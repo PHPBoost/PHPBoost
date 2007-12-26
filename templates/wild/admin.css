@@ -1,0 +1,175 @@
+/* --------------------------------------
+		admin.css
+Contient les classes supplémentaires pour l'administration.
+--------------------------------------*
+
+
+/* Administration */
+div#dynamic_menu{
+	height:22px;
+	margin:0;
+	padding:0;
+	padding-top:8px;
+	background:#557152;
+	border:1px solid #ACB46D;
+	margin-top:-2px;
+}
+div#admin_main{
+	margin:0;
+	padding:0;
+	background:#D2DECA url("images/admin_main.gif") repeat-x;
+	border:solid 1px #000000;
+	padding:0px 6px;
+}
+div#admin_contents{
+	height:450px;
+	margin-left:170px;	
+	border-left:1px solid #556854;	
+	border-top:1px solid #8BA779;	
+}
+html>body div#admin_contents{
+	height:auto;
+	min-height:450px;
+}
+div#admin_quick_menu{
+	width:155px;
+	float:left;
+	text-align:center;
+	padding-top:5px;
+}
+div#admin_quick_menu ul{
+	margin:0;
+	padding:0;
+	list-style-type:none;
+	width:169px;
+	margin-top:12px;
+}
+div#admin_quick_menu li{
+	display:block;
+	width:160px;
+	padding:15px 0px;
+}
+div#admin_quick_menu li.title_menu{
+	font-family:Tahoma, Helvetica, sans-serif;
+	text-transform:uppercase;
+	font-weight:bold;
+	font-size:0.75em;
+	background-color:#557152;
+	border:1px solid #2D4237;
+	color:#FFFFFF;	
+	padding:3px 0px;
+}
+div#admin_quick_menu li a.quick_link{
+	font-family:Tahoma, Helvetica, sans-serif;
+	text-transform:uppercase;
+	font-weight:bold;
+	font-size:0.75em;
+	color:#FFFFFF;	
+	background-color:#557152;
+	border:1px solid #2D4237;
+	padding:3px 2px;
+	text-decoration:none;
+	line-height:2.2em;
+}
+
+/* Liste des news du site officiel sur l'index */
+.phpboost_news{
+	width:450px;
+	margin:auto;
+	padding:5px;
+	text-align:left;
+	background-color:#CEDCBB;
+	border:1px solid #4C6749;	
+}
+.phpboost_news ul{
+	margin:0;
+	padding:0;
+	padding-left:12%;
+	list-style-type:none;
+	margin:auto;
+}
+
+/*Menu dynamique des liens*/
+div#dynamic_menu h5
+{
+	background:#88A078;
+	color:#edfff0;
+}
+div#dynamic_menu h5:hover
+{
+	background:#9CB18F;
+}
+.dm_menu_home{background:url(images/admin/home_mini.png) no-repeat 5px;}
+.dm_menu_admin{background:url(images/admin/admin_mini.png) no-repeat 5px;}
+.dm_menu_config{background:url(images/admin/config_mini.png) no-repeat 5px;}
+.dm_menu_modules{background:url(images/admin/modules_mini.png) no-repeat 5px;}
+.dm_menu_themes{background:url(images/admin/themes_mini.png) no-repeat 5px;}
+.dm_menu_languages{background:url(images/admin/languages_mini.png) no-repeat 5px;}
+.dm_menu_smileys{background:url(images/admin/smileys_mini.png) no-repeat 5px;}
+.dm_menu_modo{background:url(images/admin/modo_mini.png) no-repeat 5px;}
+.dm_menu_maintain{background:url(images/admin/maintain_mini.png) no-repeat 5px;}
+.dm_menu_updater{background:url(images/admin/updater_mini.png) no-repeat 5px;}
+.dm_menu_database{background:url(images/admin/database_mini.png) no-repeat 5px;}
+.dm_menu_cache{background:url(images/admin/cache_mini.png) no-repeat 5px;}
+.dm_menu_stats{background:url(images/admin/stats_mini.png) no-repeat 5px;}
+.dm_menu_errors{background:url(images/admin/errors_mini.png) no-repeat 5px;}
+.dm_menu_members{background:url(images/admin/members_mini.png) no-repeat 5px;}
+.dm_menu_groups{background:url(images/admin/groups_mini.png) no-repeat 5px;}
+.dm_menu_extendfield{background:url(images/admin/extendfield_mini.png) no-repeat 5px;}
+.dm_menu_ranks{background:url(images/admin/ranks_mini.png) no-repeat 5px;}
+.dm_menu_terms{background:url(images/admin/terms_mini.png) no-repeat 5px;}
+.dm_menu_pages{background:url(images/admin/pages_mini.png) no-repeat 5px;}
+.dm_menu_menus{background:url(images/admin/menus_mini.png) no-repeat 5px;}
+.dm_menu_files{background:url(images/admin/files_mini.png) no-repeat 5px;}
+.dm_menu_com{background:url(images/admin/com_mini.png) no-repeat 5px;}	
+			
+/* Tableaux de l'administration */
+.module_table{
+	width:95%;
+	margin:auto;
+	padding:3px;
+	margin-top:15px;	
+}
+.error_handler_position{
+	margin-top:15px;
+}
+
+/* Coloration des moteur de recherche */
+.robot{
+	color:#FF6600; 
+	font-size:12px;
+	font-weight:bold;
+}
+.success{
+	text-align:center;
+	width:20%;
+	background:#81c3a6;
+	display:block;
+	margin:auto;
+	margin-top:4px;
+	color:green;
+	font-weight:bold;
+	padding:1px;
+}
+.failure {	
+	text-align:center;
+	width:20%;
+	background:#ee8d8d;
+	display:block;
+	margin:auto;
+	margin-top:4px;
+	color:red;
+	font-weight:bold;
+	padding:1px;
+}
+.unspecified {	
+	text-align:center;
+	width:20%;
+	background:#5189bb;
+	display:block;
+	margin:auto;
+	margin-top:4px;	
+	color:#133554;
+	font-weight:bold;
+	padding:1px;
+}
