@@ -1,0 +1,164 @@
+<?php
+/*##################################################
+ *                               admin_access.php
+ *                            -------------------
+ *   begin                : June 20, 2005
+ *   copyright          : (C) 2005 Viarre Régis
+ *   email                : crowkait@phpboost.com
+ *
+ * Connexion to the admin panel!
+###################################################
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+###################################################*/
+
+if( defined('PHP_BOOST') !== true ) exit;
+
+//Module de connexion
+$login = !empty($_POST['login']) ? securit($_POST['login']) : '';
+$password = !empty($_POST['password']) ? md5($_POST['password']) : '';
+$autoconnexion = !empty($_POST['auto']) ? true : false;
+$unlock = !empty($_POST['unlock']) ? md5($_POST['unlock']) : '';
+
+//On vérifie si l'ip est valide sinon on refuse le lancement de la session!
+//Lancement de la session
+if( !empty($_POST['connect']) && !empty($login) && !empty($password) )
+{
+	$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "' AND level = 2", __LINE__, __FILE__);
+	if( !empty($user_id) ) //Membre existant.
+	{
+		$info_connect = $sql->query_array('member', 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', "WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__);
+		$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
+		$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
+		
+		if( $delay_ban >= 0 && $info_connect['user_aprob'] == '1' && $info_connect['user_warning'] < '100' ) //Utilisateur non (plus) banni.
+		{
+			//Protection de l'administration par connexion brute force.
+			if( $info_connect['test_connect'] < '5' || $unlock === $CONFIG['unlock_admin'] ) //Si clée de déverouillage bonne aucune vérification.
+			{
+				$error_report = $session->session_begin($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
+			}
+			elseif( $delay_connect >= 600 && $info_connect['test_connect'] == '5' ) //5 nouveau essais, 10 minutes après.
+			{
+				$sql->query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+				$error_report = $session->session_begin($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
+			}
+			elseif( $delay_connect >= 300 && $info_connect['test_connect'] == '5' ) //2 essais 5 minutes après
+			{
+				$sql->query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__); //Redonne un essai.
+				$error_report = $session->session_begin($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
+			}
+			else //plus d'essais
+			{
+				header('location:' . HOST . DIR . '/admin/admin_index.php?flood=0');
+				exit;
+			}
+		}
+		elseif( $info_connect['user_aprob'] == '0' )
+		{
+			header('location:' . HOST . DIR . '/member/error.php?activ=1');
+			exit;
+		}
+		elseif( $info_connect['user_warning'] == '100' )
+		{
+			header('location:' . HOST . DIR . '/member/error.php?ban_w=1');
+			exit;
+		}
+		else
+		{
+			$delay_ban = ceil((0 - $delay_ban)/60);
+			header('location:' . HOST . DIR . '/member/error.php?ban=' . $delay_ban);
+			exit;
+		}
+		
+		if( !empty($error_report) ) //Erreur
+		{
+			$info_connect['test_connect']++;
+			$sql->query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "', test_connect = test_connect + 1 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
+			header('location:' . HOST . DIR . '/admin/admin_index.php?flood=' . $info_connect['test_connect']);
+			exit;
+		}
+		elseif( !empty($unlock) && $unlock !== $CONFIG['unlock_admin'] )
+		{
+			$session->session_end(); //Suppression de la session.
+			header('location:' . HOST . DIR . '/admin/admin_index.php?flood=0');
+			exit;
+		}
+		else //Succès redonne tous les essais.
+		{
+			$sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 0 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+		}
+	}
+	else
+	{
+		header('location:' . HOST . DIR . '/member/error.php?unexist=1');
+		exit;
+	}
+	
+	header('location: ' . HOST . SCRIPT);
+	exit;
+}
+
+if( !$session->check_auth($session->data, 2) )
+{
+	$template->set_filenames(array(
+		'formulaire' => '../templates/' . $CONFIG['theme'] . '/admin/formulaire.tpl'
+	));
+	
+	$template->assign_vars(array(
+		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
+		'L_REQUIRE_PASSWORD' => $LANG['require_password'],
+		'L_CONNECT' => $LANG['connect'],
+		'L_ADMIN' => $LANG['admin'],
+		'L_PSEUDO' => $LANG['pseudo'],
+		'L_PASSWORD' => $LANG['password'],
+		'L_AUTOCONNECT'	=> $LANG['autoconnect']	
+	));
+	
+	$template->pparse('formulaire'); 
+	exit;
+}
+elseif( isset($_GET['flood']) )
+{
+	$flood = numeric($_GET['flood']);
+	if( $flood == '0' )
+	{
+		$template->assign_block_vars('unlock', array(
+		));
+	}
+	
+	$template->set_filenames(array(
+		'formulaire' => '../templates/' . $CONFIG['theme'] . '/admin/formulaire.tpl'
+	));
+	
+	$template->assign_vars(array(
+		'ERROR' => (($flood > '0') ? sprintf($LANG['flood_block'], $flood) : $LANG['flood_max']),
+		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
+		'L_REQUIRE_PASSWORD' => $LANG['require_password'],
+		'L_CONNECT' => $LANG['connect'],
+		'L_ADMIN' => $LANG['admin'],
+		'L_PSEUDO' => $LANG['pseudo'],
+		'L_PASSWORD' => $LANG['password'],
+		'L_UNLOCK' => $LANG['unlock_admin_panel'],
+		'L_AUTOCONNECT'	=> $LANG['autoconnect']	
+	));
+
+	$template->pparse('formulaire'); 
+	exit;
+}
+
+?>

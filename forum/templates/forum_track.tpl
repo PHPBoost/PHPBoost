@@ -1,0 +1,155 @@
+		<script type="text/javascript">
+		<!--
+			function check_convers(status, id)
+			{
+				for(i = 0; i < {NBR_TOPICS}; i++)
+					document.getElementById(id + i).checked = status;
+			}	 
+		-->
+		</script>
+		
+		<div class="forum_title">{FORUM_NAME}</div>
+		<div class="module_position">
+			<div class="row2">
+				<span style="float:left;">
+					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a>
+				</span>
+				<span style="float:right;">
+					{U_SEARCH}
+					{U_TOPIC_TRACK}
+					{U_LAST_MSG_READ}
+					{U_MSG_NOT_READ}
+				</span>&nbsp;
+			</div>
+		</div>
+
+		<br />
+		
+		<form action="track{U_TRACK_ACTION}" method="post" name="track">	
+			<div class="module_position">					
+				<div class="module_top_l"></div>		
+				<div class="module_top_r"></div>
+				<div class="module_top">
+					<span style="float:left;">
+						&bull; {U_FORUM_CAT}
+					</span>
+					<span style="float:right;">{PAGINATION}</span>&nbsp;
+				</div>
+				<div class="module_contents forum_contents">
+					<div class="row2 text_small">{L_EXPLAIN_TRACK}</div>
+					<table class="module_table" style="width:100%">
+						<tr class="forum_text_column">			
+							<td>{L_TOPIC}</td>
+							<td style="width:100px;">{L_AUTHOR}</td>
+							<td style="width:60px;">{L_MESSAGE}</td>
+							<td style="width:60px;">{L_VIEW}</td>
+							<td style="width:40px;"><input type="checkbox" class="valign_middle" onClick="check_convers(this.checked, 'p');" /> {L_PM}</td>
+							<td style="width:50px;"><input type="checkbox" class="valign_middle" onClick="check_convers(this.checked, 'm');" /> {L_MAIL}</td>
+							<td style="width:85px;"><input type="checkbox" class="valign_middle" onClick="check_convers(this.checked, 'd');" /> {L_DELETE}</td>
+							<td style="width:150px;">{L_LAST_MESSAGE}</td>
+						</tr>
+					</table>
+				</div>			
+			</div>	
+			<div class="module_position">
+				<div class="module_contents forum_contents">
+					<table class="module_table" style="width:100%">
+						# START msg_read #
+						<tr>
+							<td class="row2" style="text-align:center;">
+								0 {msg_read.L_MSG_NOT_READ}
+							</td>
+						</tr>	
+						# END msg_read #
+
+						# START topics #		
+						<tr>
+							<td class="forum_sous_cat" style="width:25px;text-align:center;">
+								<img src="{MODULE_DATA_PATH}/images/{topics.ANNOUNCE}.gif" alt="" />
+							</td>
+							<td class="forum_sous_cat" style="width:35px;text-align:center;">
+								{topics.DISPLAY_MSG} {topics.TRACK} {topics.POLL}
+							</td>
+							<td class="forum_sous_cat">
+								{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
+								<br />
+								<span class="text_small">{topics.DESC}</span> &nbsp;<span class="pagin_forum">{topics.PAGINATION_TOPICS}</span>
+							</td>
+							<td class="forum_sous_cat_compteur" style="width:100px;">
+								{topics.AUTHOR}
+							</td>
+							<td class="forum_sous_cat_compteur">
+								{topics.MSG}
+							</td>
+							<td class="forum_sous_cat_compteur">
+								{topics.VUS}
+							</td>
+							<td class="forum_sous_cat_compteur" style="width:40px;text-align:center;">
+								<input type="checkbox" id="p{topics.INCR}" name="p{topics.ID}" {topics.CHECKED_PM} />
+							</td>
+							<td class="forum_sous_cat_compteur" style="width:50px;text-align:center;">
+								<input type="checkbox" id="m{topics.INCR}" name="m{topics.ID}" {topics.CHECKED_MAIL} />
+							</td>
+							<td class="forum_sous_cat_compteur" style="width:85px;text-align:center;">
+								<input type="checkbox" id="d{topics.INCR}" name="d{topics.ID}" />
+							</td>
+							<td class="forum_sous_cat_last">
+								{topics.U_LAST_MSG}
+							</td>
+						</tr>	
+						# END topics #
+					</table>	
+					<br />
+					<span style="float:right"><input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />&nbsp;&nbsp;</span>	
+				</div>
+			</div>
+		</form>
+		
+		<div class="module_position">
+			<div class="module_bottom_l"></div>		
+			<div class="module_bottom_r"></div>
+			<div class="module_bottom">
+				<span style="float:left;" class="text_strong">
+					&bull; {U_FORUM_CAT}
+				</span>
+				<span style="float:right;">{PAGINATION}</span>&nbsp;
+			</div>
+		</div>		
+		
+		<br />
+		
+		<div class="module_position">
+			<div class="row2">
+				<span style="float:left;">
+					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a>
+				</span>
+				<span style="float:right;">
+					{U_SEARCH}
+					{U_TOPIC_TRACK}
+					{U_LAST_MSG_READ}
+					{U_MSG_NOT_READ}
+				</span>&nbsp;
+			</div>
+			<div class="forum_online">
+				<span style="float:left;">
+					{TOTAL_ONLINE} {L_USER} {L_ONLINE} :: {ADMIN} {L_ADMIN}, {MODO} {L_MODO}, {MEMBER} {L_MEMBER} {L_AND} {GUEST} {L_GUEST}
+					<br />
+					{L_MEMBER} {L_ONLINE}: 
+					# START online #		
+						{online.ONLINE}
+					# END online #
+				</span>
+				<span style="float:right;">
+					<form action="topic{U_CHANGE_CAT}" method="post">
+						<select name="change_cat" onchange="document.location = {U_ONCHANGE};">
+							{SELECT_CAT}
+						</select>
+						<noscript>
+							<input type="submit" name="valid_change_cat" value="Go" class="submit" />
+						</noscript>
+					</form>
+				</span>
+				<br /><br />
+			</div>
+		</div>
+		
