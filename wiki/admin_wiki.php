@@ -1,0 +1,93 @@
+<?php
+/*##################################################
+ *                               admin_wiki.php
+ *                            -------------------
+ *   begin                : November 11, 2006
+ *   copyright          : (C) 2006 Sautel Benoit
+ *   email                : ben.popeye@phpboost.com
+ *
+ *
+ *
+###################################################
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+###################################################*/
+
+include_once('../includes/admin_begin.php');
+include_once('../wiki/lang/' . $CONFIG['lang'] . '/wiki_' . $CONFIG['lang'] . '.php');
+define('TITLE', $LANG['administration'] . ' : ' . $LANG['wiki']);
+include_once('../includes/admin_header.php');
+include_once('../wiki/wiki_functions.php');
+
+$cache->load_file('wiki');
+
+$wiki_name = !empty($_POST['wiki_name']) ? stripslashes(securit($_POST['wiki_name'])) : $LANG['wiki'];
+$index_text = !empty($_POST['contents']) ? stripslashes(wiki_parse($_POST['contents'])) : '';
+$last_articles = !empty($_POST['last_articles']) ? numeric($_POST['last_articles']) : 0;
+$display_cats = !empty($_POST['display_cats']) ? 1 : 0;
+$count_hits = !empty($_POST['count_hits']) ? 1 : 0;
+
+if( !empty($_POST['update']) )  //Mise à jour
+{
+	$_WIKI_CONFIG['wiki_name'] = $wiki_name;
+	$_WIKI_CONFIG['last_articles'] = $last_articles;
+	$_WIKI_CONFIG['display_cats'] = $display_cats;
+	$_WIKI_CONFIG['index_text'] = $index_text;
+	$_WIKI_CONFIG['count_hits'] = $count_hits;
+	$_WIKI_CONFIG['auth'] = serialize($_WIKI_CONFIG['auth']);
+
+	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
+	//Régénération du cache
+	$cache->generate_module_file('wiki');	
+}
+
+$cache->load_file('wiki');
+
+$template->set_filenames(array(
+		'wiki_config' => '../templates/' . $CONFIG['theme'] . '/wiki/admin_wiki.tpl'
+	 ));
+
+include_once('../includes/bbcode.php');
+$template->assign_var_from_handle('BBCODE', 'bbcode');
+
+$template->assign_vars(array(
+	'L_UPDATE' => $LANG['update'],
+	'L_RESET' => $LANG['reset'],
+	'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
+	'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
+	'L_CONFIG_WIKI' => $LANG['wiki_config'],
+	'L_WHOLE_WIKI' => 'Configuration générale',
+	'L_INDEX_WIKI' => 'Accueil du wiki',
+	'L_COUNT_HITS' => 'Compter le nombre de fois que sont vus les articles', 
+	'L_WIKI_NAME' => 'Nom du wiki',
+	'L_DISPLAY_CATS' => 'Afficher la liste des catégories principales sur l\'accueil',
+	'L_NOT_DISPLAY' => 'Ne pas afficher',
+	'L_DISPLAY' => 'Afficher',
+	'L_LAST_ARTICLES' => 'Nombre des derniers articles à afficher sur l\'accueil (0 pour désactiver)',
+	'L_DESCRIPTION' => 'Texte de l\'accueil',
+	'HITS_SELECTED' => ($_WIKI_CONFIG['count_hits'] > 0) ? 'checked="checked"' : '',
+	'WIKI_NAME' => $_WIKI_CONFIG['wiki_name'],
+	'NOT_DISPLAY_CATS' => ( $_WIKI_CONFIG['display_cats'] == 0 ) ? 'checked="checked"' : '',
+	'DISPLAY_CATS' => ( $_WIKI_CONFIG['display_cats'] != 0 ) ? 'checked="checked"' : '',
+	'LAST_ARTICLES' => $_WIKI_CONFIG['last_articles'],
+	'DESCRIPTION' => wiki_unparse($_WIKI_CONFIG['index_text'])
+));
+	
+$template->pparse('wiki_config');
+
+include_once('../includes/admin_footer.php');
+
+?>
