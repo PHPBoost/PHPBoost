@@ -27,8 +27,11 @@
 
 if( defined('PHP_BOOST') !== true)	exit;
 
+$cache->load_file('faq');
+
 include_once('../faq/lang/' . $CONFIG['lang'] . '/faq_' . $CONFIG['lang'] . '.php');
 
 define('AUTH_READ', 0x01);
 define('AUTH_WRITE', 0x02);
+
 ?>

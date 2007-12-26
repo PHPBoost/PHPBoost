@@ -26,7 +26,6 @@
 ###################################################*/
 
 include_once('../includes/begin.php'); 
-
 include_once('faq_begin.php');
 
 $id_faq = !empty($_GET['faq']) ? numeric($_GET['faq']) : 0;
@@ -35,50 +34,57 @@ $cat_of_new_question = !empty($_GET['idcat']) ? numeric($_GET['idcat']) : 0;
 $new = !empty($_GET['new']) ? true : false;
 $new_after_id = !empty($_GET['after']) ? numeric($_GET['after']) : 0;
 
-$cache->load_file('faq');
-
 if( $edit_question > 0 )
 {
 	define('TITLE', $FAQ_LANG['question_edition']);
 	$question_infos = $sql->query_array("faq", "*", "WHERE id = '" . $edit_question . "'", __LINE__, __FILE__);
-	$id_cat4speed_bar = $question_infos['idcat'];
+	$id_cat_for_speed_bar = $question_infos['idcat'];
 }
 elseif( $cat_of_new_question >= 0 && $new )
 {
 	define('TITLE', $FAQ_LANG['question_creation']);
-	$id_cat4speed_bar = $cat_of_new_question;
+	$id_cat_for_speed_bar = $cat_of_new_question;
 }
 else
 {
 	define('TITLE', $FAQ_LANG['category_management']);
-	$id_cat4speed_bar = $id_faq;
+	$id_cat_for_speed_bar = $id_faq;
 }
-
-//Speed bar generation
-$speed_bar = array($FAQ_CONFIG['faq_name'] => transid('faq.php'));
-if( $id_cat4speed_bar > 0 )
-{
-	foreach($FAQ_CATS as $id => $array_info_cat)
-	{
-		if( $id > 0 && $FAQ_CATS[$id_cat4speed_bar]['id_left'] >= $array_info_cat['id_left'] && $FAQ_CATS[$id_cat4speed_bar]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $FAQ_CATS[$id_cat4speed_bar]['level'] )
-		{
-			$speed_bar[$array_info_cat['name']] = transid('faq.php?id=' . $id);
-		}
-	}
-}
+//Generation of speed_bar
+include_once('faq_speed_bar.php');
 
 if( $edit_question > 0 )
 {
+	//checking authorization
+	if( !$auth_write )
+	{
+		$errorh->error_handler('e_auth', E_USER_REDIRECT);
+		exit;
+	}
 	$speed_bar[$FAQ_LANG['category_management']] = transid('management.php?faq=' . $question_infos['idcat']);
 	$speed_bar[$FAQ_LANG['question_edition']] = transid('management.php?edit=' . $edit_question);
 }
 elseif( $cat_of_new_question >= 0 && $new )
 {
+	//checking authorization
+	if( !$auth_write )
+	{
+		$errorh->error_handler('e_auth', E_USER_REDIRECT);
+		exit;
+	}
 	$speed_bar[$FAQ_LANG['category_management']] = transid('management.php?faq=' . $cat_of_new_question);
 	$speed_bar[$FAQ_LANG['question_creation']] = transid('management.php?new=1&amp;idcat' . $cat_of_new_question . '&amp;after=' . $new_after_id);
 }
 else
+{
 	$speed_bar[$FAQ_LANG['category_management']] = transid('management.php' . ($id_faq > 0 ? '?faq=' . $id_faq : ''));
+	//checking authorization
+	if( !$auth_write )
+	{
+		$errorh->error_handler('e_auth', E_USER_REDIRECT);
+		exit;
+	}
+}
 	
 include_once('../includes/header.php');
 
