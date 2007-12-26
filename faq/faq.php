@@ -32,8 +32,6 @@ $id_faq = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 //For users who have disabled javascript
 $id_question = !empty($_GET['question']) ? numeric($_GET['question']) : 0;
 
-$cache->load_file('faq');
-
 if( $id_faq > 0 )
 	$TITLE = array_key_exists($id_faq, $FAQ_CATS) ? $FAQ_CATS[$id_faq]['name'] : $FAQ_LANG['faq'];
 else
@@ -41,17 +39,15 @@ else
 
 define('TITLE', $FAQ_CONFIG['faq_name'] . ($id_faq > 0 ? ' - ' . $TITLE : ''));
 
-//Speed_bar : we read categories list and wo go up to the cat using left and right  id
-$speed_bar = array($FAQ_CONFIG['faq_name'] => transid('faq.php'));
-if( $id_faq > 0 )
+$id_cat_for_speed_bar = $id_faq;
+
+include_once('faq_speed_bar.php');
+
+//checking authorization
+if( !$auth_read )
 {
-	foreach($FAQ_CATS as $id => $array_info_cat)
-	{
-		if( $id > 0 && $FAQ_CATS[$id_faq]['id_left'] >= $array_info_cat['id_left'] && $FAQ_CATS[$id_faq]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $FAQ_CATS[$id_faq]['level'] )
-		{
-			$speed_bar[$array_info_cat['name']] = transid('faq.php?id=' . $id);
-		}
-	}
+	$errorh->error_handler('e_auth', E_USER_REDIRECT);
+	exit;
 }
 
 include_once('../includes/header.php');
@@ -65,24 +61,38 @@ $template->assign_vars(array(
 ));
 
 
+//generation of unauthorized cats in the corresponding level
+$unauthorized_cats = array();
+foreach( $FAQ_CATS as $id => $value )
+{
+	if( $id > 0 && $value['level'] == ($id_faq > 0 ? $FAQ_CATS[$id_faq]['level'] + 1 : 0) && !empty($value['auth']) && !$groups->check_auth($value['auth'], AUTH_READ) )
+		$unauthorized_cats[] = $id;
+}
+
 //List of FAQs cats
 if( array_key_exists($id_faq, $FAQ_CATS) && $id_faq > 0 )
 {
-	$where_condition = "WHERE visible = '1' AND level = '" . ($FAQ_CATS[$id_faq]['level'] + 1) . "' AND id_left BETWEEN '" . $FAQ_CATS[$id_faq]['id_left'] . "' AND '" . $FAQ_CATS[$id_faq]['id_right'] . "' ORDER BY id_left";
+	$where_condition = "WHERE level = '" . ($FAQ_CATS[$id_faq]['level'] + 1) . "' AND id_left BETWEEN '" . $FAQ_CATS[$id_faq]['id_left'] . "' AND '" . $FAQ_CATS[$id_faq]['id_right'] . "'";
 	if( !empty($FAQ_CATS[$id_faq]['desc']) )
 		$template->assign_block_vars('description', array(
 			'DESCRIPTION' => second_parse($FAQ_CATS[$id_faq]['desc'])
 		));
 }
 else
-	$where_condition = "WHERE level = '0' AND visible = '1' ORDER BY id_left";
+{
+	$id_faq = 0;
+	$where_condition = "WHERE level = '0'";
+}
+if( count($unauthorized_cats) > 0 )
+	$where_condition .= ' AND id NOT IN (' . implode(', ', $unauthorized_cats) . ') ';
 
-$result = $sql->query_while("SELECT id, name, image FROM ".PREFIX."faq_cats " . $where_condition, __LINE__, __FILE__);
-
-$template->assign_block_vars('management', array());
+if( $auth_write )
+	$template->assign_block_vars('management', array());
+	
+$result = $sql->query_while("SELECT id, name, image FROM ".PREFIX."faq_cats " . $where_condition . " AND visible = '1' ORDER BY id_left", __LINE__, __FILE__);
 
 //if at least one subcat exists
-if( $sql->sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats " . $where_condition, __LINE__, __FILE__) > 0 )
+if( $sql->sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats " . $where_condition . " AND visible = '1' ORDER BY id_left", __LINE__, __FILE__) > 0 )
 {
 	$template->assign_block_vars('cats', array());
 	$i = 1;
