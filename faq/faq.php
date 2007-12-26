@@ -154,7 +154,7 @@ else
 }
 
 $template->assign_vars(array(
-	'NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
+	'L_NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
 	'L_CAT_MANAGEMENT' => $FAQ_LANG['category_manage'],
 	'U_MANAGEMENT' => transid('management.php?faq=' . $id_faq)
 ));
