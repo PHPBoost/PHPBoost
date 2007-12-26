@@ -125,15 +125,13 @@ __LINE__, __FILE__);
 if( $sql->sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__) > 0 )
 {
 	//Display mode : if this category has a particular display mode we use it, else we use default display mode. If the category is the root we use default mode.
-	if( $id_faq > 0 )
-		$faq_display_block = $FAQ_CATS[$id_faq]['display_mode'] > 0 ? ($FAQ_CATS[$id_faq]['display_mode'] == 2 ? true : false ) : $FAQ_CONFIG['display_block'];
-	else
-		$faq_display_block = $FAQ_CONFIG['display_block'];
-	
+	$faq_display_block = $FAQ_CATS[$id_faq]['display_mode'] > 0 ? ($FAQ_CATS[$id_faq]['display_mode'] == 2 ? true : false ) : $FAQ_CONFIG['display_block'];
+
 	if( !$faq_display_block )
 		$template->assign_block_vars('questions', array());
 	else
 		$template->assign_block_vars('questions_block', array());
+		
 	while( $row = $sql->sql_fetch_assoc($result) )
 	{
 		if( !$faq_display_block )

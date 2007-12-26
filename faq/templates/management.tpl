@@ -68,16 +68,16 @@
 		<form action="{TARGET}" method="post" onsubmit="javascript:return check_form_faq();">
 			<fieldset>
 				<legend>{L_CAT_PROPERTIES}</legend>
-				# START not_root #
+				# START not_root_name #
 				<dl>
 					<dt>
 						<label for="cat_title">{L_CAT_NAME}</label>
 					</dt>
 					<dd>
-						<input type="text" name="cat_name" id="cat_name" value="{category.not_root.CAT_TITLE}" />
+						<input type="text" name="cat_name" id="cat_name" value="{category.not_root_name.CAT_TITLE}" />
 					</dd>
 				</dl>
-				# END not_root #
+				# END not_root_name #
 				<label for="contents">{L_DESCRIPTION}</label>
 				{BBCODE}
 				<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
@@ -100,6 +100,7 @@
 						</select>
 					</dd>					
 				</dl>
+				# START not_root_auth #
 				<dl>
 					<dt><label for="global_auth">{L_GLOBAL_AUTH}</label>
 					<br />
@@ -129,6 +130,7 @@
 						{category.WRITE_AUTH}
 					</dd>					
 				</dl>
+				# END not_root_auth #
 				</div>
 			</fieldset>
 			<fieldset class="fieldset_submit">
