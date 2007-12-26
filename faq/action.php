@@ -42,6 +42,8 @@ $cat_properties = !empty($_GET['cat_properties']) ? true : false;
 $id_cat = !empty($_POST['id_faq']) ? numeric($_POST['id_faq']) : 0;
 $display_mode = !empty($_POST['display_mode']) ? numeric($_POST['display_mode']) : 0;
 $global_auth = !empty($_POST['global_auth']) ? true : false;
+$cat_name = !empty($_POST['cat_name']) ? securit($_POST['cat_name']) : '';
+$description = !empty($_POST['description']) ? parse($_POST['description']) : '';
 
 if( $faq_del_id > 0 )
 {
@@ -102,40 +104,24 @@ elseif( !empty($entitled) && !empty($answer) )
 		exit;
 	}
 }
-//This cat hasn't particular auth anymore
-elseif( $global_auth )
+elseif( $cat_properties && !empty($cat_name) )
 {
-	//Category existing into database
-	if( $id_cat > 0 )
+	if( $global_auth )
 	{
-		$sql->query_inject("UPDATE ".PREFIX."faq_cats SET auth = '' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+		$auth_read = isset($_POST['groups_auth1']) ? $_POST['groups_auth1'] : '';
+		$auth_write = isset($_POST['groups_auth2']) ? $_POST['groups_auth2'] : '';
+		$array_auth_all = $groups->return_array_auth($auth_read, $auth_write);
+		$new_auth = addslashes(serialize($array_auth_all));
 	}
-	//Root : properties into cache
 	else
-	{
-		$FAQ_CONFIG['root'] = array(
-			'display_mode' => $display_mode,
-			'num_questions' => $FAQ_CATS[0]['num_questions'],
-			'auth' => array()
-		);
-		$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
-	}
-	$cache->generate_module_file('faq');
-	header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $id_cat, '', '&'));
-	exit;
-}
-elseif( $cat_properties )
-{
-	$auth_read = isset($_POST['groups_auth1']) ? $_POST['groups_auth1'] : '';
-	$auth_write = isset($_POST['groups_auth2']) ? $_POST['groups_auth2'] : '';
-	$array_auth_all = $groups->return_array_auth($auth_read, $auth_write);
-	$new_auth = addslashes(serialize($array_auth_all));
+		$new_auth = '';
+		
 	$display_mode = ($display_mode <= 2 || $display_mode >= 0) ? $display_mode : 0;
 
 	//Category existing into database
 	if( $id_cat > 0 )
 	{
-		$sql->query_inject("UPDATE ".PREFIX."faq_cats SET display_mode = '" . $display_mode . "', auth = '" . $new_auth . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+		$sql->query_inject("UPDATE ".PREFIX."faq_cats SET display_mode = '" . $display_mode . "', auth = '" . $new_auth . "', description = '" . $description . "', name = '" . $cat_name . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
 	}
 	//Root : properties into cache
 	else
@@ -143,7 +129,8 @@ elseif( $cat_properties )
 		$FAQ_CONFIG['root'] = array(
 			'display_mode' => $display_mode,
 			'num_questions' => $FAQ_CATS[0]['num_questions'],
-			'auth' => $new_auth
+			'auth' => $new_auth,
+			'description' => $description
 		);
 		$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
 	}

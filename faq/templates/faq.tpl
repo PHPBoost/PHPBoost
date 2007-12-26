@@ -43,7 +43,7 @@
 		# END cats #		
 		
 		# START management #
-			<div style="float:right;text-align:center;">
+			<div style="text-align:center; margin:10px;">
 				<a href="{U_MANAGEMENT}">
 					<img src="{MODULE_DATA_PATH}/images/category_management.png" alt="{L_CATEGORY_MANAGEMENT}" title="{L_CAT_MANAGEMENT}" />
 				</a>
@@ -98,7 +98,7 @@
 		# END questions_block #
 		
 		# START no_question #
-			{NO_QUESTION_THIS_CATEGORY}
+			{L_NO_QUESTION_THIS_CATEGORY}
 		# END no_question #
 	</div>
 	<div class="module_bottom_l"></div>		
