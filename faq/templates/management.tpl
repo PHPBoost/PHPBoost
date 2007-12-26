@@ -34,9 +34,58 @@
 		}		
 		-->
 		</script>
-		<form action="{TARGET}" method="post">
+		
+		<div style="text-align:center;">
+			<a href="{U_GO_BACK_TO_CAT}">{L_GO_BACK_TO_CAT}</a>
+		</div>
+		
+		<script type="text/javascript">
+		<!--
+			var global_auth = {JS_GLOBAL};
+			function change_status_global_auth()
+			{
+				if( global_auth )
+					hide_div("hide_global_auth");
+				else
+					show_div("hide_global_auth");
+				global_auth = !global_auth;
+			}
+			
+			function check_form_faq()
+			{
+				if( document.getElementById("id_faq").value > 0 && document.getElementById("cat_name").value == "" )
+				{
+						alert("{L_REQUIRE_CAT_NAME}");
+						return false;
+				}
+				else
+					return true;
+			}
+			
+		-->
+		</script>
+		
+		<form action="{TARGET}" method="post" onsubmit="javascript:return check_form_faq();">
 			<fieldset>
 				<legend>{L_CAT_PROPERTIES}</legend>
+				# START not_root #
+				<dl>
+					<dt>
+						<label for="cat_title">{L_CAT_NAME}</label>
+					</dt>
+					<dd>
+						<input type="text" name="cat_name" id="cat_name" value="{category.not_root.CAT_TITLE}" />
+					</dd>
+				</dl>
+				# END not_root #
+				<label for="contents">{L_DESCRIPTION}</label>
+				{BBCODE}
+				<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
+				<br />
+				<div style="text-align:center;">
+					<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" class="submit" type="button" />
+				</div>
+				<br />
 				<dl>
 					<dt>
 						<label for="display_mode">{L_DISPLAY_MODE}</label>
@@ -52,13 +101,14 @@
 					</dd>					
 				</dl>
 				<dl>
-					<dt><label for="read_auth">{L_GLOBAL_AUTH}</label>
+					<dt><label for="global_auth">{L_GLOBAL_AUTH}</label>
 					<br />
 					<span class="text_small">{L_GLOBAL_AUTH_EXPLAIN}</span></dt>
 					<dd>
-						<input type="submit" name="global_auth" value="{GLOBAL_SPECIAL_AUTH}" class="submit" {GLOBAL_AUTH_DISABLED} />
+						<input type="checkbox" name="global_auth" id="global_auth" onclick="javascript: change_status_global_auth();" {GLOBAL_CHECKED} />
 					</dd>					
 				</dl>
+				<div id="hide_global_auth" style="display:{DISPLAY_GLOBAL};">
 				<dl>
 					<dt>
 						<label>
@@ -79,13 +129,14 @@
 						{category.WRITE_AUTH}
 					</dd>					
 				</dl>
+				</div>
 			</fieldset>
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
 				&nbsp;&nbsp; 
 				<input type="reset" value="{L_RESET}" class="reset" />
-				<input type="hidden" name="id_faq" value="{category.ID_FAQ}" />
+				<input type="hidden" id="id_faq" name="id_faq" value="{category.ID_FAQ}" />
 			</fieldset>
 		</form>
 		

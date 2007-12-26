@@ -36,22 +36,24 @@ $FAQ_LANG = array();
 $FAQ_LANG['faq'] = 'FAQ';
 $FAQ_LANG['faq_no_question_here'] = 'Aucune question présente dans cette catégorie';
 $FAQ_LANG['faq_page_title'] = 'FAQ - %s';
+$FAQ_LANG['cat_name'] = 'Nom de la catégorie';
 
 //Avertissement
 $FAQ_LANG['require_entitled'] = 'Veuillez entrer l\'intitulé de la question';
 $FAQ_LANG['require_answer'] = 'Veuillez entrer la réponse';
+$FAQ_LANG['require_cat_name'] = 'Veuillez entrer le nom de la catégorie';
 
 //Gestion
 $FAQ_LANG['cat_properties'] = 'Propriétés de la catégorie';
+$FAQ_LANG['cat_description'] = 'Description';
+$FAQ_LANG['go_back_to_cat'] = 'Retour à la catégorie';
 $FAQ_LANG['display_mode'] = 'Mode d\'affichage';
 $FAQ_LANG['display_block'] = 'Par blocs';
 $FAQ_LANG['display_inline'] = 'En lignes';
 $FAQ_LANG['display_auto'] = 'Automatique';
 $FAQ_LANG['display_explain'] = 'En automatique l\'affichage suivra la configuration générale, en blocs les réponses seront masquées et un clic sur la question affichera la réponse correspondante tandis que en ligne les questions seront suivies de leurs réponses.';
 $FAQ_LANG['global_auth'] = 'Autorisations spéciales';
-$FAQ_LANG['global_auth_explain'] = 'Permet d\'annuler des autorisations particulières appliquées à cette catégorie.';
-$FAQ_LANG['already_global_auth'] = 'Autorisations déjà globales';
-$FAQ_LANG['let_global_auth'] = 'Laisser les autorisations globales';
+$FAQ_LANG['global_auth_explain'] = 'Permet d\'appliquer des autorisations particulières à la catégorie. Attention les autorisations de lecture se transmettent dans les sous catégories, c\'est-à-dire que si vous ne pouvez pas voir une catégorie vous ne pouvez pas voir ses filles.';
 $FAQ_LANG['read_auth'] = 'Autorisations de lecture';
 $FAQ_LANG['write_auth'] = 'Autorisations d\'écriture';
 $FAQ_LANG['questions_list'] = 'Liste des questions';

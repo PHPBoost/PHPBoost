@@ -56,6 +56,7 @@ function generate_module_file_faq()
 				'visible' => $row['visible'],
 				'display_mode' => $row['display_mode'],
 				'num_questions' => $sql->query("SELECT COUNT(*) FROM ".PREFIX."faq WHERE idcat = '" . $row['id'] . "'", __LINE__, __FILE__),
+				'description' => $row['description'],
 				'auth' => unserialize($row['auth'])
 				),
 			true)
