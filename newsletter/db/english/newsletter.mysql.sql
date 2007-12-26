@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS `phpboost_newsletter`;
+CREATE TABLE `phpboost_newsletter` (
+	`id` int(11) NOT NULL auto_increment,
+	`mail` varchar(50) NOT NULL default '',
+	PRIMARY KEY	(`id`)
+) ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS `phpboost_newsletter_arch`;
+CREATE TABLE `phpboost_newsletter_arch` (
+	`id` int(11) NOT NULL auto_increment,
+	`title` varchar(200) NOT NULL default '',
+	`message` text NOT NULL,
+	`timestamp` bigint(20) NOT NULL default '0',
+	`type` varchar(10) NOT NULL default '',
+	`nbr` mediumint(9) NOT NULL default '0',
+	PRIMARY KEY	(`id`)
+) ENGINE=MyISAM;
+
+INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('newsletter', 'a:2:{s:11:"sender_mail";s:0:"";s:15:"newsletter_name";s:0:"";}');
+INSERT INTO `phpboost_modules_mini` (`name`, `code`, `contents`, `side`, `secure`, `activ`, `added`) VALUES ('newsletter', 'include_once(''../newsletter/newsletter_mini.php'');', '', 0, -1, 1, 0);
