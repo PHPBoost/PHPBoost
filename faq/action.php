@@ -25,9 +25,9 @@
 *
 ###################################################*/
 
-include_once('../includes/begin.php'); 
+include_once('../includes/begin.php');
 include_once('faq_begin.php');
-$cache->load_file('faq');
+
 
 $faq_del_id = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 $down = !empty($_GET['down']) ? numeric($_GET['down']) : 0;
@@ -148,9 +148,9 @@ elseif( !empty($entitled) && !empty($answer) )
 		}
 	}
 }
-elseif( $cat_properties && !empty($cat_name) )
+elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
 {
-	$id_cat_for_speed_bar = $cat_properties;
+	$id_cat_for_speed_bar = $id_cat;
 	include('faq_speed_bar.php');
 	if( $auth_write )
 	{
@@ -177,7 +177,7 @@ elseif( $cat_properties && !empty($cat_name) )
 			$FAQ_CONFIG['root'] = array(
 				'display_mode' => $display_mode,
 				'num_questions' => $FAQ_CATS[0]['num_questions'],
-				'auth' => $new_auth,
+				'auth' => $FAQ_CATS[0]['auth'],
 				'description' => $description
 			);
 			$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);

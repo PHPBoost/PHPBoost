@@ -235,9 +235,12 @@ else
 	));
 	
 	if( $id_faq > 0 )
-		$template->assign_block_vars('category.not_root', array(
+	{
+		$template->assign_block_vars('category.not_root_name', array(
 			'CAT_TITLE' => $FAQ_CATS[$id_faq]['name'],
 		));
+		$template->assign_block_vars('category.not_root_auth', array());
+	}
 	
 	//Questions management
 	$result = $sql->query_while("SELECT id, q_order, question, answer
