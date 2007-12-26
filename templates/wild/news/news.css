@@ -1,0 +1,40 @@
+/* News */
+/* Contenu de la news */
+.news_container{	
+	width:96%;
+	margin:auto;
+	background:#9CB18F url(images/border.gif) repeat-y left;
+	margin-bottom:30px;
+}
+.news_content{
+	padding:6px;
+	background:url(images/border.gif) repeat-y right;
+	overflow:hidden !important;
+	height:auto !important;
+	overflow:visible;
+	height:1%;
+}
+
+/* Barre inférieure des news */
+.news_bottom_l{
+	width:2px;
+	height:18px;
+	background:#9CB18F url(images/border.gif) repeat-y left;
+	float:left;
+}
+.news_bottom_r{
+	width:2px;
+	height:18px;
+	background:#9CB18F url(images/border.gif) repeat-y right;
+	float:right;
+}
+.news_bottom{
+	height:18px;
+	background:#9CB18F url(images/border.gif) repeat-x bottom;
+	color:#000000;
+	font-size:10px;
+	margin-left:2px;
+	margin-right:2px;
+	padding-left:6px;
+	padding-right:6px;
+}

@@ -1,0 +1,33 @@
+.pages_button
+{
+	width:145px;	
+	height:20px;
+	background:#88A078;	
+	font-weight:bold;
+	color:#edfff0;
+	text-align:center;
+	text-decoration:none;
+	border:1px solid #ACB46D;
+	margin-left:10px;
+	padding:4px 2px;
+	cursor:pointer;
+}
+ .pages_selected_cat
+ {
+	background:#88A078;
+	border:1px solid #5D745B;
+ }
+ /*Menu dynamique des liens*/
+#dynamic_menu h5 a
+{
+	color:#edfff0;
+	text-align:center;
+	font-weight:bold;
+	font-size:12px;
+	cursor:pointer;
+	text-decoration:none;
+}
+ ol{
+	margin-left:25px;
+ }
+ 
