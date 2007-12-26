@@ -2,8 +2,8 @@
 /*##################################################
  *                               admin_faq_cats.php
  *                            -------------------
- *   begin                : November 11, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   begin                : December 26, 2007
+ *   copyright          : (C) 2007 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -27,9 +27,9 @@
 ###################################################*/
 
 include_once('../includes/admin_begin.php');
-include_once('../faq/lang/' . $CONFIG['lang'] . '/faq_' . $CONFIG['lang'] . '.php'); //Chargement de la langue du module.
+include_once('faq_begin.php'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-include_once('../includes/admin_header.php');
+include_once('../includes/admin_header.php')
 
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
@@ -214,8 +214,6 @@ if( !empty($_POST['valid']) && !empty($id) )
 }
 elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 {
-	$cache->load_file('forum');
-	
 	$confirm_delete = false;	
 	
 	$idcat = $sql->query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $del . "'", __LINE__, __FILE__);
