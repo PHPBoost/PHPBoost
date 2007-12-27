@@ -1,0 +1,1 @@
+<?php header('location: http://localhost/PHPBoost2/news/news.php'); ?>
