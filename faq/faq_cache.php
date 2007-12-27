@@ -27,8 +27,6 @@
 
 if( defined('PHP_BOOST') !== true) exit;
 
-
-
 function generate_module_file_faq()
 {
 	global $sql;
