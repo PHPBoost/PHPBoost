@@ -1,0 +1,1206 @@
+<?php
+/*##################################################
+ *                               admin_stats.php
+ *                            -------------------
+ *   begin                : July 30, 2005
+ *   copyright          : (C) 2005 Viarre Régis
+ *   email                : crowkait@phpboost.com
+ *
+ *
+###################################################
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+###################################################*/
+
+require_once('../includes/admin_begin.php');
+define('TITLE', $LANG['administration']);
+require_once('../includes/admin_header.php');
+include_once('../lang/' . $CONFIG['lang'] . '/stats.php'); //Chargement de la langue.
+
+$template->set_filenames(array(
+	'admin_stats_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_stats_management.tpl'
+));
+
+$visit = !empty($_GET['visit']) ? true : false;
+$visit_year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
+$pages = !empty($_GET['pages']) ? true : false;
+$pages_year = !empty($_GET['pages_year']) ? numeric($_GET['pages_year']) : '';
+$members = !empty($_GET['members']) ? true : false;
+$referer = !empty($_GET['referer']) ? true : false;
+$keyword = !empty($_GET['keyword']) ? true : false;
+$browser = !empty($_GET['browser']) ? true : false;
+$os = !empty($_GET['os']) ? true : false;
+$all = !empty($_GET['all']) ? true : false;
+$user_lang = !empty($_GET['lang']) ? true : false;
+$bot = !empty($_GET['bot']) ? true : false;
+
+if( !empty($_POST['erase']) ) //Suppression de robots.txt
+	delete_file('../cache/robots.txt'); //On supprime le fichier.
+
+$template->assign_vars(array(
+	'L_SITE' => $LANG['site'],
+	'L_STATS' => $LANG['stats'],
+	'L_MEMBERS' => $LANG['member_s'],
+	'L_VISITS' => $LANG['guest_s'],
+	'L_PAGES' => $LANG['page_s'],
+	'L_BROWSERS' => $LANG['browser_s'],
+	'L_OS' => $LANG['os'],
+	'L_LANG' => $LANG['stat_lang'],
+	'L_KEYWORD' => $LANG['keyword_s'],
+	'L_REFERER' => $LANG['referer_s'],
+	'L_ROBOTS' => $LANG['robots']
+));
+
+if( !empty($members) )
+{
+	$last_user = $sql->query_array('member', 'user_id', 'login', "ORDER BY user_id DESC " . $sql->sql_limit(0, 1), __LINE__, __FILE__);
+	$nbr_member = $sql->count_table('member', __LINE__, __FILE__);
+	
+	$template->assign_vars(array(
+		'MODULE_DATA_PATH' => $template->module_data_path('stats'),
+		'L_LAST_MEMBER' => $LANG['last_member'],
+		'L_TEMPLATES' => $LANG['theme_s'],
+		'L_PSEUDO' => $LANG['pseudo'],
+		'L_MSG' => $LANG['message_s'],
+		'L_TOP_TEN_POSTERS' => $LANG['top_10_posters'],
+		'L_COLORS' => $LANG['colors'],
+		'L_MEMBERS' => $LANG['member_s'],
+		'L_SEX' => $LANG['sex']
+	));
+	
+	$template->assign_block_vars('members', array(
+		'LAST_USER' => $last_user['login'],
+		'U_LAST_USER_ID' => transid('.php?id=' . $last_user['user_id'], '-' . $last_user['user_id'] . '.php'),
+		'MEMBERS' => $nbr_member,
+		'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="../includes/display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
+		'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="../includes/display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />'
+	));
+	
+	$stats_array = array();
+	$result = $sql->query_while("SELECT at.theme, COUNT( m.user_theme ) AS compt
+	FROM ".PREFIX."themes at
+	LEFT JOIN ".PREFIX."member m ON m.user_theme = at.theme
+	GROUP BY at.theme
+	ORDER BY compt DESC", __LINE__, __FILE__);
+	while($row = $sql->sql_fetch_assoc($result))
+	{
+		$info_theme = @parse_ini_file('../templates/' . $row['theme'] . '/config/' . $CONFIG['lang'] . '/config.ini');
+		$name = isset($info_theme['name']) ? $info_theme['name'] : $row['theme'];
+		$stats_array[$name] = $row['compt'];
+	}	
+	$sql->close($result);
+	include_once('../includes/stats.class.php');
+	$stats = new Stats();
+		
+	$stats->load_statsdata($stats_array, 'ellipse');
+	foreach($stats->data_stats as $name => $angle_value)
+	{
+		$array_color = $stats->array_allocated_color[$stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+		$template->assign_block_vars('members.templates', array(
+			'NBR_THEME' => number_round(($angle_value*$stats->nbr_entry)/360, 0),
+			'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
+			'THEME' => ($name == 'Other') ? $LANG['other'] : $name,
+			'PERCENT' => number_round(($angle_value/3.6), 1)
+		));
+	}
+	
+	$stats_array = array();
+	$result = $sql->query_while("SELECT count(user_sex) as compt, user_sex
+	FROM ".PREFIX."member
+	GROUP BY user_sex
+	ORDER BY compt", __LINE__, __FILE__);
+	while($row = $sql->sql_fetch_assoc($result))
+	{
+		switch($row['user_sex'])
+		{
+			case 0:
+			$name = $LANG['unknow'];
+			break;
+			case 1:
+			$name = $LANG['male'];
+			break;
+			case 2:
+			$name = $LANG['female'];
+			break;
+		}
+		$stats_array[$name] = $row['compt'];
+	}	
+	$sql->close($result);
+	
+	$stats->color_index = 0;	
+	$stats->load_statsdata($stats_array, 'ellipse');
+	foreach($stats->data_stats as $name => $angle_value)
+	{
+		$array_color = $stats->array_allocated_color[$stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+		$template->assign_block_vars('members.sex', array(
+			'NBR_MBR' => number_round(($angle_value*$stats->nbr_entry)/360, 0),
+			'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
+			'SEX' => ($name == 'Other') ? $LANG['other'] : $name,
+			'PERCENT' => number_round(($angle_value/3.6), 1)
+		));
+	}
+	
+	$i = 1;		
+	$result = $sql->query_while("SELECT user_id, login, user_msg 
+	FROM ".PREFIX."member 
+	ORDER BY user_msg DESC 
+	" . $sql->sql_limit(0, 10), __LINE__, __FILE__);
+	while($row = $sql->sql_fetch_assoc($result))
+	{
+		$template->assign_block_vars('members.top_poster', array(
+			'ID' => $i,
+			'U_MEMBER_ID' => transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'LOGIN' => $row['login'],
+			'USER_POST' => $row['user_msg']
+		));
+		
+		$i++;
+	}
+	$sql->close($result);
+}
+elseif( $visit || $visit_year ) //Visites par jour classées par mois.
+{
+	//On affiche les visiteurs totaux et du jour
+	$compteur = $sql->query_array('compteur', 'ip AS nbr_ip', 'total', "WHERE id = 1", __LINE__, __FILE__);
+	$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
+	$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
+	
+	$template->assign_vars(array(
+		'MODULE_DATA_PATH' => $template->module_data_path('stats'),
+		'L_TODAY' => $LANG['today'],
+		'L_TOTAL' => $LANG['total'],
+		'L_AVERAGE' => $LANG['average'],
+		'L_VISITORS' => $LANG['guest_s'] . ':',
+		'L_VISITS_DAY' => $LANG['guest_s'],
+		'L_DAY' => $LANG['date'],
+		'L_MONTH' => $LANG['month'],
+		'L_SUBMIT' => $LANG['submit']		
+	));	
+	
+	$time = gmdate_format('Ym');
+	$current_year = substr($time, 0, 4);
+	$current_month = substr($time, 4, 2);
+	
+	$month = !empty($_GET['m']) ? numeric($_GET['m']) : (int) $current_month;
+	$year = !empty($_GET['y']) ? numeric($_GET['y']) : $current_year;
+	if( $visit_year )
+		$year = $visit_year;
+	
+	//Gestion des mois pour s'adapter au array défini dans lang/main.php
+	$array_l_months = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'], 
+	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
+
+	if( !empty($visit_year) ) //Visites par mois classées par ans.
+	{
+		//Années précédente et suivante
+		$next_year = $visit_year + 1;
+		$previous_year = $visit_year - 1;
+
+		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+		$info = $sql->query_array('stats', 'MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $visit_year . "' GROUP BY stats_month", __LINE__, __FILE__);
+
+		$template->assign_block_vars('visit', array(
+			'TYPE' => 'visit',
+			'VISIT_TOTAL' => $compteur_total,
+			'VISIT_DAY' => $compteur_day,
+			'YEAR' => $visit_year,
+			'COLSPAN' => 14,
+			'SUM_NBR' => $info['sum_month'],
+			'MAX_NBR' => $info['max_month'],
+			'MOY_NBR' => !empty($info['nbr_month']) ? number_round($info['sum_month']/$info['nbr_month'], 1) : 1,
+			'U_NEXT_LINK' =>  transid('.php?year=' . $next_year),
+			'U_PREVIOUS_LINK' => transid('.php?year=' . $previous_year)
+		));
+
+		//Année maximale
+		$info_year = $sql->query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+		$years = '';
+		for($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
+		{
+			$selected = ($i == $year) ? ' selected="selected"' : '';
+			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
+		}
+		$template->assign_block_vars('visit.years', array(
+			'YEAR' => $years 
+		));
+		
+		if( @extension_loaded('gd') )
+		{
+			$template->assign_vars(array(
+				'GRAPH_RESULT' => '<img src="../includes/display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="" />'
+			));
+			
+			//On fait la liste des visites journalières
+			$result = $sql->query_while("SELECT stats_month, SUM(nbr) AS total 
+			FROM ".PREFIX."stats 
+			WHERE stats_year = '" . $visit_year . "' 
+			GROUP BY stats_month", __LINE__, __FILE__);
+			while($row = $sql->sql_fetch_assoc($result))
+			{	
+				//On affiche les stats numériquement dans un tableau en dessous
+				$template->assign_block_vars('visit.value', array(
+					'U_DETAILS' => '<a href="admin_stats' . transid('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
+					'NBR' => $row['total']
+				));
+			}
+			$sql->close($result);
+		}
+		else
+		{
+			$result = $sql->query_while("SELECT SUM(nbr) AS total 
+			FROM ".PREFIX."stats 
+			WHERE stats_year = '" . $visit_year . "' 
+			GROUP BY stats_month", __LINE__, __FILE__);
+			$max_month = 1;
+			while($row = $sql->sql_fetch_assoc($result) )
+			{
+				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
+			}			
+				
+			$template->assign_block_vars('visit.no_gd', array(
+			));
+			
+			$i = 1; 
+			$last_month = 1;
+			$months_not_empty = array();
+			$result = $sql->query_while("SELECT stats_month, SUM(nbr) AS total 
+			FROM ".PREFIX."stats 
+			WHERE stats_year = '" . $visit_year . "' 
+			GROUP BY stats_month", __LINE__, __FILE__);
+			while($row = $sql->sql_fetch_assoc($result))
+			{	
+				$diff = 0;
+				if( $row['stats_month'] != $i )
+				{
+					$diff = $row['stats_month'] - $i;
+					for($j = 0; $j < $diff; $j++)
+					{
+						$template->assign_block_vars('visit.no_gd.values', array(
+							'HEIGHT' => 0
+						));
+					}
+				}
+				
+				$i += $diff;
+				
+				//On a des stats pour ce mois-ci, on l'enregistre
+				array_push($months_not_empty, $row['stats_month']);
+				
+				//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
+				$height = $row['total'] / $max_month * 200;
+				
+				$template->assign_block_vars('visit.no_gd.values', array(
+					'HEIGHT' => ceil($height)
+				));
+
+				$template->assign_block_vars('visit.no_gd.values.head', array(
+				));
+					
+				//On affiche les stats numériquement dans un tableau en dessous
+				$template->assign_block_vars('visit.value', array(
+					'U_DETAILS' => '<a href="admin_stats' . transid('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
+					'NBR' => $row['total']
+				));
+				
+				$last_month = $row['stats_month'];
+				$i++;
+			}
+			$sql->close($result);
+
+			//Génération des td manquants.
+			$date_day = isset($date_day) ? $date_day : 1;
+			for	($i = $last_month; $i < 12; $i++)
+			{
+				$template->assign_block_vars('visit.no_gd.end_td', array(
+					'END_TD' => '<td style="width:13px;">&nbsp;</td>'
+				));
+			}
+			//On liste les jours en dessous du graphique
+			$i = 1;
+			foreach($array_l_months as $value)
+			{
+				$template->assign_block_vars('visit.no_gd.legend', array(
+					'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="admin_stats' . transid('.php?m=' . $i . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
+				));
+				$i++;
+			}
+		}
+	}
+	else
+	{
+		//Nombre de jours pour chaque mois (gestion des années bissextiles)
+		$bissextile = (($year % 4) == 0) ? 29 : 28;
+		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
+				
+		//Mois précédent et suivant
+		$next_month = ($month < 12) ? $month + 1 : 1;
+		$next_year = ($month < 12) ? $year : $year + 1;
+		$previous_month = ($month > 1) ? $month - 1 : 12;
+		$previous_year = ($month > 1) ? $year : $year - 1;		
+		
+		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+		$info = $sql->query_array('stats', 'MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr', "WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' GROUP BY stats_month", __LINE__, __FILE__);
+			
+		$template->assign_block_vars('visit', array(
+			'TYPE' => 'visit',
+			'VISIT_TOTAL' => $compteur_total,
+			'VISIT_DAY' => $compteur_day,
+			'COLSPAN' => $array_month[$month-1] + 2,
+			'SUM_NBR' => !empty($info['sum_nbr']) ? $info['sum_nbr'] : 0,
+			'MONTH' => $array_l_months[$month - 1],
+			'MAX_NBR' => $info['max_nbr'],
+			'MOY_NBR' => number_round($info['avg_nbr'], 1),
+			'U_NEXT_LINK' => transid('.php?m=' . $next_month . '&amp;y=' . $next_year . '&amp;visit=1', '-visit.php?m=' . $next_month . '&amp;y=' . $next_year),
+			'U_PREVIOUS_LINK' => transid('.php?m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;visit=1', '-visit.php?m=' . $previous_month . '&amp;y=' . $previous_year),
+			'U_YEAR' => '<a href="admin_stats' . transid('.php?year=' . $year) . '#stats">' . $year . '</a>',
+			'U_VISITS_MORE' => '<a href="admin_stats' . transid('.php?year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
+		));
+		
+		$months = '';
+		for($i = 1; $i <= 12; $i++)
+		{
+			$selected = ($i == $month) ? ' selected="selected"' : '';
+			$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
+		}
+		$template->assign_block_vars('visit.months', array(
+			'MONTH' => $months 
+		));
+		
+		//Année maximale
+		$info_year = $sql->query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+		$years = '';
+		for($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
+		{
+			$selected = ($i == $year) ? ' selected="selected"' : '';
+			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
+		}
+		$template->assign_block_vars('visit.years', array(
+			'YEAR' => $years 
+		));
+		
+		if( @extension_loaded('gd') )
+		{
+			$template->assign_vars(array(
+				'GRAPH_RESULT' => '<img src="../includes/display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
+			));
+			
+			//On fait la liste des visites journalières
+			$result = $sql->query_while("SELECT nbr, stats_day AS day 
+			FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
+			ORDER BY stats_day", __LINE__, __FILE__);
+			while($row = $sql->sql_fetch_assoc($result))
+			{	
+				$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
+				
+				//On affiche les stats numériquement dans un tableau en dessous
+				$template->assign_block_vars('visit.value', array(
+					'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
+					'NBR' => $row['nbr']
+				));
+			}
+			$sql->close($result);
+		}
+		else
+		{
+			//Mois selectionné.
+			if( !empty($month) && !empty($year) )
+			{				
+				$template->assign_block_vars('visit.no_gd', array(
+				));
+				
+				//On rajoute un 0 devant tous les mois plus petits que 10
+				$month = ($month < 10) ? '0' . $month : $month;
+				unset($i);
+				
+				//On fait la liste des visites journalières
+				$j = 0;
+				$result = $sql->query_while("SELECT nbr, stats_day AS day 
+				FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
+				ORDER BY stats_day", __LINE__, __FILE__);
+				while($row = $sql->sql_fetch_assoc($result))
+				{	
+					//Complétion des jours précédent le premier enregistrement du mois.
+					if( $j == 0 )
+					{
+						for($z = 1; $z < $row['day']; $z++)
+						{
+							$template->assign_block_vars('visit.no_gd.values', array(
+								'HEIGHT' => 0
+							));
+						}
+						$j++;
+					}
+					//Remplissage des trous possibles entre les enregistrements.
+					$i = !isset($i) ? $row['day'] : $i;
+					$diff = 0;
+					if( $row['day'] != $i )
+					{
+						$diff = $row['day'] - $i;
+						for($j = 0; $j < $diff; $j++)
+						{
+							$template->assign_block_vars('visit.no_gd.values', array(
+								'HEIGHT' => 0
+							));
+						}
+					}
+					$i += $diff;
+					
+					//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
+					$height = ($row['nbr'] / $info['max_nbr']) * 200;
+					
+					$template->assign_block_vars('visit.no_gd.values', array(
+						'HEIGHT' => ceil($height)
+					));
+					
+					$template->assign_block_vars('visit.no_gd.values.head', array(
+					));
+						
+					$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
+						
+					//On affiche les stats numériquement dans un tableau en dessous
+					$template->assign_block_vars('visit.value', array(
+						'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
+						'NBR' => $row['nbr']
+					));
+
+					$i++;
+				}
+				$sql->close($result);
+				
+				//Génération des td manquants.
+				$date_day = isset($date_day) ? $date_day : 1;
+				for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
+				{
+					$template->assign_block_vars('visit.no_gd.days', array(
+						'END_TD' => '<td style="width:13px;">&nbsp;</td>'
+					));
+				}
+				
+				//On liste les jours en dessous du graphique
+				for($i = 1; $i <= $array_month[$month - 1]; $i++)
+				{
+					$template->assign_block_vars('visit.no_gd.legend', array(
+						'LEGEND' => $i
+					));
+				}			
+			}
+		}
+	}
+}
+elseif( $pages || $pages_year ) //Pages par jour classées par mois.
+{
+	$time = gmdate_format('Ymj');
+	$current_year = substr($time, 0, 4);
+	$current_month = substr($time, 4, 2);
+	$current_day = substr($time, 6, 2);
+
+	$day = !empty($_GET['d']) ? numeric($_GET['d']) : (int) $current_day;
+	$month = !empty($_GET['m']) ? numeric($_GET['m']) : (int) $current_month;
+	if( $pages_year )
+	{
+		$clause = '';
+		$year = $pages_year;
+	}	
+	elseif( isset($_GET['d']) )
+	{
+		$clause = "AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'";
+		$year = !empty($_GET['y']) ? numeric($_GET['y']) : $current_year;
+	}	
+	else
+	{
+		$clause = "AND stats_month = '" . $month . "'";
+		$year = !empty($_GET['y']) ? numeric($_GET['y']) : $current_year;
+	}	
+	
+	//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+	$info = $sql->query_array('stats', 'MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages', "WHERE stats_year = '" . $year . "'" . $clause . " AND pages_detail <> '' GROUP BY stats_month", __LINE__, __FILE__);
+
+	//On affiche les visiteurs totaux et du jour
+	$compteur_total = $sql->query("SELECT SUM(pages) FROM ".PREFIX."stats", __LINE__, __FILE__);
+	$compteur_day = array_sum(pages_displayed(NO_UPDATE_PAGES)) + 1;
+	$compteur_total = $compteur_total + $compteur_day;
+	$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
+	
+	$template->assign_vars(array(
+		'MODULE_DATA_PATH' => $template->module_data_path('stats'),
+		'L_TODAY' => $LANG['today'],
+		'L_TOTAL' => $LANG['total'],
+		'L_AVERAGE' => $LANG['average'],
+		'L_VISITORS' => $LANG['page_s'] . ':',
+		'L_VISITS_DAY' => $LANG['page_s'],
+		'L_DAY' => $LANG['date'],
+		'L_MONTH' => $LANG['month'],
+		'L_SUBMIT' => $LANG['submit']		
+	));	
+
+	//Gestion des mois pour s'adapter au array défini dans lang/main.php
+	$array_l_months = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'], 
+	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
+
+	if( !empty($pages_year) ) //Visites par mois classées par ans.
+	{
+		//Années précédente et suivante
+		$next_year = $pages_year + 1;
+		$previous_year = $pages_year - 1;
+			
+		$template->assign_block_vars('visit', array(
+			'TYPE' => 'pages',
+			'VISIT_TOTAL' => $compteur_total,
+			'VISIT_DAY' => $compteur_day,
+			'YEAR' => $pages_year,
+			'COLSPAN' => 13,
+			'SUM_NBR' => $info['sum_nbr'],
+			'MAX_NBR' => $info['max_nbr'],
+			'MOY_NBR' => !empty($info['nbr_month']) ? number_round($info['sum_nbr']/$info['nbr_month'], 1) : 0,
+			'U_NEXT_LINK' =>  transid('.php?pages_year=' . $next_year),
+			'U_PREVIOUS_LINK' => transid('.php?pages_year=' . $previous_year)
+		));
+
+		//Année maximale
+		$info_year = $sql->query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+		$years = '';
+		for($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
+		{
+			$selected = ($i == $year) ? ' selected="selected"' : '';
+			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
+		}
+		$template->assign_block_vars('visit.years', array(
+			'YEAR' => $years 
+		));
+		
+		if( @extension_loaded('gd') )
+		{
+			$template->assign_vars(array(
+				'GRAPH_RESULT' => '<img src="../includes/display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
+			));
+			
+			//On fait la liste des visites journalières
+			$result = $sql->query_while("SELECT stats_month, SUM(pages) AS total 
+			FROM ".PREFIX."stats 
+			WHERE stats_year = '" . $pages_year . "' 
+			GROUP BY stats_month", __LINE__, __FILE__);
+			while($row = $sql->sql_fetch_assoc($result))
+			{	
+				//On affiche les stats numériquement dans un tableau en dessous
+				$template->assign_block_vars('visit.value', array(
+					'U_DETAILS' => '<a href="admin_stats' . transid('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
+					'NBR' => $row['total']
+				));
+			}
+			$sql->close($result);
+		}
+		else
+		{
+			$result = $sql->query_while("SELECT SUM(nbr) AS total 
+			FROM ".PREFIX."stats 
+			WHERE stats_year = '" . $visit_year . "' 
+			GROUP BY stats_month", __LINE__, __FILE__);
+			$max_month = 1;
+			while($row = $sql->sql_fetch_assoc($result) )
+			{
+				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
+			}
+						
+			$template->assign_block_vars('visit.no_gd', array(
+			));
+			
+			$i = 1; 
+			$last_month = 1;
+			$months_not_empty = array();			
+			$result = $sql->query_while("SELECT stats_month, SUM(pages) AS total 
+			FROM ".PREFIX."stats 
+			WHERE stats_year = '" . $pages_year . "' 
+			GROUP BY stats_month", __LINE__, __FILE__);
+			while($row = $sql->sql_fetch_assoc($result))
+			{	
+				$diff = 0;
+				if( $row['stats_month'] != $i )
+				{
+					$diff = $row['stats_month'] - $i;
+					for($j = 0; $j < $diff; $j++)
+					{
+						$template->assign_block_vars('visit.no_gd.values', array(
+							'HEIGHT' => 0
+						));
+					}
+				}
+				
+				$i += $diff;
+				
+				//On a des stats pour ce mois-ci, on l'enregistre
+				array_push($months_not_empty, $row['stats_month']);
+				
+				//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
+				$height = $row['total'] / $info['max_month'] * 200;
+				
+				$template->assign_block_vars('visit.no_gd.months', array(
+					'HEIGHT' => ceil($height)
+				));
+
+				$template->assign_block_vars('visit.no_gd.values.head', array(
+				));
+				
+				//On affiche les stats numériquement dans un tableau en dessous
+				$template->assign_block_vars('visit.value', array(
+					'U_DETAILS' => '<a href="admin_stats' . transid('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
+					'NBR' => $row['total']
+				));
+				
+				$last_month = $row['stats_month'];
+				$i++;
+			}
+			$sql->close($result);
+
+			//Génération des td manquants.
+			$date_day = isset($date_day) ? $date_day : 1;
+			for	($i = $last_month; $i < 12; $i++)
+			{
+				$template->assign_block_vars('visit.no_gd.end_td', array(
+					'END_TD' => '<td style="width:13px;">&nbsp;</td>'
+				));
+			}
+			//On liste les jours en dessous du graphique
+			$i = 1;
+			foreach($array_l_months as $value)
+			{
+				$template->assign_block_vars('visit.no_gd.legend', array(
+					'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="admin_stats' . transid('.php?m=' . $i . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
+				));
+				$i++;
+			}
+		}
+	}
+	elseif( isset($_GET['d'])  )
+	{
+		//Nombre de jours pour chaque mois (gestion des années bissextiles)
+		$bissextile = (($year % 4) == 0) ? 29 : 28;
+		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
+		
+		//Mois précédent et suivant
+		$check_day = $day < $array_month[$month-1];
+		$next_day = $check_day ? $day + 1 : 1;
+		$next_month = ($check_day && $month < 12) ? $month + 1 : $month;
+		$next_year = ($month < 12) ? $year : $year + 1;
+		$previous_day = ($day > 1) ? $day - 1 : $array_month[$month-1];
+		$previous_month = ($month > 1) ? ($day == 1 ? $month - 1 : $month) : 12;
+		$previous_year = ($month > 1) ? $year : $year - 1;	
+
+		$template->assign_block_vars('visit', array(
+			'TYPE' => 'pages',
+			'VISIT_TOTAL' => $compteur_total,
+			'VISIT_DAY' => $compteur_day,
+			'SUM_NBR' => !empty($info['pages']) ? $info['pages'] : 0,
+			'MONTH' => $array_l_months[$month - 1],
+			'MAX_NBR' => $info['max_nbr'],
+			'MOY_NBR' => number_round($info['pages']/24, 1),
+			'U_NEXT_LINK' => transid('.php?d=' . $next_day . '&amp;m=' . $next_month . '&amp;y=' . $next_year . '&amp;pages=1'),
+			'U_PREVIOUS_LINK' => transid('.php?d=' . $previous_day . '&amp;m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1'),
+			'U_YEAR' => '<a href="admin_stats' . transid('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
+			'U_VISITS_MORE' => '<a href="admin_stats' . transid('.php?pages_year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
+		));
+		
+		$days = '';
+		for($i = 1; $i <= $array_month[$month-1]; $i++)
+		{
+			$selected = ($i == $day) ? ' selected="selected"' : '';
+			$days .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
+		}
+		$template->assign_block_vars('visit.days', array(
+			'DAY' => $days 
+		));
+		
+		$months = '';
+		for($i = 1; $i <= 12; $i++)
+		{
+			$selected = ($i == $month) ? ' selected="selected"' : '';
+			$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
+		}
+		$template->assign_block_vars('visit.months', array(
+			'MONTH' => $months 
+		));
+		
+		//Année maximale
+		$info_year = $sql->query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+		$years = '';
+		for($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
+		{
+			$selected = ($i == $year) ? ' selected="selected"' : '';
+			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
+		}
+		$template->assign_block_vars('visit.years', array(
+			'YEAR' => $years 
+		));
+		
+		$template->assign_vars(array(
+			'GRAPH_RESULT' => '<img src="../includes/display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="" />'
+		));
+		
+		//On fait la liste des visites journalières
+		$result = $sql->query_while("SELECT pages, stats_day, stats_month, stats_year
+		FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
+		ORDER BY stats_day", __LINE__, __FILE__);
+		while($row = $sql->sql_fetch_assoc($result))
+		{	
+			$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
+			
+			//On affiche les stats numériquement dans un tableau en dessous
+			$template->assign_block_vars('visit.value', array(
+				'U_DETAILS' => '<a href="admin_stats' . transid('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1') . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
+				'NBR' => $row['pages']
+			));
+		}
+		$sql->close($result);
+	}
+	else
+	{
+		//Nombre de jours pour chaque mois (gestion des années bissextiles)
+		$bissextile = (($year % 4) == 0) ? 29 : 28;
+		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
+				
+		//Mois précédent et suivant
+		$next_month = ($month < 12) ? $month + 1 : 1;
+		$next_year = ($month < 12) ? $year : $year + 1;
+		$previous_month = ($month > 1) ? $month - 1 : 12;
+		$previous_year = ($month > 1) ? $year : $year - 1;		
+		
+		$template->assign_block_vars('visit', array(
+			'TYPE' => 'pages',
+			'VISIT_TOTAL' => $compteur_total,
+			'VISIT_DAY' => $compteur_day,
+			'COLSPAN' => $array_month[$month-1] + 2,
+			'SUM_NBR' => !empty($info['sum_nbr']) ? $info['sum_nbr'] : 0,
+			'MONTH' => $array_l_months[$month - 1],
+			'MAX_NBR' => $info['max_nbr'],
+			'MOY_NBR' => number_round($info['avg_nbr'], 1),
+			'U_NEXT_LINK' => transid('.php?m=' . $next_month . '&amp;y=' . $next_year . '&amp;pages=1'),
+			'U_PREVIOUS_LINK' => transid('.php?m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1'),
+			'U_YEAR' => '<a href="admin_stats' . transid('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
+			'U_VISITS_MORE' => '<a href="admin_stats' . transid('.php?pages_year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
+		));
+		
+		$months = '';
+		for($i = 1; $i <= 12; $i++)
+		{
+			$selected = ($i == $month) ? ' selected="selected"' : '';
+			$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
+		}
+		$template->assign_block_vars('visit.months', array(
+			'MONTH' => $months 
+		));
+		
+		//Année maximale
+		$info_year = $sql->query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+		$years = '';
+		for($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
+		{
+			$selected = ($i == $year) ? ' selected="selected"' : '';
+			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
+		}
+		$template->assign_block_vars('visit.years', array(
+			'YEAR' => $years 
+		));
+		
+		if( @extension_loaded('gd') )
+		{
+			$template->assign_vars(array(
+				'GRAPH_RESULT' => '<img src="../includes/display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
+			));
+			
+			//On fait la liste des visites journalières
+			$result = $sql->query_while("SELECT pages, stats_day, stats_month, stats_year
+			FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
+			ORDER BY stats_day", __LINE__, __FILE__);
+			while($row = $sql->sql_fetch_assoc($result))
+			{	
+				$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
+				
+				//On affiche les stats numériquement dans un tableau en dessous
+				$template->assign_block_vars('visit.value', array(
+					'U_DETAILS' => '<a href="admin_stats' . transid('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1') . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
+					'NBR' => $row['pages']
+				));
+			}
+			$sql->close($result);
+		}
+		else
+		{
+			//Mois selectionné.
+			if( !empty($month) && !empty($year) )
+			{				
+				$template->assign_block_vars('visit.no_gd', array(
+				));
+				
+				//On rajoute un 0 devant tous les mois plus petits que 10
+				$month = ($month < 10) ? '0' . $month : $month;
+				unset($i);
+				
+				//On fait la liste des visites journalières
+				$j = 0;
+				$result = $sql->query_while("SELECT pages, stats_day AS day, stats_month, stats_year 
+				FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
+				ORDER BY stats_day", __LINE__, __FILE__);
+				while($row = $sql->sql_fetch_assoc($result))
+				{	
+					//Complétion des jours précédent le premier enregistrement du mois.
+					if( $j == 0 )
+					{
+						for($z = 1; $z < $row['day']; $z++)
+						{
+							$template->assign_block_vars('visit.no_gd.days', array(
+								'HEIGHT' => 0
+							));
+						}
+						$j++;
+					}
+					//Remplissage des trous possibles entre les enregistrements.
+					$i = !isset($i) ? $row['day'] : $i;
+					$diff = 0;
+					if( $row['day'] != $i )
+					{
+						$diff = $row['day'] - $i;
+						for($j = 0; $j < $diff; $j++)
+						{
+							$template->assign_block_vars('visit.no_gd.days', array(
+								'HEIGHT' => 0
+							));
+						}
+					}
+					$i += $diff;
+					
+					//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
+					$height = ($row['pages'] / $info['max_nbr']) * 200;
+					
+					$template->assign_block_vars('visit.no_gd.values', array(
+						'HEIGHT' => ceil($height)
+					));
+					
+					$template->assign_block_vars('visit.no_gd.values.head', array(
+					));
+						
+					$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
+						
+					//On affiche les stats numériquement dans un tableau en dessous
+					$template->assign_block_vars('visit.value', array(
+						'U_DETAILS' => $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'],
+						'NBR' => $row['pages']
+					));
+
+					$i++;
+				}
+				$sql->close($result);
+				
+				//Génération des td manquants.
+				$date_day = isset($date_day) ? $date_day : 1;
+				for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
+				{
+					$template->assign_block_vars('visit.no_gd.days', array(
+						'END_TD' => '<td style="width:13px;">&nbsp;</td>'
+					));
+				}
+				
+				//On liste les jours en dessous du graphique
+				for($i = 1; $i <= $array_month[$month - 1]; $i++)
+				{
+					$template->assign_block_vars('visit.no_gd.legend', array(
+						'LEGEND' => $i
+					));
+				}			
+			}
+		}
+	}
+}
+elseif( !empty($referer) )
+{
+	$template->assign_block_vars('referer', array(
+	));
+	
+	include_once('../includes/pagination.class.php'); 
+	$pagination = new Pagination();
+	
+	$nbr_referer = $sql->query("SELECT COUNT(DISTINCT(url)) FROM ".PREFIX."stats_referer WHERE type = 0", __LINE__, __FILE__);
+	$result = $sql->query_while("SELECT id, count(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
+	FROM ".PREFIX."stats_referer
+	WHERE type = 0
+	GROUP BY url
+	ORDER BY total_visit DESC
+	" . $sql->sql_limit($pagination->first_msg(15, 'p'), 15), __LINE__, __FILE__);
+	while($row = $sql->sql_fetch_assoc($result))
+	{	
+		$average = ($row['total_visit'] / $row['nbr_day']);
+		if( $row['yesterday_visit'] > $average )
+		{
+			$trend_img = 'up.png';
+			$sign = '+';
+			$trend = number_round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
+		}
+		elseif( $row['yesterday_visit'] < $average )
+		{
+			$trend_img = 'down.png';
+			$sign = '-';
+			$trend = 100 - number_round((($row['yesterday_visit'] * 100) / $average), 1);
+		}
+		else
+		{	
+			$trend_img = 'right.png';
+			$sign = '+';
+			$trend = 0;
+		}
+			
+		$template->assign_block_vars('referer.referer_list', array(
+			'ID' => $row['id'],
+			'URL' => $row['url'],
+			'IMG_MORE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
+			'NBR_LINKS' => $row['count'],
+			'TOTAL_VISIT' => $row['total_visit'],
+			'AVERAGE_VISIT' => number_round($average, 1),
+			'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
+			'TREND' => '<img src="../templates/' . $CONFIG['theme'] . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
+		));
+	}
+	$sql->close($result);
+	
+	$template->assign_vars(array(
+		'PAGINATION' => $pagination->show_pagin('admin_stats' . transid('.php?referer=1&amp;p=%d'), $nbr_referer, 'p', 15, 3),
+		'L_URL' => $LANG['url'],
+		'L_TOTAL_VISIT' => $LANG['total_visit'],
+		'L_AVERAGE_VISIT' => $LANG['average_visit'],
+		'L_TREND' => $LANG['trend'],
+		'L_LAST_UPDATE' => $LANG['last_update'],
+	));
+}
+elseif( !empty($keyword) )
+{
+	$template->assign_block_vars('keyword', array(
+	));
+	
+	include_once('../includes/pagination.class.php'); 
+	$pagination = new Pagination();
+	
+	$nbr_keyword = $sql->query("SELECT COUNT(DISTINCT(relative_url)) FROM ".PREFIX."stats_referer WHERE type = 1", __LINE__, __FILE__);
+	$result = $sql->query_while("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
+	FROM ".PREFIX."stats_referer
+	WHERE type = 1
+	GROUP BY relative_url
+	ORDER BY total_visit DESC
+	" . $sql->sql_limit($pagination->first_msg(15, 'p'), 15), __LINE__, __FILE__);
+	while($row = $sql->sql_fetch_assoc($result))
+	{	
+		$average = ($row['total_visit'] / $row['nbr_day']);
+		if( $row['yesterday_visit'] > $average )
+		{
+			$trend_img = 'up.png';
+			$sign = '+';
+			$trend = number_round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
+		}
+		elseif( $row['yesterday_visit'] < $average )
+		{
+			$trend_img = 'down.png';
+			$sign = '-';
+			$trend = 100 - number_round((($row['yesterday_visit'] * 100) / $average), 1);
+		}
+		else
+		{	
+			$trend_img = 'right.png';
+			$sign = '+';
+			$trend = 0;
+		}
+			
+		$template->assign_block_vars('keyword.keyword_list', array(
+			'ID' => $row['id'],
+			'KEYWORD' => $row['relative_url'],
+			'IMG_MORE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
+			'NBR_LINKS' => $row['count'],
+			'TOTAL_VISIT' => $row['total_visit'],
+			'AVERAGE_VISIT' => number_round($average, 1),
+			'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
+			'TREND' => '<img src="../templates/' . $CONFIG['theme'] . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
+		));
+	}	
+	$sql->close($result);
+		
+	$template->assign_vars(array(
+		'PAGINATION' => $pagination->show_pagin('admin_stats' . transid('.php?keyword=1&amp;p=%d'), $nbr_keyword, 'p', 15, 3),
+		'L_SEARCH_ENGINE' => $LANG['keyword_s'],
+		'L_TOTAL_VISIT' => $LANG['total_visit'],
+		'L_AVERAGE_VISIT' => $LANG['average_visit'],
+		'L_TREND' => $LANG['trend'],
+		'L_LAST_UPDATE' => $LANG['last_update'],
+	));
+}
+elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques camenbert.
+{
+	include_once('../lang/' . $CONFIG['lang'] . '/stats.php');
+	
+	if( !empty($browser) )
+	{
+		$template->assign_vars(array(
+			'L_BROWSERS' => $LANG['browser_s']
+		));		
+		$array_stats_info = $stats_array_browsers;
+		$stats_menu = 'browsers';
+		$path = '../images/stats/browsers/';
+	}
+	elseif( !empty($os) )
+	{
+		$template->assign_vars(array(
+			'L_OS' => $LANG['os']
+		));		
+		$array_stats_info = $stats_array_os;
+		$stats_menu = 'os';		
+		$path = '../images/stats/os/';
+	}
+	elseif( !empty($user_lang) )
+	{	
+		$template->assign_vars(array(
+			'L_LANG' => $LANG['stat_lang']
+		));	
+		$array_stats_info = $stats_array_lang;
+		$stats_menu = 'lang';
+		$path = '../images/stats/countries/';
+	}
+	
+	//On lit le fichier
+	$file = @fopen('../cache/' . $stats_menu . '.txt', 'r');
+	$stats_array = @fgets($file);
+	$stats_array = !empty($stats_array) ? unserialize($stats_array) : array();
+	@fclose($file);
+	include_once('../includes/stats.class.php');
+	$stats = new Stats();
+		
+	$stats->load_statsdata($stats_array, 'ellipse', 5);
+	
+	$template->assign_block_vars($stats_menu, array(
+		'GRAPH_RESULT' => '<img src="../includes/display_stats.php?' . $stats_menu . '=1" alt="" />'
+	));
+	
+	//Tri décroissant.
+	arsort($stats->data_stats);
+	
+	//Traitement des données.
+	$array_stats_tmp = array();
+	$array_order = array();
+	$percent_other = 0;
+	foreach($stats->data_stats as $value_name => $angle_value)
+	{
+		if( !isset($array_stats_info[$value_name]) || $value_name == 'other' ) //Autres, on additionne le tout.
+		{	
+			$value_name = 'other';
+			$angle_value += $percent_other;
+			$percent_other += $angle_value;
+			$stats_img = '<img src="../templates/' . $CONFIG['theme'] . '/images/stats/other.png" alt="' . $LANG['other'] . '" />';
+			$name_stats = $LANG['other'];
+		}	
+		else
+		{
+			$stats_img = !empty($array_stats_info[$value_name][1]) ? '<img src="' . $path . $array_stats_info[$value_name][1] . '" alt="' . $array_stats_info[$value_name][0] . '" />' : '-';
+			$name_stats = $array_stats_info[$value_name][0];
+		}
+		
+		if( !isset($array_order[$value_name]) )
+		{
+			$array_color = $stats->array_allocated_color[$stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+			$array_stats_tmp[$value_name] = array($name_stats, $array_color, $stats_img);
+			$array_order[$value_name] = $angle_value;
+		}
+	}
+	
+	//Affichage.
+	foreach($array_order as $value_name => $angle_value)
+	{				
+		$template->assign_block_vars($stats_menu . '.' . $stats_menu . '_list', array(
+			'COLOR' => 'RGB(' . trim(implode(', ', $array_stats_tmp[$value_name][1]), ', ') . ')',
+			'IMG' => $array_stats_tmp[$value_name][2],
+			'L_NAME' => $array_stats_tmp[$value_name][0],
+			'PERCENT' => number_round(($angle_value/3.6), 1),
+		));
+	}
+}
+elseif( $bot )
+{
+	$template->assign_block_vars('robots', array(
+	));
+	
+	$template->assign_vars(array(		
+		'L_ERASE_RAPPORT' => $LANG['erase_rapport'],
+		'L_ERASE' => $LANG['erase'],
+		'L_COLORS' => $LANG['colors'],
+		'L_VIEW_NUMBER' => $LANG['number_r_visit'],
+		'L_LAST_UPDATE' => $LANG['last_update']
+	));
+
+	//On lit le fichier
+	$file = @fopen('../cache/robots.txt', 'r');
+	$robot_serial = @fgets($file);	
+	$array_robot = !empty($robot_serial) ? unserialize($robot_serial) : array('other' => 0);
+	$stats_array = array();
+	$array_date = array(0 => 0, 1 => 0, 2 => 0);
+	if( is_array($array_robot) )
+	{
+		foreach($array_robot as $key => $value)
+		{
+			$array_info = explode('/', $value);			
+			if( isset($array_info[0]) && isset($array_info[1]) )
+			{	
+				$stats_array[$array_info[0]] = $array_info[1];
+				$array_date[$array_info[0]] = array(substr($array_info[2], 2, 2), substr($array_info[2], 4, 2), substr($array_info[2], 6, 2));
+			}
+		}
+	}
+
+	include_once('../includes/stats.class.php');
+	$stats = new Stats();
+		
+	$stats->load_statsdata($stats_array, 'ellipse');
+
+	$stats_info = array('Google bot' => 'google.gif', 'Yahoo Slurp' => 'yahoo.gif', 'Msn bot' => 'msn.gif', 'Voila' => 'voila.gif', 'Gigablast' => 'gigablast.gif', 'Ia archiver' => 'ia_archiver.gif', 'Exalead' => 'exalead.gif');
+
+	foreach($stats->data_stats as $key => $angle_value)
+	{
+		if( isset($stats_info[$key]) )
+		{ 
+			$array_color = $stats->array_allocated_color[$stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+			$name = ucfirst(str_replace(array('_', '.gif'), array(' ', ' '), $stats_info[$key]));
+			$template->assign_block_vars('robots.list', array(
+				'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
+				'IMG' => !empty($stats_info[$key]) ? '<img src="../images/stats/bot/' . $stats_info[$key] . '" alt="' . $name . '" />' : '',
+				'VIEWS' => number_round(($angle_value * $stats->nbr_entry)/360, 0),
+				'PERCENT' => number_round(($angle_value/3.6), 1),
+				'DATE' => gmdate_format('date_format_short', mktime(0, 0, 0, $array_date[$key][1], $array_date[$key][2], $array_date[$key][0])),
+				'L_NAME' => ($name == 'Other') ? $LANG['other'] : $name
+			));
+		}
+	}	
+}
+else
+{
+	$template->assign_vars(array(
+		'MODULE_DATA_PATH' => $template->module_data_path('stats'),
+		'L_START' => $LANG['start'],
+		'L_VERSION' => $LANG['version']
+	));
+	
+	$template->assign_block_vars('site', array(
+		'START' => gmdate_format('date_format_short', $CONFIG['start']),
+		'VERSION' => $CONFIG['version']
+	));
+}
+
+
+$template->pparse('admin_stats_management');
+
+require_once('../includes/admin_footer.php');
+
+?>

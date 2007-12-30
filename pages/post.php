@@ -1,0 +1,350 @@
+<?php
+/*##################################################
+*                               post.php
+*                            -------------------
+*   begin                : August 12, 2007
+*   copyright          : (C) 2007 Sautel Benoit
+*   email                : ben.popeye@phpboost.com
+*
+*
+###################################################
+*
+*   This program is free software; you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation; either version 2 of the License, or
+*   (at your option) any later version.
+* 
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*
+###################################################*/
+
+require_once('../includes/begin.php'); 
+require_once('../pages/pages_begin.php'); 
+include_once('pages_functions.php');
+
+$id_edit = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
+$id_edit_post = !empty($_POST['id_edit']) ? numeric($_POST['id_edit']) : 0;
+$id_edit = $id_edit > 0 ? $id_edit : $id_edit_post;
+$title = !empty($_POST['title']) ? securit($_POST['title']) : '';
+$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
+$count_hits = !empty($_POST['count_hits']) ? 1 : 0;
+$activ_com = !empty($_POST['activ_com']) ? 1 : 0;
+$own_auth = !empty($_POST['own_auth']) ? 1 : 0;
+$is_cat = !empty($_POST['is_cat']) ? 1 : 0;
+$id_cat = !empty($_POST['id_cat']) ? numeric($_POST['id_cat']) : 0;
+$preview = !empty($_POST['preview']) ? true : false;
+$del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+
+//Variable d'erreur
+$error = '';
+if( $id_edit > 0 )
+	define('TITLE', $LANG['pages_edition']);
+else
+	define('TITLE', $LANG['pages_creation']);
+	
+if( $id_edit > 0 )
+{
+	$page_infos = $sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+	speed_bar_generate($SPEED_BAR, TITLE, transid('post.php?id=' . $id_edit));
+	speed_bar_generate($SPEED_BAR, $page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+	$id = $page_infos['id_cat'];
+	while( $id > 0 )
+	{
+		speed_bar_generate($SPEED_BAR, $_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$id = (int)$_PAGES_CATS[$id]['id_parent'];
+	}
+	if( $groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
+		speed_bar_generate($SPEED_BAR, $LANG['pages'], transid('pages.php'));
+	$SPEED_BAR = array_reverse($SPEED_BAR);
+}
+else
+	speed_bar_generate($SPEED_BAR, $LANG['pages'], transid('pages.php'), TITLE, '');
+require_once('../includes/header.php');
+
+//On crée ou on édite une page
+if( !empty($contents) )
+{
+	if( $own_auth )
+	{
+		//Autorisations de la page -> reconstitution du tableau
+		$auth_create = isset($_POST['groups_auth1']) ? $_POST['groups_auth1'] : '';
+		$auth_edit = isset($_POST['groups_auth2']) ? $_POST['groups_auth2'] : '';
+		$auth_com = isset($_POST['groups_auth3']) ? $_POST['groups_auth3'] : '';
+		
+		//Génération du tableau des droits.
+		$array_auth_all = $groups->return_array_auth($auth_create, $auth_edit, $auth_com);
+		$page_auth = addslashes(serialize($array_auth_all));
+	}
+	else
+		$page_auth = '';
+	
+	//on ne prévisualise pas, donc on poste le message ou on l'édite
+	if( !$preview )
+	{
+		//Edition d'une page
+		if( $id_edit > 0 )
+		{
+			$page_infos = $sql->query_array('pages', 'id', 'title', 'contents', 'auth', 'encoded_title', 'is_cat', 'id_cat', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+			
+			//Autorisation particulière ?
+			$special_auth = !empty($page_infos['auth']);
+			$array_auth = unserialize($page_infos['auth']);
+			//Vérification de l'autorisation d'éditer la page
+			if( ($special_auth && !$groups->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+			{
+				header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
+				exit;
+			}
+			
+			//on vérifie que la catégorie ne s'insère pas dans un de ses filles
+			if( $page_infos['is_cat'] == 1 )
+			{
+				$sub_cats = array();
+				pages_find_subcats($sub_cats, $page_infos['id_cat']);
+				$sub_cats[] = $page_infos['id_cat'];
+				if( in_array($id_cat, $sub_cats) ) //Si l'ancienne catégorie ne contient pas la nouvelle (sinon boucle infinie)
+					$error = 'cat_contains_cat';
+			}
+			
+			//Articles (on édite l'entrée de l'article pour la catégorie donc aucun problème)
+			if( $page_infos['is_cat'] == 0 )
+			{		
+				//On met à jour la table
+				$sql->query_inject("UPDATE ".PREFIX."pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $activ_com . "', auth = '" . $page_auth . "', id_cat = '" . $id_cat . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+				//On redirige vers la page mise à jour
+				header('Location:' . HOST . DIR . '/pages/' . transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
+				exit;
+			}
+			//catégories : risque de boucle infinie
+			elseif( $page_infos['is_cat'] == 1 && empty($error) )
+			{
+				//Changement de catégorie mère ? => on met à jour la table catégories
+				if( $id_cat != $page_infos['id_cat'] )
+				{
+					$sql->query_inject("UPDATE ".PREFIX."pages_cats SET id_parent = '" . $id_cat . "' WHERE id = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
+				}
+				//On met à jour la table
+				$sql->query_inject("UPDATE ".PREFIX."pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $activ_com . "', auth = '" . $page_auth . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+				//Régénération du cache
+				$cache->generate_module_file('pages');
+				//On redirige vers la page mise à jour
+				header('Location:' . HOST . DIR . '/pages/' . transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
+				exit;
+			}
+		}
+		//Création d'une page
+		elseif( !empty($title) )
+		{
+			if( !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
+			{
+				header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
+				exit;
+			}
+			
+			$encoded_title = url_encode_rewrite($title);
+			$is_already_page = $sql->query("SELECT COUNT(*) FROM ".PREFIX."pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+			
+			//Si l'article n'existe pas déjà, on enregistre
+			if( $is_already_page == 0 )
+			{
+				$sql->query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . $session->data['user_id'] . "', '" . $count_hits . "', '" . $activ_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "')", __LINE__, __FILE__);
+				//Si c'est une catégorie
+				if( $is_cat > 0 )
+				{
+					$last_id_page = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."pages");  
+					$sql->query_inject("INSERT INTO ".PREFIX."pages_cats (id_parent, id_page) VALUES ('" . $id_cat . "', '" . $last_id_page . "')", __LINE__, __FILE__);
+					$last_id_pages_cat = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."pages_cats");
+					$sql->query_inject("UPDATE ".PREFIX."pages SET id_cat = '" . $last_id_pages_cat . "' WHERE id = '" . $last_id_page . "'", __LINE__, __FILE__);
+					//Régénération du cache
+					$cache->generate_module_file('pages');
+				}
+				//On redirige vers la page mise à jour
+				header('Location:' . HOST . DIR . '/pages/' . transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+				exit;
+			}
+			//Sinon, message d'erreur
+			else
+			{
+				$error = 'page_already_exists';
+			}
+		}
+	}
+	else
+		$error = 'preview';
+}
+//Suppression d'une page
+elseif( $del > 0 )
+{
+	$page_infos = $sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $del . "'", __LINE__, __FILE__);
+	
+	//Autorisation particulière ?
+	$special_auth = !empty($page_infos['auth']);
+	$array_auth = unserialize($page_infos['auth']);
+	if( ($special_auth && !$groups->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	{
+		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
+		exit;
+	}
+	//la page existe bien, on supprime
+	if( !empty($page_infos['title']) )
+	{
+		$sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del . "'", __LINE__, __FILE__);
+		$sql->query_inject("DELETE FROM ".PREFIX."pages WHERE redirect = '" . $del . "'", __LINE__, __FILE__);
+		$sql->query_inject("DELETE FROM ".PREFIX."com WHERE script = 'pages' AND idprov = '" . $del . "'", __LINE__, __FILE__);
+		header('Location:' . HOST . DIR . '/pages/pages.php?error=delete_success');
+	}
+	else
+		header('Location:' . HOST . DIR . '/pages/pages.php?error=delete_failure');
+	
+	exit;
+}
+
+$template->set_filenames(array('post' => '../templates/' . $CONFIG['theme'] . '/pages/post.tpl'));
+
+if( $id_edit > 0 )
+{
+	//Autorisation particulière ?
+	$special_auth = !empty($page_infos['auth']);
+	$array_auth = unserialize($page_infos['auth']);
+	//Vérification de l'autorisation d'éditer la page
+	if( ($special_auth && !$groups->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	{
+		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
+		exit;
+	}
+	
+	//Erreur d'enregistrement ?
+	if( $error == 'cat_contains_cat' )
+		$errorh->error_handler($LANG['pages_cat_contains_cat'], E_USER_WARNING);
+	elseif( $error == 'preview' )
+	{
+		$errorh->error_handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
+		$template->assign_block_vars('previewing', array(
+			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
+			'TITLE' => stripslashes($title)
+		));
+	}
+	
+	//Génération de l'arborescence des catégories
+	$cats = array();
+	//numéro de la catégorie de la page ou de la catégorie
+	$id_cat_display = $page_infos['is_cat'] == 1 ? $_PAGES_CATS[$page_infos['id_cat']]['id_parent'] : $page_infos['id_cat'];
+	$cat_list = display_cat_explorer($id_cat_display, $cats, 1);
+	
+	$template->assign_vars(array(
+		'CONTENTS' => !empty($error) ? stripslashes($contents) : pages_unparse($page_infos['contents']),
+		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($page_infos['count_hits'] == 1 ? 'checked="checked"' : ''),
+		'ACTIV_COM_CHECKED' => !empty($error) ? ($activ_com == 1 ? 'checked="checked"' : '') : ($page_infos['activ_com'] == 1 ? 'checked="checked"' : ''),
+		'OWN_AUTH_CHECKED' => !empty($page_infos['auth']) ? 'checked="checked"' : '',
+		'CAT_0' => $id_cat_display == 0 ? 'pages_selected_cat' : '',
+		'ID_CAT' => $id_cat_display,
+		'SELECTED_CAT' => $id_cat_display,
+		'CHECK_IS_CAT' => 'disabled="disabled"' . ($page_infos['is_cat'] == 1 ? ' checked="checked"' : '')
+	));
+}
+else
+{
+	//Autorisations
+	if( !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
+	{
+		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
+		exit;
+	}
+	//La page existe déjà !
+	if( $error == 'page_already_exists' )
+		$errorh->error_handler($LANG['pages_already_exists'], E_USER_WARNING);
+	elseif( $error == 'preview' )
+	{
+		$errorh->error_handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
+		$template->assign_block_vars('previewing', array(
+			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
+			'TITLE' => stripslashes($title)
+		));
+	}
+	if( !empty($error) )
+		$template->assign_vars(array(
+			'CONTENTS' => stripslashes($contents),
+			'PAGE_TITLE' => stripslashes($title)
+		));
+	
+	$template->assign_block_vars('create', array());
+	
+	//Génération de l'arborescence des catégories
+	$cats = array();
+	$cat_list = display_cat_explorer(0, $cats, 1);
+	$current_cat = $LANG['pages_root'];
+	
+	$template->assign_vars(array(
+		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : ''),
+		'ACTIV_COM_CHECKED' => !empty($error) ? ($activ_com == 1 ? 'checked="checked"' : '') :($_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : ''),
+		'OWN_AUTH_CHECKED' => '',
+		'CAT_0' => 'pages_selected_cat',
+		'ID_CAT' => '0',
+		'SELECTED_CAT' => '0'
+	));
+}
+
+$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : $_PAGES_CONFIG['auth'];
+$array_groups = array();
+
+//Création du tableau des groupes.
+foreach($_array_groups_auth as $idgroup => $array_group_info)
+	$array_groups[$idgroup] = $array_group_info[0];
+
+ //Création du tableau des rangs.
+$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
+
+$template->assign_vars(array(
+	'ID_EDIT' => $id_edit,
+	'NBR_GROUP' => count($array_groups),
+	'SELECT_READ_PAGE' => generate_select_groups($array_auth, 1, READ_PAGE),
+	'SELECT_EDIT_PAGE' => generate_select_groups($array_auth, 2, EDIT_PAGE),
+	'SELECT_READ_COM' => generate_select_groups($array_auth, 3, READ_COM),
+	'OWN_AUTH_DISABLED' => !empty($page_infos['auth']) ? 'false' : 'true',
+	'DISPLAY' => empty($page_infos['auth']) ? 'display:none;' : '',
+	'PAGES_PATH' => $template->module_data_path('pages'),
+	'CAT_LIST' => $cat_list,
+	'L_AUTH' => $LANG['pages_auth'],
+	'L_ACTIV_COM' => $LANG['pages_activ_com'],
+	'L_COUNT_HITS' => $LANG['pages_count_hits'],
+	'L_ALERT_CONTENTS' => $LANG['page_alert_contents'],
+	'L_ALERT_TITLE' => $LANG['page_alert_title'],
+	'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
+	'L_SELECT_ALL' => $LANG['select_all'],
+	'L_SELECT_NONE' => $LANG['select_none'],
+	'L_READ_PAGE' => $LANG['pages_auth_read'],
+	'L_EDIT_PAGE' => $LANG['pages_auth_edit'],
+	'L_READ_COM' => $LANG['pages_auth_read_com'],
+	'L_OWN_AUTH' => $LANG['pages_own_auth'],
+	'L_IS_CAT' => $LANG['pages_is_cat'],
+	'L_CAT' => $LANG['pages_parent_cat'],
+	'L_AUTH' => $LANG['pages_auth'],
+	'L_PATH' => $LANG['pages_page_path'],
+	'L_PROPERTIES' => $LANG['pages_properties'],
+	'L_TITLE_POST' => $id_edit > 0 ? sprintf($LANG['pages_edit_page'], $page_infos['title']) : $LANG['pages_creation'],
+	'L_TITLE_FIELD' => $LANG['page_title'],
+	'L_CONTENTS' => $LANG['page_contents'],
+	'L_RESET' => $LANG['reset'],
+	'L_PREVIEW' => $LANG['preview'],
+	'L_SUMBIT' => $LANG['submit'],
+	'L_ROOT' => $LANG['pages_root'],
+	'L_PREVIEWING' => $LANG['pages_previewing'],
+	'L_CONTENTS_PART' => $LANG['pages_contents_part'],
+	'L_SUBMIT' => $LANG['submit'],
+	'TARGET' => transid('post.php')
+));
+
+include_once('../includes/bbcode.php');
+
+$template->pparse('post');
+
+require_once('../includes/footer.php'); 
+
+?>

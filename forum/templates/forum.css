@@ -1,0 +1,101 @@
+/* Classe du lien du pseudo sur forum */
+a.forum_link_pseudo{
+	color:#e8eaeb; 
+	font-weight:bold;
+}
+a.forum_link_pseudo:hover { 
+	color:#f2fbff; 
+	font-weight:bold;
+}
+/* Barre du titre du forum */
+.forum_title{
+	width:96%;
+	margin:auto;
+	height:27px;
+	background:#80A0BB;
+	border:2px solid #295F8D;
+	border-bottom:1px solid #295F8D;
+	color:#FFFFFF;
+	font-weight:bold;
+	text-align:center;
+	padding-top:12px;
+}
+/* Barre des textes relatifs aux colonnes */
+.forum_text_column {	
+	height:20px;
+	background:#14496A;
+	border-top:1px solid #55819D;
+	border-bottom:1px solid #55819D;
+	font-size:10px;
+	color:#e8eaeb;	
+	text-align:center;
+	font-weight:bold;
+	padding:0px;
+}
+/* Case des liens sous-catégories */
+.forum_sous_cat{
+	background:#7FABC7;
+	border-bottom:1px solid #55819D;
+	border-right:1px solid #55819D;
+	padding:6px;
+}
+.forum_sous_cat:hover{
+	background:#A3C8DF;
+}
+/* Case compteur message/topic */
+.forum_sous_cat_compteur{	
+	width:60px;
+	background:#95C3E0;
+	border-bottom:1px solid #55819D;
+	border-right:1px solid #55819D;
+	color:#000000;
+	text-align:center; 
+}
+/* Case compteur dernier topic/dernier message */
+.forum_sous_cat_last{
+	width:150px;
+	background:#7FABC7;
+	border-bottom:1px solid #55819D;
+	font-size:10px;
+	color:#000000;
+	text-align:center; 
+}
+.forum_sous_cat_last:hover{
+	background:#A3C8DF;
+}
+/* Cadre des liens:alerter les modérateurs et suivre le sujet */
+.forum_action{
+	width:550px;
+	margin:auto;
+	background:#AFD2E8;
+	border:1px solid #295F8D;
+	border-spacing:1px;
+	text-align:center;
+	-moz-border-radius:0.4em;
+}
+/* Liens des catégories de niveau 0 */
+a.forum_link_cat{
+	color:#FEFFE4;
+	font-weight:bold;
+}
+/* Affichage des membres en ligne */
+.forum_online{
+	background:#9AB6C7;
+	color:#000000;
+	border:1px solid #55819D;
+	border-top:none;
+	padding:6px;
+}
+/* Fond des catégories dans l'administration */
+.forum_cat_admin{
+	width:100%;
+	height:20px;
+	margin-bottom:2px;
+	padding:4px 0px;
+}
+/* Contenu */
+.forum_contents{
+	padding:0px;
+	padding-right:2px;
+	background:none;
+}

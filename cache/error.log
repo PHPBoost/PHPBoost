@@ -1,0 +1,655 @@
+2007-10-12 00:23:00
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141080'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:23:45
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141125'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:24:10
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141150'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:24:31
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141171'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:24:50
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141190'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:25:55
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141255'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:26:20
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141280'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:26:28
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141288'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:26:40
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141300'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:26:55
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141315'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:27:25
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141345'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:28:03
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141383'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:28:16
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141396'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:29:07
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141447'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:30:07
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141507'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:30:27
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141527'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:30:55
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141555'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:32:14
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141634'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:32:20
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141640'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:32:31
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141651'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:32:53
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141673'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:33:02
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141682'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:33:21
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141701'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:34:25
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141765'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:34:45
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141785'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:34:54
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141794'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-12 00:37:56
+256
+Requête while invalide<br /><br />SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, g.contents<br />FROM phpboost_guestbook as g<br />LEFT JOIN phpboost_member AS m ON m.user_id = g.user_id<br />LEFT JOIN phpboost_sessions AS s ON s.user_id = g.user_id AND s.session_time > '1192141976'<br />ORDER BY g.timestamp DESC <br /> LIMIT 0, 10<br /><br />Table inconnue 'se' dans field list
+guestbook.php
+322
+2007-10-13 13:07:30
+256
+Requête inject invalide<br /><br /> CREATE TABLE `phpboost_articles` ( `id` int(11) NOT NULL auto_increment, `idcat` int(11) NOT NULL default '0', `title` varchar(100) NOT NULL default '', `contents` text NOT NULL, `icon` varchar(255) NOT NULL default '', `timestamp` int(11) NOT NULL default '0', `visible` tinyint(1) NOT NULL default '0', `start` int(11) NOT NULL default '0', `end` int(11) NOT NULL default '0', `user_id` int(11) NOT NULL default '0', `views` mediumint(9) NOT NULL default '0', `users_note` text NOT NULL, `nbrnote` mediumint(9) NOT NULL default '0', `note` smallint(6) NOT NULL default '0', `nbr_com` int(11) unsigned NOT NULL default '0', `activ_com` tinyint(1) NOT NULL default '0', PRIMARY KEY  (`id`), KEY `idcat` (`idcat`) ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;<br /><br />La table 'phpboost_articles' existe déjà
+mysql.class.php
+281
+2007-10-17 18:57:57
+256
+Requête simple invalide<br /><br />member<br /><br />Erreur de syntaxe près de 'member' à la ligne 1
+user_sex
+user_theme
+2007-10-17 22:59:01
+256
+Requête while invalide<br /><br />SELECT n.id, n.title, n.timestamp, nc.id AS idcat, nc.icon<br />FROM phpboost_news AS n<br />LEFT JOIN phpboost_news_cat AS nc ON nc.id = n.idcat<br />WHERE n.visible = 1 AND n.archive = '0'<br />ORDER BY n.timestamp DESC <br /> LIMIT 0, <br /><br />Erreur de syntaxe près de '' à la ligne 6
+news.php
+246
+2007-10-17 22:59:01
+256
+Requête while invalide<br /><br />SELECT n.id, n.title, n.timestamp, nc.id AS idcat, nc.icon<br />FROM phpboost_news AS n<br />LEFT JOIN phpboost_news_cat AS nc ON nc.id = n.idcat<br />WHERE n.visible = 1 AND n.archive = '0'<br />ORDER BY n.timestamp DESC <br /> LIMIT 0, <br /><br />Erreur de syntaxe près de '' à la ligne 6
+news.php
+246
+2007-10-17 23:08:05
+256
+Requête inject invalide<br /><br />INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('articles', 'a:5:{s:16:"nbr_articles_max";i:10;s:11:"nbr_cat_max";i:10;s:10:"nbr_column";i:2;s:8:"note_max";i:10;s:9:"auth_root";s:59:"a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}";}');<br /><br />Duplicata du champ 'articles' pour la clef 2
+mysql.class.php
+279
+2007-10-17 23:08:25
+256
+Requête inject invalide<br /><br />INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('articles', 'a:5:{s:16:"nbr_articles_max";i:10;s:11:"nbr_cat_max";i:10;s:10:"nbr_column";i:2;s:8:"note_max";i:10;s:9:"auth_root";s:59:"a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}";}');<br /><br />Duplicata du champ 'articles' pour la clef 2
+mysql.class.php
+279
+2007-10-17 23:10:15
+256
+Requête while invalide<br /><br />SELECT n.id, n.title, n.timestamp, nc.id AS idcat, nc.icon<br />FROM phpboost_news AS n<br />LEFT JOIN phpboost_news_cat AS nc ON nc.id = n.idcat<br />WHERE n.visible = 1 AND n.archive = '0'<br />ORDER BY n.timestamp DESC <br /> LIMIT 0, <br /><br />Erreur de syntaxe près de '' à la ligne 6
+news.php
+246
+2007-10-17 23:10:15
+256
+Requête while invalide<br /><br />SELECT n.id, n.title, n.timestamp, nc.id AS idcat, nc.icon<br />FROM phpboost_news AS n<br />LEFT JOIN phpboost_news_cat AS nc ON nc.id = n.idcat<br />WHERE n.visible = 1 AND n.archive = '0'<br />ORDER BY n.timestamp DESC <br /> LIMIT 0, <br /><br />Erreur de syntaxe près de '' à la ligne 6
+news.php
+246
+2007-10-20 17:16:59
+256
+Connexion base de donnée impossible!<br /><br /><br /><br />Can't connect to MySQL server on 'localhost' (10061)
+mysql.class.php
+44
+2007-10-27 14:06:51
+256
+Connexion base de donnée impossible!<br /><br /><br /><br />Can't connect to MySQL server on 'localhost' (10061)
+mysql.class.php
+44
+2007-10-28 02:31:41
+256
+Requête inject invalide<br /><br />INSERT INTO phpboost_download (idcat,title,contents,url,size,compt,timestamp,visible,start,end,user_id,users_note,nbrnote,note,nbr_com) VALUES('1', 'Dirt Co. 3', 'Vidéo retraçant les aventures du Mussotrail pendant le début de l'année 2007 !<br />Pour la regarder en streaming, merci de cliquer [url=http://www.mussotrail.com/pages/video-dirt-co-3.php]ici[/url].<br />La vidéo dure environ 8 minutes.<br />Les titres des morceaux de musique:<br />Dire Straits - Money for nothing<br />ATC - Around the world<br />[align=center]<br />[img]http://www.mussotrail.com/images/news/flyer-dirt-co3-mini.jpg[/img][/align]', 'http://www.phpboost.com/download/mussotrail/Dirt-Co-3.wmv', '84', '758', '1170543601', '1', '0', '0', '1', '', 0, 0, 0)<br /><br />Erreur de syntaxe près de 'année 2007 !<br />Pour la regarder en streaming, merci de cliquer ' à la ligne 1
+admin_download_add.php
+86
+2007-10-28 02:32:10
+256
+Requête inject invalide<br /><br />INSERT INTO phpboost_download (idcat,title,contents,url,size,compt,timestamp,visible,start,end,user_id,users_note,nbrnote,note,nbr_com) VALUES('1', 'Dirt Co. 3', 'Vidéo retraçant les aventures du Mussotrail pendant le début de l'année 2007 !<br />Pour la regarder en streaming, merci de cliquer [url=http://www.mussotrail.com/pages/video-dirt-co-3.php]ici[/url].<br />La vidéo dure environ 8 minutes.<br />Les titres des morceaux de musique:<br />Dire Straits - Money for nothing<br />ATC - Around the world<br />[align=center]<br />[img]http://www.mussotrail.com/images/news/flyer-dirt-co3-mini.jpg[/img][/align]', 'http://www.phpboost.com/download/mussotrail/Dirt-Co-3.wmv', '84', '758', '1170543601', '1', '0', '0', '1', '', 0, 0, 0)<br /><br />Erreur de syntaxe près de 'année 2007 !<br />Pour la regarder en streaming, merci de cliquer ' à la ligne 1
+admin_download_add.php
+86
+2007-10-30 21:16:20
+256
+Selection de la base de donnée impossible!<br /><br /><br /><br />Base 'phpboost' inconnue
+mysql.class.php
+45
+2007-10-30 21:16:21
+256
+Selection de la base de donnée impossible!<br /><br /><br /><br />Base 'phpboost' inconnue
+mysql.class.php
+45
+2007-10-03 17:04:30
+256
+Connexion base de donnée impossible!<br /><br /><br /><br />Can't connect to MySQL server on 'localhost' (10061)
+mysql.class.php
+44
+2007-10-03 18:39:03
+256
+Requête inject invalide<br /><br />CREATE TABLE `phpboost_group` (<br />`id` int(11) NOT NULL auto_increment,<br />`name` varchar(100) NOT NULL default '',<br />`img` varchar(255) NOT NULL default '',<br />`auth` smallint(6) NOT NULL default '0',<br />`members` text NOT NULL,<br />PRIMARY KEY<br />(`id`)<br />) ENGINE=MyISAM<br /><br />La table 'phpboost_group' existe déjà
+update.php
+183
+2007-10-03 18:40:37
+256
+Requête inject invalide<br /><br />ALTER TABLE `phpboost_admin_smilies` CHANGE `idsmile` `idsmiley` INT( 11 ) NOT NULL AUTO_INCREMENT<br /><br />La table 'test.phpboost_admin_smilies' n'existe pas
+update.php
+364
+2007-10-03 18:40:38
+256
+Requête while invalide<br /><br />SELECT id, login, user_id, contents <br />FROM phpboost_shoutbox <br />ORDER BY timestamp DESC <br /> LIMIT 0, 25<br /><br />Champ 'contents' inconnu dans field list
+shoutbox_mini.php
+113
+2007-10-03 18:48:36
+256
+Requête while invalide<br /><br />SELECT s1.id<br />FROM `phpboost_stats` AS s1<br />JOIN phpboost_stats AS s2<br />WHERE s1.stats_day = s2.stats_day AND s1.stats_month = s2.stats_month AND s1.stats_year = s2.stats_year AND s1.id != s2.id<br />GROUP BY s2.stats_day<br /><br />Champ 's1.stats_day' inconnu dans where clause
+update.php
+371
+2007-10-03 18:48:37
+256
+Requête while invalide<br /><br />SELECT id, login, user_id, contents <br />FROM phpboost_shoutbox <br />ORDER BY timestamp DESC <br /> LIMIT 0, 25<br /><br />Champ 'contents' inconnu dans field list
+shoutbox_mini.php
+113
+2007-10-03 18:49:31
+256
+Requête inject invalide<br /><br />CREATE TABLE `phpboost_modules` (<br />  `id` int(11) NOT NULL auto_increment,<br />  `name` varchar(150) NOT NULL default '',<br />  `version` varchar(15) NOT NULL default '',<br />  `auth` text NOT NULL,<br />  `activ` tinyint(1) NOT NULL default '0',<br />  PRIMARY KEY  (`id`)<br />) ENGINE=MyISAM<br /><br />La table 'phpboost_modules' existe déjà
+update.php
+392
+2007-10-03 18:49:32
+256
+Requête while invalide<br /><br />SELECT id, login, user_id, contents <br />FROM phpboost_shoutbox <br />ORDER BY timestamp DESC <br /> LIMIT 0, 25<br /><br />Champ 'contents' inconnu dans field list
+shoutbox_mini.php
+113
+2007-10-03 18:51:56
+256
+Requête while invalide<br /><br />SELECT id, login, user_id, contents <br />FROM phpboost_shoutbox <br />ORDER BY timestamp DESC <br /> LIMIT 0, 25<br /><br />Champ 'contents' inconnu dans field list
+shoutbox_mini.php
+113
+2007-10-03 18:51:56
+256
+Requête while invalide<br /><br />SELECT id, login, user_id, contents <br />FROM phpboost_shoutbox <br />ORDER BY timestamp DESC <br /> LIMIT 0, 25<br /><br />Champ 'contents' inconnu dans field list
+shoutbox_mini.php
+113
+2007-10-03 18:52:59
+256
+Requête while invalide<br /><br />SELECT id, login, user_id, contents <br />FROM phpboost_shoutbox <br />ORDER BY timestamp DESC <br /> LIMIT 0, 25<br /><br />Champ 'contents' inconnu dans field list
+shoutbox_mini.php
+113
+2007-10-03 18:52:59
+256
+Requête while invalide<br /><br />SELECT id, login, user_id, contents <br />FROM phpboost_shoutbox <br />ORDER BY timestamp DESC <br /> LIMIT 0, 25<br /><br />Champ 'contents' inconnu dans field list
+shoutbox_mini.php
+113
+2007-10-03 18:53:06
+256
+Requête while invalide<br /><br />SELECT id, login, user_id, contents <br />FROM phpboost_shoutbox <br />ORDER BY timestamp DESC <br /> LIMIT 0, 25<br /><br />Champ 'contents' inconnu dans field list
+shoutbox_mini.php
+113
+2007-10-03 18:53:06
+256
+Requête while invalide<br /><br />SELECT id, login, user_id, contents <br />FROM phpboost_shoutbox <br />ORDER BY timestamp DESC <br /> LIMIT 0, 25<br /><br />Champ 'contents' inconnu dans field list
+shoutbox_mini.php
+113
+2007-10-03 19:01:09
+256
+Requête inject invalide<br /><br />ALTER TABLE `phpboost_web_cat` DROP INDEX `idcat` , ADD INDEX `class` ( `class` ) <br /><br />La table 'test.phpboost_web_cat' n'existe pas
+update.php
+830
+2007-10-03 19:03:06
+256
+Requête inject invalide<br /><br />ALTER TABLE `phpboost_download` ADD `user_id` INT NOT NULL AFTER `end`<br /><br />Champ 'end' inconnu dans phpboost_download
+update.php
+855
+2007-10-03 19:06:00
+256
+Requête inject invalide<br /><br />UPDATE phpboost_config SET version = '2.0'<br /><br />La table 'test.phpboost_config' n'existe pas
+update.php
+894
+2007-10-03 19:33:58
+256
+Requête while invalide<br /><br />SELECT a.title, a.encoded_title, a.id<br />FROM phpboost_wiki_articles AS a<br />LEFT JOIN phpboost_wiki_contents AS c ON c.id_contents = a.id_contents<br />WHERE a.redirect = 0<br />ORDER BY c.timestamp DESC<br />LIMIT 0, 10<br /><br />La table 'test.phpboost_wiki_articles' n'existe pas
+wiki.php
+241
+2007-10-03 19:41:19
+256
+Requête inject invalide<br /><br />CREATE TABLE `phpboost_configs` (<br />`id` int(11) NOT NULL auto_increment,<br />`name` varchar(150) NOT NULL default '',<br />`value` text NOT NULL,<br />PRIMARY KEY<br />(`id`),<br />UNIQUE KEY `name` (`name`)<br />) ENGINE=MyISAM<br /><br />La table 'phpboost_configs' existe déjà
+update.php
+168
+2007-10-03 19:48:51
+256
+Requête inject invalide<br /><br />DROP TABLE `phpboost_admin_album`<br /><br />Table 'phpboost_admin_album' inconnue
+update.php
+146
+2007-10-03 19:49:17
+256
+Requête multiple invalide<br /><br />SELECT * FROM phpboost_config<br /><br />La table 'test.phpboost_config' n'existe pas
+update.php
+169
+2007-10-03 19:50:31
+256
+Requête inject invalide<br /><br />INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES <br />(1, 'config', 'a:27:{s:11:"server_name";s:16:"http://127.0.0.1";s:11:"server_path";s:26:"26;s:9:"site_name";s:11:"Dev'1&quot;";s:9:"site_desc";s:11:"Dev'2&quot;";s:12:"site_keyword";s:11:"Dev'3&quot;";s:5:"start";i:1191433811";s:7:"version";s:3:"2.0";s:4:"lang";s:6:"french";s:5:"theme";s:4:"wild";s:10:"start_page";s:14:"/news/news.php";s:8:"maintain";s:1:"0";s:14:"maintain_delay";s:1:"1";s:13:"maintain_text";s:0:"";s:7:"rewrite";i:0;s:9:"com_popup";s:1:"0";s:8:"compteur";s:1:"0";s:12:"ob_gzhandler";i:0;s:11:"site_cookie";s:7:"session";s:12:"site_session";i:3600;s:18:"site_session_invit";i:300;s:4:"mail";s:0:"";s:10:"activ_mail";s:1:"0";s:4:"sign";s:0:"";s:10:"anti_flood";s:1:"1";s:11:"delay_flood";s:1:"7";s:12:"unlock_admin";s:0:"";s:6:"pm_max";s:2:"50";}'),<br />(2, 'member', 'a:13:{s:14:"activ_register";i:1;s:7:"msg_mbr";s:0:"";s:12:"msg_register";s:0:"";s:9:"activ_mbr";i:0;s:10:"verif_code";i:1;s:17:"delay_unactiv_max";i:30;s:11:"force_theme";i:0;s:15:"activ_up_avatar";i:1;s:9:"width_max";i:120;s:10:"height_max";i:120;s:10:"weight_max";i:20;s:12:"activ_avatar";i:1;s:10:"avatar_url";s:13:"no_avatar.jpg";}'),<br />(3, 'files', 'a:3:{s:10:"size_limit";d:512;s:17:"bandwidth_protect";s:1:"1";s:10:"auth_files";s:45:"a:3:{s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}";}'),<br />(4, 'com', 'a:4:{s:8:"com_auth";i:-1;s:7:"com_max";i:10;s:14:"forbidden_tags";s:99:"a:6:{i:0;s:3:"swf";i:1;s:5:"movie";i:2;s:5:"sound";i:3;s:4:"code";i:4;s:4:"math";i:5;s:6:"anchor";}";s:8:"max_link";i:2;}')<br /><br />Erreur de syntaxe près de '1&quot;";s:9:"site_desc";s:11:"Dev'2&quot;";s:12:"site_keyword";' à la ligne 2
+update.php
+176
+2007-10-03 19:55:22
+256
+Requête inject invalide<br /><br />INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES <br />(1, 'config', 'a:27:{s:11:"server_name";s:16:"http://127.0.0.1";s:11:"server_path";s:26:"/PHP/PHPBoost/PHPBoost_2.0";s:9:"site_name";s:11:"Dev'&quot;1";s:9:"site_desc";s:11:"Dev'&quot;2";s:12:"site_keyword";s:11:"Dev'&quot;3";s:5:"start";i:1191434077";s:7:"version";s:3:"2.0";s:4:"lang";s:6:"french";s:5:"theme";s:4:"wild";s:10:"start_page";s:14:"/news/news.php";s:8:"maintain";s:1:"0";s:14:"maintain_delay";s:1:"1";s:13:"maintain_text";s:0:"";s:7:"rewrite";i:0;s:9:"com_popup";s:1:"0";s:8:"compteur";s:1:"0";s:12:"ob_gzhandler";i:0;s:11:"site_cookie";s:7:"session";s:12:"site_session";i:3600;s:18:"site_session_invit";i:300;s:4:"mail";s:0:"";s:10:"activ_mail";s:1:"0";s:4:"sign";s:0:"";s:10:"anti_flood";s:1:"1";s:11:"delay_flood";s:1:"7";s:12:"unlock_admin";s:0:"";s:6:"pm_max";s:2:"50";}'),<br />(2, 'member', 'a:13:{s:14:"activ_register";i:1;s:7:"msg_mbr";s:0:"";s:12:"msg_register";s:0:"";s:9:"activ_mbr";i:0;s:10:"verif_code";i:1;s:17:"delay_unactiv_max";i:30;s:11:"force_theme";i:0;s:15:"activ_up_avatar";i:1;s:9:"width_max";i:120;s:10:"height_max";i:120;s:10:"weight_max";i:20;s:12:"activ_avatar";i:1;s:10:"avatar_url";s:13:"no_avatar.jpg";}'),<br />(3, 'files', 'a:3:{s:10:"size_limit";d:512;s:17:"bandwidth_protect";s:1:"1";s:10:"auth_files";s:45:"a:3:{s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}";}'),<br />(4, 'com', 'a:4:{s:8:"com_auth";i:-1;s:7:"com_max";i:10;s:14:"forbidden_tags";s:99:"a:6:{i:0;s:3:"swf";i:1;s:5:"movie";i:2;s:5:"sound";i:3;s:4:"code";i:4;s:4:"math";i:5;s:6:"anchor";}";s:8:"max_link";i:2;}')<br /><br />Erreur de syntaxe près de ';1";s:9:"site_desc";s:11:"Dev'&quot;2";s:12:"site_keyword";s:11:' à la ligne 2
+update.php
+176
+2007-10-03 19:56:40
+256
+Requête inject invalide<br /><br />INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES <br />(1, 'config', 'a:27:{s:11:"server_name";s:16:"http://127.0.0.1";s:11:"server_path";s:26:"/PHP/PHPBoost/PHPBoost_2.0";s:9:"site_name";s:11:"Dev'&quot;1";s:9:"site_desc";s:11:"Dev'&quot;2";s:12:"site_keyword";s:11:"Dev'&quot;3";s:5:"start";i:1191434077;s:7:"version";s:3:"2.0";s:4:"lang";s:6:"french";s:5:"theme";s:4:"wild";s:10:"start_page";s:14:"/news/news.php";s:8:"maintain";s:1:"0";s:14:"maintain_delay";s:1:"1";s:13:"maintain_text";s:0:"";s:7:"rewrite";i:0;s:9:"com_popup";s:1:"0";s:8:"compteur";s:1:"0";s:12:"ob_gzhandler";i:0;s:11:"site_cookie";s:7:"session";s:12:"site_session";i:3600;s:18:"site_session_invit";i:300;s:4:"mail";s:0:"";s:10:"activ_mail";s:1:"0";s:4:"sign";s:0:"";s:10:"anti_flood";s:1:"1";s:11:"delay_flood";s:1:"7";s:12:"unlock_admin";s:0:"";s:6:"pm_max";s:2:"50";}'),<br />(2, 'member', 'a:13:{s:14:"activ_register";i:1;s:7:"msg_mbr";s:0:"";s:12:"msg_register";s:0:"";s:9:"activ_mbr";i:0;s:10:"verif_code";i:1;s:17:"delay_unactiv_max";i:30;s:11:"force_theme";i:0;s:15:"activ_up_avatar";i:1;s:9:"width_max";i:120;s:10:"height_max";i:120;s:10:"weight_max";i:20;s:12:"activ_avatar";i:1;s:10:"avatar_url";s:13:"no_avatar.jpg";}'),<br />(3, 'files', 'a:3:{s:10:"size_limit";d:512;s:17:"bandwidth_protect";s:1:"1";s:10:"auth_files";s:45:"a:3:{s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}";}'),<br />(4, 'com', 'a:4:{s:8:"com_auth";i:-1;s:7:"com_max";i:10;s:14:"forbidden_tags";s:99:"a:6:{i:0;s:3:"swf";i:1;s:5:"movie";i:2;s:5:"sound";i:3;s:4:"code";i:4;s:4:"math";i:5;s:6:"anchor";}";s:8:"max_link";i:2;}')<br /><br />Erreur de syntaxe près de ';1";s:9:"site_desc";s:11:"Dev'&quot;2";s:12:"site_keyword";s:11:' à la ligne 2
+update.php
+176
+2007-10-03 20:01:36
+256
+Requête inject invalide<br /><br />INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('wiki', 'a:6:{s:9:"wiki_name";s:4:"Wiki";s:13:"last_articles";i:10;s:12:"display_cats";i:0;s:10:"index_text";s:0:"";s:10:"count_hits";i:1;s:4:"auth";s:71:"a:4:{s:3:"r-1";i:1041;s:2:"r0";i:1495;s:2:"r1";i:4095;s:2:"r2";i:4095;}";}')<br /><br />Duplicata du champ 'wiki' pour la clef 2
+update.php
+505
+2007-10-06 21:18:02
+256
+Requête multiple invalide<br /><br />SELECT user_id, login, level, user_groups, user_lang, user_theme, user_mail, user_pm, user_readonly FROM phpboost_member WHERE user_id='1'<br /><br />La table 'test.phpboost_member' n'existe pas
+sessions.class.php
+229
+2007-10-06 23:44:46
+256
+Requête inject invalide<br /><br />UPDATE phpboost_forum_cats id_left = '1', id_right = '2', level = 0, aprob = '1', auth = 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:7;}'<br /><br />Erreur de syntaxe près de '= '1', id_right = '2', level = 0, aprob = '1', auth = 'a:4:{s:3:' à la ligne 1
+update.php
+686
+2007-10-06 23:46:24
+256
+Requête inject invalide<br /><br />DROP TABLE `phpboost_forum_config`<br /><br />Table 'phpboost_forum_config' inconnue
+update.php
+651
+2007-11-03 14:30:25
+256
+Requête inject invalide<br /><br />INSERT INTO `phpboost_forum_cats` (`id`, `id_left`, `id_right`, `level`, `name`, `subname`, `nbr_topic`, `nbr_msg`, `last_topic_id`, `type`, `status`, `aprob`, `auth`) VALUES (1, 1, 4, 0, 'Cat&eacute;gorie de test', 'Cat&eacute;gorie de test', 1, 1, 1, 0, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:7;}');<br /><br />Champ 'type' inconnu dans field list
+mysql.class.php
+281
+2007-11-04 15:51:50
+256
+Requête simple invalide<br /><br />gallery<br /><br />Erreur de syntaxe près de 'gallery' à la ligne 1
+idcat
+path
+2007-11-10 00:36:12
+256
+Requête multiple invalide<br /><br />SELECT COUNT(*) as nbr_topic, SUM(nbr_msg) as nbr_msg FROM phpboost_forum_topics WHERE id_left <= '2' AND id_right >= '3' AND level <= '1'<br /><br />Champ 'id_left' inconnu dans where clause
+admin_forum_config.php
+81
+2007-11-13 15:44:51
+256
+Requête while invalide<br /><br />SELECT id, count(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, last_update<br />FROM phpboost_stats_referer<br />WHERE type = 0<br />GROUP BY url<br />ORDER BY total_visit DESC<br /> LIMIT 0, 15<br /><br />La table 'phpboost.phpboost_stats_referer' n'existe pas
+stats.php
+547
+2007-11-13 15:59:09
+256
+Requête while invalide<br /><br />SELECT id, count(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, last_update<br />FROM phpboost_stats_referer<br />WHERE type = 0<br />GROUP BY url<br />ORDER BY total_visit DESC<br /> LIMIT 0, 15<br /><br />La table 'phpboost.phpboost_stats_referer' n'existe pas
+admin_stats.php
+509
+2007-11-14 00:42:48
+256
+Requête inject invalide<br /><br />UPDATE phpboost_stats_referer SET yesterday_visit = today_visit<br /><br />La table 'phpboost.phpboost_stats_referer' n'existe pas
+changeday.php
+86
+2007-11-14 02:42:36
+256
+Requête while invalide<br /><br />SELECT SUM(nbr) as total, stats_year <br />FROM phpboost_stats WHERE stats_year = '2007'<br />ORDER BY stats_year<br /><br />Mélanger les colonnes GROUP (MIN(),MAX(),COUNT()...) avec des colonnes normales est interdit s'il n'y a pas de clause GROUP BY
+display_stats.php
+82
+2007-11-14 02:42:39
+256
+Requête while invalide<br /><br />SELECT SUM(nbr) as total, stats_year <br />FROM phpboost_stats WHERE stats_year = '2007'<br />ORDER BY stats_year<br /><br />Mélanger les colonnes GROUP (MIN(),MAX(),COUNT()...) avec des colonnes normales est interdit s'il n'y a pas de clause GROUP BY
+display_stats.php
+82
+2007-11-14 02:42:55
+256
+Requête while invalide<br /><br />SELECT SUM(nbr) as total, stats_year <br />FROM phpboost_stats WHERE stats_year = '2007'<br />ORDER BY stats_year<br /><br />Mélanger les colonnes GROUP (MIN(),MAX(),COUNT()...) avec des colonnes normales est interdit s'il n'y a pas de clause GROUP BY
+display_stats.php
+81
+2007-11-14 02:43:14
+256
+Requête while invalide<br /><br />SELECT SUM(nbr) as total, stats_year <br />FROM phpboost_stats WHERE stats_year = '2007'<br />ORDER BY stats_year<br /><br />Mélanger les colonnes GROUP (MIN(),MAX(),COUNT()...) avec des colonnes normales est interdit s'il n'y a pas de clause GROUP BY
+display_stats.php
+81
+2007-11-14 02:44:49
+256
+Requête multiple invalide<br /><br />SELECT MAX(nbr) as max_month, SUM(nbr) as sum_month, AVG(sum_month) as avg_month FROM phpboost_stats WHERE stats_year = '2007' GROUP BY stats_year<br /><br />Champ 'sum_month' inconnu dans field list
+stats.php
+417
+2007-11-14 02:44:52
+256
+Requête multiple invalide<br /><br />SELECT MAX(nbr) as max_month, SUM(nbr) as sum_month, AVG(sum_month) as avg_month FROM phpboost_stats WHERE stats_year = '2007' GROUP BY stats_year<br /><br />Champ 'sum_month' inconnu dans field list
+stats.php
+417
+2007-11-16 08:20:25
+256
+Requête multiple invalide<br /><br />SELECT  FROM phpboost_SELECT SUM(pages) as sum_pages FROM phpboost_stats SELECT SUM(pages) as sum_pages FROM phpboost_stats<br /><br />Erreur de syntaxe près de 'FROM phpboost_SELECT SUM(pages) as sum_pages FROM phpboost_stats' à la ligne 1
+stats.php
+530
+2007-11-16 10:21:01
+256
+Requête simple invalide<br /><br />SELECT pages_details FROM phpboost_stats WHERE stats_year = '2007' AND stats_month = '11' AND stats_day = '16'<br /><br />Champ 'pages_details' inconnu dans field list
+display_stats.php
+107
+2007-11-16 10:21:07
+256
+Requête simple invalide<br /><br />SELECT pages_details FROM phpboost_stats WHERE stats_year = '2007' AND stats_month = '11' AND stats_day = '16'<br /><br />Champ 'pages_details' inconnu dans field list
+display_stats.php
+107
+2007-11-17 00:02:40
+256
+Requête inject invalide<br /><br />INSERT INTO phpboost_stats (stats_year, stats_month, stats_day, nbr, pages, pages_detail) VALUES ('2007', '11', '11', '1', '277', 'a:5:{i:8;i:46;i:9;i:77;i:10;i:128;i:11;i:25;i:0;i:1;}')<br /><br />Champ 'pages' inconnu dans field list
+changeday.php
+100
+2007-11-25 17:54:53
+256
+Connexion base de donnée impossible!<br /><br /><br /><br />Can't connect to MySQL server on 'localhost' (10061)
+mysql.class.php
+44
+2007-11-26 15:58:54
+256
+Requête multiple invalide<br /><br />SELECT user_id, login, level, user_groups, user_lang, user_theme, user_mail, user_pm, editor, user_readonly FROM phpboost_member WHERE user_id='1'<br /><br />Champ 'editor' inconnu dans field list
+sessions.class.php
+234
+2007-11-26 15:58:54
+256
+Requête multiple invalide<br /><br />SELECT user_id, login, level, user_groups, user_lang, user_theme, user_mail, user_pm, editor, user_readonly FROM phpboost_member WHERE user_id='1'<br /><br />Champ 'editor' inconnu dans field list
+sessions.class.php
+234
+2007-11-26 17:51:34
+256
+Unable to load required directory phpboost!
+
+
+2007-11-26 17:51:34
+256
+Unable to load required directory phpboost!
+
+
+2007-11-26 17:51:48
+256
+Unable to load required directory 'phpboost'!
+
+
+2007-11-26 17:51:48
+256
+Unable to load required directory 'phpboost'!
+
+
+2007-11-26 17:51:57
+256
+Unable to load required directory '../templates/phpboost'!
+
+
+2007-11-26 17:51:58
+256
+Unable to load required directory '../templates/phpboost'!
+
+
+2007-11-26 17:52:17
+256
+Unable to load required directory '../templates/phpboost'!
+
+
+2007-11-26 17:52:17
+256
+Unable to load required directory '../templates/phpboost'!
+
+
+2007-11-26 17:52:18
+256
+Unable to load required directory '../templates/phpboost'!
+
+
+2007-11-26 17:52:18
+256
+Unable to load required directory '../templates/phpboost'!
+
+
+2007-11-27 14:58:37
+256
+Unable to load required directory '../templates/phpboost'!
+
+
+2007-11-27 14:58:39
+256
+Unable to load required directory '../templates/phpboost'!
+
+
+2007-11-27 15:01:30
+256
+Unable to load required directory '../templates/phpboost'!
+
+
+2007-11-27 15:01:30
+256
+Unable to load required directory '../templates/phpboost'!
+
+
+2007-11-27 15:02:15
+256
+Unable to load required directory '../templates/phpboost'!
+function.php
+166
+2007-11-27 15:02:15
+256
+Unable to load required directory '../templates/phpboost'!
+function.php
+166
+2007-11-28 01:37:02
+256
+Connexion base de donnée impossible!<br /><br /><br /><br />Can't connect to MySQL server on 'localhost' (10061)
+mysql.class.php
+44
+2007-11-28 18:18:53
+256
+Requête multiple invalide<br /><br />SELECT user_id, login, level, user_groups, user_lang, user_theme, user_mail, user_pm, editor, user_readonly FROM phpboost_member WHERE user_id='1'<br /><br />Champ 'editor' inconnu dans field list
+sessions.class.php
+234
+2007-11-28 18:18:55
+256
+Requête multiple invalide<br /><br />SELECT user_id, login, level, user_groups, user_lang, user_theme, user_mail, user_pm, editor, user_readonly FROM phpboost_member WHERE user_id='1'<br /><br />Champ 'editor' inconnu dans field list
+sessions.class.php
+234
+2007-11-28 18:18:55
+256
+Requête multiple invalide<br /><br />SELECT user_id, login, level, user_groups, user_lang, user_theme, user_mail, user_pm, editor, user_readonly FROM phpboost_member WHERE user_id='1'<br /><br />Champ 'editor' inconnu dans field list
+sessions.class.php
+234
+2007-11-28 18:31:19
+256
+Requête inject invalide<br /><br />UPDATE phpboost_member SET user_lang = 'french', user_theme = 'phpboost', <br />user_mail = 'crowkait@sd.com', user_show_mail = '1', user_editor, 'tinymce', user_local = '', <br />user_msn = '', user_yahoo = '',<br />user_web = '', user_occupation = '', user_hobbies = '', <br />user_desc = '', user_sex = '0', user_born = '0000-00-00', <br />user_sign = '' WHERE user_id = '1'<br /><br />Erreur de syntaxe près de ' 'tinymce', user_local = '', <br />user_msn = '', user_yahoo = '' à la ligne 2
+member.php
+505
+2007-11-28 19:58:57
+256
+Unable to load lang file '../wiki/lang/english/wiki_english.php'!
+function.php
+157
+2007-12-06 01:27:27
+256
+Requête while invalide<br /><br />SELECT name, code, status, secure <br />FROM phpboost_modules_mini<br />WHERE activ = 1<br />ORDER BY status, idmod<br /><br />Champ 'status' inconnu dans field list
+modules_mini.php
+37
+2007-12-06 01:27:32
+256
+Requête while invalide<br /><br />SELECT name, code, status, secure <br />FROM phpboost_modules_mini<br />WHERE activ = 1<br />ORDER BY status, idmod<br /><br />Champ 'status' inconnu dans field list
+modules_mini.php
+37
+2007-12-06 01:27:32
+256
+Requête while invalide<br /><br />SELECT name, code, status, secure <br />FROM phpboost_modules_mini<br />WHERE activ = 1<br />ORDER BY status, idmod<br /><br />Champ 'status' inconnu dans field list
+modules_mini.php
+37
+2007-12-06 01:28:57
+256
+Requête while invalide<br /><br />SELECT name, code, status, secure <br />FROM phpboost_modules_mini<br />WHERE activ = 1<br />ORDER BY side, idmod<br /><br />Champ 'status' inconnu dans field list
+modules_mini.php
+37
+2007-12-06 01:28:57
+256
+Requête while invalide<br /><br />SELECT name, code, status, secure <br />FROM phpboost_modules_mini<br />WHERE activ = 1<br />ORDER BY side, idmod<br /><br />Champ 'status' inconnu dans field list
+modules_mini.php
+37
+2007-12-06 01:29:08
+256
+Requête while invalide<br /><br />SELECT name, code, status, secure <br />FROM phpboost_modules_mini<br />WHERE activ = 1<br />ORDER BY side, class<br /><br />Champ 'status' inconnu dans field list
+modules_mini.php
+37
+2007-12-06 01:29:08
+256
+Requête while invalide<br /><br />SELECT name, code, status, secure <br />FROM phpboost_modules_mini<br />WHERE activ = 1<br />ORDER BY side, class<br /><br />Champ 'status' inconnu dans field list
+modules_mini.php
+37
+2007-12-06 01:29:19
+256
+Cache -> La génération du fichier de cache des modules a échoué!
+modules_mini.php
+60
+2007-12-06 01:30:30
+256
+Cache -> La génération du fichier de cache des modules a échoué!
+modules_mini.php
+60
+2007-12-08 18:08:16
+256
+Requête multiple invalide<br /><br />SELECT COUNT(*) as check_com, nbr_com, lock_com FROM phpboost_download WHERE id = '2'<br /><br />Mélanger les colonnes GROUP (MIN(),MAX(),COUNT()...) avec des colonnes normales est interdit s'il n'y a pas de clause GROUP BY
+com.php
+77
+2007-12-10 16:26:12
+256
+Requête inject invalide<br /><br />INSERT INTO phpboost_forum_history (action, user_id, user_id_action, timestamp) VALUES('delete_msg', '', '0', 'topic-.php#m21', '1197300372')<br /><br />Column count doesn't match value count at row 1
+forum.class.php
+366
+2007-12-10 16:52:57
+256
+Requête inject invalide<br /><br />INSERT INTO phpboost_forum_history (action, user_id, user_id_action, url_action, timestamp) VALUES('delete_topic', '', '2', 'forum-2.php', '1197301977')<br /><br />Champ 'url_action' inconnu dans field list
+forum.class.php
+374
+2007-12-10 22:13:02
+256
+Requête simple invalide<br /><br />SELECT id FROM phpboost_forum_cats id_left <= '2' AND id_right >= '7' AND level = 0<br /><br />Erreur de syntaxe près de '<= '2' AND id_right >= '7' AND level = 0' à la ligne 1
+forum.class.php
+384
+2007-12-10 22:54:05
+256
+Requête simple invalide<br /><br />SELECT MAX(last_timestamp) FROM phpboost_forum_topics WHERE idcat IN ()<br /><br />Erreur de syntaxe près de ')' à la ligne 1
+forum.class.php
+360
+2007-12-12 02:24:48
+256
+Requête inject invalide<br /><br />UPDATE phpboost_forum_cats SET nbr_topic = nbr_topic + 1, nbr_msg = nbr_msg + 1' WHERE id_left <= '2' AND id_right >= '9' AND level <= '1'<br /><br />Erreur de syntaxe près de '' WHERE id_left <= '2' AND id_right >= '9' AND level <= '1'' à la ligne 1
+forum.class.php
+360
+2007-12-12 02:26:32
+256
+Requête inject invalide<br /><br />UPDATE phpboost_forum_cats SET nbr_msg = nbr_msg - 1' WHERE id_left <= '6' AND id_right >= '7' AND level <= '3'<br /><br />Erreur de syntaxe près de '' WHERE id_left <= '6' AND id_right >= '7' AND level <= '3'' à la ligne 1
+forum.class.php
+365
+2007-12-12 03:38:52
+256
+Requête while invalide<br /><br />SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.login, m2.member<br />FROM phpboost_forum_history h <br />LEFT JOIN phpboost_member m ON m.user_id = h.user_id <br />LEFT JOIN phpboost_member m2 ON m2.user_id = h.user_id_action <br />ORDER BY h.timestamp DESC<br /> LIMIT 0, 100<br /><br />Champ 'm2.member' inconnu dans field list
+moderation_forum.php
+643
+2007-12-19 20:25:02
+256
+Requête inject invalide<br /><br />UPDATE phpboost_forum_cats SET id_right = id_right + '2' WHERE <br /><br />Erreur de syntaxe près de '' à la ligne 1
+admin_forum.class.php
+253
+2007-12-23 04:16:49
+256
+Requête simple invalide<br /><br />SELECT COUNT(*) FROM phpboost_upload_cat WHERE name = 'hgf'fd' AND id_parent = '0'<br /><br />Erreur de syntaxe près de 'fd' AND id_parent = '0'' à la ligne 1
+files.class.php
+48
+2007-12-27 02:28:54
+256
+Requête inject invalide<br /><br />INSERT INTO phpboost_stats (stats_year, stats_month, stats_day, nbr, pages, pages_detail) VALUES ('2007', '12', '26', '1', '140', 'a:9:{i:22;i:15;i:19;i:44;i:20;i:29;i:18;i:14;i:17;i:11;i:16;i:2;i:12;i:13;i:1;i:6;i:21;i:6;}')<br /><br />Duplicata du champ '26-12-2007' pour la clef 2
+changeday.php
+101
+2007-12-28 04:34:08
+256
+Requête simple invalide<br /><br />pm_topic<br /><br />Erreur de syntaxe près de 'pm_topic' à la ligne 1
+user_convers_status
+last_user_id

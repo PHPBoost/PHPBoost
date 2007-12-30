@@ -1,0 +1,197 @@
+/* --------------------------------------
+		global.css
+ Contient les classes globales au site, peuvent être utilisées partout.
+--------------------------------------*/
+
+/* Classes générales
+--------------------------------------*/
+/* Case générale des tableaux du site*/
+.row1{
+	background:#9CB18F;
+	border:1px solid #5D745B;
+	padding:6px;
+}
+.row2{
+	background:#A9BF9B;
+	border:1px solid #5D745B;
+	padding:6px;
+}
+.row3{
+	background:#88A078;
+	border:1px solid #5D745B;
+	padding:6px;
+}
+/* Case résultat recherche membre AJAX */
+.xmlhttprequest_result_search{
+	overflow:auto;
+	height:100px;
+	width:100px;	
+	overflow:auto;
+	font-size:11px;
+	background:#9CB18F;
+	border:1px solid #4C6749;
+	color:#061729;
+	padding:2px;
+}
+/*Affichage du mini calendrier */
+.calendar_block{
+	position:absolute;
+	text-align:center;
+	padding:6px 4px;
+	background:#9CB18F;
+	border:1px solid #4C6749;
+	bottom:28px; 
+}
+/* Déplacement des fichiers*/
+.upload_selected_cat{
+	background:#88A078;
+	border:1px solid #5D745B;
+}
+
+
+/* Lien du site 
+--------------------------------------*/
+a{ 
+	color:#2A482F; 
+	text-decoration:none; 
+	font-weight:bold;
+	font-size:11px;
+}
+a:hover{ 
+	color:#476C4E; 
+	text-decoration:underline;
+	font-weight:bold;
+	font-size:11px; 
+}
+/* Liens petite taille */
+a.small_link{ 
+	color:#39434D;
+	font-size:10px;
+}
+a.small_link:hover{ 
+	color:#001b35;
+	font-size:10px;
+}
+/* Liens des commentaires. */
+a.com{
+	color:#39434D; 
+	font-size:10px;
+	font-weight:bold;
+}
+a.com:hover{ 
+	color:#001b35; 
+	font-size:10px;
+	font-weight:bold;
+}
+/* Lien des utilisateurs => ne pas changer le nom de ces classes! */
+a.admin{
+	color:#328500; 
+	font-size:11px;
+	font-weight:bold;
+}
+a.modo{
+	color:#76931E; 
+	font-size:11px;
+	font-weight:bold;
+}
+a.member{
+	color:#293E0B; 
+	font-size:11px;
+	font-weight:bold;
+}
+
+
+/*Menu dynamique des liens
+--------------------------------------*/
+#dynamic_menu h5
+{
+	color:#edfff0;
+	text-align:center;
+	background:#4C6249;
+	border:1px solid #ACB46D;
+	padding:4px 0px;
+	font-weight:bold;
+	font-size:12px;
+	cursor:pointer;
+}
+#dynamic_menu h5.horizontal
+{
+	height:16px;
+	padding:4px 2px;
+	margin-left:15px !important;	
+	margin-left:8px;
+	float:left;
+}
+#dynamic_menu h5:hover
+{
+	background:#596E57;
+}
+#dynamic_menu .vertical_block{
+	margin:0;
+	padding:0;
+	width:171px;
+	z-index:100;
+	position:absolute;
+	display:none;
+	background:url("images/border_right.png") repeat-y right;
+	padding-right:2px;
+	margin:-23px 150px !important;
+	margin:-42px 150px;
+}
+#dynamic_menu .horizontal_block{
+	margin:0;
+	padding:0;
+	width:171px;
+	z-index:100;
+	position:absolute;
+	display:none;
+	background:url("images/border_right.png") repeat-y right;
+	padding-right:2px;
+	margin:26px 0px !important;
+	margin:26px -80px;
+}
+#dynamic_menu ul{
+	margin:0;
+	padding:0;
+	list-style-type:none;
+	width:169px;
+	border-top:1px solid #5D745B;
+	border-bottom:1px solid #5D745B;
+}
+/* Effet d'ombre en bas du menu */
+html>body .dm_bottom{
+	display:block;
+	height:4px;
+	width:164px;
+	margin-left:5px;
+	background:url("images/border_bottom.png") repeat-x;
+}
+/* Case du menu */
+#dynamic_menu li{
+	color:#000000;	
+	background:#88A078 url("images/bgmenu.gif") repeat-y;
+	text-align:left;
+	display:block;
+	width:167px;
+	border-left:1px solid #5D745B;
+	border-right:1px solid #5D745B;
+	text-decoration:none;
+}
+#dynamic_menu li a{
+	color:#000000;	
+	font-size:0.85em;
+	text-decoration:none;
+	padding-left:32px;
+	width:131px;
+	display:block;
+	white-space:nowrap; 	
+	margin:auto;
+	padding-top:6px;
+	padding-bottom:6px;	
+}
+#dynamic_menu li a:hover{	
+	background-color:#A8BC9B;
+	border:1px solid #598F6B;
+	padding-top:5px;
+	padding-bottom:5px;
+}

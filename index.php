@@ -1,0 +1,1 @@
+<?php header('location: http://127.0.0.1/PHP/PHPBoost/PHPBoost_2.1/news/news.php'); ?>

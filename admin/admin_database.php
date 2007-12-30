@@ -1,0 +1,487 @@
+<?php
+/*##################################################
+ *                              admin_database.php
+ *                            -------------------
+ *   begin                : August 06, 2006
+ *   copyright          : (C) 2006-2007 Sautel Benoit / Viarre Régis
+ *   email                : ben.popeye@phpboost.com / crowkait@phpboost.com
+ *
+ *  
+###################################################
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+###################################################*/
+
+require_once('../includes/admin_begin.php');
+
+//On regarde si on doit lire un fichier
+$read_file = (!empty($_GET['read_file'])) ? trim($_GET['read_file']) : '';
+if( !empty($read_file) && preg_match('`.\.sql$`', $read_file) )
+{
+	//Si le fichier existe on le lit
+	if( is_file('../cache/backup/' . $read_file) )
+	{
+		header('Content-Type: text/sql');
+		header('Content-Disposition: attachment; filename="' . $read_file . '"');
+		readfile('../cache/backup/' . $read_file) or die("File not found.");
+	}
+	exit;
+}
+
+define('TITLE', $LANG['database_management']);
+require_once('../includes/admin_header.php');
+
+$repair = !empty($_POST['repair']) ? true : false;
+$optimize = !empty($_POST['optimize']) ? true : false;
+$tables_backup = !empty($_POST['backup']) ? true : false;
+$action = !empty($_GET['action']) ? securit($_GET['action']) : '';
+
+$template->set_filenames(array(
+'admin_database_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_database_management.tpl'
+));
+
+//outils de sauvegarde de la base de données
+include_once('../includes/backup.class.php');
+$backup = new backup($sql_base);
+
+$template->assign_vars(array(
+	'L_DATABASE_MANAGEMENT' => $LANG['database_management'],
+	'L_QUERY' => $LANG['db_execute_query'],
+	'L_DB_TOOLS' => $LANG['db_tools']
+));
+
+if( !empty($_GET['query']) )
+{
+	$query = !empty($_POST['query']) ? trim(stripslashes($_POST['query'])) : '';
+
+	$template->assign_block_vars('query', array());
+
+	if( !empty($query) ) //On exécute une requête
+	{
+		$lower_query = strtolower($query);		
+		$template->assign_block_vars('query.select_result', array(
+			'QUERY' => $backup->sql_highlight_string($query)
+		));
+			
+		if( strtolower(substr($query, 0, 6)) == 'select' ) //il s'agit d'une requête de sélection
+		{
+			//On éxécute la requête
+			$result = $sql->query_while(str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
+			$i = 1;
+			while( $row = $sql->sql_fetch_assoc($result) )
+			{
+				$template->assign_block_vars('query.select_result.line', array());
+				//Premier passage: on liste le nom des champs sélectionnés
+				if( $i == 1 )
+				{
+					foreach( $row as $field_name => $field_value )
+						$template->assign_block_vars('query.select_result.line.field', array(
+							'FIELD' => '<strong>' . $field_name . '</strong>',
+							'CLASS' => 'row3'
+						));
+					$template->assign_block_vars('query.select_result.line', array());
+				}
+				//On parse les valeurs de sortie
+				foreach( $row as $field_name => $field_value )
+				$template->assign_block_vars('query.select_result.line.field', array(
+					'FIELD' => securit($field_value),
+					'CLASS' => 'row1',
+					'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
+				));
+				
+				$i++;
+			}
+		}
+		elseif( substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table' ) //Requêtes d'autres types
+		{
+			$result = $sql->query_inject($query, __LINE__, __FILE__);
+			$affected_rows = @$sql->sql_affected_rows($result, "");			
+		}
+	}	
+	
+	$template->assign_vars(array(
+		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
+		'L_EXECUTE' => $LANG['db_submit_query'],
+		'L_RESULT' => $LANG['db_query_result'],
+		'QUERY' => $query,
+		'L_EXECUTED_QUERY' => $LANG['db_executed_query']
+	));
+}
+elseif( $action == 'restore' )
+{
+	//Suppression d'un fichier
+	if( !empty($_GET['del']) )
+	{
+		$file = securit($_GET['del']);
+		$file_path = '../cache/backup/' . $file;
+		//si le fichier existe
+		if( preg_match('`[^/]+\.sql$`', $file) && is_file($file_path) )
+		{
+			if( @unlink($file_path) )
+			{
+				header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=unlink_success', '', '&'));
+				exit;
+			}
+			else
+			{
+				header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=unlink_failure', '', '&'));
+				exit;
+			}
+		}
+		else
+		{
+			header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=file_does_not_exist', '', '&'));
+			exit;
+		}
+	}
+	
+	$post_file = isset($_FILES['file_sql']) ? $_FILES['file_sql'] : '';
+	
+	if( !empty($_GET['file']) ) //Restauration d'un fichier sur le ftp
+	{
+		$file = securit($_GET['file']);
+		$file_path = '../cache/backup/' . $file;
+		if( preg_match('`[^/]+\.sql$`', $file) && is_file($file_path) )
+		{
+			$sql->sql_parse($file_path);
+			$backup->tables = array();
+			$backup->list_table();
+			//on liste les tables
+			$tables = array();
+			foreach( $backup->tables as $id => $infos )
+				$tables[] = $infos['name'];
+			$backup->optimize_tables($tables);
+			$backup->repair_tables($tables);
+			$cache->generate_all_files();
+			header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=success', '', '&'));
+			exit;
+		}
+	}
+	//Fichier envoyé par post
+	elseif( !empty($post_file) )
+	{
+		if( $post_file['size'] < 10485760 && preg_match('`[^/]+\.sql$`', $post_file['name']) )
+		{
+			$file_path = '../cache/backup/' . $post_file['name'];
+			if( !is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path) )
+			{
+				$sql->sql_parse($file_path);
+				$backup->tables = array();
+				$backup->list_table();
+				//on liste les tables
+				$tables = array();
+				foreach( $backup->tables as $id => $infos )
+					$tables[] = $infos['name'];
+				$backup->optimize_tables($tables);
+				$backup->repair_tables($tables);
+				header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=success', '', '&'));
+				$cache->generate_all_files();
+				exit;
+			}
+			elseif( is_file($file_path) )//Le fichier existe déjà, on ne peut pas le copier
+			{
+				header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=file_already_exists', '', '&'));
+				exit;
+			}
+			else
+			{
+				header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=upload_failure', '', '&'));
+				exit;
+			}
+		}
+		else
+		{
+			header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=failure', '', '&'));
+			exit;
+		}
+	}
+	
+	$template->assign_block_vars('list_files', array());
+	$template->assign_vars(array(
+		'L_LIST_FILES' => $LANG['db_file_list'],
+		'L_CONFIRM_RESTORE' => $LANG['db_confirm_restore'],
+		'L_NAME' => $LANG['db_file_name'],
+		'L_WEIGHT' => $LANG['db_file_weight'],
+		'L_DELETE' => $LANG['delete'],
+		'L_DATE' => $LANG['date']
+	));
+	
+	if( !empty($_GET['error']) )
+	{
+		switch($_GET['error'])
+		{
+			case 'success' :
+				$errorh->error_handler($LANG['db_restore_success'], E_USER_NOTICE, '', '', 'list_files.');
+				break;
+			case 'failure' :
+				$errorh->error_handler($LANG['db_restore_failure'], E_USER_ERROR, '', '', 'list_files.');
+				break;
+			case 'upload_failure' :
+				$errorh->error_handler($LANG['db_upload_failure'], E_USER_ERROR, '', '', 'list_files.');
+				break;
+			case 'file_already_exists' :
+				$errorh->error_handler($LANG['db_file_already_exists'], E_USER_WARNING, '', '', 'list_files.');
+				break;
+			case 'unlink_success' :
+				$errorh->error_handler($LANG['db_unlink_success'], E_USER_NOTICE, '', '', 'list_files.');
+				break;
+			case 'unlink_failure' :
+				$errorh->error_handler($LANG['db_unlink_failure'], E_USER_ERROR, '', '', 'list_files.');
+				break;
+			case 'file_does_not_exist':
+				$errorh->error_handler($LANG['db_file_does_not_exist'], E_USER_WARNING, '', '', 'list_files.');
+				break;
+		}
+	}
+		
+	$dir = '../cache/backup';
+	$i = 0;
+	if( is_dir($dir) )
+	{
+	   if( $dh = opendir($dir) )
+		{
+			while(($file = readdir($dh)) !== false)
+			{
+				if( preg_match('`.\.sql$`', $file) )					
+				{
+					$template->assign_block_vars('list_files.file', array(
+						'FILE_NAME' => $file,
+						'WEIGHT' => number_round(filesize($dir . '/' . $file)/1048576, 1) . ' Mo',
+						'FILE_DATE' => gmdate_format('date_format_short', filemtime($dir . '/' . $file))
+					));
+					$i++;
+				}
+			}
+		   closedir($dh);
+		}
+	}
+	
+	if( $i == 0 )
+		$template->assign_vars(array(
+			'L_INFO' => $LANG['db_empty_dir'],
+		));
+	else
+		$template->assign_vars(array(
+			'L_INFO' => $LANG['db_restore_file'],
+		));
+}
+else
+{
+	//Sauvegarde
+	if( $action == 'backup' )
+	{
+		//Type de sauvegarde (1 => tout, 2 => données, 3 => structure)
+		$backup_type = (!empty($_POST['backup_type']) && $_POST['backup_type'] != 'all') ? ($_POST['backup_type'] == 'data' ? 2 : 3 ) : 1;
+		
+		//Listage des tables sélectionnées
+		$selected_tables = array();
+		
+		//Erreur, la liste des fichiers est vide
+		if( !isset($_POST['table_list']) || count($_POST['table_list']) == 0 )
+		{
+			header(transid('location:' . HOST . DIR . '/admin/admin_database.php?error=empty_list'));
+			exit;
+		}
+		foreach( $backup->tables as $table => $properties )
+		{
+			if( in_array($properties['name'], $_POST['table_list']) )
+				$selected_tables[] = $properties['name'];
+		}
+
+		if( count($selected_tables) == count($backup->tables) ) //On doit tout sauvegarder
+		{
+			//Structure, données ?
+			if( $backup_type != 2 )
+			{
+				//Suppression éventuelle des tables
+				$backup->drop_tables();
+				$backup->save .= "\n\n";
+				//Création de la structure des tables
+				$backup->create_tables();
+				$backup->save .= "\n\n";
+			}
+
+			if( $backup_type != 3 )
+			{
+				//Insertion des données dans les tables
+				$backup->insert_values();
+			}
+		}
+		else //Sauvegarde des tables sélectionnées
+		{
+			//structure, données ?
+			if( $backup_type != 2 )
+			{
+				//Suppression éventuelle des tables
+				$backup->drop_tables($selected_tables);
+				$backup->save .= "\n\n";
+				//Création de la structure des tables
+				$backup->create_tables($selected_tables);
+				$backup->save .= "\n\n";
+			}
+
+			if( $backup_type != 3 )
+			{
+				//Insertion des données dans les tables
+				$backup->insert_values($selected_tables);
+			}
+		}
+		
+		$file_name = 'backup_' . $sql_base . '_' . str_replace('/', '-', gmdate_format('y-m-d-H-i-s')) . '.sql';
+		$file_path = '../cache/backup/' . $file_name;
+
+		$backup->export_file($file_path); //Exportation de la bdd.
+		
+		header(transid('location:' . HOST . DIR . '/admin/admin_database.php?error=backup_success&file=' . $file_name));
+		exit;
+	}
+
+	if( $tables_backup ) //Liste des tables pour les sauvegarder
+	{	
+		$template->assign_block_vars('backup', array(
+			'TARGET' => transid('admin_database.php')
+		));
+		
+		$template->assign_vars(array(
+			'L_BACKUP_DATABASE' => $LANG['db_backup_database'],
+			'L_SELECTION' => $LANG['db_selected_tables'],
+			'L_EXPLAIN_BACKUP' => $LANG['db_backup_explain'],
+			'NBR_TABLES' => count($backup->tables),
+			'SELECT_ALL' => $LANG['select_all'],
+			'SELECT_NONE' => $LANG['select_none'],
+			'L_BACKUP_ALL' => $LANG['db_backup_all'],
+			'L_BACKUP_STRUCT' => $LANG['db_backup_struct'],
+			'L_BACKUP_DATA' => $LANG['db_backup_data'],
+			'L_BACKUP' => $LANG['db_backup']
+		));
+		
+		$selected_tables = array();
+		$i = 0;
+		foreach( $backup->tables as $table => $properties )
+		{
+			if( !empty($_POST['table_' . $properties['name']]) && $_POST['table_' . $properties['name']] == 'on' )
+				$selected_tables[] = $properties['name'];
+			
+			$template->assign_block_vars('backup.table_list', array(
+				'NAME' => $properties['name'],
+				'SELECTED' => in_array($properties['name'], $selected_tables) ? 'selected="selected"' : '',
+				'I' => $i
+			));
+			$i++;
+		}
+	}
+	else
+	{
+		$template->assign_block_vars('index', array(
+			'TARGET' => transid('admin_database.php')
+		));
+		
+		//Réparation ou optimisation des tables
+		if( $repair || $optimize )
+		{
+			$selected_tables = array();
+			foreach( $backup->tables as $table => $properties )
+			{
+				if( !empty($_POST['table_' . $properties['name']]) && $_POST['table_' . $properties['name']] == 'on' )
+					$selected_tables[] = $properties['name'];
+			}
+			if( $repair )
+			{
+				$backup->repair_tables($selected_tables);
+				$errorh->error_handler(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), E_USER_NOTICE, '', '', 'index.');
+			}
+			else
+			{
+				$backup->optimize_tables($selected_tables);
+				$errorh->error_handler(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), E_USER_NOTICE, '', '', 'index.');
+			}	
+		}
+		
+		if( !empty($_GET['error']) )
+		{
+			if( trim($_GET['error']) == 'backup_success' && !empty($_GET['file']) )
+				$errorh->error_handler(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), E_USER_NOTICE, '', '', 'index.');
+		}
+		
+		//liste des tables
+		$i = 0;
+		
+		list($nbr_rows, $nbr_data, $nbr_free) = array(0, 0, 0);
+		foreach( $backup->tables as $key => $table_info )
+		{	
+			$free = number_round($table_info['data_free']/1024, 1);
+			$data = number_round(($table_info['data_length'] + $table_info['index_lenght'])/1024, 1);
+			$free = ($free > 1024) ? number_round($free/1024, 1) . ' MB' : $free . ' kB';
+			$data = ($data > 1024) ? number_round($data/1024, 1) . ' MB' : $data . ' kB';
+			
+			$template->assign_block_vars('index.table_list', array(
+				'TABLE_NAME' => $table_info['name'],
+				'TABLE_ENGINE' => $table_info['engine'],
+				'TABLE_ROWS' => $table_info['rows'],
+				'TABLE_DATA' => $data != 0 ? $data : '-',
+				'TABLE_FREE' => $free != 0 ? $free : '-',
+				'TABLE_COLLATION' => $table_info['collation'],
+				'I' => $i
+			));
+			
+			$nbr_rows += $table_info['rows'];
+			$nbr_free += $table_info['data_free'];
+			$nbr_data += ($table_info['data_length'] + $table_info['index_lenght']);
+			$i++;
+		} 
+		
+		$nbr_free = number_round($nbr_free/1024, 1);
+		$nbr_data = number_round($nbr_data/1024, 1);
+		$nbr_free = ($nbr_free > 1024) ? number_round($nbr_free/1024, 1) . ' Mo' : $nbr_free . ' Ko';
+		$nbr_data = ($nbr_data > 1024) ? number_round($nbr_data/1024, 1) . ' Mo' : $nbr_data . ' Ko';
+		
+		$template->assign_vars(array(
+			'NBR_TABLES' => count($backup->tables),
+			'NBR_ROWS' => $nbr_rows,
+			'NBR_DATA' => $nbr_data,
+			'NBR_FREE' => $nbr_free,
+			'L_EXPLAIN' => $LANG['db_explain_actions'],
+			'L_DB_RESTORE' => $LANG['db_restore'],
+			'L_RESTORE_FROM_SERVER' => $LANG['db_restore_from_server'],
+			'L_FILE_LIST' => $LANG['db_view_file_list'],
+			'L_RESTORE_FROM_UPLOADED_FILE' => sprintf($LANG['import_file_explain'], ini_get('upload_max_filesize')),
+			'L_RESTORE_NOW' => $LANG['db_restore'],
+			'L_TABLE_LIST' => $LANG['db_table_list'],
+			'L_TABLE_NAME' => $LANG['db_table_name'],
+			'L_TABLE_ROWS' => $LANG['db_table_rows'],
+			'L_TABLE_ENGINE' => $LANG['db_table_engine'],
+			'L_TABLE_COLLATION' => $LANG['db_table_collation'],
+			'L_TABLE_DATA' => $LANG['db_table_data'],
+			'L_TABLE_FREE' => $LANG['db_table_free'],
+			'L_SELECTED_TABLES' => $LANG['db_selected_tables'],
+			'L_ALL' => $LANG['db_select_all'],
+			'ACTION_FOR_SELECTION' => $LANG['db_for_selected_tables'],
+			'L_OPTIMIZE' => $LANG['db_optimize'],
+			'L_REPAIR' => $LANG['db_repair'],
+			'L_BACKUP' => $LANG['db_backup'],
+		));
+	}
+}
+
+$template->assign_vars(array(
+	'L_DATABASE_MANAGEMENT' => $LANG['database_management'],
+));
+
+$template->pparse('admin_database_management');
+
+require_once('../includes/admin_footer.php');
+
+?>
