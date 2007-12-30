@@ -1,0 +1,1 @@
+INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('contact', 'a:1:{s:17:"contact_verifcode";i:1;}');

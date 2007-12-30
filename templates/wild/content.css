@@ -1,0 +1,464 @@
+/* --------------------------------------
+		content.css
+Contient les formulaires, les modules (et modules minis), et messages.
+--------------------------------------*/
+
+/* Entête des tableaux */
+th{
+	padding:5px 6px;
+	color:#FFFFFF;
+	background:#4C6749;
+	border:1px solid #2C3F2A;
+	border-bottom:1px solid #000000;
+	text-align:left;
+	font-size:0.75em;
+	text-transform:uppercase;
+}
+
+/* Formulaires 
+--------------------------------------*/
+.fieldset_mini{	
+	display:block;
+	width:70%;
+	margin:auto;
+}
+.fieldset_content{
+	width:95%;
+	margin:auto;
+	margin-top:20px;
+}
+input, textarea, optgroup, select, .xmlhttprequest_preview{
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-size:11px;
+	vertical-align:middle;
+	border-left:1px solid #86A583;
+	border-top:1px solid #86A583;
+	border-right:1px solid #435D41;
+	border-bottom:1px solid #435D41;
+	background-color:#C3D4C2;	
+	color:#0E2A48;
+	padding:1px 2px;
+}
+input:hover, textarea:hover{
+	border:1px solid #AFAEAA;
+	background-color:#E9E9E2; 
+}
+input:focus, textarea:focus{
+	border:1px solid #3D743D;
+	background-color:#E9E9E2; 
+	color:#3D743D;
+}
+fieldset textarea.post{
+	width:90%;
+	display:inline;	
+}
+textarea{
+	display:block;
+	width:94%;
+	margin:auto;
+}
+input.text{
+	padding:2px;	
+}
+input.submit{
+	border:1px solid #5B5A5A;	
+	color:#061729;	
+	padding:2px;
+	font-weight:bold;
+	background:#FFFFFF url('images/form/form.gif') repeat-x;
+}
+input.reset{
+	border:1px solid #5B5A5A;	
+	color:#E10000;
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-weight:bold;
+	padding:2px;
+	background:#FFFFFF url('images/form/form.gif') repeat-x;
+}
+input.reset:hover, input.submit:hover{
+	border:1px solid #3D743D;
+	cursor:pointer;
+	color:#3D743D;
+}
+optgroup, select{
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	cursor:pointer;
+	vertical-align:middle;
+	width:auto;	
+}
+optgroup{
+	font-weight:bold;
+	border:none;
+	border-bottom:1px solid #5B5A5A;
+}
+option{
+	padding:0px 3px;
+}
+legend{
+	padding:1px 0;
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-size:0.75em;
+	font-weight:bold;
+	color:#FFFFFF;
+	background-color:#557152;
+	border:1px solid #2D4237;
+	padding:2px 8px;
+	margin-top:-0.4em;
+	position:relative;
+	text-transform:none;
+	line-height:1.2em;
+	top:0;
+	vertical-align:middle;
+	text-transform:uppercase;
+}
+legend{ 
+	top:-1.2em; 
+}
+* html legend{
+	margin:0 0 -10px -7px;
+	line-height:1em;
+	font-size:.85em;
+}
+fieldset{
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	margin:20px 0;
+	padding:6px;
+	border:1px solid #435D41;
+	background-color:#A9BF9B;
+	position:relative;
+}
+fieldset.fieldset_submit{
+	padding:0;
+	margin:0;
+	margin:auto;
+	margin-top:-10px;
+	padding-bottom:15px;
+	width:50%;
+	text-align:center;
+	background:none;
+	border:none;
+}
+fieldset.fieldset_submit legend{
+	display:none;
+}
+fieldset dl{
+	height:1%;
+	overflow:hidden;
+	margin-bottom:16px;
+	font-size:11px;	
+}
+fieldset dl.overflow_visible{
+	overflow:visible;
+}
+html>body fieldset dl{
+	height:auto;
+	min-height:20px;
+}
+fieldset dt{
+	width:45%;
+	text-align:left;
+	padding-top:3px;
+}
+fieldset dd{
+	margin:0 0 0 45%;
+	padding:0 0 0 5px;
+	border:none;
+	vertical-align:top;
+	font-size:11px;
+}
+dt{
+	float:left;
+	width:auto;
+}
+dt span{ 
+	padding:0 5px 0 0;
+}
+label{
+	cursor:pointer;
+}
+fieldset label{
+	font-size:11px;
+	text-align:left;
+	font-weight:bold;
+	color:#203C1D;
+}
+dd label{
+	white-space:nowrap;
+	margin:0 10px 0 0;
+	font-weight:normal;
+	color:#FFFFFF;
+}
+dt span{
+	font-size:10px;
+	color:#FFFFFF;
+}
+label img{
+	vertical-align:middle;
+}
+fieldset dl dd label:hover{
+	color:#203C1D;
+}
+
+
+
+/* Messages postés par les membres (messages privés, commentaires, etc...) 
+--------------------------------------*/
+/* Classe du lien du pseudo des messages */
+a.msg_link_pseudo{
+	color:#e8eaeb; 
+	font-weight:bold;
+}
+a.msg_link_pseudo:hover { 
+	color:#f2fbff; 
+	font-weight:bold;
+}
+/* Conteneur des messages */
+.msg_position{
+	width:96%;
+	margin:auto;
+	background:#71936D url(images/border.gif) repeat-y left;
+}
+/* Case contenant l'ensemble du message */
+.msg_container{
+	background:#9CB18F url(images/border.gif) repeat-y right;
+	margin-left:2px;
+	overflow:hidden !important;
+	height:auto !important;
+	overflow:visible;
+	height:1%;
+	clear:both;
+}
+/* Barre supérieur des messages */
+.msg_top_l{
+	margin-right:0px !important;
+	margin-right:-3px;
+	width:8px;
+	height:29px;
+	background:url(images/msg_top_l.gif) no-repeat left;
+	float:left;
+}
+.msg_top_r{
+	margin-left:0px !important;
+	margin-left:-3px;
+	width:8px;
+	height:29px;
+	background:url(images/msg_top_r.gif) no-repeat right;
+	float:right;
+}
+.msg_top{
+	height:23px;
+	background:#9CB18F url(images/msg_top.gif) repeat-x;
+	padding-top:6px;
+	padding-left:6px;
+}
+/* Pseudo du membre */
+.msg_pseudo_mbr{
+	width:127px;
+	background:#4C6749;
+	padding:2px 4px;
+	float:left;
+	margin-right:0px !important;
+	margin-right:-3px;
+	margin-left:-127px !important;
+	margin-left:-64px;
+	margin-top:-4px;
+}
+/* Case au dessus du message, indique la date et les boutons d'administration */
+.msg_top_row{
+	height:16px;
+	background:#4C6749;
+	font-size:10px;
+	color:#e8eaeb;
+	margin-right:2px;
+	border-top:1px solid #092139;
+	border-bottom:1px solid #092139;
+	padding-top:4px;
+	padding-left:127px;
+	overflow:hidden !important;
+	height:auto !important;
+	overflow:visible;
+	height:1%;
+}
+/* Case des informations du membre */
+.msg_info_mbr{
+	background:#71936D;
+	width:127px;
+	padding:4px;
+	float:left;
+	border-right:1px solid #092139;
+	font-size:10px;
+}
+/* Case contenant l'ensemble du message, infos membre + contenu */
+.msg_contents_container{
+	margin-right:2px;
+	background:#71936D;
+}
+/* Case du message */
+.msg_contents{
+	background:#9CB18F;
+	margin-left:135px;
+	padding:5px;
+	border-left:1px solid #092139;
+}
+/* Case du contents du message, évite que les images trop grandes déforme */
+.msg_contents_overflow{	
+	width:99%;
+	height:auto;
+	min-height:80px;
+	overflow:auto;
+	padding:10px 0px;
+}
+/* Signature du membre */
+.msg_sign{
+	background:#9CB18F url(images/border.gif) repeat-y right;
+	padding:4px;
+	font-size:11px;
+	margin-left:137px;
+	border-left:1px solid #092139;
+}
+/* Signature du membre, fixe la hauteur maximale */
+.msg_sign_overflow{
+	height:auto !important;
+	height:80px;
+	width:99%;
+	max-height:80px;
+	max-width:99%;
+	overflow:hidden;
+}
+/* Barre inférieure des messages */
+.msg_bottom_l{
+	margin-right:0px !important;
+	margin-right:-3px;
+	width:8px;
+	height:29px;
+	background:url(images/msg_bottom_l.gif) no-repeat left;
+	float:left;
+	border-top:1px solid #092139;
+}
+.msg_bottom_r{
+	margin-left:0px !important;
+	margin-left:-3px;
+	width:8px;
+	height:29px;
+	background:url(images/msg_bottom_r.gif) no-repeat right;
+	float:right;
+	border-top:1px solid #092139;
+}
+.msg_bottom{
+	height:23px;
+	background:#9CB18F url(images/msg_bottom.gif) repeat-x;
+	padding-top:6px;
+	padding-left:6px;
+	border-top:1px solid #092139;
+}
+
+
+/* Modules
+--------------------------------------*/
+/* Conteneur des modules */
+.module_position{
+	width:96%;
+	margin:auto;
+	background:#71936D url(images/border.gif) repeat-y left;
+}
+/* Barre supérieur des modules */
+.module_top_l{
+	margin-right:0px !important;
+	margin-right:-3px;
+	width:8px;
+	height:29px;
+	background:url(images/msg_top_l.gif) no-repeat left;
+	float:left;
+}
+.module_top_r{
+	margin-left:0px !important;
+	margin-left:-3px;
+	width:8px;
+	height:29px;
+	background:url(images/msg_top_r.gif) no-repeat right;
+	float:right;
+}
+.module_top{
+	height:23px;
+	background:url(images/msg_top.gif) repeat-x;
+	padding-top:6px;
+	padding-left:6px;
+	font-size:12px;
+	font-weight:bold;
+}
+/* Contenu des modules */
+.module_contents{
+	background:#9CB18F url(images/border.gif) repeat-y right;
+	padding:10px;
+	margin-left:2px;	
+	overflow:hidden !important;
+	height:auto !important;
+	overflow:visible;
+	height:1%;
+	clear:both;
+}
+/* Barre inférieure des modules */
+.module_bottom_l{
+	margin-right:0px !important;
+	margin-right:-3px;
+	width:8px;
+	height:29px;
+	background:url(images/msg_bottom_l.gif) no-repeat left;
+	float:left;
+}
+.module_bottom_r{
+	margin-left:0px !important;
+	margin-left:-3px;
+	width:8px;
+	height:29px;
+	background:url(images/msg_bottom_r.gif) no-repeat right;
+	float:right;
+}
+.module_bottom{
+	height:23px;
+	background:url(images/msg_bottom.gif) repeat-x;
+	padding-top:6px;
+	padding-left:6px;
+	font-size:12px;
+}
+/* Tableau global, utilisé dans les différents modules */
+.module_table{
+	width:96%;
+	margin:auto;
+	border-spacing:0px;
+	border-collapse:collapse;
+	background-color:#9CB18F;	
+}
+
+
+/* Modules minis
+--------------------------------------*/
+/*Placement des mini modules */
+.module_mini_container{
+	margin-bottom:20px;
+}
+.module_mini_table{
+	width:148px;
+	background:#9CB18F url("images/mini_block.gif") repeat-y;
+	border-bottom:1px solid #7C7D6A;
+	text-align:center; 
+	padding:4px;
+	padding-top:5px;
+}
+.module_mini_top{
+	width:156px;
+	height:25px;
+	background:url("images/row1.png") no-repeat;
+	font-weight:bold;
+	color:#FFFFFF;	
+	padding-left:5px;
+	padding-top:6px;
+	list-style-type:none;
+}
+/* Bordure inférieur des modules minis */
+.module_mini_bottom{
+	margin-top:-1px;
+	height:18px;
+	width:156px;
+	background:url("images/module_bottom.jpg") no-repeat;
+}

@@ -1,0 +1,1 @@
+a:12:{s:9:"windowsxp";i:1772;s:5:"other";i:103;s:12:"windowsvista";i:95;s:5:"linux";i:34;s:11:"windows2000";i:65;s:9:"macintosh";i:18;s:9:"windowsnt";i:8;s:9:"windows95";i:12;s:9:"windows98";i:18;s:17:"windowsserver2003";i:5;s:5:"sunos";i:2;s:9:"windowsme";i:4;}

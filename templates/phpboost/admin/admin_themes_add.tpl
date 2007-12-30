@@ -1,0 +1,118 @@
+		<div id="admin_quick_menu">
+			<ul>
+				<li class="title_menu">{L_THEME_MANAGEMENT}</li>
+				<li>
+					<a href="admin_themes.php"><img src="../templates/{THEME}/images/admin/themes.png" alt="" /></a>
+					<br />
+					<a href="admin_themes.php" class="quick_link">{L_THEME_MANAGEMENT}</a>
+				</li>
+				<li>
+					<a href="admin_themes_add.php"><img src="../templates/{THEME}/images/admin/themes.png" alt="" /></a>
+					<br />
+					<a href="admin_themes_add.php" class="quick_link">{L_THEME_ADD}</a>
+				</li>
+			</ul>
+		</div>
+			
+		<div id="admin_contents">
+			# START error_handler #
+			<div class="error_handler_position">
+				<span id="errorh"></span>
+				<div class="{error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
+					<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+					<br />	
+				</div>
+			</div>
+			# END error_handler #
+			
+			<form action="admin_themes_add.php" method="post" enctype="multipart/form-data" class="fieldset_content">
+				<fieldset>
+					<legend>{L_UPLOAD_THEME}</legend>
+					<dl>
+						<dt><label for="upload_theme">{L_EXPLAIN_ARCHIVE_UPLOAD}</label></dt>
+						<dd><label><input type="file" name="upload_theme" id="upload_theme" size="30" class="submit" />
+						<input type="hidden" name="max_file_size" value="2000000" /></label></dd>
+					</dl>
+				</fieldset>			
+				<fieldset class="fieldset_submit">
+					<legend>{L_UPLOAD}</legend>
+					<input type="submit" value="{L_UPLOAD}" class="submit" />				
+				</fieldset>	
+			</form>
+		
+			<form action="admin_themes_add.php?install=1" method="post">
+				<table class="module_table">
+					<tr> 
+						<th colspan="6">
+							{L_THEME_ADD}
+						</th>
+					</tr>
+					
+					# START no_theme #
+					<tr> 
+						<td class="row1" style="text-align:center;">
+							{L_NO_THEME_ON_SERV}
+						</td>
+					</tr>
+					# END no_theme #
+					# START theme #
+					<tr>
+						<td class="row2" style="width:120px;text-align:center;">
+							{L_THEME}
+						</td>
+						<td class="row2" style="width:160px;text-align:center;">
+							{L_PREVIEW}
+						</td>
+						<td class="row2" style="text-align:center;">
+							{L_DESC}
+						</td>
+						<td class="row2" style="width:100px;text-align:center;">
+							{L_ACTIV}
+						</td>
+						<td class="row2" style="width:100px;text-align:center;">
+							{L_RANK}
+						</td>
+						<td class="row2" style="width:100px;text-align:center;">
+							{L_INSTALL}
+						</td>
+					</tr>
+					# END theme #
+					
+					# START list #
+					<tr> 	
+						<td class="row2" style="text-align:center;">					
+							<strong>{list.THEME}</strong> <em>({list.VERSION})</em>				
+						</td>
+						<td class="row2">					
+							<img src="../templates/{list.ICON}/images/theme.jpg" alt="" />
+						</td>
+						<td class="row2" style="vertical-align:top">	
+							<strong>{L_AUTHOR}:</strong> {list.AUTHOR} {list.AUTHOR_WEBSITE}<br />
+							<strong>{L_DESC}:</strong> {list.DESC}<br />
+							<strong>{L_COMPAT}:</strong> PHPBoost {list.COMPAT}<br />
+							<strong>{L_XHTML}:</strong> {list.HTML_VERSION}<br />
+							<strong>{L_CSS}:</strong> {list.CSS_VERSION}<br />
+							<strong>{L_MAIN_COLOR}:</strong> {list.MAIN_COLOR}<br />
+							<strong>{L_VARIABLE_WIDTH}:</strong> {list.VARIABLE_WIDTH}<br />
+							<strong>{L_WIDTH}:</strong> {list.WIDTH}				
+						</td>
+						<td class="row2" style="text-align:center;">	
+							<input type="radio" name="{list.IDTHEME}activ" value="1" checked="checked" /> {L_YES}
+							<input type="radio" name="{list.IDTHEME}activ" value="0" /> {L_NO}
+						</td>
+						<td class="row2" style="text-align:center;">	
+							<select name="{list.IDTHEME}secure">								
+								# START list.select #	
+								{list.select.RANK}
+								# END list.select #									
+							</select>
+						</td>
+						<td class="row2" style="text-align:center;">
+							<input type="submit" name="{list.IDTHEME}" value="{L_INSTALL}" class="submit" />
+						</td>
+					</tr>
+					# END list #
+				</table>
+			</form>
+		</div>
+		
