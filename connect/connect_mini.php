@@ -35,7 +35,7 @@ if( $session->check_auth($session->data, 0) ) //Connecté.
 	));
 
 	$l_message = ($session->data['user_pm'] > 1) ? $LANG['message_s'] : $LANG['message'];
-	$user_pm = ($session->data['user_pm'] >= 1) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/new_pm.gif"  class="valign_middle" alt="" /> <a href="../member/pm' . transid('.php?pm=' . $session->data['user_id'], '-' . $session->data['user_id'] . '.php') . '" class="small_link">' . $session->data['user_pm'] . ' ' . $l_message . '</a>' : '<img src="../templates/' . $CONFIG['theme'] . '/images/pm_mini.png" alt="" class="valign_middle"> <a href="../member/pm' . transid('.php?pm=' . $session->data['user_id'], '-' . $session->data['user_id'] . '.php') . '" class="small_link">' . $LANG['connect_private_message'] . '</a>';
+	$user_pm = ($session->data['user_pm'] >= 1) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/new_pm.gif"  class="valign_middle" alt="" /> <a href="../member/pm' . transid('.php?pm=' . $session->data['user_id'], '-' . $session->data['user_id'] . '.php') . '" class="small_link">' . $session->data['user_pm'] . ' ' . $l_message . '</a>' : '<img src="../templates/' . $CONFIG['theme'] . '/images/pm_mini.png" alt="" class="valign_middle" /> <a href="../member/pm' . transid('.php?pm=' . $session->data['user_id'], '-' . $session->data['user_id'] . '.php') . '" class="small_link">' . $LANG['connect_private_message'] . '</a>';
 	
 	$template->assign_vars(array(
 		'C_CONNECTED' => true,
@@ -43,8 +43,8 @@ if( $session->check_auth($session->data, 0) ) //Connecté.
 		'THEME' => $CONFIG['theme'],
 		'U_MEMBER_ID' => transid('.php?id=' . $session->data['user_id'] . '&amp;view=1', '-' . $session->data['user_id'] . '.php?view=1'),
 		'U_MEMBER_MP' => $user_pm,
-		'U_ADMIN' => ($session->data['level'] == 2) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/ranks_mini.png" alt="" style="vertical-align:middle"> <a href="../admin/admin_index.php" class="small_link">' . $LANG['admin_panel'] . '</a></li>' : '',
-		'U_MODO' => ($session->data['level'] >= 1) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/modo_mini.png" alt="" style="vertical-align:middle"> <a href="../member/moderation_panel.php" class="small_link">' . $LANG['modo_panel'] . '</a></li>' : '',
+		'U_ADMIN' => ($session->data['level'] == 2) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/ranks_mini.png" alt="" style="vertical-align:middle" /> <a href="../admin/admin_index.php" class="small_link">' . $LANG['admin_panel'] . '</a></li>' : '',
+		'U_MODO' => ($session->data['level'] >= 1) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/modo_mini.png" alt="" style="vertical-align:middle" /> <a href="../member/moderation_panel.php" class="small_link">' . $LANG['modo_panel'] . '</a></li>' : '',
 		'L_PROFIL' => $LANG['profil'],
 		'L_PRIVATE_PROFIL' => $LANG['connect_private_profil'],
 		'L_DISCONNECT' => $LANG['disconnect']
