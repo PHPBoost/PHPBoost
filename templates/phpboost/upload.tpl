@@ -3,7 +3,17 @@
 	<!--
 	function insert_popup(code) 
 	{
-		opener.document.getElementById("{FIELD}").value += ' ' + code;
+		var area = opener.document.getElementById("{FIELD}");
+		var nav = navigator.appName; //Recupère le nom du navigateur
+
+		area.focus();
+
+		if( nav == 'Microsoft Internet Explorer' ) // Internet Explorer
+			ie_sel(area, code, 'smile');
+		else if( nav == 'Netscape' || nav == 'Opera' ) //Netscape ou opera
+			netscape_sel(area, code, 'smile');
+		else //insertion normale (autres navigateurs)
+			opener.document.getElementById("{FIELD}").value += ' ' + code;
 	}	
 	function close_popup()
 	{
