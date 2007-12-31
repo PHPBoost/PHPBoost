@@ -46,6 +46,7 @@ if( isset($_GET['popup']) ) //Popup.
 <link rel="stylesheet" href="../templates/' . $CONFIG['theme'] . '/generic.css" type="text/css" />
 <link href="../templates/' . $CONFIG['theme'] . '/bbcode.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="../templates/' . $CONFIG['theme'] . '/images/global.js"></script>
+<script type="text/javascript" src="../templates/' . $CONFIG['theme'] . '/images/bbcode.js"></script>
 </head>
 
 <body>';
