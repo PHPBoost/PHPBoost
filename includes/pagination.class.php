@@ -25,6 +25,9 @@
  *
 ###################################################*/
 
+define('NO_PREVIOUS_NEXT_LINKS', false);
+define('LINK_START_PAGE', false);
+
 class Pagination
 {
 	var $page; //Valeur courante de la page.
@@ -56,7 +59,7 @@ class Pagination
 	}
 
 	//Renvoi la chaîne de liens formatée.
-	function show_pagin($path, $total_msg, $var_page, $nbr_msg_page, $nbr_max_link, $font_size = 11, $previous_next = true)
+	function show_pagin($path, $total_msg, $var_page, $nbr_msg_page, $nbr_max_link, $font_size = 11, $previous_next = true, $link_start_page = true)
 	{
 		if( $total_msg > $nbr_msg_page )
 		{
@@ -81,7 +84,7 @@ class Pagination
 			
 			for($i = 1; $i <= $nbr_page; $i++)
 			{
-				if( $i == $this->page ) //Page courante.
+				if( $i == $this->page && $link_start_page ) //Page courante.
 					$links .= '&nbsp;<span class="text_strong" style="font-size:' . $font_size . 'px;text-decoration: underline;">' . $this->page . '</span>&nbsp;';					
 				elseif( $i <= $this->nbr_start_links || $i > $page_max_end || ($i <= $page_current_max && $i >= $page_current_min) )
 					$links .= '&nbsp;<a style="font-size:' . $font_size . 'px;" href="' . sprintf($path, $i) . '">' . $i . '</a>&nbsp;';			
