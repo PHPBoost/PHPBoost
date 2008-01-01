@@ -344,7 +344,7 @@ if( !empty($id_get) )
 			'TITLE' => ucfirst($row['title']),			
 			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
 			'DESC' => $row['subtitle'],
-			'PAGINATION_TOPICS' => $pagination->show_pagin('topic' . transid('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d.php'), $row['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 2, 10, false),
+			'PAGINATION_TOPICS' => $pagination->show_pagin('topic' . transid('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d.php'), $row['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 2, 10, NO_PREVIOUS_NEXT_LINKS, LINK_START_PAGE),
 			'MSG' => ($row['nbr_msg'] - 1),
 			'VUS' => $row['nbr_views'],
 			'L_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '', 
