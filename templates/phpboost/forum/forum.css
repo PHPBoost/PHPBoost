@@ -83,6 +83,11 @@ a.forum_link_cat{
 	border:1px solid #55819D;
 	border-top:none;
 	padding:6px;
+	overflow:hidden !important;
+	height:auto !important;
+	overflow:visible;
+	height:1%;
+	clear:both;
 }
 /* Fond des catégories dans l'administration */
 .forum_cat_admin{

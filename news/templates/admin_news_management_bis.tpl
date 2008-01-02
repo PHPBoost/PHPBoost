@@ -5,8 +5,8 @@
 						<br />
 						<dl class="overflow_visible">
 							<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
-							<dd><label>
-								<label><input type="radio" value="2" name="visible" {news.VISIBLE_WAITING} /> 
+							<dd>
+								<label><input type="radio" value="2" name="visible" {news.VISIBLE_WAITING} /></label>
 								<input type="text" size="8" maxlength="8" id="start" name="start" value="{START}" class="text" /> 				
 								<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
 									<div id="start_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
@@ -28,7 +28,7 @@
 								<label><input type="radio" value="1" name="visible" {news.VISIBLE_ENABLED} id="release_date" /> {L_IMMEDIATE}</label>
 								<br />
 								<label><input type="radio" value="0" name="visible" {news.VISIBLE_UNAPROB} /> {L_UNAPROB}</label>
-							</label></dd>
+							</dd>
 						</dl>
 						<dl class="overflow_visible">
 							<dt><label for="current_date">* {L_NEWS_DATE}</label></dt>
@@ -38,8 +38,7 @@
 									<div id="current" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">							
 									</div>
 								</div>
-								<a onClick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={news.DAY_DATE}&amp;m={news.MONTH_DATE}&amp;y={news.YEAR_DATE}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;"><img style="vertical-align:middle;" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
-								
+								<a onClick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={news.DAY_DATE}&amp;m={news.MONTH_DATE}&amp;y={news.YEAR_DATE}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;"><img style="vertical-align:middle;" src="../templates/{THEME}/images/calendar.png" alt="" /></a>								
 								{L_AT}
 								<input type="text" size="2" maxlength="2" name="hour" value="{news.HOUR}" class="text" /> H <input type="text" size="2" maxlength="2" name="min" value="{news.MIN}" class="text" />
 							</label></dd>

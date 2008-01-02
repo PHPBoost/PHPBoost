@@ -18,9 +18,9 @@ th{
 /* Formulaires 
 --------------------------------------*/
 .fieldset_mini{	
-	display:block;
-	width:70%;
+	width:540px;
 	margin:auto;
+	margin-top:20px;
 }
 .fieldset_content{
 	width:95%;
@@ -127,12 +127,9 @@ fieldset{
 	position:relative;
 }
 fieldset.fieldset_submit{
-	padding:0;
-	margin:0;
-	margin:auto;
 	margin-top:-10px;
 	padding-bottom:15px;
-	width:50%;
+	width:100%;
 	text-align:center;
 	background:none;
 	border:none;

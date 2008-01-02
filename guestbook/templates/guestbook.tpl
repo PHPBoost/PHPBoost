@@ -15,7 +15,7 @@
 		-->
 		</script>
 
-		<form action="guestbook.php{UPDATE}" method="post" onsubmit="return check_form_or();" class="fieldset_mini">		
+		<form action="guestbook.php{UPDATE}" method="post" onsubmit="return check_form_or();" class="fieldset_mini">
 			<fieldset>
 				<legend>{L_ADD_MSG}{L_UPDATE_MSG}</legend>
 				<p>{L_REQUIRE}</p>
@@ -34,7 +34,6 @@
 					<strong>{L_FORBIDDEN_TAGS}</strong> {DISPLAY_FORBIDDEN_TAGS}
 				</p>
 			</fieldset>
-			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				# START hidden_guestbook #
