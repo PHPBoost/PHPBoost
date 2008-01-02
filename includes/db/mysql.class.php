@@ -224,9 +224,7 @@ class Sql
 			$array_fields_name = array();
 			$result = $this->query_while("SHOW COLUMNS FROM " . $table . " FROM `" . $sql_base . "`", __LINE__, __FILE__);
 			while( $row = mysql_fetch_row($result) ) 
-			{
 				$array_fields_name[] = $row[0];
-			}
 			return $array_fields_name;
 		}
 		else 

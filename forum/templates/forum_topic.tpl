@@ -197,8 +197,8 @@
 		<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto;margin-top:15px;" id="go_bottom">		
 			<div style="font-size:11px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
 			# INCLUDE handle_bbcode #		
-			<label><textarea type="text" class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
-			<fieldset class="fieldset_submit" style="padding:17px;">
+			<label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
+			<fieldset class="fieldset_submit" style="padding-top:17px;">
 				<legend>{L_SUBMIT}</legend>
 				<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
 				&nbsp;&nbsp; 									
@@ -210,18 +210,17 @@
 				<noscript><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></noscript>
 				&nbsp;&nbsp;
 				<input type="reset" value="{L_RESET}" class="reset" />				
-			</fieldset>	
-			
-			<table class="forum_action">
-				<tr>
-					# IF C_DISPLAY_MSG #
-					<td><a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{L_EXPLAIN_DISPLAY_MSG}</a> </td>	
-					# ENDIF #			
-					<td><a href="action{U_SUSCRIBE}#go_bottom"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/favorite.png" alt="" /></a> <a href="action{U_SUSCRIBE}#go_bottom">{L_SUSCRIBE}</a></td>
-					<td><a href="alert{U_ALERT}#go_bottom"><img class="valign_middle" src="../templates/{THEME}/images/important.png" alt="" /> <a href="alert{U_ALERT}#go_bottom">{L_ALERT}</a></td>
-				</tr>
-			</table>
-		</form>
+			</fieldset>			
+		</form>		
+		<table class="forum_action">
+			<tr>
+				# IF C_DISPLAY_MSG #
+				<td><a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{L_EXPLAIN_DISPLAY_MSG}</a> </td>	
+				# ENDIF #			
+				<td><a href="action{U_SUSCRIBE}#go_bottom"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/favorite.png" alt="" /></a> <a href="action{U_SUSCRIBE}#go_bottom">{L_SUSCRIBE}</a></td>
+				<td><a href="alert{U_ALERT}#go_bottom"><img class="valign_middle" src="../templates/{THEME}/images/important.png" alt="" /> <a href="alert{U_ALERT}#go_bottom">{L_ALERT}</a></td>
+			</tr>
+		</table>
 		# ENDIF #
 		
 		# IF C_ERROR_AUTH_WRITE #
