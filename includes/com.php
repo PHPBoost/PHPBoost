@@ -538,6 +538,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 				'PUNISHMENT' => $readonly,			
 				'DEL' => $del,
 				'EDIT' => $edit,
+				'U_MEMBER_PM' => '<a href="../member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>',
 				'U_ANCHOR' => $_com_path . transid($_com_vars_simple, $_com_vars_r_simple) . '#m' . $row['idcom'],
 				'U_QUOTE' => $_com_path . transid(sprintf($_com_vars, $row['idcom']) . '&amp;quote=' . $row['idcom'], sprintf($_com_vars_r, $row['idcom'], '&amp;quote=' . $row['idcom'])) . '#' . $_com_script
 			));

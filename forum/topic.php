@@ -199,11 +199,7 @@ while ( $row = $sql->sql_fetch_assoc($result) )
 	if( $is_guest )
 		$row['level'] = -1;
 		
-	$edit = '';
-	$del = '';
-	$cut = '';
-	$warning = '';
-	$readonly = '';
+	list($edit, $del, $cut, $warning, $readonly) = array('', '', '', '', '');
 	$first_message = ($row['id'] == $topic['first_msg_id']) ? true : false;
 	//Gestion du niveau d'autorisation.
 	if( $check_group_edit_auth || ($session->data['user_id'] === $row['user_id'] && !$is_guest && !$first_message) )
@@ -392,7 +388,7 @@ while ( $row = $sql->sql_fetch_assoc($result) )
 		'USER_EDIT' => $edit_mark,
 		'USER_SIGN' => (!empty($row['user_sign'])) ? '____________________<br />' . $row['user_sign'] : '',
 		'USER_WEB' => (!empty($row['user_web'])) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_web']  . '" /></a>' : '',
-		'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
+		'WARNING' => !empty($warning) ? $row['user_warning'] . '%' . $warning : '',
 		'PUNISHMENT' => $readonly,
 		'EDIT' => $edit,
 		'CUT' => $cut,

@@ -112,8 +112,11 @@
 			<div class="msg_sign">				
 				<div class="msg_sign_overflow">
 					{current.com.USER_SIGN}
-				</div>	
+				</div>				
 				<hr />
+				<div style="float:left;">
+					{current.com.U_MEMBER_PM} {current.com.USER_MAIL} {current.com.USER_MSN} {current.com.USER_YAHOO} {current.com.USER_WEB}
+				</div>
 				<div style="float:right;font-size:10px;">
 					{current.com.WARNING} {current.com.PUNISHMENT}
 				</div>&nbsp;

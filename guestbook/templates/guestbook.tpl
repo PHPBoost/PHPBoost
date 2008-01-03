@@ -104,6 +104,9 @@
 					{guestbook.USER_SIGN}	
 				</div>				
 				<hr />
+				<div style="float:left;">
+					{guestbook.U_MEMBER_PM} {guestbook.USER_MAIL} {guestbook.USER_MSN} {guestbook.USER_YAHOO} {guestbook.USER_WEB}
+				</div>
 				<div style="float:right;font-size:10px;">
 					{guestbook.WARNING} {guestbook.PUNISHMENT}
 				</div>&nbsp;

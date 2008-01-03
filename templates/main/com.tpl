@@ -36,8 +36,7 @@
 				<label><textarea rows="10" cols="60" id="contents" name="contents">{CONTENTS}</textarea> </label>
 				<br />
 				<strong>{L_FORBIDDEN_TAGS}</strong> {DISPLAY_FORBIDDEN_TAGS}
-			</fieldset>
-			
+			</fieldset>			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				# START current.post.hidden_com #
@@ -113,8 +112,11 @@
 			<div class="msg_sign">				
 				<div class="msg_sign_overflow">
 					{current.com.USER_SIGN}
-				</div>	
+				</div>				
 				<hr />
+				<div style="float:left;">
+					{current.com.U_MEMBER_PM} {current.com.USER_MAIL} {current.com.USER_MSN} {current.com.USER_YAHOO} {current.com.USER_WEB}
+				</div>
 				<div style="float:right;font-size:10px;">
 					{current.com.WARNING} {current.com.PUNISHMENT}
 				</div>&nbsp;
