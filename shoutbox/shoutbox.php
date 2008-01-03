@@ -398,6 +398,7 @@ else
 				'PUNISHMENT' => $readonly,			
 				'DEL' => $del,
 				'EDIT' => $edit,
+				'U_MEMBER_PM' => !$is_guest ? '<a href="../member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>' : '',
 				'U_ANCHOR' => 'shoutbox.php' . SID . '#m' . $row['id']
 			));
 	}

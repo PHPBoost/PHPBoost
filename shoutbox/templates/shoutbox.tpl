@@ -98,6 +98,9 @@
 					{shoutbox.USER_SIGN}
 				</div>				
 				<hr />
+				<div style="float:left;">
+					{shoutbox.U_MEMBER_PM} {shoutbox.USER_MAIL} {shoutbox.USER_MSN} {shoutbox.USER_YAHOO} {shoutbox.USER_WEB}
+				</div>
 				<div style="float:right;font-size:10px;">
 					{shoutbox.WARNING} {shoutbox.PUNISHMENT}
 				</div>&nbsp;

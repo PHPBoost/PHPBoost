@@ -205,12 +205,8 @@ else
 	while( $row = $sql->sql_fetch_assoc($result) )
 	{
 		$config = @parse_ini_file('../' . $row['name'] . '/lang/' . $CONFIG['lang'] . '/config.ini');
-		$admin_link = '';
 		if( is_array($config) )
-		{	
-			$admin_link = '../' . $row['name'] . '/admin_' . $row['name'] . '.php';
-			$row['name'] = !empty($config['name']) ? $config['name'] : '';			
-		}
+			$row['name'] = !empty($config['name']) ? $config['name'] : '';		
 		
 		if( $row['activ'] == 1 )
 		{
@@ -289,7 +285,7 @@ else
 				
 			$template->assign_block_vars('main_' . $block_position, array(
 				'IDMENU' => $row['id'],
-				'NAME' => !empty($admin_link) ? '<a href="' . $admin_link . '">' . $row['name'] . '</a>' : ucfirst($row['name']),
+				'NAME' => ucfirst($row['name']),
 				'EDIT' => ($row['added'] == 1) ? '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : '',
 				'DEL' => ($row['added'] == 1) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['side'] . '&amp;id=' . $row['id'] . '" onClick="javascript:return Confirm_menu();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" /></a>' : '',
 				'ACTIV_ENABLED' => ($row['activ'] == '1') ? 'selected="selected"' : '',
