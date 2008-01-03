@@ -32,7 +32,9 @@ $uninstall = isset($_GET['uninstall']) ? true : false;
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '0';
 $error = !empty($_GET['error']) ? trim($_GET['error']) : ''; 
 
-@include('../cache/config.php');
+$theme_tmp = $CONFIG['theme'];
+//On recupère toute les informations supplementaires.
+$cache->load_file('config', RELOAD_CACHE);
 
 if( isset($_GET['activ']) && !empty($id) ) //Aprobation du thème.
 {
@@ -291,6 +293,7 @@ else
 		
 	$template->pparse('admin_themes_management'); 
 }
+$CONFIG['theme'] = $theme_tmp;
 
 require_once('../includes/admin_footer.php');
 

@@ -248,7 +248,8 @@ else //Sinon on rempli le formulaire
 	$template->set_filenames(array(
 		'admin_config' => '../templates/' . $CONFIG['theme'] . '/admin/admin_config.tpl'
 	));
-
+	
+	$theme_tmp = $CONFIG['theme'];
 	//On recupère toute les informations supplementaires.
 	$cache->load_file('config', RELOAD_CACHE);
 
@@ -457,6 +458,8 @@ else //Sinon on rempli le formulaire
 	$template->assign_block_vars('select_editor', array(
 		'EDITOR' => $select_editors
 	));
+	
+	$CONFIG['theme'] = $theme_tmp;
 	
 	$template->pparse('admin_config');
 }
