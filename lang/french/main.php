@@ -507,7 +507,7 @@ S\'il s\'agit d\'une erreur veuillez contacter l\'administrateur du site.
 
 //Footer
 $LANG['powered_by'] = 'Boosté par';
-$LANG['phpboost_right'] = '&copy; 2005-2007';
+$LANG['phpboost_right'] = '&copy; 2005-2008';
 $LANG['sql_req'] = 'Requêtes SQL';
 $LANG['achieved'] = 'Executé en';
 ?>
