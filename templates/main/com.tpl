@@ -234,10 +234,10 @@
 			<div class="msg_container">
 				<span id="m{popup.com.ID}">
 				<span id="com"></span>
-				<div class="msg_pseudo_mbr">
-					{popup.com.USER_ONLINE} {popup.com.USER_PSEUDO}
-				</div>
 				<div class="msg_top_row">
+					<div class="msg_pseudo_mbr">
+						{popup.com.USER_ONLINE} {popup.com.USER_PSEUDO}
+					</div>
 					<div style="float:left;">&nbsp;&nbsp;<a href="{popup.com.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{popup.com.ID}" /></a> {popup.com.DATE}</div>
 					<div style="float:right;"><a href="{popup.com.U_QUOTE}" title=""><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" class="valign_middle" /></a>{popup.com.EDIT}{popup.com.DEL}&nbsp;&nbsp;</div>
 				</div>

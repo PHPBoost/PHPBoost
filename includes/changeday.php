@@ -29,7 +29,7 @@ if( defined('PHP_BOOST') !== true ) exit;
 
 //Vérification pour empêcher une double mise à jour.		
 $compteur = $sql->query_array('compteur', $sql->sql_year('time') . ' AS Y', $sql->sql_month('time') . ' AS M', $sql->sql_day('time') . ' AS D', 'total', "WHERE id = 1", __LINE__, __FILE__);
-if( $compteur['D'] != gmdate_format('j', time(), TIMEZONE_SITE) )
+if( $compteur['D'] != gmdate_format('j', time(), TIMEZONE_SYSTEM) )
 {
 	#######Taches de maintenance#######
 	//Suppression des sessions périmées

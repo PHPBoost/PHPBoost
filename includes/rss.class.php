@@ -60,7 +60,7 @@ class Rss
 			$file = file_get_contents_emulate(HOST . DIR . $path_flux);		
 			if( $file !== false )
 			{
-				if( preg_match('`<item>(.*)</item>`is', $file, $line_items) ) 
+				if( preg_match('`<item>(.*)</item>`is', $file) ) 
 					$this->parse_rss($file); //Parse le rss chargé
 			}
 			else
@@ -75,7 +75,7 @@ class Rss
 		$lenght_array = count($array_items);
 		
 		$this->flux = '<ul>';
-		for( $i = 1; $i < $lenght_array; $i++) 
+		for($i = 1; $i < $lenght_array; $i++) 
 		{
 			$url = preg_match('`<link>(.*)</link>`is', $array_items[$i], $url) ? $url[1] : '';
 			$title = preg_match('`<title>(.*)</title>`is', $array_items[$i], $title) ? $title[1] : '';
