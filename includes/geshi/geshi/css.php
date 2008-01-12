@@ -201,7 +201,7 @@ $language_data = array (
     'TAB_WIDTH' => 4
 );
 
-if (isset($this) && is_a($this, 'GeSHi')) {
+if( isset($this) && is_a($this, 'GeSHi') ) {
     $language_data['STYLES']['NUMBERS'][0] = $language_data['STYLES']['REGEXPS'][3];
 }
 
