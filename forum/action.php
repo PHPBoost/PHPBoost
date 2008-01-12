@@ -221,8 +221,14 @@ elseif( !empty($untrack) && $session->check_auth($session->data, 0) ) //Retrait 
 	header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#quote');
 	exit;
 }
-elseif( $read && $session->check_auth($session->data, 0) ) //Marquer comme lu.
+elseif( $read ) //Marquer comme lu.
 {
+	if( !$session->check_auth($session->data, 0) ) //Réservé aux membres.
+	{
+		header('location: ' . HOST . DIR . '/member/error.php'); 
+		exit;
+	}
+			
 	//Calcul du temps de péremption, ou de dernière vue des messages.
 	$check_last_view_forum = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
 

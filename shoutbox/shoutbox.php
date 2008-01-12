@@ -119,13 +119,16 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 				'shoutbox' => '../templates/' . $CONFIG['theme'] . '/shoutbox/shoutbox.tpl'
 			));
 			
-			if( $row['user_id'] !== -1 )
-				$template->assign_block_vars('hidden', array(
-					'PSEUDO' => $row['login']
+			//Pseudo du membre connecté.
+			if( $session->data['user_id'] !== -1 )
+				$template->assign_vars(array(
+					'SHOUTBOX_PSEUDO' => $session->data['login'],
+					'C_HIDDEN_SHOUT' => true
 				));
 			else
-				$template->assign_block_vars('visible', array(
-					'PSEUDO' => $row['login']
+				$template->assign_vars(array(
+					'SHOUTBOX_PSEUDO' => $LANG['guest'],
+					'C_VISIBLE_SHOUT' => true
 				));
 			
 			$forbidden_tags = implode(', ', $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
@@ -199,15 +202,15 @@ else //Affichage.
 	
 	//Pseudo du membre connecté.
 	if( $session->data['user_id'] !== -1 )
-	$template->assign_vars(array(
-		'SHOUTBOX_PSEUDO' => $session->data['login'],
-		'C_HIDDEN_SHOUT' => true
-	));
-else
-	$template->assign_vars(array(
-		'SHOUTBOX_PSEUDO' => $LANG['guest'],
-		'C_VISIBLE_SHOUT' => true
-	));
+		$template->assign_vars(array(
+			'SHOUTBOX_PSEUDO' => $session->data['login'],
+			'C_HIDDEN_SHOUT' => true
+		));
+	else
+		$template->assign_vars(array(
+			'SHOUTBOX_PSEUDO' => $LANG['guest'],
+			'C_VISIBLE_SHOUT' => true
+		));
 		  	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
