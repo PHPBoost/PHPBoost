@@ -24,7 +24,7 @@ $_tmpb_current = &$this->_block['current'][$current_key]; ?>
 foreach($_tmpb_current['post'] as $post_key => $post_value) {
 $_tmpb_post = &$_tmpb_current['post'][$post_key]; ?>
 		<span id="<?php echo isset($this->_var['SCRIPT']) ? $this->_var['SCRIPT'] : ''; ?>"></span>
-		<form action="<?php echo isset($this->_var['U_ACTION']) ? $this->_var['U_ACTION'] : ''; ?>" method="post" onsubmit="return check_form_com();" class="fieldset_content" style="width:60%">
+		<form action="<?php echo isset($this->_var['U_ACTION']) ? $this->_var['U_ACTION'] : ''; ?>" method="post" onsubmit="return check_form_com();" class="fieldset_mini">
 			<fieldset>
 				<legend><?php echo isset($this->_var['L_EDIT_COMMENT']) ? $this->_var['L_EDIT_COMMENT'] : '';  echo isset($this->_var['L_ADD_COMMENT']) ? $this->_var['L_ADD_COMMENT'] : ''; ?></legend>
 				
@@ -42,8 +42,7 @@ $_tmpb_visible_com = &$_tmpb_post['visible_com'][$visible_com_key]; ?>
 				<label><textarea rows="10" cols="60" id="contents" name="contents"><?php echo isset($this->_var['CONTENTS']) ? $this->_var['CONTENTS'] : ''; ?></textarea> </label>
 				<br />
 				<strong><?php echo isset($this->_var['L_FORBIDDEN_TAGS']) ? $this->_var['L_FORBIDDEN_TAGS'] : ''; ?></strong> <?php echo isset($this->_var['DISPLAY_FORBIDDEN_TAGS']) ? $this->_var['DISPLAY_FORBIDDEN_TAGS'] : ''; ?>
-			</fieldset>
-			
+			</fieldset>			
 			<fieldset class="fieldset_submit">
 				<legend><?php echo isset($this->_var['L_SUBMIT']) ? $this->_var['L_SUBMIT'] : ''; ?></legend>
 				<?php if( !isset($_tmpb_post['hidden_com']) || !is_array($_tmpb_post['hidden_com']) ) $_tmpb_post['hidden_com'] = array();
@@ -127,8 +126,11 @@ $_tmpb_com = &$_tmpb_current['com'][$com_key]; ?>
 			<div class="msg_sign">				
 				<div class="msg_sign_overflow">
 					<?php echo isset($_tmpb_com['USER_SIGN']) ? $_tmpb_com['USER_SIGN'] : ''; ?>
-				</div>	
+				</div>				
 				<hr />
+				<div style="float:left;">
+					<?php echo isset($_tmpb_com['U_MEMBER_PM']) ? $_tmpb_com['U_MEMBER_PM'] : ''; echo ' '; echo isset($_tmpb_com['USER_MAIL']) ? $_tmpb_com['USER_MAIL'] : ''; echo ' '; echo isset($_tmpb_com['USER_MSN']) ? $_tmpb_com['USER_MSN'] : ''; echo ' '; echo isset($_tmpb_com['USER_YAHOO']) ? $_tmpb_com['USER_YAHOO'] : ''; echo ' '; echo isset($_tmpb_com['USER_WEB']) ? $_tmpb_com['USER_WEB'] : ''; ?>
+				</div>
 				<div style="float:right;font-size:10px;">
 					<?php echo isset($_tmpb_com['WARNING']) ? $_tmpb_com['WARNING'] : ''; echo ' '; echo isset($_tmpb_com['PUNISHMENT']) ? $_tmpb_com['PUNISHMENT'] : ''; ?>
 				</div>&nbsp;
@@ -260,10 +262,10 @@ $_tmpb_com = &$_tmpb_popup['com'][$com_key]; ?>
 			<div class="msg_container">
 				<span id="m<?php echo isset($_tmpb_com['ID']) ? $_tmpb_com['ID'] : ''; ?>">
 				<span id="com"></span>
-				<div class="msg_pseudo_mbr">
-					<?php echo isset($_tmpb_com['USER_ONLINE']) ? $_tmpb_com['USER_ONLINE'] : ''; echo ' '; echo isset($_tmpb_com['USER_PSEUDO']) ? $_tmpb_com['USER_PSEUDO'] : ''; ?>
-				</div>
 				<div class="msg_top_row">
+					<div class="msg_pseudo_mbr">
+						<?php echo isset($_tmpb_com['USER_ONLINE']) ? $_tmpb_com['USER_ONLINE'] : ''; echo ' '; echo isset($_tmpb_com['USER_PSEUDO']) ? $_tmpb_com['USER_PSEUDO'] : ''; ?>
+					</div>
 					<div style="float:left;">&nbsp;&nbsp;<a href="<?php echo isset($_tmpb_com['U_ANCHOR']) ? $_tmpb_com['U_ANCHOR'] : ''; ?>"><img src="../templates/<?php echo isset($this->_var['THEME']) ? $this->_var['THEME'] : ''; ?>/images/ancre.png" alt="<?php echo isset($_tmpb_com['ID']) ? $_tmpb_com['ID'] : ''; ?>" /></a> <?php echo isset($_tmpb_com['DATE']) ? $_tmpb_com['DATE'] : ''; ?></div>
 					<div style="float:right;"><a href="<?php echo isset($_tmpb_com['U_QUOTE']) ? $_tmpb_com['U_QUOTE'] : ''; ?>" title=""><img src="../templates/<?php echo isset($this->_var['THEME']) ? $this->_var['THEME'] : ''; ?>/images/<?php echo isset($this->_var['LANG']) ? $this->_var['LANG'] : ''; ?>/quote.png" alt="<?php echo isset($this->_var['L_QUOTE']) ? $this->_var['L_QUOTE'] : ''; ?>" title="<?php echo isset($this->_var['L_QUOTE']) ? $this->_var['L_QUOTE'] : ''; ?>" class="valign_middle" /></a><?php echo isset($_tmpb_com['EDIT']) ? $_tmpb_com['EDIT'] : '';  echo isset($_tmpb_com['DEL']) ? $_tmpb_com['DEL'] : ''; ?>&nbsp;&nbsp;</div>
 				</div>

@@ -205,8 +205,8 @@ $_tmpb_msg = &$this->_block['msg'][$msg_key]; ?>
 		<form action="post<?php echo isset($this->_var['U_FORUM_ACTION_POST']) ? $this->_var['U_FORUM_ACTION_POST'] : ''; ?>" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto;margin-top:15px;" id="go_bottom">		
 			<div style="font-size:11px;text-align:center;"><label for="contents"><?php echo isset($this->_var['L_RESPOND']) ? $this->_var['L_RESPOND'] : ''; ?></label></div>	
 			<?php $this->tpl_include('handle_bbcode'); ?>		
-			<label><textarea type="text" class="post" rows="15" cols="66" id="contents" name="contents"><?php echo isset($this->_var['CONTENTS']) ? $this->_var['CONTENTS'] : ''; ?></textarea></label>
-			<fieldset class="fieldset_submit" style="padding:17px;">
+			<label><textarea class="post" rows="15" cols="66" id="contents" name="contents"><?php echo isset($this->_var['CONTENTS']) ? $this->_var['CONTENTS'] : ''; ?></textarea></label>
+			<fieldset class="fieldset_submit" style="padding-top:17px;">
 				<legend><?php echo isset($this->_var['L_SUBMIT']) ? $this->_var['L_SUBMIT'] : ''; ?></legend>
 				<input type="submit" name="valid" value="<?php echo isset($this->_var['L_SUBMIT']) ? $this->_var['L_SUBMIT'] : ''; ?>" class="submit" />
 				&nbsp;&nbsp; 									
@@ -218,18 +218,17 @@ $_tmpb_msg = &$this->_block['msg'][$msg_key]; ?>
 				<noscript><input value="<?php echo isset($this->_var['L_PREVIEW']) ? $this->_var['L_PREVIEW'] : ''; ?>" type="submit" name="prw" class="submit" /></noscript>
 				&nbsp;&nbsp;
 				<input type="reset" value="<?php echo isset($this->_var['L_RESET']) ? $this->_var['L_RESET'] : ''; ?>" class="reset" />				
-			</fieldset>	
-			
-			<table class="forum_action">
-				<tr>
-					<?php if( isset($this->_var['C_DISPLAY_MSG']) && $this->_var['C_DISPLAY_MSG'] ) { ?>
-					<td><a href="action<?php echo isset($this->_var['U_ACTION_MSG_DISPLAY']) ? $this->_var['U_ACTION_MSG_DISPLAY'] : ''; ?>#go_bottom"><?php echo isset($this->_var['ICON_DISPLAY_MSG']) ? $this->_var['ICON_DISPLAY_MSG'] : ''; ?></a>	<a href="action<?php echo isset($this->_var['U_ACTION_MSG_DISPLAY']) ? $this->_var['U_ACTION_MSG_DISPLAY'] : ''; ?>#go_bottom"><?php echo isset($this->_var['L_EXPLAIN_DISPLAY_MSG']) ? $this->_var['L_EXPLAIN_DISPLAY_MSG'] : ''; ?></a> </td>	
-					<?php } ?>			
-					<td><a href="action<?php echo isset($this->_var['U_SUSCRIBE']) ? $this->_var['U_SUSCRIBE'] : ''; ?>#go_bottom"><img class="valign_middle" src="<?php echo isset($this->_var['MODULE_DATA_PATH']) ? $this->_var['MODULE_DATA_PATH'] : ''; ?>/images/favorite.png" alt="" /></a> <a href="action<?php echo isset($this->_var['U_SUSCRIBE']) ? $this->_var['U_SUSCRIBE'] : ''; ?>#go_bottom"><?php echo isset($this->_var['L_SUSCRIBE']) ? $this->_var['L_SUSCRIBE'] : ''; ?></a></td>
-					<td><a href="alert<?php echo isset($this->_var['U_ALERT']) ? $this->_var['U_ALERT'] : ''; ?>#go_bottom"><img class="valign_middle" src="../templates/<?php echo isset($this->_var['THEME']) ? $this->_var['THEME'] : ''; ?>/images/important.png" alt="" /> <a href="alert<?php echo isset($this->_var['U_ALERT']) ? $this->_var['U_ALERT'] : ''; ?>#go_bottom"><?php echo isset($this->_var['L_ALERT']) ? $this->_var['L_ALERT'] : ''; ?></a></td>
-				</tr>
-			</table>
-		</form>
+			</fieldset>			
+		</form>		
+		<table class="forum_action">
+			<tr>
+				<?php if( isset($this->_var['C_DISPLAY_MSG']) && $this->_var['C_DISPLAY_MSG'] ) { ?>
+				<td><a href="action<?php echo isset($this->_var['U_ACTION_MSG_DISPLAY']) ? $this->_var['U_ACTION_MSG_DISPLAY'] : ''; ?>#go_bottom"><?php echo isset($this->_var['ICON_DISPLAY_MSG']) ? $this->_var['ICON_DISPLAY_MSG'] : ''; ?></a>	<a href="action<?php echo isset($this->_var['U_ACTION_MSG_DISPLAY']) ? $this->_var['U_ACTION_MSG_DISPLAY'] : ''; ?>#go_bottom"><?php echo isset($this->_var['L_EXPLAIN_DISPLAY_MSG']) ? $this->_var['L_EXPLAIN_DISPLAY_MSG'] : ''; ?></a> </td>	
+				<?php } ?>			
+				<td><a href="action<?php echo isset($this->_var['U_SUSCRIBE']) ? $this->_var['U_SUSCRIBE'] : ''; ?>#go_bottom"><img class="valign_middle" src="<?php echo isset($this->_var['MODULE_DATA_PATH']) ? $this->_var['MODULE_DATA_PATH'] : ''; ?>/images/favorite.png" alt="" /></a> <a href="action<?php echo isset($this->_var['U_SUSCRIBE']) ? $this->_var['U_SUSCRIBE'] : ''; ?>#go_bottom"><?php echo isset($this->_var['L_SUSCRIBE']) ? $this->_var['L_SUSCRIBE'] : ''; ?></a></td>
+				<td><a href="alert<?php echo isset($this->_var['U_ALERT']) ? $this->_var['U_ALERT'] : ''; ?>#go_bottom"><img class="valign_middle" src="../templates/<?php echo isset($this->_var['THEME']) ? $this->_var['THEME'] : ''; ?>/images/important.png" alt="" /> <a href="alert<?php echo isset($this->_var['U_ALERT']) ? $this->_var['U_ALERT'] : ''; ?>#go_bottom"><?php echo isset($this->_var['L_ALERT']) ? $this->_var['L_ALERT'] : ''; ?></a></td>
+			</tr>
+		</table>
 		<?php } ?>
 		
 		<?php if( isset($this->_var['C_ERROR_AUTH_WRITE']) && $this->_var['C_ERROR_AUTH_WRITE'] ) { ?>
