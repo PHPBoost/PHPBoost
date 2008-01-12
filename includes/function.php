@@ -386,10 +386,10 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 		$timestamp = time();
 	
 	$serveur_hour = number_round(date('Z')/3600, 0); //Décallage du serveur par rapport au méridien de greenwitch.
-	if( $timezone_system == 1 ) //Timestamp du site, non dépendant de l'utilisateur.
+	if( $timezone_system == 1 ) //Timestamp du serveur, non dépendant de l'utilisateur et du fuseau par défaut du site.
+		$timezone = 1 - $serveur_hour;
+	elseif( $timezone_system == 2 ) //Timestamp du site, non dépendant de l'utilisateur.
 		$timezone = $CONFIG['timezone'] - $serveur_hour;
-	elseif( $timezone_system == 2 ) //Timestamp du serveur, non dépendant de l'utilisateur et du fuseau par défaut du site.
-		$timezone = $serveur_hour;
 	else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
 		$timezone = $session->data['user_timezone'] - $serveur_hour;
 

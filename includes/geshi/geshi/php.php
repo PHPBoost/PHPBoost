@@ -60,7 +60,7 @@ $language_data = array (
 			),
 		2 => array(
 			'null', '__LINE__', '__FILE__',
-			'void', 'int', 'string', 'bool', 'float', 'object', 'false', 'true', 'var', 'default', 'list',
+			'void', 'int', 'string', 'bool', 'float', 'object', 'resource', 'false', 'true', 'var', 'default', 'list',
 			'echo', 'print', 'global', 'static', 'exit', 'array', 'empty', 'eval', 'isset', 'unset', 'die',
 			'function', 'class', 'new', '&amp;new', 'public', 'private', 'interface', 'extends',
 			),

@@ -102,7 +102,7 @@ $stats_array_browsers = array(
 	'mozilla' => array('Mozilla', 'mozilla.png'),
 	'aol' => array('Aol', ''),
 	'lynx' => array('lynx', ''),
-	'seamonkey' => array('SeaMonkey', ''),
+	'seamonkey' => array('SeaMonkey', 'seamonkey.png'),
 	'camino' => array('Camino', ''),
 	'links' => array('Links', ''),
 	'galeon' => array('Galeaon', ''),
@@ -140,9 +140,9 @@ $stats_array_os = array(
 	'aix' => array('AIX', 'aix.png'),
 	'irix' => array('Irix', 'irix.png'),
 	'hp-ux' => array('HP-UX', 'hpux.png'),
-	'wii' => array('Wii', ''),
-	'psp' => array('Psp', ''),
-	'playstation3' => array('Playstation 3', ''),
+	'wii' => array('Wii', 'wii.png'),
+	'psp' => array('Psp', 'psp.png'),
+	'playstation3' => array('Playstation 3', 'ps3.png'),
 	'other' => array('Autres', '../other.png')
 );
 

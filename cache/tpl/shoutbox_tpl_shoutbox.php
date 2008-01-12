@@ -102,6 +102,9 @@ $_tmpb_shoutbox = &$this->_block['shoutbox'][$shoutbox_key]; ?>
 					<?php echo isset($_tmpb_shoutbox['USER_SIGN']) ? $_tmpb_shoutbox['USER_SIGN'] : ''; ?>
 				</div>				
 				<hr />
+				<div style="float:left;">
+					<?php echo isset($_tmpb_shoutbox['U_MEMBER_PM']) ? $_tmpb_shoutbox['U_MEMBER_PM'] : ''; echo ' '; echo isset($_tmpb_shoutbox['USER_MAIL']) ? $_tmpb_shoutbox['USER_MAIL'] : ''; echo ' '; echo isset($_tmpb_shoutbox['USER_MSN']) ? $_tmpb_shoutbox['USER_MSN'] : ''; echo ' '; echo isset($_tmpb_shoutbox['USER_YAHOO']) ? $_tmpb_shoutbox['USER_YAHOO'] : ''; echo ' '; echo isset($_tmpb_shoutbox['USER_WEB']) ? $_tmpb_shoutbox['USER_WEB'] : ''; ?>
+				</div>
 				<div style="float:right;font-size:10px;">
 					<?php echo isset($_tmpb_shoutbox['WARNING']) ? $_tmpb_shoutbox['WARNING'] : ''; echo ' '; echo isset($_tmpb_shoutbox['PUNISHMENT']) ? $_tmpb_shoutbox['PUNISHMENT'] : ''; ?>
 				</div>&nbsp;

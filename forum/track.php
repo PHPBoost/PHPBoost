@@ -39,7 +39,12 @@ if( !empty($_POST['change_cat']) )
 	header('location:' . HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
 	exit;
 }
-
+if( !$session->check_auth($session->data, 0) ) //Réservé aux membres.
+{
+	header('location: ' . HOST . DIR . '/member/error.php'); 
+	exit;
+}
+	
 if( !empty($_POST['valid']) )
 {
 	include_once('../includes/pagination.class.php'); 

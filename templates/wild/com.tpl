@@ -86,7 +86,7 @@
 				<span id="m{current.com.ID}"></span>
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
-					{current.com.USER_ONLINE} {current.com.USER_PSEUDO}
+						{current.com.USER_ONLINE} {current.com.USER_PSEUDO}
 					</div>
 					<div style="float:left;">&nbsp;&nbsp;<a href="{current.com.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{current.com.ID}" /></a> {current.com.DATE}</div>
 					<div style="float:right;"><a href="{current.com.U_QUOTE}" title=""><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" class="valign_middle" /></a>{current.com.EDIT}{current.com.DEL}&nbsp;&nbsp;</div>
