@@ -36,10 +36,10 @@ $get_error_id = !empty($_GET['error']) ? numeric($_GET['error']) : '';
 if( !file_exists('../lang/' . $CONFIG['lang']) )
 {
 	$rep = '../lang/';
-	if ( is_dir($rep) ) //Si le dossier existe
+	if( is_dir($rep) ) //Si le dossier existe
 	{		
 		$dh = @opendir( $rep);
-		while ( ! is_bool( $lang = readdir( $dh ) ) )
+		while( !is_bool($lang = @readdir($dh)) )
 		{	
 			if( !preg_match('`\.`', $lang) )
 			{
@@ -47,7 +47,7 @@ if( !file_exists('../lang/' . $CONFIG['lang']) )
 				break;
 			}
 		}	
-		closedir($dh);
+		@closedir($dh);
 	}	
 }
 
@@ -60,7 +60,7 @@ include_once('../lang/' . $CONFIG['lang'] . '/main.php');
 if( !file_exists('../templates/' . $CONFIG['theme']) )
 {
 	$rep = '../templates/';
-	if ( is_dir($rep) ) //Si le dossier existe
+	if( is_dir($rep) ) //Si le dossier existe
 	{
 		$dh = @opendir($rep);
 		while ( !is_bool( $theme = readdir( $dh ) ) )

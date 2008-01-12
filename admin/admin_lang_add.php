@@ -149,10 +149,10 @@ else
 	//On recupère les dossier des thèmes contenu dans le dossier templates.
 	$z = 0;
 	$rep = '../lang/';
-	if ( is_dir($rep)) //Si le dossier existe
+	if( is_dir($rep) ) //Si le dossier existe
 	{
 		$dh = @opendir( $rep);
-		while ( ! is_bool( $fichier = readdir( $dh ) ) )
+		while( !is_bool($fichier = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
 			if( !preg_match('`\.`', $fichier) )

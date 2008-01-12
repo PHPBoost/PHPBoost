@@ -440,6 +440,7 @@ $LANG['del_lang_files'] = 'Supprimer les fichiers de la langue';
 $LANG['explain_default_lang'] = 'La langue par défaut ne peut pas être désinstallée, désactivée, ou réservée';
 	
 //Comments
+$LANG['com_management'] = 'Gestion des commentaires';		
 $LANG['com_config'] = 'Configuration des commentaires';		
 $LANG['com_max'] = 'Nombre de commentaires par page';
 $LANG['rank_com_post'] = 'Rang pour pouvoir poster des commentaires';

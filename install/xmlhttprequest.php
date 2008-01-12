@@ -15,7 +15,7 @@ if( $chmod )
 	//Mise à jour du cache.
 	@clearstatcache();
 	
-	$chmod_dir = array('../cache', '../cache/backup', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../includes/auth', '../lang', '../templates', '../upload');
+	$chmod_dir = array('../', '../cache', '../cache/backup', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../includes/auth', '../lang', '../templates', '../upload');
 	
 	//Vérifications et le cas échéants changements des autorisations en écriture.
 	foreach($chmod_dir as $dir)
@@ -23,15 +23,11 @@ if( $chmod )
 		$is_writable = $is_dir = true;
 		if( file_exists($dir) && is_dir($dir) )
 		{
-			if (!is_writable($dir) )
-			{	
+			if( !is_writable($dir) )
 				$is_writable = (@chmod($dir, 0777)) ? true : false;			
-			}
 		}
 		else
-		{	
 			$is_dir = $is_writable = ($fp = @mkdir($dir, 0777)) ? true : false;
-		}
 		$found = ($is_dir === true) ? '<div class="success_block">' . $LANG['existing'] . '</div>' : '<div class="failure_block">' . $LANG['unexisting'] . '</div>';
 		$writable = ($is_writable === true) ? '<div class="success_block">' . $LANG['writable'] . '</div>' : '<div class="failure_block">' . $LANG['unwritable'] . '</div>';
 		

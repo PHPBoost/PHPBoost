@@ -105,7 +105,7 @@ include_once('../lang/' . $CONFIG['lang'] . '/errors.php'); //Inclusion des lang
 
 //Chargement du cache du jour actuel.
 $cache->load_file('day');
-if( gmdate_format('j', time(), TIMEZONE_SYSTEM) != $_record_day && !empty($_record_day) ) //On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
+if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day) ) //On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
 	require_once('../includes/changeday.php');
 
 include_once('../includes/connect.php'); //Inclusion du gestionnaire de connexion.

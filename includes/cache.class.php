@@ -300,7 +300,7 @@ class Cache
 	//Day
 	function generate_file_day()
 	{
-		return 'global $_record_day;' . "\n" . '$_record_day = ' . gmdate_format('j', time(), TIMEZONE_SYSTEM) . ';';
+		return 'global $_record_day;' . "\n" . '$_record_day = ' . gmdate_format('j', time(), TIMEZONE_SITE) . ';';
 	}
 	
 	//Groupes
