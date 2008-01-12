@@ -33,7 +33,7 @@ $id = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 if( !empty($id) )
 {
 	$newsletter = $sql->query_array('newsletter_arch', 'type', 'title', 'message', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	if ($newsletter['type'] == 'html' )
+	if( $newsletter['type'] == 'html' )
 	{
 		$message = stripslashes($newsletter['message']);
 		$message = str_replace('<body', '<body onclick = "window.close()" ', $message);

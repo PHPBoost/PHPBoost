@@ -93,10 +93,10 @@ else //Sinon on rempli le formulaire
 	$rep = '../templates/' . $CONFIG['theme']  . '/images/ranks';
 	$j = 0;
 	$array_files = array();
-	if ( is_dir($rep)) //Si le dossier existe
+	if(  is_dir($rep) ) //Si le dossier existe
 	{
 		$dh = @opendir( $rep);
-		while ( !is_bool($fichier = readdir($dh)) )
+		while( !is_bool($fichier = readdir($dh)) )
 		{	
 			if( $j > 1 && $fichier != 'index.php' && $fichier != 'Thumbs.db' )
 				$array_files[] = $fichier; //On crée un array, avec les different fichiers.

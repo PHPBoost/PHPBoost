@@ -403,17 +403,17 @@ function affiche_symbol($texte,$haut)
 			for ($x = 0; $x < $tmp_largeur; $x++)
 			{
 				$rgb = ImageColorAt($tmp_img, $x, $y);
-				if ($rgb !=$tmp_blanc)
+				if( $rgb !=$tmp_blanc )
 				{
 					$toutblanc=false;
-					if ($sy == -1) $sy = $y;
+					if( $sy == -1 ) $sy = $y;
 					else $ey = $y;
 					
-					if ($sx == -1) $sx = $x;
+					if( $sx == -1 ) $sx = $x;
 					else
 					{
-						if ($x < $sx) $sx = $x;
-						else if ($x > $ex) $ex = $x;
+						if( $x < $sx ) $sx = $x;
+						else if( $x > $ex ) $ex = $x;
 					}
 				}
 			}
@@ -449,17 +449,17 @@ function affiche_symbol($texte,$haut)
 			for ($x = 0; $x < $tmp_largeur; $x++)
 			{
 				$rgb = ImageColorAt($tmp_img, $x, $y);
-				if ($rgb !=$tmp_blanc)
+				if( $rgb !=$tmp_blanc )
 				{
 					$toutblanc=false;
-					if ($sy == -1) $sy = $y;
+					if( $sy == -1 ) $sy = $y;
 					else $ey = $y;
 					
-					if ($sx == -1) $sx = $x;
+					if( $sx == -1 ) $sx = $x;
 					else
 					{
-						if ($x < $sx) $sx = $x;
-						else if ($x > $ex) $ex = $x;
+						if( $x < $sx ) $sx = $x;
+						else if( $x > $ex ) $ex = $x;
 					}
 				}
 			}
@@ -476,7 +476,7 @@ function affiche_symbol($texte,$haut)
 	case '_dintegrale':
 	case '_tintegrale':
 		if(isset($fontesmath[$texte])) $font = DIR_FONT."/".$fontesmath[$texte].".ttf";
-		elseif (is_numeric($texte)) $font = DIR_FONT."/cmr10.ttf";
+		elseif( is_numeric($texte) ) $font = DIR_FONT."/cmr10.ttf";
 		else $font = DIR_FONT."/cmmi10.ttf";
 		$t=6;
 		if(isset($symboles[$texte])) $texte = $symboles[$texte];
@@ -505,17 +505,17 @@ function affiche_symbol($texte,$haut)
 			for ($x = 0; $x < $tmp_largeur; $x++)
 			{
 				$rgb = ImageColorAt($tmp_img, $x, $y);
-				if ($rgb !=$tmp_blanc)
+				if( $rgb !=$tmp_blanc )
 				{
 					$toutblanc=false;
-					if ($sy == -1) $sy = $y;
+					if( $sy == -1 ) $sy = $y;
 					else $ey = $y;
 					
-					if ($sx == -1) $sx = $x;
+					if( $sx == -1 ) $sx = $x;
 					else
 					{
-						if ($x < $sx) $sx = $x;
-						else if ($x > $ex) $ex = $x;
+						if( $x < $sx ) $sx = $x;
+						else if( $x > $ex ) $ex = $x;
 					}
 				}
 			}
@@ -523,7 +523,7 @@ function affiche_symbol($texte,$haut)
 		
 		$nx = abs($ex - $sx);
 		$ny = abs($ey - $sy);
-		if ($toutblanc)
+		if( $toutblanc )
 		{
 			$img = ImageCreate(1, max($haut, 1));
 			$blanc=ImageColorAllocate($img, 255, 255, 255);
@@ -541,7 +541,7 @@ function affiche_symbol($texte,$haut)
 		break;
 	default:
 		if(isset($fontesmath[$texte])) $font = DIR_FONT."/".$fontesmath[$texte].".ttf";
-		elseif (is_numeric($texte)) $font = DIR_FONT."/cmr10.ttf";
+		elseif( is_numeric($texte) ) $font = DIR_FONT."/cmr10.ttf";
 		else $font = DIR_FONT."/cmmi10.ttf";
 		$t=6;
 		if(isset($symboles[$texte])) $texte = $symboles[$texte];
@@ -571,17 +571,17 @@ function affiche_symbol($texte,$haut)
 			for ($x = 0; $x < $tmp_largeur; $x++)
 			{
 				$rgb = ImageColorAt($tmp_img, $x, $y);
-				if ($rgb !=$tmp_blanc)
+				if( $rgb !=$tmp_blanc )
 				{
 					$toutblanc=false;
-					if ($sy == -1) $sy = $y;
+					if( $sy == -1 ) $sy = $y;
 					else $ey = $y;
 					
-					if ($sx == -1) $sx = $x;
+					if( $sx == -1 ) $sx = $x;
 					else
 					{
-						if ($x < $sx) $sx = $x;
-						else if ($x > $ex) $ex = $x;
+						if( $x < $sx ) $sx = $x;
+						else if( $x > $ex ) $ex = $x;
 					}
 				}
 			}
@@ -589,7 +589,7 @@ function affiche_symbol($texte,$haut)
 		
 		$nx = abs($ex - $sx);
 		$ny = abs($ey - $sy);
-		if ($toutblanc)
+		if( $toutblanc )
 		{
 			$img = ImageCreate(1, max($haut, 1));
 			$blanc=ImageColorAllocate($img, 255, 255, 255);
@@ -639,7 +639,7 @@ function affiche_math($texte, $taille)
 
 	$texte=stripslashes($texte);
 	if(isset($fontesmath[$texte])) $font = DIR_FONT."/".$fontesmath[$texte].".ttf";
-	elseif (preg_match('`[a-z]`i', $texte)) $font = DIR_FONT."/cmmi10.ttf";
+	elseif( preg_match('`[a-z]`i', $texte) ) $font = DIR_FONT."/cmmi10.ttf";
 	else $font = DIR_FONT."/cmr10.ttf";
 	if(isset($symboles[$texte])) $texte = $symboles[$texte];
 	$htexte = 'dg'.$texte;
@@ -888,11 +888,11 @@ class expression_math extends  expression
 			}
 			break;
 		case 3:
-			if ($this->noeuds[0]->texte=="lim") 
+			if( $this->noeuds[0]->texte=="lim" ) 
 			{
 				$this->dessine_limite($taille);
 			}
-			elseif ($this->noeuds[0]->texte=="root") 
+			elseif( $this->noeuds[0]->texte=="root" ) 
 			{
 				$this->dessine_root($taille);
 			}
@@ -982,7 +982,7 @@ class expression_math extends  expression
 		$size_noeud = count($this->noeuds);
 		for($i = 0; $i < $size_noeud; $i++)
 		{
-			if ($this->noeuds[$i]->texte != '(' && $this->noeuds[$i]->texte != ')')
+			if( $this->noeuds[$i]->texte != '(' && $this->noeuds[$i]->texte != ')' )
 			{
 				$this->noeuds[$i]->dessine($taille);
 				$img[$i] = $this->noeuds[$i]->image;
@@ -1112,7 +1112,7 @@ class expression_math extends  expression
 		$largeur2 = imagesx($img2);
 		$largeur = $largeur1 + $largeur2;
 		
-		if ($hauteur1 >= $hauteur2)
+		if( $hauteur1 >= $hauteur2 )
 		{
 			$hauteur = ceil($hauteur2/2+$hauteur1);
 			$this->base_verticale=$base1;
@@ -1361,7 +1361,7 @@ class expression_math extends  expression
 		{
 			for($col = 0; $col < $nbcolonne; $col++)
 			{
-				if ($i< count($this->noeuds[3]->noeuds))
+				if( $i< count($this->noeuds[3]->noeuds) )
 				{
 					$this->noeuds[3]->noeuds[$i]->dessine($taille*0.9);
 					$img[$i]=$this->noeuds[3]->noeuds[$i]->image;
@@ -1402,7 +1402,7 @@ class expression_math extends  expression
 			$l=$padding/2-1;
 			for($col = 0; $col <$nbcolonne; $col++)
 			{
-				if ($i< count($this->noeuds[3]->noeuds))
+				if( $i< count($this->noeuds[3]->noeuds) )
 				{
 					ImageCopy($imgfin, $img[$i], $l+ceil($largeur_colonne[$col]-$largeur[$i])/2, $h+$dessus_ligne[$ligne]-$base[$i], 0, 0,$largeur[$i], $hauteur[$i]);
 					//ImageRectangle($imgfin,$l,$h,$l+$largeur_colonne[$col],$h+$hauteur_ligne[$ligne],$noir);
@@ -1444,7 +1444,7 @@ class expression_math extends  expression
 		{
 			for($col = 0; $col <$nbcolonne; $col++)
 			{
-				if ($i< count($this->noeuds[3]->noeuds))
+				if( $i< count($this->noeuds[3]->noeuds) )
 				{
 					$this->noeuds[3]->noeuds[$i]->dessine($taille*0.9);
 					$img[$i]=$this->noeuds[3]->noeuds[$i]->image;
@@ -1478,24 +1478,24 @@ class expression_math extends  expression
 		ImageFilledRectangle($imgfin, 0, 0, $largeurfin-1, $hauteurfin-1, $blanc);
 		$i=0;
 		$h=$padding/2-1;
-		if (substr($typeligne, 0, 1) == '1') ImageLine($imgfin, 0, 0, $largeurfin-1, 0, $noir);
+		if( substr($typeligne, 0, 1) == '1') ImageLine($imgfin, 0, 0, $largeurfin-1, 0, $noir );
 		
 		for($ligne = 0; $ligne <$nbligne; $ligne++)
 		{
 			$l=$padding/2-1;
-			if (substr($typecolonne, 0, 1) == '1') ImageLine($imgfin, 0, $h-$padding/2, 0, $h+$hauteur_ligne[$ligne]+$padding/2, $noir);
+			if( substr($typecolonne, 0, 1) == '1') ImageLine($imgfin, 0, $h-$padding/2, 0, $h+$hauteur_ligne[$ligne]+$padding/2, $noir );
 			for($col = 0; $col <$nbcolonne; $col++)
 			{
-				if ($i< count($this->noeuds[3]->noeuds))
+				if( $i< count($this->noeuds[3]->noeuds) )
 				{
 					ImageCopy($imgfin, $img[$i], $l+ceil($largeur_colonne[$col]-$largeur[$i])/2, $h+$dessus_ligne[$ligne]-$base[$i], 0, 0,$largeur[$i], $hauteur[$i]);
-					if (substr($typecolonne, $col+1, 1) == '1') ImageLine($imgfin, $l+$largeur_colonne[$col]+$padding/2, $h-$padding/2, $l+$largeur_colonne[$col]+$padding/2, $h+$hauteur_ligne[$ligne]+$padding/2, $noir);
+					if( substr($typecolonne, $col+1, 1) == '1') ImageLine($imgfin, $l+$largeur_colonne[$col]+$padding/2, $h-$padding/2, $l+$largeur_colonne[$col]+$padding/2, $h+$hauteur_ligne[$ligne]+$padding/2, $noir );
 				}
 				$l+=$largeur_colonne[$col]+$padding;
 				$i++;
 			}
 			
-			if (substr($typeligne, $ligne+1, 1) == '1') ImageLine($imgfin, 0, $h+$hauteur_ligne[$ligne]+$padding/2, $largeurfin-1, $h+$hauteur_ligne[$ligne]+$padding/2, $noir);
+			if( substr($typeligne, $ligne+1, 1) == '1') ImageLine($imgfin, 0, $h+$hauteur_ligne[$ligne]+$padding/2, $largeurfin-1, $h+$hauteur_ligne[$ligne]+$padding/2, $noir );
 			$h+=$hauteur_ligne[$ligne]+$padding;
 		}
 		
@@ -1643,10 +1643,10 @@ class expression_math extends  expression
 		$imgexp=$this->noeuds[2]->image;
 		$baseexp=$this->noeuds[2]->base_verticale;
 		$hauteurexp=imagesy($imgexp);
-		if ($this->noeuds[1]->texte=="&$") $imggauche=parenthese($hauteurexp, $this->noeuds[1]->noeuds[0]->texte);
+		if( $this->noeuds[1]->texte=="&$") $imggauche=parenthese($hauteurexp, $this->noeuds[1]->noeuds[0]->texte );
 		else $imggauche=parenthese($hauteurexp, $this->noeuds[1]->texte);
 		$basegauche=imagesy($imggauche)/2;
-		if ($this->noeuds[3]->texte=="&$") $imgdroit=parenthese($hauteurexp, $this->noeuds[3]->noeuds[0]->texte);
+		if( $this->noeuds[3]->texte=="&$") $imgdroit=parenthese($hauteurexp, $this->noeuds[3]->noeuds[0]->texte );
 		else $imgdroit=parenthese($hauteurexp, $this->noeuds[3]->texte);
 		$basedroit=imagesy($imgdroit)/2;
 		$this->image=alignement3($imggauche, $basegauche, $imgexp, $baseexp, $imgdroit, $basedroit);

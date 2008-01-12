@@ -263,16 +263,14 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 
 		//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
 		$rep = '../images/group';
-		$j = 1;
 		$y = 0;
-		if ( is_dir($rep)) //Si le dossier existe
+		if( is_dir($rep) ) //Si le dossier existe
 		{
-			$dh = @opendir( $rep);
-			while ( ! is_bool( $fichier = readdir( $dh ) ) )
+			$dh = @opendir($rep);
+			while( !is_bool($file = readdir($dh)) )
 			{	
-				if( $j > 1 && $fichier != 'index.php' && $fichier != 'Thumbs.db' )
-					$fichier_array[] = $fichier; //On crée un array, avec les different fichiers.
-				$j++;
+				if( $file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db' )
+					$fichier_array[] = $file; //On crée un array, avec les different fichiers.
 			}	
 			closedir($dh); //On ferme le dossier
 
@@ -353,18 +351,14 @@ elseif( $add ) //Interface d'ajout du groupe.
 	
 	//On recupère les images des groupes contenu dans le dossier /images/group.
 	$rep = '../images/group';
-	$j = 1;
 	$y = 0;
-	if ( is_dir($rep)) //Si le dossier existe
+	if( is_dir($rep) ) //Si le dossier existe
 	{
-		$dh = @opendir( $rep);
-		while ( ! is_bool( $fichier = readdir( $dh ) ) )
+		$dh = @opendir($rep);
+		while( !is_bool($file = readdir($dh)) )
 		{	
-			if( $j > 1 && $fichier != 'index.php' && $fichier != 'Thumbs.db' )
-			{
-				$fichier_array[] = $fichier; //On crée un array, avec les different fichiers.
-			}
-			$j++;
+			if( $file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db' )
+				$fichier_array[] = $file; //On crée un array, avec les different fichiers.
 		}	
 		closedir($dh); //On ferme le dossier
 
@@ -378,9 +372,7 @@ elseif( $add ) //Interface d'ajout du groupe.
 					$y++;
 				}
 				else
-				{
 					$option = '<option value="' . $img_group . '">' . $img_group . '</option>';
-				}
 				
 				$template->assign_block_vars('add_group.select', array(
 					'IMG_GROUP' => $option

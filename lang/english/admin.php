@@ -440,6 +440,7 @@ $LANG['del_lang_files'] = 'Delete all lang files';
 $LANG['explain_default_lang'] = 'Default lang can\'t be uninstalled, unactivated or restricted';
 
 //Comments
+$LANG['com_management'] = 'Comments management';	
 $LANG['com_config'] = 'Comments configuration';		
 $LANG['com_max'] = 'Maximum comments displayed';
 $LANG['rank_com_post'] = 'Rank to post comments';
