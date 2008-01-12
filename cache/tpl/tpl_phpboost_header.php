@@ -33,7 +33,7 @@
 			<a href="http://www.phpboost.com/forum/index.php" title="Forum PHPBoost" class="button">Forum</a>
 			<a href="http://www.phpboost.com/wiki/wiki.php" title="Documentation PHPBoost" class="button">Documentation</a>
 			<a href="http://www.phpboost.com/download/download-2-52+phpboost-2-0.php" title="Télécharger PHPBoost" class="button">Télécharger</a>
-			<a href="http://www.phpboost.com/download/download-23.php" title="Thèmes PHPBoost" class="button">Thèmes</a>
+			<a href="http://themes.phpboost.com" title="Thèmes PHPBoost" class="button">Thèmes</a>
 			<a href="http://www.phpboost.com/phpboost/modules.php" title="Modules PHPBoost" class="button">Modules</a>
 			<a href="http://demo.phpboost.com" title="Démonstration PHPBoost" class="button">Démo</a>
 		</div>

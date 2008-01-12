@@ -3,7 +3,17 @@
 	<!--
 	function insert_popup(code) 
 	{
-		opener.document.getElementById("<?php echo isset($this->_var['FIELD']) ? $this->_var['FIELD'] : ''; ?>").value += ' ' + code;
+		var area = opener.document.getElementById("<?php echo isset($this->_var['FIELD']) ? $this->_var['FIELD'] : ''; ?>");
+		var nav = navigator.appName; //Recupère le nom du navigateur
+
+		area.focus();
+
+		if( nav == 'Microsoft Internet Explorer' ) // Internet Explorer
+			ie_sel(area, code, 'smile');
+		else if( nav == 'Netscape' || nav == 'Opera' ) //Netscape ou opera
+			netscape_sel(area, code, 'smile');
+		else //insertion normale (autres navigateurs)
+			opener.document.getElementById("<?php echo isset($this->_var['FIELD']) ? $this->_var['FIELD'] : ''; ?>").value += ' ' + code;
 	}	
 	function close_popup()
 	{
@@ -149,7 +159,7 @@
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
 				{
-					alert(xhr_object.responseText);if( xhr_object.responseText > 0 )
+					if( xhr_object.responseText > 0 )
 					{
 						document.getElementById('new_folder' + divid).innerHTML = '<table style="border:0"><tr><td style="width:34px;vertical-align:top;"><a href="upload.php?f=' + xhr_object.responseText + '&amp;<?php echo isset($this->_var['POPUP']) ? $this->_var['POPUP'] : ''; ?>"><img src="../templates/<?php echo isset($this->_var['THEME']) ? $this->_var['THEME'] : ''; ?>/images/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="upload.php?f=' + xhr_object.responseText + '&amp;<?php echo isset($this->_var['POPUP']) ? $this->_var['POPUP'] : ''; ?>">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');"><img src="../templates/<?php echo isset($this->_var['THEME']) ? $this->_var['THEME'] : ''; ?>/images/<?php echo isset($this->_var['LANG']) ? $this->_var['LANG'] : ''; ?>/edit.png" alt="" class="valign_middle" /></a></span></a></span> <a href="upload.php?delf=' + xhr_object.responseText + '&amp;f=<?php echo isset($this->_var['FOLDER_ID']) ? $this->_var['FOLDER_ID'] : ''; ?>&amp;<?php echo isset($this->_var['POPUP']) ? $this->_var['POPUP'] : ''; ?>" onClick="javascript:return Confirm_folder();"><img src="../templates/<?php echo isset($this->_var['THEME']) ? $this->_var['THEME'] : ''; ?>/images/<?php echo isset($this->_var['LANG']) ? $this->_var['LANG'] : ''; ?>/delete.png" alt="" class="valign_middle" /></a> <a href="upload.php?move=' + xhr_object.responseText + '&amp;<?php echo isset($this->_var['POPUP']) ? $this->_var['POPUP'] : ''; ?>" title="<?php echo isset($this->_var['L_MOVETO']) ? $this->_var['L_MOVETO'] : ''; ?>"><img src="../templates/<?php echo isset($this->_var['THEME']) ? $this->_var['THEME'] : ''; ?>/images/upload/move.png" alt="" class="valign_middle" /></a></div></td></tr></table>';
 						var total_folder = document.getElementById('total_folder').innerHTML;

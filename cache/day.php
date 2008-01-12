@@ -1,4 +1,4 @@
 <?php
 global $_record_day;
-$_record_day = 29;
+$_record_day = 11;
 ?>

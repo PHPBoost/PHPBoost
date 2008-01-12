@@ -14,7 +14,7 @@
 		-->
 		</script>
 
-		<form action="shoutbox.php<?php echo isset($this->_var['SID']) ? $this->_var['SID'] : '';  echo isset($this->_var['UPDATE']) ? $this->_var['UPDATE'] : ''; ?>" method="post" onsubmit="return check_form();" class="fieldset_mini">	
+		<form action="shoutbox.php<?php echo isset($this->_var['SID']) ? $this->_var['SID'] : '';  echo isset($this->_var['UPDATE']) ? $this->_var['UPDATE'] : ''; ?>" method="post" onsubmit="return check_form();" class="fieldset_mini">
 			<fieldset>
 				<legend><?php echo isset($this->_var['L_ADD_MSG']) ? $this->_var['L_ADD_MSG'] : '';  echo isset($this->_var['L_UPDATE_MSG']) ? $this->_var['L_UPDATE_MSG'] : ''; ?></legend>
 				<p><?php echo isset($this->_var['L_REQUIRE']) ? $this->_var['L_REQUIRE'] : ''; ?></p>
@@ -33,7 +33,6 @@
 					<strong><?php echo isset($this->_var['L_FORBIDDEN_TAGS']) ? $this->_var['L_FORBIDDEN_TAGS'] : ''; ?></strong> <?php echo isset($this->_var['DISPLAY_FORBIDDEN_TAGS']) ? $this->_var['DISPLAY_FORBIDDEN_TAGS'] : ''; ?>
 				</p>
 			</fieldset>
-			
 			<fieldset class="fieldset_submit">
 				<legend><?php echo isset($this->_var['L_SUBMIT']) ? $this->_var['L_SUBMIT'] : ''; ?></legend>
 				<?php if( isset($this->_var['C_HIDDEN_SHOUT']) && $this->_var['C_HIDDEN_SHOUT'] ) { ?>

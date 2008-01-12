@@ -15,7 +15,7 @@
 		-->
 		</script>
 
-		<form action="guestbook.php<?php echo isset($this->_var['UPDATE']) ? $this->_var['UPDATE'] : ''; ?>" method="post" onsubmit="return check_form_or();" class="fieldset_mini">		
+		<form action="guestbook.php<?php echo isset($this->_var['UPDATE']) ? $this->_var['UPDATE'] : ''; ?>" method="post" onsubmit="return check_form_or();" class="fieldset_mini">
 			<fieldset>
 				<legend><?php echo isset($this->_var['L_ADD_MSG']) ? $this->_var['L_ADD_MSG'] : '';  echo isset($this->_var['L_UPDATE_MSG']) ? $this->_var['L_UPDATE_MSG'] : ''; ?></legend>
 				<p><?php echo isset($this->_var['L_REQUIRE']) ? $this->_var['L_REQUIRE'] : ''; ?></p>
@@ -36,7 +36,6 @@ $_tmpb_visible_guestbook = &$this->_block['visible_guestbook'][$visible_guestboo
 					<strong><?php echo isset($this->_var['L_FORBIDDEN_TAGS']) ? $this->_var['L_FORBIDDEN_TAGS'] : ''; ?></strong> <?php echo isset($this->_var['DISPLAY_FORBIDDEN_TAGS']) ? $this->_var['DISPLAY_FORBIDDEN_TAGS'] : ''; ?>
 				</p>
 			</fieldset>
-			
 			<fieldset class="fieldset_submit">
 				<legend><?php echo isset($this->_var['L_SUBMIT']) ? $this->_var['L_SUBMIT'] : ''; ?></legend>
 				<?php if( !isset($this->_block['hidden_guestbook']) || !is_array($this->_block['hidden_guestbook']) ) $this->_block['hidden_guestbook'] = array();
@@ -113,6 +112,9 @@ $_tmpb_guestbook = &$this->_block['guestbook'][$guestbook_key]; ?>
 					<?php echo isset($_tmpb_guestbook['USER_SIGN']) ? $_tmpb_guestbook['USER_SIGN'] : ''; ?>	
 				</div>				
 				<hr />
+				<div style="float:left;">
+					<?php echo isset($_tmpb_guestbook['U_MEMBER_PM']) ? $_tmpb_guestbook['U_MEMBER_PM'] : ''; echo ' '; echo isset($_tmpb_guestbook['USER_MAIL']) ? $_tmpb_guestbook['USER_MAIL'] : ''; echo ' '; echo isset($_tmpb_guestbook['USER_MSN']) ? $_tmpb_guestbook['USER_MSN'] : ''; echo ' '; echo isset($_tmpb_guestbook['USER_YAHOO']) ? $_tmpb_guestbook['USER_YAHOO'] : ''; echo ' '; echo isset($_tmpb_guestbook['USER_WEB']) ? $_tmpb_guestbook['USER_WEB'] : ''; ?>
+				</div>
 				<div style="float:right;font-size:10px;">
 					<?php echo isset($_tmpb_guestbook['WARNING']) ? $_tmpb_guestbook['WARNING'] : ''; echo ' '; echo isset($_tmpb_guestbook['PUNISHMENT']) ? $_tmpb_guestbook['PUNISHMENT'] : ''; ?>
 				</div>&nbsp;
