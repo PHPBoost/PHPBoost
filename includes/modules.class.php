@@ -53,8 +53,10 @@ class Modules
 
     function GetModule($moduleName)
     {
-        $module = object();
-        return $module;
+        if ( ($module = object()) !== false )
+		{ return $module; }
+		else
+		{ return false; }
     }
 
     //---------------------------------------------------------- Constructeurs
