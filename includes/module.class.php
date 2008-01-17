@@ -1,7 +1,7 @@
 <?php
 
 /*##################################################
- *                              property.php
+ *                              module.class.php
  *                            -------------------
  *   begin                : January 15, 2008
  *   copyright          : (C) 2008 Rouchon Loïc
@@ -26,88 +26,57 @@
  *
 ###################################################*/
 
-define('LIST_FUNCTIONNALITIES','Search,LatestAdds,LatestModifications,MadeBy');
+define('NOT_YET_IMPLEMENTED',-1);
 
-class Modules
+class Module
 {
-	//----------------------------------------------------------------- PUBLIC
+    //----------------------------------------------------------------- PUBLIC
     //----------------------------------------------------- Méthodes publiques
-    function Search ( $functionnalitie, $modules )
-	{
-		verifyFunctionnalitieAndModules ( 'Search', $modules );
-		$modulesNames = array_keys($modules);
-		$results = Array();
-		for ($i = 0; $i < count($modules); $i++)
-		{
-			// Instanciation de l'objet $module
-			$module = $this->GetModule($modulesNames[$i]);
-			$results[$modulesNames[$i]] = $module->Search($modules[$i]);
-		}
-		return $results;
-	}
-	
-	function GetAvailablesModulesList ( $functionnalitie )
-	{
-		return $this->functionnalities[$functionnalitie];
-	}
-	
-	function GetModule($moduleName)
-	{
-		$module = object();
-		return $module;
-	}
-	
-    //-------------------------------------------- Constructeurs
-    function Modules (  )
-    // Constructeur de la classe Modules
-	{
-		//$listAvailablesModules = parse_ini_file('availablesModules.ini', TRUE);
-		$listAvailablesModules = Array();
-		foreach (explode(',',LIST_FUNCTIONNALITIES) as $functionnalitie)
-		{
-			$availablesModules = Array();
-			foreach ($listAvailablesModules as $module)
-			{
-				if ($module[$functionnalitie])
-				{ array_push($availablesModules, $module); }
-			}
-			$this->functionnalities[$functionnalitie] = $availablesModules;
-		}
-		
-	}
-	
+    function Search (  )
+    {
+        return NOT_YET_IMPLEMENTED;
+    }
+    
+    function LatestAdds (  )
+    {
+        return NOT_YET_IMPLEMENTED;
+    }
+    
+    function LatestModifications (  )
+    {
+        return NOT_YET_IMPLEMENTED;
+    }
+    
+    function MadeBy (  )
+    {
+        return NOT_YET_IMPLEMENTED;
+    }
+    
+    
+    //---------------------------------------------------------- Constructeurs
+    function Module ( $moduleName = 'NaS'  )
+    // Constructeur de la classe Module
+    {
+        $this->name = $moduleName;
+    }
+    
     //------------------------------------------------------------------ PRIVE
     
     //----------------------------------------------------- Méthodes protégées
-	function verifyFunctionnalitieAndModules ( $functionnalitie, &$modules )
-	{
-		$listMods = arra_keys($modules);
-		foreach ($listMods as $mod)
-		{
-			if ( !in_array($mod, $this->functionnalities[$functionnalitie]) )
-			{ unset($modules[$mod]); }
-		}
-	}
-	
+    
+    
     //----------------------------------------------------- Attributs protégés
-	var $functionnalities = Array();
-
-
+    var $name;
 }
 
 
 function test()
 {
-	$Mods = new Modules();
-	$Mods->functionnalities['Search'] = Array('wiki', 'forum', 'news');
-	$Mods->functionnalities['LatestAdds'] = Array('wiki', 'forum', 'news');
-	$Mods->functionnalities['LatestModifications'] = Array('wiki');
-	
-	echo '<br /><pre>';
-	print_r($Mods->functionnalities);
-	print_r($Mods->GetAvailablesModulesList('Search'));
-	echo '</pre>';
+    $Mod = new Module('wiki');
+    $Mod->Search();
+    $Mod->LatestAdds();
+    $Mod->LatestModifications();
+    $Mod->MadeBy();
 }
 
-test();
 ?>
