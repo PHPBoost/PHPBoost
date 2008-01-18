@@ -1,135 +1,131 @@
 <?php
 /*##################################################
- *                             parse.class.php
- *                            -------------------
- *   begin                : November 29, 2007
- *   copyright          : (C) 2007 Régis Viarre
- *   email                : crowkait@phpboost.com
- *
- *   
+*                             parse.class.php
+*                            -------------------
+*   begin                : November 29, 2007
+*   copyright          : (C) 2007 Régis Viarre, Benoit Sautel
+*   email                : crowkait@phpboost.com, ben.popeye@phpboost.com
+*
+*   
 ###################################################
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- * 
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
+*
+*   This program is free software; you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation; either version 2 of the License, or
+*   (at your option) any later version.
+* 
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program; if not, write to the Free Software
+*  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*
 ###################################################*/
 
 //Fonction d'importation/exportation de base de donnée.
 class Parse
 {
-    var $editors = array('bbcode', 'tinymce'); //Editeurs texte supportés.
-    var $user_editor = 'bbcode'; //Editeur texte du membre.
+####### Private #######
+	//Editeurs texte supportés.	
+	var $editors = array('bbcode', 'tinymce');
+	var $user_editor = 'bbcode'; //Editeur texte du membre.
 	var $balise = array('b', 'i', 'u', 's',	'title', 'stitle', 'style', 'url', 
 	'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
 	'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym'); //Balises supportées.
+	var $content = '';
 	
-	//On vérifie que le répertoire cache existe et est inscriptible
-    function Parse($user_editor)
-    {
-		$this->user_editor = in_array($user_editor, $this->editors) ? $user_editor : 'bbcode';
-    }
-    
-	############################## Parsage ##############################
 	//Préparation avant le parsage, avec l'éditeur WYSIWYG.
-	function preparse_tinymce(&$contents)
+	function preparse_tinymce()
 	{
-		$contents = str_replace(array('&nbsp;&nbsp;&nbsp;', '&gt;', '&lt;', '<br />', '<br>'), array("\t", '&amp;gt;', '&amp;lt;', "\r\n", "\r\n"), $contents); //Permet de poster de l'html.
-		$contents = html_entity_decode($contents); //On remplace toutes les entitées html.
+		$this->content = str_replace(array('&nbsp;&nbsp;&nbsp;', '&gt;', '&lt;', '<br />', '<br>'), array("\t", '&amp;gt;', '&amp;lt;', "\r\n", "\r\n"), $this->content); //Permet de poster de l'html.
+		$this->content = html_entity_decode($this->content); //On remplace toutes les entitées html.
 
 		//Balise size
-		$contents = preg_replace_callback('`<font size="([0-9]+)">(.+)</font>`isU', create_function('$size', 'return \'[size=\' . (6 + (2*$size[1])) . \']\' . $size[2] . \'[/size]\';'), $contents);
+		$this->content = preg_replace_callback('`<font size="([0-9]+)">(.+)</font>`isU', create_function('$size', 'return \'[size=\' . (6 + (2*$size[1])) . \']\' . $size[2] . \'[/size]\';'), $this->content);
 		//Balise image
-		$contents = preg_replace_callback('`<img src="([^"]+)"(?: border="[^"]*")? alt="[^"]*"(?: hspace="[^"]*")?(?: vspace="[^"]*")?(?: width="[^"]*")?(?: height="[^"]*")?(?: align="(top|middle|bottom)")? />`is', create_function('$img', '$align = \'\'; if( !empty($img[2]) ) $align = \'=\' . $img[2]; return \'[img\' . $align . \']\' . $img[1] . \'[/img]\';'), $contents);
+		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: border="[^"]*")? alt="[^"]*"(?: hspace="[^"]*")?(?: vspace="[^"]*")?(?: width="[^"]*")?(?: height="[^"]*")?(?: align="(top|middle|bottom)")? />`is', create_function('$img', '$align = \'\'; if( !empty($img[2]) ) $align = \'=\' . $img[2]; return \'[img\' . $align . \']\' . $img[1] . \'[/img]\';'), $this->content);
 
 		$array_preg = array(
-			'`<strong>(.+)</strong>`isU',
-			'`<em>(.+)</em>`isU',
-			'`<u>(.+)</u>`isU',
-			'`<strike>(.+)</strike>`isU',
-			'`<a href="([^"]+)">(.+)</a>`isU',
-			'`<sub>(.+)</sub>`isU',
-			'`<sup>(.+)</sup>`isU',
-			'`<font color="([^"]+)">(.+)</font>`isU',
-			'`<font style="background-color: ([^"]+)">(.+)</font>`isU',
-			'`<span style="background-color: ([^"]+)">(.+)</span>`isU',
-			'`<p style="background-color: ([^"]+)">(.+)</p>`isU',
-			'`<font face="([^"]+)">(.+)</font>`isU',
-			'`<p align="([a-z]+)">(.+)</p>`isU',
-			'`<div style="text-align: ([a-z]+)">(.+)</div>`isU',
-			'`<a(?: class="[^"]+")?(?: title="[^"]+" )? name="([^"]+)">(.*)</a>`isU',
-			'`<blockquote>(.+)</blockquote>`isU',
-			'`<ul>(.+)</ul>`isU',
-			'`<ol>(.+)</ol>`isU',
-			'`<li>(.+)</li>`isU',
-			'`</?font([^>]+)>`i',
-			'`<h1>(.+)</h1>`isU',
-			'`<h2>(.+)</h2>`isU',
-			'`<h3>(.+)</h3>`isU',
-			'`<h4>(.+)</h4>`isU',
-			'`<h5>(.+)</h5>`isU',
-			'`<h6>(.+)</h6>`isU',
-			'`<td( colspan="[^"]+")?( rowspan="[^"]+")?>`is',
-			'`<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="([^"]+)%?" height="([^"]+)%?"><param name="movie" value="([^"]+)"(.*)</object>`isU',
-			'`<span[^>]*>`i',
-			'`<p[^r>]*>`i'
-		);
+				'`<strong>(.+)</strong>`isU',
+		'`<em>(.+)</em>`isU',
+		'`<u>(.+)</u>`isU',
+		'`<strike>(.+)</strike>`isU',
+		'`<a href="([^"]+)">(.+)</a>`isU',
+		'`<sub>(.+)</sub>`isU',
+		'`<sup>(.+)</sup>`isU',
+		'`<font color="([^"]+)">(.+)</font>`isU',
+		'`<font style="background-color: ([^"]+)">(.+)</font>`isU',
+		'`<span style="background-color: ([^"]+)">(.+)</span>`isU',
+		'`<p style="background-color: ([^"]+)">(.+)</p>`isU',
+		'`<font face="([^"]+)">(.+)</font>`isU',
+		'`<p align="([a-z]+)">(.+)</p>`isU',
+		'`<div style="text-align: ([a-z]+)">(.+)</div>`isU',
+		'`<a(?: class="[^"]+")?(?: title="[^"]+" )? name="([^"]+)">(.*)</a>`isU',
+		'`<blockquote>(.+)</blockquote>`isU',
+		'`<ul>(.+)</ul>`isU',
+		'`<ol>(.+)</ol>`isU',
+		'`<li>(.+)</li>`isU',
+		'`</?font([^>]+)>`i',
+		'`<h1>(.+)</h1>`isU',
+		'`<h2>(.+)</h2>`isU',
+		'`<h3>(.+)</h3>`isU',
+		'`<h4>(.+)</h4>`isU',
+		'`<h5>(.+)</h5>`isU',
+		'`<h6>(.+)</h6>`isU',
+		'`<td( colspan="[^"]+")?( rowspan="[^"]+")?>`is',
+		'`<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="([^"]+)%?" height="([^"]+)%?"><param name="movie" value="([^"]+)"(.*)</object>`isU',
+		'`<span[^>]*>`i',
+		'`<p[^r>]*>`i'
+						   );
 		$array_preg_replace = array(
-			'[b]$1[/b]',
-			'[i]$1[/i]',
-			'[u]$1[/u]',
-			'[s]$1[/s]',
-			'[url=$1]$2[/url]',
-			'[sub]$1[/sub]',
-			'[sup]$1[/sup]',
-			'[color=$1]$2[/color]',
-			'[bgcolor=$1]$2[/bgcolor]',
-			'[bgcolor=$1]$2[/bgcolor]',
-			'[bgcolor=$1]$2[/bgcolor]',
-			'[font=$1]$2[/font]',
-			'[align=$1]$2[/align]',
-			'[align=$1]$2[/align]',
-			'[anchor=$1]$2[/anchor]',
-			'[indent]$1[/indent]',
-			'[list]$1[/list]',
-			'[list=ordered]$1[/list]',
-			'[*]$1',
-			'',
-			'[title=1]$1[/title]',
-			'[title=2]$1[/title]',
-			'[stitle=1]$1[/stitle]',
-			'[stitle=2]$1[/stitle]',
-			'[size=10]$1[/size]',
-			'[size=8]$1[/size]',
-			'[col$1$2]',
-			'[swf=$1,$2]$3[/swf]',
-			'',
-			''
-		);
-		$contents = preg_replace($array_preg, $array_preg_replace, $contents);	
+				'[b]$1[/b]',
+		'[i]$1[/i]',
+		'[u]$1[/u]',
+		'[s]$1[/s]',
+		'[url=$1]$2[/url]',
+		'[sub]$1[/sub]',
+		'[sup]$1[/sup]',
+		'[color=$1]$2[/color]',
+		'[bgcolor=$1]$2[/bgcolor]',
+		'[bgcolor=$1]$2[/bgcolor]',
+		'[bgcolor=$1]$2[/bgcolor]',
+		'[font=$1]$2[/font]',
+		'[align=$1]$2[/align]',
+		'[align=$1]$2[/align]',
+		'[anchor=$1]$2[/anchor]',
+		'[indent]$1[/indent]',
+		'[list]$1[/list]',
+		'[list=ordered]$1[/list]',
+		'[*]$1',
+		'',
+		'[title=1]$1[/title]',
+		'[title=2]$1[/title]',
+		'[stitle=1]$1[/stitle]',
+		'[stitle=2]$1[/stitle]',
+		'[size=10]$1[/size]',
+		'[size=8]$1[/size]',
+		'[col$1$2]',
+		'[swf=$1,$2]$3[/swf]',
+		'',
+		''
+								   );
+		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);	
 
 		//Préparse de la balise table.
-		$contents = preg_replace_callback('`<table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?(?: style="([^"]+)")?[^>]*>`i', array('Parse', 'parse_tinymce_table'), $contents);
+				$this->content = preg_replace_callback('`<table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?(?: style="([^"]+)")?[^>]*>`i', array('Parse', 'parse_tinymce_table'), $this->content);
 		
 		$array_str = array( 
-			'</span>', '<address>', '</address>', '<pre>', '</pre>', '<blockquote>', '</blockquote>', '</p>',
-			'<caption>', '</caption>', '<tbody>', '</tbody>', '<tr>', '</tr>', '</td>', '</table>', '&lt;', '&gt;', 
-		);
+				'</span>', '<address>', '</address>', '<pre>', '</pre>', '<blockquote>', '</blockquote>', '</p>',
+		'<caption>', '</caption>', '<tbody>', '</tbody>', '<tr>', '</tr>', '</td>', '</table>', '&lt;', '&gt;', 
+						  );
 		$array_str_replace = array( 
-			'', '', '', '[pre]', '[/pre]', '[indent]', '[/indent]', "\r\n\r\n",
-			'[row][head]', '[/head][/row]', '', '', '[row]', '[/row]', '[/col]', '[/table]', '<', '>', 
-		);		
-		$contents = str_replace($array_str, $array_str_replace, $contents);
+				'', '', '', '[pre]', '[/pre]', '[indent]', '[/indent]', "\r\n\r\n",
+		'[row][head]', '[/head][/row]', '', '', '[row]', '[/row]', '[/col]', '[/table]', '<', '>', 
+								  );		
+		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 	}
 
 	//Parse la balise table de tinymce pour le bbcode.
@@ -146,28 +142,315 @@ class Parse
 			
 		return '[table' . $prop . ']';
 	}
+	
+	//Fonction pour éclater la chaîne selon les tableaux (gestion de l'imbrication infinie)
+	function split_imbricated_tag(&$content, $tag, $attributes)
+	{
+		$content = $this->preg_split_safe_recurse($content, $tag, $attributes);
+		//1 élément représente les inter tag, un les attributs tag et l'autre le contenu
+		$nbr_occur = count($content);
+		for($i = 0; $i < $nbr_occur; $i++)
+		{
+			if( ($i % 3) === 2 && preg_match('`\['.$tag.'(?:'.$attributes.')?\].+\[/'.$tag.'\]`s', $content[$i]) )
+			{
+				//C'est le contenu d'un tag, il contient un sous tag donc on éclate
+				$this->split_imbricated_tag($content[$i], $tag, $attributes);
+			}
+		}
+	}
+	
+	//Fonction d'éclatement de chaîne supportant l'imbrication de tags
+	function preg_split_safe_recurse($contents, $tag, $attributes)
+	{
+   		// Définitions des index de position de début des Tags valides
+		$indexTags = $this->indexTags($contents, $tag, $attributes);
+		$size = count($indexTags);
+		$parsed = Array();
+ 
+   		// Stockage de la chaîne avant le premier tag dans le cas ou il y a au moins une balise ouvrante
+		if ($size >= 1)
+		{
+			array_push($parsed, substr($contents, 0, $indexTags[0]));
+		}
+		else
+		{
+			array_push($parsed, $contents);
+		}
+ 	
+		for ($i = 0; $i < $size; $i++)
+		{
+			$currentIndex = $indexTags[$i];
+			// Calcul de la sous-chaîne pour l'expression régulière
+			if ( $i == ($size - 1))
+			{
+				$subStr = substr($contents, $currentIndex); 
+			}
+			else
+			{
+				$subStr = substr($contents, $currentIndex, $indexTags[$i + 1] - $currentIndex);
+			}
+	
+			// Mise en place de l'éclatement de la sous-chaine
+			$mask = '`\['.$tag.'('.$attributes.')?\](.+)\[/'.$tag.'\](.+)?`s';
+			$localParsed = preg_split($mask, $subStr, -1, PREG_SPLIT_DELIM_CAPTURE);
+	
+			// Remplissage des résultats
+			array_push($parsed, $localParsed[1]);	// attributs du tag
+			array_push($parsed, $localParsed[2]);	// contenu du tag
+	
+			// Chaine après le tag
+			if ( $i < ($size - 1))
+			{
+				// On prend la chaine après le tag de fermeture courant jusqu'au prochain tag d'ouverture
+				$currentTagLen = strlen('['.$tag.$localParsed[1].']'.$localParsed[2].'[/'.$tag.']');
+				$endPos = $indexTags[$i + 1] - ($currentIndex + $currentTagLen);
+				array_push($parsed, substr($localParsed[3], 0, $endPos ));
+			}
+			else	// c'est la fin, il n'y a pas d'autre tag ouvrant après
+			{ 
+				array_push($parsed, $localParsed[3]); 
+			}
+		} 
+	return $parsed;
+	}
+	
+	//Fonction de détection du positionnement des balises imbriquées
+	function indexTags ($contents, $tag, $attributes)
+	{
+		$pos = -1;
+		$nbOpenTags = 0;
+		$tagsPos = Array();
+ 
+		while( ($pos = strpos($contents, '['.$tag, $pos + 1)) !== false )
+		{
+			// nombre de tag de fermeture déjà rencontré
+			$nbCloseTags = substr_count(substr($contents, 0, ($pos + strlen('['.$tag))), '[/'.$tag.']');
+ 
+			// Si on trouve un tag d'ouverture, on sauvegarde sa position uniquement si
+			// il y a autant + 1 de tags fermés avant et on itère sur le suivant
+			if ($nbOpenTags == $nbCloseTags)
+			{
+				$openTag = substr($contents, $pos, (strpos($contents, ']', $pos + 1) + 1 - $pos));
+				$match = preg_match('`\['.$tag.'('.$attributes.')?\]`', $openTag);
+				if ($match == 1)
+				{
+					$tagsPos[count($tagsPos)] = $pos; 
+				}
+			}
+			$nbOpenTags++;
+		}
+		return $tagsPos;
+	}
+	
+	
+	//Remplacement recursif des balises imbriquées.
+	function parse_imbricated($match, $regex, $replace)
+	{
+		$nbr_match = substr_count($this->content, $match);
+		for($i = 0; $i <= $nbr_match; $i++)
+		{
+			$this->content = preg_replace($regex, $replace, $this->content); 
+		}
+	}
 
+	//Fonction qui parse les tableaux dans l'ordre inverse à l'ordre hiérarchique
+	function parse_imbricated_table(&$content)
+	{
+		if( is_array($content) )
+		{
+			$string_content = '';
+			$nbr_occur = count($content);
+			for($i = 0; $i < $nbr_occur; $i++)
+			{
+				//Si c'est le contenu d'un tableau on le parse
+				if( $i % 3 === 2 )
+				{
+					//On parse d'abord les sous tableaux éventuels
+					$this->parse_imbricated_table($content[$i]);
+					//On parse le tableau concerné (il doit commencer par [row] puis [col] ou [head] et se fermer pareil moyennant espaces et retours à la ligne sinon il n'est pas valide)
+					if( preg_match('`^(?:\s|<br />)*\[row\](?:\s|<br />)*\[(?:col|head)(?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?\].*\[/(?:col|head)\](?:\s|<br />)*\[/row\](?:\s|<br />)*$`sU', $content[$i]) )
+					{						
+						//On nettoie les caractères éventuels (espaces ou retours à la ligne) entre les différentes cellules du tableau pour éviter les erreurs xhtml
+						$content[$i] = preg_replace_callback('`^(\s|<br />)+\[row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+$`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+\[row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[row\](\s|<br />)+\[col.*\]`Us', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[row\](\s|<br />)+\[head[^]]*\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[col.*\]`Us', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[head[^]]*\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[col.*\]`Us', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[head[^]]*\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[/row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[/row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						//Parsage de row, col et head
+						$content[$i] = preg_replace('`\[row\](.*)\[/row\]`sU', '<tr class="bb_table_row">$1</tr>', $content[$i]);
+						$content[$i] = preg_replace('`\[col((?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/col\]`sU', '<td class="bb_table_col"$1>$2</td>', $content[$i]);
+						$content[$i] = preg_replace('`\[head((?: colspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/head\]`sU', '<th class="bb_table_head"$1>$2</th>', $content[$i]);
+						//parsage réussi (tableau valide), on rajoute le tableau devant
+						$content[$i] = '<table class="bb_table"' . $content[$i - 1] . '>' . $content[$i] . '</table>';
+
+					}
+					else
+					{
+						//le tableau n'est pas valide, on met des balises temporaires afin qu'elles ne soient pas parsées au niveau inférieur
+						$content[$i] = str_replace(array('[col', '[row', '[/col', '[/row', '[head', '[/head'), array('[\col', '[\row', '[\/col', '[\/row', '[\head', '[\/head'), $content[$i]);
+						$content[$i] = '[table' . $content[$i - 1] . ']' . $content[$i] . '[/table]';
+					}
+				}
+				//On concatène la chaîne finale si ce n'est pas le style du tableau
+				if( $i % 3 !== 1 )
+					$string_content .= $content[$i];
+			}
+			$content = $string_content;
+		}
+	}
+
+	function parse_table()
+	{
+		//On supprime les éventuels quote qui ont été transformés en leur entité html
+		//$this->content = preg_replace_callback('`\[(?:table|col|row|head)(?: colspan=\\\&quot;[0-9]+\\\&quot;)?(?: rowspan=\\\&quot;[0-9]+\\\&quot;)?( style=\\\&quot;(?:[^&]+)\\\&quot;)?\]`U', create_function('$matches', 'return str_replace(\'\\\&quot;\', \'"\', $matches[0]);'), $this->content);
+		$this->split_imbricated_tag($this->content, 'table', ' style="[^"]+"');
+		$this->parse_imbricated_table($this->content);
+		//On remet les tableaux invalides tels qu'ils étaient avant
+		$this->content = str_replace(array('[\col', '[\row', '[\/col', '[\/row', '[\head', '[\/head'), array('[col', '[row', '[/col', '[/row', '[head', '[/head'), $this->content);
+	}
+	
+	//Fonction qui parse les listes
+
+	function parse_imbricated_list(&$content)
+	{
+		if( is_array($content) )
+		{
+			$string_content = '';
+			$nbr_occur = count($content);
+			for($i = 0; $i < $nbr_occur; $i++)
+			{
+				//Si c'est le contenu d'une liste on le parse
+				if( $i % 3 === 2 )
+				{
+					//On parse d'abord les sous listes éventuelles
+					if( is_array($content[$i]) )
+						$this->parse_imbricated_list($content[$i]);
+					
+					if( strpos($content[$i], '[*]') !== false ) //Si il contient au moins deux éléments
+					{				
+						//Nettoyage des listes (retours à la ligne)
+						$content[$i] = preg_replace_callback('`\[\*\]((?:\s|<br />)+)`', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`((?:\s|<br />)+)\[\*\]`', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						if( substr($content[$i - 1], 0, 8) == '=ordered' )
+						{
+							$list_tag = 'ol';
+							$content[$i - 1] = substr($content[$i - 1], 8);
+						}
+						else
+						{
+							$list_tag = 'ul';
+						}
+						$content[$i] = preg_replace_callback('`^((?:\s|<br />)*)\[\*\]`U', create_function('$var', 'return str_replace("<br />", "", str_replace("[*]", "<li class=\"bb_li\">", $var[0]));'), $content[$i]);
+						$content[$i] = '<' . $list_tag . $content[$i - 1] . ' class="bb_' . $list_tag . '">' . str_replace('[*]', '</li><li class="bb_li">', $content[$i]) . '</li></' . $list_tag . '>';
+					}
+				}
+				//On concatène la chaîne finale si ce n'est pas le style ou le type de tableau
+				if( $i % 3 !== 1 )
+					$string_content .= $content[$i];
+			}
+			$content = $string_content;
+		}
+	}
+	
+	//Parse les listes imbriquées
+	function parse_list()
+	{
+		//On nettoie les guillemets échappés
+		//$this->content = preg_replace_callback('`\[list(?:=(?:un)?ordered)?( style=\\\&quot;[^&]+\\\&quot;)?\]`U', create_function('$matches', 'return str_replace(\'\\\&quot;\', \'"\', $matches[0]);'), $this->content);
+		//on travaille dessus
+		if( preg_match('`\[list(=(?:un)?ordered)?( style="[^"]+")?\](\s|<br />)*\[\*\].*\[/list\]`s', $this->content) )
+		{
+			$this->split_imbricated_tag($this->content, 'list', '(?:=ordered)?(?: style="[^"]+")?');
+			$this->parse_imbricated_list($this->content);
+		}
+	}
+		
+	function unparse_table(&$content)
+	{
+		//Preg_replace.
+		$array_preg = array( 
+			'`<table class="bb_table"([^>]*)>(.*)</table>`sU',
+			'`<tr class="bb_table_row">(.*)</tr>`sU',
+			'`<th class="bb_table_head"([^>]*)>(.*)</th>`sU',
+			'`<td class="bb_table_col"([^>]*)>(.*)</td>`sU'
+		);
+		$array_preg_replace = array( 
+			'[table$1]$2[/table]',
+			'[row]$1[/row]',
+			'[head$1]$2[/head]',
+			'[col$1]$2[/col]'
+		);	
+		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
+	}
+
+	//Retour
+	function unparse_list(&$content)
+	{
+		while( preg_match('`<(?:u|o)l( style="[^"]+")? class="bb_(?:u|o)l">(.+)</(?:u|o)l>`sU', $this->content) )
+		{
+			$this->content = preg_replace('`<ul( style="[^"]+")? class="bb_ul">(.+)</ul>`sU', '[list$1]$2[/list]', $this->content);
+			$this->content = preg_replace('`<ol( style="[^"]+")? class="bb_ol">(.+)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
+			$this->content = preg_replace('`<li class="bb_li">(.+)</li>`isU', '[*]$1', $this->content);
+		}
+	}
+	
+######## Public #######
+	//On vérifie que le répertoire cache existe et est inscriptible
+	function Parse($text, $user_editor = false)
+	{
+		global $session;
+		if( $user_editor !== false )
+		{
+			$this->user_editor = in_array($user_editor, $this->editors) ? $user_editor : 'bbcode';
+		}
+		else
+		{
+			$session->data['user_editor'];
+		}
+		$this->load_content($text);
+	}
+
+	//Fonction qui renvoie le contenu traité
+	function get_content()
+	{
+		//return addslashes($this->content);
+		return $this->content;
+	}
+	
+	//Fonction de chargement de texte
+	function load_content($content)
+	{
+		$this->content = trim(stripslashes($content));
+	}
+	
 	//On parse le contenu: bbcode => xhtml.
-	function parse_content($contents, $forbidden_tags, $html_protect, $magic_quotes_activ)
+	function parse_content($forbidden_tags = array(), $html_protect = true)
 	{
 		global $LANG;
-				
-		$contents = ' ' . trim(stripslashes($contents)) . ' '; //Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé. Suppression des backslash ajoutés par magic_quotes_gpc.
+		
+		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé. Suppression des backslash ajoutés par magic_quotes_gpc.
+		$this->content = ' ' . $this->content . ' ';
+		
 		if( $this->user_editor == 'tinymce' ) //Préparse pour tinymce.
-			$this->preparse_tinymce($contents);
-		
-		//On échappe les guillemets et apostrophes.
-		$contents = addslashes($contents);	
-
-		if( $html_protect ) //Protection des données.
 		{
-			$contents = htmlspecialchars($contents);
-			$contents = strip_tags($contents);
+			$this->preparse_tinymce($this->content);
 		}
-		$contents = nl2br($contents);
-		$contents = preg_replace('`&amp;((?:#[0-9]{2,4})|(?:[a-z0-9]{2,6}));`i', "&$1;", $contents);
+
+		//Protection : suppression du code html
+		if( $html_protect )
+		{
+			$this->content = htmlspecialchars($this->content, ENT_NOQUOTES);
+			$this->content = strip_tags($this->content);
+		}
+		$this->content = preg_replace('`&amp;((?:#[0-9]{2,4})|(?:[a-z0-9]{2,6}));`i', "&$1;", $this->content);
 		
-		//Smiley.
+		//Smilies
 		@include('../cache/smileys.php');
 		if( !empty($_array_smiley_code) )
 		{	
@@ -177,7 +460,7 @@ class Parse
 				$smiley_code[] = '`(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . str_replace('\'', '\\\\\\\'', preg_quote($code)) . ')`';
 				$smiley_img_url[] = '<img src="../images/smileys/' . $img . '" alt="' . addslashes($code) . '" class="smiley" />';
 			}
-			$contents = preg_replace($smiley_code, $smiley_img_url, $contents);
+			$this->content = preg_replace($smiley_code, $smiley_img_url, $this->content);
 		}	
 		
 		//Remplacement des caractères de word.
@@ -191,8 +474,8 @@ class Parse
 			'&#352;', '&#8249;', '&#338;', '&#381;', '&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;',
 			'&#8211;', '&#8212;', '&#732;', '&#8482;', '&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
 		);		
-		$contents = str_replace($array_str, $array_str_replace, $contents);
-
+		$this->content = str_replace($array_str, $array_str_replace, $this->content);
+		
 		//Preg_replace.
 		$array_preg = array( 
 			'b' => '`\[b\](.+)\[/b\]`isU',
@@ -201,277 +484,134 @@ class Parse
 			's' => '`\[s\](.+)\[/s\]`isU',
 			'sup' => '`\[sup\](.+)\[/sup\]`isU',
 			'sub' => '`\[sub\](.+)\[/sub\]`isU',
-			'img' => '`\[img(?:=(top|middle|bottom))?\]((?:(\./|\.\./)|([\w]+://))+[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iU',
-			'color' => '`\[color=((white|black|red|green|blue|yellow|purple|orange|maroon|pink)|(#[0-9a-f]{6}))\](.+)\[/color\]`isU',
-			'bgcolor' => '`\[bgcolor=((white|black|red|green|blue|yellow|purple|orange|maroon|pink)|(#[0-9a-f]{6}))\](.+)\[/bgcolor\]`isU',
-			'size' => '`\[size=(([0-9]{1})|([0-4]+[0-9]?))\](.+)\[/size\]`isU',
-			'font' => '`\[font=([ a-z0-9,_-]+)\](.+)\[/font\]`isU',
+			'img' => '`\[img(?:=(top|middle|bottom))?\]((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_-]+\.(?:jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iU',
+			'color' => '`\[color=((?:white|black|red|green|blue|yellow|purple|orange|maroon|pink)|(?:#[0-9a-f]{6}))\](.+)\[/color\]`isU',
+			'bgcolor' => '`\[bgcolor=((?:white|black|red|green|blue|yellow|purple|orange|maroon|pink)|(?:#[0-9a-f]{6}))\](.+)\[/bgcolor\]`isU',
+			'size' => '`\[size=([1-9]|(?:[1-4][0-9]))\](.+)\[/size\]`isU',
+			'font' => '`\[font=(arial|times|courier(?: new)?|impact|geneva|optima)\](.+)\[/font\]`isU',
 			'pre' => '`\[pre\](.+)\[/pre\]`isU',
 			'align' => '`\[align=(left|center|right|justify)\](.+)\[/align\]`isU',
 			'float' => '`\[float=(left|right)\](.+)\[/float\]`isU',
-			'anchor' => '`\[anchor=([a-z0-9_-]+)\](.*)\[/anchor\]`isU',
-			'acronym' => '`\[acronym=([a-z0-9_-]+)\](.*)\[/acronym\]`isU',
+			'anchor' => '`\[anchor=([a-z_][a-z0-9_]*)\](.*)\[/anchor\]`isU',
+			'acronym' => '`\[acronym=([^\n[\]<]+)\](.*)\[/acronym\]`isU',
 			'title' => '`\[title=([1-2])\](.+)\[/title\]`iU',
 			'stitle' => '`\[stitle=([1-2])\](.+)\[/stitle\]`iU',
 			'style' => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isU',
 			'swf' => '`\[swf=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\]((?:(\./|\.\./)|([\w]+://))+[^,\n\r\t\f]+)\[/swf\]`iU',
 			'movie' => '`\[movie=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\]([^\n\r\t\f]+)\[/movie\]`iU',
-			'sound' => '`\[sound\]([^\n\r\t\f]+)\[/sound\]`iU',
-			'url' => '`\[url\]([\w]+?://([^\n\r\t\f]+))\[/url\]`iU',
-			'url1' => '`\[url\]((www|ftp)\.([^\n\r\t\f]+))\[/url\]`iU',
-			'url2' => '`\[url=(((\./|\.\./)|([\w]+://))+[^\n\r\t\f]+)\]([^\n\r\t\f]+)\[/url\]`iU',
-			'url3' => '`\[url=((www|ftp)\.([^\n\r\t\f]+))\]([^\n\r\t\f]+)\[/url\]`iU',
-			'url4' => '`(\s)((ftp|https?)+://[^ ,\n\r\t\f<\\\]+)`i', 
-			'url5' => '`(\s)(www\.[^ ,\n\r\t\f<\\\]+)`i',
-			'mail' => '`(\s)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,6})\s`i'
+			'sound' => '`\[sound\]((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_-]+\.mp3)\[/sound\]`iU',
+			'url' => '`\[url\]((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)\[/url\]`isU',
+			'url1' => '`\[url\]((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)\[/url\]`isU',
+			'url2' => '`\[url=((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)\]([^\n\r\t\f]+)\[/url\]`isU',
+			'url3' => '`\[url=((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)\]([^\n\r\t\f]+)\[/url\]`iU',
+			'url4' => '`(\s)+((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)(\s)+`isU', 
+			'url5' => '`(\s)+((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)(\s)+`i',
+			'mail' => '`(\s)+([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s)+`i'
 		);	 	
 		$array_preg_replace = array( 
 			'b' => "<strong>$1</strong>",
 			'i' => "<em>$1</em>",
-			'u' => "<span style=\\\"text-decoration: underline;\\\">$1</span>",
+			'u' => "<span style=\"text-decoration: underline;\">$1</span>",
 			's' => "<strike>$1</strike>",		
 			'sup' => '<sup>$1</sup>',
 			'sub' => '<sub>$1</sub>',
-			'img' => "<img src=\\\"$2\\\" alt=\\\"\\\" class=\\\"valign_$1\\\" />",
-			'color' => "<span style=\\\"color:$1;\\\">$4</span>",
-			'bgcolor' => "<span style=\\\"background-color:$1;\\\">$4</span>",
-			'size' => "<span style=\\\"font-size: $1px;\\\">$4</span>",
-			'font' => "<span style=\\\"font-family: $1;\\\">$2</span>",
+			'img' => "<img src=\"$2\" alt=\"\" class=\"valign_$1\" />",
+			'color' => "<span style=\"color:$1;\">$2</span>",
+			'bgcolor' => "<span style=\"background-color:$1;\">$2</span>",
+			'size' => "<span style=\"font-size: $1px;\">$2</span>",
+			'font' => "<span style=\"font-family: $1;\">$2</span>",
 			'pre' => "<pre>$1</pre>",
-			'align' => "<p style=\\\"text-align:$1\\\">$2</p>",
-			'float' => "<p class=\\\"float_$1\\\">$2</p>",	
-			'anchor' => "<span id=\\\"$1\\\">$2</span>",
-			'acronym' => "<acronym title=\\\"$1\\\" class=\\\"bb_acronym\\\">$2</acronym>",
-			'title' => "<h3 class=\\\"title$1\\\">$2</h3>",
-			'stitle' => "<br /><h4 class=\\\"stitle$1\\\">$2</h4><br />",
-			'style' => "<span class=\\\"$1\\\">$2</span>",
-			'swf' => "<object type=\\\"application/x-shockwave-flash\\\" data=\\\"$3\\\" width=\\\"$1\\\" height=\\\"$2\\\">
-				<param name=\\\"allowScriptAccess\\\" value=\\\"never\\\" />
-				<param name=\\\"play\\\" value=\\\"true\\\" />
-				<param name=\\\"movie\\\" value=\\\"$3\\\" />
-				<param name=\\\"menu\\\" value=\\\"false\\\" />
-				<param name=\\\"quality\\\" value=\\\"high\\\" />
-				<param name=\\\"scalemode\\\" value=\\\"noborder\\\" />
-				<param name=\\\"wmode\\\" value=\\\"transparent\\\" />
-				<param name=\\\"bgcolor\\\" value=\\\"#000000\\\" />
-			</object>",
-			'movie' => "<object type=\\\"application/x-shockwave-flash\\\" data=\\\"../includes/data/movieplayer.swf?movie=$3\\\" width=\\\"$1\\\" height=\\\"$2\\\">
-				<param name=\\\"allowScriptAccess\\\" value=\\\"never\\\" />
-				<param name=\\\"play\\\" value=\\\"true\\\" />
-				<param name=\\\"movie\\\" value=\\\"$1\\\" />
-				<param name=\\\"menu\\\" value=\\\"false\\\" />
-				<param name=\\\"quality\\\" value=\\\"high\\\" />
-				<param name=\\\"scalemode\\\" value=\\\"noborder\\\" />
-				<param name=\\\"wmode\\\" value=\\\"transparent\\\" />
-				<param name=\\\"bgcolor\\\" value=\\\"#FFFFFF\\\" />
-			</object>",
-			'sound' => "<object type=\\\"application/x-shockwave-flash\\\" data=\\\"../includes/data/dewplayer.swf?son=$1\\\" width=\\\"200\\\" height=\\\"20\\\">
-				<param name=\\\"allowScriptAccess\\\" value=\\\"never\\\" />
-				<param name=\\\"play\\\" value=\\\"true\\\" />
-				<param name=\\\"movie\\\" value=\\\"../includes/data/dewplayer.swf?son=$1\\\" />
-				<param name=\\\"menu\\\" value=\\\"false\\\" />
-				<param name=\\\"quality\\\" value=\\\"high\\\" />
-				<param name=\\\"scalemode\\\" value=\\\"noborder\\\" />
-				<param name=\\\"wmode\\\" value=\\\"transparent\\\" />
-				<param name=\\\"bgcolor\\\" value=\\\"#FFFFFF\\\" />
-			</object>",
-			'url' => "<a href=\\\"$1\\\">$1</a>",
-			'url1' => "<a href=\\\"http://$1\\\">$1</a>",
-			'url2' => "<a href=\\\"$1\\\">$5</a>",
-			'url3' => "<a href=\\\"http://$1\\\">$4</a>",
-			'url4' => "$1<a href=\\\"$2\\\">$2</a>", 
-		    'url5' => "$1<a href=\\\"http://$2\\\">$2</a>",
-		    'mail' => "$1<a href=\\\"mailto:$2\\\">$2</a>"
-		);		
+			'align' => "<p style=\"text-align:$1\">$2</p>",
+			'float' => "<p class=\"float_$1\">$2</p>",	
+			'anchor' => "<span id=\"$1\">$2</span>",
+			'acronym' => "<acronym title=\"$1\" class=\"bb_acronym\">$2</acronym>",
+			'title' => "<h3 class=\"title$1\">$2</h3>",
+			'stitle' => "<br /><h4 class=\"stitle$1\">$2</h4><br />",
+			'style' => "<span class=\"$1\">$2</span>",
+			'swf' => "<object type=\"application/x-shockwave-flash\" data=\"$3\" width=\"$1\" height=\"$2\">
+		<param name=\"allowScriptAccess\" value=\"never\" />
+		<param name=\"play\" value=\"true\" />
+		<param name=\"movie\" value=\"$3\" />
+		<param name=\"menu\" value=\"false\" />
+		<param name=\"quality\" value=\"high\" />
+		<param name=\"scalemode\" value=\"noborder\" />
+		<param name=\"wmode\" value=\"transparent\" />
+		<param name=\"bgcolor\" value=\"#000000\" />
+		</object>",
+			'movie' => "<object type=\"application/x-shockwave-flash\" data=\"../includes/data/movieplayer.swf?movie=$3\" width=\"$1\" height=\"$2\">
+		<param name=\"allowScriptAccess\" value=\"never\" />
+		<param name=\"play\" value=\"true\" />
+		<param name=\"movie\" value=\"$1\" />
+		<param name=\"menu\" value=\"false\" />
+		<param name=\"quality\" value=\"high\" />
+		<param name=\"scalemode\" value=\"noborder\" />
+		<param name=\"wmode\" value=\"transparent\" />
+		<param name=\"bgcolor\" value=\"#FFFFFF\" />
+		</object>",
+			'sound' => "<object type=\"application/x-shockwave-flash\" data=\"../includes/data/dewplayer.swf?son=$1\" width=\"200\" height=\"20\">
+		<param name=\"allowScriptAccess\" value=\"never\" />
+		<param name=\"play\" value=\"true\" />
+		<param name=\"movie\" value=\"../includes/data/dewplayer.swf?son=$1\" />
+		<param name=\"menu\" value=\"false\" />
+		<param name=\"quality\" value=\"high\" />
+		<param name=\"scalemode\" value=\"noborder\" />
+		<param name=\"wmode\" value=\"transparent\" />
+		<param name=\"bgcolor\" value=\"#FFFFFF\" />
+		</object>",
+			'url' => "<a href=\"$1\">$1</a>",
+			'url1' => "<a href=\"http://$1\">$1</a>",
+			'url2' => "<a href=\"$1\">$2</a>",
+			'url3' => "<a href=\"http://$1\">$2</a>",
+			'url4' => "$1<a href=\"$2\">$2</a>$3", 
+			'url5' => "$1<a href=\"http://$2\">$2</a>$3",
+			'mail' => "$1<a href=\"mailto:$2\">$2</a>$3"
+		);
 
 		//Suppression des remplacements des balises interdites.
-		$other_balise = array('table', 'code', 'math', 'quote', 'hide', 'indent', 'list'); 
-		foreach($forbidden_tags as $key => $balise)
-		{	
-			if( in_array($balise, $other_balise) )
-			{
-				$array_preg[$balise] = '`\[' . $balise . '.*\](.+)\[/' . $balise . '\]`isU';
-				$array_preg_replace[$balise] = "$1";
-			}
-			else
+		if( !empty($forbidden_tags) )
+		{
+			$other_tags = array('table', 'code', 'math', 'quote', 'hide', 'indent', 'list'); 
+			foreach($forbidden_tags as $key => $tag)
 			{	
-				unset($array_preg[$balise]);
-				unset($array_preg_replace[$balise]);
-			}
-		}	
-		//Remplacement
-		$contents = preg_replace($array_preg, $array_preg_replace, $contents);	
-
-		//Parsage des balises imbriquées.	
-		$this->parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $contents);
-		$this->parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $contents);
-		$this->parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $contents);
-		$this->parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $contents);
-
-		 //Parsage de la balise table.
-		if( strpos($contents, '[table') !== false )
-			$this->parse_table($contents);
+				if( in_array($tag, $other_tags) )
+				{
+					$array_preg[$tag] = '`\[' . $tag . '.*\](.+)\[/' . $tag . '\]`isU';
+					$array_preg_replace[$tag] = "$1";
+				}
+				else
+				{	
+					unset($array_preg[$tag]);
+					unset($array_preg_replace[$tag]);
+				}
+			}	
+		}
+		//Remplacement : on parse les balises classiques
+		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
-		//Parsage de la balise list.
-		if( strpos($contents, '[list') !== false )
-			$this->parse_list($contents);
-
-		return trim($contents);
-	}
-
-	//Remplacement recursif des balises imbriquées.
-	function parse_imbricated($match, $regex, $replace, &$contents)
-	{
-		$nbr_match = substr_count($contents, $match);
-		for($i = 0; $i <= $nbr_match; $i++)
-			$contents = preg_replace($regex, $replace, $contents); 
-	}
-
-	//Fonction pour éclater la chaîne selon les tableaux (gestion de l'imbrication infinie)
-	function split_imbricated_table(&$contents)
-	{
-		$contents = preg_split('`\[table( style="[^"]+")?\]((?:[^[]|\[(?!/?table(?: style="[^"]+")?\])|(?R))+)\[/table\]`', $contents, -1, PREG_SPLIT_DELIM_CAPTURE);
-
-		//1 élément représente les inter tableaux, un le style du tableau et l'autre le contenu
-		$nbr_occur = count($contents);
-		for($i = 0; $i < $nbr_occur; $i++)
+		//Interprétation des sauts de ligne
+		$this->content = nl2br($this->content);
+		
+		//Tableaux
+		if( strpos($this->content, '[table') !== false )
 		{
-			if( ($i % 3) === 2 && preg_match('`\[table(?: style="[^"]+")?\].+\[/table\]`s', $contents[$i]) )
-			{
-				//C'est le contenu d'un tableau, il contient un sous tableau donc on éclate
-				$this->split_imbricated_table($contents[$i]);
-			}
+			$this->parse_table();
 		}
+		
+		//Listes
+		if( strpos($this->content, '[list') !== false )
+		{
+			$this->parse_list();
+		}
+		##### //Fonction de parsage des balises imbriquées générique à faire #####
+		//Parsage des balises imbriquées.	
+		$this->parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->content);
+		$this->parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->content);
+		$this->parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
+		$this->parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->content);
 	}
 
-	//Fonction qui parse les tableaux dans l'ordre inverse à l'ordre hiérarchique
-	function parse_imbricated_table(&$contents)
-	{
-		if( is_array($contents) )
-		{
-			$string_contents = '';
-			$nbr_occur = count($contents);
-			for($i = 0; $i < $nbr_occur; $i++)
-			{
-				//Si c'est le contenu d'un tableau on le parse
-				if( $i % 3 === 2 )
-				{
-					//On parse d'abord les sous tableaux éventuels
-					$this->parse_imbricated_table($contents[$i]);
-					//On parse le tableau concerné (il doit commencer par [row] puis [col] ou [head] et se fermer pareil moyennant espaces et retours à la ligne sinon il n'est pas valide)
-					if( preg_match('`^(?:\s|<br />)*\[row\](?:\s|<br />)*\[(?:col|head)(?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?\].*\[/(?:col|head)\](?:\s|<br />)*\[/row\](?:\s|<br />)*$`sU', $contents[$i]) )
-					{
-						
-						//On nettoie les caractères éventuels (espaces ou retours à la ligne) entre les différentes cellules du tableau pour éviter les erreurs xhtml
-						$contents[$i] = preg_replace_callback('`^(\s|<br />)+\[row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						$contents[$i] = preg_replace_callback('`\[/row\](\s|<br />)+$`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						$contents[$i] = preg_replace_callback('`\[/row\](\s|<br />)+\[row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						$contents[$i] = preg_replace_callback('`\[row\](\s|<br />)+\[col.*\]`Us', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						$contents[$i] = preg_replace_callback('`\[row\](\s|<br />)+\[head[^]]*\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						$contents[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[col.*\]`Us', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						$contents[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[head[^]]*\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						$contents[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[col.*\]`Us', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						$contents[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[head[^]]*\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						$contents[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[/row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						$contents[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[/row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						//Parsage de row, col et head
-						$contents[$i] = preg_replace('`\[row\](.*)\[/row\]`sU', '<tr class="bb_table_row">$1</tr>', $contents[$i]);
-						$contents[$i] = preg_replace('`\[col((?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/col\]`sU', '<td class="bb_table_col"$1>$2</td>', $contents[$i]);
-						$contents[$i] = preg_replace('`\[head((?: colspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/head\]`sU', '<th class="bb_table_head"$1>$2</th>', $contents[$i]);
-						//parsage réussi (tableau valide), on rajoute le tableau devant
-						$contents[$i] = '<table class="bb_table"' . $contents[$i - 1] . '>' . $contents[$i] . '</table>';
-					}
-					else
-					{
-						//le tableau n'est pas valide, on met des balises temporaires afin qu'elles ne soient pas parsées au niveau inférieur
-						$contents[$i] = str_replace(array('[col', '[row', '[/col', '[/row', '[head', '[/head'), array('[\col', '[\row', '[\/col', '[\/row', '[\head', '[\/head'), $contents[$i]);
-						$contents[$i] = '[table' . $contents[$i - 1] . ']' . $contents[$i] . '[/table]';
-					}
-				}
-				//On concatène la chaîne finale si ce n'est pas le style du tableau
-				if( $i % 3 !== 1 )
-					$string_contents .= $contents[$i];
-			}
-			$contents = $string_contents;
-		}
-	}
-
-	function parse_table(&$contents)
-	{
-		//On supprime les éventuels quote qui ont été transformés en leur entité html
-		$contents = preg_replace_callback('`\[(?:table|col|row|head)(?: colspan=\\\&quot;[0-9]+\\\&quot;)?(?: rowspan=\\\&quot;[0-9]+\\\&quot;)?( style=\\\&quot;(?:[^&]+)\\\&quot;)?\]`U', create_function('$matches', 'return str_replace(\'\\\&quot;\', \'"\', $matches[0]);'), $contents);
-		$contents = stripslashes($contents);
-		$this->split_imbricated_table($contents);
-		$this->parse_imbricated_table($contents);
-		//On remet les tableaux invalides tels qu'ils étaient avant
-		$contents = str_replace(array('[\col', '[\row', '[\/col', '[\/row', '[\head', '[\/head'), array('[col', '[row', '[/col', '[/row', '[head', '[/head'), $contents);
-		$contents = addslashes($contents);
-	}
-	
-	//Fonction pour éclater les listes (imbrication infinie)
-	function split_imbricated_list(&$contents)
-	{
-		$contents = preg_split('`\[list(?:=((?:un)?ordered))?(?: style="([^"]+)")?\]((?:[^[]|\[(?!/?list(=(?:un)?ordered)?( style="[^"]+")?\])|(?R))+)\[/list\]`', $contents, -1, PREG_SPLIT_DELIM_CAPTURE);
-		//1 élément représente le texte inter listes, un deuxième le type de liste (ul ou ol), le troisième le style éventuel de la liste et le quatrième le contenu de la liste
-		$nbr_occur = count($contents);
-		for( $i = 0; $i < $nbr_occur; $i++)
-		{
-			if( $i % 4 === 3 && preg_match('`\[list(=(?:un)?ordered)?( style="[^"]+")?\](\s|<br />)*\[\*\].*\[/list\]`s', $contents[$i]) )
-			{
-				//C'est le contenu du tableau, on travaille dessus
-				$this->split_imbricated_list($contents[$i]);
-			}
-		}
-	}
-
-	//Fonction qui parse les listes
-	function parse_imbricated_list(&$contents)
-	{
-		if( is_array($contents) )
-		{
-			$string_contents = '';
-			$nbr_occur = count($contents);
-			for($i = 0; $i < $nbr_occur; $i++)
-			{
-				//Si c'est le contenu d'une liste on le parse
-				if( $i % 4 === 3 )
-				{
-					//On parse d'abord les sous listes éventuelles
-					$this->parse_imbricated_list($contents[$i]);
-					if( strpos($contents[$i], '[*]') !== false ) //Si il contient au moins deux éléments
-					{				
-						//Nettoyage des listes (retours à la ligne)
-						$contents[$i] = preg_replace_callback('`\[\*\]((?:\s|<br />)+)`', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						$contents[$i] = preg_replace_callback('`((?:\s|<br />)+)\[\*\]`', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $contents[$i]);
-						$list_tag = $contents[$i - 2] == 'ordered' ? 'ol' : 'ul';
-						$list_style = !empty($contents[$i - 1]) ? ' style="' . $contents[$i - 1] . '"' : '';
-						$contents[$i] = preg_replace_callback('`^((?:\s|<br />)*)\[\*\]`U', create_function('$var', 'return str_replace("<br />", "", str_replace("[*]", "<li class=\"bb_li\">", $var[0]));'), $contents[$i]);
-						$contents[$i] = '<' . $list_tag . $list_style . ' class="bb_' . $list_tag . '">' . str_replace('[*]', '</li><li class="bb_li">', $contents[$i]) . '</li></' . $list_tag . '>';
-					}
-				}
-				//On concatène la chaîne finale si ce n'est pas le style ou le type de tableau
-				if( ($i % 4 !== 1) && ($i % 4 !== 2) )
-					$string_contents .= $contents[$i];
-			}
-			$contents = $string_contents;
-		}
-	}
-
-	function parse_list(&$contents)
-	{
-		//On nettoie les guillemets échappés
-		$contents = preg_replace_callback('`\[list(?:=(?:un)?ordered)?( style=\\\&quot;[^&]+\\\&quot;)?\]`U', create_function('$matches', 'return str_replace(\'\\\&quot;\', \'"\', $matches[0]);'), $contents);
-		//on travaille dessus
-		if( preg_match('`\[list(=(?:un)?ordered)?( style="[^"]+")?\](\s|<br />)*\[\*\].*\[/list\]`s', $contents) )
-		{
-			$this->split_imbricated_list($contents);
-			$this->parse_imbricated_list($contents);
-		}
-	}
-	
-	############################## Unparsage ##############################
 	//On unparse le contenu.
-	function unparse_content($contents, $editor_unparse)
+	function unparse_content()
 	{
 		//Smiley.
 		@include('../cache/smileys.php');
@@ -483,33 +623,33 @@ class Parse
 				$smiley_img_url[] = '`<img src="../images/smileys/' . preg_quote($img) . '(.*) />`sU';
 				$smiley_code[] = $code;
 			}	
-			$contents = preg_replace($smiley_img_url, $smiley_code, $contents);
+			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
 		}
 			
 		if( $this->user_editor == 'tinymce' && $editor_unparse ) //Préparse pour tinymce.
 		{
 			//Remplacement des caractères de word.			
 			$array_str = array( 
-			"\t", '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '€', '‚', 'ƒ',
-			'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
-			'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
-			'›', 'œ', 'ž', 'Ÿ', '<li class="bb_li">', '</table>', '<tr class="bb_table_row">', '</th>'
+				"\t", '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '€', '‚', 'ƒ',
+				'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
+				'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
+				'›', 'œ', 'ž', 'Ÿ', '<li class="bb_li">', '</table>', '<tr class="bb_table_row">', '</th>'
 			);
 			$array_str_replace = array( 
-			'&nbsp;&nbsp;&nbsp;', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '&#8364;', '&#8218;', '&#402;', '&#8222;',
-			'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
-			'&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;', '&#8211;', '&#8212;', '&#732;', '&#8482;',
-			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;', '<li>', '</tbody></table>', '<tr>', '</caption>'
+				'&nbsp;&nbsp;&nbsp;', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '&#8364;', '&#8218;', '&#402;', '&#8222;',
+				'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
+				'&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;', '&#8211;', '&#8212;', '&#732;', '&#8482;',
+				'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;', '<li>', '</tbody></table>', '<tr>', '</caption>'
 			);	
-			$contents = str_replace($array_str, $array_str_replace, $contents);
+			$this->content = str_replace($array_str, $array_str_replace, $this->content);
 			
 			//Remplacement des balises imbriquées.	
-			$this->parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $contents);
-			$this->parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $contents);
-			$this->parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '<blockquote>$1</blockquote>', $contents);
+			$this->parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->content);
+			$this->parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
+			$this->parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '<blockquote>$1</blockquote>', $this->content);
 			
 			//Balise size
-			$contents = preg_replace_callback('`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU', create_function('$size', 'if( $size[1] >= 36 ) $fontsize = 7;	elseif( $size[1] <= 12 ) $fontsize = 1;	else $fontsize = min(($size[1] - 6)/2, 7); return \'<font size="\' . $fontsize . \'">\' . $size[2] . \'</font>\';'), $contents);
+			$this->content = preg_replace_callback('`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU', create_function('$size', 'if( $size[1] >= 36 ) $fontsize = 7;	elseif( $size[1] <= 12 ) $fontsize = 1;	else $fontsize = min(($size[1] - 6)/2, 7); return \'<font size="\' . $fontsize . \'">\' . $size[2] . \'</font>\';'), $this->content);
 		
 			//Preg_replace.
 			$array_preg = array( 
@@ -562,31 +702,31 @@ class Parse
 				"[sound]$1[/sound]",
 				"[movie=$2,$3]$1[/movie]"
 			);	
-			$contents = preg_replace($array_preg, $array_preg_replace, $contents);
+			$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 			
-			$contents = htmlentities($contents);
+			$this->content = htmlentities($this->content);
 		}
 		else
 		{		
 			//Remplacement des balises imbriquées.	
-			$this->parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $contents);
-			$this->parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $contents);
-			$this->parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $contents);
+			$this->parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->content);
+			$this->parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
+			$this->parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->content);
 				
 			//Str_replace.
 			$array_str = array( 
-			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '&#8364;', '&#8218;', '&#402;', '&#8222;',
-			'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
-			'&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;', '&#8211;', '&#8212;', '&#732;', '&#8482;',
-			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
+				'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '&#8364;', '&#8218;', '&#402;', '&#8222;',
+				'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
+				'&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;', '&#8211;', '&#8212;', '&#732;', '&#8482;',
+				'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
 			);	
 			$array_str_replace = array( 
-			'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '€', '‚', 'ƒ',
-			'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
-			'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
-			'›', 'œ', 'ž', 'Ÿ'
+				'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '€', '‚', 'ƒ',
+				'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
+				'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
+				'›', 'œ', 'ž', 'Ÿ'
 			);	
-			$contents = str_replace($array_str, $array_str_replace, $contents);
+			$this->content = str_replace($array_str, $array_str_replace, $this->content);
 
 			//Preg_replace.
 			$array_preg = array( 
@@ -635,47 +775,17 @@ class Parse
 				"[movie=$2,$3]$1[/movie]",
 				"[swf=$2,$3]$1[/swf]"
 			);	
-			$contents = preg_replace($array_preg, $array_preg_replace, $contents);
+			$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
 			//Unparsage de la balise table.
-			if( strpos($contents, '<table') !== false )
-				$this->unparse_table($contents);
+			if( strpos($this->content, '<table') !== false )
+				$this->unparse_table($this->content);
 
 			//Unparsage de la balise table.
-			if( strpos($contents, '<li') !== false )
-				$this->unparse_list($contents);
+			if( strpos($this->content, '<li') !== false )
+				$this->unparse_list($this->content);
 		}
-		
-		return $contents;
-	}
-
-	function unparse_table(&$contents)
-	{
-		//Preg_replace.
-		$array_preg = array( 
-		'`<table class="bb_table"([^>]*)>(.*)</table>`sU',
-		'`<tr class="bb_table_row">(.*)</tr>`sU',
-		'`<th class="bb_table_head"([^>]*)>(.*)</th>`sU',
-		'`<td class="bb_table_col"([^>]*)>(.*)</td>`sU'
-		);
-		$array_preg_replace = array( 
-		'[table$1]$2[/table]',
-		'[row]$1[/row]',
-		'[head$1]$2[/head]',
-		'[col$1]$2[/col]'
-		);	
-		$contents = preg_replace($array_preg, $array_preg_replace, $contents);
-	}
-
-	//Retour
-	function unparse_list(&$contents)
-	{
-	    while( preg_match('`<(?:u|o)l( style="[^"]+")? class="bb_(?:u|o)l">(.+)</(?:u|o)l>`sU', $contents) )
-	    {
-	        $contents = preg_replace('`<ul( style="[^"]+")? class="bb_ul">(.+)</ul>`sU', '[list$1]$2[/list]', $contents);
-	        $contents = preg_replace('`<ol( style="[^"]+")? class="bb_ol">(.+)</ol>`sU', '[list=ordered$1]$2[/list]', $contents);
-	        $contents = preg_replace('`<li class="bb_li">(.+)</li>`isU', '[*]$1', $contents);
-	    }
+		$this->contents = addslashes($contents);
 	}
 }
 
