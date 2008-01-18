@@ -419,8 +419,8 @@ class Parse
 	//Fonction qui renvoie le contenu traité
 	function get_content()
 	{
-		//return addslashes($this->content);
-		return $this->content;
+		return addslashes($this->content);
+		//return $this->content;
 	}
 	
 	//Fonction de chargement de texte
