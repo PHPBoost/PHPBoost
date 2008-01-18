@@ -230,9 +230,11 @@ function parse($contents, $forbidden_tags = array(), $html_protect = true, $magi
 	global $LANG, $session;
 	
 	include_once('../includes/parse.class.php');
-	$parse = new Parse($session->data['user_editor']);
+	$text = new Parse($contents);
 
-	return $parse->parse_content($contents, $forbidden_tags, $html_protect, $magic_quotes_activ);
+	$text->parse_content($forbidden_tags, $html_protect, $magic_quotes_activ);
+	
+	return $text->get_content();
 }
 
 //Charge l'unparseur.
