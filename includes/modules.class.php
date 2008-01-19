@@ -154,18 +154,4 @@ class Modules
     var $availablesModules;
 }
 
-
-function test()
-{
-    $Mods = new Modules();
-    $Mods->functionnalities['Search'] = Array('wiki', 'forum', 'news');
-    $Mods->functionnalities['LatestAdds'] = Array('wiki', 'forum', 'news');
-    $Mods->functionnalities['LatestModifications'] = Array('wiki');
-    
-    echo '<br /><pre>';
-    print_r($Mods->functionnalities);
-    print_r($Mods->GetAvailablesModulesList('Search'));
-    echo '</pre>';
-}
-
 ?>
