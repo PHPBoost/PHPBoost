@@ -55,7 +55,7 @@ class Modules
      *  du/des module(s) sélectionné(s) avec les bons arguments.
      */
     {
-        if ( in_array($this->functionnalities, $functionnalitie) )
+        if ( in_array($functionnalitie, $this->functionnalities) )
         {
             $results = Array( );
             foreach($modules as $moduleName => $args)
@@ -80,7 +80,7 @@ class Modules
         foreach($SECURE_MODULE as $moduleName)
         {
             $module = $this->GetModule($moduleName);
-            if ( array_key_exists($module->functionnalities, $functionnalitie) )
+            if ( array_key_exists($functionnalitie, $module->functionnalities) )
             { array_push( $modules, $module ); }
         }
         return $modules;
@@ -91,16 +91,17 @@ class Modules
      *  Instancie et renvoie le module demandé.
      */
     {
-        if ( !in_array(array_keys($loadedModules), $moduleName) )
+        if ( !array_key_exists($moduleName, $this->loadedModules ) )
         {
-            if ( in_array($this->availablesModules, $moduleName) )
+            if ( in_array($moduleName, $this->availablesModules) )
             {
                 global $groups, $SECURE_MODULE;
                 if ( $groups->check_auth($SECURE_MODULE[$moduleName], 1) )
                 {
                     if (@include_once('../'.$moduleName.'/'.$moduleName.'.class.php'))
                     {
-                        $this->loadedModules[$moduleName] = new ucfirst($moduleName)();
+                        $constructeur = ucfirst($moduleName);
+                        $this->loadedModules[$moduleName] = new $constructeur();
                     }
                     else { return MODULE_NOT_IMPLEMENTED; }
                 }
@@ -144,8 +145,8 @@ class Modules
      *  Vérifie que le module implémente bien la fonctionnalité demandé.
      */
     {
-        if ( array_key_exists($module, $functionnalitie) )
-        { return (!empty( $module[$functionnalitie] ) && $module[$functionnalitie] != 'false' != ? true : false); }
+        if ( array_key_exists($functionnalitie, $module) )
+        { return (!empty( $module[$functionnalitie] ) && $module[$functionnalitie] != 'false' ? true : false); }
         else
         { return false; }
     }
