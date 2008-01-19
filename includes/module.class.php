@@ -83,6 +83,8 @@ class Module
      * Constructeur de la classe Module
      */
     {
+        global $CONFIG;
+        
         $this->name = $moduleName;
         // récupération des infos sur le module à partir du fichier module.ini
         $this->infos = parse_ini_file('../'.$this->name.'/lang/'.$CONFIG['lang'].'/config.ini');
