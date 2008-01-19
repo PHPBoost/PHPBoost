@@ -33,6 +33,9 @@ class Modules
     //----------------------------------------------------------------- PUBLIC
     //----------------------------------------------------- Méthodes publiques
     function Search ( $modules )
+    /**
+     *  Effectue une recherche dans ce module
+     */
     {
         verifyFunctionnalitieAndModules ( 'Search', $modules );
         $modulesNames = array_keys($modules);
@@ -54,9 +57,9 @@ class Modules
     function GetModule($moduleName)
     {
         if ( ($module = object()) !== false )
-		{ return $module; }
-		else
-		{ return false; }
+        { return $module; }
+        else
+        { return false; }
     }
 
     //---------------------------------------------------------- Constructeurs
@@ -78,7 +81,18 @@ class Modules
     }
 
     //------------------------------------------------------------------ PRIVE
-    
+    /**
+     *  Pour des raisons de compatibilité avec PHP 4, les mots-clés private,
+     *  protected et public ne sont pas utilisé.
+     *  
+     *  L'appel aux méthodes et/ou attributs PRIVE/PROTEGE est donc possible.
+     *  Cependant il est strictement déconseillé, car cette partie du code
+     *  est suceptible de changer sans avertissement et donc vos modules ne
+     *  fonctionnerai plus.
+     *  
+     *  Bref, utilisation à vos risques et périls !!!
+     *  
+     */
     //----------------------------------------------------- Méthodes protégées
     function verifyFunctionnalitieAndModules ( $functionnalitie, &$modules )
     {
