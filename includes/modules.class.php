@@ -62,7 +62,7 @@ class Modules
             {
                 // Instanciation de l'objet $module
                 $module = $this->GetModule($moduleName);
-                if ( $this->checkModuleFunctionnalitie ( $functionnalitie, $module ) )
+                if ( $this->checkModuleFunctionnalitie ( $functionnalitie, $module ) == true )
                 { $results[$moduleName] = $module->$functionnalitie($args); }
             }
             return $results;
@@ -76,6 +76,7 @@ class Modules
      */
     {
         $modules = Array (  );
+        global $SECURE_MODULE;
         foreach($SECURE_MODULE as $moduleName)
         {
             $module = $this->GetModule($moduleName);
@@ -94,7 +95,8 @@ class Modules
         {
             if ( in_array($this->availablesModules, $moduleName) )
             {
-                if ( $groups->check_auth($SECURE_MODULE[$moduleName]) )
+                global $groups, $SECURE_MODULE;
+                if ( $groups->check_auth($SECURE_MODULE[$moduleName], 1) )
                 {
                     if (@include_once('../'.$moduleName.'/'.$moduleName.'.class.php'))
                     {
@@ -115,11 +117,11 @@ class Modules
      *  Constructeur de la classe Modules
      */
     {
-        global $groups;
+        global $cache, $SECURE_MODULE;
         
         $this->loadedModules = Array(  );
         $this->functionnalities = explode(',',LIST_FUNCTIONNALITIES);
-        $cache->load_file('modules');
+        //$cache->load_file('modules'); // déjà fait dans le header normalement
         $this->availablesModules = array_keys($SECURE_MODULE);
     }
 
@@ -143,7 +145,7 @@ class Modules
      */
     {
         if ( array_key_exists($module, $functionnalitie) )
-        { return true; }
+        { return (!empty( $module[$functionnalitie] ) && $module[$functionnalitie] != 'false' != ? true : false); }
         else
         { return false; }
     }
