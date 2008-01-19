@@ -32,51 +32,82 @@ class Module
 {
     //----------------------------------------------------------------- PUBLIC
     //----------------------------------------------------- Méthodes publiques
-    function Search (  )
+    function GetInfo (  )
+    /**
+     *  Renvoie le nom du module, les informations trouvée dans le config.ini
+     *  du module ainsi que les fonctionnalités dont dispose le module.
+     */
+    {
+        return Array(   'name' => $this->name,
+                        'infos' => $this->infos,
+                        'functionnalities' => $this->functionnalities,
+                    );
+    }
+    
+    function Search ( $args = null )
+    /**
+     *  Effectue une recherche dans ce module
+     */
     {
         return NOT_YET_IMPLEMENTED;
     }
     
-    function LatestAdds (  )
+    function LatestAdds ( $args = null )
+    /**
+     *  Renvoie la liste des derniers ajouts
+     */
     {
         return NOT_YET_IMPLEMENTED;
     }
     
-    function LatestModifications (  )
+    function LatestModifications ( $args = null )
+    /**
+     *  Renvoie la liste des dernieres modifications
+     */
     {
         return NOT_YET_IMPLEMENTED;
     }
     
-    function MadeBy (  )
+    function MadeBy ( $args = null )
+    /**
+     *  Renvoie la liste des actions du/des utilisateurs/groupes
+     */
     {
         return NOT_YET_IMPLEMENTED;
     }
     
     
     //---------------------------------------------------------- Constructeurs
-    function Module ( $moduleName = 'NaS'  )
-    // Constructeur de la classe Module
+    function Module ( $moduleName = 'empty-module'  )
+    /**
+     * Constructeur de la classe Module
+     */
     {
         $this->name = $moduleName;
+        // récupération des infos sur le module à partir du fichier module.ini
+        $this->infos = parse_ini_file('../'.$this->name.'/lang/'.$CONFIG['lang'].'/config.ini');
+        $this->functionnalities = parse_ini_file('../'.$this->name.'/functionnalities.ini');
     }
     
     //------------------------------------------------------------------ PRIVE
-    
+    /**
+     *  Pour des raisons de compatibilité avec PHP 4, les mots-clés private,
+     *  protected et public ne sont pas utilisé.
+     *  
+     *  L'appel aux méthodes et/ou attributs PRIVE/PROTEGE est donc possible.
+     *  Cependant il est strictement déconseillé, car cette partie du code
+     *  est suceptible de changer sans avertissement et donc vos modules ne
+     *  fonctionnerai plus.
+     *  
+     *  Bref, utilisation à vos risques et périls !!!
+     *  
+     */
     //----------------------------------------------------- Méthodes protégées
-    
     
     //----------------------------------------------------- Attributs protégés
     var $name;
-}
-
-
-function test()
-{
-    $Mod = new Module('wiki');
-    $Mod->Search();
-    $Mod->LatestAdds();
-    $Mod->LatestModifications();
-    $Mod->MadeBy();
+    var $infos;
+    var $functionnalities;
 }
 
 ?>
