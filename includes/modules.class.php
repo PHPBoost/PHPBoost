@@ -27,10 +27,11 @@
 ###################################################*/
 
 define('LIST_FUNCTIONNALITIES','Search,LatestAdds,LatestModifications,MadeBy');
-define('ACCES DENIED', -1);
+define('ACCES_DENIED', -1);
 define('MODULE_NOT_AVAILABLE', -2);
 define('MODULE_NOT_IMPLEMENTED', -3);
 define('FUNCTIONNALITIE_DOES_NOT_EXIST', -4);
+
 
 /**
  *  Les arguments de fonction nommé "$modules" sont assez particulier.
@@ -70,23 +71,26 @@ class Modules
         else { return FUNCTIONNALITIE_DOES_NOT_EXIST; }
     }
 
-    function GetAvailablesModulesList ( $functionnalitie )
+    function GetAvailablesModules ( $functionnalitie )
     /**
      *  Renvoie la liste des modules disposant de la fonctionnalité demandé.
      */
     {
         $modules = Array (  );
         global $SECURE_MODULE;
-        foreach($SECURE_MODULE as $moduleName)
+        foreach($SECURE_MODULE as $moduleName => $auth)
         {
             $module = $this->GetModule($moduleName);
-            if ( array_key_exists($functionnalitie, $module->functionnalities) )
-            { array_push( $modules, $module ); }
+            if ( !in_array($module, $this->loadModuleErrors) )
+            {
+                if ( array_key_exists($functionnalitie, $module->functionnalities) )
+                { array_push( $modules, $module ); }
+            }
         }
         return $modules;
     }
 
-    function GetModule($moduleName)
+    function GetModule ( $moduleName = '' )
     /**
      *  Instancie et renvoie le module demandé.
      */
@@ -124,6 +128,8 @@ class Modules
         $this->functionnalities = explode(',',LIST_FUNCTIONNALITIES);
         //$cache->load_file('modules'); // déjà fait dans le header normalement
         $this->availablesModules = array_keys($SECURE_MODULE);
+        
+        $this->loadModuleErrors = Array ( ACCES_DENIED, MODULE_NOT_AVAILABLE, MODULE_NOT_IMPLEMENTED );
     }
 
     //------------------------------------------------------------------ PRIVE
@@ -155,6 +161,7 @@ class Modules
     var $functionnalities;
     var $loadedModules;
     var $availablesModules;
+    var $loadModuleErrors;
 }
 
 ?>
