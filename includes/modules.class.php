@@ -28,16 +28,30 @@
 
 define('LIST_FUNCTIONNALITIES','Search,LatestAdds,LatestModifications,MadeBy');
 
+
+/**
+ *  Les arguments de fonction nommé "$modules" sont assez particulier.
+ *
+ *  Il s'agit d'un tableau avec comme clés le nom des modules et comme
+ *  arguments un tableau d'arguments correspondant à la liste des arguments
+ *  nécessaire pour la méthode de ce module particulier.
+ *
+ *  Par exemple, la recherche sur le forum peut nécessiter plus d'option
+ *  qu'une recherche sur le wiki.
+ *
+ */
+
+
 class Modules
 {
     //----------------------------------------------------------------- PUBLIC
     //----------------------------------------------------- Méthodes publiques
     function Search ( $modules )
     /**
-     *  Effectue une recherche dans ce module
+     *  Effectue une recherche dans le(s) module(s) sélectionné(s)
      */
     {
-        verifyFunctionnalitieAndModules ( 'Search', $modules );
+        $this->verifyModulesFunctionnalities ( 'Search', array_keys($modules) );
         $modulesNames = array_keys($modules);
         $results = Array();
         for ($i = 0; $i < count($modules); $i++)
@@ -94,9 +108,8 @@ class Modules
      *  
      */
     //----------------------------------------------------- Méthodes protégées
-    function verifyFunctionnalitieAndModules ( $functionnalitie, &$modules )
+    function verifyModulesFunctionnalities ( $functionnalitie, $listMods )
     {
-        $listMods = arra_keys($modules);
         foreach ($listMods as $mod)
         {
             if ( !in_array($mod, $this->functionnalities[$functionnalitie]) )
