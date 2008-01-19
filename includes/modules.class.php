@@ -27,7 +27,10 @@
 ###################################################*/
 
 define('LIST_FUNCTIONNALITIES','Search,LatestAdds,LatestModifications,MadeBy');
-
+define('ACCES DENIED', -1);
+define('MODULE_NOT_AVAILABLE', -2);
+define('MODULE_NOT_IMPLEMENTED', -3);
+define('FUNCTIONNALITIE_DOES_NOT_EXIST', -4);
 
 /**
  *  Les arguments de fonction nommé "$modules" sont assez particulier.
@@ -46,52 +49,78 @@ class Modules
 {
     //----------------------------------------------------------------- PUBLIC
     //----------------------------------------------------- Méthodes publiques
-    function Search ( $modules )
+    function Functionnalitie ( $functionnalitie, $modules )
     /**
-     *  Effectue une recherche dans le(s) module(s) sélectionné(s)
+     *  Vérifie les fonctionnalité des modules et appelle la méthode
+     *  du/des module(s) sélectionné(s) avec les bons arguments.
      */
     {
-        $this->verifyModulesFunctionnalities ( 'Search', array_keys($modules) );
-        $modulesNames = array_keys($modules);
-        $results = Array();
-        for ($i = 0; $i < count($modules); $i++)
+        if ( in_array($this->functionnalities, $functionnalitie) )
         {
-            // Instanciation de l'objet $module
-            $module = $this->GetModule($modulesNames[$i]);
-            $results[$modulesNames[$i]] = $module->Search($modules[$i]);
+            $results = Array( );
+            foreach($modules as $moduleName => $args)
+            {
+                // Instanciation de l'objet $module
+                $module = $this->GetModule($moduleName);
+                if ( $this->checkModuleFunctionnalitie ( $functionnalitie, $module ) )
+                { $results[$moduleName] = $module->$functionnalitie($args); }
+            }
+            return $results;
         }
-        return $results;
+        else { return FUNCTIONNALITIE_DOES_NOT_EXIST; }
     }
 
     function GetAvailablesModulesList ( $functionnalitie )
+    /**
+     *  Renvoie la liste des modules disposant de la fonctionnalité demandé.
+     */
     {
-        return $this->functionnalities[$functionnalitie];
+        $modules = Array (  );
+        foreach($SECURE_MODULE as $moduleName)
+        {
+            $module = $this->GetModule($moduleName);
+            if ( array_key_exists($module->functionnalities, $functionnalitie) )
+            { array_push( $modules, $module ); }
+        }
+        return $modules;
     }
 
     function GetModule($moduleName)
+    /**
+     *  Instancie et renvoie le module demandé.
+     */
     {
-        if ( ($module = object()) !== false )
-        { return $module; }
-        else
-        { return false; }
+        if ( !in_array(array_keys($loadedModules), $moduleName) )
+        {
+            if ( in_array($this->availablesModules, $moduleName) )
+            {
+                if ( $groups->check_auth($SECURE_MODULE[$moduleName]) )
+                {
+                    if (@include_once('../'.$moduleName.'/'.$moduleName.'.class.php'))
+                    {
+                        $this->loadedModules[$moduleName] = new ucfirst($moduleName)();
+                    }
+                    else { return MODULE_NOT_IMPLEMENTED; }
+                }
+                else { return ACCES_DENIED; }
+            }
+            else { return MODULE_NOT_AVAILABLE; }
+        }
+        return $this->loadedModules[$moduleName];
     }
 
     //---------------------------------------------------------- Constructeurs
     function Modules (  )
-    // Constructeur de la classe Modules
+    /**
+     *  Constructeur de la classe Modules
+     */
     {
-        //$listAvailablesModules = parse_ini_file('availablesModules.ini', TRUE);
-        $listAvailablesModules = Array();
-        foreach (explode(',',LIST_FUNCTIONNALITIES) as $functionnalitie)
-        {
-            $availablesModules = Array();
-            foreach ($listAvailablesModules as $module)
-            {
-                if ($module[$functionnalitie])
-                { array_push($availablesModules, $module); }
-            }
-            $this->functionnalities[$functionnalitie] = $availablesModules;
-        }
+        global $groups;
+        
+        $this->loadedModules = Array(  );
+        $this->functionnalities = explode(',',LIST_FUNCTIONNALITIES);
+        $cache->load_file('modules');
+        $this->availablesModules = array_keys($SECURE_MODULE);
     }
 
     //------------------------------------------------------------------ PRIVE
@@ -108,17 +137,21 @@ class Modules
      *  
      */
     //----------------------------------------------------- Méthodes protégées
-    function verifyModulesFunctionnalities ( $functionnalitie, $listMods )
+    function checkModuleFunctionnalitie ( $functionnalitie, $module )
+    /**
+     *  Vérifie que le module implémente bien la fonctionnalité demandé.
+     */
     {
-        foreach ($listMods as $mod)
-        {
-            if ( !in_array($mod, $this->functionnalities[$functionnalitie]) )
-            { unset($modules[$mod]); }
-        }
+        if ( array_key_exists($module, $functionnalitie) )
+        { return true; }
+        else
+        { return false; }
     }
 
     //----------------------------------------------------- Attributs protégés
-    var $functionnalities = Array();
+    var $functionnalities;
+    var $loadedModules;
+    var $availablesModules;
 }
 
 
