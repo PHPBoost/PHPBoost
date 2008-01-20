@@ -156,16 +156,6 @@ class Modules
      *  
      */
     //----------------------------------------------------- Méthodes protégées
-    function checkModuleFunctionnalitie ( $functionnalitie, $module )
-    /**
-     *  Vérifie que le module implémente bien la fonctionnalité demandé.
-     */
-    {
-        if ( array_key_exists($functionnalitie, $module) )
-        { return (!empty( $module[$functionnalitie] ) && $module[$functionnalitie] != 'false' ? true : false); }
-        else
-        { return false; }
-    }
 
     //----------------------------------------------------- Attributs protégés
     var $functionnalities;
