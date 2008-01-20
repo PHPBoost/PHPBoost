@@ -27,11 +27,9 @@
 ###################################################*/
 
 define('LIST_FUNCTIONNALITIES','Search,LatestAdds,LatestModifications,MadeBy');
-define('ACCES_DENIED', -1);
-define('MODULE_NOT_AVAILABLE', -2);
-define('MODULE_NOT_IMPLEMENTED', -3);
 define('FUNCTIONNALITIE_DOES_NOT_EXIST', -4);
 
+require_once('../includes/module.class.php');
 
 /**
  *  Les arguments de fonction nommé "$modules" sont assez particulier.
@@ -63,8 +61,13 @@ class Modules
             {
                 // Instanciation de l'objet $module
                 $module = $this->GetModule($moduleName);
+                // Si le module à déjà été appelé et a déjà eu une erreur,
+                // On nettoie le bit d'erreur correspondant.
+                $module->clearFunctionnalitieError();
                 if ( $this->checkModuleFunctionnalitie ( $functionnalitie, $module ) == true )
                 { $results[$moduleName] = $module->$functionnalitie($args); }
+                else
+                { $module->setError( FUNCTIONNALITIE_NOT_YET_IMPLEMENTED ); }
             }
             return $results;
         }
@@ -81,7 +84,7 @@ class Modules
         foreach($SECURE_MODULE as $moduleName => $auth)
         {
             $module = $this->GetModule($moduleName);
-            if ( !in_array($module, $this->loadModuleErrors) )
+            if ( !in_array($module->name, $this->loadModuleErrors) )
             {
                 if ( array_key_exists($functionnalitie, $module->functionnalities) )
                 { array_push( $modules, $module ); }
@@ -102,16 +105,23 @@ class Modules
                 global $groups, $SECURE_MODULE;
                 if ( $groups->check_auth($SECURE_MODULE[$moduleName], 1) )
                 {
-                    if (@include_once('../'.$moduleName.'/'.$moduleName.'.class.php'))
+                    if (@include_once('../'.$moduleName.'/'.$moduleName.'_interface.class.php'))
                     {
                         $constructeur = ucfirst($moduleName);
-                        $this->loadedModules[$moduleName] = new $constructeur();
+                        $module = new $constructeur();
                     }
-                    else { return MODULE_NOT_IMPLEMENTED; }
+                    else
+                    {   $module = new Module($moduleName, MODULE_NOT_YET_IMPLEMENTED);
+                    }
                 }
-                else { return ACCES_DENIED; }
+                else
+                {   $module = new Module($moduleName, ACCES_DENIED);
+                }
             }
-            else { return MODULE_NOT_AVAILABLE; }
+            else
+            {   $module = new Module($moduleName, MODULE_NOT_AVAILABLE);
+            }
+            $this->loadedModules[$moduleName] = $module;
         }
         return $this->loadedModules[$moduleName];
     }
@@ -129,7 +139,7 @@ class Modules
         //$cache->load_file('modules'); // déjà fait dans le header normalement
         $this->availablesModules = array_keys($SECURE_MODULE);
         
-        $this->loadModuleErrors = Array ( ACCES_DENIED, MODULE_NOT_AVAILABLE, MODULE_NOT_IMPLEMENTED );
+        $this->loadModuleErrors = Array ( ACCES_DENIED, MODULE_NOT_AVAILABLE, MODULE_NOT_YET_IMPLEMENTED );
     }
 
     //------------------------------------------------------------------ PRIVE
