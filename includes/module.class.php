@@ -62,7 +62,7 @@ class Module
         { $this->setError ( FUNCTIONNALITIE_NOT_YET_IMPLEMENTED ); }
     }
     
-    function hasFunctionnalitie ( $functionnalitie )
+    function HasFunctionnalitie ( $functionnalitie )
     /**
      *  Teste que la fonctionnalité est bien implémentée
      */
