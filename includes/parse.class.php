@@ -36,6 +36,7 @@ class Parse
 	'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
 	'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym'); //Balises supportées.
 	var $content = '';
+	var $array_code = array();
 	
 	//Préparation avant le parsage, avec l'éditeur WYSIWYG.
 	function preparse_tinymce()
@@ -160,21 +161,21 @@ class Parse
 	}
 	
 	//Fonction d'éclatement de chaîne supportant l'imbrication de tags
-	function preg_split_safe_recurse($contents, $tag, $attributes)
+	function preg_split_safe_recurse($content, $tag, $attributes)
 	{
    		// Définitions des index de position de début des Tags valides
-		$indexTags = $this->indexTags($contents, $tag, $attributes);
+		$indexTags = $this->indexTags($content, $tag, $attributes);
 		$size = count($indexTags);
-		$parsed = Array();
+		$parsed = array();
  
    		// Stockage de la chaîne avant le premier tag dans le cas ou il y a au moins une balise ouvrante
 		if ($size >= 1)
 		{
-			array_push($parsed, substr($contents, 0, $indexTags[0]));
+			array_push($parsed, substr($content, 0, $indexTags[0]));
 		}
 		else
 		{
-			array_push($parsed, $contents);
+			array_push($parsed, $content);
 		}
  	
 		for ($i = 0; $i < $size; $i++)
@@ -183,11 +184,11 @@ class Parse
 			// Calcul de la sous-chaîne pour l'expression régulière
 			if ( $i == ($size - 1))
 			{
-				$subStr = substr($contents, $currentIndex); 
+				$subStr = substr($content, $currentIndex); 
 			}
 			else
 			{
-				$subStr = substr($contents, $currentIndex, $indexTags[$i + 1] - $currentIndex);
+				$subStr = substr($content, $currentIndex, $indexTags[$i + 1] - $currentIndex);
 			}
 	
 			// Mise en place de l'éclatement de la sous-chaine
@@ -210,27 +211,27 @@ class Parse
 			{ 
 				array_push($parsed, $localParsed[3]); 
 			}
-		} 
-	return $parsed;
+		}
+		return $parsed;
 	}
 	
 	//Fonction de détection du positionnement des balises imbriquées
-	function indexTags ($contents, $tag, $attributes)
+	function indexTags ($content, $tag, $attributes)
 	{
 		$pos = -1;
 		$nbOpenTags = 0;
 		$tagsPos = Array();
  
-		while( ($pos = strpos($contents, '['.$tag, $pos + 1)) !== false )
+		while( ($pos = strpos($content, '['.$tag, $pos + 1)) !== false )
 		{
 			// nombre de tag de fermeture déjà rencontré
-			$nbCloseTags = substr_count(substr($contents, 0, ($pos + strlen('['.$tag))), '[/'.$tag.']');
+			$nbCloseTags = substr_count(substr($content, 0, ($pos + strlen('['.$tag))), '[/'.$tag.']');
  
 			// Si on trouve un tag d'ouverture, on sauvegarde sa position uniquement si
 			// il y a autant + 1 de tags fermés avant et on itère sur le suivant
 			if ($nbOpenTags == $nbCloseTags)
 			{
-				$openTag = substr($contents, $pos, (strpos($contents, ']', $pos + 1) + 1 - $pos));
+				$openTag = substr($content, $pos, (strpos($content, ']', $pos + 1) + 1 - $pos));
 				$match = preg_match('`\['.$tag.'('.$attributes.')?\]`', $openTag);
 				if ($match == 1)
 				{
@@ -316,7 +317,6 @@ class Parse
 	}
 	
 	//Fonction qui parse les listes
-
 	function parse_imbricated_list(&$content)
 	{
 		if( is_array($content) )
@@ -370,7 +370,50 @@ class Parse
 			$this->parse_imbricated_list($this->content);
 		}
 	}
+	
+	//Fonction qui retire les portions de code pour ne pas y toucher
+	function pick_up_code()
+	{
+		$split_code = $this->preg_split_safe_recurse($this->content, 'code', '=[a-zA-Z0-9_-]+');
+		$num_codes = count($split_code);
+		if( $num_codes > 1 )
+		{
+			$this->content = '';
+			$id_code = 0;
+			for( $i = 0; $i < $num_codes; $i++ )
+			{
+				//contenu
+				if( $i % 3 == 0 )
+				{
+					$this->content .= $split_code[$i];
+					if( $i < $num_codes - 1 )
+					{
+						$this->content .= "\n" . '[CODE_TAG_' . $id_code++ . ']' . "\n";
+					}
+				}
+				elseif( $i % 3 == 2 )
+				{
+					$this->array_code[] = '[code' . $split_code[$i - 1] . ']' . strip_tags(htmlspecialchars($split_code[$i], ENT_NOQUOTES)) . '[/code]';
+				}
+			}
+		}
+	}
 		
+	//Fonction qui réimplante les portions de code
+	function reimplant_code()
+	{
+		$num_code = count($this->array_code);
+		if( !empty($num_code) )
+		{
+			for( $i = 0; $i < $num_code; $i++ )
+			{
+				$this->content = str_replace("\n" . '[CODE_TAG_' . $i . ']' . "\n", $this->array_code[$i], $this->content);
+			}
+			$this->array_code = array();
+		}
+	}
+	
+	//Fonction de retour pour les tableaux
 	function unparse_table(&$content)
 	{
 		//Preg_replace.
@@ -389,7 +432,7 @@ class Parse
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 	}
 
-	//Retour
+	//Fonction de retour pour les listes
 	function unparse_list(&$content)
 	{
 		while( preg_match('`<(?:u|o)l( style="[^"]+")? class="bb_(?:u|o)l">(.+)</(?:u|o)l>`sU', $this->content) )
@@ -419,8 +462,8 @@ class Parse
 	//Fonction qui renvoie le contenu traité
 	function get_content()
 	{
-		return addslashes($this->content);
-		//return $this->content;
+		//return addslashes($this->content);
+		return $this->content;
 	}
 	
 	//Fonction de chargement de texte
@@ -433,6 +476,9 @@ class Parse
 	function parse_content($forbidden_tags = array(), $html_protect = true)
 	{
 		global $LANG;
+		
+		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
+		$this->pick_up_code();
 		
 		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé. Suppression des backslash ajoutés par magic_quotes_gpc.
 		$this->content = ' ' . $this->content . ' ';
@@ -461,7 +507,7 @@ class Parse
 				$smiley_img_url[] = '<img src="../images/smileys/' . $img . '" alt="' . addslashes($code) . '" class="smiley" />';
 			}
 			$this->content = preg_replace($smiley_code, $smiley_img_url, $this->content);
-		}	
+		}
 		
 		//Remplacement des caractères de word.
 		$array_str = array( 
@@ -587,6 +633,8 @@ class Parse
 		}
 		//Remplacement : on parse les balises classiques
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
+		
+		$this->reimplant_code();
 		
 		//Interprétation des sauts de ligne
 		$this->content = nl2br($this->content);
