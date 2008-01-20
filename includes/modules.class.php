@@ -65,9 +65,7 @@ class Modules
                 // On nettoie le bit d'erreur correspondant.
                 $module->clearFunctionnalitieError();
                 if ( $module->hasFunctionnalitie ( $functionnalitie ) == true )
-                { $results[$moduleName] = $module->$functionnalitie($args); }
-                else
-                { $module->setError( FUNCTIONNALITIE_NOT_YET_IMPLEMENTED ); }
+                { $results[$moduleName] = $module->Functionnalitie($functionnalitie, $args); }
             }
             return $results;
         }
