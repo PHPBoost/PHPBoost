@@ -27,7 +27,7 @@
 ###################################################*/
 
 define('LIST_FUNCTIONNALITIES','Search,LatestAdds,LatestModifications,MadeBy');
-define('FUNCTIONNALITIE_DOES_NOT_EXIST', -4);
+define('FUNCTIONNALITIE_DOES_NOT_EXIST', -1);
 
 require_once('../includes/module.class.php');
 
@@ -64,7 +64,7 @@ class Modules
                 // Si le module à déjà été appelé et a déjà eu une erreur,
                 // On nettoie le bit d'erreur correspondant.
                 $module->clearFunctionnalitieError();
-                if ( $this->checkModuleFunctionnalitie ( $functionnalitie, $module ) == true )
+                if ( $module->hasFunctionnalitie ( $functionnalitie ) == true )
                 { $results[$moduleName] = $module->$functionnalitie($args); }
                 else
                 { $module->setError( FUNCTIONNALITIE_NOT_YET_IMPLEMENTED ); }

@@ -47,36 +47,30 @@ class Module
                     );
     }
     
-    function Search ( $args = null )
+    function Functionnalitie ( $functionnalitie, $args = null )
     /**
-     *  Effectue une recherche dans ce module
+     *  Teste l'existance de la fonctionnalité et l'appelle le cas échéant.
+     *  Si elle n'est pas disponible, le flag
+     *  FUNCTIONNALITIE_NOT_YET_IMPLEMENTED de la variable errors est
+     *  alors positionné.
      */
     {
-        return FUNCTIONNALITIE_NOT_YET_IMPLEMENTED;
+        $this->clearFunctionnalitieError ( );
+        if ( $this->hasFunctionnalitie( $functionnalitie ) )
+        { return $this->$functionnalitie ( $args ); }
+        else
+        { $this->setError ( FUNCTIONNALITIE_NOT_YET_IMPLEMENTED ); }
     }
     
-    function LatestAdds ( $args = null )
+    function hasFunctionnalitie ( $functionnalitie )
     /**
-     *  Renvoie la liste des derniers ajouts
+     *  Teste que la fonctionnalité est bien implémentée
      */
     {
-        return FUNCTIONNALITIE_NOT_YET_IMPLEMENTED;
-    }
-    
-    function LatestModifications ( $args = null )
-    /**
-     *  Renvoie la liste des dernieres modifications
-     */
-    {
-        return FUNCTIONNALITIE_NOT_YET_IMPLEMENTED;
-    }
-    
-    function MadeBy ( $args = null )
-    /**
-     *  Renvoie la liste des actions du/des utilisateurs/groupes
-     */
-    {
-        return FUNCTIONNALITIE_NOT_YET_IMPLEMENTED;
+        if ( array_key_exists($functionnalitie, $this->functionnalities) )
+        { return (!empty( $this->functionnalities[$functionnalitie] ) && $this->functionnalities[$functionnalitie] != 'false' ? true : false); }
+        else
+        { return false; }
     }
     
     function GetErrors (  )
