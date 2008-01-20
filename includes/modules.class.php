@@ -48,7 +48,7 @@ class Modules
     //----------------------------------------------------- Méthodes publiques
     function Functionnalitie ( $functionnalitie, $modules )
     /**
-     *  Vérifie les fonctionnalité des modules et appelle la méthode
+     *  Vérifie les fonctionnalités des modules et appelle la méthode
      *  du/des module(s) sélectionné(s) avec les bons arguments.
      */
     {
