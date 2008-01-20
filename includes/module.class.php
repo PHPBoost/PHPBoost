@@ -26,7 +26,10 @@
  *
 ###################################################*/
 
-define('NOT_YET_IMPLEMENTED',-1);
+define('MODULE_NOT_AVAILABLE', 1);
+define('ACCES_DENIED', 2);
+define('MODULE_NOT_YET_IMPLEMENTED', 4);
+define('FUNCTIONNALITIE_NOT_YET_IMPLEMENTED', 8);
 
 class Module
 {
@@ -49,7 +52,7 @@ class Module
      *  Effectue une recherche dans ce module
      */
     {
-        return NOT_YET_IMPLEMENTED;
+        return FUNCTIONNALITIE_NOT_YET_IMPLEMENTED;
     }
     
     function LatestAdds ( $args = null )
@@ -57,7 +60,7 @@ class Module
      *  Renvoie la liste des derniers ajouts
      */
     {
-        return NOT_YET_IMPLEMENTED;
+        return FUNCTIONNALITIE_NOT_YET_IMPLEMENTED;
     }
     
     function LatestModifications ( $args = null )
@@ -65,7 +68,7 @@ class Module
      *  Renvoie la liste des dernieres modifications
      */
     {
-        return NOT_YET_IMPLEMENTED;
+        return FUNCTIONNALITIE_NOT_YET_IMPLEMENTED;
     }
     
     function MadeBy ( $args = null )
@@ -73,12 +76,19 @@ class Module
      *  Renvoie la liste des actions du/des utilisateurs/groupes
      */
     {
-        return NOT_YET_IMPLEMENTED;
+        return FUNCTIONNALITIE_NOT_YET_IMPLEMENTED;
     }
     
+    function GetErrors (  )
+    /**
+     *  Renvoie un integer contenant des bits d'erreurs.
+     */
+    {
+        return $this->errors;
+    }
     
     //---------------------------------------------------------- Constructeurs
-    function Module ( $moduleName = 'empty-module'  )
+    function Module ( $moduleName = 'empty-module', $error = 0  )
     /**
      * Constructeur de la classe Module
      */
@@ -86,9 +96,19 @@ class Module
         global $CONFIG;
         
         $this->name = $moduleName;
-        // récupération des infos sur le module à partir du fichier module.ini
-        $this->infos = parse_ini_file('../'.$this->name.'/lang/'.$CONFIG['lang'].'/config.ini');
-        $this->functionnalities = parse_ini_file('../'.$this->name.'/functionnalities.ini');
+        
+        if ($error == 0)
+        {   // récupération des infos sur le module à partir du fichier module.ini
+            $this->infos = parse_ini_file('../'.$this->name.'/lang/'.$CONFIG['lang'].'/config.ini');
+            $this->functionnalities = parse_ini_file('../'.$this->name.'/functionnalities.ini');
+        }
+        else
+        {
+            $this->infos = Array ( );
+            $this->functionnalities = Array ( );
+        }
+        
+        $this->errors = $error;
     }
     
     //------------------------------------------------------------------ PRIVE
@@ -105,11 +125,27 @@ class Module
      *  
      */
     //----------------------------------------------------- Méthodes protégées
+    function setError ( $error = 0 )
+    /**
+     *  Ajoute l'erreur rencontré aux erreurs déjà présentes.
+     */
+    {
+        $this->errors = $this->errors|$error;
+    }
+    
+    function clearFunctionnalitieError (  )
+    /**
+     *  Nettoie le bit d'erreur de la fonctionnalité, pour en tester une autre
+     */
+    {
+        $this->errors = $this->errors &~  FUNCTIONNALITIE_NOT_YET_IMPLEMENTED;
+    }
     
     //----------------------------------------------------- Attributs protégés
     var $name;
     var $infos;
     var $functionnalities;
+    var $errors;
 }
 
 ?>
