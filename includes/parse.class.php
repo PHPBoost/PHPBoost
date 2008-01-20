@@ -388,7 +388,7 @@ class Parse
 					$this->content .= $split_code[$i];
 					if( $i < $num_codes - 1 )
 					{
-						$this->content .= "\n" . '[CODE_TAG_' . $id_code++ . ']' . "\n";
+						$this->content .= '[CODE_TAG_' . $id_code++ . ']';
 					}
 				}
 				elseif( $i % 3 == 2 )
@@ -403,11 +403,12 @@ class Parse
 	function reimplant_code()
 	{
 		$num_code = count($this->array_code);
+
 		if( !empty($num_code) )
 		{
 			for( $i = 0; $i < $num_code; $i++ )
 			{
-				$this->content = str_replace("\n" . '[CODE_TAG_' . $i . ']' . "\n", $this->array_code[$i], $this->content);
+				$this->content = str_replace('[CODE_TAG_' . $i . ']', $this->array_code[$i], $this->content);
 			}
 			$this->array_code = array();
 		}
@@ -479,7 +480,7 @@ class Parse
 		
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		$this->pick_up_code();
-		
+
 		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé. Suppression des backslash ajoutés par magic_quotes_gpc.
 		$this->content = ' ' . $this->content . ' ';
 		
@@ -634,8 +635,6 @@ class Parse
 		//Remplacement : on parse les balises classiques
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
-		$this->reimplant_code();
-		
 		//Interprétation des sauts de ligne
 		$this->content = nl2br($this->content);
 		
@@ -656,6 +655,8 @@ class Parse
 		$this->parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->content);
 		$this->parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
 		$this->parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->content);
+		
+		$this->reimplant_code();
 	}
 
 	//On unparse le contenu.
@@ -665,7 +666,7 @@ class Parse
 		@include('../cache/smileys.php');
 		if(!empty($_array_smiley_code) )
 		{
-			//Création du tableau de remplacement.
+			//Création du tableau de remplacement
 			foreach($_array_smiley_code as $code => $img)
 			{	
 				$smiley_img_url[] = '`<img src="../images/smileys/' . preg_quote($img) . '(.*) />`sU';
@@ -676,7 +677,7 @@ class Parse
 			
 		if( $this->user_editor == 'tinymce' && $editor_unparse ) //Préparse pour tinymce.
 		{
-			//Remplacement des caractères de word.			
+			//Remplacement des caractères de word
 			$array_str = array( 
 				"\t", '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '€', '‚', 'ƒ',
 				'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
