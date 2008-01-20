@@ -26,8 +26,6 @@
  *
 ###################################################*/
 
-define('LIST_FUNCTIONNALITIES','Search,LatestAdds,LatestModifications,MadeBy');
-define('FUNCTIONNALITIE_DOES_NOT_EXIST', -1);
 
 require_once('../includes/module.class.php');
 
@@ -54,22 +52,18 @@ class Modules
      *  du/des module(s) sélectionné(s) avec les bons arguments.
      */
     {
-        if ( in_array($functionnalitie, $this->functionnalities) )
+        $results = Array( );
+        foreach($modules as $moduleName => $args)
         {
-            $results = Array( );
-            foreach($modules as $moduleName => $args)
-            {
-                // Instanciation de l'objet $module
-                $module = $this->GetModule($moduleName);
-                // Si le module à déjà été appelé et a déjà eu une erreur,
-                // On nettoie le bit d'erreur correspondant.
-                $module->clearFunctionnalitieError();
-                if ( $module->hasFunctionnalitie ( $functionnalitie ) == true )
-                { $results[$moduleName] = $module->Functionnalitie($functionnalitie, $args); }
-            }
-            return $results;
+            // Instanciation de l'objet $module
+            $module = $this->GetModule($moduleName);
+            // Si le module à déjà été appelé et a déjà eu une erreur,
+            // On nettoie le bit d'erreur correspondant.
+            $module->clearFunctionnalitieError();
+            if ( $module->hasFunctionnalitie ( $functionnalitie ) == true )
+            { $results[$moduleName] = $module->Functionnalitie($functionnalitie, $args); }
         }
-        else { return FUNCTIONNALITIE_DOES_NOT_EXIST; }
+        return $results;
     }
 
     function GetAvailablesModules ( $functionnalitie )
@@ -130,13 +124,10 @@ class Modules
      *  Constructeur de la classe Modules
      */
     {
-        global $cache, $SECURE_MODULE;
+        global $SECURE_MODULE;
         
         $this->loadedModules = Array(  );
-        $this->functionnalities = explode(',',LIST_FUNCTIONNALITIES);
-        //$cache->load_file('modules'); // déjà fait dans le header normalement
         $this->availablesModules = array_keys($SECURE_MODULE);
-        
         $this->loadModuleErrors = Array ( ACCES_DENIED, MODULE_NOT_AVAILABLE, MODULE_NOT_YET_IMPLEMENTED );
     }
 
@@ -156,7 +147,6 @@ class Modules
     //----------------------------------------------------- Méthodes protégées
 
     //----------------------------------------------------- Attributs protégés
-    var $functionnalities;
     var $loadedModules;
     var $availablesModules;
     var $loadModuleErrors;
