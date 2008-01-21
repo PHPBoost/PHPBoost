@@ -29,7 +29,7 @@
 define('MODULE_NOT_AVAILABLE', 1);
 define('ACCES_DENIED', 2);
 define('MODULE_NOT_YET_IMPLEMENTED', 4);
-define('FUNCTIONNALITIE_NOT_YET_IMPLEMENTED', 8);
+define('FUNCTIONNALITIE_NOT_IMPLEMENTED', 8);
 
 class Module
 {
@@ -51,7 +51,7 @@ class Module
     /**
      *  Teste l'existance de la fonctionnalité et l'appelle le cas échéant.
      *  Si elle n'est pas disponible, le flag
-     *  FUNCTIONNALITIE_NOT_YET_IMPLEMENTED de la variable errors est
+     *  FUNCTIONNALITIE_NOT_IMPLEMENTED de la variable errors est
      *  alors positionné.
      */
     {
@@ -59,7 +59,7 @@ class Module
         if ( $this->hasFunctionnalitie( $functionnalitie ) )
         { return $this->$functionnalitie ( $args ); }
         else
-        { $this->setError ( FUNCTIONNALITIE_NOT_YET_IMPLEMENTED ); }
+        { $this->setError ( FUNCTIONNALITIE_NOT_IMPLEMENTED ); }
     }
     
     function HasFunctionnalitie ( $functionnalitie )
@@ -67,7 +67,7 @@ class Module
      *  Teste que la fonctionnalité est bien implémentée
      */
     {
-        return in_array($functionnalitie, $this->functionnalities);
+        return method_exists($this, $functionnalitie);
     }
     
     function GetErrors (  )
@@ -129,7 +129,7 @@ class Module
      *  Nettoie le bit d'erreur de la fonctionnalité, pour en tester une autre
      */
     {
-        $this->errors = $this->errors &~  FUNCTIONNALITIE_NOT_YET_IMPLEMENTED;
+        $this->errors = $this->errors &~  FUNCTIONNALITIE_NOT_IMPLEMENTED;
     }
     
     //----------------------------------------------------- Attributs protégés
