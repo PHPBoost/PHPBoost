@@ -67,7 +67,7 @@ class ModuleInterface
      *  Teste que la fonctionnalité est bien implémentée
      */
     {
-        return method_exists($this, $functionnalitie);
+        return in_array($functionnalitie, $this->functionnalities);
     }
     
     function GetErrors (  )
