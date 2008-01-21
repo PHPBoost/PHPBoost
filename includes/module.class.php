@@ -93,7 +93,23 @@ class ModuleInterface
         if ($error == 0)
         {   // récupération des infos sur le module à partir du fichier module.ini
             $this->infos = @parse_ini_file('../'.$this->name.'/lang/'.$CONFIG['lang'].'/config.ini');
-            $this->functionnalities = get_class_methods( $moduleName );
+            
+            // Récupération des méthodes du module
+            $methods = get_class_methods( ucfirst($moduleName).'Interface' );
+            // Méthode de la classe générique ModuleInterface
+            $moduleMethods = get_class_methods('ModuleInterface');
+            
+            // Enlèvement de toutes les méthodes auxquelles le developpeur n'a pas accès
+            for ($i = 0; $i < count($methods); $i++)
+            {
+                // Si la méthode est une méthode générique de la classe ModuleInterface
+                //  Ou si c'est le constructeur de l'interface de son module
+                //  Ou si c'est une méthode privé de l'interface de son module,
+                // Alors ce n'est pas une fonctionnalité.
+                if ( in_array($methods[$i], $moduleMethods) or ( $methods[$i] == ucfirst($moduleName).'Interface' ) )
+                { array_splice($methods, $i); }
+            }
+            $this->functionnalities = $methods;
         }
         
         $this->errors = $error;
