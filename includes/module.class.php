@@ -88,15 +88,12 @@ class ModuleInterface
         
         $this->name = $moduleName;
         
+        $this->infos = Array ( );
+        $this->functionnalities = Array ( );
         if ($error == 0)
         {   // récupération des infos sur le module à partir du fichier module.ini
-            $this->infos = parse_ini_file('../'.$this->name.'/lang/'.$CONFIG['lang'].'/config.ini');
+            $this->infos = @parse_ini_file('../'.$this->name.'/lang/'.$CONFIG['lang'].'/config.ini');
             $this->functionnalities = get_class_methods( $moduleName );
-        }
-        else
-        {
-            $this->infos = Array ( );
-            $this->functionnalities = Array ( );
         }
         
         $this->errors = $error;
