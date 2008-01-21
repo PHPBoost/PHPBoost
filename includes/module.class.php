@@ -31,7 +31,7 @@ define('ACCES_DENIED', 2);
 define('MODULE_NOT_YET_IMPLEMENTED', 4);
 define('FUNCTIONNALITIE_NOT_IMPLEMENTED', 8);
 
-class Module
+class ModuleInterface
 {
     //----------------------------------------------------------------- PUBLIC
     //----------------------------------------------------- Méthodes publiques
@@ -79,7 +79,7 @@ class Module
     }
     
     //---------------------------------------------------------- Constructeurs
-    function Module ( $moduleName = '', $error = 0  )
+    function ModuleInterface ( $moduleName = '', $error = 0  )
     /**
      * Constructeur de la classe Module
      */
@@ -121,7 +121,7 @@ class Module
      *  Ajoute l'erreur rencontré aux erreurs déjà présentes.
      */
     {
-        $this->errors = $this->errors|$error;
+        $this->errors |= $error;
     }
     
     function clearFunctionnalitieError (  )

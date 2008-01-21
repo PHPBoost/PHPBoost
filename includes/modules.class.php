@@ -68,7 +68,7 @@ class Modules
 
     function GetAvailablesModules ( $functionnalitie )
     /**
-     *  Renvoie la liste des modules disposant de la fonctionnalité demandé.
+     *  Renvoie la liste des modules disposant de la fonctionnalité demandée.
      */
     {
         $modules = Array (  );
@@ -78,7 +78,7 @@ class Modules
             $module = $this->GetModule($moduleName);
             if ( !in_array($module->name, $this->loadModuleErrors) )
             {
-                if ( array_key_exists($functionnalitie, $module->functionnalities) )
+                if ( $module->HasFunctionnalitie($functionnalitie) )
                 { array_push( $modules, $module ); }
             }
         }
@@ -90,7 +90,7 @@ class Modules
      *  Instancie et renvoie le module demandé.
      */
     {
-        if ( !array_key_exists($moduleName, $this->loadedModules ) )
+        if ( !isset($this->loadedModules[$moduleName]) )
         {
             if ( in_array($moduleName, $this->availablesModules) )
             {
@@ -99,20 +99,17 @@ class Modules
                 {
                     if (@include_once('../'.$moduleName.'/'.$moduleName.'_interface.class.php'))
                     {
-                        $constructeur = ucfirst($moduleName);
+                        $constructeur = ucfirst($moduleName.'Interface');
                         $module = new $constructeur();
                     }
                     else
-                    {   $module = new Module($moduleName, MODULE_NOT_YET_IMPLEMENTED);
-                    }
+                    { $module = new ModuleInterface($moduleName, MODULE_NOT_YET_IMPLEMENTED); }
                 }
                 else
-                {   $module = new Module($moduleName, ACCES_DENIED);
-                }
+                { $module = new ModuleInterface($moduleName, ACCES_DENIED); }
             }
             else
-            {   $module = new Module($moduleName, MODULE_NOT_AVAILABLE);
-            }
+            { $module = new ModuleInterface($moduleName, MODULE_NOT_AVAILABLE); }
             $this->loadedModules[$moduleName] = $module;
         }
         return $this->loadedModules[$moduleName];
