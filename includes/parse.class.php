@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-//Fonction d'importation/exportation de base de donnée.
+//Classe d'interprétation du BBCode
 class Parse
 {
 ####### Private #######
@@ -116,7 +116,7 @@ class Parse
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);	
 
 		//Préparse de la balise table.
-				$this->content = preg_replace_callback('`<table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?(?: style="([^"]+)")?[^>]*>`i', array('Parse', 'parse_tinymce_table'), $this->content);
+		$this->content = preg_replace_callback('`<table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?(?: style="([^"]+)")?[^>]*>`i', array('Parse', 'parse_tinymce_table'), $this->content);
 		
 		$array_str = array( 
 				'</span>', '<address>', '</address>', '<pre>', '</pre>', '<blockquote>', '</blockquote>', '</p>',
@@ -415,7 +415,7 @@ class Parse
 	}
 	
 	//Fonction de retour pour les tableaux
-	function unparse_table(&$content)
+	function unparse_table()
 	{
 		//Preg_replace.
 		$array_preg = array( 
@@ -470,7 +470,7 @@ class Parse
 	//Fonction de chargement de texte
 	function load_content($content)
 	{
-		$this->content = trim(stripslashes($content));
+		$this->content = trim((MAGIC_QUOTES == false ? $content : stripslashes($content)));
 	}
 	
 	//On parse le contenu: bbcode => xhtml.
@@ -520,7 +520,8 @@ class Parse
 			'&#8364;', '&#8218;', '&#402;', '&#8222;', '&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;',
 			'&#352;', '&#8249;', '&#338;', '&#381;', '&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;',
 			'&#8211;', '&#8212;', '&#732;', '&#8482;', '&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
-		);		
+		);
+		
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 		
 		//Preg_replace.
@@ -548,13 +549,14 @@ class Parse
 			'movie' => '`\[movie=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\]([^\n\r\t\f]+)\[/movie\]`iU',
 			'sound' => '`\[sound\]((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_-]+\.mp3)\[/sound\]`iU',
 			'url' => '`\[url\]((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)\[/url\]`isU',
-			'url1' => '`\[url\]((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)\[/url\]`isU',
-			'url2' => '`\[url=((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)\]([^\n\r\t\f]+)\[/url\]`isU',
-			'url3' => '`\[url=((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)\]([^\n\r\t\f]+)\[/url\]`iU',
-			'url4' => '`(\s)+((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)(\s)+`isU', 
-			'url5' => '`(\s)+((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)(\s)+`i',
-			'mail' => '`(\s)+([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s)+`i'
-		);	 	
+			'url2' => '`\[url\]((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)\[/url\]`isU',
+			'url3' => '`\[url=((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)\]([^\n\r\t\f]+)\[/url\]`isU',
+			'url4' => '`\[url=((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)\]([^\n\r\t\f]+)\[/url\]`iU',
+			'url5' => '`(\s)+((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)(\s)+`isU', 
+			'url6' => '`(\s)+((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=%@&;,-]*)(\s)+`i',
+			'mail' => '`(\s)+([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s)+`i',
+			'mail2' => '`\url=mailto:([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})\]([^\n\r\t\f]+)\[\url\]`i'
+		);
 		$array_preg_replace = array( 
 			'b' => "<strong>$1</strong>",
 			'i' => "<em>$1</em>",
@@ -606,17 +608,31 @@ class Parse
 		<param name=\"bgcolor\" value=\"#FFFFFF\" />
 		</object>",
 			'url' => "<a href=\"$1\">$1</a>",
-			'url1' => "<a href=\"http://$1\">$1</a>",
-			'url2' => "<a href=\"$1\">$2</a>",
-			'url3' => "<a href=\"http://$1\">$2</a>",
-			'url4' => "$1<a href=\"$2\">$2</a>$3", 
-			'url5' => "$1<a href=\"http://$2\">$2</a>$3",
+			'url2' => "<a href=\"http://$1\">$1</a>",
+			'url3' => "<a href=\"$1\">$2</a>",
+			'url4' => "<a href=\"http://$1\">$2</a>",
+			'url5' => "$1<a href=\"$2\">$2</a>$3", 
+			'url6' => "$1<a href=\"http://$2\">$2</a>$3",
 			'mail' => "$1<a href=\"mailto:$2\">$2</a>$3"
 		);
 
 		//Suppression des remplacements des balises interdites.
 		if( !empty($forbidden_tags) )
 		{
+			//Si on interdit les liens, on ajoute toutes les manières par lesquelles elles peuvent passer
+			if( in_array('url', $forbidden_tags) )
+			{
+				$forbidden_tags[] = 'url2';
+				$forbidden_tags[] = 'url3';
+				$forbidden_tags[] = 'url4';
+				$forbidden_tags[] = 'url5';
+				$forbidden_tags[] = 'url6';
+			}
+			if( in_array('mail', $forbidden_tags) )
+			{
+				$forbidden_tags[] = 'mail2';
+			}
+			
 			$other_tags = array('table', 'code', 'math', 'quote', 'hide', 'indent', 'list'); 
 			foreach($forbidden_tags as $key => $tag)
 			{	
@@ -632,6 +648,7 @@ class Parse
 				}
 			}	
 		}
+		
 		//Remplacement : on parse les balises classiques
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
@@ -656,10 +673,11 @@ class Parse
 		$this->parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
 		$this->parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->content);
 		
+		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
 		$this->reimplant_code();
 	}
 
-	//On unparse le contenu.
+	//On unparse le contenu xHTML => BBCode
 	function unparse_content()
 	{
 		//Smiley.
