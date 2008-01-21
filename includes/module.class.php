@@ -67,10 +67,7 @@ class Module
      *  Teste que la fonctionnalité est bien implémentée
      */
     {
-        if ( array_key_exists($functionnalitie, $this->functionnalities) )
-        { return (!empty( $this->functionnalities[$functionnalitie] ) && $this->functionnalities[$functionnalitie] != 'false' ? true : false); }
-        else
-        { return false; }
+        return in_array($functionnalitie, $this->functionnalities);
     }
     
     function GetErrors (  )
@@ -82,7 +79,7 @@ class Module
     }
     
     //---------------------------------------------------------- Constructeurs
-    function Module ( $moduleName = 'empty-module', $error = 0  )
+    function Module ( $moduleName = '', $error = 0  )
     /**
      * Constructeur de la classe Module
      */
@@ -94,7 +91,7 @@ class Module
         if ($error == 0)
         {   // récupération des infos sur le module à partir du fichier module.ini
             $this->infos = parse_ini_file('../'.$this->name.'/lang/'.$CONFIG['lang'].'/config.ini');
-            $this->functionnalities = parse_ini_file('../'.$this->name.'/functionnalities.ini');
+            $this->functionnalities = get_class_methods( $moduleName );
         }
         else
         {
