@@ -91,8 +91,11 @@ class ModuleInterface
         $this->infos = Array ( );
         $this->functionnalities = Array ( );
         if ($error == 0)
-        {   // récupération des infos sur le module à partir du fichier module.ini
-            $this->infos = @parse_ini_file('../'.$this->name.'/lang/'.$CONFIG['lang'].'/config.ini');
+        {
+           // récupération des infos sur le module à partir du fichier module.ini
+           $iniFile = '../'.$this->name.'/lang/'.$CONFIG['lang'].'/config.ini';
+           if ( file_exists($iniFile) )
+           { $this->infos = @parse_ini_file($iniFile); }
             
             // Récupération des méthodes du module
             $methods = get_class_methods( ucfirst($moduleName).'Interface' );
