@@ -4,7 +4,7 @@
  *                              module.class.php
  *                            -------------------
  *   begin                : January 15, 2008
- *   copyright          : (C) 2008 Rouchon Loï¿½c
+ *   copyright          : (C) 2008 Rouchon Loéc
  *   email                : xhorn37@yahoo.fr
  *
  *
@@ -34,11 +34,11 @@ define('FUNCTIONNALITIE_NOT_IMPLEMENTED', 8);
 class ModuleInterface
 {
     //----------------------------------------------------------------- PUBLIC
-    //----------------------------------------------------- Mï¿½thodes publiques
+    //----------------------------------------------------- Méthodes publiques
     function GetInfo (  )
     /**
-     *  Renvoie le nom du module, les informations trouvï¿½e dans le config.ini
-     *  du module ainsi que les fonctionnalitï¿½s dont dispose le module.
+     *  Renvoie le nom du module, les informations trouvées dans le config.ini
+     *  du module ainsi que les fonctionnalités dont dispose le module.
      */
     {
         return Array(   'name' => $this->name,
@@ -49,10 +49,10 @@ class ModuleInterface
     
     function Functionnalitie ( $functionnalitie, $args = null )
     /**
-     *  Teste l'existance de la fonctionnalitï¿½ et l'appelle le cas ï¿½chï¿½ant.
+     *  Teste l'existance de la fonctionnalité et l'appelle le cas échéant.
      *  Si elle n'est pas disponible, le flag
      *  FUNCTIONNALITIE_NOT_IMPLEMENTED de la variable errors est
-     *  alors positionnï¿½.
+     *  alors positionné.
      */
     {
         $this->clearFunctionnalitieError ( );
@@ -64,7 +64,7 @@ class ModuleInterface
     
     function HasFunctionnalitie ( $functionnalitie )
     /**
-     *  Teste que la fonctionnalitï¿½ est bien implï¿½mentï¿½e
+     *  Teste que la fonctionnalité est bien implémentée
      */
     {
         return in_array($functionnalitie, $this->functionnalities);
@@ -92,23 +92,23 @@ class ModuleInterface
         $this->functionnalities = Array ( );
         if ($error == 0)
         {
-           // rï¿½cupï¿½ration des infos sur le module ï¿½ partir du fichier module.ini
+           // récupération des infos sur le module é partir du fichier module.ini
            $iniFile = '../'.$this->name.'/lang/'.$CONFIG['lang'].'/config.ini';
            if ( file_exists($iniFile) )
            { $this->infos = @parse_ini_file($iniFile); }
             
-            // Rï¿½cupï¿½ration des mï¿½thodes du module
+            // Récupération des méthodes du module
             $methods = get_class_methods( ucfirst($moduleName).'Interface' );
-            // Mï¿½thode de la classe gï¿½nï¿½rique ModuleInterface
+            // Méthode de la classe générique ModuleInterface
             $moduleMethods = get_class_methods('ModuleInterface');
             
-            // Enlï¿½vement de toutes les mï¿½thodes auxquelles le developpeur n'a pas accï¿½s
+            // Enlévement de toutes les méthodes auxquelles le developpeur n'a pas accés
             for ($i = 0; $i < count($methods); $i++)
             {
-                // Si la mï¿½thode est une mï¿½thode gï¿½nï¿½rique de la classe ModuleInterface
+                // Si la méthode est une méthode générique de la classe ModuleInterface
                 //  Ou si c'est le constructeur de l'interface de son module
-                //  Ou si c'est une mï¿½thode privï¿½ de l'interface de son module,
-                // Alors ce n'est pas une fonctionnalitï¿½.
+                //  Ou si c'est une méthode privé de l'interface de son module,
+                // Alors ce n'est pas une fonctionnalité.
                 if ( in_array($methods[$i], $moduleMethods) or ( $methods[$i] == ucfirst($moduleName).'Interface' ) )
                 { array_splice($methods, $i); }
             }
@@ -120,21 +120,21 @@ class ModuleInterface
     
     //------------------------------------------------------------------ PRIVE
     /**
-     *  Pour des raisons de compatibilitï¿½ avec PHP 4, les mots-clï¿½s private,
-     *  protected et public ne sont pas utilisï¿½.
+     *  Pour des raisons de compatibilité avec PHP 4, les mots-clés private,
+     *  protected et public ne sont pas utilisé.
      *  
-     *  L'appel aux mï¿½thodes et/ou attributs PRIVE/PROTEGE est donc possible.
-     *  Cependant il est strictement dï¿½conseillï¿½, car cette partie du code
+     *  L'appel aux méthodes et/ou attributs PRIVE/PROTEGE est donc possible.
+     *  Cependant il est strictement déconseillé, car cette partie du code
      *  est suceptible de changer sans avertissement et donc vos modules ne
      *  fonctionnerai plus.
      *  
-     *  Bref, utilisation ï¿½ vos risques et pï¿½rils !!!
+     *  Bref, utilisation é vos risques et périls !!!
      *  
      */
-    //----------------------------------------------------- Mï¿½thodes protï¿½gï¿½es
+    //----------------------------------------------------- Méthodes protégées
     function setError ( $error = 0 )
     /**
-     *  Ajoute l'erreur rencontrï¿½ aux erreurs dï¿½jï¿½ prï¿½sentes.
+     *  Ajoute l'erreur rencontré aux erreurs déjé présentes.
      */
     {
         $this->errors |= $error;
@@ -142,13 +142,13 @@ class ModuleInterface
     
     function clearFunctionnalitieError (  )
     /**
-     *  Nettoie le bit d'erreur de la fonctionnalitï¿½, pour en tester une autre
+     *  Nettoie le bit d'erreur de la fonctionnalité, pour en tester une autre
      */
     {
         $this->errors = $this->errors &~  FUNCTIONNALITIE_NOT_IMPLEMENTED;
     }
     
-    //----------------------------------------------------- Attributs protï¿½gï¿½s
+    //----------------------------------------------------- Attributs protégés
     var $name;
     var $infos;
     var $functionnalities;
