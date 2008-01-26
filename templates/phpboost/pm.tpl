@@ -15,7 +15,6 @@
 		    }
 			return true;
 		}
-
 		function check_form_pm(){
 			if(document.getElementById('contents').value == "") {
 				alert("{L_REQUIRE_MESSAGE}");
@@ -23,31 +22,16 @@
 		    }
 			return true;
 		}
-
 		function Confirm_pm() {
 			return confirm("{L_DELETE_MESSAGE}");
 		}
-
 		function XMLHttpRequest_search()
 		{
-			var xhr_object = null;
-			var filename = "../includes/xmlhttprequest.php?pm=1";
 			var login = document.getElementById("login").value;
-			var data = null;
-			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-			    return;
-			
 			if( login != "" )
 			{
-				data = "login=" + login;
-			   
-				xhr_object.open("POST", filename, true);
-
+				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?pm=1');
+				data = 'login=' + login;
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 ) 
@@ -56,21 +40,15 @@
 						show_div("xmlhttprequest_result_search");
 					}
 				}
-
-				xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhr_object.send(data);
+				xmlhttprequest_sender(xhr_object, data);
 			}	
 			else
-			{
 				alert("{L_REQUIRE_RECIPIENT}");
-			}	
 		}
-
 		function insert_XMLHttpRequest(login)
 		{
 			document.getElementById("login").value = login;
 		}
-
 		-->
 		</script>
 
@@ -91,14 +69,14 @@
 			}	 
 		-->
 		</script>
-		# START convers.error_handler #
+		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
-		<div class="{convers.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{convers.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {convers.error_handler.L_ERROR}
+		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			<br />	
 		</div>
 		<br />		
-		# END convers.error_handler #
+		# ENDIF #
 		
 		<form action="pm{convers.U_MEMBER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
 			<div class="module_position">					
@@ -172,13 +150,13 @@
 					<table class="module_table">
 						<tr> 		
 							<td style="width:33%;text-align:center"> 
-								<img style="vertical-align:middle;" src="../templates/{THEME}/images/announce.gif" alt="" /> {L_READ} 
+								<img class="valign_middle" src="../templates/{THEME}/images/announce.gif" alt="" /> {L_READ} 
 							</td>
 							<td style="width:34%;text-align:center"> 
-								<img style="vertical-align:middle;" src="../templates/{THEME}/images/announce_track.gif" alt="" /> {L_TRACK}		
+								<img class="valign_middle" src="../templates/{THEME}/images/announce_track.gif" alt="" /> {L_TRACK}		
 							</td>
 							<td style="width:33%;text-align:center"> 
-								<img style="vertical-align:middle;" src="../templates/{THEME}/images/new_announce.gif" alt="" /> {L_NOT_READ}		
+								<img class="valign_middle" src="../templates/{THEME}/images/new_announce.gif" alt="" /> {L_NOT_READ}		
 							</td>
 						</tr>
 					</table>
@@ -295,15 +273,15 @@
 
 
 		# START post_pm #
-		# START post_pm.error_handler #
+		# IF C_ERROR_HANDLER #
 		<br />
 		<span id="errorh"></span>
-		<div class="{post_pm.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{post_pm.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {post_pm.error_handler.L_ERROR}
+		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			<br />	
 		</div>
 		<br />		
-		# END post_pm.error_handler #
+		# ENDIF #
 		<span id="quote"></span>			
 		<div style="font-size: 10px;text-align:center;padding-bottom: 2px;">{L_RESPOND}</div>
 		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto">						
@@ -402,15 +380,15 @@
 					<div class="module_top_r"></div>
 					<div class="module_top">&bull; {post_convers.U_MEMBER_VIEW} &raquo; {post_convers.U_PM_BOX}</div>
 					<div class="module_contents">	
-						# START post_convers.error_handler #
+						# IF C_ERROR_HANDLER #
 						<br />
 						<span id="errorh"></span>
-						<div class="{post_convers.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-							<img src="../templates/{THEME}/images/{post_convers.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {post_convers.error_handler.L_ERROR}
+						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 							<br />	
 						</div>
 						<br />		
-						# END post_convers.error_handler #
+						# ENDIF #
 						
 						# START post_convers.show_convers #		
 						<table class="module_table">

@@ -93,15 +93,15 @@
 		-->
 		</script>
 
-		# START field_edit.error_handler #
+		# IF C_ERROR_HANDLER #
 		<div class="error_handler_position">
 			<span id="errorh"></span>
-			<div class="{field_edit.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-				<img src="../templates/{THEME}/images/{field_edit.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {field_edit.error_handler.L_ERROR}
+			<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 				<br />	
 			</div>
 		</div>
-		# END field_edit.error_handler #
+		# ENDIF #
 				
 		<form action="admin_extend_field.php?id={field_edit.ID}" method="post" onsubmit="return check_form_field();" class="fieldset_content">
 			<fieldset>

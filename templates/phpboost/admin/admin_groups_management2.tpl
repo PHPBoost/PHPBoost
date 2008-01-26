@@ -30,25 +30,11 @@
 
 		function XMLHttpRequest_search()
 		{
-			var xhr_object = null;
-			var data = null;
-			var filename = "../includes/xmlhttprequest.php?group_member=1";
 			var login = document.getElementById("login_mbr").value;
-			var data = null;
-			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-			    return;
-			
 			if( login != "" )
 			{
-				data = "login=" + login;
-			   
-				xhr_object.open("POST", filename, true);
-
+				data = 'login=' + login;
+				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?group_member=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 ) 
@@ -57,15 +43,10 @@
 						show_div("xmlhttprequest_result_search");
 					}
 				}
-
-				xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-				xhr_object.send(data);
+				xmlhttprequest_sender(xhr_object, data);
 			}	
 			else
-			{
 				alert("{L_REQUIRE_LOGIN}");
-			}		
 		}
 
 		function hide_div2(divID)
@@ -112,64 +93,60 @@
 		</div>
 		
 		<div id="admin_contents">		
-			# START edit_group #
+			# IF C_EDIT_GROUP #
 					
 			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_GROUPS_MANAGEMENT}</legend>
 					<dl>
 						<dt><label for="name">* {L_NAME}</label></dt>
-						<dd><label><input type="text" size="25" id="name" name="name" value="{edit_group.NAME}" class="text" /></label></dd>
+						<dd><label><input type="text" size="25" id="name" name="name" value="{NAME}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label>{L_AUTH_FLOOD}</label></dt>
-						<dd><label><input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" value="1" /> {L_YES}
+						<dt><label for="auth_flood">{L_AUTH_FLOOD}</label></dt>
+						<dd><label><input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" id="auth_flood" value="1" /> {L_YES}
 						</label>&nbsp;&nbsp; 
-						<label><input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" value="0" /> {L_NO}</label></dd>
+						<label><input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" value="0" class="text" /> {L_NO}</label></dd>
 					</dl>
 					<dl>
-						<dt><label>{L_PM_NO_LIMIT}</label></dt>
-						<dd><label><input type="radio" {PM_NO_LIMIT_ENABLED} name="pm_no_limit" value="1" /> {L_YES}
-						</label>&nbsp;&nbsp; 
-						<label><input type="radio" {PM_NO_LIMIT_DISABLED} name="pm_no_limit" value="0" /> {L_NO}</label></dd>
+						<dt><label for="pm_group_limit">{L_PM_GROUP_LIMIT}</label><br /><span>{L_PM_GROUP_LIMIT_EXPLAIN}</span></dt>
+						<dd><label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="{PM_GROUP_LIMIT}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label>{L_DATA_NO_LIMIT}</label></dt>
-						<dd><label><input type="radio" {DATA_NO_LIMIT_ENABLED} name="data_no_limit" value="1" /> {L_YES}
-						</label>&nbsp;&nbsp; 
-						<label><input type="radio" {DATA_NO_LIMIT_DISABLED} name="data_no_limit" value="0" /> {L_NO}</label></dd>
+						<dt><label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span></dt>
+						<dd><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}" class="text" /> {L_MB}</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="img">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
+						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
 						<dd><label>
-							<select name="img" id="img" onChange="img_change(this.options[selectedIndex].value)">
-								# START edit_group.select #
-									{edit_group.select.IMG_GROUP}
-								# END edit_group.select #
+							<select name="img" id="img_group" onChange="img_change(this.options[selectedIndex].value)">
+								# START select #
+									{select.IMG_GROUP}
+								# END select #
 							</select>				
-							<img src="../images/group/{edit_group.IMG}" name="img_group" alt="" style="vertical-align:middle;" /></label></dd>
+							<img src="../images/group/{IMG}" name="img_group" alt="" class="valign_middle" /></label></dd>
 					</dl>
 				</fieldset>						
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="hidden" name="id" value="{edit_group.GROUP_ID}" class="update" />
+					<input type="hidden" name="id" value="{GROUP_ID}" class="update" />
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
 					&nbsp;&nbsp; 
 					<input type="reset" value="{L_RESET}" class="reset" />
 				</fieldset>
 			</form>
 			
-			# START error_handler #
+			# IF C_ERROR_HANDLER #
 				<div class="error_handler_position">
-						<span id="errorh"></span>
-						<div class="{edit_group.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-							<img src="../templates/{THEME}/images/{edit_group.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {edit_group.error_handler.L_ERROR}
-							<br />	
-						</div>
+					<span id="errorh"></span>
+					<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+						<br />	
+					</div>
 				</div>
-			# END error_handler #
+			# ENDIF #
 			
-			<form action="admin_groups.php?id={edit_group.GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset_content">
+			<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_MBR_GROUP}</legend>
 					<dl>
@@ -204,25 +181,24 @@
 					</td>
 				</tr>
 				
-				# START edit_group.member #
+				# START member #
 				<tr> 
 					<td class="row2">
-						<a href="../member/member{edit_group.member.U_USER_ID}">{edit_group.member.LOGIN}</a>
+						<a href="../member/member{member.U_USER_ID}">{member.LOGIN}</a>
 					</td>
 					<td class="row2">
-						<a href="admin_groups.php?del_mbr=1&amp;id={edit_group.GROUP_ID}&amp;user_id={edit_group.member.USER_ID}" onClick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}" onClick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
-				# END edit_group.member #
+				# END member #
 			</table>
 					
 			
 			<p style="text-align: center;">{PAGINATION}</p>
-			# END edit_group #
-
+			# ENDIF #
 			
 			
-			# START add_group #
+			# IF C_ADD_GROUP #
 			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_GROUPS}</legend>
@@ -231,32 +207,28 @@
 						<dd><label><input type="text" maxlength="25" size="25" id="name" name="name" value="" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label>{L_AUTH_FLOOD}</label></dt>
-						<dd><label><input type="radio" name="auth_flood" value="1" /> {L_YES}</label>
+						<dt><label for="auth_flood">{L_AUTH_FLOOD}</label></dt>
+						<dd><label><input type="radio" name="auth_flood" id="auth_flood" checked="checked" value="1" /> {L_YES}</label>
 						&nbsp;&nbsp; 
-						<label><input type="radio" checked="checked" name="auth_flood" value="0" /> {L_NO}</label></dd>
+						<label><input type="radio" name="auth_flood" value="0" /> {L_NO}</label></dd>
 					</dl>
 					<dl>
-						<dt><label>{L_PM_NO_LIMIT}</label></dt>
-						<dd><label><input type="radio" name="pm_no_limit" value="1" /> {L_YES}</label>
-						&nbsp;&nbsp; 
-						<label><input type="radio" checked="checked" name="pm_no_limit" value="0" /> {L_NO}</label></dd>
+						<dt><label for="pm_group_limit">{L_PM_GROUP_LIMIT}</label><br /><span>{L_PM_GROUP_LIMIT_EXPLAIN}</span></dt>
+						<dd><label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="75" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label>{L_DATA_NO_LIMIT}</label></dt>
-						<dd><label><input type="radio" name="data_no_limit" value="1" /> {L_YES}</label>
-						&nbsp;&nbsp; 
-						<label><input type="radio" checked="checked" name="data_no_limit" value="0" /> {L_NO}</label></dd>
+						<dt><label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span></dt>
+						<dd><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="5" class="text" /> {L_MB}</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="id">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
+						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
 						<dd><label>
-							<select name="img" id="img" onChange="img_change(this.options[selectedIndex].value)">
-								# START add_group.select #
-									{add_group.select.IMG_GROUP}
-								# END add_group.select #
+							<select name="img" id="img_group" onChange="img_change(this.options[selectedIndex].value)">
+								# START select #
+									{select.IMG_GROUP}
+								# END select #
 							</select>				
-							<img src="../images/group/{add_group.IMG}" name="img_group" alt="" style="vertical-align:middle" />
+							<img src="../images/group/{IMG}" name="img_group" alt="" style="vertical-align:middle" />
 						</label></dd>
 					</dl>				
 				</fieldset>
@@ -266,6 +238,6 @@
 					<input type="submit" name="valid" value="{L_ADD}" class="submit" />
 				</fieldset>
 			</form>
-			# END add_group #
+			# ENDIF #
 		</div>
 		

@@ -50,16 +50,16 @@
 						</form>
 					</td>			
 				</tr>
-				# START index.error_handler #
+				# IF C_ERROR_HANDLER #
 				<tr>
 					<td class="row1" colspan="2" style="text-align:center;">
 						<span id="errorh"></span>
-						<div class="{index.error_handler.CLASS}">
-							<img src="../templates/{THEME}/images/{index.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {index.error_handler.L_ERROR}
+						<div class="{ERRORH_CLASS}">
+							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 						</div>
 					</td>
 				</tr>
-				# END index.error_handler #
+				# ENDIF #
 			</table>
 
 			<br />
@@ -161,7 +161,7 @@
 									<img src="../templates/{THEME}/images/admin/configuration.png" alt="repair" />
 								</td>
 								<td>
-									<img src="../templates/{THEME}/images/admin/updater.png" alt="optimize" style="vertical-align:middle;" />
+									<img src="../templates/{THEME}/images/admin/updater.png" alt="optimize" class="valign_middle" />
 								</td>
 								</tr>
 								<tr>
@@ -331,16 +331,16 @@
 							{L_LIST_FILES}
 						</th>
 					</tr>
-					# START list_files.error_handler #
+					# IF C_ERROR_HANDLER #
 					<tr>
 						<td class="row1" colspan="4" style="text-align:center;">
 							<span id="errorh"></span>
-							<div class="{list_files.error_handler.CLASS}">
-								<img src="../templates/{THEME}/images/{list_files.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {list_files.error_handler.L_ERROR}
+							<div class="{ERRORH_CLASS}">
+								<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 							</div>
 						</td>
 					</tr>
-					# END list_files.error_handler #
+					# ENDIF #
 					
 					<tr>
 						<td class="row1" colspan="4" style="text-align:center;">

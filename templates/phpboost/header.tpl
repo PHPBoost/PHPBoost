@@ -16,8 +16,7 @@
 		<link rel="stylesheet" href="../templates/{THEME}/links/links.css" type="text/css" media="screen, print, handheld" />
 		{ALTERNATIVE_CSS}
 		<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
-		<link rel="alternate" type="application/rss+xml" href="../index/rss.php" title="RSS {SITE_NAME}" />
-		<link rel="alternate" type="application/rss+xml" href="../forum/rss.php" title="RSS Forum" />
+		<link rel="alternate" type="application/rss+xml" href="../news/rss.php" title="RSS {SITE_NAME}" />
 		<script type="text/javascript" src="../templates/{THEME}/images/global.js"></script>
 	</head>
 	<body>
@@ -93,7 +92,8 @@
 			release_time -= (release_minutes * sp_minute);
 
 			release_seconds = Math.floor(release_time);
-	
+			release_seconds = (release_seconds < 10) ? '0' + release_seconds : release_seconds;
+			
 			document.getElementById('release').innerHTML = '<strong>' + release_days + '</strong> {L_DAYS} <strong>' + release_hours + '</strong> {L_HOURS} <strong>' + release_minutes + '</strong> {L_MIN} <strong>' + release_seconds + '</strong> {L_SEC}';
 		}
 	}

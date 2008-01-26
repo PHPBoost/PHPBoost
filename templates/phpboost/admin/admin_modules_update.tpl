@@ -21,15 +21,15 @@
 		
 		<div id="admin_contents">
 			
-			# START error_handler #
+			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
 				<span id="errorh"></span>
-				<div class="{error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 			</div>
-			# END error_handler #
+			# ENDIF #
 			
 			<form action="" method="post" enctype="multipart/form-data" class="fieldset_content">
 				<fieldset>
@@ -102,7 +102,7 @@
 					# START available #
 					<tr> 	
 						<td class="row2">					
-							<img style="vertical-align:middle;" src="../{available.ICON}/{available.ICON}.png" alt="" /> <strong>{available.NAME}</strong>
+							<img class="valign_middle" src="../{available.ICON}/{available.ICON}.png" alt="" /> <strong>{available.NAME}</strong>
 						</td>
 						<td class="row2" style="text-align:center;">					
 							<strong>{available.VERSION}</strong>

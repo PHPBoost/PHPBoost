@@ -25,18 +25,18 @@
 							<span class="text_white">{L_NEW_PASS}</span>
 						</th>
 					</tr>
-					# START error_handler #
+					# IF C_ERROR_HANDLER #
 					<tr>
 						<td class="row2" style="text-align: center;">
 							<br />
 							<span id="errorh"></span>
-							<div class="{error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-								<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+							<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+								<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 								<br />	
 							</div>
 						</td>
 					</tr>
-					# END error_handler #
+					# ENDIF #
 					<tr>	
 						<td colspan="2" class="row2" style="text-align: center;">
 							{L_REQUIRE}

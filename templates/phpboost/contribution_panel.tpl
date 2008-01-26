@@ -56,16 +56,16 @@
 					{L_CONTRIBUTION}
 				</th>
 			</tr>
-			# START contribution.error_handler #
+			# IF C_ERROR_HANDLER #
 			<tr>
 				<td colspan="2">
 					<span id="errorh"></span>
-					<div class="{contribution.error_handler.CLASS}">
-						<img src="../templates/{THEME}/images/{contribution.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {contribution.error_handler.L_ERROR}
+					<div class="{ERRORH_CLASS}">
+						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					</div>
 				</td>
 			</tr>
-			# END contribution.error_handler #
+			# ENDIF #
 			# START contribution.properties #
 			<tr>
 				<td class="row3">

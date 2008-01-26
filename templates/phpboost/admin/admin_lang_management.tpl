@@ -23,18 +23,18 @@
 							{L_LANG_MANAGEMENT}
 						</th>
 					</tr>
-					# START main.error_handler #
+					# IF C_ERROR_HANDLER #
 					<tr> 
 						<td class="row2" colspan="5" style="text-align:center;">
 							<span id="errorh"></span>
-							<div class="{main.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-								<img src="../templates/{THEME}/images/{main.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {main.error_handler.L_ERROR}
+							<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+								<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 								<br />	
 							</div>
 							<br />		
 						</td>
 					</tr>
-					# END main.error_handler #				
+					# ENDIF #				
 					<tr>
 						<td class="row2" colspan="5">
 							<strong>{L_EXPLAIN_DEFAULT_LANG}</strong>

@@ -145,6 +145,28 @@ function popup(page,name)
 		window.open(page, name, "width=672, height=620,location=no,status=no,toolbar=no,scrollbars=yes");
 }
 
+//Fonction de préparation de l'ajax.
+function xmlhttprequest_init(filename)
+{
+	var xhr_object = null;
+
+	if(window.XMLHttpRequest) //Firefox
+	   xhr_object = new XMLHttpRequest();
+	else if(window.ActiveXObject) //Internet Explorer
+	   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+
+	xhr_object.open('POST', filename, true);
+
+	return xhr_object;
+}
+
+//Fonction ajax d'envoi.
+function xmlhttprequest_sender(xhr_object, data)
+{
+	xhr_object.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xhr_object.send(data);
+}
+
 //Echape les variables de type chaînes dans les requêtes xmlhttprequest.
 function escape_xmlhttprequest(contents)
 {

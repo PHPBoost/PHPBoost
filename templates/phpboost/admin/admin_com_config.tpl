@@ -32,14 +32,19 @@
 				<li>
 					<a href="admin_com.php"><img src="../templates/{THEME}/images/admin/com.png" alt="" /></a>
 					<br />
-					<a href="admin_com.php" class="quick_link">{L_COM_CONFIG}</a>
+					<a href="admin_com.php" class="quick_link">{L_COM_MANAGEMENT}</a>
+				</li>
+				<li>
+					<a href="admin_com_config.php"><img src="../templates/{THEME}/images/admin/com.png" alt="" /></a>
+					<br />
+					<a href="admin_com_config.php" class="quick_link">{L_COM_CONFIG}</a>
 				</li>
 			</ul>
 		</div>
 		
 		<div id="admin_contents">
 		
-			<form action="admin_com.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_com_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_COM_CONFIG}</legend>
 					<dl> 

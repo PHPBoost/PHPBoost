@@ -19,7 +19,7 @@
 			}
 			#maintain{
 				text-align:center;
-				padding:10px;
+				padding:30px;
 			}
 			.delay{
 				width:280px;				
@@ -81,14 +81,15 @@
 						release_time -= (release_minutes * sp_minute);
 
 						release_seconds = Math.floor(release_time);
-				
+						release_seconds = (release_seconds < 10) ? '0' + release_seconds : release_seconds;
+						
 						document.getElementById('release').innerHTML = '<strong>' + release_days + '</strong> {L_DAYS} <strong>' + release_hours + '</strong> {L_HOURS} <strong>' + release_minutes + '</strong> {L_MIN} <strong>' + release_seconds + '</strong> {L_SEC}';
 					}
 				}
 				release({L_RELEASE_FORMAT});
 				-->
 				</script>
-				# ENDIF #
+				# ENDIF #	
 			</div>	
 			<hr />
 			

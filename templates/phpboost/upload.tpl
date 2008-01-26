@@ -7,7 +7,6 @@
 		var nav = navigator.appName; //Recupère le nom du navigateur
 
 		area.focus();
-
 		if( nav == 'Microsoft Internet Explorer' ) // Internet Explorer
 			ie_sel(area, code, 'smile');
 		else if( nav == 'Netscape' || nav == 'Opera' ) //Netscape ou opera
@@ -74,21 +73,10 @@
 	}		
 	function rename_folder(id_folder, previous_name, previous_cut_name)
 	{
-		var xhr_object = null;
-		var data = null;
-		var name = document.getElementById("finput" + id_folder).value;
-		var filename = "../includes/xmlhttprequest.php?rename_folder=1";
+		var name = document.getElementById('finput' + id_folder).value;
 		var regex = /\/|\.|\\|\||\?|<|>|\"/;
 		
-		if(window.XMLHttpRequest) // Firefox
-		   xhr_object = new XMLHttpRequest();
-		else if(window.ActiveXObject) // Internet Explorer
-		   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-		else // XMLHttpRequest non supporté par le navigateur
-		    return;
-
 		document.getElementById('img' + id_folder).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-		
 		if( name != '' && regex.test(name) ) //interdiction des caractères spéciaux dans la nom.
 		{
 			alert("{L_FOLDER_FORBIDDEN_CHARS}");
@@ -99,8 +87,7 @@
 		{
 			name2 = escape_xmlhttprequest(name);
 			data = "id_folder=" + id_folder + "&name=" + name2 + "&previous_name=" + previous_name;
-			xhr_object.open("POST", filename, true);
-
+			var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?rename_folder=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
@@ -120,26 +107,14 @@
 				else if( xhr_object.readyState == 4 )
 					document.getElementById('img' + id_folder).innerHTML = '';
 			}
-
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(data);
+			xmlhttprequest_sender(xhr_object, data);
 		}
 	}	
 	function add_folder(id_parent, user_id, divid)
 	{
-		var xhr_object = null;
-		var data = null;
 		var name = document.getElementById("folder_name").value;
-		var filename = "../includes/xmlhttprequest.php?new_folder=1";
 		var regex = /\/|\.|\\|\||\?|<|>|\"/;
-		
-		if(window.XMLHttpRequest) // Firefox
-		   xhr_object = new XMLHttpRequest();
-		else if(window.ActiveXObject) // Internet Explorer
-		   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-		else // XMLHttpRequest non supporté par le navigateur
-		    return;
-		
+
 		if( name != '' && regex.test(name) ) //interdiction des caractères spéciaux dans le nom.
 		{
 			alert("{L_FOLDER_FORBIDDEN_CHARS}");
@@ -153,15 +128,14 @@
 		{
 			name2 = escape_xmlhttprequest(name);
 			data = "name=" + name2 + "&user_id=" + user_id + "&id_parent=" + id_parent;
-			xhr_object.open("POST", filename, true);
-
+			var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?new_folder=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
 				{
 					if( xhr_object.responseText > 0 )
 					{
-						document.getElementById('new_folder' + divid).innerHTML = '<table style="border:0"><tr><td style="width:34px;vertical-align:top;"><a href="upload.php?f=' + xhr_object.responseText + '&amp;{POPUP}"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="upload.php?f=' + xhr_object.responseText + '&amp;{POPUP}">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a></span></a></span> <a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;{POPUP}" onClick="javascript:return Confirm_folder();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> <a href="upload.php?move=' + xhr_object.responseText + '&amp;{POPUP}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a></div></td></tr></table>';
+						document.getElementById('new_folder' + divid).innerHTML = '<table style="border:0"><tr><td style="width:34px;vertical-align:top;"><a href="upload.php?f=' + xhr_object.responseText + '&amp;{POPUP}"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="upload.php?f=' + xhr_object.responseText + '&amp;{POPUP}">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a></span></a></span> <a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;{POPUP}" onClick="javascript:return Confirm_folder();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> <a href="upload.php?move=' + xhr_object.responseText + '&amp;{POPUP}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
 						var total_folder = document.getElementById('total_folder').innerHTML;
 						total_folder++;						
 						document.getElementById('total_folder').innerHTML = total_folder;
@@ -177,9 +151,7 @@
 					}
 				}
 			}
-
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(data);
+			xmlhttprequest_sender(xhr_object, data);
 		}
 		else
 		{
@@ -202,34 +174,22 @@
 	}	
 	function rename_file(id_file, previous_name, previous_cut_name)
 	{
-		var xhr_object = null;
-		var data = null;
 		var name = document.getElementById("fiinput" + id_file).value;
-		var filename = "../includes/xmlhttprequest.php?rename_file=1";
 		var regex = /\/|\\|\||\?|<|>|\"/;
-		
-		if(window.XMLHttpRequest) // Firefox
-		   xhr_object = new XMLHttpRequest();
-		else if(window.ActiveXObject) // Internet Explorer
-		   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-		else // XMLHttpRequest non supporté par le navigateur
-		    return;
 
-		document.getElementById('img' + id_file).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-		
+		document.getElementById('imgf' + id_file).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 		if( name != '' && regex.test(name) ) //interdiction des caractères spéciaux dans la nom.
 		{
 			alert("{L_FOLDER_FORBIDDEN_CHARS}");	
 			document.getElementById('fi1' + id_file).style.display = 'inline';
 			document.getElementById('fi' + id_file).style.display = 'none';
-			document.getElementById('img' + id_file).innerHTML = '';
+			document.getElementById('imgf' + id_file).innerHTML = '';
 		}
 		else if( name != '' )
 		{
 			name2 = escape_xmlhttprequest(name);
 			data = "id_file=" + id_file + "&name=" + name2 + "&previous_name=" + previous_cut_name;
-			xhr_object.open("POST", filename, true);
-
+			var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?rename_file=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' ) 
@@ -245,21 +205,19 @@
 						document.getElementById('fi' + id_file).style.display = 'none';
 						document.getElementById('fi1' + id_file).style.display = 'inline';
 						document.getElementById('fi1' + id_file).innerHTML = xhr_object.responseText;
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>';
 					}
-					document.getElementById('img' + id_file).innerHTML = '';
+					document.getElementById('imgf' + id_file).innerHTML = '';
 				}
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 				{
 					document.getElementById('fi' + id_file).style.display = 'none';
 					document.getElementById('fi1' + id_file).style.display = 'inline';	
 					document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>';
-					document.getElementById('img' + id_file).innerHTML = '';					
+					document.getElementById('imgf' + id_file).innerHTML = '';					
 				}
 			}
-
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(data);
+			xmlhttprequest_sender(xhr_object, data);
 		}
 	}	
 	var delay = 1000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
@@ -414,7 +372,7 @@
 								<a href="upload{files.U_MOVE}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>								
 								
 								{files.INSERT}
-								<span id="img{files.ID}"></span>
+								<span id="imgf{files.ID}"></span>
 							</td>
 						</tr>
 					</table>
@@ -424,18 +382,18 @@
 			</td>
 		</tr>
 		
-		# START error_handler #
+		# IF C_ERROR_HANDLER #
 		<tr>
 			<td class="row3">	
 				<span id="errorh"></span>
-				<div class="{error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 				<br />	
 			</td>	
 		</tr>
-		# END error_handler #
+		# ENDIF #
 		<tr>				
 			<td class="row3" id="new_file">							
 				<form action="upload.php?f={FOLDER_ID}&amp;{POPUP}" enctype="multipart/form-data" method="post">
