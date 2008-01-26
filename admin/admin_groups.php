@@ -177,6 +177,30 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 		include_once('../includes/pagination.class.php'); 
 		$pagination = new Pagination();
 		
+		//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
+		$img_groups = '<option value="" selected="selected">--</option>';
+		$rep = '../images/group';
+		$y = 0;
+		if( is_dir($rep) ) //Si le dossier existe
+		{
+			$dh = @opendir($rep);
+			while( !is_bool($file = readdir($dh)) )
+			{	
+				if( $file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db' )
+					$fichier_array[] = $file; //On crée un array, avec les different fichiers.
+			}	
+			closedir($dh); //On ferme le dossier
+
+			if( is_array($fichier_array) )
+			{			
+				foreach($fichier_array as $img_group)
+				{
+					$selected = ($img_group == $group['img']) ? ' selected="selected"' : '';
+					$img_groups .= '<option value="' . $img_group . '"' . $selected . '>' . $img_group . '</option>';
+				}
+			}
+		}
+		
 		$array_group = unserialize($group['auth']);
 		$template->assign_vars(array(
 			'NAME' => $group['name'],
@@ -185,6 +209,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 			'PAGINATION' => $pagination->show_pagin('admin_groups.php?id=' . $idgroup . '&amp;p=%d', $nbr_member_group, 'p', 25, 3),
 			'THEME' => $CONFIG['theme'],
 			'LANG' => $CONFIG['lang'],	
+			'IMG_GROUPS' => $img_groups,	
 			'C_EDIT_GROUP' => true,
 			'AUTH_FLOOD_ENABLED' => $array_group['auth_flood'] == 1 ? 'checked="checked"' : '',
 			'AUTH_FLOOD_DISABLED' => $array_group['auth_flood'] == 0 ? 'checked="checked"' : '',
@@ -216,41 +241,6 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 			'L_DELETE' => $LANG['delete'],
 			'L_ADD_MBR_GROUP' => $LANG['add_mbr_group']
 		));		
-
-		//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
-		$rep = '../images/group';
-		$y = 0;
-		if( is_dir($rep) ) //Si le dossier existe
-		{
-			$dh = @opendir($rep);
-			while( !is_bool($file = readdir($dh)) )
-			{	
-				if( $file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db' )
-					$fichier_array[] = $file; //On crée un array, avec les different fichiers.
-			}	
-			closedir($dh); //On ferme le dossier
-
-			if( is_array($fichier_array) )
-			{			
-				foreach($fichier_array as $img_group)
-				{
-					if( $y == 0)
-					{
-						$option = '<option value="" selected="selected">--</option>';
-						$y++;
-					}
-					else
-					{
-						$selected = ($img_group == $group['img']) ? ' selected="selected"' : '';
-						$option = '<option value="' . $img_group . '"' . $selected . '>' . $img_group . '</option>';
-					}
-					
-					$template->assign_block_vars('select', array(
-						'IMG_GROUP' => $option
-					));
-				}
-			}
-		}	
 		
 		//Liste des membres du groupe.
 		$members = $sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . numeric($group['id']) . "'", __LINE__, __FILE__);
@@ -279,9 +269,31 @@ elseif( $add ) //Interface d'ajout du groupe.
 	'admin_groups_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_groups_management2.tpl'
 	));
 	
+	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
+	$img_groups = '<option value="" selected="selected">--</option>';
+	$rep = '../images/group';
+	$y = 0;
+	if( is_dir($rep) ) //Si le dossier existe
+	{
+		$dh = @opendir($rep);
+		while( !is_bool($file = readdir($dh)) )
+		{	
+			if( $file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db' )
+				$fichier_array[] = $file; //On crée un array, avec les different fichiers.
+		}	
+		closedir($dh); //On ferme le dossier
+
+		if( is_array($fichier_array) )
+		{			
+			foreach($fichier_array as $img_group)
+				$img_groups .= '<option value="' . $img_group . '">' . $img_group . '</option>';
+		}
+	}
+		
 	$template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],	
+		'IMG_GROUPS' => $img_groups,
 		'C_ADD_GROUP' => true,
 		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 		'L_REQUIRE_NAME' => $LANG['require_name'],
@@ -302,38 +314,6 @@ elseif( $add ) //Interface d'ajout du groupe.
 		'L_NO' => $LANG['no'],
 		'L_ADD' => $LANG['add']
 	));		
-	
-	//On recupère les images des groupes contenu dans le dossier /images/group.
-	$rep = '../images/group';
-	$y = 0;
-	if( is_dir($rep) ) //Si le dossier existe
-	{
-		$dh = @opendir($rep);
-		while( !is_bool($file = readdir($dh)) )
-		{	
-			if( $file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db' )
-				$fichier_array[] = $file; //On crée un array, avec les different fichiers.
-		}	
-		closedir($dh); //On ferme le dossier
-
-		if( is_array($fichier_array) )
-		{			
-			foreach($fichier_array as $img_group)
-			{
-				if( $y == 0 )
-				{
-					$option = '<option value="">--</option>';
-					$y++;
-				}
-				else
-					$option = '<option value="' . $img_group . '">' . $img_group . '</option>';
-				
-				$template->assign_block_vars('select', array(
-					'IMG_GROUP' => $option
-				));
-			}
-		}
-	}	
 	
 	$template->pparse('admin_groups_management2');
 }
