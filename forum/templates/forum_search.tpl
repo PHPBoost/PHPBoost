@@ -19,14 +19,7 @@
 				&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
 			</div>
 			<div class="module_contents">
-				# START error_handler #
-				<span id="errorh"></span>
-				<div class="{error_handler.CLASS}">
-					<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
-				</div>		
-				# END error_handler #
-					
-				<form action="search.php{SID}#errorh" method="post" onsubmit="return check_form();" class="fieldset_content">
+				<form action="search.php{SID}#search_forum" method="post" onsubmit="return check_form();" class="fieldset_content">
 					<fieldset>
 						<legend>{L_SEARCH_FORUM}</legend>
 						<dl>
@@ -60,9 +53,17 @@
 						<dl>
 							<dt><label for="where">{L_OPTIONS}</label></dt>
 							<dd>
-								<label><input type="radio" name="where" id="where" value="contents"  checked="checked" /> {L_CONTENTS}</label>
+								<label><input type="radio" name="where" id="where" value="contents" {CONTENTS_CHECKED} /> {L_CONTENTS}</label>
 								<br />
-								<label><input type="radio" name="where" value="title" /> {L_TITLE}</label>
+								<label><input type="radio" name="where" value="title" {TITLE_CHECKED} /> {L_TITLE}</label>
+								<br />
+								<label><input type="radio" name="where" value="all" {ALL_CHECKED} /> {L_TITLE}/{L_CONTENTS}</label>
+							</dd>
+						</dl>
+						<dl>
+							<dt><label for="colorate_result">{L_COLORATE_RESULT}</label></dt>
+							<dd>
+								<label><input type="checkbox" name="colorate_result" id="colorate_result" value="1" {COLORATE_RESULT} /></label>
 							</dd>
 						</dl>
 					</fieldset>			
@@ -70,6 +71,14 @@
 						<legend>{L_SEARCH}</legend>
 						<input type="submit" name="valid_search" value="{L_SEARCH}" class="submit" />			
 					</fieldset>
+					
+					<span id="search_forum"></span>
+					# IF C_ERROR_HANDLER #
+					<span id="errorh"></span>
+					<div class="{ERRORH_CLASS}">
+						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					</div>		
+					# ENDIF #
 					
 					# START list #
 					<div class="module_position" style="width:100%;">					

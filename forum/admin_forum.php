@@ -69,13 +69,9 @@ if( !empty($_POST['valid']) && !empty($id) )
 		}
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/forum/admin_forum.php?id=' . $id . '&error=incomplete');
-		exit;
-	}
+		redirect(HOST . DIR . '/forum/admin_forum.php?id=' . $id . '&error=incomplete');
 
-	header('location:' . HOST . DIR . '/forum/admin_forum.php');
-	exit;
+	redirect(HOST . DIR . '/forum/admin_forum.php');
 }
 elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 {
@@ -96,8 +92,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 			$admin_forum = new Admin_forum();
 			$admin_forum->del_cat($idcat, $confirm_delete);
 			
-			header('location:' . HOST . SCRIPT);
-			exit;
+			redirect(HOST . SCRIPT);
 		}
 		else //Sinon on propose de déplacer les topics existants dans une autre catégorie.
 		{
@@ -180,16 +175,12 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 				$admin_forum = new Admin_forum();
 				$admin_forum->del_cat($idcat, $confirm_delete);	
 				
-				header('location:' . HOST . SCRIPT);
-				exit;
+				redirect(HOST . SCRIPT);
 			}
 		}
 	}
 	else
-	{
-		header('location:' . HOST . SCRIPT);
-		exit;
-	}
+		redirect(HOST . SCRIPT);
 }
 elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 {
@@ -197,10 +188,7 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 	
 	//Catégorie existe?
 	if( !isset($CAT_FORUM[$id]) )
-	{
-		header('location:' . HOST . DIR . '/forum/admin_forum.php');
-		exit;
-	}
+		redirect(HOST . DIR . '/forum/admin_forum.php');
 	
 	require_once('../forum/admin_forum.class.php');
 	$admin_forum = new Admin_forum();
@@ -208,8 +196,7 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 	if( $move == 'up' || $move == 'down' )
 		$admin_forum->move_updown_cat($id, $move);		
 		
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 elseif( !empty($id) )
 {
@@ -235,62 +222,16 @@ elseif( !empty($id) )
 	}
 	$sql->close($result);
 	
-	//Création du tableau des groupes.
-	$array_groups = array();
-	foreach($_array_groups_auth as $idgroup => $array_group_info)
-		$array_groups[$idgroup] = $array_group_info[0];	
-		
-	//Création du tableau des rangs.
-	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	
-	//Récupération des tableaux des autorisations et des groupes.
-	$array_auth = !empty($forum_info['auth']) ? unserialize($forum_info['auth']) : array();
-	
-	//Génération d'une liste à sélection multiple des rangs et groupes
-	function generate_select_groups($array_auth, $auth_id, $auth_level, $disabled = '')
-	{
-		global $array_groups, $array_ranks, $LANG;
-		
-		$j = 0;
-		//Liste des rangs
-		$select_groups = '<select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
-		foreach($array_ranks as $idgroup => $group_name)
-		{
-			$selected = '';	
-			if( array_key_exists('r' . $idgroup, $array_auth) && ((int)$array_auth['r' . $idgroup] & (int)$auth_level) !== 0 && empty($disabled) )
-				$selected = 'selected="selected"';
-				
-			$selected = ($idgroup == 2 && empty($disabled)) ? 'selected="selected"' : $selected;
-			
-			$select_groups .=  '<option ' . $disabled . ' value="r' . $idgroup . '" id="' . $auth_id . 'r' . $j . '" ' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_id . 'r\', ' . $j . ')">' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .=  '</optgroup>';
-		
-		//Liste des groupes.
-		$j = 0;
-		$select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
-		foreach($array_groups as $idgroup => $group_name)
-		{
-			$selected = '';		
-			if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_level) !== 0 && empty($disabled) )
-				$selected = 'selected="selected"';
-
-			$select_groups .= '<option ' . $disabled . ' value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '" ' . $selected . '>' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .= '</optgroup></select>';
-		
-		return $select_groups;
-	}
-	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
 	$is_root = ($forum_info['level'] > 0);
-	
+
+	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_auth = !empty($forum_info['auth']) ? unserialize($forum_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
+		
 	$template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $template->module_data_path('forum'),
@@ -303,9 +244,9 @@ elseif( !empty($id) )
 		'UNCHECKED_APROB' => ($forum_info['aprob'] == 0) ? 'checked="checked"' : '',
 		'CHECKED_STATUS' => ($forum_info['status'] == 1) ? 'checked="checked"' : '',
 		'UNCHECKED_STATUS' => ($forum_info['status'] == 0) ? 'checked="checked"' : '',
-		'AUTH_READ' => generate_select_groups($array_auth, 'r', 1),
-		'AUTH_WRITE' => $is_root ? generate_select_groups($array_auth, 'w', 2) : generate_select_groups($array_auth, 'w', 2, 'disabled="disabled"'),
-		'AUTH_EDIT' => $is_root ? generate_select_groups($array_auth, 'x', 4) : generate_select_groups($array_auth, 'x', 4, 'disabled="disabled"'),
+		'AUTH_READ' => $groups->generate_select_groups('r', $array_auth, 0x01),
+		'AUTH_WRITE' => $is_root ? $groups->generate_select_groups('w', $array_auth, 0x02) : $groups->generate_select_groups('w', $array_auth, 0x02, array(), GROUP_DISABLE_SELECT),
+		'AUTH_EDIT' => $is_root ? $groups->generate_select_groups('x', $array_auth, 0x04) : $groups->generate_select_groups('x', $array_auth, 0x04, array(), GROUP_DISABLE_SELECT),
 		'DISABLED' => $is_root ? '0' : '1',
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
@@ -348,10 +289,7 @@ else
 	'admin_forum_cat' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_cat.tpl'
 	));
 		
-	//Création du tableau des groupes.
-	$array_groups = array();
-	foreach($_array_groups_auth as $idgroup => $array_group_info)
-		$array_groups[$idgroup] = $array_group_info[0];
+	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
 		
 	$template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],

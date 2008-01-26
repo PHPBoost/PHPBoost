@@ -30,10 +30,7 @@ if( defined('PHP_BOOST') !== true)
 	
 //Autorisation sur le module.
 if( !$groups->check_auth($SECURE_MODULE['articles'], ACCESS_MODULE) )
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}
 
 define('READ_CAT_ARTICLES', 0x01);
 define('WRITE_CAT_ARTICLES', 0x02);

@@ -34,15 +34,10 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 	$template->set_filenames(array('web' => '../templates/' . $CONFIG['theme'] . '/web/web.tpl'));
 	
 	if( !$session->check_auth($session->data, $CAT_WEB[$idcat]['secure']) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	if( empty($web['id']) )
-	{
-		$errorh->error_handler('e_unexist_link_web', E_USER_REDIRECT); 
-		exit;
-	}	
+		$errorh->error_handler('e_unexist_link_web', E_USER_REDIRECT);
+		
 	if( $session->data['level'] === 2 )
 	{
 		$java = "<script language='JavaScript' type='text/javascript'>
@@ -141,14 +136,10 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 					users_note = '" . $users_note . "' WHERE id = '" . $get_note . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 					
 					//Success.
-					header('location:' . HOST . DIR . '/web/web' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
-					exit;
+					redirect(HOST . DIR . '/web/web' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
 				}
 				else
-				{
-					header('location:' . HOST . DIR . '/web/web' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
-					exit;
-				}			
+					redirect(HOST . DIR . '/web/web' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
 			}
 			elseif( !empty($session->data['user_id']) )
 			{
@@ -177,16 +168,10 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 				));
 			}	
 			else
-			{
 				$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-				exit;
-			}
 		}
 		else 
-		{
 			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-			exit;
-		}
 	}
 	
 	//Affichage commentaires.
@@ -207,10 +192,7 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 	$template->set_filenames(array('web' => '../templates/' . $CONFIG['theme'] . '/web/web.tpl'));
 	
 	if( !$session->check_auth($session->data, $CAT_WEB[$idcat]['secure']) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	$nbr_web = $sql->query("SELECT COUNT(*) as compt 
 	FROM ".PREFIX."web 

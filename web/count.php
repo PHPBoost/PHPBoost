@@ -34,9 +34,6 @@ if( !empty($idweb) )
 //Redirection vers le site demandé!
 $url_web = $sql->query("SELECT url FROM ".PREFIX."web WHERE id = '" . $idweb . "'", __LINE__, __FILE__);
 if( !empty($url_web) )
-{
-	header('location:' . $url_web);
-	exit;
-}
+	redirect($url_web);
 
 ?>

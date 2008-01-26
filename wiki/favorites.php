@@ -36,10 +36,7 @@ require_once('../wiki/wiki_speed_bar.php');
 require_once('../includes/header.php'); 
 
 if( !$groups->check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) || !$session->check_auth($session->data, 0) )
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}
 
 $add_favorite = !empty($_GET['add']) ? numeric($_GET['add']) : 0;
 $remove_favorite = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
@@ -49,47 +46,34 @@ if( $add_favorite > 0 )//Ajout d'un favori
 	//on vérifie que l'article existe
 	$article_infos = $sql->query_array("wiki_articles", "encoded_title", "WHERE id = '" . $add_favorite . "'", __LINE__, __FILE__);
 	if( empty($article_infos['encoded_title']) ) //L'article n'existe pas
-	{
-		header('Location: ' . HOST . DIR . '/wiki/' . transid('wiki.php', '', '&'));
-		exit;
-	}
+		redirect(HOST . DIR . '/wiki/' . transid('wiki.php', '', '&'));
 	//On regarde que le sujet n'est pas en favoris
 	$is_favorite = $sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_favorites WHERE user_id = '" . $session->data['user_id'] . "' AND id_article = '" . $add_favorite . "'", __LINE__, __FILE__);
 	if( $is_favorite == 0 )
 	{
 		$sql->query_inject("INSERT INTO ".PREFIX."wiki_favorites (id_article, user_id) VALUES ('" . $add_favorite . "', '" . $session->data['user_id'] . "')", __LINE__, __FILE__);
-		header('Location: ' . HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
-		exit;
+		redirect(HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris
-	{
-		header('Location: ' . HOST . DIR . '/wiki/' . transid('favorites.php?error=e_already_favorite', '', '&') . '#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/wiki/' . transid('favorites.php?error=e_already_favorite', '', '&') . '#errorh');
 }
 elseif( $remove_favorite > 0 )
 {
 	//on vérifie que l'article existe
 	$article_infos = $sql->query_array("wiki_articles", "encoded_title", "WHERE id = '" . $remove_favorite . "'", __LINE__, __FILE__);
 	if( empty($article_infos['encoded_title']) ) //L'article n'existe pas
-	{
-		header('Location: ' . HOST . DIR . '/wiki/' . transid('wiki.php', '', '&'));
-		exit;
-	}
+		redirect(HOST . DIR . '/wiki/' . transid('wiki.php', '', '&'));
+		
 	//On regarde que le sujet n'est pas en favoris
 	$is_favorite = $sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_favorites WHERE user_id = '" . $session->data['user_id'] . "' AND id_article = '" . $remove_favorite . "'", __LINE__, __FILE__);
 	//L'article est effectivement en favoris
 	if( $is_favorite > 0 )
 	{
 		$sql->query_inject("DELETE FROM ".PREFIX."wiki_favorites WHERE id_article = '" . $remove_favorite . "' AND user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
-		header('Location: ' . HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
-		exit;
+		redirect(HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris
-	{
-		header('Location: ' . HOST . DIR . '/wiki/' . transid('favorites.php?error=e_no_favorite', '', '&') . '#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/wiki/' . transid('favorites.php?error=e_no_favorite', '', '&') . '#errorh');
 }
 else
 {

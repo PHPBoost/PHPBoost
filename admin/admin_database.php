@@ -127,25 +127,16 @@ elseif( $action == 'restore' )
 	{
 		$file = securit($_GET['del']);
 		$file_path = '../cache/backup/' . $file;
-		//si le fichier existe
+		//Si le fichier existe
 		if( preg_match('`[^/]+\.sql$`', $file) && is_file($file_path) )
 		{
 			if( @unlink($file_path) )
-			{
-				header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=unlink_success', '', '&'));
-				exit;
-			}
+				redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=unlink_success', '', '&'));
 			else
-			{
-				header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=unlink_failure', '', '&'));
-				exit;
-			}
+				redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=unlink_failure', '', '&'));
 		}
 		else
-		{
-			header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=file_does_not_exist', '', '&'));
-			exit;
-		}
+			redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=file_does_not_exist', '', '&'));
 	}
 	
 	$post_file = isset($_FILES['file_sql']) ? $_FILES['file_sql'] : '';
@@ -166,8 +157,8 @@ elseif( $action == 'restore' )
 			$backup->optimize_tables($tables);
 			$backup->repair_tables($tables);
 			$cache->generate_all_files();
-			header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=success', '', '&'));
-			exit;
+			
+			redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=success', '', '&'));
 		}
 	}
 	//Fichier envoyé par post
@@ -187,26 +178,17 @@ elseif( $action == 'restore' )
 					$tables[] = $infos['name'];
 				$backup->optimize_tables($tables);
 				$backup->repair_tables($tables);
-				header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=success', '', '&'));
+				
 				$cache->generate_all_files();
-				exit;
+				redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=success', '', '&'));
 			}
 			elseif( is_file($file_path) )//Le fichier existe déjà, on ne peut pas le copier
-			{
-				header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=file_already_exists', '', '&'));
-				exit;
-			}
+				redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=file_already_exists', '', '&'));
 			else
-			{
-				header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=upload_failure', '', '&'));
-				exit;
-			}
+				redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=upload_failure', '', '&'));
 		}
 		else
-		{
-			header('location:' . HOST . DIR . transid('/admin/admin_database.php?action=restore&error=failure', '', '&'));
-			exit;
-		}
+			redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=failure', '', '&'));
 	}
 	
 	$template->assign_block_vars('list_files', array());
@@ -224,25 +206,25 @@ elseif( $action == 'restore' )
 		switch($_GET['error'])
 		{
 			case 'success' :
-				$errorh->error_handler($LANG['db_restore_success'], E_USER_NOTICE, '', '', 'list_files.');
+				$errorh->error_handler($LANG['db_restore_success'], E_USER_NOTICE);
 				break;
 			case 'failure' :
-				$errorh->error_handler($LANG['db_restore_failure'], E_USER_ERROR, '', '', 'list_files.');
+				$errorh->error_handler($LANG['db_restore_failure'], E_USER_ERROR);
 				break;
 			case 'upload_failure' :
-				$errorh->error_handler($LANG['db_upload_failure'], E_USER_ERROR, '', '', 'list_files.');
+				$errorh->error_handler($LANG['db_upload_failure'], E_USER_ERROR);
 				break;
 			case 'file_already_exists' :
-				$errorh->error_handler($LANG['db_file_already_exists'], E_USER_WARNING, '', '', 'list_files.');
+				$errorh->error_handler($LANG['db_file_already_exists'], E_USER_WARNING);
 				break;
 			case 'unlink_success' :
-				$errorh->error_handler($LANG['db_unlink_success'], E_USER_NOTICE, '', '', 'list_files.');
+				$errorh->error_handler($LANG['db_unlink_success'], E_USER_NOTICE);
 				break;
 			case 'unlink_failure' :
-				$errorh->error_handler($LANG['db_unlink_failure'], E_USER_ERROR, '', '', 'list_files.');
+				$errorh->error_handler($LANG['db_unlink_failure'], E_USER_ERROR);
 				break;
 			case 'file_does_not_exist':
-				$errorh->error_handler($LANG['db_file_does_not_exist'], E_USER_WARNING, '', '', 'list_files.');
+				$errorh->error_handler($LANG['db_file_does_not_exist'], E_USER_WARNING);
 				break;
 		}
 	}
@@ -291,10 +273,8 @@ else
 		
 		//Erreur, la liste des fichiers est vide
 		if( !isset($_POST['table_list']) || count($_POST['table_list']) == 0 )
-		{
-			header(transid('location:' . HOST . DIR . '/admin/admin_database.php?error=empty_list'));
-			exit;
-		}
+			redirect(HOST . DIR . transid('/admin/admin_database.php?error=empty_list'));
+
 		foreach( $backup->tables as $table => $properties )
 		{
 			if( in_array($properties['name'], $_POST['table_list']) )
@@ -345,8 +325,7 @@ else
 
 		$backup->export_file($file_path); //Exportation de la bdd.
 		
-		header(transid('location:' . HOST . DIR . '/admin/admin_database.php?error=backup_success&file=' . $file_name));
-		exit;
+		redirect(HOST . DIR . transid('/admin/admin_database.php?error=backup_success&file=' . $file_name));
 	}
 
 	if( $tables_backup ) //Liste des tables pour les sauvegarder
@@ -401,19 +380,19 @@ else
 			if( $repair )
 			{
 				$backup->repair_tables($selected_tables);
-				$errorh->error_handler(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), E_USER_NOTICE, '', '', 'index.');
+				$errorh->error_handler(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), E_USER_NOTICE);
 			}
 			else
 			{
 				$backup->optimize_tables($selected_tables);
-				$errorh->error_handler(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), E_USER_NOTICE, '', '', 'index.');
+				$errorh->error_handler(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), E_USER_NOTICE);
 			}	
 		}
 		
 		if( !empty($_GET['error']) )
 		{
 			if( trim($_GET['error']) == 'backup_success' && !empty($_GET['file']) )
-				$errorh->error_handler(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), E_USER_NOTICE, '', '', 'index.');
+				$errorh->error_handler(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), E_USER_NOTICE);
 		}
 		
 		//liste des tables

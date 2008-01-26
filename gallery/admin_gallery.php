@@ -48,8 +48,7 @@ if( !empty($idpics) && isset($_GET['move']) ) //Déplacement d'une image.
 	//Régénération du cache des photos aléatoires.
 	$cache->generate_module_file('gallery');
 					
-	header('location: ' . HOST . DIR . '/gallery/admin_gallery.php?cat=' . $move);
-	exit;
+	redirect(HOST . DIR . '/gallery/admin_gallery.php?cat=' . $move);
 }
 elseif( !empty($del) ) //Suppression d'une image.
 {
@@ -58,8 +57,7 @@ elseif( !empty($del) ) //Suppression d'une image.
 	//Régénération du cache des photos aléatoires.
 	$cache->generate_module_file('gallery');
 
-	header('location: ' . HOST . DIR . '/gallery/admin_gallery.php?cat=' . $idcat);
-	exit;
+	redirect(HOST . DIR . '/gallery/admin_gallery.php?cat=' . $idcat);
 }
 else
 {
@@ -68,10 +66,7 @@ else
 	));
 	
 	if( !empty($idcat) && !isset($CAT_GALLERY[$idcat]) )
-	{
-		header('location: ' . HOST . DIR . '/gallery/admin_gallery.php?error=unexist_cat');
-		exit;
-	}
+		redirect(HOST . DIR . '/gallery/admin_gallery.php?error=unexist_cat');
 	
 	if( !empty($idcat) )
 	{

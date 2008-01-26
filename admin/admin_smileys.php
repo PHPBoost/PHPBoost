@@ -46,14 +46,10 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //Mise à jour.
 		###### Régénération du cache des smileys #######
 		$cache->generate_file('smileys');
 		
-		header('location:' . HOST . SCRIPT);	
-		exit;		
+		redirect(HOST . SCRIPT);	
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#errorh');
 }	
 elseif( !empty($id) && $del ) //Suppression.
 {
@@ -63,8 +59,7 @@ elseif( !empty($id) && $del ) //Suppression.
 	###### Régénération du cache des smileys #######	
 	$cache->generate_file('smileys');
 	
-	header('location:' . HOST . SCRIPT); 
-	exit;
+	redirect(HOST . SCRIPT); 
 }	
 elseif( !empty($id) && $edit ) //Edition.
 {

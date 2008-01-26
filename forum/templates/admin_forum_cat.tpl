@@ -11,20 +11,9 @@
 			
 		function XMLHttpRequest_get_parent(divid, direction)
 		{
-			var xhr_object = null;
-			var filename = 'admin_xmlhttprequest.php?g_' + direction + '=' + divid;
-			var data = null;
-			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-				return;
-			
 			document.getElementById('l' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 			
-			xhr_object.open("POST", filename, true);
+			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?g_' + direction + '=' + divid);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -32,24 +21,12 @@
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 					document.getElementById('l' + divid).innerHTML = '';
 			}
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(null);
+			xmlhttprequest_sender(xhr_object, null);
 		}
 		
 		function XMLHttpRequest_forum_cat_move(change_cat, divid, direction)
 		{
-			var xhr_object = null;
-			var filename = 'admin_xmlhttprequest.php?id=' + divid + '&move=' + direction;
-			var data = null;
-			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-				return;
-			
-			xhr_object.open("POST", filename, true);
+			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?id=' + divid + '&move=' + direction);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -61,8 +38,7 @@
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 					document.getElementById('l' + divid).innerHTML = '';
 			}
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(null);
+			xmlhttprequest_sender(xhr_object, null);
 		}
 		
 		function forum_cat_move(change_cat, divid, direction)

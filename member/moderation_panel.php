@@ -31,10 +31,7 @@ define('TITLE', $LANG['moderation_panel']);
 require_once('../includes/header.php');
 
 if( !$session->check_auth($session->data, 1) ) //Si il n'est pas modérateur
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}
 
 $template->set_filenames(array(
 	'moderation_panel' => '../templates/' . $CONFIG['theme'] . '/moderation_panel.tpl'
@@ -109,13 +106,12 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 					$privatemsg = new Privatemsg();
 					
 					//Envoi du message.
-					$privatemsg->send_pm($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', CHECK_PM_BOX, SYSTEM_PM);
+					$privatemsg->send_pm($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', SYSTEM_PM);
 				}
 			}
 		}
 		
-		header('location:' . HOST . DIR . transid('/member/moderation_panel.php?action=punish', '', '&'));
-		exit;
+		redirect(HOST . DIR . transid('/member/moderation_panel.php?action=punish', '', '&'));
 	}
 	
 	$template->assign_vars(array(
@@ -135,15 +131,9 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 			$login = !empty($_POST['login_mbr']) ? securit($_POST['login_mbr']) : '';
 			$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
-			{
-				header('location:' . HOST . DIR . transid('/member/moderation_panel.php?action=punish&id=' . $user_id, '', '&'));
-				exit;
-			}	
+				redirect(HOST . DIR . transid('/member/moderation_panel.php?action=punish&id=' . $user_id, '', '&'));
 			else
-			{
-				header('location:' . HOST . DIR . transid('/member/moderation_panel.php?action=punish', '', '&'));
-				exit;
-			}	
+				redirect(HOST . DIR . transid('/member/moderation_panel.php?action=punish', '', '&'));
 		}	
 				
 		$template->assign_block_vars('user_list', array(
@@ -282,7 +272,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 						$privatemsg = new Privatemsg();
 						
 						//Envoi du message.
-						$privatemsg->send_pm($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', CHECK_PM_BOX, SYSTEM_PM);
+						$privatemsg->send_pm($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', SYSTEM_PM);
 					}
 				}
 			}
@@ -298,8 +288,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			}	
 		}
 		
-		header('Location:' . HOST . DIR . transid('/member/moderation_panel.php?action=warning', '', '&'));
-		exit;
+		redirect(HOST . DIR . transid('/member/moderation_panel.php?action=warning', '', '&'));
 	}
 	
 	$template->assign_vars(array(
@@ -319,15 +308,9 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			$login = !empty($_POST['login_mbr']) ? securit($_POST['login_mbr']) : '';
 			$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
-			{
-				header('location:' . HOST . DIR . transid('/member/moderation_panel.php?action=warning&id=' . $user_id, '', '&'));
-				exit;
-			}	
+				redirect(HOST . DIR . transid('/member/moderation_panel.php?action=warning&id=' . $user_id, '', '&'));
 			else
-			{
-				header('location:' . HOST . DIR . transid('/member/moderation_panel.php?action=warning', '', '&'));
-				exit;
-			}	
+				redirect(HOST . DIR . transid('/member/moderation_panel.php?action=warning', '', '&'));
 		}		
 		
 		$template->assign_vars(array(
@@ -432,8 +415,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 				$mail->send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 			}			
 		}		
-		header('Location:' . HOST . DIR . transid('/member/moderation_panel.php?action=ban', '', '&'));
-		exit;
+		redirect(HOST . DIR . transid('/member/moderation_panel.php?action=ban', '', '&'));
 	}
 	
 	$template->assign_vars(array(
@@ -453,15 +435,9 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 			$login = !empty($_POST['login_mbr']) ? securit($_POST['login_mbr']) : '';
 			$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
-			{
-				header('location:' . HOST . DIR . transid('/member/moderation_panel.php?action=ban&id=' . $user_id, '', '&'));
-				exit;
-			}	
+				redirect(HOST . DIR . transid('/member/moderation_panel.php?action=ban&id=' . $user_id, '', '&'));
 			else
-			{
-				header('location:' . HOST . DIR . transid('/member/moderation_panel.php?action=ban', '', '&'));
-				exit;
-			}	
+				redirect(HOST . DIR . transid('/member/moderation_panel.php?action=ban', '', '&'));
 		}	
 		
 		$template->assign_block_vars('user_list', array(

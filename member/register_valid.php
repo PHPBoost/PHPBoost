@@ -32,10 +32,7 @@ require_once('../includes/header.php');
 
 $cache->load_file('member');
 if( !$CONFIG_MEMBER['activ_register'] )
-{
-	header('location: ' . get_start_page());
-	exit;
-}
+	redirect(get_start_page());
 
 $user_mail = !empty($_POST['mail']) ? strtolower($_POST['mail']) : '';
 if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $user_mail) )
@@ -108,19 +105,13 @@ if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-z
 						$upload->upload_file('avatars', '`([a-z0-9])+\.(jpg|gif|png|bmp)+`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 						
 						if( !empty($upload->error) ) //Erreur, on arrête ici
-						{
-							header('Location:' . HOST . DIR . '/member/register' . transid('.php?erroru=' . $upload->error) . '#errorh');
-							exit;					
-						}
+							redirect(HOST . DIR . '/member/register' . transid('.php?erroru=' . $upload->error) . '#errorh');
 						else
 						{
 							$path = $dir . $upload->filename['avatars'];
 							$error = $upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 							if( !empty($error) ) //Erreur, on arrête ici
-							{
-								header('Location:' . HOST . DIR . '/member/register' . transid('.php?erroru=' . $error) . '#errorh');
-								exit;					
-							}
+								redirect(HOST . DIR . '/member/register' . transid('.php?erroru=' . $error) . '#errorh');
 							else
 								$user_avatar = $path; //Avatar uploadé et validé.
 						}
@@ -132,10 +123,7 @@ if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-z
 					$path = securit($_POST['avatar']);
 					$error = $upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 					if( !empty($error) ) //Erreur, on arrête ici
-					{
-						header('Location:' . HOST . DIR . '/member/register' . transid('.php?erroru=' . $error) . '#errorh');
-						exit;						
-					}
+						redirect(HOST . DIR . '/member/register' . transid('.php?erroru=' . $error) . '#errorh');
 					else
 						$user_avatar = $path; //Avatar posté et validé.
 				}
@@ -146,15 +134,9 @@ if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-z
 				$check_mail = $sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 			
 				if( $check_user >= 1 ) 
-				{
-					header('Location:' . HOST . DIR . '/member/register' . transid('.php?error=pseudo_auth') . '#errorh');
-					exit;
-				}
+					redirect(HOST . DIR . '/member/register' . transid('.php?error=pseudo_auth') . '#errorh');
 				elseif( $check_mail >= 1 ) 
-				{
-					header('Location:' . HOST . DIR . '/member/register' . transid('.php?error=mail_auth') . '#errorh');
-					exit;
-				}
+					redirect(HOST . DIR . '/member/register' . transid('.php?error=mail_auth') . '#errorh');
 				else //Succes.
 				{
 					$user_aprob = ($CONFIG_MEMBER['activ_mbr'] == 0) ? 1 : 0;
@@ -294,40 +276,20 @@ if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-z
 				}
 			}
 			elseif( !empty($_POST['register_valid']) && $password !== $password_bis )
-			{
-				header('Location:' . HOST . DIR . '/member/register' . transid('.php?error=pass_same') . '#errorh');
-				exit;
-			}
+				redirect(HOST . DIR . '/member/register' . transid('.php?error=pass_same') . '#errorh');
 			else
-			{				
-				header('Location:' . HOST . DIR . '/member/register' . transid('.php?error=incomplete') . '#errorh');
-				exit;
-			
-			}
+				redirect(HOST . DIR . '/member/register' . transid('.php?error=incomplete') . '#errorh');
 		}
 		else
-		{
-			header('Location:' . HOST . DIR . '/member/register' . transid('.php?error=lenght_mini') . '#errorh');
-			exit;
-		
-		}
+			redirect(HOST . DIR . '/member/register' . transid('.php?error=lenght_mini') . '#errorh');
 	}
 	else
-	{
-		header('Location:' . HOST . DIR . '/member/register' . transid('.php?error=verif_code') . '#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/member/register' . transid('.php?error=verif_code') . '#errorh');
 }	
 elseif( !empty($user_mail) )
-{
-	header('Location:' . HOST . DIR . '/member/register' . transid('.php?error=invalid_mail') . '#errorh');
-	exit;
-}
+	redirect(HOST . DIR . '/member/register' . transid('.php?error=invalid_mail') . '#errorh');
 else
-{
-	header('Location: ' . get_start_page());
-	exit;
-}
+	redirect(get_start_page());
 	
 require_once('../includes/footer.php'); 
 

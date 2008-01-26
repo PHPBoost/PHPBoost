@@ -2,27 +2,17 @@
 		<!--
 		function XMLHttpRequest_shoutmsg()
 		{
-			var xhr_object = null;
-			var data = null;
-			var filename = "../shoutbox/xmlhttprequest.php?add=1";
 			var pseudo = document.getElementById("shout_pseudo").value;
 			var contents = document.getElementById("shout_contents").value;
-			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-			    return;
-				
-			if( pseudo != "" && contents != "" )
+
+			if( pseudo != '' && contents != '' )
 			{
 				document.getElementById('shoutimg').src = '../templates/{THEME}/images/loading_mini.gif';
 
 				pseudo = escape_xmlhttprequest(pseudo);
 				contents = escape_xmlhttprequest(contents);
 				data = "pseudo=" + pseudo + "&contents=" + contents;
-				xhr_object.open("POST", filename, true);
+				var xhr_object = xmlhttprequest_init('../shoutbox/xmlhttprequest.php?add=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' && xhr_object.responseText != '-2' && xhr_object.responseText != '-3' && xhr_object.responseText != '-4' )
@@ -55,28 +45,16 @@
 						}
 					}
 				}
-				xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhr_object.send(data);
+				xmlhttprequest_sender(xhr_object, data);
 			}
 			else
 				alert("{L_ALERT_INCOMPLETE}");
 		}
 		function XMLHttpRequest_shoutdelmsg(idmsg)
 		{
-			var xhr_object = null;
-			var data = null;
-			var filename = "../shoutbox/xmlhttprequest.php?del=1";
-
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-			    return;
-				
 			document.getElementById('shoutimg').src = '../templates/{THEME}/images/loading_mini.gif';
 			data = "idmsg=" + idmsg;
-			xhr_object.open("POST", filename, true);
+			var xhr_object = xmlhttprequest_init('../shoutbox/xmlhttprequest.php?del=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText == '1' )
@@ -87,24 +65,12 @@
 				else if( xhr_object.readyState == 4 )
 					document.getElementById('shoutimg').src = '../templates/{THEME}/images/refresh_mini.png';
 			}
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(data);
+			xmlhttprequest_sender(xhr_object, data);
 		}
 		function XMLHttpRequest_shoutrefresh()
 		{
-			var xhr_object = null;
-			var data = null;
-			var filename = "../shoutbox/xmlhttprequest.php?refresh=1";
-
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-			    return;
-				
 			document.getElementById('shoutimg').src = '../templates/{THEME}/images/loading_mini.gif';
-			xhr_object.open("POST", filename, true);
+			var xhr_object = xmlhttprequest_init('../shoutbox/xmlhttprequest.php?refresh=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -115,8 +81,7 @@
 				else if( xhr_object.readyState == 4 )
 					document.getElementById('shoutimg').src = '../templates/{THEME}/images/refresh_mini.png';
 			}
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(data);
+			xmlhttprequest_sender(xhr_object, null);
 		}
 		function check_form_shout(){
 			if(document.getElementById('shout_contents').value == "") {

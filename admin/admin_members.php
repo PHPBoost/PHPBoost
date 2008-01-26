@@ -46,8 +46,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 		//On régénère le cache
 		$cache->generate_file('stats');
 			
-		header('location:' . HOST . SCRIPT);
-		exit;
+		redirect(HOST . SCRIPT);
 	}
 
 	$login = !empty($_POST['name']) ? clean_user($_POST['name']) : '';
@@ -58,15 +57,9 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 		$check_user = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE login = '" . $login . "' AND user_id <> '" . $id_post . "'", __LINE__, __FILE__);
 		$check_mail = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_id <> '" . $id_post . "' AND user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 		if( $check_user >= 1 ) 
-		{
-			header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pseudo_auth') . '#errorh');
-			exit;
-		}
+			redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pseudo_auth') . '#errorh');
 		elseif( $check_mail >= 1 ) 
-		{
-			header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=auth_mail') . '#errorh');
-			exit;
-		}
+			redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=auth_mail') . '#errorh');
 		else
 		{
 			//Vérification des password.
@@ -84,16 +77,10 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 						$sql->query_inject("UPDATE ".PREFIX."member SET password = '" . $password_md5 . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__); 
 					}
 					else //Longueur minimale du password
-					{						
-						header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
-						exit;
-					}
+						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
 				}
 				else
-				{
-					header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_same') . '#errorh');
-					exit;
-				}
+					redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_same') . '#errorh');
 			}
 			
 			$user_level = isset($_POST['level']) ? numeric($_POST['level']) : '-1';  
@@ -185,19 +172,13 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 				{
 					$upload->upload_file('avatars', '`([a-z0-9])+\.(jpg|gif|png|bmp)+`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 					if( !empty($upload->error) ) //Erreur, on arrête ici
-					{
-						header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $upload->error) . '#errorh');
-						exit;						
-					}
+						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $upload->error) . '#errorh');
 					else
 					{
 						$path = $dir . $upload->filename['avatars'];
 						$error = $upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 						if( !empty($error) ) //Erreur, on arrête ici
-						{
-							header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
-							exit;						
-						}
+							redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 						else
 						{
 							//Suppression de l'ancien avatar (sur le serveur) si il existe!
@@ -218,10 +199,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 				$path = securit($_POST['avatar']);
 				$error = $upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
-				{
-					header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
-					exit;						
-				}
+					redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 				else
 					$user_avatar = $path; //Avatar posté et validé.
 			}
@@ -305,21 +283,14 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 					}
 				}	
 				
-				header('location:' . HOST . SCRIPT);	
-				exit;
+				redirect(HOST . SCRIPT);	
 			}
 			else
-			{
-				header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
-				exit;
-			}
+				redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
 		}
 	}
 	else
-	{
-		header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
-		exit;
-	}	
+		redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
 }
 elseif( $add && !empty($_POST['add']) ) //Ajout  du membre.
 {
@@ -336,15 +307,9 @@ elseif( $add && !empty($_POST['add']) ) //Ajout  du membre.
 		$check_user = $sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
 		$check_mail = $sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE user_mail = '" . $mail . "'", __LINE__, __FILE__);
 		if( $check_user >= 1 ) 
-		{
-			header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?error=pseudo_auth&add=1') . '#errorh');
-			exit;
-		}
+			redirect(HOST . DIR . '/admin/admin_members' . transid('.php?error=pseudo_auth&add=1') . '#errorh');
 		elseif( $check_mail >= 1 ) 
-		{
-			header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?error=auth_mail&add=1') . '#errorh');
-			exit;
-		}
+			redirect(HOST . DIR . '/admin/admin_members' . transid('.php?error=auth_mail&add=1') . '#errorh');
 		else
 		{
 			if( strlen($password) >= 6 && strlen($password_bis) >= 6 )
@@ -358,27 +323,17 @@ elseif( $add && !empty($_POST['add']) ) //Ajout  du membre.
 					//On régénère le cache
 					$cache->generate_file('stats');
 						
-					header('location:' . HOST . SCRIPT); 	
-					exit;
+					redirect(HOST . SCRIPT); 	
 				}
 				else
-				{
-					header('Location:' . HOST . DIR . '/member/member' . transid('.php?error=incomplete&add=1') . '#errorh');
-					exit;
-				}
+					redirect(HOST . DIR . '/member/member' . transid('.php?error=incomplete&add=1') . '#errorh');
 			}
 			else //Longueur minimale du password
-			{						
-				header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#errorh');
-				exit;
-			}			
+				redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#errorh');
 		}
 	}
 	else
-	{
-		header('Location:' . HOST . DIR . '/admin/admin_members' . transid('.php?error=invalid_mail&add=1') . '#errorh');
-		exit;
-	}	
+		redirect(HOST . DIR . '/admin/admin_members' . transid('.php?error=invalid_mail&add=1') . '#errorh');
 }
 elseif( !empty($id) && $delete ) //Suppression du membre.
 {
@@ -388,8 +343,7 @@ elseif( !empty($id) && $delete ) //Suppression du membre.
 	//On régénère le cache
 	$cache->generate_file('stats');
 		
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 elseif( $add )
 {
@@ -422,7 +376,7 @@ elseif( $add )
 		$errstr = '';
 	}
 	if( !empty($errstr) )
-		$errorh->error_handler($errstr, E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'members_add.');  
+		$errorh->error_handler($errstr, E_USER_NOTICE);  
 		
 	$template->assign_vars(array(
 		'L_MEMBERS_MANAGEMENT' => $LANG['members_management'],
@@ -503,10 +457,10 @@ elseif( !empty($id) )
 		$errstr = '';
 	}
 	if( !empty($errstr) )
-		$errorh->error_handler($errstr, E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'members_management.');  
+		$errorh->error_handler($errstr, E_USER_NOTICE);  
 
 	if( isset($LANG[$get_l_error]) )
-		$errorh->error_handler($LANG[$get_l_error], E_USER_WARNING, NO_LINE_ERROR, NO_FILE_ERROR, 'members_management.');  
+		$errorh->error_handler($errstr, E_USER_WARNING);   
 
 	$user_sex = '';
 	if( !empty($mbr['user_sex']) )

@@ -52,7 +52,7 @@
 			<div class="msg_top_l"></div>			
 			<div class="msg_top_r"></div>
 			<div class="msg_top">
-				<div style="float:left"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{news.TITLE}</h3></div>
+				<div style="float:left"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> <a href="news{news.U_NEWS_LINK}" class="news_title">{news.TITLE}</a></div>
 				<div style="float:right">{news.COM}{news.EDIT}{news.DEL}</div>
 			</div>							
 			<div class="news_content">

@@ -388,9 +388,18 @@ $LANG['explain_archive_upload'] = 'L\'archive uploadée doit être au format zip o
 
 //Gestion des fichiers
 $LANG['auth_files'] = 'Autorisation requise pour l\'activation de l\'interface de fichiers';
-$LANG['size_limit'] = 'Taille maximum des uploads autorisée aux membres';
+$LANG['size_limit'] = 'Taille maximum des uploads autorisés aux membres';
 $LANG['bandwidth_protect'] = 'Protection de la bande passante';
 $LANG['bandwidth_protect_explain'] = 'Interdiction d\'accès aux fichiers du répertoire upload depuis un autre serveur';
+$LANG['auth_extensions'] = 'Extensions autorisées';
+$LANG['extend_extensions'] = 'Extensions autorisées supplémentaires';
+$LANG['extend_extensions_explain'] = 'Séparez les extensions avec des virgules';
+$LANG['files_image'] = 'Images';
+$LANG['files_archives'] = 'Archives';
+$LANG['files_text'] = 'Textes';
+$LANG['files_media'] = 'Media';
+$LANG['files_prog'] = 'Programmation';
+$LANG['files_misc'] = 'Divers';
 
 //Gestion des menus
 $LANG['confirm_del_menu'] = 'Supprimer ce menu?';
@@ -522,8 +531,10 @@ $LANG['explain_terms'] = 'Entrez ci-dessous le règlement à afficher lors de l\'e
 $LANG['groups_management'] = 'Gestion des groupes';
 $LANG['groups_add'] = 'Ajouter un groupe';
 $LANG['auth_flood'] = 'Autorisation de flooder';
-$LANG['pm_no_limit'] = 'Messages privés illimités';
-$LANG['data_no_limit'] = 'Données uploadables illimitées';
+$LANG['pm_group_limit'] = 'Limite de messages privés';
+$LANG['pm_group_limit_explain'] = 'Mettre -1 pour illimité';
+$LANG['data_group_limit'] = 'Limite de données uploadables';
+$LANG['data_group_limit_explain'] = 'Mettre -1 pour illimité';
 $LANG['img_assoc_group'] = 'Image associée au groupe';
 $LANG['img_assoc_group_explain'] = 'Mettre dans le dossier images/group/';
 $LANG['add_mbr_group'] = 'Ajouter un membre au groupe';
@@ -615,7 +626,6 @@ $LANG['fai'] = 'Fournisseurs d\'accès Internet';
 $LANG['all_fai'] = 'Voir la liste complète des fournisseurs d\'accès Internet';
 $LANG['10_fai'] = 'Voir les 10 principaux fournisseurs d\'accès Internet';
 $LANG['os'] = 'Systèmes d\'exploitation';
-$LANG['other'] = 'Autres';
 $LANG['number'] = 'Nombre ';
 $LANG['start'] = 'Création du site';
 $LANG['stat_lang'] = 'Pays des visiteurs';

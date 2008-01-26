@@ -51,16 +51,10 @@ $preview_topic = !empty($_POST['prw_t']) ? trim($_POST['prw_t']) : '';
 ############# Vérification d'autorisation dans la catégorie envoyée #############
 //Existance de la catégorie.
 if( !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0 )
-{
 	$errorh->error_handler('e_unexist_cat', E_USER_REDIRECT);
-	exit;
-}
 
 if( $session->data['user_readonly'] > time() ) //Lecture seule.
-{
 	$errorh->error_handler('e_readonly', E_USER_REDIRECT);
-	exit;
-}
 
 //Niveau d'autorisation de la catégorie
 if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
@@ -88,18 +82,12 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 	if( $previs ) //Prévisualisation des messages
 	{
 		if( !$groups->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
-		{
-			header('location:' . transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
-			exit;
-		}
+			redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 		$topic = $sql->query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 
 		if( empty($topic['idcat']) ) //Topic inexistant.
-		{
 			$errorh->error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
-			exit;
-		}
 		
 		$template->set_filenames(array(
 			'edit_msg' => '../templates/' . $CONFIG['theme'] . '/forum/forum_edit_msg.tpl',
@@ -156,10 +144,7 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		{
 			$is_modo = $groups->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 			if( !$groups->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
-			{
-				header('location:' . transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
-				exit;
-			}	
+				redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 			if( $is_modo )
 				$type = isset($_POST['type']) ? numeric($_POST['type']) : 0; 
@@ -184,10 +169,7 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				
 				//Droit de flooder?.
 				if( $check_time >= $delay_expire && !$groups->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM) ) //Flood
-				{
-					header('location:' . transid(HOST . SCRIPT . '?error=flood_t&id=' . $id_get, '', '&') . '#errorh');
-					exit;
-				}
+					redirect(transid(HOST . SCRIPT . '?error=flood_t&id=' . $id_get, '', '&') . '#errorh');
 			}
 			
 			if( $check_status == 1 )
@@ -215,28 +197,18 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						$forumfct->add_poll($last_topic_id, $question, $answers, 0, $votes, $poll_type); //Ajout du sondage.
 					}
 					
-					header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&') . '#m' . $last_msg_id);
-					exit;
+					redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&') . '#m' . $last_msg_id);
 				}
 				else
-				{
-					header('location:' . transid(HOST . SCRIPT . '?error=incomplete_t&id=' . $id_get, '', '&') . '#errorh');
-					exit;
-				}
+					redirect(transid(HOST . SCRIPT . '?error=incomplete_t&id=' . $id_get, '', '&') . '#errorh');
 			}
 			else //Verrouillé
-			{
-				header('location:' . transid(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#errorh');
-				exit;
-			}
+				redirect(transid(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#errorh');
 		}
 		elseif( !empty($preview_topic) && !empty($id_get) )
 		{
 			if( !$groups->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
-			{
-				header('location:' . transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
-				exit;
-			}	
+				redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 			$template->set_filenames(array(
 				'forum_post' => '../templates/' . $CONFIG['theme'] . '/forum/forum_post.tpl',
@@ -340,10 +312,7 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		else
 		{
 			if( !$groups->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
-			{
-				header('location:' . transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
-				exit;
-			}	
+				redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 			$template->set_filenames(array(
 				'forum_post' => '../templates/' . $CONFIG['theme'] . '/forum/forum_post.tpl',
@@ -404,18 +373,12 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 	elseif( $new_get === 'n_msg' && empty($error_get) ) //Nouveau message
 	{
 		if( !$groups->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
-		{
-			header('location:' . transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
-			exit;
-		}	
+			redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 		//Verrouillé?
 		$topic = $sql->query_array('forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 		if( empty($topic['idcat']) )
-		{
 			$errorh->error_handler('e_topic_lock_forum', E_USER_REDIRECT);
-			exit;
-		}
 		
 		$is_modo = $groups->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 		//Catégorie verrouillée?
@@ -425,10 +388,7 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			$check_status = 1;
 		
 		if( $check_status == 0 ) //Verrouillée
-		{
-			header('location:' . transid(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#errorh');
-			exit;
-		}
+			redirect(transid(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#errorh');
 		
 		//Mod anti Flood
 		if( $check_time !== false ) 
@@ -436,10 +396,7 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			$delay_expire = time() - $CONFIG['delay_flood']; //On calcul la fin du delai.			
 			//Droit de flooder?
 			if( $check_time >= $delay_expire && !$groups->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM) ) //Ok
-			{			
-				header('location:' .  transid(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
-				exit;
-			}
+				redirect( transid(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
 		}
 		
 		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
@@ -456,28 +413,18 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$last_msg_id = $forumfct->add_msg($idt_get, $topic['idcat'], $contents, $topic['title'], $last_page, $last_page_rewrite);
 				
 				//Redirection après post.
-				header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get . $last_page, '-' . $idt_get . $last_page_rewrite . '.php', '&') . '#m' . $last_msg_id);
-				exit;
+				redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get . $last_page, '-' . $idt_get . $last_page_rewrite . '.php', '&') . '#m' . $last_msg_id);
 			}
 			else
-			{
-				header('location:' . transid(HOST . SCRIPT . '?error=incomplete&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
-				exit;
-			}
+				redirect(transid(HOST . SCRIPT . '?error=incomplete&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
 		}
 		else
-		{
-			header('location:' . transid(HOST . SCRIPT . '?error=locked&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
-			exit;
-		}
+			redirect(transid(HOST . SCRIPT . '?error=locked&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
 	}
 	elseif( $new_get === 'msg' && empty($error_get) ) //Edition d'un message/topic.
 	{
 		if( !$groups->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
-		{
-			header('location:' . transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
-			exit;
-		}	
+			redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 		$id_m = !empty($_GET['idm']) ? numeric($_GET['idm']) : 0;		
 		$update = !empty($_GET['update']) ? true : false;
@@ -485,10 +432,7 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		$topic = $sql->query_array('forum_topics', 'title', 'subtitle', 'type', 'user_id', 'display_msg', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 		
 		if( empty($id_get) || empty($id_first) ) //Topic/message inexistant.
-		{
 			$errorh->error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
-			exit;
-		}
 		
 		$is_modo = $groups->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 		
@@ -504,10 +448,7 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$check_auth = true;
 		
 			if( !$check_auth )
-			{
 				$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-				exit;
-			}
 			
 			if( $update && !empty($post_topic) )
 			{
@@ -553,14 +494,10 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						$forumfct->del_poll($idt_get);
 					
 					//Redirection après post.
-					header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php', '&'));
-					exit;
+					redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php', '&'));
 				}
 				else
-				{
-					header('location:' . HOST . DIR . '/forum/post' . transid('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete_t', '', '&') . '#errorh');
-					exit;
-				}
+					redirect(HOST . DIR . '/forum/post' . transid('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete_t', '', '&') . '#errorh');
 			}
 			elseif( !empty($preview_topic) )
 			{
@@ -702,14 +639,20 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$poll = $sql->query_array('forum_poll', 'question', 'answers', 'type', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 				$array_answer = explode('|', $poll['answers']);
 	
+				$module_data_path = $template->module_data_path('forum');
+				
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
 				if( $CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || $session->data['user_id'] == $topic['user_id']) )
 				{
-					$template->assign_block_vars('display', array(
-						'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $template->module_data_path('forum') . '/images/msg_display.png" alt="" style="vertical-align:middle;" />' : '',
-						'L_DISPLAY_MSG' => $CONFIG_FORUM['display_msg'],
-						'L_EXPLAIN_DISPLAY_MSG' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
-						'U_ACTION_MSG_DISPLAY' => transid('.php?msg_d=1&amp;id=' . $idt_get)
+					$img_display = $topic['display_msg'] ? 'msg_display2.png' : 'msg_display.png';
+					$template->assign_vars(array(
+						'C_DISPLAY_MSG' => true,
+						'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_display . '" alt="" class="valign_middle" />' : '',
+						'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
+						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
+						'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
+						'L_EXPLAIN_DISPLAY_MSG_BIS' => $CONFIG_FORUM['explain_display_msg_bis'],
+						'U_ACTION_MSG_DISPLAY' => transid('.php?msg_d=1&amp;id=' . $id_get)
 					));
 				}
 				
@@ -726,6 +669,8 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'CONTENTS' => unparse($contents),
 					'QUESTION' => !empty($poll['question']) ? $poll['question'] : '',
 					'SELECTED_SIMPLE' => 'checked="ckecked"',
+					'MODULE_DATA_PATH' => $module_data_path,
+					'IDTOPIC' => $idt_get,
 					'U_ACTION' => 'post.php' . transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 					'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
@@ -792,10 +737,7 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$check_auth = true;
 	
 			if( !$check_auth ) //Non autorisé!
-			{
 				$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-				exit;
-			}
 			
 			if( $update && !empty($_POST['edit_msg']) )
 			{
@@ -810,14 +752,10 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					$msg_page = ($msg_page > 1) ? '&pt=' . $msg_page : '';
 					
 					//Redirection après édition.
-					header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get . $msg_page, '-' . $idt_get .  $msg_page_rewrite . '.php', '&') . '#m' . $id_m);
-					exit;
+					redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get . $msg_page, '-' . $idt_get .  $msg_page_rewrite . '.php', '&') . '#m' . $id_m);
 				}
 				else
-				{
-					header('location:' . HOST . DIR . '/forum/post' . transid('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete', '', '&') . '#errorh');
-					exit;
-				}
+					redirect(HOST . DIR . '/forum/post' . transid('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete', '', '&') . '#errorh');
 			}
 			else
 			{
@@ -868,10 +806,7 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		{
 			$topic = $sql->query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 			if( empty($topic['idcat']) ) //Topic inexistant.
-			{
 				$errorh->error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
-				exit;
-			}
 			
 			$template->set_filenames(array(
 				'error_post' => '../templates/' . $CONFIG['theme'] . '/forum/forum_edit_msg.tpl',
@@ -999,26 +934,17 @@ if( $groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			));
 		}
 		else
-		{
 			$errorh->error_handler('unknow_error', E_USER_REDIRECT);
-			exit;
-		}		
 			
 		include_once('../includes/bbcode.php');
 		
 		$template->pparse('error_post');
 	}
 	else
-	{
 		$errorh->error_handler('unknow_error', E_USER_REDIRECT); 
-		exit;
-	}
 }
 else
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}
 
 include('../includes/footer.php');
 

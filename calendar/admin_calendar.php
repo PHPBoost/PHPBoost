@@ -42,8 +42,7 @@ if( !empty($_POST['valid'])  )
 	###### Régénération du cache des news #######
 	$cache->generate_module_file('calendar');
 	
-	header('location:' . HOST . SCRIPT);	
-	exit;
+	redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	

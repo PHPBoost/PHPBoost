@@ -30,14 +30,14 @@
 				<div class="module_top_r"></div>
 				<div class="module_top">{poll.QUESTION} {EDIT}{DEL}</div>
 				<div class="module_contents">
-					# START poll.error_handler #
+					# IF C_ERROR_HANDLER #
 					<br />
 					<span id="errorh"></span>
-					<div class="{poll.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-						<img src="../templates/{THEME}/images/{poll.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {poll.error_handler.L_ERROR}
+					<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 						<br />	
 					</div>
-					# END poll.error_handler #
+					# ENDIF #
 					
 					<table class="module_table">
 						# START poll.question #

@@ -30,10 +30,7 @@ if( defined('PHP_BOOST') !== true)
 	
 //Accès au module.
 if( !$groups->check_auth($SECURE_MODULE['forum'], ACCESS_MODULE) )
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}
 
 load_module_lang('forum', $CONFIG['lang']); //Chargement de la langue du module.
 

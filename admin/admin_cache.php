@@ -34,8 +34,7 @@ require_once('../includes/admin_header.php');
 if( !empty($_POST['cache']) )
 {
 	$cache->generate_all_files();
-	header('location:' . HOST . DIR . '/admin/admin_cache.php?s=1');
-	exit;
+	redirect(HOST . DIR . '/admin/admin_cache.php?s=1');
 }
 else //Sinon on rempli le formulaire	 
 {		
@@ -56,7 +55,6 @@ else //Sinon on rempli le formulaire
 	
 	$template->pparse('admin_cache');
 }
-
 
 require_once('../includes/admin_footer.php');
 

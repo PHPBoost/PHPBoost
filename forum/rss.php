@@ -33,12 +33,16 @@ if( defined('PHP_BOOST') !== true)
 		'LANG' => $LANG['xml_lang']
 	));
 
+	$cache->load_file('forum');
+	
+	$cat_get = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
+	$clause_cat = !empty($cat_get) ? " AND c.id_left >= '" . $CAT_FORUM[$cat_get]['id_left'] . "' AND id_right <= '" . $CAT_FORUM[$cat_get]['id_right'] . "'" : '';
+	
 	$result = $sql->query_while("SELECT t.id, t.title, t.last_timestamp, msg.contents
 	FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
-	LEFT JOIN ".PREFIX."forum_msg msg ON msg.idtopic = t.id
-	WHERE (c.auth LIKE '%s:3:\"r-1\";i:1;%' OR c.auth LIKE '%s:3:\"r-1\";i:3;%') AND c.level != 0 AND c.aprob = 1
-	GROUP BY t.id
+	LEFT JOIN ".PREFIX."forum_msg msg ON msg.id = t.last_msg_id
+	WHERE (c.auth LIKE '%s:3:\"r-1\";i:1;%' OR c.auth LIKE '%s:3:\"r-1\";i:3;%') AND c.level != 0 AND c.aprob = 1 " . $clause_cat . "
 	ORDER BY t.last_timestamp DESC
 	" . $sql->sql_limit(0, 10), __LINE__, __FILE__);
 	while ($row = $sql->sql_fetch_assoc($result))
@@ -68,7 +72,7 @@ else //Récupération directe du contenu.
 	$result = $sql->query_while("SELECT t.id, t.title, t.last_timestamp, t.last_msg_id
 	FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
-	WHERE (c.auth LIKE '%s:3:\"r-1\";i:1;%' OR c.auth LIKE '%s:3:\"r-1\";i:3;%') AND c.level !=0 AND c.aprob =1 " . $cat_get . "
+	WHERE (c.auth LIKE '%s:3:\"r-1\";i:1;%' OR c.auth LIKE '%s:3:\"r-1\";i:3;%') AND c.level !=0 AND c.aprob = 1 " . $cat_get . "
 	GROUP BY t.id
 	ORDER BY t.last_timestamp DESC
 	" . $sql->sql_limit(0, 10), __LINE__, __FILE__);

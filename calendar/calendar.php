@@ -67,12 +67,10 @@ if( $checkdate === true && empty($id) && empty($add) )
 			$month = substr($time, 4, 2);
 			$day = substr($time, 6, 2);
 			
-			header('location:'. HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
+			redirect(HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
 		}	
 		else
-		{
-			header('location:'. HOST . DIR . '/calendar/calendar' . transid('.php?e=fu&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fu', '&'));
-		}		
+			redirect(HOST . DIR . '/calendar/calendar' . transid('.php?e=fu&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fu', '&'));
 	}
 	elseif( $get_event == 'down' )
 	{
@@ -89,14 +87,10 @@ if( $checkdate === true && empty($id) && empty($add) )
 			$month = substr($time, 4, 2);
 			$day = substr($time, 6, 2);
 			
-			header('location:'. HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
-			exit;
+			redirect(HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
 		}	
 		else
-		{
-			header('location:'. HOST . DIR . '/calendar/calendar' . transid('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
-			exit;
-		}
+			redirect(HOST . DIR . '/calendar/calendar' . transid('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
 	}
 	
 	$template->set_filenames(array(
@@ -120,7 +114,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 		$errstr = '';
 	}
 	if( !empty($errstr) )
-		$errorh->error_handler($errstr, E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'show.');
+		$errorh->error_handler($errstr, E_USER_NOTICE);
 		
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 	$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'], 
@@ -304,10 +298,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 elseif( !empty($id) )
 {
 	if( !$session->check_auth($session->data, 2) ) //Admins seulement autorisés à editer/supprimer!
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	if( !empty($del) ) //Suppression simple.
 	{
@@ -316,8 +307,7 @@ elseif( !empty($id) )
 		//Suppression des commentaires associés.
 		$sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'calendar'", __LINE__, __FILE__);
 		
-		header('location:' . HOST . SCRIPT . SID2);
-		exit;
+		redirect(HOST . SCRIPT . SID2);
 	}
 	elseif( !empty($edit) )
 	{
@@ -348,20 +338,13 @@ elseif( !empty($id) )
 					$month = gmdate_format('m', $timestamp);
 					$year = gmdate_format('Y', $timestamp);
 					
-					header('location:' . HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
-					exit;
+					redirect(HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
 				}
 				else
-				{
-					header('location:' . HOST . SCRIPT . transid('?edit=1&error=incomplete', '', '&') . '#errorh');
-					exit;
-				}
+					redirect(HOST . SCRIPT . transid('?edit=1&error=incomplete', '', '&') . '#errorh');
 			}	
 			else
-			{
-				header('location:' . HOST . SCRIPT . transid('?add=1&error=invalid_date', '', '&') . '#errorh');
-				exit;
-			}
+				redirect(HOST . SCRIPT . transid('?add=1&error=invalid_date', '', '&') . '#errorh');
 		}
 		else //Formulaire d'édition
 		{
@@ -412,7 +395,7 @@ elseif( !empty($id) )
 				$errstr = '';
 			}
 			if( !empty($errstr) )
-				$errorh->error_handler($errstr, E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'form.');
+				$errorh->error_handler($errstr, E_USER_NOTICE);
 				
 			include_once('../includes/bbcode.php');
 			
@@ -421,18 +404,12 @@ elseif( !empty($id) )
 		}
 	}
 	else
-	{
-		header('location:' . HOST . SCRIPT . SID2);
-		exit;
-	}			
+		redirect(HOST . SCRIPT . SID2);
 }
 elseif( !empty($add) ) //Ajout d'un évenement
 {
 	if( !$session->check_auth($session->data, $CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 
 	if( !empty($_POST['valid']) ) //Enregistrement
 	{
@@ -461,21 +438,13 @@ elseif( !empty($add) ) //Ajout d'un évenement
 				$month = gmdate_format('m', $timestamp);
 				$year = gmdate_format('Y', $timestamp);
 				
-				header('location:' . HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
-				exit;
+				redirect(HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
 			}
-			else
-			{
-				//Champs incomplet!
-				header('location:' . HOST . SCRIPT . transid('?add=1&error=incomplete', '', '&') . '#errorh');
-				exit;
-			}
+			else //Champs incomplet!
+				redirect(HOST . SCRIPT . transid('?add=1&error=incomplete', '', '&') . '#errorh');
 		}
 		else
-		{
-			header('location:' . HOST . SCRIPT . transid('?add=1&error=invalid_date', '', '&') . '#errorh');
-			exit;
-		}
+			redirect(HOST . SCRIPT . transid('?add=1&error=invalid_date', '', '&') . '#errorh');
 	} 
 	else
 	{
@@ -533,7 +502,7 @@ elseif( !empty($add) ) //Ajout d'un évenement
 			$errstr = '';
 		}
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'form.');
+			$errorh->error_handler($errstr, E_USER_NOTICE);
 		
 		include_once('../includes/bbcode.php');
 
@@ -541,10 +510,7 @@ elseif( !empty($add) ) //Ajout d'un évenement
 	}
 }
 else
-{
-	header('location:' . HOST . SCRIPT . transid('?error=invalid_date', '', '&') . '#errorh');
-	exit;
-}
+	redirect(HOST . SCRIPT . transid('?error=invalid_date', '', '&') . '#errorh');
 
 require_once('../includes/footer.php'); 
 

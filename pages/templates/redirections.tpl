@@ -82,11 +82,11 @@
 
 		
 		# START rename #
-		# START rename.error_handler #
-			<div class="{rename.error_handler.CLASS}">
-				<img src="../templates/{THEME}/images/{rename.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {rename.error_handler.L_ERROR}
+		# IF C_ERROR_HANDLER #
+			<div class="{ERRORH_CLASS}">
+				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			</div>
-		# END rename.error_handler #
+		# ENDIF #
 		<form action="{TARGET}" method="post" class="fieldset_content">					
 			<fieldset>
 				<legend>{L_TITLE}</legend>
@@ -113,11 +113,11 @@
 
 		
 		# START new #
-		# START new.error_handler #
-			<div class="{new.error_handler.CLASS}">
-				<img src="../templates/{THEME}/images/{new.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {new.error_handler.L_ERROR}
+		# IF C_ERROR_HANDLER #
+			<div class="{ERRORH_CLASS}">
+				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			</div>
-		# END new.error_handler #
+		# ENDIF #
 		<form action="{TARGET}" method="post" class="fieldset_content">					
 			<fieldset>
 				<legend>{L_TITLE}</legend>

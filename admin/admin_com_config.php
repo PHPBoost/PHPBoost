@@ -49,8 +49,7 @@ if( !empty($_POST['valid'])  )
 	###### Régénération du cache dela configuration #######
 	$cache->generate_file('config');
 	
-	header('location:' . HOST . SCRIPT);	
-	exit;
+	redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	

@@ -43,54 +43,41 @@ if( !empty($_POST['valid']) && !empty($idgroup_post) ) //Modification du groupe.
 	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
 	$img = !empty($_POST['img']) ? securit($_POST['img']) : '';
 	$auth_flood = isset($_POST['auth_flood']) ? numeric($_POST['auth_flood']) : '1';
-	$pm_no_limit = isset($_POST['pm_no_limit']) ? numeric($_POST['pm_no_limit']) : '1';	
-	$data_no_limit = isset($_POST['data_no_limit']) ? numeric($_POST['data_no_limit']) : '1';	
+	$pm_group_limit = isset($_POST['pm_group_limit']) ? numeric($_POST['pm_group_limit']) : '75';	
+	$data_group_limit = isset($_POST['data_group_limit']) ? numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';	
 		
-	//Attention 31 droits max!
-	$group_auth = 0;
-	$array_group_auth = array($auth_flood, $pm_no_limit, $data_no_limit);
-	foreach($array_group_auth as $key => $auth)
-		$group_auth |= ($auth << $key);
-			
-	$sql->query_inject("UPDATE ".PREFIX."group SET name = '" . $name . "', img = '" . $img . "', auth = '" . $group_auth . "' WHERE id = '" . $idgroup_post . "'", __LINE__, __FILE__);
+	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);	
+	
+	$sql->query_inject("UPDATE ".PREFIX."group SET name = '" . $name . "', img = '" . $img . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'", __LINE__, __FILE__);
 	
 	###### On régénère le fichier de cache des groupes #######
 	$cache->generate_file('groups');
 	
-	header('location:' . HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup_post);
-	exit;
+	redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup_post);
 }
 elseif( !empty($_POST['valid']) && $add_post ) //ajout  du groupe.
 {
 	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
 	$img = !empty($_POST['img']) ? securit($_POST['img']) : '';
 	$auth_flood = isset($_POST['auth_flood']) ? numeric($_POST['auth_flood']) : '1';
-	$pm_no_limit = isset($_POST['pm_no_limit']) ? numeric($_POST['pm_no_limit']) : '1';	
-	$data_no_limit = isset($_POST['data_no_limit']) ? numeric($_POST['data_no_limit']) : '1';	
+	$pm_group_limit = isset($_POST['pm_group_limit']) ? numeric($_POST['pm_group_limit']) : '75';	
+	$data_group_limit = isset($_POST['data_group_limit']) ? numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';	
 	
 	if( !empty($name) )
 	{
-		//Attention 31 droits max!
-		$group_auth = 0;
-		$array_group_auth = array($auth_flood, $pm_no_limit, $data_no_limit);
-		foreach($array_group_auth as $key => $auth)
-			$group_auth |= ($auth << $key);
+		$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);	
 
 		//Insertion
 		$sql->query_inject("INSERT INTO ".PREFIX."group 
-		(name,img,auth, members) VALUES ('" . $name . "', '" . $img . "', '" . $group_auth . "', '')", __LINE__, __FILE__);
+		(name, img, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
 			
 		###### On régénère le fichier de cache des groupes #######
 		$cache->generate_file('groups');	
 		
-		header('location:' . HOST . DIR . '/admin/admin_groups.php?id=' . $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."group"));		
-		exit;
+		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."group"));		
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/admin/admin_groups.php?error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/admin/admin_groups.php?error=incomplete#errorh');
 }
 elseif( !empty($idgroup) && $del_group ) //Suppression du groupe.
 {
@@ -116,8 +103,7 @@ elseif( !empty($idgroup) && $del_group ) //Suppression du groupe.
 	###### On régénère le fichier de cache des groupes #######
 	$cache->generate_file('groups');	
 	
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 elseif( !empty($idgroup) && $add_mbr ) //Ajout du membre au groupe.
 {
@@ -130,36 +116,22 @@ elseif( !empty($idgroup) && $add_mbr ) //Ajout du membre au groupe.
 		$user_groups_key = array_search($idgroup, explode('|', $user_groups));
 		
 		if( !is_numeric($user_groups_key) ) //Le membre n'appartient pas déjà au groupe.
-		{
 			$sql->query_inject("UPDATE ".PREFIX."member SET user_groups = '" . $user_groups . $idgroup . "|' WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
-		}
 		else
-		{
-			header('location:' . HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
-			exit;
-		}
+			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
 	
 		//On insère le membre dans le groupe.
 		$members = $sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		$members_key = array_search($user_id, explode('|', $members));
 		if( !is_numeric($members_key) ) //Le membre n'appartient pas déjà au groupe.
-		{
 			$sql->query_inject("UPDATE ".PREFIX."group SET members = CONCAT(members, '" . $user_id . "|') WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-		}
 		else
-		{
-			header('location:' . HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
-			exit;
-		}
+			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
 		
-		header('location:' . HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add'); 	
-		exit;
+		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add'); 	
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#errorh');
 }
 elseif( $del_mbr && !empty($user_id) && !empty($idgroup) ) //Suppression du membre du groupe.
 {
@@ -179,64 +151,45 @@ elseif( $del_mbr && !empty($user_id) && !empty($idgroup) ) //Suppression du memb
 		
 		$sql->query_inject("UPDATE ".PREFIX."group SET members = '" . implode('|', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 	
-		header('location:' . HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add');	
-		exit;
+		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add');	
 	}	
 	else
-	{
-		header('location:' . HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#errorh');
 }
 elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 {		
 	$template->set_filenames(array(
-	'admin_groups_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_groups_management2.tpl'
+		'admin_groups_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_groups_management2.tpl'
 	));
 	
 	$group = $sql->query_array('group', 'id', 'name', 'img', 'auth', 'members', "WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-	
 	if( !empty($group['id']) )
 	{
-		$template->assign_block_vars('edit_group', array(	
-			'NAME' => $group['name'],
-			'IMG' => $group['img'],
-			'GROUP_ID' => $idgroup
-		));
-
 		//Gestion erreur.
 		$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 		if( $get_error == 'incomplete' )
-			$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'edit_group.');
+			$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		elseif( $get_error == 'already_group' )
-			$errorh->error_handler($LANG['e_already_group'], E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'edit_group.');
+			$errorh->error_handler($LANG['e_already_group'], E_USER_NOTICE);
 		
 		$nbr_member_group = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
 		//On crée une pagination si le nombre de membre est trop important.
 		include_once('../includes/pagination.class.php'); 
 		$pagination = new Pagination();
 		
-		//Récupération des autorisations.
-		$array_var = array('auth_flood', 'pm_no_limit', 'data_no_limit');
-		foreach($array_var as $key => $value)
-		{
-			$pow = 1 << $key;
-			if( ($group['auth'] & $pow) == $pow )
-				${$value} = 1;
-			else
-				${$value} = 0;
-		}
-				
+		$array_group = unserialize($group['auth']);
 		$template->assign_vars(array(
+			'NAME' => $group['name'],
+			'IMG' => $group['img'],
+			'GROUP_ID' => $idgroup,
 			'PAGINATION' => $pagination->show_pagin('admin_groups.php?id=' . $idgroup . '&amp;p=%d', $nbr_member_group, 'p', 25, 3),
 			'THEME' => $CONFIG['theme'],
 			'LANG' => $CONFIG['lang'],	
-			'AUTH_FLOOD_ENABLED' => $auth_flood == 1 ? 'checked="checked"' : '',
-			'AUTH_FLOOD_DISABLED' => $auth_flood == 0 ? 'checked="checked"' : '',
-			'PM_NO_LIMIT_ENABLED' => $pm_no_limit == 1 ? 'checked="checked"' : '',
-			'PM_NO_LIMIT_DISABLED' => $pm_no_limit == 0 ? 'checked="checked"' : '',
-			'DATA_NO_LIMIT_ENABLED' => $data_no_limit == 1 ? 'checked="checked"' : '',
-			'DATA_NO_LIMIT_DISABLED' => $data_no_limit == 0 ? 'checked="checked"' : '',
+			'C_EDIT_GROUP' => true,
+			'AUTH_FLOOD_ENABLED' => $array_group['auth_flood'] == 1 ? 'checked="checked"' : '',
+			'AUTH_FLOOD_DISABLED' => $array_group['auth_flood'] == 0 ? 'checked="checked"' : '',
+			'PM_GROUP_LIMIT' => $array_group['pm_group_limit'],
+			'DATA_GROUP_LIMIT' => number_round($array_group['data_group_limit']/1024, 2),
 			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 			'L_REQUIRE_NAME' => $LANG['require_name'],
 			'L_CONFIRM_DEL_MEMBER_GROUP' => $LANG['confirm_del_member_group'],			
@@ -247,11 +200,14 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 			'L_IMG_ASSOC_GROUP' => $LANG['img_assoc_group'],	
 			'L_IMG_ASSOC_GROUP_EXPLAIN' => $LANG['img_assoc_group_explain'],	
 			'L_AUTH_FLOOD' => $LANG['auth_flood'],
-			'L_PM_NO_LIMIT' => $LANG['pm_no_limit'],
-			'L_DATA_NO_LIMIT' => $LANG['data_no_limit'],
+			'L_PM_GROUP_LIMIT' => $LANG['pm_group_limit'],
+			'L_PM_GROUP_LIMIT_EXPLAIN' => $LANG['pm_group_limit_explain'],
+			'L_DATA_GROUP_LIMIT' => $LANG['data_group_limit'],
+			'L_DATA_GROUP_LIMIT_EXPLAIN' => $LANG['data_group_limit_explain'],
 			'L_YES' => $LANG['yes'],
 			'L_NO' => $LANG['no'],
-			'L_ADD' => $LANG['add'],		
+			'L_ADD' => $LANG['add'],	
+			'L_MB' => $LANG['unit_megabytes'],			
 			'L_MBR_GROUP' => $LANG['mbrs_group'],
 			'L_PSEUDO' => $LANG['pseudo'],
 			'L_SEARCH' => $LANG['search'],
@@ -289,7 +245,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 						$option = '<option value="' . $img_group . '"' . $selected . '>' . $img_group . '</option>';
 					}
 					
-					$template->assign_block_vars('edit_group.select', array(
+					$template->assign_block_vars('select', array(
 						'IMG_GROUP' => $option
 					));
 				}
@@ -304,7 +260,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 			$login = $sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
 			if( !empty($login) )
 			{	
-				$template->assign_block_vars('edit_group.member', array(
+				$template->assign_block_vars('member', array(
 					'USER_ID' => $user_id,
 					'LOGIN' => $login,
 					'U_USER_ID' => transid('.php?id=' . $user_id, '-' . $user_id . '.php')
@@ -313,10 +269,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 		}
 	}
 	else
-	{
-		header('location:' . HOST . SCRIPT);
-		exit;
-	}
+		redirect(HOST . SCRIPT);
 	
 	$template->pparse('admin_groups_management2');
 }
@@ -326,12 +279,10 @@ elseif( $add ) //Interface d'ajout du groupe.
 	'admin_groups_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_groups_management2.tpl'
 	));
 	
-	$template->assign_block_vars('add_group', array(	
-	));
-
 	$template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],	
+		'C_ADD_GROUP' => true,
 		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 		'L_REQUIRE_NAME' => $LANG['require_name'],
 		'L_CONFIRM_DEL_MEMBER_GROUP' => $LANG['confirm_del_member_group'],	
@@ -342,8 +293,11 @@ elseif( $add ) //Interface d'ajout du groupe.
 		'L_IMG_ASSOC_GROUP' => $LANG['img_assoc_group'],	
 		'L_IMG_ASSOC_GROUP_EXPLAIN' => $LANG['img_assoc_group_explain'],	
 		'L_AUTH_FLOOD' => $LANG['auth_flood'],
-		'L_PM_NO_LIMIT' => $LANG['pm_no_limit'],
-		'L_DATA_NO_LIMIT' => $LANG['data_no_limit'],
+		'L_PM_GROUP_LIMIT' => $LANG['pm_group_limit'],
+		'L_PM_GROUP_LIMIT_EXPLAIN' => $LANG['pm_group_limit_explain'],
+		'L_DATA_GROUP_LIMIT' => $LANG['data_group_limit'],
+		'L_DATA_GROUP_LIMIT_EXPLAIN' => $LANG['data_group_limit_explain'],
+		'L_MB' => $LANG['unit_megabytes'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_ADD' => $LANG['add']
@@ -374,13 +328,13 @@ elseif( $add ) //Interface d'ajout du groupe.
 				else
 					$option = '<option value="' . $img_group . '">' . $img_group . '</option>';
 				
-				$template->assign_block_vars('add_group.select', array(
+				$template->assign_block_vars('select', array(
 					'IMG_GROUP' => $option
 				));
 			}
 		}
 	}	
-			
+	
 	$template->pparse('admin_groups_management2');
 }
 else //Liste des groupes.

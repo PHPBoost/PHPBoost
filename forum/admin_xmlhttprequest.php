@@ -196,11 +196,8 @@ if( $session->data['level'] === 2 ) //Admin
 			
 				//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 				if( empty($list_cats) )
-				{
-					header('location:' . HOST . SCRIPT);
-					exit;
-				}
-							
+					redirect(HOST . SCRIPT);
+					
 				//Dernier topic des parents du forum à supprimer.
 				if( !empty($list_parent_cats) )
 				{

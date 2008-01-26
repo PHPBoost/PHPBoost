@@ -30,6 +30,10 @@ require_once('../forum/forum_begin.php');
 define('TITLE', 'Ajax forum');
 require_once('../includes/header_no_display.php');
 
+$track = !empty($_GET['t']) ? numeric($_GET['t']) : '';	
+$untrack = !empty($_GET['ut']) ? numeric($_GET['ut']) : '';	
+$msg_d = !empty($_GET['msg_d']) ? numeric($_GET['msg_d']) : '';
+
 if( !empty($_GET['del']) ) //Suppression d'un message.
 {
 	//Instanciation de la class du forum.
@@ -56,6 +60,34 @@ if( !empty($_GET['del']) ) //Suppression d'un message.
 	}
 	else
 		echo '-1';	
+}
+elseif( !empty($track) && $session->check_auth($session->data, 0) ) //Ajout du sujet aux sujets suivis.
+{
+	//Instanciation de la class du forum.
+	include_once('../forum/forum.class.php');
+	$forumfct = new Forum;
+
+	$forumfct->track_topic($track); //Ajout du sujet aux sujets suivis.
+	echo 1;
+}
+elseif( !empty($untrack) && $session->check_auth($session->data, 0) ) //Retrait du sujet, aux sujets suivis.
+{
+	//Instanciation de la class du forum.
+	include_once('../forum/forum.class.php');
+	$forumfct = new Forum;
+
+	$forumfct->untrack_topic($untrack); //Retrait du sujet aux sujets suivis.
+	echo 2;
+}
+elseif( !empty($msg_d) )
+{
+	//Vérification de l'appartenance du sujet au membres, ou modo.
+	$topic = $sql->query_array("forum_topics", "idcat", "user_id", "display_msg", "WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
+	if( (!empty($topic['user_id']) && $session->data['user_id'] == $topic['user_id']) || $groups->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) )
+	{
+		$sql->query_inject("UPDATE ".PREFIX."forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
+		echo ($topic['display_msg']) ? 2 : 1;
+	}	
 }
 elseif( !empty($_GET['warning_moderation_panel'])  || !empty($_GET['punish_moderation_panel']) ) //Recherche d'un membre
 {

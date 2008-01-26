@@ -61,8 +61,7 @@ if( !$session->check_auth($session->data, 0) )
 					$mail->send_mail($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass), $CONFIG['mail']);	
 
 					//Affichage de la confirmation.
-					header('Location: ' . HOST . DIR . '/member/forget.php?error=forget_mail_send');
-					exit;
+					redirect(HOST . DIR . '/member/forget.php?error=forget_mail_send');
 				}
 				else
 					$errorh->error_handler($LANG['e_mail_forget'], E_USER_NOTICE);
@@ -116,28 +115,16 @@ if( !$session->check_auth($session->data, 0) )
 			$sql->query_inject("UPDATE ".PREFIX."member SET activ_pass = '', new_pass = '' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 			//Affichage de l'echec
-			header('Location: ' . HOST . DIR . '/member/forget.php?error=forget_confirm_change');
-			exit;
+			redirect(HOST . DIR . '/member/forget.php?error=forget_confirm_change');
 		}
-		else
-		{
-			//Affichage de l'echec
-			header('Location: ' . HOST . DIR . '/member/forget.php?error=forget_echec_change');
-			exit;
-		}
+		else //Affichage de l'echec
+			redirect(HOST . DIR . '/member/forget.php?error=forget_echec_change');
 	}	
-	else
-	{
-		//Affichage de l'echec
-		header('Location: ' . HOST . DIR . '/member/forget.php?error=forget_echec_change');
-		exit;	
-	}
+	else //Affichage de l'echec
+		redirect(HOST . DIR . '/member/forget.php?error=forget_echec_change');
 }
 else
-{
-	header('location: ' . get_start_page());
-	exit;
-}
+	redirect(get_start_page());
 
 require_once('../includes/footer.php'); 
 

@@ -91,14 +91,10 @@ if( !empty($_POST['valid']) )
 		$rss->generate_file('javascript', 'rss_download');
 		$rss->generate_file('php', 'rss2_download');
 		
-		header('location:' . HOST . DIR . '/download/admin_download.php'); 
-		exit;
+		redirect(HOST . DIR . '/download/admin_download.php'); 
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/download/admin_download_add.php?error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/download/admin_download_add.php?error=incomplete#errorh');
 }
 elseif( !empty($_POST['previs']) )
 {

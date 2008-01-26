@@ -80,14 +80,14 @@
 
 			-->
 			</script>
-			# START write.error_handler #
+			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
 			<span id="errorh"></span>
-				<div class="{write.error_handler.CLASS}">
-					<img src="../templates/{THEME}/images/{write.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {write.error_handler.L_ERROR}
+				<div class="{ERRORH_CLASS}">
+					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 				</div>
 			</div>
-			# END write.error_handler #
+			# ENDIF #
 			
 			<form action="admin_newsletter.php?type={write.TYPE}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
@@ -134,12 +134,12 @@
 				</tr>
 				<tr> 
 					<td class="row1" style="text-align:center;">
-						# START error_handler #
+						# IF C_ERROR_HANDLER #
 						<span id="errorh"></span>
-						<div class="{end.error_handler.CLASS}">
-							<img src="../templates/{THEME}/images/{end.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {end.error_handler.L_ERROR}
+						<div class="{ERRORH_CLASS}">
+							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 						</div>
-						# END error_handler #
+						# ENDIF #
 						
 						<br />
 						<a href="admin_newsletter.php">{L_BACK}</a> / <a href="../newsletter/newsletter.php">{L_ARCHIVES}</a>
@@ -152,14 +152,14 @@
 			
 			# START config #
 			
-			# START config.error_handler #
+			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
 				<span id="errorh"></span>
-				<div class="{config.error_handler.CLASS}">
-					<img src="../templates/{THEME}/images/{config.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {config.error_handler.L_ERROR}
+				<div class="{ERRORH_CLASS}">
+					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 				</div>
 			</div>
-			# END config.error_handler #
+			# ENDIF #
 			<form action="admin_newsletter_config.php" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_NEWSLETTER}</legend>
@@ -185,14 +185,14 @@
 			
 			# START member_list #
 			
-			# START member_list.error_handler #
+			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
 			<span id="errorh"></span>
-				<div class="{member_list.error_handler.CLASS}">
-					<img src="../templates/{THEME}/images/{member_list.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {member_list.error_handler.L_ERROR}
+				<div class="{ERRORH_CLASS}">
+					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 				</div>
 			</div>
-			# END member_list.error_handler #
+			# ENDIF #
 			
 			<table class="module_table" style="width:50%;">
 				<tr> 

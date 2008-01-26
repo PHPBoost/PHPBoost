@@ -12,21 +12,10 @@
 		}
 		function XMLHttpRequest_del(idmsg)
 		{
-			var xhr_object = null;
-			var data = null;
-			var filename = "../forum/xmlhttprequest.php?del=1&idm=" + idmsg;
-			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-			    return;
-				
 			if( document.getElementById('dimg' + idmsg) )
 				document.getElementById('dimg' + idmsg).src = '../templates/{THEME}/images/loading_mini.gif';
 			
-			xhr_object.open("POST", filename, true);
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?del=1&idm=' + idmsg);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
@@ -40,8 +29,47 @@
 						document.getElementById('dimg' + idmsg).src = '../templates/{THEME}/images/{LANG}/delete.png';
 				}
 			}
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(null);
+			xmlhttprequest_sender(xhr_object, null);
+		}
+		function XMLHttpRequest_change_statut()
+		{
+			var idtopic = {IDTOPIC};			
+			if( document.getElementById('forum_change_img') )
+				document.getElementById('forum_change_img').src = '../templates/{THEME}/images/loading.gif';
+			
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?msg_d=' + idtopic);
+			xhr_object.onreadystatechange = function() 
+			{
+				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
+				{	
+					if( document.getElementById('forum_change_img') )
+						document.getElementById('forum_change_img').src = xhr_object.responseText == '1' ? '{MODULE_DATA_PATH}/images/msg_display2.png' : '{MODULE_DATA_PATH}/images/msg_display.png';
+					if( document.getElementById('forum_change_msg') )
+						document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
+				}
+			}
+			xmlhttprequest_sender(xhr_object, null);
+		}
+		var is_favorite = {IS_FAVORITE};
+		function XMLHttpRequest_favorite()
+		{
+			var idtopic = {IDTOPIC};
+			if( document.getElementById('forum_favorite_img') )
+				document.getElementById('forum_favorite_img').src = '../templates/{THEME}/images/loading.gif';
+			
+			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?' + (is_favorite ? 'ut' : 't') + '=' + idtopic);
+			xhr_object.onreadystatechange = function() 
+			{
+				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
+				{	
+					if( document.getElementById('forum_favorite_img') )
+				document.getElementById('forum_favorite_img').src = '{MODULE_DATA_PATH}/images/favorite.png';
+					if( document.getElementById('forum_favorite_msg') )
+						document.getElementById('forum_favorite_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE}" : "{L_SUSCRIBE}";
+					is_favorite = xhr_object.responseText == '1' ? true : false;
+				}
+			}
+			xmlhttprequest_sender(xhr_object, null);
 		}
 		function del_msg(idmsg)
 		{
@@ -63,7 +91,6 @@
 		function Confirm_cut() {
 			return confirm("{L_ALERT_CUT_TOPIC}");
 		}
-
 		-->
 		</script>
 
@@ -211,14 +238,36 @@
 				&nbsp;&nbsp;
 				<input type="reset" value="{L_RESET}" class="reset" />				
 			</fieldset>			
-		</form>		
+		</form>
 		<table class="forum_action">
 			<tr>
 				# IF C_DISPLAY_MSG #
-				<td><a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{L_EXPLAIN_DISPLAY_MSG}</a> </td>	
+				<td>
+					<span id="forum_change_statut">
+						<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
+					</span>
+					<script type="text/javascript">
+					<!--				
+					document.getElementById('forum_change_statut').style.display = 'none';
+					document.write('<a href="javascript:XMLHttpRequest_change_statut()">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
+					-->
+					</script>
+				</td>	
 				# ENDIF #			
-				<td><a href="action{U_SUSCRIBE}#go_bottom"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/favorite.png" alt="" /></a> <a href="action{U_SUSCRIBE}#go_bottom">{L_SUSCRIBE}</a></td>
-				<td><a href="alert{U_ALERT}#go_bottom"><img class="valign_middle" src="../templates/{THEME}/images/important.png" alt="" /> <a href="alert{U_ALERT}#go_bottom">{L_ALERT}</a></td>
+				<td>				
+					<span id="forum_favorite">
+						<a href="action{U_SUSCRIBE}#go_bottom"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/favorite.png" alt="" /></a> <a href="action{U_SUSCRIBE}#go_bottom">{L_SUSCRIBE_DEFAULT}</a>
+					</span>
+					<script type="text/javascript">
+					<!--				
+					document.getElementById('forum_favorite').style.display = 'none';
+					document.write('<a href="javascript:XMLHttpRequest_favorite()"><img id="forum_favorite_img" class="valign_middle" src="{MODULE_DATA_PATH}/images/favorite.png" alt="" /></a> <a href="javascript:XMLHttpRequest_favorite()"><span id="forum_favorite_msg">{L_SUSCRIBE_DEFAULT}</span></a>');
+					-->
+					</script>
+				</td>
+				<td>
+					<a href="alert{U_ALERT}#go_bottom"><img class="valign_middle" src="../templates/{THEME}/images/important.png" alt="" /> <a href="alert{U_ALERT}#go_bottom">{L_ALERT}</a>
+				</td>
 			</tr>
 		</table>
 		# ENDIF #

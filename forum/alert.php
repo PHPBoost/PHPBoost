@@ -43,16 +43,10 @@ define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['alert_topic']);
 require_once('../includes/header.php');
 
 if( empty($alert) && empty($alert_post) || empty($topic['idcat']) ) 
-{
-	header('location:' . HOST . DIR . '/forum/index' . transid('.php'));  
-	exit;
-}
+	redirect(HOST . DIR . '/forum/index' . transid('.php'));  
 
 if( !$session->check_auth($session->data, 0) ) //Si c'est un invité
-{
     $errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}  
 	
 $template->set_filenames(array(
 	'forum_alert' => '../templates/' . $CONFIG['theme'] . '/forum/forum_alert.tpl',

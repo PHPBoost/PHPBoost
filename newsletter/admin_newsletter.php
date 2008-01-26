@@ -67,10 +67,10 @@ if( $member_list )
 		if( !empty($member_mail) )
 		{
 			$sql->query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
-			$errorh->error_handler(sprintf($LANG['newsletter_del_member_success'], $member_mail), E_USER_NOTICE, '', '', 'member_list.');
+			$errorh->error_handler(sprintf($LANG['newsletter_del_member_success'], $member_mail), E_USER_NOTICE);
 		}
 		else
-			$errorh->error_handler($LANG['newsletter_member_does_not_exists'], E_USER_WARNING, '', '', 'member_list.');
+			$errorh->error_handler($LANG['newsletter_member_does_not_exists'], E_USER_WARNING);
 	}
 	$result = $sql->query_while("SELECT id, mail FROM ".PREFIX."newsletter ORDER by id", __LINE__, __FILE__);
 	while( $row = $sql->sql_fetch_assoc($result) )
@@ -106,9 +106,9 @@ elseif( !empty($type) && $send && !$send_test && !empty($mail_object) && !empty(
 	));
 	
 	if( count($error_mailing_list) == 0 ) //Aucune erreur
-		$errorh->error_handler($LANG['newsletter_sent_successful'], E_USER_NOTICE, '', '', 'end.');
+		$errorh->error_handler($LANG['newsletter_sent_successful'], E_USER_NOTICE);
 	else
-		$errorh->error_handler(sprintf($LANG['newsletter_error_list'], implode(', ', $error_mailing_list)), E_USER_NOTICE, '', '', 'end.');
+		$errorh->error_handler(sprintf($LANG['newsletter_error_list'], implode(', ', $error_mailing_list)), E_USER_NOTICE);
 }
 elseif( !empty($type) ) //Rédaction
 {
@@ -146,9 +146,9 @@ elseif( !empty($type) ) //Rédaction
 		));
 	
 	if( empty($mail_object) && $send_test )
-		$errorh->error_handler($LANG['require_title'], E_USER_WARNING, '', '', 'write.');
+		$errorh->error_handler($LANG['require_title'], E_USER_WARNING);
 	elseif( empty($mail_contents) && $send_test )
-		$errorh->error_handler($LANG['require_text'], E_USER_WARNING, '', '', 'write.');
+		$errorh->error_handler($LANG['require_text'], E_USER_WARNING);
 	elseif( $send_test ) //Si on doit envoyer un test
 	{
 		switch($type)
@@ -163,7 +163,7 @@ elseif( !empty($type) ) //Rédaction
 				$newsletter_sender->send_text($mail_object, $mail_contents, $session->data['user_mail']);
 			break;
 		}
-		$errorh->error_handler(sprintf($LANG['newsletter_test_sent'], $session->data['user_mail']), E_USER_NOTICE, '', '', 'write.');
+		$errorh->error_handler(sprintf($LANG['newsletter_test_sent'], $session->data['user_mail']), E_USER_NOTICE);
 	}
 }
 //On fait choisir un type

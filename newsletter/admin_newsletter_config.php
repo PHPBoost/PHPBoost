@@ -54,7 +54,7 @@ if( !empty($sender_mail) && !empty($newsletter_name) )
 		$_NEWSLETTER_CONFIG['newsletter_name'] = $newsletter_name;
 	}
 	else
-		$errorh->error_handler($LANG['newsletter_email_address_is_not_valid'], E_USER_WARNING, '', '', 'config.');
+		$errorh->error_handler($LANG['newsletter_email_address_is_not_valid'], E_USER_WARNING);
 }
 
 $template->assign_vars(array(

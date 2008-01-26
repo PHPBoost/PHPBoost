@@ -168,15 +168,15 @@
 			<br /><br /><br />
 			# END articles.preview #
 
-			# START articles.error_handler #
+			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
 					<span id="errorh"></span>
-					<div class="{articles.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-						<img src="../templates/{THEME}/images/{articles.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {articles.error_handler.L_ERROR}
+					<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 						<br />	
 					</div>
 			</div>
-			# END articles.error_handler #
+			# ENDIF #
 			
 			<form action="admin_articles.php" name="form" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
@@ -222,7 +222,7 @@
 								<div id="start_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 								</div>
 							</div>
-							<a onClick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={articles.DAY_RELEASE_S}&amp;m={articles.MONTH_RELEASE_S}&amp;y={articles.YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img style="vertical-align:middle;" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+							<a onClick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={articles.DAY_RELEASE_S}&amp;m={articles.MONTH_RELEASE_S}&amp;y={articles.YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 							
 							{L_UNTIL}&nbsp;
 							
@@ -231,7 +231,7 @@
 								<div id="end_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
 								</div>
 							</div>
-							<a onClick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={articles.DAY_RELEASE_E}&amp;m={articles.MONTH_RELEASE_E}&amp;y={articles.YEAR_RELEASE_E}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img style="vertical-align:middle;" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
+							<a onClick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={articles.DAY_RELEASE_E}&amp;m={articles.MONTH_RELEASE_E}&amp;y={articles.YEAR_RELEASE_E}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
 							<br />
 							<label><input type="radio" id="release_date" value="1" name="visible" {articles.VISIBLE_ENABLED} /> {L_IMMEDIATE}</label></label>
 							<br />
@@ -246,7 +246,7 @@
 								<div id="current" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">							
 								</div>
 							</div>
-							<a onClick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={articles.DAY_DATE}&amp;m={articles.MONTH_DATE}&amp;y={articles.YEAR_DATE}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;"><img style="vertical-align:middle;" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+							<a onClick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={articles.DAY_DATE}&amp;m={articles.MONTH_DATE}&amp;y={articles.YEAR_DATE}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 							{L_AT}
 							<input type="text" size="2" maxlength="2" name="hour" value="{articles.HOUR}" class="text" /> H <input type="text" size="2" maxlength="2" name="min" value="{articles.MIN}" class="text" />
 						</label></dd>

@@ -34,10 +34,7 @@ if( !empty($_POST['shoutbox']) && empty($shout_id) ) //Insertion
 {		
 	//Membre en lecture seule?
 	if( $session->data['user_readonly'] > time() ) 
-	{
 		$errorh->error_handler('e_readonly', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	$shout_pseudo = !empty($_POST['shout_pseudo']) ? clean_user($_POST['shout_pseudo']) : $LANG['guest']; //Pseudo posté.
 	$shout_contents = !empty($_POST['shout_contents']) ? trim($_POST['shout_contents']) : '';	
@@ -48,54 +45,34 @@ if( !empty($_POST['shoutbox']) && empty($shout_id) ) //Insertion
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 			$check_time = ($session->data['user_id'] !== -1 && $CONFIG['anti_flood'] == 1) ? $sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__) : '';
-			if( !empty($check_time) && !$groups->check_auth($groups->user_groups_auth, AUTH_FLOOD) )
+			if( !empty($check_time) && !$groups->max_value($groups->user_groups_auth, AUTH_FLOOD) )
 			{
 				if( $check_time >= (time() - $CONFIG['delay_flood']) )
-				{
-					header('location:' . HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=flood', '', '&') . '#errorh');
-					exit;
-				}
+					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=flood', '', '&') . '#errorh');
 			}
 			
 			//Vérifie que le message ne contient pas du flood de lien.
 			$shout_contents = parse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);		
 			if( !check_nbr_links($shout_pseudo, 0) ) //Nombre de liens max dans le pseudo.
-			{	
-				header('location:' . HOST . SCRIPT . transid('?error=l_pseudo', '', '&') . '#errorh');
-				exit;
-			}			
+				redirect(HOST . SCRIPT . transid('?error=l_pseudo', '', '&') . '#errorh');
 			if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
-			{	
-				header('location:' . HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
-				exit;
-			}
+				redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
 			$sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login,user_id,contents,timestamp) VALUES('" . $shout_pseudo . "', '" . $session->data['user_id'] . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
-			header('location:' . HOST . transid(SCRIPT . '?' . QUERY_STRING, '', '&'));
-			exit;
+			redirect(HOST . transid(SCRIPT . '?' . QUERY_STRING, '', '&'));
 		}
 		else //utilisateur non autorisé!
-		{
-			header('location:' . transid(HOST . SCRIPT . '?error=auth', '', '&') . '#errorh');
-			exit;
-		}
+			redirect(transid(HOST . SCRIPT . '?error=auth', '', '&') . '#errorh');
 	}
-	else
-	{
-		//Champs incomplet!
-		header('location:' . transid(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
-		exit;
-	}
+	else //Champs incomplet!
+		redirect(transid(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
 }
 elseif( !empty($shout_id) ) //Edition + suppression!
 {
 	//Membre en lecture seule?
 	if( $session->data['user_readonly'] > time() ) 
-	{
 		$errorh->error_handler('e_readonly', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	$del = !empty($_GET['del']) ? true : false;
 	$edit = !empty($_GET['edit']) ? true : false;
@@ -110,8 +87,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 		{
 			$sql->query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
-			header('location:' . HOST . SCRIPT . SID2);
-			exit;
+			redirect(HOST . SCRIPT . SID2);
 		}
 		elseif( $edit )
 		{
@@ -165,34 +141,20 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 				//Vérifie que le message ne contient pas du flood de lien.
 				$shout_contents = parse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);		
 				if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
-				{	
-					header('location:' . HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
-					exit;
-				}
+					redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
 				$sql->query_inject("UPDATE ".PREFIX."shoutbox SET contents = '" . $shout_contents . "', login = '" . $shout_pseudo . "' WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
-				header('location:' . HOST . SCRIPT. SID2);
-				exit;
+				redirect(HOST . SCRIPT. SID2);
 			}
-			else
-			{
-				//Champs incomplet!
-				header('location:' . transid(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
-				exit;
-			}
+			else //Champs incomplet!
+				redirect(transid(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
 		}
 		else
-		{
-			header('location:' . HOST . SCRIPT . SID2);
-			exit;
-		}
+			redirect(HOST . SCRIPT . SID2);
 	}
 	else
-	{
-		header('location:' . HOST . SCRIPT . SID2);
-		exit;
-	}
+		redirect(HOST . SCRIPT . SID2);
 }
 else //Affichage.
 {
@@ -345,7 +307,7 @@ else //Affichage.
 				foreach($_array_groups_auth as $idgroup => $array_group_info)
 				{
 					if( is_numeric(array_search($idgroup, $array_user_groups)) )
-						$user_groups .= !empty($array_group_info[1]) ? '<img src="../images/group/' . $array_group_info[1] . '" alt="' . $array_group_info[0] . '" title="' . $array_group_info[0] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info[0];
+						$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
 				}
 			}
 			else

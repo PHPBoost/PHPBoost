@@ -159,6 +159,7 @@ $LANG['relevance'] = 'Pertinance';
 $LANG['no_result'] = 'No result';
 $LANG['invalid_req'] = 'Invalid request';
 $LANG['keywords'] = 'Key Words (4 characters minimum)';
+$LANG['colorate_result'] = 'Colorate results';
 
 //Stats
 $LANG['stats'] = 'Statistics';

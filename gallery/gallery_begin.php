@@ -29,10 +29,7 @@ if( defined('PHP_BOOST') !== true)
 	exit;
 	
 if( !$groups->check_auth($SECURE_MODULE['gallery'], ACCESS_MODULE) )
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}
 
 load_module_lang('gallery', $CONFIG['lang']); //Chargement de la langue du module.
 $cache->load_file('gallery');

@@ -55,8 +55,7 @@ if( !empty($_POST['valid']) )
 	
 	$cache->generate_file('modules_mini');		
 	
-	header('location:' . HOST . SCRIPT);	
-	exit;
+	redirect(HOST . SCRIPT);	
 }
 elseif( (isset($_GET['unactiv']) || isset($_GET['activ'])) && isset($_GET['pos']) && !empty($id) ) //Gestion de l'activation pour un module donné.
 {
@@ -83,16 +82,14 @@ elseif( (isset($_GET['unactiv']) || isset($_GET['activ'])) && isset($_GET['pos']
 	
 	$cache->generate_file('modules_mini');		
 	
-	header('location:' . HOST . DIR . '/admin/admin_menus.php#m' . $id);	
-	exit;
+	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
 }
 elseif( isset($_GET['secure']) && !empty($id) ) //Gestion de la sécurité pour un module donné.
 {
 	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	$cache->generate_file('modules_mini');		
 	
-	header('location:' . HOST . DIR . '/admin/admin_menus.php#m' . $id);	
-	exit;
+	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
 }
 elseif( isset($_GET['left']) && !empty($id) ) //Gestion du placement pour un module donné.
 {
@@ -110,8 +107,7 @@ elseif( isset($_GET['left']) && !empty($id) ) //Gestion du placement pour un mod
 	
 	$cache->generate_file('modules_mini');		
 	
-	header('location:' . HOST . DIR . '/admin/admin_menus.php#m' . $id);	
-	exit;
+	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
 }
 elseif( isset($_GET['right']) && !empty($id) ) //Gestion du placement pour un module donné.
 {
@@ -129,8 +125,7 @@ elseif( isset($_GET['right']) && !empty($id) ) //Gestion du placement pour un mo
 	
 	$cache->generate_file('modules_mini');		
 	
-	header('location:' . HOST . DIR . '/admin/admin_menus.php#m' . $id);	
-	exit;
+	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
 }
 elseif( !empty($top) || !empty($bottom) ) //Monter/descendre.
 {
@@ -145,8 +140,7 @@ elseif( !empty($top) || !empty($bottom) ) //Monter/descendre.
 		###### Régénération du cache des liens #######
 		$cache->generate_file('modules_mini');
 		
-		header('location:' . HOST . SCRIPT . '#m' . $id);
-		exit;
+		redirect(HOST . SCRIPT . '#m' . $id);
 	}
 	elseif( !empty($bottom))
 	{
@@ -159,8 +153,7 @@ elseif( !empty($top) || !empty($bottom) ) //Monter/descendre.
 		###### Régénération du cache des liens #######
 		$cache->generate_file('modules_mini');
 		
-		header('location:' . HOST . SCRIPT . '#m' . $id);
-		exit;
+		redirect(HOST . SCRIPT . '#m' . $id);
 	}
 }
 else	

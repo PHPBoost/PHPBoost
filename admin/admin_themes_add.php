@@ -51,16 +51,11 @@ if( $install )
 	{
 		$sql->query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES('" . securit($theme) . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
 		
-		header('location:' . HOST . SCRIPT); 
-		exit;
+		redirect(HOST . SCRIPT); 
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/admin/admin_modules_add.php?error=e_theme_already_exist#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/admin/admin_modules_add.php?error=e_theme_already_exist#errorh');
 }
-		
 elseif( !empty($_FILES['upload_theme']['name']) ) //Upload et décompression de l'archive Zip/Tar
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
@@ -112,8 +107,7 @@ elseif( !empty($_FILES['upload_theme']['name']) ) //Upload et décompression de l
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '?error=' . $error : '';
-	header('location:' . HOST . SCRIPT . $error);	
-	exit;
+	redirect(HOST . SCRIPT . $error);	
 }
 else  
 {

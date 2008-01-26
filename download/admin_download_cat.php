@@ -61,8 +61,7 @@ if( !empty($_POST['valid']) )
 	//Régénération du cache des catégories.
 	$cache->generate_module_file('download');
 	
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 elseif( empty($top) && empty($bottom) && $del && !empty($id) ) //Suppression du lien.
 {
@@ -72,8 +71,7 @@ elseif( empty($top) && empty($bottom) && $del && !empty($id) ) //Suppression du 
 	//Régénération du cache des catégories.
 	$cache->generate_module_file('download');
 	
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 {
@@ -88,8 +86,7 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 		//Régénération du cache des catégories.
 		$cache->generate_module_file('download');
 		
-		header('location:' . HOST . SCRIPT . '#d' . $id);
-		exit;
+		redirect(HOST . SCRIPT . '#d' . $id);
 	}
 	elseif( !empty($bottom) )
 	{
@@ -102,8 +99,7 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 		//Régénération du cache des catégories.
 		$cache->generate_module_file('download');
 		
-		header('location:' . HOST . SCRIPT . '#d' . $id);
-		exit;
+		redirect(HOST . SCRIPT . '#d' . $id);
 	}
 }
 //On ajoute la nouvelle catégorie
@@ -130,14 +126,10 @@ elseif( !empty($_POST['add']) ) //Ajout du lien.
 		//Régénération du cache des catégories.
 		$cache->generate_module_file('download');
 	
-		header('location:' . HOST . SCRIPT); 
-		exit;		
+		redirect(HOST . SCRIPT); 
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/download/admin_download_cat.php?error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/download/admin_download_cat.php?error=incomplete#errorh');
 }
 //Sinon on rempli le formulaire
 else	

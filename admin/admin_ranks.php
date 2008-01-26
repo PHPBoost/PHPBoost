@@ -53,8 +53,7 @@ if( !empty($_POST['valid']) )
 	###### Régénération du cache des rangs #######
 	$cache->generate_file('ranks');
 		
-	header('location:' . HOST . SCRIPT);	
-	exit;
+	redirect(HOST . SCRIPT);	
 }
 elseif( !empty($_GET['del']) && !empty($get_id) ) //Suppression du rang.
 {
@@ -64,8 +63,7 @@ elseif( !empty($_GET['del']) && !empty($get_id) ) //Suppression du rang.
 	###### Régénération du cache des rangs #######
 	$cache->generate_file('ranks');
 	
-	header('location:' . HOST . SCRIPT); 	
-	exit;
+	redirect(HOST . SCRIPT); 	
 }
 else //Sinon on rempli le formulaire	 
 {	

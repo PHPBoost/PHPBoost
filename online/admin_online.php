@@ -42,8 +42,7 @@ if( !empty($_POST['valid']) )
 	###### Régénération du cache des online #######
 	$cache->generate_module_file('online');
 	
-	header('location:' . HOST . SCRIPT);	
-	exit;
+	redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	

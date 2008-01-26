@@ -140,6 +140,11 @@ $LANG['bb_text'] = 'Texte';
 $LANG['bb_script'] = 'Script';
 $LANG['bb_web'] = 'Web';
 $LANG['bb_prog'] = 'Programmation';
+$LANG['lines'] = 'Nombre de lignes';
+$LANG['cols'] = 'Nombre de colonnes';
+$LANG['head_table'] = 'Entête';
+$LANG['head_add'] = 'Ajouter l\'entête';
+$LANG['insert_table'] = 'Insérer le tableau';
 $LANG['forbidden_tags'] = 'Balises BBcode interdites:';
 
 //Connexion
@@ -232,6 +237,7 @@ $LANG['theme'] = 'Thème';
 $LANG['online'] = 'En ligne';
 $LANG['modules'] = 'Modules';
 $LANG['no_result'] = 'Aucun résulat';
+$LANG['during'] = 'Pendant';
 $LANG['until'] = 'Jusqu\'au';
 $LANG['lock'] = 'Verrouiller';
 $LANG['unlock'] = 'Déverrouiller';
@@ -377,7 +383,7 @@ $LANG['register_valid_email'] = 'Vous devez activer votre compte avant de pouvoi
 $LANG['register_valid_admin'] = 'Attention: Votre compte devra être activé par un administrateur avant de pouvoir vous connecter. Merci de votre patience.';
 $LANG['register_mail'] = 'Cher %s,
 
-Tout d\'abord, merci de vous être inscrit sur %s. Vous faites parti dès maintenant des membres du site. 
+Tout d\'abord, merci de vous être inscrit sur %s. Vous faites partie dès maintenant des membres du site. 
 En vous inscrivant sur %s, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez entre autre être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.                                              
 
 Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de passe. 

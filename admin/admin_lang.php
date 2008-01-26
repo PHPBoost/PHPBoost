@@ -35,14 +35,14 @@ $error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 if( isset($_GET['activ']) && !empty($id) ) //Activation
 {
 	$sql->query_inject("UPDATE ".PREFIX."lang SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
-	header('location:' . HOST . SCRIPT . '#t' . $id);	
-	exit;
+	
+	redirect(HOST . SCRIPT . '#t' . $id);	
 }
 if( isset($_GET['secure']) && !empty($id) ) //Changement de niveau d'autorisation.
 {
 	$sql->query_inject("UPDATE ".PREFIX."lang SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
-	header('location:' . HOST . SCRIPT . '#t' . $id);	
-	exit;
+	
+	redirect(HOST . SCRIPT . '#t' . $id);	
 }
 elseif( isset($_POST['valid']) ) //Mise à jour
 {
@@ -56,8 +56,7 @@ elseif( isset($_POST['valid']) ) //Mise à jour
 		if( $row['activ'] != $activ || $row['secure'] != $secure )
 			$sql->query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
-	header('location:' . HOST . SCRIPT);	
-	exit;
+	redirect(HOST . SCRIPT);	
 }
 elseif( $uninstall ) //Désinstallation.
 {
@@ -77,8 +76,7 @@ elseif( $uninstall ) //Désinstallation.
 		}
 		else
 		{
-			header('location:' . HOST . DIR . '/admin/admin_lang.php?error=incomplete#errorh');
-			exit;
+			redirect(HOST . DIR . '/admin/admin_lang.php?error=incomplete#errorh');
 		}
 		
 		//Suppression des fichiers du module
@@ -89,8 +87,7 @@ elseif( $uninstall ) //Désinstallation.
 		}
 	
 		$error = !empty($error) ? '?error=' . $error : '';
-		header('location:' . HOST . SCRIPT . $error);
-		exit;		
+		redirect(HOST . SCRIPT . $error);
 	}
 	else
 	{
@@ -153,9 +150,9 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG[$get_error], E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'main.');
+		$errorh->error_handler($LANG[$get_error], E_USER_NOTICE);
 	elseif( !empty($get_error) && isset($LANG[$get_error]) )
-		$errorh->error_handler($LANG[$get_error], E_USER_WARNING, NO_LINE_ERROR, NO_FILE_ERROR, 'main.');
+		$errorh->error_handler($LANG[$get_error], E_USER_WARNING);
 	 
 	
 	//On recupère les dossier des thèmes contenu dans le dossier templates	

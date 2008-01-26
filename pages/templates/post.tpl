@@ -57,13 +57,13 @@
 
 		<script type="text/javascript" src="{PAGES_PATH}/images/pages.js"></script>
 	
-		# START error_handler #
-			<div class="{error_handler.CLASS}">
-				<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+		# IF C_ERROR_HANDLER #
+			<div class="{ERRORH_CLASS}">
+				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 				<br />
 			</div>
 			<br />
-		# END error_handler #
+		# ENDIF #
 		
 		# START previewing #
 		<div class="module_position">					

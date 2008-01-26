@@ -62,43 +62,29 @@ if( !empty($idm_get) && $del ) //Suppression d'un message/topic.
 		if( !empty($msg['idtopic']) && ($groups->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $session->data['user_id'] == $topic['user_id']) ) //Autorisé à supprimer?
 			$forumfct->del_topic($msg['idtopic']); //Suppresion du topic.
 		else
-		{
 			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-			exit;
-		}
 		
-		header('location:' . HOST . DIR . '/forum/forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
-		exit;
+		redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
 	}
 	elseif( !empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get ) //Suppression d'un message.
 	{	
 		if( !empty($topic['idcat']) && ($groups->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $session->data['user_id'] == $msg['user_id']) ) //Autorisé à supprimer?
 			list($nbr_msg, $previous_msg_id) = $forumfct->del_msg($idm_get, $msg['idtopic'], $topic['idcat'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']);
 		else
-		{
 			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-			exit;
-		}
 		
 		if( $nbr_msg === false && $previous_msg_id === false ) //Echec de la suppression.
-		{
 			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-			exit;
-		}
 		
 		//On compte le nombre de messages du topic avant l'id supprimé.
 		$last_page = ceil( $nbr_msg/ $CONFIG_FORUM['pagination_msg'] );
 		$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 		$last_page = ($last_page > 1) ? '&pt=' . $last_page : '';
 			
-		header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $msg['idtopic'] . $last_page, '-' . $msg['idtopic'] . $last_page_rewrite . '.php', '&') . '#m' . $previous_msg_id);
-		exit;
+		redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $msg['idtopic'] . $last_page, '-' . $msg['idtopic'] . $last_page_rewrite . '.php', '&') . '#m' . $previous_msg_id);
 	}
 	else //Non autorisé, on redirige.
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}	
 }
 elseif( !empty($idt_get) )
 {		
@@ -106,10 +92,7 @@ elseif( !empty($idt_get) )
 	$topic = $sql->query_array('forum_topics', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 
 	if( !$groups->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 	$rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : '';
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
@@ -124,14 +107,10 @@ elseif( !empty($idt_get) )
 		{
 			$sql->query_inject("UPDATE ".PREFIX."forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 			
-			header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
-			exit;
+			redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
 		}	
 		else
-		{	
 			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-			exit;
-		}
 	}	
 	elseif( $poll && $session->data['user_id'] !== -1 ) //Enregistrement vote du sondage
 	{
@@ -164,8 +143,7 @@ elseif( !empty($idt_get) )
 			$sql->query_inject("UPDATE ".PREFIX."forum_poll SET " . $add_voter_id . " votes = '" . implode('|', $array_votes) . "' WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 		}
 		
-		header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
-		exit;
+		redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
 	}
 	elseif( !empty($lock_get) )
 	{
@@ -180,8 +158,7 @@ elseif( !empty($idt_get) )
 			
 				$forumfct->lock_topic($idt_get);
 			
-				header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get  . $rewrited_title . '.php', '&'));
-				exit;			
+				redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get  . $rewrited_title . '.php', '&'));
 			}
 			elseif( $lock_get === 'false' )  //Déverrouillage du topic.
 			{
@@ -191,35 +168,26 @@ elseif( !empty($idt_get) )
 				
 				$forumfct->unlock_topic($idt_get);
 			
-				header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get  . $rewrited_title . '.php', '&'));
-				exit;
+				redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get  . $rewrited_title . '.php', '&'));
 			}
 		}
 		else
-		{
 			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-			exit;
-		}		
 	}
 	else
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 }
 elseif( !empty($track) && $session->check_auth($session->data, 0) ) //Ajout du sujet aux sujets suivis.
 {
 	$forumfct->track_topic($track); //Ajout du sujet aux sujets suivis.
 	
-	header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $track, '-' . $track . '.php', '&') . '#quote');
-	exit;
+	redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $track, '-' . $track . '.php', '&') . '#go_bottom');
 }
 elseif( !empty($untrack) && $session->check_auth($session->data, 0) ) //Retrait du sujet, aux sujets suivis.
 {
 	$forumfct->untrack_topic($untrack); //Retrait du sujet aux sujets suivis.
 	
-	header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#quote');
-	exit;
+	redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#go_bottom');
 }
 elseif( $read ) //Marquer comme lu.
 {
@@ -238,14 +206,10 @@ elseif( $read ) //Marquer comme lu.
 	else
 		$sql->query_inject("INSERT INTO ".PREFIX."member_extend (user_id,last_view_forum) VALUES ('" . $session->data['user_id'] . "', '" .  time(). "')", __LINE__, __FILE__); 	
 
-		header('location:' . HOST . DIR . '/forum/index.php' . SID2);
-	exit;
+	redirect(HOST . DIR . '/forum/index.php' . SID2);
 }
 else
-{
-	header('Location:' . HOST . DIR . '/forum/index.php' . SID2);
-	exit;
-}
+	redirect(HOST . DIR . '/forum/index.php' . SID2);
 
 require_once('../includes/footer_no_display.php');
 

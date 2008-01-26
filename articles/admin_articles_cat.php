@@ -91,10 +91,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 			
 			//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 			if( empty($list_cats) )
-			{
-				header('location:' . HOST . SCRIPT);
-				exit;
-			}
+				redirect(HOST . SCRIPT);
 			
 			//Catégories parentes de l'article cible.
 			if( !empty($to) )
@@ -188,13 +185,9 @@ if( !empty($_POST['valid']) && !empty($id) )
 		$cache->generate_module_file('articles');
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/articles/admin_articles_cat.php?id=' . $id . '&error=incomplete');
-		exit;
-	}
+		redirect(HOST . DIR . '/articles/admin_articles_cat.php?id=' . $id . '&error=incomplete');
 
-	header('location:' . HOST . DIR . '/articles/admin_articles_cat.php');
-	exit;
+	redirect(HOST . DIR . '/articles/admin_articles_cat.php');
 }
 elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la racine.
 {
@@ -224,8 +217,7 @@ elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la ra
 	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_ARTICLES)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 	$cache->generate_module_file('articles');
 	
-	header('location:' . HOST . DIR . '/articles/admin_articles_cat.php');
-	exit;
+	redirect(HOST . DIR . '/articles/admin_articles_cat.php');
 }
 elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 {
@@ -397,10 +389,7 @@ elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 						
 						//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 						if( empty($list_sub_cats) )
-						{
-							header('location:' . HOST . SCRIPT);
-							exit;
-						}
+							redirect(HOST . SCRIPT);
 
 						//Catégories parentes de l'article cible.
 						if( !empty($f_to) )
@@ -502,8 +491,7 @@ elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 					
 					$cache->generate_module_file('articles');
 					
-					header('location:' . HOST . SCRIPT);
-					exit;
+					redirect(HOST . SCRIPT);
 				}	
 			}
 		}
@@ -539,15 +527,11 @@ elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 			###### Regénération du cache #######
 			$cache->generate_module_file('articles');
 			
-			header('location:' . HOST . DIR . '/articles/admin_articles_cat.php');
-			exit;
+			redirect(HOST . DIR . '/articles/admin_articles_cat.php');
 		}		
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/articles/admin_articles_cat.php');
-		exit;
-	}
+		redirect(HOST . DIR . '/articles/admin_articles_cat.php');
 }
 elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 {
@@ -555,11 +539,8 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 	
 	//Catégorie existe?
 	if( !isset($CAT_ARTICLES[$id]) )
-	{
-		header('location:' . HOST . DIR . '/articles/admin_articles_cat.php');
-		exit;
-	}
-	
+		redirect(HOST . DIR . '/articles/admin_articles_cat.php');
+
 	//Catégories parentes de l'article à déplacer.
 	$list_parent_cats = '';
 	$result = $sql->query_while("SELECT id 
@@ -717,8 +698,7 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 		$cache->generate_module_file('articles');
 	}
 		
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 elseif( !empty($id) ) //Edition des catégories.
 {
@@ -731,10 +711,7 @@ elseif( !empty($id) ) //Edition des catégories.
 	$articles_info = $sql->query_array("articles_cats", "id_left", "id_right", "level", "name", "contents", "icon", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	if( !isset($CAT_ARTICLES[$id]) )
-	{
-		header('location: ' . HOST . DIR . '/articles/admin_articles_cat.php?error=unexist_cat');
-		exit;
-	}
+		redirect(HOST . DIR . '/articles/admin_articles_cat.php?error=unexist_cat');
 	
 	//Listing des catégories disponibles.			
 	$articles = '<option value="0">' . $LANG['root'] . '</option>';
@@ -749,60 +726,6 @@ elseif( !empty($id) ) //Edition des catégories.
 		$articles .= '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 	}
 	$sql->close($result);
-	
-	//Création du tableau des groupes.
-	$array_groups = array();
-	foreach($_array_groups_auth as $idgroup => $array_group_info)
-		$array_groups[$idgroup] = $array_group_info[0];	
-		
-	//Création du tableau des rangs.
-	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	
-	//Récupération des tableaux des autorisations et des groupes.
-	$array_auth = !empty($articles_info['auth']) ? unserialize($articles_info['auth']) : array();
-	
-	//Génération d'une liste à sélection multiple des rangs et groupes
-	function generate_select_groups($array_auth, $auth_id, $auth_level)
-	{
-		global $array_groups, $array_ranks, $LANG;
-		
-		$j = 0;
-		//Liste des rangs
-		$select_groups = '<select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
-		foreach($array_ranks as $idgroup => $group_name)
-		{
-			$selected = '';	
-			if( array_key_exists('r' . $idgroup, $array_auth) && ((int)$array_auth['r' . $idgroup] & (int)$auth_level) !== 0 )
-				$selected = 'selected="selected"';
-				
-			$selected = ($idgroup == 2) ? 'selected="selected"' : $selected;
-			
-			$select_groups .=  '<option value="r' . $idgroup . '" id="' . $auth_id . 'r' . $j . '" ' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_id . 'r\', ' . $j . ')">' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .=  '</optgroup>';
-		
-		//Liste des groupes.
-		$j = 0;
-		$select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
-		foreach($array_groups as $idgroup => $group_name)
-		{
-			$selected = '';		
-			if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_level) !== 0 )
-				$selected = 'selected="selected"';
-
-			$select_groups .= '<option value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '" ' . $selected . '>' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .= '</optgroup></select>';
-		
-		return $select_groups;
-	}
-	
-	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? $_GET['error'] : '';
-	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 
 	//Images disponibles
 	$img_direct_path = (strpos($articles_info['icon'], '/') !== false);
@@ -825,6 +748,14 @@ elseif( !empty($id) ) //Edition des catégories.
 			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
 		}
 	}	
+	
+	//Gestion erreur.
+	$get_error = !empty($_GET['error']) ? $_GET['error'] : '';
+	if( $get_error == 'incomplete' )
+		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
+	
+	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_auth = !empty($articles_info['auth']) ? unserialize($articles_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
 		
 	$template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
@@ -839,7 +770,7 @@ elseif( !empty($id) ) //Edition des catégories.
 		'IMG_PATH' => $img_direct_path ? $articles_info['icon'] : '',
 		'IMG_ICON' => !empty($articles_info['icon']) ? '<img src="' . $articles_info['icon'] . '" alt="" class="valign_middle" />' : '',		
 		'IMG_LIST' => $image_list,
-		'AUTH_READ' => generate_select_groups($array_auth, 'r', 1),
+		'AUTH_READ' => $groups->generate_select_groups('r', $array_auth, 0x01),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
 		'L_ARTICLES_ADD' => $LANG['articles_add'],
@@ -882,65 +813,18 @@ elseif( !empty($root) ) //Edition de la racine.
 		'admin_articles_cat_edit2' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_cat_edit2.tpl'
 	));
 			
-	//Création du tableau des groupes.
-	$array_groups = array();
-	foreach($_array_groups_auth as $idgroup => $array_group_info)
-		$array_groups[$idgroup] = $array_group_info[0];	
-		
-	//Création du tableau des rangs.
-	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	
-	//Récupération des tableaux des autorisations et des groupes.
-	$array_auth = !empty($CONFIG_ARTICLES['auth_root']) ? $CONFIG_ARTICLES['auth_root'] : array();
-	
-	//Génération d'une liste à sélection multiple des rangs et groupes
-	function generate_select_groups($array_auth, $auth_id, $auth_level)
-	{
-		global $array_groups, $array_ranks, $LANG;
-		
-		$j = 0;
-		//Liste des rangs
-		$select_groups = '<select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
-		foreach($array_ranks as $idgroup => $group_name)
-		{
-			$selected = '';	
-			if( array_key_exists('r' . $idgroup, $array_auth) && ((int)$array_auth['r' . $idgroup] & (int)$auth_level) !== 0 )
-				$selected = 'selected="selected"';
-				
-			$selected = ($idgroup == 2) ? 'selected="selected"' : $selected;
-			
-			$select_groups .=  '<option value="r' . $idgroup . '" id="' . $auth_id . 'r' . $j . '" ' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_id . 'r\', ' . $j . ')">' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .=  '</optgroup>';
-		
-		//Liste des groupes.
-		$j = 0;
-		$select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
-		foreach($array_groups as $idgroup => $group_name)
-		{
-			$selected = '';		
-			if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_level) !== 0 )
-				$selected = 'selected="selected"';
-
-			$select_groups .= '<option value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '" ' . $selected . '>' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .= '</optgroup></select>';
-		
-		return $select_groups;
-	}
-	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? $_GET['error'] : '';
 	if( $get_error == 'incomplete' )
 		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
+	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_auth = !empty($CONFIG_ARTICLES['auth_root']) ? $CONFIG_ARTICLES['auth_root'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	$template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $template->module_data_path('articles'),
 		'NBR_GROUP' => count($array_groups),
-		'AUTH_READ' => generate_select_groups($array_auth, 'r', 1),
+		'AUTH_READ' => $groups->generate_select_groups('r', $array_auth, 0x01),
 		'L_ROOT' => $LANG['root'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
 		'L_ARTICLES_ADD' => $LANG['articles_add'],
@@ -974,10 +858,7 @@ else
 	if( $get_error == 'unexist_cat' )
 		$errorh->error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 		
-	//Création du tableau des groupes.
-	$array_groups = array();
-	foreach($_array_groups_auth as $idgroup => $array_group_info)
-		$array_groups[$idgroup] = $array_group_info[0];
+	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
 		
 	$template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],

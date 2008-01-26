@@ -42,11 +42,10 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 
 	############Affichage des 4 premiers membres de la table et nombres des différents level en ligne##############
 	$i = 0;
-	$result = $sql->query_while("SELECT s.user_id, s.level, s.session_time, m.login 
+	$result = $sql->query_while("SELECT s.user_id, s.level, s.session_time, m.login
 	FROM ".PREFIX."sessions s 
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
-	GROUP BY s.user_id
 	ORDER BY " . $CONFIG_ONLINE['display_order_online'], __LINE__, __FILE__); //4 Membres enregistrés max.
 	while( $row = $sql->sql_fetch_assoc($result) )
 	{

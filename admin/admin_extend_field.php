@@ -46,8 +46,7 @@ if( $del && !empty($id) )
 		$sql->query_inject("DELETE FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		$sql->query_inject("ALTER TABLE ".PREFIX."member_extend DROP " . $field_name, __LINE__, __FILE__);
 	}
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 elseif( !empty($_POST['valid']) )
 {
@@ -92,20 +91,13 @@ elseif( !empty($_POST['valid']) )
 				$sql->query_inject("ALTER TABLE ".PREFIX."member_extend CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
 			$sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
-			header('location:' . HOST . DIR . '/admin/admin_extend_field.php');
-			exit;		
+			redirect(HOST . DIR . '/admin/admin_extend_field.php');
 		}
 		else
-		{
-			header('location:' . HOST . DIR . '/admin/admin_extend_field_add.php?error=exist_field#errorh');
-			exit; 
-		}
+			redirect(HOST . DIR . '/admin/admin_extend_field_add.php?error=exist_field#errorh');
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/admin/admin_extend_field.php?id=' . $id . '&error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/admin/admin_extend_field.php?id=' . $id . '&error=incomplete#errorh');
 }
 elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 {
@@ -117,8 +109,7 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 		$sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class=" . $top . " WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
 		$sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class=" . $idmoins . " WHERE class = 0", __LINE__, __FILE__);
 		
-		header('location:' . HOST . SCRIPT . '#e' . $id);
-		exit;
+		redirect(HOST . SCRIPT . '#e' . $id);
 	}
 	elseif( !empty($bottom) )
 	{
@@ -128,8 +119,7 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 		$sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = " . $bottom . " WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
 		$sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = " . $idplus . " WHERE class = 0", __LINE__, __FILE__);
 			
-		header('location:' . HOST . SCRIPT . '#e' . $id);
-		exit;
+		redirect(HOST . SCRIPT . '#e' . $id);
 	}
 }
 elseif( !empty($id) )
@@ -159,9 +149,9 @@ elseif( !empty($id) )
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'field_edit.');
+		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $get_error == 'exist_field' )
-		$errorh->error_handler($LANG['e_exist_field'], E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'field_edit.');
+		$errorh->error_handler($LANG['e_exist_field'], E_USER_NOTICE);
 	
 	$array_field = array(
 		1 => $LANG['short_text'],

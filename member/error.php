@@ -102,7 +102,7 @@ if( in_array($id_error, $array_error) )
 		}	
 			
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, $errno, NO_LINE_ERROR, NO_FILE_ERROR, 'connexion.');		
+			$errorh->error_handler($errstr, $errno);		
 			
 		$template->assign_vars(array(
 			'L_CONNECT' => $LANG['connect'],
@@ -117,10 +117,7 @@ if( in_array($id_error, $array_error) )
 		$template->pparse('error');
 	}
 	else
-	{	
-		header('location: ' . get_start_page());
-		exit;
-	}
+		redirect(get_start_page());
 }
 elseif( !empty($id_error) )
 {
@@ -172,10 +169,7 @@ elseif( $session->data['user_id'] === -1 )
 	$template->pparse('error');
 }
 else
-{
-	header('location: ' . get_start_page());
-	exit;
-}
+	redirect(get_start_page());
 
 require_once('../includes/footer.php'); 
 

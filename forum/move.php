@@ -50,10 +50,7 @@ if( !empty($id_get) ) //Déplacement du sujet.
 
 	$topic = $sql->query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	if( !$groups->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	$template->assign_block_vars('move', array(
 	));
@@ -167,20 +164,13 @@ elseif( !empty($id_post) ) //Déplacement du topic
 
 			$forumfct->move_topic($id_post, $idcat, $to); //Déplacement du topic
 
-			header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
-			exit;
+			redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
 		}
 		else
-		{
 			$errorh->error_handler('e_incomplete', E_USER_REDIRECT); 
-			exit;
-		}
 	}
 	else
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}	
 }
 elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //Choix de la nouvelle catégorie, titre, sous-titre du topic à scinder.
 {
@@ -195,18 +185,12 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	$topic = $sql->query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	
 	if( !$groups->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 
 	$id_first = $sql->query("SELECT MIN(id) as id FROM ".PREFIX."forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	//Scindage du premier message interdite.
 	if( $id_first == $idm )
-	{
 		$errorh->error_handler('e_unable_cut_forum', E_USER_REDIRECT); 
-		exit;
-	}
 			
 	$cat = $sql->query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
 	$to = !empty($_POST['to']) ? numeric($_POST['to']) : $cat['id']; //Catégorie cible.
@@ -399,18 +383,12 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 	$to = !empty($_POST['to']) ? numeric($_POST['to']) : ''; //Catégorie cible.
 	
 	if( !$groups->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	$id_first = $sql->query("SELECT MIN(id) FROM ".PREFIX."forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	//Scindage du premier message interdite.
 	if( $id_first == $id_post_msg )
-	{
 		$errorh->error_handler('e_unable_cut_forum', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	$level = $sql->query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
 	if( !empty($to) && $level > 0 )
@@ -447,26 +425,16 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 				$forumfct->add_poll($last_topic_id, $question, $answers, 0, $votes, $poll_type); //Ajout du sondage.
 			}
 			
-			header('location:' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
-			exit;
+			redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
 		}
 		else
-		{
-			header('location:' . transid(HOST . SCRIPT . '?error=false_t&idm=' . $id_post_msg, '', '&') . '#errorh');
-			exit;
-		}
+			redirect(transid(HOST . SCRIPT . '?error=false_t&idm=' . $id_post_msg, '', '&') . '#errorh');
 	}
 	else
-	{
 		$errorh->error_handler('e_incomplete', E_USER_REDIRECT); 
-		exit;
-	}	
 }
 else
-{
 	$errorh->error_handler('unknow_error', E_USER_REDIRECT); 
-	exit;
-}
 
 include('../includes/footer.php');
 

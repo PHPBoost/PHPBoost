@@ -1,4 +1,3 @@
-		<link href="{MODULE_DATA_PATH}/forum.css" rel="stylesheet" type="text/css" media="screen, handheld">
 		<script type="text/javascript">
 		<!--
 		function Confirm() {
@@ -63,7 +62,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="row1" style="width:250px;">
+						<td class="row1" style="width:200px;">
 							{L_CREATE_ARTICLE}
 						</td>
 						<td class="row2" style="text-align:center;">
@@ -119,7 +118,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="row1" style="width:250px;">
+						<td class="row1">
 							{L_EDIT}
 						</td>
 						<td class="row2" style="text-align:center;">
@@ -133,7 +132,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="row1" style="width:250px;">
+						<td class="row1">
 							{L_DELETE}
 						</td>
 						<td class="row2" style="text-align:center;">
@@ -147,7 +146,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="row1" style="width:250px;">
+						<td class="row1">
 							{L_RENAME}
 						</td>
 						<td class="row2" style="text-align:center;">
@@ -161,7 +160,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="row1" style="width:250px;">
+						<td class="row1">
 							{L_REDIRECT}
 						</td>
 						<td class="row2" style="text-align:center;">
@@ -175,7 +174,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="row1" style="width:250px;">
+						<td class="row1">
 							{L_MOVE}
 						</td>
 						<td class="row2" style="text-align:center;">
@@ -189,7 +188,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="row1" style="width:250px;">
+						<td class="row1">
 							{L_STATUS}
 						</td>
 						<td class="row2" style="text-align:center;">
@@ -203,7 +202,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="row1" style="width:250px;">
+						<td class="row1">
 							{L_COM}
 						</td>
 						<td class="row2" style="text-align:center;">
@@ -217,7 +216,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="row1" style="width:250px;">
+						<td class="row1">
 							{L_RESTRICTION}
 						</td>
 						<td class="row2" style="text-align:center;">

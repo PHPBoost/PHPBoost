@@ -1,4 +1,4 @@
-# START error_handler #
+# IF C_ERROR_HANDLER #
 <table class="module_table">
 	<tr>
 		<th>
@@ -8,10 +8,10 @@
 	<tr>
 		<td class="row2">
 			<span id="errorh"></span>
-			<div class="{error_handler.CLASS}">
-				<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+			<div class="{ERRORH_CLASS}">
+				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			</div>
 		</td>
 	</tr>
 </table>
-# END error_handler #
+# ENDIF #

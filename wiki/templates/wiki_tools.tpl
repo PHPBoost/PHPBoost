@@ -15,7 +15,7 @@
 		<div id="dynamic_menu">
 			<div style="float:right;">
 				<div style="float:left;" onmouseover="show_menu(1);" onmouseout="hide_menu();">
-					<h5 onclick="temporise_menu(1)" style="margin-right:20px;" class="horizontal"><img src="{WIKI_PATH}/images/contribuate.png" style="vertical-align:middle;" alt="" />&nbsp;{L_OTHER_TOOLS}&nbsp;</h5>					
+					<h5 onclick="temporise_menu(1)" style="margin-right:20px;" class="horizontal"><img src="{WIKI_PATH}/images/contribuate.png" class="valign_middle" alt="" />&nbsp;{L_OTHER_TOOLS}&nbsp;</h5>					
 					<div id="smenu1" class="horizontal_block">
 						<ul>
 							# START contribution_tools #
@@ -26,7 +26,7 @@
 					</div>						
 				</div>
 				<div style="float:left;" onmouseover="show_menu(2);" onmouseout="hide_menu();">
-					<h5 onclick="temporise_menu(2)" style="margin-right:5px;" class="horizontal"><img src="{WIKI_PATH}/images/tools.png" style="vertical-align:middle;" alt="" />&nbsp;{L_CONTRIBUTION_TOOLS}&nbsp;</h5>					
+					<h5 onclick="temporise_menu(2)" style="margin-right:5px;" class="horizontal"><img src="{WIKI_PATH}/images/tools.png" class="valign_middle" alt="" />&nbsp;{L_CONTRIBUTION_TOOLS}&nbsp;</h5>					
 					<div id="smenu2" class="horizontal_block">
 						<ul>
 							# START other_tools #

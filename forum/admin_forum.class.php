@@ -334,10 +334,7 @@ class Admin_forum
 		
 		//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 		if( empty($list_cats) )
-		{
-			header('location:' . HOST . SCRIPT);
-			exit;
-		}
+			redirect(HOST . SCRIPT);
 
 		########## Suppression ##########
 		//On supprime virtuellement (changement de signe des bornes) les enfants.

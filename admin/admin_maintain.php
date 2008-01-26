@@ -34,10 +34,22 @@ require_once('../includes/admin_header.php');
 if( !empty($_POST['valid']) )
 {
 	
-	$maintain = isset($_POST['maintain']) ? numeric($_POST['maintain']) : 0; //Désactivé par défaut.
-	if( $maintain != -1 )
-		$maintain = !empty($maintain) ? time() + $maintain : '0';	
-	
+	$maintain_check = isset($_POST['maintain_check']) ? numeric($_POST['maintain_check']) : 0;
+	switch($maintain_check) 
+	{
+		case 1:
+			$maintain = isset($_POST['maintain']) ? numeric($_POST['maintain']) : 0; //Désactivé par défaut.
+			if( $maintain != -1 )
+				$maintain = !empty($maintain) ? time() + $maintain : '0';	
+		break;
+		case 2:
+			$maintain = isset($_POST['end']) ? trim($_POST['end']) : 0;
+			$maintain = strtotimestamp($maintain, $LANG['date_format_short']);
+		break;
+		default:
+		$maintain = '0';
+	}
+
 	$CONFIG['maintain_text'] = !empty($_POST['contents']) ? stripslashes(parse($_POST['contents'])) : '';
 	$CONFIG['maintain_delay'] = isset($_POST['display_delay']) ? numeric($_POST['display_delay']) : 0;
 	$CONFIG['maintain_display_admin'] = isset($_POST['maintain_display_admin']) ? numeric($_POST['maintain_display_admin']) : 0;
@@ -47,8 +59,7 @@ if( !empty($_POST['valid']) )
 	###### Régénération du cache $CONFIG #######
 	$cache->generate_file('config');
 	
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 else //Sinon on rempli le formulaire	 
 {		
@@ -59,13 +70,20 @@ else //Sinon on rempli le formulaire
 	$CONFIG['maintain_delay'] = isset($CONFIG['maintain_delay']) ? $CONFIG['maintain_delay'] : 1;
 	$CONFIG['maintain_display_admin'] = isset($CONFIG['maintain_display_admin']) ? $CONFIG['maintain_display_admin'] : 1;
 
+	$check_until = ($CONFIG['maintain'] > (time() + 86400));
 	$template->assign_vars(array(
 		'MAINTAIN_CONTENTS' => !empty($CONFIG['maintain_text']) ? unparse($CONFIG['maintain_text']) : '',
 		'DISPLAY_DELAY_ENABLED' => ($CONFIG['maintain_delay'] == 1) ? 'checked="checked"' : '',
 		'DISPLAY_DELAY_DISABLED' => ($CONFIG['maintain_delay'] == 0) ? 'checked="checked"' : '',
 		'DISPLAY_ADMIN_ENABLED' => ($CONFIG['maintain_display_admin'] == 1) ? 'checked="checked"' : '',
 		'DISPLAY_ADMIN_DISABLED' => ($CONFIG['maintain_display_admin'] == 0) ? 'checked="checked"' : '',
+		'MAINTAIN_CHECK_NO' => ($CONFIG['maintain'] <= time()) ? ' checked="checked"' : '',
+		'MAINTAIN_CHECK_DELAY' => ($CONFIG['maintain'] > time() && $CONFIG['maintain'] <= (time() + 86400)) ? ' checked="checked"' : '',
+		'MAINTAIN_CHECK_UNTIL' => $check_until ? ' checked="checked"' : '',
+		'DATE_UNTIL' => $check_until ? gmdate_format('date_format_short', $CONFIG['maintain']) : '',
 		'L_MAINTAIN' => $LANG['maintain'],
+		'L_UNTIL' => $LANG['until'],
+		'L_DURING' => $LANG['during'],
 		'L_SET_MAINTAIN' => $LANG['maintain_for'],
 		'L_MAINTAIN_DELAY' => $LANG['maintain_delay'],
 		'L_MAINTAIN_DISPLAY_ADMIN' => $LANG['maintain_display_admin'],
@@ -78,8 +96,8 @@ else //Sinon on rempli le formulaire
 	));
 		
 	//Durée de la maintenance.
-	$array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800'); 
-	$array_delay = array(0 => $LANG['unspecified'], 1 => $LANG['no'], 2 => '1 ' . $LANG['minute'], 3 => '5 ' . $LANG['minutes'], 4 => '15 ' . $LANG['minutes'], 5 => '30 ' . $LANG['minutes'], 6 => '1 ' . $LANG['hour'], 7 => '2 ' . $LANG['hours'], 8 => '1 ' . $LANG['day'], 9 => '2 ' . $LANG['days'], 10 => '1 ' . $LANG['week']); 
+	$array_time = array(-1, 60, 300, 900, 1800, 3600, 7200, 14400, 21600, 28800, 57600); 
+	$array_delay = array($LANG['unspecified'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '4 ' . $LANG['hours'], '6 ' . $LANG['hours'], '8 ' . $LANG['hours'], '16 ' . $LANG['hours']); 
 	
 	$CONFIG['maintain'] = isset($CONFIG['maintain']) ? $CONFIG['maintain'] : -1;
 	if( $CONFIG['maintain'] != -1 )
@@ -99,10 +117,9 @@ else //Sinon on rempli le formulaire
 	else
 		$key_delay = -1;
 
-	foreach( $array_time as $key => $time)
+	foreach($array_time as $key => $time)
 	{
 		$selected = (($key_delay + 1) == $key) ? 'selected="selected"' : '' ;
-		
 		$template->assign_block_vars('select_maintain', array(
 			'DELAY' => '<option value="' . $time . '" ' . $selected . '>' . $array_delay[$key] . '</option>'
 		));

@@ -56,10 +56,7 @@ if( !empty($new_title) && $id_rename_post > 0 )
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if( ($special_auth && !$groups->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-	{
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$encoded_title = url_encode_rewrite($new_title);
 	$num_rows_same_title = $sql->query("SELECT COUNT(*) AS rows FROM ".PREFIX."pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
@@ -76,21 +73,16 @@ if( !empty($new_title) && $id_rename_post > 0 )
 		}
 		else
 			$sql->query_inject("UPDATE ".PREFIX."pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
-		header('Location:' . transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
-		exit;
+		redirect(transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	//le titre réel change mais pas celui encodé
 	elseif( $num_rows_same_title > 0 && $encoded_title == $page_infos['encoded_title'] )
 	{
 		$sql->query_inject("UPDATE ".PREFIX."pages SET title = '" . $new_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
-		header('Location:' . transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
-		exit;
+		redirect(transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
-	{
-		header('Location:' . HOST . DIR . '/pages/action.php?rename=' . $id_rename_post . '&error=title_already_exists');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/action.php?rename=' . $id_rename_post . '&error=title_already_exists');
 }
 //on poste une redirection
 elseif( !empty($redirection_name) && $id_new_post > 0 )
@@ -102,10 +94,7 @@ elseif( !empty($redirection_name) && $id_new_post > 0 )
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if( ($special_auth && !$groups->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-	{
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$encoded_title = url_encode_rewrite($redirection_name);
 	$num_rows_same_title = $sql->query("SELECT COUNT(*) AS rows FROM ".PREFIX."pages WHERE encoded_title = '" . $redirection_name . "'", __LINE__, __FILE__);
@@ -114,14 +103,10 @@ elseif( !empty($redirection_name) && $id_new_post > 0 )
 	if( $num_rows_same_title == 0 )
 	{
 		$sql->query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, redirect) VALUES ('" . $redirection_name . "', '" . $encoded_title . "', '" . $id_new_post . "')", __LINE__, __FILE__);
-		header('Location:' . transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
-		exit;
+		redirect(transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
-	{
-		header('Location:' . HOST . DIR . '/pages/action.php?new=' . $id_new_post . '&error=title_already_exists');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/action.php?new=' . $id_new_post . '&error=title_already_exists');
 }
 //Suppression des redirections
 elseif( $del_redirection > 0 )
@@ -133,15 +118,13 @@ elseif( $del_redirection > 0 )
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if( ($special_auth && !$groups->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-	{
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		
 	//On supprime la redirection
 	if( $page_infos['redirect'] > 0 )
 		$sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del_redirection . "' AND redirect > 0", __LINE__, __FILE__);
-	header('Location:' . HOST . DIR . transid('/pages/action.php?id=' . $page_infos['redirect'], '', '&'));
-	exit;
+		
+	redirect(HOST . DIR . transid('/pages/action.php?id=' . $page_infos['redirect'], '', '&'));
 }
 //Suppression d'une catégorie
 elseif( $del_cat_post > 0 && $report_cat >= 0 )
@@ -152,9 +135,7 @@ elseif( $del_cat_post > 0 && $report_cat >= 0 )
 	$general_auth = empty($page_infos['auth']) ? true : false;
 	$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : array();
 	if( !((!$general_auth || $groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) && ($general_auth || $groups->check_auth($array_auth , EDIT_PAGE))) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	}
 
 	$sub_cats = array();
 	//On fait un tableau contenant la liste des sous catégories de cette catégorie
@@ -166,10 +147,7 @@ elseif( $del_cat_post > 0 && $report_cat >= 0 )
 	{	
 		//Si on ne la déplace pas dans une de ses catégories filles
 		if( ($report_cat > 0 && in_array($report_cat, $sub_cats)) || $report_cat == $page_infos['id_cat'] )//Si on veut reporter dans une catégorie parente
-		{
-			header('Location: ' . HOST . DIR . '/pages/' . transid('action.php?del_cat=' . $del_cat_post . '&error=e_cat_contains_cat#errorh', '','&'));
-			exit;
-		}
+			redirect(HOST . DIR . '/pages/' . transid('action.php?del_cat=' . $del_cat_post . '&error=e_cat_contains_cat#errorh', '','&'));
 	}
 	
 	if( $remove_action == 'remove_all' ) //On supprime le contenu de la catégorie
@@ -184,14 +162,10 @@ elseif( $del_cat_post > 0 && $report_cat >= 0 )
 		if( array_key_exists($page_infos['id_cat'], $_PAGES_CATS) && $_PAGES_CATS[$page_infos['id_cat']]['id_parent'] > 0 )
 		{
 			$title = $_PAGES_CATS[$_PAGES_CATS[$page_infos['id_cat']]['id_parent']]['name'];
-			header('Location: ' . HOST . DIR . '/pages/' . transid('pages.php?title=' . url_encode_rewrite($title), url_encode_rewrite($title), '&'));
-			exit;
+			redirect(HOST . DIR . '/pages/' . transid('pages.php?title=' . url_encode_rewrite($title), url_encode_rewrite($title), '&'));
 		}
 		else
-		{
-			header('Location: ' . HOST . DIR . '/pages/' . transid('pages.php', '', '&'));
-			exit;
-		}
+			redirect(HOST . DIR . '/pages/' . transid('pages.php', '', '&'));
 	}
 	elseif( $remove_action == 'move_all' ) //On déplace le contenu de la catégorie
 	{
@@ -206,14 +180,10 @@ elseif( $del_cat_post > 0 && $report_cat >= 0 )
 		if( array_key_exists($report_cat, $_PAGES_CATS) )
 		{
 			$title = $_PAGES_CATS[$report_cat]['name'];
-			header('Location: ' . HOST . DIR . '/pages/' . transid('pages.php?title=' . url_encode_rewrite($title), url_encode_rewrite($title), '&'));
-			exit;
+			redirect(HOST . DIR . '/pages/' . transid('pages.php?title=' . url_encode_rewrite($title), url_encode_rewrite($title), '&'));
 		}
 		else
-		{
-			header('Location: ' . HOST . DIR . '/pages/' . transid('pages.php', '', '&'));
-			exit;
-		}
+			redirect(HOST . DIR . '/pages/' . transid('pages.php', '', '&'));
 	}
 }
 
@@ -226,10 +196,7 @@ if( $id_page > 0 )
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if( ($special_auth && !$groups->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-	{
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	if($id_redirection > 0 )
 		speed_bar_generate($SPEED_BAR, $LANG['pages_redirection_management'], transid('action.php?id=' . $id_redirection));
@@ -267,10 +234,7 @@ if( $del_cat > 0 )
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if( ($special_auth && !$groups->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-	{
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$cats = array();
 	$cat_list = display_cat_explorer($page_infos['id_cat'], $cats);
@@ -319,7 +283,7 @@ if( $del_cat > 0 )
 	else
 		$errstr = '';
 	if( !empty($errstr) )
-		$errorh->error_handler($errstr, E_USER_WARNING, '', '', 'remove.');
+		$errorh->error_handler($errstr, E_USER_WARNING);
 }
 elseif( $id_rename > 0 )
 {
@@ -337,7 +301,7 @@ elseif( $id_rename > 0 )
 	//Erreur : la page existe déjà
 	if( $error == 'title_already_exists' )
 	{
-		$errorh->error_handler($LANG['pages_already_exists'], E_USER_WARNING, '', '', 'rename.');
+		$errorh->error_handler($LANG['pages_already_exists'], E_USER_WARNING);
 	}
 }
 //Création d'une redirection
@@ -355,7 +319,7 @@ elseif( $id_new > 0 )
 	//Erreur : la page existe déjà
 	if( $error == 'title_already_exists' )
 	{
-		$errorh->error_handler($LANG['pages_already_exists'], E_USER_WARNING, '', '', 'new.');
+		$errorh->error_handler($LANG['pages_already_exists'], E_USER_WARNING);
 	}
 }
 //Liste des redirections vers cette page
@@ -393,10 +357,7 @@ elseif( $id_redirection > 0 )
 else
 {
 	if( !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-	{
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 
 	$template->assign_block_vars('redirections', array());
 	

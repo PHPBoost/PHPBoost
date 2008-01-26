@@ -56,8 +56,7 @@ if( !empty($_POST['valid']) )
 	###### Régénération du cache des liens #######
 	$cache->generate_module_file('links');
 	
-	header('location:' . HOST . SCRIPT);
-	exit;	
+	redirect(HOST . SCRIPT);
 }
 elseif( !empty($_GET['del']) && !empty($id) ) //Suppresion du lien.
 {
@@ -67,8 +66,7 @@ elseif( !empty($_GET['del']) && !empty($id) ) //Suppresion du lien.
 	###### Régénération du cache des liens #######
 	$cache->generate_module_file('links');
 	
-	header('location:' . HOST . SCRIPT);	
-	exit;	
+	redirect(HOST . SCRIPT);	
 }
 elseif( !empty($_POST['add']) ) //Ajout du lien.
 {
@@ -86,15 +84,10 @@ elseif( !empty($_POST['add']) ) //Ajout du lien.
 		
 		###### Régénération du cache des liens #######
 		$cache->generate_module_file('links');
-		header('location:' . HOST . SCRIPT);
-		exit;
+		redirect(HOST . SCRIPT);
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/links/admin_links.php?add=1&error=incomplete#errorh');
-		exit;
-	}
-
+		redirect(HOST . DIR . '/links/admin_links.php?add=1&error=incomplete#errorh');
 }
 elseif( !empty($_POST['sepa']) ) //Insertion d'un séparateur.
 {
@@ -111,14 +104,10 @@ elseif( !empty($_POST['sepa']) ) //Insertion d'un séparateur.
 	
 		###### Régénération du cache des liens #######
 		$cache->generate_module_file('links');	
-		header('location:' . HOST . SCRIPT);
-		exit;
+		redirect(HOST . SCRIPT);
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/links/admin_links.php?add=1&error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/links/admin_links.php?add=1&error=incomplete#errorh');
 }
 elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 {
@@ -133,8 +122,7 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 		###### Régénération du cache des liens #######
 		$cache->generate_module_file('links');
 		
-		header('location:' . HOST . SCRIPT . '#l' . $id);
-		exit;
+		redirect(HOST . SCRIPT . '#l' . $id);
 	}
 	elseif( !empty($bottom) )
 	{
@@ -146,8 +134,7 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 		
 		###### Régénération du cache des liens #######
 		$cache->generate_module_file('links');		
-		header('location:' . HOST . SCRIPT . '#l' . $id);
-		exit;
+		redirect(HOST . SCRIPT . '#l' . $id);
 	}
 }
 elseif( $add )
@@ -162,7 +149,7 @@ elseif( $add )
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'add.');
+		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
 	$template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],

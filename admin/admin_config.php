@@ -85,30 +85,12 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 	if( !empty($config['theme']) && !empty($CONFIG['lang']) ) //Nom de serveur obligatoire
 	{
 		$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-		
-		//Modification de la page de démarrage.
-		if( !empty($start_page) )
-		{
-			//Ecriture du fichier de redirection
-			$file_path = '../index.php';
-			delete_file($file_path); //Rippe le fichier			
-			$start_page = (substr($start_page, 0, 1) == '/') ? HOST . DIR . $start_page : $start_page;			
-			$file = @fopen($file_path, 'w+'); //On crée le fichier avec droit d'écriture et lecture.
-			@fwrite($file, '<?php header(\'location: ' . $start_page . '\'); ?>');
-			@fclose($file);
-		}
-		
-		###### Régénération du cache $CONFIG #######
 		$cache->generate_file('config');
 		
-		header('location:' . HOST . SCRIPT);
-		exit;
+		redirect(HOST . SCRIPT);
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/admin/admin_config.php?error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/admin/admin_config.php?error=incomplete#errorh');
 }
 elseif( !empty($check_advanced) && empty($_POST['advanced']) )
 {
@@ -207,13 +189,6 @@ elseif( !empty($_POST['advanced']) )
 	
 	if( !empty($CONFIG['server_name']) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit'])  ) //Nom de serveur obligatoire
 	{
-		//Ecriture du fichier de redirection
-		$file_path = '../index.php';
-		delete_file($file_path); //Rippe le fichier					
-		$file = @fopen($file_path, 'w+'); //On crée le fichier avec droit d'écriture et lecture.
-		@fwrite($file, '<?php header(\'location: ' . get_start_page() . '\'); ?>');
-		@fclose($file);
-		
 		if( !empty($_POST['rewrite_engine']) && !strpos($_SERVER['SERVER_NAME'], 'free.fr') ) //Activation.
 		{
 			$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
@@ -234,14 +209,10 @@ elseif( !empty($_POST['advanced']) )
 			$cache->generate_htaccess();
 		}
 	
-		header('location:' . HOST . DIR . '/admin/admin_config.php?adv=1');
-		exit;
+		redirect(HOST . DIR . '/admin/admin_config.php?adv=1');
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/admin/admin_config.php?adv=1&error=incomplete#errorh');
-		exit;
-	}	
+		redirect(HOST . DIR . '/admin/admin_config.php?adv=1&error=incomplete#errorh');
 }
 else //Sinon on rempli le formulaire	 
 {		
@@ -356,7 +327,6 @@ else //Sinon on rempli le formulaire
 		'L_RESET' => $LANG['reset']		
 	));
 
-		
 	//Gestion langue par défaut.
 	$rep = '../lang/';
 	if( is_dir($rep) ) //Si le dossier existe
@@ -481,8 +451,7 @@ if( !empty($_GET['unlock']) )
 	
 	$mail->send_mail($session->data['user_mail'], $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail']);	
 
-	header('location:' . HOST . DIR . '/admin/admin_config.php?adv=1&mail=1');
-	exit;
+	redirect(HOST . DIR . '/admin/admin_config.php?adv=1&mail=1');
 }
 
 require_once('../includes/admin_footer.php');

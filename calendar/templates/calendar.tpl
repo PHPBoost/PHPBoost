@@ -71,15 +71,15 @@
 			</div>
 		</form>
 		
-		# START show.error_handler #
+		# IF C_ERROR_HANDLER #
 		<br />
 		<span id="errorh"></span>
-		<div class="{show.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{show.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {show.error_handler.L_ERROR}
+		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			<br />	
 		</div>
 		<br />		
-		# END show.error_handler #
+		# ENDIF #
 		<br /><br />
 		
 		# START show.action #
@@ -133,13 +133,13 @@
 		</script>
 
 		<script type="text/javascript" src="../templates/{THEME}/images/calendar.js"></script>
-		# START form.error_handler #
+		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
-		<div class="{form.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{form.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {form.error_handler.L_ERROR}
+		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			<br />	
 		</div>
-		# END form.error_handler #
+		# ENDIF #
 		
 		<form action="calendar.php{form.UPDATE}" method="post" onsubmit="return check_form_cl();" class="fieldset_content" style="width:70%">
 			<fieldset>
@@ -154,7 +154,7 @@
 							<div id="cl_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 							</div>
 						</div>
-						<a onClick="xmlhttprequest_calendar('cl_date', '?input_field=date&amp;field=cl_date&amp;d={form.DAY_DATE}&amp;m={form.MONTH_DATE}&amp;y={form.YEAR_DATE}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img style="vertical-align:middle;" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+						<a onClick="xmlhttprequest_calendar('cl_date', '?input_field=date&amp;field=cl_date&amp;d={form.DAY_DATE}&amp;m={form.MONTH_DATE}&amp;y={form.YEAR_DATE}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 					
 						{L_AT}
 						<label><input type="text" size="2" maxlength="2" name="hour" value="{form.HOUR}" class="text" /></label> H <label><input type="text" size="2" maxlength="2" name="min" value="{form.MIN}" class="text" /></label>

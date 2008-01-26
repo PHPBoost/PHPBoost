@@ -53,8 +53,7 @@ if( !empty($_POST['msg_register']) ) //Message à l'inscription.
 	###### Régénération du cache $CONFIG_MEMBER #######
 	$cache->generate_file('member');
 		
-	header('location:' . HOST . SCRIPT); 	
-	exit;
+	redirect(HOST . SCRIPT); 	
 }
 else
 {			

@@ -36,15 +36,9 @@ if( !empty($idurl) && !empty($CAT_DOWNLOAD[$idcat]['name']) && !empty($idcat) ) 
 	$template->set_filenames(array('download' => '../templates/' . $CONFIG['theme'] . '/download/download.tpl'));
 	
 	if( !$session->check_auth($session->data, $CAT_DOWNLOAD[$idcat]['secure']) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	if( empty($download['id']) )
-	{
 		$errorh->error_handler('e_unexist_file_download', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	if( $session->data['level'] === 2 )
 	{
@@ -170,14 +164,10 @@ if( !empty($idurl) && !empty($CAT_DOWNLOAD[$idcat]['name']) && !empty($idcat) ) 
 					users_note = '" . $users_note . "' WHERE id = '" . $get_note . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 					
 					//Success.
-					header('location:' . HOST . DIR . '/download/download' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
-					exit;
+					redirect(HOST . DIR . '/download/download' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
 				}
 				else
-				{
-					header('location:' . HOST . DIR . '/download/download' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
-					exit;
-				}			
+					redirect(HOST . DIR . '/download/download' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
 			}
 			else
 			{
@@ -207,10 +197,7 @@ if( !empty($idurl) && !empty($CAT_DOWNLOAD[$idcat]['name']) && !empty($idcat) ) 
 			}
 		}
 		else 
-		{
 			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-			exit;
-		}
 	}	
 	
 	//Affichage commentaires.
@@ -231,10 +218,7 @@ elseif( !empty($idcat) && empty($idurl) ) //Contenu de la catégorie!
 	$template->set_filenames(array('download' => '../templates/' . $CONFIG['theme'] . '/download/download.tpl'));
 
 	if( !$session->check_auth($session->data, $CAT_DOWNLOAD[$idcat]['secure']) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	$nbr_dl = $sql->query("SELECT COUNT(*) FROM ".PREFIX."download WHERE visible = 1 AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 

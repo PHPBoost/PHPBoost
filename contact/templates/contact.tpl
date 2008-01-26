@@ -12,7 +12,6 @@
 			{L_REQUIRE_VERIF_CODE}
 			return true;
 		}
-		
 		function refresh_img()
 		{
 			if ( typeof this.img_id == 'undefined' )
@@ -20,40 +19,25 @@
 			else
 				this.img_id++;
 			
-			var xhr_object = null;
-			var data = null;
-			var filename = "../member/verif_code.php";
-			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-			    return;
-
-			data = "new=1";
-			xhr_object.open("POST", filename, true);					
+			var data = 'new=1';
+			var xhr_object = xmlhttprequest_init('../member/verif_code.php');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
-				{					
 					document.getElementById('verif_code_img').src = '../member/verif_code.php?new=' + img_id;	
-				}
 			}
-
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(data);
+			xmlhttprequest_sender(xhr_object, data);
 		}
 		-->
 		</script>
 
-		# START error_handler #
+		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
-		<div class="{error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			<br />	
 		</div>
-		# END error_handler #
+		# ENDIF #
 				
 		<form action="contact.php{U_ACTION_CONTACT}" method="post" onsubmit="return check_form_mail();" class="fieldset_mini">
 			<fieldset>

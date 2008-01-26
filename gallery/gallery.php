@@ -58,8 +58,7 @@ if( !empty($g_del) ) //Suppression d'une image.
 	//Régénération du cache des photos aléatoires.
 	$cache->generate_module_file('gallery');
 	
-	header('location: ' . HOST . DIR . '/gallery/gallery' . transid('.php?cat=' . $g_idcat, '-' . $g_idcat . '.php', '&'));
-	exit;
+	redirect(HOST . DIR . '/gallery/gallery' . transid('.php?cat=' . $g_idcat, '-' . $g_idcat . '.php', '&'));
 }
 elseif( !empty($g_idpics) && isset($_GET['move']) ) //Déplacement d'une image.
 {
@@ -69,35 +68,25 @@ elseif( !empty($g_idpics) && isset($_GET['move']) ) //Déplacement d'une image.
 	//Régénération du cache des photos aléatoires.
 	$cache->generate_module_file('gallery');
 					
-	header('location: ' . HOST . DIR . '/gallery/gallery' . transid('.php?cat=' . $move, '-' . $move . '.php', '&'));
-	exit;
+	redirect(HOST . DIR . '/gallery/gallery' . transid('.php?cat=' . $move, '-' . $move . '.php', '&'));
 }
 elseif( isset($_FILES['gallery']) ) //Upload
 { 
 	if( !empty($g_idcat) )
 	{
 		if( !isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0 ) 
-		{	
-			header('location: ' . HOST . DIR . '/gallery/gallery' . transid('.php?error=unexist_cat', '', '&'));
-			exit;
-		}
+			redirect(HOST . DIR . '/gallery/gallery' . transid('.php?error=unexist_cat', '', '&'));
 	}
 	else //Racine.
 		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
 		
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if( !$groups->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$groups->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}	
-	
+
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if( !$gallery->auth_upload_pics($session->data['user_id'], $session->data['level']) )
-	{
-		header('location: ' . HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#errorh');
 	
 	$dir = 'pics/';
 	include_once('../includes/upload.class.php');
@@ -113,35 +102,23 @@ elseif( isset($_FILES['gallery']) ) //Upload
 		{
 			$upload->upload_file('gallery', '`([a-z0-9])+\.(jpg|gif|png)+`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 			if( !empty($upload->error) ) //Erreur, on arrête ici
-			{
-				header('location: ' . HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $upload->error, '-' . $g_idcat . '.php?add=1&error=' . $upload->error, '&') . '#errorh');
-				exit;
-			}
+				redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $upload->error, '-' . $g_idcat . '.php?add=1&error=' . $upload->error, '&') . '#errorh');
 			else
 			{
 				$path = $dir . $upload->filename['gallery'];
 				$error = $upload->validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
-				{
-					header('location: ' . HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $error, '-' . $g_idcat . '.php?add=1&error=' . $error, '&') . '#errorh');
-					exit;					
-				}
+					redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $error, '-' . $g_idcat . '.php?add=1&error=' . $error, '&') . '#errorh');
 				else
 				{					
 					//Enregistrement de l'image dans la bdd.
 					$gallery->resize_pics($path);		
 					if( !empty($gallery->error) )
-					{
-						header('location: ' . HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $upload->error, '-' . $g_idcat . '.php?add=1&error=' . $upload->error, '&') . '#errorh');
-						exit;
-					}
+						redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $upload->error, '-' . $g_idcat . '.php?add=1&error=' . $upload->error, '&') . '#errorh');
 					
 					$idpic = $gallery->add_pics($idcat_post, $name_post, $upload->filename['gallery'], $session->data['user_id']);
 					if( !empty($gallery->error) )
-					{
-						header('location: ' . HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $upload->error, '-' . $g_idcat . '.php?add=1&error=' . $upload->error, '&') . '#errorh');
-						exit;
-					}
+						redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $upload->error, '-' . $g_idcat . '.php?add=1&error=' . $upload->error, '&') . '#errorh');
 					
 					//Régénération du cache des photos aléatoires.
 					$cache->generate_module_file('gallery');
@@ -150,8 +127,7 @@ elseif( isset($_FILES['gallery']) ) //Upload
 		}
 	}
 	
-	header('location: ' . HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $idcat_post . '&id=' . $idpic, '-' . $idcat_post . '.php?add=1&id=' . $idpic, '&'));
-	exit;	
+	redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $idcat_post . '&id=' . $idpic, '-' . $idcat_post . '.php?add=1&id=' . $idpic, '&'));
 }
 elseif( $g_add )
 {
@@ -162,10 +138,7 @@ elseif( $g_add )
 	if( !empty($g_idcat) )
 	{
 		if( !isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0 ) 
-		{	
-			header('location: ' . HOST . DIR . '/gallery/gallery' . transid('.php?error=unexist_cat', '', '&'));
-			exit;
-		}
+			redirect(HOST . DIR . '/gallery/gallery' . transid('.php?error=unexist_cat', '', '&'));
 
 		$cat_links = '';
 		foreach($CAT_GALLERY as $id => $array_info_cat)
@@ -187,10 +160,7 @@ elseif( $g_add )
 	
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if( !$groups->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$groups->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	$auth_cats = '<option value="0">' . $LANG['root'] . '</option>';
 	foreach($CAT_GALLERY as $idcat => $key)
@@ -291,10 +261,7 @@ else
 	if( !empty($g_idcat) )
 	{
 		if( !isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0 ) 
-		{	
-			header('location: ' . HOST . DIR . '/gallery/gallery' . transid('.php?error=unexist_cat', '', '&'));
-			exit;
-		}
+			redirect(HOST . DIR . '/gallery/gallery' . transid('.php?error=unexist_cat', '', '&'));
 
 		$cat_links = '';
 		foreach($CAT_GALLERY as $id => $array_info_cat)
@@ -319,10 +286,7 @@ else
 	
 	//Niveau d'autorisation de la catégorie
 	if( !$groups->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	$nbr_pics = $sql->query("SELECT COUNT(*) FROM ".PREFIX."gallery WHERE idcat = '" . $g_idcat . "' AND aprob = 1", __LINE__, __FILE__);
 	$total_cat = $sql->query("SELECT COUNT(*) FROM ".PREFIX."gallery_cats gc " . $clause_cat, __LINE__, __FILE__);

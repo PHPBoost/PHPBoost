@@ -29,7 +29,7 @@
 require_once('../includes/begin.php');
 define('TITLE', '');
 require_once('../includes/header_no_display.php');
-header("Content-type: image/jpeg"); //Envoi du header.
+header('Content-type: image/jpeg'); //Envoi du header.
 
 //Configuration
 $width = 160;

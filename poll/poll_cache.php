@@ -32,8 +32,6 @@ function generate_module_file_poll()
 {
 	global $sql;
 	
-	global $sql;
-	
 	$code = 'global $CONFIG_POLL;' . "\n";
 		
 	//Récupération du tableau linéarisé dans la bdd.
@@ -41,39 +39,33 @@ function generate_module_file_poll()
 	$CONFIG_POLL = is_array($CONFIG_POLL) ? $CONFIG_POLL : array();
 	foreach($CONFIG_POLL as $key => $value)
 		$code .= '$CONFIG_POLL[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
-	
-	$_array_poll = '$_array_poll = array(';
-	$_question_poll = '';
-	$_poll_type = '0';
-	$_total_vote = '0';
-	
-	$poll = $sql->query_array('poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $CONFIG_POLL['poll_mini'] . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
-	if( !empty($poll['id']) ) //Sondage existant.
-	{	
-		$array_answer = explode('|', $poll['answers']);
-		$array_vote = explode('|', $poll['votes']);
-		
-		$_total_vote = array_sum($array_vote);
-		$_total_vote = ($_total_vote == 0) ? 1 : $_total_vote; //Empêche la division par 0.
-		
-		$_question_poll = $poll['question'];
-		
-		$array_poll = array_combine($array_answer, $array_vote);
-		foreach($array_poll as $answer => $nbrvote)
+
+	$_array_poll = '';
+	if( is_array($CONFIG_POLL['poll_mini']) )
+	{
+		foreach($CONFIG_POLL['poll_mini'] as $key => $idpoll)
 		{
-			$_array_poll .= var_export($answer, true) . ' => ' . var_export(number_round(($nbrvote * 100 / $_total_vote), 1), true) . ', ' . "\n";
-		}		
-		$_poll_type = $poll['type'];
+			$poll = $sql->query_array('poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
+			if( !empty($poll['id']) ) //Sondage existant.
+			{	
+				$array_answer = explode('|', $poll['answers']);
+				$array_vote = explode('|', $poll['votes']);
+				
+				$total_vote = array_sum($array_vote);
+				$total_vote = ($total_vote == 0) ? 1 : $total_vote; //Empêche la division par 0.
+				
+				$array_votes = array_combine($array_answer, $array_vote);
+				foreach($array_votes as $answer => $nbrvote)
+					$array_votes[$answer] = number_round(($nbrvote * 100 / $total_vote), 1);
+					
+				$_array_poll .= $key . ' => array(\'id\' => ' . var_export($poll['id'], true) . ', \'question\' => ' . var_export($poll['question'], true) . ', \'votes\' => ' . var_export($array_votes, true) . ', \'total\' => ' . var_export($total_vote, true) . ', \'type\' => ' . var_export($poll['type'], true) . '),' . "\n";
+			}
+		}
 	}
-	$_array_poll .= ');' . "\n";
-	
-	return $code .
-	"\n" . 
-	'global $_mini_poll, $_poll_type, $_question_poll, $_total_vote, $_array_poll;' . 
-	"\n\n" . $_array_poll . 
-	"\r\n" . '$_poll_type = ' . var_export($_poll_type, true) . ';' .
-	"\r\n" . '$_total_vote = ' . var_export($_total_vote, true) . ';' .
-	"\r\n" . '$_question_poll = ' . var_export($_question_poll, true) . ';';
+	if( !empty($_array_poll) )
+		$code .= "\n" . 'global $_array_poll;' . "\n\n" . '$_array_poll = array(' . $_array_poll . ');';
+
+	return $code;
 }
 
 ?>

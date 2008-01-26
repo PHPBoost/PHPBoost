@@ -99,7 +99,7 @@ class Forum
 
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if( $row['last_view_id'] == $previous_msg_id && $row['pm'] == '1' ) 
-					$privatemsg->send_pm($row['user_id'], addslashes($LANG['forum_mail_title_new_post']), sprintf(addslashes($LANG['forum_mail_new_post']), addslashes($title_subject_pm), addslashes($pseudo_pm), $preview_contents, addslashes($next_pm)), '-1', CHECK_PM_BOX, SYSTEM_PM);
+					$privatemsg->send_pm($row['user_id'], addslashes($LANG['forum_mail_title_new_post']), sprintf(addslashes($LANG['forum_mail_new_post']), addslashes($title_subject_pm), addslashes($pseudo_pm), $preview_contents, addslashes($next_pm)), '-1', SYSTEM_PM);
 			}
 			
 			forum_generate_rss(); //Regénération du flux rss.
