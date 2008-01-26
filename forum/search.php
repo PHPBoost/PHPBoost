@@ -193,16 +193,26 @@ if( !empty($valid_search) && !empty($search) )
 		$result = $sql->query_while($req, __LINE__, __FILE__);
 		while( $row = $sql->sql_fetch_assoc($result) ) //On execute la requête dans une boucle pour afficher tout les résultats.
 		{ 
-			$title = '';
+			$title = $row['title'];
 			if( !empty($row['title']) )
 				$title = (strlen(html_entity_decode($row['title'])) > 45 ) ? substr_html($row['title'], 0, 45) . '...' : $row['title'];
 			
 			//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 			$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($row['title']) : '';
 			
+			//Pertinance du résultat.
 			$relevance = max($row['relevance'], $row['relevance2']);
-			$contents = $colorate_result ? preg_replace_callback('`(.*)(' . preg_quote($search) . ')(.*)`isU', 'token_colorate', $row['contents']) : $row['contents'];
-			$title = $colorate_result ? preg_replace_callback('`(.*)(' . preg_quote($search) . ')(.*)`isU', 'token_colorate', $title) : $title;
+			
+			$contents = $row['contents'];
+			if( $colorate_result )
+			{
+				$array_search = explode(' ', $search);
+				foreach($array_search as $token)
+				{
+					$contents =  preg_replace_callback('`(.*)(' . preg_quote($token) . ')(.*)`isU', 'token_colorate', $contents);
+					$title = preg_replace_callback('`(.*)(' . preg_quote($token) . ')(.*)`isU', 'token_colorate', $title);
+				}
+			}
 			
 			$template->assign_block_vars('list', array(
 				'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($row['connect']) && $row['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
