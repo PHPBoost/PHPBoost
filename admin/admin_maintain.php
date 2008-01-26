@@ -96,15 +96,15 @@ else //Sinon on rempli le formulaire
 	));
 		
 	//Durée de la maintenance.
-	$array_time = array(-1, 60, 300, 900, 1800, 3600, 7200, 14400, 21600, 28800, 57600); 
-	$array_delay = array($LANG['unspecified'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '4 ' . $LANG['hours'], '6 ' . $LANG['hours'], '8 ' . $LANG['hours'], '16 ' . $LANG['hours']); 
+	$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 14400, 21600, 28800, 57600); 
+	$array_delay = array($LANG['unspecified'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '10 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '4 ' . $LANG['hours'], '6 ' . $LANG['hours'], '8 ' . $LANG['hours'], '16 ' . $LANG['hours']); 
 	
 	$CONFIG['maintain'] = isset($CONFIG['maintain']) ? $CONFIG['maintain'] : -1;
 	if( $CONFIG['maintain'] != -1 )
 	{
 		$key_delay = 0;
 		$current_time = time();
-		for($i = 10; $i >= 0; $i--)
+		for($i = 11; $i >= 0; $i--)
 		{					
 			$delay = ($CONFIG['maintain'] - $current_time) - $array_time[$i];		
 			if( $delay >= $array_time[$i] ) 
