@@ -146,8 +146,8 @@ class Templates
 	function parse($parse_name)
 	{
 		//Remplacement des variables simples.
-		$this->template = preg_replace('`{([a-z_]+)}`i', '<?php echo isset($this->_var[\'$1\']) ? $this->_var[\'$1\'] : \'\'; ?>', $this->template);
-		$this->template = preg_replace_callback('`{([a-z_\.]+)}`i', array('Templates', 'parse_blocks_vars'), $this->template);
+		$this->template = preg_replace('`{([\w]+)}`i', '<?php echo isset($this->_var[\'$1\']) ? $this->_var[\'$1\'] : \'\'; ?>', $this->template);
+		$this->template = preg_replace_callback('`{([\w\.]+)}`i', array('Templates', 'parse_blocks_vars'), $this->template);
 		
 		//Parse des blocs imbriqués ou non.
 		$this->template = preg_replace_callback('`# START ([\w\.]+) #`', array('Templates', 'parse_blocks'), $this->template);

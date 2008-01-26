@@ -25,17 +25,9 @@
  *
 ###################################################*/
 
-$get_show = !empty($_GET['show']) ? trim($_GET['show']) : '';
-if( defined('PHP_BOOST') !== true && empty($get_show) )
-	exit;
-elseif( !empty($get_show) )
-{
-	include_once('../includes/begin.php');
-	define('TITLE', '');
-	include_once('../includes/header_no_display.php');
-}	
+$get_show = !empty($_GET['show']) ? true : false;
 
-if( empty($get_show) )
+if( !$get_show && defined('PHP_BOOST') === true )
 {
 	$template->set_filenames(array(
 		'handle_bbcode' => '../templates/' . $CONFIG['theme'] . '/bbcode.tpl'
@@ -67,7 +59,7 @@ if( empty($get_show) )
 		$cache->load_file('files');
 			
 		$template->assign_vars(array(	
-			'UPLOAD_MANAGEMENT' => $groups->check_auth($CONFIG_FILES['auth_files'], 1) ? '<a style="font-size: 10px;" title="' . $LANG['bb_upload'] . '" href="#" onclick="window.open(\'../member/upload.php?popup=1&amp;fd=' . $field  . '\', \'\', \'height=435,width=680,resizable=yes,scrollbars=yes\');return false;"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/files_add.png" alt="" /></a>' : '',
+			'UPLOAD_MANAGEMENT' => $groups->check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) ? '<a style="font-size: 10px;" title="' . $LANG['bb_upload'] . '" href="#" onclick="window.open(\'../member/upload.php?popup=1&amp;fd=' . $field  . '\', \'\', \'height=435,width=680,resizable=yes,scrollbars=yes\');return false;"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/files_add.png" alt="" /></a>' : '',
 			'L_BB_SMILEYS' => $LANG['bb_smileys'],
 			'L_BB_BOLD' => $LANG['bb_bold'],
 			'L_BB_ITALIC' => $LANG['bb_italic'],
@@ -115,7 +107,12 @@ if( empty($get_show) )
 			'L_TEXT' => $LANG['bb_text'],
 			'L_SCRIPT' => $LANG['bb_script'],
 			'L_WEB' => $LANG['bb_web'],
-			'L_PROG' => $LANG['bb_prog']
+			'L_PROG' => $LANG['bb_prog'],
+			'L_TABLE_HEAD' => $LANG['head_table'],
+			'L_ADD_HEAD' => $LANG['head_add'],
+			'L_LINES' => $LANG['lines'],
+			'L_COLS' => $LANG['cols'],
+			'L_INSERT_TABLE' => $LANG['insert_table']
 		));
 		
 		//Inclusion du cache des smileys pour éviter une requête inutile.
@@ -184,17 +181,20 @@ if( empty($get_show) )
 		}
 	}
 }
-elseif( !empty($get_show) )
+elseif( $get_show )
 {
-	$_field = !empty($_GET['field']) ? trim($_GET['field']) : '';
-	$smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
-	$smile_by_line = 4; //Smiley par ligne.
-
-	#########################bbcode_smileys.tpl#########################
+	include_once('../includes/begin.php');
+	define('TITLE', '');
+	include_once('../includes/header_no_display.php');
+	
 	$template->set_filenames(array(
 		'bbcode_smileys' => '../templates/' . $CONFIG['theme'] . '/bbcode_smileys.tpl'
 	));
 	
+	$_field = !empty($_GET['field']) ? trim($_GET['field']) : '';
+	$smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
+	$smile_by_line = 4; //Smiley par ligne.
+
 	$template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'FIELD' => (!isset($_field) ? 'contents' : $_field),
@@ -275,10 +275,7 @@ elseif( !empty($get_show) )
 	}	
 	
 	$template->pparse('bbcode_smileys'); 
+	include_once('../includes/footer_no_display.php');
 }
 
-if( !empty($get_show) )
-{
-	include_once('../includes/footer_no_display.php');
-}	
 ?>

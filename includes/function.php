@@ -31,8 +31,8 @@ define('MAGIC_QUOTES_UNACTIV', false);
 define('NO_UPDATE_PAGES', true);
 define('NO_FATAL_ERROR', false);
 define('NO_EDITOR_UNPARSE', false);
-define('TIMEZONE_SYSTEM', 1);
-define('TIMEZONE_SITE', 2);
+define('TIMEZONE_SITE', 1);
+define('TIMEZONE_SYSTEM', 2);
 
 //Passe à la moulinette les entrées (chaînes) utilisateurs.
 function securit($var, $html_protect = true)
@@ -64,7 +64,7 @@ function numeric($var, $type = 'int')
 		return 0;
 }
 
-//Si register_globals activé, suppression des variables qui trainent. Fonction phpBB3
+//Si register_globals activé, suppression des variables globales qui trainent. Fonction emprunté à phpBB3
 function securit_register_globals()
 {	
 	$not_unset = array(
@@ -101,7 +101,7 @@ function securit_register_globals()
 				$cookie = &$_COOKIE;
 				while( isset($cookie['GLOBALS']) )
 				{
-					foreach ($cookie['GLOBALS'] as $registered_var => $value)
+					foreach($cookie['GLOBALS'] as $registered_var => $value)
 					{
 						if( !isset($not_unset[$registered_var]) )
 							unset($GLOBALS[$registered_var]);
@@ -199,6 +199,18 @@ function sql_to_cache($str)
 	return str_replace('\'', '\\\'', str_replace('\\', '\\\\', $str));
 }
 
+//Redirection.
+function redirect($url)
+{
+	global $sql;
+	
+	if( !empty($sql) && is_object($sql) ) //Coupure de la connexion mysql.
+		$sql->sql_close();
+		
+	header('Location:' . $url);
+	exit;
+}
+
 //Récupération de la page de démarrage du site.
 function get_start_page()
 {
@@ -206,6 +218,19 @@ function get_start_page()
 	
 	$start_page = (substr($CONFIG['start_page'], 0, 1) == '/') ? transid(HOST . DIR . $CONFIG['start_page']) : $CONFIG['start_page'];
 	return $start_page;
+}
+
+//Récupération de la page d'installation.
+function get_install_page()
+{
+	$server_name = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
+	$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
+	if( !$server_path )
+		$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
+	$install_path = trim(dirname($server_path)) . '/install/install.php';
+	
+	//Suppression du dossier courant, et trim du chemin de l'installateur.
+	return 'http://' . $server_name . preg_replace('`(.*)/[a-z]+/(install/install\.php)(.*)`i', '$1/$2', $install_path);
 }
 
 //Génération de la speed_bar.
@@ -377,6 +402,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 			break;
 			case 'date_format_short':
 			$format = $LANG['date_format_short'];
+			
 			break;
 			case 'date_format_long':
 			$format = $LANG['date_format_long'];
@@ -388,10 +414,10 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 		$timestamp = time();
 	
 	$serveur_hour = number_round(date('Z')/3600, 0); //Décallage du serveur par rapport au méridien de greenwitch.
-	if( $timezone_system == 1 ) //Timestamp du serveur, non dépendant de l'utilisateur et du fuseau par défaut du site.
-		$timezone = 1 - $serveur_hour;
-	elseif( $timezone_system == 2 ) //Timestamp du site, non dépendant de l'utilisateur.
+	if( $timezone_system == 1 ) //Timestamp du site, non dépendant de l'utilisateur.
 		$timezone = $CONFIG['timezone'] - $serveur_hour;
+	elseif( $timezone_system == 2 ) //Timestamp du serveur, non dépendant de l'utilisateur et du fuseau par défaut du site.
+		$timezone = 0;
 	else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
 		$timezone = $session->data['user_timezone'] - $serveur_hour;
 

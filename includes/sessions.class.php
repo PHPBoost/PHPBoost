@@ -154,16 +154,14 @@ class Sessions
 					
 					setcookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
 					
-					header('location:' . HOST . DIR . '/member/error.php?flood=' . (5 - ($test_connect + 1)));
-					exit;
+					redirect(HOST . DIR . '/member/error.php?flood=' . (5 - ($test_connect + 1)));
 				}
 				elseif( is_numeric($error_report) )
 				{
 					setcookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
 					
 					$error_report = ceil($error_report/60);
-					header('location:' . HOST . DIR . '/member/error.php?ban=' . $error_report);
-					exit;
+					redirect(HOST . DIR . '/member/error.php?ban=' . $error_report);
 				}
 				else //Succès on recharge la page.
 				{
@@ -171,10 +169,9 @@ class Sessions
 					$sql->query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "' WHERE user_id = '" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
 					
 					if( QUERY_STRING != '' )
-						header('location:' . HOST . SCRIPT . '?' . QUERY_STRING);
+						redirect(HOST . SCRIPT . '?' . QUERY_STRING);
 					else
-						header('location:' . HOST . SCRIPT);					
-					exit;
+						redirect(HOST . SCRIPT);					
 				}
 			}
 			else
@@ -204,7 +201,7 @@ class Sessions
 			if( isset($_GET['sid']) && isset($_GET['suid']) )
 			{
 				$query_string = preg_replace('`&?sid=(.*)&suid=(.*)`', '', QUERY_STRING);
-				header('location:' . HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : ''));				
+				redirect(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : ''));				
 			}
 			
 			$session_data = isset($_COOKIE[$CONFIG['site_cookie'].'_data']) ? unserialize(stripslashes($_COOKIE[$CONFIG['site_cookie'].'_data'])) : array();
@@ -268,10 +265,9 @@ class Sessions
 					}	
 					
 					if( QUERY_STRING != '' )
-						header('location:' . HOST . SCRIPT . '?' . QUERY_STRING);
+						redirect(HOST . SCRIPT . '?' . QUERY_STRING);
 					else
-						header('location:' . HOST . SCRIPT);
-					exit;
+						redirect(HOST . SCRIPT);
 				}
 			}
 		}
@@ -289,10 +285,9 @@ class Sessions
 				$this->session_begin('-1', '', '-1', $session_script, $session_script_get, $session_script_title); //Session visiteur
 				
 				if( QUERY_STRING != '' )
-					header('location:' . HOST . SCRIPT . '?' . QUERY_STRING);
+					redirect(HOST . SCRIPT . '?' . QUERY_STRING);
 				else
-					header('location:' . HOST . SCRIPT);	
-				exit;
+					redirect(HOST . SCRIPT);	
 			}
 		}
 	}

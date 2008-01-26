@@ -62,26 +62,16 @@ if( !empty($_POST['connect']) && !empty($login) && !empty($password) )
 				$error_report = $session->session_begin($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
 			}
 			else //plus d'essais
-			{
-				header('location:' . HOST . DIR . '/admin/admin_index.php?flood=0');
-				exit;
-			}
+				redirect(HOST . DIR . '/admin/admin_index.php?flood=0');
 		}
 		elseif( $info_connect['user_aprob'] == '0' )
-		{
-			header('location:' . HOST . DIR . '/member/error.php?activ=1');
-			exit;
-		}
+			redirect(HOST . DIR . '/member/error.php?activ=1');
 		elseif( $info_connect['user_warning'] == '100' )
-		{
-			header('location:' . HOST . DIR . '/member/error.php?ban_w=1');
-			exit;
-		}
+			redirect(HOST . DIR . '/member/error.php?ban_w=1');
 		else
 		{
 			$delay_ban = ceil((0 - $delay_ban)/60);
-			header('location:' . HOST . DIR . '/member/error.php?ban=' . $delay_ban);
-			exit;
+			redirect(HOST . DIR . '/member/error.php?ban=' . $delay_ban);
 		}
 		
 		if( !empty($error_report) ) //Erreur
@@ -89,28 +79,20 @@ if( !empty($_POST['connect']) && !empty($login) && !empty($password) )
 			$info_connect['test_connect']++;
 			$sql->query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "', test_connect = test_connect + 1 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
-			header('location:' . HOST . DIR . '/admin/admin_index.php?flood=' . $info_connect['test_connect']);
-			exit;
+			redirect(HOST . DIR . '/admin/admin_index.php?flood=' . $info_connect['test_connect']);
 		}
 		elseif( !empty($unlock) && $unlock !== $CONFIG['unlock_admin'] )
 		{
 			$session->session_end(); //Suppression de la session.
-			header('location:' . HOST . DIR . '/admin/admin_index.php?flood=0');
-			exit;
+			redirect(HOST . DIR . '/admin/admin_index.php?flood=0');
 		}
 		else //Succès redonne tous les essais.
-		{
 			$sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 0 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-		}
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/member/error.php?unexist=1');
-		exit;
-	}
+		redirect(HOST . DIR . '/member/error.php?unexist=1');
 	
-	header('location: ' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 
 if( !$session->check_auth($session->data, 2) )

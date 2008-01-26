@@ -80,20 +80,14 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		}
 	}
 	if( $check_script === false )
-	{
 		$errorh->error_handler('e_unexist_page', E_USER_REDIRECT);
-		exit;
-	}	
 	
 	###########################Insertion##############################
 	if( !empty($_POST['valid']) && !$update )
 	{
 		//Membre en lecture seule?
 		if( $session->data['user_readonly'] > time() ) 
-		{
 			$errorh->error_handler('e_auth', E_USER_REDIRECT);
-			exit;
-		}
 		
 		$login = !empty($_POST['login']) ? securit($_POST['login']) : ''; //Pseudo posté.
 		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
@@ -101,36 +95,24 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		{
 			//Status des commentaires, verrouillé/déverrouillé?
 			if( $info_sql_module['lock_com'] >= 1 && !$session->check_auth($session->data, 1) )
-			{
-				header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&'));
-				exit;
-			}
+				redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&'));
 			
 			//Autorisation de poster des commentaires? 
 			if( $session->check_auth($session->data, $CONFIG_COM['com_auth']) )
 			{
 				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 				$check_time = ($session->data['user_id'] !== -1 && $CONFIG['anti_flood'] == 1) ? $sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."com WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__) : '';
-				if( !empty($check_time) && !$groups->check_auth($groups->user_groups_auth, AUTH_FLOOD) )
+				if( !empty($check_time) && !$groups->max_value($groups->user_groups_auth, AUTH_FLOOD) )
 				{				
 					if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcul la fin du delai.	
-					{
-						header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=flood#errorh');
-						exit;
-					}	
+						redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=flood#errorh');
 				}
 				
 				$contents = parse($contents, $CONFIG_COM['forbidden_tags']);
 				if( !check_nbr_links($login, 0) ) //Nombre de liens max dans le pseudo.
-				{	
-					header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=l_pseudo#errorh');
-					exit;
-				}
+					redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=l_pseudo#errorh');
 				if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
-				{	
-					header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=l_flood#errorh');
-					exit;
-				}
+					redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=l_flood#errorh');
 						
 				$sql->query_inject("INSERT INTO ".PREFIX."com (idprov,login,user_id,contents,timestamp,script) VALUES('" . $_com_idprov . "', '" . $login . "', '" . $session->data['user_id'] . "', '" . $contents . "',
 				'" . time() . "', '" . $_com_script . "')", __LINE__, __FILE__);
@@ -141,29 +123,19 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 				$sql->query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET nbr_com = nbr_com + 1 WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
 				
 				//Rédirection vers la page pour éviter le double post!
-				header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '#m' . $_com_idcom);
-				exit;		
+				redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '#m' . $_com_idcom);
 			}
 			else //utilisateur non autorisé!
-			{
-				header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=auth#errorh');
-				exit;
-			}	
+				redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=auth#errorh');
 		}
 		else
-		{
-			header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=incomplete#errorh');
-			exit;
-		}
+			redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=incomplete#errorh');
 	}
 	elseif( !empty($_com_script) && ($update || $del || $edit) ) //Edition + suppression
 	{
 		//Membre en lecture seule?
 		if( $session->data['user_readonly'] > time() ) 
-		{
 			$errorh->error_handler('e_auth', E_USER_REDIRECT);
-			exit;
-		}
 		
 		$row = $sql->query_array('com', '*', "WHERE idcom = '" . $_com_idcom . "' AND idprov = '" . $_com_idprov . "' AND script = '" . $_com_script . "'", __LINE__, __FILE__);
 		$row['user_id'] = (int)$row['user_id'];
@@ -187,25 +159,29 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 					$lastid = !empty($lastid) ? '#m' . $lastid : '';
 					
 					//Succès redirection.
-					header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . $lastid);
-					exit;
+					redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . $lastid);
 				}
 				elseif( $edit )
 				{
-					$block = ($CONFIG['com_popup'] == 0 && $POPUP !== true) ? 'current' : 'popup'; 
-					$template->assign_block_vars($block, array(
+					$block = ($CONFIG['com_popup'] == 0 && $POPUP !== true); 
+					$template->assign_vars(array(
+						'CURRENT_PAGE_COM' => $block ? true : false,
+						'POPUP_PAGE_COM' => $block ? false : true
 					));
-		
-					$template->assign_block_vars($block.'.post', array(
+
+					$template->assign_vars(array(
+						'AUTH_POST_COM' => true
 					));
 					
 					//Pseudo du membre connecté.
-					if( $row['user_id'] !== -1 )
-						$template->assign_block_vars($block . '.post.hidden_com', array(
-							'LOGIN' => $row['login']
+					if( $session->data['user_id'] !== -1 )
+						$template->assign_vars(array(
+							'HIDDEN_COM' => true,
+							'LOGIN' => $session->data['login']
 						));
 					else
-						$template->assign_block_vars($block . '.post.visible_com', array(
+						$template->assign_vars(array(
+							'VISIBLE_COM' => true,
 							'LOGIN' => $LANG['guest']
 						));
 					
@@ -245,36 +221,21 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 					{
 						$contents = parse($contents, $CONFIG_COM['forbidden_tags']);
 						if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
-						{	
-							header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=l_flood#errorh');
-							exit;
-						}
+							redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=l_flood#errorh');
 
 						$sql->query_inject("UPDATE ".PREFIX."com SET contents = '" . $contents . "', login = '" . $login . "' WHERE idcom = '" . $_com_idcom . "' AND idprov = '" . $_com_idprov . "' AND script = '" . $_com_script . "'", __LINE__, __FILE__);
 						
 						//Succès redirection.
-						header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '#m' . $_com_idcom);
-						exit;					
+						redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '#m' . $_com_idcom);
 					}
-					else
-					{
-						//Champs incomplet!
-						header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=incomplete#errorh');
-						exit;
-					}	
+					else //Champs incomplet!
+						redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=incomplete#errorh');
 				}
 				else
-				{
-					header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=incomplete#errorh');
-					exit;
-				}
+					redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=incomplete#errorh');
 			}
 			else
-			{
-				//Non autorisé
 				$errorh->error_handler('e_auth', E_USER_REDIRECT);
-				exit;
-			}
 		}
 	}
 	elseif( isset($_GET['lock']) && !empty($_com_script) && !empty($_com_idprov) ) //Verrouillage des commentaires.
@@ -283,14 +244,10 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		{
 			$sql->query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET lock_com = '" . numeric($_GET['lock']) . "' WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
 			
-			header('location:' . $_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '#' . $_com_script);
+			redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '#' . $_com_script);
 		}
 		else
-		{
-			//Non autorisé
 			$errorh->error_handler('e_auth', E_USER_REDIRECT);
-			exit;
-		}
 	}
 	else
 	{
@@ -307,17 +264,22 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		include_once('../includes/pagination.class.php'); 
 		$pagination = new Pagination();
 
-		$block = ($CONFIG['com_popup'] == 0 && $POPUP !== true) ? 'current' : 'popup'; 
-		$template->assign_block_vars($block, array(
+		$block = ($CONFIG['com_popup'] == 0 && $POPUP !== true); 
+		$template->assign_vars(array(
+			'CURRENT_PAGE_COM' => $block ? true : false,
+			'POPUP_PAGE_COM' => $block ? false : true
 		));
 		
 		//Affichage du lien de verrouillage/déverrouillage.
 		if( $session->data['level'] === 2 || $session->check_auth($session->data, 1) )
-			$template->assign_block_vars($block . '.lock', array(
+		{
+			$template->assign_vars(array(
+				'COM_LOCK' => true,
 				'IMG' => ($info_sql_module['lock_com'] >= 1) ? 'unlock' : 'lock',
 				'L_LOCK' => ($info_sql_module['lock_com'] >= 1) ? $LANG['unlock'] : $LANG['lock'],
 				'U_LOCK' => $_com_path . (($info_sql_module['lock_com'] >= 1) ? transid($_com_vars_simple . '&amp;lock=0') : transid($_com_vars_simple . '&amp;lock=1'))
 			));
+		}
 		
 		//Gestion des erreurs.
 		$get_error = !empty($_GET['error']) ? trim($_GET['error']) :'';
@@ -344,26 +306,32 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 			$errstr = '';
 		}
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, $block . '.');
+			$errorh->error_handler($errstr, E_USER_NOTICE);
 		
 		//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
 		if( empty($info_sql_module['lock_com']) || $session->check_auth($session->data, 1) )
 		{	
-			$template->assign_block_vars($block.'.post', array(
-			));
+			if( $session->check_auth($session->data, $CONFIG_COM['com_auth']) )
+				$template->assign_vars(array(
+					'AUTH_POST_COM' => true
+				));
+			else
+				$errorh->error_handler($LANG['e_unauthorized'], E_USER_NOTICE);
 			
 			//Pseudo du membre connecté.
 			if( $session->data['user_id'] !== -1 )
-				$template->assign_block_vars($block . '.post.hidden_com', array(
+				$template->assign_vars(array(
+					'HIDDEN_COM' => true,
 					'LOGIN' => $session->data['login']
 				));
 			else
-				$template->assign_block_vars($block . '.post.visible_com', array(
+				$template->assign_vars(array(
+					'VISIBLE_COM' => true,
 					'LOGIN' => $LANG['guest']
 				));
 		}	
 		else
-			$errorh->error_handler($LANG['com_locked'], E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, $block . '.');
+			$errorh->error_handler($LANG['com_locked'], E_USER_NOTICE);
 
 		
 		$get_pos = strpos($_SERVER['QUERY_STRING'], '&pc');
@@ -482,7 +450,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 				foreach($_array_groups_auth as $idgroup => $array_group_info)
 				{
 					if( is_numeric(array_search($idgroup, $array_user_groups)) )
-						$user_groups .= !empty($array_group_info[1]) ? '<img src="../images/group/' . $array_group_info[1] . '" alt="' . $array_group_info[0] . '" title="' . $array_group_info[0] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info[0];
+						$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
 				}
 			}
 			else
@@ -515,7 +483,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 			}
 			else $user_local = '';
 			
-			$template->assign_block_vars($block . '.com',array(
+			$template->assign_block_vars('com',array(
 				'ID' => $row['idcom'],
 				'CONTENTS' => ucfirst(second_parse($row['contents'])),
 				'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),

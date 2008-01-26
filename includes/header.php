@@ -38,10 +38,7 @@ if( $CONFIG['maintain'] > time() )
 	if( $session->data['level'] !== 2 ) //Non admin.
 	{
 		if( SCRIPT !== (DIR . '/includes/maintain.php') ) //Evite de créer une boucle infine.
-		{ 
-			header('location: ' . HOST . DIR . '/includes/maintain.php');
-			exit;	
-		}
+			redirect(HOST . DIR . '/member/maintain.php');
 	}
 	elseif( $CONFIG['maintain_display_admin'] ) //Affichage du message d'alerte à l'administrateur.
 	{
@@ -65,10 +62,10 @@ if( $CONFIG['maintain'] > time() )
 			}
 			
 			//Calcul du format de la date
-			$seconds = gmdate_format('s', $CONFIG['maintain'], TIMEZONE_SYSTEM);
+			$seconds = gmdate_format('s', $CONFIG['maintain'], TIMEZONE_SITE);
 			$array_release = array(
-			gmdate_format('Y', $CONFIG['maintain'], TIMEZONE_SYSTEM), (gmdate_format('n', $CONFIG['maintain'], TIMEZONE_SYSTEM) - 1), gmdate_format('j', $CONFIG['maintain'], TIMEZONE_SYSTEM), 
-			gmdate_format('G', $CONFIG['maintain'], TIMEZONE_SYSTEM), gmdate_format('i', $CONFIG['maintain'], TIMEZONE_SYSTEM), ($seconds < 10) ? trim($seconds, 0) : $seconds);
+			gmdate_format('Y', $CONFIG['maintain'], TIMEZONE_SITE), (gmdate_format('n', $CONFIG['maintain'], TIMEZONE_SITE) - 1), gmdate_format('j', $CONFIG['maintain'], TIMEZONE_SITE), 
+			gmdate_format('G', $CONFIG['maintain'], TIMEZONE_SITE), gmdate_format('i', $CONFIG['maintain'], TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
 		}	
 		else //Délai indéterminé.
 		{	

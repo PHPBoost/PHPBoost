@@ -152,11 +152,9 @@ class Parse
 		$nbr_occur = count($content);
 		for($i = 0; $i < $nbr_occur; $i++)
 		{
-			if( ($i % 3) === 2 && preg_match('`\['.$tag.'(?:'.$attributes.')?\].+\[/'.$tag.'\]`s', $content[$i]) )
-			{
-				//C'est le contenu d'un tag, il contient un sous tag donc on éclate
+			//C'est le contenu d'un tag, il contient un sous tag donc on éclate
+			if( ($i % 3) === 2 && preg_match('`\['.$tag.'(?:'.$attributes.')?\].+\[/'.$tag.'\]`s', $content[$i]) ) 
 				$this->split_imbricated_tag($content[$i], $tag, $attributes);
-			}
 		}
 	}
 	
@@ -170,26 +168,18 @@ class Parse
  
    		// Stockage de la chaîne avant le premier tag dans le cas ou il y a au moins une balise ouvrante
 		if ($size >= 1)
-		{
 			array_push($parsed, substr($content, 0, $indexTags[0]));
-		}
 		else
-		{
 			array_push($parsed, $content);
-		}
  	
 		for ($i = 0; $i < $size; $i++)
 		{
 			$currentIndex = $indexTags[$i];
 			// Calcul de la sous-chaîne pour l'expression régulière
 			if ( $i == ($size - 1))
-			{
 				$subStr = substr($content, $currentIndex); 
-			}
 			else
-			{
 				$subStr = substr($content, $currentIndex, $indexTags[$i + 1] - $currentIndex);
-			}
 	
 			// Mise en place de l'éclatement de la sous-chaine
 			$mask = '`\['.$tag.'('.$attributes.')?\](.+)\[/'.$tag.'\](.+)?`s';
@@ -208,9 +198,7 @@ class Parse
 				array_push($parsed, substr($localParsed[3], 0, $endPos ));
 			}
 			else	// c'est la fin, il n'y a pas d'autre tag ouvrant après
-			{ 
 				array_push($parsed, $localParsed[3]); 
-			}
 		}
 		return $parsed;
 	}
@@ -234,9 +222,7 @@ class Parse
 				$openTag = substr($content, $pos, (strpos($content, ']', $pos + 1) + 1 - $pos));
 				$match = preg_match('`\['.$tag.'('.$attributes.')?\]`', $openTag);
 				if ($match == 1)
-				{
 					$tagsPos[count($tagsPos)] = $pos; 
-				}
 			}
 			$nbOpenTags++;
 		}
@@ -249,9 +235,7 @@ class Parse
 	{
 		$nbr_match = substr_count($this->content, $match);
 		for($i = 0; $i <= $nbr_match; $i++)
-		{
 			$this->content = preg_replace($regex, $replace, $this->content); 
-		}
 	}
 
 	//Fonction qui parse les tableaux dans l'ordre inverse à l'ordre hiérarchique
@@ -387,14 +371,10 @@ class Parse
 				{
 					$this->content .= $split_code[$i];
 					if( $i < $num_codes - 1 )
-					{
 						$this->content .= '[CODE_TAG_' . $id_code++ . ']';
-					}
 				}
 				elseif( $i % 3 == 2 )
-				{
 					$this->array_code[] = '[code' . $split_code[$i - 1] . ']' . strip_tags(htmlspecialchars($split_code[$i], ENT_NOQUOTES)) . '[/code]';
-				}
 			}
 		}
 	}
@@ -407,9 +387,7 @@ class Parse
 		if( !empty($num_code) )
 		{
 			for( $i = 0; $i < $num_code; $i++ )
-			{
 				$this->content = str_replace('[CODE_TAG_' . $i . ']', $this->array_code[$i], $this->content);
-			}
 			$this->array_code = array();
 		}
 	}

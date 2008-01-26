@@ -35,11 +35,8 @@ $session->session_check(TITLE); //Vérification de la session.
 //Gestion de la maintenance du site.
 if( $CONFIG['maintain'] > time() && !$session->check_auth($session->data, 2) )
 {	
-	if( SCRIPT !== (DIR . '/includes/maintain.php') )
-	{ 
-		header('location: ' . HOST . DIR . '/includes/maintain.php');
-		exit;	
-	}
+	if( SCRIPT !== (DIR . '/member/maintain.php') )
+		redirect(HOST . DIR . '/includes/maintain.php');
 }
 
 ?>
