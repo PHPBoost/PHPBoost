@@ -112,14 +112,10 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		###### Régénération du cache des news #######
 		$cache->generate_module_file('news');
 		
-		header('location:' . HOST . SCRIPT);
-		exit;	
+		redirect(HOST . SCRIPT);
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/news/admin_news.php?id= ' . $id_post . '&error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/news/admin_news.php?id= ' . $id_post . '&error=incomplete#errorh');
 }
 elseif( $del && !empty($id) ) //Suppression de la news.
 {
@@ -140,8 +136,7 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 	$CONFIG_NEWS['nbr_news'] = $sql->query("SELECT COUNT(*) AS nbr_news FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
 	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 		
-	header('location:' . HOST . SCRIPT);
-	exit;	
+	redirect(HOST . SCRIPT);
 }
 elseif( !empty($id) )
 {			
@@ -234,9 +229,9 @@ elseif( !empty($id) )
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'news.');
+		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING, NO_LINE_ERROR, NO_FILE_ERROR, 'news.');	
+		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 	
 	include('../includes/bbcode.php');
 	$template->pparse('admin_news_management');    
@@ -342,7 +337,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$sql->close($result);
 	
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING, NO_LINE_ERROR, NO_FILE_ERROR, 'news.');	
+		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 		
 	$template->assign_block_vars('news.preview', array(
 		'THEME' => $CONFIG['theme'],

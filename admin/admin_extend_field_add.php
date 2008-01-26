@@ -73,20 +73,13 @@ if( !empty($_POST['valid']) ) //Insertion du nouveau champs.
 			$field_name = $field_name . ' ' . $array_field[$field];
 			$sql->query_inject("ALTER TABLE ".PREFIX."member_extend ADD " . $field_name, __LINE__, __FILE__);
 			
-			header('location:' . HOST . DIR . '/admin/admin_extend_field.php');
-			exit;
+			redirect(HOST . DIR . '/admin/admin_extend_field.php');
 		}
 		else
-		{
-			header('location:' . HOST . DIR . '/admin/admin_extend_field_add.php?error=exist_field#errorh');
-			exit; 
-		}
+			redirect(HOST . DIR . '/admin/admin_extend_field_add.php?error=exist_field#errorh');
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/admin/admin_extend_field_add.php?error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/admin/admin_extend_field_add.php?error=incomplete#errorh');
 }
 else
 {

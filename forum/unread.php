@@ -33,10 +33,7 @@ require_once('../includes/header.php');
 
 //Redirection changement de catégorie.
 if( !empty($_POST['change_cat']) )
-{
-	header('location:' . HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
-	exit;
-}
+	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
 if( !$session->check_auth($session->data, 0) ) //Réservé aux membres.
 {
 	header('location: ' . HOST . DIR . '/member/error.php'); 
@@ -230,11 +227,8 @@ if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(
 	$template->pparse('forum_forum');
 }
 else
-{
-	header('Location:' . HOST . DIR . '/forum/index.php' . SID2);
-	exit;
-}
+	redirect(HOST . DIR . '/forum/index.php' . SID2);
 
-include('../includes/footer.php');
+require_once('../includes/footer.php');
 
 ?>

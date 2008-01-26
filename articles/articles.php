@@ -34,15 +34,9 @@ if( !empty($idart) && isset($_GET['cat']) )
 {
 	//Niveau d'autorisation de la catégorie
 	if( !isset($CAT_ARTICLES[$idartcat]) || !$groups->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
-	{	
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	if( empty($articles['id']) )
-	{
 		$errorh->error_handler('e_unexist_articles', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	$template->set_filenames(array('articles' => '../templates/' . $CONFIG['theme'] . '/articles/articles.tpl'));		
 	
@@ -147,14 +141,10 @@ if( !empty($idart) && isset($_GET['cat']) )
 					users_note = '" . $users_note . "' WHERE id = " . $get_note . " AND idcat = " . $idartcat, __LINE__, __FILE__);
 					
 					//Success.
-					header('location:' . HOST . DIR . '/articles/articles' . transid('.php?cat=' . $idartcat . '&id=' . $get_note, '-' . $idartcat . '-' . $get_note . '.php', '&'));
-					exit;
+					redirect(HOST . DIR . '/articles/articles' . transid('.php?cat=' . $idartcat . '&id=' . $get_note, '-' . $idartcat . '-' . $get_note . '.php', '&'));
 				}
 				else
-				{
-					header('location:' . HOST . DIR . '/articles/articles' . transid('.php?cat=' . $idartcat . '&id=' . $get_note, '-' . $idartcat . '-' . $get_note . '.php', '&'));
-					exit;
-				}			
+					redirect(HOST . DIR . '/articles/articles' . transid('.php?cat=' . $idartcat . '&id=' . $get_note, '-' . $idartcat . '-' . $get_note . '.php', '&'));
 			}
 			else
 			{
@@ -184,10 +174,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 			}
 		}
 		else 
-		{
 			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-			exit;
-		}
 	}	
 	
 	//Affichage commentaires.
@@ -212,10 +199,7 @@ else
 	if( $idartcat > 0 )
 	{
 		if( !isset($CAT_ARTICLES[$idartcat]) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
-		{	
 			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-			exit;
-		}
 
 		$cat_links = '';
 		foreach($CAT_ARTICLES as $id => $array_info_cat)
@@ -233,10 +217,7 @@ else
 
 	//Niveau d'autorisation de la catégorie
 	if( !$groups->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) ) 
-	{	
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	$nbr_articles = $sql->query("SELECT COUNT(*) FROM ".PREFIX."articles WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);	
 	$total_cat = $sql->query("SELECT COUNT(*) FROM ".PREFIX."articles_cats ac " . $clause_cat, __LINE__, __FILE__);	

@@ -27,12 +27,12 @@
 						# START com #
 						<div style="float:left;">
 							<h5 style="margin-right:20px;" class="horizontal">
-								<img src="{PAGES_PATH}/images/com.png" style="vertical-align:middle;" alt="" />&nbsp;<a href="{com.U_COM}">{com.L_COM}</a>
+								<img src="{PAGES_PATH}/images/com.png" class="valign_middle" alt="" />&nbsp;<a href="{com.U_COM}">{com.L_COM}</a>
 							</h5>
 						</div>
 						# END com #
 						<div style="float:left;" onmouseover="show_menu(1);" onmouseout="hide_menu();">
-							<h5 onclick="temporise_menu(1)" style="margin-right:20px;" class="horizontal"><img src="{PAGES_PATH}/images/tools.png" style="vertical-align:middle;" alt="" />&nbsp;{L_LINKS}&nbsp;</h5>					
+							<h5 onclick="temporise_menu(1)" style="margin-right:20px;" class="horizontal"><img src="{PAGES_PATH}/images/tools.png" class="valign_middle" alt="" />&nbsp;{L_LINKS}&nbsp;</h5>					
 							<div id="smenu1" class="horizontal_block">
 								<ul>
 									# START links_list #

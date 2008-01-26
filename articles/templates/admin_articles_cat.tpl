@@ -11,20 +11,9 @@
 			
 		function XMLHttpRequest_get_parent(divid, direction)
 		{
-			var xhr_object = null;
-			var filename = 'admin_xmlhttprequest.php?g_' + direction + '=' + divid;
-			var data = null;
+			document.getElementById('l' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-				return;
-			
-			document.getElementById('l' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" style="vertical-align:middle;" />';
-			
-			xhr_object.open("POST", filename, true);
+			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?g_' + direction + '=' + divid);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -32,24 +21,12 @@
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 					document.getElementById('l' + divid).innerHTML = '';
 			}
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(null);
+			xmlhttprequest_sender(xhr_object, null);
 		}
 		
 		function XMLHttpRequest_articles_cats_move(change_cat, divid, direction)
 		{
-			var xhr_object = null;
-			var filename = 'admin_xmlhttprequest.php?id=' + divid + '&move=' + direction;
-			var data = null;
-				
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-				return;
-			
-			xhr_object.open("POST", filename, true);
+			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?id=' + divid + '&move=' + direction);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -61,8 +38,7 @@
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 					document.getElementById('l' + divid).innerHTML = '';
 			}
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(null);
+			xmlhttprequest_sender(xhr_object, null);
 		}
 		
 		function articles_cats_move(change_cat, divid, direction)
@@ -268,18 +244,18 @@
 						{L_ARTICLES_CAT}
 					</th>
 				</tr>	
-				# START error_handler #
+				# IF C_ERROR_HANDLER #
 				<tr> 
 					<td class="row1" colspan="2" style="text-align:center;">
 						<span id="errorh"></span>
-						<div class="{error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-							<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 							<br />	
 						</div>
 						<br />		
 					</td>
 				</tr>
-				# END error_handler #
+				# ENDIF #
 				
 				<tr>
 					<td style="padding-left:20px;" class="row2">

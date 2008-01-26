@@ -89,14 +89,10 @@ if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 		###### Regénération du cache #######
 		$cache->generate_module_file('gallery');
 			
-		header('location:' . HOST . DIR . '/gallery/admin_gallery_cat.php');	
-		exit;
+		redirect(HOST . DIR . '/gallery/admin_gallery_cat.php');	
 	}	
 	else
-	{
-		header('location:' . HOST . DIR . '/gallery/admin_gallery_cat_add.php?error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/gallery/admin_gallery_cat_add.php?error=incomplete#errorh');
 }
 else	
 {		
@@ -116,56 +112,21 @@ else
 	}
 	$sql->close($result);
 	
-	//Création du tableau des groupes.
-	$array_groups = array();
-	foreach($_array_groups_auth as $idgroup => $array_group_info)
-		$array_groups[$idgroup] = $array_group_info[0];	
-		
-	//Création du tableau des rangs.
-	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-		
-	//Génération d'une liste à sélection multiple des rangs et groupes
-	function generate_select_groups($auth_id)
-	{
-		global $array_groups, $array_ranks, $LANG;
-		
-		$j = 0;
-		//Liste des rangs
-		$select_groups = '<select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
-		foreach($array_ranks as $idgroup => $group_name)
-		{
-			$selected = ($idgroup == 2) ? 'selected="selected"' : '';			
-			$select_groups .=  '<option value="r' . $idgroup . '" id="' . $auth_id . 'r' . $j . '" ' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_id . 'r\', ' . $j . ')">' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .=  '</optgroup>';
-		
-		//Liste des groupes.
-		$j = 0;
-		$select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
-		foreach($array_groups as $idgroup => $group_name)
-		{
-			$select_groups .= '<option value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '">' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .= '</optgroup></select>';
-		
-		return $select_groups;
-	}
-	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		
+	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
 	
 	$template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $template->module_data_path('gallery'),
 		'NBR_GROUP' => count($array_groups),
 		'CATEGORIES' => $galleries,
-		'AUTH_READ' => generate_select_groups('r'),
-		'AUTH_WRITE' => generate_select_groups('w'),
-		'AUTH_EDIT' => generate_select_groups('x'),
+		'AUTH_READ' => $groups->generate_select_groups('r', array(), -1, array(0 => true, 1 => true, 2 => true)),
+		'AUTH_WRITE' => $groups->generate_select_groups('w', array(), -1, array(1 => true, 2 => true)),
+		'AUTH_EDIT' => $groups->generate_select_groups('x', array(), -1, array(2 => true)),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 

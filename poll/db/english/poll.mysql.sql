@@ -23,5 +23,5 @@ CREATE TABLE `phpboost_poll_ip` (
 	PRIMARY KEY	(`id`)
 ) ENGINE=MyISAM;
 
-INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('poll', 'a:4:{s:9:"poll_auth";i:-1;s:9:"poll_mini";i:-1;s:11:"poll_cookie";s:4:"poll";s:18:"poll_cookie_lenght";i:1800000;}');
+INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('poll', 'a:4:{s:9:"poll_auth";i:-1;s:9:"poll_mini";a:0:{}s:11:"poll_cookie";s:4:"poll";s:18:"poll_cookie_lenght";i:2592000;}');
 INSERT INTO `phpboost_modules_mini` (`name`, `code`, `contents`, `side`, `secure`, `activ`, `added`) VALUES ('poll', 'include_once(''../poll/poll_mini.php'');', '', 1, -1, 1, 0);

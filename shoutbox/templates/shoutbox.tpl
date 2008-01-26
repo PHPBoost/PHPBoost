@@ -51,13 +51,13 @@
 		</form>
 
 		<br />
-		# START error_handler #
+		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
-		<div class="{error_handler.CLASS}">
-			<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+		<div class="{ERRORH_CLASS}">
+			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 		</div>
 		<br />		
-		# END error_handler #
+		# ENDIF #
 		
 		<div class="msg_position">
 			<div class="msg_top_l"></div>			

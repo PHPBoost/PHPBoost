@@ -27,9 +27,8 @@
 ###################################################*/
 
 require_once('../includes/begin.php');
-define('TITLE', 'Ajax');
-require_once('../includes/header_no_display.php');
 include_once('../gallery/gallery_begin.php');
+require_once('../includes/header_no_display.php');
 
 //Notation des images.
 if( !empty($_GET['note_pics']) && $session->check_auth($session->data, 0) ) //Utilisateur connecté.

@@ -53,16 +53,14 @@ if( !empty($_POST['valid']) )
 	}
 	$sql->close($result);
 	
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 elseif( !empty($_GET['del']) && !empty($id) ) //Suppression de la catégorie.
 {
 	$sql->query_inject("DELETE FROM ".PREFIX."news_cat WHERE id = " . $id, __LINE__, __FILE__);
 	$sql->query_inject("UPDATE ".PREFIX."news SET idcat = 0 WHERE idcat = " . $id, __LINE__, __FILE__);
 		
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 //On ajoute la nouvelle catégorie
 elseif( !empty($_POST['add']) ) //Ajout de la catégorie.
@@ -80,14 +78,10 @@ elseif( !empty($_POST['add']) ) //Ajout de la catégorie.
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
 		$sql->query_inject("INSERT INTO ".PREFIX."news_cat (name, contents, icon) VALUES('" . $cat . "', '" . $contents . "', '" . $icon . "')", __LINE__, __FILE__);
 			
-		header('location:' . HOST . SCRIPT); 	
-		exit;
+		redirect(HOST . SCRIPT); 	
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/news/admin_news_cat.php?error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/news/admin_news_cat.php?error=incomplete#errorh');
 }
 //Sinon on rempli le formulaire
 else	

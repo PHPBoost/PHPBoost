@@ -119,14 +119,14 @@
 				</tr>
 				<tr>
 					<td class="row_next">
-						<img src="templates/images/help.png" alt="{L_DOCUMENTATION}" style="vertical-align:middle;" />
+						<img src="templates/images/help.png" alt="{L_DOCUMENTATION}" class="valign_middle" />
 						&nbsp;&nbsp;
 						<a href="{U_DOCUMENTATION}">{L_DOCUMENTATION}</a>
 					</td>
 				</tr>
 				<tr>
 					<td class="row_next">
-						<img src="templates/images/intro.png" alt="{L_RESTART_INSTALL}" style="vertical-align:middle;" />
+						<img src="templates/images/intro.png" alt="{L_RESTART_INSTALL}" class="valign_middle" />
 						&nbsp;&nbsp;
 						<a href="{U_RESTART}" onclick="return confirm('{L_CONFIRM_RESTART}');">{L_RESTART_INSTALL}</a>
 					</td>
@@ -174,7 +174,7 @@
 						# END error #
 						<form action="{TARGET}" method="post">
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}" ><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}" ><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />
 							</fieldset>		
 						</form>
@@ -195,12 +195,12 @@
 						</fieldset>
 						<br />
 						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" style="vertical-align:middle;" >
+							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
 						</div>
 						<form action="{TARGET}" method="post">
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" style="vertical-align:middle;" /></a>&nbsp;
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
+								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
 							</fieldset>		
 						</form>
@@ -220,12 +220,12 @@
 						</fieldset>
 						<br />
 						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" style="vertical-align:middle;" >
+							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
 						</div>
 						<form action="{TARGET}" method="post">
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" style="vertical-align:middle;" /></a>&nbsp;
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
+								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
 							</fieldset>		
 						</form>
@@ -255,12 +255,12 @@
 						</fieldset>
 						<br />
 						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" style="vertical-align:middle;" >
+							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
 						</div>
 						<form action="{TARGET}" method="post">
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" style="vertical-align:middle;" /></a>&nbsp;
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
+								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
 							</fieldset>		
 						</form>
@@ -287,12 +287,12 @@
 							</div>
 						# END error #
 						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" style="vertical-align:middle;" >
+							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
 						</div>
 						<form action="{TARGET}" method="post">
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" style="vertical-align:middle;" /></a>&nbsp;
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
+								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
 							</fieldset>		
 						</form>
@@ -311,13 +311,13 @@
 						</fieldset>
 						<br />
 						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" style="vertical-align:middle;" >
+							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
 						</div>
 						</div>
 						<form action="{TARGET}" method="post">
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" style="vertical-align:middle;" /></a>&nbsp;
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
+								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
 							</fieldset>		
 						</form>
@@ -346,12 +346,12 @@
 						</div>
 						<br />
 						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" style="vertical-align:middle;" >
+							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
 						</div>
 						<form action="{TARGET}" method="post">
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" style="vertical-align:middle;" /></a>&nbsp;
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
+								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
 							</fieldset>		
 						</form>
@@ -379,12 +379,12 @@
 						</div>
 						<br />
 						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" style="vertical-align:middle;" >
+							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
 						</div>
 						<form action="{TARGET}" method="post">
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" style="vertical-align:middle;" /></a>&nbsp;
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
+								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
 							</fieldset>		
 						</form>
@@ -404,12 +404,12 @@
 						</fieldset>
 						<br />
 						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" style="vertical-align:middle;" >
+							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
 						</div>
 						<form action="{TARGET}" method="post">
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" style="vertical-align:middle;" /></a>&nbsp;
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
+								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
 							</fieldset>		
 						</form>
@@ -428,12 +428,12 @@
 						</fieldset>
 						<br />
 						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" style="vertical-align:middle;" >
+							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
 						</div>
 						<form action="{TARGET}" method="post">
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" style="vertical-align:middle;" /></a>&nbsp;
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
+								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
 							</fieldset>		
 						</form>
@@ -455,12 +455,12 @@
 						</fieldset>
 						<br />
 						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" style="vertical-align:middle;" >
+							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
 						</div>
 						<form action="{TARGET}" method="post">
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" style="vertical-align:middle;" /></a>&nbsp;
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
+								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
 							</fieldset>		
 						</form>
@@ -473,7 +473,7 @@
 						<br />
 						<form action="{TARGET}" method="post">
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
 							</fieldset>		
 						</form>

@@ -48,8 +48,7 @@ if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
 	###### Régénération du cache des news #######
 	$cache->generate_module_file('articles');
 	
-	header('location:' . HOST . SCRIPT);	
-	exit;
+	redirect(HOST . SCRIPT);	
 }
 elseif( !empty($_POST['articles_count']) ) //Recompte le nombre d'articles de chaque catégories
 {
@@ -92,8 +91,7 @@ elseif( !empty($_POST['articles_count']) ) //Recompte le nombre d'articles de ch
 	
 	$cache->generate_module_file('articles');
 	
-	header('location:' . HOST . DIR . '/articles/admin_articles_config.php'); 
-	exit;
+	redirect(HOST . DIR . '/articles/admin_articles_config.php'); 
 }
 //Sinon on rempli le formulaire
 else	

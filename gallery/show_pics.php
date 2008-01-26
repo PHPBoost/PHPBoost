@@ -38,10 +38,7 @@ if( !empty($g_idpics) )
 	if( !empty($g_idcat) )
 	{
 		if( !isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0 ) 
-		{	
-			header('location: ' . HOST . DIR . '/gallery/gallery.php?error=unexist_cat');
-			exit;
-		}
+			redirect(HOST . DIR . '/gallery/gallery.php?error=unexist_cat');
 	}
 	else //Racine.
 	{
@@ -50,10 +47,7 @@ if( !empty($g_idpics) )
 	}
 	//Niveau d'autorisation de la catégorie
 	if( !$groups->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	//Mise à jour du nombre de vues.
 	$sql->query_inject("UPDATE LOW_PRIORITY ".PREFIX."gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'", __LINE__, __FILE__);
@@ -61,10 +55,7 @@ if( !empty($g_idpics) )
 	$clause_admin = $session->data['level'] == 2 ? '' : ' AND aprob = 1';
 	$path = $sql->query("SELECT path FROM ".PREFIX."gallery WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'" . $clause_admin, __LINE__, __FILE__);
 	if( empty($path) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 
 	include_once('../gallery/gallery.class.php');
 	$gallery = new Gallery;

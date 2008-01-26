@@ -39,18 +39,8 @@
 		}	
 		function rename_file(id_file, previous_cut_name)
 		{
-			var xhr_object = null;
-			var data = null;
 			var name = document.getElementById("fiinput" + id_file).value;
-			var filename = "xmlhttprequest.php?rename_pics=1";
 			var regex = /\/|\\|\||\?|<|>|\"/;
-			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-				return;
 			
 			if( regex.test(name) ) //interdiction des caractères spéciaux dans la nom.
 			{
@@ -61,10 +51,8 @@
 			else
 			{
 				document.getElementById('img' + id_file).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-
 				data = "id_file=" + id_file + "&name=" + name + "&previous_name=" + previous_cut_name;
-				xhr_object.open("POST", filename, true);
-
+				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?rename_pics=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '0' )
@@ -78,30 +66,17 @@
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
 						document.getElementById('img' + id_file).innerHTML = '';
 				}
-
-				xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhr_object.send(data);
+				xmlhttprequest_sender(xhr_object, data);
 			}
 		}
 		function pics_aprob(id_file)
 		{
-			var xhr_object = null;
-			var data = null;
-			var filename = "xmlhttprequest.php?aprob_pics=1";
 			var regex = /\/|\\|\||\?|<|>|\"/;
 			
 			document.getElementById('img' + id_file).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-				return;
-			
-			data = "id_file=" + id_file;
-			xhr_object.open("POST", filename, true);
 
+			data = "id_file=" + id_file;
+			var xhr_object = xmlhttprequest_init('xmlhttprequest.php?aprob_pics=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
@@ -119,9 +94,7 @@
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '-1' )
 					document.getElementById('img' + id_file).innerHTML = '';
 			}
-
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(data);
+			xmlhttprequest_sender(xhr_object, data);
 		}
 		
 		var delay = 2000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
@@ -249,14 +222,14 @@
 		<div id="admin_contents">
 			
 			
-			# START error_handler #
+			# IF C_ERROR_HANDLER #
 				<span id="errorh"></span>
-				<div class="{error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 				<br />	
-			# END error_handler #
+			# ENDIF #
 			
 			{PAGINATION}
 

@@ -310,20 +310,9 @@
 			}
 			else
 			{
-				var xhr_object = null;
-				var filename = '../includes/xmlhttprequest.php?stats_referer=1&id=' + divid;
-				var data = null;
-				
-				if(window.XMLHttpRequest) // Firefox
-				   xhr_object = new XMLHttpRequest();
-				else if(window.ActiveXObject) // Internet Explorer
-				   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-				else // XMLHttpRequest non supporté par le navigateur
-					return;
-				
 				document.getElementById('load' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 				
-				xhr_object.open("POST", filename, true);
+				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?stats_referer=1&id=' + divid);
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -336,8 +325,7 @@
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 						document.getElementById('load' + divid).innerHTML = '';
 				}
-				xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhr_object.send(null);
+				xmlhttprequest_sender(xhr_object, null);
 			}
 		}
 		-->
@@ -408,20 +396,9 @@
 			}
 			else
 			{
-				var xhr_object = null;
-				var filename = '../includes/xmlhttprequest.php?stats_keyword=1&id=' + divid;
-				var data = null;
-				
-				if(window.XMLHttpRequest) // Firefox
-				   xhr_object = new XMLHttpRequest();
-				else if(window.ActiveXObject) // Internet Explorer
-				   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-				else // XMLHttpRequest non supporté par le navigateur
-					return;
-				
 				document.getElementById('load' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 				
-				xhr_object.open("POST", filename, true);
+				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?stats_keyword=1&id=' + divid);
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -434,8 +411,7 @@
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 						document.getElementById('load' + divid).innerHTML = '';
 				}
-				xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhr_object.send(null);
+				xmlhttprequest_sender(xhr_object, null);
 			}
 		}
 		-->

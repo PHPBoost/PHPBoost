@@ -210,7 +210,7 @@ $LANG['end_installation'] = '<fieldset>
 							<br />
 							<ul>
 								<li>Thanks to every members who encouraged us and helped us to find bugs, which will permit to PHPBoost to be a stable software.</li>
-								<li>Thank Ptithom for every thing he has done for us (documentation writing, finding bugs)</li>
+								<li>Thanks to members of modules developpement team (Florent), graphics team (KONA, tonyck), translate team (Forensic) and redaction team (Ptithom, Mat)</li>
 							</ul>
 							<br />
 							Other projects
@@ -228,6 +228,7 @@ $LANG['end_installation'] = '<fieldset>
 							<ul>
 								<li>Régis VIARRE <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer</li>
 								<li>Benoît SAUTEL <em>(alias ben.popeye)</em>, developer</li>
+								<li>Loïc ? <em>(alias horn)</em>, developer</li>
 							</ul>
 						</fieldset>';
 $LANG['site_index'] = 'Go to my website';

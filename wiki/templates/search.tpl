@@ -5,16 +5,16 @@
 						{L_SEARCH}
 					</th>
 				</tr>
-				# START error_handler #
+				# IF C_ERROR_HANDLER #
 				<tr>
 					<td colspan="3">
 						<span id="errorh"></span>
-						<div class="{error_handler.CLASS}">
-							<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 						</div>
 					</td>
 				</tr>
-				# END error_handler #
+				# ENDIF #
 				<tr>
 					<td class="row2" style="text-align:center;">
 						{L_KEY_WORDS} &nbsp;
@@ -65,16 +65,16 @@
 					</td>
 				</tr>
 				# END search_result.item #
-				# START search_result.error_handler #
+				# IF C_ERROR_HANDLER #
 				<tr>
 					<td colspan="2" class="row2">
 						<span id="errorh"></span>
-						<div class="{search_result.error_handler.CLASS}">
-							<img src="../templates/{THEME}/images/{search_result.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {search_result.error_handler.L_ERROR}
+						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 						</div>
 					</td>
 				</tr>
-				# END search_result.error_handler #
+				# ENDIF #
 				<tr>
 					<td class="row2" colspan="2" style="text-align:center;">
 						{search_result.PAGES}

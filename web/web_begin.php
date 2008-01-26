@@ -30,10 +30,7 @@ if( defined('PHP_BOOST') !== true)
 	
 //Autorisation sur le module.
 if( !$groups->check_auth($SECURE_MODULE['web'], ACCESS_MODULE) )
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}
 
 load_module_lang('web', $CONFIG['lang']); //Chargement de la langue du module.
 

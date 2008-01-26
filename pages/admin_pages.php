@@ -54,30 +54,23 @@ if( !empty($_POST['update']) )  //Mise à jour
 	//Régénération du cache
 	$cache->generate_module_file('pages');
 	
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
-
-$array_auth = isset($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
-$array_groups = array();
-//Création du tableau des groupes.
-foreach($_array_groups_auth as $idgroup => $array_group_info)
-	$array_groups[$idgroup] = $array_group_info[0];
-
- //Création du tableau des rangs.
-$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 
 $template->set_filenames(array(
 	'pages_config' => '../templates/' . $CONFIG['theme'] . '/pages/admin_pages.tpl'
- ));
+));
+
+$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+$array_auth = isset($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
 
 $template->assign_vars(array(
 	'HITS_CHECKED' => $_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : '',
 	'NBR_GROUP' => count($array_groups),
 	'COM_CHECKED' => $_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : '',
-	'SELECT_READ_PAGE' => generate_select_groups($_PAGES_CONFIG['auth'], 1, READ_PAGE),
-	'SELECT_EDIT_PAGE' => generate_select_groups($_PAGES_CONFIG['auth'], 2, EDIT_PAGE),
-	'SELECT_READ_COM' => generate_select_groups($_PAGES_CONFIG['auth'], 3, READ_COM),
+	'SELECT_READ_PAGE' => $groups->generate_select_groups(1, $array_auth, READ_PAGE),
+	'SELECT_EDIT_PAGE' => $groups->generate_select_groups(2, $array_auth, EDIT_PAGE),
+	'SELECT_READ_COM' => $groups->generate_select_groups(3, $array_auth, READ_COM),
 	'L_READ_COM' => $LANG['pages_auth_read_com'],
 	'L_EDIT_PAGE' => $LANG['pages_auth_edit'],
 	'L_READ_PAGE' => $LANG['pages_auth_read'],

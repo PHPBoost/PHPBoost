@@ -140,6 +140,11 @@ $LANG['bb_text'] = 'Text';
 $LANG['bb_script'] = 'Script';
 $LANG['bb_web'] = 'Web';
 $LANG['bb_prog'] = 'Programation';
+$LANG['lines'] = 'Number of lines';
+$LANG['cols'] = 'Number of columns';
+$LANG['head_table'] = 'Head';
+$LANG['head_add'] = 'Add table head';
+$LANG['insert_table'] = 'Insert table';
 $LANG['forbidden_tags'] = 'Forbidden BBcode tags:';
 
 //Connexion
@@ -232,6 +237,7 @@ $LANG['theme'] = 'Theme';
 $LANG['online'] = 'Online';
 $LANG['modules'] = 'Modules';
 $LANG['no_result'] = 'No result';
+$LANG['during'] = 'During';
 $LANG['until'] = 'Until';
 $LANG['lock'] = 'Locked';
 $LANG['unlock'] = 'Unlocked';

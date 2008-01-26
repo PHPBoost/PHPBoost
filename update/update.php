@@ -534,8 +534,7 @@ elseif( $step == 2 )
 		  KEY `id` (`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__); 
 		
-		header('location:' . HOST . FILE . add_lang('?step=3', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=3', true));
 	}
 	
 	$template->assign_block_vars('kernel_update', array());
@@ -608,8 +607,7 @@ elseif( $step == 3 )
 		}
 		$sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_articles`", __LINE__, __FILE__);
 
-		header('location:' . HOST . FILE . add_lang('?step=4', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=4', true));
 	}
 	$template->assign_block_vars('articles_update', array());
 	$template->assign_vars(array(
@@ -630,8 +628,7 @@ elseif( $step == 4 )
 		$sql->query_inject("ALTER TABLE `" . PREFIX . "calendar` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
 		$sql->query_inject("ALTER TABLE `" . PREFIX . "calendar` CHANGE `nbr_com` `nbr_com` INT( 11 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
 		$sql->query_inject("ALTER TABLE `" . PREFIX . "calendar` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__); 
-		header('location:' . HOST . FILE . add_lang('?step=5', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=5', true));
 	}
 	$template->assign_block_vars('calendar_update', array());
 	$template->assign_vars(array(
@@ -718,8 +715,7 @@ elseif( $step == 5 )
 		KEY `idtopic` (`idtopic`,`user_id`,`idmodo`)
 		) ENGINE=MyISAM;", __LINE__, __FILE__); 
 		
-		header('location:' . HOST . FILE . add_lang('?step=6', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=6', true));
 	}
 	$template->assign_block_vars('forum_update', array());
 	$template->assign_vars(array(
@@ -796,8 +792,7 @@ elseif( $step == 6 )
 		$sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "album`", __LINE__, __FILE__); 
 		$sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_albumcat`", __LINE__, __FILE__); 
 
-		header('location:' . HOST . FILE . add_lang('?step=7', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=7', true));
 	}
 	$template->assign_block_vars('gallery_update', array());
 	$template->assign_vars(array(
@@ -829,8 +824,7 @@ elseif( $step == 7 )
 		$sql->query_inject("ALTER TABLE `" . PREFIX . "livreor` CHANGE `login` `login` VARCHAR( 255 ) DEFAULT '' NOT NULL", __LINE__, __FILE__);  
 		$sql->query_inject("ALTER TABLE `" . PREFIX . "livreor` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__); 
 		$sql->query_inject("ALTER TABLE `" . PREFIX . "livreor` RENAME `" . PREFIX . "guestbook`", __LINE__, __FILE__); 
-		header('location:' . HOST . FILE . add_lang('?step=8', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=8', true));
 	}
 	$template->assign_block_vars('guestbook_update', array());
 	$template->assign_vars(array(
@@ -872,8 +866,7 @@ elseif( $step == 8 )
 		) ENGINE=MyISAM", __LINE__, __FILE__); 
 		$sql->query_inject("INSERT INTO `" . PREFIX . "news_cat` (`id`, `name`, `contents`, `icon`) VALUES (1, 'Test', 'Cat&eacute;gorie de test', 'news.png')", __LINE__, __FILE__);  
 
-		header('location:' . HOST . FILE . add_lang('?step=9', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=9', true));
 	}
 	$template->assign_block_vars('news_update', array());
 	$template->assign_vars(array(
@@ -912,8 +905,7 @@ elseif( $step == 9 )
 				}
 			}
 		}
-		header('location:' . HOST . FILE . add_lang('?step=10', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=10', true));
 	}
 	$template->assign_block_vars('pages_update', array());
 	$template->assign_vars(array(
@@ -932,8 +924,7 @@ elseif( $step == 10 )
 	{
 		$sql->query_inject("ALTER TABLE `" . PREFIX . "shoutbox` CHANGE `user_id` `user_id` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
 		$sql->query_inject("ALTER TABLE `" . PREFIX . "shoutbox` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
-		header('location:' . HOST . FILE . add_lang('?step=11', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=11', true));
 	}
 	$template->assign_block_vars('shoutbox_update', array());
 	$template->assign_vars(array(
@@ -968,8 +959,7 @@ elseif( $step == 11 )
 		$sql->query_inject("ALTER TABLE `" . PREFIX . "admin_web` DROP INDEX `idcat` , ADD INDEX `class` ( `class` ) ", __LINE__, __FILE__); 
 		$sql->query_inject("ALTER TABLE `" . PREFIX . "admin_web` RENAME `" . PREFIX . "web_cat`", __LINE__, __FILE__); 
 
-		header('location:' . HOST . FILE . add_lang('?step=12', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=12', true));
 	}
 	$template->assign_block_vars('web_update', array());
 	$template->assign_vars(array(
@@ -1010,8 +1000,7 @@ elseif( $step == 12 )
 		$sql->query_inject("ALTER TABLE `" . PREFIX . "admin_download` DROP INDEX `idcat` , ADD INDEX `class` ( `class` ) ", __LINE__, __FILE__);
 		$sql->query_inject("ALTER TABLE `" . PREFIX . "admin_download` RENAME `" . PREFIX . "download_cat`", __LINE__, __FILE__); 
 		
-		header('location:' . HOST . FILE . add_lang('?step=13', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=13', true));
 	}
 	$template->assign_block_vars('download_update', array());
 	$template->assign_vars(array(
@@ -1028,21 +1017,12 @@ elseif( $step == 13 )
 {
 	if( $go_to_next_step )
 	{
-		//Ecriture du fichier de redirection
-		$file_path = '../index.php';
-		delete_file($file_path); //Rippe le fichier
-		
-		$file = @fopen($file_path, 'w+'); //On crée le fichier avec droit d'écriture et lecture.
-		@fwrite($file, '<?php header(\'location: ' . HOST . DIR . '/news/news.php\'); ?>');
-		@fclose($file);
-		
 		$cache = new Cache; //!\\Initialisation  de la class de gestion du cache//!\\
 		
 		//Régénération du cache
 		$cache->generate_htaccess();
 		$cache->generate_all_files();
-		header('location:' . HOST . FILE . add_lang('?step=14', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=14', true));
 	}
 	$template->assign_block_vars('cache', array());
 	$template->assign_vars(array(

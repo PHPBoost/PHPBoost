@@ -30,10 +30,7 @@ if( defined('PHP_BOOST') !== true)
 	
 //Autorisation sur le module.
 if( !$groups->check_auth($SECURE_MODULE['poll'], ACCESS_MODULE) )
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}
 
 load_module_lang('poll', $CONFIG['lang']); //Chargement de la langue du module.
 define('TITLE', $LANG['title_poll']);

@@ -28,10 +28,7 @@
 if( defined('PHP_BOOST') !== true)	exit;
 
 if( !$groups->check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) )
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}
 
 require_once('../wiki/wiki_auth.php');
 

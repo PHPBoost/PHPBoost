@@ -190,7 +190,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$sql->close($result);
 	
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING, NO_LINE_ERROR, NO_FILE_ERROR, 'download.');
+		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);
 		
 	include_once('../includes/bbcode.php');
 	
@@ -209,14 +209,10 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 	{
 		$sql->query_inject("UPDATE ".PREFIX."web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
-		header('location:' . HOST . SCRIPT);
-		exit;
+		redirect(HOST . SCRIPT);
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/web/admin_web.php?id= ' . $id_post . '&error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/web/admin_web.php?id= ' . $id_post . '&error=incomplete#errorh');
 }
 elseif( $del && !empty($id) ) //Suppresion du lien web.
 {
@@ -226,8 +222,7 @@ elseif( $del && !empty($id) ) //Suppresion du lien web.
 	//On supprimes les éventuels commentaires associés.
 	$sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'web'", __LINE__, __FILE__);
 	
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }		
 else
 {			

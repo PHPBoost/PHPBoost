@@ -70,8 +70,7 @@ if( !empty($_POST['valid']) )
 	###### Régénération du cache de la gallery #######
 	$cache->generate_module_file('gallery');
 	
-	header('location:' . HOST . SCRIPT);	
-	exit;
+	redirect(HOST . SCRIPT);	
 }
 elseif( !empty($_POST['gallery_cache']) ) //Suppression des miniatures.
 {
@@ -85,8 +84,7 @@ elseif( !empty($_POST['gallery_cache']) ) //Suppression des miniatures.
 	
 	$cache->generate_module_file('gallery');
 	
-	header('location:' . HOST . DIR . '/gallery/admin_gallery_config.php'); 
-	exit;
+	redirect(HOST . DIR . '/gallery/admin_gallery_config.php'); 
 }
 else 
 {		

@@ -12,14 +12,14 @@
 				</div>
 				<div class="module_contents">
 					<div style="text-align:center">
-						# START error_handler #
+						# IF C_ERROR_HANDLER #
 							<span id="errorh"></span>
-							<div class="{error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-								<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+							<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+								<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 								<br />	
 							</div>
 							<br />	
-						# END error_handler #
+						# ENDIF #
 		
 						# START image_up #								
 						<strong>{image_up.L_SUCCESS_UPLOAD}</strong>

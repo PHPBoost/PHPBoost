@@ -54,10 +54,7 @@ if( is_array($CAT_FORUM) )
 }
 
 if( !$session->check_auth($session->data, 1) && $check_auth_by_group !== true ) //Si il n'est pas modérateur (total ou partiel)
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT);
-	exit;
-}
 
 $template->set_filenames(array(
 	'forum_moderation_panel' => '../templates/' . $CONFIG['theme'] . '/forum/forum_moderation_panel.tpl',
@@ -89,8 +86,7 @@ if( !empty($id_topic_get) )
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 	$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($topic['title']) : '';
 
-	header('location:' . HOST . DIR . '/forum/forum' . transid('.php?id=' . $id_topic_get, '-' . $id_topic_get . $rewrited_cat_title . '.php', '&'));
-	exit;
+	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $id_topic_get, '-' . $id_topic_get . $rewrited_cat_title . '.php', '&'));
 }
 
 if( $action == 'alert' ) //Gestion des alertes
@@ -124,8 +120,7 @@ if( $action == 'alert' ) //Gestion des alertes
 		else 
 			$get_id = '&id=' . $id_get;
 			
-		header('location:' . HOST . DIR . '/forum/moderation_forum' . transid('.php?action=alert' . $get_id, '', '&'));
-		exit;
+		redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=alert' . $get_id, '', '&'));
 	}
 	
 	$template->assign_vars(array(
@@ -278,7 +273,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 					$privatemsg = new Privatemsg();
 					
 					//Envoi du message.
-					$privatemsg->send_pm($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', CHECK_PM_BOX, SYSTEM_PM);
+					$privatemsg->send_pm($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', SYSTEM_PM);
 				}
 			}
 			
@@ -286,8 +281,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 			forum_history_collector(H_READONLY_USER, $info_mbr['user_id'], 'moderation_forum.php?action=punish&id=' . $info_mbr['user_id']);
 		}
 		
-		header('location:' . HOST . DIR . '/forum/moderation_forum' . transid('.php?action=punish', '', '&'));
-		exit;
+		redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=punish', '', '&'));
 	}
 	
 	$template->assign_vars(array(		
@@ -309,15 +303,9 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 			$login = !empty($_POST['login_mbr']) ? securit($_POST['login_mbr']) : '';
 			$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
-			{
-				header('location:' . HOST . DIR . '/forum/moderation_forum' . transid('.php?action=punish&id=' . $user_id, '', '&'));
-				exit;
-			}	
+				redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=punish&id=' . $user_id, '', '&'));
 			else
-			{
-				header('location:' . HOST . DIR . '/forum/moderation_forum' . transid('.php?action=punish', '', '&'));
-				exit;
-			}	
+				redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=punish', '', '&'));
 		}	
 		
 		$template->assign_block_vars('user_list', array(
@@ -458,7 +446,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 						$privatemsg = new Privatemsg();
 						
 						//Envoi du message.
-						$privatemsg->send_pm($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', CHECK_PM_BOX, SYSTEM_PM);
+						$privatemsg->send_pm($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', SYSTEM_PM);
 					}
 				}
 				
@@ -480,8 +468,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			}	
 		}
 		
-		header('Location:' . HOST . DIR . '/forum/moderation_forum' . transid('.php?action=warning', '', '&'));
-		exit;
+		redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=warning', '', '&'));
 	}
 	
 	$template->assign_vars(array(		
@@ -503,15 +490,9 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			$login = !empty($_POST['login_mbr']) ? securit($_POST['login_mbr']) : '';
 			$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
-			{
-				header('location:' . HOST . DIR . '/forum/moderation_forum' . transid('.php?action=warning&id=' . $user_id, '', '&'));
-				exit;
-			}	
+				redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=warning&id=' . $user_id, '', '&'));
 			else
-			{
-				header('location:' . HOST . DIR . '/forum/moderation_forum' . transid('.php?action=warning', '', '&'));
-				exit;
-			}	
+				redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=warning', '', '&'));
 		}		
 		
 		$template->assign_vars(array(
@@ -596,8 +577,7 @@ elseif( !empty($_GET['del_h']) && $session->data['level'] === 2 ) //Suppression 
 {
 	$sql->query_inject("DELETE FROM ".PREFIX."forum_history");
 	
-	header('location:' . HOST . DIR . '/forum/moderation_forum' . transid('.php', '', '&'));
-	exit;
+	redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php', '', '&'));
 }
 else //Panneau de modération
 {

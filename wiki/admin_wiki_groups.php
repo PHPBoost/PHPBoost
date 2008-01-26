@@ -58,8 +58,7 @@ if( !empty($_POST['valid']) )
 	###### Regénération du cache des catégories (liste déroulante dans le forum) #######
 	$cache->generate_module_file('wiki');
 
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 else	
 {		
@@ -67,16 +66,25 @@ else
 		'admin_wiki_groups' => '../templates/' . $CONFIG['theme'] . '/wiki/admin_wiki_groups.tpl'
 	));
 	
-	$array_groups = array();
+	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_auth = isset($_WIKI_CONFIG['auth']) ? $_WIKI_CONFIG['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	
-	//Création du tableau des groupes.
-	foreach($_array_groups_auth as $idgroup => $array_group_info)
-		$array_groups[$idgroup] = $array_group_info[0];
-		
 	$template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $template->module_data_path('wiki'),
 		'NBR_GROUP' => count($array_groups),
+		'SELECT_CREATE_ARTICLE' => $groups->generate_select_groups(1, $array_auth, WIKI_CREATE_ARTICLE),
+		'SELECT_CREATE_CAT' => $groups->generate_select_groups(2, $array_auth, WIKI_CREATE_CAT),
+		'SELECT_RESTORE_ARCHIVE' => $groups->generate_select_groups(3, $array_auth, WIKI_RESTORE_ARCHIVE),
+		'SELECT_DELETE_ARCHIVE' => $groups->generate_select_groups(4, $array_auth, WIKI_DELETE_ARCHIVE),
+		'SELECT_EDIT' => $groups->generate_select_groups(5, $array_auth, WIKI_EDIT),
+		'SELECT_DELETE' => $groups->generate_select_groups(6, $array_auth, WIKI_DELETE),
+		'SELECT_RENAME' => $groups->generate_select_groups(7, $array_auth, WIKI_RENAME),
+		'SELECT_REDIRECT' => $groups->generate_select_groups(8, $array_auth, WIKI_REDIRECT),
+		'SELECT_MOVE' => $groups->generate_select_groups(9, $array_auth, WIKI_MOVE),
+		'SELECT_STATUS' => $groups->generate_select_groups(10, $array_auth, WIKI_STATUS),
+		'SELECT_COM' => $groups->generate_select_groups(11, $array_auth, WIKI_COM),
+		'SELECT_RESTRICTION' => $groups->generate_select_groups(12, $array_auth, WIKI_RESTRICTION),
 		'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
 		'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
 		'L_CONFIG_WIKI' => $LANG['wiki_config'],
@@ -98,64 +106,6 @@ else
 		'L_STATUS' => $LANG['wiki_auth_status'],
 		'L_COM' => $LANG['wiki_auth_com'],
 		'L_RESTRICTION' => $LANG['wiki_auth_restriction'],
-	));
-	
-	//Création du tableau des rangs.
-	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	
-	//Génération d'une liste à sélection multiple des rangs et groupes
-	function generate_select_groups($array_auth, $auth_id, $auth_level)
-	{
-		global $array_groups, $array_ranks, $LANG, $_WIKI_CONFIG;
-		
-		$j = 0;
-		//Liste des rangs
-		$select_groups = '<select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple"><optgroup label="' . $LANG['ranks'] . '">';
-		foreach($array_ranks as $idgroup => $group_name)
-		{
-			$selected = '';	
-			if( isset($_WIKI_CONFIG['auth']['r' . $idgroup]) && ((int)$_WIKI_CONFIG['auth']['r' . $idgroup] & (int)$auth_level) !== 0 )
-				$selected = 'selected="selected"';
-							
-			$select_groups .=  '<option value="r' . $idgroup . '" id="' . $auth_id . 'r' . $j . '" ' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_id . 'r\', ' . $j . ')">' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .=  '</optgroup>';
-		
-		//Liste des groupes.
-		$j = 0;
-		$select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
-		foreach($array_groups as $idgroup => $group_name)
-		{
-			$selected = '';		
-			if( isset($_WIKI_CONFIG['auth'][$idgroup]) && ((int)$_WIKI_CONFIG['auth'][$idgroup] & (int)$auth_level) !== 0 )
-				$selected = 'selected="selected"';
-
-			$select_groups .= '<option value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '" ' . $selected . '>' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .= '</optgroup></select>';
-		
-		return $select_groups;
-	}
-	
-	//Récupération des tableaux des autorisations et des groupes.
-	$array_auth = isset($_WIKI_CONFIG['auth']) ? $_WIKI_CONFIG['auth'] : array();
-	
-	//On assigne les variables pour le POST en précisant l'idurl.	
-	$template->assign_vars(array(
-		'SELECT_CREATE_ARTICLE' => generate_select_groups($array_auth, 1, WIKI_CREATE_ARTICLE),
-		'SELECT_CREATE_CAT' => generate_select_groups($array_auth, 2, WIKI_CREATE_CAT),
-		'SELECT_RESTORE_ARCHIVE' => generate_select_groups($array_auth, 3, WIKI_RESTORE_ARCHIVE),
-		'SELECT_DELETE_ARCHIVE' => generate_select_groups($array_auth, 4, WIKI_DELETE_ARCHIVE),
-		'SELECT_EDIT' => generate_select_groups($array_auth, 5, WIKI_EDIT),
-		'SELECT_DELETE' => generate_select_groups($array_auth, 6, WIKI_DELETE),
-		'SELECT_RENAME' => generate_select_groups($array_auth, 7, WIKI_RENAME),
-		'SELECT_REDIRECT' => generate_select_groups($array_auth, 8, WIKI_REDIRECT),
-		'SELECT_MOVE' => generate_select_groups($array_auth, 9, WIKI_MOVE),
-		'SELECT_STATUS' => generate_select_groups($array_auth, 10, WIKI_STATUS),
-		'SELECT_COM' => generate_select_groups($array_auth, 11, WIKI_COM),
-		'SELECT_RESTRICTION' => generate_select_groups($array_auth, 12, WIKI_RESTRICTION),
 	));
 
 	$template->pparse('admin_wiki_groups'); // traitement du modele	

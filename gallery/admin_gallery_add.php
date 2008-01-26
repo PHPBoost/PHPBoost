@@ -53,36 +53,24 @@ if( isset($_FILES['gallery']) && isset($_POST['idcat_post']) ) //Upload
 		{
 			$upload->upload_file('gallery', '`([a-z0-9])+\.(jpg|gif|png)+`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 			if( !empty($upload->error) ) //Erreur, on arrête ici
-			{
-				header('Location:' . HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $upload->error . '#errorh');
-				exit;
-			}
+				redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $upload->error . '#errorh');
 			else
 			{
 				$path = $dir . $upload->filename['gallery'];
 				$error = $upload->validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
-				{
-					header('Location:' . HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $error . '#errorh');
-					exit;					
-				}
+					redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $error . '#errorh');
 				else
 				{					
 					//Enregistrement de l'image dans la bdd.
 					$gallery->resize_pics($path);		
 					if( !empty($gallery->error) )
-					{
-						header('Location:' . HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $gallery->error . '#errorh');
-						exit;
-					}
+						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $gallery->error . '#errorh');
 					
 					$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
 					$idpic = $gallery->add_pics($idcat_post, $name, $upload->filename['gallery'], $session->data['user_id']);
 					if( !empty($gallery->error) )
-					{
-						header('Location:' . HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $gallery->error . '#errorh');
-						exit;
-					}
+						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $gallery->error . '#errorh');
 					
 					//Régénération du cache des photos aléatoires.
 					$cache->generate_module_file('gallery');
@@ -91,8 +79,7 @@ if( isset($_FILES['gallery']) && isset($_POST['idcat_post']) ) //Upload
 		}
 	}
 	
-	header('Location:' . HOST . DIR . '/gallery/admin_gallery_add.php?add=' . $idpic);
-	exit;	
+	redirect(HOST . DIR . '/gallery/admin_gallery_add.php?add=' . $idpic);
 }
 elseif( !empty($_POST['valid']) && !empty($nbr_pics_post) ) //Ajout massif d'images par ftp.
 {
@@ -116,8 +103,7 @@ elseif( !empty($_POST['valid']) && !empty($nbr_pics_post) ) //Ajout massif d'ima
 	//Régénération du cache des photos aléatoires.
 	$cache->generate_module_file('gallery');
 					
-	header('Location:' . HOST . DIR . '/gallery/admin_gallery_add.php');
-	exit;
+	redirect(HOST . DIR . '/gallery/admin_gallery_add.php');
 }
 else
 {

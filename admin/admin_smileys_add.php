@@ -47,20 +47,13 @@ if( !empty($_POST['add']) )
 			###### Régénération du cache des smileys #######	
 			$cache->generate_file('smileys');	
 		
-			header('location:' . HOST . DIR . '/admin/admin_smileys.php');
-			exit;
+			redirect(HOST . DIR . '/admin/admin_smileys.php');
 		}
 		else
-		{
-			header('location:' . HOST . DIR . '/admin/admin_smileys_add.php?error=e_smiley_already_exist#errorh');
-			exit;
-		}
+			redirect(HOST . DIR . '/admin/admin_smileys_add.php?error=e_smiley_already_exist#errorh');
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/admin/admin_smileys_add.php?error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/admin/admin_smileys_add.php?error=incomplete#errorh');
 }
 elseif( !empty($_FILES['upload_smiley']['name']) ) //Upload et décompression de l'archive Zip/Tar
 {
@@ -83,8 +76,7 @@ elseif( !empty($_FILES['upload_smiley']['name']) ) //Upload et décompression de 
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '?error=' . $error : '';
-	header('location:' . HOST . SCRIPT . $error);	
-	exit;
+	redirect(HOST . SCRIPT . $error);	
 }
 else
 {

@@ -43,8 +43,5 @@ header('Expires: 0');
 header('Cache-Control: no-cache');
 header('Pragma: public');
 if( @readfile($info_file['url']) === false )
-{
-	header('location:' . $info_file['url'], true);
-	exit;
-}
+	redirect($info_file['url']);
 ?>

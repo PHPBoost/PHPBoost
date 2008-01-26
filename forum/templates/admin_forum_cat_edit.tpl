@@ -10,12 +10,13 @@
 				return true;
 			}
 			
-			var disabled = {DISABLED};		
-			
+			var disabled = {DISABLED};				
 			function check_select_multiple_ranks(id, start)
 			{
 				if( !disabled || id == 'rr' )			
 				{
+					id_select = id.replace(/(.*)r/g, '$1');
+					check_select_multiple(id_select, false);
 					var i;
 					for(i = start; i <= 3; i++)
 					{
@@ -60,11 +61,14 @@
 								document.getElementById(array_id[j] + i).disabled = '';	
 						}
 					}
+					document.getElementById('wr2').selected = true;
 					document.getElementById('wr3').selected = true;
 					document.getElementById('xr3').selected = true;
 				}
 				else
 				{
+					document.getElementById('wr3').selected = false;
+					document.getElementById('xr3').selected = false;
 					disabled = 1;
 					var i;
 					var array_id = new Array('wr', 'xr', 'wg', 'xg');
@@ -119,15 +123,15 @@
 
 		<div id="admin_contents">
 					
-			# START error_handler #
+			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
 				<span id="errorh"></span>
-				<div class="{error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 			</div>
-			# END error_handler #
+			# ENDIF #
 				
 			<form action="admin_forum.php?id={ID}" method="post" onsubmit="return check_form_list();" class="fieldset_content">
 				<fieldset>

@@ -156,7 +156,8 @@ if( empty($idnews) && empty($idcat) )
 				'EDIT' => $admin,
 				'DEL' => $del,
 				'NEW_ROW' => $new_row, 
-				'U_MEMBER_ID' => transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php')
+				'U_MEMBER_ID' => transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+				'U_NEWS_LINK' => transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
 			));
 			$z++;
 		}
@@ -222,10 +223,7 @@ if( empty($idnews) && empty($idcat) )
 elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 {
 	if( empty($news['id']) )
-	{
 		$errorh->error_handler('e_unexist_news', E_USER_REDIRECT);
-		exit;
-	}
 	
 	$template->set_filenames(array('news' => '../templates/' . $CONFIG['theme'] . '/news/news.tpl'));
 	
@@ -277,10 +275,7 @@ elseif( !empty($idcat) )
 	
 	$cat = $sql->query_array('news_cat', 'id', 'name', 'icon', "WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	if( empty($cat['id']) )
-	{
 		$errorh->error_handler('error_unexist_cat', E_USER_REDIRECT);
-		exit;
-	}
 	
 	$template->assign_vars(array(
 		'CAT_NAME' => $cat['name'],

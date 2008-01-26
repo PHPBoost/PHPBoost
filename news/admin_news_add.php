@@ -100,14 +100,10 @@ if( !empty($_POST['valid']) )
 		$CONFIG_NEWS['nbr_news'] = $sql->query("SELECT COUNT(*) AS nbr_news FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
 		$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 			
-		header('location:' . HOST . DIR . '/news/admin_news.php');
-		exit;
+		redirect(HOST . DIR . '/news/admin_news.php');
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/news/admin_news_add.php?error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/news/admin_news_add.php?error=incomplete#errorh');
 }
 elseif( !empty($_POST['previs']) )
 {

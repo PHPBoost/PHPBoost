@@ -36,10 +36,7 @@ require_once('../wiki/wiki_speed_bar.php');
 require_once('../includes/header.php'); 
 
 if( !$groups->check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) || !$session->check_auth($session->data, 0) )
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}
 
 $search_string = !empty($_GET['search']) ? securit($_GET['search']) : '';
 $where_search = !empty($_GET['where']) ? ($_GET['where'] == 'contents' ? 'contents' : 'title') : 'title';
@@ -108,7 +105,7 @@ if( $search_string != '' ) //recherche
 	}
 	
 	if( $num_rows == 0 )
-		$errorh->error_handler($LANG['wiki_empty_search'], E_NOTICE, '', '', 'search_result.');
+		$errorh->error_handler($LANG['wiki_empty_search'], E_NOTICE);
 	
 }
 

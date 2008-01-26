@@ -123,9 +123,9 @@ if( !empty($id) && !$del )
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'download.');
+		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING, NO_LINE_ERROR, NO_FILE_ERROR, 'download.');	
+		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 		
 	include_once('../includes/bbcode.php');
 
@@ -272,7 +272,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$sql->close($result);
 	
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING, NO_LINE_ERROR, NO_FILE_ERROR, 'download.');
+		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);
 		
 	include_once('../includes/bbcode.php');
 
@@ -344,14 +344,10 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		$rss->generate_file('javascript', 'rss_download');
 		$rss->generate_file('php', 'rss2_download');
 		
-		header('location:' . HOST . SCRIPT);
-		exit;
+		redirect(HOST . SCRIPT);
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/download/admin_download.php?id= ' . $id_post . '&error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/download/admin_download.php?id= ' . $id_post . '&error=incomplete#errorh');
 }
 elseif( $del && !empty($id) ) //Suppression du fichier.
 {
@@ -367,8 +363,7 @@ elseif( $del && !empty($id) ) //Suppression du fichier.
 	$rss->generate_file('javascript', 'rss_download');
 	$rss->generate_file('php', 'rss2_download');
 	
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 else			
 {	

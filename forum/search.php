@@ -36,6 +36,7 @@ $search = !empty($_POST['search']) ? securit($_POST['search']) : '';
 $idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : -1;
 $time = !empty($_POST['time']) ? numeric($_POST['time']) * 3600 * 24 : 0; //X jour en secondes.
 $where = !empty($_POST['where']) ? securit($_POST['where']) : '';
+$colorate_result = !empty($_POST['colorate_result']) ? true : false;
 $valid_search = !empty($_POST['valid_search']) ? securit($_POST['valid_search']) : '';
 
 $template->set_filenames(array(
@@ -51,6 +52,10 @@ $template->assign_vars(array(
 	'SID' => SID,
 	'SEARCH' => $search,
 	'SELECT_CAT' => forum_list_cat($session->data), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+	'CONTENTS_CHECKED' => ($where == 'contents' || empty($where)) ? 'checked="checked"' : '',
+	'TITLE_CHECKED' => ($where == 'title') ? 'checked="checked"' : '',
+	'ALL_CHECKED' => ($where == 'all') ? 'checked="checked"' : '',
+	'COLORATE_RESULT' => ($colorate_result || empty($where)) ? 'checked="checked"' : '',
 	'U_SEARCH' => '<a class="small_link" href="search.php' . SID . '" title="' . $LANG['search'] . '">' . $LANG['search'] . '</a> &bull;',
 	'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' .SID . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a> &bull;',
 	'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' .SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . '</a>',
@@ -74,6 +79,7 @@ $template->assign_vars(array(
 	'L_TITLE' => $LANG['title'],
 	'L_CONTENTS' => $LANG['contents'],
 	'L_RELEVANCE' => $LANG['relevance'],
+	'L_COLORATE_RESULT' => $LANG['colorate_result'],
 	'L_SEARCH' => $LANG['search'],
 	'L_ON' => $LANG['on']	
 ));
@@ -107,16 +113,31 @@ while( $row = $sql->sql_fetch_assoc($result) )
 }
 $sql->close($result);
 
+//Coloration de l'item recherché en dehors des balises html.
+function token_colorate($matches)
+{
+	static $open_tag = 0;
+	static $close_tag = 0;
+	
+	$open_tag += substr_count($matches[1], '<');
+	$close_tag += substr_count($matches[1], '>');
+	
+	if( $open_tag == $close_tag )
+		return $matches[1] . '<span style="background:yellow;">' . $matches[2] . '</span>' . $matches[3];
+	else
+		return $matches[0];
+}
+
 if( !empty($valid_search) && !empty($search) )
 {
 	if( $idcat == '-1' )
 		$idcat = 0;
-			
+	
 	if( strlen($search) >= 4 )
 	{
 		$auth_cats = !empty($auth_cats) ? " AND c1.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 		
-		$req_msg = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(msg.contents) AGAINST('" . $search . "') AS relevance
+		$req_msg = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(msg.contents) AGAINST('" . $search . "') AS relevance, 0 AS relevance2
 		FROM ".PREFIX."forum_msg msg
 		LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 		LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
@@ -129,7 +150,7 @@ if( !empty($valid_search) && !empty($search) )
 		ORDER BY relevance DESC
 		" . $sql->sql_limit(0, 24);
 
-		$req_topic = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance
+		$req_title = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, 0 AS relevance2
 		FROM ".PREFIX."forum_msg msg
 		LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 		LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
@@ -142,7 +163,30 @@ if( !empty($valid_search) && !empty($search) )
 		ORDER BY relevance DESC
 		" . $sql->sql_limit(0, 24);
 		
-		$req = ($where === 'title') ? $req_topic : $req_msg;
+		$req_all = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, MATCH(msg.contents) AGAINST('" . $search . "') AS relevance2
+		FROM ".PREFIX."forum_msg msg
+		LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+		LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
+		JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
+		JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
+		JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
+		WHERE (MATCH(t.title) AGAINST('" . $search . "') OR MATCH(msg.contents) AGAINST('" . $search . "')) AND msg.timestamp > '" . (time() - $time) . "'
+		" . (!empty($idcat) ? " AND t.idcat = '" . $idcat . "'" : '') . $auth_cats . "
+		GROUP BY t.id
+		ORDER BY relevance DESC
+		" . $sql->sql_limit(0, 24);
+		
+		switch($where)
+		{
+			case 'title':
+			$req = $req_title;
+			break;
+			case 'all':
+			$req = $req_all;
+			break;
+			default:
+			$req = $req_msg;
+		}
 
 		$max_relevance = 4.5;		
 		$check_result = false;
@@ -156,13 +200,17 @@ if( !empty($valid_search) && !empty($search) )
 			//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 			$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($row['title']) : '';
 			
+			$relevance = max($row['relevance'], $row['relevance2']);
+			$contents = $colorate_result ? preg_replace_callback('`(.*)(' . preg_quote($search) . ')(.*)`isU', 'token_colorate', $row['contents']) : $row['contents'];
+			$title = $colorate_result ? preg_replace_callback('`(.*)(' . preg_quote($search) . ')(.*)`isU', 'token_colorate', $title) : $title;
+			
 			$template->assign_block_vars('list', array(
 				'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($row['connect']) && $row['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 				'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
-				'CONTENTS' => second_parse($row['contents']),
-				'RELEVANCE' => ($row['relevance'] > $max_relevance ) ? '100' : number_round(($row['relevance'] * 100) / $max_relevance, 2),
+				'CONTENTS' => second_parse($contents),
+				'RELEVANCE' => ($relevance > $max_relevance ) ? '100' : number_round(($relevance * 100) / $max_relevance, 2),
 				'DATE' => gmdate_format('d/m/y', $row['timestamp']),
-				'U_TITLE'  => '<a class="small_link" href="../forum/topic' . transid('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '#m' . $row['msgid'] . '" title="' . $title . '">' . $title . '</a>'				
+				'U_TITLE'  => '<a class="small_link" href="../forum/topic' . transid('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '#m' . $row['msgid'] . '">' . ucfirst($title) . '</a>'				
 			));
 			
 			$check_result = true;

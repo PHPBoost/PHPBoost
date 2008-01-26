@@ -11,7 +11,6 @@
 		    }
 			return true;
 		}
-
 		function hide_poll(divID)
 		{
 			if( document.getElementById(divID) ) 
@@ -21,16 +20,32 @@
 					document.getElementById('hidepoll_link').style.display = 'none';
 			}
 		}
-
 		function add_field(i, i_max) 
 		{
 			var i2 = i + 1;
 
 			document.getElementById('a'+i).innerHTML = '<input type="text" size="25" name="a'+i+'" value="" class="text" /><br /></span>';
-			
 			document.getElementById('a'+i).innerHTML += (i < i_max) ? '<p id="a'+i2+'"style="text-align:center"><a href="javascript:add_field('+i2+', '+i_max+')"><img src="../templates/{THEME}/images/form/plus.png" alt="+" /></a></a></p>' : '';
 		}
-
+		function XMLHttpRequest_change_statut()
+		{
+			var idtopic = {IDTOPIC};			
+			if( document.getElementById('forum_change_img') )
+				document.getElementById('forum_change_img').src = '../templates/{THEME}/images/loading.gif';
+			
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?msg_d=' + idtopic);
+			xhr_object.onreadystatechange = function() 
+			{
+				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
+				{	
+					if( document.getElementById('forum_change_img') )
+						document.getElementById('forum_change_img').src = xhr_object.responseText == '1' ? '{MODULE_DATA_PATH}/images/msg_display2.png' : '{MODULE_DATA_PATH}/images/msg_display.png';
+					if( document.getElementById('forum_change_msg') )
+						document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
+				}
+			}
+			xmlhttprequest_sender(xhr_object, null);
+		}
 		-->
 		</script>
 		
@@ -42,14 +57,14 @@
 			<div class="module_top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
 			<div class="module_contents">		
 				<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">		
-					# START error_handler #
+					# IF C_ERROR_HANDLER #
 					<br />	
 					<span id="errorh"></span>
-					<div class="{error_handler.CLASS}">
-						<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+					<div class="{ERRORH_CLASS}">
+						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					</div>
 					<br />		
-					# END error_handler #
+					# ENDIF #
 
 					# START show_msg #		
 					<div class="module_position">					
@@ -209,11 +224,18 @@
 		
 		# INCLUDE forum_bottom #
 		
-		# START display #
+		# IF C_DISPLAY_MSG #
 		<br /><br />
 		<div class="forum_action" style="padding:5px;">
-			{display.ICON_DISPLAY_MSG}
-			<a href="action{display.U_ACTION_MSG_DISPLAY}">{display.L_EXPLAIN_DISPLAY_MSG}</a>
+			<span id="forum_change_statut">
+				<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
+			</span>
+			<script type="text/javascript">
+			<!--				
+			document.getElementById('forum_change_statut').style.display = 'none';
+			document.write('<a href="javascript:XMLHttpRequest_change_statut()">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
+			-->
+			</script>
 		</div>		
-		# END display #	
+		# ENDIF #	
 		

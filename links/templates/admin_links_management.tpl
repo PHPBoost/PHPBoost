@@ -126,14 +126,14 @@
 			
 			
 			# START add #
-			# START add.error_handler #
+			# IF C_ERROR_HANDLER #
 			<span id="errorh"></span>
-			<div class="{add.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-				<img src="../templates/{THEME}/images/{add.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {add.error_handler.L_ERROR}
+			<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 				<br />	
 			</div>
 			<br />	
-			# END add.error_handler #
+			# ENDIF #
 			<form action="admin_links.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_LINK_ADD}</legend>

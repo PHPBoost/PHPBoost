@@ -53,8 +53,7 @@ if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà exista
 	
 	$cache->generate_file('modules_mini');		
 	
-	header('location:' . HOST . DIR . '/admin/admin_menus.php#m' . $id_post);	
-	exit;
+	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id_post);	
 }
 elseif( $action == 'add' ) //Ajout d'un menu.
 {		
@@ -73,8 +72,7 @@ elseif( $action == 'add' ) //Ajout d'un menu.
 	$cache->generate_file('modules_mini');		
 	
 	$last_menu_id = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."modules_mini");
-	header('location:' . HOST . DIR . '/admin/admin_menus.php#m' . $last_menu_id);	
-	exit;
+	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $last_menu_id);	
 }
 elseif( !empty($del) && isset($pos) && !empty($id) ) //Suppression du menu.
 {
@@ -91,8 +89,7 @@ elseif( !empty($del) && isset($pos) && !empty($id) ) //Suppression du menu.
 	
 	$cache->generate_file('modules_mini');		
 	
-	header('location:' . HOST . DIR . '/admin/admin_menus.php');	
-	exit;
+	redirect(HOST . DIR . '/admin/admin_menus.php');	
 }
 else	
 {		

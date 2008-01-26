@@ -61,8 +61,7 @@ if( $del && !empty($id) ) //Suppresion de l'article.
 	$rss->generate_file('javascript', 'rss_articles');
 	$rss->generate_file('php', 'rss2_articles');
 	
-	header('location:' . HOST . SCRIPT);	
-	exit;
+	redirect(HOST . SCRIPT);	
 }	
 elseif( !empty($id) )
 {
@@ -169,7 +168,7 @@ elseif( !empty($id) )
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'articles.');
+		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 
 	include_once('../includes/bbcode.php');
 	
@@ -415,14 +414,10 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		$rss->generate_file('javascript', 'rss_articles');
 		$rss->generate_file('php', 'rss2_articles');
 		
-		header('location:' . HOST . SCRIPT);
-		exit;
+		redirect(HOST . SCRIPT);
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/articles/admin_articles.php?id= ' . $id_post . '&error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/articles/admin_articles.php?id= ' . $id_post . '&error=incomplete#errorh');
 }		
 else
 {			

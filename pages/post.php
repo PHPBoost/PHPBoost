@@ -98,10 +98,7 @@ if( !empty($contents) )
 			$array_auth = unserialize($page_infos['auth']);
 			//Vérification de l'autorisation d'éditer la page
 			if( ($special_auth && !$groups->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-			{
-				header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
-				exit;
-			}
+				redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 			
 			//on vérifie que la catégorie ne s'insère pas dans un de ses filles
 			if( $page_infos['is_cat'] == 1 )
@@ -119,8 +116,7 @@ if( !empty($contents) )
 				//On met à jour la table
 				$sql->query_inject("UPDATE ".PREFIX."pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $activ_com . "', auth = '" . $page_auth . "', id_cat = '" . $id_cat . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 				//On redirige vers la page mise à jour
-				header('Location:' . HOST . DIR . '/pages/' . transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
-				exit;
+				redirect(HOST . DIR . '/pages/' . transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
 			//catégories : risque de boucle infinie
 			elseif( $page_infos['is_cat'] == 1 && empty($error) )
@@ -135,18 +131,14 @@ if( !empty($contents) )
 				//Régénération du cache
 				$cache->generate_module_file('pages');
 				//On redirige vers la page mise à jour
-				header('Location:' . HOST . DIR . '/pages/' . transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
-				exit;
+				redirect(HOST . DIR . '/pages/' . transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
 		}
 		//Création d'une page
 		elseif( !empty($title) )
 		{
 			if( !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-			{
-				header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
-				exit;
-			}
+				redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 			
 			$encoded_title = url_encode_rewrite($title);
 			$is_already_page = $sql->query("SELECT COUNT(*) FROM ".PREFIX."pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
@@ -166,8 +158,7 @@ if( !empty($contents) )
 					$cache->generate_module_file('pages');
 				}
 				//On redirige vers la page mise à jour
-				header('Location:' . HOST . DIR . '/pages/' . transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
-				exit;
+				redirect(HOST . DIR . '/pages/' . transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 			}
 			//Sinon, message d'erreur
 			else
@@ -188,22 +179,18 @@ elseif( $del > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	if( ($special_auth && !$groups->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-	{
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		
 	//la page existe bien, on supprime
 	if( !empty($page_infos['title']) )
 	{
 		$sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del . "'", __LINE__, __FILE__);
 		$sql->query_inject("DELETE FROM ".PREFIX."pages WHERE redirect = '" . $del . "'", __LINE__, __FILE__);
 		$sql->query_inject("DELETE FROM ".PREFIX."com WHERE script = 'pages' AND idprov = '" . $del . "'", __LINE__, __FILE__);
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=delete_success');
+		redirect(HOST . DIR . '/pages/pages.php?error=delete_success');
 	}
 	else
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=delete_failure');
-	
-	exit;
+		redirect(HOST . DIR . '/pages/pages.php?error=delete_failure');
 }
 
 $template->set_filenames(array('post' => '../templates/' . $CONFIG['theme'] . '/pages/post.tpl'));
@@ -215,10 +202,7 @@ if( $id_edit > 0 )
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation d'éditer la page
 	if( ($special_auth && !$groups->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-	{
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	//Erreur d'enregistrement ?
 	if( $error == 'cat_contains_cat' )
@@ -253,10 +237,8 @@ else
 {
 	//Autorisations
 	if( !$groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-	{
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		
 	//La page existe déjà !
 	if( $error == 'page_already_exists' )
 		$errorh->error_handler($LANG['pages_already_exists'], E_USER_WARNING);
@@ -291,22 +273,15 @@ else
 	));
 }
 
-$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : $_PAGES_CONFIG['auth'];
-$array_groups = array();
-
-//Création du tableau des groupes.
-foreach($_array_groups_auth as $idgroup => $array_group_info)
-	$array_groups[$idgroup] = $array_group_info[0];
-
- //Création du tableau des rangs.
-$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
+$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : (isset($_PAGES_CONFIG['auth'])) ? $_PAGES_CONFIG['auth'] : array();
 
 $template->assign_vars(array(
 	'ID_EDIT' => $id_edit,
 	'NBR_GROUP' => count($array_groups),
-	'SELECT_READ_PAGE' => generate_select_groups($array_auth, 1, READ_PAGE),
-	'SELECT_EDIT_PAGE' => generate_select_groups($array_auth, 2, EDIT_PAGE),
-	'SELECT_READ_COM' => generate_select_groups($array_auth, 3, READ_COM),
+	'SELECT_READ_PAGE' => $groups->generate_select_groups(1, $array_auth, READ_PAGE),
+	'SELECT_EDIT_PAGE' => $groups->generate_select_groups(2, $array_auth, EDIT_PAGE),
+	'SELECT_READ_COM' => $groups->generate_select_groups(3, $array_auth, READ_COM),
 	'OWN_AUTH_DISABLED' => !empty($page_infos['auth']) ? 'false' : 'true',
 	'DISPLAY' => empty($page_infos['auth']) ? 'display:none;' : '',
 	'PAGES_PATH' => $template->module_data_path('pages'),

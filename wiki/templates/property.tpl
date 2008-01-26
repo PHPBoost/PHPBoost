@@ -256,10 +256,10 @@
 		</script>
 		<script type="text/javascript" src="{WIKI_PATH}/images/wiki.js"></script>
 
-		# START move.error_handler #
+		# IF C_ERROR_HANDLER #
 			<span id="errorh"></span>
-			<div class="{move.error_handler.CLASS}">
-				<img src="../templates/{THEME}/images/{move.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {move.error_handler.L_ERROR}
+			<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			</div>
 		# END move.error_handler #
 		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
@@ -303,12 +303,12 @@
 			}
 		-->
 		</script>
-		# START rename.error_handler #
+		# IF C_ERROR_HANDLER #
 			<span id="errorh"></span>
-			<div class="{rename.error_handler.CLASS}">
-				<img src="../templates/{THEME}/images/{rename.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {rename.error_handler.L_ERROR}
+			<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			</div>
-		# END rename.error_handler #
+		# ENDIF #
 		
 		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
 			<fieldset>
@@ -395,12 +395,12 @@
 			}
 		-->
 		</script>
-		# START create.error_handler #
+		# IF C_ERROR_HANDLER #
 			<span id="errorh"></span>
-			<div class="{create.error_handler.CLASS}">
-				<img src="../templates/{THEME}/images/{create.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {create.error_handler.L_ERROR}
+			<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			</div>
-		# END create.error_handler #
+		# ENDIF #
 		
 		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
 			<fieldset>
@@ -428,12 +428,12 @@
 		</script>
 		<script type="text/javascript" src="{WIKI_PATH}/images/wiki.js"></script>
 
-		# START remove.error_handler #
+		# IF C_ERROR_HANDLER #
 			<span id="errorh"></span>
-			<div class="{remove.error_handler.CLASS}">
-				<img src="../templates/{THEME}/images/{remove.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {remove.error_handler.L_ERROR}
+			<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			</div>
-		# END remove.error_handler #
+		# ENDIF #
 				
 		<form action="action.php" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset_content">					
 			<fieldset>

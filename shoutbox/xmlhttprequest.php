@@ -44,7 +44,7 @@ if( $add )
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 			$check_time = ($session->data['user_id'] !== -1 && $CONFIG['anti_flood'] == 1) ? $sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__) : '';
-			if( !empty($check_time) && !$groups->check_auth($groups->user_groups_auth, AUTH_FLOOD) )
+			if( !empty($check_time) && !$groups->max_value($groups->user_groups_auth, AUTH_FLOOD) )
 			{
 				if( $check_time >= (time() - $CONFIG['delay_flood']) )
 				{

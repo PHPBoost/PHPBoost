@@ -53,8 +53,7 @@ if( !empty($_POST['valid']) )
 	###### Regénération du cache des catégories (liste déroulante dans le forum) #######
 	$cache->generate_module_file('forum');
 
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 else	
 {		
@@ -62,15 +61,14 @@ else
 		'admin_forum_groups' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_groups.tpl'
 	));
 	
-	$array_groups = array();
-	//Création du tableau des groupes.
-	foreach($_array_groups_auth as $idgroup => $array_group_info)
-		$array_groups[$idgroup] = $array_group_info[0];
-		
+	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_auth = isset($CONFIG_FORUM['auth']) ? $CONFIG_FORUM['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
+	
 	$template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $template->module_data_path('forum'),
 		'NBR_GROUP' => count($array_groups),
+		'FLOOD_AUTH' => $groups->generate_select_groups(1, $array_auth, 0x01),
+		'EDIT_MARK_AUTH' => $groups->generate_select_groups(2, $array_auth, 0x02),
+		'TRACK_TOPIC_AUTH' => $groups->generate_select_groups(3, $array_auth, 0x04),
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
 		'L_ADD_CAT' => $LANG['cat_add'],
@@ -85,55 +83,6 @@ else
 		'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
 		'L_SELECT_ALL' => $LANG['select_all'],
 		'L_SELECT_NONE' => $LANG['select_none']
-	));
-	
-	//Création du tableau des rangs.
-	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	
-	//Génération d'une liste à sélection multiple des rangs et groupes
-	function generate_select_groups($array_auth, $auth_id, $auth_level)
-	{
-		global $array_groups, $array_ranks, $LANG, $CONFIG_FORUM;
-		
-		$j = 0;
-		//Liste des rangs
-		$select_groups = '<select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple"><optgroup label="' . $LANG['ranks'] . '">';
-		foreach($array_ranks as $idgroup => $group_name)
-		{
-			$selected = '';	
-			if( isset($CONFIG_FORUM['auth']['r' . $idgroup]) && ((int)$CONFIG_FORUM['auth']['r' . $idgroup] & (int)$auth_level) !== 0 )
-				$selected = 'selected="selected"';
-							
-			$select_groups .=  '<option value="r' . $idgroup . '" id="' . $auth_id . 'r' . $j . '" ' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_id . 'r\', ' . $j . ')">' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .=  '</optgroup>';
-		
-		//Liste des groupes.
-		$j = 0;
-		$select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
-		foreach($array_groups as $idgroup => $group_name)
-		{
-			$selected = '';		
-			if( isset($CONFIG_FORUM['auth'][$idgroup]) && ((int)$CONFIG_FORUM['auth'][$idgroup] & (int)$auth_level) !== 0 )
-				$selected = 'selected="selected"';
-
-			$select_groups .= '<option value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '" ' . $selected . '>' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .= '</optgroup></select>';
-		
-		return $select_groups;
-	}
-	
-	//Récupération des tableaux des autorisations et des groupes.
-	$array_auth = isset($CONFIG_FORUM['auth']) ? $CONFIG_FORUM['auth'] : array();
-	
-	//On assigne les variables pour le POST en précisant l'idurl.	
-	$template->assign_vars(array(
-		'FLOOD_AUTH' => generate_select_groups($array_auth, 1, 1),
-		'EDIT_MARK_AUTH' => generate_select_groups($array_auth, 2, 2),
-		'TRACK_TOPIC_AUTH' => generate_select_groups($array_auth, 3, 4)
 	));
 
 	$template->pparse('admin_forum_groups'); // traitement du modele	

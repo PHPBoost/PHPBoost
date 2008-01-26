@@ -54,16 +54,17 @@ else
 		'L_COM_CONFIG' => $LANG['com_config'],
 	));
 
-$result = $sql->query_while("SELECT * 
-FROM ".PREFIX."com c
-LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
-GROUP BY c.idcom
-ORDER BY c.timestamp DESC", __LINE__, __FILE__);
-while($row = $sql->sql_fetch_assoc($result) )
-{
-	echo $row['contents'];
-}
-$sql->close($result);
+	$result = $sql->query_while("SELECT * 
+	FROM ".PREFIX."com c
+	LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
+	GROUP BY c.idcom
+	ORDER BY c.timestamp DESC", __LINE__, __FILE__);
+	while($row = $sql->sql_fetch_assoc($result) )
+	{
+		$template->assign_block_vars('com_list', array(
+			'CONTENTS' => $row['contents']
+		));
+	}
 	
 	$template->pparse('admin_com_management'); // traitement du modele	
 }

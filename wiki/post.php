@@ -98,10 +98,7 @@ if( !empty($contents) ) //On enregistre un article
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 			if( !((!$general_auth || $groups->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $groups->check_auth($article_auth , WIKI_EDIT))) )
-			{
 				$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-				exit;
-			}
 			
 			$previous_id_contents = $sql->query("SELECT id_contents FROM ".PREFIX."wiki_articles WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 			//On met à jour l'ancien contenu (comme archive)
@@ -122,22 +119,15 @@ if( !empty($contents) ) //On enregistre un article
 			
 			//On redirige
 			$redirect = $article_infos['encoded_title'];
-			header('Location: ' . transid('wiki.php?title=' . $redirect, $redirect, '', '&'));
-			exit;
+			redirect(transid('wiki.php?title=' . $redirect, $redirect, '', '&'));
 		}
 		elseif( !empty($title) ) //On crée un article
 		{
 			//autorisations
 			if( $is_cat && !$groups->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
-			{
 				$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-				exit;
-			}
 			elseif( !$is_cat && !$groups->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
-			{
 				$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-				exit;
-			}
 			
 			//On vérifie que le titre n'existe pas
 			$article_exists = $sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title = '" . url_encode_rewrite($title) . "'", __LINE__, __FILE__);
@@ -145,9 +135,7 @@ if( !empty($contents) ) //On enregistre un article
 			
 			//Si il existe: message d'erreur
 			if( $article_exists > 0 )
-			{
 				$errstr = $LANG['wiki_title_already_exists'];
-			}
 			else //On enregistre
 			{
 				$sql->query_inject("INSERT INTO ".PREFIX."wiki_articles (title, encoded_title, id_cat, is_cat) VALUES ('" . $title . "', '" . url_encode_rewrite($title) . "', '" . $new_id_cat . "', '" . $is_cat . "')", __LINE__, __FILE__);
@@ -177,8 +165,7 @@ if( !empty($contents) ) //On enregistre un article
 				$rss->generate_file('php', 'rss2_wiki');
 		
 				$redirect = $sql->query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);
-				header('Location: ' . transid('wiki.php?title=' . $redirect, $redirect, '' , '&'));
-				exit;
+				redirect(transid('wiki.php?title=' . $redirect, $redirect, '' , '&'));
 			}
 		}
 	}
@@ -197,10 +184,7 @@ if( $id_edit > 0 )//On édite
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	if( !((!$general_auth || $groups->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $groups->check_auth($article_auth , WIKI_EDIT))) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	$article_contents = $sql->query_array('wiki_contents', '*', "WHERE id_contents = '" . $article_infos['id_contents'] . "'", __LINE__, __FILE__);
 	$contents = $article_contents['content'];
@@ -225,15 +209,9 @@ else
 {	
 	//autorisations
 	if( $is_cat && !$groups->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	elseif( !$is_cat && !$groups->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	if( $id_cat > 0 && array_key_exists($id_cat, $_WIKI_CATS) ) //Catégorie préselectionnée
 	{

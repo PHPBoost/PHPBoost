@@ -18,14 +18,14 @@
 			<div class="module_top"><a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
 			<div class="module_contents">
 				<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">
-					# START error_handler #
+					# IF C_ERROR_HANDLER #
 					<br />	
 					<span id="errorh"></span>
-					<div class="{error_handler.CLASS}">
-						<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+					<div class="{ERRORH_CLASS}">
+						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					</div>
 					<br />		
-					# END error_handler #
+					# ENDIF #
 
 					# START show_msg #
 					<div class="module_position">					

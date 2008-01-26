@@ -91,14 +91,10 @@ if( $install ) //Installation du module
 			$cache->generate_htaccess(); 				
 		}
 		
-		header('location:' . HOST . SCRIPT);	
-		exit;		
+		redirect(HOST . SCRIPT);	
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/admin/admin_modules_add.php?error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/admin/admin_modules_add.php?error=incomplete#errorh');
 }			
 elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de l'archive Zip/Tar
 {
@@ -156,8 +152,7 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '?error=' . $error : '';
-	header('location:' . HOST . SCRIPT . $error);	
-	exit;
+	redirect(HOST . SCRIPT . $error);	
 }
 else
 {			

@@ -105,10 +105,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de voir la page
 	if( ($special_auth && !$groups->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
-	{
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	//Génération des liens de la page
 	$links = array();
@@ -175,28 +172,20 @@ if( !empty($encoded_title) && $num_rows == 1 )
 }
 //Page non trouvée
 elseif( (!empty($encoded_title) || $id_com > 0) && $num_rows == 0 )
-{
-	header('Location:' . HOST . DIR . transid('/pages/pages.php?error=e_page_not_found'));
-	exit;
-}
+	redirect(HOST . DIR . transid('/pages/pages.php?error=e_page_not_found'));
 //Commentaires
 elseif( $id_com > 0 )
 {
 	//Commentaires activés pour cette page ?
 	if( $page_infos['activ_com'] == 0 )
-	{
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_unactiv_com');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/pages.php?error=e_unactiv_com');
+		
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de voir la page
 	if( ($special_auth && !$groups->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) && ($special_auth && !$groups->check_auth($array_auth, READ_COM)) || (!$special_auth && !$groups->check_auth($_PAGES_CONFIG['auth'], READ_COM)) )
-	{
-		header('Location:' . HOST . DIR . '/pages/pages.php?error=e_auth_com');
-		exit;
-	}
+		redirect(HOST . DIR . '/pages/pages.php?error=e_auth_com');
 	
 	$template->set_filenames(array('com' => '../templates/' . $CONFIG['theme'] . '/pages/com.tpl'));
 	
@@ -240,8 +229,7 @@ elseif( !empty($error) )
 			$errorh->error_handler($LANG['pages_delete_failure'], E_USER_NOTICE);
 			break;
 		default :
-			header('Location:' . HOST . DIR . transid('/pages/pages.php'));
-			exit;
+			redirect(HOST . DIR . transid('/pages/pages.php'));
 	}
 	$template->pparse('error');
 }

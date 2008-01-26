@@ -35,10 +35,7 @@ $page = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
 
 //Redirection changement de catégorie.
 if( !empty($_POST['change_cat']) )
-{
-	header('location:' . HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
-	exit;
-}
+	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
 if( !$session->check_auth($session->data, 0) ) //Réservé aux membres.
 {
 	header('location: ' . HOST . DIR . '/member/error.php'); 
@@ -69,8 +66,7 @@ if( !empty($_POST['valid']) )
 	}
 	$sql->close($result);
 	
-	header('location: ' . HOST . DIR . '/forum/track.php' . SID2);
-	exit;
+	redirect(HOST . DIR . '/forum/track.php' . SID2);
 }
 elseif( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(s) du membre.
 {
@@ -266,10 +262,7 @@ elseif( $session->check_auth($session->data, 0) ) //Affichage des message()s non
 	$template->pparse('forum_track');
 }
 else
-{
-	header('Location:' . HOST . DIR . '/forum/index.php' . SID2);
-	exit;
-}
+	redirect(HOST . DIR . '/forum/index.php' . SID2);
 
 include('../includes/footer.php');
 

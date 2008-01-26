@@ -53,10 +53,7 @@ if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
 	include_once('lang/french/install_french.php');
 	
 if( !empty($_GET['restart']) )
-{
-	header('location:' . HOST . add_lang(FILE, true));
-	exit;
-}
+	redirect(HOST . add_lang(FILE, true));
 
 $template = new Templates; //!\\Initialisation des templates//!\\
 
@@ -81,9 +78,8 @@ function add_lang($url, $header_location = false)
 //Changement de langue
 if( !empty($_POST['new_language']) && is_file('lang/' . $_POST['new_language'] . '/install_' . $_POST['new_language'] . '.php') && $_POST['new_language'] != $lang)
 {
-		$lang = $_POST['new_language'];
-		header('location:' . HOST . FILE . add_lang('?step=' . $step, true));
-		exit;
+	$lang = $_POST['new_language'];
+	redirect(HOST . FILE . add_lang('?step=' . $step, true));
 }
 
 //Préambule
@@ -105,10 +101,8 @@ elseif( $step == 2 )
 	$license_agreement = !empty($_POST['license_agreement']) ? true : false;
 	//On vérifie l'étape et si elle est validée on passe à la suivante
 	if( $submit && $license_agreement )
-	{
-		header('location:' . HOST . FILE . add_lang('?step=3', true));
-		exit;
-	}
+		redirect(HOST . FILE . add_lang('?step=3', true));
+		
 	$template->assign_block_vars('license', array());
 	$template->assign_vars(array(
 		'TARGET' => add_lang('install.php?step=2'),
@@ -143,7 +137,7 @@ elseif( $step == 3 )
 	//Mise à jour du cache.
 	@clearstatcache();
 	
-	$chmod_dir = array('../', '../cache', '../cache/backup', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../includes/auth', '../lang', '../templates', '../upload');
+	$chmod_dir = array('../cache', '../cache/backup', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../includes/auth', '../lang', '../templates', '../upload');
 	
 	//Vérifications et le cas échéants changements des autorisations en écriture.
 	foreach($chmod_dir as $dir)
@@ -272,8 +266,7 @@ else
 			//On crée la structure de la base de données et on y insère la configuration de base
 			$sql->sql_parse('db/' . $dbms . '.sql', $tableprefix);
 			$sql->close();
-			header('location:' . HOST . FILE . add_lang('?step=5', true));
-			exit;
+			redirect(HOST . FILE . add_lang('?step=5', true));
 		}
 	}
 	
@@ -409,8 +402,7 @@ elseif( $step == 5 )
 		include('../includes/cache.class.php');
 		$cache = new Cache;
 		$cache->generate_all_files();
-		header('location:' . HOST . FILE . add_lang('?step=6', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=6', true));
 	}
 		
 	//Interface configuration du site
@@ -580,8 +572,7 @@ elseif( $step == 6 )
 			}
 			
 			//On redirige vers l'étape suivante
-			header('location:' . HOST . FILE . add_lang('?step=7', true));
-			exit;
+			redirect(HOST . FILE . add_lang('?step=7', true));
 		}
 		else
 			$template->assign_block_vars('admin.error', array(
@@ -901,8 +892,7 @@ elseif( $step == 7 )
 		$cache->generate_all_files();		
 		
 		//On redirige vers l'étape suivante
-		header('location:' . HOST . FILE . add_lang('?step=8', true));
-		exit;
+		redirect(HOST . FILE . add_lang('?step=8', true));
 	}
 	
 	$template->assign_block_vars('modules', array());

@@ -102,14 +102,10 @@ if( !empty($_POST['valid']) )
 		$rss->generate_file('javascript', 'rss_articles');
 		$rss->generate_file('php', 'rss2_articles');
 		
-		header('location:' . HOST . DIR . '/articles/admin_articles.php');
-		exit;
+		redirect(HOST . DIR . '/articles/admin_articles.php');
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/articles/admin_articles_add.php?error=incomplete#errorh');
-		exit;
-	}	
+		redirect(HOST . DIR . '/articles/admin_articles_add.php?error=incomplete#errorh');
 }
 elseif( !empty($_POST['previs']) )
 {

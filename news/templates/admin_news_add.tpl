@@ -83,15 +83,15 @@
 			<br /><br /><br />
 			# END news #
 			
-			# START error_handler #
+			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
 				<span id="errorh"></span>
-				<div class="{error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 			</div>
-			# END error_handler #	
+			# ENDIF #	
 			
 			<form action="admin_news_add.php" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>

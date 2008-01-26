@@ -59,32 +59,16 @@ if( !empty($_POST['mail_valid']) )
 		include_once('../includes/mail.class.php');
 		$mail = new Mail();
 
-		if( $mail->send_mail($CONFIG['mail'], $mail_objet, $mail_contents, $mail_from, '', 'user') )
-		{
-			//Succès mail
-			header('location:' . HOST . SCRIPT . transid('?error=success', '', '&') . '#errorh');
-			exit; 
-		}
-		else
-		{
-			//Erreur mail
-			header('location:' . HOST . SCRIPT . transid('?error=error', '', '&') . '#errorh');
-			exit;
-		}
+		if( $mail->send_mail($CONFIG['mail'], $mail_objet, $mail_contents, $mail_from, '', 'user') ) //Succès mail
+			redirect(HOST . SCRIPT . transid('?error=success', '', '&') . '#errorh');
+		else //Erreur mail
+			redirect(HOST . SCRIPT . transid('?error=error', '', '&') . '#errorh');
 	}
-	else
-	{
-		//Champs incomplet!
-		header('location:' . HOST . SCRIPT . transid('?error=verif', '', '&') . '#errorh');
-		exit;
-	}
+	else //Champs incomplet!
+		redirect(HOST . SCRIPT . transid('?error=verif', '', '&') . '#errorh');
 }
-elseif( !empty($_POST['mail_valid']) && ( empty($mail_email) || empty($mail_contents) ) )
-{
-	//Champs incomplet!
-	header('location:' . HOST . SCRIPT . transid('?error=incomplete', '', '&') . '#errorh');
-	exit;
-}
+elseif( !empty($_POST['mail_valid']) && ( empty($mail_email) || empty($mail_contents) ) ) //Champs incomplet!
+	redirect(HOST . SCRIPT . transid('?error=incomplete', '', '&') . '#errorh');
 else
 {	
 	###########################Affichage##############################

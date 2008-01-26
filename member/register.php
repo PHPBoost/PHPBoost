@@ -32,10 +32,7 @@ require_once('../includes/header.php');
 
 $cache->load_file('member');
 if( !$CONFIG_MEMBER['activ_register'] )
-{
-	header('location: ' . get_start_page());
-	exit;
-}
+	redirect(get_start_page());
 
 $key = !empty($_GET['key']) ? securit($_GET['key']) : '';
 $get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
@@ -99,10 +96,10 @@ if( empty($key) )
 			$errstr = '';
 		}
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'register.');  
+			$errorh->error_handler($errstr, E_USER_NOTICE);  
 
 		if( isset($LANG[$get_erroru]) )
-			$errorh->error_handler($LANG[$get_erroru], E_USER_WARNING, NO_LINE_ERROR, NO_FILE_ERROR, 'register.');  
+			$errorh->error_handler($LANG[$get_erroru], E_USER_WARNING);  
 			
 		//Mode d'activation du membre.
 		if( $CONFIG_MEMBER['activ_mbr'] == '1' )
@@ -361,10 +358,7 @@ if( empty($key) )
 		$template->pparse('register');
 	}
 	else
-	{
-		header('location:' . get_start_page());
-		exit;
-	}
+		redirect(get_start_page());
 }
 elseif( !empty($key) && $session->check_auth($session->data, 0) !== true ) //Activation du compte membre
 {
@@ -396,10 +390,7 @@ elseif( !empty($key) && $session->check_auth($session->data, 0) !== true ) //Act
 	$template->pparse('register');
 }
 else
-{
-	header('Location: ' . get_start_page());
-	exit;
-}
+	redirect(get_start_page());
 
 require_once('../includes/footer.php'); 
 

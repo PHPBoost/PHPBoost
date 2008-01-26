@@ -5,6 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta name="description" content="PHPBoost" />
 		<link type="text/css" href="templates/install.css" title="phpboost" rel="stylesheet" />
+		<link type="text/css" href="templates/global.js" title="phpboost" rel="stylesheet" />
 		<link rel="shortcut" href="../favicon.ico" />
 	</head>
 	<body>
@@ -145,14 +146,14 @@
 				</tr>
 				<tr>
 					<td class="row_next">
-						<img src="templates/images/help.png" alt="{L_DOCUMENTATION}" style="vertical-align:middle;" />
+						<img src="templates/images/help.png" alt="{L_DOCUMENTATION}" class="valign_middle" />
 						&nbsp;&nbsp;
 						<a href="{U_DOCUMENTATION}">{L_DOCUMENTATION}</a>
 					</td>
 				</tr>
 				<tr>
 					<td class="row_next">
-						<img src="templates/images/intro.png" alt="{L_RESTART_INSTALL}" style="vertical-align:middle;" />
+						<img src="templates/images/intro.png" alt="{L_RESTART_INSTALL}" class="valign_middle" />
 						&nbsp;&nbsp;
 						<a href="{U_RESTART}" onclick="return confirm('{L_CONFIRM_RESTART}');">{L_RESTART_INSTALL}</a>
 					</td>
@@ -213,14 +214,14 @@
 								<br />
 								<div style="text-align:center;">
 									<label style="cursor:pointer;">
-										<input type="checkbox" name="license_agreement" id="license_agreement" style="vertical-align:middle;" />
+										<input type="checkbox" name="license_agreement" id="license_agreement" class="valign_middle" />
 										{L_PLEASE_AGREE}
 									</label>
 								</div>
 							</fieldset>
 							
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}" ><img src="templates/images/left.png" alt="{L_START_INSTALL}" style="vertical-align:middle;" /></a>
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}" ><img src="templates/images/left.png" alt="{L_START_INSTALL}" class="valign_middle" /></a>
 								&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
 								<input type="hidden"  name="submit" value="next" />
@@ -237,22 +238,10 @@
 						display_result = false;
 						function refresh()
 						{
-							var xhr_object = null;
-							var data = null;
-							var filename = "xmlhttprequest.php?lang={LANG}&chmod=1";
-							
-							if(window.XMLHttpRequest) // Firefox
-							   xhr_object = new XMLHttpRequest();
-							else if(window.ActiveXObject) // Internet Explorer
-							   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-							else // XMLHttpRequest non supporté par le navigateur
-								return;
-											
-							xhr_object.open("POST", filename, true);
-							
 							if( !display_result )
 								document.getElementById('result_box').style.display = 'block';
-
+							
+							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?lang={LANG}&chmod=1');
 							xhr_object.onreadystatechange = function() 
 							{
 								if( xhr_object.readyState == 1 )
@@ -272,10 +261,7 @@
 										progress_bar(99, "{L_QUERY_FAILURE}", 0);
 								}									
 							}
-
-							xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-							xhr_object.send(data);
+							xmlhttprequest_sender(xhr_object, data);
 						}
 						-->
 						</script>
@@ -309,7 +295,7 @@
 								<legend>{L_AUTH_DIR}</legend>
 								<p>{L_CHECK_AUTH_DIR}</p>
 								<div id="chmod">
-									# START chmod #							
+									# START config_server.chmod #							
 									<dl>
 										<dt><label>{config_server.chmod.TITLE}</label></dt>
 										<dd>
@@ -317,7 +303,7 @@
 											{config_server.chmod.WRITABLE}
 										</dd>								
 									</dl>
-									# END chmod #
+									# END config_server.chmod #
 								</div>
 							</fieldset>	
 							
@@ -335,7 +321,7 @@
 							</fieldset>
 							
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;&nbsp;
+								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
 								<script type="text/javascript">
 								<!--
 									document.write("<a title=\"{L_REFRESH}\" href=\"javascript:refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" style=\"vertical-align:middle;\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
@@ -344,7 +330,7 @@
 								<noscript>
 									<p><a href="{U_CURRENT_STEP}">{L_REFRESH}</a>&nbsp;&nbsp;</p>
 								</noscript>
-								<a href="{U_NEXT_STEP}" title="{L_NEXT_STEP}"><img src="templates/images/right.png" alt="{L_NEXT_STEP}" style="vertical-align:middle;" /></a>
+								<a href="{U_NEXT_STEP}" title="{L_NEXT_STEP}"><img src="templates/images/right.png" alt="{L_NEXT_STEP}" class="valign_middle" /></a>
 							</fieldset>
 						</div>
 					</td>
@@ -358,24 +344,12 @@
 						display_result = false;
 						function send_infos()
 						{
-							var xhr_object = null;
-							var data = null;
-							var filename = "xmlhttprequest.php?lang={LANG}&db=1";
-							
-							if(window.XMLHttpRequest) // Firefox
-							   xhr_object = new XMLHttpRequest();
-							else if(window.ActiveXObject) // Internet Explorer
-							   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-							else // XMLHttpRequest non supporté par le navigateur
-								return;
-								
 							data = "dbms=" + document.getElementById("dbms").value + "&host=" + document.getElementById("host").value + "&login=" + document.getElementById("login").value + "&password=" + document.getElementById("password").value + "&database=" + document.getElementById("database").value;
 
-							xhr_object.open("POST", filename, true);
-							
 							if( !display_result )
 								document.getElementById('result_box').style.display = 'block';
 								
+							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?lang={LANG}&db=1');
 							xhr_object.onreadystatechange = function() 
 							{
 								if( xhr_object.readyState == 1 )
@@ -392,10 +366,7 @@
 										progress_bar(99, "{L_QUERY_FAILURE}", 0);
 								}									
 							}
-
-							xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-							xhr_object.send(data);
+							xmlhttprequest_sender(xhr_object, data);
 						}
 						function check_form_db()
 						{
@@ -426,9 +397,9 @@
 									<dt><label for="dbms">{L_CHOOSE_DBMS}</label><br /><span>{L_CHOOSE_DBMS_EXPLAIN}</span></dt>
 									<dd><label>
 										<select name="dbms" id="dbms">
-											# START dbms #
+											# START db.dbms #
 											<option value="{db.dbms.DBMS}" {db.dbms.SELECTED} {db.dbms.DISABLED}>{db.dbms.L_DBMS}</option>
-											# END dbms #
+											# END db.dbms #
 										</select>
 									</label></dd>								
 								</dl>
@@ -477,7 +448,7 @@
 							</fieldset>
 							
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;&nbsp;
+								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
 								<script type="text/javascript">
 								<!--
 									document.write("<a href=\"javascript:send_infos();\" title=\"{L_TEST_DB_CONFIG}\" /><img src=\"templates/images/refresh.png\" style=\"vertical-align:middle;\" title=\"{L_TEST_DB_CONFIG}\" /></a>&nbsp;");
@@ -552,9 +523,9 @@
 									<dt><label for="lang">* {L_DEFAULT_LANGUAGE}</label></dt>
 									<dd><label>
 										<select id="lang" name="lang" onchange="change_img_lang('img_lang', this.options[this.selectedIndex].value)">
-											# START lang #
+											# START site_config.lang #
 											<option value="{site_config.lang.LANG}" {site_config.lang.SELECTED}>{site_config.lang.LANG_NAME}</option>
-											# END lang #
+											# END site_config.lang #
 										</select> <img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
 									</label></dd>								
 								</dl>
@@ -562,9 +533,9 @@
 									<dt><label for="theme">* {L_DEFAULT_THEME}</label></dt>
 									<dd><label>
 										<select id="theme" name="theme" onChange="change_img_theme('img_theme', this.options[selectedIndex].value)">
-											# START theme #
+											# START site_config.theme #
 												<option value="{site_config.theme.THEME}" {site_config.theme.SELECTED}>{site_config.theme.THEME_NAME}</option>
-											# END theme # 				
+											# END site_config.theme # 				
 										</select>
 										<img id="img_theme" src="../templates/{IMG_THEME}/images/theme.jpg" alt="" style="vertical-align:top" />
 									</label></dd>								
@@ -584,7 +555,7 @@
 							</fieldset>
 							
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>&nbsp;&nbsp;
+								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
 								<input title="{L_NEXT_STEP}" class="img_submit" src="templates/images/right.png" type="image" class="img_submit" />
 								<input type="hidden" name="submit" value="submit" />
 							</fieldset>
@@ -661,12 +632,12 @@
 						
 						
 						<form action="{U_CURRENT_STEP}" method="post" onsubmit="return check_form_admin();" class="fieldset_content">
-							# START error #
+							# START admin.error #
 							<fieldset>
 								<legend>{L_ERROR}</legend>
 								{admin.error.ERROR}
 							</fieldset>
-							# END error #
+							# END admin.error #
 							<fieldset>
 								<legend>{L_ADMIN_ACCOUNT}</legend>	
 								<p>{L_CHECK_EXTENSIONS}</p>
@@ -690,9 +661,9 @@
 									<dt><label for="lang">* {L_LANG}</label></dt>
 									<dd><label>
 										<select id="lang" name="lang" onchange="change_img_lang('img_lang', this.options[this.selectedIndex].value)">
-											# START lang #
+											# START admin.lang #
 												<option value="{admin.lang.LANG}" {admin.lang.SELECTED}>{admin.lang.LANG_NAME}</option>
-											# END lang #								
+											# END admin.lang #								
 										</select>
 										<img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
 									</label></dd>								
@@ -708,7 +679,7 @@
 							</fieldset>
 							
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" style="vertical-align:middle;" alt="{L_PREVIOUS_STEP}" /></a>
+								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" class="valign_middle" alt="{L_PREVIOUS_STEP}" /></a>
 								&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
 								<input type="hidden" name="submit" value="submit" />
@@ -897,36 +868,36 @@
 							
 							<fieldset>
 								<legend>{L_MODULE_LIST}</legend>
-								# START module_list #
+								# START modules.module_list #
 									<div class="selected_module" id="module_{modules.module_list.MODULE_FOLDER_NAME}" onclick="select_module('{modules.module_list.MODULE_FOLDER_NAME}');" style="cursor:pointer;">
-										<input type="checkbox" name="install_{modules.module_list.MODULE_FOLDER_NAME}" id="install_{modules.module_list.MODULE_FOLDER_NAME}" style="vertical-align:middle;" checked="checked" />
-										<img src="{modules.module_list.SRC_IMAGE_MODULE}" alt="{modules.module_list.MODULE_NAME}" style="vertical-align:middle;" />
+										<input type="checkbox" name="install_{modules.module_list.MODULE_FOLDER_NAME}" id="install_{modules.module_list.MODULE_FOLDER_NAME}" class="valign_middle" checked="checked" />
+										<img src="{modules.module_list.SRC_IMAGE_MODULE}" alt="{modules.module_list.MODULE_NAME}" class="valign_middle" />
 										<strong>{modules.module_list.MODULE_NAME}</strong>
 										<span class="text_small">{modules.module_list.MODULE_DESC}</span>
 									</div>
-								# END module_list #
+								# END modules.module_list #
 							</fieldset>
 							
 							<fieldset>
 								<legend>{L_OTHER_OPTIONS}</legend>
 								<div class="selected_module" id="activ_member_block" onclick="activ_member();" style="cursor:pointer;">
-									<input type="checkbox" name="activ_member" id="activ_member" style="vertical-align:middle;" checked="checked" />
-									<img src="templates/images/member_accounts.png" alt="{L_ACTIV_MEMBER_ACCOUNTS}" style="vertical-align:middle;" />
+									<input type="checkbox" name="activ_member" id="activ_member" class="valign_middle" checked="checked" />
+									<img src="templates/images/member_accounts.png" alt="{L_ACTIV_MEMBER_ACCOUNTS}" class="valign_middle" />
 									{L_ACTIV_MEMBER_ACCOUNTS}
 								</div>
 								<div class="unselected_module" style="padding-left:27px;">
-									<img src="templates/images/index_module.png" alt="{L_INDEX_MODULE}" style="vertical-align:middle;" />
+									<img src="templates/images/index_module.png" alt="{L_INDEX_MODULE}" class="valign_middle" />
 									{L_INDEX_MODULE}
 									<select name="index_module" id="index_module">
 										<option selected="selected" value="default">{L_DEFAULT_INDEX}</option>
-										# START module_index_list #
+										# START modules.module_index_list #
 										<option value="{modules.module_index_list.MODULE}" id="index_module_{modules.module_index_list.MODULE}">{modules.module_index_list.MODULE_NAME}</option>
-										# END module_index_list #
+										# END modules.module_index_list #
 									</select>
 								</div>
 							</fieldset>
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" style="vertical-align:middle;" alt="{L_PREVIOUS_STEP}" /></a>
+								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" class="valign_middle" alt="{L_PREVIOUS_STEP}" /></a>
 								&nbsp;
 								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
 								<input type="hidden" name="submit" value="submit" />
@@ -948,7 +919,7 @@
 								</dl><label>
 							</fieldset>
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" style="vertical-align:middle;" /></a>
+								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>
 								<input title="{L_NEXT_STEP}" src="templates/images/right.png" type="image" class="img_submit" />
 								<input type="hidden" name="submit" value="submit" />
 							</fieldset>

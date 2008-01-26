@@ -27,7 +27,7 @@
 
 require_once('../includes/begin.php'); 
 require_once('../forum/forum_begin.php');
-//Variable GET.
+
 $page = !empty($_GET['pt']) ? numeric($_GET['pt']) : 1;
 $id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 $quote_get = !empty($_GET['quote']) ? numeric($_GET['quote']) : '';	
@@ -36,16 +36,11 @@ $quote_get = !empty($_GET['quote']) ? numeric($_GET['quote']) : '';
 $topic = !empty($id_get) ? $sql->query_array('forum_topics', 'id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__) : '';
 //Existance du topic.
 if( empty($topic['id']) )
-{
 	$errorh->error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
-	exit;
-}
 //Existance de la catégorie.
 if( !isset($CAT_FORUM[$topic['idcat']]) || $CAT_FORUM[$topic['idcat']]['aprob'] == 0 || $CAT_FORUM[$topic['idcat']]['level'] == 0 )
-{
 	$errorh->error_handler('e_unexist_cat', E_USER_REDIRECT);
-	exit;
-}
+
 //Récupération de la barre d'arborescence.
 speed_bar_generate($SPEED_BAR, $CONFIG_FORUM['forum_name'], 'index.php' . SID);
 foreach($CAT_FORUM as $idcat => $array_info_cat)
@@ -64,16 +59,11 @@ $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($topic['t
 
 //Redirection changement de catégorie.
 if( !empty($_POST['change_cat']) )
-{	
-	header('location:' . HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
-	exit;
-}	
+	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
+	
 //Autorisation en lecture.
 if( !$groups->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) )
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT);
-	exit;
-}
 
 $template->set_filenames(array(
 	'forum_topic' => '../templates/' . $CONFIG['theme'] . '/forum/forum_topic.tpl',
@@ -330,7 +320,7 @@ while ( $row = $sql->sql_fetch_assoc($result) )
 		foreach($_array_groups_auth as $idgroup => $array_group_info)
 		{
 			if( is_numeric(array_search($idgroup, $array_user_groups)) )
-				$user_groups .= !empty($array_group_info[1]) ? '<img src="../images/group/' . $array_group_info[1] . '" alt="' . $array_group_info[0] . '" title="' . $array_group_info[0] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info[0];
+				$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
 		}
 	}
 	else
@@ -445,8 +435,12 @@ $template->assign_vars(array(
 	'GUEST' => $total_visit,
 	'SELECT_CAT' => forum_list_cat($session->data), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'U_SUSCRIBE' => ($track === false) ? transid('.php?t=' . $id_get) : transid('.php?ut=' . $id_get),
+	'IS_FAVORITE' => $track ? 'true' : 'false',
+	'IS_CHANGE' => $topic['display_msg'] ? 'true' : 'false',
 	'U_ALERT' => transid('.php?id=' . $id_get),
-	'L_SUSCRIBE' => ($track === false) ? $LANG['track_topic'] : $LANG['untrack_topic'],
+	'L_SUSCRIBE_DEFAULT' => ($track === false) ? $LANG['track_topic'] : $LANG['untrack_topic'],
+	'L_SUSCRIBE' => $LANG['track_topic'],
+	'L_UNSUSCRIBE' => $LANG['untrack_topic'],
 	'L_ALERT' => $LANG['alert_topic'],
 	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 	'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
@@ -496,14 +490,16 @@ else
 		$template->assign_vars(array(
 			'C_DISPLAY_MSG' => true,
 			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_display . '" alt="" class="valign_middle" />' : '',
-			'L_EXPLAIN_DISPLAY_MSG' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
+			'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
+			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
+			'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
+			'L_EXPLAIN_DISPLAY_MSG_BIS' => $CONFIG_FORUM['explain_display_msg_bis'],
 			'U_ACTION_MSG_DISPLAY' => transid('.php?msg_d=1&amp;id=' . $id_get)
 		));
 	}
 }
 	
 include('../includes/bbcode.php');
-
 $template->pparse('forum_topic');
 
 include('../includes/footer.php');

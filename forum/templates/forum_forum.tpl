@@ -12,7 +12,7 @@
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
 				<div class="module_top">
-					<a href="rss.php" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> 
+					<a href="rss.php?cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> 
 					&nbsp;&nbsp;<strong>{cat.L_NAME}</strong>
 				</div>
 				<div class="module_contents forum_contents">
@@ -72,7 +72,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<span style="float:left;">
-					<a href="rss.php?cat={IDCAT}" title="Rss"><img style="vertical-align:middle;" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT} {U_POST_NEW_SUBJECT}
+					<a href="rss.php?cat={IDCAT}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT} {U_POST_NEW_SUBJECT}
 				</span>
 				<span style="float:right;">{PAGINATION}</span>&nbsp;
 			</div>
@@ -146,7 +146,7 @@
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
 				<span style="float:left;" class="text_strong">
-					<a href="rss.php?cat={IDCAT}" title="Rss"><img style="vertical-align:middle;" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT} {U_POST_NEW_SUBJECT}
+					<a href="rss.php?cat={IDCAT}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT} {U_POST_NEW_SUBJECT}
 				</span>
 				<span style="float:right;">{PAGINATION}</span>&nbsp;
 			</div>

@@ -16,6 +16,18 @@
 				}
 				return true;
 			}
+			function check_select_multiple(id, status)
+			{
+				var i;
+				
+				if( document.getElementById('poll_mini_none') )
+					document.getElementById('poll_mini_none').selected = '';
+				for(i = 0; i < {NBR_MINI_POLL}; i++)
+				{	
+					if( document.getElementById(id + i) )
+						document.getElementById(id + i).selected = status;			
+				}
+			}			
 			-->
 			</script>
 			
@@ -43,19 +55,21 @@
 		<div id="admin_contents">
 			<form action="admin_poll_config.php" method="post" class="fieldset_content">
 				<fieldset>
-					<legend>{L_POLL_CONFIG}</legend>
+					<legend>{L_POLL_CONFIG_MINI}</legend>
 					<dl>
-						<dt><label for="nbr_articles_max">{L_POLL_MINI}</label></dt>
+						<dt><label for="poll_mini">{L_POLL_MINI}</label><br /><span>{L_POLL_MINI_EXPLAIN}</span></dt>
 						<dd><label>
-							<select name="poll_mini">				
-							# START select #				
-							{select.POLL_CURRENT}				
-							# END select #				
+							<select id="poll_mini" name="poll_mini[]" size="5" multiple="multiple">
+								{MINI_POLL_LIST}				
 							</select>
+							<br />
+							<a href="javascript:check_select_multiple('poll_mini', true);">{L_SELECT_ALL}</a>
+							&nbsp;/&nbsp;
+							<a href="javascript:check_select_multiple('poll_mini', false);">{L_SELECT_NONE}</a>
 						</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="nbr_cat_max">* {L_RANK}</label></dt>
+						<dt><label for="poll_auth">* {L_RANK}</label></dt>
 						<dd><label>
 							<select name="poll_auth" id="poll_auth">
 								# START select_auth #
@@ -64,15 +78,18 @@
 							</select>
 						</label></dd>
 					</dl>
+				</fieldset>	
+				<fieldset>
+					<legend>{L_POLL_CONFIG_ADVANCED}</legend>
 					<dl>
-						<dt><label for="nbr_column">* {L_COOKIE_NAME}</label></dt>
+						<dt><label for="poll_cookie">* {L_COOKIE_NAME}</label></dt>
 						<dd><label><input type="text" maxlength="25" size="25" name="poll_cookie" id="poll_cookie" value="{COOKIE_NAME}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="note_max">* {L_COOKIE_LENGHT}</label></dt>
-						<dd><label><input type="text" maxlength="11" size="6" name="poll_cookie_lenght" id="poll_cookie_lenght" value="{COOKIE_LENGHT}" class="text" /></label> {L_HOUR}</dd>
+						<dt><label for="poll_cookie_lenght">* {L_COOKIE_LENGHT}</label></dt>
+						<dd><label><input type="text" maxlength="11" size="6" name="poll_cookie_lenght" id="poll_cookie_lenght" value="{COOKIE_LENGHT}" class="text" /></label> {L_DAYS}</dd>
 					</dl>
-				</fieldset>			
+				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />

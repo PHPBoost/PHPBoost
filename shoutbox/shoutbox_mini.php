@@ -38,10 +38,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	{		
 		//Membre en lecture seule?
 		if( $session->data['user_readonly'] > time() ) 
-		{
 			$errorh->error_handler('e_readonly', E_USER_REDIRECT); 
-			exit;
-		}
 			
 		$shout_pseudo = !empty($_POST['shout_pseudo']) ? clean_user($_POST['shout_pseudo']) : $LANG['guest']; //Pseudo posté.
 		$shout_contents = !empty($_POST['shout_contents']) ? trim($_POST['shout_contents']) : '';	
@@ -52,38 +49,25 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 			{
 				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 				$check_time = ($session->data['user_id'] !== -1 && $CONFIG['anti_flood'] == 1) ? $sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__) : '';
-				if( !empty($check_time) && !$groups->check_auth($groups->user_groups_auth, AUTH_FLOOD) )
+				if( !empty($check_time) && !$groups->max_value($groups->user_groups_auth, AUTH_FLOOD) )
 				{
 					if( $check_time >= (time() - $CONFIG['delay_flood']) )
-					{
-						header('location:' . HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=flood', '', '&'));
-						exit;
-					}
+						redirect(HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=flood', '', '&'));
 				}
 				
 				//Vérifie que le message ne contient pas du flood de lien.				
 				$shout_contents = parse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
 				if( !check_nbr_links($shout_pseudo, 0) ) //Nombre de liens max dans le pseudo.
-				{	
-					header('location:' . HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=lp_flood', '', '&'));
-					exit;
-				}
+					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=lp_flood', '', '&'));
 				if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
-				{	
-					header('location:' . HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=l_flood', '', '&'));
-					exit;
-				}
+					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=l_flood', '', '&'));
 					
 				$sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login,user_id,contents,timestamp) VALUES('" . $shout_pseudo . "', '" . $session->data['user_id'] . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
-				header('location:' . HOST . transid(SCRIPT . '?' . QUERY_STRING, '', '&'));
-				exit;
+				redirect(HOST . transid(SCRIPT . '?' . QUERY_STRING, '', '&'));
 			}
 			else //utilisateur non autorisé!
-			{
-				header('location:' . HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=auth', '', '&'));
-				exit;
-			}
+				redirect(HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=auth', '', '&'));
 		}	
 	}
 	

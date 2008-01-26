@@ -111,42 +111,6 @@ function pages_find_subcats(&$array, $id_cat)
 	}
 }
 
-//Génération d'une liste à sélection multiple des rangs et groupes
-function generate_select_groups($array_auth, $auth_id, $auth_level)
-{
-	global $array_groups, $array_ranks, $LANG;
-	
-	$j = 0;
-	//Liste des rangs
-	$select_groups = '<select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
-	foreach($array_ranks as $idgroup => $group_name)
-	{
-		$selected = '';	
-		if( isset($array_auth['r' . $idgroup]) && ((int)$array_auth['r' . $idgroup] & (int)$auth_level) !== 0 )
-			$selected = 'selected="selected"';
-						
-		$select_groups .=  '<option value="r' . $idgroup . '" id="' . $auth_id . 'r' . $j . '" ' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_id . 'r\', ' . $j . ')">' . $group_name . '</option>';
-		$j++;
-	}
-	$select_groups .=  '</optgroup>';
-	
-	//Liste des groupes.
-	$j = 0;
-	$select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
-	foreach($array_groups as $idgroup => $group_name)
-	{
-		$selected = '';		
-		if( isset($array_auth[$idgroup]) && ((int)$array_auth[$idgroup] & (int)$auth_level) !== 0 )
-			$selected = 'selected="selected"';
-
-		$select_groups .= '<option value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '" ' . $selected . '>' . $group_name . '</option>';
-		$j++;
-	}
-	$select_groups .= '</optgroup></select>';
-	
-	return $select_groups;
-}
-
 //Fonction "parse" pour les pages laissant passer le html tout en remplaçant les caractères spéciaux par leurs entités html correspondantes
 function pages_parse($contents)
 {

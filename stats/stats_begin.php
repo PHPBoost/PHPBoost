@@ -30,10 +30,7 @@ if( defined('PHP_BOOST') !== true)
 	
 //Autorisation sur le module.
 if( !$groups->check_auth($SECURE_MODULE['stats'], ACCESS_MODULE) )
-{
 	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}
 
 include_once('../lang/' . $CONFIG['lang'] . '/stats.php'); //Chargement de la langue.
 

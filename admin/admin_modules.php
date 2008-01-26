@@ -54,8 +54,7 @@ if( isset($_POST['valid']) )
 	//Génération du cache des modules
 	$cache->generate_file('modules');
 	
-	header('location:' . HOST . SCRIPT);	
-	exit;
+	redirect(HOST . SCRIPT);	
 }
 elseif( $uninstall ) //Désinstallation du module
 {
@@ -126,14 +125,10 @@ elseif( $uninstall ) //Désinstallation du module
 			}
 			
 			$error = !empty($error) ? '?error=' . $error : '';
-			header('location:' . HOST . SCRIPT . $error);	
-			exit;		
+			redirect(HOST . SCRIPT . $error);	
 		}
 		else
-		{
-			header('location:' . HOST . DIR . '/admin/admin_modules.php?error=incomplete#errorh');
-			exit;
-		}
+			redirect(HOST . DIR . '/admin/admin_modules.php?error=incomplete#errorh');
 	}
 	else
 	{
@@ -213,14 +208,11 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'main.');
+		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( !empty($get_error) && isset($LANG[$get_error]) )
-		$errorh->error_handler($LANG[$get_error], E_USER_WARNING, NO_LINE_ERROR, NO_FILE_ERROR, 'main.');
+		$errorh->error_handler($LANG[$get_error], E_USER_WARNING);
 		
-	$array_groups = array();
-	//Création du tableau des groupes.
-	foreach($_array_groups_auth as $idgroup => $array_group_info)
-		$array_groups[$idgroup] = $array_group_info[0];	
+	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
 
 	//Modules installé
 	$i = 0;	

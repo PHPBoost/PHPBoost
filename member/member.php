@@ -361,10 +361,10 @@ if( !empty($id_get) ) //Espace membre
 			$errstr = '';
 		}
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, E_USER_NOTICE, NO_LINE_ERROR, NO_FILE_ERROR, 'update.');  
+			$errorh->error_handler($errstr, E_USER_NOTICE);  
 
 		if( isset($LANG[$get_l_error]) )
-			$errorh->error_handler($LANG[$get_l_error], E_USER_WARNING, NO_LINE_ERROR, NO_FILE_ERROR, 'update.');
+			$errorh->error_handler($LANG[$get_l_error], E_USER_WARNING);
 	}
 	elseif( !empty($_POST['valid']) && ($session->data['user_id'] === $id_get) && ($session->check_auth($session->data, 0)) ) //Update du profil
 	{
@@ -390,16 +390,10 @@ if( !empty($id_get) ) //Espace membre
 						$sql->query_inject("UPDATE ".PREFIX."member SET password = '" . $password_md5 . "' WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__); 
 					}
 					else //Longueur minimale du password
-					{						
-						header('Location:' . HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=pass_mini') . '#errorh');
-						exit;
-					}
+						redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=pass_mini') . '#errorh');
 				}
 				else //Password non identiques.
-				{
-					header('Location:' . HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=pass_same') . '#errorh');
-					exit;
-				}
+					redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=pass_same') . '#errorh');
 			}
 		}
 		
@@ -462,19 +456,13 @@ if( !empty($id_get) ) //Espace membre
 				{
 					$upload->upload_file('avatars', '`([a-z0-9])+\.(jpg|gif|png|bmp)+`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 					if( !empty($upload->error) ) //Erreur, on arrête ici
-					{
-						header('Location:' . HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $upload->error) . '#errorh');
-						exit;
-					}
+						redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $upload->error) . '#errorh');
 					else
 					{
 						$path = $dir . $upload->filename['avatars'];
 						$error = $upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 						if( !empty($error) ) //Erreur, on arrête ici
-						{
-							header('Location:' . HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
-							exit;					
-						}
+							redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 						else
 						{
 							//Suppression de l'ancien avatar (sur le serveur) si il existe!
@@ -495,10 +483,7 @@ if( !empty($id_get) ) //Espace membre
 				$path = securit($_POST['avatar']);
 				$error = $upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
-				{
-					header('Location:' . HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
-					exit;						
-				}
+					redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 				else
 					$user_avatar = $path; //Avatar posté et validé.
 			}
@@ -509,10 +494,7 @@ if( !empty($id_get) ) //Espace membre
 				$check_mail = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login <> '" . securit($session->data['login']) . "'", __LINE__, __FILE__);		
 				$user_mail = "user_mail = '" . $user_mail . "', ";				
 				if( $check_mail >= 1 ) //Autre utilisateur avec le même mail!
-				{
-					header('Location:' . HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#errorh');
-					exit;
-				}
+					redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#errorh');
 				
 				//Suppression des images des stats concernant les membres, si l'info à été modifiée.
 				$info_mbr = $sql->query_array("member", "user_theme", "user_sex", "WHERE user_id = '" . numeric($session->data['user_id']) . "'", __LINE__, __FILE__);
@@ -611,20 +593,13 @@ if( !empty($id_get) ) //Espace membre
 					}
 				}
 				
-				header('location:' . HOST . DIR . '/member/member' . transid('.php?id=' . $session->data['user_id'], '-' . $session->data['user_id'] . '.php', '&'));
-				exit;
+				redirect(HOST . DIR . '/member/member' . transid('.php?id=' . $session->data['user_id'], '-' . $session->data['user_id'] . '.php', '&'));
 			}
 			else
-			{
-				header('Location:' . HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
-				exit;			
-			}
+				redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
 		}	
 		else
-		{
-			header('Location:' . HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#errorh');
-			exit;
-		}
+			redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#errorh');
 	}	
 	elseif( !empty($view_get) && $session->data['user_id'] === $id_get && ($session->check_auth($session->data, 0)) ) //Zone membre
 	{
@@ -636,7 +611,7 @@ if( !empty($id_get) ) //Espace membre
 		$cache->load_file('files');
 
 		//Droit d'accès?.
-		$is_auth_files = $groups->check_auth($CONFIG_FILES['auth_files'], 1);
+		$is_auth_files = $groups->check_auth($CONFIG_FILES['auth_files'], AUTH_FILES);
 	
 		$template->assign_vars(array(
 			'SID' => SID,
@@ -671,10 +646,7 @@ if( !empty($id_get) ) //Espace membre
 		$user_born = $sql->query("SELECT " . $sql->sql_date_diff('user_born') . " FROM ".PREFIX."member WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		if( empty($row['user_id']) ) //Vérification de l'existance du membre. 
-		{
 			$errorh->error_handler('e_auth', E_USER_REDIRECT);
-			exit;
-		}
 		
 		//Dernière connexion, si vide => date d'enregistrement du membre.
 		$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']; 
@@ -933,10 +905,7 @@ else //Show all member!
 		$login = !empty($_POST['login']) ? securit($_POST['login']) : '';
 		$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 		if( !empty($user_id) )
-		{
-			header('location:' . HOST . DIR . '/member/member' . transid('.php?id=' . $user_id, '-' . $user_id . '.php', '&'));
-			exit;
-		}	
+			redirect(HOST . DIR . '/member/member' . transid('.php?id=' . $user_id, '-' . $user_id . '.php', '&'));
 		else
 			$login = $LANG['no_result'];
 	}

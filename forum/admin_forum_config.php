@@ -62,14 +62,10 @@ if( !empty($_POST['valid']) )
 		###### Régénération du cache du forum ###### 
 		$cache->generate_module_file('forum');
 				
-		header('location:' . HOST . SCRIPT);	
-		exit;
+		redirect(HOST . SCRIPT);	
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/forum/admin_forum_config.php?error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/forum/admin_forum_config.php?error=incomplete#errorh');
 }
 elseif( $update_cached ) //Mise à jour des données stockées en cache dans la bdd.
 {
@@ -95,8 +91,7 @@ elseif( $update_cached ) //Mise à jour des données stockées en cache dans la bdd
 	}
 	$sql->close($result);
 	
-	header('location:' . HOST . SCRIPT);	
-	exit;
+	redirect(HOST . SCRIPT);	
 }
 else	
 {	

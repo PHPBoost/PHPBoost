@@ -48,26 +48,17 @@ $rewrited_title = ($CONFIG['rewrite'] == 1 && !empty($CAT_FORUM[$id_get]['name']
 
 //Redirection changement de catégorie.
 if( !empty($_POST['change_cat']) )
-{
-	header('location:' . HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
-	exit;
-}
+	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
 	
 if( !empty($id_get) )
 {
 	//Vérification de l'existance de la catégorie.
 	if( !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0 )
-	{
 		$errorh->error_handler('e_unexist_cat_forum', E_USER_REDIRECT);
-		exit;
-	}
 		
 	//Vérification des autorisations d'accès.
 	if( !$groups->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
-	{
 		$errorh->error_handler('e_auth', E_USER_REDIRECT);
-		exit;
-	}		
 	
 	$template->set_filenames(array(
 		'forum_forum' => '../templates/' . $CONFIG['theme'] . '/forum/forum_forum.tpl',
@@ -417,10 +408,7 @@ if( !empty($id_get) )
 	$template->pparse('forum_forum');
 }
 else
-{
-	header('Location:' . HOST . DIR . '/forum/index.php' . SID2);
-	exit;
-}
+	redirect(HOST . DIR . '/forum/index.php' . SID2);
 
 include('../includes/footer.php');
 

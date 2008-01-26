@@ -40,10 +40,7 @@ if( !empty($_POST['guestbook']) && empty($id_get) ) //Enregistrement
 
 	//Membre en lecture seule?
 	if( $session->data['user_readonly'] > time() ) 
-	{
 		$errorh->error_handler('e_readonly', E_USER_REDIRECT); 
-		exit;
-	}
 	
 	if( !empty($guestbook_contents) && !empty($guestbook_pseudo) )
 	{	
@@ -55,41 +52,25 @@ if( !empty($_POST['guestbook']) && empty($id_get) ) //Enregistrement
 			if( !empty($check_time) )
 			{			
 				if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcul la fin du delai.	
-				{
-					header('location:' . HOST . SCRIPT . transid('?error=flood', '', '&') . '#errorh');
-					exit;
-				}	
+					redirect(HOST . SCRIPT . transid('?error=flood', '', '&') . '#errorh');
 			}
 
 			$guestbook_contents = parse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']); 			
 			if( !check_nbr_links($guestbook_pseudo, 0) ) //Nombre de liens max dans le pseudo.
-			{	
-				header('location:' . HOST . SCRIPT . transid('?error=l_pseudo', '', '&') . '#errorh');
-				exit;
-			}			
+				redirect(HOST . SCRIPT . transid('?error=l_pseudo', '', '&') . '#errorh');
 			if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
-			{	
-				header('location:' . HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
-				exit;
-			}			
+				redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
 			$sql->query_inject("INSERT INTO ".PREFIX."guestbook (contents,login,user_id,timestamp) VALUES('" . $guestbook_contents . "', '" . $guestbook_pseudo . "', '" . $session->data['user_id'] . "', '" . time() . "')", __LINE__, __FILE__);
 			$last_msg_id = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."guestbook"); //Dernier message inséré.
 			
-			header('location:' . HOST . SCRIPT . SID2 . '#m' . $last_msg_id);
-			exit;
+			redirect(HOST . SCRIPT . SID2 . '#m' . $last_msg_id);
 		}
 		else //utilisateur non autorisé!
-		{
-			header('location:' . HOST . SCRIPT . transid('?error=auth', '', '&') . '#errorh');
-			exit;
-		}
+			redirect(HOST . SCRIPT . transid('?error=auth', '', '&') . '#errorh');
 	}
 	else
-	{
-		header('location:' . HOST . SCRIPT . transid('?error=incomplete', '', '&') . '#errorh');
-		exit;
-	}
+		redirect(HOST . SCRIPT . transid('?error=incomplete', '', '&') . '#errorh');
 }
 elseif( !empty($_POST['previs']) ) //Prévisualisation.
 {
@@ -165,8 +146,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 			$sql->query_inject("DELETE FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 			$previous_id = $sql->query("SELECT MAX(id) FROM ".PREFIX."guestbook", __LINE__, __FILE__);
 			
-			header('location:' . HOST . SCRIPT . SID2 . '#m' . $previous_id);
-			exit;
+			redirect(HOST . SCRIPT . SID2 . '#m' . $previous_id);
 		}
 		elseif( $edit )
 		{
@@ -215,33 +195,20 @@ elseif( !empty($id_get) ) //Edition + suppression!
 			{
 				$guestbook_contents = parse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']); 			
 				if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
-				{	
-					header('location:' . HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
-					exit;
-				}
+					redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
 				$sql->query_inject("UPDATE ".PREFIX."guestbook SET contents = '" . $guestbook_contents . "', login = '" . $guestbook_pseudo . "' WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 			
-				header('location:' . HOST . SCRIPT. SID2 . '#m' . $id_get);
-				exit;
+				redirect(HOST . SCRIPT. SID2 . '#m' . $id_get);
 			}
 			else
-			{
 				$errorh->error_handler('e_incomplete', E_USER_REDIRECT);
-				exit;
-			}
 		}
 		else
-		{
-			header('location:' . HOST . SCRIPT . SID2);
-			exit;
-		}
+			redirect(HOST . SCRIPT . SID2);
 	}
 	else
-	{
-		header('location:' . HOST . SCRIPT . SID2);
-		exit;
-	}
+		redirect(HOST . SCRIPT . SID2);
 }
 else //Affichage.
 {
@@ -388,7 +355,7 @@ else //Affichage.
 				foreach($_array_groups_auth as $idgroup => $array_group_info)
 				{
 					if( is_numeric(array_search($idgroup, $array_user_groups)) )
-						$user_groups .= !empty($array_group_info[1]) ? '<img src="../images/group/' . $array_group_info[1] . '" alt="' . $array_group_info[0] . '" title="' . $array_group_info[0] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info[0];
+						$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
 				}
 			}
 			else

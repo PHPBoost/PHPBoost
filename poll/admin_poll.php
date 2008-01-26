@@ -48,8 +48,7 @@ if( $del && !empty($id) ) //Suppresion poll
 		$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
 		$cache->generate_module_file('poll');
 	}
-	header('location:' . HOST . SCRIPT);
-	exit;
+	redirect(HOST . SCRIPT);
 }
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
@@ -136,14 +135,10 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		if( $id_post == $CONFIG_POLL['poll_mini'] )
 			$cache->generate_module_file('poll');
 		
-		header('location:' . HOST . SCRIPT);
-		exit;
+		redirect(HOST . SCRIPT);
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/poll/admin_poll.php?id= ' . $id_post . '&error=incomplete#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/poll/admin_poll.php?id= ' . $id_post . '&error=incomplete#errorh');
 }	
 elseif( !empty($id) )
 {

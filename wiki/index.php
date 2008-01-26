@@ -29,7 +29,6 @@ include_once('../includes/begin.php');
 define('TITLE', '');
 include_once('../includes/header.php'); 
 
-header('Location: ' . HOST . DIR . '/wiki/wiki.php');
-exit;
+redirect(HOST . DIR . '/wiki/wiki.php');
 
 ?>

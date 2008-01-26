@@ -209,8 +209,8 @@ $LANG['end_installation'] = '<fieldset>
 							Membres
 							<br />
 							<ul>
-								<li>Merci à tous les membres qui nous ont encouragé et qui nous ont signalé tous les bugs qu\'ils ont pu rencontrer, ce qui aura permis à PHPBoost 2.0 d\'être stable.</li>
-								<li>Merci en particulier à Ptithom qui a passé beaucoup de temps à tester la version béta et à nous rédiger une documentation complète.</li>
+								<li>Merci à tous les membres qui nous ont encouragé et qui nous ont signalé tous les bugs qu\'ils ont pu rencontrer, ce qui aura permis à PHPBoost 2.1 d\'être stable.</li>
+								<li>Merci aux membres de l\'équipe de développement de modules (Florent), de l\'équipe graphique (KONA, tonyck), de l\'équipe de traduction (Forensic) et de l\'équipe de rédaction (Ptithom, Mat)</li>
 							</ul>
 							<br />
 							Projets
@@ -228,6 +228,7 @@ $LANG['end_installation'] = '<fieldset>
 							<ul>
 								<li>Régis VIARRE <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur</li>
 								<li>Benoît SAUTEL <em>(alias ben.popeye)</em>, développeur</li>
+								<li>Loïc ? <em>(alias horn)</em>, développeur</li>
 							</ul>
 						</fieldset>';
 $LANG['site_index'] = 'Aller à l\'accueil du site';

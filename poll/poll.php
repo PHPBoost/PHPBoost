@@ -37,10 +37,7 @@ if( !empty($poll_id) )
 	
 	//Pas de sondage trouvé => erreur.
 	if( empty($poll['id']) )
-	{
 		$errorh->error_handler('e_unexist_poll', E_USER_REDIRECT); 
-		exit;
-	}	
 }	
 	
 //On vérifie si on est sur les archives
@@ -79,10 +76,7 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
 		$ip = $sql->query("SELECT ip FROM ".PREFIX."poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 		
 		if( !empty($ip) || $check_cookie )
-		{
-			header('Location:' . HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#errorh');
-			exit;
-		}
+			redirect(HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#errorh');
 		else //Si le cookie n'existe pas et l'ip n'est pas connue on enregistre.
 		{
 			//Insertion de l'adresse ip.
@@ -139,10 +133,7 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
 		}	
 	}
 	else
-	{
-		header('Location:' . HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#errorh');
-		exit;
-	}		
+		redirect(HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#errorh');
 }
 elseif( !empty($poll['id']) && empty($archives) )
 {
@@ -235,7 +226,7 @@ elseif( !empty($poll['id']) && empty($archives) )
 			$errstr = '';
 		}
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, $type, NO_LINE_ERROR, NO_FILE_ERROR, 'poll.');
+			$errorh->error_handler($errstr, $type);
 		
 		$template->assign_vars(array(
 			'SID' => SID,			
@@ -390,10 +381,7 @@ elseif( !empty($archives) ) //Archives.
 	$template->pparse('poll');
 }
 else
-{
 	$errorh->error_handler('e_unexist_page', E_USER_REDIRECT); 
-	exit;
-}
 	
 require_once('../includes/footer.php');
 
