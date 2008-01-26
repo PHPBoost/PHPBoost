@@ -96,7 +96,7 @@
 							<input type="radio" name="{available.ID}activ" value="0" /> {L_NO}
 						</td>
 						<td class="row2">	
-							<input type="submit" name="{available.ID}" value="{L_INSTALL}" class="submit" />
+							<input type="submit" name="module_{available.ID}" value="{L_INSTALL}" class="submit" />
 						</td>
 					</tr>						
 					# END available #
