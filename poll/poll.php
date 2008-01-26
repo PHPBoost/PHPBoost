@@ -118,10 +118,8 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
 				$L_ERROR =  $LANG['confirm_vote'];
 				include('../includes/confirm.php');
 				
-				if( $CONFIG_POLL['poll_mini'] == $poll['id'] ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
-				{
+				if( in_array($poll['id'], $CONFIG_POLL['poll_mini'])  ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
 					$cache->generate_module_file('poll');
-				}
 			}	
 			else //Vote blanc
 			{
