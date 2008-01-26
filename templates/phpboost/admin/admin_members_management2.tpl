@@ -57,15 +57,15 @@
 	
 			# START members_add #
 			
-			# START members_add.error_handler #
+			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
 				<span id="errorh"></span>
-				<div class="{members_add.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{members_add.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {members_add.error_handler.L_ERROR}
-					<br />	
+				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<br />
 				</div>
 			</div>
-			# END members_add.error_handler #
+			# ENDIF #
 			
 			<form action="admin_members.php?add=1" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
@@ -151,15 +151,15 @@
 			</script>
 			<script type="text/javascript" src="../templates/{THEME}/images/calendar.js"></script>
 			
-			# START members_management.error_handler #
+			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
 				<span id="errorh"></span>
-				<div class="{members_management.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{members_management.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {members_management.error_handler.L_ERROR}
+				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 			</div>
-			# END members_management.error_handler #
+			# ENDIF #
 			
 			<form action="admin_members.php" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
@@ -344,7 +344,7 @@
 								<div id="calendar" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 								</div>
 							</div>
-							<a onClick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={BORN_DAY}&amp;m={BORN_MONTH}&amp;y={BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img style="vertical-align:middle;" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+							<a onClick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={BORN_DAY}&amp;m={BORN_MONTH}&amp;y={BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 						</label></dd>
 					</dl>
 					<dl>

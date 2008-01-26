@@ -28,30 +28,19 @@
 		<!--
 		function XMLHttpRequest_preview()
 		{
-			var xhr_object = null;
-			var data = null;
-			var filename = "../includes/xmlhttprequest.php?preview=1";
 			{TINYMCE_TRIGGER}
 			var contents = document.getElementById('{FIELD}').value;
-			var forbidden_tags = "";
-			var data = null;
+			var forbidden_tags = '';
 			
 			if( document.getElementById('{FIELD}_ftags') )
 				forbidden_tags = document.getElementById('{FIELD}_ftags').value;
-					
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-			    return;
 			
 			if( contents != "" )
 			{
 				contents = escape_xmlhttprequest(contents);
 				data = "contents=" + contents + "&ftags=" + forbidden_tags;			
 			  
-				xhr_object.open("POST", filename, true);
+				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?preview=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 ) 
@@ -60,10 +49,7 @@
 						document.getElementById("xmlhttprequest_preview").innerHTML = xhr_object.responseText;
 					}
 				}
-
-				xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-				xhr_object.send(data);
+				xmlhttprequest_sender(xhr_object, data);
 			}	
 			else
 				alert("{L_REQUIRE_TEXT}");
@@ -87,7 +73,6 @@
 			'pink', '#FFCC00', 'yellow', '#00FF00', '#00FFFF', '#00CCFF', '#993366', '#C0C0C0',
 			'#FF99CC', '#FFCC99', '#FFFF99', '#CCFFCC', '#CCFFFF', '#CC99FF', '#CC99FF', 'white');							
 			
-			
 			contents = '<table style="border-collapse:collapse;margin:auto;"><tr>';
 			for(i = 0; i < 40; i++)
 			{
@@ -97,6 +82,31 @@
 			}
 			document.getElementById("bbcolor{FIELD}").innerHTML = contents + '</tr></table>';
 		}		
+		function bbcode_table_{FIELD}()
+		{
+			var cols = document.getElementById('cols').value;
+			var lines = document.getElementById('lines').value;
+			var head = document.getElementById('head').checked;
+			var code = '';
+			
+			if( cols >= 0 && lines >= 0 )
+			{
+				var colspan = cols > 1 ? ' colspan="' + cols + '"' : '';
+				var pointor = head ? (59 + colspan.length) : 22;
+				code = head ? '[table]\n\t[row]\n\t\t[head' + colspan + ']{L_TABLE_HEAD}[/head]\n\t[/row]\n' : '[table]\n';
+				
+				for(var i = 0; i < lines; i++)
+				{
+					code += '\t[row]\n';
+					for(var j = 0; j < cols; j++)
+						code += '\t\t[col][/col]\n';
+					code += '\t[/row]\n';
+				}				
+				code += '[/table]';
+				
+				insertbbcode(code.substring(0, pointor), code.substring(pointor, code.length), '{FIELD}');
+			}
+		}
 		function bbcode_url_{FIELD}()
 		{
 			var url = prompt("{L_URL_PROMPT}");
@@ -202,7 +212,7 @@
 											<option value="35">35</option>
 											<option value="40">40</option>
 											<option value="45">45</option>
-										</select>	
+										</select>
 									</div>
 								</div>
 								<a href="javascript:bb_display_block('6', '{FIELD}');" onmouseover="bb_hide_block('6', '{FIELD}', 1);" onmouseout="bb_hide_block('6', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_SIZE}"><img src="../templates/{THEME}/images/form/size.png" alt="{L_BB_SIZE}" /></a>			
@@ -229,7 +239,16 @@
 								<img src="../templates/{THEME}/images/form/sup.png" class="bbcode_hover" onclick="insertbbcode('[sup]', '[/sup]', '{FIELD}');" alt="{L_BB_SUP}" title="{L_BB_SUP}" />
 								<img src="../templates/{THEME}/images/form/sub.png" class="bbcode_hover" onclick="insertbbcode('[sub]', '[/sub]', '{FIELD}');" alt="{L_BB_SUB}" title="{L_BB_SUB}" />
 								<img src="../templates/{THEME}/images/form/indent.png" class="bbcode_hover" onclick="insertbbcode('[indent]', '[/indent]', '{FIELD}');" alt="{L_BB_INDENT}" title="{L_BB_INDENT}" />
-								<img src="../templates/{THEME}/images/form/table.png" class="bbcode_hover" onclick="insertbbcode('[table][row][col]', '[/col][/row][/table]', '{FIELD}');" alt="{L_BB_TABLE}" title="{L_BB_TABLE}" />
+								
+								<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block7{FIELD}">
+									<div id="bbcolor{FIELD}" class="bbcode_block" style="margin-left:130px;width:180px;" onmouseover="bb_hide_block('7', '{FIELD}', 1);" onmouseout="bb_hide_block('7', '{FIELD}', 0);">
+										<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="lines" id="lines" maxlength="3" value="2" /></label></p>
+										<p><label style="font-size:10px;font-weight:normal">* {L_COLS} <input size="3" type="text" class="text" name="cols" id="cols" maxlength="3" value="2" /></label></p>
+										<p><label style="font-size:10px;font-weight:normal">{L_ADD_HEAD} <input size="3" type="checkbox" name="head" id="head" /></label></p>
+										<p style="text-align:center;"><a class="small_link" href="javascript:bbcode_table_{FIELD}();"><img src="../templates/{THEME}/images/form/table.png" alt="{L_BB_TABLE}" title="{L_BB_TABLE}" class="valign_middle" /> {L_INSERT_TABLE}</a></p>
+									</div>
+								</div>
+								<a href="javascript:bb_display_block('7', '{FIELD}');" onmouseout="bb_hide_block('7', '{FIELD}', 0);" onmouseover="bb_hide_block('7', '{FIELD}', 1);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="../templates/{THEME}/images/form/table.png" alt="{L_BB_TABLE}" title="{L_BB_TABLE}" /></a>
 																		
 								<img src="../templates/{THEME}/images/form/separate.png" alt="" />
 								
@@ -239,8 +258,8 @@
 								
 								<img src="../templates/{THEME}/images/form/separate.png" alt="" />
 								
-								<div style="position:relative;z-index:100;margin-left:-70px;float:right;display:none;" id="bb_block7{FIELD}">
-									<div style="margin-left:-120px;" class="bbcode_block" onmouseover="bb_hide_block('7', '{FIELD}', 1);" onmouseout="bb_hide_block('7', '{FIELD}', 0);">
+								<div style="position:relative;z-index:100;margin-left:-70px;float:right;display:none;" id="bb_block8{FIELD}">
+									<div style="margin-left:-120px;" class="bbcode_block" onmouseover="bb_hide_block('8', '{FIELD}', 1);" onmouseout="bb_hide_block('8', '{FIELD}', 0);">
 										<select id="code{FIELD}" onchange="insertbbcode_select('code', '[/code]', '{FIELD}')">
 											<option value="" selected="selected" disabled="disabled">{L_CODE}</option>
 											<optgroup label="{L_TEXT}">
@@ -273,10 +292,10 @@
 												<option value="vb">Vb</option>
 												<option value="asm">Asm</option>
 											</optgroup>
-										</select>	
+										</select>
 									</div>
 								</div>
-								<a href="javascript:bb_display_block('7', '{FIELD}');" onmouseover="bb_hide_block('7', '{FIELD}', 1);" onmouseout="bb_hide_block('7', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_CODE}"><img src="../templates/{THEME}/images/form/code.png" alt="{L_BB_CODE}" /></a>
+								<a href="javascript:bb_display_block('8', '{FIELD}');" onmouseover="bb_hide_block('8', '{FIELD}', 1);" onmouseout="bb_hide_block('8', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_CODE}"><img src="../templates/{THEME}/images/form/code.png" alt="{L_BB_CODE}" /></a>
 								
 								<img src="../templates/{THEME}/images/form/math.png" class="bbcode_hover" onclick="insertbbcode('[math]', '[/math]', '{FIELD}');" alt="{L_BB_MATH}" title="{L_BB_MATH}" />	
 								<img src="../templates/{THEME}/images/form/anchor.png" class="bbcode_hover" onclick="insertbbcode('[anchor]', '[/anchor]', '{FIELD}');" alt="{L_BB_ANCHOR}" title="{L_BB_ANCHOR}" />						
@@ -284,7 +303,7 @@
 							<td style="width:3px;">
 								<img src="../templates/{THEME}/images/form/separate.png" alt="" />
 							</td>
-							<td style="padding: 2px;width:22px;">
+							<td style="padding:2px;width:22px;">
 								<a href="http://www.phpboost.com/wiki/bbcode" title="{L_BB_HELP}"><img src="../templates/{THEME}/images/form/help.png" alt="{L_BB_HELP}" /></a>
 							</td>
 						</tr>	

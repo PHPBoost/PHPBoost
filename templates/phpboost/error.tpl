@@ -21,14 +21,14 @@
 				<div class="module_top_r"></div>
 				<div class="module_top"><strong>{L_CONNECT}</strong></div>
 				<div class="module_contents" style="text-align:center;">
-					# START connexion.error_handler #
+					# IF C_ERROR_HANDLER #
 					<span id="errorh"></span>
-					<div class="{connexion.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-						<img src="../templates/{THEME}/images/{connexion.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {connexion.error_handler.L_ERROR}
+					<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 						<br />	
 					</div>
 					<br />	
-					# END connexion.error_handler #
+					# ENDIF #
 					
 					<label>{L_PSEUDO}
 					<input size="15" type="text" class="text" id="login_error" name="login" maxlength="25" /></label>
@@ -59,10 +59,9 @@
 			<div class="module_top"><strong>{L_ERROR}</strong></div>
 			<div class="module_contents">
 				<span id="errorh"></span>
-					<div class="{error.CLASS}">
-						<img src="../templates/{THEME}/images/{error.IMG}.png" alt="" style="float:left;padding-right:6px;" /> <strong>{error.L_ERROR}</strong>
-					</div>
-					
+				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+				</div>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>

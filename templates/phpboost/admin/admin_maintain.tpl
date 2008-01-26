@@ -1,3 +1,5 @@
+		<script type="text/javascript" src="../templates/{THEME}/images/calendar.js"></script>
+		
 		<div id="admin_quick_menu">
 			<ul>
 				<li class="title_menu">{L_MAINTAIN}</li>
@@ -13,15 +15,34 @@
 			<form action="admin_maintain.php" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_SET_MAINTAIN}</legend>
-					<dl>
+					<dl class="overflow_visible">
 						<dt><label for="maintain">{L_SET_MAINTAIN}</label></dt>
-						<dd><label>
-							<select name="maintain" id="maintain">				
-							# START select_maintain #				
-								{select_maintain.DELAY}				
-							# END select_maintain #				
-							</select>
-						</label></dd>
+						<dd>
+							<label>
+								<input type="radio" name="maintain_check" value="0"{MAINTAIN_CHECK_NO}> {L_NO}
+							</label>
+							<br />	
+							<label for="maintain" onClick="document.getElementById('maintain_check1').checked = 'checked';">
+								<input type="radio" name="maintain_check" id="maintain_check1" value="1"{MAINTAIN_CHECK_DELAY}>
+								{L_DURING}
+								<select name="maintain" id="maintain">				
+								# START select_maintain #				
+									{select_maintain.DELAY}				
+								# END select_maintain #				
+								</select>
+							</label>
+							<br />							
+							<label>
+								<input type="radio" name="maintain_check" id="maintain_check2" value="2"{MAINTAIN_CHECK_UNTIL}>
+								{L_UNTIL}&nbsp;
+								
+								<input type="text" size="8" maxlength="8" id="end" name="end" value="{DATE_UNTIL}" class="text" />
+								<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
+									<div id="end_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);"></div>
+								</div>
+								<a onClick="document.getElementById('maintain_check2').checked = 'checked';xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
+							</label>
+						</dd>
 					</dl>
 					<dl>
 						<dt><label for="display_delay">{L_MAINTAIN_DELAY}</label></dt>

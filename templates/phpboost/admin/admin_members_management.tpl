@@ -19,7 +19,6 @@
 		    }
 			return true;
 		}
-
 		function check_form_search(){
 			if(document.getElementById('search').value == "") {
 				alert("{L_REQUIRE_PSEUDO}");
@@ -28,7 +27,6 @@
 
 			return true;
 		}
-
 		function check_msg(){
 			if(document.getElementById('contents').value == "") {
 				alert("{L_REQUIRE_TEXT}");
@@ -36,62 +34,38 @@
 		    }
 			return true;
 		}
-
 		function Confirm() {
-		return confirm("{L_CONFIRM_DEL_MEMBER}");
+			return confirm("{L_CONFIRM_DEL_MEMBER}");
 		}
-
 		function XMLHttpRequest_search()
 		{
-			var xhr_object = null;
-			var data = null;
-			var filename = "../includes/xmlhttprequest.php?admin_member=1";
-			var login = document.getElementById("login_mbr").value;
-			var data = null;
-			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-			    return;
-			
+			var login = document.getElementById('login_mbr').value;
 			if( login != "" )
 			{
-				data = "login=" + login;
-			   
-				xhr_object.open("POST", filename, true);
-
+				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?admin_member=1');
+				data = 'login=' + login;
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 ) 
 					{
-						document.getElementById("xmlhttprequest_result_search").innerHTML = xhr_object.responseText;
-						hide_div("xmlhttprequest_result_search");
+						document.getElementById('xmlhttprequest_result_search').innerHTML = xhr_object.responseText;
+						hide_div('xmlhttprequest_result_search');
 					}
 				}
-
-				xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-				xhr_object.send(data);
+				xmlhttprequest_sender(xhr_object, data);
 			}	
 			else
-			{
 				alert("{L_REQUIRE_LOGIN}");
-			}		
 		}
-		
 		function hide_div(divID)
 		{
 			if( document.getElementById(divID) )
 				document.getElementById(divID).style.display = 'block';
 		}
-
 		function insert_XMLHttpRequest(login)
 		{
-			document.getElementById("login_mbr").value = login;
+			document.getElementById('login_mbr').value = login;
 		}
-
 		-->
 		</script>
 		

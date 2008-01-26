@@ -8,7 +8,7 @@
 		</tr>							
 		<tr> 
 			<td class="row2">
-				<a href="upload.php?root=1&amp;{POPUP}"><img src="../templates/{THEME}/images/upload/home.png" style="vertical-align:middle;" alt="" /></a>
+				<a href="upload.php?root=1&amp;{POPUP}"><img src="../templates/{THEME}/images/upload/home.png" class="valign_middle" alt="" /></a>
 				<a href="upload.php?root=1&amp;{POPUP}">{L_ROOT}</a>
 			</td>
 		</tr>							
@@ -18,7 +18,7 @@
 					{L_URL}
 				</div>
 				<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
-						<img src="../templates/{THEME}/images/upload/folder_mini.png" style="vertical-align:middle;" alt="" /> {U_ROOT}{URL}
+						<img src="../templates/{THEME}/images/upload/folder_mini.png" class="valign_middle" alt="" /> {U_ROOT}{URL}
 					</div>
 				</div>
 			</td>
@@ -28,16 +28,16 @@
 				<br />
 				<form action="{TARGET}" method="post">
 				<table class="module_table">
-					# START error_handler #
+					# IF C_ERROR_HANDLER #
 					<tr>
 						<td class="row1" colspan="3">
 							<span id="errorh"></span>
-							<div class="{error_handler.CLASS}">
-								<img src="../templates/{THEME}/images/{error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {error_handler.L_ERROR}
+							<div class="{ERRORH_CLASS}">
+								<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 							</div>
 						</td>
 					</tr>
-					# END error_handler #
+					# ENDIF #
 					<tr> 
 						<td class="row1" style="width:210px;">
 							# START folder #	

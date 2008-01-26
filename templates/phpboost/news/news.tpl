@@ -62,7 +62,7 @@
 			<div class="news_top_l"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<div style="float:left"><h3 class="title valign_middle">{news.TITLE}</h3></div>
+				<div style="float:left"><a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a></div>
 				<div style="float:right">{news.COM}{news.EDIT}{news.DEL}</div>
 			</div>							
 			<div class="news_content">

@@ -37,14 +37,14 @@
 
 		# START update #
 
-		# START update.update.error_handler #
+		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
-		<div class="{update.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{update.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {update.error_handler.L_ERROR}
+		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			<br />	
 		</div>
 		<br />		
-		# END update.update.error_handler #
+		# ENDIF #
 		
 		<script type="text/javascript" src="../templates/{THEME}/images/calendar.js"></script>
 		<form action="member{update.U_MEMBER_ACTION_UPDATE}" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
@@ -167,7 +167,7 @@
 							<div id="calendar" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 							</div>
 						</div>
-						<a onClick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={update.BORN_DAY}&amp;m={update.BORN_MONTH}&amp;y={update.BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img style="vertical-align:middle;" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+						<a onClick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={update.BORN_DAY}&amp;m={update.BORN_MONTH}&amp;y={update.BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 					</label></dd>
 				</dl>
 				<dl>
@@ -298,28 +298,15 @@
 
 		<script type="text/javascript">
 		<!--
-
 		function XMLHttpRequest_search()
 		{
-			var xhr_object = null;
-			var data = null;
-			var filename = "../includes/xmlhttprequest.php?member=1";
+			var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?member=1');
 			var login = document.getElementById("login_mbr").value;
 			var data = null;
 			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-			    return;
-			
 			if( login != "" )
 			{
-				data = "login=" + login;
-			   
-				xhr_object.open("POST", filename, true);
-
+				data = 'login=' + login;	
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 ) 
@@ -328,15 +315,10 @@
 						hide_div("xmlhttprequest_result_search");
 					}
 				}
-
-				xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-				xhr_object.send(data);
+				xmlhttprequest_sender(xhr_object, data);
 			}	
 			else
-			{
 				alert("{L_REQUIRE_LOGIN}");
-			}		
 		}
 
 		function hide_div(divID)
@@ -344,7 +326,6 @@
 			if( document.getElementById(divID) )
 				document.getElementById(divID).style.display = 'block';
 		}
-
 		-->
 		</script>
 

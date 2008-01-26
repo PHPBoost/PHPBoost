@@ -1,6 +1,6 @@
 			<div style="width:98%;padding: 4px;">
-				<div style="padding-bottom: 4px;padding-left: 10px;"><a href="{U_INDEX_SITE}"><img style="vertical-align:middle;" src="../templates/{THEME}/images/admin/home_mini.png" alt="" /> {L_INDEX_SITE}</a>
-				&bull; <a href="../admin/admin_index.php"><img style="vertical-align:middle;" src="../templates/{THEME}/images/admin/admin_mini.png" alt="" /> {L_INDEX_ADMIN}</a></div>
+				<div style="padding-bottom: 4px;padding-left: 10px;"><a href="{U_INDEX_SITE}"><img class="valign_middle" src="../templates/{THEME}/images/admin/home_mini.png" alt="" /> {L_INDEX_SITE}</a>
+				&bull; <a href="../admin/admin_index.php"><img class="valign_middle" src="../templates/{THEME}/images/admin/admin_mini.png" alt="" /> {L_INDEX_ADMIN}</a></div>
 
 				<table class="module_table">
 					<tr>

@@ -20,17 +20,12 @@
 		function check_select_multiple(id, status)
 		{
 			var i;
-			var j;				
-			var array_id = new Array('r', 'g');
-			for(j = 0; j <= 1; j++)
-			{
-				for(i = 0; i < {NBR_GROUP}; i++)
-				{	
-					if( document.getElementById(id + array_id[j] + i) )
-						document.getElementById(id + array_id[j] + i).selected = status;		
-				}
+			
+			for(i = 0; i < {NBR_EXTENSIONS}; i++)
+			{	
+				if( document.getElementById(id + i) )
+					document.getElementById(id + i).selected = status;			
 			}
-			document.getElementById(id + 'r3').selected = true;		
 		}			
 		-->
 		</script>
@@ -70,6 +65,22 @@
 							&nbsp;
 							<label><input type="radio" name="bandwidth_protect" value="0"{BANDWIDTH_PROTECT_DISABLED} /> {L_UNACTIV}</label>
 						</dd>
+					</dl>
+					<dl> 
+						<dt><label>* {L_AUTH_EXTENSIONS}</label></dt>
+						<dd><label>
+							<select id="auth_extensions" name="auth_extensions[]" size="25" multiple="multiple">
+								{AUTH_EXTENSIONS}
+							</select>	
+							<br />
+							<a href="javascript:check_select_multiple('ext', true);">{L_SELECT_ALL}</a>
+							&nbsp;/&nbsp;
+							<a href="javascript:check_select_multiple('ext', false);">{L_SELECT_NONE}</a>							
+						</label></dd>
+					<dl>
+					<dl> 
+						<dt><label for="auth_extensions_sup">{L_EXTEND_EXTENSIONS}</label><br /><span>{L_EXTEND_EXTENSIONS_EXPLAIN}</span></dt>
+						<dd><label><input type="text" size="35" id="auth_extensions_sup" name="auth_extensions_sup" value="{AUTH_EXTENSIONS_SUP}" class="text" /></label></dd>
 					</dl>
 				</fieldset>
 				

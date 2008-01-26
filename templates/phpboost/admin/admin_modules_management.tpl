@@ -58,18 +58,18 @@
 								{L_MODULES_INSTALLED}
 							</th>
 						</tr>
-						# START main.error_handler #
+						# IF C_ERROR_HANDLER #
 						<tr> 
 							<td class="row2" colspan="5" style="text-align:center;">
 								<span id="errorh"></span>
-								<div class="{main.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-									<img src="../templates/{THEME}/images/{main.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {main.error_handler.L_ERROR}
+								<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+									<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 									<br />	
 								</div>
 								<br />		
 							</td>
 						</tr>
-						# END main.error_handler #
+						# ENDIF #
 					
 						# START main.modules_installed #
 						<tr>
@@ -103,7 +103,7 @@
 						<tr> 	
 							<td class="row2">					
 								<span id="m{main.installed.ID}"></span>
-								<img style="vertical-align:middle;" src="../{main.installed.ICON}/{main.installed.ICON}.png" alt="" /> <strong>{main.installed.NAME}</strong> <em>({main.installed.VERSION})</em>
+								<img class="valign_middle" src="../{main.installed.ICON}/{main.installed.ICON}.png" alt="" /> <strong>{main.installed.NAME}</strong> <em>({main.installed.VERSION})</em>
 							</td>
 							<td class="row2">	
 								<strong>{L_AUTHOR}:</strong> {main.installed.AUTHOR} {main.installed.AUTHOR_WEBSITE}<br />

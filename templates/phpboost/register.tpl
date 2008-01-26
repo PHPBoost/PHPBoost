@@ -104,30 +104,15 @@
 				this.img_id = 0;
 			else
 				this.img_id++;
-			
-			var xhr_object = null;
-			var data = null;
-			var filename = "verif_code.php";
-			
-			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
-			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-			else // XMLHttpRequest non supporté par le navigateur
-			    return;
 
 			data = "new=1";
-			xhr_object.open("POST", filename, true);					
+			var xhr_object = xmlhttprequest_init('verif_code.php');			
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
-				{					
 					document.getElementById('verif_code_img').src = 'verif_code.php?new=' + img_id;	
-				}
 			}
-
-			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(data);
+			xmlhttprequest_sender(xhr_object, data);
 		}	
 		
 		function change_img_theme(id, value)
@@ -146,14 +131,14 @@
 		-->		
 		</script>
 
-		# START register.error_handler #
+		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
-		<div class="{register.error_handler.CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{register.error_handler.IMG}.png" alt="" style="float:left;padding-right:6px;" /> {register.error_handler.L_ERROR}
+		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			<br />	
 		</div>
 		<br />		
-		# END register.error_handler #
+		# ENDIF #
 		
 		<script type="text/javascript" src="../templates/{THEME}/images/calendar.js"></script>
 		<form action="../member/register_valid.php" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
@@ -288,7 +273,7 @@
 						<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
 							<div id="calendar" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);"></div>
 						</div>
-						<a onClick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img style="vertical-align:middle;" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+						<a onClick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 					</label></dd>			
 				</dl>
 				<dl>
