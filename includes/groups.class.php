@@ -26,27 +26,45 @@
 ###################################################*/
 
 define('ACCESS_MODULE', 0x01); //Accès à un module.
+/*
 define('AUTH_FLOOD', 0x01); //Droit de flooder.
 define('PM_NO_LIMIT', 0x02); //Aucune limite de messages privés.
-define('DATA_NO_LIMIT', 0x04); //Aucune limite de données uploadables.
+define('DATA_NO_LIMIT', 0x04); //Aucune limite de données uploadables.*/
+define('AUTH_FLOOD', 'auth_flood'); //Droit de flooder.
+define('PM_GROUP_LIMIT', 'pm_group_limit'); //Aucune limite de messages privés.
+define('DATA_GROUP_LIMIT', 'data_group_limit');
 define('ADMIN_NOAUTH_DEFAULT', false); //Aucune limite de données uploadables.
+define('GROUP_DISABLE_SELECT', 'disabled="disabled" ');
 
 class Groups
 {
+	var $array_groups_auth = array(); //Ensemble des autorisations des groupes.
 	var $user_groups = array(); //Ensemble des groupes du membre.
 	var $user_auth; //Autorisations globales des groupes dont le membre fait partie.
 	
 	//Constructeur: Retourne les autorisations globales données par l'ensemble des groupes dont le membre fait partie.
 	function Groups($userdata, $array_auth_groups)
 	{
+		$this->array_groups_auth = $array_auth_groups;
+		
 		$this->user_groups = explode('|', $userdata['user_groups']);		
 		array_unshift($this->user_groups, 'r' . $userdata['level']); //Ajoute le groupe associé au rang du membre.
 		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
 		
 		foreach($array_auth_groups as $idgroup => $array_info)
-			$array_auth_groups[$idgroup] = $array_info[2];
+			$array_auth_groups[$idgroup] = $array_info['auth'];
 		
 		$this->user_groups_auth = $array_auth_groups;
+	}
+	
+	//Crée le tableau des autorisations des groupes.
+	function create_groups_array()
+	{
+		$array_groups = array();
+		foreach($this->array_groups_auth as $idgroup => $array_group_info)
+			$array_groups[$idgroup] = $array_group_info['name'];
+			
+		return $array_groups;
 	}
 	
 	//Cherche les autorisations maximum parmis les différents groupes dont le membre fait partie, puis fait la comparaisons sur le droit demandé.
@@ -56,6 +74,26 @@ class Groups
 			return false;
 		
 		return (((int)$this->sum_auth_groups($array_auth_groups) & (int)$check_auth) !== 0);
+	}
+	
+	//Cherche les valeurs maximum parmis les différents groupes dont le membre fait partie.
+	function max_value($array_auth_groups, $key_auth, $max_value_compare = 0)
+	{
+		if( !is_array($array_auth_groups) )
+			return false;
+		
+		//Récupère les autorisations de tout les groupes dont le membre fait partie.
+		$array_user_auth_groups = $this->array_group_intersect($array_auth_groups);
+		$max_auth = $max_value_compare;
+		foreach($array_user_auth_groups as $idgroup => $group_auth)
+		{	
+			if( $group_auth[$key_auth] == -1 )
+				return -1;
+			else
+				$max_auth = max($max_auth, $group_auth[$key_auth]);
+		}
+			
+		return $max_auth;
 	}
 	
 	//Retourne l'autorisation maximale donnée par chacun des groupes dont le membre fait partie.
@@ -161,6 +199,46 @@ class Groups
 			$array_auth_all['r2'] = $sum_auth;
 	
 		return $array_auth_all;
+	}
+	
+	//Génération d'une liste à sélection multiple des rangs et groupes
+	function generate_select_groups($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '')
+	{
+		global $array_groups, $array_ranks, $LANG;
+		
+		$array_ranks = is_array($array_ranks) ? $array_ranks : array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
+		 
+		$j = 0;
+		//Liste des rangs
+		$select_groups = '<select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="' . (empty($disabled) ? 'if(disabled == 0)' : '') . 'document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
+		foreach($array_ranks as $idgroup => $group_name)
+		{
+			$selected = '';	
+			if( array_key_exists('r' . $idgroup, $array_auth) && ((int)$array_auth['r' . $idgroup] & (int)$auth_level) !== 0 && empty($disabled) )
+				$selected = 'selected="selected"';
+				
+			$selected = (isset($array_ranks_default[$idgroup]) && $array_ranks_default[$idgroup] === true && empty($disabled)) ? 'selected="selected"' : $selected;
+			
+			$select_groups .=  '<option ' . $disabled . 'value="r' . $idgroup . '" id="' . $auth_id . 'r' . $j . '" ' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_id . 'r\', ' . $j . ')">' . $group_name . '</option>';
+			$j++;
+		}
+		$select_groups .=  '</optgroup>';
+		
+		//Liste des groupes.
+		$j = 0;
+		$select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
+		foreach($array_groups as $idgroup => $group_name)
+		{
+			$selected = '';		
+			if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_level) !== 0 && empty($disabled) )
+				$selected = 'selected="selected"';
+
+			$select_groups .= '<option  ' . $disabled . 'value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '" ' . $selected . '>' . $group_name . '</option>';
+			$j++;
+		}
+		$select_groups .= '</optgroup></select>';
+		
+		return $select_groups;
 	}
 }
 

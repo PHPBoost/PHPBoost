@@ -314,7 +314,7 @@ class Cache
 		ORDER BY id", __LINE__, __FILE__);
 		while( $row = $sql->sql_fetch_assoc($result) )
 		{
-			$code .= $row['id'] . ' => array(' . var_export($row['name'], true) . ', ' . var_export($row['img'], true) . ', ' . $row['auth'] . '),' . "\n";
+			$code .= $row['id'] . ' => array(\'name\' => ' . var_export($row['name'], true) . ', \'img\' => ' . var_export($row['img'], true) . ', \'auth\' => ' . var_export(unserialize($row['auth']), true) . '),' . "\n";
 		}			
 		$sql->close($result);
 		$code .= ');';

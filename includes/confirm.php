@@ -26,9 +26,7 @@
 ###################################################*/
 
 if( defined('PHP_BOOST') !== true )
-{
 	exit;
-}
 else
 {
 	$template->set_filenames(array(

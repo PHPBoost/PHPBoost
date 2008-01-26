@@ -29,7 +29,6 @@
 define('DELETE_ON_ERROR', true);
 define('NO_DELETE_ON_ERROR', false);
 define('UNIQ_NAME', true);
-define('NO_CHECK_EXIST', false);
 define('CHECK_EXIST', true);
 define('NO_UNIQ_NAME', false);
 
@@ -47,15 +46,6 @@ class Upload
 		return;
 	}
 
-	//Récupère les informations du fichier à uploader.
-	function get_info_file($filepostname, $filename, $uniq_name)
-	{		
-		$this->extension[$filepostname] = strtolower(substr(strrchr($filename, '.'), 1));
-		$this->filename[$filepostname] = !empty($uniq_name) ? $uniq_name . '.' . $this->extension[$filepostname] : $filename;	
-		
-		return;
-	}
-	
 	//Vérification de la conformité du fichier
 	function check_file($filename, $regexp)
 	{
@@ -68,8 +58,48 @@ class Upload
 		return true;
 	}
 	
+	//Nettoie l'url de tous les caractères spéciaux, accents, etc....
+	function clean_filename($string)
+	{
+		$string = strtolower($string);
+
+		$chars_special = array(' ', 'é', 'è', 'ê', 'à', 'â', 'ù', 'ü', 'û', 'ï', 'î', 'ô', 'ç');
+		$chars_replace = array('-', 'e', 'e', 'e', 'a', 'a', 'u', 'u', 'u', 'i', 'i', 'o', 'c');
+		$string = str_replace($chars_special, $chars_replace, $string);
+
+		$string = preg_replace('`([^a-z0-9]|[\s])`', '_', $string);
+		$string = preg_replace('`[_]{2,}`', '_', $string);
+		$string = trim($string, ' _');
+		
+		return $string;
+	}
+
+	//Genère à partir du nom du fichier, un nom de fichier unique. Gère les colisions. Renseigne les informations du fichier à uploader.
+	function generate_info_file($filename, $filepostname, $uniq_name)
+	{
+		$this->extension[$filepostname] = strtolower(substr(strrchr($filename, '.'), 1));
+		
+		$filename = substr($filename, 0, strrpos($filename, '.'));
+		$filename = str_replace('.', '_', $filename);
+		$filename = $this->clean_filename($filename);
+
+		if( $uniq_name )
+		{
+			$filename_tmp = $filename;
+			while( file_exists($this->base_directory . $filename_tmp . '.' . $this->extension[$filepostname]) )
+			{
+				$filename_tmp = $filename;
+				$filename_tmp .= '_' . substr(md5(uniqid(mt_rand(), true)), 0, 5);
+			}
+			$filename = $filename_tmp;
+		}
+			
+		$filename .= '.' . $this->extension[$filepostname];		
+		$this->filename[$filepostname] = $filename;	
+	}
+	
 	//Upload d'un fichier
-	function upload_file($filepostname, $regexp = '', $uniq_name = false, $check_exist = true, $weight_max = 100000000)
+	function upload_file($filepostname, $regexp = '', $uniq_name = false, $weight_max = 100000000, $check_exist = true)
 	{		
 		global $LANG;
 		
@@ -79,11 +109,10 @@ class Upload
 			if( ($file['size']/1024) <= $weight_max )
 			{
 				//Récupération des infos sur le fichier à traiter.
-				$gen_uniq_name = ($uniq_name) ? md5(uniqid(mt_rand(), true)) : '';
-				$this->get_info_file($filepostname, $file['name'], $gen_uniq_name);			
+				$this->generate_info_file($file['name'], $filepostname, $uniq_name);
 				if( $this->check_file($file['name'], $regexp) )
 				{					
-					if( !$check_exist || !is_file($this->base_directory . $this->filename[$filepostname]) ) //Autorisation d'écraser le fichier?
+					if( !$check_exist || !file_exists($this->base_directory . $this->filename[$filepostname]) ) //Autorisation d'écraser le fichier?
 					{
 						$this->error = $this->error_upload_manager($file['error']);
 						if( empty($this->error) )

@@ -62,22 +62,14 @@ class Privatemsg extends Sql
 				(user_id = '" . $userid . "' AND user_convers_status = 2)
 			)
 		)
-		AND visible = 1", __LINE__, __FILE__);			
+		", __LINE__, __FILE__);
 		return $total_pm;
 	}
 	
 	//Envoi d'une conversation + le message privé associé.
-	function send_pm($pm_to, $pm_objet, $pm_contents, $pm_from, $check_box = true, $system_pm = false)
+	function send_pm($pm_to, $pm_objet, $pm_contents, $pm_from, $system_pm = false)
 	{
 		global $CONFIG, $sql;
-		
-		//Vérification de la boite du destinataire.
-		$visible = 1;
-		if( $check_box )
-		{
-			if( $this->get_total_convers_pm($pm_to) >= $CONFIG['pm_max'] )
-				$visible = 0;
-		}
 		
 		//Message privé envoyé par le système => user_id = -1
 		if( $system_pm )
@@ -89,7 +81,7 @@ class Privatemsg extends Sql
 			$user_convers_status = '0';
 			
 		//Insertion de la conversation.
-		$sql->query_inject("INSERT INTO ".PREFIX."pm_topic (title,user_id,user_id_dest,user_convers_status,user_view_pm,nbr_msg,last_user_id,last_msg_id,last_timestamp,visible) VALUES ('" . securit($pm_objet) . "', '" . $pm_from . "', '" . $pm_to . "', '" . $user_convers_status . "', 1, 1, '" . $pm_from . "', 0, '" . time() . "', '" . $visible . "')", __LINE__, __FILE__);
+		$sql->query_inject("INSERT INTO ".PREFIX."pm_topic (title, user_id, user_id_dest, user_convers_status, user_view_pm, nbr_msg, last_user_id, last_msg_id, last_timestamp) VALUES ('" . securit($pm_objet) . "', '" . $pm_from . "', '" . $pm_to . "', '" . $user_convers_status . "', 1, 1, '" . $pm_from . "', 0, '" . time() . "')", __LINE__, __FILE__);
 		$this->pm_convers_id = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."pm_topic");			
 
 		//Insertion du message associé à la conversation.
@@ -117,7 +109,7 @@ class Privatemsg extends Sql
 		}
 		
 		//Insertion du message.
-		$sql->query_inject("INSERT INTO ".PREFIX."pm_msg (idconvers,user_id,contents,timestamp,view_status) VALUES('" . $pm_idconvers . "', '" . $pm_from . "', '" . parse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
+		$sql->query_inject("INSERT INTO ".PREFIX."pm_msg (idconvers, user_id, contents, timestamp, view_status) VALUES('" . $pm_idconvers . "', '" . $pm_from . "', '" . parse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
 		$this->pm_msg_id = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."pm_msg");
 		
 		//On modifie le statut de la conversation.
@@ -138,14 +130,6 @@ class Privatemsg extends Sql
 			//Mise à jour du compteur de mp du destinataire.
 			if( $info_convers['user_view_pm'] > 0 )
 				$sql->query_inject("UPDATE ".PREFIX."member SET user_pm = user_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_userid . "'", __LINE__, __FILE__);
-		}
-		
-		//Suppression d'une conversation, autorisation de voir une conversation en attente (s'il y en a une) et si la boite ne dépasse pas déjà la limite (possible pour les illimités).		
-		if( $this->get_total_convers_pm($pm_userid) == $CONFIG['pm_max'] )
-		{
-			$waiting_pm = $sql->query("SELECT id FROM ".PREFIX."pm_topic WHERE user_id_dest = '" . $pm_userid . "' AND visible = 0" . $sql->sql_limit(0, 1), __LINE__, __FILE__);
-			if( !empty($waiting_pm) )
-				$sql->query_inject("UPDATE ".PREFIX."pm_topic SET visible = 1 WHERE id = '" . $waiting_pm . "'", __LINE__, __FILE__);
 		}
 		
 		if( $pm_expd ) //Expediteur.

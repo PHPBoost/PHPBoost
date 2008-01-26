@@ -35,8 +35,7 @@ $autoconnexion = !empty($_POST['auto']) ? true : false;
 if( !empty($_GET['disconnect']) )
 {
 	$session->session_end();
-	header('location: ' . get_start_page());
-	exit;
+	redirect(get_start_page());
 }
 elseif( !empty($_POST['connect']) && !empty($login) && !empty($password) ) //Création de la session.
 {
@@ -64,26 +63,16 @@ elseif( !empty($_POST['connect']) && !empty($login) && !empty($password) ) //Cré
 				$error_report = $session->session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, TITLE, $autoconnexion); //On lance la session.
 			}
 			else //plus d'essais
-			{
-				header('location:' . HOST . DIR . '/member/error.php?e=e_member_flood#errorh');
-				exit;
-			}
+				redirect(HOST . DIR . '/member/error.php?e=e_member_flood#errorh');
 		}
 		elseif( $info_connect['user_aprob'] == '0' )
-		{
-			header('location:' . HOST . DIR . '/member/error.php?e=e_unactiv_member#errorh');
-			exit;
-		}
+			redirect(HOST . DIR . '/member/error.php?e=e_unactiv_member#errorh');
 		elseif( $info_connect['user_warning'] == '100' )
-		{
-			header('location:' . HOST . DIR . '/member/error.php?e=e_member_ban_w#errorh');
-			exit;
-		}
+			redirect(HOST . DIR . '/member/error.php?e=e_member_ban_w#errorh');
 		else
 		{
 			$delay_ban = ceil((0 - $delay_ban)/60);
-			header('location:' . HOST . DIR . '/member/error.php?e=e_member_ban&ban=' . $delay_ban . '#errorh');
-			exit;
+			redirect(HOST . DIR . '/member/error.php?e=e_member_ban&ban=' . $delay_ban . '#errorh');
 		}
 				
 		if( !empty($error_report) ) //Erreur
@@ -91,34 +80,22 @@ elseif( !empty($_POST['connect']) && !empty($login) && !empty($password) ) //Cré
 			$sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
 			$info_connect['test_connect']++;
 			$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
-			header('location:' . HOST . DIR . '/member/error.php?e=e_member_flood&flood=' . $info_connect['test_connect'] . '#errorh');
-			exit;
+			redirect(HOST . DIR . '/member/error.php?e=e_member_flood&flood=' . $info_connect['test_connect'] . '#errorh');
 		}
 		elseif( $info_connect['test_connect'] > 0 ) //Succès redonne tous les essais.
-		{
 			$sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-		}
 	}
 	else
-	{
-		header('location:' . HOST . DIR . '/member/error.php?e=e_unexist_member#errorh');
-		exit;
-	}
+		redirect(HOST . DIR . '/member/error.php?e=e_unexist_member#errorh');
 	
 	$query_string = QUERY_STRING;
 	$query_string = !empty($query_string) ? '?' . QUERY_STRING . '&sid=' . $session->data['session_id'] . '&suid=' . $session->data['user_id'] : '?sid=' . $session->data['session_id'] . '&suid=' . $session->data['user_id'];
 	
 	//Redirection avec les variables de session dans l'url.
 	if( SCRIPT != DIR . '/member/error.php' )
-	{
-		header('location: ' . HOST . SCRIPT . $query_string);
-		exit;
-	}
+		redirect(HOST . SCRIPT . $query_string);
 	else
-	{
-		header('location: ' . get_start_page());
-		exit;
-	}
+		redirect(get_start_page());
 }
 
 ?>

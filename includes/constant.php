@@ -30,17 +30,7 @@ require_once('../includes/auth/config.php'); //Fichier de configuration.
 
 //PHPBoost installé? Si non redirection manuelle, car chemin non connu.
 if( !defined('PHPBOOST_INSTALLED') )
-{
-	$server_name = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
-	$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-	if( !$server_path )
-		$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
-	$install_path = trim(dirname($server_path)) . '/install/install.php';
-	
-	//Suppression du dossier courant, et trim du chemin de l'installateur.
-	header('Location: http://' . $server_name . preg_replace('`(.*)/[a-z]+/(install/install\.php)(.*)`i', '$1/$2', $install_path));
-	exit;
-}
+	redirect(get_install_page());
 
 set_magic_quotes_runtime(0); //Désactivation du magic_quotes_runtime (échappe les guillemets des sources externes).
 //Si register_globals activé, suppression des variables qui trainent.
@@ -58,6 +48,8 @@ define('ERROR_REPORTING', E_ALL | E_NOTICE);
 define('E_USER_REDIRECT', -1); //Erreur avec redirection
 define('E_USER_SUCCESS', -2); //Succès.
 define('HTML_UNPROTECT', false); //Non protection de l'html.
+
+define('AUTH_FILES', 0x01); //Configuration générale des fichiers
 
 //Récupération de l'ip, essaye de récupérer la véritable ip avec un proxy.
 if( $_SERVER ) 	

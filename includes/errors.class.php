@@ -45,11 +45,11 @@ class Errors
 	{
 		$this->archive_all = $archive_all;
 		//Récupération de l'adresse de redirection => constantes non initialisées.
-		$this->redirect = 'Location: http://' . $_SERVER['HTTP_HOST'] . preg_replace('`(/(.*))?/(.*)/(.*)\.php`', '$1', $_SERVER['PHP_SELF']);
+		$this->redirect = 'http://' . $_SERVER['HTTP_HOST'] . preg_replace('`(/(.*))?/(.*)/(.*)\.php`', '$1', $_SERVER['PHP_SELF']);
 	}	
 	
 	//Gestionnaire d'erreurs controlées par le développeur.
-	function error_handler($errstr, $errno, $errline = '', $errfile = '', $tpl_block = '', $archive = false)
+	function error_handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false)
 	{
 		global $LANG, $template;
 		
@@ -61,36 +61,38 @@ class Errors
 				//Message d'erreur demandant une redirection.
 				case E_USER_REDIRECT:
 				$this->error_log($errfile, $errline, $errno, $errstr, $archive);
-				header($this->redirect . '/member/error' . transid('.php?e=' . $errstr, '', '&'));
-				exit;
+				redirect($this->redirect . '/member/error' . transid('.php?e=' . $errstr, '', '&'));
 				break;				
 				//Message de succès, étrange pour une classe d'erreur non?
 				case E_USER_SUCCESS:
 				$errstr = sprintf($LANG['error_success'], $errstr, '', '');
-				$template->assign_block_vars($tpl_block . 'error_handler', array(
-					'IMG' => 'success',
-					'CLASS' => 'error_success',
-					'L_ERROR' => $errstr
+				$template->assign_vars(array(
+					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
+					'ERRORH_IMG' => 'success',
+					'ERRORH_CLASS' => 'error_success',
+					'L_ERRORH' => $errstr
 				));
 				break;
 				//Notice utilisateur.
 				case E_USER_NOTICE:
 				case E_NOTICE:
 				$errstr = sprintf($LANG['error_notice'], $errstr, '', '');
-				$template->assign_block_vars($tpl_block . 'error_handler', array(
-					'IMG' => 'notice',
-					'CLASS' => 'error_notice',
-					'L_ERROR' => $errstr
+				$template->assign_vars(array(
+					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
+					'ERRORH_IMG' => 'notice',
+					'ERRORH_CLASS' => 'error_notice',
+					'L_ERRORH' => $errstr
 				));
 				break;
 				//Warning utilisateur.
 				case E_USER_WARNING:
 				case E_WARNING:
 				$errstr = sprintf($LANG['error_warning'], $errstr, '', '');
-				$template->assign_block_vars($tpl_block . 'error_handler', array(
-					'IMG' => 'important',
-					'CLASS' => 'error_warning',
-					'L_ERROR' => $errstr
+				$template->assign_vars(array(
+					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
+					'ERRORH_IMG' => 'important',
+					'ERRORH_CLASS' => 'error_warning',
+					'L_ERRORH' => $errstr
 				));
 				break;
 				//Erreur fatale.
@@ -98,10 +100,10 @@ class Errors
 				case E_ERROR:
 				//Enregistrement de l'erreur fatale dans tout les cas.
 				$error_id = $this->error_log($errfile, $errline, $errno, $errstr, true);
-				if( is_object($session) )
-					header($this->redirect . '/member/fatal' . transid('.php?error=' . $error_id, '', '&'));
+				if( !empty($session) && is_object($session) )
+					redirect($this->redirect . '/member/fatal' . transid('.php?error=' . $error_id, '', '&'));
 				else
-					header($this->redirect . '/member/fatal.php?error=' . $error_id);
+					redirect($this->redirect . '/member/fatal.php?error=' . $error_id);
 				exit;
 			}
 		
