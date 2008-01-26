@@ -120,9 +120,7 @@
 						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
 						<dd><label>
 							<select name="img" id="img_group" onChange="img_change(this.options[selectedIndex].value)">
-								# START select #
-									{select.IMG_GROUP}
-								# END select #
+								{IMG_GROUPS}
 							</select>				
 							<img src="../images/group/{IMG}" name="img_group" alt="" class="valign_middle" /></label></dd>
 					</dl>
@@ -224,9 +222,7 @@
 						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
 						<dd><label>
 							<select name="img" id="img_group" onChange="img_change(this.options[selectedIndex].value)">
-								# START select #
-									{select.IMG_GROUP}
-								# END select #
+								{IMG_GROUPS}
 							</select>				
 							<img src="../images/group/{IMG}" name="img_group" alt="" style="vertical-align:middle" />
 						</label></dd>
