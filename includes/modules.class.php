@@ -4,7 +4,7 @@
  *                              modules.class.php
  *                            -------------------
  *   begin                : January 15, 2008
- *   copyright          : (C) 2008 Rouchon Loïc
+ *   copyright            : (C) 2008 Rouchon Loïc
  *   email                : xhorn37@yahoo.fr
  *
  *
