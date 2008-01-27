@@ -44,7 +44,7 @@ if( defined('PHP_BOOST') !== true)
 	LEFT JOIN ".PREFIX."forum_msg msg ON msg.id = t.last_msg_id
 	WHERE (c.auth LIKE '%s:3:\"r-1\";i:1;%' OR c.auth LIKE '%s:3:\"r-1\";i:3;%') AND c.level != 0 AND c.aprob = 1 " . $clause_cat . "
 	ORDER BY t.last_timestamp DESC
-	" . $sql->sql_limit(0, 10), __LINE__, __FILE__);
+	" . $sql->sql_limit(0, 15), __LINE__, __FILE__);
 	while ($row = $sql->sql_fetch_assoc($result))
 	{ 
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
@@ -75,7 +75,7 @@ else //Récupération directe du contenu.
 	WHERE (c.auth LIKE '%s:3:\"r-1\";i:1;%' OR c.auth LIKE '%s:3:\"r-1\";i:3;%') AND c.level !=0 AND c.aprob = 1 " . $cat_get . "
 	GROUP BY t.id
 	ORDER BY t.last_timestamp DESC
-	" . $sql->sql_limit(0, 10), __LINE__, __FILE__);
+	" . $sql->sql_limit(0, 15), __LINE__, __FILE__);
 	while ($row = mysql_fetch_array($result))
 	{ 
 		//Variable utilisé pour la récupération du flux par le lecteur rss.
