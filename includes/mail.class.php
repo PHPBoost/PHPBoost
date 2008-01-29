@@ -46,6 +46,11 @@ class Mail
 			$this->objet = stripslashes($mail_objet);
 			$this->contents = stripslashes($mail_contents);
 		}
+		else
+		{
+			$this->objet = $mail_objet;
+			$this->contents = $mail_contents;
+		}
 	}
 	
 	//Vérification de la validité du mail du posteur => Protection contre injection header.
