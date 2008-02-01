@@ -41,6 +41,7 @@ class Search
      *  Enregistre les résultats de la recherche dans la base des résultats
      */
     {
+        // Nettoyage des erreurs
         $this->resetError(SEARCH_DEPRECATED);
         $this->resetError(MODULE_DOES_NOT_EXISTS);
         
@@ -51,7 +52,9 @@ class Search
         // 		Recherche et stockage dans la table des résultats et stockage id_search
         
         // Update du timestamp de la recherche
-        $this->updateTimeStamp();
+        $this->updateTimeStamp ( $id_search );
+        
+        return $id_search;
     }
     
     function GetResults ( $id_search, $id_modules = Array (), $offset = 0, $nbLines = NB_LINES)
@@ -62,26 +65,12 @@ class Search
         // Teste l'existence de la recherche dans la base sinon stoppe
         if ( $this->isInCache ( $id_search, $id_modules ) )
         {
-            this->resetError( SEARCH_DEPRECATED );
-            
+            $this->resetError( SEARCH_DEPRECATED );
             $results = Array ( );
-            $modulesConditions = "";
             
-            // Choix de la recherche
-            $modulesConditions .= " WHERE id_search=".$this->id_search;
-            
-            // Choix du/des modules sur lesquels rechercher
-            $nbModules = count($id_modules);
-            if ( $nbModules > 0 )
-            { $modulesConditions .= " AND (" ; }
-            
-            for ( $i = 0; $i < $nbModules; $i++ )
-            {
-                $modulesConditions .= "id_module='".$id_modules[$i]."'";
-                if ( $i < ( $nbModules - 1 ) )
-                { $modulesConditions .= " OR " ; }
-            }
-            $modulesConditions .= ") ";
+            // Conditions de la recherche
+            $modulesConditions  = " WHERE id_search='".$this->id_search."' ";
+            $modulesConditions .= "AND".$this->getModulesConditions ( $id_modules );
             
             // Récupération du nombre de résultats correspondant à la recherche
             $reqNbResults  = "SELECT COUNT(*) ".PREFIX."search_results".$modulesConditions.
@@ -91,9 +80,10 @@ class Search
             $reqResults  = "SELECT id_module, id_content, pertinence, link FROM ".PREFIX."search_results";
             $reqResults .= "'".$modulesConditions."' ".$this->sql->sql_limit(0, 10);
             
+            // Exécution de la requête
             $request = $this->sql->query_while( $reqResults, __LINE__, __FILE__ );
             while( $result = $this->sql->sql_fetch_assoc($request) )
-            {
+            {   // Ajout des résultats
                 array_push($results, $result)
             }
             $this->sql->close($request); //On libère la mémoire
@@ -103,30 +93,20 @@ class Search
         else
         {
             $this->setError( SEARCH_DEPRECATED );
-            return Array ( 0, Array ( ) );
+            return Array ( -1, Array ( ) );
         }
     }
     
-    function isInCache ( $id_search, $id_module )
+    function isInCache ( $id_search, $id_modules = Array ( ) )
     /**
      *  Renvoie true si les résultats existent dans le cache et false sinon
      */
     {
         // Choix du/des modules sur lesquels rechercher
-        $nbModules = count($id_modules);
-        if ( $nbModules > 0 )
-        { $modulesConditions .= " AND (" ; }
-        
-        for ( $i = 0; $i < $nbModules; $i++ )
-        {
-            $modulesConditions .= "id_module='".$id_modules[$i]."'";
-            if ( $i < ( $nbModules - 1 ) )
-            { $modulesConditions .= " OR " ; }
-        }
-        $modulesConditions .= ") ";
+        $modulesConditions = $this->getModulesConditions ( $id_modules );
         
         $reqNbSearch  = "SELECT COUNT(*) ".PREFIX."search_index WHERE id_search='".$id_search."' ";
-        $reqNbSearch .= $modulesConditions;
+        $reqNbSearch .= "AND ".$modulesConditions;
         if ( $sql->query( $reqNbSearch, __LINE__, __FILE__ ) == count($id_modules) )
         {
             $this->updateTimeStamp ( $id_search );
@@ -170,13 +150,35 @@ class Search
      *  Bref, utilisation é vos risques et périls !!!
      *  
      */
+    
     //----------------------------------------------------- Méthodes protégées
+    function getModulesConditions ( &$id_modules )
+    /**
+     *  Génère les conditions de la clause WHERE pour limiter les requêtes
+     *  aux seuls modules concernés.
+     */
+    {
+        $nbModules = count( $id_modules );
+        
+        if ( $nbModules > 0 )
+        { $modulesConditions .= " (" ; }
+        
+        for ( $i = 0; $i < $nbModules; $i++ )
+        {
+            $modulesConditions .= "id_module='".$id_modules[$i]."'";
+            if ( $i < ( $nbModules - 1 ) )
+            { $modulesConditions .= " OR " ; }
+            else
+            { $modulesConditions .= ") "; }
+        }
+    }
+    
     function updateTimeStamp ( $id_search = $this->id_search )
     /**
      *  Met le timestamp de la requête courante à jour.
      */
     {
-        $reqUpdate  = "UPDATE ".PREFIX."search_index SET last_search_use = '".$time()."' ";
+        $reqUpdate  = "UPDATE ".PREFIX."search_index SET last_search_use='".$time()."' ";
         $reqUpdate .= "WHERE id_search=".$id_search;
         $sql->query_inject($reqUpdate, __LINE__, __FILE__);
     }
@@ -187,7 +189,7 @@ class Search
      */
     {
         $reqUpdate  = "DELETE FROM ".PREFIX."search_index WHERE ";
-        $reqUpdate .= "last_search_use < '".( $time() - (CACHE_TIME*60) )."'";
+        $reqUpdate .= "last_search_use < '".($time() - (CACHE_TIME * 60))."'";
         $sql->query_inject($reqUpdate, __LINE__, __FILE__);
     }
     
