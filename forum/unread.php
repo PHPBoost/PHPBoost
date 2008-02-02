@@ -76,7 +76,7 @@ if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(
 	LEFT JOIN ".PREFIX."member m1 ON m1.user_id = t.user_id
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = t.last_user_id
 	WHERE t.last_timestamp >= '" . $max_time . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "
-	ORDER BY t.type DESC , t.last_timestamp DESC 
+	ORDER BY t.last_timestamp DESC 
 	" . $sql->sql_limit($pagination->first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
 	while( $row = $sql->sql_fetch_assoc($result) )
 	{

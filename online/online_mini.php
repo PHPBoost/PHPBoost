@@ -38,9 +38,8 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 	));
 
 	//On compte les visiteurs en ligne dans la bdd, en prenant en compte le temps max de connexion.
-	list($count_visit, $count_member, $count_modo, $count_admin) = array('0', '0', '0', '0');  
+	list($count_visit, $count_member, $count_modo, $count_admin) = array(0, 0, 0, 0);  
 
-	############Affichage des 4 premiers membres de la table et nombres des différents level en ligne##############
 	$i = 0;
 	$result = $sql->query_while("SELECT s.user_id, s.level, s.session_time, m.login
 	FROM ".PREFIX."sessions s 
@@ -75,7 +74,6 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 				$template->assign_block_vars('online', array(
 					'MEMBER' => '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . wordwrap_html($row['login'], 19) . '</a><br />'	
 				));
-				
 				$i++;
 			}		 
 		}
