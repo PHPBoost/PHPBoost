@@ -92,7 +92,7 @@ elseif( $session->check_auth($session->data, 0) ) //Affichage des message()s non
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = t.last_user_id
 	LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $session->data['user_id'] . "'
 	WHERE tr.user_id = '" . $session->data['user_id'] . "'
-	ORDER BY t.type DESC , t.last_timestamp DESC
+	ORDER BY t.last_timestamp DESC
 	" . $sql->sql_limit($pagination->first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
 	while ($row = $sql->sql_fetch_assoc($result))
 	{

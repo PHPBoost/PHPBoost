@@ -121,7 +121,6 @@ s.session_script_title, m.login
 FROM ".PREFIX."sessions s
 LEFT JOIN ".PREFIX."member m ON s.user_id = m.user_id
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
-GROUP BY s.user_id 
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
 while( $row = $sql->sql_fetch_assoc($result) )
 {
