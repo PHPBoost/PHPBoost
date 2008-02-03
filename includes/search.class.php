@@ -139,25 +139,22 @@ class Search
         return Array ( $nbResults, $results );
     }
     
-//     function isInCache ( $id_search, $id_modules = Array ( ) )
-//     /**
-//      *  Renvoie true si les résultats existent dans le cache et false sinon
-//      */
-//     {
-//         // Choix du/des modules sur lesquels rechercher
-//         $modulesConditions = $this->getModulesConditions ( $id_modules );
-//         
-//         $reqNbSearch  = "SELECT COUNT(*) ".PREFIX."search_index WHERE id_search='".$id_search."' ";
-//         $reqNbSearch .= "AND ".$modulesConditions;
-//         if ( $sql->query( $reqNbSearch, __LINE__, __FILE__ ) == count($id_modules) )
-//         {
-//             $this->updateTimeStamp ( $id_search );
-//             return true;
-//         }
-//         else
-//         { return false; }
-//     }
-
+    function ModulesInCache ( )
+    /**
+     *  Renvoie la liste des modules présent dans le cache
+     */
+    {
+        return array_keys ( $this->id_search );
+    }
+    
+    function IsInCache ( $id_module )
+    /**
+     *  Renvoie true si les résultats du module sont dans le cache
+     */
+    {
+        return in_array ( $id_module, array_keys ( $this->id_search ) );
+    }
+    
     function GetErrors (  )
     /**
      *  Renvoie un integer contenant des bits d'erreurs.
@@ -191,8 +188,9 @@ class Search
         
         $request = $this->sql->query_while( $reqCache, __LINE__, __FILE__ );
         while( $row = $this->sql->sql_fetch_assoc($request) )
-        {   // Ajout des résultats
-            $this->id_search[$row[1]] = $row[0];
+        {   // Ajout des résultats s'il fait partie de la liste des modules à traiter
+            if ( in_array ( $row[1], array_keys ( $this->modules ) ) )
+            { $this->id_search[$row[1]] = $row[0]; }
         }
         $this->sql->close($request);
     }
