@@ -36,16 +36,19 @@ class Search
 {
     //----------------------------------------------------------------- PUBLIC
     //----------------------------------------------------- Méthodes publiques
-    function InsertResults ( &$search, &$results = Array ( ) )
+    function InsertResults ( &$search, &$modules = Array ( ), &$results = Array ( ) )
     /**
      *  Enregistre les résultats de la recherche dans la base des résultats
      */
     {
         // Nettoyage des erreurs
         $this->resetError(SEARCH_DEPRECATED);
-        $this->resetError(MODULE_DOES_NOT_EXISTS);
+        
+        $nonPerformedModules = Array ( );
         
         // Vérification de la présence des résultats dans le cache
+        
+        
         // 	si oui
         //		utilise le id_search trouve pour les resultats
         //	sinon
@@ -126,13 +129,18 @@ class Search
     
     //---------------------------------------------------------- Constructeurs
     
-    function Search ( &$sql )
+    function Search ( &$sql, $search, $modules = Array ( ) )
     /**
      *  Constructeur de la classe Search
      */
     {
         $this->errors = 0;
+        $this->id_search = - 1;
+        $this->search = $search;
+        $this->modules = $modules;
+        
         $this->sql = $sql;
+        $this->modulesConditions = $this->getModulesConditions ( &$modules );
         
         $this->cleanOldResults ( );
     }
@@ -147,30 +155,36 @@ class Search
      *  est suceptible de changer sans avertissement et donc vos modules ne
      *  fonctionnerai plus.
      *  
-     *  Bref, utilisation é vos risques et périls !!!
+     *  Bref, utilisation à vos risques et périls !!!
      *  
      */
     
     //----------------------------------------------------- Méthodes protégées
-    function getModulesConditions ( &$id_modules )
+    function getModulesConditions ( &$modules )
     /**
      *  Génère les conditions de la clause WHERE pour limiter les requêtes
-     *  aux seuls modules concernés.
+     *  aux seuls modules avec les bonnes options de recherches concernés.
      */
     {
-        $nbModules = count( $id_modules );
+        $nbModules = count( $modules );
         
         if ( $nbModules > 0 )
-        { $modulesConditions .= " (" ; }
+        { $modulesConditions .= " ( " ; }
         
-        for ( $i = 0; $i < $nbModules; $i++ )
+        $i = 0;
+        foreach ( $modules as $id_module => $options )
         {
-            $modulesConditions .= "id_module='".$id_modules[$i]."'";
+            $modulesConditions .= "( id_module='".$id_module."'";
+            $modulesConditions .= " AND options='".$options."' )";
+            
             if ( $i < ( $nbModules - 1 ) )
             { $modulesConditions .= " OR " ; }
             else
-            { $modulesConditions .= ") "; }
+            { $modulesConditions .= " ) "; }
+            $i++;
         }
+        
+        return $modulesConditions;
     }
     
     function updateTimeStamp ( $id_search = $this->id_search )
@@ -210,6 +224,10 @@ class Search
     }
     
     //----------------------------------------------------- Attributs protégés
+    var $id_search;
+    var $search;
+    var $modules;
+    var $modulesConditions;
     var $sql;
     var $errors;
 }
