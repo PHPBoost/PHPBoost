@@ -428,13 +428,9 @@ class Parse
 	{
 		global $session;
 		if( $user_editor !== false )
-		{
 			$this->user_editor = in_array($user_editor, $this->editors) ? $user_editor : 'bbcode';
-		}
 		else
-		{
 			$session->data['user_editor'];
-		}
 		$this->load_content($text);
 	}
 
