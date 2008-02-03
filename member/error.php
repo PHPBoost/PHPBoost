@@ -39,10 +39,7 @@ if( in_array($id_error, $array_error) )
 		$template->set_filenames(array(
 			'error' => '../templates/' . $CONFIG['theme'] . '/error.tpl'
 		));
-			
-		$template->assign_block_vars('connexion', array(
-		));
-		
+
 		$errno = E_USER_WARNING;
 		switch($id_error)
 		{ 
@@ -105,6 +102,7 @@ if( in_array($id_error, $array_error) )
 			$errorh->error_handler($errstr, $errno);		
 			
 		$template->assign_vars(array(
+			'C_ERRORH_CONNEXION' => true,
 			'L_CONNECT' => $LANG['connect'],
 			'L_PSEUDO' => $LANG['pseudo'],
 			'L_PASSWORD' => $LANG['password'],
@@ -137,10 +135,12 @@ elseif( !empty($id_error) )
 		'U_INDEX' => '<a href="' . transid(get_start_page()) .'">' . $LANG['index'] . '</a>', 
 	));
 	
-	$template->assign_block_vars('error', array(
-		'IMG' => 'important',
-		'CLASS' => 'error_warning',
-		'L_ERROR' => isset($LANG[$id_error]) ? $LANG[$id_error] : $LANG['unknow_error']
+	$template->assign_vars(array(
+		'C_ERRORH_CONNEXION' => false,
+		'C_ERRORH' => true,
+		'ERRORH_IMG' => 'important',
+		'ERRORH_CLASS' => 'error_warning',
+		'L_ERRORH' => isset($LANG[$id_error]) ? $LANG[$id_error] : $LANG['unknow_error']
 	));
 	
 	$template->pparse('error');
@@ -148,15 +148,11 @@ elseif( !empty($id_error) )
 elseif( $session->data['user_id'] === -1 )
 {
 	$template->set_filenames(array(
-	'error' => '../templates/' . $CONFIG['theme'] . '/error.tpl'
-	));
-	
-	$template->assign_block_vars('connexion', array(
+		'error' => '../templates/' . $CONFIG['theme'] . '/error.tpl'
 	));
 
-	include_once('../includes/connect.php');
-	
 	$template->assign_vars(array(
+		'C_ERRORH_CONNEXION' => true,
 		'L_CONNECT' => $LANG['connect'],
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_PASSWORD' => $LANG['password'],

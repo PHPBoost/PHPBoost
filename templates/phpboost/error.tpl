@@ -1,4 +1,4 @@
-		# START connexion #
+		# IF C_ERRORH_CONNEXION #
 		<script type="text/javascript">
 		<!--
 		function check_conect_error(){
@@ -14,7 +14,7 @@
 		}
 		-->
 		</script>
-							
+		
 		<form action="" method="post" style="margin:auto;" onsubmit="return check_conect_error();">
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
@@ -49,10 +49,10 @@
 				<div class="module_bottom"></div>
 			</div>
 		</form>	
-		# END connexion #
+		# ENDIF #
 
-		# START error #
 		
+		# IF C_ERRORH #
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
@@ -67,6 +67,5 @@
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom"><strong>{U_BACK}</strong></div>
 		</div>
-		
-		# END error #
+		# ENDIF #
 		
