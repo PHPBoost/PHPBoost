@@ -316,9 +316,11 @@ DROP TABLE IF EXISTS `phpboost_search_index`;
 CREATE TABLE `phpboost_search_results` (
     `id_search`         int(11)         NOT NULL auto_increment,
     `id_module`         int(11)         NOT NULL default '0',
+    `id_user`           int(11)         NOT NULL default '0',
     `search`            VARCHAR(255)    NOT NULL default '',
     `options`           VARCHAR(255)    NOT NULL default '',
     `last_search_use`   timestamp       NOT NULL,
+    `timesUsed`         int(11)         NOT NULL default '0',
     PRIMARY KEY (`id_search`, `id_module`),
     INDEX `last_search_use` (`last_search_use`),
 ) ENGINE=MyISAM;
