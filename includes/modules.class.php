@@ -27,7 +27,7 @@
 ###################################################*/
 
 
-require_once('../includes/module_interface.class.php');
+require_once ( '../includes/module_interface.class.php' );
 
 /**
  *  Les arguments de fonction nommé "$modules" sont assez particulier.
