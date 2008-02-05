@@ -27,7 +27,28 @@
 
 if( defined('PHP_BOOST') !== true ) exit;
 
-//Vérification pour empêcher une double mise à jour.		
+// Code pouvant potentiellement régler le pb de mise à jour double
+/**
+define('DAILY_UPDATE_LOCK_FILE', '../cache/daily_update_lock.php');
+define('DAILY_UPDATE_LOCK', '<?php define(\'IS_DAILY_UPDATE_LOCK\', true); ?>');
+define('DAILY_UPDATE_UNLOCK', '<?php define(\'IS_DAILY_UPDATE_LOCK\', false); ?>');
+
+if ( @include_once(DAILY_UPDATE_LOCK_FILE) )
+{
+    if ( IS_DAILY_UPDATE_LOCK == false )
+    {   $file = fopen ( DAILY_UPDATE_LOCK_FILE, 'w');
+        fwrite ( $file, DAILY_UPDATE_LOCK );
+        fclose ( $file );
+    }
+    // Ici on peut alors placer le traitement...
+}
+$file = fopen ( DAILY_UPDATE_LOCK_FILE, 'w');
+fwrite ( $file, DAILY_UPDATE_UNLOCK );
+fclose ( $file );
+*/
+// Fin code
+
+//Vérification pour empêcher une double mise à jour.    	
 $check_update = $sql->query("SELECT COUNT(*) FROM ".PREFIX."stats WHERE stats_year = '" . gmdate_format('Y', time(), TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m', time(), TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format('d', time(), TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__);
 if( empty($check_update) )
 {
