@@ -73,7 +73,7 @@ class Modules
     {
         $modules = Array (  );
         global $SECURE_MODULE;
-        foreach( $SECURE_MODULE as $moduleName => $auth )
+        foreach( array_keys($SECURE_MODULE) as $moduleName )
         {
             $module = $this->GetModule ( $moduleName );
             if ( $module->GetErrors == 0 and $module->HasFunctionnalitie ($functionnalitie ) )

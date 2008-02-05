@@ -315,7 +315,7 @@ INSERT INTO `phpboost_smileys` (`idsmiley`, `code_smiley`, `url_smiley`) VALUES
 DROP TABLE IF EXISTS `phpboost_search_index`;
 CREATE TABLE `phpboost_search_results` (
     `id_search`         int(11)         NOT NULL auto_increment,
-    `id_module`         int(11)         NOT NULL default '0',
+    `id_module`         VARCHAR(255)    NOT NULL default '0',
     `id_user`           int(11)         NOT NULL default '0',
     `search`            VARCHAR(255)    NOT NULL default '',
     `options`           VARCHAR(255)    NOT NULL default '',
@@ -336,7 +336,7 @@ CREATE TABLE `phpboost_search_results` (
 DROP TABLE IF EXISTS `phpboost_search_results`;
 CREATE TABLE `phpboost_search_results` (
     `id_search`         int(11)         NOT NULL auto_increment,
-    `id_module`         int(11)         NOT NULL default '0',
+    `id_module`         VARCHAR(255)    NOT NULL default '0',
     `id_module_content` int(11)         NOT NULL default '0',
     `relevance`         decimal         NOT NULL default '0',
     `link`              varchar(255)    NOT NULL default '',
