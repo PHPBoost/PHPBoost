@@ -52,16 +52,16 @@ class Modules
      *  du/des module(s) sélectionné(s) avec les bons arguments.
      */
     {
-        $results = Array( );
-        foreach($modules as $moduleName => $args)
+        $results = Array ( );
+        foreach( $modules as $moduleName => $args )
         {
             // Instanciation de l'objet $module
-            $module = $this->GetModule($moduleName);
+            $module = $this->GetModule ( $moduleName );
             // Si le module à déjà été appelé et a déjà eu une erreur,
             // On nettoie le bit d'erreur correspondant.
-            $module->clearFunctionnalitieError();
+            $module->clearFunctionnalitieError ( );
             if ( $module->hasFunctionnalitie ( $functionnalitie ) == true )
-            { $results[$moduleName] = $module->Functionnalitie($functionnalitie, $args); }
+            { $results[$moduleName] = $module->Functionnalitie ( $functionnalitie, $args ); }
         }
         return $results;
     }
@@ -73,13 +73,12 @@ class Modules
     {
         $modules = Array (  );
         global $SECURE_MODULE;
-        foreach($SECURE_MODULE as $moduleName => $auth)
+        foreach( $SECURE_MODULE as $moduleName => $auth )
         {
-            $module = $this->GetModule($moduleName);
-            if ( !in_array($module->name, $this->loadModuleErrors) )
+            $module = $this->GetModule ( $moduleName );
+            if ( $module->GetErrors == 0 and $module->HasFunctionnalitie ($functionnalitie ) )
             {
-                if ( $module->HasFunctionnalitie($functionnalitie) )
-                { array_push( $modules, $module ); }
+                array_push( $modules, $module );
             }
         }
         return $modules;
@@ -90,26 +89,26 @@ class Modules
      *  Instancie et renvoie le module demandé.
      */
     {
-        if ( !isset($this->loadedModules[$moduleName]) )
+        if ( !isset( $this->loadedModules[$moduleName] ) )
         {
-            if ( in_array($moduleName, $this->availablesModules) )
+            if ( in_array( $moduleName, $this->availablesModules ) )
             {
                 global $groups, $SECURE_MODULE;
-                if ( $groups->check_auth($SECURE_MODULE[$moduleName], 1) )
+                if ( $groups->check_auth ( $SECURE_MODULE[$moduleName], 1 ) )
                 {
-                    if (@include_once('../'.$moduleName.'/'.$moduleName.'_interface.class.php'))
+                    if ( @include_once ( '../'.$moduleName.'/'.$moduleName.'_interface.class.php' ) )
                     {
-                        $constructeur = ucfirst($moduleName.'Interface');
-                        $module = new $constructeur();
+                        $moduleConstructor = ucfirst ( $moduleName.'Interface' );
+                        $module = new $moduleConstructor ( );
                     }
                     else
-                    { $module = new ModuleInterface($moduleName, MODULE_NOT_YET_IMPLEMENTED); }
+                    { $module = new ModuleInterface ( $moduleName, MODULE_NOT_YET_IMPLEMENTED ); }
                 }
                 else
-                { $module = new ModuleInterface($moduleName, ACCES_DENIED); }
+                { $module = new ModuleInterface ( $moduleName, ACCES_DENIED ); }
             }
             else
-            { $module = new ModuleInterface($moduleName, MODULE_NOT_AVAILABLE); }
+            { $module = new ModuleInterface ( $moduleName, MODULE_NOT_AVAILABLE ); }
             $this->loadedModules[$moduleName] = $module;
         }
         return $this->loadedModules[$moduleName];
@@ -123,9 +122,8 @@ class Modules
     {
         global $SECURE_MODULE;
         
-        $this->loadedModules = Array(  );
-        $this->availablesModules = array_keys($SECURE_MODULE);
-        $this->loadModuleErrors = Array ( ACCES_DENIED, MODULE_NOT_AVAILABLE, MODULE_NOT_YET_IMPLEMENTED );
+        $this->loadedModules = Array (  );
+        $this->availablesModules = array_keys ( $SECURE_MODULE );
     }
 
     //------------------------------------------------------------------ PRIVE
@@ -146,7 +144,6 @@ class Modules
     //----------------------------------------------------- Attributs protégés
     var $loadedModules;
     var $availablesModules;
-    var $loadModuleErrors;
 }
 
 ?>
