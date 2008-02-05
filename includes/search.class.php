@@ -41,7 +41,6 @@ class Search
      *  Enregistre les résultats de la recherche dans la base des résultats
      *  si ils n'y sont pas déjà
      *  Nb requêtes : 1
-     *  avec n Nb de résultats
      */
     {
         // Nettoyage des erreurs
