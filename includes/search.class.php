@@ -41,9 +41,6 @@ class Search
      *  Nb requêtes : 1
      */
     {
-        // Nettoyage des erreurs
-        $this->resetError(SEARCH_DEPRECATED);
-        
         $nbReqSEARCH = 0;
         $reqSEARCH = '';
         
@@ -97,8 +94,6 @@ class Search
      *  Nb requêtes : 1, 2 si le SGBD ne supporte pas 'sql->sql_num_rows'
      */
     {
-        $this->resetError( SEARCH_DEPRECATED );
-        
         $results = Array ( );
         $numModules = 0;
         $modulesConditions = '';
@@ -116,8 +111,6 @@ class Search
                 $modulesConditions .= " AND id_module='".$id_module."' ) ";
                 $numModules++;
             }
-            else
-            { $this->setError( SEARCH_DEPRECATED ); }
         }
         
         // Récupération des $nbLines résultats à partir de l'$offset
@@ -156,14 +149,6 @@ class Search
      */
     {
         return in_array ( $id_module, array_keys ( $this->id_search ) );
-    }
-    
-    function GetErrors (  )
-    /**
-     *  Renvoie un integer contenant des bits d'erreurs.
-     */
-    {
-        return $this->errors;
     }
     
     //---------------------------------------------------------- Constructeurs
@@ -301,22 +286,6 @@ class Search
         }
         
         return $modulesConditions;
-    }
-    
-    function setError ( $error = 0 )
-    /**
-     *  Ajoute l'erreur rencontré aux erreurs déjé présentes.
-     */
-    {
-        $this->errors |= $error;
-    }
-    
-    function resetError ( $error )
-    /**
-     *  Nettoie le bit d'erreur de l'erreur correspondante
-     */
-    {
-        $this->errors = $this->errors & (~$error);
     }
     
     //----------------------------------------------------- Attributs protégés
