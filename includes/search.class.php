@@ -28,9 +28,7 @@
 
 define('NB_LINES', 10);
 define('CACHE_TIME', 30);
-define('CONNEXION_NOT_OPEN', 1);
-define('SEARCH_DEPRECATED', 2);
-define('MODULE_DOES_NOT_EXISTS', 4);
+define('CACHE_TIMES_USED', 10);
 
 class Search
 {
@@ -191,7 +189,7 @@ class Search
 
         // Délestage
         $reqDelete  = "DELETE FROM ".PREFIX."search_index WHERE ";
-        $reqDelete .= "last_search_use < '".($time() - (CACHE_TIME * 60))."' OR times_used > 10 ";
+        $reqDelete .= "last_search_use < '".($time() - (CACHE_TIME * 60))."' OR times_used > '".CACHE_TIMES_USED."' ";
         
         // Vérifications des résultats dans le cache.
         $reqCache  = "SELECT id_search, id_module FROM".PREFIX."search_index WHERE ";
