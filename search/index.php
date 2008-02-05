@@ -3,7 +3,7 @@
 *                               index.php
 *                            -------------------
  *   begin                : January 27, 2008
- *   copyright            : (C) 2008 Rouchon Loic
+ *   copyright            : (C) 2008 Rouchon Loïc
  *   email                : horn@phpboost.com
 *
 *
@@ -25,10 +25,10 @@
 *
 ###################################################*/
 
-include_once('../includes/begin.php'); 
-define('TITLE', '');
-include_once('../includes/header.php'); 
+include_once ( '../includes/begin.php' );
+define ( 'TITLE', '' );
+include_once ( '../includes/header.php' );
 
-redirect(HOST . DIR . '/search/search.php');
+redirect ( HOST.DIR.'/search/search.php' );
 
 ?>

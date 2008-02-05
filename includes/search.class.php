@@ -4,7 +4,7 @@
  *                              search.class.php
  *                            -------------------
  *   begin                : February 1, 2008
- *   copyright            : (C) 2008 Rouchon Loic
+ *   copyright            : (C) 2008 Rouchon LoÃ¯c
  *   email                : horn@phpboost.com
  *
  *
@@ -33,12 +33,12 @@ define('CACHE_TIMES_USED', 10);
 class Search
 {
     //----------------------------------------------------------------- PUBLIC
-    //----------------------------------------------------- Méthodes publiques
+    //----------------------------------------------------- Mï¿½thodes publiques
     function InsertResults ( &$requests )
     /**
-     *  Enregistre les résultats de la recherche dans la base des résultats
-     *  si ils n'y sont pas déjà
-     *  Nb requêtes : 1
+     *  Enregistre les rï¿½sultats de la recherche dans la base des rï¿½sultats
+     *  si ils n'y sont pas dï¿½jï¿½
+     *  Nb requï¿½tes : 1
      */
     {
         $nbReqSEARCH = 0;
@@ -47,12 +47,12 @@ class Search
         $nbReqInsert = 0;
         $reqInsert = '';
         
-        // Vérification de la présence des résultats dans le cache
+        // Vï¿½rification de la prï¿½sence des rï¿½sultats dans le cache
         foreach ( $requests as $id_module => $request )
         {
             if ( !$this->IsInCache ( $id_module ) )
-            {   // Si les résultats ne sont pas dans le cache.
-                // Ajout des résultats dans le cache
+            {   // Si les rï¿½sultats ne sont pas dans le cache.
+                // Ajout des rï¿½sultats dans le cache
                 if ( $nbReqSEARCH > 0 )
                 { $reqSEARCH .= ' UNION '; }
                 else
@@ -72,7 +72,7 @@ class Search
 //             $reqInsert .= " ('".$this->id_search[$id_module]."','".$id_module."','".$result['id_content']."',";
 //             $reqInsert .= "'".$result['relevance']."','".$result['id_content']."'), ";
 //             
-//             // Exécution de 10 requêtes d'insertions
+//             // Exï¿½cution de 10 requï¿½tes d'insertions
 //             if ( $nbReqInsert == 10 )
 //             {
 //                 $this-sql->query_insert("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__);
@@ -82,16 +82,16 @@ class Search
 //             else { $nbReqInsert++; }
 //         }
 //         
-//         // Exécution des dernières requêtes d'insertions
+//         // Exï¿½cution des derniï¿½res requï¿½tes d'insertions
 //         if ( $nbReqInsert > 1 )
 //         { $sql->query_inject("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__); }
     }
     
     function GetResults (  &$results, &$id_modules, $offset = 0, $nbLines = NB_LINES)
     /**
-     *  Renvoie le nombre de résultats de la recherche
-     *  et mets les résultats dans le tableau &results
-     *  Nb requêtes : 1, 2 si le SGBD ne supporte pas 'sql->sql_num_rows'
+     *  Renvoie le nombre de rï¿½sultats de la recherche
+     *  et mets les rï¿½sultats dans le tableau &results
+     *  Nb requï¿½tes : 1, 2 si le SGBD ne supporte pas 'sql->sql_num_rows'
      */
     {
         $results = Array ( );
@@ -113,21 +113,21 @@ class Search
             }
         }
         
-        // Récupération des $nbLines résultats à partir de l'$offset
+        // Rï¿½cupï¿½ration des $nbLines rï¿½sultats ï¿½ partir de l'$offset
         $reqResults  = "SELECT id_module, id_content, relevance, link FROM ".PREFIX."search_results WHERE ";
         $reqResults .= $modulesConditions." ORDER BY relevance DESC ".$this->sql->sql_limit($offset, $nbLines);
         
-        // Exécution de la requête
+        // Exï¿½cution de la requï¿½te
         $request = $this->sql->query_while( $reqResults, __LINE__, __FILE__ );
         while( $result = $this->sql->sql_fetch_assoc($request) )
-        {   // Ajout des résultats
+        {   // Ajout des rï¿½sultats
             array_push($results, $result);
         }
-        // Récupération du nombre de résultats correspondant à la recherche
+        // Rï¿½cupï¿½ration du nombre de rï¿½sultats correspondant ï¿½ la recherche
         $reqNbResults  = "SELECT COUNT(*) ".PREFIX."search_results ".$modulesConditions;
         $nbResults = $this->sql->sql_num_rows( $request, $reqNbResults );
         
-        //On libère la mémoire
+        //On libï¿½re la mï¿½moire
         $this->sql->close($request);
         
         return $nbResults;
@@ -135,8 +135,8 @@ class Search
     
     function ModulesInCache ( )
     /**
-     *  Renvoie la liste des modules présent dans le cache
-     *  Nb requêtes : 0
+     *  Renvoie la liste des modules prï¿½sent dans le cache
+     *  Nb requï¿½tes : 0
      */
     {
         return array_keys ( $this->id_search );
@@ -144,8 +144,8 @@ class Search
     
     function IsInCache ( $id_module )
     /**
-     *  Renvoie true si les résultats du module sont dans le cache
-     *  Nb requêtes : 0
+     *  Renvoie true si les rï¿½sultats du module sont dans le cache
+     *  Nb requï¿½tes : 0
      */
     {
         return in_array ( $id_module, array_keys ( $this->id_search ) );
@@ -156,7 +156,7 @@ class Search
     function Search ( $search = '', $modules = Array ( ) )
     /**
      *  Constructeur de la classe Search
-     *  Nb requêtes : 4 + k / 10
+     *  Nb requï¿½tes : 4 + k / 10
      *  avec k nombre de module n'ayant pas de cache de recherche
      */
     {
@@ -172,22 +172,22 @@ class Search
         $this->sql = $sql;
         $this->modulesConditions = $this->getModulesConditions ( &$modules );
 
-        // Délestage
+        // Dï¿½lestage
         $reqDelete  = "DELETE FROM ".PREFIX."search_index WHERE ";
         $reqDelete .= "last_search_use < '".($time() - (CACHE_TIME * 60))."' OR times_used > '".CACHE_TIMES_USED."' ";
         
-        // Vérifications des résultats dans le cache.
+        // Vï¿½rifications des rï¿½sultats dans le cache.
         $reqCache  = "SELECT id_search, id_module FROM".PREFIX."search_index WHERE ";
         $reqCache .= "search='".$search."' AND id_user='".$this->id_user."' AND ".$this->modulesConditions;
         
         $request = $this->sql->query_while( $reqCache, __LINE__, __FILE__ );
         while( $row = $this->sql->sql_fetch_assoc($request) )
-        {   // Ajout des résultats s'ils font partie de la liste des modules à traiter
+        {   // Ajout des rï¿½sultats s'ils font partie de la liste des modules ï¿½ traiter
             $this->id_search[$row[1]] = $row[0];
         }
         $this->sql->close($request);
         
-        // Mise à jours des résultats du cache
+        // Mise ï¿½ jours des rï¿½sultats du cache
         if ( count ( $this->id_search ) > 0 )
         {
             $reqUpdate  = "UPDATE ".PREFIX."search_index SET times_used=(times_used + 1), last_search_use='".$time()."' WHERE ";
@@ -204,7 +204,7 @@ class Search
                 $reqInsert .= "('".$this->id_search[$id_module]."','".$id_module."','".$this->id_user."','".$result['id_content']."',";
                 $reqInsert .= "'".$result['relevance']."','".time()."', '0'), ";
                 
-                // Exécution de 10 requêtes d'insertions
+                // Exï¿½cution de 10 requï¿½tes d'insertions
                 if ( $nbReqInsert == 10 )
                 {
                     $reqInsert = "INSERT INTO ".PREFIX."search_index VALUES ( ".$reqInsert." )";
@@ -216,16 +216,16 @@ class Search
             }
         }
         
-        // Exécution des dernières requêtes d'insertions
+        // Exï¿½cution des derniï¿½res requï¿½tes d'insertions
         if ( $nbReqInsert > 1 )
         { $sql->query_inject("INSERT INTO ".PREFIX."search_index VALUES ( ".$reqInsert." )", __LINE__, __FILE__); }
         
-        // Récupération des résultats et de leurs id dans le cache.
+        // Rï¿½cupï¿½ration des rï¿½sultats et de leurs id dans le cache.
         
-        // Pourquoi faire çà plutôt que de récupérer id_search pour chaque
+        // Pourquoi faire ï¿½ï¿½ plutï¿½t que de rï¿½cupï¿½rer id_search pour chaque
         // insertion dans l'index du cache.
-        // parce que cela donne au total pour le contructeur une complexité
-        // en requête de :
+        // parce que cela donne au total pour le contructeur une complexitï¿½
+        // en requï¿½te de :
         // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k / 10 (nb non dans le cache) + 1 (recup id) = 4 + k/10
         // au lieu de :
         // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k (nb non dans le cache) = 3 + k
@@ -236,7 +236,7 @@ class Search
         
         $request = $this->sql->query_while( $reqCache, __LINE__, __FILE__ );
         while( $row = $this->sql->sql_fetch_assoc($request) )
-        {   // Ajout des résultats s'il fait partie de la liste des modules à traiter
+        {   // Ajout des rï¿½sultats s'il fait partie de la liste des modules ï¿½ traiter
             $this->id_search[$row[1]] = $row[0];
         }
         $this->sql->close($request);
@@ -244,23 +244,23 @@ class Search
     
     //------------------------------------------------------------------ PRIVE
     /**
-     *  Pour des raisons de compatibilité avec PHP 4, les mots-clés private,
-     *  protected et public ne sont pas utilisé.
+     *  Pour des raisons de compatibilitï¿½ avec PHP 4, les mots-clï¿½s private,
+     *  protected et public ne sont pas utilisï¿½.
      *  
-     *  L'appel aux méthodes et/ou attributs PRIVE/PROTEGE est donc possible.
-     *  Cependant il est strictement déconseillé, car cette partie du code
+     *  L'appel aux mï¿½thodes et/ou attributs PRIVE/PROTEGE est donc possible.
+     *  Cependant il est strictement dï¿½conseillï¿½, car cette partie du code
      *  est suceptible de changer sans avertissement et donc vos modules ne
      *  fonctionnerai plus.
      *  
-     *  Bref, utilisation à vos risques et périls !!!
+     *  Bref, utilisation ï¿½ vos risques et pï¿½rils !!!
      *  
      */
     
-    //----------------------------------------------------- Méthodes protégées
+    //----------------------------------------------------- Mï¿½thodes protï¿½gï¿½es
     function getModulesConditions ( &$modules )
     /**
-     *  Génère les conditions de la clause WHERE pour limiter les requêtes
-     *  aux seuls modules avec les bonnes options de recherches concernés.
+     *  Gï¿½nï¿½re les conditions de la clause WHERE pour limiter les requï¿½tes
+     *  aux seuls modules avec les bonnes options de recherches concernï¿½s.
      */
     {
         $nbModules = count( $modules );
@@ -288,7 +288,7 @@ class Search
         return $modulesConditions;
     }
     
-    //----------------------------------------------------- Attributs protégés
+    //----------------------------------------------------- Attributs protï¿½gï¿½s
     var $id_search;
     var $search;
     var $modules;
