@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-define('MODULE_NOT_AVAILABLE', 1);
-define('ACCES_DENIED', 2);
-define('MODULE_NOT_YET_IMPLEMENTED', 4);
-define('FUNCTIONNALITIE_NOT_IMPLEMENTED', 8);
+define ( 'MODULE_NOT_AVAILABLE', 1 );
+define ( 'ACCES_DENIED', 2 );
+define ( 'MODULE_NOT_YET_IMPLEMENTED', 4 );
+define ( 'FUNCTIONNALITIE_NOT_IMPLEMENTED', 8 );
 
 class ModuleInterface
 {
