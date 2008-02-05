@@ -36,7 +36,7 @@ class Search
 {
     //----------------------------------------------------------------- PUBLIC
     //----------------------------------------------------- Méthodes publiques
-    function InsertResults ( &$requests = Array ( ) )
+    function InsertResults ( &$requests )
     /**
      *  Enregistre les résultats de la recherche dans la base des résultats
      *  si ils n'y sont pas déjà
@@ -67,7 +67,6 @@ class Search
             }
         }
         
-        
         $reqSEARCH = "INSERT ( ".$reqSEARCH." ) INTO ".PREFIX."search_results;";
         $this->sql->query_inject($reqSEARCH, __LINE__, __FILE__ );
         
@@ -94,7 +93,7 @@ class Search
 //         { $sql->query_inject("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__); }
     }
     
-    function GetResults (  &$results, &$id_modules = Array ( ), $offset = 0, $nbLines = NB_LINES)
+    function GetResults (  &$results, &$id_modules, $offset = 0, $nbLines = NB_LINES)
     /**
      *  Renvoie le nombre de résultats de la recherche
      *  et mets les résultats dans le tableau &results
@@ -111,13 +110,13 @@ class Search
         foreach ( $id_modules as $id_module )
         {
             // Teste l'existence de la recherche dans la base sinon signale l'erreur
-            if ( in_array ( $id_module, array_keys ( $this->search ) )
+            if ( in_array ( $id_module, array_keys ( $this->search ) ) )
             {
                 // Conditions de la recherche
                 if ( $numModules > 0 )
                 { $modulesConditions .= " OR"; }
                 $modulesConditions .= " ( id_search='".$this->id_search[$id_module]."' ";
-                $modulesConditions .= " AND id_module='".$id_module."' ) "
+                $modulesConditions .= " AND id_module='".$id_module."' ) ";
                 $numModules++;
             }
             else
@@ -191,11 +190,9 @@ class Search
         $this->sql = $sql;
         $this->modulesConditions = $this->getModulesConditions ( &$modules );
 
-        // Delestage
+        // Délestage
         $reqDelete  = "DELETE FROM ".PREFIX."search_index WHERE ";
-        $reqDelete .= "last_search_use < '".($time() - (CACHE_TIME * 60))."' OR times_used > 10; ";
-        
-        $ids_search = Array ( );
+        $reqDelete .= "last_search_use < '".($time() - (CACHE_TIME * 60))."' OR times_used > 10 ";
         
         // Vérifications des résultats dans le cache.
         $reqCache  = "SELECT id_search, id_module FROM".PREFIX."search_index WHERE ";
@@ -203,7 +200,7 @@ class Search
         
         $request = $this->sql->query_while( $reqCache, __LINE__, __FILE__ );
         while( $row = $this->sql->sql_fetch_assoc($request) )
-        {   // Ajout des résultats s'il fait partie de la liste des modules à traiter
+        {   // Ajout des résultats s'ils font partie de la liste des modules à traiter
             $this->id_search[$row[1]] = $row[0];
         }
         $this->sql->close($request);
@@ -222,18 +219,19 @@ class Search
         {
             if ( !$this->IsInCache ( $id_module ) )
             {
-                $reqInsert .= "('"..$this->id_search[$id_module]."','".$id_module."','".$this->id_user."','".$result['id_content']."',";
+                $reqInsert .= "('".$this->id_search[$id_module]."','".$id_module."','".$this->id_user."','".$result['id_content']."',";
                 $reqInsert .= "'".$result['relevance']."','".time()."', '0'), ";
                 
                 // Exécution de 10 requêtes d'insertions
                 if ( $nbReqInsert == 10 )
                 {
-                    $reqInsert = "INSERT INTO ".PREFIX."search_index VALUES ( ".$reqInsert." )";;
-                    $this-sql->query_insert($reqInsert, __LINE__, __FILE__);
+                    $reqInsert = "INSERT INTO ".PREFIX."search_index VALUES ( ".$reqInsert." )";
+                    $this->sql->query_insert($reqInsert, __LINE__, __FILE__);
                     $reqInsert = '';
                     $nbReqInsert = 0;
                 }
                 else { $nbReqInsert++; }
+            }
         }
         
         // Exécution des dernières requêtes d'insertions
@@ -321,7 +319,7 @@ class Search
      *  Nettoie le bit d'erreur de l'erreur correspondante
      */
     {
-        $this->errors = $this->errors &~  $error;
+        $this->errors = $this->errors & (~$error);
     }
     
     //----------------------------------------------------- Attributs protégés
@@ -332,6 +330,8 @@ class Search
     var $id_user;
     var $sql;
     var $errors;
+
 }
 
 ?>
+
