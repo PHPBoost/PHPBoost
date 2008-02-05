@@ -40,7 +40,7 @@ class Search
     /**
      *  Enregistre les résultats de la recherche dans la base des résultats
      *  si ils n'y sont pas déjà
-     *  Nb requêtes : 1 + n / 10
+     *  Nb requêtes : 1
      *  avec n Nb de résultats
      */
     {
@@ -67,26 +67,31 @@ class Search
             }
         }
         
-        $reqInsert = '';
-        $request = $this->sql->query_while( $reqSEARCH, __LINE__, __FILE__ );
-        while( $result = $this->sql->sql_fetch_assoc($request) )
-        {
-            $reqInsert .= " ('".$this->id_search[$id_module]."','".$id_module."','".$result['id_content']."',";
-            $reqInsert .= "'".$result['relevance']."','".$result['id_content']."'), ";
-            
-            // Exécution de 10 requêtes d'insertions
-            if ( $nbReqInsert == 10 )
-            {
-                $this-sql->query_insert("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__);
-                $reqInsert = '';
-                $nbReqInsert = 0;
-            }
-            else { $nbReqInsert++; }
-        }
         
-        // Exécution des dernières requêtes d'insertions
-        if ( $nbReqInsert > 1 )
-        { $sql->query_inject("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__); }
+        $reqSEARCH = "INSERT ( ".$reqSEARCH." ) INTO ".PREFIX."search_results;";
+        $this->sql->query_inject($reqSEARCH, __LINE__, __FILE__ );
+        
+        // Au cas ou le insert select into ne soit pas portable.
+//         $reqInsert = '';
+//         $request = $this->sql->query_while( $reqSEARCH, __LINE__, __FILE__ );
+//         while( $result = $this->sql->sql_fetch_assoc($request) )
+//         {
+//             $reqInsert .= " ('".$this->id_search[$id_module]."','".$id_module."','".$result['id_content']."',";
+//             $reqInsert .= "'".$result['relevance']."','".$result['id_content']."'), ";
+//             
+//             // Exécution de 10 requêtes d'insertions
+//             if ( $nbReqInsert == 10 )
+//             {
+//                 $this-sql->query_insert("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__);
+//                 $reqInsert = '';
+//                 $nbReqInsert = 0;
+//             }
+//             else { $nbReqInsert++; }
+//         }
+//         
+//         // Exécution des dernières requêtes d'insertions
+//         if ( $nbReqInsert > 1 )
+//         { $sql->query_inject("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__); }
     }
     
     function GetResults (  &$results, &$id_modules = Array ( ), $offset = 0, $nbLines = NB_LINES)
