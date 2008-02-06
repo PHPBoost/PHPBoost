@@ -181,9 +181,16 @@ class CategoriesManagement
     }
     
     // Method which cleans error status
-    function clean_error()
+    function clean_error($error = 0)
     {
-        $this->error = 0;
+        if( $error != 0 )
+		{
+			$this->error &= (~$error);
+		}
+		else
+		{
+			$this->error = 0;
+		}
     }
     
     ## Private attributes ##
