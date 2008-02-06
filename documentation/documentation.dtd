@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ELEMENT texte (en-tete, corps)>
-<!ELEMENT en-tete (titre, auteur, couverture, info_traitements)>
-<!ELEMENT titre (#PCDATA)>
-<!ELEMENT auteur (#PCDATA)>
-<!ELEMENT couverture EMPTY>
-<!ATTLIST couverture
-          chemin CDATA #REQUIRED>
-<!ELEMENT info_traitements (but, auteurs, email, date)>
-<!ELEMENT but (#PCDATA)>
-<!ELEMENT auteurs (auteur+, NoBinome)>
-<!ELEMENT NoBinome (#PCDATA)>
-<!ELEMENT email (#PCDATA)>
-<!ELEMENT date (#PCDATA)>
-<!ELEMENT corps (paragraphe|image)*>
-<!ELEMENT paragraphe (phrase+)>
-<!ATTLIST paragraphe
-          type CDATA #REQUIRED>
-<!ELEMENT phrase (#PCDATA)>
-<!ATTLIST phrase
-          locuteur CDATA #REQUIRED
-          modalite CDATA #REQUIRED
-          langue CDATA #REQUIRED>
-<!ELEMENT image EMPTY>
-<!ATTLIST image
-          chemin CDATA #REQUIRED>
+<!ELEMENT document (header, body)>
+    
+    <!ELEMENT header (title, authors, dates)>
+        <!ELEMENT title (#PCDATA)>
+        <!ELEMENT authors (author+)>
+            <!ELEMENT author EMPTY>
+            <!ATTLIST author name CDATA #REQUIRED email CDATA #REQUIRED>
+        <!ELEMENT dates (creation, last-modification)>
+            <!ELEMENT creation (#PCDATA)>
+            <!ELEMENT last-modification (#PCDATA)>
+        
+    <!ELEMENT body (thanks?, content, related?)>
+        
+        <!ELEMENT text (#PCDATA)>
+        <!ELEMENT para (#PCDATA)>
+        <!ATTLIST para style CDATA #IMPLIED>
+        <!ELEMENT code (line)>
+        <!ATTLIST code language CDATA #REQUIRED>
+        <!ELEMENT line (#PCDATA)>
+        
+        <!ELEMENT thanks (text?, thanks-list?)>
+        <!ELEMENT thanks-list (thank)>
+        <!ELEMENT thank (#PCDATA)>
+        
+        <!ELEMENT content (preface?, chapters, appendice?)>
+            <!ELEMENT preface (text)>
+            <!ELEMENT chapters (chapter+)>
+            <!ELEMENT appendice (text)>
+            
+            <!ELEMENT chapter (chapter|para|code|img)+>
+            <!ATTLIST chapter title CDATA #REQUIRED>
+            
+        <!ELEMENT related (resource+)>
+        <!ELEMENT resource (#PCDATA)>
+
+        <!ELEMENT img EMPTY>
+        <!ATTLIST img name CDATA #REQUIRED path CDATA #REQUIRED>
 
 
 
