@@ -129,7 +129,7 @@ class CategoriesManagement
         
         if( $num_concerned_cats == 2 )
         {
-            
+            // A implémenter
         }
         else
         {
