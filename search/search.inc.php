@@ -28,18 +28,15 @@
 require_once ( '../includes/modules.class.php' );
 require_once ( '../includes/search.class.php' );
 
-function GetSearchForms ( $search = '', $args = Array ( ) )
+function GetSearchForms ( &$modules, &$args )
 /**
  *  Affiche les formulaires de recherches pour tous les modules.
  */
 {
-    $modules = new Modules ( );
-    $availablesModules = GetSearchAvailablesModules ( );
-    
     $searchForms = Array ( );
-    foreach ( $availablesModules as $module )
+    foreach ( $modules as $module )
     {
-        $searchForms[$module->name] = $module->Functionnalitie ( 'GetSearchForm', $search, $args );
+        $searchForms[$module->name] = $module->Functionnalitie ( 'GetSearchForm', $args );
     }
     
     return $searchForms;
@@ -65,16 +62,21 @@ function GetSearchResults ( &$search, &$modules, &$results, $offset = 0, $nbResu
     return $search->GetResults ( &$results, &$id_modules, $offset = 0, $nbLines = NB_LINES);
 }
 
-function GetSearchAvailablesModules ( )
+function GetSearchFormsAvailablesModules ( &$searchModules = Array ( ) )
 /**
- *  Renvoie la liste des modules disposants des fonctionnalités
- *  de recherches demandées
+ *  Renvoie la liste des modules disposants d'un formulaires de recherche
+ *  spécialisé
  */
 {
-    return array_intersect (
-                            $modules->GetAvailablesModules ( 'GetSearchForm' ),
-                            $modules->GetAvailablesModules ( 'GetSearchRequest' )
-                        );
+    return $modules->GetAvailablesModules ( 'GetSearchForm', $searchModules );
+}
+
+function GetSearchAvailablesModules ( )
+/**
+ *  Renvoie la liste des modules disposants de la fonctionnalité de recherche
+ */
+{
+    return $modules->GetAvailablesModules ( 'GetSearchRequest' );
 }
 
 ?>
