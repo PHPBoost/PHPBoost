@@ -52,17 +52,15 @@ if ( $search != '' )
     $modules = new Modules ( );
     
     // Listes des modules de recherches
-    $searchModules = GetSearchAvailablesModules ( );
+    $searchModules = $modules->GetAvailablesModules ( 'GetSearchRequest' );
     // Ajout du paramètre search à tous les modules
     foreach ( $searchModules as $module )
     {
-        $args = Array ( );
-        $modulesArgs[$module->name] = $args['search'] = $search;
+        $modulesArgs[$module->name] = Array ('search' => $args );
     }
     
-    
     // Chargement des modules avec formulaires
-    $formsModule = GetSearchFormsAvailablesModules ( $searchModules );
+    $formsModule = $modules->GetAvailablesModules ( 'GetSearchForm', $searchModules );
     
     // Ajout de la liste des paramètres de recherches spécifiques à chaque module
     foreach ( $formsModule as $formModule)
@@ -71,26 +69,29 @@ if ( $search != '' )
         {
             // Récupération de la liste des paramètres
             $formModuleArgs = $formModule->Functionnalitie ( 'GetSearchArgs' );
-            // Ajout des paramètres optionnels
+            // Ajout des paramètres optionnels sans les sécurisés.
+            // Ils sont sécurisés à l'intérieur de chaque module.
             foreach ( $formModuleArgs as $arg )
             {
-                if ( $arg !== 'search' )
-                { array_push ( $args, $_POST[$arg] ); }
+                array_push ( $modulesArgs[$formModule->name], $_POST[$arg] );
             }
-            $modulesArgs[$formModule->name] = $args;
         }
     }
     
     // Affiche les formulaires prérempli précomplétées
-    $searchForms = GetSearchForms ( $search, $modulesArgs );
+    $searchForms = GetSearchForms ( $formsModule , $modulesArgs );
     
-    $nbResults = GetSearchResults ( $search, $modulesArgs, $results, ($p - 1), ($p - 1 + NB_RESULTS_PER_PAGE ) );
+    $nbResults = GetSearchResults ( $search, $searchModules, $modulesArgs, $results, ($p - 1), ($p - 1 + NB_RESULTS_PER_PAGE ) );
 }
 else
 {
+    // Listes des modules de recherches
+    $searchModules = $modules->GetAvailablesModules ( 'GetSearchRequest' );
+    // Chargement des modules avec formulaires
+    $formsModule = $modules->GetAvailablesModules ( 'GetSearchForm', $searchModules );
     // Affiche les formulaires vides
-    $formsModule = GetSearchFormsAvailablesModules ( );
-    $searchForms = GetSearchForms (  );
+    
+    $searchForms = GetSearchForms ( $formsModule );
 }
 
 //--------------------------------------------------------------------- Footer
