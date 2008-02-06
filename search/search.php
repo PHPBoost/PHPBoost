@@ -34,6 +34,11 @@ load_module_lang ( 'search', $CONFIG['lang'] );
 require_once ( '../includes/modules.class.php' );
 require_once ( '../search/search.inc.php' );
 
+$template->set_filenames ( Array (
+    'search_mini' => '../templates/'.$CONFIG['theme'].'/search/search_mini.tpl',
+    'search_forms' => '../templates/'.$CONFIG['theme'].'/search/search_forms.tpl',
+    'search_results' => '../templates/'.$CONFIG['theme'].'/search/search_results.tpl'
+) );
 
 //--------------------------------------------------------------------- Params
 define ( 'NB_RESULTS_PER_PAGE', 10 );
@@ -73,15 +78,20 @@ if ( $search != '' )
             // Ils sont sécurisés à l'intérieur de chaque module.
             foreach ( $formModuleArgs as $arg )
             {
-                array_push ( $modulesArgs[$formModule->name], $_POST[$arg] );
+                $modulesArgs[$formModule->name][$arg] = $_POST[$arg];
             }
         }
     }
     
-    // Affiche les formulaires prérempli précomplétées
+    // Génération des formulaires précomplétés et passage aux templates
     $searchForms = GetSearchForms ( $formsModule , $modulesArgs );
+    $template->assign_block_vars ( 'forms', Array ( $searchForms ) );
     
+    // Génération des résultats et passage aux templates
     $nbResults = GetSearchResults ( $search, $searchModules, $modulesArgs, $results, ($p - 1), ($p - 1 + NB_RESULTS_PER_PAGE ) );
+    $template->assign_vars ( Array ( 'nbResults' => $nbResults, 'results' => $results ) );
+    
+    $template->pparse ( 'search_results' );
 }
 else
 {
@@ -89,9 +99,13 @@ else
     $searchModules = $modules->GetAvailablesModules ( 'GetSearchRequest' );
     // Chargement des modules avec formulaires
     $formsModule = $modules->GetAvailablesModules ( 'GetSearchForm', $searchModules );
-    // Affiche les formulaires vides
     
+    // Génération des formulaires et passage aux templates
     $searchForms = GetSearchForms ( $formsModule );
+    $template->assign_block_vars ( 'forms', Array ( $searchForms ) );
+    
+    // parsage de la page
+    $template->pparse ( 'search_forms' );
 }
 
 //--------------------------------------------------------------------- Footer
