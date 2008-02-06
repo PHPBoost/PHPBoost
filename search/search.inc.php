@@ -36,47 +36,39 @@ function GetSearchForms ( &$modules, &$args )
     $searchForms = Array ( );
     foreach ( $modules as $module )
     {
-        $searchForms[$module->name] = $module->Functionnalitie ( 'GetSearchForm', $args );
+        if ( isset ( $args[$module->name] ) )
+        {
+            $searchForms[$module->name] = $module->Functionnalitie ( 'GetSearchForm', $args[$module->name] );
+        }
+        else
+        {
+            $searchForms[$module->name] = $module->Functionnalitie ( 'GetSearchForm', Array ( 'search' => '' ) );
+        }
     }
     
     return $searchForms;
 }
 
-function GetSearchResults ( &$search, &$modules, &$results, $offset = 0, $nbResults = 10 )
+function GetSearchResults ( $searchTxt, &$searchModules, &$modulesArgs, &$results, $offset = 0, $nbResults = 10 )
 /**
  *  Exécute la recherche si les résultats ne sont pas dans le cache et
  *  renvoie les résultats.
  */
 {
     $requests = Array ( );
+    $modulesNames = Array ( );
     
-    foreach ( $modules as $module => $args )
+    foreach ( $searchModules as $module )
     {
-        $requests[$module->name] = $module->Functionnalitie ( 'GetSearchRequest', $search, $args );
+        $requests[$module->name] = $module->Functionnalitie ( 'GetSearchRequest', $modulesArgs[$module->name] );
+        array_push ( $modulesNames, $module->name );
     }
     
-    $search = new Search ( $search, $modules )
+    $search = new Search ( $searchTxt, $modulesNames )
     
     $search->InsertResults ( $request );
     
     return $search->GetResults ( &$results, &$id_modules, $offset = 0, $nbLines = NB_LINES);
-}
-
-function GetSearchFormsAvailablesModules ( &$searchModules = Array ( ) )
-/**
- *  Renvoie la liste des modules disposants d'un formulaires de recherche
- *  spécialisé
- */
-{
-    return $modules->GetAvailablesModules ( 'GetSearchForm', $searchModules );
-}
-
-function GetSearchAvailablesModules ( )
-/**
- *  Renvoie la liste des modules disposants de la fonctionnalité de recherche
- */
-{
-    return $modules->GetAvailablesModules ( 'GetSearchRequest' );
 }
 
 ?>
