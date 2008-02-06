@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE texte SYSTEM "documentation.dtd">
+<!DOCTYPE document SYSTEM "/home/loic/phpboost/documentation/documentation.dtd">
 <?xml-stylesheet type="text/xsl" href="documentation.xsl"?>
 <document>
     <header>
@@ -9,26 +9,41 @@
             <author name="SAUTEL Benoït" email="loic.rouchon@insa-lyon.fr" />
             <author name="VIARRE Régis" email="loic.rouchon@insa-lyon.fr" />
         </authors>
-        <date>03/02/2008</date>
+        <dates>
+            <creation>03/02/2008</creation>
+            <last-modification>06/02/2008</last-modification>
+        </dates>
     </header>
-    <thanks>
-        <text></text>
-        <thanks-list>
-            <thanks></thanks>
-        </thanks-list>
-    </thanks>
     <body>
-        <preface>
-        </preface>
-        <chapters title="">
-            <para style=""></para>
-            <code language=""></code>
-        </chapters>
-        <appendice>
-        </postface>
+        <thanks>
+            <text></text>
+            <thanks-list>
+                <thank></thank>
+            </thanks-list>
+        </thanks>
+        <content>
+            <preface>
+                <text></text>
+            </preface>
+            <chapters>
+                <chapter title="Chapter One">
+                    <chapter title="Sub Chapter">
+                        <img name="Image" path="../images/image.png" />
+                    </chapter>
+                    <para style="Warning"></para>
+                    <code language="php">
+                        <line></line>
+                    </code>
+                </chapter>
+            </chapters>
+            <appendice>
+                <text></text>
+            </appendice>
+        </content>
+        <related>
+            <resource></resource>
+        </related>
     </body>
-    <related>
-    </related>
 </document>
 
 
