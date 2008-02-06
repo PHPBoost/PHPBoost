@@ -1,7 +1,7 @@
 <?php
 
 /*##################################################
- *                              module.class.php
+ *                      module_interface.class.php
  *                            -------------------
  *   begin                : January 15, 2008
  *   copyright            : (C) 2008 Rouchon Loïc
