@@ -66,19 +66,34 @@ class Modules
         return $results;
     }
 
-    function GetAvailablesModules ( $functionnalitie )
+    function GetAvailablesModules ( $functionnalitie, $modulesList = Array ( ) )
     /**
      *  Renvoie la liste des modules disposant de la fonctionnalité demandée.
+     *  Si $modulesList est spécifié, alors on ne recherche que le sous ensemble de celui-ci
      */
     {
         $modules = Array (  );
-        global $SECURE_MODULE;
-        foreach( array_keys($SECURE_MODULE) as $moduleName )
+        
+        if ( $modulesList === Array ( ) )
         {
-            $module = $this->GetModule ( $moduleName );
-            if ( $module->GetErrors == 0 and $module->HasFunctionnalitie ($functionnalitie ) )
+            global $SECURE_MODULE;
+            foreach( array_keys($SECURE_MODULE) as $moduleName )
             {
-                array_push( $modules, $module );
+                $module = $this->GetModule ( $moduleName );
+                if ( $module->GetErrors == 0 and $module->HasFunctionnalitie ($functionnalitie ) )
+                {
+                    array_push( $modules, $module );
+                }
+            }
+        }
+        else
+        {
+            foreach( $modulesList as $module )
+            {
+                if ( $module->GetErrors == 0 and $module->HasFunctionnalitie ($functionnalitie ) )
+                {
+                    array_push( $modules, $module );
+                }
             }
         }
         return $modules;
