@@ -170,7 +170,7 @@ class Search
         
         global $sql;
         $this->sql = $sql;
-        $this->modulesConditions = $this->getModulesConditions ( &$modules );
+        $this->modulesConditions = $this->getModulesConditions ( $modules );
 
         // Délestage
         $reqDelete  = "DELETE FROM ".PREFIX."search_index WHERE ";
