@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT texte (en-tete, corps)>
+<!ELEMENT en-tete (titre, auteur, couverture, info_traitements)>
+<!ELEMENT titre (#PCDATA)>
+<!ELEMENT auteur (#PCDATA)>
+<!ELEMENT couverture EMPTY>
+<!ATTLIST couverture
+          chemin CDATA #REQUIRED>
+<!ELEMENT info_traitements (but, auteurs, email, date)>
+<!ELEMENT but (#PCDATA)>
+<!ELEMENT auteurs (auteur+, NoBinome)>
+<!ELEMENT NoBinome (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT date (#PCDATA)>
+<!ELEMENT corps (paragraphe|image)*>
+<!ELEMENT paragraphe (phrase+)>
+<!ATTLIST paragraphe
+          type CDATA #REQUIRED>
+<!ELEMENT phrase (#PCDATA)>
+<!ATTLIST phrase
+          locuteur CDATA #REQUIRED
+          modalite CDATA #REQUIRED
+          langue CDATA #REQUIRED>
+<!ELEMENT image EMPTY>
+<!ATTLIST image
+          chemin CDATA #REQUIRED>
+
+
+
