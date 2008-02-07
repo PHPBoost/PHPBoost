@@ -110,14 +110,17 @@
 		function bbcode_list_{FIELD}()
 		{
 			var elements = document.getElementById('bb_list{FIELD}').value;
+			var ordered_list = document.getElementById('bb_ordered_list{FIELD}').checked;
 			if( elements <= 0 )
 				elements = 1;
 			
-			code = '[list]\n';
+			var pointor = ordered_list ? 19 : 11;
+			
+			code = '[list' + (ordered_list ? '=ordered' : '') + ']\n';
 			for(var j = 0; j < elements; j++)
 				code += '\t[*]\n';
 			code += '[/list]';
-			insertbbcode(code.substring(0, 11), code.substring(11, code.length), '{FIELD}');
+			insertbbcode(code.substring(0, pointor), code.substring(pointor, code.length), '{FIELD}');
 		}
 		function bbcode_url_{FIELD}()
 		{
@@ -205,6 +208,7 @@
 								<div style="position:relative;z-index:100;float:right;display:none;" id="bb_block9{FIELD}">
 									<div id="bbcolor{FIELD}" class="bbcode_block" style="margin-left:-220px;width:180px;" onmouseover="bb_hide_block('9', '{FIELD}', 1);" onmouseout="bb_hide_block('9', '{FIELD}', 0);">
 										<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="bb_list{FIELD}" id="bb_list{FIELD}" maxlength="3" value="3" /></label></p>
+										<p><label style="font-size:10px;font-weight:normal">{L_ORDERED_LIST} <input size="3" type="checkbox" name="bb_ordered_list{FIELD}" id="bb_ordered_list{FIELD}" /></label></p>
 										<p style="text-align:center;"><a class="small_link" href="javascript:bbcode_list_{FIELD}();"><img src="../templates/{THEME}/images/form/list.png" alt="{L_BB_LIST}" title="{L_BB_LIST}" class="valign_middle" /> {L_INSERT_LIST}</a></p>
 									</div>
 								</div>

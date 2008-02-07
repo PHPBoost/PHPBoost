@@ -145,6 +145,7 @@ $LANG['cols'] = 'Nombre de colonnes';
 $LANG['head_table'] = 'Entête';
 $LANG['head_add'] = 'Ajouter l\'entête';
 $LANG['insert_table'] = 'Insérer le tableau';
+$LANG['ordered_list'] = 'Liste ordonnée';
 $LANG['insert_list'] = 'Insérer la liste';
 $LANG['forbidden_tags'] = 'Balises BBcode interdites:';
 
