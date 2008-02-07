@@ -1,0 +1,62 @@
+/** Général **/
+body
+{
+    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+}
+
+/** Titres **/
+h1
+{
+    text-align:center;
+    background:#dddddd;
+    padding:20px;
+}
+h2
+{
+    background:#dddddd;
+}
+h3
+{
+    background:#dddddd;
+}
+h4
+{
+    position:relative;
+    left:30px;
+}
+h5
+{
+    position:relative;
+    left:40px;
+}
+h6
+{
+    
+}
+
+/** Conteneurs **/
+div#document
+{
+    position:relative;
+    left:2%;
+    width:96%;
+    background:#000000;
+}
+
+div#content, div#thanks, div#related
+{
+    position:relative;
+    left:1%;
+    width:98%;
+    padding-top:2px;
+    padding-bottom:2px;
+    background:#eeeeee;
+}
+
+div.text
+{
+    position:relative;
+    left:1%;
+    width:98%;
+    background:#ffffff;
+}

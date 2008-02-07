@@ -25,19 +25,24 @@
             <meta http-equiv="Content-Language" content="fr" />
             <meta name="Robots" content="index, follow, all" />
             <meta name="classification" content="tout public" />
+            <link rel="stylesheet" href="documentation.css" type="text/css" media="screen, print, handheld" />
         </head>
         <body>
+          <div id="document">
             <xsl:apply-templates select="//header"/>
             <xsl:apply-templates select="//body"/>
+          </div>
         </body>
     </html>
   </xsl:template>
   
   <!-- header -->
   <xsl:template match="header">
-    <xsl:apply-templates select="title"/>
-    <xsl:apply-templates select="dates"/>
-    <xsl:apply-templates select="authors"/>
+    <div class="header">
+      <xsl:apply-templates select="title"/>
+      <xsl:apply-templates select="dates"/>
+      <xsl:apply-templates select="authors"/>
+    </div>
   </xsl:template>
 
   <!-- title -->
@@ -45,23 +50,23 @@
     <h1>
       <xsl:value-of select="."/>
     </h1>
-    <hr />
   </xsl:template>
   
   <!-- authors -->
   <xsl:template match="authors">
-    Auteurs : <br />
-    <xsl:for-each select="author">
-        <xsl:value-of select="@name"/> : <i><xsl:value-of select="@email"/></i><br />
-    </xsl:for-each>
-    <hr />
+    <div class="authors">
+      <xsl:for-each select="author">
+        <b><xsl:value-of select="@name"/></b> : <i><xsl:value-of select="@email"/></i><br />
+      </xsl:for-each>
+    </div>
   </xsl:template>
   
   <!-- dates -->
   <xsl:template match="dates">
-    Créé le <xsl:value-of select="creation"/><br />
-    Dernière modification le <xsl:value-of select="last-modification"/><br />
-    <br />
+    <div class="dates">
+      Créé le <i><xsl:value-of select="creation"/></i><br />
+      Dernière modification le <i><xsl:value-of select="last-modification"/></i><br />
+    </div>
   </xsl:template>
   
   <!-- body -->
@@ -74,8 +79,9 @@
   <!-- thanks -->
   <xsl:template match="thanks">
     <h2>Thanks</h2>
-    <xsl:apply-templates select="text"/>
-    <xsl:apply-templates select="thanks-list"/>
+    <div id="thanks">
+      <xsl:apply-templates/>
+    </div>
   </xsl:template>
   
   <!-- thanks -->
@@ -90,75 +96,86 @@
   <!-- content -->
   <xsl:template match="content">
     <h2>Content</h2>
-    <xsl:apply-templates select="preface"/>
-    <xsl:apply-templates select="chapters"/>
-    <xsl:apply-templates select="appendice"/>
+    <div id="content">
+      <xsl:apply-templates select="preface"/>
+      <xsl:apply-templates select="chapters"/>
+      <xsl:apply-templates select="appendice"/>
+    </div>
   </xsl:template>
   
   <!-- preface -->
   <xsl:template match="preface">
     <h3>Preface</h3>
-    <xsl:apply-templates select="text"/>
+    <div id="preface">
+      <xsl:apply-templates/>
+    </div>
   </xsl:template>
   
   <!-- chapters -->
   <xsl:template match="chapters">
     <h3>Chapters</h3>
-    <xsl:for-each select="chapter">
-      <xsl:apply-templates select="."/>
-    </xsl:for-each>
+    <div id="chapters">
+      <xsl:for-each select="chapter">
+        <xsl:apply-templates select="."/>
+      </xsl:for-each>
+    </div>
   </xsl:template>
   
   <xsl:template match="chapter">
-    <xsl:choose>
-      <xsl:when test="count(ancestor::chapter) = 0">
-        <h4>
-          <xsl:value-of select="count (preceding-sibling::chapter) + 1"/>) -
-          <xsl:value-of select="@title"/>
-        </h4>
-      </xsl:when>
-      <xsl:otherwise>
-        <h5>
-          <xsl:for-each select="ancestor::chapter">
-            <xsl:value-of select="count (preceding-sibling::chapter) + 1"/>.</xsl:for-each><xsl:value-of select="count (preceding-sibling::chapter) + 1"/>) -
-          <xsl:value-of select="@title"/>
-        </h5>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:for-each select=".">
-        <xsl:apply-templates/>
-    </xsl:for-each>
+    <div class="chapter">
+      <xsl:choose>
+        <xsl:when test="count(ancestor::chapter) = 0">
+          <h4>
+            <xsl:value-of select="count (preceding-sibling::chapter) + 1"/>) -
+            <xsl:value-of select="@title"/>
+          </h4>
+        </xsl:when>
+        <xsl:otherwise>
+          <h5>
+            <xsl:for-each select="ancestor::chapter">
+              <xsl:value-of select="count (preceding-sibling::chapter) + 1"/>.</xsl:for-each><xsl:value-of select="count (preceding-sibling::chapter) + 1"/>) -
+            <xsl:value-of select="@title"/>
+          </h5>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:for-each select=".">
+          <xsl:apply-templates/>
+      </xsl:for-each>
+    </div>
   </xsl:template>
   
   <!-- appendice -->
   <xsl:template match="appendice">
     <h3>Appendice</h3>
-    <xsl:apply-templates select="text"/>
+    <div id="appendice">
+      <xsl:apply-templates/>
+    </div>
   </xsl:template>
   
   <!-- related -->
   <xsl:template match="related">
     <h2>Related</h2>
-    <ul>
-    <xsl:for-each select="resource">
-        <li><xsl:value-of select="."/></li>
-    </xsl:for-each>
-    </ul>
-  </xsl:template>
-  
-  <!-- text -->
-  <xsl:template match="text">
-    <xsl:value-of select="."/>
+    <div id="related">
+      <ul>
+        <xsl:for-each select="link">
+          <li>
+            <xsl:apply-templates select="."/>
+          </li>
+        </xsl:for-each>
+      </ul>
+    </div>
   </xsl:template>
   
   <!-- para -->
   <xsl:template match="para">
-    <p>
-      <xsl:attribute name="class">
-        <xsl:value-of select="@style"/>
-      </xsl:attribute>
-      <xsl:value-of select="."/>
-    </p>
+    <div class="text">
+      <p>
+        <xsl:attribute name="class">
+          <xsl:value-of select="@style"/>
+        </xsl:attribute>
+        <xsl:value-of select="."/>
+      </p>
+    </div>
   </xsl:template>
   
   <!-- code -->
@@ -169,10 +186,20 @@
       </xsl:attribute>
       <table>
         <xsl:for-each select="line">
-          <tr><td><xsl:value-of select="position()"/></td><td><xsl:value-of select="."/></td></tr>
+          <tr><td class="codeNumLines"><xsl:value-of select="position()"/></td><td class="code"><xsl:value-of select="."/></td></tr>
         </xsl:for-each>
       </table>
     </div>
+  </xsl:template>
+  
+  <!-- link -->
+  <xsl:template match="link">
+    <a>
+      <xsl:attribute name="href">
+        <xsl:value-of select="@link"/>
+      </xsl:attribute>
+      <xsl:value-of select="@name"/>
+    </a>
   </xsl:template>
   
   <!-- img -->

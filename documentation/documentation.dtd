@@ -12,27 +12,28 @@
         
     <!ELEMENT body (thanks?, content, related?)>
         
-        <!ELEMENT text (#PCDATA)>
         <!ELEMENT para (#PCDATA)>
         <!ATTLIST para style CDATA #IMPLIED>
-        <!ELEMENT code (line)>
+        <!ELEMENT code (line+)>
         <!ATTLIST code language CDATA #REQUIRED>
         <!ELEMENT line (#PCDATA)>
         
-        <!ELEMENT thanks (text?, thanks-list?)>
+        <!ELEMENT thanks (para*, thanks-list?)>
         <!ELEMENT thanks-list (thank+)>
         <!ELEMENT thank (#PCDATA)>
         
         <!ELEMENT content (preface?, chapters, appendice?)>
-            <!ELEMENT preface (text)>
+            <!ELEMENT preface (para*)>
             <!ELEMENT chapters (chapter+)>
-            <!ELEMENT appendice (text)>
+            <!ELEMENT appendice (para*)>
             
             <!ELEMENT chapter (chapter|para|code|img)+>
             <!ATTLIST chapter title CDATA #REQUIRED>
             
-        <!ELEMENT related (resource+)>
-        <!ELEMENT resource (#PCDATA)>
+            <!ELEMENT related (link+)>
+            
+        <!ELEMENT link EMPTY>
+        <!ATTLIST link name CDATA #REQUIRED link CDATA #REQUIRED>
 
         <!ELEMENT img EMPTY>
         <!ATTLIST img name CDATA #REQUIRED path CDATA #REQUIRED>
