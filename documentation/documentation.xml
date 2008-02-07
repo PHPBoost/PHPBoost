@@ -5,9 +5,9 @@
     <header>
         <title>Documentation PHPBoost</title>
         <authors>
-            <author name="ROUCHON Loïc" email="loic.rouchon@insa-lyon.fr" />
-            <author name="SAUTEL Benoït" email="loic.rouchon@insa-lyon.fr" />
-            <author name="VIARRE Régis" email="loic.rouchon@insa-lyon.fr" />
+            <author name="ROUCHON Loïc" email="horn@phpboost.com" />
+            <author name="SAUTEL Benoït" email="ben.popeye@phpboost.com" />
+            <author name="VIARRE Régis" email="crowkait@phpboost.com" />
         </authors>
         <dates>
             <creation>03/02/2008</creation>
@@ -16,37 +16,44 @@
     </header>
     <body>
         <thanks>
-            <text></text>
+            <text>Remerciement à tout le monde...</text>
             <thanks-list>
-                <thank></thank>
+                <thank>Benoit</thank>
+                <thank>Loïc</thank>
+                <thank>Régis</thank>
             </thanks-list>
         </thanks>
         <content>
             <preface>
-                <text></text>
+                <text>Avant Propos...</text>
             </preface>
             <chapters>
-                <chapter title="Chapter One">
-                    <chapter title="Sub Chapter">
+                <chapter title="Utilisation">
+                    <chapter title="Installation">
+                        <para>Petite image :</para>
                         <img name="Image" path="../images/image.png" />
+                        <para>commentaires...</para>
                     </chapter>
-                    <para style="Warning"></para>
+                    <para>maintenant, nous allons commencer...</para>
+                    <para style="notice">Remarquez ceci...</para>
+                    <para style="Warning">Attention...</para>
                     <code language="php">
-                        <line></line>
+                        <line>&lt;?php</line>
+                        <line>  echo 'Hello World!'</line>
+                        <line>?&gt;</line>
                     </code>
+                </chapter>
+                <chapter title="Développement">
+                    <para>Contenu du chapitre 2...</para>
                 </chapter>
             </chapters>
             <appendice>
-                <text></text>
+                <text>Vous savez donc maintenant comment fonctionne PHPBoost...</text>
             </appendice>
         </content>
         <related>
-            <resource></resource>
+            <resource>http://www.phpboost.com</resource>
         </related>
     </body>
 </document>
-
-
-
-
 

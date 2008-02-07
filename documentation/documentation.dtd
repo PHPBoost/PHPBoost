@@ -20,7 +20,7 @@
         <!ELEMENT line (#PCDATA)>
         
         <!ELEMENT thanks (text?, thanks-list?)>
-        <!ELEMENT thanks-list (thank)>
+        <!ELEMENT thanks-list (thank+)>
         <!ELEMENT thank (#PCDATA)>
         
         <!ELEMENT content (preface?, chapters, appendice?)>
