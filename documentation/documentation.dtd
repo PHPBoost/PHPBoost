@@ -30,7 +30,8 @@
             <!ELEMENT chapter (chapter|para|code|img)+>
             <!ATTLIST chapter title CDATA #REQUIRED>
             
-            <!ELEMENT related (link+)>
+            <!ELEMENT related (para|link-list)+>
+            <!ELEMENT link-list (link+)>
             
         <!ELEMENT link EMPTY>
         <!ATTLIST link name CDATA #REQUIRED link CDATA #REQUIRED>

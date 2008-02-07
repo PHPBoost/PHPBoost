@@ -17,6 +17,7 @@
     <body>
         <thanks>
             <para>Remerciement à tout le monde...</para>
+            <para>et aux autres...</para>
             <thanks-list>
                 <thank>Benoit</thank>
                 <thank>Loïc</thank>
@@ -26,8 +27,15 @@
         <content>
             <preface>
                 <para>Avant Propos...</para>
+                <para>Suite de l'avant propos...</para>
+                <para>Fin de l'avant Propos...</para>
             </preface>
             <chapters>
+                <chapter title="Introduction">
+                    <para>
+                        Tout d'abord, merci d'avoir choisi PHPBoost...
+                    </para>
+                </chapter>
                 <chapter title="Utilisation">
                     <chapter title="Installation">
                         <para>Petite image :</para>
@@ -87,8 +95,27 @@
             </appendice>
         </content>
         <related>
-            <link name="PHPBoost - Site Officiel" link="http://www.phpboost.com"/>
-            <link name="Documentation Officielle" link="http://www.phpboost.com/wiki/wiki.php"/>
+            <para>
+                La nouvelle version de PHPBoost est très enthousiasmante pour nous,
+                c'est le fruit de plus d'un an de travail acharné sur la précédente version.
+                Cette version avec ses très nombreuses améliorations et nouveautés nous
+                permet de nous lancer dans une nouvelle phase de développement. Avec PHPBoost
+                découvrez la simplicité pour créer votre site et sa personnalisation à vos besoins.
+                Notre philosophie est de mettre en avant nos utilisateurs, c'est ainsi que vous
+                pouvez participer activement à la communauté même avec peu de connaissances.
+                Votre site est à porté de clic !
+            </para>
+            <link-list>
+                <link name="PHPBoost - Site Officiel" link="http://www.phpboost.com"/>
+                <link name="Documentation Officielle" link="http://www.phpboost.com/wiki/wiki.php"/>
+            </link-list>
+            <para>
+                Informations de Téléchargement
+            </para>
+            <link-list>
+                <link name="Page de téléchargement" link="http://www.phpboost.com/download/download-2-52+phpboost-2-0.php"/>
+                <link name="Téléchargement direct" link="http://www.phpboost.com/download/count.php?id=52"/>
+            </link-list>
         </related>
     </body>
 </document>
