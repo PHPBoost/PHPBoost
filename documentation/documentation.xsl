@@ -55,9 +55,12 @@
   <!-- authors -->
   <xsl:template match="authors">
     <div class="authors">
-      <xsl:for-each select="author">
-        <b><xsl:value-of select="@name"/></b> : <i><xsl:value-of select="@email"/></i><br />
-      </xsl:for-each>
+      <ul>
+        <xsl:for-each select="author">
+          <xsl:if test="position()>1">-</xsl:if>
+          <li><span class="name"><xsl:value-of select="@name"/></span> : <span class="email"><xsl:value-of select="@email"/></span></li>
+        </xsl:for-each>
+      </ul>
     </div>
   </xsl:template>
   
@@ -180,10 +183,7 @@
   
   <!-- code -->
   <xsl:template match="code">
-    <div>
-      <xsl:attribute name="class">
-        code <xsl:value-of select="@language"/>
-      </xsl:attribute>
+    <div class="code">
       <table>
         <xsl:for-each select="line">
           <tr><td class="numLines"><xsl:value-of select="position()"/></td><td class="code"><xsl:value-of select="."/></td></tr>
