@@ -5,9 +5,9 @@
     <header>
         <title>Documentation PHPBoost</title>
         <authors>
-            <author name="ROUCHON Loïc" email="horn@phpboost.com" />
-            <author name="SAUTEL Benoït" email="ben.popeye@phpboost.com" />
-            <author name="VIARRE Régis" email="crowkait@phpboost.com" />
+            <author name="ROUCHON Loïc" email="horn@phpboost.com"/>
+            <author name="SAUTEL Benoït" email="ben.popeye@phpboost.com"/>
+            <author name="VIARRE Régis" email="crowkait@phpboost.com"/>
         </authors>
         <dates>
             <creation>03/02/2008</creation>
@@ -31,7 +31,7 @@
                 <chapter title="Utilisation">
                     <chapter title="Installation">
                         <para>Petite image :</para>
-                        <img name="Image" path="../images/image.png" />
+                        <img name="PHPBoost" path="../favicon.ico"/>
                         <para>commentaires...</para>
                     </chapter>
                     <para>maintenant, nous allons commencer...</para>

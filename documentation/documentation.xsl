@@ -105,13 +105,26 @@
   <xsl:template match="chapters">
     <h3>Chapters</h3>
     <xsl:for-each select="chapter">
-      <h4><xsl:value-of select="position()"/>) - <xsl:value-of select="@title"/></h4>
       <xsl:apply-templates select="."/>
     </xsl:for-each>
   </xsl:template>
   
   <xsl:template match="chapter">
-    <h5><xsl:value-of select="position()"/>) - <xsl:value-of select="@title"/></h5>
+    <xsl:choose>
+      <xsl:when test="count(ancestor::chapter) = 0">
+        <h4>
+          <xsl:value-of select="count (preceding-sibling::chapter) + 1"/>) -
+          <xsl:value-of select="@title"/>
+        </h4>
+      </xsl:when>
+      <xsl:otherwise>
+        <h5>
+          <xsl:for-each select="ancestor::chapter">
+            <xsl:value-of select="count (preceding-sibling::chapter) + 1"/>.</xsl:for-each><xsl:value-of select="count (preceding-sibling::chapter) + 1"/>) -
+          <xsl:value-of select="@title"/>
+        </h5>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:for-each select=".">
         <xsl:apply-templates/>
     </xsl:for-each>
@@ -146,6 +159,20 @@
       </xsl:attribute>
       <xsl:value-of select="."/>
     </p>
+  </xsl:template>
+  
+  <!-- code -->
+  <xsl:template match="code">
+    <div>
+      <xsl:attribute name="class">
+        code <xsl:value-of select="@language"/>
+      </xsl:attribute>
+      <table>
+        <xsl:for-each select="line">
+          <tr><td><xsl:value-of select="position()"/></td><td><xsl:value-of select="."/></td></tr>
+        </xsl:for-each>
+      </table>
+    </div>
   </xsl:template>
   
   <!-- img -->
