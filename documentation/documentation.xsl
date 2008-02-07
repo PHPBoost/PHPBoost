@@ -1,180 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:output method="html"/>
+  <xsl:output   method="html"
+                indent="no"
+                omit-xml-declaration="yes"
+                encoding="utf-8"
+                doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
+                doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"/>
+  
   <!-- Racine -->
   <xsl:template match="/">
-    <html>
-      <head>
-        <title>
-          <xsl:value-of select="//titre"/>
-        </title>
-      </head>
-      <body bgColor="white">
-        <xsl:apply-templates/>
-      </body>
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+        <head>
+            <title><xsl:value-of select="//header/title"/></title>
+            <xsl:for-each select="authors/author">
+                <meta>
+                  <xsl:attribute name="name">
+                    <xsl:value-of select="author"/>
+                  </xsl:attribute>
+                  <xsl:attribute name="content">
+                    <xsl:value-of select="name"/>, <xsl:value-of select="email"/>
+                  </xsl:attribute>
+                </meta>
+            </xsl:for-each>
+            <meta http-equiv="Content-Language" content="fr" />
+            <meta name="Robots" content="index, follow, all" />
+            <meta name="classification" content="tout public" />
+        </head>
+        <body>
+            <xsl:apply-templates select="//header"/>
+            <xsl:apply-templates select="//body"/>
+        </body>
     </html>
   </xsl:template>
-  <!-- En-Tete -->
-  <xsl:template match="en-tete">
-    <table align="center" cellspacing="50" style="border:0px;">
-      <tr>
-        <td style="border:0px;">
-          <xsl:apply-templates select="couverture"/>
-        </td>
-        <td style="border:0px;">
-          <xsl:apply-templates select="titre"/>
-          <xsl:apply-templates select="auteur"/>
-          <xsl:apply-templates select="info_traitements"/>
-        </td>
-      </tr>
-    </table>
-    <hr/>
-    <h3>Début du texte:</h3>
+  
+  <!-- header -->
+  <xsl:template match="header">
+    <xsl:apply-templates select="title"/>
+    <xsl:apply-templates select="dates"/>
+    <xsl:apply-templates select="authors"/>
   </xsl:template>
-  <!-- Titre -->
-  <xsl:template match="titre">
-    <h1 style="text-align:center; color:blue;">
-      <xsl:apply-templates/>
+
+  <!-- title -->
+  <xsl:template match="title">
+    <h1>
+      <xsl:value-of select="."/>
     </h1>
+    <hr />
   </xsl:template>
-  <!-- Couverture -->
-  <xsl:template match="couverture">
-    <div align="center">
-      <img>
-        <xsl:attribute name="src">
-          <xsl:value-of select="@chemin"/>
-        </xsl:attribute>
-      </img>
-    </div>
+  
+  <!-- authors -->
+  <xsl:template match="authors">
+    Auteurs : <br />
+    <xsl:for-each select="author">
+        <xsl:value-of select="@name"/> : <i><xsl:value-of select="@email"/></i><br />
+    </xsl:for-each>
+    <hr />
   </xsl:template>
-  <!-- En-Tete/Auteur -->
-  <xsl:template match="en-tete/auteur">
-    <h2 style="text-align: center; font-style: italic;">
-      <xsl:apply-templates/>
-    </h2>
+  
+  <!-- dates -->
+  <xsl:template match="dates">
+    Créé le <xsl:value-of select="creation"/><br />
+    Dernière modification le <xsl:value-of select="last-modification"/><br />
+    <br />
   </xsl:template>
-  <!-- Infos Traitements -->
-  <xsl:template match="info_traitements">
-    <blockquote style="color:darkgreen;">But du TP du
-      <xsl:value-of select="date"/>:
-      <xsl:value-of select="but"/>
-      <br/>Auteurs :
-      <xsl:for-each select="auteurs/auteur">
-        <xsl:value-of select="."/>
-        <xsl:if test="position()!=last()"> et </xsl:if>
-      </xsl:for-each>(
-      <xsl:value-of select="auteurs/NoBinome"/>)
-      <br/>Email du reponsable :
-      <xsl:value-of select="email"/>
-    </blockquote>
+  
+  <!-- body -->
+  <xsl:template match="body">
+    <xsl:apply-templates select="thanks"/>
+    <xsl:apply-templates select="content"/>
+    <xsl:apply-templates select="related"/>
   </xsl:template>
-  <!-- Paragraphe -->
-  <xsl:template match="paragraphe">
-    <xsl:choose>
-      <xsl:when test="@type='dialogue'">
-        <table align="center" width="90%">
-          <tr>
-            <td width="45%">
-              <table border="1" cellpadding="10" width="100%">
-                <xsl:for-each select="phrase[@langue!='tcheque']">
-                  <tr>
-                    <td width="50">
-                      <xsl:choose>
-                        <xsl:when test="@locuteur='Le Petit Prince'">
-                          <img src="images/Le Petit Prince.png" title="Le Petit Prince"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                          <img src="images/Narrateur.png" title="Narrateur"/>
-                        </xsl:otherwise>
-                      </xsl:choose>
-                    </td>
-                    <td>
-                      <xsl:apply-templates select="."/>
-                    </td>
-                  </tr>
-                </xsl:for-each>
-              </table>
-            </td>
-            <td/>
-            <td width="45%">
-              <table border="1" cellpadding="10" width="100%">
-                <xsl:for-each select="phrase[@langue='tcheque']">
-                  <tr>
-                    <td width="50">
-                      <xsl:choose>
-                        <xsl:when test="@locuteur='Le Petit Prince'">
-                          <img src="images/Le Petit Prince.png" title="Le Petit Prince"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                          <img src="images/Narrateur.png" title="Narrateur"/>
-                        </xsl:otherwise>
-                      </xsl:choose>
-                    </td>
-                    <td>
-                      <xsl:apply-templates select="."/>
-                    </td>
-                  </tr>
-                </xsl:for-each>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </xsl:when>
-      <xsl:otherwise>
-        <p>
-          <xsl:for-each select="phrase">
-            <xsl:apply-templates select="."/>
-          </xsl:for-each>
-        </p>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:if test="position()=last()">
-      <h3>Fin du texte.</h3><hr/>
-    </xsl:if>
+  
+  <!-- thanks -->
+  <xsl:template match="thanks">
+    <h2>Thanks</h2>
+    <xsl:apply-templates select="text"/>
+    <xsl:apply-templates select="thanks-list"/>
   </xsl:template>
-  <!-- Phrase -->
-  <xsl:template match="phrase">
-    <xsl:choose>
-      <xsl:when test="@langue='tcheque'">
-        <span style="font-style: italic; color: brown;">
-          <xsl:value-of select="."/>
-        </span>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="(../@type='dialogue') and (contains(text(), 'mouton'))">
-            <span style="font-size: 24; font-weight: bold;">
-              <xsl:value-of select="."/>
-              <img src="images/moutonDessin.png" title="Mouton"/>
-            </span>
-          </xsl:when>
-          <xsl:otherwise>
-            <span style="">
-              <xsl:value-of select="."/>
-            </span>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:if test="following-sibling::phrase[1]/@langue!=@langue">
-      <br/>
-    </xsl:if>
+  
+  <!-- thanks -->
+  <xsl:template match="thanks-list">
+    <ul>
+    <xsl:for-each select="thank">
+        <li><xsl:value-of select="."/></li>
+    </xsl:for-each>
+    </ul>
   </xsl:template>
-  <!-- Image -->
-  <xsl:template match="image">
-    <div align="center">
-      <img>
-        <xsl:attribute name="src">
-          <xsl:value-of select="@chemin"/>
-        </xsl:attribute>
-      </img>
-    </div>
-    <xsl:if test="position()=last()">
-      <h3>Fin du texte.</h3><hr/>
-    </xsl:if>
+  
+  <!-- content -->
+  <xsl:template match="content">
+    <h2>Content</h2>
+    <xsl:apply-templates select="preface"/>
+    <xsl:apply-templates select="chapters"/>
+    <xsl:apply-templates select="appendice"/>
   </xsl:template>
+  
+  <!-- preface -->
+  <xsl:template match="preface">
+    <h3>Preface</h3>
+    <xsl:apply-templates select="text"/>
+  </xsl:template>
+  
+  <!-- chapters -->
+  <xsl:template match="chapters">
+    <h3>Chapters</h3>
+    <xsl:for-each select="chapter">
+      <h4><xsl:value-of select="position()"/>) - <xsl:value-of select="@title"/></h4>
+      <xsl:apply-templates select="."/>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <xsl:template match="chapter">
+    <h5><xsl:value-of select="position()"/>) - <xsl:value-of select="@title"/></h5>
+    <xsl:for-each select=".">
+        <xsl:apply-templates/>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <!-- appendice -->
+  <xsl:template match="appendice">
+    <h3>Appendice</h3>
+    <xsl:apply-templates select="text"/>
+  </xsl:template>
+  
+  <!-- related -->
+  <xsl:template match="related">
+    <h2>Related</h2>
+    <ul>
+    <xsl:for-each select="resource">
+        <li><xsl:value-of select="."/></li>
+    </xsl:for-each>
+    </ul>
+  </xsl:template>
+  
+  <!-- text -->
+  <xsl:template match="text">
+    <xsl:value-of select="."/>
+  </xsl:template>
+  
+  <!-- para -->
+  <xsl:template match="para">
+    <p>
+      <xsl:attribute name="class">
+        <xsl:value-of select="@style"/>
+      </xsl:attribute>
+      <xsl:value-of select="."/>
+    </p>
+  </xsl:template>
+  
+  <!-- img -->
+  <xsl:template match="img">
+    <img>
+      <xsl:attribute name="name">
+        <xsl:value-of select="@name"/>
+      </xsl:attribute>
+      <xsl:attribute name="alt">
+        <xsl:value-of select="@name"/>
+      </xsl:attribute>
+      <xsl:attribute name="src">
+        <xsl:value-of select="@path"/>
+      </xsl:attribute>
+    </img>
+  </xsl:template>
+  
 </xsl:stylesheet>
-
-
-
-
