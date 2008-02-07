@@ -53,7 +53,7 @@ $config = array(
 	'administration_file_name' => 'admin_faq_cats.php',
 	'url' => array(
 		'unrewrited' => '../news/news.php?id=%d',
-		'rewrited' => '../news-%d+%s.php')
+		'rewrited' => '../news-%d+%s.php'),
 );
 	
 
@@ -248,7 +248,7 @@ class CategoriesManagement
 		{
 			var xhr_object = null;
 			direction = direction == \'up\' ? \'up\' : \'down\';
-			var filename = \'xmlhttprequest.php?id_\' + direction + \'=\' + id;
+			var filename = \'' . $this->config_display['xmlhttprequest_file'] . '?id_\' + direction + \'=\' + id;
 			var data = null;
 			
 			if(window.XMLHttpRequest) // Firefox
@@ -258,15 +258,15 @@ class CategoriesManagement
 			else // XMLHttpRequest non supporté par le navigateur
 				return;
 			
-			document.getElementById(\'l\' + divid).innerHTML = \'<img src="../templates/{THEME}/images/loading_mini.gif" alt="" style="vertical-align:middle;" />\';
+			document.getElementById(\'l\' + divid).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" style="vertical-align:middle;" />\';
 			
 			xhr_object.open("POST", filename, true);
 			xhr_object.onreadystatechange = function() 
 			{
-				if( xhr_object.readyState == 4 && xhr_object.responseText != '' )
+				if( xhr_object.readyState == 4 && xhr_object.responseText != \'\' )
 					move_cat(id, direction);
 			}
-			document.getElementById(\'l\' + divid).innerHTML = '';
+			document.getElementById(\'l\' + divid).innerHTML = \'\';
 			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhr_object.send(null);
 		}
@@ -306,7 +306,7 @@ class CategoriesManagement
 	//Recursive method allowing to display the administration panel of a category and its daughters
 	function create_cat_administration(&$string, $id_cat, $level, &$cache_var)
 	{
-		global $CONFIG;
+		global $CONFIG, $LANG;
 		
 		$id_categories = array_keys($cache_var);
 		$num_cats = count($id_categories);
@@ -324,7 +324,6 @@ class CategoriesManagement
 						<div class="row3">
 							<span style="float:left;">
 								&nbsp;&nbsp;<img src="../templates/' . $CONFIG['theme'] . '/images/upload/folder.png" alt="" style="vertical-align:middle" />
-							{list.LOCK}
 							&nbsp;' .
 							(!empty($this->display_config['url']) ? '<a href="' . transid(sprintf($this->display_config['url']['unrewrited'], $id), !empty($this->display_config['url']['rewrited']) ? sprintf($this->display_config['url']['rewrited'], $id, url_encore_rewrite($values['name'])) : ''))
 							. '</span>
