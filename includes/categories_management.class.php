@@ -167,6 +167,7 @@ class CategoriesManagement
             return false;
         }
     }
+
     
     // Deleting a category
     function Delete_category($id)
