@@ -105,27 +105,8 @@ include_once('../lang/' . $CONFIG['lang'] . '/errors.php'); //Inclusion des lang
 
 //Chargement du cache du jour actuel.
 $cache->load_file('day');
-//On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
-if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day) ) 
-{
-    // On vérifie qu'une MAJ n'est pas déjà en cours.
-    define('DAILY_UPDATE_LOCK_FILE', '../cache/daily_update_lock.php');
-    define('DAILY_UPDATE_LOCK', '<?php define(\'IS_DAILY_UPDATE_LOCK\', true); ?>');
-    define('DAILY_UPDATE_UNLOCK', '<?php define(\'IS_DAILY_UPDATE_LOCK\', false); ?>');
-    
-    if ( @include_once(DAILY_UPDATE_LOCK_FILE) )
-    {
-        if ( IS_DAILY_UPDATE_LOCK == false )
-        {   $file = fopen ( DAILY_UPDATE_LOCK_FILE, 'w');
-            fwrite ( $file, DAILY_UPDATE_LOCK );
-            fclose ( $file );
-            require_once('../includes/changeday.php');
-        }
-    }
-    $file = fopen ( DAILY_UPDATE_LOCK_FILE, 'w');
-    fwrite ( $file, DAILY_UPDATE_UNLOCK );
-    fclose ( $file );
-}
+if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day) ) //On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
+	require_once('../includes/changeday.php');
 
 include_once('../includes/connect.php'); //Inclusion du gestionnaire de connexion.
 	

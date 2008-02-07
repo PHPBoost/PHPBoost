@@ -21,6 +21,7 @@
 	</head>
 	<body>
 
+	<div id="global">
 	<div id="header">
 		<img src="../templates/{THEME}/images/header_boost.jpg" alt="PHPBoost" />
 	</div>	

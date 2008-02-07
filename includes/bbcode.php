@@ -112,6 +112,7 @@ if( !$get_show && defined('PHP_BOOST') === true )
 			'L_ADD_HEAD' => $LANG['head_add'],
 			'L_LINES' => $LANG['lines'],
 			'L_COLS' => $LANG['cols'],
+			'L_INSERT_LIST' => $LANG['insert_list'],
 			'L_INSERT_TABLE' => $LANG['insert_table']
 		));
 		

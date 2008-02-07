@@ -84,9 +84,9 @@
 		}		
 		function bbcode_table_{FIELD}()
 		{
-			var cols = document.getElementById('cols').value;
-			var lines = document.getElementById('lines').value;
-			var head = document.getElementById('head').checked;
+			var cols = document.getElementById('bb_cols{FIELD}').value;
+			var lines = document.getElementById('bb_lines{FIELD}').value;
+			var head = document.getElementById('bb_head{FIELD}').checked;
 			var code = '';
 			
 			if( cols >= 0 && lines >= 0 )
@@ -106,6 +106,18 @@
 				
 				insertbbcode(code.substring(0, pointor), code.substring(pointor, code.length), '{FIELD}');
 			}
+		}
+		function bbcode_list_{FIELD}()
+		{
+			var elements = document.getElementById('bb_list{FIELD}').value;
+			if( elements <= 0 )
+				elements = 1;
+			
+			code = '[list]\n';
+			for(var j = 0; j < elements; j++)
+				code += '\t[*]\n';
+			code += '[/list]';
+			insertbbcode(code.substring(0, 11), code.substring(11, code.length), '{FIELD}');
 		}
 		function bbcode_url_{FIELD}()
 		{
@@ -189,7 +201,14 @@
 								<img src="../templates/{THEME}/images/form/image.png" class="bbcode_hover" onclick="insertbbcode('[img]', '[/img]', '{FIELD}');" alt="{L_BB_IMG}" title="{L_BB_IMG}" />			
 								<img src="../templates/{THEME}/images/form/quote.png" class="bbcode_hover" onclick="insertbbcode('[quote]', '[/quote]', '{FIELD}');" alt="{L_BB_QUOTE}" title="{L_BB_QUOTE}" />		
 								<img src="../templates/{THEME}/images/form/hide.png" class="bbcode_hover" onclick="insertbbcode('[hide]', '[/hide]', '{FIELD}');" alt="{L_BB_HIDE}" title="{L_BB_HIDE}" />	
-								<img src="../templates/{THEME}/images/form/list.png" class="bbcode_hover" onclick="insertbbcode('[list][*]', '[/list]', '{FIELD}');" alt="{L_BB_LIST}" title="{L_BB_LIST}" />
+								
+								<div style="position:relative;z-index:100;float:right;display:none;" id="bb_block9{FIELD}">
+									<div id="bbcolor{FIELD}" class="bbcode_block" style="margin-left:-220px;width:180px;" onmouseover="bb_hide_block('9', '{FIELD}', 1);" onmouseout="bb_hide_block('9', '{FIELD}', 0);">
+										<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="bb_list{FIELD}" id="bb_list{FIELD}" maxlength="3" value="3" /></label></p>
+										<p style="text-align:center;"><a class="small_link" href="javascript:bbcode_list_{FIELD}();"><img src="../templates/{THEME}/images/form/list.png" alt="{L_BB_LIST}" title="{L_BB_LIST}" class="valign_middle" /> {L_INSERT_LIST}</a></p>
+									</div>
+								</div>
+								<a href="javascript:bb_display_block('9', '{FIELD}');" onmouseout="bb_hide_block('9', '{FIELD}', 0);" onmouseover="bb_hide_block('9', '{FIELD}', 1);" class="bbcode_hover" title="{L_BB_LIST}"><img src="../templates/{THEME}/images/form/list.png" alt="{L_BB_LIST}" title="{L_BB_LIST}" /></a>
 								
 								<img src="../templates/{THEME}/images/form/separate.png" alt="" />
 								
@@ -242,13 +261,13 @@
 								
 								<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block7{FIELD}">
 									<div id="bbcolor{FIELD}" class="bbcode_block" style="margin-left:130px;width:180px;" onmouseover="bb_hide_block('7', '{FIELD}', 1);" onmouseout="bb_hide_block('7', '{FIELD}', 0);">
-										<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="lines" id="lines" maxlength="3" value="2" /></label></p>
-										<p><label style="font-size:10px;font-weight:normal">* {L_COLS} <input size="3" type="text" class="text" name="cols" id="cols" maxlength="3" value="2" /></label></p>
-										<p><label style="font-size:10px;font-weight:normal">{L_ADD_HEAD} <input size="3" type="checkbox" name="head" id="head" /></label></p>
+										<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="bb_lines{FIELD}" id="bb_lines{FIELD}" maxlength="3" value="2" /></label></p>
+										<p><label style="font-size:10px;font-weight:normal">* {L_COLS} <input size="3" type="text" class="text" name="bb_cols{FIELD}" id="bb_cols{FIELD}" maxlength="3" value="2" /></label></p>
+										<p><label style="font-size:10px;font-weight:normal">{L_ADD_HEAD} <input size="3" type="checkbox" name="bb_head{FIELD}" id="bb_head{FIELD}" /></label></p>
 										<p style="text-align:center;"><a class="small_link" href="javascript:bbcode_table_{FIELD}();"><img src="../templates/{THEME}/images/form/table.png" alt="{L_BB_TABLE}" title="{L_BB_TABLE}" class="valign_middle" /> {L_INSERT_TABLE}</a></p>
 									</div>
 								</div>
-								<a href="javascript:bb_display_block('7', '{FIELD}');" onmouseout="bb_hide_block('7', '{FIELD}', 0);" onmouseover="bb_hide_block('7', '{FIELD}', 1);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="../templates/{THEME}/images/form/table.png" alt="{L_BB_TABLE}" title="{L_BB_TABLE}" /></a>
+								<a href="javascript:bb_display_block('7', '{FIELD}');" onmouseout="bb_hide_block('7', '{FIELD}', 0);" onmouseover="bb_hide_block('7', '{FIELD}', 1);" class="bbcode_hover" title="{L_BB_TABLE}"><img src="../templates/{THEME}/images/form/table.png" alt="{L_BB_TABLE}" title="{L_BB_TABLE}" /></a>
 																		
 								<img src="../templates/{THEME}/images/form/separate.png" alt="" />
 								

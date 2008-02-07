@@ -113,9 +113,10 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 					redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=l_pseudo#errorh');
 				if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
 					redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=l_flood#errorh');
-						
-				$sql->query_inject("INSERT INTO ".PREFIX."com (idprov,login,user_id,contents,timestamp,script) VALUES('" . $_com_idprov . "', '" . $login . "', '" . $session->data['user_id'] . "', '" . $contents . "',
-				'" . time() . "', '" . $_com_script . "')", __LINE__, __FILE__);
+				
+				//Récupération de l'adresse de la page.
+				$path_com = '..' . str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING;
+				$sql->query_inject("INSERT INTO ".PREFIX."com (idprov, login, user_id, contents, timestamp, script, path) VALUES('" . $_com_idprov . "', '" . $login . "', '" . $session->data['user_id'] . "', '" . $contents . "', '" . time() . "', '" . $_com_script . "', '" . $path_com . "')", __LINE__, __FILE__);
 				
 				$_com_idcom = $sql->sql_insert_id("SELECT MAX(idcom) FROM ".PREFIX."com");
 				

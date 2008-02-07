@@ -145,6 +145,7 @@ $LANG['cols'] = 'Number of columns';
 $LANG['head_table'] = 'Head';
 $LANG['head_add'] = 'Add table head';
 $LANG['insert_table'] = 'Insert table';
+$LANG['insert_list'] = 'Insert list';
 $LANG['forbidden_tags'] = 'Forbidden BBcode tags:';
 
 //Connexion
