@@ -76,7 +76,7 @@ if( $calendar_type == 'date' )
 			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . htmlentities($array_l_month[$i - 1]) . '</option>'
 		));
 	}			
-	for($i = 1970; $i <= 2037; $i++)
+	for($i = 1900; $i <= 2037; $i++)
 	{
 		$selected = ($year == $i) ? 'selected="selected"' : '';
 		$template->assign_block_vars('year', array(

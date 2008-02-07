@@ -406,8 +406,16 @@ $LANG['confirm_del_menu'] = 'Supprimer ce menu?';
 $LANG['menus_management'] = 'Gestion des menus';
 $LANG['menus_add'] = 'Ajouter un menu';
 $LANG['menus_edit'] = 'Modifier menu';
-$LANG['menus_available'] = 'Menus disponibles';
+$LANG['available_menus'] = 'Menus disponibles';
+$LANG['no_available_menus'] = 'Aucun menu disponible';
 $LANG['menus_explain'] = 'Le contenu des menus peut être rédigé en HTML ou en BBcode. Les deux peuvent également être mélangé.';
+$LANG['menu_header'] = 'Tête de page';
+$LANG['menu_subheader'] = 'Sous entête';
+$LANG['menu_left'] = 'Menu gauche';
+$LANG['menu_right'] = 'Menu droit';
+$LANG['menu_top_central'] = 'Menu central haut';
+$LANG['menu_bottom_central'] = 'Menu central bas';
+$LANG['menu_footer'] = 'Pied de page';
 
 //Smiley
 $LANG['upload_smiley'] = 'Uploader un smiley';
@@ -453,6 +461,8 @@ $LANG['com_management'] = 'Gestion des commentaires';
 $LANG['com_config'] = 'Configuration des commentaires';		
 $LANG['com_max'] = 'Nombre de commentaires par page';
 $LANG['rank_com_post'] = 'Rang pour pouvoir poster des commentaires';
+$LANG['display_topic_com'] = 'Voir la discussion';
+$LANG['display_recent_com'] = 'Voir les derniers commentaires';
 
 //Gestion membre
 $LANG['job'] = 'Emploi';

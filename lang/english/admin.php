@@ -406,8 +406,16 @@ $LANG['confirm_del_menu'] = 'Delete this menu?';
 $LANG['menus_management'] = 'Menus management';
 $LANG['menus_add'] = 'Add menu';
 $LANG['menus_edit'] = 'Edit menu';
-$LANG['menus_available'] = 'Available menus';
+$LANG['available_menus'] = 'Available menus';
+$LANG['no_available_menus'] = 'No available menus';
 $LANG['menus_explain'] = 'You can use HTML and BBcode to write menus contents. You already can use them together.';
+$LANG['menu_header'] = 'Header';
+$LANG['menu_subheader'] = 'Sub header';
+$LANG['menu_left'] = 'Left menu';
+$LANG['menu_right'] = 'Right menu';
+$LANG['menu_top_central'] = 'Top central menu';
+$LANG['menu_bottom_central'] = 'Bottom central menu';
+$LANG['menu_footer'] = 'Footer';
 
 //Smiley
 $LANG['upload_smiley'] = 'Upload smiley';
@@ -453,6 +461,8 @@ $LANG['com_management'] = 'Comments management';
 $LANG['com_config'] = 'Comments configuration';		
 $LANG['com_max'] = 'Maximum comments displayed';
 $LANG['rank_com_post'] = 'Rank to post comments';
+$LANG['display_topic_com'] = 'Display comments topics';
+$LANG['display_recent_com'] = 'Display last comments';
 
 //Gestion membre
 $LANG['job'] = 'Job';
