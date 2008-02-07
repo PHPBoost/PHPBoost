@@ -69,19 +69,14 @@ div.text
     background:#ffffff;
 }
 
-div.code table
-{
-    width:100%;
-}
 
-div.code table tr td.numLines
-{
-    width:30px;
-    text-align:right;
-    background:#ffffff;
-}
+/** Code **/
+div.code table { width:100%; border:1px #aaaaaa solid; }
+div.code table tr td.numLines { width:30px; text-align:right; border-right:1px #000 solid; background:#ffffff; }
+div.code table tr td.code { background:#fafafa; }
 
-div.code table tr td.code
-{
-    background:#fafafa;
-}
+/** Authors **/
+div.authors ul { list-style:none; }
+div.authors li { display:inline; margin:5px; }
+div.authors span.name { font-weight:bold; }
+div.authors span.email { font-style:italic; }
