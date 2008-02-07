@@ -35,6 +35,7 @@ whose name is id and which represents the identifier of each category. It must b
 You also must have an integer attribute named id_parent which represents the identifier of 
 the parent category (it will be 0 if its parent category is the root of the tree).
 To maintain order, you must have a field containing the rank of the category which be an integer named c_order.
+In this class the user are supposed to be an administrator, no checking of his auth is done
 */
 
 define('ERROR_UNKNOWN_MOTION', 1);
@@ -168,7 +169,6 @@ class CategoriesManagement
         }
     }
 
-    
     // Deleting a category
     function Delete_category($id)
     {
