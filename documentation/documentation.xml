@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE document SYSTEM "/home/loic/phpboost/documentation/documentation.dtd">
 <?xml-stylesheet type="text/xsl" href="documentation.xsl"?>
-<document>
+<document version="2.0">
     <header>
         <title>Documentation PHPBoost</title>
         <authors>
@@ -13,6 +13,7 @@
             <creation>03/02/2008</creation>
             <last-modification>06/02/2008</last-modification>
         </dates>
+        <license name="GPL v3" link="http://www.gnu.org/licenses/gpl-3.0.html"/>
     </header>
     <body>
         <thanks>
