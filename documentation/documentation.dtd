@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ELEMENT document (header, body)>
+<!ATTLIST document version CDATA #REQUIRED>
     
-    <!ELEMENT header (title, authors, dates)>
+    <!ELEMENT header (title, authors, dates, license)>
         <!ELEMENT title (#PCDATA)>
         <!ELEMENT authors (author+)>
             <!ELEMENT author EMPTY>
@@ -9,6 +10,10 @@
         <!ELEMENT dates (creation, last-modification)>
             <!ELEMENT creation (#PCDATA)>
             <!ELEMENT last-modification (#PCDATA)>
+            
+        <!ELEMENT license (para*)>
+            <!ATTLIST license name CDATA #REQUIRED>
+            <!ATTLIST license link CDATA #REQUIRED>
         
     <!ELEMENT body (thanks?, content, related?)>
         

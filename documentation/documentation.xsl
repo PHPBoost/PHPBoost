@@ -40,6 +40,7 @@
   <xsl:template match="header">
     <div class="header">
       <xsl:apply-templates select="title"/>
+      <xsl:apply-templates select="license"/>
       <xsl:apply-templates select="dates"/>
       <xsl:apply-templates select="authors"/>
     </div>
@@ -58,25 +59,85 @@
       <ul>
         <xsl:for-each select="author">
           <xsl:if test="position()>1">-</xsl:if>
-          <li><span class="name"><xsl:value-of select="@name"/></span> : <span class="email"><xsl:value-of select="@email"/></span></li>
+          <li>
+            <span class="name"><xsl:value-of select="@name"/></span> :
+            <span class="email">
+              <a>
+                <xsl:attribute name="href">mailto:<xsl:value-of select="@email"/></xsl:attribute>
+                <xsl:value-of select="@email"/>
+              </a>
+            </span>
+          </li>
         </xsl:for-each>
       </ul>
+    </div>
+  </xsl:template>
+  
+  <!-- License -->
+  <xsl:template match="license">
+    <div class="license">
+      Ce programme est distribué sous la license
+      <a>
+        <xsl:attribute name="href"><xsl:value-of select="@link"/></xsl:attribute>
+        <xsl:value-of select="@name"/>
+      </a>
     </div>
   </xsl:template>
   
   <!-- dates -->
   <xsl:template match="dates">
     <div class="dates">
-      Créé le <i><xsl:value-of select="creation"/></i><br />
-      Dernière modification le <i><xsl:value-of select="last-modification"/></i><br />
+      <ul>
+        <li>Version <xsl:value-of select="/document/@version"/></li> -
+        <li>Créé le <span class="date"><xsl:value-of select="creation"/></span></li> -
+        <li>Dernière modification le <span class="date"><xsl:value-of select="last-modification"/></span></li>
+      </ul>
     </div>
   </xsl:template>
   
   <!-- body -->
   <xsl:template match="body">
+    <xsl:call-template name="index"/>
     <xsl:apply-templates select="thanks"/>
     <xsl:apply-templates select="content"/>
     <xsl:apply-templates select="related"/>
+  </xsl:template>
+  
+  <!-- Index -->
+  <xsl:template name="index">
+    <h2>Index</h2>
+    <div id="index">
+      <ol>
+        <xsl:for-each select="//chapters/chapter">
+          <li>
+            <a>
+              <xsl:attribute name="href">#<xsl:value-of select="@title"/></xsl:attribute>
+              <xsl:value-of select="@title"/>
+            </a>
+          </li>
+          <xsl:if test="count ( ./chapter ) != 0">
+            <xsl:call-template name="indexSubChapters"/>
+          </xsl:if>
+        </xsl:for-each>
+      </ol>
+    </div>
+  </xsl:template>
+  
+  <!-- indexSubChapters -->
+  <xsl:template name="indexSubChapters">
+      <ol>
+        <xsl:for-each select="chapter">
+          <li>
+            <a>
+              <xsl:attribute name="href">#<xsl:value-of select="@title"/></xsl:attribute>
+              <xsl:value-of select="@title"/>
+            </a>
+          </li>
+          <xsl:if test="count ( ./chapter ) != 0">
+            <xsl:call-template name="indexSubChapters"/>
+          </xsl:if>
+        </xsl:for-each>
+      </ol>
   </xsl:template>
   
   <!-- thanks -->
@@ -129,6 +190,12 @@
   
   <xsl:template match="chapter">
     <div class="chapter">
+      <xsl:attribute name="name">
+        <xsl:value-of select="@title"/>
+      </xsl:attribute>
+      <xsl:attribute name="anchor">
+        <xsl:value-of select="@title"/>
+      </xsl:attribute>
       <xsl:choose>
         <xsl:when test="count(ancestor::chapter) = 0">
           <h4>
@@ -144,9 +211,7 @@
           </h5>
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:for-each select=".">
-          <xsl:apply-templates/>
-      </xsl:for-each>
+      <xsl:apply-templates/>
     </div>
   </xsl:template>
   
