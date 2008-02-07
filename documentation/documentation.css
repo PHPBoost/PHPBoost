@@ -80,3 +80,6 @@ div.authors ul { list-style:none; }
 div.authors li { display:inline; margin:5px; }
 div.authors span.name { font-weight:bold; }
 div.authors span.email { font-style:italic; }
+
+/** Thanks **/
+div.thanks-list { margin-left:4%; width:92%; padding:1px 1px; margin-bottom:20px; background:#ffffff; }

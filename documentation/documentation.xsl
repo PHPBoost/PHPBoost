@@ -89,11 +89,14 @@
   
   <!-- thanks -->
   <xsl:template match="thanks-list">
-    <ul>
-    <xsl:for-each select="thank">
-        <li><xsl:value-of select="."/></li>
-    </xsl:for-each>
-    </ul>
+    <h4>Remerciements :</h4>
+    <div class="thanks-list">
+      <ul>
+        <xsl:for-each select="thank">
+          <li><xsl:value-of select="."/></li>
+        </xsl:for-each>
+      </ul>
+    </div>
   </xsl:template>
   
   <!-- content -->
@@ -159,6 +162,13 @@
   <xsl:template match="related">
     <h2>Related</h2>
     <div id="related">
+      <xsl:apply-templates/>
+    </div>
+  </xsl:template>
+  
+  <!-- link-list -->
+  <xsl:template match="link-list">
+    <div class="link-list">
       <ul>
         <xsl:for-each select="link">
           <li>
