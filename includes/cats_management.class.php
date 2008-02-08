@@ -222,6 +222,10 @@ class CategoriesManagement
 	{
 		//Respect du standard à vérifier
 		$this->config_display = $config;
+		if( empty($this->display_config['xmlhttprequest_file']) )
+			$this->display_config['xmlhttprequest_file'] = '../admin/xmlhttprequest_cats.php';
+		
+		return Check_displaying_configuration();
 	}
 
 	//Method which checks if display configuration is good
@@ -229,15 +233,13 @@ class CategoriesManagement
 	{
 		if( !empty($this->display_config) )
 		{
-			if( array_key_exists('xmlhttprequest_file', $this->display_config) && array_key_exists('administration_file_name', $this->display_config) && array_key_exists('url' ,$this->display_config) && array_key_exists('unrewrited', $this->display_config['url']) )
+			if( array_key_exists('administration_file_name', $this->display_config) && array_key_exists('url' ,$this->display_config) && array_key_exists('unrewrited', $this->display_config['url']) )
 				return true;
 			else
 			{
 				if( $debug )
 					return false;
 				
-				if( !array_key_exists('xmlhttprequest_file', $this->display_config) )
-					die('<strong>CategoriesManagement error : </strong> you must specify the key <em>xmlhttprequest_file</em>';
 				if( !array_key_exists('administration_file_name', $this->display_config) )
 					die('<strong>CategoriesManagement error : </strong> you must specify the key <em>administration_file_name</em>';
 				if( !array_key_exists('url' ,$this->display_config) )
@@ -265,12 +267,13 @@ class CategoriesManagement
 		
 		//Let's display
 		$string = '';
+		
 		//AJAX functions
-		echo '
+		$string .= '
 		<script type="text/javascript">
 		<!--
 		
-		//Déplacement d\'une catégorie en Ajax
+		// Moving a category with AJAX technology
 		function ajax_move_cat(id, direction)
 		{
 			var xhr_object = null;
@@ -290,38 +293,60 @@ class CategoriesManagement
 			xhr_object.open("POST", filename, true);
 			xhr_object.onreadystatechange = function() 
 			{
+				//Transfert finished and successful
 				if( xhr_object.readyState == 4 && xhr_object.responseText != \'\' )
-					move_cat(id, direction);
+					document.getElementById("cat_administration").innerHtmp = xhr_object.responseText;
+				//Error
+				elseif(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' )
+					alert("' .  . '");
 			}
 			document.getElementById(\'l\' + divid).innerHTML = \'\';
 			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhr_object.send(null);
 		}
 		
-		//Déplacement graphique de la catégorie
-		function move_cat(id, direction)
+		// Deleting a category with AJAX technology
+		function ajax_move_cat(id)
 		{
-			//On enregistre le contenu de toutes les catégories frères de la catégorie demandée
-			var categories = new array();
-			for ( var i = 0; i < num_cats; i++ )
+			var xhr_object = null;
+			var filename = \'' . $this->config_display['xmlhttprequest_file'] . '?del=\' + id;
+			var data = null;
+			
+			if(window.XMLHttpRequest) // Firefox
+			   xhr_object = new XMLHttpRequest();
+			else if(window.ActiveXObject) // Internet Explorer
+			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+			else // XMLHttpRequest non supporté par le navigateur
+				return;
+			
+			document.getElementById(\'l\' + divid).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" style="vertical-align:middle;" />\';
+			
+			xhr_object.open("POST", filename, true);
+			xhr_object.onreadystatechange = function() 
 			{
-				if( categories_list[i] == id )
-				{
-					
-				}
+				//Transfert finished and successful
+				if( xhr_object.readyState == 4 && xhr_object.responseText != \'\' )
+					document.getElementById("cat_administration").innerHtmp = xhr_object.responseText;
+				//Error
+				elseif(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' )
+					alert("' .  . '");
 			}
+			document.getElementById(\'l\' + divid).innerHTML = \'\';
+			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr_object.send(null);
 		}
 		
 		function Confirm() {
-			return confirm("{L_CONFIRM_DEL}");
+			return confirm("' . $LANG[] . '");
 		}
 		-->
 		</script>
+		<div id="cat_administration">
 		';
 		//Categories list
 		$this->create_cat_administration($string, 0, 0, $cache_var);
-		echo $string;
-		return true;
+		$string .= '</div>';
+		return $string;
 	}
 
 	//Method for users who want to know what was the error
@@ -339,6 +364,11 @@ class CategoriesManagement
 		
 		$id_categories = array_keys($cache_var);
 		$num_cats = count($id_categories);
+		
+		//If there is no category
+		if( $num_cats == 0 )
+			return $LANG['no_category_existing'];
+		
 		// Browsing categories
 		for( $i = 0; $i < $num_cats; $i++ )
 		{
@@ -354,7 +384,7 @@ class CategoriesManagement
 							<span style="float:left;">
 								&nbsp;&nbsp;<img src="../templates/' . $CONFIG['theme'] . '/images/upload/folder.png" alt="" style="vertical-align:middle" />
 							&nbsp;' .
-							(!empty($this->display_config['url']) ? '<a href="' . transid(sprintf($this->display_config['url']['unrewrited'], $id), !empty($this->display_config['url']['rewrited']) ? sprintf($this->display_config['url']['rewrited'], $id, url_encore_rewrite($values['name'])) : ''))
+							(!empty($this->display_config['url']) ? '<a href="' . transid(sprintf($this->display_config['url']['unrewrited'], $id), !empty($this->display_config['url']['rewrited']) ? (strpos($this->display_config['url']['rewrited'], '%s') !== false ? sprintf($this->display_config['url']['rewrited'], $id, url_encore_rewrite($values['name'])) : sprintf($this->display_config['url']['rewrited'], $id))) : ''))
 							. '</span>
 							</span>
 							<span style="float:right;">
