@@ -206,7 +206,7 @@ $result = $sql->query_while("SELECT s.user_id, s.level, m.login
 FROM ".PREFIX."sessions s 
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
-ORDER BY s.session_time DESC", __LINE__, __FILE__);echo ;
+ORDER BY s.session_time DESC", __LINE__, __FILE__);
 while( $row = $sql->sql_fetch_assoc($result) )
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
