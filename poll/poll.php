@@ -192,7 +192,7 @@ elseif( !empty($poll['id']) && empty($archives) )
 		{
 			$template->assign_block_vars('poll.result', array(
 				'ANSWERS' => $answer, 
-				'NBRVOTE' => $nbrvote,
+				'NBRVOTE' => (int)$nbrvote,
 				'WIDTH' => number_round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
 				'PERCENT' => number_round(($nbrvote * 100 / $sum_vote), 1)
 			));
