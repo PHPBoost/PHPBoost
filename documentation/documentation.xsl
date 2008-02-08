@@ -190,6 +190,9 @@
   
   <xsl:template match="chapter">
     <div class="chapter">
+      <xsl:attribute name="id">
+        <xsl:value-of select="@title"/>
+      </xsl:attribute>
       <xsl:attribute name="name">
         <xsl:value-of select="@title"/>
       </xsl:attribute>
