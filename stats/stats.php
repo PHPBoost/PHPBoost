@@ -1093,7 +1093,7 @@ elseif( $browser || $os || $user_lang ) //Graphiques camenbert.
 			$value_name = 'other';
 			$angle_value += $percent_other;
 			$percent_other += $angle_value;
-			$stats_img = '<img src="../templates/' . $CONFIG['theme'] . '/images/stats/other.png" alt="' . $LANG['other'] . '" />';
+			$stats_img = !empty($array_stats_info['other'][1]) ? '<img src="' . $path . $array_stats_info['other'][1] . '" alt="' . $LANG['other'] . '" />' : '<img src="../templates/' . $CONFIG['theme'] . '/images/stats/other.png" alt="' . $LANG['other'] . '" />';
 			$name_stats = $LANG['other'];
 		}	
 		else

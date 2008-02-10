@@ -516,6 +516,6 @@ It may be an error, if you want you could contact the administrator of the web s
 //Footer
 $LANG['powered_by'] = 'Boosted by';
 $LANG['phpboost_right'] = '&copy; 2005-2008';
-$LANG['sql_req'] = ' SQL Requests';
+$LANG['sql_req'] = ' Requests';
 $LANG['achieved'] = 'Achieved in';
 ?>
