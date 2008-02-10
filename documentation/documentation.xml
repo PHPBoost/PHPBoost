@@ -47,9 +47,9 @@
                     <para style="notice">Remarquez ceci...</para>
                     <para style="Warning">Attention...</para>
                     <code language="php">
-                        <line>&lt;?php</line>
-                        <line>  echo 'Hello World!'</line>
-                        <line>?&gt;</line>
+                        &lt;?php
+                            echo 'Hello World!';
+                        ?&gt;
                     </code>
                 </chapter>
                 <chapter title="Développement">

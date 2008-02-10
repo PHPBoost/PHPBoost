@@ -19,9 +19,8 @@
         
         <!ELEMENT para (#PCDATA)>
         <!ATTLIST para style CDATA #IMPLIED>
-        <!ELEMENT code (line+)>
+        <!ELEMENT code (#PCDATA)>
         <!ATTLIST code language CDATA #REQUIRED>
-        <!ELEMENT line (#PCDATA)>
         
         <!ELEMENT thanks (para*, thanks-list?)>
         <!ELEMENT thanks-list (thank+)>

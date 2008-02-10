@@ -262,11 +262,7 @@
   <!-- code -->
   <xsl:template match="code">
     <div class="code">
-      <table>
-        <xsl:for-each select="line">
-          <tr><td class="numLines"><xsl:value-of select="position()"/></td><td class="code"><xsl:value-of select="."/></td></tr>
-        </xsl:for-each>
-      </table>
+      <xsl:value-of select="."/>
     </div>
   </xsl:template>
   
