@@ -43,6 +43,4 @@ div.authors span.email { font-style:italic; }
 div.thanks-list { margin-left:4%; width:92%; padding:1px 1px; margin-bottom:20px; background:#ffffff; }
 
 /** Code **/
-div.code table { width:100%; border:1px #aaaaaa solid; }
-div.code table tr td.numLines { width:30px; text-align:right; border-right:1px #000 solid; background:#ffffff; }
-div.code table tr td.code { background:#fafafa; }
+div.code { background:#e0e0ff; color:#000000; padding:10px 5px 10px; }
