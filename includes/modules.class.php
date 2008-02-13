@@ -46,7 +46,7 @@ class Modules
 {
     //----------------------------------------------------------------- PUBLIC
     //----------------------------------------------------- Méthodes publiques
-    function Functionnalitie ( $functionnalitie, $modules )
+    function Functionnality ( $functionnality, $modules )
     /**
      *  Vérifie les fonctionnalités des modules et appelle la méthode
      *  du/des module(s) sélectionné(s) avec les bons arguments.
@@ -59,14 +59,14 @@ class Modules
             $module = $this->GetModule ( $moduleName );
             // Si le module à déjà été appelé et a déjà eu une erreur,
             // On nettoie le bit d'erreur correspondant.
-            $module->clearFunctionnalitieError ( );
-            if ( $module->hasFunctionnalitie ( $functionnalitie ) == true )
-            { $results[$moduleName] = $module->Functionnalitie ( $functionnalitie, $args ); }
+            $module->clearFunctionnalityError ( );
+            if ( $module->hasFunctionnality ( $functionnality ) == true )
+            { $results[$moduleName] = $module->Functionnality ( $functionnality, $args ); }
         }
         return $results;
     }
 
-    function GetAvailablesModules ( $functionnalitie, $modulesList = Array ( ) )
+    function GetAvailablesModules ( $functionnality, $modulesList = Array ( ) )
     /**
      *  Renvoie la liste des modules disposant de la fonctionnalité demandée.
      *  Si $modulesList est spécifié, alors on ne recherche que le sous ensemble de celui-ci
@@ -80,7 +80,7 @@ class Modules
             foreach( array_keys($SECURE_MODULE) as $moduleName )
             {
                 $module = $this->GetModule ( $moduleName );
-                if ( $module->GetErrors == 0 and $module->HasFunctionnalitie ($functionnalitie ) )
+                if ( $module->GetErrors == 0 and $module->HasFunctionnality ($functionnality ) )
                 {
                     array_push( $modules, $module );
                 }
@@ -90,7 +90,7 @@ class Modules
         {
             foreach( $modulesList as $module )
             {
-                if ( $module->GetErrors == 0 and $module->HasFunctionnalitie ($functionnalitie ) )
+                if ( $module->GetErrors == 0 and $module->HasFunctionnality ($functionnality ) )
                 {
                     array_push( $modules, $module );
                 }
