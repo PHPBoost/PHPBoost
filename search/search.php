@@ -70,10 +70,10 @@ if ( $search != '' )
     // Ajout de la liste des paramètres de recherches spécifiques à chaque module
     foreach ( $formsModule as $formModule)
     {
-        if ( $formModule->HasFunctionnalitie ( 'GetSearchArgs' ) )
+        if ( $formModule->HasFunctionnality ( 'GetSearchArgs' ) )
         {
             // Récupération de la liste des paramètres
-            $formModuleArgs = $formModule->Functionnalitie ( 'GetSearchArgs' );
+            $formModuleArgs = $formModule->Functionnality ( 'GetSearchArgs' );
             // Ajout des paramètres optionnels sans les sécurisés.
             // Ils sont sécurisés à l'intérieur de chaque module.
             foreach ( $formModuleArgs as $arg )
@@ -97,9 +97,9 @@ if ( $search != '' )
         // A vérifier que les résultats renvoyé par la méthode GetResults de la classe Search
         // Renvoie bien un tableau associatif
         $module = $modules->GetModule ( $result['id_module'];
-        if ( $module->HasFunctionnalitie ( 'ParseSearchResult' ) )
+        if ( $module->HasFunctionnality ( 'ParseSearchResult' ) )
         {
-            array_push ( $htmlResults, $module->Functionnalitie ( 'ParseSearchResult', Array ( $result ) ) );
+            array_push ( $htmlResults, $module->Functionnality ( 'ParseSearchResult', Array ( $result ) ) );
         }
         else
         { array_push ( $htmlResults, $result ); }

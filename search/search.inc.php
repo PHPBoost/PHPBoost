@@ -38,11 +38,11 @@ function GetSearchForms ( &$modules, &$args )
     {
         if ( isset ( $args[$module->name] ) )
         {
-            $searchForms[$module->name] = $module->Functionnalitie ( 'GetSearchForm', $args[$module->name] );
+            $searchForms[$module->name] = $module->Functionnality ( 'GetSearchForm', $args[$module->name] );
         }
         else
         {
-            $searchForms[$module->name] = $module->Functionnalitie ( 'GetSearchForm', Array ( 'search' => '' ) );
+            $searchForms[$module->name] = $module->Functionnality ( 'GetSearchForm', Array ( 'search' => '' ) );
         }
     }
     
@@ -60,7 +60,7 @@ function GetSearchResults ( $searchTxt, &$searchModules, &$modulesArgs, &$result
     
     foreach ( $searchModules as $module )
     {
-        $requests[$module->name] = $module->Functionnalitie ( 'GetSearchRequest', $modulesArgs[$module->name] );
+        $requests[$module->name] = $module->Functionnality ( 'GetSearchRequest', $modulesArgs[$module->name] );
         array_push ( $modulesNames, $module->name );
     }
     
