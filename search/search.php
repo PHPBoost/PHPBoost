@@ -35,7 +35,7 @@ require_once ( '../includes/modules.class.php' );
 require_once ( '../search/search.inc.php' );
 
 $template->set_filenames ( Array (
-    'search_mini' => '../templates/'.$CONFIG['theme'].'/search/search_mini.tpl',
+    'search_mini_form' => '../templates/'.$CONFIG['theme'].'/search/search_mini_form.tpl',
     'search_forms' => '../templates/'.$CONFIG['theme'].'/search/search_forms.tpl',
     'search_results' => '../templates/'.$CONFIG['theme'].'/search/search_results.tpl'
 ) );
@@ -107,6 +107,9 @@ if ( $search != '' )
     
     $template->assign_vars ( Array ( 'htmlResults' => $htmlResults ) ) ;
     
+    // parsage des formulaires de recherches
+    $template->pparse ( 'search_forms' );
+    // parsage des résultats de la recherche
     $template->pparse ( 'search_results' );
 }
 else
