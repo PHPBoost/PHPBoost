@@ -29,7 +29,7 @@
 define ( 'MODULE_NOT_AVAILABLE', 1 );
 define ( 'ACCES_DENIED', 2 );
 define ( 'MODULE_NOT_YET_IMPLEMENTED', 4 );
-define ( 'FUNCTIONNALITIE_NOT_IMPLEMENTED', 8 );
+define ( 'FUNCTIONNALITY__NOT_IMPLEMENTED', 8 );
 
 class ModuleInterface
 {
@@ -47,27 +47,27 @@ class ModuleInterface
                     );
     }
     
-    function Functionnalitie ( $functionnalitie, $args = null )
+    function Functionnality ( $functionnality, $args = null )
     /**
      *  Teste l'existance de la fonctionnalité et l'appelle le cas échéant.
      *  Si elle n'est pas disponible, le flag
-     *  FUNCTIONNALITIE_NOT_IMPLEMENTED de la variable errors est
+     *  FUNCTIONNALITY__NOT_IMPLEMENTED de la variable errors est
      *  alors positionné.
      */
     {
-        $this->clearFunctionnalitieError ( );
-        if ( $this->hasFunctionnalitie ( $functionnalitie ) )
-        { return $this->$functionnalitie ( $args ); }
+        $this->clearFunctionnalityError ( );
+        if ( $this->hasFunctionnality ( $functionnality ) )
+        { return $this->$functionnality ( $args ); }
         else
-        { $this->setError ( FUNCTIONNALITIE_NOT_IMPLEMENTED ); }
+        { $this->setError ( FUNCTIONNALITY__NOT_IMPLEMENTED ); }
     }
     
-    function HasFunctionnalitie ( $functionnalitie )
+    function HasFunctionnality ( $functionnality )
     /**
      *  Teste que la fonctionnalité est bien implémentée
      */
     {
-        return in_array ( $functionnalitie, $this->functionnalities );
+        return in_array ( $functionnality, $this->functionnalities );
     }
     
     function GetErrors (  )
@@ -140,12 +140,12 @@ class ModuleInterface
         $this->errors |= $error;
     }
     
-    function clearFunctionnalitieError ( )
+    function clearFunctionnalityError ( )
     /**
      *  Nettoie le bit d'erreur de la fonctionnalité, pour en tester une autre
      */
     {
-        $this->errors &= ( ~ FUNCTIONNALITIE_NOT_IMPLEMENTED );
+        $this->errors &= ( ~ FUNCTIONNALITY__NOT_IMPLEMENTED );
     }
     
     //----------------------------------------------------- Attributs protégés
