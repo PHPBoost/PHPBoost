@@ -56,14 +56,15 @@ $template->assign_vars(array(
 	'TITLE_CHECKED' => ($where == 'title') ? 'checked="checked"' : '',
 	'ALL_CHECKED' => ($where == 'all') ? 'checked="checked"' : '',
 	'COLORATE_RESULT' => ($colorate_result || empty($where)) ? 'checked="checked"' : '',
-	'U_SEARCH' => '<a class="small_link" href="search.php' . SID . '" title="' . $LANG['search'] . '">' . $LANG['search'] . '</a> &bull;',
 	'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' .SID . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a> &bull;',
 	'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' .SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . '</a>',
 	'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a> &bull;',
+	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a> &bull;',
 	'U_FORUM_CAT' => '<a href="search.php' . SID . '">' . $LANG['search'] . '</a>',
 	'U_CHANGE_CAT' => 'search.php' . SID,	
 	'U_ONCHANGE' => "'forum" . transid(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",	
 	'L_FORUM_INDEX' => $LANG['forum_index'],
+	'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
 	'L_REQUIRE_TEXT' => $LANG['require_text'],
 	'L_SEARCH_FORUM' => $LANG['search_forum'],
 	'L_KEYWORDS' => $LANG['keywords'],
@@ -283,7 +284,9 @@ $template->assign_vars(array(
 	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 	'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 	'L_AND' => $LANG['and'],
-	'L_ONLINE' => strtolower($LANG['online'])
+	'L_ONLINE' => strtolower($LANG['online']),
+	'L_SEARCH' => $LANG['search'],
+	'L_ADVANCED_SEARCH' => $LANG['advanced_search']
 ));
 
 $template->pparse('search');

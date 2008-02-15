@@ -209,7 +209,7 @@
 			<div class="msg_bottom_l"></div>		
 			<div class="msg_bottom_r"></div>
 			<div class="msg_bottom" style="text-align:center;">
-				<span style="float:left;" class="text_strong">
+				<span style="float:left;">
 					<a href="rss.php?cat={ID}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a>
 					&bull; {U_FORUM_CAT} {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span>
 				</span>

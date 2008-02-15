@@ -3,7 +3,7 @@
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
-			<div class="module_top">{L_STATS}</div>
+			<div class="module_top"><strong>{L_STATS}</strong></div>
 			<div class="module_contents">
 				<table class="module_table">
 					<tr>

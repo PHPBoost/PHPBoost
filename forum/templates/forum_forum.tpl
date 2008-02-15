@@ -145,7 +145,7 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<span style="float:left;" class="text_strong">
+				<span style="float:left;">
 					<a href="rss.php?cat={IDCAT}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT} {U_POST_NEW_SUBJECT}
 				</span>
 				<span style="float:right;">{PAGINATION}</span>&nbsp;

@@ -27,7 +27,7 @@
 
 
 ####################################################
-#                                                           French                                                                             #
+#                                                           French                                                                 #
 ####################################################
 
 //Admin
@@ -75,6 +75,12 @@ $LANG['flood_auth'] = 'Droit de flooder';
 $LANG['edit_mark_auth'] = 'Désactivation du marqueur d\'édition des messages';
 $LANG['track_topic_auth'] = 'Désactivation de la limite de sujet suivis';
 
+//Requis
+$LANG['require_topic_p'] = 'Veuillez entrer le nombre de sujets par page!';
+$LANG['require_nbr_msg_p'] = 'Veuillez entrer le nombre de messages par page!';
+$LANG['require_time_new_msg'] = 'Veuillez entrer une durée pour la vue des nouveaux messages!';
+$LANG['require_topic_track_max'] = 'Veuillez entrer le nombre maximum de sujet suivis!';
+
 //Erreurs
 $LANG['e_topic_lock_forum'] = 'Sujet verrouillé, vous ne pouvez pas poster de message';
 $LANG['e_cat_lock_forum'] = 'Catégorie verrouillée, création nouveau sujet/message impossible';
@@ -90,6 +96,9 @@ $LANG['alert_unlock_topic'] = 'Déverrouiller ce Sujet ?';
 $LANG['alert_move_topic'] = 'Déplacer ce Sujet ?';
 $LANG['alert_warning'] = 'Avertir ce membre?';
 $LANG['alert_history'] = 'Supprimer l\'historique?';
+$LANG['confirm_mark_as_read'] = 'Marquer tous les sujets comme lus?';
+$LANG['confirm_mark_as_read_forum'] = 'Marquer les sujets de ce forum comme lus?';
+$LANG['confirm_mark_as_read_favorite'] = 'Marquer les sujets favoris comme lus?';
 
 //Titres
 $LANG['title_forum'] = 'Forum';
@@ -98,13 +107,14 @@ $LANG['title_post'] = 'Poster';
 $LANG['title_search'] = 'Chercher';
 
 //Forum
-$LANG['forum_index'] = 'Accueil forum';
+$LANG['forum_index'] = 'Index';
 $LANG['forum'] = 'Forum';
 $LANG['forum_s'] = 'Forums';
 $LANG['subforum_s'] = 'Sous-forums';
 $LANG['topic'] = 'Sujet';
 $LANG['topic_s'] = 'Sujets';
 $LANG['author'] = 'Auteur';
+$LANG['advanced_search'] = 'Recherche avancée';
 $LANG['distributed'] = 'Répartis en';
 $LANG['mark_as_read'] = 'Marquer comme lu';
 $LANG['show_topic_track'] = 'Sujets suivis';
