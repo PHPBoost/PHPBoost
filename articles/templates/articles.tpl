@@ -4,7 +4,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					{article.NAME} 
+					<strong>{article.NAME}</strong>
 				</div>
 				<div style="float:right">
 					{article.COM} {EDIT} {DEL}
@@ -25,15 +25,15 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<div style="float:left" class="text_small">
+				<span style="float:left" class="text_small">
 					{article.L_NOTE}: {article.NOTE}
-				</div>
-				<div style="float:right" class="text_small">
+				</span>
+				<span style="float:right" class="text_small">
 					{article.L_WRITTEN}: <a href="../member/member{article.U_MEMBER_ID}">{article.PSEUDO}</a>, {article.L_ON}: {article.DATE}
-				</div>
+				</span>
+				<div class="spacer"></div>
 			</div>
 		</div>
-		
 		<br /><br />
 		# INCLUDE handle_com #
 		

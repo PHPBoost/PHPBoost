@@ -112,6 +112,7 @@
 				<p style="text-align:center" class="text_small">
 					{L_NO_ARTICLES} {L_TOTAL_ARTICLE}
 				</p>
+				&nbsp;
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
