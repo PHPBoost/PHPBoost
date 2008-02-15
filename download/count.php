@@ -37,11 +37,11 @@ $filesize = @filesize(str_replace(HOST . DIR . '/', '../', $info_file['url']));
 $filesize = ($filesize !== false) ? $filesize : (!empty($info_file) ? number_round($info_file['size']*1048576, 0) : false);
 if( $filesize !== false )
 	header('Content-Length: ' . $filesize);
-header('content-type: application/force-download' );
-header('Content-Disposition: attachment; filename="' . substr(strrchr($info_file['url'], '/'), 1) . '"');
-header('Expires: 0');
-header('Cache-Control: no-cache');
-header('Pragma: public');
+header('content-type:application/force-download');
+header('Content-Disposition:attachment;filename="' . substr(strrchr($info_file['url'], '/'), 1) . '"');
+header('Expires:0');
+header('Cache-Control:must-revalidate');
+header('Pragma:public');
 if( @readfile($info_file['url']) === false )
 	redirect($info_file['url']);
 ?>
