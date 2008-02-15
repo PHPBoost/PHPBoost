@@ -82,6 +82,7 @@ $template->assign_vars(array(
 	'L_RELEVANCE' => $LANG['relevance'],
 	'L_COLORATE_RESULT' => $LANG['colorate_result'],
 	'L_SEARCH' => $LANG['search'],
+	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 	'L_ON' => $LANG['on']	
 ));
 

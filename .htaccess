@@ -1,48 +1,48 @@
 Options +FollowSymlinks
 RewriteEngine on
 # Articles #
-RewriteRule ^(.*)articles/articles-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /PHPBoost_2.1/articles/articles.php?cat=$2&id=$3&p=$4 [L,QSA]
+RewriteRule ^(.*)articles/articles-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /PHP/PHPBoost/PHPBoost_2.1/articles/articles.php?cat=$2&id=$3&p=$4 [L,QSA]
 
 # Calendrier #
-RewriteRule ^(.*)calendar/calendar-([0-9]+)-([0-9]+)-([0-9]+)-?([0-9]*)\.php$ /PHPBoost_2.1/calendar/calendar.php?d=$2&m=$3&y=$4&e=$5 [L,QSA]
+RewriteRule ^(.*)calendar/calendar-([0-9]+)-([0-9]+)-([0-9]+)-?([0-9]*)\.php$ /PHP/PHPBoost/PHPBoost_2.1/calendar/calendar.php?d=$2&m=$3&y=$4&e=$5 [L,QSA]
 
 # Téléchargement #
-RewriteRule ^(.*)download/download-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /PHPBoost_2.1/download/download.php?cat=$2&id=$3&p=$4 [L,QSA]
+RewriteRule ^(.*)download/download-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /PHP/PHPBoost/PHPBoost_2.1/download/download.php?cat=$2&id=$3&p=$4 [L,QSA]
 
 # Forum #
-RewriteRule ^(.*)forum/forum-([0-9]+)-?([0-9]*)(\+?[^.]*)\.php$ /PHPBoost_2.1/forum/forum.php?id=$2&p=$3 [L,QSA]
-RewriteRule ^(.*)forum/topic-([0-9]+)-?([0-9]*)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /PHPBoost_2.1/forum/topic.php?id=$2&pt=$3&idm=$4&quote=$5 [L]
-RewriteRule ^(.*)forum/cat-([0-9]+)(\+?[^.]*)\.php$ /PHPBoost_2.1/forum/index.php?id=$2 [L,QSA]
+RewriteRule ^(.*)forum/forum-([0-9]+)-?([0-9]*)(\+?[^.]*)\.php$ /PHP/PHPBoost/PHPBoost_2.1/forum/forum.php?id=$2&p=$3 [L,QSA]
+RewriteRule ^(.*)forum/topic-([0-9]+)-?([0-9]*)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /PHP/PHPBoost/PHPBoost_2.1/forum/topic.php?id=$2&pt=$3&idm=$4&quote=$5 [L]
+RewriteRule ^(.*)forum/cat-([0-9]+)(\+?[^.]*)\.php$ /PHP/PHPBoost/PHPBoost_2.1/forum/index.php?id=$2 [L,QSA]
 
 # Galerie #
-RewriteRule ^(.*)gallery/gallery-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /PHPBoost_2.1/gallery/gallery.php?cat=$2&id=$3&p=$4 [L,QSA]
+RewriteRule ^(.*)gallery/gallery-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /PHP/PHPBoost/PHPBoost_2.1/gallery/gallery.php?cat=$2&id=$3&p=$4 [L,QSA]
 
 # News #
-RewriteRule ^(.*)news/news-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /PHPBoost_2.1/news/news.php?cat=$2&id=$3&p=$4 [L,QSA]
+RewriteRule ^(.*)news/news-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /PHP/PHPBoost/PHPBoost_2.1/news/news.php?cat=$2&id=$3&p=$4 [L,QSA]
 
 # Pages #
-RewriteRule ^(.*)pages/([a-z0-9-]+)$ /PHPBoost_2.1/pages/pages.php?title=$2
+RewriteRule ^(.*)pages/([a-z0-9-]+)$ /PHP/PHPBoost/PHPBoost_2.1/pages/pages.php?title=$2
 
 # Sondages #
-RewriteRule ^(.*)poll/poll-([0-9]+)-?([0-9]*)-?([0-9]*)\.php$ /PHPBoost_2.1/poll/poll.php?id=$2&r=$3&p=$4 [L,QSA]
+RewriteRule ^(.*)poll/poll-([0-9]+)-?([0-9]*)-?([0-9]*)\.php$ /PHP/PHPBoost/PHPBoost_2.1/poll/poll.php?id=$2&r=$3&p=$4 [L,QSA]
 
 # Stats #
-RewriteRule ^(.*)stats/stats-([a-z]+)\.php$ /PHPBoost_2.1/stats/stats.php?$2=1 [L,QSA]
+RewriteRule ^(.*)stats/stats-([a-z]+)\.php$ /PHP/PHPBoost/PHPBoost_2.1/stats/stats.php?$2=1 [L,QSA]
 
 # Web #
-RewriteRule ^(.*)web/web-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /PHPBoost_2.1/web/web.php?cat=$2&id=$3&p=$4 [L,QSA]
+RewriteRule ^(.*)web/web-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /PHP/PHPBoost/PHPBoost_2.1/web/web.php?cat=$2&id=$3&p=$4 [L,QSA]
 
 # Wiki #
-RewriteRule ^(.*)wiki/([a-z0-9-]+)$ /PHPBoost_2.1/wiki/wiki.php?title=$2
+RewriteRule ^(.*)wiki/([a-z0-9-]+)$ /PHP/PHPBoost/PHPBoost_2.1/wiki/wiki.php?title=$2
 
 # Core #
-RewriteRule ^(.*)member/member-([0-9]+)-?([0-9]*)\.php$ /PHPBoost_2.1/member/member.php?id=$2&p=$3 [L,QSA]
-RewriteRule ^(.*)member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$ /PHPBoost_2.1/member/pm.php?pm=$2&id=$3&p=$4&quote=$5 [L,QSA]
+RewriteRule ^(.*)member/member-([0-9]+)-?([0-9]*)\.php$ /PHP/PHPBoost/PHPBoost_2.1/member/member.php?id=$2&p=$3 [L,QSA]
+RewriteRule ^(.*)member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$ /PHP/PHPBoost/PHPBoost_2.1/member/pm.php?pm=$2&id=$3&p=$4&quote=$5 [L,QSA]
 
 # Error page #
-ErrorDocument 404 http://localhost/PHPBoost_2.1/news/news.php
+ErrorDocument 404 http://127.0.0.1/PHP/PHPBoost/PHPBoost_2.1/news/news.php
 
 # Bandwith protection #
 RewriteCond %{HTTP_REFERER} !^$
-RewriteCond %{HTTP_REFERER} !^http://localhost
+RewriteCond %{HTTP_REFERER} !^http://127.0.0.1
 ReWriteRule .*upload/.*$ - [F]

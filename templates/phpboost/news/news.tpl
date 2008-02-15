@@ -65,8 +65,8 @@
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<div style="float:left;padding-left:30px;"><a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a></div>
-				<div style="float:right;">{news.COM}{news.EDIT}{news.DEL} <a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a></div>
+				<span style="float:left;padding-left:5px;"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> &nbsp;&nbsp;<a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a></span>
+				<span style="float:right;">{news.COM}{news.EDIT}{news.DEL}</span>
 			</div>							
 			<div class="news_content">
 				{news.IMG}

@@ -76,12 +76,15 @@ elseif( $session->check_auth($session->data, 0) ) //Affichage des message()s non
 		'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
 	));
 
-	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-	$max_time_config = (time() - $CONFIG_FORUM['view_time']);
 	
 	include_once('../includes/pagination.class.php'); 
 	$pagination = new Pagination();
 
+	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
+	$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : time();
+	$max_time = (time() - $CONFIG_FORUM['view_time']);
+	$max_time_msg = ($session->data['last_view_forum'] > $max_time) ? $session->data['last_view_forum'] : $max_time;
+	
 	$nbr_topics_compt = 0;
 	$result = $sql->query_while("SELECT m1.login AS login , m2.login AS last_login , t.id , t.title , t.subtitle , t.user_id , t.nbr_msg , t.nbr_views , t.last_user_id , t.last_msg_id , t.last_timestamp , t.type , t.status, t.display_msg, v.last_view_id, p.question, me.last_view_forum, tr.pm, tr.mail, me.last_view_forum
 	FROM ".PREFIX."forum_topics t
@@ -101,9 +104,8 @@ elseif( $session->check_auth($session->data, 0) ) //Affichage des message()s non
 		
 		//Vérifications des topics Lu/non Lus.
 		$img_announce = 'announce';		
-		$max_time = ($row['last_view_forum'] > $max_time_config) ? $row['last_view_forum'] : $max_time_config;
 		$new_msg = false;
-		if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time ) //Nouveau message (non lu).
+		if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg ) //Nouveau message (non lu).
 		{		
 			$img_announce =  'new_' . $img_announce; 
 			$new_msg = true;
