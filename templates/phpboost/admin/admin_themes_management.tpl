@@ -117,6 +117,7 @@
 			</form>
 			# END main #
 		
+		
 			# START del #
 			<form action="admin_themes.php?uninstall=1" method="post" class="fieldset_content">
 				<fieldset>
@@ -134,4 +135,32 @@
 				</fieldset>	
 			</form>
 			# END del #
+			
+			
+			# START edit #			
+			<form action="admin_themes.php?edit=1" method="post" class="fieldset_content">	
+				<fieldset> 
+				<legend>{L_THEMES_MANAGEMENT}</legend>
+					<dl>
+						<dt><label for="left_column">{L_LEFT_COLUMN}</label><br /><span>{L_LEFT_COLUMN_EXPLAIN}</span></dt>
+						<dd>
+							<label><input type="checkbox" {LEFT_COLUMN_ENABLED} name="left_column" id="left_column" value="1" /></label>
+						</dd>
+					</dl>
+					<dl>
+						<dt><label for="right_column">{L_RIGHT_COLUMN}</label><br /><span>{L_RIGHT_COLUMN_EXPLAIN}</span></dt>
+						<dd>
+							<label><input type="checkbox" {RIGHT_COLUMN_ENABLED} name="right_column" id="right_column" value="1" /></label>
+						</dd>
+					</dl>
+				</fieldset>
+				<fieldset class="fieldset_submit" style="margin-bottom:0px">
+					<legend>{L_UPDATE}</legend>
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					&nbsp;&nbsp; 
+					<input type="reset" value="{L_RESET}" class="reset" />
+				</fieldset>
+			</form>			
+			# END edit #
+			
 		</div>

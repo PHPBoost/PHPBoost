@@ -8,11 +8,13 @@
 		
 		
 		# START edito #
-		<div class="edito_top">
-			<div style="float:left;padding-left:30px;padding-top:5px;"><h3 class="title">{edito.TITLE}</h3></div>
-			<div style="float:right">{edito.EDIT}</div>
-		</div>
 		<div class="news_container">
+			<div class="news_top_l"></div>			
+			<div class="news_top_r"></div>
+			<div class="news_top">
+				<div style="float:left;padding-left:30px;"><h3 class="title">{edito.TITLE}</h3></div>
+				<div style="float:right;">{edito.EDIT}</div>
+			</div>
 			<div class="news_content">
 				<img src="../templates/phpboost/news/images/phpboost_box_v2_mini.jpg" alt="PHPBoost 2.0" class="float_right" />
 				<img src="../templates/phpboost/news/images/phpboost_version.jpg" alt="PHPBoost 2.0" />
@@ -38,10 +40,11 @@
 		
 		# START no_news_available #
 		<div class="news_container">
-			<div class="news_top_l"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a></div>			
+			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<h3 class="title valign_middle">{L_LAST_NEWS}</h3>
+				<div style="float:left;padding-left:30px;"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a></div>
+				<div style="float:right;"><h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
 			</div>	
 						
 			<div class="news_content">
@@ -59,11 +62,11 @@
 		
 		{news.NEW_ROW}
 		<div class="news_container">
-			<div class="news_top_l"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a></div>			
+			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<div style="float:left"><a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a></div>
-				<div style="float:right">{news.COM}{news.EDIT}{news.DEL}</div>
+				<div style="float:left;padding-left:30px;"><a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a></div>
+				<div style="float:right;">{news.COM}{news.EDIT}{news.DEL} <a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a></div>
 			</div>							
 			<div class="news_content">
 				{news.IMG}
@@ -116,10 +119,10 @@
 		<div style="text-align: center;">{ARCHIVES}</div>
 		
 		<div class="news_container" style="width:500px;margin-top:20px;">
-			<div class="news_top_l"><a href="../forum/rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a></div>			
+			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<h3 class="title valign_middle">Derniers sujets du forum</h3>
+				<h3 class="title valign_middle"><a href="../forum/rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> Derniers sujets du forum</h3>
 			</div>						
 			<div class="news_content" style="text-align:center">
 				<script type="text/javascript" src="../cache/rss_forum.html"></script>  
