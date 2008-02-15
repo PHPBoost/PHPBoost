@@ -300,7 +300,7 @@ class Forum
 	{
 		global $sql;
 		
-		$sql->query_inject("UPDATE ".PREFIX."forum_topics SET status = 1 WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+		$sql->query_inject("UPDATE ".PREFIX."forum_topics SET status = 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
 				
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_UNLOCK_TOPIC, 0, 'topic' . transid('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));

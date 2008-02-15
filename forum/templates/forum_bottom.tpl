@@ -1,23 +1,19 @@
 		<div class="module_position" style="margin-top:15px;">
-			<div class="row2">
+			<div class="forum_links" style="border-bottom:none;">
 				<span style="float:left;">
-					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &bull; <a href="stats.php{SID}">{L_STATS}</a> <a href="stats.php{SID}"><img src="{MODULE_DATA_PATH}/images/stats.png" alt="" class="valign_middle" /></a>
+					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> 
 				</span>
 				<span style="float:right;">
-					{U_SEARCH}
-					{U_TOPIC_TRACK}
-					{U_LAST_MSG_READ}
-					{U_MSG_NOT_READ}
-					{U_MSG_SET_VIEW}
-				</span>&nbsp;
+					<img src="{MODULE_DATA_PATH}/images/favorite_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK}
+					<img src="{MODULE_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ}
+					<img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> {U_MSG_NOT_READ}
+					<img src="{MODULE_DATA_PATH}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
+				</span>
+				<div class="spacer"></div>
 			</div>
-			# IF C_TOTAL_POST #
+			
 			<div class="forum_online">
-				{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}.
-			</div>
-			# ENDIF #
-			# IF USERS_ONLINE #
-			<div class="forum_online">
+				# IF USERS_ONLINE #
 				<span style="float:left;">
 					{TOTAL_ONLINE} {L_USER} {L_ONLINE} :: {ADMIN} {L_ADMIN}, {MODO} {L_MODO}, {MEMBER} {L_MEMBER} {L_AND} {GUEST} {L_GUEST}
 					<br />
@@ -51,6 +47,18 @@
 					# ENDIF #
 				</span>
 				<div class="spacer"></div>
+				# ENDIF #
+			
+				# IF C_TOTAL_POST #
+				<div style="margin-top:6px;">
+					<span style="float:left;">
+						{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
+					</span>
+					<span style="float:right;">
+						<a href="stats.php{SID}">{L_STATS}</a> <a href="stats.php{SID}"><img src="{MODULE_DATA_PATH}/images/stats.png" alt="" class="valign_middle" /></a>
+					</span>
+					<div class="spacer"></div>
+				</div>
+				# ENDIF #
 			</div>
-			# ENDIF #
 		</div>

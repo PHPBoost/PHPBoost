@@ -74,7 +74,13 @@ $LANG['explain_forum_groups'] = 'These configuration are only on the forum';
 $LANG['flood_auth'] = 'Allowed flood';
 $LANG['edit_mark_auth'] = 'Unactiv edit mark';
 $LANG['track_topic_auth'] = 'Unactiv tracked topics limit';
-		
+	
+//Require
+$LANG['require_topic_p'] = 'Please enter the number of topics per page!';
+$LANG['require_nbr_msg_p'] = 'Please enter the number of messages per page!';
+$LANG['require_time_new_msg'] = 'Please enter one duration for the sight of the new messages!';
+$LANG['require_topic_track_max'] = 'Please enter the maximum number of tracked topics!';
+	
 //Error
 $LANG['e_topic_lock_forum'] = 'Locked topic, you can\'t post';
 $LANG['e_cat_lock_forum'] = 'Locked category, you can\'t post new topic or message';
@@ -90,6 +96,9 @@ $LANG['alert_unlock_topic'] = 'Unlock this Topic ?';
 $LANG['alert_move_topic'] = 'Move this Topic ?';
 $LANG['alert_warning'] = 'Warning this member?';
 $LANG['alert_history'] = 'Delete history?';
+$LANG['confirm_mark_as_read'] = 'Mark all topics as read?';
+$LANG['confirm_mark_as_read_forum'] = 'Mark topics of this forum as read';
+$LANG['confirm_mark_as_read_favorite'] = 'Mark tracked topics as read';
 
 //Titres
 $LANG['title_forum'] = 'Forum';
@@ -98,13 +107,14 @@ $LANG['title_post'] = 'Post';
 $LANG['title_search'] = 'Search';
 
 //Forum
-$LANG['forum_index'] = 'Forum index';
+$LANG['forum_index'] = 'Index';
 $LANG['forum'] = 'Forum';
 $LANG['forum_s'] = 'Forums';
 $LANG['subforum_s'] = 'Sous-forums';
 $LANG['topic'] = 'Topic';
 $LANG['topic_s'] = 'Topics';
 $LANG['author'] = 'Author';
+$LANG['advanced_search'] = 'Advanced search';
 $LANG['distributed'] = 'Distributed in';
 $LANG['mark_as_read'] = 'Mark all topics as read';
 $LANG['show_topic_track'] = 'Tracked topics';
