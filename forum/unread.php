@@ -143,8 +143,9 @@ if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(
 	//Le membre a déjà lu tous les messages.
 	if( $nbr_topics == 0 )
 	{
-		$template->assign_block_vars('msg_read', array(
-			'L_MSG_NOT_READ' => $LANG['show_not_read']
+		$template->assign_vars(array(
+			'C_NO_MSG_NOT_READ' => true,
+			'L_MSG_NOT_READ' => $LANG['no_msg_not_read']
 		));		
 	}
 

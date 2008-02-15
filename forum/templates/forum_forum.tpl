@@ -91,19 +91,21 @@
 		<div class="module_position">
 			<div class="module_contents forum_contents">
 				<table class="module_table" style="width:100%">
-					# START msg_read #
+					# IF C_NO_MSG_NOT_READ #
 					<tr>
 						<td class="forum_sous_cat" style="text-align:center;">
-							0 {msg_read.L_MSG_NOT_READ}
+							<strong>{L_MSG_NOT_READ}</strong>
 						</td>
 					</tr>	
-					# END msg_read #
+					# ENDIF #
 
 					# START topics #		
 					<tr>
+						# IF C_MASS_MODO_CHECK #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">
-							# IF C_MASS_MODO_CHECK # <input type="checkbox" name="ck{topics.ID}" /> # ENDIF #
+							<input type="checkbox" name="ck{topics.ID}" /> 
 						</td>
+						# ENDIF #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">
 							<img src="{MODULE_DATA_PATH}/images/{topics.ANNOUNCE}.gif" alt="" />
 						</td>
@@ -130,13 +132,13 @@
 					</tr>	
 					# END topics #
 					
-					# START no_topics #
+					# IF C_NO_TOPICS #
 					<tr>
 						<td class="forum_sous_cat" style="text-align:center;">
-							{no_topics.L_NO_TOPICS}
+							<strong>{L_NO_TOPICS}</strong>
 						</td>
 					</tr>
-					# END no_topics #
+					# ENDIF #
 				</table>		
 			</div>
 		</div>
