@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-include_once ( '../includes/begin.php' );
-define ( 'TITLE', '' );
-include_once ( '../includes/header.php' );
+include_once('../includes/begin.php');
+define('TITLE', '');
+include_once('../includes/header.php');
 
-redirect ( HOST.DIR.'/search/search.php' );
+redirect(HOST.DIR.'/search/search.php');
 
 ?>
