@@ -112,17 +112,18 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 	$l_admin = ($count_admin > 1) ? $LANG['admin_s'] : $LANG['admin'];
 
 	$template->assign_vars(array(
-		'L_VISITOR' => $l_guest,
 		'VISIT' => $count_visit,
-		'L_MEMBER' => $l_member,
 		'MEMBER' => $count_member,
-		'L_MODO' => $l_modo,
 		'MODO' => $count_modo,
-		'L_ADMIN' => $l_admin,
 		'ADMIN' => $count_admin,
 		'MORE' => $more,	
 		'TOTAL' => $total,
-		'L_ONLINE' => $LANG['online']
+		'L_VISITOR' => $l_guest,
+		'L_MEMBER' => $l_member,
+		'L_MODO' => $l_modo,
+		'L_ADMIN' => $l_admin,
+		'L_ONLINE' => $LANG['online'],
+		'L_TOTAL' => $LANG['total']
 	));
 
 	$template->pparse('online'); 

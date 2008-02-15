@@ -52,6 +52,12 @@ $LANG['rank_vote'] = 'Rang pour pouvoir voter';
 $LANG['poll_date'] = 'Date du sondage';
 $LANG['poll_date_explain'] = '(jj/mm/aa) Laisser vide pour mettre la date d\'aujourd\'hui';
 
+//Requis
+$LANG['require_poll_entry'] = 'Veuillez entrer un nombre d\'entrées pour le sondage!';
+$LANG['require_question'] = 'Veuillez entrer une question pour le sondage!';
+$LANG['require_answer'] = 'Veuillez entrer une réponse';
+$LANG['require_answer_type'] = 'Veuillez entrer le type de réponse du sondage!';
+
 //Erreurs
 $LANG['e_unexist_poll'] = 'Le sondage que vous avez demandé n\'existe pas';
 $LANG['e_no_poll'] = 'Aucun sondage disponible';

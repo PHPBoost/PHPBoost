@@ -93,28 +93,12 @@ $LANG['require_session_invit'] = 'Veuillez entrer une durée pour la session invi
 $LANG['require_pass'] = 'Veuillez entrer un mot de passe!';
 $LANG['require_rank'] = 'Veuillez entrer un rang!';
 $LANG['require_code'] = 'Veuillez entrer un code pour le smiley!';
-$LANG['require_poll_entry'] = 'Veuillez entrer un nombre d\'entrées pour le sondage!';
-$LANG['require_question'] = 'Veuillez entrer une question pour le sondage!';
-$LANG['require_answer'] = 'Veuillez entrer une réponse';
-$LANG['require_answer_type'] = 'Veuillez entrer le type de réponse du sondage!';
-$LANG['require_topic_p'] = 'Veuillez entrer le nombre de sujets par page!';
-$LANG['require_nbr_msg_p'] = 'Veuillez entrer le nombre de messages par page!';
-$LANG['require_time_new_msg'] = 'Veuillez entrer une durée pour la vue des nouveaux messages!';
-$LANG['require_topic_track_max'] = 'Veuillez entrer le nombre maximum de sujet suivis!';
 $LANG['require_max_width'] = 'Veuillez entrer une largeur maximale pour les avatars!';
 $LANG['require_height'] = 'Veuillez entrer une hauteur maximale pour les avatars!';
 $LANG['require_weight'] = 'Veuillez entrer un poids maximal pour les avatars!';
 $LANG['require_rank_name'] = 'Veuillez entrer un nom pour le rang!';
 $LANG['require_nbr_msg_rank'] = 'Veuillez entrer un nombre de messages pour le rang!';
 $LANG['require_subcat'] = 'Veuillez sélectionner une sous-catégorie!';
-$LANG['require_height'] = 'Veuillez entrer une hauteur maximale pour les miniatures!';
-$LANG['require_height_max'] = 'Veuillez entrer une hauteur maximale pour les photos!';
-$LANG['require_width_max'] = 'Veuillez entrer une largeur maximale pour les photos!';
-$LANG['require_width'] = 'Veuillez entrer une largeur maximale pour les miniatures!'; 
-$LANG['require_weight_max'] = 'Veuillez entrez un poids maximum pour la photo!'; 
-$LANG['require_row'] = 'Veuillez entrer un nombre de colonne(s) pour la galerie!'; 
-$LANG['require_img_p'] = 'Veuillez entrer le nombre de photos par page!'; 
-$LANG['require_quality'] = 'Veuillez entrer une qualité pour les miniatures!';
 $LANG['require_file_name'] = 'Vous devez rentrer un nom de fichier';
 
 //Confirmations.
@@ -416,7 +400,7 @@ $LANG['menu_right'] = 'Menu droit';
 $LANG['menu_top_central'] = 'Menu central haut';
 $LANG['menu_bottom_central'] = 'Menu central bas';
 $LANG['menu_footer'] = 'Pied de page';
-
+		
 //Smiley
 $LANG['upload_smiley'] = 'Uploader un smiley';
 $LANG['smiley'] = 'Smiley';
@@ -443,6 +427,8 @@ $LANG['exensible'] = 'Extensible';
 $LANG['del_theme'] = 'Suppression du thème';
 $LANG['del_theme_files'] = 'Supprimer tous les fichiers du thème';
 $LANG['explain_default_theme'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé, ou réservé';
+$LANG['activ_left_column'] = 'Activer la colonne de gauche';
+$LANG['activ_right_column'] = 'Activer la colonne de droite';
 		
 //Langues
 $LANG['upload_lang'] = 'Uploader une langue';

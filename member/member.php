@@ -491,7 +491,7 @@ if( !empty($id_get) ) //Espace membre
 			
 			if( !empty($user_mail) )
 			{
-				$check_mail = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login <> '" . securit($session->data['login']) . "'", __LINE__, __FILE__);		
+				$check_mail = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login <> '" . addslashes($session->data['login']) . "'", __LINE__, __FILE__);		
 				$user_mail = "user_mail = '" . $user_mail . "', ";				
 				if( $check_mail >= 1 ) //Autre utilisateur avec le même mail!
 					redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#errorh');

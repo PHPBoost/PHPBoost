@@ -38,7 +38,7 @@
 					</p>
 					<p>
 						{U_REGISTER}
-					</p>	
+					</p>&nbsp;
 				</form>	
 			</div>		
 			<div class="module_mini_bottom">

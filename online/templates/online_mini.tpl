@@ -10,8 +10,8 @@
 				# END online #
 				{MORE}					
 				
-				<div class="text_small" style="text-align:left;padding-left: 8px;padding-top: 10px;">
-					Total: {TOTAL}
+				<div class="text_small" style="margin-top:10px;">
+					{L_TOTAL} : {TOTAL}
 				</div>
 			</div>
 			<div class="module_mini_bottom">
