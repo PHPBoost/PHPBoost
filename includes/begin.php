@@ -100,8 +100,8 @@ $CONFIG['theme'] = find_require_dir('../templates/', (empty($session->data['user
 //Si le dossier de langue n'existe pas on prend le suivant exisant.
 $CONFIG['lang'] = find_require_dir('../lang/', (empty($session->data['user_lang']) ? $CONFIG['lang'] : $session->data['user_lang']));
 $LANG = array();
-include_once('../lang/' . $CONFIG['lang'] . '/main.php'); //!\\ Langues //!\\
-include_once('../lang/' . $CONFIG['lang'] . '/errors.php'); //Inclusion des langues des erreurs.
+require_once('../lang/' . $CONFIG['lang'] . '/main.php'); //!\\ Langues //!\\
+require_once('../lang/' . $CONFIG['lang'] . '/errors.php'); //Inclusion des langues des erreurs.
 
 //Chargement du cache du jour actuel.
 $cache->load_file('day');
