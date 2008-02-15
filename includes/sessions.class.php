@@ -230,7 +230,7 @@ class Sessions
 		if( $this->data['user_id'] !== -1 && !empty($this->data['user_id']) )
 		{	
 			//Récupère également les champs membres supplémentaires
-			$result = $sql->query_inject("SELECT m.user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_readonly, me.*
+			$result = $sql->query_inject("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_readonly, me.*
 			FROM ".PREFIX."member m
 			LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $this->data['user_id'] . "'
 			WHERE m.user_id = '" . $this->data['user_id'] . "'", __LINE__, __FILE__);	
@@ -238,7 +238,7 @@ class Sessions
 			$this->data = array_merge($userdata, $this->data); //Fusion des deux tableaux.
 		}	
 		
-		$this->data['user_id'] = isset($userdata['user_id']) ? (int)$userdata['user_id'] : -1;
+		$this->data['user_id'] = isset($userdata['m_user_id']) ? (int)$userdata['m_user_id'] : -1;
 		$this->data['login'] = isset($userdata['login']) ? $userdata['login'] : '';	
 		$this->data['level'] = isset($userdata['level']) ? (int)$userdata['level'] : -1;		
 		$this->data['user_groups'] = isset($userdata['user_groups']) ? $userdata['user_groups'] : '';
