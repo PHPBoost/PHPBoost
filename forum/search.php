@@ -235,7 +235,7 @@ if( !empty($valid_search) && !empty($search) )
 		$errorh->error_handler($LANG['invalid_req'], E_USER_NOTICE);
 }
 elseif( !empty($valid_search) )
-	$errorh->error_handler($LANG['incomplete'], E_USER_WARNING);
+	$errorh->error_handler($LANG['invalid_req'], E_USER_WARNING);
 	
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
