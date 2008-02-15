@@ -125,7 +125,7 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 				'REDIRECTED' => sprintf($LANG['wiki_redirecting_from'], '<a href="' . transid('wiki.php?title=' . $encoded_title, $encoded_title) . '">' . $ex_title . '</a>')
 			));
 			$general_auth = empty($article_infos['auth']) ? true : false;
-			echo $general_auth;
+			
 			if( ((!$general_auth || $groups->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $groups->check_auth($article_auth , WIKI_REDIRECT))) )
 			{
 				$template->assign_block_vars('redirect.remove_redirection', array(
