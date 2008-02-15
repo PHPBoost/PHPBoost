@@ -352,7 +352,8 @@ if( !empty($id_get) )
 	//Affichage message aucun topics.
 	if( $nbr_topics_display == 0 )
 	{
-		$template->assign_block_vars('no_topics', array(
+		$template->assign_vars(array(
+			'C_NO_TOPICS' => true,
 			'L_NO_TOPICS' => $LANG['no_topics']
 		));
 	}
