@@ -1,5 +1,5 @@
 		<div class="module_mini_container">
-			<ul style="margin:0px;padding:0px;margin-left:-1px;list-style-type:none;">
+			<ul style="margin:0px;padding:0px;list-style-type:none;">
 			# START links #		
 				# START links.title #			
 				<li class="module_mini_top">
@@ -13,6 +13,6 @@
 				# END links.subtitle #		
 			# END links #
 			</ul>
-			<div class="module_mini_bottom_left">&nbsp;
+			<div class="module_mini_bottom">&nbsp;
 			</div>
 		</div>
