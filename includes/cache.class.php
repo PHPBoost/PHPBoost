@@ -254,22 +254,22 @@ class Cache
 		global $sql;
 		
 		$code = '';
-		$result = $sql->query_while("SELECT name, code, contents, side, secure, added
+		$result = $sql->query_while("SELECT name, code, contents, location, secure, added
 		FROM ".PREFIX."modules_mini 
 		WHERE activ = 1
-		ORDER BY side, class", __LINE__, __FILE__);
+		ORDER BY location, class", __LINE__, __FILE__);
 		while( $row = $sql->sql_fetch_assoc($result) )
 		{
 			if( $row['added'] == '0' )
 			{
-				if( $row['side'] == '0' )
+				if( $row['location'] == '0' )
 					$code .= 'if( $BLOCK_top && $session->data[\'level\'] >= ' . $row['secure'] . ' ){' . $row['code'] . '}' . "\n";
 				else
 					$code .= 'if( $BLOCK_bottom && $session->data[\'level\'] >= ' . $row['secure'] . ' ){' . $row['code'] . '}' . "\n";
 			}
 			else
 			{
-				if( $row['side'] == '0' )
+				if( $row['location'] == '0' )
 					$code .= 'if( $BLOCK_top && $session->data[\'level\'] >= ' . $row['secure'] . ' ){' . 
 					"\$template->set_filenames(array('modules_mini' => '../templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\$template->assign_vars(array('MODULE_MINI_NAME' => " . var_export($row['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($row['contents'], true) . "));\$template->pparse('modules_mini');" . '}' . "\n";
 				else
