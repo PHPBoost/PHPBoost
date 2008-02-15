@@ -34,6 +34,11 @@ require_once('../includes/header.php');
 //Redirection changement de catégorie.
 if( !empty($_POST['change_cat']) )
 	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
+if( !$session->check_auth($session->data, 0) ) //Réservé aux membres.
+{
+	header('location: ' . HOST . DIR . '/member/error.php'); 
+	exit;
+}
 
 if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(s) du membre.
 {
@@ -43,21 +48,15 @@ if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(
 		'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
 	));
 	
-	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-	$max_time_config = (time() - $CONFIG_FORUM['view_time']);
-	$extend_field = '';
-	$extend_field_s = '';
-	if( $session->data['user_id'] != -1 ) //Jointure pour les membres pour des raisons d'optimisation SQL
-	{
-		$extend_field = "LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $session->data['user_id'] . "'";
-		$extend_field_s = ', me.last_view_forum';
-	}
-
 	include_once('../includes/pagination.class.php'); 
 	$pagination = new Pagination();
 
+	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
+	$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : time();
+	$max_time = (time() - $CONFIG_FORUM['view_time']);
+	$max_time_msg = ($session->data['last_view_forum'] > $max_time) ? $session->data['last_view_forum'] : $max_time;
+	
 	$result = $sql->query_while("SELECT m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
-	" . $extend_field_s . "
 	FROM ".PREFIX."forum_view v
 	LEFT JOIN ".PREFIX."forum_topics t ON t.id = v.idtopic
 	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat 
@@ -65,8 +64,7 @@ if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $session->data['user_id'] . "'
 	LEFT JOIN ".PREFIX."member m1 ON m1.user_id = t.user_id
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = t.last_user_id
-	" . $extend_field . "
-	WHERE t.last_timestamp >= '" . $max_time_config . "' AND v.user_id = '" . $session->data['user_id'] . "'
+	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . $session->data['user_id'] . "'
 	ORDER BY t.last_timestamp DESC
 	" . $sql->sql_limit($pagination->first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
 	while ($row = $sql->sql_fetch_assoc($result))
@@ -78,8 +76,7 @@ if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(
 			
 		//Vérifications des topics Lu/non Lus.
 		$img_announce = 'announce';		
-		$max_time = ($row['last_view_forum'] > $max_time_config) ? $row['last_view_forum'] : $max_time_config;
-		if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time ) //Nouveau message (non lu).
+		if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg ) //Nouveau message (non lu).
 				$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
 		if( $row['type'] == '0' && $row['status'] != '0' ) //Topic non vérrouillé de type normal avec plus de pagination_msg réponses.
 			$img_announce .= ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg']) ? '_hot' : '';			
@@ -134,14 +131,15 @@ if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(
 	$nbr_topics = $sql->query("SELECT COUNT(*)
 	FROM ".PREFIX."forum_view v
 	LEFT JOIN ".PREFIX."forum_topics t ON t.id = v.idtopic
-	WHERE t.last_timestamp >= '" . $max_time_config . "' AND v.user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
+	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
 	
 	//Le membre a déjà lu tous les messages.
 	if( $nbr_topics == 0 )
 	{
-		$template->assign_block_vars('msg_read', array(
-			'L_MSG_NOT_READ' => $LANG['no_last_read']
-		));		
+		$template->assign_vars(array(
+			'C_NO_TOPICS' => true,
+			'L_NO_TOPICS' => '0 ' . $LANG['no_last_read']
+		));
 	}
 
 	$template->assign_vars(array(

@@ -65,6 +65,9 @@ $template->assign_vars(array(
 	'SID' => SID,
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
+	'FORUM_NAME' => $LANG['moderation_panel'] . ' : ' . $LANG['moderation_forum'],
+	'L_SEARCH' => $LANG['search'],
+	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
 	'L_USERS_WARNING' => $LANG['warning_management'],
 	'L_ALERT_MANAGEMENT' => $LANG['alert_management'],
@@ -696,10 +699,12 @@ $template->assign_vars(array(
 	'L_AND' => $LANG['and'],
 	'L_ONLINE' => strtolower($LANG['online']),
 	'L_FORUM_INDEX' => $LANG['forum_index'],		
+	'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
 	'U_SEARCH' => '<a class="small_link" href="search.php' . SID . '" title="' . $LANG['search'] . '">' . $LANG['search'] . '</a> &bull;',
 	'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' .SID . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a> &bull;',
-	'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' . SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . '</a>',
+	'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' . SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . '</a> &bull;',
 	'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php' . SID . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a> &bull;',
+	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'U_ONCHANGE' => "'forum" . transid(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'"
 ));
 	

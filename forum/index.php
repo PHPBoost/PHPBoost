@@ -42,15 +42,7 @@ $template->set_filenames(array(
 	'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
 ));
 
-//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-$max_time_config = (time() - $CONFIG_FORUM['view_time']);
-$extend_field = '';
-$extend_field_s = '';
-if( $session->data['user_id'] != -1 ) //Jointure pour les membres pour des raisons d'optimisation SQL
-{
-	$extend_field = "LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $session->data['user_id'] . "'";
-	$extend_field_s = ', me.last_view_forum';
-}
+$is_guest = ($session->data['user_id'] !== -1) ? false : true;
 
 //Affichage des sous-catégories de la catégorie.
 $display_sub_cat = ' AND c.level BETWEEN 0 AND 1';
@@ -64,138 +56,148 @@ if( !empty($id_get) )
 
 $module_data_path = $template->module_data_path('forum');
 
+//Vérification des autorisations.
+$auth_cats = '';
+if( is_array($CAT_FORUM) )
+{
+	foreach($CAT_FORUM as $idcat => $key)
+	{
+		if( !$groups->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+			$auth_cats .= $idcat . ',';
+	}
+	$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
+}
+
+//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
+$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : time();
+$max_time = (time() - $CONFIG_FORUM['view_time']);
+$max_time_msg = ($session->data['last_view_forum'] > $max_time) ? $session->data['last_view_forum'] : $max_time;
+
 $total_topic = 0;
 $total_msg = 0;	
 $cat_left = 0;
 $cat_right = 0;
-$is_guest = ($session->data['user_id'] !== -1) ? false : true;
 //On liste les catégories et sous-catégories.
 $result = $sql->query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid, 
 t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
-" . $extend_field_s . "
 FROM ".PREFIX."forum_cats c
 LEFT JOIN ".PREFIX."forum_topics t ON t.id = c.last_topic_id
 LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $session->data['user_id'] . "' AND v.idtopic = t.id
 LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
-" . $extend_field . "
-WHERE c.aprob = 1 " . $display_sub_cat . "
+WHERE c.aprob = 1 " . $display_sub_cat . " " . $auth_cats . "
 ORDER BY c.id_left", __LINE__, __FILE__);
 while ($row = $sql->sql_fetch_assoc($result))
 {	
-	if( $groups->check_auth($CAT_FORUM[$row['cid']]['auth'], READ_CAT_FORUM) )
+	$template->assign_block_vars('all', array(
+	));
+		
+	//Si c'est une catégorie
+	if( $row['level'] === '0' )
 	{
-		$template->assign_block_vars('all', array(
+		$template->assign_block_vars('all.cats', array(
+			'IDCAT' => $row['cid'],
+			'NAME' => $row['name'],
+			'U_FORUM_VARS' => transid('index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . url_encode_rewrite($row['name']) . '.php')
 		));
-			
-		//Si c'est une catégorie
-		if( $row['level'] === '0' )
+		$cat_left = $CAT_FORUM[$row['cid']]['id_left'];
+		$cat_right = $CAT_FORUM[$row['cid']]['id_right'];			
+	}
+	//On liste les sous-catégories
+	else
+	{
+		$subforums = '';
+		if( !empty($id_get) )
 		{
 			$template->assign_block_vars('all.cats', array(
-				'IDCAT' => $row['cid'],
-				'NAME' => $row['name'],
-				'U_FORUM_VARS' => transid('index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . url_encode_rewrite($row['name']) . '.php')
+				'IDCAT' => $id_get,
+				'NAME' => $CAT_FORUM[$id_get]['name'],
+				'U_FORUM_VARS' => transid('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
 			));
-			$cat_left = $CAT_FORUM[$row['cid']]['id_left'];
-			$cat_right = $CAT_FORUM[$row['cid']]['id_right'];			
+			$cat_left = $CAT_FORUM[$id_get]['id_left'];
+			$cat_right = $CAT_FORUM[$id_get]['id_right'];
+			$id_get = '';
 		}
-		//On liste les sous-catégories
-		else
+		else //Vérirication de l'existance de sous forums.
 		{
-			$subforums = '';
-			if( !empty($id_get) )
-			{
-				$template->assign_block_vars('all.cats', array(
-					'IDCAT' => $id_get,
-					'NAME' => $CAT_FORUM[$id_get]['name'],
-					'U_FORUM_VARS' => transid('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
-				));
-				$cat_left = $CAT_FORUM[$id_get]['id_left'];
-				$cat_right = $CAT_FORUM[$id_get]['id_right'];
-				$id_get = '';
-			}
-			else //Vérirication de l'existance de sous forums.
-			{
-				if( $CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1 )
-				{		
-					foreach($CAT_FORUM as $idcat => $key) //Listage des sous forums.
+			if( $CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1 )
+			{		
+				foreach($CAT_FORUM as $idcat => $key) //Listage des sous forums.
+				{
+					if( $CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'] )
 					{
-						if( $CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'] )
+						if( $CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1) )
 						{
-							if( $CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1) )
+							if( $groups->check_auth($CAT_FORUM[$row['cid']]['auth'], READ_CAT_FORUM) )
 							{
-								if( $groups->check_auth($CAT_FORUM[$row['cid']]['auth'], READ_CAT_FORUM) )
-								{
-									$link = '<a href="forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
-									$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';				
-								}	
-							}
+								$link = '<a href="forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
+								$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';				
+							}	
 						}
-					}	
-					$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
-				}
-			}
-			
-			if( !empty($row['last_topic_id']) )
-			{
-				//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
-				if( !empty($row['last_view_id']) ) //Calcul de la page du last_view_id réalisé dans topic.php
-				{
-					$last_msg_id = $row['last_view_id']; 
-					$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
-					$last_page_rewrite = '-0-' . $row['last_view_id'];
-				}
-				else
-				{
-					$last_msg_id = $row['last_msg_id']; 
-					$last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
-					$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
-					$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';					
+					}
 				}	
-
-				$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);			
-				$last_topic_title = (strlen(html_entity_decode($last_topic_title)) > 20) ? substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;			
-				$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
-				
-				$last = '<a href="topic' . transid('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . url_encode_rewrite($row['title'])  . '.php') . '" class="small_link">' . $last_topic_title . '</a><br />
-				<a href="topic' . transid('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . url_encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />' . $LANG['by'] . ' ' . ($row['last_user_id'] != '-1' ? '<a href="../member/member' . transid('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>');
-				
+				$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
+			}
+		}
+		
+		if( !empty($row['last_topic_id']) )
+		{
+			//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
+			if( !empty($row['last_view_id']) ) //Calcul de la page du last_view_id réalisé dans topic.php
+			{
+				$last_msg_id = $row['last_view_id']; 
+				$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
+				$last_page_rewrite = '-0-' . $row['last_view_id'];
 			}
 			else
 			{
-				$row['last_timestamp'] = '';
-				$last = '<br />' . $LANG['no_message'] . '<br /><br />';
-			}
+				$last_msg_id = $row['last_msg_id']; 
+				$last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
+				$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
+				$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';					
+			}	
 
-			//Vérifications des topics Lu/non Lus.
-			$img_announce = 'announce';		
-			if( !$is_guest )
-			{
-				$max_time = ($row['last_view_forum'] > $max_time_config) ? $row['last_view_forum'] : $max_time_config;
-				if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time ) //Nouveau message (non lu).
-					$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
-			}
-			$img_announce .= ($row['status'] == '0') ? '_lock' : '';
+			$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);			
+			$last_topic_title = (strlen(html_entity_decode($last_topic_title)) > 20) ? substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;			
+			$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
 			
-			$total_topic += $row['nbr_topic'];
-			$total_msg += $row['nbr_msg'];
+			$last = '<a href="topic' . transid('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . url_encode_rewrite($row['title'])  . '.php') . '" class="small_link">' . $last_topic_title . '</a><br />
+			<a href="topic' . transid('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . url_encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />' . $LANG['by'] . ' ' . ($row['last_user_id'] != '-1' ? '<a href="../member/member' . transid('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>');
 			
-			$template->assign_block_vars('all.s_cats', array(
-				'ANNOUNCE' => '<img src="' . $module_data_path . '/images/' . $img_announce . '.gif" alt="" />',
-				'NAME' => $row['name'],
-				'DESC' => $row['subname'],
-				'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
-				'NBR_TOPIC' => $row['nbr_topic'],
-				'NBR_MSG' => $row['nbr_msg'],
-				'U_FORUM_VARS' => transid('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . url_encode_rewrite($row['name']) . '.php'),
-				'U_LAST_TOPIC' => $last				
-			));
 		}
-		
-		if( $cat_right - $cat_left == 1 || ($CAT_FORUM[$row['cid']]['id_right'] + 1) == $cat_right )
+		else
 		{
-			$template->assign_block_vars('all.end_s_cats', array(
-			));	
+			$row['last_timestamp'] = '';
+			$last = '<br />' . $LANG['no_message'] . '<br /><br />';
 		}
+
+		//Vérifications des topics Lu/non Lus.
+		$img_announce = 'announce';		
+		if( !$is_guest )
+		{
+			if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg ) //Nouveau message (non lu).
+				$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
+		}
+		$img_announce .= ($row['status'] == '0') ? '_lock' : '';
+		
+		$total_topic += $row['nbr_topic'];
+		$total_msg += $row['nbr_msg'];
+		
+		$template->assign_block_vars('all.s_cats', array(
+			'ANNOUNCE' => '<img src="' . $module_data_path . '/images/' . $img_announce . '.gif" alt="" />',
+			'NAME' => $row['name'],
+			'DESC' => $row['subname'],
+			'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
+			'NBR_TOPIC' => $row['nbr_topic'],
+			'NBR_MSG' => $row['nbr_msg'],
+			'U_FORUM_VARS' => transid('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . url_encode_rewrite($row['name']) . '.php'),
+			'U_LAST_TOPIC' => $last				
+		));
+	}
+	
+	if( $cat_right - $cat_left == 1 || ($CAT_FORUM[$row['cid']]['id_right'] + 1) == $cat_right )
+	{
+		$template->assign_block_vars('all.end_s_cats', array(
+		));	
 	}
 }
 $sql->close($result);
@@ -233,6 +235,17 @@ while( $row = $sql->sql_fetch_assoc($result) )
 }
 $sql->close($result);
 
+
+if( !$is_guest )
+{
+	//Requête pour compter le nombre de messages non lus.
+	$nbr_msg_not_read = $sql->query("SELECT COUNT(*)
+	FROM ".PREFIX."forum_topics t
+	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
+	LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id AND v.user_id = '" . $session->data['user_id'] . "'
+	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "", __LINE__, __FILE__);
+}
+
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
 $template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
@@ -254,7 +267,7 @@ $template->assign_vars(array(
 	'U_SEARCH' => '<a class="small_link" href="search.php' . SID . '" title="' . $LANG['search'] . '">' . $LANG['search'] . '</a> &bull;',
 	'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' .SID . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a> &bull;',
 	'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php' . SID . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a> &bull;',
-	'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' .SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . '</a> &bull;',
+	'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' .SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . (!$is_guest ? ' (' . $nbr_msg_not_read . ')' : '') . '</a> &bull;',
 	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'L_TOPIC' => ($total_topic > 1) ? $LANG['topic_s'] : $LANG['topic'],
 	'L_MESSAGE' => ($total_msg > 1) ? $LANG['message_s'] : $LANG['message'],

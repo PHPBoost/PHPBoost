@@ -68,22 +68,16 @@ if( !empty($id_get) )
 	
 	//Invité?	
 	$is_guest = ($session->data['user_id'] !== -1) ? false : true;
-
 	$module_data_path = $template->module_data_path('forum');
+	
+	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
+	$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : time();
+	$max_time = (time() - $CONFIG_FORUM['view_time']);
+	$max_time_msg = ($session->data['last_view_forum'] > $max_time) ? $session->data['last_view_forum'] : $max_time;
 	
 	//Affichage des sous forums s'il y en a.
 	if( ($CAT_FORUM[$id_get]['id_right'] - $CAT_FORUM[$id_get]['id_left']) > 1 ) //Intervalle > 1 => sous forum présent.
 	{
-		//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-		$max_time_config = (time() - $CONFIG_FORUM['view_time']);
-		$extend_field = '';
-		$extend_field_s = '';
-		if( !$is_guest ) //Jointure pour les membres pour des raisons d'optimisation SQL
-		{
-			$extend_field = "LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $session->data['user_id'] . "'";
-			$extend_field_s = ', me.last_view_forum';
-		}
-	
 		$template->assign_block_vars('cat', array(
 			'L_NAME' => $LANG['sub_forums']
 		));
@@ -91,12 +85,10 @@ if( !empty($id_get) )
 		//On liste les sous-catégories.
 		$result = $sql->query_while("SELECT c.id AS cid, c.name, c.subname, c.nbr_topic, c.nbr_msg, c.status, t.id AS tid, 
 		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
-		" . $extend_field_s . "
 		FROM ".PREFIX."forum_cats c
 		LEFT JOIN ".PREFIX."forum_topics t ON t.id = c.last_topic_id
 		LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $session->data['user_id'] . "' AND v.idtopic = t.id
 		LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
-		" . $extend_field . "
 		WHERE c.aprob = 1 
 		AND c.id_left > '" . $CAT_FORUM[$id_get]['id_left'] . "' AND c.id_right < '" . $CAT_FORUM[$id_get]['id_right'] . "' AND c.level = '" . $CAT_FORUM[$id_get]['level'] . "' + 1
 		ORDER BY c.id_left ASC", __LINE__, __FILE__);
@@ -159,8 +151,7 @@ if( !empty($id_get) )
 				$img_announce = 'announce';		
 				if( !$is_guest )
 				{
-					$max_time = ($row['last_view_forum'] > $max_time_config) ? $row['last_view_forum'] : $max_time_config;
-					if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time ) //Nouveau message (non lu).
+					if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg ) //Nouveau message (non lu).
 						$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
 				}
 				$img_announce .= ($row['status'] == '0') ? '_lock' : '';
@@ -256,26 +247,14 @@ if( !empty($id_get) )
 		'L_GO' => $LANG['go']
 	));		
 
-	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-	$max_time_config = (time() - $CONFIG_FORUM['view_time']);
-	$extend_field = '';
-	$extend_field_s = '';
-	if( $session->data['user_id'] != -1 ) //Jointure pour les membres pour des raisons d'optimisation SQL
-	{
-		$extend_field = "LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $session->data['user_id'] . "'";
-		$extend_field_s = ', me.last_view_forum';
-	}
-
 	$nbr_topics_display = 0;
 	$result = $sql->query_while("SELECT m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
-	" . $extend_field_s . "
 	FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $session->data['user_id'] . "' AND v.idtopic = t.id
 	LEFT JOIN ".PREFIX."member m1 ON m1.user_id = t.user_id
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = t.last_user_id
 	LEFT JOIN ".PREFIX."forum_poll p ON p.idtopic = t.id
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $session->data['user_id'] . "'
-	" . $extend_field . "
 	WHERE t.idcat = '" . $id_get . "'
 	ORDER BY t.type DESC , t.last_timestamp DESC
 	" . $sql->sql_limit($pagination->first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);	
@@ -290,8 +269,7 @@ if( !empty($id_get) )
 		if( !$is_guest ) //Non visible aux invités.
 		{
 			$new_msg = false;
-			$max_time = ($row['last_view_forum'] > $max_time_config) ? $row['last_view_forum'] : $max_time_config;
-			if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time ) //Nouveau message (non lu).
+			if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg ) //Nouveau message (non lu).
 			{	
 				$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
 				$new_msg = true;

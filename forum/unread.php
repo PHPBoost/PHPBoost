@@ -48,13 +48,14 @@ if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(
 		'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
 	));
 	
-	//Calcul du temps de péremption, ou de dernière vue des messages.
-	$last_view_forum = $sql->query("SELECT last_view_forum FROM ".PREFIX."member_extend WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
-	$max_time = ($last_view_forum > (time() - $CONFIG_FORUM['view_time'])) ? $last_view_forum : (time() - $CONFIG_FORUM['view_time']);
-			
 	include_once('../includes/pagination.class.php'); 
 	$pagination = new Pagination();
 
+	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
+	$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : time();
+	$max_time = (time() - $CONFIG_FORUM['view_time']);
+	$max_time_msg = ($session->data['last_view_forum'] > $max_time) ? $session->data['last_view_forum'] : $max_time;
+	
 	//Vérification des autorisations.
 	$auth_cats = '';
 	if( is_array($CAT_FORUM) )
@@ -75,7 +76,7 @@ if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $session->data['user_id'] . "'
 	LEFT JOIN ".PREFIX."member m1 ON m1.user_id = t.user_id
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = t.last_user_id
-	WHERE t.last_timestamp >= '" . $max_time . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "
+	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "
 	ORDER BY t.last_timestamp DESC 
 	" . $sql->sql_limit($pagination->first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
 	while( $row = $sql->sql_fetch_assoc($result) )
