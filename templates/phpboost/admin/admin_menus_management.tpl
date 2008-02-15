@@ -98,7 +98,7 @@
 										<a href="javascript:menu_display_block({mod_subheader.IDMENU});" onmouseover="menu_hide_block({mod_subheader.IDMENU}, 1);" onmouseout="menu_hide_block({mod_subheader.IDMENU}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
 									</div>
 									
-									<p>{mod_subheader.CONTENTS}</p>
+									<p>{mod_subheader.CONTENTS}</p>&nbsp;
 								</div>
 								<div class="module_mini_bottom_horizontal">
 								</div>
@@ -146,7 +146,7 @@
 										</div>
 									</div>
 									
-									<p>{mod_left.CONTENTS}</p>
+									<p>{mod_left.CONTENTS}</p>&nbsp;
 								</div>
 								<div class="module_mini_bottom">
 								</div>
@@ -195,7 +195,7 @@
 												<a href="javascript:menu_display_block({mod_topcentral.IDMENU});" onmouseover="menu_hide_block({mod_topcentral.IDMENU}, 1);" onmouseout="menu_hide_block({mod_topcentral.IDMENU}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
 												</div>
 											</div>
-											<p>{mod_topcentral.CONTENTS}</p>
+											<p>{mod_topcentral.CONTENTS}</p>&nbsp;
 											<br />
 										</div>
 										<div class="module_mini_bottom_horizontal">
@@ -241,7 +241,7 @@
 											<a href="javascript:menu_display_block({mod_main.IDMENU});" onmouseover="menu_hide_block({mod_main.IDMENU}, 1);" onmouseout="menu_hide_block({mod_main.IDMENU}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
 										</div>
 										
-										<p>{mod_main.CONTENTS}</p>
+										<p>{mod_main.CONTENTS}</p>&nbsp;
 									</div>
 									<div class="module_mini_bottom">
 									</div>
@@ -287,7 +287,7 @@
 											</div>
 										</div>
 										
-										<p>{mod_bottomcentral.CONTENTS}</p>							
+										<p>{mod_bottomcentral.CONTENTS}</p>&nbsp;					
 									</div>
 									<div class="module_mini_bottom_horizontal">
 									</div>
@@ -335,7 +335,7 @@
 										</div>
 									</div>
 									
-									<p>{mod_right.CONTENTS}</p>							
+									<p>{mod_right.CONTENTS}</p>&nbsp;					
 								</div>
 								<div class="module_mini_bottom">
 								</div>

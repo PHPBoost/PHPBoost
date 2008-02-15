@@ -336,7 +336,6 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 	$title = !empty($_POST['title']) ? securit($_POST['title']) : '';
 	$icon = !empty($_POST['icon']) ? securit($_POST['icon']) : '';
 	$icon_path = !empty($_POST['icon_path']) ? securit($_POST['icon_path']) : '';
-	$views = !empty($_POST['views']) ? numeric($_POST['views']) : 0;
 	$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
@@ -406,7 +405,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 			$cat_clause = " idcat = '" . $idcat . "', ";
 		}	
 		
-		$sql->query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . $contents . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . ", views = '" . $views . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$sql->query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . $contents . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		include_once('../includes/rss.class.php'); //Flux rss regénéré!
 		$rss = new Rss('articles/rss.php');
