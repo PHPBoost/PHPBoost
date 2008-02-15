@@ -93,28 +93,12 @@ $LANG['require_session_invit'] = 'Please enter a duration for the session invite
 $LANG['require_pass'] = 'Please enter a password!';
 $LANG['require_rank'] = 'Please enter a rank!';
 $LANG['require_code'] = 'Please enter a code for the smiley!';
-$LANG['require_poll_entry'] = 'Please enter a number of entries for the poll!';
-$LANG['require_question'] = 'Please enter a question for the poll!';
-$LANG['require_answer'] = 'Please enter an answer';
-$LANG['require_answer_type'] = 'Please enter the type of response of the poll!';
-$LANG['require_topic_p'] = 'Please enter the number of topics per page!';
-$LANG['require_nbr_msg_p'] = 'Please enter the number of messages per page!';
-$LANG['require_time_new_msg'] = 'Please enter one duration for the sight of the new messages!';
-$LANG['require_topic_track_max'] = 'Please enter the maximum number of tracked topics!';
 $LANG['require_max_width'] = 'Please enter a maximum width for the avatar!';
 $LANG['require_height'] = 'Please enter a maximum height for the avatar!';
 $LANG['require_weight'] = 'Please enter a maximum weight for the avatar!';
 $LANG['require_rank_name'] = 'Please enter a name for the rank!';
 $LANG['require_nbr_msg_rank'] = 'Please enter a number of message for rank!';
 $LANG['require_subcat'] = 'Please enter a subcategory!';
-$LANG['require_height'] = 'Please enter a maximum height for the thumbtails!';
-$LANG['require_height_max'] = 'Please enter a maximum height for the pictures!';
-$LANG['require_width_max'] = 'Please enter a maximum width for the pictures!';
-$LANG['require_width'] = 'Please enter a maximum width for the thumbtails!'; 
-$LANG['require_weight_max'] = 'Please enter a maximum weight for the pictures!'; 
-$LANG['require_row'] = 'Please enter a number of columns for the gallery!'; 
-$LANG['require_img_p'] = 'Please enter the number of pictures per page!'; 
-$LANG['require_quality'] = 'Please enter the quality for thumbtails ';
 $LANG['require_file_name'] = 'Please enter a file name';
 
 //Confirmations.
@@ -443,6 +427,8 @@ $LANG['exensible'] = 'Extensible';
 $LANG['del_theme'] = 'Delete theme';
 $LANG['del_theme_files'] = 'Delete all theme files';
 $LANG['explain_default_theme'] = 'Default theme can\'t be uninstalled, unactivated or restricted';
+$LANG['activ_left_column'] = 'Activate left column';
+$LANG['activ_right_column'] = 'Activate right column';
 
 //Langues
 $LANG['upload_lang'] = 'Upload lang';

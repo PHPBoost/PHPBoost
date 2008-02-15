@@ -13,7 +13,7 @@
 				</p>	
 				<p>
 					<a href="../stats/stats.php{SID}" title="{L_MORE_STAT}" class="small_link">{L_MORE_STAT}</a>
-				</p>	
+				</p>&nbsp;
 			</div>
 			<div class="module_mini_bottom">
 			</div>

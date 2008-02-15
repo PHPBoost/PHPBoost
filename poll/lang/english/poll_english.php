@@ -52,6 +52,12 @@ $LANG['rank_vote'] = 'Rank to vote';
 $LANG['poll_date'] = 'Poll date';
 $LANG['poll_date_explain'] = '(dd/mm/yy) Leave empty to set today date';
 
+//Requis
+$LANG['require_poll_entry'] = 'Please enter a number of entries for the poll!';
+$LANG['require_question'] = 'Please enter a question for the poll!';
+$LANG['require_answer'] = 'Please enter an answer';
+$LANG['require_answer_type'] = 'Please enter the type of response of the poll!';
+
 //Error
 $LANG['e_unexist_poll'] = 'This poll doesn\'t exist';
 $LANG['e_no_poll'] = 'No polls available';

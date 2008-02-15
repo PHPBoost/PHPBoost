@@ -8,6 +8,7 @@
 					<span style="font-size:10px;">{question.QUESTION}</span>
 
 					<hr style="width:90%;" />
+					<br />
 					<p style="padding-left: 6px;text-align: left;">		
 						# START question.radio #
 						<label><input type="{question.radio.TYPE}" name="radio" value="{question.radio.NAME}" /> <span class="text_small">{question.radio.ANSWERS}</span></label>
@@ -22,7 +23,7 @@
 					<p>
 						<input class="submit" name="valid_poll" type="submit" value="{L_VOTE}" /><br />
 						<a class="small_link" href="../poll/poll{U_POLL_RESULT}">{L_POLL_RESULT}</a>
-					</p>
+					</p>&nbsp;
 				</div>	
 				<div class="module_mini_bottom">
 				</div>
@@ -39,8 +40,9 @@
 				<span style="font-size:10px;">{result.QUESTION}</span>
 				
 				<hr style="width:90%;" />
+				<br />
 				# START result.answers #					
-				<p style="padding-left: 6px;text-align: left;">
+				<p style="padding-left:6px;text-align: left;">
 					<span class="text_small">{result.answers.ANSWERS}</span>
 					<br />
 					<img src="../templates/{THEME}/images/poll_left.png" height="8px" width="" alt="{result.answers.WIDTH}%" title="{result.answers.WIDTH}%" /><img src="../templates/{THEME}/images/poll.png" height="8px" width="{result.answers.WIDTH}" alt="{result.answers.WIDTH}%" title="{result.answers.WIDTH}%" /><img src="../templates/{THEME}/images/poll_right.png" height="8px" width="" alt="{result.answers.WIDTH}%" title="{result.answers.WIDTH}%" />
@@ -50,9 +52,9 @@
 				</p>			
 				# END result.answers #
 				
-				<div class="text_small" style="padding-left: 8px;padding-top: 10px;">
+				<div class="text_small" style="margin-top:10px;">
 					{result.VOTES} {L_VOTE}
-				</div>
+				</div>&nbsp;
 			</div>		
 			<div class="module_mini_bottom">
 			</div>

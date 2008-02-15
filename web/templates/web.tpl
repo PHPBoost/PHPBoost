@@ -6,7 +6,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					{cat.L_CATEGORIES} {cat.EDIT}
+					<strong>{cat.L_CATEGORIES}</strong> {cat.EDIT}
 				</div>
 				<div style="float:right">
 					{cat.PAGINATION}
@@ -45,7 +45,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					{link.CAT_NAME}
+					<strong>{link.CAT_NAME}</strong>
 				</div>
 				<div style="float:right">
 					{PAGINATION}
@@ -123,7 +123,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					{web.NAME} {EDIT}{DEL}
+					<strong>{web.NAME}</strong> {EDIT}{DEL}
 				</div>
 				<div style="float:right">
 					{web.COM}

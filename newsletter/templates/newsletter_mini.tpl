@@ -5,7 +5,7 @@
 			<div class="module_mini_table">
 				<form action="{ACTION}" method="post">
 					<p>
-					<input type="text" name="mail_newsletter" maxlength="50" size="18" class="text" value="{USER_MAIL}" />
+						<input type="text" name="mail_newsletter" maxlength="50" size="18" class="text" value="{USER_MAIL}" />
 					</p>
 					<p>
 						<label><input type="radio" name="subscribe" value="subscribe" checked="checked" /> {SUBSCRIBE}</label>
@@ -17,7 +17,7 @@
 					</p>
 					<p>
 						<a href="{ARCHIVES_LINK}" style=" font-size:10px;">{L_ARCHIVES}</a>
-					</p>
+					</p>&nbsp;
 				</form>		
 			</div>
 			<div class="module_mini_bottom">

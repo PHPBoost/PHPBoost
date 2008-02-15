@@ -132,6 +132,16 @@ $LANG['vertical_dynamic_scroll'] = 'Vertical dynamic scroll';
 $LANG['horizontal_dynamic_scroll'] = 'Horizontal dynamic scroll';
 $LANG['column'] = 'Columns';
 
+//Require
+$LANG['require_height'] = 'Please enter a maximum height for the thumbtails!';
+$LANG['require_height_max'] = 'Please enter a maximum height for the pictures!';
+$LANG['require_width_max'] = 'Please enter a maximum width for the pictures!';
+$LANG['require_width'] = 'Please enter a maximum width for the thumbtails!'; 
+$LANG['require_weight_max'] = 'Please enter a maximum weight for the pictures!'; 
+$LANG['require_row'] = 'Please enter a number of columns for the gallery!'; 
+$LANG['require_img_p'] = 'Please enter the number of pictures per page!'; 
+$LANG['require_quality'] = 'Please enter the quality for thumbtails ';
+
 //Erreurs
 $LANG['e_no_gd'] = 'Gallery -> Gd Library not loaded';
 $LANG['e_unabled_create_pics'] = 'Gallery -> Error create pic';
