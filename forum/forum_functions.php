@@ -28,13 +28,13 @@
 //Liste des catégories du forum.
 function forum_list_cat($userdata)
 {
-	global $groups, $CAT_FORUM;
+	global $groups, $CAT_FORUM, $AUTH_READ_FORUM;
 	
 	$select = '';
 	foreach($CAT_FORUM as $idcat => $array_cat)
 	{
 		$margin = ($array_cat['level'] > 0) ? str_repeat('--------', $array_cat['level']) : '--';
-		$select .= ($groups->check_auth($CAT_FORUM[$idcat]['auth'], 1)) ? '<option value="' . $idcat . '">' . $margin . ' ' . str_replace('\'', '\\\'', $array_cat['name']) . '</option>' : '';
+		$select .= $AUTH_READ_FORUM[$idcat] ? '<option value="' . $idcat . '">' . $margin . ' ' . str_replace('\'', '\\\'', $array_cat['name']) . '</option>' : '';
 	}
 	
 	return $select;
@@ -45,11 +45,11 @@ function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 {
 	global $sql, $session, $CONFIG_FORUM;
 	
-	//Message(s) dans le topic non lu ( non prise en compte des topics trop vieux (x semaine) ou déjà lus).
-	$last_view_forum = $sql->query("SELECT last_view_forum FROM ".PREFIX."member_extend WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
-	$max_time_config = (time() - $CONFIG_FORUM['view_time']);
-	$max_time = $last_view_forum > $max_time_config ? $last_view_forum : $max_time_config;
-	if( $session->data['user_id'] !== -1 && $last_timestamp >= $max_time )
+	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
+	$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : time();
+	$max_time = (time() - $CONFIG_FORUM['view_time']);
+	$max_time_msg = ($session->data['last_view_forum'] > $max_time) ? $session->data['last_view_forum'] : $max_time;
+	if( $session->data['user_id'] !== -1 && $last_timestamp >= $max_time_msg )
 	{
 		$check_view_id = $sql->query("SELECT last_view_id FROM ".PREFIX."forum_view WHERE user_id = '" . $session->data['user_id'] . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 		if( !empty($check_view_id) && $check_view_id != $last_msg_id ) 

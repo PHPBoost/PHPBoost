@@ -50,8 +50,7 @@ if( !empty($_POST['valid']) )
 	$result = $sql->query_while("SELECT t.id, tr.pm, tr.mail
 	FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id
-	WHERE tr.user_id = '" . $session->data['user_id'] . "'
-	" . $sql->sql_limit($pagination->first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
+	WHERE tr.user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
 	while ($row = $sql->sql_fetch_assoc($result))
 	{
 		$pm = (isset($_POST['p' . $row['id']]) && $_POST['p' . $row['id']] == 'on') ? 1 : 0;
@@ -81,7 +80,7 @@ elseif( $session->check_auth($session->data, 0) ) //Affichage des message()s non
 	$pagination = new Pagination();
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-	$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : time();
+	$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : 0;
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($session->data['last_view_forum'] > $max_time) ? $session->data['last_view_forum'] : $max_time;
 	
@@ -173,8 +172,9 @@ elseif( $session->check_auth($session->data, 0) ) //Affichage des message()s non
 	//Le membre a déjà lu tous les messages.
 	if( $nbr_topics == 0 )
 	{
-		$template->assign_block_vars('msg_read', array(
-			'L_MSG_NOT_READ' => $LANG['show_topic_track']
+		$template->assign_vars(array(
+			'C_NO_TRACKED_TOPICS' => true,
+			'L_NO_TRACKED_TOPICS' => '0 ' . $LANG['show_topic_track']
 		));
 	}
 
@@ -187,9 +187,6 @@ elseif( $session->check_auth($session->data, 0) ) //Affichage des message()s non
 		'MODULE_DATA_PATH' => $template->module_data_path('forum'),
 		'PAGINATION' => $pagination->show_pagin('track' . transid('.php?p=%d'), $nbr_topics, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 		'LANG' => $CONFIG['lang'],
-		'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' . SID . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a> &bull;',
-		'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' . SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . '</a> &bull;',
-		'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a> &bull;',
 		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1&amp;favorite=1', '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 		'U_CHANGE_CAT'=> 'track.php' . SID,
 		'U_ONCHANGE' => "'forum" . transid(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",
@@ -202,8 +199,6 @@ elseif( $session->check_auth($session->data, 0) ) //Affichage des message()s non
 		'L_DELETE' => $LANG['delete'],	
 		'L_MAIL' => $LANG['mail'],	
 		'L_PM' => $LANG['pm'],
-		'L_SEARCH' => $LANG['search'],
-		'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 		'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read_favorite'],
 		'L_EXPLAIN_TRACK' => $LANG['explain_track'],
 		'L_TOPIC' => $l_topic,

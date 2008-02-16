@@ -71,7 +71,7 @@ if( !empty($id_get) )
 	$module_data_path = $template->module_data_path('forum');
 	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-	$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : time();
+	$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : 0;
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($session->data['last_view_forum'] > $max_time) ? $session->data['last_view_forum'] : $max_time;
 	
@@ -218,9 +218,6 @@ if( !empty($id_get) )
 		'PAGINATION' => $pagination->show_pagin('forum' . transid('.php?id=' . $id_get . '&amp;p=%d', '-' . $id_get . '-%d.php'), $nbr_topic, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 		'IDCAT' => $id_get,
 		'C_MASS_MODO_CHECK' => $check_group_edit_auth ? true : false,
-		'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' .SID . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a> &bull;',
-		'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' . SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . '</a> &bull;',
-		'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php' . SID . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a> &bull;',
 		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1&amp;f=' . $id_get, '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 		'U_CHANGE_CAT'=> 'forum' . transid('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
 		'U_ONCHANGE' => "'forum" . transid(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",
@@ -233,8 +230,6 @@ if( !empty($id_get) )
 		'L_ANSWERS' => $LANG['replies'],
 		'L_MESSAGE' => $LANG['message_s'],
 		'L_VIEW' => $LANG['views'],
-		'L_SEARCH' => $LANG['search'],
-		'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 		'L_LAST_MESSAGE' => $LANG['last_messages'],
 		'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read_forum'],
 		'L_FOR_SELECTION' => $LANG['for_selection'],

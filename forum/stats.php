@@ -70,16 +70,8 @@ $template->assign_vars(array(
 	'L_NBR_TOPICS_TODAY' => $LANG['nbr_topics_today'],
 	'L_NBR_MSG_TODAY' => $LANG['nbr_msg_today'],
 	'L_LAST_MSG' => $LANG['forum_last_msg'],
-	'L_SEARCH' => $LANG['search'],
-	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],	
-	'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
 	'L_POPULAR' => $LANG['forum_popular'],				
 	'L_ANSWERS' => $LANG['forum_nbr_answers'],
-'U_SEARCH' => '<a class="small_link" href="search.php' . SID . '" title="' . $LANG['search'] . '">' . $LANG['search'] . '</a> &bull;',
-	'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' .SID . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a> &bull;',
-	'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' . SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . '</a>',
-	'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php' . SID . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a> &bull;',
-	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>'
 ));
 
 $auth_cats = '';

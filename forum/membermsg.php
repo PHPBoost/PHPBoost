@@ -68,13 +68,6 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 		'L_BACK' => $LANG['back'],
 		'L_VIEW_MSG_MEMBER' => $LANG['show_member_msg'],
 		'L_FORUM_INDEX' => $LANG['forum_index'],
-		'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
-		'L_SEARCH' => $LANG['search'],
-		'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-		'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' .SID . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a> &bull;',
-		'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' . SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . '</a> &bull;',
-		'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php' . SID . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a> &bull;',
-		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 		'U_FORUM_VIEW_MSG' => transid('.php?id=' . $view_msg)
 	));
 	

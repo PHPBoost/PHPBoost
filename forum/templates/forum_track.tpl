@@ -39,13 +39,13 @@
 			<div class="module_position">
 				<div class="module_contents forum_contents">
 					<table class="module_table" style="width:100%">
-						# START msg_read #
+						# IF C_NO_TRACKED_TOPICS #
 						<tr>
-							<td class="row2" style="text-align:center;">
-								0 {msg_read.L_MSG_NOT_READ}
+							<td class="forum_sous_cat" style="text-align:center;">
+								<strong>{L_NO_TRACKED_TOPICS}</strong>
 							</td>
 						</tr>	
-						# END msg_read #
+						# ENDIF #
 
 						# START topics #		
 						<tr>
