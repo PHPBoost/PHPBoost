@@ -83,11 +83,17 @@ class CategoriesManagement
 		
 		if( array_key_exists($id_parent, $cache_var) )
 		{
+			$max_order = $sql->query_inject("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE idcat = '" . $id_parent . "'", __LINE__, __FILE__);
+			
 			//Whe add it at the end of the parent category
-			if( $order == 0 )
+			if( $order <= 0 || $order > $max_order )
+				$sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order) VALUES ('" . $name . "', '" . ($max_order + 1) . "')", __LINE__, __FILE__);
+			else
 			{
-				$sql->query_inject("INSERT INTO " . PREFIX . $this->table . "");
+				$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE idcat = '" . $id_parent . "' AND c_order >= '" . $order . "'", __LINE__, __FILE__);
+				$sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order) VALUES ('" . $name . "', '" . $order . "')", __LINE__, __FILE__);
 			}
+			return $sql->sql_insert_id("SELECT MAX(id) FROM " . PREFIX . $this->table);
 		}
 		else
 		{
@@ -300,15 +306,15 @@ class CategoriesManagement
 		function ajax_move_cat(id, direction)
 		{
 			direction = (direction == \'up\' ? \'up\' : \'down\');
-			var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?id_\' + direction + \'=\' + id);	
+			var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?id_\' + direction + \'=\' + id);
 			
-			document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" style="vertical-align:middle;" />\';
+			document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
 			
 			xhr_object.onreadystatechange = function() 
 			{
 				//Transfert finished and successful
 				if( xhr_object.readyState == 4 && xhr_object.responseText != \'\' )
-					document.getElementById("cat_administration").innerHtmp = xhr_object.responseText;
+					document.getElementById("cat_administration").innerHtml = xhr_object.responseText;
 				//Error
 				else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' )
 					alert("' . $LANG . 'Erreur !");
@@ -318,29 +324,26 @@ class CategoriesManagement
 		}
 		
 		// Deleting a category thanks to AJAX
-		function ajax_move_cat(id, direction)
+		function ajax_del_cat(id)
 		{
-			direction = (direction == \'up\' ? \'up\' : \'down\');
+			if( !confirm("' . $LANG . '") )
+				return;
+			
 			var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?del=\' + id);
 			
-			document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" style="vertical-align:middle;" />\';
+			document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
 			
 			xhr_object.onreadystatechange = function() 
 			{
 				//Transfert finished and successful
 				if( xhr_object.readyState == 4 && xhr_object.responseText != \'\' )
-					document.getElementById("cat_administration").innerHtmp = xhr_object.responseText;
+					document.getElementById("cat_administration").innerHtml = xhr_object.responseText;
 				//Error
 				else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' )
 					alert("' . $LANG . '");
 			}
 			document.getElementById(\'l\' + id).innerHTML = \'\';
 			xmlhttprequest_sender(xhr_object, null);
-		}
-		
-		function Confirm()
-		{
-			return confirm("' . $LANG . '");
 		}
 		-->
 		alert("finir les langues !");
@@ -415,7 +418,9 @@ class CategoriesManagement
 								if( $values['order'] > 1 )
 								{
 									$string .= '
-									<a href="' . $this->display_config['xmlhttprequest_file'] . '.php?id=' . $id . '&amp;move=up" id="up_' . $id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="" class="valign_middle" /></a>
+									<a href="' . $this->display_config['xmlhttprequest_file'] . '.php?id=' . $id . '&amp;move=up" id="up_' . $id . '">
+										<img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="" class="valign_middle" />
+									</a>
 									<script type="text/javascript">
 									<!--
 										document.getElementById("up_' . $id . '").href = "#";
@@ -431,7 +436,9 @@ class CategoriesManagement
 								if( $i != $num_cats  - 1 && $cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat )
 								{
 									$string .= '
-									<a href="' . $this->display_config['xmlhttprequest_file'] . '.php?id=' . $id . '&amp;move=down" id="down_' . $id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="" class="valign_middle" /></a>
+									<a href="' . $this->display_config['xmlhttprequest_file'] . '.php?id=' . $id . '&amp;move=down" id="down_' . $id . '">
+										<img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="" class="valign_middle" />
+									</a>
 									<script type="text/javascript">
 									<!--
 										document.getElementById("down_' . $id . '").href = "#";
@@ -444,7 +451,21 @@ class CategoriesManagement
 								}
 								
 								$string .= '
-								<a href="' . $this->display_config['administration_file_name'] . '?id=' . $id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a> <a href="' . $this->display_config['administration_file_name'] . '?del=' . $id . '" onclick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
+								<a href="' . $this->display_config['administration_file_name'] . '?id=' . $id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>&nbsp;';
+								
+								$string .= '
+								<a href="' . $this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id . '">
+									<img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" />
+								</a>
+								<script type="text/javascript">
+									<!--
+										document.getElementById("del_' . $id . '").href = "#";
+										document.getElementById("del_' . $id . '").onclick = function()
+										{
+											ajax_del_cat(' . $id . ');
+										}
+									-->
+								</script>&nbsp;&nbsp;
 							</span>&nbsp;
 						</div>	
 					</div>
