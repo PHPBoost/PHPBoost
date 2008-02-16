@@ -52,7 +52,7 @@ if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(
 	$pagination = new Pagination();
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-	$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : time();
+	$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : 0;
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($session->data['last_view_forum'] > $max_time) ? $session->data['last_view_forum'] : $max_time;
 	
@@ -148,25 +148,17 @@ if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(
 		'MODULE_DATA_PATH' => $template->module_data_path('forum'),
 		'PAGINATION' => $pagination->show_pagin('lastread' . transid('.php?p=%d'), $nbr_topics, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 		'LANG' => $CONFIG['lang'],
-		'U_SEARCH' => '<a class="small_link" href="search.php' . SID . '" title="' . $LANG['search'] . '">' . $LANG['search'] . '</a> &bull;',
-		'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' . SID . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a> &bull;',
-		'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' . SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . '</a> &bull;',
-		'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php' . SID . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a> &bull;',
-		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a> &bull;',
 		'U_CHANGE_CAT'=> 'unread.php' . SID,
 		'U_ONCHANGE' => "'forum" . transid(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",
 		'U_FORUM_CAT' => '<a href="../forum/lastread.php' . SID . '">' . $LANG['show_last_read'] . '</a>',
 		'U_POST_NEW_SUBJECT' => '',		
 		'L_FORUM_INDEX' => $LANG['forum_index'],
-		'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
 		'L_FORUM' => $LANG['forum'],	
 		'L_AUTHOR' => $LANG['author'],
 		'L_TOPIC' =>  ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'],
 		'L_MESSAGE' => $LANG['replies'],
 		'L_VIEW' => $LANG['views'],
 		'L_LAST_MESSAGE' => $LANG['last_message'],
-		'L_SEARCH' => $LANG['search'],
-		'L_ADVANCED_SEARCH' => $LANG['advanced_search']
 	));	
 	
 	//Listes les utilisateurs en lignes.

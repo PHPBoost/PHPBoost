@@ -1,12 +1,45 @@
-		<div class="module_position" style="margin-top:15px;">
+		<div class="module_position" style="margin-top:15px;margin-bottom:26px;">
 			<div class="forum_links" style="border-bottom:none;">
 				<span style="float:left;">
 					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> 
 				</span>
 				<span style="float:right;">
-					<img src="{MODULE_DATA_PATH}/images/favorite_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK}
-					<img src="{MODULE_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ}
-					<img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> {U_MSG_NOT_READ}
+					<img src="{MODULE_DATA_PATH}/images/favorite_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
+					<img src="{MODULE_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
+					<img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> {U_MSG_NOT_READ} 
+					
+					# IF C_SESSION_MEMBER_CONNECTED #
+					<div style="position:relative;float:left;">
+						<div style="position:absolute;z-index:100;float:left;margin-left:200px;display:none;" id="forum_blockforum_unread2">
+							<div class="row2" style="width:368px;height:{MAX_UNREAD_HEIGHT}px;overflow:auto;padding:0px;" onmouseover="forum_hide_block('forum_unread2', 1);" onmouseout="forum_hide_block('forum_unread2', 0);">
+								# IF C_MSG_NOT_READ #
+								<table class="module_table" style="margin:2px;width:99%">
+									# START forum_unread_list #
+									<tr>
+										<td class="text_small row2" style="padding:4px;width:100%">
+											{forum_unread_list.U_TOPICS}
+										</td>
+										<td class="text_small row2" style="padding:4px;">
+											[{forum_unread_list.LOGIN}]
+										</td>
+										<td class="text_small row2" style="padding:4px;white-space:nowrap">
+											{forum_unread_list.DATE}
+										</td>
+									</tr>
+									# END forum_unread_list #
+								</table>
+								# ENDIF #
+								
+								# IF C_NO_MSG_NOT_READ #
+									<div class="row2">{L_MSG_NOT_READ}</div>
+								# ENDIF #
+							</div>
+						</div>
+					</div>
+					<a href="javascript:forum_display_block('forum_unread2');" onmouseover="forum_hide_block('forum_unread2', 1);" onmouseout="forum_hide_block('forum_unread2', 0);" class="bbcode_hover"><img src="../templates/{THEME}/images/upload/plus.png" alt="" class="valign_middle" /></a> 
+					# ENDIF #
+					
+					&bull;
 					<img src="{MODULE_DATA_PATH}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
 				</span>
 				<div class="spacer"></div>
