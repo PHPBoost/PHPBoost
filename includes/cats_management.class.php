@@ -58,6 +58,7 @@ You can also have other fields such as auth level, description, visible, that cl
 ); */
 
 define('DEBUG_MODE', true);
+define('DO_NOT_DISPLAY_JAVASCRIPT_FUNCTIONS', false);
 define('ERROR_UNKNOWN_MOTION', 1);
 define('ERROR_CAT_IS_AT_TOP', 2);
 define('ERROR_CAT_IS_AT_BOTTOM', 4);
@@ -76,15 +77,15 @@ class CategoriesManagement
 	}
 	
 	//Method which adds a category
-	function Add_category($id_parent, $name, &$cache_var, $order = 0)
+	function Add_category($id_parent, $name, $order = 0)
 	{
 		global $sql, $cache;
 		$this->clean_error();
 		
-		if( array_key_exists($id_parent, $cache_var) )
+		$max_order = $sql->query_inject("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE idcat = '" . $id_parent . "'", __LINE__, __FILE__);
+		
+		if( $max_order > 0 )
 		{
-			$max_order = $sql->query_inject("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE idcat = '" . $id_parent . "'", __LINE__, __FILE__);
-			
 			//Whe add it at the end of the parent category
 			if( $order <= 0 || $order > $max_order )
 				$sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order) VALUES ('" . $name . "', '" . ($max_order + 1) . "')", __LINE__, __FILE__);
@@ -107,8 +108,8 @@ class CategoriesManagement
 	{
 		global $sql, $cache;
 		$this->clean_error();
+		if( in_array($way, array('up', 'down')) )
 		
-		if( in_array(array('up', 'down'), $way) )
 		{
 			$cat_info = $sql->query_array($this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
@@ -283,7 +284,7 @@ class CategoriesManagement
 
 	//Method which builds the list of categories and links to makes operations to administrate them (delete, move, add...), it's return string is ready to be displayed
 	//This method doesn't allow you tu use templates, it's not so important because you are in the administration panel
-	function Build_administration_list(&$cache_var)
+	function Build_administration_list(&$cache_var, $display_javascript_functions = true)
 	{
 		global $CONFIG, $LANG;
 		$this->clean_error();
@@ -298,64 +299,70 @@ class CategoriesManagement
 		$string = '';
 		
 		//AJAX functions
-		$string .= '
-		<script type="text/javascript">
-		<!--
-		
-		// Moving a category with AJAX technology
-		function ajax_move_cat(id, direction)
+		if( $display_javascript_functions )
 		{
-			direction = (direction == \'up\' ? \'up\' : \'down\');
-			var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '.php?id_\' + direction + \'=\' + id);
+			$string .= '
+			<script type="text/javascript">
+			<!--
 			
-			document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
-			
-			xhr_object.onreadystatechange = function() 
+			// Moving a category with AJAX technology
+			function ajax_move_cat(id, direction)
 			{
-				//Transfert finished and successful
-				if( xhr_object.readyState == 4 && xhr_object.responseText != \'\' )
+				direction = (direction == \'up\' ? \'up\' : \'down\');
+				var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?id_\' + direction + \'=\' + id);
+				
+				document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
+				
+				xhr_object.onreadystatechange = function() 
 				{
-					//document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
-					alert(xhr_object.responseText);
+					//Transfert finished and successful
+					if( xhr_object.readyState == 4 && xhr_object.responseText != \'\' )
+					{
+						document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
+					}
+					//Error
+					else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' )
+						alert("' . $LANG . 'Erreur !");
 				}
-				//Error
-				else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' )
-					alert("' . $LANG . 'Erreur !");
+				document.getElementById(\'l\' + id).innerHTML = \'\';
+				xmlhttprequest_sender(xhr_object, null);
 			}
-			document.getElementById(\'l\' + id).innerHTML = \'\';
-			xmlhttprequest_sender(xhr_object, null);
+			
+			// Deleting a category thanks to AJAX
+			function ajax_del_cat(id)
+			{
+				if( !confirm("' . $LANG . '") )
+					return;
+				
+				var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?del=\' + id);
+				
+				document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
+				
+				xhr_object.onreadystatechange = function() 
+				{
+					//Transfert finished and successful
+					if( xhr_object.readyState == 4 && xhr_object.responseText != \'\' )
+						document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
+					//Error
+					else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' )
+						alert("' . $LANG . '");
+				}
+				document.getElementById(\'l\' + id).innerHTML = \'\';
+				xmlhttprequest_sender(xhr_object, null);
+			}
+			-->
+			alert("finir les langues !");
+			</script>';
+			
+			$string .= '
+			<div id="cat_administration">
+			';
 		}
 		
-		// Deleting a category thanks to AJAX
-		function ajax_del_cat(id)
-		{
-			if( !confirm("' . $LANG . '") )
-				return;
-			
-			var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '.php?del=\' + id);
-			
-			document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
-			
-			xhr_object.onreadystatechange = function() 
-			{
-				//Transfert finished and successful
-				if( xhr_object.readyState == 4 && xhr_object.responseText != \'\' )
-					document.getElementById("cat_administration").innerHtml = xhr_object.responseText;
-				//Error
-				else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' )
-					alert("' . $LANG . '");
-			}
-			document.getElementById(\'l\' + id).innerHTML = \'\';
-			xmlhttprequest_sender(xhr_object, null);
-		}
-		-->
-		alert("finir les langues !");
-		</script>
-		<div id="cat_administration">
-		';
 		//Categories list
 		$this->create_cat_administration($string, 0, 0, $cache_var);
-		$string .= '</div>';
+		
+		$string .= $display_javascript_functions ? '</div>' : '';
 		return $string;
 	}
 

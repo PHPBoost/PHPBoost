@@ -31,21 +31,22 @@ require_once('../includes/header_no_display.php');
 
 if( $session->data['level'] === 2 ) //Admin
 {	
+	$cache->load_file('faq');
 	include_once('../includes/cats_management.class.php');
 	$categories = new CategoriesManagement('faq_cats', 'faq');
 	
 	$id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
 	$id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
 	$cat_to_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
-	die('test');
+	
 	$result = false;
 	
-	if( $id_up > 0 ) die('up ' . $id_up);
-		//$result = $categories->Move_category($id_up, 'up');
-	elseif( $id_down > 0 ) die('down ' . $id_down);
-		//$result = $categories->Move_category($id_down, 'down');
-	elseif( $del > 0 ) die('del ' . $del);
-		//$result = $categories->Delete_category($cat_to_del);
+	if( $id_up > 0 )
+		$result = $categories->Move_category($id_up, 'up');
+	elseif( $id_down > 0 )
+		$result = $categories->Move_category($id_down, 'down');
+	elseif( $cat_to_del > 0 )
+		$result = $categories->Delete_category($cat_to_del);
 	
 	$cat_config = array(
 		'xmlhttprequest_file' => 'xmlhttprequest.php',
@@ -58,7 +59,7 @@ if( $session->data['level'] === 2 ) //Admin
 	$categories->Set_displaying_configuration($cat_config);
 	
 	if( $result )
-		echo $categories->Build_administration_list();
+		echo $categories->Build_administration_list($FAQ_CATS, DO_NOT_DISPLAY_JAVASCRIPT_FUNCTIONS);
 }
 
 ?>
