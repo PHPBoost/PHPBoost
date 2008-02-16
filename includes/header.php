@@ -112,7 +112,7 @@ $template->assign_vars(array(
 	'SITE_KEYWORD' => $CONFIG['site_keyword'],
 	'THEME' => $CONFIG['theme'],
 	'ALTERNATIVE_CSS' => $alternative_css,
-	'C_SESSION_MEMBER_CONNECTED' => ($session->data['level'] > 0) ? true : false,
+	'C_SESSION_MEMBER_CONNECTED' => ($session->data['level'] >= 0) ? true : false,
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],	
 	'L_VISIT' => $LANG['guest_s'],
 	'L_TODAY' => $LANG['today'],
