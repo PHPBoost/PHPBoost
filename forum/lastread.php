@@ -27,7 +27,10 @@
 
 require_once('../includes/begin.php'); 
 require_once('../forum/forum_begin.php');
-speed_bar_generate($SPEED_BAR, $CONFIG_FORUM['forum_name'], 'index.php' . SID, $LANG['show_last_read'], '');
+
+$speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$speed_bar->Add_link($LANG['show_last_read'], '');
+
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_last_read']);
 require_once('../includes/header.php'); 
 

@@ -47,21 +47,28 @@ class Speed_bar
 		$this->array_links = array_reverse($this->array_links);
 	}
 	
+	//Inversion de l'ordre des liens
+	function Remove_last_link()
+	{
+		$this->array_links = array_pop($this->array_links);
+	}
+	
 	//Affichage
 	function Display_speed_bar()
 	{
 		global $template, $CONFIG, $LANG;
+		
 		if( empty($this->array_links) )
 			$this->Add_link(HOST . SCRIPT . SID, stripslashes(TITLE));
 		
 		$template->set_filenames(array(
 			'speed_bar' => '../templates/' . $CONFIG['theme'] . '/speed_bar.tpl'
-			));
+		));
 			
 		$template->assign_vars(array(
 			'START_PAGE' => get_start_page(),
 			'L_INDEX' => $LANG['index']	
-			));
+		));
 		
 		foreach($this->array_links as $key => $array)
 		{

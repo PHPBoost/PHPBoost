@@ -50,18 +50,18 @@ if( !empty($encoded_title) ) //Si on connait son titre
 	define('TITLE', $page_infos['title']);
 	
 	//définition du fil d'Ariane de la page
-	speed_bar_generate($SPEED_BAR, $page_infos['title'], transid('pages.php?title=' . $encoded_title, $encoded_title));
+	$speed_bar->Add_link($page_infos['title'], transid('pages.php?title=' . $encoded_title, $encoded_title));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
 		//Si on a les droites de lecture sur la catégorie, on l'affiche	
 		if( empty($_PAGES_CATS[$id]['auth']) || $groups->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )
-			speed_bar_generate($SPEED_BAR, $_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+			$speed_bar->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}	
 	if( $groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		speed_bar_generate($SPEED_BAR, $LANG['pages'], transid('pages.php'));
-	$SPEED_BAR = array_reverse($SPEED_BAR);
+		$speed_bar->Add_link($LANG['pages'], transid('pages.php'));
+	$speed_bar->Reverse_links();
 	//on renverse ce fil pour le mettre dans le bon ordre d'arborescence
 }
 elseif( $id_com > 0 )
@@ -74,23 +74,23 @@ elseif( $id_com > 0 )
 	$page_infos = $sql->sql_fetch_assoc($result);
 	$sql->close($result);
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
-	speed_bar_generate($SPEED_BAR, $LANG['pages_com'], transid('pages.php?com=' . $id_com));
-	speed_bar_generate($SPEED_BAR, $page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+	$speed_bar->Add_link($LANG['pages_com'], transid('pages.php?com=' . $id_com));
+	$speed_bar->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
-		speed_bar_generate($SPEED_BAR, $_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$speed_bar->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if( $groups->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		speed_bar_generate($SPEED_BAR, $LANG['pages'], transid('pages.php'));
-	$SPEED_BAR = array_reverse($SPEED_BAR);
+		$speed_bar->Add_link($LANG['pages'], transid('pages.php'));
+	$speed_bar->Reverse_links();
 }
 else
 {
 	define('TITLE', $LANG['pages']);
 	if( $groups->check_auth($_PAGES_CONFIG['auth'], READ_PAGE) )
-		speed_bar_generate($SPEED_BAR, $LANG['pages'], transid('pages.php'));
+		$speed_bar->Add_link($LANG['pages'], transid('pages.php'));
 }
 require_once('../includes/header.php');
 

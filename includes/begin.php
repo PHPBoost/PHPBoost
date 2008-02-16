@@ -44,12 +44,14 @@ require_once('../includes/db/' . DBTYPE . '.class.php');
 require_once('../includes/cache.class.php');
 require_once('../includes/sessions.class.php');
 require_once('../includes/groups.class.php');
+require_once('../includes/speed_bar.class.php');
 
 //Instanciation des objets indispensables au noyau.
 $errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
 $template = new Templates; //!\\Initialisation des templates//!\\
 $sql = new Sql; //!\\Initialisation  de la class sql//!\\
 $cache = new Cache; //!\\Initialisation  de la class de gestion du cache//!\\
+$speed_bar = new Speed_bar; //!\\Initialisation  de la class de la speed bar//!\\
 
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
 

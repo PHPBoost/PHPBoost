@@ -27,7 +27,8 @@
 
 require_once('../includes/begin.php'); 
 define('TITLE', $LANG['title_pm']);
-speed_bar_generate($SPEED_BAR, $LANG['member_area'], transid('member.php?id=' . $session->data['user_id'] . '&amp;view=1', 'member-' . $session->data['user_id'] . '.php?view=1'), $LANG['title_pm'], transid('pm.php'));
+$speed_bar->Add_link($LANG['member_area'], transid('member.php?id=' . $session->data['user_id'] . '&amp;view=1', 'member-' . $session->data['user_id'] . '.php?view=1'));
+$speed_bar->Add_link($LANG['title_pm'], transid('pm.php'));
 require_once('../includes/header.php'); 
 
 //Interdit aux non membres.

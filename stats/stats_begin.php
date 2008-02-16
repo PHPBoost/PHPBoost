@@ -58,7 +58,8 @@ $l_title = $user_lang ? $LANG['stat_lang'] : $l_title;
 $l_title = !empty($l_title) ? $l_title : '';
 
 if( !empty($l_title) ) 
-	speed_bar_generate($SPEED_BAR, $LANG['title_stats'], transid('stats.php'), $l_title, '');	
+	$speed_bar->Add_link($LANG['title_stats'], transid('stats.php'));
+	$speed_bar->Add_link($l_title, '');	
 define('TITLE', $LANG['title_stats'] . (!empty($l_title) ? ' - ' . $l_title : ''));
 
 ?>

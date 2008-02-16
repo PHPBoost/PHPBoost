@@ -27,9 +27,12 @@
 
 require_once('../includes/begin.php');
 require_once('../forum/forum_begin.php');
+
 $id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 $cat_name = !empty($CAT_FORUM[$id_get]['name']) ? $CAT_FORUM[$id_get]['name'] : '';
-speed_bar_generate($SPEED_BAR, $CONFIG_FORUM['forum_name'], 'index.php' . SID, $cat_name, '');
+$speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$speed_bar->Add_link($cat_name, '');
+
 if( !empty($id_get) )
 	define('TITLE', $LANG['title_forum'] . ' - ' . addslashes($CAT_FORUM[$id_get]['name']));
 else
