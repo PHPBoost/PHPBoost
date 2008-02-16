@@ -78,10 +78,10 @@
 					<img src="{MODULE_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
 					<img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> {U_MSG_NOT_READ} 
 					
-					# IF C_SESSION_MEMBER_CONNECTED #
+					# IF C_DISPLAY_UNREAD_DETAILS #
 					<div style="position:relative;float:left;">
-						<div style="position:absolute;z-index:100;float:left;margin-left:200px;display:none;" id="forum_blockforum_unread">
-							<div class="row2" style="width:368px;height:{MAX_UNREAD_HEIGHT}px;overflow:auto;padding:0px;" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);">
+						<div style="position:absolute;z-index:100;float:left;margin-left:170px;display:none;" id="forum_blockforum_unread">
+							<div class="row2" style="width:398px;height:{MAX_UNREAD_HEIGHT}px;overflow:auto;padding:0px;" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);">
 								# IF C_MSG_NOT_READ #
 								<table class="module_table" style="margin:2px;width:99%">
 									# START forum_unread_list #
@@ -98,10 +98,6 @@
 									</tr>
 									# END forum_unread_list #
 								</table>
-								# ENDIF #
-								
-								# IF C_NO_MSG_NOT_READ #
-									<div class="row2">{L_MSG_NOT_READ}</div>
 								# ENDIF #
 							</div>
 						</div>
