@@ -42,15 +42,15 @@ $g_idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 if( !empty($g_idcat) )
 {
 	//Création de l'arborescence des catégories.
-	speed_bar_generate($SPEED_BAR, $LANG['title_gallery'], transid('gallery.php'));
+	$speed_bar->Add_link($LANG['title_gallery'], transid('gallery.php'));
 	foreach($CAT_GALLERY as $id => $array_info_cat)
 	{
 		if( $CAT_GALLERY[$g_idcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_GALLERY[$g_idcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_GALLERY[$g_idcat]['level'] )
-			speed_bar_generate($SPEED_BAR, $array_info_cat['name'], 'gallery' . transid('.php?cat=' . $id, '-' . $id . '.php'));
+			$speed_bar->Add_link($array_info_cat['name'], 'gallery' . transid('.php?cat=' . $id, '-' . $id . '.php'));
 	}
 }
 else
-	speed_bar_generate($SPEED_BAR, $LANG['title_gallery'], '');
+	$speed_bar->Add_link($LANG['title_gallery'], '');
 	
 $title_gallery = !empty($CAT_GALLERY[$g_idcat]['name']) ? addslashes($CAT_GALLERY[$g_idcat]['name']) : '';
 define('TITLE', (!empty($title_gallery) ? $LANG['title_gallery'] . ' - ' . $title_gallery : $LANG['title_gallery']));

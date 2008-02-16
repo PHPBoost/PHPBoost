@@ -57,30 +57,30 @@ if( empty($idartcat) )//Racine.
 if( isset($_GET['cat']) )
 { 
 	//Création de l'arborescence des catégories.
-	speed_bar_generate($SPEED_BAR, $LANG['title_articles'], transid('articles.php'));
+	$speed_bar->Add_link($LANG['title_articles'], transid('articles.php'));
 	foreach($CAT_ARTICLES as $id => $array_info_cat)
 	{
 		if( $CAT_ARTICLES[$idartcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_ARTICLES[$idartcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_ARTICLES[$idartcat]['level'] )
-			speed_bar_generate($SPEED_BAR, $array_info_cat['name'], 'articles' . transid('.php?cat=' . $id, '-' . $id . '.php'));
+			$speed_bar->Add_link($array_info_cat['name'], 'articles' . transid('.php?cat=' . $id, '-' . $id . '.php'));
 	}
 	if( !empty($idart) )
 	{
 		$articles = $sql->query_array('articles', '*', "WHERE visible = 1 AND id = '" . $idart . "' AND idcat = " . $idartcat, __LINE__, __FILE__);
 		
 		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($articles['title']));
-		speed_bar_generate($SPEED_BAR, $articles['title'], 'articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $idart, '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php'));
+		$speed_bar->Add_link($articles['title'], 'articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $idart, '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php'));
 		
 		if( !empty($get_note) )
-			speed_bar_generate($SPEED_BAR, $LANG['note'], '');
+			$speed_bar->Add_link($LANG['note'], '');
 		elseif( !empty($_GET['i']) )
-			speed_bar_generate($SPEED_BAR, $LANG['com'], '');
+			$speed_bar->Add_link($LANG['com'], '');
 	}
 	else
 		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($CAT_ARTICLES[$idartcat]['name']));
 }
 else
 {
-	speed_bar_generate($SPEED_BAR, $LANG['title_articles'], '');
+	$speed_bar->Add_link($LANG['title_articles'], '');
 	define('TITLE', $LANG['title_articles']);
 }
 

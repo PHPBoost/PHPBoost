@@ -29,14 +29,15 @@ require_once('../includes/begin.php');
 require_once('../pages/pages_begin.php'); 
 define('TITLE', $LANG['pages'] . ' : ' . $LANG['pages_explorer']);
 $cat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
-speed_bar_generate($SPEED_BAR, $LANG['pages'], transid('pages.php'), $LANG['pages_explorer'], transid('explorer.php'));
+$speed_bar->Add_link($LANG['pages'], transid('pages.php'));
+$speed_bar->Add_link($LANG['pages_explorer'], transid('explorer.php'));
 require_once('../includes/header.php');
 
 $template->set_filenames(array('pages_explorer' => '../templates/' . $CONFIG['theme'] . '/pages/explorer.tpl'));
 
 //Liste des dossiers de la racine
 $root = '';
-foreach( $_PAGES_CATS as $key => $value )
+foreach($_PAGES_CATS as $key => $value )
 {
 	if( $value['id_parent'] == 0 )
 	{

@@ -31,11 +31,14 @@ $action = !empty($_GET['action']) ? trim($_GET['action']) : '';
 $id_get = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $new_status = isset($_GET['new_status']) ? numeric($_GET['new_status']) : '';
 $get_del = !empty($_GET['del']) ? numeric($_GET['del']) : '';
-speed_bar_generate($SPEED_BAR, $LANG['moderation_panel'], '../member/moderation_panel.php' . SID, $CONFIG_FORUM['forum_name'], 'moderation_forum.php' . SID);
+
+$speed_bar->Add_link($LANG['moderation_panel'], '../member/moderation_panel.php' . SID);
+$speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'moderation_forum.php' . SID);
 if( $action == 'alert' )
-	speed_bar_generate($SPEED_BAR, $LANG['alert_management'], transid('moderation_forum.php?action=alert'));
+	$speed_bar->Add_link($LANG['alert_management'], transid('moderation_forum.php?action=alert'));
 elseif( $action == 'users' )
-	speed_bar_generate($SPEED_BAR, $LANG['warning_management'], transid('moderation_forum.php?action=warning'));
+	$speed_bar->Add_link($LANG['warning_management'], transid('moderation_forum.php?action=warning'));
+	
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['moderation_panel']);
 require_once('../includes/header.php');
 

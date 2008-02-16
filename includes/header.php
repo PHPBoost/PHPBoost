@@ -196,6 +196,6 @@ if( $right_column )
 }
 
 //Gestion du fil d'ariane, et des titres des pages dynamiques.
-include_once('../includes/speed_bar.php');	
+$speed_bar->Display_speed_bar();
 
 ?>

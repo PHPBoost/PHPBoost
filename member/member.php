@@ -32,7 +32,9 @@ $edit_get = !empty($_GET['edit']) ? trim($_GET['edit']) : '';
 $id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 
 $title_mbr = !empty($id_get) ? (!empty($edit_get) ? $LANG['profil_edit'] : $LANG['index']) : $LANG['member_s'];
-speed_bar_generate($SPEED_BAR, $LANG['member_area'], transid('member.php?id=' . $session->data['user_id'] . '&amp;view=1', 'member-' . $session->data['user_id'] . '.php?view=1'), $title_mbr, '');
+$speed_bar->Add_link($LANG['member_area'], transid('member.php?id=' . $session->data['user_id'] . '&amp;view=1', 'member-' . $session->data['user_id'] . '.php?view=1'));
+$speed_bar->Add_link($title_mbr, '');
+
 require_once('../includes/header.php'); 
 
 $view_get = !empty($_GET['view']) ? trim($_GET['view']) : '';

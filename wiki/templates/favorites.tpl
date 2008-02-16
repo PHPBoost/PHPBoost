@@ -19,7 +19,7 @@
 					{L_UNTRACK}
 				</td>
 			</tr>
-			# START no_favorite ##
+			# START no_favorite #
 			<tr>
 				<td colspan="2" class="row2" style="text-align:center;">
 					<br />

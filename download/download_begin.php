@@ -58,9 +58,9 @@ else
 
 $l_com_note = !empty($idurl) ? (!empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '') ) : '';
 
-speed_bar_generate($SPEED_BAR, $LANG['title_download'], transid('download.php'), 
-$CAT_DOWNLOAD[$idcat]['name'], (empty($idurl) ? '' : transid('download.php?cat=' . $idcat, 'download-' . $idcat . '+' . url_encode_rewrite($CAT_DOWNLOAD[$idcat]['name']) . '.php')),
-$download['title'], ((!empty($get_note) || !empty($_GET['i'])) ? transid('download.php?cat=' . $idcat . '&amp;id=' . $idurl, 'download-' . $idcat . '-' . $idurl . '+' . url_encode_rewrite($download['title']) . '.php') : ''),
-$l_com_note, '');
+$speed_bar->Add_link($LANG['title_download'], transid('download.php')); 
+$speed_bar->Add_link($CAT_DOWNLOAD[$idcat]['name'], (empty($idurl) ? '' : transid('download.php?cat=' . $idcat, 'download-' . $idcat . '+' . url_encode_rewrite($CAT_DOWNLOAD[$idcat]['name']) . '.php')));
+$speed_bar->Add_link($download['title'], ((!empty($get_note) || !empty($_GET['i'])) ? transid('download.php?cat=' . $idcat . '&amp;id=' . $idurl, 'download-' . $idcat . '-' . $idurl . '+' . url_encode_rewrite($download['title']) . '.php') : ''));
+$speed_bar->Add_link($l_com_note, '');
 
 ?>

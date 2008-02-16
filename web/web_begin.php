@@ -53,9 +53,9 @@ else
 	define('TITLE', $LANG['title_web']);
 	
 $l_com_note = !empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '');
-speed_bar_generate($SPEED_BAR, $LANG['title_web'], transid('web.php'), 
-$CAT_WEB[$idcat]['name'], (empty($idweb) ? '' : transid('web.php?cat=' . $idcat, 'web-' . $idcat . '.php')),
-$web['title'], ((!empty($get_note) || !empty($_GET['i'])) ? transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php') : ''),
-$l_com_note, '');
+$speed_bar->Add_link($LANG['title_web'], transid('web.php')); 
+$speed_bar->Add_link($CAT_WEB[$idcat]['name'], (empty($idweb) ? '' : transid('web.php?cat=' . $idcat, 'web-' . $idcat . '.php')));
+$speed_bar->Add_link($web['title'], ((!empty($get_note) || !empty($_GET['i'])) ? transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php') : ''));
+$speed_bar->Add_link($l_com_note, '');
 
 ?>

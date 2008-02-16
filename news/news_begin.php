@@ -52,7 +52,9 @@ else
 	define('TITLE', $LANG['title_news']);
 	
 $news_title = !empty($idnews) ? $news['title'] : '';
-speed_bar_generate($SPEED_BAR, $LANG['title_news'], transid('news.php'), $news_title, (!empty($_GET['i']) ? transid('news.php?id=' . $idnews) : ''), (isset($_GET['i']) ? $LANG['com'] : ''), '');
+$speed_bar->Add_link($LANG['title_news'], transid('news.php'));
+$speed_bar->Add_link($news_title, (!empty($_GET['i']) ? transid('news.php?id=' . $idnews) : ''));
+$speed_bar->Add_link((isset($_GET['i']) ? $LANG['com'] : ''), '');
 
 //Chargement du cache
 $cache->load_file('news');
