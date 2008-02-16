@@ -34,7 +34,77 @@ $track = !empty($_GET['t']) ? numeric($_GET['t']) : '';
 $untrack = !empty($_GET['ut']) ? numeric($_GET['ut']) : '';	
 $msg_d = !empty($_GET['msg_d']) ? numeric($_GET['msg_d']) : '';
 
-if( !empty($_GET['del']) ) //Suppression d'un message.
+if( !empty($_GET['refresh_unread']) ) //Suppression d'un message.
+{
+	$is_guest = ($session->data['user_id'] !== -1) ? false : true;
+	$nbr_msg_not_read = 0;
+	if( !$is_guest )
+	{
+		//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
+		$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : 0;
+		$max_time = (time() - $CONFIG_FORUM['view_time']);
+		$max_time_msg = ($session->data['last_view_forum'] > $max_time) ? $session->data['last_view_forum'] : $max_time;
+		
+		//Vérification des autorisations.
+		$unauth_cats = '';
+		if( is_array($AUTH_READ_FORUM) )
+		{
+			foreach($AUTH_READ_FORUM as $idcat => $auth)
+			{
+				if( !$auth )
+					$unauth_cats .= $idcat . ',';
+			}
+			$unauth_cats = !empty($unauth_cats) ? " AND c.id NOT IN (" . trim($unauth_cats, ',') . ")" : '';
+		}
+		
+		$contents = '';			
+		//Requête pour compter le nombre de messages non lus.
+		$nbr_msg_not_read = 0;
+		$result = $sql->query_while("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
+		FROM ".PREFIX."forum_topics t
+		LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
+		LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id AND v.user_id = '" . $session->data['user_id'] . "'
+		LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
+		WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $unauth_cats . "
+		ORDER BY t.last_timestamp DESC", __LINE__, __FILE__);
+		while( $row = $sql->sql_fetch_assoc($result) )
+		{
+			//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
+			if( !empty($row['last_view_id']) ) //Calcul de la page du last_view_id réalisé dans topic.php
+			{
+				$last_msg_id = $row['last_view_id']; 
+				$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
+				$last_page_rewrite = '-0-' . $row['last_view_id'];
+			}
+			else
+			{
+				$last_msg_id = $row['last_msg_id']; 
+				$last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
+				$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
+				$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';					
+			}	
+
+			$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);			
+			$last_topic_title = (strlen(html_entity_decode($last_topic_title)) > 25) ? substr_html($last_topic_title, 0, 25) . '...' : $last_topic_title;			
+			$last_topic_title = addslashes($last_topic_title);			
+			$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
+
+			$contents .= '<tr><td class="text_small row2" style="padding:4px;width:100%;"><a href="topic' . transid('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . addslashes(url_encode_rewrite($row['title']))  . '.php') . '#m' .  $last_msg_id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a> <a href="topic' . transid('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . addslashes(url_encode_rewrite($row['title']))  . '.php') . '" class="small_link">' . $last_topic_title . '</a></td><td class="text_small row2" style="padding:4px;">' . ($row['last_user_id'] != '-1' ? '<a href="../member/member' . transid('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '" class="small_link">' . addslashes($row['login']) . '</a>' : '<em>' . addslashes($LANG['guest']) . '</em>') . '</td><td class="text_small row2" style="padding:4px;white-space:nowrap">' . gmdate_format('date_format', $row['last_timestamp']) . '</td></tr>';
+			$nbr_msg_not_read++;
+		}
+		$sql->close($result);
+
+		$max_visible_topics = 10;
+		$height_visible_topics = ($nbr_msg_not_read < $max_visible_topics) ? (23 * $nbr_msg_not_read) : 23 * $max_visible_topics;
+			
+		echo "array_unread_topics[0] = '" . $nbr_msg_not_read . "';\n";
+		echo "array_unread_topics[1] = '" . '<a class="small_link" href="../forum/unread.php' .SID . '" title="' . addslashes($LANG['show_not_reads']) . '">' . addslashes($LANG['show_not_reads']) . ($session->data['user_id'] !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>' . "';\n";
+		echo "array_unread_topics[2] = '" . '<div class="row2" style="width:428px;height:' . max($height_visible_topics, 65) . 'px;overflow:auto;padding:0px;" onmouseover="forum_hide_block(\\\'forum_unread\\\', 1);" onmouseout="forum_hide_block(\\\'forum_unread\\\', 0);"><table class="module_table" style="margin:2px;width:99%">' . $contents . "</table></div>';";
+	}
+	else
+		echo '';
+}
+elseif( !empty($_GET['del']) ) //Suppression d'un message.
 {
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
