@@ -114,6 +114,14 @@ if( !$is_guest )
 		$unauth_cats = !empty($unauth_cats) ? " AND c.id NOT IN (" . trim($unauth_cats, ',') . ")" : '';
 	}
 
+	//Si on est sur un topic, on le supprime dans la requête => si ce topic n'était pas lu il ne sera plus dans la liste car désormais lu.
+	$clause_topic = '';
+	if( strpos(SCRIPT, '/forum/topic.php') !== false )
+	{
+		$id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
+		$clause_topic = " AND t.id != '" . $id_get . "'";
+	}
+	
 	//Requête pour compter le nombre de messages non lus.
 	$nbr_topics = 0;
 	$sql_request = "SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
@@ -121,7 +129,7 @@ if( !$is_guest )
 	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
 	LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id AND v.user_id = '" . $session->data['user_id'] . "'
 	LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
-	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $unauth_cats;
+	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . $unauth_cats;
 	$result = $sql->query_while($sql_request, __LINE__, __FILE__);
 	$nbr_msg_not_read = $sql->sql_num_rows($result, $sql_request);
 	while( $row = $sql->sql_fetch_assoc($result) )
@@ -175,6 +183,7 @@ $max_visible_topics = 10;
 $height_visible_topics = ($nbr_msg_not_read < $max_visible_topics) ? (23 * $nbr_msg_not_read) : 23 * $max_visible_topics;
 $template->assign_vars(array(	
 	'MAX_UNREAD_HEIGHT' => max($height_visible_topics, 65),
+	'C_DISPLAY_UNREAD_DETAILS' => ($session->data['user_id'] !== -1 && $nbr_msg_not_read > 0) ? true : false,
 	'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' .SID . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
 	'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php' . SID . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a>',
 	'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' .SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . ($session->data['user_id'] !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',

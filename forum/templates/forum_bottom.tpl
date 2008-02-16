@@ -10,8 +10,8 @@
 					
 					# IF C_SESSION_MEMBER_CONNECTED #
 					<div style="position:relative;float:left;">
-						<div style="position:absolute;z-index:100;float:left;margin-left:200px;display:none;" id="forum_blockforum_unread2">
-							<div class="row2" style="width:368px;height:{MAX_UNREAD_HEIGHT}px;overflow:auto;padding:0px;" onmouseover="forum_hide_block('forum_unread2', 1);" onmouseout="forum_hide_block('forum_unread2', 0);">
+						<div style="position:absolute;z-index:100;float:left;margin-left:170px;display:none;" id="forum_blockforum_unread2">
+							<div class="row2" style="width:398px;height:{MAX_UNREAD_HEIGHT}px;overflow:auto;padding:0px;" onmouseover="forum_hide_block('forum_unread2', 1);" onmouseout="forum_hide_block('forum_unread2', 0);">
 								# IF C_MSG_NOT_READ #
 								<table class="module_table" style="margin:2px;width:99%">
 									# START forum_unread_list #
@@ -28,10 +28,6 @@
 									</tr>
 									# END forum_unread_list #
 								</table>
-								# ENDIF #
-								
-								# IF C_NO_MSG_NOT_READ #
-									<div class="row2">{L_MSG_NOT_READ}</div>
 								# ENDIF #
 							</div>
 						</div>
