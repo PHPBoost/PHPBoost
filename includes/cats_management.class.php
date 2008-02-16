@@ -306,7 +306,7 @@ class CategoriesManagement
 		function ajax_move_cat(id, direction)
 		{
 			direction = (direction == \'up\' ? \'up\' : \'down\');
-			var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?id_\' + direction + \'=\' + id);
+			var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '.php?id_\' + direction + \'=\' + id);
 			
 			document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
 			
@@ -314,7 +314,10 @@ class CategoriesManagement
 			{
 				//Transfert finished and successful
 				if( xhr_object.readyState == 4 && xhr_object.responseText != \'\' )
-					document.getElementById("cat_administration").innerHtml = xhr_object.responseText;
+				{
+					//document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
+					alert(xhr_object.responseText);
+				}
 				//Error
 				else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' )
 					alert("' . $LANG . 'Erreur !");
@@ -329,7 +332,7 @@ class CategoriesManagement
 			if( !confirm("' . $LANG . '") )
 				return;
 			
-			var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?del=\' + id);
+			var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '.php?del=\' + id);
 			
 			document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
 			
