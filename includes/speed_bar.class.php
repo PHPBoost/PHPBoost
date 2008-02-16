@@ -29,7 +29,6 @@
 class Speed_bar
 {
 	##  Méthodes publiques  ##
-	
 	//Ajout d'un lien
 	function Add_link($text, $target)
 	{
@@ -81,7 +80,7 @@ class Speed_bar
 		$this->array_links = array();
 	}
 	
-	// Attributs protégés
+	## Attributs protégés ##
 	var $array_links = array();
 }
 
