@@ -34,7 +34,7 @@ class Speed_bar
 	{
 		if( !empty($text) )
 		{
-			$this->array_links[] = array($text, $target);
+			$this->array_links[] = array(stripslashes($text), $target);
 			return true;
 		}
 		else
@@ -59,7 +59,7 @@ class Speed_bar
 		global $template, $CONFIG, $LANG;
 		
 		if( empty($this->array_links) )
-			$this->Add_link(HOST . SCRIPT . SID, stripslashes(TITLE));
+			$this->Add_link(stripslashes(TITLE), HOST . SCRIPT . SID);
 		
 		$template->set_filenames(array(
 			'speed_bar' => '../templates/' . $CONFIG['theme'] . '/speed_bar.tpl'
