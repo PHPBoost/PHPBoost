@@ -123,15 +123,13 @@ if( !$is_guest )
 	}
 	
 	//Requête pour compter le nombre de messages non lus.
-	$nbr_topics = 0;
-	$sql_request = "SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
+	$nbr_msg_not_read = 0;
+	$result = $sql->query_while("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
 	FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
 	LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id AND v.user_id = '" . $session->data['user_id'] . "'
 	LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
-	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . $unauth_cats;
-	$result = $sql->query_while($sql_request, __LINE__, __FILE__);
-	$nbr_msg_not_read = $sql->sql_num_rows($result, $sql_request);
+	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . $unauth_cats, __LINE__, __FILE__);
 	while( $row = $sql->sql_fetch_assoc($result) )
 	{
 		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
@@ -158,25 +156,9 @@ if( !$is_guest )
 			'DATE' => gmdate_format('date_format', $row['last_timestamp']),
 			'U_TOPICS' => '<a href="topic' . transid('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . url_encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a> <a href="topic' . transid('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . url_encode_rewrite($row['title'])  . '.php') . '" class="small_link">' . $last_topic_title . '</a>'
 		));
-		$nbr_topics++;
+		$nbr_msg_not_read++;
 	}
 	$sql->close($result);
-	
-	//Le membre a déjà lu tous les messages.
-	if( $nbr_topics == 0 )
-	{
-		$template->assign_vars(array(
-			'C_NO_MSG_NOT_READ' => true,
-			'C_MSG_NOT_READ' => false,
-			'L_MSG_NOT_READ' => $LANG['no_msg_not_read']
-		));		
-	}
-	else
-	{
-		$template->assign_vars(array(
-			'C_MSG_NOT_READ' => true
-		));
-	}
 }
 
 $max_visible_topics = 10;
