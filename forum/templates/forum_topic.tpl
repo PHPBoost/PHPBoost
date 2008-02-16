@@ -63,7 +63,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{	
 					if( document.getElementById('forum_favorite_img') )
-				document.getElementById('forum_favorite_img').src = '{MODULE_DATA_PATH}/images/favorite.png';
+						document.getElementById('forum_favorite_img').src = '{MODULE_DATA_PATH}/images/favorite.png';
 					if( document.getElementById('forum_favorite_msg') )
 						document.getElementById('forum_favorite_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE}" : "{L_SUSCRIBE}";
 					is_favorite = xhr_object.responseText == '1' ? true : false;

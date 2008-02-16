@@ -3,6 +3,41 @@
 		function Confirm_read_topics() {
 			return confirm("{L_CONFIRM_READ_TOPICS}");
 		}
+		
+		//Rafraissiement des topics non lus.
+		function XMLHttpRequest_unread_topics(divID)
+		{
+			if( document.getElementById('refresh_unread' + divID) )
+				document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/loading_mini.gif';
+				
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?refresh_unread=1');
+			xhr_object.onreadystatechange = function() 
+			{
+				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
+				{	
+					if( document.getElementById('refresh_unread' + divID) )
+						document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/refresh_mini.png';
+					
+					var array_unread_topics = new Array('', '');
+					eval(xhr_object.responseText);
+					
+					if( array_unread_topics[0] > 0 )
+						forum_display_block('forum_unread' + divID);
+						
+					document.getElementById('nbr_unread_topics').innerHTML = array_unread_topics[1];
+					document.getElementById('nbr_unread_topics2').innerHTML = array_unread_topics[1];
+					document.getElementById('forum_blockforum_unread').innerHTML = array_unread_topics[2];
+					document.getElementById('forum_blockforum_unread2').innerHTML = array_unread_topics[2];
+				}
+				else if( xhr_object.readyState == 4 && xhr_object.responseText == '-1' )
+				{	
+					if( document.getElementById('refresh_unread' + divID) )
+						document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/refresh_mini.png';
+				}
+			}
+			xmlhttprequest_sender(xhr_object, null);
+		}
+		
 		var delay_forum = 1000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
 		var timeout_forum;
 		var displayed_forum = false;
@@ -48,7 +83,6 @@
 		-->
 		</script>
 		
-		
 		<div class="module_position" style="margin-bottom:15px;background:none;border:none">
 			<div class="forum_title_l"></div>
 			<div class="forum_title_r"></div>
@@ -76,32 +110,13 @@
 				<span style="float:right;">
 					<img src="{MODULE_DATA_PATH}/images/favorite_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
 					<img src="{MODULE_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
-					<img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> {U_MSG_NOT_READ} 
+					<img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
 					
-					# IF C_DISPLAY_UNREAD_DETAILS #
 					<div style="position:relative;float:left;">
-						<div style="position:absolute;z-index:100;float:left;margin-left:160px;display:none;" id="forum_blockforum_unread">
-							<div class="row2" style="width:408px;height:{MAX_UNREAD_HEIGHT}px;overflow:auto;padding:0px;" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);">
-								<table class="module_table" style="margin:2px;width:99%">
-									# START forum_unread_list #
-									<tr>
-										<td class="text_small row2" style="padding:4px;width:100%">
-											{forum_unread_list.U_TOPICS}
-										</td>
-										<td class="text_small row2" style="padding:4px;">
-											[{forum_unread_list.LOGIN}]
-										</td>
-										<td class="text_small row2" style="padding:4px;white-space:nowrap">
-											{forum_unread_list.DATE}
-										</td>
-									</tr>
-									# END forum_unread_list #
-								</table>
-							</div>
+						<div style="position:absolute;z-index:100;float:left;margin-left:140px;display:none;" id="forum_blockforum_unread">
 						</div>
 					</div>
-					<a href="javascript:forum_display_block('forum_unread');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);" class="bbcode_hover"><img src="../templates/{THEME}/images/upload/plus.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
+					<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><img src="../templates/{THEME}/images/refresh_mini.png" alt="" id="refresh_unread" class="valign_middle" /></a>
 
 					&bull;					
 					<img src="{MODULE_DATA_PATH}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
