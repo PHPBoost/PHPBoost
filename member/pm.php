@@ -597,6 +597,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		//Rang de l'utilisateur.
 		$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 		$user_group = $user_rank;
+		$user_rank_icon = '';
 		if( $row['level'] === '2' ) //Rang spécial (admins).  
 		{
 			$user_rank = $_array_rank[-2][0];
@@ -623,7 +624,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		}
 		
 		//Image associée au rang.
-		$user_assoc_img = isset($user_rank_icon) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
+		$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 					
 		//Affichage des groupes du membre.		
 		if( !empty($row['user_groups']) && $_array_groups_auth ) 

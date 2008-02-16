@@ -97,7 +97,7 @@
 									</tr>
 									# END forum_unread_list #
 								</table>
-s							</div>
+							</div>
 						</div>
 					</div>
 					<a href="javascript:forum_display_block('forum_unread');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);" class="bbcode_hover"><img src="../templates/{THEME}/images/upload/plus.png" alt="" class="valign_middle" /></a>
