@@ -35,21 +35,25 @@ $id_post = ( !empty($_POST['id'])) ? numeric($_POST['id']) : '' ;
 
 $top = !empty($_GET['top']) ? securit($_GET['top']) : '' ;
 $bottom = !empty($_GET['bot']) ? securit($_GET['bot']) : '' ;
-$pos = isset($_GET['pos']) ? numeric($_GET['pos']) : 0;
+$move = isset($_GET['move']) ? securit($_GET['move']) : '';
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {	
 	$result = $sql->query_while("SELECT id, activ, secure
-	FROM ".PREFIX."modules_mini
-	ORDER BY side, class", __LINE__, __FILE__);
+	FROM ".PREFIX."modules_mini", __LINE__, __FILE__);
 	while( $row = $sql->sql_fetch_assoc($result) )
 	{
 		$activ = isset($_POST[$row['id'] . 'activ']) ? numeric($_POST[$row['id'] . 'activ']) : '0';  
 		$secure = isset($_POST[$row['id'] . 'secure']) ? numeric($_POST[$row['id'] . 'secure']) : '-1'; 
 		
 		if( $row['secure'] != $secure || $row['activ'] != $activ )
-			$sql->query_inject("UPDATE ".PREFIX."modules_mini SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		{	
+			$location = '';
+			if( empty($activ) )
+				$location = "location = '',";
+			$sql->query_inject("UPDATE ".PREFIX."modules_mini SET " . $location . " activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		}
 	}
 	$sql->close($result);
 	
@@ -57,22 +61,22 @@ if( !empty($_POST['valid']) )
 	
 	redirect(HOST . SCRIPT);	
 }
-elseif( isset($_GET['unactiv']) && !empty($id) ) //Gestion de l'activation pour un module donné.
+elseif( isset($_GET['activ']) && !empty($id) ) //Gestion de l'activation pour un module donné.
 {
-	$previous_class = $sql->query("SELECT class FROM ".PREFIX."modules_mini WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = 0, activ = 0 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$max_class = $sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = 'left' AND activ = 1", __LINE__, __FILE__);
+	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . ($max_class + 1) . "', location = 'left', activ = 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
-	//Réordonnement du classement.
-	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $previous_class . "'", __LINE__, __FILE__);
-
 	$cache->generate_file('modules_mini');		
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
 }
 elseif( isset($_GET['unactiv']) && !empty($id) ) //Gestion de l'inactivation pour un module donné.
 {
-	$max_class = $sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . $max_class . "', activ = 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$info_menu = $sql->query_array("modules_mini", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = 0, activ = 0, location = '' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
+	//Réordonnement du classement.
+	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . $info_menu['location'] . "'", __LINE__, __FILE__);
+
 	$cache->generate_file('modules_mini');		
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
 }
@@ -83,30 +87,43 @@ elseif( isset($_GET['secure']) && !empty($id) ) //Gestion de la sécurité pour un
 	
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
 }
+elseif( !empty($move) && !empty($id) ) //Gestion de la sécurité pour un module donné.
+{
+	$info_menu = $sql->query_array("modules_mini", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$max_class = $sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" . $move . "' AND activ = 1", __LINE__, __FILE__);
+	
+	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . $info_menu['location'] . "' AND activ = 1", __LINE__, __FILE__);	
+	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . ($max_class + 1) . "', location = '" . $move . "', activ = 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	
+	$cache->generate_file('modules_mini');		
+	
+	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
+}
 elseif( ($top || $bottom) && !empty($id) ) //Monter/descendre.
 {
-	if( $to )
+	if( $top )
 	{	
-		$topmoins = ($top - 1);
-		
-		$sql->query_inject("SELECT class FROM ".PREFIX."modules_mini WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . $top . "' WHERE class = '" . $topmoins . "' AND side = '" . $pos . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . $topmoins . "' WHERE class = 0 AND side = '" . $pos . "'", __LINE__, __FILE__);
-		
-		###### Régénération du cache des liens #######
+		$info_menu = $sql->query_array("modules_mini", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$top = $sql->query("SELECT id FROM ".PREFIX."modules_mini WHERE location = '" . $info_menu['location'] . "' AND class = '" . ($info_menu['class'] - 1) . "' AND activ = 1", __LINE__, __FILE__);
+		if( !empty($top) )
+		{
+			$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class + 1 WHERE id = '" . $top . "'", __LINE__, __FILE__);
+			$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		}
 		$cache->generate_file('modules_mini');
 		
 		redirect(HOST . SCRIPT . '#m' . $id);
 	}
 	elseif( $bottom )
 	{
-		$bottomplus = ($bottom + 1);
+		$info_menu = $sql->query_array("modules_mini", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$bottom = $sql->query("SELECT id FROM ".PREFIX."modules_mini WHERE location = '" . $info_menu['location'] . "' AND class = '" . ($info_menu['class'] + 1) . "' AND activ = 1", __LINE__, __FILE__);
+		if( !empty($bottom) )
+		{
+			$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE id = '" . $bottom . "'", __LINE__, __FILE__);
+			$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class + 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		}
 		
-		$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = 0 WHERE class = '" . $bottom . "' AND side = '" . $pos . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . $bottom . "' WHERE class = '" . $bottomplus . "' AND side = '" . $pos . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . $bottomplus . "' WHERE class = 0 AND side = '" . $pos . "'", __LINE__, __FILE__);
-		
-		###### Régénération du cache des liens #######
 		$cache->generate_file('modules_mini');
 		
 		redirect(HOST . SCRIPT . '#m' . $id);
@@ -120,7 +137,18 @@ else
 	
 	//On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
 	$info_theme = parse_ini_file('../templates/' . $CONFIG['theme'] . '/config/' . $CONFIG['lang'] . '/config.ini');
-		
+	
+	$array_max = array();
+	$result = $sql->query_while("SELECT MAX(class) AS max, location
+	FROM ".PREFIX."modules_mini
+	GROUP BY location
+	ORDER BY class", __LINE__, __FILE__);
+	while( $row = $sql->sql_fetch_assoc($result) )
+	{
+		$array_max[$row['location']] = $row['max'];
+	}
+	$sql->close($result);
+	
 	$i = 0;
 	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	$result = $sql->query_while("SELECT id, class, name, contents, location, activ, secure, added
@@ -158,6 +186,8 @@ else
 				'ACTIV_DISABLED' => ($row['activ'] == '0') ? 'selected="selected"' : '',
 				'CONTENTS' => !empty($row['contents']) ? '<br />' . second_parse($row['contents']) : '',
 				'RANK' => $ranks,
+				'UP' => ($row['class'] > 1) ? '<a href="admin_menus.php?top=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/up.png" alt="" /></a>' : '<div style="float:left;width:32px;">&nbsp;</div>',
+				'DOWN' => ($array_max[$row['location']] != $row['class']) ? '<a href="admin_menus.php?bot=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/down.png" alt="" /></a>' : '<div style="float:left;width:32px;">&nbsp;</div>',
 				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $row['id'] . "&amp;pos=" . $row['location'] . "&amp;unactiv=' + this.options[this.selectedIndex].value",
 				'U_ONCHANGE_SECURE' => "'admin_menus.php?id=" . $row['id'] . "&amp;secure=' + this.options[this.selectedIndex].value"
 			));

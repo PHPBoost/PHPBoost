@@ -88,7 +88,9 @@ if( $CONFIG['maintain'] > time() )
 }
 	
 $template->set_filenames(array(
-	'header' => '../templates/' . $CONFIG['theme'] . '/header.tpl'
+	'header' => '../templates/' . $CONFIG['theme'] . '/header.tpl',
+	'subheader' => '../templates/' . $CONFIG['theme'] . '/subheader.tpl',
+	'topcentral' => '../templates/' . $CONFIG['theme'] . '/topcentral.tpl'
 ));
 
 $alternative_css = '';
@@ -152,42 +154,48 @@ if( $left_column )
 }
 $template->pparse('header');
 
-if( $left_column ) 
+//Gestion des blocs de subheader.
+$MODULES_MINI['subheader'] = true;
+include('../includes/modules_mini.php');	
+$MODULES_MINI['subheader'] = false;
+
+$template->pparse('subheader');
+
+if( $left_column ) //Gestion des blocs de gauche.
 {
 	$template->set_filenames(array(
 		'end_left' => '../templates/' . $CONFIG['theme'] . '/end_left.tpl',
 	));
 	
-	//Gestion des blocs.
-	$BLOCK_top = true;
-	$BLOCK_bottom = false;
+	$MODULES_MINI['left'] = true;
 	include('../includes/modules_mini.php');	
+	$MODULES_MINI['left'] = false;
 	
 	if( !$right_column ) //Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
 	{
-		$BLOCK_top = false;
-		$BLOCK_bottom = true;
+		$MODULES_MINI['right'] = true;
 		include('../includes/modules_mini.php');
+		$MODULES_MINI['right'] = false;
 	}
 
 	$template->pparse('end_left');
 }	
-if( $right_column )
+if( $right_column )  //Gestion des blocs de droite.
 {
 	$template->set_filenames(array(
 		'start_right' => '../templates/' . $CONFIG['theme'] . '/start_right.tpl'
 	));
 
 	$template->pparse('start_right');	
-	$BLOCK_top = false;
-	$BLOCK_bottom = true;
+	$MODULES_MINI['right'] = true;
 	include('../includes/modules_mini.php');
+	$MODULES_MINI['right'] = false;
 	
 	if( !$left_column ) //Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
 	{
-		$BLOCK_top = true;
-		$BLOCK_bottom = false;
+		$MODULES_MINI['left'] = true;
 		include('../includes/modules_mini.php');
+		$MODULES_MINI['left'] = false;
 	}
 	
 	$template->assign_vars(array(	
@@ -197,5 +205,11 @@ if( $right_column )
 
 //Gestion du fil d'ariane, et des titres des pages dynamiques.
 $speed_bar->Display_speed_bar();
+
+$MODULES_MINI['topcentral'] = true;
+include('../includes/modules_mini.php');
+$MODULES_MINI['topcentral'] = false;
+
+$template->pparse('topcentral');
 
 ?>

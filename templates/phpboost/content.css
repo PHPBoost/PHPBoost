@@ -427,32 +427,3 @@ a.msg_link_pseudo:hover {
 	border:1px solid #335B87;
 	border-top:none;
 }
-
-
-/* Modules minis horizontaux.
---------------------------------------*/
-.module_mini_container_horizontal{ /*Placement des mini modules */
-	margin-bottom:20px;
-}
-.module_mini_top_horizontal{
-	width:98%;
-	height:15px;
-	font-weight:bold;
-	background:#A6C4DE;
-	padding:4px;
-	border:1px solid #335B87;
-	text-align:center;
-	margin:auto;
-}
-.module_mini_table_horizontal{
-	width:98%;
-	background:#FFFFFF;
-	border:1px solid #335B87;
-	text-align:center; 
-	padding:4px;
-	padding-top:5px;
-	margin:auto;
-}
-.module_mini_bottom_horizontal { /* Bordure inférieur des modules minis */ 
-	margin:auto;
-}

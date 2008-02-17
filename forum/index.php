@@ -88,13 +88,12 @@ WHERE c.aprob = 1 " . $display_sub_cat . " " . $unauth_cats . "
 ORDER BY c.id_left", __LINE__, __FILE__);
 while ($row = $sql->sql_fetch_assoc($result))
 {	
-	$template->assign_block_vars('all', array(
-	));
-		
-	//Si c'est une catégorie
-	if( $row['level'] === '0' )
+	$template->assign_block_vars('forums_list', array(
+	));	
+	
+	if( $row['level'] === '0' ) //Si c'est une catégorie
 	{
-		$template->assign_block_vars('all.cats', array(
+		$template->assign_block_vars('forums_list.cats', array(
 			'IDCAT' => $row['cid'],
 			'NAME' => $row['name'],
 			'U_FORUM_VARS' => transid('index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . url_encode_rewrite($row['name']) . '.php')
@@ -102,13 +101,12 @@ while ($row = $sql->sql_fetch_assoc($result))
 		$cat_left = $CAT_FORUM[$row['cid']]['id_left'];
 		$cat_right = $CAT_FORUM[$row['cid']]['id_right'];			
 	}
-	//On liste les sous-catégories
-	else
+	else //On liste les sous-catégories
 	{
 		$subforums = '';
 		if( !empty($id_get) )
 		{
-			$template->assign_block_vars('all.cats', array(
+			$template->assign_block_vars('forums_list.cats', array(
 				'IDCAT' => $id_get,
 				'NAME' => $CAT_FORUM[$id_get]['name'],
 				'U_FORUM_VARS' => transid('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
@@ -119,15 +117,20 @@ while ($row = $sql->sql_fetch_assoc($result))
 		}
 		else //Vérirication de l'existance de sous forums.
 		{
+			$template->assign_vars(array(
+				'C_FORUM_ROOT_CAT' => false,
+				'C_FORUM_CHILD_CAT' => true,
+				'C_END_S_CATS' => false
+			));			
 			if( $CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1 )
 			{		
 				foreach($CAT_FORUM as $idcat => $key) //Listage des sous forums.
 				{
 					if( $CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'] )
 					{
-						if( $CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1) )
+						if( $CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1) ) //Sous forum distant d'un niveau au plus.
 						{
-							if( $groups->check_auth($CAT_FORUM[$row['cid']]['auth'], READ_CAT_FORUM) )
+							if( $AUTH_READ_FORUM[$row['cid']] ) //Autorisation en lecture.
 							{
 								$link = '<a href="forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
 								$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';				
@@ -180,8 +183,7 @@ while ($row = $sql->sql_fetch_assoc($result))
 		
 		$total_topic += $row['nbr_topic'];
 		$total_msg += $row['nbr_msg'];
-		
-		$template->assign_block_vars('all.s_cats', array(
+		$template->assign_block_vars('forums_list.subcats', array(
 			'ANNOUNCE' => '<img src="' . $module_data_path . '/images/' . $img_announce . '.gif" alt="" />',
 			'NAME' => $row['name'],
 			'DESC' => $row['subname'],
@@ -193,9 +195,9 @@ while ($row = $sql->sql_fetch_assoc($result))
 		));
 	}
 	
-	if( $cat_right - $cat_left == 1 || ($CAT_FORUM[$row['cid']]['id_right'] + 1) == $cat_right )
+	if( $cat_right - $cat_left == 1 || ($CAT_FORUM[$row['cid']]['id_right'] + 1) == $cat_right ) //Fermeture de la catégorie racine.
 	{
-		$template->assign_block_vars('all.end_s_cats', array(
+		$template->assign_block_vars('forums_list.endcats', array(
 		));	
 	}
 }

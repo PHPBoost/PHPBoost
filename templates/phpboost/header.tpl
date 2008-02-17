@@ -24,21 +24,8 @@
 	<div id="global">
 	<div id="header">
 		<img src="../templates/{THEME}/images/header_boost.jpg" alt="PHPBoost" />
+		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
 	</div>	
-	
-	<div id="sub_header">						
-		<div id="sub_header_left">
-			<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
-			<a href="http://www.phpboost.com" title="Accueil PHPBoost" class="button">Accueil</a>
-			<a href="http://www.phpboost.com/forum/index.php" title="Forum PHPBoost" class="button">Forum</a>
-			<a href="http://www.phpboost.com/wiki/wiki.php" title="Documentation PHPBoost" class="button">Documentation</a>
-			<a href="http://www.phpboost.com/download/download-2-52+phpboost-2-0.php" title="Télécharger PHPBoost" class="button">Télécharger</a>
-			<a href="http://themes.phpboost.com" title="Thèmes PHPBoost" class="button">Thèmes</a>
-			<a href="http://www.phpboost.com/phpboost/modules.php" title="Modules PHPBoost" class="button">Modules</a>
-			<a href="http://demo.phpboost.com" title="Démonstration PHPBoost" class="button">Démo</a>
-		</div>
-		<div id="sub_header_right"></div>
-	</div>
 	
 	# IF C_COMPTEUR #
 	<div id="compteur">					
@@ -103,7 +90,7 @@
 	</script>
 	# ENDIF #
 	
-	# IF C_START_LEFT #
-	<div id="left_menu">
-	# ENDIF #
+		
+	<div id="sub_header">						
+		<div id="sub_header_left">
 	

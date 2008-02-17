@@ -27,6 +27,15 @@
 
 if( defined('PHP_BOOST') !== true) exit;
 	
+
+$template->set_filenames(array(
+	'bottomcentral' => '../templates/' . $CONFIG['theme'] . '/bottomcentral.tpl'
+));
+$template->pparse('bottomcentral');
+
+$MODULES_MINI['bottomcentral'] = true;
+include('../includes/modules_mini.php');
+
 $sql->sql_close(); //Fermeture de mysql
 
 $template->set_filenames(array(
