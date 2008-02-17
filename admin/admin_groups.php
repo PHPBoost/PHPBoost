@@ -68,8 +68,7 @@ elseif( !empty($_POST['valid']) && $add_post ) //ajout  du groupe.
 		$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);	
 
 		//Insertion
-		$sql->query_inject("INSERT INTO ".PREFIX."group 
-		(name, img, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
+		$sql->query_inject("INSERT INTO ".PREFIX."group (name, img, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
 			
 		###### On régénère le fichier de cache des groupes #######
 		$cache->generate_file('groups');	

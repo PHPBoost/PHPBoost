@@ -57,7 +57,7 @@ $sql->close($result);
 include_once('../includes/pagination.class.php'); 
 $pagination = new Pagination();
 
-$nbr_com = !empty($module) ? $array_com[$module] : $sql->count_table('com', __LINE__, __FILE__);
+$nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $sql->count_table('com', __LINE__, __FILE__);
 $template->assign_vars(array(
 	'THEME' => $CONFIG['theme'],
 	'LANG' => $CONFIG['lang'],

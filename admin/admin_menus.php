@@ -48,12 +48,7 @@ if( !empty($_POST['valid']) )
 		$secure = isset($_POST[$row['id'] . 'secure']) ? numeric($_POST[$row['id'] . 'secure']) : '-1'; 
 		
 		if( $row['secure'] != $secure || $row['activ'] != $activ )
-		{	
-			$location = '';
-			if( empty($activ) )
-				$location = "location = '',";
-			$sql->query_inject("UPDATE ".PREFIX."modules_mini SET " . $location . " activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-		}
+			$sql->query_inject("UPDATE ".PREFIX."modules_mini SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	$sql->close($result);
 	
@@ -63,8 +58,9 @@ if( !empty($_POST['valid']) )
 }
 elseif( isset($_GET['activ']) && !empty($id) ) //Gestion de l'activation pour un module donné.
 {
-	$max_class = $sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = 'left' AND activ = 1", __LINE__, __FILE__);
-	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . ($max_class + 1) . "', location = 'left', activ = 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$previous_location = $sql->query("SELECT location FROM ".PREFIX."modules_mini WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$max_class = $sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" . $previous_location . "' AND activ = 1", __LINE__, __FILE__);
+	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . ($max_class + 1) . "', activ = 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$cache->generate_file('modules_mini');		
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
@@ -72,7 +68,7 @@ elseif( isset($_GET['activ']) && !empty($id) ) //Gestion de l'activation pour un
 elseif( isset($_GET['unactiv']) && !empty($id) ) //Gestion de l'inactivation pour un module donné.
 {
 	$info_menu = $sql->query_array("modules_mini", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = 0, activ = 0, location = '' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = 0, activ = 0 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	//Réordonnement du classement.
 	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . $info_menu['location'] . "'", __LINE__, __FILE__);
