@@ -485,7 +485,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 			}
 			else $user_local = '';
 			
-			$template->assign_block_vars('com',array(
+			$template->assign_block_vars('com_list',array(
 				'ID' => $row['idcom'],
 				'CONTENTS' => ucfirst(second_parse($row['contents'])),
 				'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),

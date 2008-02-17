@@ -169,7 +169,8 @@ if( $session->check_auth($session->data, 0) ) //Affichage des message()s non lu(
 		'L_TOPIC' => $l_topic,
 		'L_MESSAGE' => $LANG['replies'],
 		'L_VIEW' => $LANG['views'],
-		'L_LAST_MESSAGE' => $LANG['last_message']
+		'L_LAST_MESSAGE' => $LANG['last_message'],
+		'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read_forum']
 	));	
 
 	//Listes les utilisateurs en lignes.	

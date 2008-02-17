@@ -80,49 +80,49 @@
 				</div>
 			</div>	
 		</div>
-		# START com #
+		# START com_list #
 		<div class="msg_position">
 			<div class="msg_container">
-				<span id="m{com.ID}"></span>
+				<span id="m{com_list.ID}"></span>
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
-					{com.USER_ONLINE} {com.USER_PSEUDO}
+					{com_list.USER_ONLINE} {com_list.USER_PSEUDO}
 					</div>
-					<div style="float:left;">&nbsp;&nbsp;<a href="{com.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{com.ID}" /></a> {com.DATE}</div>
-					<div style="float:right;"><a href="{com.U_QUOTE}" title=""><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" class="valign_middle" /></a>{com.EDIT}{com.DEL}&nbsp;&nbsp;</div>
+					<div style="float:left;">&nbsp;&nbsp;<a href="{com_list.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{com_list.ID}" /></a> {com_list.DATE}</div>
+					<div style="float:right;"><a href="{com_list.U_QUOTE}" title=""><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" class="valign_middle" /></a>{com_list.EDIT}{com_list.DEL}&nbsp;&nbsp;</div>
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">
-						<p style="text-align:center;">{com.USER_RANK}</p>
-						<p style="text-align:center;">{com.USER_IMG_ASSOC}</p>
-						<p style="text-align:center;">{com.USER_AVATAR}</p>
-						<p style="text-align:center;">{com.USER_GROUP}</p>
-						{com.USER_SEX}
-						{com.USER_DATE}<br />
-						{com.USER_MSG}<br />
-						{com.USER_LOCAL}
+						<p style="text-align:center;">{com_list.USER_RANK}</p>
+						<p style="text-align:center;">{com_list.USER_IMG_ASSOC}</p>
+						<p style="text-align:center;">{com_list.USER_AVATAR}</p>
+						<p style="text-align:center;">{com_list.USER_GROUP}</p>
+						{com_list.USER_SEX}
+						{com_list.USER_DATE}<br />
+						{com_list.USER_MSG}<br />
+						{com_list.USER_LOCAL}
 					</div>
 					<div class="msg_contents">
 						<div class="msg_contents_overflow">
-							{com.CONTENTS}
+							{com_list.CONTENTS}
 						</div>
 					</div>
 				</div>
 			</div>	
 			<div class="msg_sign">				
 				<div class="msg_sign_overflow">
-					{com.USER_SIGN}
+					{com_list.USER_SIGN}
 				</div>				
 				<hr />
 				<div style="float:left;">
-					{com.U_MEMBER_PM} {com.USER_MAIL} {com.USER_MSN} {com.USER_YAHOO} {com.USER_WEB}
+					{com_list.U_MEMBER_PM} {com_list.USER_MAIL} {com_list.USER_MSN} {com_list.USER_YAHOO} {com_list.USER_WEB}
 				</div>
 				<div style="float:right;font-size:10px;">
-					{com.WARNING} {com.PUNISHMENT}
+					{com_list.WARNING} {com_list.PUNISHMENT}
 				</div>&nbsp;
 			</div>	
 		</div>				
-		# END com #		
+		# END com_list #		
 		<div class="msg_position">		
 			<div class="msg_bottom_l"></div>		
 			<div class="msg_bottom_r"></div>
@@ -229,47 +229,47 @@
 				</div>
 			</div>	
 		</div>
-		# START com #
+		# START com_list #
 		<div class="msg_position">
 			<div class="msg_container">
-				<span id="m{com.ID}">
+				<span id="m{com_list.ID}">
 				<span id="com"></span>
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
-						{com.USER_ONLINE} {com.USER_PSEUDO}
+						{com_list.USER_ONLINE} {com_list.USER_PSEUDO}
 					</div>
-					<div style="float:left;">&nbsp;&nbsp;<a href="{com.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{com.ID}" /></a> {com.DATE}</div>
-					<div style="float:right;"><a href="{com.U_QUOTE}" title=""><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" class="valign_middle" /></a>{com.EDIT}{com.DEL}&nbsp;&nbsp;</div>
+					<div style="float:left;">&nbsp;&nbsp;<a href="{com_list.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{com_list.ID}" /></a> {com_list.DATE}</div>
+					<div style="float:right;"><a href="{com_list.U_QUOTE}" title=""><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" class="valign_middle" /></a>{com_list.EDIT}{com_list.DEL}&nbsp;&nbsp;</div>
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">
-						<p style="text-align:center;">{com.USER_RANK}</p>
-						<p style="text-align:center;">{com.USER_IMG_ASSOC}</p>
-						<p style="text-align:center;">{com.USER_AVATAR}</p>
-						<p style="text-align:center;">{com.USER_GROUP}</p>
-						{com.USER_SEX}
-						{com.USER_DATE}<br />
-						{com.USER_MSG}<br />
-						{com.USER_LOCAL}
+						<p style="text-align:center;">{com_list.USER_RANK}</p>
+						<p style="text-align:center;">{com_list.USER_IMG_ASSOC}</p>
+						<p style="text-align:center;">{com_list.USER_AVATAR}</p>
+						<p style="text-align:center;">{com_list.USER_GROUP}</p>
+						{com_list.USER_SEX}
+						{com_list.USER_DATE}<br />
+						{com_list.USER_MSG}<br />
+						{com_list.USER_LOCAL}
 					</div>
 					<div class="msg_contents">
 						<div class="msg_contents_overflow">
-							{com.CONTENTS}
+							{com_list.CONTENTS}
 						</div>
 					</div>
 				</div>
 			</div>	
 			<div class="msg_sign">				
 				<div class="msg_sign_overflow">
-					{com.USER_SIGN}	
+					{com_list.USER_SIGN}	
 				</div>			
 				<hr />
 				<div style="float:right;font-size:10px;">
-					{com.WARNING} {com.PUNISHMENT}
+					{com_list.WARNING} {com_list.PUNISHMENT}
 				</div>
 			</div>	
 		</div>				
-		# END com #		
+		# END com_list #		
 		<div class="msg_position">		
 			<div class="msg_bottom_l"></div>		
 			<div class="msg_bottom_r"></div>

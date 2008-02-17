@@ -272,15 +272,11 @@ class Cache
 			foreach($modules_mini[$location] as $location_key => $info)
 			{
 				if( $info['added'] == '0' )
-				{
 					$code .= 'if( $session->data[\'level\'] >= ' . $info['secure'] . ' ){' . $info['code'] . '}' . "\n";
-				}
 				else
 				{
 					if( $info['use_tpl'] == '0' )
-					{
 						$code .= 'echo ' . var_export($info['contents'], true) . ';' . "\n";
-					}
 					else
 					{
 						switch($location)
