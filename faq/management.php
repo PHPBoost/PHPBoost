@@ -61,8 +61,8 @@ if( $edit_question > 0 )
 		$errorh->error_handler('e_auth', E_USER_REDIRECT);
 		exit;
 	}
-	$speed_bar[$FAQ_LANG['category_management']] = transid('management.php?faq=' . $question_infos['idcat']);
-	$speed_bar[$FAQ_LANG['question_edition']] = transid('management.php?edit=' . $edit_question);
+	$speed_bar->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $question_infos['idcat']));
+	$speed_bar->Add_link($FAQ_LANG['question_edition'], transid('management.php?edit=' . $edit_question));
 }
 elseif( $cat_of_new_question >= 0 && $new )
 {
@@ -72,12 +72,12 @@ elseif( $cat_of_new_question >= 0 && $new )
 		$errorh->error_handler('e_auth', E_USER_REDIRECT);
 		exit;
 	}
-	$speed_bar[$FAQ_LANG['category_management']] = transid('management.php?faq=' . $cat_of_new_question);
-	$speed_bar[$FAQ_LANG['question_creation']] = transid('management.php?new=1&amp;idcat' . $cat_of_new_question . '&amp;after=' . $new_after_id);
+	$speed_bar->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $cat_of_new_question));
+	$speed_bar->Add_link($FAQ_LANG['question_creation'], transid('management.php?new=1&amp;idcat' . $cat_of_new_question . '&amp;after=' . $new_after_id));
 }
 else
 {
-	$speed_bar[$FAQ_LANG['category_management']] = transid('management.php' . ($id_faq > 0 ? '?faq=' . $id_faq : ''));
+	$speed_bar->Add_link($FAQ_LANG['category_management'], transid('management.php' . ($id_faq > 0 ? '?faq=' . $id_faq : '')));
 	//checking authorization
 	if( !$auth_write )
 	{
