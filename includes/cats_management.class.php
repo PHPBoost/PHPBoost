@@ -58,7 +58,7 @@ You can also have other fields such as auth level, description, visible, that cl
 ); */
 
 define('DEBUG_MODE', true);
-define('DO_NOT_DISPLAY_JAVASCRIPT_FUNCTIONS', false);
+define('AJAX_MODE', false);
 define('ERROR_UNKNOWN_MOTION', 1);
 define('ERROR_CAT_IS_AT_TOP', 2);
 define('ERROR_CAT_IS_AT_BOTTOM', 4);
@@ -153,7 +153,6 @@ class CategoriesManagement
 					$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Regeneration of the cache file of the module
 					$cache->generate_module_file($this->cache_file_name);
-					
 					return true;
 				}
 				else
@@ -375,7 +374,7 @@ class CategoriesManagement
 
 	## Private methods ##
 	//Recursive method allowing to display the administration panel of a category and its daughters
-	function create_cat_administration(&$string, $id_cat, $level, &$cache_var)
+	function create_cat_administration(&$string, $id_cat, $level, &$cache_var, $display_javascript_functions = true)
 	{
 		global $CONFIG, $LANG;
 		
@@ -428,61 +427,58 @@ class CategoriesManagement
 								if( $values['order'] > 1 )
 								{
 									$string .= '
-									<a href="' . $this->display_config['xmlhttprequest_file'] . '.php?id=' . $id . '&amp;move=up" id="up_' . $id . '">
+									<a href="' . (!$display_javascript_functions ? $this->display_config['xmlhttprequest_file'] . '?id=' . $id . '&amp;move=up" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');') . '">
 										<img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="" class="valign_middle" />
-									</a>
-									<script type="text/javascript">
-									<!--
-										document.getElementById("up_' . $id . '").href = "#";
-										document.getElementById("up_' . $id . '").onclick = function()
-										{
-											ajax_move_cat(' . $id . ', \'up\');
-										}
-									-->
-									</script>';
+									</a>';
+									
+									if( $display_javascript_functions )
+										$string .= '
+										<script type="text/javascript">
+										<!--
+											document.getElementById("up_' . $id . '").href = "javascript:ajax_move_cat(' . $id . ', \'up\');";
+										-->
+										</script>';
 								}
 								
 								//If it's not the last of the category we can make it going upper
 								if( $i != $num_cats  - 1 && $cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat )
 								{
 									$string .= '
-									<a href="' . $this->display_config['xmlhttprequest_file'] . '.php?id=' . $id . '&amp;move=down" id="down_' . $id . '">
+									<a href="' . (!$display_javascript_functions ? $this->display_config['xmlhttprequest_file'] . '?id=' . $id . '&amp;move=down" id="down_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'down\');') . '">
 										<img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="" class="valign_middle" />
-									</a>
-									<script type="text/javascript">
-									<!--
-										document.getElementById("down_' . $id . '").href = "#";
-										document.getElementById("down_' . $id . '").onclick = function()
-										{
-											ajax_move_cat(' . $id . ', \'down\');
-										}
-									-->
-									</script>';
+									</a>';
+									if( $display_javascript_functions )
+										$string .= '
+										<script type="text/javascript">
+										<!--
+											document.getElementById("down_' . $id . '").href = "javascript:			ajax_move_cat(' . $id . ', \'down\');";
+										-->
+										</script>';
 								}
 								
 								$string .= '
 								<a href="' . $this->display_config['administration_file_name'] . '?id=' . $id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>&nbsp;';
 								
 								$string .= '
-								<a href="' . $this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id . '">
+								<a href="' . (!$display_javascript_functions ? $this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id : 'javascript:ajax_del_cat(' . $id . ');') . '">
 									<img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" />
-								</a>
-								<script type="text/javascript">
-									<!--
-										document.getElementById("del_' . $id . '").href = "#";
-										document.getElementById("del_' . $id . '").onclick = function()
-										{
-											ajax_del_cat(' . $id . ');
-										}
-									-->
-								</script>&nbsp;&nbsp;
+								</a>';
+								if( $display_javascript_functions )
+									$string .= '
+									<script type="text/javascript">
+										<!--
+											document.getElementById("del_' . $id . '").href = "javascript:ajax_del_cat(' . $id . ');";
+										-->
+									</script>';
+								
+								$string .= '&nbsp;&nbsp;
 							</span>&nbsp;
 						</div>	
 					</div>
 				</span>';
 				
 				//We call the function for its daughter categories
-				$this->create_cat_administration($string, $id, $level + 1, $cache_var);
+				$this->create_cat_administration($string, $id, $level + 1, $cache_var, $display_javascript_functions);
 			}
 		}
 	}

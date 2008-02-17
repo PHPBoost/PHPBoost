@@ -48,18 +48,24 @@ if( $session->data['level'] === 2 ) //Admin
 	elseif( $cat_to_del > 0 )
 		$result = $categories->Delete_category($cat_to_del);
 	
-	$cat_config = array(
-		'xmlhttprequest_file' => 'xmlhttprequest.php',
-		'administration_file_name' => 'xmlhttprequest_cats.php',
-		'url' => array(
-			'unrewrited' => '../news/news.php?id=%d',
-			'rewrited' => '../news-%d+%s.php'),
-		);
-		
-	$categories->Set_displaying_configuration($cat_config);
-	
+	//Operation was successfully
 	if( $result )
-		echo $categories->Build_administration_list($FAQ_CATS, DO_NOT_DISPLAY_JAVASCRIPT_FUNCTIONS);
+	{	
+		$cat_config = array(
+			'xmlhttprequest_file' => 'xmlhttprequest_cats.php',
+			'administration_file_name' => 'admin_faq_cats.php',
+			'url' => array(
+				'unrewrited' => '../faq/faq.php?id=%d',
+				'rewrited' => '../faq/faq-%d+%s.php'),
+			);
+		
+		$categories->Set_displaying_configuration($cat_config);
+		
+		$cache->load_file('faq', RELOAD_CACHE);
+	
+		echo $categories->Build_administration_list($FAQ_CATS, AJAX_MODE);
+	}
 }
+include_once('../includes/footer_no_display.php');
 
 ?>
