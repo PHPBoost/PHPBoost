@@ -39,28 +39,41 @@ $categories = new FaqCats();
 $id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
 $id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
 $cat_to_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+$id_edit = !empty($_GET['edit']) ? numeric($_GET['edit']) : 0;
+$new_cat = !empty($_GET['new']) ? true : false;
+
+$template->set_filenames(array(
+'admin_faq_cat' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq_cats.tpl'
+));
+$template->assign_vars(array(
+	'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
+	'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
+	'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],
+	'L_ADD_CAT' => $FAQ_LANG['add_cat']
+));
 
 if( $id_up > 0 )
 {
-	$categories = new FaqCats();
 	$categories->Move_category($id_up, 'up');
 	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $id_down > 0 )
 {
-	$categories = new FaqCats();
 	$categories->Move_category($id_down, 'down');
+	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $cat_to_del > 0 )
 {
 	
 }
-else
+elseif( $new_cat XOR $id_edit > 0 )
 {
-	$template->set_filenames(array(
-	'admin_faq_cat' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq_cats.tpl'
-	));
-	
+	$template->assign_block_vars('edit_category', array(
+			'' => ''
+		));
+}
+else
+{	
 	$cat_config = array(
 		'xmlhttprequest_file' => 'xmlhttprequest_cats.php',
 		'administration_file_name' => 'admin_faq_cats.php',
@@ -71,11 +84,12 @@ else
 		
 	$categories->Set_displaying_configuration($cat_config);
 	
-	echo $categories->Build_administration_list($FAQ_CATS);
-
-	$template->pparse('admin_faq_cat');
-
+	$template->assign_block_vars('categories_list', array(
+		'CATEGORIES' => $categories->Build_administration_list($FAQ_CATS)
+		));
 }
+
+$template->pparse('admin_faq_cat');
 
 include_once('../includes/admin_footer.php');
 
