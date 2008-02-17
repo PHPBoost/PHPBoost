@@ -1,14 +1,3 @@
-			<!--
-			<div style="margin:auto;width:468px;margin-top:20px;margin-bottom:20px;">
-				<script type="text/javascript">
-				google_ad_client = "pub-9943645616388527";
-				google_ad_slot = "5657830319";
-				google_ad_width = 468;
-				google_ad_height = 60;
-				</script>
-				<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-			</div> 
-			-->	
 		</div>
 	</div>
 	</div>
