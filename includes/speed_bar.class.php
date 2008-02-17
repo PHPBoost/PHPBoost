@@ -50,7 +50,7 @@ class Speed_bar
 	//Inversion de l'ordre des liens
 	function Remove_last_link()
 	{
-		$this->array_links = array_pop($this->array_links);
+		array_pop($this->array_links);
 	}
 	
 	//Affichage

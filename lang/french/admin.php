@@ -400,7 +400,9 @@ $LANG['menu_right'] = 'Menu droit';
 $LANG['menu_top_central'] = 'Menu central haut';
 $LANG['menu_bottom_central'] = 'Menu central bas';
 $LANG['menu_footer'] = 'Pied de page';
-		
+$LANG['location'] = 'Emplacement';
+$LANG['use_tpl'] = 'Utiliser la structure des templates';
+
 //Smiley
 $LANG['upload_smiley'] = 'Uploader un smiley';
 $LANG['smiley'] = 'Smiley';

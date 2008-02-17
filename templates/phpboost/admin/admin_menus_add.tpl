@@ -23,9 +23,9 @@
 					<a href="admin_menus.php" class="quick_link">{L_MENUS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_menus_add.php"><img src="../templates/{THEME}/images/admin/menus.png" alt="" /></a>
+					<a href="admin_menus_php"><img src="../templates/{THEME}/images/admin/menus.png" alt="" /></a>
 					<br />
-					<a href="admin_menus_add.php" class="quick_link">{L_ADD_MENUS}</a>
+					<a href="admin_menus_php" class="quick_link">{L_ADD_MENUS}</a>
 				</li>
 			</ul>
 		</div>
@@ -35,37 +35,29 @@
 				<fieldset> 
 					<legend>{L_ACTION_MENUS}</legend>
 					<p>{L_EXPLAIN_MENUS}</p>
-					# START add #
+					# IF C_ADD_MENU #
 					<dl>
 						<dt><label for="name">{L_NAME}</label></dt>
 						<dd><label><input type="text" size="18" name="name" id="name" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="activ">{L_STATUS}</label></dt>
+						<dt><label for="location">* {L_LOCATION}</label></dt>
 						<dd><label>
-							<select name="activ">								
-								<option value="1" selected="selected">{L_ACTIV}</option>
-								<option value="0">{L_UNACTIV}</option>					
+							<select name="location" id="location">								
+								<option value="subheader">{L_SUB_HEADER}</option>
+								<option value="left" selected="selected">{L_LEFT_MENU}</option>	
+								<option value="topcentral">{L_TOP_CENTRAL_MENU}</option>	
+								<option value="bottomcentral">{L_BOTTOM_CENTRAL_MENU}</option>	
+								<option value="right">{L_RIGHT_MENU}</option>	
 							</select>
 						</label></dd>
 					</dl>
-					<label>
-						# INCLUDE handle_bbcode #	
-						<textarea type="text" rows="15" cols="5" id="contents" name="contents"></textarea> 
-					</label>
-					# END add #		
-					
-					# START edit #
-					<dl>
-						<dt><label for="name">{L_NAME}</label></dt>
-						<dd><label><input type="text" size="18" value="{edit.NAME}" name="name" id="name" class="text" /></label></dd>
-					</dl>
 					<dl>
 						<dt><label for="activ">{L_STATUS}</label></dt>
 						<dd><label>
-							<select name="activ">								
-								<option value="1" {edit.ACTIV_ENABLED}>{L_ACTIV}</option>
-								<option value="0" {edit.ACTIV_DISABLED}>{L_UNACTIV}</option>					
+							<select name="activ" id="activ">								
+								<option value="1" selected="selected">{L_ACTIV}</option>
+								<option value="0">{L_UNACTIV}</option>					
 							</select>
 						</label></dd>
 					</dl>
@@ -73,18 +65,60 @@
 						<dt><label for="secure">{L_RANK}</label></dt>
 						<dd><label>
 							<select name="secure">								
-								# START edit.select #	
-								{edit.select.RANK}
-								# END edit.select #									
+								{RANKS}								
 							</select>
 						</label></dd>
 					</dl>
+					<dl>
+						<dt><label for="use_tpl">{L_USE_TPL}</label></dt>
+						<dd><label><input type="checkbox" size="18" name="use_tpl" id="use_tpl" checked="checked" class="text" /></label></dd>
+					</dl>
 					<label>
 						# INCLUDE handle_bbcode #	
-						<textarea type="text" rows="15" cols="5" id="contents" name="contents">{edit.CONTENTS}</textarea> 
+						<textarea type="text" rows="15" cols="5" id="contents" name="contents"></textarea> 
+					</label>
+					# ENDIF #		
+					
+					# IF C_EDIT_MENU #
+					<dl>
+						<dt><label for="name">{L_NAME}</label></dt>
+						<dd><label><input type="text" size="18" value="{NAME}" name="name" id="name" class="text" /></label></dd>
+					</dl>
+					<dl>
+						<dt><label for="location">* {L_LOCATION}</label></dt>
+						<dd><label>
+							<select name="location" id="location">								
+								{LOCATIONS}
+							</select>
+						</label></dd>
+					</dl>
+					<dl>
+						<dt><label for="activ">{L_STATUS}</label></dt>
+						<dd><label>
+							<select name="activ">								
+								<option value="1" {ACTIV_ENABLED}>{L_ACTIV}</option>
+								<option value="0" {ACTIV_DISABLED}>{L_UNACTIV}</option>					
+							</select>
+						</label></dd>
+					</dl>
+					<dl>
+						<dt><label for="secure">{L_RANK}</label></dt>
+						<dd><label>
+							<select name="secure">								
+								{RANKS}
+							</select>
+						</label></dd>
+					</dl>
+					<dl>
+						<dt><label for="use_tpl">{L_USE_TPL}</label></dt>
+						<dd><label><input type="checkbox" size="18" name="use_tpl" id="use_tpl" {USE_TPL} class="text" /></label></dd>
+					</dl>
+					<label>
+						# INCLUDE handle_bbcode #	
+						<textarea type="text" rows="15" cols="5" id="contents" name="contents">{CONTENTS}</textarea> 
 						<br />
 					</label>
-					# END edit #	
+					# ENDIF #	
 				</fieldset>		
 			
 				<fieldset class="fieldset_submit">

@@ -10,4 +10,3 @@
 			# END link_speed_bar #			
 		</div>	
 		<div id="top_contents">
-		</div>	

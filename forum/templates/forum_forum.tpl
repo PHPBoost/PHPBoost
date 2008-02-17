@@ -6,14 +6,14 @@
 		</div>
 		# END error_auth_write #
 		
-		# START cat #		
+		# IF C_FORUM_SUB_CATS #	
 		<div style="margin-top:20px;margin-bottom:20px;">
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
 				<div class="module_top">
 					<a href="rss.php?cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> 
-					&nbsp;&nbsp;<strong>{cat.L_NAME}</strong>
+					&nbsp;&nbsp;<strong>{L_SUBFORUMS}</strong>
 				</div>
 				<div class="module_contents forum_contents">
 					<table class="module_table" style="width:100%">
@@ -25,47 +25,42 @@
 						</tr>
 					</table>
 				</div>
-			</div>				
-		# END cat #
-		
-		
-		# START s_cats #			
+			</div>		
+			# START subcats #			
 			<div class="module_position">
 				<div class="module_contents forum_contents">
 					<table class="module_table" style="width:100%">
 						<tr>
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								{s_cats.ANNOUNCE}
+								{subcats.ANNOUNCE}
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;">
-								<a href="forum{s_cats.U_FORUM_VARS}">{s_cats.NAME}</a>
+								<a href="forum{subcats.U_FORUM_VARS}">{subcats.NAME}</a>
 								<br />
-								<span class="text_small">{s_cats.DESC}</span>
-								<span class="text_small">{s_cats.SUBFORUMS}</span>
+								<span class="text_small">{subcats.DESC}</span>
+								<span class="text_small">{subcats.SUBFORUMS}</span>
 							</td>
 							<td class="forum_sous_cat_compteur">
-								{s_cats.NBR_TOPIC}
+								{subcats.NBR_TOPIC}
 							</td>
 							<td class="forum_sous_cat_compteur">
-								{s_cats.NBR_MSG}
+								{subcats.NBR_MSG}
 							</td>
 							<td class="forum_sous_cat_last">
-								{s_cats.U_LAST_TOPIC}
+								{subcats.U_LAST_TOPIC}
 							</td>
 						</tr>	
 					</table>		
 				</div>
 			</div>
-		# END s_cats #
-		
-		# START end_cat #
+			# END subcats #		
 			<div class="module_position">
 				<div class="module_bottom_l"></div>		
 				<div class="module_bottom_r"></div>
 				<div class="module_bottom"></div>
 			</div>		
 		</div>	
-		# END end_cat #
+		# ENDIF #
 				
 		<div class="module_position">					
 			<div class="module_top_l"></div>		

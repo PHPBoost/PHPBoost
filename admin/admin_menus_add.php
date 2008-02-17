@@ -35,21 +35,28 @@ $edit = !empty($_GET['edit']) ? true : false;
 $id_post = ( !empty($_POST['id'])) ? numeric($_POST['id']) : '' ;
 $action = !empty($_POST['action']) ? trim($_POST['action']) : '';
 $del = !empty($_GET['del']) ? true : false;
-$pos = isset($_GET['pos']) ? numeric($_GET['pos']) : 0;
 
 //Si c'est confirmé on execute
 if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà existant.
 {	
-	$name = securit($_POST['name']);
-	$activ = numeric($_POST['activ']);  
-	$secure = numeric($_POST['secure']); 
-	$contents = parse($_POST['contents'], array(), HTML_UNPROTECT);
-	
-	$code = "\$template->set_filenames(array(\'modules_mini\' => \'../templates/\' . \$CONFIG[\'theme\'] . \'/modules_mini.tpl\'));
-\$template->assign_vars(array(\'MODULE_MINI_NAME\' => \'" . $name . "\', \'MODULE_MINI_CONTENTS\' => \'" . $contents . "\'));
-\$template->pparse(\'modules_mini\');";
+	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
+	$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '';  
+	$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : ''; 
+	$contents = !empty($_POST['contents']) ? parse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
+	$location = !empty($_POST['location']) ? securit($_POST['location']) : '';
+	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
 
-	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET name = '" . $name . "', code = '" . $code . "', contents = '" . $contents ."', activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+	if( empty($activ) )
+		$location = '';
+
+	$previous_location = $sql->query("SELECT location FROM ".PREFIX."modules_mini WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+	$clause_class = '';
+	if( $previous_location != $location )
+	{	
+		$class = $sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE activ = 1 AND location = '" . $location . "'", __LINE__, __FILE__);
+		$clause_class = " class = '" . ($class + 1) . "', ";
+	}
+	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET " . $clause_class . " name = '" . $name . "', contents = '" . $contents ."', location = '" . $location . "', activ = '" . $activ . "', secure = '" . $secure . "', use_tpl = '" . $use_tpl . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 	
 	$cache->generate_file('modules_mini');		
 	
@@ -57,35 +64,32 @@ if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà exista
 }
 elseif( $action == 'add' ) //Ajout d'un menu.
 {		
-	$name = securit($_POST['name']);
-	$activ = numeric($_POST['activ']);  
-	$secure = numeric($_POST['secure']); 
-	$contents = parse($_POST['contents'], array(), HTML_UNPROTECT);	
-	$code = "\$template->set_filenames(array(\'modules_mini\' => \'../templates/\' . \$CONFIG[\'theme\'] . \'/modules_mini.tpl\'));
-\$template->assign_vars(array(\'MODULE_MINI_NAME\' => \'" . $name . "\', \'MODULE_MINI_CONTENTS\' => \'" . $contents . "\'));
-\$template->pparse(\'modules_mini\');";
-	$class = $sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE activ = 1 AND side = 0", __LINE__, __FILE__);
+	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
+	$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '';  
+	$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : '-1'; 
+	$contents = !empty($_POST['contents']) ? parse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
+	$location = !empty($_POST['location']) ? securit($_POST['location']) : '';
+	$use_tpl = isset($_POST['use_tpl']) ? numeric($_POST['use_tpl']) : '';
 	
-	$sql->query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, code, contents, side, secure, activ, added) VALUES 
-	('" . ($class + 1) . "', '" . $name . "', '" . $code . "', '" . $contents ."', 0, '" . $secure . "', '" . $activ . "', 1)", __LINE__, __FILE__);
+	if( empty($activ) )
+		$location = '';
+	
+	$class = $sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE activ = 1 AND location = '" . $location . "'", __LINE__, __FILE__);
+	$sql->query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, code, contents, location, secure, activ, added, use_tpl) VALUES 
+	('" . ($class + 1) . "', '" . $name . "', '', '" . $contents ."', '" . $location . "', '" . $secure . "', '" . $activ . "', 1, '" . $use_tpl . "')", __LINE__, __FILE__);
+	$last_menu_id = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."modules_mini");
 	
 	$cache->generate_file('modules_mini');		
 	
-	$last_menu_id = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."modules_mini");
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $last_menu_id);	
 }
-elseif( !empty($del) && isset($pos) && !empty($id) ) //Suppression du menu.
+elseif( !empty($del) && !empty($id) ) //Suppression du menu.
 {
-	$previous_class = $sql->query("SELECT class FROM ".PREFIX."modules_mini WHERE id = " . $id, __LINE__, __FILE__);
+	$info_menu = $sql->query_array("modules_mini", "class", "location", "WHERE id = " . $id, __LINE__, __FILE__);
 	$sql->query_inject("DELETE FROM ".PREFIX."modules_mini WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	//Réordonnement du classement.
-	$result = $sql->query_while("SELECT id
-	FROM ".PREFIX."modules_mini	
-	WHERE side = " . $pos . " AND activ = 1 AND class > " . $previous_class . "
-	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
-		$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . addslashes($info_menu['location']) . "'", __LINE__, __FILE__);
 	
 	$cache->generate_file('modules_mini');		
 	
@@ -114,80 +118,66 @@ else
 		'L_ADMIN' => $LANG['admin'],
 		'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
 		'L_ADD_MENUS' => $LANG['menus_add'],
+		'L_LOCATION' => $LANG['location'],
+		'L_USE_TPL' => $LANG['use_tpl'],
+		'L_SUB_HEADER' => $LANG['menu_subheader'],
+		'L_LEFT_MENU' => $LANG['menu_left'],
+		'L_RIGHT_MENU' => $LANG['menu_right'],
+		'L_TOP_CENTRAL_MENU' => $LANG['menu_top_central'],
+		'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
 		'L_EXPLAIN_MENUS' => $LANG['menus_explain'],
 		'L_ACTION_MENUS' => ($edit) ? $LANG['menus_edit'] : $LANG['menus_add'],
 		'L_ACTION' => ($edit) ? $LANG['update'] : $LANG['submit'],
 		'L_RESET' => $LANG['reset']
 	));
-
+	
+	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	if( $edit )
 	{
-		$menu = $sql->query_array('modules_mini', 'id', 'name', 'contents', 'activ', 'secure', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$menu = $sql->query_array('modules_mini', 'id', 'name', 'contents', 'activ', 'secure', 'location', 'use_tpl', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
-		//Affichage réduit des différents modules.
-		$template->assign_block_vars('edit', array(
+		//Rangs d'autorisation.
+		$ranks = '';
+		foreach($array_auth_ranks as $rank => $name)
+		{
+			$selected = ($menu['secure'] == $rank) ? 'selected="selected"' : '';
+			$ranks .= '<option value="' . $rank . '" ' . $selected . '>' . $name . '</option>';
+		}
+		
+		//Rangs d'autorisation.
+		$array_location = array('subheader' => $LANG['menu_subheader'], 'left' => $LANG['menu_left'], 'topcentral' => $LANG['menu_top_central'], 'bottomcentral' => $LANG['menu_bottom_central'], 'right' => $LANG['menu_right']);
+		$locations = '';
+		foreach($array_location as $id => $name)
+		{
+			$selected = ($menu['location'] == $id) ? 'selected="selected"' : '';
+			$locations .= '<option value="' . $id . '" ' . $selected . '>' . $name . '</option>';
+		}
+		
+		$template->assign_vars(array(
+			'C_EDIT_MENU' => true,
 			'NAME' => $menu['name'],
+			'RANKS' => $ranks,
+			'LOCATIONS' => $locations,
 			'ACTIV_ENABLED' => ($menu['activ'] == '1') ? 'selected="selected"' : '',
 			'ACTIV_DISABLED' => ($menu['activ'] == '0') ? 'selected="selected"' : '',
+			'USE_TPL' => ($menu['use_tpl'] == '1') ? 'checked="checked"' : '',
 			'CONTENTS' => !empty($menu['contents']) ? unparse($menu['contents']) : ''
 		));
-
-		//Rang d'autorisation.
-		for($i = -1 ; $i <= 2 ; $i++)
-		{
-			switch($i) 
-			{	
-				case -1:
-					$rank = $LANG['guest'];
-				break;					
-				case 0:
-					$rank = $LANG['member'];
-				break;					
-				case 1: 
-					$rank = $LANG['modo'];
-				break;			
-				case 2:
-					$rank = $LANG['admin'];
-				break;						
-				default: -1;
-			}
-			
-			$selected = ( $menu['secure'] == $i ) ? 'selected="selected"' : '';
-			$template->assign_block_vars('edit.select', array(	
-				'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
-			));
-		}
 	}
 	else
 	{
-		//Affichage réduit des différents modules.
-		$template->assign_block_vars('add', array(
-		));
-
-		//Rang d'autorisation.
-		for($i = -1 ; $i <= 2 ; $i++)
+		//Rangs d'autorisation.
+		$ranks = '';
+		foreach($array_auth_ranks as $rank => $name)
 		{
-			switch($i) 
-			{	
-				case -1:
-					$rank = $LANG['guest'];
-				break;					
-				case 0:
-					$rank = $LANG['member'];
-				break;					
-				case 1: 
-					$rank = $LANG['modo'];
-				break;			
-				case 2:
-					$rank = $LANG['admin'];
-				break;						
-				default: -1;
-			}
-			
-			$template->assign_block_vars('add.select', array(	
-				'RANK' => '<option value="' . $i . '">' . $rank . '</option>'
-			));
+			$selected = (-1 == $rank) ? 'selected="selected"' : '';
+			$ranks .= '<option value="' . $rank . '" ' . $selected . '>' . $name . '</option>';
 		}
+		
+		$template->assign_vars(array(
+			'C_ADD_MENU' => true,
+			'RANKS' => $ranks
+		));		
 	}
 	
 	include_once('../includes/bbcode.php');

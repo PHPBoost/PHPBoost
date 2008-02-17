@@ -253,32 +253,56 @@ class Cache
 	{
 		global $sql;
 		
-		$code = '';
-		$result = $sql->query_while("SELECT name, code, contents, location, secure, added
+		$modules_mini = array();
+		$result = $sql->query_while("SELECT name, code, contents, location, secure, added, use_tpl
 		FROM ".PREFIX."modules_mini 
 		WHERE activ = 1
 		ORDER BY location, class", __LINE__, __FILE__);
 		while( $row = $sql->sql_fetch_assoc($result) )
 		{
-			if( $row['added'] == '0' )
-			{
-				if( $row['location'] == '0' )
-					$code .= 'if( $BLOCK_top && $session->data[\'level\'] >= ' . $row['secure'] . ' ){' . $row['code'] . '}' . "\n";
-				else
-					$code .= 'if( $BLOCK_bottom && $session->data[\'level\'] >= ' . $row['secure'] . ' ){' . $row['code'] . '}' . "\n";
-			}
-			else
-			{
-				if( $row['location'] == '0' )
-					$code .= 'if( $BLOCK_top && $session->data[\'level\'] >= ' . $row['secure'] . ' ){' . 
-					"\$template->set_filenames(array('modules_mini' => '../templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\$template->assign_vars(array('MODULE_MINI_NAME' => " . var_export($row['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($row['contents'], true) . "));\$template->pparse('modules_mini');" . '}' . "\n";
-				else
-					$code .= 'if( $BLOCK_bottom && $session->data[\'level\'] >= ' . $row['secure'] . ' ){' . 
-					"\$template->set_filenames(array('modules_mini' => '../templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\$template->assign_vars(array('MODULE_MINI_NAME' => " . var_export($row['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($row['contents'], true) . "));\$template->pparse('modules_mini');" . '}' . "\n";
-			}
+			$modules_mini[$row['location']][] = array('name' => $row['name'], 'code' => $row['code'], 'contents' => $row['contents'], 'secure' => $row['secure'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
 		}
 		$sql->close($result);
 
+		$code = '';
+		$array_seek = array('subheader', 'left', 'right', 'topcentral', 'bottomcentral');
+		foreach($array_seek as $location)
+		{
+			$code .= 'if( isset($MODULES_MINI[\'' . $location . '\']) && $MODULES_MINI[\'' . $location . '\'] ){' . "\n";
+			foreach($modules_mini[$location] as $location_key => $info)
+			{
+				if( $info['added'] == '0' )
+				{
+					$code .= 'if( $session->data[\'level\'] >= ' . $info['secure'] . ' ){' . $info['code'] . '}' . "\n";
+				}
+				else
+				{
+					if( $info['use_tpl'] == '0' )
+					{
+						$code .= 'echo ' . var_export($info['contents'], true) . ';' . "\n";
+					}
+					else
+					{
+						switch($location)
+						{
+							case 'left':
+							case 'right':
+							$code .= 'if( $session->data[\'level\'] >= ' . $info['secure'] . ' ){' . 
+							"\$template->set_filenames(array('modules_mini' => '../templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\$template->assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\$template->pparse('modules_mini');" . '}' . "\n";
+							break;
+							case 'subheader':
+							case 'topcentral':
+							case 'bottomcentral':
+							$code .= 'if( $session->data[\'level\'] >= ' . $info['secure'] . ' ){' . 
+							"\$template->set_filenames(array('modules_mini_horizontal' => '../templates/' . \$CONFIG['theme'] . '/modules_mini_horizontal.tpl'));\$template->assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\$template->pparse('modules_mini_horizontal');" . '}' . "\n";
+							break;					
+						}						
+					}
+				}
+			}
+			$code .= '}' . "\n";
+		}
+		
 		return $code;
 	}
 	

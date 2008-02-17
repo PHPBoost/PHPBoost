@@ -78,9 +78,21 @@ if( !empty($id_get) )
 	//Affichage des sous forums s'il y en a.
 	if( ($CAT_FORUM[$id_get]['id_right'] - $CAT_FORUM[$id_get]['id_left']) > 1 ) //Intervalle > 1 => sous forum présent.
 	{
-		$template->assign_block_vars('cat', array(
-			'L_NAME' => $LANG['sub_forums']
+		$template->assign_vars(array(
+			'C_FORUM_SUB_CATS' => true
 		));
+		
+		//Vérification des autorisations.
+		$unauth_cats = '';
+		if( is_array($AUTH_READ_FORUM) )
+		{
+			foreach($AUTH_READ_FORUM as $idcat => $auth)
+			{
+				if( $auth === false )
+					$unauth_cats .= $idcat . ',';
+			}
+			$unauth_cats = !empty($unauth_cats) ? " AND c.id NOT IN (" . trim($unauth_cats, ',') . ")" : '';
+		}
 		
 		//On liste les sous-catégories.
 		$result = $sql->query_while("SELECT c.id AS cid, c.name, c.subname, c.nbr_topic, c.nbr_msg, c.status, t.id AS tid, 
@@ -89,89 +101,82 @@ if( !empty($id_get) )
 		LEFT JOIN ".PREFIX."forum_topics t ON t.id = c.last_topic_id
 		LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $session->data['user_id'] . "' AND v.idtopic = t.id
 		LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
-		WHERE c.aprob = 1 
-		AND c.id_left > '" . $CAT_FORUM[$id_get]['id_left'] . "' AND c.id_right < '" . $CAT_FORUM[$id_get]['id_right'] . "' AND c.level = '" . $CAT_FORUM[$id_get]['level'] . "' + 1
+		WHERE c.aprob = 1 AND c.id_left > '" . $CAT_FORUM[$id_get]['id_left'] . "' AND c.id_right < '" . $CAT_FORUM[$id_get]['id_right'] . "' AND c.level = '" . $CAT_FORUM[$id_get]['level'] . "' + 1  " . $unauth_cats . "
 		ORDER BY c.id_left ASC", __LINE__, __FILE__);
-		while ($row = $sql->sql_fetch_assoc($result))
+		while( $row = $sql->sql_fetch_assoc($result) )
 		{	
-			if( $groups->check_auth($CAT_FORUM[$row['cid']]['auth'], READ_CAT_FORUM) )
+			if( $row['nbr_msg'] !== '0' )
 			{
-				if( $row['nbr_msg'] !== '0' )
+				//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
+				if( !empty($row['last_view_id']) ) //Calcul de la page du last_view_id réalisé dans topic.php
 				{
-					//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
-					if( !empty($row['last_view_id']) ) //Calcul de la page du last_view_id réalisé dans topic.php
-					{
-						$last_msg_id = $row['last_view_id']; 
-						$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
-						$last_page_rewrite = '-0-' . $row['last_view_id'];
-					}
-					else
-					{
-						$last_msg_id = $row['last_msg_id']; 
-						$last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
-						$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
-						$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';					
-					}		
-								
-					$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);
-					$last_topic_title = (strlen(html_entity_decode($last_topic_title)) > 20) ? substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;
-
-					$last = '<a href="topic' . transid('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . url_encode_rewrite($row['title'])  . '.php') . '" class="small_link">' . ucfirst($last_topic_title) . '</a><br />
-					<a href="topic' . transid('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . url_encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />
-					' . $LANG['by'] . (!empty($row['login']) ? ' <a href="../member/member' . transid('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '" class="small_link">' . wordwrap_html($row['login'], 13) . '</a>' : ' ' . $LANG['guest']);
+					$last_msg_id = $row['last_view_id']; 
+					$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
+					$last_page_rewrite = '-0-' . $row['last_view_id'];
 				}
 				else
 				{
-					$row['last_timestamp'] = '';
-					$last = '<br />' . $LANG['no_message'] . '<br /><br />';
-				}
+					$last_msg_id = $row['last_msg_id']; 
+					$last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
+					$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
+					$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';					
+				}		
+							
+				$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);
+				$last_topic_title = (strlen(html_entity_decode($last_topic_title)) > 20) ? substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;
 
-				//Vérirication de l'existance de sous forums.
-				$subforums = '';
-				if( $CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1 )
-				{		
-					foreach($CAT_FORUM as $idcat => $key) //Listage des sous forums.
-					{
-						if( $CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'] )
-						{
-							if( $CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1) )
-							{
-								if( $groups->check_auth($CAT_FORUM[$row['cid']]['auth'], READ_CAT_FORUM) )
-								{
-									$link = '<a href="forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
-									$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';		
-								}
-							}	
-						}
-					}	
-					$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
-				}
-				
-				//Vérifications des topics Lu/non Lus.
-				$img_announce = 'announce';		
-				if( !$is_guest )
-				{
-					if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg ) //Nouveau message (non lu).
-						$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
-				}
-				$img_announce .= ($row['status'] == '0') ? '_lock' : '';
-				
-				$template->assign_block_vars('s_cats', array(					
-					'ANNOUNCE' => '<img src="' . $module_data_path . '/images/' . $img_announce . '.gif" alt="" />',
-					'NAME' => $row['name'],
-					'DESC' => $row['subname'],
-					'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
-					'NBR_TOPIC' => $row['nbr_topic'],
-					'NBR_MSG' => $row['nbr_msg'],
-					'U_FORUM_VARS' => transid('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . url_encode_rewrite($row['name']) . '.php'),
-					'U_LAST_TOPIC' => $last					
-				));
+				$last = '<a href="topic' . transid('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . url_encode_rewrite($row['title'])  . '.php') . '" class="small_link">' . ucfirst($last_topic_title) . '</a><br />
+				<a href="topic' . transid('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . url_encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />
+				' . $LANG['by'] . (!empty($row['login']) ? ' <a href="../member/member' . transid('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '" class="small_link">' . wordwrap_html($row['login'], 13) . '</a>' : ' ' . $LANG['guest']);
 			}
+			else
+			{
+				$row['last_timestamp'] = '';
+				$last = '<br />' . $LANG['no_message'] . '<br /><br />';
+			}
+
+			//Vérirication de l'existance de sous forums.
+			$subforums = '';
+			if( $CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1 )
+			{		
+				foreach($CAT_FORUM as $idcat => $key) //Listage des sous forums.
+				{
+					if( $CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'] )
+					{
+						if( $CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1) )
+						{
+							if( $AUTH_READ_FORUM[$row['cid']] ) //Autorisation en lecture.
+							{
+								$link = '<a href="forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
+								$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';		
+							}
+						}	
+					}
+				}	
+				$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
+			}
+			
+			//Vérifications des topics Lu/non Lus.
+			$img_announce = 'announce';		
+			if( !$is_guest )
+			{
+				if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg ) //Nouveau message (non lu).
+					$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
+			}
+			$img_announce .= ($row['status'] == '0') ? '_lock' : '';
+			
+			$template->assign_block_vars('subcats', array(					
+				'ANNOUNCE' => '<img src="' . $module_data_path . '/images/' . $img_announce . '.gif" alt="" />',
+				'NAME' => $row['name'],
+				'DESC' => $row['subname'],
+				'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
+				'NBR_TOPIC' => $row['nbr_topic'],
+				'NBR_MSG' => $row['nbr_msg'],
+				'U_FORUM_VARS' => transid('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . url_encode_rewrite($row['name']) . '.php'),
+				'U_LAST_TOPIC' => $last					
+			));
 		}
-		$sql->close($result);		
-		
-		$template->assign_block_vars('end_cat', array(
-		));
+		$sql->close($result);	
 	}
 		
 	//On vérifie si l'utilisateur a les droits d'écritures.
@@ -224,6 +229,7 @@ if( !empty($id_get) )
 		'U_FORUM_CAT' => $forum_cats,		
 		'U_POST_NEW_SUBJECT' => ($check_group_write_auth && !$locked_cat) ? '&raquo; <a href="post' . transid('.php?new=topic&amp;id=' . $id_get, '') . '" title="' . $LANG['post_new_subject'] . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/post.png" alt="' . $LANG['post_new_subject'] . '" title="' . $LANG['post_new_subject'] . '" /></a>' : '',
 		'L_FORUM_INDEX' => $LANG['forum_index'],		
+		'L_SUBFORUMS' => $LANG['sub_forums'],
 		'L_FORUM' => $LANG['forum'],		
 		'L_AUTHOR' => $LANG['author'],
 		'L_TOPIC' => $LANG['topic_s'],

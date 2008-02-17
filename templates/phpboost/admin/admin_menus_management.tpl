@@ -60,7 +60,7 @@
 			<form action="admin_menus.php" method="post">
 				<table class="module_table" style="background:#FFFFFF;width:99%">
 					<tr>
-						<td colspan="{COLSPAN}" style="border:1px solid black;background:#BFFF8F">
+						<td colspan="{COLSPAN}" style="border:1px solid black;background:#CCFF99">
 							# START mod_subheader #
 							<div style="margin:15px;" class="module_mini_container_horizontal">
 								<div class="module_mini_top_horizontal">
@@ -78,16 +78,16 @@
 											{mod_subheader.RANK}
 										</select>							
 									</p>						
-									<div style="width:100px;height:30px;margin:auto;">
+									<div style="width:100px;height:30px;">
 										<div style="float:left">
-											<a href="admin_menus.php?top=1&amp;id={mod_subheader.IDMENU}"><img src="../templates/{THEME}/images/admin/up.png" alt="" /></a>
-											<a href="admin_menus.php?bot=1&amp;id={mod_subheader.IDMENU}"><img src="../templates/{THEME}/images/admin/down.png" alt="" /></a>
+											{mod_subheader.UP}
+											{mod_subheader.DOWN}
 										</div>
 										<div style="position:relative;float:right">
 											<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-100px;float:left;display:none;" id="move{mod_subheader.IDMENU}">
 												<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_subheader.IDMENU}, 1);" onmouseout="menu_hide_block({mod_subheader.IDMENU}, 0);">
 													<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
-													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#BFFF8F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_subheader.IDMENU}">{L_SUB_HEADER}</a></div>
+													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_subheader.IDMENU}">{L_SUB_HEADER}</a></div>
 													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_subheader.IDMENU}">{L_LEFT_MENU}</a></div>
 													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=topcentral&amp;id={mod_subheader.IDMENU}">{L_TOP_CENTRAL_MENU}</a></div>
 													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=bottomcentral&amp;id={mod_subheader.IDMENU}">{L_BOTTOM_CENTRAL_MENU}</a></div>
@@ -97,7 +97,6 @@
 										</div>
 										<a href="javascript:menu_display_block({mod_subheader.IDMENU});" onmouseover="menu_hide_block({mod_subheader.IDMENU}, 1);" onmouseout="menu_hide_block({mod_subheader.IDMENU}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
 									</div>
-									
 									<p>{mod_subheader.CONTENTS}</p>&nbsp;
 								</div>
 								<div class="module_mini_bottom_horizontal">
@@ -128,14 +127,14 @@
 									</p>								
 									<div style="width:100px;height:30px;margin:auto;">
 										<div style="float:left">
-											<a href="admin_menus.php?top=1&amp;id={mod_left.IDMENU}"><img src="../templates/{THEME}/images/admin/up.png" alt="" /></a>
-											<a href="admin_menus.php?bot=1&amp;id={mod_left.IDMENU}"><img src="../templates/{THEME}/images/admin/down.png" alt="" /></a>
+											{mod_left.UP}
+											{mod_left.DOWN}
 										</div>
 										<div style="position:relative;float:right">
 											<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-70px;float:left;display:none;" id="move{mod_left.IDMENU}">
 												<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_left.IDMENU}, 1);" onmouseout="menu_hide_block({mod_left.IDMENU}, 0);">
 													<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
-													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#BFFF8F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_left.IDMENU}">{L_SUB_HEADER}</a></div>
+													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_left.IDMENU}">{L_SUB_HEADER}</a></div>
 													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_left.IDMENU}">{L_LEFT_MENU}</a></div>
 													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=topcentral&amp;id={mod_left.IDMENU}">{L_TOP_CENTRAL_MENU}</a></div>
 													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=bottomcentral&amp;id={mod_left.IDMENU}">{L_BOTTOM_CENTRAL_MENU}</a></div>
@@ -161,48 +160,54 @@
 							</div>
 							<div id="top_contents" style="border:1px solid black;background:#FFE25F">
 								# START mod_topcentral #
-								<div style="margin:15px;" class="module_mini_container_horizontal">
-									<div class="module_mini_top_horizontal">
-											<span id="m{mod_topcentral.IDMENU}"></span><h5 class="sub_title">{mod_topcentral.NAME} {mod_topcentral.EDIT}{mod_topcentral.DEL}</h5>
+								<div style="margin:15px;width:auto" class="module_position">					
+									<div class="module_top_l"></div>		
+									<div class="module_top_r"></div>
+									<div class="module_top">
+										<div style="float:left">
+											<strong><span id="m{mod_topcentral.IDMENU}"></span><h5 class="sub_title">{mod_topcentral.NAME} {mod_topcentral.EDIT}{mod_topcentral.DEL}</h5></strong>
 										</div>
-										<div class="module_mini_table_horizontal">
-											<p>
-												<select name="{mod_topcentral.IDMENU}activ" onchange="document.location = {mod_topcentral.U_ONCHANGE_ACTIV}">								
-													<option value="1" {mod_topcentral.ACTIV_ENABLED}>{L_ACTIV}</option>
-													<option value="0" {mod_topcentral.ACTIV_DISABLED}>{L_UNACTIV}</option>					
-												</select>
-											</p>
-											<p>							
-												<select name="{mod_topcentral.IDMENU}secure" onchange="document.location = {mod_topcentral.U_ONCHANGE_SECURE}">								
-													{mod_topcentral.RANK}
-												</select>							
-											</p>						
-											<div style="width:100px;height:30px;margin:auto;">
-												<div style="float:left">
-													<a href="admin_menus.php?top=1&amp;id={mod_topcentral.IDMENU}"><img src="../templates/{THEME}/images/admin/up.png" alt="" /></a>
-													<a href="admin_menus.php?bot=1&amp;id={mod_topcentral.IDMENU}"><img src="../templates/{THEME}/images/admin/down.png" alt="" /></a>
-												</div>
-												<div style="position:relative;float:right"><div style="position:absolute;z-index:100;margin-top:155px;margin-left:-70px;float:left;display:none;" id="move{mod_topcentral.IDMENU}">
-													<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_topcentral.IDMENU}, 1);" onmouseout="menu_hide_block({mod_topcentral.IDMENU}, 0);">
-														<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
-															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#BFFF8F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_topcentral.IDMENU}">{L_SUB_HEADER}</a></div>
-															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_topcentral.IDMENU}">{L_LEFT_MENU}</a></div>
-															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=topcentral&amp;id={mod_topcentral.IDMENU}">{L_TOP_CENTRAL_MENU}</a></div>
-															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=bottomcentral&amp;id={mod_topcentral.IDMENU}">{L_BOTTOM_CENTRAL_MENU}</a></div>
-															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=right&amp;id={mod_topcentral.IDMENU}">{L_RIGHT_MENU}</a></div>
-													</div>
-												</div>
-												<a href="javascript:menu_display_block({mod_topcentral.IDMENU});" onmouseover="menu_hide_block({mod_topcentral.IDMENU}, 1);" onmouseout="menu_hide_block({mod_topcentral.IDMENU}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
-												</div>
-											</div>
-											<p>{mod_topcentral.CONTENTS}</p>&nbsp;
-											<br />
-										</div>
-										<div class="module_mini_bottom_horizontal">
+										<div style="float:right">
 										</div>
 									</div>
+									<div class="module_contents">
+										<p>
+											<select name="{mod_topcentral.IDMENU}activ" onchange="document.location = {mod_topcentral.U_ONCHANGE_ACTIV}">								
+												<option value="1" {mod_topcentral.ACTIV_ENABLED}>{L_ACTIV}</option>
+												<option value="0" {mod_topcentral.ACTIV_DISABLED}>{L_UNACTIV}</option>					
+											</select>
+										</p>
+										<p>							
+											<select name="{mod_topcentral.IDMENU}secure" onchange="document.location = {mod_topcentral.U_ONCHANGE_SECURE}">								
+												{mod_topcentral.RANK}
+											</select>							
+										</p>						
+										<div style="width:100px;height:30px;">
+											<div style="float:left">
+												{mod_topcentral.UP}
+												{mod_topcentral.DOWN}
+											</div>
+											<div style="position:relative;float:right"><div style="position:absolute;z-index:100;margin-top:155px;margin-left:-70px;float:left;display:none;" id="move{mod_topcentral.IDMENU}">
+												<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_topcentral.IDMENU}, 1);" onmouseout="menu_hide_block({mod_topcentral.IDMENU}, 0);">
+													<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
+														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_topcentral.IDMENU}">{L_SUB_HEADER}</a></div>
+														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_topcentral.IDMENU}">{L_LEFT_MENU}</a></div>
+														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=topcentral&amp;id={mod_topcentral.IDMENU}">{L_TOP_CENTRAL_MENU}</a></div>
+														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=bottomcentral&amp;id={mod_topcentral.IDMENU}">{L_BOTTOM_CENTRAL_MENU}</a></div>
+														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=right&amp;id={mod_topcentral.IDMENU}">{L_RIGHT_MENU}</a></div>
+												</div>
+											</div>
+											<a href="javascript:menu_display_block({mod_topcentral.IDMENU});" onmouseover="menu_hide_block({mod_topcentral.IDMENU}, 1);" onmouseout="menu_hide_block({mod_topcentral.IDMENU}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
+											</div>
+										</div>
+										<p>{mod_topcentral.CONTENTS}</p>&nbsp;
+									</div>
+									<div class="module_bottom_l"></div>		
+									<div class="module_bottom_r"></div>
+									<div class="module_bottom"></div>
 								</div>
 								# END mod_topcentral #
+								&nbsp;
 							</div>
 							<div style="width:96%;min-height:250px;margin:auto;border:1px solid black;">
 								<p style="text-align:center;margin-top:5px;" class="text_strong">{L_MENUS_AVAILABLE}</p>
@@ -230,7 +235,7 @@
 												<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-130px;float:left;display:none;" id="move{mod_main.IDMENU}">
 													<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_main.IDMENU}, 1);" onmouseout="menu_hide_block({mod_main.IDMENU}, 0);">
 														<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
-														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#BFFF8F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_main.IDMENU}">{L_SUB_HEADER}</a></div>
+														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_main.IDMENU}">{L_SUB_HEADER}</a></div>
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_main.IDMENU}">{L_LEFT_MENU}</a></div>
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=topcentral&amp;id={mod_main.IDMENU}">{L_TOP_CENTRAL_MENU}</a></div>
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=bottomcentral&amp;id={mod_main.IDMENU}">{L_BOTTOM_CENTRAL_MENU}</a></div>
@@ -251,11 +256,17 @@
 							</div>							
 							<div id="bottom_contents" style="border:1px solid black;background:#FF5F5F;clear:both">
 								# START mod_bottomcentral #
-								<div style="margin:15px;" class="module_mini_container_horizontal">
-									<div class="module_mini_top_horizontal">
-										<span id="m{mod_bottomcentral.IDMENU}"></span><h5 class="sub_title">{mod_bottomcentral.NAME} {mod_bottomcentral.EDIT}{mod_bottomcentral.DEL}</h5>
+								<div style="margin:15px;width:auto" class="module_position">					
+									<div class="module_top_l"></div>		
+									<div class="module_top_r"></div>
+									<div class="module_top">
+										<div style="float:left">
+											<strong><span id="m{mod_bottomcentral.IDMENU}"></span><h5 class="sub_title">{mod_bottomcentral.NAME} {mod_bottomcentral.EDIT}{mod_bottomcentral.DEL}</h5></strong>
+										</div>
+										<div style="float:right">
+										</div>
 									</div>
-									<div class="module_mini_table_horizontal">
+									<div class="module_contents">
 										<p>
 											<select name="{mod_bottomcentral.IDMENU}activ" onchange="document.location = {mod_bottomcentral.U_ONCHANGE_ACTIV}">								
 												<option value="1" {mod_bottomcentral.ACTIV_ENABLED}>{L_ACTIV}</option>
@@ -267,16 +278,16 @@
 												{mod_bottomcentral.RANK}
 											</select>							
 										</p>						
-										<div style="width:100px;height:30px;margin:auto;">
+										<div style="width:100px;height:30px;">
 											<div style="float:left">
-												<a href="admin_menus.php?top=1&amp;id={mod_bottomcentral.IDMENU}"><img src="../templates/{THEME}/images/admin/up.png" alt="" /></a>
-												<a href="admin_menus.php?bot=1&amp;id={mod_bottomcentral.IDMENU}"><img src="../templates/{THEME}/images/admin/down.png" alt="" /></a>
+												{mod_bottomcentral.UP}
+												{mod_bottomcentral.DOWN}
 											</div>
 											<div style="position:relative;float:right">
 												<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-70px;float:left;display:none;" id="move{mod_bottomcentral.IDMENU}">
 													<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_bottomcentral.IDMENU}, 1);" onmouseout="menu_hide_block({mod_bottomcentral.IDMENU}, 0);">
 														<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
-															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#BFFF8F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_bottomcentral.IDMENU}">{L_SUB_HEADER}</a></div>
+															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_bottomcentral.IDMENU}">{L_SUB_HEADER}</a></div>
 															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_bottomcentral.IDMENU}">{L_LEFT_MENU}</a></div>
 															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=topcentral&amp;id={mod_bottomcentral.IDMENU}">{L_TOP_CENTRAL_MENU}</a></div>
 															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=bottomcentral&amp;id={mod_bottomcentral.IDMENU}">{L_BOTTOM_CENTRAL_MENU}</a></div>
@@ -287,12 +298,14 @@
 											</div>
 										</div>
 										
-										<p>{mod_bottomcentral.CONTENTS}</p>&nbsp;					
+										<p>{mod_bottomcentral.CONTENTS}</p>&nbsp;
 									</div>
-									<div class="module_mini_bottom_horizontal">
-									</div>
+									<div class="module_bottom_l"></div>		
+									<div class="module_bottom_r"></div>
+									<div class="module_bottom"></div>
 								</div>
 								# END mod_bottomcentral #
+								&nbsp;
 							</div>							
 						</td>				
 						
@@ -317,14 +330,14 @@
 									</p>						
 									<div style="width:100px;height:30px;margin:auto;">
 										<div style="float:left">
-											<a href="admin_menus.php?top=1&amp;id={mod_right.IDMENU}"><img src="../templates/{THEME}/images/admin/up.png" alt="" /></a>
-											<a href="admin_menus.php?bot=1&amp;id={mod_right.IDMENU}"><img src="../templates/{THEME}/images/admin/down.png" alt="" /></a>
+											{mod_right.UP}
+											{mod_right.DOWN}
 										</div>
 										<div style="position:relative;float:right">
 											<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-110px;float:left;display:none;" id="move{mod_right.IDMENU}">
 												<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_right.IDMENU}, 1);" onmouseout="menu_hide_block({mod_right.IDMENU}, 0);">
 													<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
-														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#BFFF8F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_right.IDMENU}">{L_SUB_HEADER}</a></div>
+														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_right.IDMENU}">{L_SUB_HEADER}</a></div>
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_right.IDMENU}">{L_LEFT_MENU}</a></div>
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=topcentral&amp;id={mod_right.IDMENU}">{L_TOP_CENTRAL_MENU}</a></div>
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=bottomcentral&amp;id={mod_right.IDMENU}">{L_BOTTOM_CENTRAL_MENU}</a></div>
@@ -355,7 +368,7 @@
 				</tr>
 				<tr> 
 					<td class="row2">
-						<div style="float:left;margin-left:5px;margin-right:10px;height:15px;width:15px;background:#BFFF8F;border:1px solid black"></div> <div style="clear:right">{L_SUB_HEADER}</div>
+						<div style="float:left;margin-left:5px;margin-right:10px;height:15px;width:15px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right">{L_SUB_HEADER}</div>
 						<br />
 						<div style="float:left;margin-left:5px;margin-right:10px;height:15px;width:15px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right">{L_LEFT_MENU}</div>
 						<br />
