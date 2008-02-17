@@ -51,7 +51,7 @@ You can also have other fields such as auth level, description, visible, that cl
 //Config example
 /* $config = array(
 	'xmlhttprequest_file' => 'xmlhttprequest.php',
-	'administration_file_name' => 'admin_faq_cats.php',
+	'administration_file_name' => 'admin_news_cats.php',
 	'url' => array(
 		'unrewrited' => '../news/news.php?id=%d',
 		'rewrited' => '../news-%d+%s.php'),
@@ -406,7 +406,7 @@ class CategoriesManagement
 								if( $values['order'] > 1 )
 								{
 									$string .= '
-									<a href="' . (!$ajax_mode ? $this->display_config['xmlhttprequest_file'] . '?id=' . $id . '&amp;move=up" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');') . '">
+									<a href="' . (!$ajax_mode ? $this->display_config['xmlhttprequest_file'] . '?id_up=' . $id . '" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');') . '">
 										<img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="" class="valign_middle" />
 									</a>';
 									
@@ -423,7 +423,7 @@ class CategoriesManagement
 								if( $i != $num_cats  - 1 && $cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat )
 								{
 									$string .= '
-									<a href="' . (!$ajax_mode ? $this->display_config['xmlhttprequest_file'] . '?id=' . $id . '&amp;move=down" id="down_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'down\');') . '">
+									<a href="' . (!$ajax_mode ? transid($this->display_config['xmlhttprequest_file'] . '?id_down=' . $id . '" id="down_' . $id) : 'javascript:ajax_move_cat(' . $id . ', \'down\');') . '">
 										<img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="" class="valign_middle" />
 									</a>';
 									if( $ajax_mode )
@@ -436,10 +436,10 @@ class CategoriesManagement
 								}
 								
 								$string .= '
-								<a href="' . $this->display_config['administration_file_name'] . '?id=' . $id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>&nbsp;';
+								<a href="' . transid($this->display_config['administration_file_name'] . '?id=' . $id) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>&nbsp;';
 								
 								$string .= '
-								<a href="' . $this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id . '">
+								<a href="' . transid($this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id) . '">
 									<img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" />
 								</a>';
 

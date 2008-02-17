@@ -33,6 +33,7 @@ if( $session->data['level'] === 2 ) //Admin
 {	
 	$cache->load_file('faq');
 	include_once('../includes/cats_management.class.php');
+	// Only those two parameters must be changed if you want to use again this file in another context
 	$categories = new CategoriesManagement('faq_cats', 'faq');
 	
 	$id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
@@ -45,8 +46,6 @@ if( $session->data['level'] === 2 ) //Admin
 		$result = $categories->Move_category($id_up, 'up');
 	elseif( $id_down > 0 )
 		$result = $categories->Move_category($id_down, 'down');
-	elseif( $cat_to_del > 0 )
-		$result = $categories->Delete_category($cat_to_del);
 	
 	//Operation was successfully
 	if( $result )
