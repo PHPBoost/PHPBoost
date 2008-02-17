@@ -463,6 +463,10 @@ $LANG['moveto'] = 'Move to';
 $LANG['success_upload'] = 'Your file has been uploaded successfully !';
 $LANG['upload_folder_contains_folder'] = 'Vous souhaitez placer cette catégorie dans une de ses catégories filles ou dans elle-même, ce qui est impossible !';
 
+//gestion des catégories
+$LANG['cats_managment_could_not_be_moved'] = 'An error occured, the category couldn\'t be moved';
+$LANG['cats_managment_no_category_existing'] = 'No category existing';
+
 ##########Moderation panel##########
 $LANG['moderation_panel'] = 'Moderation panel';
 $LANG['user_contact_pm'] = 'Contact by private message';

@@ -33,11 +33,25 @@ include_once('../includes/admin_header.php');
 
 $cache->load_file('faq');
 
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$action = !empty($_GET['move']) && in_array($_GET['move'], array('up', 'down') ) ? true : false;
-$move = $action ? $_GET['move'] : '';
+include_once('faq_cats.class.php');
+$categories = new FaqCats();
 
-if( $id > 0 && !$action )
+$id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
+$id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
+$cat_to_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+
+if( $id_up > 0 )
+{
+	$categories = new FaqCats();
+	$categories->Move_category($id_up, 'up');
+	redirect(transid('admin_faq_cats.php'));
+}
+elseif( $id_down > 0 )
+{
+	$categories = new FaqCats();
+	$categories->Move_category($id_down, 'down');
+}
+elseif( $cat_to_del > 0 )
 {
 	
 }
@@ -46,10 +60,6 @@ else
 	$template->set_filenames(array(
 	'admin_faq_cat' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq_cats.tpl'
 	));
-	
-
-	include_once('../includes/cats_management.class.php');
-	$categories = new CategoriesManagement('faq_cats', 'faq');
 	
 	$cat_config = array(
 		'xmlhttprequest_file' => 'xmlhttprequest_cats.php',
