@@ -240,6 +240,50 @@ class Groups
 		
 		return $select_groups;
 	}
+	
+	//Ajout du membre au groupe	
+	function add_member($idgroup)
+	{
+		global $sql;
+ 
+		//On insère le groupe au champ membre.
+		$user_groups_key = array_search($idgroup, explode('|', $this->user_groups));
+ 
+		if( !is_numeric($user_groups_key) ) //Le membre n'appartient pas déjà au groupe.
+			$sql->query_inject("UPDATE ".PREFIX."member SET user_groups = CONCAT(user_groups, '" . $idgroup . "|') WHERE user_id = '" . numeric($this->user_id) . "'", __LINE__, __FILE__);
+
+			//On insère le membre dans le groupe.
+		$members = $sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$members_key = array_search($this->user_id, explode('|', $members));
+ 
+		if( !is_numeric($members_key) ) //Le membre n'appartient pas déjà au groupe.
+			$sql->query_inject("UPDATE ".PREFIX."group SET members = CONCAT(members, '" . $this->user_id . "|') WHERE id = '" . numeric($idgroup) . "'", __LINE__, __FILE__);
+	}
+ 
+	//Suppression le membre d'un groupe
+	function del_member($idgroup)
+	{
+		global $sql;
+		
+		$user_groups_key = array_search($idgroup, $this->user_groups);
+		if( is_numeric($user_groups_key) ) // le membre est bien dans le groupe
+		{ 
+			unset($this->user_groups[$user_groups_key]);
+			$user_groups_bis=$this->user_groups; // on travaille sur une autre varaible pour enlever le level
+			array_pop($this->user_groups); // on vire la dernière case qui est le level
+			$sql->query_inject("UPDATE ".PREFIX."member SET user_groups = '" . implode('|', $this->user_groups) . "' WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
+		}
+ 
+		$members_group = $sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$members_group = explode('|', $members_group);
+		$members_group_key = array_search($this->user_id, $members_group);
+ 
+		if( is_numeric($members_group_key) ) // le membre est bien dans le groupe
+		{ 
+			unset($members_group[$members_group_key]);
+			$sql->query_inject("UPDATE ".PREFIX."group SET members = '" . implode('|', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		}
+	}
 }
 
 ?>

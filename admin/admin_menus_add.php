@@ -43,11 +43,8 @@ if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà exista
 	$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '';  
 	$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : ''; 
 	$contents = !empty($_POST['contents']) ? parse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
-	$location = !empty($_POST['location']) ? securit($_POST['location']) : '';
+	$location = !empty($_POST['location']) ? securit($_POST['location']) : 'left';
 	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
-
-	if( empty($activ) )
-		$location = '';
 
 	$previous_location = $sql->query("SELECT location FROM ".PREFIX."modules_mini WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 	$clause_class = '';
@@ -68,7 +65,7 @@ elseif( $action == 'add' ) //Ajout d'un menu.
 	$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '';  
 	$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : '-1'; 
 	$contents = !empty($_POST['contents']) ? parse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
-	$location = !empty($_POST['location']) ? securit($_POST['location']) : '';
+	$location = !empty($_POST['location']) ? securit($_POST['location']) : 'left';
 	$use_tpl = isset($_POST['use_tpl']) ? numeric($_POST['use_tpl']) : '';
 	
 	if( empty($activ) )
@@ -89,7 +86,7 @@ elseif( !empty($del) && !empty($id) ) //Suppression du menu.
 	$sql->query_inject("DELETE FROM ".PREFIX."modules_mini WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	//Réordonnement du classement.
-	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . addslashes($info_menu['location']) . "'", __LINE__, __FILE__);
+	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . addslashes($info_menu['location']) . "' AND activ = 1", __LINE__, __FILE__);
 	
 	$cache->generate_file('modules_mini');		
 	
