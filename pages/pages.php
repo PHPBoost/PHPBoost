@@ -28,7 +28,7 @@
 require_once('../includes/begin.php'); 
 
 $encoded_title = !empty($_GET['title']) ? securit($_GET['title']) : '';
-$id_com = !empty($_GET['com']) ? numeric($_GET['com']) : 0;
+$id_com = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 
 include_once('pages_begin.php');
@@ -74,7 +74,7 @@ elseif( $id_com > 0 )
 	$page_infos = $sql->sql_fetch_assoc($result);
 	$sql->close($result);
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
-	$speed_bar->Add_link($LANG['pages_com'], transid('pages.php?com=' . $id_com));
+	$speed_bar->Add_link($LANG['pages_com'], transid('pages.php?id=' . $id_com . '&amp;i=0'));
 	$speed_bar->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
@@ -152,7 +152,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	//Affichage des commentaires si il y en a la possibilité
 	if( $page_infos['activ_com'] == 1 && (($special_auth && $groups->check_auth($array_auth, READ_COM)) || (!$special_auth && $groups->check_auth($_PAGES_CONFIG['auth'], READ_COM))) )
 		$template->assign_block_vars('com', array(
-			'U_COM' => transid('pages.php?com=' . $page_infos['id']),
+			'U_COM' => transid('pages.php?id=' . $page_infos['id'] . '&amp;i=0'),
 			'L_COM' => $page_infos['nbr_com'] > 0 ? sprintf($LANG['pages_display_coms'], $page_infos['nbr_com']) : $LANG['pages_post_com']
 		));
 	
@@ -189,8 +189,8 @@ elseif( $id_com > 0 )
 	
 	$template->set_filenames(array('com' => '../templates/' . $CONFIG['theme'] . '/pages/com.tpl'));
 	
-	$_com_vars = 'pages.php?com=' . $id_com . '&amp;i=%d';
-	$_com_vars_e = 'pages.php?com=' . $id_com . '&i=1';
+	$_com_vars = 'pages.php?id=' . $id_com . '&amp;i=%d';
+	$_com_vars_e = 'pages.php?id=' . $id_com . '&i=1';
 	$_com_vars_r = '';
 	$_com_idprov = $id_com;
 	$_com_script = 'pages';
