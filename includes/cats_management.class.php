@@ -436,10 +436,10 @@ class CategoriesManagement
 								}
 								
 								$string .= '
-								<a href="' . transid($this->display_config['administration_file_name'] . '?id=' . $id) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>&nbsp;';
+								<a href="' . transid($this->display_config['administration_file_name'] . '?edit=' . $id) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>&nbsp;';
 								
 								$string .= '
-								<a href="' . transid($this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id) . '">
+								<a href="' . transid($this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id) . '" onclick="return confirm(\'' . addslashes($LANG['cats_management_confirm_delete']) . '\');">
 									<img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" />
 								</a>';
 

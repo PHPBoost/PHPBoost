@@ -466,6 +466,7 @@ $LANG['upload_folder_contains_folder'] = 'Vous souhaitez placer cette catégorie 
 //gestion des catégories
 $LANG['cats_managment_could_not_be_moved'] = 'An error occured, the category couldn\'t be moved';
 $LANG['cats_managment_no_category_existing'] = 'No category existing';
+$LANG['cats_management_confirm_delete'] = 'Are you sure you really want to delete this category ?';
 
 ##########Moderation panel##########
 $LANG['moderation_panel'] = 'Moderation panel';

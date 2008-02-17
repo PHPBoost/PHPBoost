@@ -73,4 +73,10 @@ $FAQ_LANG['question'] = 'Question';
 $FAQ_LANG['entitled'] = 'Intitulé';
 $FAQ_LANG['answer'] = 'Réponse';
 
+//Management
+$FAQ_LANG['faq_management'] = 'Gestion de la FAQ';
+$FAQ_LANG['faq_configuration'] = 'Configuration de la FAQ';
+$FAQ_LANG['cats_management'] = 'Gestion des catégories';
+$FAQ_LANG['add_cat'] = 'Ajouter une catégorie';
+
 ?>
