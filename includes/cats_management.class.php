@@ -283,7 +283,7 @@ class CategoriesManagement
 
 	//Method which builds the list of categories and links to makes operations to administrate them (delete, move, add...), it's return string is ready to be displayed
 	//This method doesn't allow you tu use templates, it's not so important because you are in the administration panel
-	function Build_administration_list(&$cache_var, $display_javascript_functions = true)
+	function Build_administration_list(&$cache_var, $ajax_mode = true)
 	{
 		global $CONFIG, $LANG;
 		$this->clean_error();
@@ -298,8 +298,8 @@ class CategoriesManagement
 		$string = '';
 		
 		//AJAX functions
-		if( $display_javascript_functions )
 		{
+		if( $ajax_mode )
 			$string .= '
 			<script type="text/javascript">
 			<!--
@@ -321,36 +321,12 @@ class CategoriesManagement
 					}
 					//Error
 					else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' )
-						alert("' . $LANG . 'Erreur !");
-				}
-				document.getElementById(\'l\' + id).innerHTML = \'\';
-				xmlhttprequest_sender(xhr_object, null);
-			}
-			
-			// Deleting a category thanks to AJAX
-			function ajax_del_cat(id)
-			{
-				if( !confirm("' . $LANG . '") )
-					return;
-				
-				var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?del=\' + id);
-				
-				document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
-				
-				xhr_object.onreadystatechange = function() 
-				{
-					//Transfert finished and successful
-					if( xhr_object.readyState == 4 && xhr_object.responseText != \'\' )
-						document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
-					//Error
-					else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' )
-						alert("' . $LANG . '");
+						alert("' . $LANG['cats_managment_could_not_be_moved'] . '");
 				}
 				document.getElementById(\'l\' + id).innerHTML = \'\';
 				xmlhttprequest_sender(xhr_object, null);
 			}
 			-->
-			alert("finir les langues !");
 			</script>';
 			
 			$string .= '
@@ -361,7 +337,7 @@ class CategoriesManagement
 		//Categories list
 		$this->create_cat_administration($string, 0, 0, $cache_var);
 		
-		$string .= $display_javascript_functions ? '</div>' : '';
+		$string .= $ajax_mode ? '</div>' : '';
 		return $string;
 	}
 
@@ -374,16 +350,19 @@ class CategoriesManagement
 
 	## Private methods ##
 	//Recursive method allowing to display the administration panel of a category and its daughters
-	function create_cat_administration(&$string, $id_cat, $level, &$cache_var, $display_javascript_functions = true)
+	function create_cat_administration(&$string, $id_cat, $level, &$cache_var, $ajax_mode = true)
 	{
 		global $CONFIG, $LANG;
 		
-		$id_categories = array_keys($cache_var);
+		$id_categories = @array_keys($cache_var);
 		$num_cats = count($id_categories);
 		
 		//If there is no category
 		if( $num_cats == 0 )
-			return $LANG['no_category_existing'];
+		{
+			$string .= '<div class="notice">' . $LANG['cats_managment_no_category_existing'] . '</div>';
+			return;
+		}
 		
 		// Browsing categories
 		for( $i = 0; $i < $num_cats; $i++ )
@@ -427,11 +406,11 @@ class CategoriesManagement
 								if( $values['order'] > 1 )
 								{
 									$string .= '
-									<a href="' . (!$display_javascript_functions ? $this->display_config['xmlhttprequest_file'] . '?id=' . $id . '&amp;move=up" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');') . '">
+									<a href="' . (!$ajax_mode ? $this->display_config['xmlhttprequest_file'] . '?id=' . $id . '&amp;move=up" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');') . '">
 										<img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="" class="valign_middle" />
 									</a>';
 									
-									if( $display_javascript_functions )
+									if( $ajax_mode )
 										$string .= '
 										<script type="text/javascript">
 										<!--
@@ -444,10 +423,10 @@ class CategoriesManagement
 								if( $i != $num_cats  - 1 && $cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat )
 								{
 									$string .= '
-									<a href="' . (!$display_javascript_functions ? $this->display_config['xmlhttprequest_file'] . '?id=' . $id . '&amp;move=down" id="down_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'down\');') . '">
+									<a href="' . (!$ajax_mode ? $this->display_config['xmlhttprequest_file'] . '?id=' . $id . '&amp;move=down" id="down_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'down\');') . '">
 										<img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="" class="valign_middle" />
 									</a>';
-									if( $display_javascript_functions )
+									if( $ajax_mode )
 										$string .= '
 										<script type="text/javascript">
 										<!--
@@ -460,17 +439,10 @@ class CategoriesManagement
 								<a href="' . $this->display_config['administration_file_name'] . '?id=' . $id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>&nbsp;';
 								
 								$string .= '
-								<a href="' . (!$display_javascript_functions ? $this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id : 'javascript:ajax_del_cat(' . $id . ');') . '">
+								<a href="' . $this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id . '">
 									<img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" />
 								</a>';
-								if( $display_javascript_functions )
-									$string .= '
-									<script type="text/javascript">
-										<!--
-											document.getElementById("del_' . $id . '").href = "javascript:ajax_del_cat(' . $id . ');";
-										-->
-									</script>';
-								
+
 								$string .= '&nbsp;&nbsp;
 							</span>&nbsp;
 						</div>	
@@ -478,7 +450,7 @@ class CategoriesManagement
 				</span>';
 				
 				//We call the function for its daughter categories
-				$this->create_cat_administration($string, $id, $level + 1, $cache_var, $display_javascript_functions);
+				$this->create_cat_administration($string, $id, $level + 1, $cache_var, $ajax_mode);
 			}
 		}
 	}
