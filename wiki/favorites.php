@@ -35,8 +35,8 @@ require_once('../wiki/wiki_speed_bar.php');
 
 require_once('../includes/header.php'); 
 
-if( !$groups->check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) || !$session->check_auth($session->data, 0) )
-	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+if( !$Member->Check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) || !$Member->Check_level(0) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 $add_favorite = !empty($_GET['add']) ? numeric($_GET['add']) : 0;
 $remove_favorite = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
@@ -44,14 +44,14 @@ $remove_favorite = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 if( $add_favorite > 0 )//Ajout d'un favori
 {
 	//on vérifie que l'article existe
-	$article_infos = $sql->query_array("wiki_articles", "encoded_title", "WHERE id = '" . $add_favorite . "'", __LINE__, __FILE__);
+	$article_infos = $Sql->Query_array("wiki_articles", "encoded_title", "WHERE id = '" . $add_favorite . "'", __LINE__, __FILE__);
 	if( empty($article_infos['encoded_title']) ) //L'article n'existe pas
 		redirect(HOST . DIR . '/wiki/' . transid('wiki.php', '', '&'));
 	//On regarde que le sujet n'est pas en favoris
-	$is_favorite = $sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_favorites WHERE user_id = '" . $session->data['user_id'] . "' AND id_article = '" . $add_favorite . "'", __LINE__, __FILE__);
+	$is_favorite = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."wiki_favorites WHERE user_id = '" . $Member->Get_attribute('user_id') . "' AND id_article = '" . $add_favorite . "'", __LINE__, __FILE__);
 	if( $is_favorite == 0 )
 	{
-		$sql->query_inject("INSERT INTO ".PREFIX."wiki_favorites (id_article, user_id) VALUES ('" . $add_favorite . "', '" . $session->data['user_id'] . "')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."wiki_favorites (id_article, user_id) VALUES ('" . $add_favorite . "', '" . $Member->Get_attribute('user_id') . "')", __LINE__, __FILE__);
 		redirect(HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris
@@ -60,16 +60,16 @@ if( $add_favorite > 0 )//Ajout d'un favori
 elseif( $remove_favorite > 0 )
 {
 	//on vérifie que l'article existe
-	$article_infos = $sql->query_array("wiki_articles", "encoded_title", "WHERE id = '" . $remove_favorite . "'", __LINE__, __FILE__);
+	$article_infos = $Sql->Query_array("wiki_articles", "encoded_title", "WHERE id = '" . $remove_favorite . "'", __LINE__, __FILE__);
 	if( empty($article_infos['encoded_title']) ) //L'article n'existe pas
 		redirect(HOST . DIR . '/wiki/' . transid('wiki.php', '', '&'));
 		
 	//On regarde que le sujet n'est pas en favoris
-	$is_favorite = $sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_favorites WHERE user_id = '" . $session->data['user_id'] . "' AND id_article = '" . $remove_favorite . "'", __LINE__, __FILE__);
+	$is_favorite = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."wiki_favorites WHERE user_id = '" . $Member->Get_attribute('user_id') . "' AND id_article = '" . $remove_favorite . "'", __LINE__, __FILE__);
 	//L'article est effectivement en favoris
 	if( $is_favorite > 0 )
 	{
-		$sql->query_inject("DELETE FROM ".PREFIX."wiki_favorites WHERE id_article = '" . $remove_favorite . "' AND user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("DELETE FROM ".PREFIX."wiki_favorites WHERE id_article = '" . $remove_favorite . "' AND user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 		redirect(HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris
@@ -77,7 +77,7 @@ elseif( $remove_favorite > 0 )
 }
 else
 {
-	$template->set_filenames(array('wiki_favorites' => '../templates/' . $CONFIG['theme'] . '/wiki/favorites.tpl'));
+	$Template->Set_filenames(array('wiki_favorites' => '../templates/' . $CONFIG['theme'] . '/wiki/favorites.tpl'));
 	
 	//Gestion des erreurs
 	$error = !empty($_GET['error']) ? securit($_GET['error']) : '';
@@ -88,41 +88,41 @@ else
 	else
 		$errstr = '';
 	if( !empty($errstr) )
-		$errorh->error_handler($errstr, E_USER_WARNING);
+		$Errorh->Error_handler($errstr, E_USER_WARNING);
 	
 	//on liste les favoris
-	$result = $sql->query_while("SELECT f.id, a.id, a.title, a.encoded_title
+	$result = $Sql->Query_while("SELECT f.id, a.id, a.title, a.encoded_title
 	FROM ".PREFIX."wiki_favorites f
 	LEFT JOIN ".PREFIX."wiki_articles a ON a.id = f.id_article
-	WHERE user_id = '" . $session->data['user_id'] . "'"
+	WHERE user_id = '" . $Member->Get_attribute('user_id') . "'"
 	, __LINE__, __FILE__);
 	
-	$num_rows = $sql->sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
+	$num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
 	if( $num_rows == 0 )
 	{
-		$template->assign_block_vars('no_favorite', array(
+		$Template->Assign_block_vars('no_favorite', array(
 			'L_NO_FAVORITE' => $LANG['wiki_no_favorite']
 		));
 	}
 	
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$template->assign_block_vars('list', array(
+		$Template->Assign_block_vars('list', array(
 			'U_ARTICLE' => transid('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 			'ARTICLE' => $row['title'],
 			'ID' => $row['id'],
-			'ACTIONS' => '<a href="' . transid('favorites.php?del=' . $row['id']) . '" title="' . $LANG['wiki_unwatch_this_topic'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '\');"><img src="' . $template->module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['wiki_unwatch_this_topic'] . '" /></a>'
+			'ACTIONS' => '<a href="' . transid('favorites.php?del=' . $row['id']) . '" title="' . $LANG['wiki_unwatch_this_topic'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '\');"><img src="' . $Template->Module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['wiki_unwatch_this_topic'] . '" /></a>'
 		));
 	}
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_FAVORITES' => $LANG['wiki_favorites'],
 		'L_TITLE' => $LANG['title'],
 		'L_UNTRACK' => $LANG['wiki_unwatch']
 	));
 
-	$template->pparse('wiki_favorites');
+	$Template->Pparse('wiki_favorites');
 }
 
 require_once('../includes/footer.php'); 

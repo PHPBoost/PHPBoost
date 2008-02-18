@@ -35,17 +35,17 @@ require_once('../wiki/wiki_speed_bar.php');
 
 require_once('../includes/header.php'); 
 
-if( !$groups->check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) || !$session->check_auth($session->data, 0) )
-	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+if( !$Member->Check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) || !$Member->Check_level(0) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 $search_string = !empty($_GET['search']) ? securit($_GET['search']) : '';
 $where_search = !empty($_GET['where']) ? ($_GET['where'] == 'contents' ? 'contents' : 'title') : 'title';
 $page = !empty($_GET['page']) ? numeric($_GET['page']) : 1;
 $page = $page <= 0 ? 1 : $page;
 
-$template->set_filenames(array('wiki_search' => '../templates/' . $CONFIG['theme'] . '/wiki/search.tpl'));
+$Template->Set_filenames(array('wiki_search' => '../templates/' . $CONFIG['theme'] . '/wiki/search.tpl'));
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'L_SEARCH' => $LANG['wiki_search'],
 	'L_KEY_WORDS' => $LANG['wiki_search_key_words'],
 	'TARGET' => transid('search.php'),
@@ -78,23 +78,23 @@ if( $search_string != '' ) //recherche
 		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
 		WHERE MATCH(c.content) AGAINST('" . $search_string . "')";
 	
-	$result = $sql->query_while($query, __LINE__, __FILE__);
+	$result = $Sql->Query_while($query, __LINE__, __FILE__);
 	
-	$num_rows = $sql->sql_num_rows($result, $query_rows, __LINE__, __FILE__);
+	$num_rows = $Sql->Sql_num_rows($result, $query_rows, __LINE__, __FILE__);
 	
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
-	$pages_links = $pagination->show_pagin('search' . transid('.php?search=' . $search_string . '&amp;where=' . $where_search . '&amp;page=%d'), $num_rows, 'page', 10, 3);
+	$Pagination = new Pagination();
+	$pages_links = $Pagination->Display_pagination('search' . transid('.php?search=' . $search_string . '&amp;where=' . $where_search . '&amp;page=%d'), $num_rows, 'page', 10, 3);
 	
-	$template->assign_block_vars('search_result', array(
+	$Template->Assign_block_vars('search_result', array(
 		'PAGES' => !empty($pages_links) ? $pages_links : '&nbsp;'
 	));
 	
 	$i = 1; //On émule le "limit" 10 résultats par page
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( $i > ($page - 1) * 10 && $i <= $page * 2 ) //On affiche
-			$template->assign_block_vars('search_result.item', array(
+			$Template->Assign_block_vars('search_result.item', array(
 				'TITLE' => $row['title'],
 				'U_TITLE' => transid('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 				'RELEVANCE' => number_round(($row['relevance'] / 5.5), 2) * 100 . ' %'
@@ -105,11 +105,11 @@ if( $search_string != '' ) //recherche
 	}
 	
 	if( $num_rows == 0 )
-		$errorh->error_handler($LANG['wiki_empty_search'], E_NOTICE);
+		$Errorh->Error_handler($LANG['wiki_empty_search'], E_NOTICE);
 	
 }
 
-$template->pparse('wiki_search');
+$Template->Pparse('wiki_search');
 
 
 require_once('../includes/footer.php'); 

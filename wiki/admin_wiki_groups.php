@@ -50,41 +50,41 @@ if( !empty($_POST['valid']) )
 	$auth_restriction = isset($_POST['groups_auth12']) ? $_POST['groups_auth12'] : '';
 	
 	//Génération du tableau des droits.
-	$array_auth_all = $groups->return_array_auth($auth_create_article, $auth_create_cat, $auth_restore_archive, $auth_delete_archive, $auth_edit, $auth_delete, $auth_rename, $auth_redirect, $auth_move, $auth_status, $auth_com, $auth_restriction);
+	$array_auth_all = $Group->Return_array_auth($auth_create_article, $auth_create_cat, $auth_restore_archive, $auth_delete_archive, $auth_edit, $auth_delete, $auth_rename, $auth_redirect, $auth_move, $auth_status, $auth_com, $auth_restriction);
 		
 	$_WIKI_CONFIG['auth'] = addslashes(serialize($array_auth_all));
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
 
 	###### Regénération du cache des catégories (liste déroulante dans le forum) #######
-	$cache->generate_module_file('wiki');
+	$Cache->Generate_module_file('wiki');
 
 	redirect(HOST . SCRIPT);
 }
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_wiki_groups' => '../templates/' . $CONFIG['theme'] . '/wiki/admin_wiki_groups.tpl'
 	));
 	
-	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = isset($_WIKI_CONFIG['auth']) ? $_WIKI_CONFIG['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $template->module_data_path('wiki'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('wiki'),
 		'NBR_GROUP' => count($array_groups),
-		'SELECT_CREATE_ARTICLE' => $groups->generate_select_groups(1, $array_auth, WIKI_CREATE_ARTICLE),
-		'SELECT_CREATE_CAT' => $groups->generate_select_groups(2, $array_auth, WIKI_CREATE_CAT),
-		'SELECT_RESTORE_ARCHIVE' => $groups->generate_select_groups(3, $array_auth, WIKI_RESTORE_ARCHIVE),
-		'SELECT_DELETE_ARCHIVE' => $groups->generate_select_groups(4, $array_auth, WIKI_DELETE_ARCHIVE),
-		'SELECT_EDIT' => $groups->generate_select_groups(5, $array_auth, WIKI_EDIT),
-		'SELECT_DELETE' => $groups->generate_select_groups(6, $array_auth, WIKI_DELETE),
-		'SELECT_RENAME' => $groups->generate_select_groups(7, $array_auth, WIKI_RENAME),
-		'SELECT_REDIRECT' => $groups->generate_select_groups(8, $array_auth, WIKI_REDIRECT),
-		'SELECT_MOVE' => $groups->generate_select_groups(9, $array_auth, WIKI_MOVE),
-		'SELECT_STATUS' => $groups->generate_select_groups(10, $array_auth, WIKI_STATUS),
-		'SELECT_COM' => $groups->generate_select_groups(11, $array_auth, WIKI_COM),
-		'SELECT_RESTRICTION' => $groups->generate_select_groups(12, $array_auth, WIKI_RESTRICTION),
+		'SELECT_CREATE_ARTICLE' => $Group->Generate_select_groups(1, $array_auth, WIKI_CREATE_ARTICLE),
+		'SELECT_CREATE_CAT' => $Group->Generate_select_groups(2, $array_auth, WIKI_CREATE_CAT),
+		'SELECT_RESTORE_ARCHIVE' => $Group->Generate_select_groups(3, $array_auth, WIKI_RESTORE_ARCHIVE),
+		'SELECT_DELETE_ARCHIVE' => $Group->Generate_select_groups(4, $array_auth, WIKI_DELETE_ARCHIVE),
+		'SELECT_EDIT' => $Group->Generate_select_groups(5, $array_auth, WIKI_EDIT),
+		'SELECT_DELETE' => $Group->Generate_select_groups(6, $array_auth, WIKI_DELETE),
+		'SELECT_RENAME' => $Group->Generate_select_groups(7, $array_auth, WIKI_RENAME),
+		'SELECT_REDIRECT' => $Group->Generate_select_groups(8, $array_auth, WIKI_REDIRECT),
+		'SELECT_MOVE' => $Group->Generate_select_groups(9, $array_auth, WIKI_MOVE),
+		'SELECT_STATUS' => $Group->Generate_select_groups(10, $array_auth, WIKI_STATUS),
+		'SELECT_COM' => $Group->Generate_select_groups(11, $array_auth, WIKI_COM),
+		'SELECT_RESTRICTION' => $Group->Generate_select_groups(12, $array_auth, WIKI_RESTRICTION),
 		'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
 		'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
 		'L_CONFIG_WIKI' => $LANG['wiki_config'],
@@ -108,7 +108,7 @@ else
 		'L_RESTRICTION' => $LANG['wiki_auth_restriction'],
 	));
 
-	$template->pparse('admin_wiki_groups'); // traitement du modele	
+	$Template->Pparse('admin_wiki_groups'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

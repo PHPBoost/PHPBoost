@@ -80,12 +80,12 @@ if( !empty($contents) ) //On enregistre un article
 
 	if( $preview )//Prévisualisation
 	{
-		$template->assign_block_vars('preview', array(
+		$Template->Assign_block_vars('preview', array(
 			'CONTENTS' => second_parse(wiki_no_rewrite(stripslashes($contents))),
 			'TITLE' => stripslashes($title)
 		));
 		if( !empty($menu) )
-			$template->assign_block_vars('preview.menu', array(
+			$Template->Assign_block_vars('preview.menu', array(
 				'MENU' => stripslashes($menu)
 			));
 	}
@@ -93,29 +93,29 @@ if( !empty($contents) ) //On enregistre un article
 	{
 		if( $id_edit > 0 )//On édite un article
 		{		
-			$article_infos = $sql->query_array("wiki_articles", "encoded_title", "auth", "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__); 
+			$article_infos = $Sql->Query_array("wiki_articles", "encoded_title", "auth", "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__); 
 			//Autorisations
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-			if( !((!$general_auth || $groups->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $groups->check_auth($article_auth , WIKI_EDIT))) )
-				$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+			if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_EDIT))) )
+				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 			
-			$previous_id_contents = $sql->query("SELECT id_contents FROM ".PREFIX."wiki_articles WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+			$previous_id_contents = $Sql->Query("SELECT id_contents FROM ".PREFIX."wiki_articles WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 			//On met à jour l'ancien contenu (comme archive)
-			$sql->query_inject("UPDATE ".PREFIX."wiki_contents SET activ = 0 WHERE id_contents = '" . $previous_id_contents . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."wiki_contents SET activ = 0 WHERE id_contents = '" . $previous_id_contents . "'", __LINE__, __FILE__);
 			//On insère le contenu
-			$sql->query_inject("INSERT INTO ".PREFIX."wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . $menu . "', '" . $contents . "', 1, " . $session->data['user_id'] . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . $menu . "', '" . $contents . "', 1, " . $Member->Get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
 			//Dernier id enregistré
-			$id_contents = $sql->sql_insert_id("SELECT MAX(id_contents) FROM ".PREFIX."wiki_contents");
+			$id_contents = $Sql->Sql_insert_id("SELECT MAX(id_contents) FROM ".PREFIX."wiki_contents");
 
 	 		//On donne le nouveau id de contenu
-			$sql->query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 			//Regénération du flux rss.
 			include_once('../includes/rss.class.php'); //Flux rss regénéré!
-			$rss = new Rss('wiki/rss.php');
-			$rss->cache_path('../cache/');
-			$rss->generate_file('javascript', 'rss_wiki');
-			$rss->generate_file('php', 'rss2_wiki');
+			$Rss = new Rss('wiki/rss.php');
+			$Rss->Cache_path('../cache/');
+			$Rss->Generate_file('javascript', 'rss_wiki');
+			$Rss->Generate_file('php', 'rss2_wiki');
 			
 			//On redirige
 			$redirect = $article_infos['encoded_title'];
@@ -124,13 +124,13 @@ if( !empty($contents) ) //On enregistre un article
 		elseif( !empty($title) ) //On crée un article
 		{
 			//autorisations
-			if( $is_cat && !$groups->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
-				$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-			elseif( !$is_cat && !$groups->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
-				$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+			if( $is_cat && !$Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
+				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+			elseif( !$is_cat && !$Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
+				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 			
 			//On vérifie que le titre n'existe pas
-			$article_exists = $sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title = '" . url_encode_rewrite($title) . "'", __LINE__, __FILE__);
+			$article_exists = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title = '" . url_encode_rewrite($title) . "'", __LINE__, __FILE__);
 			
 			
 			//Si il existe: message d'erreur
@@ -138,33 +138,33 @@ if( !empty($contents) ) //On enregistre un article
 				$errstr = $LANG['wiki_title_already_exists'];
 			else //On enregistre
 			{
-				$sql->query_inject("INSERT INTO ".PREFIX."wiki_articles (title, encoded_title, id_cat, is_cat) VALUES ('" . $title . "', '" . url_encode_rewrite($title) . "', '" . $new_id_cat . "', '" . $is_cat . "')", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."wiki_articles (title, encoded_title, id_cat, is_cat) VALUES ('" . $title . "', '" . url_encode_rewrite($title) . "', '" . $new_id_cat . "', '" . $is_cat . "')", __LINE__, __FILE__);
 				//On récupère le numéro de l'article créé
-				$id_article = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."wiki_articles");
+				$id_article = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."wiki_articles");
 				//On insère le contenu
-				$sql->query_inject("INSERT INTO ".PREFIX."wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . $menu . "', '" . $contents . "', 1, " . $session->data['user_id'] . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . $menu . "', '" . $contents . "', 1, " . $Member->Get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
 				//On met à jour le numéro du contenu dans la table articles
-				$id_contents = $sql->sql_insert_id("SELECT MAX(id_contents) FROM ".PREFIX."wiki_contents");
+				$id_contents = $Sql->Sql_insert_id("SELECT MAX(id_contents) FROM ".PREFIX."wiki_contents");
 				$cat_update = '';
 				if( $is_cat == 1 )//si c'est une catégorie, on la crée
 				{
-					$sql->query_inject("INSERT INTO ".PREFIX."wiki_cats (id_parent, article_id) VALUES (" . $new_id_cat . ", '" . $id_article . "')", __LINE__, __FILE__);
+					$Sql->Query_inject("INSERT INTO ".PREFIX."wiki_cats (id_parent, article_id) VALUES (" . $new_id_cat . ", '" . $id_article . "')", __LINE__, __FILE__);
 					//on récupère l'id de la dernière catégorie créée
-					$id_created_cat = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."wiki_articles");
+					$id_created_cat = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."wiki_articles");
 					$cat_update = ", id_cat = '" . $id_created_cat . "'";
 					//On régénère le cache
-					$cache->generate_module_file('wiki');
+					$Cache->Generate_module_file('wiki');
 				}
-				$sql->query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article, __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article, __LINE__, __FILE__);
 				
 				//Regénération du flux rss.
 				include_once('../includes/rss.class.php'); //Flux rss regénéré!
-				$rss = new Rss('wiki/rss.php');
-				$rss->cache_path('../cache/');
-				$rss->generate_file('javascript', 'rss_wiki');
-				$rss->generate_file('php', 'rss2_wiki');
+				$Rss = new Rss('wiki/rss.php');
+				$Rss->Cache_path('../cache/');
+				$Rss->Generate_file('javascript', 'rss_wiki');
+				$Rss->Generate_file('php', 'rss2_wiki');
 		
-				$redirect = $sql->query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);
+				$redirect = $Sql->Query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);
 				redirect(transid('wiki.php?title=' . $redirect, $redirect, '' , '&'));
 			}
 		}
@@ -172,21 +172,21 @@ if( !empty($contents) ) //On enregistre un article
 }
 
 //On propose le formulaire
-$template->set_filenames(array('wiki_edit' => '../templates/' . $CONFIG['theme'] . '/wiki/post.tpl'));
-$template->assign_vars(array(
-	'WIKI_PATH' => $template->module_data_path('wiki'),
+$Template->Set_filenames(array('wiki_edit' => '../templates/' . $CONFIG['theme'] . '/wiki/post.tpl'));
+$Template->Assign_vars(array(
+	'WIKI_PATH' => $Template->Module_data_path('wiki'),
 ));
 if( $id_edit > 0 )//On édite
 {
-	$article_infos = $sql->query_array('wiki_articles', '*', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 	
 	//Autorisations
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-	if( !((!$general_auth || $groups->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $groups->check_auth($article_auth , WIKI_EDIT))) )
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_EDIT))) )
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
-	$article_contents = $sql->query_array('wiki_contents', '*', "WHERE id_contents = '" . $article_infos['id_contents'] . "'", __LINE__, __FILE__);
+	$article_contents = $Sql->Query_array('wiki_contents', '*', "WHERE id_contents = '" . $article_infos['id_contents'] . "'", __LINE__, __FILE__);
 	$contents = $article_contents['content'];
 	if( !empty($article_contents['menu']) ) //On reforme les paragraphes
 	{
@@ -201,21 +201,21 @@ if( $id_edit > 0 )//On édite
 	
 	$l_action_submit = $LANG['update'];
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'SELECTED_CAT' => $id_edit,
 	));
 }
 else
 {	
 	//autorisations
-	if( $is_cat && !$groups->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	elseif( !$is_cat && !$groups->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	if( $is_cat && !$Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+	elseif( !$is_cat && !$Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	if( $id_cat > 0 && array_key_exists($id_cat, $_WIKI_CATS) ) //Catégorie préselectionnée
 	{
-		$template->assign_block_vars('create', array());
+		$Template->Assign_block_vars('create', array());
 		$cats = array();
 		$cat_list = display_cat_explorer($id_cat, $cats, 1);
 		$cats = array_reverse($cats);
@@ -230,7 +230,7 @@ else
 			$i++;
 		}
 		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $_WIKI_CATS[$id_cat]['name'];
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'SELECTED_CAT' => $id_cat,
 			'CAT_0' => '',
 			'CAT_LIST' => $cat_list,
@@ -239,32 +239,32 @@ else
 	}
 	else //Si il n'a pas de catégorie parente
 	{
-		$template->assign_block_vars('create', array());
+		$Template->Assign_block_vars('create', array());
 		$contents = '';
-		$result = $sql->query_while("SELECT c.id, a.title, a.encoded_title
+		$result = $Sql->Query_while("SELECT c.id, a.title, a.encoded_title
 		FROM ".PREFIX."wiki_cats c
 		LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.article_id
 		WHERE c.id_parent = 0
 		ORDER BY title ASC", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			$sub_cats_number = $sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$sub_cats_number = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if( $sub_cats_number > 0 )
 			{	
-				$template->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $template->module_data_path('wiki') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
-					<a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $template->module_data_path('wiki') . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+				$Template->Assign_block_vars('create.list', array(
+					'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $Template->Module_data_path('wiki') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
+					<a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $Template->Module_data_path('wiki') . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 			else
 			{
-				$template->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $template->module_data_path('wiki') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+				$Template->Assign_block_vars('create.list', array(
+					'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $Template->Module_data_path('wiki') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 		}
-		$sql->close($result);
-		$template->assign_vars(array(
+		$Sql->Close($result);
+		$Template->Assign_vars(array(
 			'SELECTED_CAT' => 0,
 			'CAT_0' => 'wiki_selected_cat',
 			'CAT_LIST' => '',
@@ -276,7 +276,7 @@ else
 
 include_once('../includes/bbcode.php');
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], $article_infos['title'])) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], $article_infos['title'])),
 	'L_TITLE_FIELD' => $LANG['title'],
 	'L_CONTENTS' => $LANG['wiki_contents'],
@@ -304,9 +304,9 @@ include_once('../wiki/post_js_tools.php');
 
 //Eventuelles erreurs
 if( !empty($errstr) )
-	$errorh->error_handler($errstr, E_USER_WARNING);
+	$Errorh->Error_handler($errstr, E_USER_WARNING);
 
-$template->pparse('wiki_edit');
+$Template->Pparse('wiki_edit');
 
 
 require_once('../includes/footer.php');

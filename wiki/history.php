@@ -36,7 +36,7 @@ define('TITLE' , $LANG['wiki_history']);
 
 if( !empty($id_article) )
 {
-	$article_infos = $sql->query_array('wiki_articles', 'title', 'auth', 'encoded_title', 'id_cat', 'WHERE id = ' . $id_article, __LINE__, __FILE__);
+	$article_infos = $Sql->Query_array('wiki_articles', 'title', 'auth', 'encoded_title', 'id_cat', 'WHERE id = ' . $id_article, __LINE__, __FILE__);
 }
 
 $speed_bar_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
@@ -46,35 +46,35 @@ require_once('../includes/header.php');
 
 if( !empty($id_article) )
 {
-	$template->set_filenames(array('wiki_history' => '../templates/' . $CONFIG['theme'] . '/wiki/history.tpl'));
+	$Template->Set_filenames(array('wiki_history' => '../templates/' . $CONFIG['theme'] . '/wiki/history.tpl'));
 
-	$template->assign_block_vars('article', array(
+	$Template->Assign_block_vars('article', array(
 		'L_TITLE' => $LANG['wiki_history'] . ': <a href="' . $article_infos['encoded_title'] . '">' . $article_infos['title'] . '</a>',
 	));
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-	$restore_auth = (!$general_auth || $groups->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTORE_ARCHIVE)) && ($general_auth || $groups->check_auth($article_auth , WIKI_RESTORE_ARCHIVE)) ? true : false;
-	$delete_auth = (!$general_auth || $groups->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $groups->check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
+	$restore_auth = (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_RESTORE_ARCHIVE)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_RESTORE_ARCHIVE)) ? true : false;
+	$delete_auth = (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
 	
 	//on va chercher le contenu de la page
-	$result = $sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.login, c.id_article, c.activ
+	$result = $Sql->Query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.login, c.id_article, c.activ
 		FROM ".PREFIX."wiki_contents c
 		LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.id_article
 		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
 		WHERE c.id_article = '" . $id_article . "'
 		ORDER BY c.timestamp DESC", __LINE__, __FILE__);
 	
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		//Restauration
 		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . transid('action.php?restore=' . $row['id_contents']) . '" title="' . $LANG['wiki_restore_version'] . '"><img src="templates/images/restore.png" alt="' . $LANG['wiki_restore_version'] . '" /></a> &nbsp; ' : '';
 		
 		//Suppression
-		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . transid('action.php?del_contents=' . $row['id_contents']) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $template->module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
+		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . transid('action.php?del_contents=' . $row['id_contents']) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $Template->Module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
 		
 		
-		$template->assign_block_vars('article.list', array(
+		$Template->Assign_block_vars('article.list', array(
 			'TITLE' => $LANG['wiki_consult_article'],
 			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
@@ -83,16 +83,16 @@ if( !empty($id_article) )
 			'ACTIONS' => !empty($actions) ? $actions : $LANG['wiki_no_possible_action']
 		));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_VERSIONS' => $LANG['wiki_version_list'],
 		'L_DATE' => $LANG['date'],
 		'L_AUTHOR' => $LANG['wiki_author'],
 		'L_ACTIONS' => $LANG['wiki_possible_actions'],
 		));
 	
-	$template->pparse('wiki_history');	
+	$Template->Pparse('wiki_history');	
 }
 else //On affiche la liste des modifications 
 {
@@ -103,37 +103,37 @@ else //On affiche la liste des modifications
 	$order = $order == 'asc' ? 'asc' : 'desc';
 	
 	//On compte le nombre d'articles
-	$nbr_articles = $sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE redirect = '0'", __LINE__, __FILE__);
+	$nbr_articles = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE redirect = '0'", __LINE__, __FILE__);
 	
 	//On instancie la classe de pagination
 	include_once('../includes/pagination.class.php');
-	$pagination = new Pagination();
-	$show_pagin = $pagination->show_pagin(transid('history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'), $nbr_articles, 'p', $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 3); 
+	$Pagination = new Pagination();
+	$show_pagin = $Pagination->Display_pagination(transid('history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'), $nbr_articles, 'p', $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 3); 
 	
-	$template->set_filenames(array('wiki_history' => '../templates/' . $CONFIG['theme'] . '/wiki/history.tpl'));
+	$Template->Set_filenames(array('wiki_history' => '../templates/' . $CONFIG['theme'] . '/wiki/history.tpl'));
 
-	$template->assign_block_vars('index', array(
+	$Template->Assign_block_vars('index', array(
 		'L_HISTORY' => $LANG['wiki_history'],
 		'L_TITLE' => $LANG['wiki_article_title'],
 		'L_AUTHOR' => $LANG['wiki_author'],
 		'L_DATE' => $LANG['date'],
-		'ARROW_TOP_TITLE' => ($field == 'title' && $order == 'asc') ? '' : '<a href="' . transid('history.php?p=' . $pagination->page . '&amp;field=title&amp;order=asc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="asc" /></a>',
-		'ARROW_BOTTOM_TITLE' => ($field == 'title' && $order == 'desc') ? '' : '<a href="' . transid('history.php?p=' . $pagination->page . '&amp;field=title&amp;order=desc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="desc" /></a>',
-		'ARROW_TOP_DATE' => ($field == 'timestamp' && $order == 'asc') ? '' : '<a href="' . transid('history.php?p=' . $pagination->page . '&amp;field=timestamp&amp;order=asc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="asc" /></a>',
-		'ARROW_BOTTOM_DATE' => ($field == 'timestamp' && $order == 'desc') ? '' : '<a href="' . transid('history.php?p=' . $pagination->page . '&amp;field=timestamp&amp;order=desc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="desc" /></a>',
+		'ARROW_TOP_TITLE' => ($field == 'title' && $order == 'asc') ? '' : '<a href="' . transid('history.php?p=' . $Pagination->page . '&amp;field=title&amp;order=asc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="asc" /></a>',
+		'ARROW_BOTTOM_TITLE' => ($field == 'title' && $order == 'desc') ? '' : '<a href="' . transid('history.php?p=' . $Pagination->page . '&amp;field=title&amp;order=desc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="desc" /></a>',
+		'ARROW_TOP_DATE' => ($field == 'timestamp' && $order == 'asc') ? '' : '<a href="' . transid('history.php?p=' . $Pagination->page . '&amp;field=timestamp&amp;order=asc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="asc" /></a>',
+		'ARROW_BOTTOM_DATE' => ($field == 'timestamp' && $order == 'desc') ? '' : '<a href="' . transid('history.php?p=' . $Pagination->page . '&amp;field=timestamp&amp;order=desc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="desc" /></a>',
 		'PAGINATION' => ($nbr_articles > $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY  ?  $show_pagin : '') //Affichage de la pagination si il le faut
 	));	
 
-	$result = $sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, m.login, c.id_article, c.activ,  a.id_contents
+	$result = $Sql->Query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, m.login, c.id_article, c.activ,  a.id_contents
 		FROM ".PREFIX."wiki_articles a
 		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
 		WHERE a.redirect = 0
 		ORDER BY " . ($field == 'title' ? 'a' : 'c') . "." . $field . " " . $order . "
-		" . $sql->sql_limit($pagination->first_msg($_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 'p'),$_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY), __LINE__, __FILE__);
+		" . $Sql->Sql_limit($Pagination->First_msg($_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 'p'),$_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY), __LINE__, __FILE__);
 	while( $row = mysql_fetch_assoc($result) )
 	{
-		$template->assign_block_vars('index.list', array(
+		$Template->Assign_block_vars('index.list', array(
 			'TITLE' => $row['title'],
 			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
@@ -141,7 +141,7 @@ else //On affiche la liste des modifications
 		));
 	}
 	
-	$template->pparse('wiki_history');
+	$Template->Pparse('wiki_history');
 }
 
 require_once('../includes/footer.php'); 
