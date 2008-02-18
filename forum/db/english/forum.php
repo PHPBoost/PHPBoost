@@ -27,10 +27,10 @@
 
 if( defined('PHP_BOOST') !== true ) exit;
 
-$user_id = (is_object($session) && !empty($session->data['user_id'])) ? $session->data['user_id'] : 1;
-$sql->query_inject("UPDATE ".PREFIX."forum_topics SET user_id = '" . $user_id . "', last_user_id = '" . $user_id . "' WHERE id = '" . $user_id . "'", __LINE__, __FILE__);
-$sql->query_inject("UPDATE ".PREFIX."forum_msg SET user_ip = '" . USER_IP . "' WHERE id = '" . $user_id . "'", __LINE__, __FILE__);
-$sql->query_inject("UPDATE ".PREFIX."member SET user_msg = user_msg + 1 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+$user_id = (is_object($Session) && $Member->Get_attribute('user_id') != '') ? $Member->Get_attribute('user_id') : 1;
+$Sql->Query_inject("UPDATE ".PREFIX."forum_topics SET user_id = '" . $user_id . "', last_user_id = '" . $user_id . "' WHERE id = '" . $user_id . "'", __LINE__, __FILE__);
+$Sql->Query_inject("UPDATE ".PREFIX."forum_msg SET user_ip = '" . USER_IP . "' WHERE id = '" . $user_id . "'", __LINE__, __FILE__);
+$Sql->Query_inject("UPDATE ".PREFIX."member SET user_msg = user_msg + 1 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 
 	
 ?>

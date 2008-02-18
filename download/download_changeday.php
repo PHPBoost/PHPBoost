@@ -28,15 +28,15 @@
 if( defined('PHP_BOOST') !== true) exit;
 
 //Publication des téléchargements en attente pour la date donnée.
-$result = $sql->query_while("SELECT id, start, end
+$result = $Sql->Query_while("SELECT id, start, end
 FROM ".PREFIX."download
 WHERE visible != 0", __LINE__, __FILE__);
-while($row = $sql->sql_fetch_assoc($result) )
+while($row = $Sql->Sql_fetch_assoc($result) )
 { 
 	if( $row['start'] <= time() && $row['start'] != 0 )
-		$sql->query_inject("UPDATE ".PREFIX."download SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."download SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	if( $row['end'] <= time() && $row['end'] != 0 )
-		$sql->query_inject("UPDATE ".PREFIX."download SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."download SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 }
 
 ?>

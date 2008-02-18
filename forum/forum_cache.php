@@ -30,13 +30,13 @@ if( defined('PHP_BOOST') !== true) exit;
 //Configuration des news
 function generate_module_file_forum()
 {
-	global $sql;
+	global $Sql;
 		
 	//Configuration du forum
 	$forum_config = 'global $CONFIG_FORUM;' . "\n";
 	
 	//Récupération du tableau linéarisé dans la bdd.
-	$CONFIG_FORUM = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'forum'", __LINE__, __FILE__));
+	$CONFIG_FORUM = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'forum'", __LINE__, __FILE__));
 	foreach($CONFIG_FORUM as $key => $value)
 	{	
 		if( $key == 'auth' )
@@ -48,10 +48,10 @@ function generate_module_file_forum()
 	//Liste des catégories du forum
 	$i = 0;
 	$forum_cats = 'global $CAT_FORUM;' . "\n";
-	$result = $sql->query_while("SELECT id, id_left, id_right, level, name, status, aprob, auth, aprob
+	$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, status, aprob, auth, aprob
 	FROM ".PREFIX."forum_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{	
 		if( empty($row['auth']) )
 			$row['auth'] = serialize(array());
@@ -64,7 +64,7 @@ function generate_module_file_forum()
 		$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
 		$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
 	}
-	$sql->close($result);		
+	$Sql->Close($result);		
 	
 	return $forum_config . "\n" . $forum_cats;
 }

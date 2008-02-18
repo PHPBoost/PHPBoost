@@ -30,22 +30,22 @@ if( defined('PHP_BOOST') !== true) exit;
 //Configuration des news
 function generate_module_file_download()
 {
-	global $sql;
+	global $Sql;
 	
 	$code = 'global $CAT_DOWNLOAD;' . "\n" . 'global $CONFIG_DOWNLOAD;' . "\n";
 		
 	//Récupération du tableau linéarisé dans la bdd.
-	$CONFIG_DOWNLOAD = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'download'", __LINE__, __FILE__));
+	$CONFIG_DOWNLOAD = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'download'", __LINE__, __FILE__));
 	$CONFIG_DOWNLOAD = is_array($CONFIG_DOWNLOAD) ? $CONFIG_DOWNLOAD : array();
 	foreach($CONFIG_DOWNLOAD as $key => $value)
 		$code .= '$CONFIG_DOWNLOAD[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 	
 	$code .= "\n";
 	
-	$result = $sql->query_while("SELECT id, name, secure
+	$result = $Sql->Query_while("SELECT id, name, secure
 	FROM ".PREFIX."download_cat
 	WHERE aprob = 1", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{		
 		$code .= '$CAT_DOWNLOAD[\'' . $row['id'] . '\'][\'secure\'] = ' . var_export($row['secure'], true) . ';' . "\n";
 		$code .= '$CAT_DOWNLOAD[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";

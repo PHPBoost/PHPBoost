@@ -31,11 +31,11 @@ include_once('../gallery/gallery_begin.php');
 require_once('../includes/header_no_display.php');
 
 //Notation des images.
-if( !empty($_GET['note_pics']) && $session->check_auth($session->data, 0) ) //Utilisateur connecté.
+if( !empty($_GET['note_pics']) && $Member->Check_level(0) ) //Utilisateur connecté.
 {	
 	//Initialisation  de la class de gestion des fichiers.
 	include_once('../gallery/gallery.class.php');
-	$gallery = new Gallery;
+	$Gallery = new Gallery;
 	
 	$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
 	$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;
@@ -47,26 +47,26 @@ if( !empty($_GET['note_pics']) && $session->check_auth($session->data, 0) ) //Ut
 		echo 0;
 	
 	//Autorisation en lecture, notation activée, et note comprise dans l'intervalle autorisé.
-	if( !empty($id_file) && $note >= 0 && $note <= $CONFIG_GALLERY['note_max'] && $groups->check_auth($CAT_GALLERY[$idcat]['auth'], READ_CAT_GALLERY) && $CONFIG_GALLERY['activ_note'] == 1 )
-		echo $gallery->note_pics($id_file, $note, $session->data['user_id']);
+	if( !empty($id_file) && $note >= 0 && $note <= $CONFIG_GALLERY['note_max'] && $Member->Check_auth($CAT_GALLERY[$idcat]['auth'], READ_CAT_GALLERY) && $CONFIG_GALLERY['activ_note'] == 1 )
+		echo $Gallery->Note_pics($id_file, $note, $Member->Get_attribute('user_id'));
 	else 
 		echo 0;
 }
 	
-if( $session->data['level'] >= 1 ) //Modo
+if( $Member->Get_attribute('level') >= 1 ) //Modo
 {	
 	if( !empty($_GET['rename_pics']) ) //Renomme une image.
 	{
 		//Initialisation  de la class de gestion des fichiers.
 		include_once('../gallery/gallery.class.php');
-		$gallery = new Gallery;
+		$Gallery = new Gallery;
 		
 		$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
 		$name = !empty($_POST['name']) ? securit(utf8_decode($_POST['name'])) : '';
 		$previous_name = !empty($_POST['previous_name']) ? securit(utf8_decode($_POST['previous_name'])) : '';
 		
 		if( !empty($id_file) )
-			echo $gallery->rename_pics($id_file, $name, $previous_name);
+			echo $Gallery->Rename_pics($id_file, $name, $previous_name);
 		else 
 			echo -1;
 	}
@@ -74,14 +74,14 @@ if( $session->data['level'] >= 1 ) //Modo
 	{
 		//Initialisation  de la class de gestion des fichiers.
 		include_once('../gallery/gallery.class.php');
-		$gallery = new Gallery;
+		$Gallery = new Gallery;
 		
 		$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
 		if( !empty($id_file) )
 		{
-			echo $gallery->aprob_pics($id_file);
+			echo $Gallery->Aprob_pics($id_file);
 			//Régénération du cache des photos aléatoires.
-			$cache->generate_module_file('gallery');
+			$Cache->Generate_module_file('gallery');
 		}
 		else 
 			echo 0;

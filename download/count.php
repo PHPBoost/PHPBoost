@@ -29,8 +29,8 @@ require_once('../includes/begin.php');
 
 $idurl = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 if( !empty($idurl) )
-	$sql->query_inject("UPDATE ".PREFIX."download SET compt = compt + 1 WHERE id = '" . $idurl . "'", __LINE__, __FILE__); //MAJ du compteur.
-$info_file = $sql->query_array("download", "url", "size", "WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."download SET compt = compt + 1 WHERE id = '" . $idurl . "'", __LINE__, __FILE__); //MAJ du compteur.
+$info_file = $Sql->Query_array("download", "url", "size", "WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
 
 //Redirection vers le fichier demandé!
 $filesize = @filesize(str_replace(HOST . DIR . '/', '../', $info_file['url']));

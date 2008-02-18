@@ -48,7 +48,7 @@
 					disabled = 0;
 					var i;
 					var array_id = new Array('wr', 'xr', 'wg', 'xg');
-					for(j = 0; j <= 5; j++)
+					for(j = 0; j <= 3; j++)
 					{
 						for(i = -1; i <= 2; i++)
 						{	
@@ -61,8 +61,10 @@
 								document.getElementById(array_id[j] + i).disabled = '';	
 						}
 					}
+					document.getElementById('wr1').selected = true;
 					document.getElementById('wr2').selected = true;
 					document.getElementById('wr3').selected = true;
+					document.getElementById('xr2').selected = true;
 					document.getElementById('xr3').selected = true;
 				}
 				else
@@ -72,7 +74,7 @@
 					disabled = 1;
 					var i;
 					var array_id = new Array('wr', 'xr', 'wg', 'xg');
-					for(j = 0; j <= 5; j++)
+					for(j = 0; j <= 3; j++)
 					{
 						for(i = -1; i <= 2; i++)
 						{	

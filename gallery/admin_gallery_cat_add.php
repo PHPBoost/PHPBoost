@@ -36,7 +36,7 @@ $idcat = !empty($_GET['idcat']) ? numeric($_GET['idcat']) : 0;
 //Si c'est confirmé on execute
 if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 {
-	$cache->load_file('gallery');
+	$Cache->Load_file('gallery');
 	
 	$parent_category = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
 	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
@@ -48,7 +48,7 @@ if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 	$auth_edit = isset($_POST['groups_authx']) ? $_POST['groups_authx'] : ''; 
 		
 	//Génération du tableau des droits.
-	$array_auth_all = $groups->return_array_auth($auth_read, $auth_write, $auth_edit);
+	$array_auth_all = $Group->Return_array_auth($auth_read, $auth_write, $auth_edit);
 	
 	if( !empty($name) )
 	{	
@@ -56,14 +56,14 @@ if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 		{
 			//Galerie parente de la galerie cible.
 			$list_parent_cats = '';
-			$result = $sql->query_while("SELECT id
+			$result = $Sql->Query_while("SELECT id
 			FROM ".PREFIX."gallery_cats 
 			WHERE id_left <= '" . $CAT_GALLERY[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$parent_category]['id_right'] . "'", __LINE__, __FILE__);
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				$list_parent_cats .= $row['id'] . ', ';
 			}
-			$sql->close($result);
+			$Sql->Close($result);
 			$list_parent_cats = trim($list_parent_cats, ', ');
 				
 			if( empty($list_parent_cats) )
@@ -72,22 +72,22 @@ if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 				$clause_parent = "id IN (" . $list_parent_cats . ")";
 				
 			$id_left = $CAT_GALLERY[$parent_category]['id_right'];
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + 2 WHERE " . $clause_parent, __LINE__, __FILE__);
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + 2 WHERE " . $clause_parent, __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'", __LINE__, __FILE__);
 			$level = $CAT_GALLERY[$parent_category]['level'] + 1;
 			
 		}
 		else //Insertion galerie niveau 0.
 		{
-			$id_left = $sql->query("SELECT MAX(id_right) FROM ".PREFIX."gallery_cats", __LINE__, __FILE__);
+			$id_left = $Sql->Query("SELECT MAX(id_right) FROM ".PREFIX."gallery_cats", __LINE__, __FILE__);
 			$id_left++;
 			$level = 0;
 		}
 			
-		$sql->query_inject("INSERT INTO ".PREFIX."gallery_cats (id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $status . "', '" . $aprob . "', '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
+		$Sql->Query_inject("INSERT INTO ".PREFIX."gallery_cats (id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $status . "', '" . $aprob . "', '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
 
 		###### Regénération du cache #######
-		$cache->generate_module_file('gallery');
+		$Cache->Generate_module_file('gallery');
 			
 		redirect(HOST . DIR . '/gallery/admin_gallery_cat.php');	
 	}	
@@ -96,37 +96,37 @@ if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 }
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_gallery_cat_add' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_cat_add.tpl'
 	));
 			
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$galleries = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
-	$result = $sql->query_while("SELECT id, name, level
+	$result = $Sql->Query_while("SELECT id, name, level
 	FROM ".PREFIX."gallery_cats 
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{	
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$galleries .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 		
-	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $template->module_data_path('gallery'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
 		'NBR_GROUP' => count($array_groups),
 		'CATEGORIES' => $galleries,
-		'AUTH_READ' => $groups->generate_select_groups('r', array(), -1, array(0 => true, 1 => true, 2 => true)),
-		'AUTH_WRITE' => $groups->generate_select_groups('w', array(), -1, array(1 => true, 2 => true)),
-		'AUTH_EDIT' => $groups->generate_select_groups('x', array(), -1, array(2 => true)),
+		'AUTH_READ' => $Group->Generate_select_groups('r', array(), -1, array(0 => true, 1 => true, 2 => true)),
+		'AUTH_WRITE' => $Group->Generate_select_groups('w', array(), -1, array(1 => true, 2 => true)),
+		'AUTH_EDIT' => $Group->Generate_select_groups('x', array(), -1, array(2 => true)),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 
@@ -159,7 +159,7 @@ else
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 	
-	$template->pparse('admin_gallery_cat_add'); // traitement du modele	
+	$Template->Pparse('admin_gallery_cat_add'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

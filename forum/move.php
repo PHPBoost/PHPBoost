@@ -27,7 +27,7 @@
 
 require_once('../includes/begin.php'); 
 require_once('../forum/forum_begin.php');
-$speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 define('TITLE', $LANG['title_forum']);
 require_once('../includes/header.php'); 
 
@@ -42,27 +42,27 @@ $preview_topic = !empty($_POST['prw_t']) ? trim($_POST['prw_t']) : ''; //Prévisu
 
 if( !empty($id_get) ) //Déplacement du sujet.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'forum_move' => '../templates/' . $CONFIG['theme'] . '/forum/forum_move.tpl',
 		'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
 		'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
 	));
 
-	$topic = $sql->query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
-	if( !$groups->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	$topic = $Sql->Query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+	if( !$Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
-	$template->assign_block_vars('move', array(
+	$Template->Assign_block_vars('move', array(
 	));
 	
-	$cat = $sql->query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
+	$cat = $Sql->Query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
 	
 	$auth_cats = '';
 	if( is_array($CAT_FORUM) )
 	{
 		foreach($CAT_FORUM as $idcat => $key)
 		{
-			if( !$groups->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+			if( !$Member->Check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? "WHERE id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -70,20 +70,20 @@ if( !empty($id_get) ) //Déplacement du sujet.
 
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$cat_forum = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
-	$result = $sql->query_while("SELECT id, name, level
+	$result = $Sql->Query_while("SELECT id, name, level
 	FROM ".PREFIX."forum_cats 
 	" . $auth_cats . "
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{	
 		$disabled = ($row['id'] == $topic['idcat']) ? ' disabled="disabled"' : '';
 		$cat_forum .= ($row['level'] > 0) ? '<option value="' . $row['id'] . '"' . $disabled . '>' . str_repeat('--------', $row['level']) . ' ' . $row['name'] . '</option>' : '<option value="' . $row['id'] . '" disabled="disabled">-- ' . $row['name'] . '</option>';
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'SID' => SID,
-		'MODULE_DATA_PATH' => $template->module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['move_topic'],
 		'ID' => $id_get,
 		'TITLE' => $topic['title'],
@@ -99,12 +99,12 @@ if( !empty($id_get) ) //Déplacement du sujet.
 
 	//Listes les utilisateurs en lignes.	
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $sql->query_while("SELECT s.user_id, s.level, m.login 
+	$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
 	FROM ".PREFIX."sessions s 
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
@@ -128,10 +128,10 @@ if( !empty($id_get) ) //Déplacement du sujet.
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 
 	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -147,52 +147,52 @@ if( !empty($id_get) ) //Déplacement du sujet.
 		'L_ONLINE' => strtolower($LANG['online']),
 	));
 	
-	$template->pparse('forum_move');
+	$Template->Pparse('forum_move');
 }
 elseif( !empty($id_post) ) //Déplacement du topic
 {
-	$idcat = $sql->query("SELECT idcat FROM ".PREFIX."forum_topics WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
-	if( $groups->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
+	$idcat = $Sql->Query("SELECT idcat FROM ".PREFIX."forum_topics WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+	if( $Member->Check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
 	{		
 		$to = !empty($_POST['to']) ? numeric($_POST['to']) : $idcat; //Catégorie cible.
-		$level = $sql->query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
+		$level = $Sql->Query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
 		if( !empty($to) && $level > 0 && $idcat != $to )
 		{
 			//Instanciation de la class du forum.
 			include_once('../forum/forum.class.php');
-			$forumfct = new Forum;
+			$Forumfct = new Forum;
 
-			$forumfct->move_topic($id_post, $idcat, $to); //Déplacement du topic
+			$Forumfct->Move_topic($id_post, $idcat, $to); //Déplacement du topic
 
 			redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
 		}
 		else
-			$errorh->error_handler('e_incomplete', E_USER_REDIRECT); 
+			$Errorh->Error_handler('e_incomplete', E_USER_REDIRECT); 
 	}
 	else
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //Choix de la nouvelle catégorie, titre, sous-titre du topic à scinder.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'forum_move' => '../templates/' . $CONFIG['theme'] . '/forum/forum_post.tpl',
 		'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
 		'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
 	));
 
 	$idm = !empty($id_get_msg) ? $id_get_msg : $id_post_msg;
-	$msg =  $sql->query_array('forum_msg', 'idtopic', 'contents', "WHERE id = '" . $idm . "'", __LINE__, __FILE__);
-	$topic = $sql->query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$msg =  $Sql->Query_array('forum_msg', 'idtopic', 'contents', "WHERE id = '" . $idm . "'", __LINE__, __FILE__);
+	$topic = $Sql->Query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	
-	if( !$groups->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	if( !$Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-	$id_first = $sql->query("SELECT MIN(id) as id FROM ".PREFIX."forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$id_first = $Sql->Query("SELECT MIN(id) as id FROM ".PREFIX."forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	//Scindage du premier message interdite.
 	if( $id_first == $idm )
-		$errorh->error_handler('e_unable_cut_forum', E_USER_REDIRECT); 
+		$Errorh->Error_handler('e_unable_cut_forum', E_USER_REDIRECT); 
 			
-	$cat = $sql->query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
+	$cat = $Sql->Query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
 	$to = !empty($_POST['to']) ? numeric($_POST['to']) : $cat['id']; //Catégorie cible.
 	
 	$auth_cats = '';
@@ -200,7 +200,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	{	
 		foreach($CAT_FORUM as $idcat => $key)
 		{
-			if( !$groups->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+			if( !$Member->Check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? "WHERE id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -208,24 +208,24 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$cat_forum = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
-	$result = $sql->query_while("SELECT id, name, level
+	$result = $Sql->Query_while("SELECT id, name, level
 	FROM ".PREFIX."forum_cats 
 	" . $auth_cats . "
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{	
 		$cat_forum .= ($row['level'] > 0) ? '<option value="' . $row['id'] . '">' . str_repeat('--------', $row['level']) . ' ' . $row['name'] . '</option>' : '<option value="' . $row['id'] . '" disabled="disabled">-- ' . $row['name'] . '</option>';
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->assign_block_vars('cut_cat', array(
+	$Template->Assign_block_vars('cut_cat', array(
 		'CATEGORIES' => $cat_forum
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'MODULE_DATA_PATH' => $template->module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['cut_topic'],
 		'SID' => SID,			
 		'U_ACTION' => 'move.php',
@@ -254,7 +254,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		
 	if( empty($post_topic) && empty($preview_topic) )
 	{
-		$template->assign_block_vars('type', array(
+		$Template->Assign_block_vars('type', array(
 			'CHECKED_NORMAL' => 'checked="checked"',
 			'L_TYPE' => '* ' . $LANG['type'],
 			'L_DEFAULT' => $LANG['default'],
@@ -262,7 +262,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			'L_ANOUNCE' => $LANG['forum_announce']
 		));
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'TITLE' => '',
 			'DESC' => '',
 			'CONTENTS' => unparse($msg['contents']),
@@ -281,7 +281,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		$checked_postit = ($type == 1) ? 'checked="ckecked"' : '';
 		$checked_annonce = ($type == 2) ? 'checked="ckecked"' : '';
 		
-		$template->assign_block_vars('type', array(
+		$Template->Assign_block_vars('type', array(
 			'CHECKED_NORMAL' => $checked_normal,
 			'CHECKED_POSTIT' => $checked_postit,
 			'CHECKED_ANNONCE' => $checked_annonce,
@@ -291,13 +291,13 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			'L_ANOUNCE' => $LANG['forum_announce']
 		));
 
-		$template->assign_block_vars('show_msg', array(
+		$Template->Assign_block_vars('show_msg', array(
 			'L_PREVIEW' => $LANG['preview'],
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
 			'CONTENTS' => second_parse(stripslashes(parse($contents)))
 		));
 		
-		$template->assign_vars(array(	
+		$Template->Assign_vars(array(	
 			'TITLE' => stripslashes($title),
 			'DESC' => stripslashes($subtitle),
 			'CONTENTS' => stripslashes($contents),
@@ -307,17 +307,17 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		
 		//Liste des choix des sondages => 20 maxi
 		for($i = 0; $i < 20; $i++)
-			$template->assign_vars(array(
+			$Template->Assign_vars(array(
 				'ANSWER' . $i => !empty($_POST['a'.$i]) ? stripslashes($_POST['a'.$i]) : ''
 			));
 		
 		//Type de réponses du sondage.
 		if( isset($_POST['poll_type']) && $_POST['poll_type'] == '0' )
-			$template->assign_vars(array(
+			$Template->Assign_vars(array(
 				'SELECTED_SIMPLE' => 'checked="ckecked"'
 			));
 		elseif( isset($_POST['poll_type']) && $_POST['poll_type'] == '1' )				
-			$template->assign_vars(array(
+			$Template->Assign_vars(array(
 				'SELECTED_MULTIPLE' => 'checked="ckecked"'
 			));
 	}
@@ -326,12 +326,12 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	
 	//Listes les utilisateurs en lignes.
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $sql->query_while("SELECT s.user_id, s.level, m.login 
+	$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
 	FROM ".PREFIX."sessions s 
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
@@ -355,10 +355,10 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 
 	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -374,23 +374,23 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		'L_ONLINE' => strtolower($LANG['online'])
 	));	
 	
-	$template->pparse('forum_move');
+	$Template->Pparse('forum_move');
 }
 elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 {
-	$msg =  $sql->query_array('forum_msg', 'idtopic', 'user_id', 'timestamp', 'contents', "WHERE id = '" . $id_post_msg . "'", __LINE__, __FILE__);
-	$topic = $sql->query_array('forum_topics', 'idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$msg =  $Sql->Query_array('forum_msg', 'idtopic', 'user_id', 'timestamp', 'contents', "WHERE id = '" . $id_post_msg . "'", __LINE__, __FILE__);
+	$topic = $Sql->Query_array('forum_topics', 'idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	$to = !empty($_POST['to']) ? numeric($_POST['to']) : ''; //Catégorie cible.
 	
-	if( !$groups->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	if( !$Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
-	$id_first = $sql->query("SELECT MIN(id) FROM ".PREFIX."forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$id_first = $Sql->Query("SELECT MIN(id) FROM ".PREFIX."forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	//Scindage du premier message interdite.
 	if( $id_first == $id_post_msg )
-		$errorh->error_handler('e_unable_cut_forum', E_USER_REDIRECT); 
+		$Errorh->Error_handler('e_unable_cut_forum', E_USER_REDIRECT); 
 	
-	$level = $sql->query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
+	$level = $Sql->Query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
 	if( !empty($to) && $level > 0 )
 	{
 		$type = isset($_POST['type']) ? numeric($_POST['type']) : 0; 
@@ -403,9 +403,9 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 		{
 			//Instanciation de la class du forum.
 			include_once('../forum/forum.class.php');
-			$forumfct = new Forum;
+			$Forumfct = new Forum;
 
-			$last_topic_id = $forumfct->cut_topic($id_post_msg, $msg['idtopic'], $topic['idcat'], $to, $title, $subtitle, $contents, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id'], $topic['last_timestamp']); //Scindement du topic
+			$last_topic_id = $Forumfct->Cut_topic($id_post_msg, $msg['idtopic'], $topic['idcat'], $to, $title, $subtitle, $contents, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id'], $topic['last_timestamp']); //Scindement du topic
 			
 			//Ajout d'un sondage en plus du topic.
 			$question = isset($_POST['question']) ? securit($_POST['question']) : '';
@@ -422,7 +422,7 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 						$votes .= '0|';
 					}
 					
-				$forumfct->add_poll($last_topic_id, $question, $answers, 0, $votes, $poll_type); //Ajout du sondage.
+				$Forumfct->Add_poll($last_topic_id, $question, $answers, 0, $votes, $poll_type); //Ajout du sondage.
 			}
 			
 			redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
@@ -431,10 +431,10 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 			redirect(transid(HOST . SCRIPT . '?error=false_t&idm=' . $id_post_msg, '', '&') . '#errorh');
 	}
 	else
-		$errorh->error_handler('e_incomplete', E_USER_REDIRECT); 
+		$Errorh->Error_handler('e_incomplete', E_USER_REDIRECT); 
 }
 else
-	$errorh->error_handler('unknow_error', E_USER_REDIRECT); 
+	$Errorh->Error_handler('unknow_error', E_USER_REDIRECT); 
 
 include('../includes/footer.php');
 

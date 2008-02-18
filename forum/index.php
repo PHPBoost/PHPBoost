@@ -30,8 +30,8 @@ require_once('../forum/forum_begin.php');
 
 $id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 $cat_name = !empty($CAT_FORUM[$id_get]['name']) ? $CAT_FORUM[$id_get]['name'] : '';
-$speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
-$speed_bar->Add_link($cat_name, '');
+$Speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Speed_bar->Add_link($cat_name, '');
 
 if( !empty($id_get) )
 	define('TITLE', $LANG['title_forum'] . ' - ' . addslashes($CAT_FORUM[$id_get]['name']));
@@ -39,7 +39,7 @@ else
 	define('TITLE', $LANG['title_forum']);
 require_once('../includes/header.php'); 
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'forum_index' => '../templates/' . $CONFIG['theme'] . '/forum/forum_index.tpl'
 ));
 
@@ -47,13 +47,13 @@ $template->set_filenames(array(
 $display_sub_cat = ' AND c.level BETWEEN 0 AND 1';
 if( !empty($id_get) )
 {
-	$intervall = $sql->query_array("forum_cats", "id_left", "id_right", "level", "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+	$intervall = $Sql->Query_array("forum_cats", "id_left", "id_right", "level", "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	$display_sub_cat = ' AND c.id_left > \'' . $intervall['id_left'] . '\'
    AND c.id_right < \'' . $intervall['id_right'] . '\'
    AND c.level = \'' . $intervall['level'] . '\' + 1';
 }
 
-$module_data_path = $template->module_data_path('forum');
+$module_data_path = $Template->Module_data_path('forum');
 
 //Vérification des autorisations.
 $unauth_cats = '';
@@ -68,32 +68,30 @@ if( is_array($AUTH_READ_FORUM) )
 }
 
 //Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-$session->data['last_view_forum'] = isset($session->data['last_view_forum']) ? $session->data['last_view_forum'] : 0;
-$max_time = (time() - $CONFIG_FORUM['view_time']);
-$max_time_msg = ($session->data['last_view_forum'] > $max_time) ? $session->data['last_view_forum'] : $max_time;
+$max_time_msg = forum_limit_time_msg();
 
-$is_guest = ($session->data['user_id'] !== -1) ? false : true;
+$is_guest = ($Member->Get_attribute('user_id') !== -1) ? false : true;
 $total_topic = 0;
 $total_msg = 0;	
 $cat_left = 0;
 $cat_right = 0;
 //On liste les catégories et sous-catégories.
-$result = $sql->query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid, 
+$result = $Sql->Query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid, 
 t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
 FROM ".PREFIX."forum_cats c
 LEFT JOIN ".PREFIX."forum_topics t ON t.id = c.last_topic_id
-LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $session->data['user_id'] . "' AND v.idtopic = t.id
+LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $Member->Get_attribute('user_id') . "' AND v.idtopic = t.id
 LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
 WHERE c.aprob = 1 " . $display_sub_cat . " " . $unauth_cats . "
 ORDER BY c.id_left", __LINE__, __FILE__);
-while ($row = $sql->sql_fetch_assoc($result))
+while ($row = $Sql->Sql_fetch_assoc($result))
 {	
-	$template->assign_block_vars('forums_list', array(
+	$Template->Assign_block_vars('forums_list', array(
 	));	
 	
 	if( $row['level'] === '0' ) //Si c'est une catégorie
 	{
-		$template->assign_block_vars('forums_list.cats', array(
+		$Template->Assign_block_vars('forums_list.cats', array(
 			'IDCAT' => $row['cid'],
 			'NAME' => $row['name'],
 			'U_FORUM_VARS' => transid('index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . url_encode_rewrite($row['name']) . '.php')
@@ -106,7 +104,7 @@ while ($row = $sql->sql_fetch_assoc($result))
 		$subforums = '';
 		if( !empty($id_get) )
 		{
-			$template->assign_block_vars('forums_list.cats', array(
+			$Template->Assign_block_vars('forums_list.cats', array(
 				'IDCAT' => $id_get,
 				'NAME' => $CAT_FORUM[$id_get]['name'],
 				'U_FORUM_VARS' => transid('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
@@ -117,7 +115,7 @@ while ($row = $sql->sql_fetch_assoc($result))
 		}
 		else //Vérirication de l'existance de sous forums.
 		{
-			$template->assign_vars(array(
+			$Template->Assign_vars(array(
 				'C_FORUM_ROOT_CAT' => false,
 				'C_FORUM_CHILD_CAT' => true,
 				'C_END_S_CATS' => false
@@ -183,7 +181,7 @@ while ($row = $sql->sql_fetch_assoc($result))
 		
 		$total_topic += $row['nbr_topic'];
 		$total_msg += $row['nbr_msg'];
-		$template->assign_block_vars('forums_list.subcats', array(
+		$Template->Assign_block_vars('forums_list.subcats', array(
 			'ANNOUNCE' => '<img src="' . $module_data_path . '/images/' . $img_announce . '.gif" alt="" />',
 			'NAME' => $row['name'],
 			'DESC' => $row['subname'],
@@ -197,20 +195,20 @@ while ($row = $sql->sql_fetch_assoc($result))
 	
 	if( $cat_right - $cat_left == 1 || ($CAT_FORUM[$row['cid']]['id_right'] + 1) == $cat_right ) //Fermeture de la catégorie racine.
 	{
-		$template->assign_block_vars('forums_list.endcats', array(
+		$Template->Assign_block_vars('forums_list.endcats', array(
 		));	
 	}
 }
-$sql->close($result);
+$Sql->Close($result);
 
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-$result = $sql->query_while("SELECT s.user_id, s.level, m.login 
+$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
 FROM ".PREFIX."sessions s 
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $sql->sql_fetch_assoc($result) )
+while( $row = $Sql->Sql_fetch_assoc($result) )
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
@@ -234,10 +232,10 @@ while( $row = $sql->sql_fetch_assoc($result) )
 	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 }
-$sql->close($result);
+$Sql->Close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'NBR_MSG' => $total_msg,
 	'NBR_TOPIC' => $total_topic,
@@ -272,7 +270,7 @@ $template->assign_vars(array(
 	'L_ONLINE' => strtolower($LANG['online'])
 ));
 
-$template->pparse('forum_index');	
+$Template->Pparse('forum_index');	
 
 include('../includes/footer.php');
 

@@ -38,28 +38,28 @@ if( !empty($_POST['valid'])  )
 	$config_guestbook['guestbook_forbidden_tags'] = isset($_POST['guestbook_forbidden_tags']) ? serialize($_POST['guestbook_forbidden_tags']) : serialize(array());
 	$config_guestbook['guestbook_max_link'] = isset($_POST['guestbook_max_link']) ? numeric($_POST['guestbook_max_link']) : -1;
 		
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_guestbook)) . "' WHERE name = 'guestbook'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_guestbook)) . "' WHERE name = 'guestbook'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
-	$cache->generate_module_file('guestbook');
+	$Cache->Generate_module_file('guestbook');
 	
 	redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_guestbook_config' => '../templates/' . $CONFIG['theme'] . '/guestbook/admin_guestbook_config.tpl'
 	));
 	
-	$cache->load_file('guestbook');
+	$Cache->Load_file('guestbook');
 	
 	//Balises interdites => valeur 1.
 	$array_tags = array('b' => 0, 'i' => 0, 'u' => 0, 's' => 0,	'title' => 0, 'stitle' => 0, 'style' => 0, 'url' => 0, 
 	'img' => 0, 'quote' => 0, 'hide' => 0, 'list' => 0, 'color' => 0, 'bgcolor' => 0, 'font' => 0, 'size' => 0, 'align' => 0, 'float' => 0, 'sup' => 0, 
 	'sub' => 0, 'indent' => 0, 'pre' => 0, 'table' => 0, 'swf' => 1, 'movie' => 1, 'sound' => 1, 'code' => 0, 'math' => 0, 'anchor' => 0, 'acronym' => 0);
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'NBR_TAGS' => count($array_tags),
 		'MAX_LINK' => isset($CONFIG_GUESTBOOK['guestbook_max_link']) ? $CONFIG_GUESTBOOK['guestbook_max_link'] : '-1',
 		'L_REQUIRE' => $LANG['require'],	
@@ -98,7 +98,7 @@ else
 		} 
 
 		$selected = ($CONFIG_GUESTBOOK['guestbook_auth'] == $i) ? 'selected="selected"' : '' ;
-		$template->assign_block_vars('select_auth', array(
+		$Template->Assign_block_vars('select_auth', array(
 			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 		));
 	}
@@ -115,13 +115,13 @@ else
 		else
 			$selected = ($is_selected) ? 'selected="selected"' : '';		
 		
-		$template->assign_block_vars('forbidden_tags', array(
+		$Template->Assign_block_vars('forbidden_tags', array(
 			'TAGS' => '<option id="tag' . $i . '" value="' . $name . '" ' . $selected . '>[' . $name . ']</option>'
 		));
 		$i++;
 	}
 	
-	$template->pparse('admin_guestbook_config'); // traitement du modele	
+	$Template->Pparse('admin_guestbook_config'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

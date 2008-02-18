@@ -35,7 +35,7 @@ $class = ( !empty($_GET['id'])) ? numeric($_GET['id']) : 0;
 $top = ( !empty($_GET['top'])) ? securit($_GET['top']) : '' ;
 $bottom = ( !empty($_GET['bot'])) ? securit($_GET['bot']) : '' ;
 
-$cache->load_file('forum');
+$Cache->Load_file('forum');
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
@@ -45,30 +45,30 @@ if( !empty($_POST['valid']) )
 	$auth_topic_track = isset($_POST['groups_auth3']) ? $_POST['groups_auth3'] : '';
 	
 	//Génération du tableau des droits.
-	$array_auth_all = $groups->return_array_auth($auth_flood, $auth_edit_mark, $auth_topic_track, ADMIN_NOAUTH_DEFAULT);
+	$array_auth_all = $Group->Return_array_auth($auth_flood, $auth_edit_mark, $auth_topic_track, ADMIN_NOAUTH_DEFAULT);
 		
 	$CONFIG_FORUM['auth'] = serialize($array_auth_all);
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'", __LINE__, __FILE__);
 
 	###### Regénération du cache des catégories (liste déroulante dans le forum) #######
-	$cache->generate_module_file('forum');
+	$Cache->Generate_module_file('forum');
 
 	redirect(HOST . SCRIPT);
 }
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_forum_groups' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_groups.tpl'
 	));
 	
-	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = isset($CONFIG_FORUM['auth']) ? $CONFIG_FORUM['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'NBR_GROUP' => count($array_groups),
-		'FLOOD_AUTH' => $groups->generate_select_groups(1, $array_auth, 0x01),
-		'EDIT_MARK_AUTH' => $groups->generate_select_groups(2, $array_auth, 0x02),
-		'TRACK_TOPIC_AUTH' => $groups->generate_select_groups(3, $array_auth, 0x04),
+		'FLOOD_AUTH' => $Group->Generate_select_groups(1, $array_auth, 0x01),
+		'EDIT_MARK_AUTH' => $Group->Generate_select_groups(2, $array_auth, 0x02),
+		'TRACK_TOPIC_AUTH' => $Group->Generate_select_groups(3, $array_auth, 0x04),
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
 		'L_ADD_CAT' => $LANG['cat_add'],
@@ -85,7 +85,7 @@ else
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 
-	$template->pparse('admin_forum_groups'); // traitement du modele	
+	$Template->Pparse('admin_forum_groups'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

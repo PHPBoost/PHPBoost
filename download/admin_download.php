@@ -37,15 +37,15 @@ $del = !empty($_GET['delete']) ? true : false;
 
 if( !empty($id) && !$del )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_download_management' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_management.tpl'
 	 ));
 
-	$row = $sql->query_array('download', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->Query_array('download', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$idcat = $row['idcat'];
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'TITLE' => $row['title'],
 		'COMPT' => !empty($row['compt']) ? $row['compt'] : 0,
 		'USER_ID' => $row['user_id'],
@@ -82,7 +82,7 @@ if( !empty($id) && !$del )
 		'L_PREVIEW' => $LANG['preview']
 	));
 	
-	$template->assign_block_vars('download', array(
+	$Template->Assign_block_vars('download', array(
 		'TITLE' => $row['title'],
 		'IDURL' => $row['id'],
 		'CONTENTS' => unparse($row['contents']),
@@ -109,31 +109,31 @@ if( !empty($id) && !$del )
 	
 	//Catégories.		
 	$i = 0;
-	$result = $sql->query_while("SELECT id, name FROM ".PREFIX."download_cat", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	$result = $Sql->Query_while("SELECT id, name FROM ".PREFIX."download_cat", __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-		$template->assign_block_vars('download.select', array(
+		$Template->Assign_block_vars('download.select', array(
 			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
 	}	
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);	
+		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 		
 	include_once('../includes/bbcode.php');
 
-	$template->pparse('admin_download_management'); 
+	$Template->Pparse('admin_download_management'); 
 }	
 elseif( !empty($_POST['previs']) && !empty($id_post) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_download_management' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_management.tpl'
 	 ));
 	 
@@ -151,7 +151,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;	
 	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
 	
-	$cat = $sql->query("SELECT name FROM ".PREFIX."download_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->Query("SELECT name FROM ".PREFIX."download_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 		
 	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
@@ -176,7 +176,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		$end = '';
 	}
 	
-	$template->assign_block_vars('download', array(
+	$Template->Assign_block_vars('download', array(
 		'IDURL' => $id_post,
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => stripslashes($contents),
@@ -200,9 +200,9 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'VISIBLE_UNAPROB' => (($visible == 0) ? 'checked="checked"' : '')
 	));
 	
-	$pseudo = $sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+	$pseudo = $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 	//Prévisualisation
-	$template->assign_block_vars('download.preview', array(
+	$Template->Assign_block_vars('download.preview', array(
 		'USER_ID' => $user_id,
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(parse($contents))),
@@ -212,10 +212,10 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'IDCAT' => $idcat,
 		'CAT' => $cat,
 		'COMPT' => $compt,
-		'MODULE_DATA_PATH' => $template->module_data_path('download')
+		'MODULE_DATA_PATH' => $Template->Module_data_path('download')
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'LANG' => $CONFIG['lang'],
 		'ID' => $id,
 		'TITLE' => stripslashes($title),
@@ -260,23 +260,23 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	
 	//Catégories.
 	$i = 0;	
-	$result = $sql->query_while("SELECT id, name FROM ".PREFIX."download_cat", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	$result = $Sql->Query_while("SELECT id, name FROM ".PREFIX."download_cat", __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-		$template->assign_block_vars('download.select', array(
+		$Template->Assign_block_vars('download.select', array(
 			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);
+		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 		
 	include_once('../includes/bbcode.php');
 
-	$template->pparse('admin_download_management'); 
+	$Template->Pparse('admin_download_management'); 
 }	
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
@@ -336,13 +336,13 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		else
 			$timestamp = ' , timestamp = \'' . time() . '\'';
 			
-		$sql->query_inject("UPDATE ".PREFIX."download SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', size = '" . $size . "', idcat = '" . $idcat . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . ", compt = '" . $compt . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->Query_inject("UPDATE ".PREFIX."download SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', size = '" . $size . "', idcat = '" . $idcat . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . ", compt = '" . $compt . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		include_once('../includes/rss.class.php'); //Flux rss regénéré!
-		$rss = new Rss('download/rss.php');
-		$rss->cache_path('../cache/');
-		$rss->generate_file('javascript', 'rss_download');
-		$rss->generate_file('php', 'rss2_download');
+		$Rss = new Rss('download/rss.php');
+		$Rss->Cache_path('../cache/');
+		$Rss->Generate_file('javascript', 'rss_download');
+		$Rss->Generate_file('php', 'rss2_download');
 		
 		redirect(HOST . SCRIPT);
 	}
@@ -352,35 +352,35 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 elseif( $del && !empty($id) ) //Suppression du fichier.
 {
 	//On supprime dans la bdd.
-	$sql->query_inject("DELETE FROM ".PREFIX."download WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->Query_inject("DELETE FROM ".PREFIX."download WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
 	//On supprimes les éventuels commentaires associés.
-	$sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'download'", __LINE__, __FILE__);
+	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'download'", __LINE__, __FILE__);
 	
 	include_once('../includes/rss.class.php'); //Flux rss regénéré!
-	$rss = new Rss('download/rss.php');
-	$rss->cache_path('../cache/');
-	$rss->generate_file('javascript', 'rss_download');
-	$rss->generate_file('php', 'rss2_download');
+	$Rss = new Rss('download/rss.php');
+	$Rss->Cache_path('../cache/');
+	$Rss->Generate_file('javascript', 'rss_download');
+	$Rss->Generate_file('php', 'rss2_download');
 	
 	redirect(HOST . SCRIPT);
 }
 else			
 {	
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_download_management' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_management.tpl'
 	 ));
 
-	$nbr_dl = $sql->count_table('download', __LINE__, __FILE__);
+	$nbr_dl = $Sql->Count_table('download', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de fichier est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 		
-	$template->assign_vars(array(			
+	$Template->Assign_vars(array(			
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'PAGINATION' => $pagination->show_pagin('admin_download.php?p=%d', $nbr_dl, 'p', 25, 3),
+		'PAGINATION' => $Pagination->Display_pagination('admin_download.php?p=%d', $nbr_dl, 'p', 25, 3),
 		'L_DEL_ENTRY' => $LANG['del_entry'],
 		'L_DOWNLOAD_ADD' => $LANG['download_add'],
 		'L_DOWNLOAD_MANAGEMENT' => $LANG['download_management'],
@@ -396,16 +396,16 @@ else
 		'L_DATE' => $LANG['date']
 	));
 
-	$template->assign_block_vars('list', array(
+	$Template->Assign_block_vars('list', array(
 	));
 	
-	$result = $sql->query_while("SELECT d.id, d.idcat, d.title, d.timestamp, d.visible, d.start, d.end, d.size, dc.name, m.login 
+	$result = $Sql->Query_while("SELECT d.id, d.idcat, d.title, d.timestamp, d.visible, d.start, d.end, d.size, dc.name, m.login 
 	FROM ".PREFIX."download d 
 	LEFT JOIN ".PREFIX."download_cat dc ON dc.id = d.idcat
 	LEFT JOIN ".PREFIX."member m ON d.user_id = m.user_id
 	ORDER BY d.timestamp DESC 
-	" . $sql->sql_limit($pagination->first_msg(25, 'p'), 25), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( $row['visible'] == 2 )
 			$aprob = $LANG['waiting'];			
@@ -426,7 +426,7 @@ else
 		elseif( $row['end'] > 0 )
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 		
-		$template->assign_block_vars('list.download', array(
+		$Template->Assign_block_vars('list.download', array(
 			'TITLE' => $title,
 			'IDCAT' => $row['idcat'],
 			'ID' => $row['id'],
@@ -439,11 +439,11 @@ else
 		));	
 	
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_download_management'); 
+	$Template->Pparse('admin_download_management'); 
 }
 
 require_once('../includes/admin_footer.php');

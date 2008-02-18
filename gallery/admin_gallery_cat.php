@@ -30,7 +30,7 @@ $root = !empty($_GET['root']) ? numeric($_GET['root']) : 0;
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) && !empty($id) )
 {
-	$cache->load_file('gallery');
+	$Cache->Load_file('gallery');
 	
 	$to = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
 	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
@@ -42,14 +42,14 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$auth_edit = isset($_POST['groups_authx']) ? $_POST['groups_authx'] : ''; 
 
 	//Génération du tableau des droits.
-	$array_auth_all = $groups->return_array_auth($auth_read, $auth_write, $auth_edit);
+	$array_auth_all = $Group->Return_array_auth($auth_read, $auth_write, $auth_edit);
 
 	if( !empty($name) )
 	{
-		$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET name = '" . $name . "', contents = '" . $contents . "', aprob = '" . $aprob . "', status = '" . $status . "', auth = '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET name = '" . $name . "', contents = '" . $contents . "', aprob = '" . $aprob . "', status = '" . $status . "', auth = '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 		//Empêche le déplacement dans une catégorie fille.
-		$to = $sql->query("SELECT id FROM ".PREFIX."gallery_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
+		$to = $Sql->Query("SELECT id FROM ".PREFIX."gallery_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
 		 
 		//Catégorie parente changée?
 		$change_cat = !empty($to) ? !($CAT_GALLERY[$to]['id_left'] < $CAT_GALLERY[$id]['id_left'] && $CAT_GALLERY[$to]['id_right'] > $CAT_GALLERY[$id]['id_right'] && ($CAT_GALLERY[$id]['level'] - 1) == $CAT_GALLERY[$to]['level']) : $CAT_GALLERY[$id]['level'] > 0;		
@@ -60,27 +60,27 @@ if( !empty($_POST['valid']) && !empty($id) )
 		
 			//Sous galeries de la galerie à supprimer.
 			$list_cats = '';
-			$result = $sql->query_while("SELECT id
+			$result = $Sql->Query_while("SELECT id
 			FROM ".PREFIX."gallery_cats 
 			WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'
 			ORDER BY id_left", __LINE__, __FILE__);
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				$list_cats .= $row['id'] . ', ';
 			}
-			$sql->close($result);
+			$Sql->Close($result);
 			$list_cats = trim($list_cats, ', ');
 			
 			//Galeries parentes de la galerie à supprimer.
 			$list_parent_cats = '';
-			$result = $sql->query_while("SELECT id 
+			$result = $Sql->Query_while("SELECT id 
 			FROM ".PREFIX."gallery_cats 
 			WHERE id_left < '" . $CAT_GALLERY[$id]['id_left'] . "' AND id_right > '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				$list_parent_cats .= $row['id'] . ', ';
 			}
-			$sql->close($result);
+			$Sql->Close($result);
 			$list_parent_cats = trim($list_parent_cats, ', ');
 			
 			//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
@@ -91,14 +91,14 @@ if( !empty($_POST['valid']) && !empty($id) )
 			if( !empty($to) )
 			{
 				$list_parent_cats_to = '';
-				$result = $sql->query_while("SELECT id 
+				$result = $Sql->Query_while("SELECT id 
 				FROM ".PREFIX."gallery_cats 
 				WHERE id_left <= '" . $CAT_GALLERY[$to]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$to]['id_right'] . "'", __LINE__, __FILE__);
-				while( $row = $sql->sql_fetch_assoc($result) )
+				while( $row = $Sql->Sql_fetch_assoc($result) )
 				{
 					$list_parent_cats_to .= $row['id'] . ', ';
 				}
-				$sql->close($result);
+				$Sql->Close($result);
 				$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 						
 				if( empty($list_parent_cats_to) )
@@ -109,37 +109,37 @@ if( !empty($_POST['valid']) && !empty($id) )
 
 			########## Suppression ##########
 			//On supprime virtuellement (changement de signe des bornes) les enfants.
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);					
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);					
 			
 			//Récupération du nombre d'images de la galerie.
-			$nbr_pics_aprob = $sql->query("SELECT nbr_pics_aprob FROM ".PREFIX."gallery_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
-			$nbr_pics_unaprob = $sql->query("SELECT nbr_pics_unaprob FROM ".PREFIX."gallery_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$nbr_pics_aprob = $Sql->Query("SELECT nbr_pics_aprob FROM ".PREFIX."gallery_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$nbr_pics_unaprob = $Sql->Query("SELECT nbr_pics_unaprob FROM ".PREFIX."gallery_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
 			//On modifie les bornes droites des parents et le nbr d'images.
 			if( !empty($list_parent_cats) )
 			{
-				$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob - " . numeric($nbr_pics_aprob) . ", nbr_pics_unaprob = nbr_pics_unaprob - " . numeric($nbr_pics_unaprob) . " WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob - " . numeric($nbr_pics_aprob) . ", nbr_pics_unaprob = nbr_pics_unaprob - " . numeric($nbr_pics_unaprob) . " WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 			}
 			
 			//On réduit la taille de l'arbre du nombre de galeries supprimées à partir de la position de celui-ci.
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
 
 			########## Ajout ##########
 			if( !empty($to) ) //Galerie cible différent de la racine.
 			{
 				//On modifie les bornes droites et le nbr d'images des parents de la cible.
-				$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + '" . ($nbr_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob + " . numeric($nbr_pics_aprob) . ", nbr_pics_unaprob = nbr_pics_unaprob + " . numeric($nbr_pics_unaprob) . " WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + '" . ($nbr_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob + " . numeric($nbr_pics_aprob) . ", nbr_pics_unaprob = nbr_pics_unaprob + " . numeric($nbr_pics_unaprob) . " WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 
 				//On augmente la taille de l'arbre du nombre de galeries supprimées à partir de la position de la galerie cible.
 				if( $CAT_GALLERY[$id]['id_left'] > $CAT_GALLERY[$to]['id_left']  ) //Direction galerie source -> galerie cible.
 				{	
-					$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$to]['id_right'] . "'", __LINE__, __FILE__);						
+					$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$to]['id_right'] . "'", __LINE__, __FILE__);						
 					$limit = $CAT_GALLERY[$to]['id_right'];
 					$end = $limit + ($nbr_cat*2) - 1;
 				}
 				else
 				{	
-					$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2)) . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2)) . "'", __LINE__, __FILE__);
 					$limit = $CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2);
 					$end = $limit + ($nbr_cat*2) - 1;						
 				}	
@@ -150,16 +150,16 @@ if( !empty($_POST['valid']) && !empty($id) )
 				{
 					$id_left = $limit + ($CAT_GALLERY[$array_sub_cats[$z]]['id_left'] - $CAT_GALLERY[$id]['id_left']);
 					$id_right = $end - ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$array_sub_cats[$z]]['id_right']);
-					$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 					$z++;
 				}
 					
 				//On met à jour la nouvelle galerie.
-				$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET level = level - '" . (($CAT_GALLERY[$id]['level'] - $CAT_GALLERY[$to]['level']) - 1) . "' WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET level = level - '" . (($CAT_GALLERY[$id]['level'] - $CAT_GALLERY[$to]['level']) - 1) . "' WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);
 			}
 			else //Racine
 			{
-				$max_id = $sql->query("SELECT MAX(id_right) FROM ".PREFIX."gallery_cats", __LINE__, __FILE__);
+				$max_id = $Sql->Query("SELECT MAX(id_right) FROM ".PREFIX."gallery_cats", __LINE__, __FILE__);
 				//On replace les galeries supprimées virtuellement.
 				$array_sub_cats = explode(', ', $list_cats);
 				$z = 0;
@@ -169,14 +169,14 @@ if( !empty($_POST['valid']) && !empty($id) )
 				{
 					$id_left = $limit + ($CAT_GALLERY[$array_sub_cats[$z]]['id_left'] - $CAT_GALLERY[$id]['id_left']);
 					$id_right = $end - ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$array_sub_cats[$z]]['id_right']);
-					$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 					$z++;
 				}		
-				$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET level = level - '" . ($CAT_GALLERY[$id]['level'] - $CAT_GALLERY[$to]['level']) . "' WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);		
+				$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET level = level - '" . ($CAT_GALLERY[$id]['level'] - $CAT_GALLERY[$to]['level']) . "' WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);		
 			}
 		}
 		
-		$cache->generate_module_file('gallery');
+		$Cache->Generate_module_file('gallery');
 	}
 	else
 		redirect(HOST . DIR . '/gallery/admin_gallery_cat.php?id=' . $id . '&error=incomplete');
@@ -185,34 +185,34 @@ if( !empty($_POST['valid']) && !empty($id) )
 }
 elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la racine.
 {
-	$cache->load_file('gallery');
+	$Cache->Load_file('gallery');
 	
 	$auth_read = isset($_POST['groups_authr']) ? $_POST['groups_authr'] : ''; 
 	$auth_write = isset($_POST['groups_authw']) ? $_POST['groups_authw'] : ''; 
 	$auth_edit = isset($_POST['groups_authx']) ? $_POST['groups_authx'] : ''; 
 	
 	//Génération du tableau des droits.
-	$array_auth_all = $groups->return_array_auth($auth_read, $auth_write, $auth_edit);
+	$array_auth_all = $Group->Return_array_auth($auth_read, $auth_write, $auth_edit);
 	
 	$CONFIG_GALLERY['auth_root'] = serialize($array_auth_all);
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_GALLERY)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
-	$cache->generate_module_file('gallery');
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_GALLERY)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
+	$Cache->Generate_module_file('gallery');
 	
 	redirect(HOST . DIR . '/gallery/admin_gallery_cat.php');
 }
 elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 {
-	$cache->load_file('gallery');
+	$Cache->Load_file('gallery');
 	
 	$confirm_delete = false;	
 	
-	$idcat = $sql->query("SELECT id FROM ".PREFIX."gallery_cats WHERE id = '" . $del . "'", __LINE__, __FILE__);
+	$idcat = $Sql->Query("SELECT id FROM ".PREFIX."gallery_cats WHERE id = '" . $del . "'", __LINE__, __FILE__);
 	if( !empty($idcat) && isset($CAT_GALLERY[$idcat]) )
 	{
 		//On vérifie si la catégorie contient des sous galeries.
 		$nbr_sub_cat = (($CAT_GALLERY[$idcat]['id_right'] - $CAT_GALLERY[$idcat]['id_left'] - 1) / 2);
 		//On vérifie si la catégorie ne contient pas d'images.
-		$check_pics = $sql->query("SELECT COUNT(*) FROM ".PREFIX."gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
+		$check_pics = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
 		
 		if( $check_pics == 0 && $nbr_sub_cat == 0 ) //Si vide on supprime simplement, la catégorie.
 		{
@@ -222,7 +222,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 		{
 			if( empty($_POST['del_cat']) )
 			{
-				$template->set_filenames(array(
+				$Template->Set_filenames(array(
 					'admin_gallery_cat_del' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_cat_del.tpl'
 				));
 
@@ -230,19 +230,19 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 				{
 					//Listing des galeries disponibles, sauf celle qui va être supprimée.		
 					$subgallery = '<option value="0">' . $LANG['root'] . '</option>';
-					$result = $sql->query_while("SELECT id, name, level
+					$result = $Sql->Query_while("SELECT id, name, level
 					FROM ".PREFIX."gallery_cats 
 					WHERE id_left NOT BETWEEN '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND '" . $CAT_GALLERY[$idcat]['id_right'] . "'
 					ORDER BY id_left", __LINE__, __FILE__);
-					while( $row = $sql->sql_fetch_assoc($result) )
+					while( $row = $Sql->Sql_fetch_assoc($result) )
 					{	
 						$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 						$disabled = ($row['level'] > 0) ? '' : ' disabled="disabled"';
 						$subgallery .= '<option value="' . $row['id'] . '"' . $disabled . '>' . $margin . ' ' . $row['name'] . '</option>';
 					}
-					$sql->close($result);
+					$Sql->Close($result);
 					
-					$template->assign_block_vars('pics', array(
+					$Template->Assign_block_vars('pics', array(
 						'GALLERIES' => $subgallery,
 						'L_KEEP' => $LANG['keep_pics'],
 						'L_MOVE_PICS' => $LANG['move_pics_to'],
@@ -253,18 +253,18 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 				{			
 					//Listing des catégories disponibles, sauf celle qui va être supprimée.		
 					$subgallery = '<option value="0">' . $LANG['root'] . '</option>';
-					$result = $sql->query_while("SELECT id, name, level
+					$result = $Sql->Query_while("SELECT id, name, level
 					FROM ".PREFIX."gallery_cats 
 					WHERE id_left NOT BETWEEN '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND '" . $CAT_GALLERY[$idcat]['id_right'] . "'
 					ORDER BY id_left", __LINE__, __FILE__);
-					while( $row = $sql->sql_fetch_assoc($result) )
+					while( $row = $Sql->Sql_fetch_assoc($result) )
 					{	
 						$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 						$subgallery .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 					}
-					$sql->close($result);
+					$Sql->Close($result);
 					
-					$template->assign_block_vars('subgalleries', array(
+					$Template->Assign_block_vars('subgalleries', array(
 						'GALLERIES' => $subgallery,
 						'L_KEEP' => $LANG['keep_subgallery'],
 						'L_MOVE_GALLERIES' => $LANG['move_subgalleries_to'],
@@ -272,8 +272,8 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 					));
 				}
 		
-				$gallery_name = $sql->query("SELECT name FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
-				$template->assign_vars(array(
+				$gallery_name = $Sql->Query("SELECT name FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+				$Template->Assign_vars(array(
 					'IDCAT' => $idcat,
 					'GALLERY_NAME' => $gallery_name,
 					'L_REQUIRE_SUBCAT' => $LANG['require_subcat'],
@@ -288,7 +288,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 					'L_SUBMIT' => $LANG['submit'],
 				));
 				
-				$template->pparse('admin_gallery_cat_del'); //Traitement du modele	
+				$Template->Pparse('admin_gallery_cat_del'); //Traitement du modele	
 			}
 			else //Traitements.
 			{			
@@ -300,72 +300,72 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 				{
 					//Déplacement de sous galeries.
 					$f_to = !empty($_POST['f_to']) ? numeric($_POST['f_to']) : 0;
-					$f_to = $sql->query("SELECT id FROM ".PREFIX."gallery_cats WHERE id = '" . $f_to . "' AND id_left NOT BETWEEN '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+					$f_to = $Sql->Query("SELECT id FROM ".PREFIX."gallery_cats WHERE id = '" . $f_to . "' AND id_left NOT BETWEEN '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 					
 					//Déplacement d'images
 					$t_to = !empty($_POST['t_to']) ? numeric($_POST['t_to']) : 0;
-					$t_to = $sql->query("SELECT id FROM ".PREFIX."gallery_cats WHERE id = '" . $t_to . "' AND id <> '" . $idcat . "'", __LINE__, __FILE__);
+					$t_to = $Sql->Query("SELECT id FROM ".PREFIX."gallery_cats WHERE id = '" . $t_to . "' AND id <> '" . $idcat . "'", __LINE__, __FILE__);
 					
 					####Déplacement des images dans la catégorie sélectionnée.####
 					//Galeries parentes de la galerie à supprimer.
 					$list_parent_cats = '';
-					$result = $sql->query_while("SELECT id
+					$result = $Sql->Query_while("SELECT id
 					FROM ".PREFIX."gallery_cats 
 					WHERE id_left < '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right > '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-					while( $row = $sql->sql_fetch_assoc($result) )
+					while( $row = $Sql->Sql_fetch_assoc($result) )
 					{
 						$list_parent_cats .= $row['id'] . ', ';
 					}
-					$sql->close($result);
+					$Sql->Close($result);
 					$list_parent_cats = trim($list_parent_cats, ', ');
 					
 					//On va chercher la somme du nombre d'images
-					$nbr_pics_aprob = $sql->query("SELECT nbr_pics_aprob FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+					$nbr_pics_aprob = $Sql->Query("SELECT nbr_pics_aprob FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 					$nbr_pics_aprob = !empty($nbr_pics_aprob) ? $nbr_pics_aprob : 0;
-					$nbr_pics_unaprob = $sql->query("SELECT nbr_pics_unaprob FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+					$nbr_pics_unaprob = $Sql->Query("SELECT nbr_pics_unaprob FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 					$nbr_pics_unaprob = !empty($nbr_pics_unaprob) ? $nbr_pics_unaprob : 0;
 					
 					//On déplace les images dans la nouvelle galerie.
-					$sql->query_inject("UPDATE ".PREFIX."gallery SET idcat = '" . $t_to . "' WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE ".PREFIX."gallery SET idcat = '" . $t_to . "' WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
 
 					//On met à jour la nouvelle galerie.
-					$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + " . numeric($nbr_pics_aprob) . ", nbr_pics_unaprob = nbr_pics_unaprob + " . numeric($nbr_pics_unaprob) . " WHERE id = '" . $t_to . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + " . numeric($nbr_pics_aprob) . ", nbr_pics_unaprob = nbr_pics_unaprob + " . numeric($nbr_pics_unaprob) . " WHERE id = '" . $t_to . "'", __LINE__, __FILE__);
 					
 					//On modifie les bornes droites des parents et le nbr d'images.
 					if( !empty($list_parent_cats) )
 					{
-						$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - " . numeric($nbr_pics_aprob) . ", nbr_pics_unaprob = nbr_pics_unaprob - " . numeric($nbr_pics_unaprob) . " WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+						$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - " . numeric($nbr_pics_aprob) . ", nbr_pics_unaprob = nbr_pics_unaprob - " . numeric($nbr_pics_unaprob) . " WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 					}
 					
 					//On supprime l'ancienne galerie.
-					$sql->query_inject("DELETE FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("DELETE FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 					
 					//Présence de sous-galeries => déplacement de celles-ci.
 					if( $nbr_sub_cat > 0 )
 					{
 						//Sous galeries de la galerie à supprimer.
 						$list_sub_cats = '';
-						$result = $sql->query_while("SELECT id
+						$result = $Sql->Query_while("SELECT id
 						FROM ".PREFIX."gallery_cats 
 						WHERE id_left BETWEEN '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND '" . $CAT_GALLERY[$idcat]['id_right'] . "' AND id != '" . $idcat . "'
 						ORDER BY id_left", __LINE__, __FILE__);
-						while( $row = $sql->sql_fetch_assoc($result) )
+						while( $row = $Sql->Sql_fetch_assoc($result) )
 						{
 							$list_sub_cats .= $row['id'] . ', ';
 						}
-						$sql->close($result);
+						$Sql->Close($result);
 						$list_sub_cats = trim($list_sub_cats, ', ');
 						
 						//Galeries parentes de la galerie à supprimer.
 						$list_parent_cats = '';
-						$result = $sql->query_while("SELECT id
+						$result = $Sql->Query_while("SELECT id
 						FROM ".PREFIX."gallery_cats 
 						WHERE id_left < '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right > '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-						while( $row = $sql->sql_fetch_assoc($result) )
+						while( $row = $Sql->Sql_fetch_assoc($result) )
 						{
 							$list_parent_cats .= $row['id'] . ', ';
 						}
-						$sql->close($result);
+						$Sql->Close($result);
 						$list_parent_cats = trim($list_parent_cats, ', ');
 						
 						//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
@@ -376,14 +376,14 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 						if( !empty($f_to) )
 						{							
 							$list_parent_cats_to = '';
-							$result = $sql->query_while("SELECT id
+							$result = $Sql->Query_while("SELECT id
 							FROM ".PREFIX."gallery_cats 
 							WHERE id_left <= '" . $CAT_GALLERY[$f_to]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$f_to]['id_right'] . "'", __LINE__, __FILE__);
-							while( $row = $sql->sql_fetch_assoc($result) )
+							while( $row = $Sql->Sql_fetch_assoc($result) )
 							{
 								$list_parent_cats_to .= $row['id'] . ', ';
 							}
-							$sql->close($result);
+							$Sql->Close($result);
 							$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 						
 							if( empty($list_parent_cats_to) )
@@ -394,40 +394,40 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 							
 						########## Suppression ##########
 						//On supprime l'ancienne galerie.
-						$sql->query_inject("DELETE FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+						$Sql->Query_inject("DELETE FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 						
 						//On supprime virtuellement (changement de signe des bornes) les enfants.
-						$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);					
+						$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);					
 						
 						//Récupération du nombre d'images de la galerie.
-						$nbr_pics_aprob = $sql->query("SELECT nbr_pics_aprob FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
-						$nbr_pics_unaprob = $sql->query("SELECT nbr_pics_unaprob FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+						$nbr_pics_aprob = $Sql->Query("SELECT nbr_pics_aprob FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+						$nbr_pics_unaprob = $Sql->Query("SELECT nbr_pics_unaprob FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 			
 						//On modifie les bornes droites des parents et le nbr d'images.
 						if( !empty($list_parent_cats) )
 						{
-							$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob - " . numeric($nbr_pics_aprob) . ", nbr_pics_unaprob = nbr_pics_unaprob - " . numeric($nbr_pics_unaprob) . " WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+							$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob - " . numeric($nbr_pics_aprob) . ", nbr_pics_unaprob = nbr_pics_unaprob - " . numeric($nbr_pics_unaprob) . " WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 						}
 						
 						//On réduit la taille de l'arbre du nombre de galerie supprimées à partir de la position de celui-ci.
-						$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left - '" . (2 + $nbr_sub_cat*2) . "', id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+						$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left - '" . (2 + $nbr_sub_cat*2) . "', id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 					
 						########## Ajout ##########
 						if( !empty($f_to) ) //Galerie cible différent de la racine.
 						{
 							//On modifie les bornes droites et le nbr d'images des parents de la cible.
-							$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + '" . ($nbr_sub_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob + " . numeric($nbr_pics_aprob) . ", nbr_pics_unaprob = nbr_pics_unaprob + " . numeric($nbr_pics_unaprob) . " WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
+							$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + '" . ($nbr_sub_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob + " . numeric($nbr_pics_aprob) . ", nbr_pics_unaprob = nbr_pics_unaprob + " . numeric($nbr_pics_unaprob) . " WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 							
 							//On augmente la taille de l'arbre du nombre de galerie supprimées à partir de la position de la galerie cible.
 							if( $CAT_GALLERY[$idcat]['id_left'] > $CAT_GALLERY[$f_to]['id_left'] ) //Direction galerie source -> galerie cible.
 							{	
-								$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$f_to]['id_right'] . "'", __LINE__, __FILE__);						
+								$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$f_to]['id_right'] . "'", __LINE__, __FILE__);						
 								$limit = $CAT_GALLERY[$f_to]['id_right'];
 								$end = $limit + ($nbr_sub_cat*2) - 1;
 							}
 							else
 							{	
-								$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . ($CAT_GALLERY[$f_to]['id_right'] - (2 + $nbr_sub_cat*2)) . "'", __LINE__, __FILE__);
+								$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . ($CAT_GALLERY[$f_to]['id_right'] - (2 + $nbr_sub_cat*2)) . "'", __LINE__, __FILE__);
 								$limit = $CAT_GALLERY[$f_to]['id_right'] - (2 + $nbr_sub_cat*2);
 								$end = $limit + ($nbr_sub_cat*2) - 1;						
 							}
@@ -439,16 +439,16 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 							{
 								$id_left = $limit + ($CAT_GALLERY[$array_sub_cats[$z]]['id_left'] - $CAT_GALLERY[$idcat]['id_left']) - 1;
 								$id_right = $end - ($CAT_GALLERY[$idcat]['id_right'] - $CAT_GALLERY[$array_sub_cats[$z]]['id_right']) + 1;
-								$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
+								$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 								$z++;
 							}								
 
 							//On met à jour le nouveau galerie.
-							$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET level = level - '" . ($CAT_GALLERY[$idcat]['level'] - $CAT_GALLERY[$f_to]['level']) . "' WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);
+							$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET level = level - '" . ($CAT_GALLERY[$idcat]['level'] - $CAT_GALLERY[$f_to]['level']) . "' WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);
 						}
 						else //Racine
 						{
-							$max_id = $sql->query("SELECT MAX(id_right) FROM ".PREFIX."gallery_cats", __LINE__, __FILE__);
+							$max_id = $Sql->Query("SELECT MAX(id_right) FROM ".PREFIX."gallery_cats", __LINE__, __FILE__);
 							//On replace les galeries supprimées virtuellement.
 							$array_sub_cats = explode(', ', $list_sub_cats);
 							$z = 0;
@@ -458,19 +458,19 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 							{
 								$id_left = $limit + ($CAT_GALLERY[$array_sub_cats[$z]]['id_left'] - $CAT_GALLERY[$idcat]['id_left']) - 1;
 								$id_right = $end - ($CAT_GALLERY[$idcat]['id_right'] - $CAT_GALLERY[$array_sub_cats[$z]]['id_right']) + 1;
-								$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
+								$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 								$z++;
 							}		
-							$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET level = level - '" . ($CAT_GALLERY[$idcat]['level'] - $CAT_GALLERY[$f_to]['level'] + 1) . "' WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);
+							$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET level = level - '" . ($CAT_GALLERY[$idcat]['level'] - $CAT_GALLERY[$f_to]['level'] + 1) . "' WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);
 						}
 					}
 					else //On rétabli l'arbre intervallaire.
 					{
-						$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right - 2 WHERE id_left < '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right > '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-						$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left - 2, id_right = id_right - 2 WHERE id_left > '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+						$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right - 2 WHERE id_left < '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right > '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+						$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left - 2, id_right = id_right - 2 WHERE id_left > '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 					}
 					
-					$cache->generate_module_file('gallery');
+					$Cache->Generate_module_file('gallery');
 					
 					redirect(HOST . SCRIPT);
 				}	
@@ -481,32 +481,32 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 		{
 			//Galeries parentes de la galerie à supprimer.
 			$list_parent_cats = '';
-			$result = $sql->query_while("SELECT id
+			$result = $Sql->Query_while("SELECT id
 			FROM ".PREFIX."gallery_cats 
 			WHERE id_left < '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right > '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				$list_parent_cats .= $row['id'] . ', ';
 			}
-			$sql->close($result);
+			$Sql->Close($result);
 			$list_parent_cats = trim($list_parent_cats, ', ');
 			
 			$nbr_del = $CAT_GALLERY[$idcat]['id_right'] - $CAT_GALLERY[$idcat]['id_left'] + 1;
 			if( !empty($list_parent_cats) )
 			{
 				//Récupération du nombre d'images de la galerie.
-				$nbr_pics_aprob = $sql->query("SELECT nbr_pics_aprob FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
-				$nbr_pics_unaprob = $sql->query("SELECT nbr_pics_unaprob FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+				$nbr_pics_aprob = $Sql->Query("SELECT nbr_pics_aprob FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+				$nbr_pics_unaprob = $Sql->Query("SELECT nbr_pics_unaprob FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 				
-				$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right - '" . $nbr_del . "', nbr_pics_aprob = nbr_pics_aprob - '" . numeric($nbr_pics_aprob) . "', nbr_pics_unaprob = nbr_pics_unaprob - '" . numeric($nbr_pics_unaprob) . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right - '" . $nbr_del . "', nbr_pics_aprob = nbr_pics_aprob - '" . numeric($nbr_pics_aprob) . "', nbr_pics_unaprob = nbr_pics_unaprob - '" . numeric($nbr_pics_unaprob) . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 			}		
 			
-			$sql->query_inject("DELETE FROM ".PREFIX."gallery_cats WHERE id_left BETWEEN '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);	
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left - '" . $nbr_del . "', id_right = id_right - '" . $nbr_del . "' WHERE id_left > '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-			$sql->query_inject("DELETE FROM ".PREFIX."gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);	
+			$Sql->Query_inject("DELETE FROM ".PREFIX."gallery_cats WHERE id_left BETWEEN '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);	
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left - '" . $nbr_del . "', id_right = id_right - '" . $nbr_del . "' WHERE id_left > '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("DELETE FROM ".PREFIX."gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);	
 			
 			###### Regénération du cache #######
-			$cache->generate_module_file('gallery');
+			$Cache->Generate_module_file('gallery');
 			
 			redirect(HOST . DIR . '/gallery/admin_gallery_cat.php');
 		}		
@@ -516,7 +516,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 }
 elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 {
-	$cache->load_file('gallery');
+	$Cache->Load_file('gallery');
 	
 	//Catégorie existe?
 	if( !isset($CAT_GALLERY[$id]) )
@@ -524,70 +524,70 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 	
 	//Galeries parentes de la galerie à déplacer.
 	$list_parent_cats = '';
-	$result = $sql->query_while("SELECT id 
+	$result = $Sql->Query_while("SELECT id 
 	FROM ".PREFIX."gallery_cats 
 	WHERE id_left < '" . $CAT_GALLERY[$id]['id_left'] . "' AND id_right > '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$list_parent_cats .= $row['id'] . ', ';
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	$list_parent_cats = trim($list_parent_cats, ', ');
 	
 	$to = 0;
 	if( $move == 'up' )
 	{	
 		//Même catégorie
-		$switch_id_cat = $sql->query("SELECT id FROM ".PREFIX."gallery_cats
+		$switch_id_cat = $Sql->Query("SELECT id FROM ".PREFIX."gallery_cats
 		WHERE '" . $CAT_GALLERY[$id]['id_left'] . "' - id_right = 1", __LINE__, __FILE__);		
 		if( !empty($switch_id_cat) )
 		{
 			//On monte la catégorie à déplacer, on lui assigne des id négatifs pour assurer l'unicité.
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left + '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right + '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left + '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right + '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
 			//On descend la catégorie cible.
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "', id_right = id_right + '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$switch_id_cat]['id_left'] . "' AND '" . $CAT_GALLERY[$switch_id_cat]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "', id_right = id_right + '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$switch_id_cat]['id_left'] . "' AND '" . $CAT_GALLERY[$switch_id_cat]['id_right'] . "'", __LINE__, __FILE__);
 			
 			//On rétablit les valeurs absolues.
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left WHERE id_left < 0", __LINE__, __FILE__);
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = - id_right WHERE id_right < 0", __LINE__, __FILE__);	
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left WHERE id_left < 0", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = - id_right WHERE id_right < 0", __LINE__, __FILE__);	
 			
-			$cache->generate_module_file('gallery');
+			$Cache->Generate_module_file('gallery');
 		}		
 		elseif( !empty($list_parent_cats)  )
 		{
 			//Changement de catégorie.
-			$to = $sql->query("SELECT id FROM ".PREFIX."gallery_cats
+			$to = $Sql->Query("SELECT id FROM ".PREFIX."gallery_cats
 			WHERE id_left < '" . $CAT_GALLERY[$id]['id_left'] . "' AND level = '" . ($CAT_GALLERY[$id]['level'] - 1) . "' AND
 			id NOT IN (" . $list_parent_cats . ")
 			ORDER BY id_left DESC" . 
-			$sql->sql_limit(0, 1), __LINE__, __FILE__);
+			$Sql->Sql_limit(0, 1), __LINE__, __FILE__);
 		}
 	}
 	elseif( $move == 'down' )
 	{
 		//Doit-on changer de catégorie parente ou non ?
-		$switch_id_cat = $sql->query("SELECT id FROM ".PREFIX."gallery_cats
+		$switch_id_cat = $Sql->Query("SELECT id FROM ".PREFIX."gallery_cats
 		WHERE id_left - '" . $CAT_GALLERY[$id]['id_right'] . "' = 1", __LINE__, __FILE__);
 		if( !empty($switch_id_cat) )
 		{
 			//On monte la catégorie à déplacer, on lui assigne des id négatifs pour assurer l'unicité.
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left - '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right - '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left - '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right - '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
 			//On descend la catégorie cible.
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left - '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "', id_right = id_right - '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$switch_id_cat]['id_left'] . "' AND '" . $CAT_GALLERY[$switch_id_cat]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left - '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "', id_right = id_right - '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$switch_id_cat]['id_left'] . "' AND '" . $CAT_GALLERY[$switch_id_cat]['id_right'] . "'", __LINE__, __FILE__);
 			
 			//On rétablit les valeurs absolues.
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left WHERE id_left < 0", __LINE__, __FILE__);
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = - id_right WHERE id_right < 0", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left WHERE id_left < 0", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = - id_right WHERE id_right < 0", __LINE__, __FILE__);
 			
-			$cache->generate_module_file('gallery');
+			$Cache->Generate_module_file('gallery');
 		}
 		elseif( !empty($list_parent_cats)  )
 		{
 			//Changement de catégorie.
-			$to = $sql->query("SELECT id FROM ".PREFIX."gallery_cats
+			$to = $Sql->Query("SELECT id FROM ".PREFIX."gallery_cats
 			WHERE id_left > '" . $CAT_GALLERY[$id]['id_left'] . "' AND level = '" . ($CAT_GALLERY[$id]['level'] - 1) . "'
 			ORDER BY id_left" . 
-			$sql->sql_limit(0, 1), __LINE__, __FILE__);
+			$Sql->Sql_limit(0, 1), __LINE__, __FILE__);
 		}
 	}
 
@@ -598,15 +598,15 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 	
 		//Sous galeries de la galerie à déplacer.
 		$list_cats = '';
-		$result = $sql->query_while("SELECT id
+		$result = $Sql->Query_while("SELECT id
 		FROM ".PREFIX."gallery_cats 
 		WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'
 		ORDER BY id_left", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			$list_cats .= $row['id'] . ', ';
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 		$list_cats = trim($list_cats, ', ');
 	
 		if( empty($list_cats) )
@@ -615,19 +615,19 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 			$clause_cats = " id IN (" . $list_cats . ")";
 			
 		//Récupération du nombre d'images de la galerie.
-		$nbr_pics_aprob = $sql->query("SELECT nbr_pics_aprob FROM ".PREFIX."gallery_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		$nbr_pics_unaprob = $sql->query("SELECT nbr_pics_unaprob FROM ".PREFIX."gallery_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$nbr_pics_aprob = $Sql->Query("SELECT nbr_pics_aprob FROM ".PREFIX."gallery_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$nbr_pics_unaprob = $Sql->Query("SELECT nbr_pics_unaprob FROM ".PREFIX."gallery_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//Galeries parentes de la galerie cible.
 		$list_parent_cats_to = '';
-		$result = $sql->query_while("SELECT id, level 
+		$result = $Sql->Query_while("SELECT id, level 
 		FROM ".PREFIX."gallery_cats 
 		WHERE id_left <= '" . $CAT_GALLERY[$to]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$to]['id_right'] . "'", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			$list_parent_cats_to .= $row['id'] . ', ';
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 		$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 	
 		if( empty($list_parent_cats_to) )
@@ -637,30 +637,30 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 			
 		########## Suppression ##########
 		//On supprime virtuellement (changement de signe des bornes) les enfants.
-		$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left, id_right = - id_right WHERE " . $clause_cats, __LINE__, __FILE__);					
+		$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = - id_left, id_right = - id_right WHERE " . $clause_cats, __LINE__, __FILE__);					
 		//On modifie les bornes droites des parents.
 		if( !empty($list_parent_cats) )
 		{
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob - '" . $nbr_pics_aprob . "', nbr_pics_unaprob = nbr_pics_unaprob - '" . $nbr_pics_unaprob . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob - '" . $nbr_pics_aprob . "', nbr_pics_unaprob = nbr_pics_unaprob - '" . $nbr_pics_unaprob . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 		}
 		
 		//On réduit la taille de l'arbre du nombre de galeries supprimées à partir de la position de celui-ci.
-		$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
 
 		########## Ajout ##########
 		//On modifie les bornes droites des parents de la cible.
-		$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + '" . ($nbr_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob + '" . $nbr_pics_aprob . "', nbr_pics_unaprob = nbr_pics_unaprob + '" . $nbr_pics_unaprob . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + '" . ($nbr_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob + '" . $nbr_pics_aprob . "', nbr_pics_unaprob = nbr_pics_unaprob + '" . $nbr_pics_unaprob . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 
 		//On augmente la taille de l'arbre du nombre de galeries supprimées à partir de la position de la galerie cible.
 		if( $CAT_GALLERY[$id]['id_left'] > $CAT_GALLERY[$to]['id_left']  ) //Direction galerie source -> galerie cible.
 		{	
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$to]['id_right'] . "'", __LINE__, __FILE__);						
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$to]['id_right'] . "'", __LINE__, __FILE__);						
 			$limit = $CAT_GALLERY[$to]['id_right'];
 			$end = $limit + ($nbr_cat*2) - 1;
 		}
 		else
 		{	
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2)) . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2)) . "'", __LINE__, __FILE__);
 			$limit = $CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2);
 			$end = $limit + ($nbr_cat*2) - 1;						
 		}	
@@ -672,53 +672,53 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 		{
 			$id_left = $limit + ($CAT_GALLERY[$array_sub_cats[$z]]['id_left'] - $CAT_GALLERY[$id]['id_left']);
 			$id_right = $end - ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$array_sub_cats[$z]]['id_right']);
-			$sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 			$z++;
 		}
 		
-		$cache->generate_module_file('gallery');
+		$Cache->Generate_module_file('gallery');
 	}
 		
 	redirect(HOST . SCRIPT);
 }
 elseif( !empty($id) ) //Edition des catégories.
 {
-	$cache->load_file('gallery');
+	$Cache->Load_file('gallery');
 	
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_gallery_cat_edit' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_cat_edit.tpl'
 	));
 			
-	$gallery_info = $sql->query_array("gallery_cats", "id_left", "id_right", "level", "name", "contents", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$gallery_info = $Sql->Query_array("gallery_cats", "id_left", "id_right", "level", "name", "contents", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	if( !isset($CAT_GALLERY[$id]) )
 		redirect(HOST . DIR . '/gallery/admin_gallery_cat.php?error=unexist_cat');
 	
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$galeries = '<option value="0">' . $LANG['root'] . '</option>';
-	$result = $sql->query_while("SELECT id, id_left, id_right, name, level
+	$result = $Sql->Query_while("SELECT id, id_left, id_right, name, level
 	FROM ".PREFIX."gallery_cats 
 	WHERE id_left NOT BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{	
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id_left'] < $gallery_info['id_left'] && $row['id_right'] > $gallery_info['id_right'] && ($gallery_info['level'] - 1) == $row['level'] ) ? ' selected="selected"' : '';
 		$galeries .= '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = !empty($gallery_info['auth']) ? unserialize($gallery_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $template->module_data_path('gallery'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
 		'NBR_GROUP' => count($array_groups),
 		'ID' => $id,
 		'CATEGORIES' => $galeries,
@@ -728,9 +728,9 @@ elseif( !empty($id) ) //Edition des catégories.
 		'UNCHECKED_APROB' => ($gallery_info['aprob'] == 0) ? 'checked="checked"' : '',
 		'CHECKED_STATUS' => ($gallery_info['status'] == 1) ? 'checked="checked"' : '',
 		'UNCHECKED_STATUS' => ($gallery_info['status'] == 0) ? 'checked="checked"' : '',
-		'AUTH_READ' => $groups->generate_select_groups('r', $array_auth, 0x01),
-		'AUTH_WRITE' => $groups->generate_select_groups('w', $array_auth, 0x02),
-		'AUTH_EDIT' => $groups->generate_select_groups('x', $array_auth, 0x04),
+		'AUTH_READ' => $Group->Generate_select_groups('r', $array_auth, 0x01),
+		'AUTH_WRITE' => $Group->Generate_select_groups('w', $array_auth, 0x02),
+		'AUTH_EDIT' => $Group->Generate_select_groups('x', $array_auth, 0x04),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 
@@ -764,30 +764,30 @@ elseif( !empty($id) ) //Edition des catégories.
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 	
-	$template->pparse('admin_gallery_cat_edit'); // traitement du modele
+	$Template->Pparse('admin_gallery_cat_edit'); // traitement du modele
 }
 elseif( !empty($root) ) //Edition de la racine.
 {
-	$cache->load_file('gallery');
+	$Cache->Load_file('gallery');
 	
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_gallery_cat_edit2' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_cat_edit2.tpl'
 	));
 			
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
-	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = !empty($CONFIG_GALLERY['auth_root']) ? $CONFIG_GALLERY['auth_root'] : array(); //Récupération des tableaux des autorisations et des groupes.
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $template->module_data_path('gallery'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
 		'NBR_GROUP' => count($array_groups),
-		'AUTH_READ' => $groups->generate_select_groups('r', $array_auth, 0x01),
-		'AUTH_WRITE' => $groups->generate_select_groups('w', $array_auth, 0x02),
-		'AUTH_EDIT' => $groups->generate_select_groups('x', $array_auth, 0x04),
+		'AUTH_READ' => $Group->Generate_select_groups('r', $array_auth, 0x01),
+		'AUTH_WRITE' => $Group->Generate_select_groups('w', $array_auth, 0x02),
+		'AUTH_EDIT' => $Group->Generate_select_groups('x', $array_auth, 0x04),
 		'L_ROOT' => $LANG['root'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 
@@ -810,22 +810,22 @@ elseif( !empty($root) ) //Edition de la racine.
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 	
-	$template->pparse('admin_gallery_cat_edit2'); // traitement du modele
+	$Template->Pparse('admin_gallery_cat_edit2'); // traitement du modele
 }
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_gallery_cat' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_cat.tpl'
 	));
 		
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if( $get_error == 'unexist_cat' )
-		$errorh->error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $template->module_data_path('gallery'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
@@ -856,17 +856,17 @@ else
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 
-	$max_cat = $sql->query("SELECT MAX(id_left) FROM ".PREFIX."gallery_cats", __LINE__, __FILE__);
+	$max_cat = $Sql->Query("SELECT MAX(id_left) FROM ".PREFIX."gallery_cats", __LINE__, __FILE__);
 	$list_cats_js = '';
 	$array_js = '';	
 	$i = 0;
-	$result = $sql->query_while("SELECT id, id_left, id_right, level, name, contents, status
+	$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, contents, status
 	FROM ".PREFIX."gallery_cats 
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		//On assigne les variables pour le POST en précisant l'idurl.
-		$template->assign_block_vars('list', array(
+		$Template->Assign_block_vars('list', array(
 			'I' => $i,
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
@@ -885,15 +885,15 @@ else
 		$array_js .= 'array_cats[' . $row['id'] . '][\'i\'] = ' . $i . ";\n";
 		$i++;
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'LIST_CATS' => trim($list_cats_js, ', '),
 		'ARRAY_JS' => $array_js,
 		'ID_END' => ($i - 1)
 	));
 
-	$template->pparse('admin_gallery_cat'); // traitement du modele	
+	$Template->Pparse('admin_gallery_cat'); // traitement du modele	
 }
 	
 require_once('../includes/admin_footer.php');

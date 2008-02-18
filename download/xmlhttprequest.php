@@ -32,7 +32,7 @@ require_once('../includes/header_no_display.php');
 include_once('../download/download_begin.php');
 
 //Notation des images.
-if( !empty($_GET['note_pics']) && $session->check_auth($session->data, 0) ) //Utilisateur connecté.
+if( !empty($_GET['note_pics']) && $Member->Check_level(0) ) //Utilisateur connecté.
 {	
 	$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
 	$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;
@@ -44,15 +44,15 @@ if( !empty($_GET['note_pics']) && $session->check_auth($session->data, 0) ) //Ut
 		echo 0;
 	
 	//Autorisation en lecture, notation activée, et note comprise dans l'intervalle autorisé.
-	$info_download = $sql->query_array('download', 'id', 'users_note', 'nbrnote', 'note', 'auth', "WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
-	if( !empty($info_download['id']) && $note >= 0 && $note <= $CONFIG_DOWNLOAD['note_max'] && $groups->check_auth($CAT_DOWNLOAD[$idcat]['auth'], READ_CAT_DOWNLOAD) && $groups->check_auth($info_download['auth'], READ_FILE_DOWNLOAD) )
+	$info_download = $Sql->Query_array('download', 'id', 'users_note', 'nbrnote', 'note', 'auth', "WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
+	if( !empty($info_download['id']) && $note >= 0 && $note <= $CONFIG_DOWNLOAD['note_max'] && $Member->Check_auth($CAT_DOWNLOAD[$idcat]['auth'], READ_CAT_DOWNLOAD) && $Member->Check_auth($info_download['auth'], READ_FILE_DOWNLOAD) )
 	{
-		if( !in_array($session->data['user_id'], explode('/', $info_download['users_note'])) )
+		if( !in_array($Member->Get_attribute('user_id'), explode('/', $info_download['users_note'])) )
 		{			
 			$note = (($info_download['note'] * $info_download['nbrnote']) + $note)/($info_download['nbrnote'] + 1);			
-			$users_note = !empty($info_download['users_note']) ? $info_download['users_note'] . '/' . $session->data['user_id'] : $session->data['user_id']; //On ajoute l'id de l'utilisateur.
+			$users_note = !empty($info_download['users_note']) ? $info_download['users_note'] . '/' . $Member->Get_attribute('user_id') : $Member->Get_attribute('user_id'); //On ajoute l'id de l'utilisateur.
 			
-			$sql->query_inject("UPDATE ".PREFIX."download SET note = '" . $note . "', nbrnote = nbrnote + 1, users_note = '" . $users_note . "' WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."download SET note = '" . $note . "', nbrnote = nbrnote + 1, users_note = '" . $users_note . "' WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 			echo 'get_note = ' . $note . ';get_nbrnote = ' . ($info_download['nbrnote']+1) . ';';
 		}
 		else	

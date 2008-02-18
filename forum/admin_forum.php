@@ -38,7 +38,7 @@ $move = !empty($_GET['move']) ? trim($_GET['move']) : 0;
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) && !empty($id) )
 {
-	$cache->load_file('forum');
+	$Cache->Load_file('forum');
 	
 	$to = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
 	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
@@ -50,14 +50,14 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$auth_edit = isset($_POST['groups_authx']) ? $_POST['groups_authx'] : ''; 
 
 	//Génération du tableau des droits.
-	$array_auth_all = $groups->return_array_auth($auth_read, $auth_write, $auth_edit);
+	$array_auth_all = $Group->Return_array_auth($auth_read, $auth_write, $auth_edit);
 		
 	if( !empty($name) )
 	{
-		$sql->query_inject("UPDATE ".PREFIX."forum_cats SET name = '" . $name . "', subname = '" . $subname . "', status = '" . $status . "', aprob = '" . $aprob . "', auth = '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET name = '" . $name . "', subname = '" . $subname . "', status = '" . $status . "', aprob = '" . $aprob . "', auth = '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 		//Empêche le déplacement dans une catégorie fille.
-		$to = $sql->query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'", __LINE__, __FILE__);
+		$to = $Sql->Query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'", __LINE__, __FILE__);
 		 
 		//Catégorie parente changée?
 		$change_cat = !empty($to) ? !($CAT_FORUM[$to]['id_left'] < $CAT_FORUM[$id]['id_left'] && $CAT_FORUM[$to]['id_right'] > $CAT_FORUM[$id]['id_right'] && ($CAT_FORUM[$id]['level'] - 1) == $CAT_FORUM[$to]['level']) : $CAT_FORUM[$id]['level'] > 0;		
@@ -75,15 +75,15 @@ if( !empty($_POST['valid']) && !empty($id) )
 }
 elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 {
-	$cache->load_file('forum');
+	$Cache->Load_file('forum');
 	$confirm_delete = false;	
-	$idcat = $sql->query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $del . "'", __LINE__, __FILE__);
+	$idcat = $Sql->Query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $del . "'", __LINE__, __FILE__);
 	if( !empty($idcat) && isset($CAT_FORUM[$idcat]) )
 	{
 		//On vérifie si la catégorie contient des sous forums.
 		$nbr_sub_cat = (($CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$idcat]['id_left'] - 1) / 2);
 		//On vérifie si la catégorie ne contient pas de topic.
-		$check_topic = $sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_topics WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
+		$check_topic = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."forum_topics WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
 		
 		if( $check_topic == 0 && $nbr_sub_cat == 0 ) //Si vide on supprime simplement, la catégorie.
 		{
@@ -98,7 +98,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 		{
 			if( empty($_POST['del_cat']) )
 			{
-				$template->set_filenames(array(
+				$Template->Set_filenames(array(
 					'admin_forum_cat_del' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_cat_del.tpl'
 				));
 
@@ -106,19 +106,19 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 				{
 					//Listing des catégories disponibles, sauf celle qui va être supprimée.		
 					$forums = '';
-					$result = $sql->query_while("SELECT id, name, level
+					$result = $Sql->Query_while("SELECT id, name, level
 					FROM ".PREFIX."forum_cats 
 					WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
 					ORDER BY id_left", __LINE__, __FILE__);
-					while( $row = $sql->sql_fetch_assoc($result) )
+					while( $row = $Sql->Sql_fetch_assoc($result) )
 					{	
 						$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 						$disabled = ($row['level'] > 0) ? '' : ' disabled="disabled"';
 						$forums .= '<option value="' . $row['id'] . '"' . $disabled . '>' . $margin . ' ' . $row['name'] . '</option>';
 					}
-					$sql->close($result);
+					$Sql->Close($result);
 					
-					$template->assign_block_vars('topics', array(
+					$Template->Assign_block_vars('topics', array(
 						'FORUMS' => $forums,
 						'L_KEEP' => $LANG['keep_topic'],
 						'L_MOVE_TOPICS' => $LANG['move_topics_to'],
@@ -129,18 +129,18 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 				{			
 					//Listing des catégories disponibles, sauf celle qui va être supprimée.		
 					$forums = '<option value="0">' . $LANG['root'] . '</option>';
-					$result = $sql->query_while("SELECT id, name, level
+					$result = $Sql->Query_while("SELECT id, name, level
 					FROM ".PREFIX."forum_cats 
 					WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
 					ORDER BY id_left", __LINE__, __FILE__);
-					while( $row = $sql->sql_fetch_assoc($result) )
+					while( $row = $Sql->Sql_fetch_assoc($result) )
 					{	
 						$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 						$forums .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 					}
-					$sql->close($result);
+					$Sql->Close($result);
 					
-					$template->assign_block_vars('subforums', array(
+					$Template->Assign_block_vars('subforums', array(
 						'FORUMS' => $forums,
 						'L_KEEP' => $LANG['keep_subforum'],
 						'L_MOVE_FORUMS' => $LANG['move_sub_forums_to'],
@@ -148,8 +148,8 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 					));
 				}
 		
-				$forum_name = $sql->query("SELECT name FROM ".PREFIX."forum_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
-				$template->assign_vars(array(
+				$forum_name = $Sql->Query("SELECT name FROM ".PREFIX."forum_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+				$Template->Assign_vars(array(
 					'IDCAT' => $idcat,
 					'FORUM_NAME' => $forum_name,
 					'L_REQUIRE_SUBCAT' => $LANG['require_subcat'],
@@ -164,7 +164,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 					'L_SUBMIT' => $LANG['submit'],
 				));
 				
-				$template->pparse('admin_forum_cat_del'); //Traitement du modele	
+				$Template->Pparse('admin_forum_cat_del'); //Traitement du modele	
 			}
 			else //Traitements.
 			{			
@@ -184,7 +184,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 }
 elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 {
-	$cache->load_file('forum');
+	$Cache->Load_file('forum');
 	
 	//Catégorie existe?
 	if( !isset($CAT_FORUM[$id]) )
@@ -200,41 +200,41 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 }
 elseif( !empty($id) )
 {
-	$cache->load_file('forum');
+	$Cache->Load_file('forum');
 	
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_forum_cat_edit' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_cat_edit.tpl'
 	));
 			
-	$forum_info = $sql->query_array("forum_cats", "id_left", "id_right", "level", "name", "subname", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$forum_info = $Sql->Query_array("forum_cats", "id_left", "id_right", "level", "name", "subname", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$forums = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
-	$result = $sql->query_while("SELECT id, id_left, id_right, name, level
+	$result = $Sql->Query_while("SELECT id, id_left, id_right, name, level
 	FROM ".PREFIX."forum_cats 
 	WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{	
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id_left'] < $forum_info['id_left'] && $row['id_right'] > $forum_info['id_right'] && ($forum_info['level'] - 1) == $row['level'] ) ? ' selected="selected"' : '';
 		$forums .= '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
 	$is_root = ($forum_info['level'] > 0);
 
-	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = !empty($forum_info['auth']) ? unserialize($forum_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $template->module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 		'NBR_GROUP' => count($array_groups),
 		'ID' => $id,
 		'CATEGORIES' => $forums,
@@ -244,9 +244,9 @@ elseif( !empty($id) )
 		'UNCHECKED_APROB' => ($forum_info['aprob'] == 0) ? 'checked="checked"' : '',
 		'CHECKED_STATUS' => ($forum_info['status'] == 1) ? 'checked="checked"' : '',
 		'UNCHECKED_STATUS' => ($forum_info['status'] == 0) ? 'checked="checked"' : '',
-		'AUTH_READ' => $groups->generate_select_groups('r', $array_auth, 0x01),
-		'AUTH_WRITE' => $is_root ? $groups->generate_select_groups('w', $array_auth, 0x02) : $groups->generate_select_groups('w', $array_auth, 0x02, array(), GROUP_DISABLE_SELECT),
-		'AUTH_EDIT' => $is_root ? $groups->generate_select_groups('x', $array_auth, 0x04) : $groups->generate_select_groups('x', $array_auth, 0x04, array(), GROUP_DISABLE_SELECT),
+		'AUTH_READ' => $Group->Generate_select_groups('r', $array_auth, 0x01),
+		'AUTH_WRITE' => $is_root ? $Group->Generate_select_groups('w', $array_auth, 0x02) : $Group->Generate_select_groups('w', $array_auth, 0x02, array(), GROUP_DISABLE_SELECT),
+		'AUTH_EDIT' => $is_root ? $Group->Generate_select_groups('x', $array_auth, 0x04) : $Group->Generate_select_groups('x', $array_auth, 0x04, array(), GROUP_DISABLE_SELECT),
 		'DISABLED' => $is_root ? '0' : '1',
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
@@ -281,19 +281,19 @@ elseif( !empty($id) )
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 	
-	$template->pparse('admin_forum_cat_edit'); // traitement du modele
+	$Template->Pparse('admin_forum_cat_edit'); // traitement du modele
 }
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 	'admin_forum_cat' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_cat.tpl'
 	));
 		
-	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $template->module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 		'NBR_GROUP' => count($array_groups),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -324,17 +324,17 @@ else
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 
-	$max_cat = $sql->query("SELECT MAX(id_left) FROM ".PREFIX."forum_cats", __LINE__, __FILE__);
+	$max_cat = $Sql->Query("SELECT MAX(id_left) FROM ".PREFIX."forum_cats", __LINE__, __FILE__);
 	$list_cats_js = '';
 	$array_js = '';	
 	$i = 0;
-	$result = $sql->query_while("SELECT id, id_left, id_right, level, name, subname, status
+	$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, subname, status
 	FROM ".PREFIX."forum_cats 
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		//On assigne les variables pour le POST en précisant l'idurl.
-		$template->assign_block_vars('list', array(
+		$Template->Assign_block_vars('list', array(
 			'I' => $i,
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
@@ -353,15 +353,15 @@ else
 		$array_js .= 'array_cats[' . $row['id'] . '][\'i\'] = ' . $i . ";\n";
 		$i++;
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'LIST_CATS' => trim($list_cats_js, ', '),
 		'ARRAY_JS' => $array_js,
 		'ID_END' => ($i - 1)
 	));
 
-	$template->pparse('admin_forum_cat'); // traitement du modele	
+	$Template->Pparse('admin_forum_cat'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

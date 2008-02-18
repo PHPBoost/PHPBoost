@@ -34,7 +34,7 @@ require_once('../includes/admin_header.php');
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {
-	$cache->load_file('gallery');
+	$Cache->Load_file('gallery');
 	
 	$config_gallery = array();
 	$config_gallery['width'] = isset($_POST['width']) ? numeric($_POST['width']) : '150';  
@@ -65,34 +65,34 @@ if( !empty($_POST['valid']) )
 	$config_gallery['speed_mini_pics'] = !empty($_POST['speed_mini_pics']) ? numeric($_POST['speed_mini_pics']) : 6;
 	$config_gallery['auth_root'] = !empty($CONFIG_GALLERY['auth_root']) ? stripslashes(serialize($CONFIG_GALLERY['auth_root'])) : serialize(array());
 
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_gallery)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_gallery)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
 	
 	###### Régénération du cache de la gallery #######
-	$cache->generate_module_file('gallery');
+	$Cache->Generate_module_file('gallery');
 	
 	redirect(HOST . SCRIPT);	
 }
 elseif( !empty($_POST['gallery_cache']) ) //Suppression des miniatures.
 {
 	include_once('../gallery/gallery.class.php'); 
-	$gallery = new Gallery;
+	$Gallery = new Gallery;
 	
-	$cache->load_file('gallery');
+	$Cache->Load_file('gallery');
 	
-	$gallery->clear_cache(); //Recréaction miniatures, et inscrustation du logo sur image.
-	$gallery->count_cat_pics(); //Recompte le nombre d'images de chaque catégories
+	$Gallery->Clear_cache(); //Recréaction miniatures, et inscrustation du logo sur image.
+	$Gallery->Count_cat_pics(); //Recompte le nombre d'images de chaque catégories
 	
-	$cache->generate_module_file('gallery');
+	$Cache->Generate_module_file('gallery');
 	
 	redirect(HOST . DIR . '/gallery/admin_gallery_config.php'); 
 }
 else 
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_gallery_config' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_config.tpl'
 	));
 	
-	$cache->load_file('gallery');
+	$Cache->Load_file('gallery');
 
 	$CONFIG_GALLERY['activ_pop'] = !isset($CONFIG_GALLERY['activ_pop']) ? 0 : $CONFIG_GALLERY['activ_pop'];
 	$CONFIG_GALLERY['activ_title'] = !isset($CONFIG_GALLERY['activ_title']) ? 1 : $CONFIG_GALLERY['activ_title'];
@@ -126,7 +126,7 @@ else
 		$z--;
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'WIDTH' => isset($CONFIG_GALLERY['width']) ? $CONFIG_GALLERY['width'] : '150',
 		'HEIGHT' => isset($CONFIG_GALLERY['height']) ? $CONFIG_GALLERY['height'] : '150',
 		'WIDTH_MAX' => isset($CONFIG_GALLERY['width_max']) ? $CONFIG_GALLERY['width_max'] : '640',
@@ -248,7 +248,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 		
-	$template->pparse('admin_gallery_config'); 	
+	$Template->Pparse('admin_gallery_config'); 	
 }
 
 require_once('../includes/admin_footer.php');

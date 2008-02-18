@@ -35,7 +35,7 @@ $get_id = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 $id_post = !empty($_POST['idc']) ? numeric($_POST['idc']) : '';  
 $update_cached = !empty($_GET['upd']) ? true : false;	
 
-$cache->load_file('forum');
+$Cache->Load_file('forum');
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
@@ -57,10 +57,10 @@ if( !empty($_POST['valid']) )
 		
 	if( !empty($CONFIG_FORUM['forum_name']) && !empty($CONFIG_FORUM['pagination_topic']) && !empty($CONFIG_FORUM['pagination_msg']) && !empty($CONFIG_FORUM['view_time']) )
 	{
-		$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'", __LINE__, __FILE__);
 			
 		###### Régénération du cache du forum ###### 
-		$cache->generate_module_file('forum');
+		$Cache->Generate_module_file('forum');
 				
 		redirect(HOST . SCRIPT);	
 	}
@@ -69,42 +69,42 @@ if( !empty($_POST['valid']) )
 }
 elseif( $update_cached ) //Mise à jour des données stockées en cache dans la bdd.
 {
-	$result = $sql->query_while("SELECT id, id_left, id_right
+	$result = $Sql->Query_while("SELECT id, id_left, id_right
 	FROM ".PREFIX."forum_cats
 	WHERE level > 0", __LINE__, __FILE__);
-	while($row = $sql->sql_fetch_assoc($result) )
+	while($row = $Sql->Sql_fetch_assoc($result) )
 	{	
 		$cat_list = $row['id'];
 		if( ($row['id_right'] - $row['id_left']) > 1 )
 		{
-			$result2 = $sql->query_while("SELECT id
+			$result2 = $Sql->Query_while("SELECT id
 			FROM ".PREFIX."forum_cats
 			WHERE id_left >= '" . $row['id_left'] . "' AND id_right <= '" . $row['id_right'] ."'", __LINE__, __FILE__);
-			while($row2 = $sql->sql_fetch_assoc($result2) )
+			while($row2 = $Sql->Sql_fetch_assoc($result2) )
 			{
 				$cat_list .=  ', ' . $row2['id'];
 			}
 		}
 		
-		$info_cat = $sql->query_array("forum_topics", "COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg", "WHERE idcat IN (" . $cat_list . ")", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."forum_cats SET nbr_topic = '" . $info_cat['nbr_topic'] . "', nbr_msg = '" . $info_cat['nbr_msg'] . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$info_cat = $Sql->Query_array("forum_topics", "COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg", "WHERE idcat IN (" . $cat_list . ")", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET nbr_topic = '" . $info_cat['nbr_topic'] . "', nbr_msg = '" . $info_cat['nbr_msg'] . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	redirect(HOST . SCRIPT);	
 }
 else	
 {	
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_forum_config' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_config.tpl'
 	));
 
-	$cache->load_file('forum');
+	$Cache->Load_file('forum');
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$CONFIG_FORUM['edit_mark'] = isset($CONFIG_FORUM['edit_mark']) ? $CONFIG_FORUM['edit_mark'] : 0;
 	$CONFIG_FORUM['no_left_column'] = isset($CONFIG_FORUM['no_left_column']) ? $CONFIG_FORUM['no_left_column'] : 0;
@@ -112,9 +112,9 @@ else
 	$CONFIG_FORUM['activ_display_msg'] = isset($CONFIG_FORUM['activ_display_msg']) ? $CONFIG_FORUM['activ_display_msg'] : 0;
 	$CONFIG_FORUM['icon_display_msg'] = isset($CONFIG_FORUM['icon_display_msg']) ? $CONFIG_FORUM['icon_display_msg'] : 1;
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $template->module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 		'FORUM_NAME' => !empty($CONFIG_FORUM['forum_name']) ? $CONFIG_FORUM['forum_name'] : '',
 		'PAGINATION_TOPIC' => !empty($CONFIG_FORUM['pagination_topic']) ? $CONFIG_FORUM['pagination_topic'] : '20',
 		'PAGINATION_MSG' => !empty($CONFIG_FORUM['pagination_msg']) ? $CONFIG_FORUM['pagination_msg'] : '15',
@@ -173,7 +173,7 @@ else
 		'L_UPDATE_DATA_CACHED' => $LANG['update_data_cached']
 	));
 
-	$template->pparse('admin_forum_config');
+	$Template->Pparse('admin_forum_config');
 }
 
 require_once('../includes/admin_footer.php');

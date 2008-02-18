@@ -28,7 +28,7 @@
 if( defined('PHP_BOOST') !== true) exit;
 
 //Suppression des marqueurs de vue du forum trop anciens.
-$cache->load_file('forum'); //Requête des configuration générales (forum), $CONFIG_FORUM variable globale.
-$sql->query_inject("DELETE FROM ".PREFIX."forum_view WHERE timestamp < '" . (time() - $CONFIG_FORUM['view_time']) . "'", __LINE__, __FILE__);
+$Cache->Load_file('forum'); //Requête des configuration générales (forum), $CONFIG_FORUM variable globale.
+$Sql->Query_inject("DELETE FROM ".PREFIX."forum_view WHERE timestamp < '" . (time() - $CONFIG_FORUM['view_time']) . "'", __LINE__, __FILE__);
 
 ?>

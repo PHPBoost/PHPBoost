@@ -28,11 +28,11 @@
 if( defined('PHP_BOOST') !== true)	
 	exit;
 	
-if( !$groups->check_auth($SECURE_MODULE['gallery'], ACCESS_MODULE) )
-	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+if( !$Member->Check_auth($SECURE_MODULE['gallery'], ACCESS_MODULE) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 load_module_lang('gallery', $CONFIG['lang']); //Chargement de la langue du module.
-$cache->load_file('gallery');
+$Cache->Load_file('gallery');
 
 define('READ_CAT_GALLERY', 0x01);
 define('WRITE_CAT_GALLERY', 0x02);
@@ -42,15 +42,15 @@ $g_idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 if( !empty($g_idcat) )
 {
 	//Création de l'arborescence des catégories.
-	$speed_bar->Add_link($LANG['title_gallery'], transid('gallery.php'));
+	$Speed_bar->Add_link($LANG['title_gallery'], transid('gallery.php'));
 	foreach($CAT_GALLERY as $id => $array_info_cat)
 	{
 		if( $CAT_GALLERY[$g_idcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_GALLERY[$g_idcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_GALLERY[$g_idcat]['level'] )
-			$speed_bar->Add_link($array_info_cat['name'], 'gallery' . transid('.php?cat=' . $id, '-' . $id . '.php'));
+			$Speed_bar->Add_link($array_info_cat['name'], 'gallery' . transid('.php?cat=' . $id, '-' . $id . '.php'));
 	}
 }
 else
-	$speed_bar->Add_link($LANG['title_gallery'], '');
+	$Speed_bar->Add_link($LANG['title_gallery'], '');
 	
 $title_gallery = !empty($CAT_GALLERY[$g_idcat]['name']) ? addslashes($CAT_GALLERY[$g_idcat]['name']) : '';
 define('TITLE', (!empty($title_gallery) ? $LANG['title_gallery'] . ' - ' . $title_gallery : $LANG['title_gallery']));

@@ -1,3 +1,7 @@
+		<span id="go_top"></span>	
+		
+		# INCLUDE forum_top #
+		
 		<script type="text/javascript">
 		<!--
 		function check_form_msg(){
@@ -94,10 +98,6 @@
 		-->
 		</script>
 
-		<span id="go_top"></span>	
-
-		# INCLUDE forum_top #
-
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
@@ -146,10 +146,10 @@
 							</td>
 						</tr>
 						# END poll_result #										
-					</table>
+					</table>					
+					<br />
 					
 					# IF C_POLL_QUESTION #
-					<br />
 					<fieldset class="fieldset_submit">
 						<legend>{L_VOTE}</legend>
 						<input class="submit" name="valid_forum_poll" type="submit" value="{L_VOTE}" /><br />

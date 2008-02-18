@@ -55,9 +55,9 @@ if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
 if( !empty($_GET['restart']) )
 	redirect(HOST . add_lang(FILE, true));
 
-$template = new Templates; //!\\Initialisation des templates//!\\
+$Template = new Templates; //!\\Initialisation des templates//!\\
 
-$template->set_filenames(array('install' => '../install/templates/install.tpl'));
+$Template->Set_filenames(array('install' => '../install/templates/install.tpl'));
 
 //Fonction pour gérer la langue
 function add_lang($url, $header_location = false)
@@ -85,12 +85,12 @@ if( !empty($_POST['new_language']) && is_file('lang/' . $_POST['new_language'] .
 //Préambule
 if( $step == 1 )
 {
-	$template->assign_block_vars('intro', array());
-	$template->assign_vars(array(
+	$Template->Assign_block_vars('intro', array());
+	$Template->Assign_vars(array(
 		'L_INTRO_EXPLAIN' => $LANG['intro_explain'],
 		'L_NEXT_STEP' => add_lang('install.php?step=2')
 	));
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_START_INSTALL' => $LANG['start_install'],
 	));
 }
@@ -103,8 +103,8 @@ elseif( $step == 2 )
 	if( $submit && $license_agreement )
 		redirect(HOST . FILE . add_lang('?step=3', true));
 		
-	$template->assign_block_vars('license', array());
-	$template->assign_vars(array(
+	$Template->Assign_block_vars('license', array());
+	$Template->Assign_vars(array(
 		'TARGET' => add_lang('install.php?step=2'),
 		'U_PREVIOUS_PAGE' => add_lang('install.php?step=1'),
 		'L_REQUIRE_LICENSE_AGREEMENT' => ($submit && !$license_agreement) ? '<div class="warning">' . $LANG['require_license_agreement'] . '</div>' : $LANG['require_license_agreement'],
@@ -128,7 +128,7 @@ elseif( $step == 3 )
 	else
 		$check_rewrite = '<div class="unspecified_block">' . $LANG['unknown'] . '</div>';
 	
-	$template->assign_block_vars('config_server', array(
+	$Template->Assign_block_vars('config_server', array(
 		'PHP_VERSION' => phpversion() >= '4.1.0' ? '<div class="success_block">' . $LANG['yes'] . '</div>' : '<div class="failure_block">' . $LANG['no'] . '</div>',
 		'GD' => ( @extension_loaded('gd') ) ? '<div class="success_block">' . $LANG['yes'] . '</div>' : '<div class="failure_block">' . $LANG['no'] . '</div>',
 		'URL_REWRITING' => $check_rewrite
@@ -154,14 +154,14 @@ elseif( $step == 3 )
 		$found = ($is_dir === true) ? '<div class="success_block">' . $LANG['existing'] . '</div>' : '<div class="failure_block">' . $LANG['unexisting'] . '</div>';
 		$writable = ($is_writable === true) ? '<div class="success_block">' . $LANG['writable'] . '</div>' : '<div class="failure_block">' . $LANG['unwritable'] . '</div>';
 			
-		$template->assign_block_vars('config_server.chmod', array(
+		$Template->Assign_block_vars('config_server.chmod', array(
 			'TITLE'	=> str_replace('../' , '', $dir),
 			'FOUND' => $found,
 			'WRITABLE' => $writable			
 		));
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_CONFIG_SERVER_EXPLAIN' => $LANG['config_server_explain'],
 		'L_PHP_VERSION' => $LANG['php_version'],
 		'L_CHECK_PHP_VERSION' => $LANG['check_php_version'],
@@ -214,20 +214,20 @@ elseif( $step == 4 )
 				return '<div class="error">' . $LANG['db_error_dbms'] . '</div>';
 				
 			require_once('../includes/errors.class.php');
-			$errorh = new Errors;
-			$sql = new Sql(false);
+			$Errorh = new Errors;
+			$Sql = new Sql(false);
 			
 			//Connexion
-			$result = @$sql->sql_connect($host, $login, $password);
+			$result = @$Sql->Sql_connect($host, $login, $password);
 			if( !$result )
 				return '<div class="error">' . $LANG['db_error_connexion'] . '</div>';
 				
 			//Sélection de la base de données
-			if( !@$sql->sql_select_db($database, $result) )
+			if( !@$Sql->Sql_select_db($database, $result) )
 				return '<div class="warning">' . $LANG['db_error_selection'] . '</div>';
 				
 			//Déconnexion
-			$sql->sql_close();
+			$Sql->Sql_close();
 			return '';
 		}
 		$error = test_db_config();
@@ -235,12 +235,12 @@ elseif( $step == 4 )
 		if( empty($error) )
 		{
 			require_once('../includes/errors.class.php');
-			$errorh = new Errors;
-			$sql = new Sql(false);			
+			$Errorh = new Errors;
+			$Sql = new Sql(false);			
 			//Connexion
-			$result = $sql->sql_connect($host, $login, $password);
+			$result = $Sql->Sql_connect($host, $login, $password);
 			//Sélection de la base de données
-			$sql->sql_select_db($database, $result);
+			$Sql->Sql_select_db($database, $result);
 						
 			//Création du fichier de configuration.
 			$file_path = '../includes/auth/config.php';
@@ -264,13 +264,13 @@ else
 ?>');
 			@fclose($file);
 			//On crée la structure de la base de données et on y insère la configuration de base
-			$sql->sql_parse('db/' . $dbms . '.sql', $tableprefix);
-			$sql->close();
+			$Sql->Sql_parse('db/' . $dbms . '.sql', $tableprefix);
+			$Sql->Close();
 			redirect(HOST . FILE . add_lang('?step=5', true));
 		}
 	}
 	
-	$template->assign_block_vars('db', array(
+	$Template->Assign_block_vars('db', array(
 		'DISPLAY_RESULT' => !empty($error) ? 'block' : 'none',
 		'ERROR' => !empty($error) ? $error : '',
 		'PROGRESS' => !empty($error) ? '100' : '0',
@@ -283,7 +283,7 @@ else
 	
 	foreach( $dbms as $name )
 	{	
-		$template->assign_block_vars('db.dbms', array(
+		$Template->Assign_block_vars('db.dbms', array(
 			'L_DBMS' => $name,
 			'DBMS' => strtolower($name),
 			'SELECTED' => $name == $default_dbms ? 'selected="selected"' : '',
@@ -291,7 +291,7 @@ else
 		));		
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'HOST_VALUE' => !empty($error) ? $host  : 'localhost',
 		'LOGIN_VALUE' => !empty($error) ? $login  : '',
 		'PASSWORD_VALUE' => !empty($error) ? $password  : '',
@@ -380,33 +380,33 @@ elseif( $step == 5 )
 		
 		$config_string = serialize($CONFIG);
 		require_once('../includes/errors.class.php');
-		$errorh = new Errors;
+		$Errorh = new Errors;
 		include_once('../includes/auth/config.php');
 		define('PREFIX', $table_prefix);
 		include_once('../includes/db/' . $dbtype . '.class.php');
-		$sql = new Sql;
+		$Sql = new Sql;
 		//On insère dans la base de données
-		$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes($config_string) . "' WHERE name = 'config'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes($config_string) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		
 		//On insère la langue dans la bdd.
-		$check_lang = $sql->query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . securit($CONFIG['lang']) . "'", __LINE__, __FILE__);
+		$check_lang = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . securit($CONFIG['lang']) . "'", __LINE__, __FILE__);
 		if( $check_lang == 0 )	
-			$sql->query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES ('" . securit($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES ('" . securit($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
 		
 		//On insère le thème dans la bdd.
-		$check_theme = $sql->query("SELECT COUNT(*) FROM ".PREFIX."themes WHERE theme = '" . securit($CONFIG['theme']) . "'", __LINE__, __FILE__);
+		$check_theme = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."themes WHERE theme = '" . securit($CONFIG['theme']) . "'", __LINE__, __FILE__);
 		if( $check_theme == 0 )	
-			$sql->query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . securit($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . securit($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
 		
 		//On génère le cache
 		include('../includes/cache.class.php');
-		$cache = new Cache;
-		$cache->generate_all_files();
+		$Cache = new Cache;
+		$Cache->Generate_all_files();
 		redirect(HOST . FILE . add_lang('?step=6', true));
 	}
 		
 	//Interface configuration du site
-	$template->assign_block_vars('site_config', array(
+	$Template->Assign_block_vars('site_config', array(
 		'SITE_URL' => $server_name,
 		'SITE_PATH' => $server_path
 	));
@@ -436,7 +436,7 @@ elseif( $step == 5 )
 						$selected = true;
 						$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
 					}					
-					$template->assign_block_vars('site_config.lang', array(
+					$Template->Assign_block_vars('site_config.lang', array(
 						'LANG' => $file,
 						'LANG_NAME' => $lang_info['name'],
 						'SELECTED' => ($selected) ? 'selected="selected"' : ''
@@ -461,7 +461,7 @@ elseif( $step == 5 )
 				$theme_info = @parse_ini_file('../templates/' . $file . '/config/' . $lang . '/config.ini');
 				if( $theme_info )
 				{
-					$template->assign_block_vars('site_config.theme', array(
+					$Template->Assign_block_vars('site_config.theme', array(
 						'THEME' => $file,
 						'THEME_NAME' => $theme_info['name'],
 						'SELECTED' => ($file == DEFAULT_THEME) ? 'selected="selected"' : ''
@@ -472,7 +472,7 @@ elseif( $step == 5 )
 		closedir($dh); //On ferme le dossier
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'JS_LANG_IDENTIFIER' => $array_identifier,
 		'IMG_LANG_IDENTIFIER' => $lang_identifier,
 		'IMG_THEME' => DEFAULT_THEME,
@@ -501,7 +501,7 @@ elseif( $step == 5 )
 }
 elseif( $step == 6 )
 {
-	$template->assign_block_vars('admin', array());
+	$Template->Assign_block_vars('admin', array());
 	//Validation de l'étape
 	if( !empty($_POST['submit']) )
 	{
@@ -537,45 +537,45 @@ elseif( $step == 6 )
 		if( empty($error) )
 		{
 			require_once('../includes/errors.class.php');
-			$errorh = new Errors;
+			$Errorh = new Errors;
 			require_once('../includes/auth/config.php');
 			define('PREFIX', $table_prefix);
 			include_once('../includes/db/' . $dbtype . '.class.php');
-			$sql = new Sql;
+			$Sql = new Sql;
 			//On crée le code de déverrouillage
 			include_once('../includes/cache.class.php');
-			$cache = new Cache;
-			$cache->load_file('config');
+			$Cache = new Cache;
+			$Cache->Load_file('config');
 			
 			//On enregistre le membre
-			$sql->query_inject("UPDATE ".PREFIX."member SET login = '" . securit($login) . "', password = '" . md5($password) . "', level = '2', user_lang = '" . $user_lang . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . securit($login) . "', password = '" . md5($password) . "', level = '2', user_lang = '" . $user_lang . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
 			
 			$unlock_admin = substr(md5(uniqid(mt_rand(), true)), 0, 12); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;
 			$CONFIG['unlock_admin'] = md5($unlock_admin);
 			$CONFIG['mail'] = $user_mail;
-			$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-			$cache->generate_file('config');
+			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+			$Cache->Generate_file('config');
 			//On envoie un mail à l'administrateur
 			$LANG['admin'] = '';
 			include_once('../includes/mail.class.php');
-			$mail = new Mail();
-			$mail->send_mail($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail']);
+			$Mail = new Mail();
+			$Mail->Send_mail($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail']);
 			
 			//On connecte directement l'administrateur si il l'a demandé
 			if( $create_session )
 			{
 				include('../includes/constant.php');
 				include('../includes/sessions.class.php');
-				$session = new Sessions;
-				$sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-				$session->session_begin(1, md5($password), 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); //On lance la session.
+				$Session = new Sessions;
+				$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+				$Session->Session_begin(1, md5($password), 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); //On lance la session.
 			}
 			
 			//On redirige vers l'étape suivante
 			redirect(HOST . FILE . add_lang('?step=7', true));
 		}
 		else
-			$template->assign_block_vars('admin.error', array(
+			$Template->Assign_block_vars('admin.error', array(
 				'ERROR' => '<div class="warning">' . $error . '</div>'
 			));
 	}
@@ -605,7 +605,7 @@ elseif( $step == 6 )
 						$selected = true;
 						$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
 					}					
-					$template->assign_block_vars('admin.lang', array(
+					$Template->Assign_block_vars('admin.lang', array(
 						'LANG' => $file,
 						'LANG_NAME' => $lang_info['name'],
 						'SELECTED' => ($selected) ? 'selected="selected"' : ''
@@ -616,7 +616,7 @@ elseif( $step == 6 )
 		closedir($dh); //On ferme le dossier
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'JS_LANG_IDENTIFIER' => $array_identifier,
 		'IMG_LANG_IDENTIFIER' => $lang_identifier,
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=5'),
@@ -674,15 +674,15 @@ elseif( $step == 7 )
 		$activ_member = !empty($_POST['activ_member']) ? true : false;
 		
 		require_once('../includes/errors.class.php');
-		$errorh = new Errors;
+		$Errorh = new Errors;
 		include_once('../includes/auth/config.php');
 		define('PREFIX', $table_prefix);
 		define('DBTYPE', $dbtype);
 		include_once('../includes/db/' . $dbtype . '.class.php');
-		$sql = new Sql;
+		$Sql = new Sql;
 		//On génère le cache
 		include('../includes/cache.class.php');
-		$cache = new Cache;
+		$Cache = new Cache;
 		
 		$link_installed = false; //Module de lien installé?
 		
@@ -724,16 +724,16 @@ elseif( $step == 7 )
 						
 					//Parsage du fichier sql si le module utilise la bdd
 					if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql') )
-						$sql->sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
+						$Sql->Sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
 
 					//Insertion du modules dans la bdd => module installé.
-					$sql->query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . securit($module_name) . "', '" . securit($info_module['version']) . "', '" . addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1))) . "', '1')", __LINE__, __FILE__);
+					$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . securit($module_name) . "', '" . securit($info_module['version']) . "', '" . addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1))) . "', '1')", __LINE__, __FILE__);
 					
 					if( $module_name == 'links' )
 						$link_installed = true;
 				}
 			}
-			$cache->load_file('config');
+			$Cache->Load_file('config');
 			
 			//Page de démarrage
 			if( $preselections_configs[$preselection][0] != 'member' && $module_infos = @parse_ini_file('../' . $preselections_configs[$preselection][0] . '/lang/' . $lang . '/config.ini') )
@@ -748,7 +748,7 @@ elseif( $step == 7 )
 				$start_page = 'member/member.php';
 			$CONFIG['start_page'] = '/' . $start_page;
 
-			$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 			
 			//Ecriture du fichier de redirection
 			$file_path = '../index.php';
@@ -760,9 +760,9 @@ elseif( $step == 7 )
 			@fwrite($file, '<?php header(\'location: ' . $start_page . '\'); ?>');
 			@fclose($file);
 			
-			$cache->load_file('member');
+			$Cache->Load_file('member');
 			$CONFIG_MEMBER['activ_mbr'] = $preselections_configs[$preselection][2];
-			$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_MEMBER)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ
+			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_MEMBER)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ
 		}
 		//Sinon combinaison personnalisée
 		else
@@ -796,10 +796,10 @@ elseif( $step == 7 )
 		
 						//Parsage du fichier sql.
 						if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql') )
-							$sql->sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
+							$Sql->Sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
 
 						//Insertion du modules dans la bdd => module installé.
-						$sql->query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . securit($module_name) . "', '" . securit($info_module['version']) . "', '" . addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1))) . "', '1')", __LINE__, __FILE__);
+						$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . securit($module_name) . "', '" . securit($info_module['version']) . "', '" . addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1))) . "', '1')", __LINE__, __FILE__);
 						
 						if( $module_name == 'links' )
 							$link_installed = true;
@@ -809,9 +809,9 @@ elseif( $step == 7 )
 			//Désactivation de l'espace membre dans le cas où c'est demandé
 			if( !$activ_member )
 			{
-				$cache->load_file('member');
+				$Cache->Load_file('member');
 				$CONFIG_MEMBER['activ_mbr'] = 0;
-				$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_MEMBER)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ
+				$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_MEMBER)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ
 			}
 			//Traitement de la page de démarrage
 			if( !empty($_POST['install_' . $index_module]) && in_array($index_module, $supported_modules) )
@@ -825,9 +825,9 @@ elseif( $step == 7 )
 			else
 				$index_module_url = '/member/member.php';
 				
-			$cache->load_file('config');
+			$Cache->Load_file('config');
 			$CONFIG['start_page'] = $index_module_url;
-			$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 			
 			//Ecriture du fichier de redirection
 			$file_path = '../index.php';
@@ -842,72 +842,72 @@ elseif( $step == 7 )
 		
 		//On réassigne le class des modules minis
 		$i = 0;
-		$result = $sql->query_while("SELECT id
+		$result = $Sql->Query_while("SELECT id
 		FROM ".PREFIX."modules_mini 
 		ORDER BY side, name", __LINE__, __FILE__);
-		while($row = $sql->sql_fetch_assoc($result) )
+		while($row = $Sql->Sql_fetch_assoc($result) )
 		{
-			$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . $i . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . $i . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			$i++;
 		}
-		$sql->close($result);		
+		$Sql->Close($result);		
 		
 		//On insère les liens dans le module de liens, s'il est installé.
 		if( $link_installed )
 		{
 			$i = 6;
-			$result = $sql->query_while("SELECT name
+			$result = $Sql->Query_while("SELECT name
 			FROM ".PREFIX."modules 
 			WHERE activ = 1
 			ORDER BY name", __LINE__, __FILE__);
-			while($row = $sql->sql_fetch_assoc($result) )
+			while($row = $Sql->Sql_fetch_assoc($result) )
 			{
 				$info_module = @parse_ini_file('../' . $row['name'] . '/lang/' . $lang . '/config.ini');
 				if( !empty($info_module['name']) && !empty($info_module['starteable_page']) )
-					$sql->query_inject("INSERT INTO ".PREFIX."links (class, name, url, activ, secure, added, sep) VALUES ('" . $i . "', '" . addslashes($info_module['name']) . "', '../" . $row['name'] . "/" . addslashes($info_module['starteable_page']) . "', 1, '-1', 0, 0)", __LINE__, __FILE__);
+					$Sql->Query_inject("INSERT INTO ".PREFIX."links (class, name, url, activ, secure, added, sep) VALUES ('" . $i . "', '" . addslashes($info_module['name']) . "', '../" . $row['name'] . "/" . addslashes($info_module['starteable_page']) . "', 1, '-1', 0, 0)", __LINE__, __FILE__);
 				$i++;
 			}
-			$sql->close($result);
+			$Sql->Close($result);
 		}
 		
 		$i = 1;		
 		$side = true;
-		$result = $sql->query_while("SELECT id, side
+		$result = $Sql->Query_while("SELECT id, side
 		FROM ".PREFIX."modules_mini 
 		ORDER BY side, name", __LINE__, __FILE__);
-		while($row = $sql->sql_fetch_assoc($result) )
+		while($row = $Sql->Sql_fetch_assoc($result) )
 		{
 			if( $row['side'] == 1 && $side )
 			{
 				$i = 1;
 				$side = false;
 			}
-			$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . $i . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . $i . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			$i++;
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 		
 		//Régénération du cache
-		$cache->generate_htaccess();
-		$cache->generate_all_files();		
+		$Cache->Generate_htaccess();
+		$Cache->Generate_all_files();		
 		
 		//On redirige vers l'étape suivante
 		redirect(HOST . FILE . add_lang('?step=8', true));
 	}
 	
-	$template->assign_block_vars('modules', array());
+	$Template->Assign_block_vars('modules', array());
 	
 	foreach( $supported_modules as $module_name )
 	{
 		if( $module_info = @parse_ini_file('../' . $module_name . '/lang/' . $lang . '/config.ini') )
 		{
-			$template->assign_block_vars('modules.module_list', array(
+			$Template->Assign_block_vars('modules.module_list', array(
 				'MODULE_NAME' => $module_info['name'],
 				'MODULE_DESC' => $module_info['info'],
 				'MODULE_FOLDER_NAME' => $module_name,
 				'SRC_IMAGE_MODULE' => '../' . $module_name . '/' . $module_name . '.png'
 			));
-			$template->assign_block_vars('modules.module_index_list', array(
+			$Template->Assign_block_vars('modules.module_index_list', array(
 				'MODULE_NAME' => $module_info['name'],
 				'MODULE' => $module_name
 			));
@@ -918,7 +918,7 @@ elseif( $step == 7 )
 		else
 			$unexisting_modules[] = $module_name;
 	}
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'ARRAY_MODULE_LIST' => trim($modules_list, ', '),
 		'ARRAY_MODULE_INDEX_LIST' => trim($index_modules, ', '),
 		'L_EXPLAIN_MODULES' => $LANG['modules_explain'],
@@ -942,8 +942,8 @@ elseif( $step == 7 )
 }
 elseif( $step == 8 )
 {
-	$template->assign_block_vars('register_online', array());
-	$template->assign_vars(array(
+	$Template->Assign_block_vars('register_online', array());
+	$Template->Assign_vars(array(
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=7'),
 		'U_NEXT_STEP' => add_lang('install.php?step=9'),
 		'L_PREVIOUS_STEP' => $LANG['previous_step'],
@@ -956,16 +956,16 @@ elseif( $step == 8 )
 elseif( $step == 9 )
 {
 	require_once('../includes/errors.class.php');
-	$errorh = new Errors;
+	$Errorh = new Errors;
 	include_once('../includes/auth/config.php');
 	define('PREFIX', $table_prefix);
 	define('DBTYPE', $dbtype);
 	include_once('../includes/db/' . $dbtype . '.class.php');
-	$sql = new Sql;
+	$Sql = new Sql;
 	//On génère le cache
 	include('../includes/cache.class.php');
-	$cache = new Cache;
-	$cache->load_file('config');
+	$Cache = new Cache;
+	$Cache->Load_file('config');
 	
 	//Enregistrement en ligne
 	if( !empty($_POST['register']) )
@@ -973,13 +973,13 @@ elseif( $step == 9 )
 	else
 		$register_file = 'update.php?t=' . $CONFIG['site_name'] . '&amp;s=2&amp;v=' . $update_version . '&amp;u=' . $CONFIG['server_name'] . $CONFIG['server_path'];
 	
-	$template->assign_block_vars('end', array(
+	$Template->Assign_block_vars('end', array(
 		'CONTENTS' => sprintf($LANG['end_installation']),
 		'REGISTER' => '<img src="http://www.phpboost.com/phpboost/' . str_replace('"', '\"', $register_file) . '" alt="" />',		
 		'U_INDEX' => '..' . $CONFIG['start_page']
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_SITE_INDEX' => $LANG['site_index']
 	));
 }
@@ -1011,7 +1011,7 @@ if( is_dir($rep) ) //Si le dossier existe
 			$info_lang = @parse_ini_file('../lang/' . $file . '/config.ini');
 			if( !empty($info_lang['name']) )
 			{	
-				$template->assign_block_vars('lang', array(
+				$Template->Assign_block_vars('lang', array(
 					'LANG' => $file,
 					'LANG_NAME' => $info_lang['name'],
 					'SELECTED' => $file == $lang ? 'selected="selected"' : ''
@@ -1019,7 +1019,7 @@ if( is_dir($rep) ) //Si le dossier existe
 				
 				if(	$file == $lang )
 				{
-					$template->assign_vars(array(
+					$Template->Assign_vars(array(
 						'LANG_IDENTIFIER' => $info_lang['identifier']
 					));
 				}
@@ -1029,7 +1029,7 @@ if( is_dir($rep) ) //Si le dossier existe
 	closedir($dh); //On ferme le dossier
 }
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'LANG' => $lang,
 	'NUM_STEP' => $step,
 	'PROGRESS_BAR_PICS' => str_repeat('<img src="templates/images/loading.png" alt="" />', floor($steps[$step - 1][2] * 24 / 100)),
@@ -1058,7 +1058,7 @@ for($i = 1; $i <= 9; $i++ )
 		$row = 'row_current';
 	else
 		$row = 'row_next';
-	$template->assign_block_vars('link_menu', array(
+	$Template->Assign_block_vars('link_menu', array(
 		'ROW' => '<tr>
 				<td class="' . $row . '">
 					<img src="templates/images/' . $steps[$i - 1][1] . '" alt="' . $steps[$i - 1][0] . '" style="vertical-align:middle;" />&nbsp;&nbsp;' . $steps[$i - 1][0] . '
@@ -1067,7 +1067,7 @@ for($i = 1; $i <= 9; $i++ )
 	));
 }
 
-$template->pparse('install');
+$Template->Pparse('install');
 
 ob_end_flush();
 

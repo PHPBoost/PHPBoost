@@ -28,44 +28,44 @@
 require_once('../includes/begin.php'); 
 require_once('../forum/forum_begin.php');
 
-$speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 define('TITLE', $LANG['title_forum']);
 require_once('../includes/header.php'); 
 
 $view_msg = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 if( !empty($view_msg) ) //Affichage de tous les messages du membre
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'membermsg' => '../templates/' . $CONFIG['theme'] . '/forum/forum_membermsg.tpl',
 		'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
 		'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
 	));
 	
 	include('../includes/pagination.class.php');
-	$pagination = new Pagination;
+	$Pagination = new Pagination;
 	
 	$auth_cats = '';
 	foreach($CAT_FORUM as $idcat => $key)
 	{
-		if( !$groups->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+		if( !$Member->Check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
 			$auth_cats .= $idcat . ',';
 	}
 	$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 
 
-	$nbr_msg = $sql->query("SELECT COUNT(*)
+	$nbr_msg = $Sql->Query("SELECT COUNT(*)
 	FROM ".PREFIX."forum_msg msg
 	LEFT JOIN ".PREFIX."forum_topics t ON msg.idtopic = t.id
 	JOIN ".PREFIX."forum_cats c ON t.idcat = c.id AND c.aprob = 1" . $auth_cats . "
 	WHERE msg.user_id = '" . $view_msg . "'", __LINE__, __FILE__);
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'SID' => SID,
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'MODULE_DATA_PATH' => $template->module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['show_member_msg'],
-		'PAGINATION' => $pagination->show_pagin('membermsg' . transid('.php?id=' . $view_msg . '&amp;p=%d'), $nbr_msg, 'p', 10, 3),
+		'PAGINATION' => $Pagination->Display_pagination('membermsg' . transid('.php?id=' . $view_msg . '&amp;p=%d'), $nbr_msg, 'p', 10, 3),
 		'L_BACK' => $LANG['back'],
 		'L_VIEW_MSG_MEMBER' => $LANG['show_member_msg'],
 		'L_FORUM_INDEX' => $LANG['forum_index'],
@@ -73,12 +73,12 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 	));
 	
 	//Gestion des rangs.	
-	$cache->load_file('ranks');
+	$Cache->Load_file('ranks');
 	
 	//Création du tableau des rangs.
 	$array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG['modo_s'], 2 => $LANG['admin_s']);
 	
-	$result = $sql->query_while("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, m.user_groups, t.title, t.status, t.idcat, c.name, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, s.user_id AS connect, msg.contents
+	$result = $Sql->Query_while("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, m.user_groups, t.title, t.status, t.idcat, c.name, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, s.user_id AS connect, msg.contents
 	FROM ".PREFIX."forum_msg msg
 	LEFT JOIN ".PREFIX."forum_topics t ON msg.idtopic = t.id
 	JOIN ".PREFIX."forum_cats c ON t.idcat = c.id AND c.aprob = 1
@@ -86,8 +86,8 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 	LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 	WHERE msg.user_id = '" . $view_msg . "'" . $auth_cats . "
 	ORDER BY msg.id DESC
-	" . $sql->sql_limit($pagination->first_msg(10, 'p'), 10), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		//Rang de l'utilisateur.			
 		if( $row['level'] === '2' ) //Rang spécial (admins).  
@@ -165,7 +165,7 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 		//Ajout du marqueur d'édition si activé.
 	$edit_mark = ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '0') ? '<br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' <a class="edit_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id_edit'], '-' . $row['user_id_edit'] . '.php') . '">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span><br />' : '';
 		
-		$template->assign_block_vars('list', array(
+		$Template->Assign_block_vars('list', array(
 			'CONTENTS' => second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'ID' => $row['id'],
@@ -192,16 +192,16 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 			'U_TITLE_T' => '<a href="../forum/topic' . transid('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '">' . ucfirst($row['title']) . '</a>'
 		));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Listes les utilisateurs en lignes.
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $sql->query_while("SELECT s.user_id, s.level, m.login 
+	$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
 	FROM ".PREFIX."sessions s 
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '" . DIR . "/forum/%'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
@@ -225,10 +225,10 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 
 	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -244,7 +244,7 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 		'L_ONLINE' => strtolower($LANG['online'])
 	));
 		
-	$template->pparse('membermsg');
+	$Template->Pparse('membermsg');
 }
 else
 	redirect(HOST . DIR . '/forum/index.php');

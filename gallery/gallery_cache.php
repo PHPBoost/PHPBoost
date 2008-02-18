@@ -30,13 +30,13 @@ if( defined('PHP_BOOST') !== true) exit;
 //Configuration de la galerie
 function generate_module_file_gallery()
 {
-	global $sql;
+	global $Sql;
 	global $CONFIG_GALLERY;
 	
 	$gallery_config = 'global $CONFIG_GALLERY;' . "\n";
 	
 	//Récupération du tableau linéarisé dans la bdd.
-	$CONFIG_GALLERY = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'gallery'", __LINE__, __FILE__));
+	$CONFIG_GALLERY = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'gallery'", __LINE__, __FILE__));
 	$CONFIG_GALLERY = is_array($CONFIG_GALLERY) ? $CONFIG_GALLERY : array();
 	foreach($CONFIG_GALLERY as $key => $value)
 	{
@@ -47,10 +47,10 @@ function generate_module_file_gallery()
 	}
 
 	$cat_gallery = 'global $CAT_GALLERY;' . "\n";
-	$result = $sql->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
+	$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, aprob, auth
 	FROM ".PREFIX."gallery_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{		
 		if( empty($row['auth']) )
 			$row['auth'] = serialize(array());
@@ -62,25 +62,25 @@ function generate_module_file_gallery()
 		$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
 		$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	include_once('../gallery/gallery.class.php'); 
-	$gallery = new Gallery;	
+	$Gallery = new Gallery;	
 			
 	$_array_random_pics = 'global $_array_random_pics;' . "\n" . '$_array_random_pics = array(';
-	$result = $sql->query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth 
+	$result = $Sql->Query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth 
 	FROM ".PREFIX."gallery g
 	LEFT JOIN ".PREFIX."gallery_cats gc on gc.id = g.idcat
 	WHERE g.aprob = 1 AND (gc.aprob = 1 OR g.idcat = 0)
 	ORDER BY RAND()
-	" . $sql->sql_limit(0, 30), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit(0, 30), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( $row['idcat'] == 0 )
 			$row['auth'] = $CONFIG_GALLERY['auth_root'];
 		
 		//Calcul des dimensions avec respect des proportions.
-		list($width, $height) = $gallery->get_resize_properties($row['width'], $row['height']);
+		list($width, $height) = $Gallery->Get_resize_properties($row['width'], $row['height']);
 		
 		$_array_random_pics .= 'array(' . "\n" .
 		'\'id\' => ' . var_export($row['id'], true) . ',' . "\n" .
@@ -91,7 +91,7 @@ function generate_module_file_gallery()
 		'\'idcat\' => ' . var_export($row['idcat'], true) . ',' . "\n" .
 		'\'auth\' => ' . var_export($row['auth'], true) . '),' . "\n";
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	$_array_random_pics .= ');';
 	
