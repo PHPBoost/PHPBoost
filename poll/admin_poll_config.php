@@ -37,36 +37,36 @@ if( !empty($_POST['valid']))
 	$config_poll['poll_cookie'] = !empty($_POST['poll_cookie']) ? stripslashes(securit($_POST['poll_cookie'])) : 'poll';	
 	$config_poll['poll_cookie_lenght'] = !empty($_POST['poll_cookie_lenght']) ? (numeric($_POST['poll_cookie_lenght']) * 3600 * 24) : 30*24*3600;	
 		
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_poll)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_poll)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des sondages #######
-	$cache->generate_module_file('poll');
+	$Cache->Generate_module_file('poll');
 	
 	redirect(HOST . SCRIPT); 	
 }
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 	'admin_poll_config' => '../templates/' . $CONFIG['theme'] . '/poll/admin_poll_config.tpl'
 	));
 
-	$cache->load_file('poll');
+	$Cache->Load_file('poll');
 	
 	$i = 0;
 	//Mini poll courant	
 	$mini_poll_list = '';
-	$result = $sql->query_while("SELECT id, question 
+	$result = $Sql->Query_while("SELECT id, question 
 	FROM ".PREFIX."poll
 	WHERE archive = 0 AND visible = 1
 	ORDER BY timestamp", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$selected = in_array($row['id'], $CONFIG_POLL['poll_mini']) ? 'selected="selected"' : '';
 		$mini_poll_list .= '<option value="' . $row['id'] . '" ' . $selected . ' id="poll_mini' . $i++ . '">' . $row['question'] . '</option>';
 	}
-	$sql->close($result); 
+	$Sql->Close($result); 
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'COOKIE_NAME' => !empty($CONFIG_POLL['poll_cookie']) ? $CONFIG_POLL['poll_cookie'] : 'poll',
 		'COOKIE_LENGHT' => !empty($CONFIG_POLL['poll_cookie_lenght']) ? number_format($CONFIG_POLL['poll_cookie_lenght']/86400, 0) : 500,		
 		'MINI_POLL_LIST' => $mini_poll_list,		
@@ -109,12 +109,12 @@ else
 			default: -1;
 		} 
 		$selected = ($CONFIG_POLL['poll_auth'] == $i) ? 'selected="selected"' : '' ;
-		$template->assign_block_vars('select_auth', array(
+		$Template->Assign_block_vars('select_auth', array(
 			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 		));
 	} 
 	 
-	$template->pparse('admin_poll_config');	
+	$Template->Pparse('admin_poll_config');	
 }
 
 require_once('../includes/admin_footer.php');

@@ -29,13 +29,13 @@ if( defined('PHP_BOOST') !== true)
 	exit;
 	
 //Autorisation sur le module.
-if( !$groups->check_auth($SECURE_MODULE['online'], ACCESS_MODULE) )
-	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+if( !$Member->Check_auth($SECURE_MODULE['online'], ACCESS_MODULE) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 load_module_lang('online', $CONFIG['lang']); //Chargement de la langue du module.
 define('TITLE', $LANG['online']);
 
 //Chargement du cache
-$cache->load_file('online');
+$Cache->Load_file('online');
 
 ?>

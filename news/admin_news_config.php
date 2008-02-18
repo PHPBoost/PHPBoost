@@ -41,28 +41,28 @@ if( !empty($_POST['valid']) )
 	$config_news['pagination_arch'] = isset($_POST['pagination_arch']) ? numeric($_POST['pagination_arch']) : '15';
 	$config_news['activ_com'] = isset($_POST['activ_com']) ? numeric($_POST['activ_com']) : 0;  
 	$config_news['activ_icon'] = isset($_POST['activ_icon']) ? numeric($_POST['activ_icon']) : 0;  
-	$config_news['nbr_news'] = $sql->query("SELECT COUNT(*) FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
+	$config_news['nbr_news'] = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
 	$config_news['nbr_column'] = !empty($_POST['nbr_column']) ? numeric($_POST['nbr_column']) : 1;
 	$config_news['edito'] = !empty($_POST['edito']) ? stripslashes(parse($_POST['edito'])) : '';
 	$config_news['edito_title'] = !empty($_POST['edito_title']) ? stripslashes(securit($_POST['edito_title'])) : '';
 		
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_news)) . "' WHERE name = 'news'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_news)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
-	$cache->generate_module_file('news');
+	$Cache->Generate_module_file('news');
 	
 	redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_news_config' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_config.tpl'
 	));
 	
-	$cache->load_file('news');
+	$Cache->Load_file('news');
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'PAGINATION' => !empty($CONFIG_NEWS['pagination_news']) ? $CONFIG_NEWS['pagination_news'] : '6',
 		'PAGINATION_ARCH' => !empty($CONFIG_NEWS['pagination_arch']) ? numeric($CONFIG_NEWS['pagination_arch']) : '15',
 		'TITLE' => !empty($CONFIG_NEWS['edito_title']) ? $CONFIG_NEWS['edito_title'] : '',
@@ -114,7 +114,7 @@ else
 
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_news_config'); // traitement du modele	
+	$Template->Pparse('admin_news_config'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

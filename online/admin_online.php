@@ -37,23 +37,23 @@ if( !empty($_POST['valid']) )
 	$config_online['online_displayed'] = !empty($_POST['online_displayed']) ? numeric($_POST['online_displayed']) : 4;
 	$config_online['display_order_online'] = !empty($_POST['display_order_online']) ? securit($_POST['display_order_online']) : 's.level, s.session_time DESC';
 		
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_online)) . "' WHERE name = 'online'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_online)) . "' WHERE name = 'online'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des online #######
-	$cache->generate_module_file('online');
+	$Cache->Generate_module_file('online');
 	
 	redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_online' => '../templates/' . $CONFIG['theme'] . '/online/admin_online.tpl'
 	));
 	
-	$cache->load_file('online');
+	$Cache->Load_file('online');
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'NBR_ONLINE_DISPLAYED' => !empty($CONFIG_ONLINE['online_displayed']) ? $CONFIG_ONLINE['online_displayed'] : 4,
 		'L_ONLINE_CONFIG' => $LANG['online_config'],
 		'L_NBR_ONLINE_DISPLAYED' => $LANG['nbr_online_displayed'],
@@ -70,12 +70,12 @@ else
 	foreach($array_order_online as $key => $value)
 	{
 		$selected = ($CONFIG_ONLINE['display_order_online'] == $key) ? 'selected="selected"' : '' ;
-		$template->assign_block_vars('display_order', array(
+		$Template->Assign_block_vars('display_order', array(
 			'ORDER' => '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>'
 		));
 	}
 
-	$template->pparse('admin_online'); // traitement du modele	
+	$Template->Pparse('admin_online'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

@@ -41,40 +41,40 @@ $mail_object = get_magic_quotes_gpc() ? addslashes($mail_object) : $mail_object;
 $member_list = !empty($_GET['member_list']) ? true : false;
 $del_member = !empty($_GET['del_member']) ? numeric($_GET['del_member']) : 0;
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'admin_newsletter' => '../templates/' . $CONFIG['theme'] . '/newsletter/admin_newsletter.tpl'
 ));	
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'L_NEWSLETTER' => $LANG['newsletter'],
 	'L_SEND_NEWSLETTER' => $LANG['send_newsletter'],
 	'L_CONFIG_NEWSLETTER' => $LANG['newsletter_config'],
 	'L_MEMBER_LIST' => $LANG['newsletter_member_list']
 ));
 
-$cache->load_file('newsletter');
+$Cache->Load_file('newsletter');
 include('newsletter.class.php');
 $newsletter_sender = new Newsletter_sender;
 
 //Liste des membres
 if( $member_list )
 {
-	$template->assign_block_vars('member_list', array());
+	$Template->Assign_block_vars('member_list', array());
 	
 	if( $del_member > 0 )
 	{
-		$member_mail = $sql->query("SELECT mail FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
+		$member_mail = $Sql->Query("SELECT mail FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
 		if( !empty($member_mail) )
 		{
-			$sql->query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
-			$errorh->error_handler(sprintf($LANG['newsletter_del_member_success'], $member_mail), E_USER_NOTICE);
+			$Sql->Query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
+			$Errorh->Error_handler(sprintf($LANG['newsletter_del_member_success'], $member_mail), E_USER_NOTICE);
 		}
 		else
-			$errorh->error_handler($LANG['newsletter_member_does_not_exists'], E_USER_WARNING);
+			$Errorh->Error_handler($LANG['newsletter_member_does_not_exists'], E_USER_WARNING);
 	}
-	$result = $sql->query_while("SELECT id, mail FROM ".PREFIX."newsletter ORDER by id", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
-		$template->assign_block_vars('member_list.line', array(
+	$result = $Sql->Query_while("SELECT id, mail FROM ".PREFIX."newsletter ORDER by id", __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
+		$Template->Assign_block_vars('member_list.line', array(
 			'MAIL' => $row['mail'],
 			'U_DELETE' => transid('admin_newsletter.php?member_list=1&amp;del_member=' . $row['id'])
 		));
@@ -82,7 +82,7 @@ if( $member_list )
 //Si on envoie avec un certain type
 elseif( !empty($type) && $send && !$send_test && !empty($mail_object) && !empty($mail_contents) )
 {
-	$nbr = $sql->count_table('newsletter', __LINE__, __FILE__);
+	$nbr = $Sql->Count_table('newsletter', __LINE__, __FILE__);
 	
 	switch($type)
 	{
@@ -98,17 +98,17 @@ elseif( !empty($type) && $send && !$send_test && !empty($mail_object) && !empty(
 	}
 	
 	//On envoie une confirmation
-	$template->assign_block_vars('end', array());
-	$template->assign_vars(array(		
+	$Template->Assign_block_vars('end', array());
+	$Template->Assign_vars(array(		
 		'L_ARCHIVES' => $LANG['newsletter_go_to_archives'],
 		'L_BACK' => $LANG['newsletter_back'],
 		'L_NEWSLETTER' => $LANG['newsletter'],
 	));
 	
 	if( count($error_mailing_list) == 0 ) //Aucune erreur
-		$errorh->error_handler($LANG['newsletter_sent_successful'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['newsletter_sent_successful'], E_USER_NOTICE);
 	else
-		$errorh->error_handler(sprintf($LANG['newsletter_error_list'], implode(', ', $error_mailing_list)), E_USER_NOTICE);
+		$Errorh->Error_handler(sprintf($LANG['newsletter_error_list'], implode(', ', $error_mailing_list)), E_USER_NOTICE);
 }
 elseif( !empty($type) ) //Rédaction
 {
@@ -121,9 +121,9 @@ elseif( !empty($type) ) //Rédaction
 		$type = ($type == 'html') ? 'html' : 'text';
 	}
 	
-	$nbr = $sql->count_table("newsletter", __LINE__, __FILE__);	
+	$nbr = $Sql->Count_table("newsletter", __LINE__, __FILE__);	
 		
-	$template->assign_block_vars('write', array(
+	$Template->Assign_block_vars('write', array(
 		'TYPE' => $type,
 		'SUBSCRIBE_LINK' => ($type == 'html') ? $LANG['newsletter_subscribe_link'] : '',
 		'NBR_SUBSCRIBERS' => $nbr,
@@ -131,7 +131,7 @@ elseif( !empty($type) ) //Rédaction
 		'TITLE' => $mail_object,
 		'PREVIEW_BUTTON' => $type == 'bbcode' ? '<input value="' . $LANG['preview'] . '" onclick="XMLHttpRequest_preview(this.form);" class="submit" type="button">' : ''
 	));
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_WRITE_TYPE' => $LANG['newsletter_write_type'],
 		'L_TITLE' => $LANG['title'],
 		'L_MESSAGE' => $LANG['message'],
@@ -141,35 +141,35 @@ elseif( !empty($type) ) //Rédaction
 	));
 	
 	if( $type == 'bbcode' )
-		$template->assign_block_vars('write.bbcode_explain', array(
+		$Template->Assign_block_vars('write.bbcode_explain', array(
 			'L_WARNING' => $LANG['newsletter_bbcode_warning']
 		));
 	
 	if( empty($mail_object) && $send_test )
-		$errorh->error_handler($LANG['require_title'], E_USER_WARNING);
+		$Errorh->Error_handler($LANG['require_title'], E_USER_WARNING);
 	elseif( empty($mail_contents) && $send_test )
-		$errorh->error_handler($LANG['require_text'], E_USER_WARNING);
+		$Errorh->Error_handler($LANG['require_text'], E_USER_WARNING);
 	elseif( $send_test ) //Si on doit envoyer un test
 	{
 		switch($type)
 		{
 			case 'html':
-				$newsletter_sender->send_html($mail_object, $mail_contents, $session->data['user_mail']);
+				$newsletter_sender->send_html($mail_object, $mail_contents, $Member->Get_attribute('user_mail'));
 				break;
 			case 'bbcode':
-				$newsletter_sender->send_bbcode($mail_object, $mail_contents, $session->data['user_mail']);
+				$newsletter_sender->send_bbcode($mail_object, $mail_contents, $Member->Get_attribute('user_mail'));
 				break;
 			default:
-				$newsletter_sender->send_text($mail_object, $mail_contents, $session->data['user_mail']);
+				$newsletter_sender->send_text($mail_object, $mail_contents, $Member->Get_attribute('user_mail'));
 			break;
 		}
-		$errorh->error_handler(sprintf($LANG['newsletter_test_sent'], $session->data['user_mail']), E_USER_NOTICE);
+		$Errorh->Error_handler(sprintf($LANG['newsletter_test_sent'], $Member->Get_attribute('user_mail')), E_USER_NOTICE);
 	}
 }
 //On fait choisir un type
 else
 {
-	$template->assign_block_vars('select_type', array(
+	$Template->Assign_block_vars('select_type', array(
 		'L_SELECT_TYPE' => $LANG['newsletter_select_type'],
 		'L_SELECT_TYPE_TEXT' => $LANG['newsletter_select_type_text'],
 		'L_SELECT_TYPE_EXPLAIN_TEXT' => $LANG['newsletter_select_type_text_explain'],
@@ -181,7 +181,7 @@ else
 	));
 }
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'L_REQUIRE_TITLE' => $LANG['require_title'],
 	'L_REQUIRE_TEXT' => $LANG['require_text'],
 	'L_REQUIRE_MAIL' => $LANG['require_mail'],
@@ -190,7 +190,7 @@ $template->assign_vars(array(
 	'L_DELETE' => $LANG['delete']
 ));
 
-$template->pparse('admin_newsletter'); 
+$Template->Pparse('admin_newsletter'); 
 
 
 require_once('../includes/admin_footer.php');

@@ -29,8 +29,8 @@ if( defined('PHP_BOOST') !== true)
 	exit;
 	
 //Autorisation sur le module.
-if( !$groups->check_auth($SECURE_MODULE['web'], ACCESS_MODULE) )
-	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+if( !$Member->Check_auth($SECURE_MODULE['web'], ACCESS_MODULE) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 load_module_lang('web', $CONFIG['lang']); //Chargement de la langue du module.
 
@@ -38,13 +38,13 @@ $get_note =  !empty($_GET['note']) ? numeric($_GET['note']) : 0;
 $idweb = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 
-$cache->load_file('web'); //$CAT_WEB et $CONFIG_WEB en global.
+$Cache->Load_file('web'); //$CAT_WEB et $CONFIG_WEB en global.
 
 $CAT_WEB[$idcat]['name'] = !empty($CAT_WEB[$idcat]['name']) ? $CAT_WEB[$idcat]['name'] : '';
 $web['title'] = '';
 if( !empty($idweb) && !empty($idcat) )
 { 
-	$web = $sql->query_array('web' , '*', "WHERE aprob = 1 AND id = '" . $idweb . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
+	$web = $Sql->Query_array('web' , '*', "WHERE aprob = 1 AND id = '" . $idweb . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 	define('TITLE', $LANG['title_web'] . ' - ' . addslashes($web['title']));
 }
 elseif( !empty($idcat) )
@@ -53,9 +53,9 @@ else
 	define('TITLE', $LANG['title_web']);
 	
 $l_com_note = !empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '');
-$speed_bar->Add_link($LANG['title_web'], transid('web.php')); 
-$speed_bar->Add_link($CAT_WEB[$idcat]['name'], (empty($idweb) ? '' : transid('web.php?cat=' . $idcat, 'web-' . $idcat . '.php')));
-$speed_bar->Add_link($web['title'], ((!empty($get_note) || !empty($_GET['i'])) ? transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php') : ''));
-$speed_bar->Add_link($l_com_note, '');
+$Speed_bar->Add_link($LANG['title_web'], transid('web.php')); 
+$Speed_bar->Add_link($CAT_WEB[$idcat]['name'], (empty($idweb) ? '' : transid('web.php?cat=' . $idcat, 'web-' . $idcat . '.php')));
+$Speed_bar->Add_link($web['title'], ((!empty($get_note) || !empty($_GET['i'])) ? transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php') : ''));
+$Speed_bar->Add_link($l_com_note, '');
 
 ?>

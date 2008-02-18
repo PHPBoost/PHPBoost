@@ -39,28 +39,28 @@ if( !empty($_POST['valid'])  )
 	$config_shoutbox['shoutbox_forbidden_tags'] = isset($_POST['shoutbox_forbidden_tags']) ? serialize($_POST['shoutbox_forbidden_tags']) : serialize(array());
 	$config_shoutbox['shoutbox_max_link'] = isset($_POST['shoutbox_max_link']) ? numeric($_POST['shoutbox_max_link']) : -1;
 	
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_shoutbox)) . "' WHERE name = 'shoutbox'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_shoutbox)) . "' WHERE name = 'shoutbox'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
-	$cache->generate_module_file('shoutbox');
+	$Cache->Generate_module_file('shoutbox');
 	
 	redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_shoutbox_config' => '../templates/' . $CONFIG['theme'] . '/shoutbox/admin_shoutbox_config.tpl'
 	));
 	
-	$cache->load_file('shoutbox');
+	$Cache->Load_file('shoutbox');
 	
 	//Balises interdites => valeur 1.
 	$array_tags = array('b' => 0, 'i' => 0, 'u' => 0, 's' => 0,	'title' => 1, 'stitle' => 1, 'style' => 1, 'url' => 0, 
 	'img' => 1, 'quote' => 1, 'hide' => 1, 'list' => 1, 'color' => 0, 'bgcolor' => 0, 'font' => 0, 'size' => 0, 'align' => 1, 'float' => 1, 'sup' => 0, 
 	'sub' => 0, 'indent' => 1, 'pre' => 0, 'table' => 1, 'swf' => 1, 'movie' => 1, 'sound' => 1, 'code' => 1, 'math' => 1, 'anchor' => 0, 'acronym' => 0);
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'NBR_TAGS' => count($array_tags),
 		'SHOUTBOX_MAX_MSG' => !empty($CONFIG_SHOUTBOX['shoutbox_max_msg']) ? $CONFIG_SHOUTBOX['shoutbox_max_msg'] : '100',
 		'SHOUTBOX_AUTH' => isset($CONFIG_SHOUTBOX['shoutbox_auth']) ? $CONFIG_SHOUTBOX['shoutbox_auth'] : '-1',
@@ -103,7 +103,7 @@ else
 		} 
 
 		$selected = ($CONFIG_SHOUTBOX['shoutbox_auth'] == $i) ? 'selected="selected"' : '' ;
-		$template->assign_block_vars('select_auth', array(
+		$Template->Assign_block_vars('select_auth', array(
 			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 		));
 	}
@@ -120,13 +120,13 @@ else
 		else
 			$selected = ($is_selected) ? 'selected="selected"' : '';	
 			
-		$template->assign_block_vars('forbidden_tags', array(
+		$Template->Assign_block_vars('forbidden_tags', array(
 			'TAGS' => '<option id="tag' . $i . '" value="' . $name . '" ' . $selected . '>[' . $name . ']</option>'
 		));
 		$i++;
 	}	
 	
-	$template->pparse('admin_shoutbox_config'); // traitement du modele	
+	$Template->Pparse('admin_shoutbox_config'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

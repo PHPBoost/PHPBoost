@@ -29,11 +29,11 @@ require_once('../includes/begin.php');
 require_once('../pages/pages_begin.php'); 
 define('TITLE', $LANG['pages'] . ' : ' . $LANG['pages_explorer']);
 $cat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
-$speed_bar->Add_link($LANG['pages'], transid('pages.php'));
-$speed_bar->Add_link($LANG['pages_explorer'], transid('explorer.php'));
+$Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
+$Speed_bar->Add_link($LANG['pages_explorer'], transid('explorer.php'));
 require_once('../includes/header.php');
 
-$template->set_filenames(array('pages_explorer' => '../templates/' . $CONFIG['theme'] . '/pages/explorer.tpl'));
+$Template->Set_filenames(array('pages_explorer' => '../templates/' . $CONFIG['theme'] . '/pages/explorer.tpl'));
 
 //Liste des dossiers de la racine
 $root = '';
@@ -44,32 +44,32 @@ foreach($_PAGES_CATS as $key => $value )
 		//Autorisation particulière ?
 		$special_auth = !empty($value['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if( ($special_auth && $groups->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $groups->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+		if( ($special_auth && $Member->Check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 		{
-			$root .= '<tr><td class="row2"><img src="' . $template->module_data_path('pages') . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
+			$root .= '<tr><td class="row2"><img src="' . $Template->Module_data_path('pages') . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 		}
 	}
 }
 //Liste des fichiers de la racine
-$result = $sql->query_while("SELECT title, id, encoded_title, auth
+$result = $Sql->Query_while("SELECT title, id, encoded_title, auth
 	FROM ".PREFIX."pages
 	WHERE id_cat = 0 AND is_cat = 0
 	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
-while( $row = $sql->sql_fetch_assoc($result) )
+while( $row = $Sql->Sql_fetch_assoc($result) )
 {
 	//Autorisation particulière ?
 	$special_auth = !empty($row['auth']);
 	$array_auth = unserialize($row['auth']);
 	//Vérification de l'autorisation d'éditer la page
-	if( ($special_auth && $groups->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $groups->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+	if( ($special_auth && $Member->Check_auth($array_auth, READ_PAGE)) || (!$special_auth && $Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 	{
-		$root .= '<tr><td class="row2"><img src="' . $template->module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
+		$root .= '<tr><td class="row2"><img src="' . $Template->Module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 	}
 }
-$sql->close($result);
+$Sql->Close($result);
 
-$template->assign_vars(array(
-	'PAGES_PATH' => $template->module_data_path('pages'),
+$Template->Assign_vars(array(
+	'PAGES_PATH' => $Template->Module_data_path('pages'),
 	'TITLE' => $LANG['pages_explorer'],
 	'L_ROOT' => $LANG['pages_root'],
 	'SELECTED_CAT' => $cat > 0 ? $cat : 0,
@@ -78,36 +78,36 @@ $template->assign_vars(array(
 ));
 
 $contents = '';
-$result = $sql->query_while("SELECT c.id, p.title, p.encoded_title
+$result = $Sql->Query_while("SELECT c.id, p.title, p.encoded_title
 FROM ".PREFIX."pages_cats c
 LEFT JOIN ".PREFIX."pages p ON p.id = c.id_page
 WHERE c.id_parent = 0
 ORDER BY p.title ASC", __LINE__, __FILE__);
-while( $row = $sql->sql_fetch_assoc($result) )
+while( $row = $Sql->Sql_fetch_assoc($result) )
 {
-	$sub_cats_number = $sql->query("SELECT COUNT(*) FROM ".PREFIX."pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+	$sub_cats_number = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 	if( $sub_cats_number > 0 )
 	{	
-		$template->assign_block_vars('list', array(
-			'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $template->module_data_path('pages') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
-			<a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $template->module_data_path('pages') . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+		$Template->Assign_block_vars('list', array(
+			'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $Template->Module_data_path('pages') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
+			<a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $Template->Module_data_path('pages') . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 		));
 	}
 	else
 	{
-		$template->assign_block_vars('list', array(
-			'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $template->module_data_path('pages') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+		$Template->Assign_block_vars('list', array(
+			'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $Template->Module_data_path('pages') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 		));
 	}
 }
-$sql->close($result);
-$template->assign_vars(array(
+$Sql->Close($result);
+$Template->Assign_vars(array(
 	'SELECTED_CAT' => 0,
 	'CAT_0' => 'pages_selected_cat',
 	'CAT_LIST' => ''
 ));
 
-$template->pparse('pages_explorer');
+$Template->Pparse('pages_explorer');
 
 
 require_once('../includes/footer.php');

@@ -29,13 +29,13 @@ if( defined('PHP_BOOST') !== true)
 	exit;
 	
 //Autorisation sur le module.
-if( !$groups->check_auth($SECURE_MODULE['newsletter'], ACCESS_MODULE) )
-	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+if( !$Member->Check_auth($SECURE_MODULE['newsletter'], ACCESS_MODULE) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 load_module_lang('newsletter', $CONFIG['lang']); //Chargement de la langue du module.
 define('TITLE', $LANG['newsletter']);
 
 //Chargement du cache
-$cache->load_file('newsletter');
+$Cache->Load_file('newsletter');
 
 ?>

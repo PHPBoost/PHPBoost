@@ -41,7 +41,7 @@ if( !empty($_POST['valid']) )
 
 	if( !empty($title) && !empty($url) && !empty($idcat) && isset($aprob) )
 	{	
-		$sql->query_inject("INSERT INTO ".PREFIX."web (idcat,title,contents,url,compt,aprob,timestamp,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "', '0', '0', '0', '0')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."web (idcat,title,contents,url,compt,aprob,timestamp,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "', '0', '0', '0', '0')", __LINE__, __FILE__);
 		
 		redirect(HOST . DIR . '/web/admin_web.php');
 	}
@@ -50,7 +50,7 @@ if( !empty($_POST['valid']) )
 }
 elseif( !empty($_POST['previs']) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_web_add' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_add.tpl'
 	));
 
@@ -64,9 +64,9 @@ elseif( !empty($_POST['previs']) )
 	$aprob_enable = ($aprob == 1) ? 'checked="checked"' : '';
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
 
-	$cat = $sql->query("SELECT name FROM ".PREFIX."web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->Query("SELECT name FROM ".PREFIX."web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	
-	$template->assign_block_vars('web', array(
+	$Template->Assign_block_vars('web', array(
 		'NAME' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(parse($contents))),
 		'URL' => stripslashes($url),
@@ -82,7 +82,7 @@ elseif( !empty($_POST['previs']) )
 		'L_CAT' => $LANG['categorie'],
 	));
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'NAME' => stripslashes($title),
@@ -116,33 +116,33 @@ elseif( !empty($_POST['previs']) )
 	
 	//Catégories.
 	$i = 0;
-	$result = $sql->query_while("SELECT id, name 
+	$result = $Sql->Query_while("SELECT id, name 
 	FROM ".PREFIX."web_cat
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
-		$template->assign_block_vars('select', array(
+		$Template->Assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '"' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);
+		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_web_add'); 
+	$Template->Pparse('admin_web_add'); 
 }
 else
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_web_add' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_add.tpl'
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'COMPT' => '0',
 		'CHECK_ENABLED' => 'checked="ckecked"',
 		'CHECK_DISABLED' => '',
@@ -169,28 +169,28 @@ else
 	
 	//Catégories.	
 	$i = 0;
-	$result = $sql->query_while("SELECT id, name 
+	$result = $Sql->Query_while("SELECT id, name 
 	FROM ".PREFIX."web_cat
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$template->assign_block_vars('select', array(
+		$Template->Assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '">' . $row['name'] . '</option>'
 		));
 		$i++;
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);
+		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_web_add'); 
+	$Template->Pparse('admin_web_add'); 
 }
 
 require_once('../includes/admin_footer.php');

@@ -30,12 +30,12 @@ if( defined('PHP_BOOST') !== true) exit;
 //Configuration des news
 function generate_module_file_shoutbox()
 {
-	global $sql;
+	global $Sql;
 	
 	$shoutbox_config = 'global $CONFIG_SHOUTBOX;' . "\n";
 		
 	//Récupération du tableau linéarisé dans la bdd.
-	$CONFIG_SHOUTBOX = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'shoutbox'", __LINE__, __FILE__));
+	$CONFIG_SHOUTBOX = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'shoutbox'", __LINE__, __FILE__));
 	$CONFIG_SHOUTBOX = is_array($CONFIG_SHOUTBOX) ? $CONFIG_SHOUTBOX : array();
 	foreach($CONFIG_SHOUTBOX as $key => $value)
 		if( $key == 'shoutbox_forbidden_tags' )

@@ -32,16 +32,16 @@ require_once('../includes/header.php');
 $idnews = !empty($_GET['id']) ? numeric($_GET['id']) : 0;	
 $idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 
-$is_admin = $session->data['level'] === 2;
+$is_admin = $Member->Get_attribute('level') === 2;
 if( empty($idnews) && empty($idcat) ) 
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'news' => '../templates/' . $CONFIG['theme'] . '/news/news.tpl'
 	));
 
 	if( $CONFIG_NEWS['activ_edito'] == '1' ) //Affichage de l'édito
 	{
-		$template->assign_block_vars('edito', array(
+		$Template->Assign_block_vars('edito', array(
 			'CONTENTS' => second_parse(stripslashes($CONFIG_NEWS['edito'])),
 			'TITLE' => $CONFIG_NEWS['edito_title'],
 			'EDIT' => $is_admin ? '<a href="../news/admin_news_config.php" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>&nbsp;' : ''
@@ -65,9 +65,9 @@ if( empty($idnews) && empty($idcat) )
 	{
 		//On crée une pagination (si activé) si le nombre de news est trop important.
 		include_once('../includes/pagination.class.php'); 
-		$pagination = new Pagination();
-		$show_pagin = $pagination->show_pagin('news' . $url_pagin, $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
-		$first_msg = $pagination->first_msg($CONFIG_NEWS['pagination_news'], 'p'); 
+		$Pagination = new Pagination();
+		$show_pagin = $Pagination->Display_pagination('news' . $url_pagin, $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
+		$first_msg = $Pagination->First_msg($CONFIG_NEWS['pagination_news'], 'p'); 
 		$archives= '';
 	}
 	else
@@ -77,7 +77,7 @@ if( empty($idnews) && empty($idcat) )
 		$show_pagin = '';
 	}
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'PAGINATION' => $show_pagin,
 		'ARCHIVES' => $archives,
 		'THEME' => $CONFIG['theme'],
@@ -97,7 +97,7 @@ if( empty($idnews) && empty($idcat) )
 			$CONFIG_NEWS['nbr_column'] = !empty($CONFIG_NEWS['nbr_column']) ? $CONFIG_NEWS['nbr_column'] : 1;
 			$column_width = floor(100/$CONFIG_NEWS['nbr_column']);	
 			
-			$template->assign_vars(array(
+			$Template->Assign_vars(array(
 				'START_TABLE_NEWS' => '<table style="margin:auto;width:98%"><tr><td style="vertical-align:top;width:' . $column_width . '%">',
 				'END_TABLE_NEWS' => '</td></tr></table>'
 			));	
@@ -106,14 +106,14 @@ if( empty($idnews) && empty($idcat) )
 			$new_row = '';
 		
 		$z = 0;
-		$result = $sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
+		$result = $Sql->Query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
 		FROM ".PREFIX."news n
 		LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 		LEFT JOIN ".PREFIX."member m ON m.user_id = n.user_id		
 		WHERE n.visible = 1 AND n.archive = '" . $show_archive . "'
 		ORDER BY n.timestamp DESC 
-		" . $sql->sql_limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
-		while($row = $sql->sql_fetch_assoc($result) )
+		" . $Sql->Sql_limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
+		while($row = $Sql->Sql_fetch_assoc($result) )
 		{ 
 			//Initialisation
 			list($admin, $del, $com, $link) = array('', '', '', ''); 			
@@ -143,7 +143,7 @@ if( empty($idnews) && empty($idcat) )
 				$i++;
 			}
 				
-			$template->assign_block_vars('news', array(
+			$Template->Assign_block_vars('news', array(
 				'ID' => $row['id'],
 				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img src="' . $row['icon'] . '" alt="" style="vertical-align:middle;" /></a>' : ''),
 				'TITLE' => $row['title'],
@@ -161,11 +161,11 @@ if( empty($idnews) && empty($idcat) )
 			));
 			$z++;
 		}
-		$sql->close($result);	
+		$Sql->Close($result);	
 		
 		if( $z == 0 )
 		{
-			$template->assign_block_vars('no_news_available', array(
+			$Template->Assign_block_vars('no_news_available', array(
 				'L_NO_NEWS_AVAILABLE' => $LANG['no_news_available']
 			));
 		}
@@ -180,27 +180,27 @@ if( empty($idnews) && empty($idcat) )
 			$CONFIG_NEWS['nbr_column'] = !empty($CONFIG_NEWS['nbr_column']) ? $CONFIG_NEWS['nbr_column'] : 1;
 			$column_width = floor(100/$CONFIG_NEWS['nbr_column']);	
 			
-			$template->assign_block_vars('news_link', array(
+			$Template->Assign_block_vars('news_link', array(
 				'START_TABLE_NEWS' => '<table style="margin:auto;width:98%"><tr><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">',
 				'END_TABLE_NEWS' => '</ul></td></tr></table>'
 			));	
 		}
 		else
 		{	
-			$template->assign_block_vars('news_link', array(
+			$Template->Assign_block_vars('news_link', array(
 				'START_TABLE_NEWS' => '<ul style="margin:0;padding:0;list-style-type:none;">',
 				'END_TABLE_NEWS' => '</ul>'
 			));
 			$new_row = '';
 		}
 		
-		$result = $sql->query_while("SELECT n.id, n.title, n.timestamp, nc.id AS idcat, nc.icon
+		$result = $Sql->Query_while("SELECT n.id, n.title, n.timestamp, nc.id AS idcat, nc.icon
 		FROM ".PREFIX."news n
 		LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 		WHERE n.visible = 1 AND n.archive = '" . $show_archive . "'
 		ORDER BY n.timestamp DESC 
-		" . $sql->sql_limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
-		while ($row = $sql->sql_fetch_assoc($result))
+		" . $Sql->Sql_limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
+		while ($row = $Sql->Sql_fetch_assoc($result))
 		{ 
 			//Séparation des news en colonnes si activé.
 			if( $column )
@@ -209,7 +209,7 @@ if( empty($idnews) && empty($idcat) )
 				$i++;
 			}
 			
-			$template->assign_block_vars('news_link.list', array(
+			$Template->Assign_block_vars('news_link.list', array(
 				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img style="vertical-align:middle;" src="' . $row['icon'] . '" alt="" /></a>' : ''),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'TITLE' => $row['title'],
@@ -217,15 +217,15 @@ if( empty($idnews) && empty($idcat) )
 				'U_NEWS' => 'news' . transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
 			));
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 	}
 }
 elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 {
 	if( empty($news['id']) )
-		$errorh->error_handler('e_unexist_news', E_USER_REDIRECT);
+		$Errorh->Error_handler('e_unexist_news', E_USER_REDIRECT);
 	
-	$template->set_filenames(array('news' => '../templates/' . $CONFIG['theme'] . '/news/news.tpl'));
+	$Template->Set_filenames(array('news' => '../templates/' . $CONFIG['theme'] . '/news/news.tpl'));
 	
 	//Initialisation
 	list($admin, $del, $com, $link) = array('', '', '', '', ''); 		
@@ -235,7 +235,7 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $news['id'] . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img style="vertical-align:middle;" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" /></a>';
 	}
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
 		'L_ON' => $LANG['on']
@@ -254,7 +254,7 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
 	}
 
-	$template->assign_block_vars('news', array(
+	$Template->Assign_block_vars('news', array(
 		'ID' => $news['id'],
 		'ICON' => ((!empty($news['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news.php?cat=' . $news['idcat'] . '"><img style="vertical-align:middle;" src="' . $news['icon'] . '" alt="" /></a>' : ''),
 		'TITLE' => $news['title'],
@@ -271,26 +271,26 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 }
 elseif( !empty($idcat) )
 {
-	$template->set_filenames(array('news' => '../templates/' . $CONFIG['theme'] . '/news/news_cat.tpl'));
+	$Template->Set_filenames(array('news' => '../templates/' . $CONFIG['theme'] . '/news/news_cat.tpl'));
 	
-	$cat = $sql->query_array('news_cat', 'id', 'name', 'icon', "WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->Query_array('news_cat', 'id', 'name', 'icon', "WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	if( empty($cat['id']) )
-		$errorh->error_handler('error_unexist_cat', E_USER_REDIRECT);
+		$Errorh->Error_handler('error_unexist_cat', E_USER_REDIRECT);
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'CAT_NAME' => $cat['name'],
 		'EDIT' => ($is_admin) ? '&nbsp;&nbsp;<a href="admin_news_cat.php?id=' . $cat['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" /></a>' : '',
 		'L_CATEGORY' => $LANG['category']
 	));
 		
-	$result = $sql->query_while("SELECT n.id, n.title, n.nbr_com, nc.id AS idcat, nc.icon
+	$result = $Sql->Query_while("SELECT n.id, n.title, n.nbr_com, nc.id AS idcat, nc.icon
 	FROM ".PREFIX."news n
 	LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 	WHERE n.visible = 1 AND n.idcat = '" . $idcat . "'
 	ORDER BY n.timestamp DESC", __LINE__, __FILE__);
-	while ($row = $sql->sql_fetch_assoc($result))
+	while ($row = $Sql->Sql_fetch_assoc($result))
 	{ 
-		$template->assign_block_vars('list', array(
+		$Template->Assign_block_vars('list', array(
 			'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img style="vertical-align:middle;" src="' . $row['icon'] . '" alt="" /></a>' : ''),
 			'TITLE' => $row['title'],
 			'COM' => $row['nbr_com'],
@@ -309,7 +309,7 @@ if( isset($_GET['i']) && !empty($idnews) )
 	$_com_script = 'news';
 	include_once('../includes/com.php');
 }	
-$template->pparse('news');
+$Template->Pparse('news');
 	
 require_once('../includes/footer.php'); 
 

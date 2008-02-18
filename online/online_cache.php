@@ -30,12 +30,12 @@ if( defined('PHP_BOOST') !== true) exit;
 //Configuration du livre d'or
 function generate_module_file_online()
 {
-	global $sql;
+	global $Sql;
 	
 	$online_config = 'global $CONFIG_ONLINE;' . "\n";
 		
 	//Récupération du tableau linéarisé dans la bdd.
-	$CONFIG_ONLINE = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'online'", __LINE__, __FILE__));
+	$CONFIG_ONLINE = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'online'", __LINE__, __FILE__));
 	$CONFIG_ONLINE = is_array($CONFIG_ONLINE) ? $CONFIG_ONLINE : array();
 	foreach($CONFIG_ONLINE as $key => $value)
 		$online_config .= '$CONFIG_ONLINE[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";

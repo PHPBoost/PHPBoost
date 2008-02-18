@@ -19,8 +19,8 @@ require_once('../includes/errors.class.php');
 require_once('../includes/template.class.php');
 require_once('../includes/sessions.class.php');
 
-$errorh = new Errors(); //!\\Initialisation  de la class des erreurs//!\\
-$template = new Templates; //!\\Initialisation des templates//!\\ 
+$Errorh = new Errors(); //!\\Initialisation  de la class des erreurs//!\\
+$Template = new Templates; //!\\Initialisation des templates//!\\ 
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
 
 $CONFIG = array();
@@ -30,7 +30,7 @@ if( !isset($CONFIG) )
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
 	
-$session = new Sessions; //!\\Initialisation  de la class des sessions//!\\
+$Session = new Sessions; //!\\Initialisation  de la class des sessions//!\\
 
 $get_error_id = !empty($_GET['error']) ? numeric($_GET['error']) : '';
 
@@ -92,17 +92,17 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 <body><br /><br /><br />';
 
 //Récupération de l'erreur dans les logs.
-$errinfo = $errorh->get_last_error_log();
+$errinfo = $Errorh->Get_last_error_log();
 if( empty($errinfo) )
 	list($errinfo['errno'], $errinfo['errstr'], $errinfo['errline'], $errinfo['errfile']) = array('-1', '???', '0', 'unknow');
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'error' => '../templates/' . $CONFIG['theme'] . '/error.tpl'
 ));
 
-$class = $errorh->get_errno_class($errinfo['errno']);	
+$class = $Errorh->Get_errno_class($errinfo['errno']);	
 	
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'THEME' => $CONFIG['theme'],		
 	'ERRORH_IMG' => 'stop',
 	'ERRORH_CLASS' => $class,
@@ -113,7 +113,7 @@ $template->assign_vars(array(
 	'U_BACK' => '<a href="' . get_start_page() . '">' . $LANG['index'] . '</a>' . (!empty($_SERVER['HTTP_REFERER']) ? ' &raquo; <a href="' . transid($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : ' &raquo; <a href="javascript:history.back(1)">' . $LANG['back'] . '</a>'),
 ));
 
-$template->pparse('error');
+$Template->Pparse('error');
 
 echo '</body></html>';
 

@@ -38,17 +38,17 @@ $del = !empty($_GET['delete']) ? true : false;
 
 if( !empty($id) && !$del )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_web_management2' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_management2.tpl'
 	));
 
-	$row = $sql->query_array('web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->Query_array('web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$aprob_enabled = ($row['aprob'] == 1) ? 'checked="checked"' : '';
 	$aprob_disabled = ($row['aprob'] == 0) ? 'checked="checked"' : '';
 	$idcat = $row['idcat'];
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'IDWEB' => $row['id'],
 		'NAME' => $row['title'],
 		'CONTENTS' => unparse($row['contents']),
@@ -80,36 +80,36 @@ if( !empty($id) && !$del )
 
 	//Catégories.
 	$i = 0;	
-	$result = $sql->query_while("SELECT id, name 
+	$result = $Sql->Query_while("SELECT id, name 
 	FROM ".PREFIX."web_cat", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-		$template->assign_block_vars('select', array(
+		$Template->Assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);	
+		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_web_management2'); 
+	$Template->Pparse('admin_web_management2'); 
 }
 elseif( !empty($_POST['previs']) && !empty($id_post) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_web_management' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_management2.tpl'
 	));
 
-	$row = $sql->query_array('web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->Query_array('web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$title = !empty($_POST['name']) ? trim($_POST['name']) : '';
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
@@ -121,9 +121,9 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$aprob_enable = ($aprob == 1) ? 'checked="checked"' : '';
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
 
-	$cat = $sql->query("SELECT name FROM ".PREFIX."web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->Query("SELECT name FROM ".PREFIX."web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	
-	$template->assign_block_vars('web', array(
+	$Template->Assign_block_vars('web', array(
 		'NAME' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(parse($contents))),
 		'URL' => stripslashes($url),
@@ -131,7 +131,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'CAT' => $cat,
 		'COMPT' => $compt,
 		'DATE' => gmdate_format('date_format_short'),
-		'MODULE_DATA_PATH' => $template->module_data_path('web'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('web'),
 		'L_DESC' => $LANG['description'],
 		'L_DATE' => $LANG['date'],
 		'L_COM' => $LANG['com'],
@@ -140,7 +140,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_CATEGORY' => $LANG['categorie'],
 	));
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'IDWEB' => $id_post,
@@ -177,24 +177,24 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	
 	//Catégories.	
 	$i = 0;
-	$result = $sql->query_while("SELECT id, name 
+	$result = $Sql->Query_while("SELECT id, name 
 	FROM ".PREFIX."web_cat", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
-		$template->assign_block_vars('select', array(
+		$Template->Assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '"' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);
+		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 		
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_web_management'); 
+	$Template->Pparse('admin_web_management'); 
 }				
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
@@ -207,7 +207,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 
 	if( !empty($title) && !empty($url) && !empty($idcat) )
 	{
-		$sql->query_inject("UPDATE ".PREFIX."web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->Query_inject("UPDATE ".PREFIX."web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		redirect(HOST . SCRIPT);
 	}
@@ -217,27 +217,27 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 elseif( $del && !empty($id) ) //Suppresion du lien web.
 {
 	//On supprime dans la bdd.
-	$sql->query_inject("DELETE FROM ".PREFIX."web WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->Query_inject("DELETE FROM ".PREFIX."web WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
 	//On supprimes les éventuels commentaires associés.
-	$sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'web'", __LINE__, __FILE__);
+	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'web'", __LINE__, __FILE__);
 	
 	redirect(HOST . SCRIPT);
 }		
 else
 {			
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_web_management' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_management.tpl'
 	));
 
-	$nbr_web = $sql->count_table('web', __LINE__, __FILE__);
+	$nbr_web = $Sql->Count_table('web', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de web est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 
-	$template->assign_vars(array(	
-		'PAGINATION' => $pagination->show_pagin('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	
+	$Template->Assign_vars(array(	
+		'PAGINATION' => $Pagination->Display_pagination('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'L_WEB_ADD' => $LANG['web_add'],
@@ -256,19 +256,19 @@ else
 		'L_DELETE' => $LANG['delete'],
 	));
 		
-	$result = $sql->query_while("SELECT d.*, ad.name 
+	$result = $Sql->Query_while("SELECT d.*, ad.name 
 	FROM ".PREFIX."web d 
 	LEFT JOIN ".PREFIX."web_cat ad ON ad.id = d.idcat
 	ORDER BY timestamp DESC 
-	" . $sql->sql_limit($pagination->first_msg(25, 'p'), 25), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$aprob = ($row['aprob'] == 1) ? $LANG['yes'] : $LANG['no'];
 		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
 		$title = $row['title'];
 		$title = strlen($title) > 45 ? substr_html($title, 0, 45) . '...' : $title;
 
-		$template->assign_block_vars('web', array(
+		$Template->Assign_block_vars('web', array(
 			'IDWEB' => $row['id'],
 			'NAME' => $title,
 			'IDCAT' => $row['idcat'],
@@ -278,11 +278,11 @@ else
 			'COMPT' => $row['compt']
 		));	
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_web_management'); 
+	$Template->Pparse('admin_web_management'); 
 }
 
 require_once('../includes/admin_footer.php');

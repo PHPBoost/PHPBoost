@@ -134,12 +134,12 @@ imagejpeg($img);
 imagedestroy($img);
 
 $user_id = substr(md5(USER_IP), 0, 8);
-$check_user_id = $sql->query("SELECT COUNT(*) FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+$check_user_id = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 if( $check_user_id == 1 )
-	$sql->query_inject("UPDATE ".PREFIX."verif_code SET code = '" . $code . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."verif_code SET code = '" . $code . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 else
 {
-	$sql->query_inject("INSERT INTO ".PREFIX."verif_code (user_id, code, timestamp) VALUES ('" . $user_id . "', '" . $code . "', '" . time() . "')", __LINE__, __FILE__);
+	$Sql->Query_inject("INSERT INTO ".PREFIX."verif_code (user_id, code, timestamp) VALUES ('" . $user_id . "', '" . $code . "', '" . time() . "')", __LINE__, __FILE__);
 }
 
 require_once('../includes/footer_no_display.php');

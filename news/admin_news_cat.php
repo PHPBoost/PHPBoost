@@ -35,9 +35,9 @@ $id = ( !empty($_GET['id'])) ? numeric($_GET['id']) : 0;
 //Si c'est confirmé on met à jour!
 if( !empty($_POST['valid']) )
 {
-	$result = $sql->query_while("SELECT id
+	$result = $Sql->Query_while("SELECT id
 	FROM ".PREFIX."news_cat", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$cat = !empty($_POST[$row['id'] . 'cat']) ? securit($_POST[$row['id'] . 'cat']) : '';  
 		$icon = !empty($_POST[$row['id'] . 'icon']) ? securit($_POST[$row['id'] . 'icon']) : '';  
@@ -48,17 +48,17 @@ if( !empty($_POST['valid']) )
 			$icon = $icon_path;
 		
 		if( !empty($cat) )
-			$sql->query_inject("UPDATE ".PREFIX."news_cat SET name = '" . $cat . "', icon = '" . $icon . "', contents = '" . $contents . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."news_cat SET name = '" . $cat . "', icon = '" . $icon . "', contents = '" . $contents . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	redirect(HOST . SCRIPT);
 }
 elseif( !empty($_GET['del']) && !empty($id) ) //Suppression de la catégorie.
 {
-	$sql->query_inject("DELETE FROM ".PREFIX."news_cat WHERE id = " . $id, __LINE__, __FILE__);
-	$sql->query_inject("UPDATE ".PREFIX."news SET idcat = 0 WHERE idcat = " . $id, __LINE__, __FILE__);
+	$Sql->Query_inject("DELETE FROM ".PREFIX."news_cat WHERE id = " . $id, __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = 0 WHERE idcat = " . $id, __LINE__, __FILE__);
 		
 	redirect(HOST . SCRIPT);
 }
@@ -76,7 +76,7 @@ elseif( !empty($_POST['add']) ) //Ajout de la catégorie.
 	if( !empty($cat) )
 	{	
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
-		$sql->query_inject("INSERT INTO ".PREFIX."news_cat (name, contents, icon) VALUES('" . $cat . "', '" . $contents . "', '" . $icon . "')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."news_cat (name, contents, icon) VALUES('" . $cat . "', '" . $contents . "', '" . $icon . "')", __LINE__, __FILE__);
 			
 		redirect(HOST . SCRIPT); 	
 	}
@@ -86,7 +86,7 @@ elseif( !empty($_POST['add']) ) //Ajout de la catégorie.
 //Sinon on rempli le formulaire
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_news_cat' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_cat.tpl'
 	));
 	  
@@ -108,7 +108,7 @@ else
 	foreach($img_array as $key => $img_path)
 		$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],	
 		'IMG_LIST' => $image_list,
 		'L_DEL_ENTRY' => $LANG['del_entry'],
@@ -130,11 +130,11 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
-	$result = $sql->query_while("SELECT a.id, a.name, a.contents, a.icon
+	$result = $Sql->Query_while("SELECT a.id, a.name, a.contents, a.icon
 	FROM ".PREFIX."news_cat a", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
 		$row['name'] = html_entity_decode($row['name']);
@@ -148,7 +148,7 @@ else
 			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
 		}
 		
-		$template->assign_block_vars('cat', array(
+		$Template->Assign_block_vars('cat', array(
 			'IDCAT' => $row['id'],
 			'CAT' => $name,
 			'CONTENTS' => $row['contents'],
@@ -157,9 +157,9 @@ else
 			'IMG_LIST' => $image_list,
 		));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 		
-	$template->pparse('admin_news_cat'); // traitement du modele	
+	$Template->Pparse('admin_news_cat'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

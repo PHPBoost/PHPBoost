@@ -29,8 +29,8 @@ if( defined('PHP_BOOST') !== true)
 	exit;
 	
 //Autorisation sur le module.
-if( !$groups->check_auth($SECURE_MODULE['news'], ACCESS_MODULE) )
-	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+if( !$Member->Check_auth($SECURE_MODULE['news'], ACCESS_MODULE) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 load_module_lang('news', $CONFIG['lang']); //Chargement de la langue du module.
 
@@ -39,12 +39,12 @@ $idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 $show_archive = !empty($_GET['arch']) ? 1 : 0;
 if( !empty($idnews) && empty($idcat) )
 {
-	$result = $sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.archive, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
+	$result = $Sql->Query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.archive, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
 	FROM ".PREFIX."news n
 	LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 	LEFT JOIN ".PREFIX."member m ON m.user_id = n.user_id		
 	WHERE n.visible = 1 AND n.id = '" . $idnews . "'", __LINE__, __FILE__);
-	$news = $sql->sql_fetch_assoc($result);
+	$news = $Sql->Sql_fetch_assoc($result);
 	
 	define('TITLE', $LANG['title_news'] . ' - ' . addslashes($news['title']));
 }
@@ -52,12 +52,12 @@ else
 	define('TITLE', $LANG['title_news']);
 	
 $news_title = !empty($idnews) ? $news['title'] : '';
-$speed_bar->Add_link($LANG['title_news'], transid('news.php'));
-$speed_bar->Add_link($news_title, (!empty($_GET['i']) ? transid('news.php?id=' . $idnews) : ''));
-$speed_bar->Add_link((isset($_GET['i']) ? $LANG['com'] : ''), '');
+$Speed_bar->Add_link($LANG['title_news'], transid('news.php'));
+$Speed_bar->Add_link($news_title, (!empty($_GET['i']) ? transid('news.php?id=' . $idnews) : ''));
+$Speed_bar->Add_link((isset($_GET['i']) ? $LANG['com'] : ''), '');
 
 //Chargement du cache
-$cache->load_file('news');
+$Cache->Load_file('news');
 //Css alternatif.
 define('ALTERNATIVE_CSS', 'news');
 

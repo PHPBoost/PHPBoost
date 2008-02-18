@@ -27,16 +27,16 @@
 
 if( defined('PHP_BOOST') !== true) exit;
 
-$cache->load_file('shoutbox'); //$CONFIG_SHOUTBOX en global.
+$Cache->Load_file('shoutbox'); //$CONFIG_SHOUTBOX en global.
 
 if( $CONFIG_SHOUTBOX['shoutbox_max_msg'] != -1 )
 {
 	//Suppression des messages en surplus dans la shoutbox.
-	$sql->query_inject("SELECT @compt := id AS compt
+	$Sql->Query_inject("SELECT @compt := id AS compt
 	FROM ".PREFIX."shoutbox
 	ORDER BY id DESC
-	" . $sql->sql_limit(0, $CONFIG_SHOUTBOX['shoutbox_max_msg']), __LINE__, __FILE__);
-	$sql->query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id < @compt", __LINE__, __FILE__);
+	" . $Sql->Sql_limit(0, $CONFIG_SHOUTBOX['shoutbox_max_msg']), __LINE__, __FILE__);
+	$Sql->Query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id < @compt", __LINE__, __FILE__);
 }
 
 ?>

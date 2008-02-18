@@ -30,12 +30,12 @@ if( defined('PHP_BOOST') !== true) exit;
 //Configuration des news
 function generate_module_file_news()
 {
-	global $sql;
+	global $Sql;
 
 	$news_config = 'global $CONFIG_NEWS;' . "\n";
 	
 	//Récupération du tableau linéarisé dans la bdd.
-	$CONFIG_NEWS = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'news'", __LINE__, __FILE__));
+	$CONFIG_NEWS = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'news'", __LINE__, __FILE__));
 	foreach($CONFIG_NEWS as $key => $value)
 		$news_config .= '$CONFIG_NEWS[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 	

@@ -33,11 +33,11 @@ $activ_confirm = !empty($_GET['activate']) ? securit($_GET['activate']) : '';
 $activ_get = !empty($_GET['activ']) ? securit($_GET['activ']) : '';
 $user_get = !empty($_GET['u']) ? numeric($_GET['u']) : '';
 
-if( !$session->check_auth($session->data, 0) )
+if( !$Member->Check_level(0) )
 {
 	if( empty($activ_confirm) )
 	{	
-		$template->set_filenames(array(
+		$Template->Set_filenames(array(
 			'forget' => '../templates/' . $CONFIG['theme'] . '/forget.tpl'
 		));
 			
@@ -48,26 +48,26 @@ if( !$session->check_auth($session->data, 0) )
 
 			if( !empty($user_mail) && preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,6}$!", $user_mail) )
 			{	
-				$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login = '" . $login . "'", __LINE__, __FILE__);
+				$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login = '" . $login . "'", __LINE__, __FILE__);
 				if( !empty($user_id) ) //Succès mail trouvé, en crée un nouveau mdp, et la clée d'activ et on l'envoi au membre
 				{
 					$new_pass = substr(md5(uniqid(rand(), true)), 0, 6); //Génération du nouveau mot de pass unique!
 					$activ_pass =  substr(md5(uniqid(rand(), true)), 0, 30); //Génération de la clée d'activation!
 					
-					$sql->query_inject("UPDATE ".PREFIX."member SET activ_pass = '" . $activ_pass . "', new_pass = '" . md5($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clée d'activation dans la bdd.
+					$Sql->Query_inject("UPDATE ".PREFIX."member SET activ_pass = '" . $activ_pass . "', new_pass = '" . md5($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clée d'activation dans la bdd.
 					
 					include_once('../includes/mail.class.php');
-					$mail = new Mail();
-					$mail->send_mail($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass), $CONFIG['mail']);	
+					$Mail = new Mail();
+					$Mail->Send_mail($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass), $CONFIG['mail']);	
 
 					//Affichage de la confirmation.
 					redirect(HOST . DIR . '/member/forget.php?error=forget_mail_send');
 				}
 				else
-					$errorh->error_handler($LANG['e_mail_forget'], E_USER_NOTICE);
+					$Errorh->Error_handler($LANG['e_mail_forget'], E_USER_NOTICE);
 			}
 			else
-				$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+				$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		}
 		
 		$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';			
@@ -88,9 +88,9 @@ if( !$session->check_auth($session->data, 0) )
 			$errstr = '';
 		}	
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, $errno);			
+			$Errorh->Error_handler($errstr, $errno);			
 	
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 			'L_REQUIRE_MAIL' => $LANG['require_mail'],
 			'L_REQUIRE' => $LANG['require'],
@@ -101,18 +101,18 @@ if( !$session->check_auth($session->data, 0) )
 			'L_SUBMIT' => $LANG['submit']
 		));
 		
-		$template->pparse('forget');
+		$Template->Pparse('forget');
 	}
 	elseif( !empty($activ_get) && !empty($user_get) && $activ_confirm === 'true' )
 	{
-		$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE user_id = '" . $user_get . "' AND activ_pass = '" . $activ_get . "'", __LINE__, __FILE__);
+		$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE user_id = '" . $user_get . "' AND activ_pass = '" . $activ_get . "'", __LINE__, __FILE__);
 		if( !empty($user_id) )
 		{
 			//Mise à jour du nouveau password
-			$sql->query_inject("UPDATE ".PREFIX."member SET password = new_pass WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."member SET password = new_pass WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 			//Effacement des clées d'activations.
-			$sql->query_inject("UPDATE ".PREFIX."member SET activ_pass = '', new_pass = '' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."member SET activ_pass = '', new_pass = '' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 			//Affichage de l'echec
 			redirect(HOST . DIR . '/member/forget.php?error=forget_confirm_change');

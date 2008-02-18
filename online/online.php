@@ -29,31 +29,31 @@ require_once('../includes/begin.php');
 require_once('../online/online_begin.php'); 
 require_once('../includes/header.php'); 
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'online' => '../templates/' . $CONFIG['theme'] . '/online/online.tpl'
 ));
 	
 //Membre connectés..
-$nbr_member = $sql->query("SELECT COUNT(*) FROM ".PREFIX."sessions WHERE level <> -1 AND session_time > '" . (time() - $CONFIG['site_session_invit']) . "'", __LINE__, __FILE__);
+$nbr_member = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."sessions WHERE level <> -1 AND session_time > '" . (time() - $CONFIG['site_session_invit']) . "'", __LINE__, __FILE__);
 include_once('../includes/pagination.class.php'); 
-$pagination = new Pagination();
+$Pagination = new Pagination();
 	
-$template->assign_vars(array(
-	'PAGINATION' => $pagination->show_pagin('online' . transid('.php?p=%d'), $nbr_member, 'p', 25, 3),
+$Template->Assign_vars(array(
+	'PAGINATION' => $Pagination->Display_pagination('online' . transid('.php?p=%d'), $nbr_member, 'p', 25, 3),
 	'L_LOGIN' => $LANG['pseudo'],
 	'L_LOCATION' => $LANG['location'],
 	'L_LAST_UPDATE' => $LANG['last_update'],
 	'L_ONLINE' => $LANG['online']
 ));
 
-$result = $sql->query_while("SELECT s.user_id, s.level, s.session_time, s.session_script, s.session_script_get, 
+$result = $Sql->Query_while("SELECT s.user_id, s.level, s.session_time, s.session_script, s.session_script_get, 
 s.session_script_title, m.login
 FROM ".PREFIX."sessions s
 JOIN ".PREFIX."member m ON (m.user_id = s.user_id)
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 ORDER BY " . $CONFIG_ONLINE['display_order_online'] . "
-" . $sql->sql_limit($pagination->first_msg(25, 'p'), 25), __LINE__, __FILE__); //Membres enregistrés.
-while( $row = $sql->sql_fetch_assoc($result) )
+" . $Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__); //Membres enregistrés.
+while( $row = $Sql->Sql_fetch_assoc($result) )
 {
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
@@ -74,15 +74,15 @@ while( $row = $sql->sql_fetch_assoc($result) )
 	} 
 
 	$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
-	$template->assign_block_vars('users', array(
+	$Template->Assign_block_vars('users', array(
 		'MEMBER' => !empty($row['login']) ? '<a href="' . HOST . '/member/member.php?id=' . $row['user_id'] . '" class="' . $status . '">' . $row['login'] . '</a>': $LANG['guest'],
 		'LOCATION' => '<a href="' . HOST . DIR . $row['session_script'] . $row['session_script_get'] . '">' . stripslashes($row['session_script_title']) . '</a>',
 		'LAST_UPDATE' => gmdate_format('date_format_long', $row['session_time'])
 	));	
 }
-$sql->close($result);
+$Sql->Close($result);
 
-$template->pparse('online'); 
+$Template->Pparse('online'); 
 
 require_once('../includes/footer.php'); 
 

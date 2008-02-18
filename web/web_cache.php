@@ -30,22 +30,22 @@ if( defined('PHP_BOOST') !== true) exit;
 //Configuration des news
 function generate_module_file_web()
 {
-	global $sql;
+	global $Sql;
 	
 	$code = 'global $CAT_WEB;' . "\n" . 'global $CONFIG_WEB;' . "\n";
 		
 	//Récupération du tableau linéarisé dans la bdd.
-	$CONFIG_WEB = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'web'", __LINE__, __FILE__));
+	$CONFIG_WEB = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'web'", __LINE__, __FILE__));
 	$CONFIG_WEB = is_array($CONFIG_WEB) ? $CONFIG_WEB : array();
 	foreach($CONFIG_WEB as $key => $value)
 		$code .= '$CONFIG_WEB[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 	
 	$code .= "\n";
 	
-	$result = $sql->query_while("SELECT id, name, secure
+	$result = $Sql->Query_while("SELECT id, name, secure
 	FROM ".PREFIX."web_cat
 	WHERE aprob = 1", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{		
 		$code .= '$CAT_WEB[\'' . $row['id'] . '\'][\'secure\'] = ' . var_export($row['secure'], true) . ';' . "\n";
 		$code .= '$CAT_WEB[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";

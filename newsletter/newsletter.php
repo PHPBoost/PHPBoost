@@ -33,7 +33,7 @@ $mail_newsletter = (!empty($_POST['mail_newsletter'])) ? securit($_POST['mail_ne
 $subscribe = (!empty($_POST['subscribe'])) ? trim($_POST['subscribe']) : 'subscribe';
 $id = (!empty($_GET['id'])) ? numeric($_GET['id']) : '';
 	
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'newsletter' => '../templates/' . $CONFIG['theme'] . '/newsletter/newsletter.tpl'
 ));	
 
@@ -49,55 +49,55 @@ if( !empty($mail_newsletter) )
 		//Inscription
 		if( $subscribe === 1)
 		{
-			$check_mail = $sql->query("SELECT COUNT(*) FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __LINE__, __FILE__);
+			$check_mail = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __LINE__, __FILE__);
 			//Si il n'est pas déjà inscrit
 			if( $check_mail == 0 )
 			{
 				//On enregistre le mail
-				$sql->query_inject("INSERT INTO ".PREFIX."newsletter (mail) VALUES ('" . $mail_newsletter . "')",  __LINE__, __FILE__);
-				$errorh->error_handler($LANG['newsletter_add_success'], E_USER_NOTICE);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter (mail) VALUES ('" . $mail_newsletter . "')",  __LINE__, __FILE__);
+				$Errorh->Error_handler($LANG['newsletter_add_success'], E_USER_NOTICE);
 			}			
 			else
-				$errorh->error_handler($LANG['newsletter_add_failure'], E_USER_NOTICE);
+				$Errorh->Error_handler($LANG['newsletter_add_failure'], E_USER_NOTICE);
 		}
 		else
 		{
-			$check_mail = $sql->query("SELECT COUNT(*) FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __LINE__, __FILE__);
+			$check_mail = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __LINE__, __FILE__);
 			if( $check_mail >= 1 )
 			{
-				$sql->query_inject("DELETE FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __lINE__, __FILE__);
-				$errorh->error_handler($LANG['newsletter_del_success'], E_USER_NOTICE);
+				$Sql->Query_inject("DELETE FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __lINE__, __FILE__);
+				$Errorh->Error_handler($LANG['newsletter_del_success'], E_USER_NOTICE);
 			}
 			else
-				$errorh->error_handler($LANG['newsletter_del_success'], E_USER_WARNING);
+				$Errorh->Error_handler($LANG['newsletter_del_success'], E_USER_WARNING);
 		}
 	}
 	else
-		$errorh->error_handler($LANG['newsletter_email_address_is_not_valid'], E_USER_WARNING);
+		$Errorh->Error_handler($LANG['newsletter_email_address_is_not_valid'], E_USER_WARNING);
 }
 //Désinscription demandée suite à la réception d'une newsletter
 elseif( $id > 0 )
 {
-	$check_mail = $sql->query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	$errorh->error_handler($LANG['newsletter_del_success'], E_USER_WARNING);
+	$check_mail = $Sql->Query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$Errorh->Error_handler($LANG['newsletter_del_success'], E_USER_WARNING);
 }
 //Affichage des archives
 else
 {
-	$template->assign_block_vars('arch_title', array());
+	$Template->Assign_block_vars('arch_title', array());
 	
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 	
 	$i = 0;	
-	$result = $sql->query_while("SELECT id, title, message, timestamp, type, nbr
+	$result = $Sql->Query_while("SELECT id, title, message, timestamp, type, nbr
 	FROM ".PREFIX."newsletter_arch 
 	ORDER BY id DESC 
-	" . $sql->sql_limit($pagination->first_msg(5, 'p'), 5), __LINE__, __FILE__);
+	" . $Sql->Sql_limit($Pagination->First_msg(5, 'p'), 5), __LINE__, __FILE__);
 	
-	while($row = $sql->sql_fetch_assoc($result))
+	while($row = $Sql->Sql_fetch_assoc($result))
 	{
-		$template->assign_block_vars('arch', array(
+		$Template->Assign_block_vars('arch', array(
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'TITLE' => stripslashes($row['title']),
 			'MESSAGE' => ($row['type'] === 'bbcode' || $row['type'] === 'html') ? '<div style="text-align:center;"><a class="com" href="#" onclick="popup(\'' . HOST . DIR . transid('/newsletter/newsletter_arch.php?id=' . $row['id'], '', '') . '\', \'' . $row['title'] . '\');">' . $LANG['newsletter_msg_html'] . '</a></div>' : nl2br($row['message']), 
@@ -107,26 +107,26 @@ else
 		$i++;
 	}
 	
-	$total_msg = $sql->query("SELECT COUNT(*) FROM ".PREFIX."newsletter_arch", __LINE__, __FILE__);
+	$total_msg = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."newsletter_arch", __LINE__, __FILE__);
 	
 	if( $total_msg == 0 )
-		$errorh->error_handler($LANG['newsletter_no_archives'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['newsletter_no_archives'], E_USER_NOTICE);
 	
-	$template->assign_vars(array(
-		'PAGINATION' => $pagination->show_pagin('newsletter.php?p=%d', $total_msg, 'p', 5, 3),
+	$Template->Assign_vars(array(
+		'PAGINATION' => $Pagination->Display_pagination('newsletter.php?p=%d', $total_msg, 'p', 5, 3),
 		'L_NEWSLETTER_ARCHIVES' => $LANG['newsletter_archives'],
 		'L_NEWSLETTER_ARCHIVES_EXPLAIN' => $LANG['newsletter_archives_explain']
 		));
 	
 	if( $i === 0 )
 	{	
-		$template->assign_block_vars('mail', array(
+		$Template->Assign_block_vars('mail', array(
 			'MSG' => 'Il n\'y a pas d\'archives pour le moment.'
 		));
 	}
 }
 
-$template->pparse('newsletter');
+$Template->Pparse('newsletter');
 
 require_once('../includes/footer.php');
 

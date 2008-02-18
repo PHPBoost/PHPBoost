@@ -99,6 +99,14 @@ div#admin_quick_menu li a.quick_link{
 	margin-top:15px;
 }
 
+/* Fond des catégories dans l'administration */
+.management_cat_admin{
+	width:100%;
+	height:20px;
+	margin-bottom:2px;
+	padding:4px 0px;
+}
+
 /* Coloration des moteur de recherche */
 .robot{
 	color:#FF6600; 

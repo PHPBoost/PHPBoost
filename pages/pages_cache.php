@@ -29,23 +29,23 @@ if( defined('PHP_BOOST') !== true) exit;
 
 function generate_module_file_pages()
 {
-	global $sql;
+	global $Sql;
 	
 	//Catégories des pages
 	$config = 'global $_PAGES_CATS;' . "\n";
 	$config .= '$_PAGES_CATS = array();' . "\n";
-	$result = $sql->query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
+	$result = $Sql->Query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
 	FROM ".PREFIX."pages_cats c
 	LEFT JOIN ".PREFIX."pages p ON p.id = c.id_page
 	ORDER BY p.title", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$config .= '$_PAGES_CATS[\'' . $row['id'] . '\'] = array(\'id_parent\' => ' . ( !empty($row['id_parent']) ? $row['id_parent'] : '0') . ', \'name\' => ' . var_export($row['title'], true) . ', \'auth\' => ' . var_export(unserialize(stripslashes($row['auth'])), true) . ');' . "\n";
 	}
 
 	//Configuration du module de pages
 	$code = 'global $_PAGES_CONFIG;' . "\n" . '$_PAGES_CONFIG = array();' . "\n";
-	$CONFIG_PAGES = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'pages'", __LINE__, __FILE__));
+	$CONFIG_PAGES = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'pages'", __LINE__, __FILE__));
 	$CONFIG_PAGES = is_array($CONFIG_PAGES) ? $CONFIG_PAGES : array();
 	foreach($CONFIG_PAGES as $key => $value)
 	{

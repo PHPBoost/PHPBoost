@@ -32,14 +32,14 @@ if( defined('PHP_BOOST') !== true) exit;
 @load_module_lang('stats', $CONFIG['lang']);
 
 #########################Stats.tpl###########################
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'stats_mini' => '../templates/' . $CONFIG['theme'] . '/stats/stats_mini.tpl'
 ));
 
-$cache->load_file('stats');
+$Cache->Load_file('stats');
 $l_member_registered = ($nbr_members > 1) ? $LANG['member_registered_s'] : $LANG['member_registered'];
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'SID' => SID,
 	'L_STATS' => $LANG['stats'],
 	'L_MORE_STAT' => $LANG['more_stats'],
@@ -48,6 +48,6 @@ $template->assign_vars(array(
 	'U_LINK_LAST_MEMBER' => '<a href="' . HOST . DIR . '/member/member' . transid('.php?id=' . $last_member_id, '-' . $last_member_id  . '.php') . '">' . $last_member_login . '</a>'
 ));
 
-$template->pparse('stats_mini');
+$Template->Pparse('stats_mini');
 
 ?>

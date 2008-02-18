@@ -30,21 +30,21 @@ if( defined('PHP_BOOST') !== true) exit;
 //Gestion des liens
 function generate_module_file_links()
 {
-	global $sql;
+	global $Sql;
 	
 	$code = 'global $_array_link;global $LANG;' . "\n" . '$_array_link = array(' . "\n";
-	$result = $sql->query_while("SELECT name, url, activ, secure, sep 
+	$result = $Sql->Query_while("SELECT name, url, activ, secure, sep 
 	FROM ".PREFIX."links 
 	WHERE activ = 1 
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$code .= 'array(\'name\' => ' . var_export($row['name'], true) . ',' . "\r\n" .
 		'\'url\' => ' . var_export($row['url'], true) . ',' . "\r\n" .
 		'\'secure\' => ' . var_export($row['secure'], true) . ',' . "\r\n" .
 		'\'sep\' => ' . var_export($row['sep'], true) . '),' . "\r\n";
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	$code .= ');';
 	return $code;
 }	
