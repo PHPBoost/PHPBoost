@@ -29,10 +29,10 @@ require_once('../includes/begin.php');
 
 $idweb = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 if( !empty($idweb) )
-	$sql->query_inject("UPDATE ".PREFIX."web SET compt = compt + 1 WHERE id = '" . $idweb . "'", __LINE__, __LINE__); //MAJ du compteur.
+	$Sql->Query_inject("UPDATE ".PREFIX."web SET compt = compt + 1 WHERE id = '" . $idweb . "'", __LINE__, __LINE__); //MAJ du compteur.
 
 //Redirection vers le site demandé!
-$url_web = $sql->query("SELECT url FROM ".PREFIX."web WHERE id = '" . $idweb . "'", __LINE__, __FILE__);
+$url_web = $Sql->Query("SELECT url FROM ".PREFIX."web WHERE id = '" . $idweb . "'", __LINE__, __FILE__);
 if( !empty($url_web) )
 	redirect($url_web);
 

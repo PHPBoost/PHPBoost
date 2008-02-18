@@ -31,9 +31,9 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 {
 	//Chargement de la langue du module.
 	@load_module_lang('online', $CONFIG['lang']);
-	$cache->load_file('online');
+	$Cache->Load_file('online');
 	
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'online' => '../templates/' . $CONFIG['theme'] . '/online/online_mini.tpl'
 	));
 
@@ -41,12 +41,12 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 	list($count_visit, $count_member, $count_modo, $count_admin) = array(0, 0, 0, 0);  
 
 	$i = 0;
-	$result = $sql->query_while("SELECT s.user_id, s.level, s.session_time, m.login
+	$result = $Sql->Query_while("SELECT s.user_id, s.level, s.session_time, m.login
 	FROM ".PREFIX."sessions s 
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 	ORDER BY " . $CONFIG_ONLINE['display_order_online'], __LINE__, __FILE__); //4 Membres enregistrés max.
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( $i < $CONFIG_ONLINE['online_displayed'] )
 		{
@@ -71,7 +71,7 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 			//Visiteurs non pris en compte.
 			if( $row['level'] !== '-1' )
 			{
-				$template->assign_block_vars('online', array(
+				$Template->Assign_block_vars('online', array(
 					'MEMBER' => '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . wordwrap_html($row['login'], 19) . '</a><br />'	
 				));
 				$i++;
@@ -94,7 +94,7 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 			break;
 		}
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 
 
 	$count_visit = (empty($count_visit) && empty($count_member) && empty($count_modo) && empty($count_admin)) ? '1' : $count_visit;
@@ -111,7 +111,7 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 	$l_modo = ($count_modo > 1) ? $LANG['modo_s'] : $LANG['modo'];
 	$l_admin = ($count_admin > 1) ? $LANG['admin_s'] : $LANG['admin'];
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'VISIT' => $count_visit,
 		'MEMBER' => $count_member,
 		'MODO' => $count_modo,
@@ -126,7 +126,7 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 		'L_TOTAL' => $LANG['total']
 	));
 
-	$template->pparse('online'); 
+	$Template->Pparse('online'); 
 }	
 
 ?>

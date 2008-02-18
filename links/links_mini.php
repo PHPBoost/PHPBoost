@@ -27,15 +27,15 @@
 
 if( defined('PHP_BOOST') !== true)	exit;
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'links' => '../templates/' . $CONFIG['theme'] . '/links/links_mini.tpl'
 ));
 
 //Inclusion du cache des liens pour éviter une requête inutile.
-$cache->load_file('links');
+$Cache->Load_file('links');
 
-$template->assign_vars(array(
-	'MODULE_DATA_PATH' => $template->module_data_path('links')
+$Template->Assign_vars(array(
+	'MODULE_DATA_PATH' => $Template->Module_data_path('links')
 ));
 	
 $i = 0;	
@@ -43,25 +43,25 @@ if( isset($_array_link) )
 {					
 	foreach($_array_link as $array_links)
 	{
-		if( $session->data['level'] >= $array_links['secure'] )
+		if( $Member->Get_attribute('level') >= $array_links['secure'] )
 		{
-			$template->assign_block_vars('links', array(
+			$Template->Assign_block_vars('links', array(
 			));
 			
 			if( $array_links['sep'] == '1' )
 			{
-				$template->assign_block_vars('links.title', array(
+				$Template->Assign_block_vars('links.title', array(
 					'NAME' => $array_links['name']
 				));
 				if( $i > 0 )
 				{
-					$template->assign_block_vars('links.title.bottom', array(					
+					$Template->Assign_block_vars('links.title.bottom', array(					
 					));	
 				}
 			}
 			else 
 			{
-				$template->assign_block_vars('links.subtitle', array(
+				$Template->Assign_block_vars('links.subtitle', array(
 					'NAME' => $array_links['name'],
 					'URL' => strpos($array_links['url'], '//') !== false ? $array_links['url'] : $array_links['url'] . SID
 				));
@@ -72,6 +72,6 @@ if( isset($_array_link) )
 }
 
 if( $i > 0 )
-	$template->pparse('links');
+	$Template->Pparse('links');
 
 ?>

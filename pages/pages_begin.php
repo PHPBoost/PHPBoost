@@ -27,8 +27,8 @@
 
 if( defined('PHP_BOOST') !== true)	exit;
 
-if( !$groups->check_auth($SECURE_MODULE['pages'], ACCESS_MODULE) )
-	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+if( !$Member->Check_auth($SECURE_MODULE['pages'], ACCESS_MODULE) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 load_module_lang('pages', $CONFIG['lang']);
 
@@ -36,7 +36,7 @@ define('READ_PAGE', 0x01);
 define('EDIT_PAGE', 0x02);
 define('READ_COM', 0x04);
 
-$cache->load_file('pages');
+$Cache->Load_file('pages');
 
 define('ALTERNATIVE_CSS', 'pages');
 

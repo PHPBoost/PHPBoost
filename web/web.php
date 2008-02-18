@@ -31,14 +31,14 @@ require_once('../includes/header.php');
 
 if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Contenu du lien.
 {
-	$template->set_filenames(array('web' => '../templates/' . $CONFIG['theme'] . '/web/web.tpl'));
+	$Template->Set_filenames(array('web' => '../templates/' . $CONFIG['theme'] . '/web/web.tpl'));
 	
-	if( !$session->check_auth($session->data, $CAT_WEB[$idcat]['secure']) )
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	if( !$Member->Check_level($CAT_WEB[$idcat]['secure']) )
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	if( empty($web['id']) )
-		$errorh->error_handler('e_unexist_link_web', E_USER_REDIRECT);
+		$Errorh->Error_handler('e_unexist_link_web', E_USER_REDIRECT);
 		
-	if( $session->data['level'] === 2 )
+	if( $Member->Get_attribute('level') === 2 )
 	{
 		$java = "<script language='JavaScript' type='text/javascript'>
 		<!--
@@ -58,14 +58,14 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 		$java = '';
 	}
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'JAVA' => $java,
 		'EDIT' => $edit,
 		'DEL' => $del
 	));
 		
 	//Notation
-	if( $session->data['user_id'] !== -1 ) //Utilisateur connecté
+	if( $Member->Get_attribute('user_id') !== -1 ) //Utilisateur connecté
 		$link_note = '<a class="com" style="font-size:10px;" href="web' . transid('.php?note=' . $web['id'] . '&amp;id=' . $idweb . '&amp;cat=' . $idcat, '-' . $idcat . '-' . $idweb . '-0-0-' . $web['id'] . '.php?note=' . $web['id']) . '#note" title="' . $LANG['note'] . '">' . $LANG['note'] . '</a>';
 	else
 		$link_note = $LANG['note'];
@@ -81,8 +81,8 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 	$com_false = $LANG['post_com'] . '</a>';
 	$l_com = !empty($web['nbr_com']) ? $com_true . ' (' . $web['nbr_com'] . ')</a>' : $com_false;
 	
-	$template->assign_block_vars('web', array(
-		'MODULE_DATA_PATH' => $template->module_data_path('web'),
+	$Template->Assign_block_vars('web', array(
+		'MODULE_DATA_PATH' => $Template->Module_data_path('web'),
 		'IDWEB' => $web['id'],		
 		'NAME' => $web['title'],
 		'CONTENTS' => $web['contents'],
@@ -106,13 +106,13 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 	//Affichage et gestion de la notation
 	if( !empty($get_note) && !empty($CAT_WEB[$idcat]['name']) )
 	{
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'L_ACTUAL_NOTE' => $LANG['actual_note'],
 			'L_VOTE' => $LANG['vote'],
 			'L_NOTE' => $LANG['note']
 		));
 				
-		if( $session->check_auth($session->data, 0) ) //Utilisateur connecté.
+		if( $Member->Check_level(0) ) //Utilisateur connecté.
 		{
 			if( !empty($_POST['valid_note']) )
 			{
@@ -120,19 +120,19 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 				
 				//Echelle de notation.
 				$check_note = ( ($note >= 0) && ($note <= $CONFIG_WEB['note_max']) ) ? true : false;				
-				$users_note = $sql->query("SELECT users_note FROM ".PREFIX."web WHERE idcat = '" . $idcat . "' AND id = '" . $get_note . "'", __LINE__, __FILE__);
+				$users_note = $Sql->Query("SELECT users_note FROM ".PREFIX."web WHERE idcat = '" . $idcat . "' AND id = '" . $get_note . "'", __LINE__, __FILE__);
 				
 				$array_users_note = explode('/', $users_note);
-				if( !in_array($session->data['user_id'], $array_users_note) && !empty($session->data['user_id']) && ($check_note === true) )
+				if( !in_array($Member->Get_attribute('user_id'), $array_users_note) && $Member->Get_attribute('user_id') != '' && ($check_note === true) )
 				{
-					$row_note = $sql->query_array('web', 'users_note', 'nbrnote', 'note', "WHERE id = '" . $get_note . "'", __LINE__, __FILE__);
+					$row_note = $Sql->Query_array('web', 'users_note', 'nbrnote', 'note', "WHERE id = '" . $get_note . "'", __LINE__, __FILE__);
 					$note = ( ($row_note['note'] * $row_note['nbrnote']) + $note ) / ($row_note['nbrnote'] + 1);
 					
 					$row_note['nbrnote']++;
 					
-					$users_note = !empty($row_note['users_note']) ? $row_note['users_note'] . '/' . $session->data['user_id'] : $session->data['user_id']; //On ajoute l'id de l'utilisateur.
+					$users_note = !empty($row_note['users_note']) ? $row_note['users_note'] . '/' . $Member->Get_attribute('user_id') : $Member->Get_attribute('user_id'); //On ajoute l'id de l'utilisateur.
 					
-					$sql->query_inject("UPDATE ".PREFIX."web SET note = '" . $note . "', nbrnote = '" . $row_note['nbrnote'] . "', 
+					$Sql->Query_inject("UPDATE ".PREFIX."web SET note = '" . $note . "', nbrnote = '" . $row_note['nbrnote'] . "', 
 					users_note = '" . $users_note . "' WHERE id = '" . $get_note . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 					
 					//Success.
@@ -141,13 +141,13 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 				else
 					redirect(HOST . DIR . '/web/web' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
 			}
-			elseif( !empty($session->data['user_id']) )
+			elseif( $Member->Get_attribute('user_id') != '' )
 			{
-				$row = $sql->query_array('web', 'users_note', 'nbrnote', 'note', "WHERE idcat = '" . $idcat . "' AND id = '" . $get_note . "'", __LINE__, __FILE__);
+				$row = $Sql->Query_array('web', 'users_note', 'nbrnote', 'note', "WHERE idcat = '" . $idcat . "' AND id = '" . $get_note . "'", __LINE__, __FILE__);
 				
 				$array_users_note = explode('/', $row['users_note']);
 				$select = '';
-				if( in_array($session->data['user_id'], $array_users_note) ) //Déjà voté
+				if( in_array($Member->Get_attribute('user_id'), $array_users_note) ) //Déjà voté
 					$select .= '<option value="-1">' . $LANG['already_vote'] . '</option>';
 				else 
 				{
@@ -161,17 +161,17 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 					}
 				}
 				
-				$template->assign_block_vars('note', array(
+				$Template->Assign_block_vars('note', array(
 					'NOTE' => ($row['nbrnote'] > 0) ? $row['note'] : '<em>' . $LANG['no_note'] . '</em>',
 					'SELECT' => $select,
 					'U_WEB_ACTION_NOTE' => transid('.php?note=' . $get_note . '&amp;id=' . $get_note . '&amp;cat=' . $idcat, '-' . $idcat . '-' . $get_note . '.php?note=' . $get_note)
 				));
 			}	
 			else
-				$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 		}
 		else 
-			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	}
 	
 	//Affichage commentaires.
@@ -185,25 +185,25 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 		include_once('../includes/com.php');
 	}	
 
-	$template->pparse('web');
+	$Template->Pparse('web');
 }
 elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 {
-	$template->set_filenames(array('web' => '../templates/' . $CONFIG['theme'] . '/web/web.tpl'));
+	$Template->Set_filenames(array('web' => '../templates/' . $CONFIG['theme'] . '/web/web.tpl'));
 	
-	if( !$session->check_auth($session->data, $CAT_WEB[$idcat]['secure']) )
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	if( !$Member->Check_level($CAT_WEB[$idcat]['secure']) )
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
-	$nbr_web = $sql->query("SELECT COUNT(*) as compt 
+	$nbr_web = $Sql->Query("SELECT COUNT(*) as compt 
 	FROM ".PREFIX."web 
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 	
-	$template->assign_block_vars('link', array(
+	$Template->Assign_block_vars('link', array(
 		'CAT_NAME' => $CAT_WEB[$idcat]['name'],		
 		'NO_CAT' => ($nbr_web == 0) ? $LANG['none_link'] : ''
 	));	
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'MAX_NOTE' => $CONFIG_WEB['note_max'],
 		'L_LINK' => $LANG['link'],
 		'L_DATE' => $LANG['date'],
@@ -250,18 +250,18 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 
 	//On crée une pagination si le nombre de lien est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 		
-	$template->assign_vars(array(
-		'PAGINATION' => $pagination->show_pagin('web' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $CONFIG_WEB['nbr_web_max'], 3)
+	$Template->Assign_vars(array(
+		'PAGINATION' => $Pagination->Display_pagination('web' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $CONFIG_WEB['nbr_web_max'], 3)
 	));
 
-	$result = $sql->query_while("SELECT id, title, timestamp, compt, note, nbrnote, nbr_com
+	$result = $Sql->Query_while("SELECT id, title, timestamp, compt, note, nbrnote, nbr_com
 	FROM ".PREFIX."web
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
 	ORDER BY " . $sort . " " . $mode . 
-	$sql->sql_limit($pagination->first_msg($CONFIG_WEB['nbr_web_max'], 'p'), $CONFIG_WEB['nbr_web_max']), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	$Sql->Sql_limit($Pagination->First_msg($CONFIG_WEB['nbr_web_max'], 'p'), $CONFIG_WEB['nbr_web_max']), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		//On reccourci le lien si il est trop long.
 		$row['title'] = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
@@ -272,7 +272,7 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 		$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
 	
 	
-		$template->assign_block_vars('link.web', array(			
+		$Template->Assign_block_vars('link.web', array(			
 			'NAME' => $row['title'],
 			'CAT' => $CAT_WEB[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
@@ -282,32 +282,32 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 			'U_WEB_LINK' => transid('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->pparse('web');
+	$Template->Pparse('web');
 }
 else
 {
-	$template->set_filenames(array('web' => '../templates/' . $CONFIG['theme'] . '/web/web.tpl'));
+	$Template->Set_filenames(array('web' => '../templates/' . $CONFIG['theme'] . '/web/web.tpl'));
 	
-	$total_link = $sql->query("SELECT COUNT(*) FROM ".PREFIX."web_cat wc
+	$total_link = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."web_cat wc
 	LEFT JOIN ".PREFIX."web w ON w.idcat = wc.id
-	WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $session->data['level'] . "'", __LINE__, __FILE__);
-	$total_cat = $sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."web_cat WHERE aprob = 1 AND secure <= '" . $session->data['level'] . "'", __LINE__, __FILE__);
+	WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $Member->Get_attribute('level') . "'", __LINE__, __FILE__);
+	$total_cat = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."web_cat WHERE aprob = 1 AND secure <= '" . $Member->Get_attribute('level') . "'", __LINE__, __FILE__);
 	
 	$edit = '';
-	if( $session->data['level'] === 2 )
+	if( $Member->Get_attribute('level') === 2 )
 		$edit = '&nbsp;&nbsp;<a href="admin_web_cat.php' .  SID . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
 
 	//On crée une pagination si le nombre de catégories est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 
 	$CONFIG_WEB['nbr_column'] = ($total_cat > $CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : $total_cat;
 	$CONFIG_WEB['nbr_column'] = !empty($CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : 1;
 	
-	$template->assign_block_vars('cat', array(
-		'PAGINATION' => $pagination->show_pagin('web' . transid('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $CONFIG_WEB['nbr_cat_max'], 3),
+	$Template->Assign_block_vars('cat', array(
+		'PAGINATION' => $Pagination->Display_pagination('web' . transid('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $CONFIG_WEB['nbr_cat_max'], 3),
 		'EDIT' => $edit,
 		'TOTAL_FILE' => $total_link,
 		'L_CATEGORIES' => $LANG['categories'],
@@ -318,17 +318,17 @@ else
 	
 	//Catégorie disponibles	
 	$column_width = floor(100/$CONFIG_WEB['nbr_column']);
-	$result = $sql->query_while(
+	$result = $Sql->Query_while(
 	"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count
 	FROM ".PREFIX."web_cat aw
 	LEFT JOIN ".PREFIX."web w ON w.idcat = aw.id AND w.aprob = 1
-	WHERE aw.aprob = 1 AND aw.secure <= '" . $session->data['level'] . "'
+	WHERE aw.aprob = 1 AND aw.secure <= '" . $Member->Get_attribute('level') . "'
 	GROUP BY aw.id
 	ORDER BY aw.class
-	" . $sql->sql_limit($pagination->first_msg($CONFIG_WEB['nbr_cat_max'], 'p'), $CONFIG_WEB['nbr_cat_max']), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_WEB['nbr_cat_max'], 'p'), $CONFIG_WEB['nbr_cat_max']), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$template->assign_block_vars('cat.web', array(
+		$Template->Assign_block_vars('cat.web', array(
 			'WIDTH' => $column_width,
 			'TOTAL' => $row['count'],
 			'CAT' => $row['name'],
@@ -337,9 +337,9 @@ else
 			'U_WEB_CAT' => transid('.php?cat=' . $row['id'], '-' . $row['id'] . '.php')
 		));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->pparse('web');
+	$Template->Pparse('web');
 }
 			
 require_once('../includes/footer.php'); 

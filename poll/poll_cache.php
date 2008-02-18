@@ -30,12 +30,12 @@ if( defined('PHP_BOOST') !== true) exit;
 //Mini-polls
 function generate_module_file_poll()
 {
-	global $sql;
+	global $Sql;
 	
 	$code = 'global $CONFIG_POLL;' . "\n";
 		
 	//Récupération du tableau linéarisé dans la bdd.
-	$CONFIG_POLL = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'poll'", __LINE__, __FILE__));
+	$CONFIG_POLL = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'poll'", __LINE__, __FILE__));
 	$CONFIG_POLL = is_array($CONFIG_POLL) ? $CONFIG_POLL : array();
 	foreach($CONFIG_POLL as $key => $value)
 		$code .= '$CONFIG_POLL[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
@@ -45,7 +45,7 @@ function generate_module_file_poll()
 	{
 		foreach($CONFIG_POLL['poll_mini'] as $key => $idpoll)
 		{
-			$poll = $sql->query_array('poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
+			$poll = $Sql->Query_array('poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
 			if( !empty($poll['id']) ) //Sondage existant.
 			{	
 				$array_answer = explode('|', $poll['answers']);

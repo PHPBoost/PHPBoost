@@ -92,7 +92,7 @@ if( !empty($_POST['valid']) )
 			}
 		}
 
-		$sql->query_inject("INSERT INTO ".PREFIX."poll (question,answers,votes,type,archive,timestamp,visible,start,end,user_id) VALUES ('" . $question . "', '" . substr($answers, 0, strlen($answers) - 1) . "', '" . substr($votes, 0, strlen($votes) - 1) . "', '" . $type . "', '" . $archive . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $session->data['user_id'] . "')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."poll (question,answers,votes,type,archive,timestamp,visible,start,end,user_id) VALUES ('" . $question . "', '" . substr($answers, 0, strlen($answers) - 1) . "', '" . substr($votes, 0, strlen($votes) - 1) . "', '" . $type . "', '" . $archive . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "')", __LINE__, __FILE__);
 				
 		redirect(HOST . DIR . '/poll/admin_poll.php');
 	}
@@ -101,11 +101,11 @@ if( !empty($_POST['valid']) )
 }
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_poll_add' => '../templates/' . $CONFIG['theme'] . '/poll/admin_poll_add.tpl'
 	));
 	 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'VISIBLE_ENABLED' => 'checked="checked"',
 		'L_REQUIRE_QUESTION' => $LANG['require_question'],
 		'L_REQUIRE_ANSWER' => $LANG['require_answer'],
@@ -135,9 +135,9 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['incomplete'], E_USER_NOTICE);
 		
-	$template->pparse('admin_poll_add'); 
+	$Template->Pparse('admin_poll_add'); 
 }
 
 require_once('../includes/admin_footer.php');

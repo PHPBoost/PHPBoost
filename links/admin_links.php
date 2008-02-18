@@ -39,10 +39,10 @@ $bottom = !empty($_GET['bot']) ? securit($_GET['bot']) : '' ;
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {
-	$result = $sql->query_while("SELECT id, name, url, sep
+	$result = $Sql->Query_while("SELECT id, name, url, sep
 	FROM ".PREFIX."links
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$name = !empty($_POST[$row['id'] . 'name']) ? securit($_POST[$row['id'] . 'name']) : '';  
 		$activ = isset($_POST[$row['id'] . 'activ']) ? numeric($_POST[$row['id'] . 'activ']) : '0'; //Désactivé par défaut.  
@@ -50,21 +50,21 @@ if( !empty($_POST['valid']) )
 		$url = !empty($_POST[$row['id'] . 'url']) ? securit($_POST[$row['id'] . 'url']) : ''; 
 		
 		if( ($row['sep'] == 1 || !empty($url)) && !empty($name) )
-			$sql->query_inject("UPDATE ".PREFIX."links SET name = '" . $name . "', url = '" . $url . "', activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."links SET name = '" . $name . "', url = '" . $url . "', activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	
 	###### Régénération du cache des liens #######
-	$cache->generate_module_file('links');
+	$Cache->Generate_module_file('links');
 	
 	redirect(HOST . SCRIPT);
 }
 elseif( !empty($_GET['del']) && !empty($id) ) //Suppresion du lien.
 {
 	//On supprime dans la bdd.
-	$sql->query_inject("DELETE FROM ".PREFIX."links WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->Query_inject("DELETE FROM ".PREFIX."links WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
 	###### Régénération du cache des liens #######
-	$cache->generate_module_file('links');
+	$Cache->Generate_module_file('links');
 	
 	redirect(HOST . SCRIPT);	
 }
@@ -78,12 +78,12 @@ elseif( !empty($_POST['add']) ) //Ajout du lien.
 	if( !empty($name) && !empty($url) )
 	{	
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
-		$idnext = $sql->query("SELECT MAX(class) FROM ".PREFIX."links", __LINE__, __FILE__);
+		$idnext = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."links", __LINE__, __FILE__);
 		$idnext++;
-		$sql->query_inject("INSERT INTO ".PREFIX."links (class,name,url,activ,secure,sep) VALUES('" . $idnext . "', '" . $name . "', '" . $url . "', '" . $activ . "', '" . $secure . "', '0')", __LINE__, __FILE__);	
+		$Sql->Query_inject("INSERT INTO ".PREFIX."links (class,name,url,activ,secure,sep) VALUES('" . $idnext . "', '" . $name . "', '" . $url . "', '" . $activ . "', '" . $secure . "', '0')", __LINE__, __FILE__);	
 		
 		###### Régénération du cache des liens #######
-		$cache->generate_module_file('links');
+		$Cache->Generate_module_file('links');
 		redirect(HOST . SCRIPT);
 	}
 	else
@@ -98,12 +98,12 @@ elseif( !empty($_POST['sepa']) ) //Insertion d'un séparateur.
 	if( !empty($name) )
 	{	
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
-		$idnext = $sql->query("SELECT MAX(class) FROM ".PREFIX."links", __LINE__, __FILE__);
+		$idnext = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."links", __LINE__, __FILE__);
 		$idnext++;
-		$sql->query_inject("INSERT INTO ".PREFIX."links (class,name,url,activ,secure,sep) VALUES('" . $idnext . "', '" . $name . "', '', '" . $activ . "', '" . $secure . "', '1')", __LINE__, __FILE__);	
+		$Sql->Query_inject("INSERT INTO ".PREFIX."links (class,name,url,activ,secure,sep) VALUES('" . $idnext . "', '" . $name . "', '', '" . $activ . "', '" . $secure . "', '1')", __LINE__, __FILE__);	
 	
 		###### Régénération du cache des liens #######
-		$cache->generate_module_file('links');	
+		$Cache->Generate_module_file('links');	
 		redirect(HOST . SCRIPT);
 	}
 	else
@@ -115,12 +115,12 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 	{	
 		$topmoins = ($top - 1);
 		
-		$sql->query_inject("UPDATE ".PREFIX."links SET class = 0 WHERE class = '" . $top . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."links SET class = '" . $top . "' WHERE class = '" . $topmoins . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."links SET class = '" . $topmoins . "' WHERE class = 0", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."links SET class = 0 WHERE class = '" . $top . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."links SET class = '" . $top . "' WHERE class = '" . $topmoins . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."links SET class = '" . $topmoins . "' WHERE class = 0", __LINE__, __FILE__);
 		
 		###### Régénération du cache des liens #######
-		$cache->generate_module_file('links');
+		$Cache->Generate_module_file('links');
 		
 		redirect(HOST . SCRIPT . '#l' . $id);
 	}
@@ -128,30 +128,30 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 	{
 		$bottomplus = ($bottom + 1);
 		
-		$sql->query_inject("UPDATE ".PREFIX."links SET class = 0 WHERE class = '" . $bottom . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."links SET class = '" . $bottom . "' WHERE class = '" . $bottomplus . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."links SET class = '" . $bottomplus . "' WHERE class = 0", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."links SET class = 0 WHERE class = '" . $bottom . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."links SET class = '" . $bottom . "' WHERE class = '" . $bottomplus . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."links SET class = '" . $bottomplus . "' WHERE class = 0", __LINE__, __FILE__);
 		
 		###### Régénération du cache des liens #######
-		$cache->generate_module_file('links');		
+		$Cache->Generate_module_file('links');		
 		redirect(HOST . SCRIPT . '#l' . $id);
 	}
 }
 elseif( $add )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 	'admin_links_management' => '../templates/' . $CONFIG['theme'] . '/links/admin_links_management.tpl'
 	));
 	
-	$template->assign_block_vars('add', array(
+	$Template->Assign_block_vars('add', array(
 	));
 		
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'L_REQUIRE_NAME' => $LANG['require_name'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
@@ -173,18 +173,18 @@ elseif( $add )
 		'L_RESET' => $LANG['reset']
 	));
 
-	$template->pparse('admin_links_management'); // traitement du modele	
+	$Template->Pparse('admin_links_management'); // traitement du modele	
 }
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_links_management' => '../templates/' . $CONFIG['theme'] . '/links/admin_links_management.tpl'
 	));
 	
-	$template->assign_block_vars('management', array(
+	$Template->Assign_block_vars('management', array(
 	));
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'L_DEL_ENTRY' => $LANG['del_entry'],
 		'L_LINK_CONFIGURATION' => $LANG['link_configuration'],
@@ -205,12 +205,12 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 		
-	$result = $sql->query_while("SELECT l.id, l.class, l.url, l.name, l.activ, l.secure, l.sep, MAX(l1.class) as max_class, MIN(l1.class) as min_class
+	$result = $Sql->Query_while("SELECT l.id, l.class, l.url, l.name, l.activ, l.secure, l.sep, MAX(l1.class) as max_class, MIN(l1.class) as min_class
 	FROM ".PREFIX."links l, 
 	".PREFIX."links l1
 	GROUP BY l.class
 	ORDER BY l.class", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( $row['sep'] == '1' )
 			$url = '<img src="../templates/' . $CONFIG['theme'] . '/images/row1.png" alt="" />';
@@ -223,7 +223,7 @@ else
 		$bottom_link = ($row['max_class'] != $row['class']) ? '<a href="admin_links.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
 		<img src="../templates/' . $CONFIG['theme'] . '/images/admin/down.png" alt="" title="" /></a>' : '';
 		
-		$template->assign_block_vars('management.links', array(
+		$Template->Assign_block_vars('management.links', array(
 			'IDCAT' => $row['id'],
 			'NAME' => $row['name'],
 			'URL' => $url,
@@ -236,14 +236,14 @@ else
 		//Activation des liens.
 		if( $row['activ'] == '1' ) //activé
 		{
-			$template->assign_block_vars('management.links.activ', array(
+			$Template->Assign_block_vars('management.links.activ', array(
 				'ACTIV_ENABLED' => 'checked="checked"'
 			));
 				
 		}
 		elseif( $row['activ'] == '0' )				
 		{
-			$template->assign_block_vars('management.links.activ', array(
+			$Template->Assign_block_vars('management.links.activ', array(
 				'ACTIV_DISABLED' => 'checked="checked"'
 			));
 		} 
@@ -273,14 +273,14 @@ else
 			} 
 				
 			$selected = ($row['secure'] == $i) ? 'selected="selected"' : '' ;	
-			$template->assign_block_vars('management.links.select', array(
+			$Template->Assign_block_vars('management.links.select', array(
 				'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 			));
 		}		
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 
-	$template->pparse('admin_links_management'); // traitement du modele	
+	$Template->Pparse('admin_links_management'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

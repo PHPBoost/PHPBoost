@@ -34,9 +34,9 @@ $id_error = !empty($_GET['e']) ? trim($_GET['e']) : '';
 $array_error = array('e_member_ban', 'e_member_ban_w', 'e_unexist_member', 'e_unactiv_member', 'e_member_flood');	
 if( in_array($id_error, $array_error) )
 {
-	if( $session->data['user_id'] === -1 )
+	if( $Member->Get_attribute('user_id') === -1 )
 	{
-		$template->set_filenames(array(
+		$Template->Set_filenames(array(
 			'error' => '../templates/' . $CONFIG['theme'] . '/error.tpl'
 		));
 
@@ -99,9 +99,9 @@ if( in_array($id_error, $array_error) )
 		}	
 			
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, $errno);		
+			$Errorh->Error_handler($errstr, $errno);		
 			
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'C_ERRORH_CONNEXION' => true,
 			'L_CONNECT' => $LANG['connect'],
 			'L_PSEUDO' => $LANG['pseudo'],
@@ -112,14 +112,14 @@ if( in_array($id_error, $array_error) )
 			'U_REGISTER' => $CONFIG_MEMBER['activ_register'] ? '<a href="../member/register.php">' . $LANG['register'] . '</a><br />' : ''
 		));
 		
-		$template->pparse('error');
+		$Template->Pparse('error');
 	}
 	else
 		redirect(get_start_page());
 }
 elseif( !empty($id_error) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'error' => '../templates/' . $CONFIG['theme'] . '/error.tpl'
 	));
 
@@ -128,14 +128,14 @@ elseif( !empty($id_error) )
 	if( is_dir('../' . $module) )
 		load_module_lang($module, $CONFIG['lang']); //Chargement de la langue du module.
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],		
 		'L_ERROR' => $LANG['error'],
 		'U_BACK' => !empty($_SERVER['HTTP_REFERER']) ? '<a href="' . transid($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : '<a href="javascript:history.back(1)">' . $LANG['back'] . '</a>',
 		'U_INDEX' => '<a href="' . transid(get_start_page()) .'">' . $LANG['index'] . '</a>', 
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'C_ERRORH_CONNEXION' => false,
 		'C_ERRORH' => true,
 		'ERRORH_IMG' => 'important',
@@ -143,15 +143,15 @@ elseif( !empty($id_error) )
 		'L_ERRORH' => isset($LANG[$id_error]) ? $LANG[$id_error] : $LANG['unknow_error']
 	));
 	
-	$template->pparse('error');
+	$Template->Pparse('error');
 }
-elseif( $session->data['user_id'] === -1 )
+elseif( $Member->Get_attribute('user_id') === -1 )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'error' => '../templates/' . $CONFIG['theme'] . '/error.tpl'
 	));
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'C_ERRORH_CONNEXION' => true,
 		'L_CONNECT' => $LANG['connect'],
 		'L_PSEUDO' => $LANG['pseudo'],
@@ -162,7 +162,7 @@ elseif( $session->data['user_id'] === -1 )
 		'U_REGISTER' => $CONFIG_MEMBER['activ_register'] ? '<a href="../member/register.php">' . $LANG['register'] . '</a><br />' : ''
 	));
 	
-	$template->pparse('error');
+	$Template->Pparse('error');
 }
 else
 	redirect(get_start_page());

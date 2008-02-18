@@ -29,8 +29,8 @@ if( defined('PHP_BOOST') !== true)
 	exit;
 	
 //Autorisation sur le module.
-if( !$groups->check_auth($SECURE_MODULE['stats'], ACCESS_MODULE) )
-	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+if( !$Member->Check_auth($SECURE_MODULE['stats'], ACCESS_MODULE) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 include_once('../lang/' . $CONFIG['lang'] . '/stats.php'); //Chargement de la langue.
 
@@ -58,8 +58,8 @@ $l_title = $user_lang ? $LANG['stat_lang'] : $l_title;
 $l_title = !empty($l_title) ? $l_title : '';
 
 if( !empty($l_title) ) 
-	$speed_bar->Add_link($LANG['title_stats'], transid('stats.php'));
-	$speed_bar->Add_link($l_title, '');	
+	$Speed_bar->Add_link($LANG['title_stats'], transid('stats.php'));
+	$Speed_bar->Add_link($l_title, '');	
 define('TITLE', $LANG['title_stats'] . (!empty($l_title) ? ' - ' . $l_title : ''));
 
 ?>

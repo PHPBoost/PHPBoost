@@ -29,10 +29,10 @@ if( defined('PHP_BOOST') !== true) exit;
 
 function generate_module_file_newsletter()
 {
-	global $sql, $CONFIG;
+	global $Sql, $CONFIG;
 	//Configuration de la newsletter
 	$code = 'global $_NEWSLETTER_CONFIG;' . "\n" . '$_NEWSLETTER_CONFIG = array();' . "\n";
-	$NEWSLETTER_CONFIG = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'newsletter'", __LINE__, __FILE__));
+	$NEWSLETTER_CONFIG = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'newsletter'", __LINE__, __FILE__));
 	if( is_array($NEWSLETTER_CONFIG) )
 	{
 		$mails = explode(';', $CONFIG['mail']);

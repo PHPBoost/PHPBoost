@@ -36,23 +36,23 @@ $del = !empty($_GET['delete']) ? true : false;
 
 if( $del && !empty($id) ) //Suppresion poll
 {
-	$cache->load_file('poll');
+	$Cache->Load_file('poll');
 	
 	//On supprime des tables config et reponses des polls.
-	$sql->query_inject("DELETE FROM ".PREFIX."poll WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->Query_inject("DELETE FROM ".PREFIX."poll WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	
 	###### Régénération du cache du mini poll #######
 	if( $id == $CONFIG_POLL['mini_poll'] )		
 	{	
 		$CONFIG_POLL['poll_mini'] = '-1';
-		$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
-		$cache->generate_module_file('poll');
+		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
+		$Cache->Generate_module_file('poll');
 	}
 	redirect(HOST . SCRIPT);
 }
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
-	$cache->load_file('poll');
+	$Cache->Load_file('poll');
 	
 	$question = !empty($_POST['question']) ? securit($_POST['question']) : '';
 	$type = isset($_POST['type']) ? numeric($_POST['type']) : '';
@@ -121,19 +121,19 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		}
 		$votes = trim($votes, '|');
 		
-		$sql->query_inject("UPDATE ".PREFIX."poll SET question = '" . $question . "', answers = '" . substr($answers, 0, strlen($answers) - 1) . "', votes = '" . $votes . "', type = '" . $type . "', archive = '" . $archive . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."poll SET question = '" . $question . "', answers = '" . substr($answers, 0, strlen($answers) - 1) . "', votes = '" . $votes . "', type = '" . $type . "', archive = '" . $archive . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 		
 		if( $id_post == $CONFIG_POLL['poll_mini'] && ($visible == '0' || $archive == '1') )
 		{
 			$CONFIG_POLL['poll_mini'] = '-1';
-			$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);	
+			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);	
 		
 			###### Régénération du cache #######
-			$cache->generate_module_file('poll');
+			$Cache->Generate_module_file('poll');
 		}	
 		//Régénaration du cache du mini poll, si celui-ci a été modifié.
 		if( $id_post == $CONFIG_POLL['poll_mini'] )
-			$cache->generate_module_file('poll');
+			$Cache->Generate_module_file('poll');
 		
 		redirect(HOST . SCRIPT);
 	}
@@ -142,13 +142,13 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 }	
 elseif( !empty($id) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_poll_management2' => '../templates/' . $CONFIG['theme'] . '/poll/admin_poll_management2.tpl'
 	));
 
-	$row = $sql->query_array('poll', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->Query_array('poll', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'IDPOLL' => $row['id'],
 		'QUESTIONS' => $row['question'],	
 		'TYPE_UNIQUE' => ($row['type'] == '1') ? 'checked="checked"' : '',
@@ -203,7 +203,7 @@ elseif( !empty($id) )
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['incomplete'], E_USER_NOTICE);
 	
 	$array_answer = explode('|', $row['answers']);
 	$array_vote = explode('|', $row['votes']);
@@ -217,11 +217,11 @@ elseif( !empty($id) )
 	foreach($array_poll as $answer => $nbrvote)
 	{
 		$percent = number_round(($nbrvote * 100 / $sum_vote), 1);
-		$template->assign_block_vars('answers', array(
+		$Template->Assign_block_vars('answers', array(
 			'ID' => $i,
 			'ANSWER' => !empty($answer) ? $answer : ''
 		));
-		$template->assign_block_vars('votes', array(
+		$Template->Assign_block_vars('votes', array(
 			'ID' => $i,
 			'VOTES' => isset($nbrvote) ? $nbrvote : '',
 			'PERCENT' => isset($percent) ? $percent . '%' : ''
@@ -229,25 +229,25 @@ elseif( !empty($id) )
 		$i++;
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'MAX_ID' => $i
 	));
 	
-	$template->pparse('admin_poll_management2'); 
+	$Template->Pparse('admin_poll_management2'); 
 }			
 else
 {			
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_poll_management' => '../templates/' . $CONFIG['theme'] . '/poll/admin_poll_management.tpl'
 	));
 	 
-	$nbr_poll = $sql->count_table('poll', __LINE__, __FILE__);
+	$nbr_poll = $Sql->Count_table('poll', __LINE__, __FILE__);
 
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 	
-	$template->assign_vars(array(
-		'PAGINATION' => $pagination->show_pagin('admin_poll.php?p=%d', $nbr_poll, 'p', 20, 3),
+	$Template->Assign_vars(array(
+		'PAGINATION' => $Pagination->Display_pagination('admin_poll.php?p=%d', $nbr_poll, 'p', 20, 3),
 		'LANG' => $CONFIG['lang'],
 		'L_CONFIRM_ERASE_POOL' => $LANG['confirm_del_poll'],
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
@@ -265,12 +265,12 @@ else
 		'L_SHOW' => $LANG['show']
 	)); 
 
-	$result = $sql->query_while("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, m.login 
+	$result = $Sql->Query_while("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, m.login 
 	FROM ".PREFIX."poll p
 	LEFT JOIN ".PREFIX."member m ON p.user_id = m.user_id	
 	ORDER BY p.timestamp DESC 
-	" . $sql->sql_limit($pagination->first_msg(20, 'p'), 20), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit($Pagination->First_msg(20, 'p'), 20), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( $row['visible'] == 2 )
 			$aprob = $LANG['waiting'];			
@@ -292,7 +292,7 @@ else
 		elseif( $row['end'] > 0 )
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 		
-		$template->assign_block_vars('questions', array(
+		$Template->Assign_block_vars('questions', array(
 			'QUESTIONS' => $question,
 			'IDPOLL' => $row['id'],
 			'PSEUDO' => !empty($row['login']) ? $row['login'] : $LANG['guest'],			
@@ -302,9 +302,9 @@ else
 			'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : '')
 		));
 	}
-	$sql->close($result);	
+	$Sql->Close($result);	
 	
-	$template->pparse('admin_poll_management'); 
+	$Template->Pparse('admin_poll_management'); 
 }
 
 require_once('../includes/admin_footer.php');

@@ -40,11 +40,11 @@ if( $add )
 	if( !empty($shout_pseudo) && !empty($shout_contents) )
 	{
 		//Accès pour poster.		
-		if( $session->check_auth($session->data, $CONFIG_SHOUTBOX['shoutbox_auth']) )
+		if( $Member->Check_level($CONFIG_SHOUTBOX['shoutbox_auth']) )
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-			$check_time = ($session->data['user_id'] !== -1 && $CONFIG['anti_flood'] == 1) ? $sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__) : '';
-			if( !empty($check_time) && !$groups->max_value($groups->user_groups_auth, AUTH_FLOOD) )
+			$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->Query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+			if( !empty($check_time) && !$Member->Check_max_value(AUTH_FLOOD) )
 			{
 				if( $check_time >= (time() - $CONFIG['delay_flood']) )
 				{
@@ -66,11 +66,11 @@ if( $add )
 				exit;
 			}
 			
-			$sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $session->data['user_id'] . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
-			$last_msg_id = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."shoutbox"); 
+			$Sql->Query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $Member->Get_attribute('user_id') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+			$last_msg_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."shoutbox"); 
 			
-			if( $session->data['user_id'] !== -1 )
-				$shout_pseudo = '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a> <a class="small_link" href="../member/member' . transid('.php?id=' . $session->data['user_id'], '-' . $session->data['user_id'] . '.php') . '">' . (!empty($shout_pseudo) ? wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . '</a>';
+			if( $Member->Get_attribute('user_id') !== -1 )
+				$shout_pseudo = '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a> <a class="small_link" href="../member/member' . transid('.php?id=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php') . '">' . (!empty($shout_pseudo) ? wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . '</a>';
 			else
 				$shout_pseudo = '<span class="text_small" style="font-style: italic;">' . (!empty($shout_pseudo) ? wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . '</span>';
 				
@@ -86,14 +86,14 @@ if( $add )
 }
 elseif( $refresh )
 {
-	$result = $sql->query_while("SELECT id, login, user_id, contents 
+	$result = $Sql->Query_while("SELECT id, login, user_id, contents 
 	FROM ".PREFIX."shoutbox 
 	ORDER BY timestamp DESC 
-	" . $sql->sql_limit(0, 25), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit(0, 25), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$row['user_id'] = (int)$row['user_id'];		
-		if( $session->check_auth($session->data, 1) || ($row['user_id'] === $session->data['user_id'] && $session->data['user_id'] !== -1) )
+		if( $Member->Check_level(1) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 			$del = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a>';
 		else
 			$del = '';
@@ -105,22 +105,22 @@ elseif( $refresh )
 		
 		echo '<p id="shout_container_' . $row['id'] . '">' . $row['login'] . '<span class="text_small">: ' . str_replace(array("\n", "\r"), array('', ''), ucfirst($row['contents'])) . '</span></p>' . "\n";
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 }
 elseif( $del )
 {
 	$shout_id = !empty($_POST['idmsg']) ? numeric($_POST['idmsg']) : '';
 	if( !empty($shout_id) )
 	{
-		$user_id = (int)$sql->query("SELECT user_id FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
-		if( $session->check_auth($session->data, 1) || ($user_id === $session->data['user_id'] && $session->data['user_id'] !== -1) )
+		$user_id = (int)$Sql->Query("SELECT user_id FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
+		if( $Member->Check_level(1) || ($user_id === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 		{
-			$sql->query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			echo 1;
 		}
 	}
 }
 
-$sql->sql_close(); //Fermeture de mysql
+$Sql->Sql_close(); //Fermeture de mysql
 
 ?>

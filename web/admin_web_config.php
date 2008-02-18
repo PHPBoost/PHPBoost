@@ -39,23 +39,23 @@ if( !empty($_POST['valid']) )
 	$config_web['nbr_column'] = !empty($_POST['nbr_column']) ? numeric($_POST['nbr_column']) : 2;
 	$config_web['note_max'] = !empty($_POST['note_max']) ? numeric($_POST['note_max']) : 10;
 	
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_web)) . "' WHERE name = 'web'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_web)) . "' WHERE name = 'web'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
-	$cache->generate_module_file('web');
+	$Cache->Generate_module_file('web');
 	
 	redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_web_config' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_config.tpl'
 	));
 	
-	$cache->load_file('web');
+	$Cache->Load_file('web');
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'NBR_WEB_MAX' => !empty($CONFIG_WEB['nbr_web_max']) ? $CONFIG_WEB['nbr_web_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_WEB['nbr_cat_max']) ? $CONFIG_WEB['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : '2',
@@ -74,7 +74,7 @@ else
 		'L_RESET' => $LANG['reset'],
 	));
 		
-	$template->pparse('admin_web_config'); // traitement du modele	
+	$Template->Pparse('admin_web_config'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

@@ -33,11 +33,11 @@ $poll = array();
 $poll_id = !empty($_GET['id']) ? numeric($_GET['id']) : '0';
 if( !empty($poll_id) )
 {
-	$poll = $sql->query_array('poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
+	$poll = $Sql->Query_array('poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
 	
 	//Pas de sondage trouvé => erreur.
 	if( empty($poll['id']) )
-		$errorh->error_handler('e_unexist_poll', E_USER_REDIRECT); 
+		$Errorh->Error_handler('e_unexist_poll', E_USER_REDIRECT); 
 }	
 	
 //On vérifie si on est sur les archives
@@ -48,7 +48,7 @@ $show_result = !empty($_GET['r']) ? numeric($_GET['r']) : '';
 if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
 {
 	//Niveau d'autorisation.
-	if( $session->check_auth($session->data, $CONFIG_POLL['poll_auth']) )
+	if( $Member->Check_level($CONFIG_POLL['poll_auth']) )
 	{
 		//On note le passage du visiteur par un cookie.
 		if( isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ) //Recherche dans le cookie existant.
@@ -73,14 +73,14 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
 		}
 		
 		//Injection de l'adresse ip du visiteur dans la bdd.	
-		$ip = $sql->query("SELECT ip FROM ".PREFIX."poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+		$ip = $Sql->Query("SELECT ip FROM ".PREFIX."poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 		
 		if( !empty($ip) || $check_cookie )
 			redirect(HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#errorh');
 		else //Si le cookie n'existe pas et l'ip n'est pas connue on enregistre.
 		{
 			//Insertion de l'adresse ip.
-			$sql->query_inject("INSERT INTO ".PREFIX."poll_ip (ip,idpoll,timestamp) VALUES('" . USER_IP . "', '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."poll_ip (ip,idpoll,timestamp) VALUES('" . USER_IP . "', '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
 			
 			//Récupération du vote.
 			$check_answer = false;
@@ -110,7 +110,7 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
 
 			if( $check_answer ) //Enregistrement vote du sondage
 			{
-				$sql->query_inject("UPDATE ".PREFIX."poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'", __LINE__, __FILE__);
 				
 				//Tout c'est bien déroulé, on redirige vers la page des resultats.
 				$DELAY_REDIRECT = 2;
@@ -119,7 +119,7 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
 				include('../includes/confirm.php');
 				
 				if( in_array($poll['id'], $CONFIG_POLL['poll_mini'])  ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
-					$cache->generate_module_file('poll');
+					$Cache->Generate_module_file('poll');
 			}	
 			else //Vote blanc
 			{
@@ -135,12 +135,12 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
 }
 elseif( !empty($poll['id']) && empty($archives) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'poll' => '../templates/' . $CONFIG['theme'] . '/poll/poll.tpl'
 	));
 	
 	list($java, $edit, $del) = array('','','');	
-	if( $session->data['level'] === 2 )
+	if( $Member->Get_attribute('level') === 2 )
 	{
 		$java = "<script type='text/javascript'>
 		<!--
@@ -156,7 +156,7 @@ elseif( !empty($poll['id']) && empty($archives) )
 		
 	//Résultats
 	//On vérifie si l'ip est connue
-	$ip = $sql->query("SELECT ip FROM ".PREFIX."poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'", __LINE__, __FILE__);
+	$ip = $Sql->Query("SELECT ip FROM ".PREFIX."poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'", __LINE__, __FILE__);
 	
 	//Si le cookie existe, ou l'ip est connue on redirige vers les resulats, sinon on prclose en compte le vote.
 	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
@@ -168,20 +168,20 @@ elseif( !empty($poll['id']) && empty($archives) )
 		$sum_vote = array_sum($array_vote);
 		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 					
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'SID' => SID,			
 			'THEME' => $CONFIG['theme'],
 			'JAVA' => $java,
 			'EDIT' => $edit,
 			'DEL' => $del,
-			'MODULE_DATA_PATH' => $template->module_data_path('poll'),
+			'MODULE_DATA_PATH' => $Template->Module_data_path('poll'),
 			'L_POLL' => $LANG['poll'],
 			'L_BACK_POLL' => $LANG['poll_back'],
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote']),
 			'L_ON' => $LANG['on']
 		));
 		
-		$template->assign_block_vars('poll', array(
+		$Template->Assign_block_vars('poll', array(
 			'QUESTION' => $poll['question'],
 			'DATE' => gmdate_format('date_format_short', $poll['timestamp']),
 			'VOTES' => $sum_vote,
@@ -190,7 +190,7 @@ elseif( !empty($poll['id']) && empty($archives) )
 		$array_poll = array_combine($array_answer, $array_vote);
 		foreach($array_poll as $answer => $nbrvote)
 		{
-			$template->assign_block_vars('poll.result', array(
+			$Template->Assign_block_vars('poll.result', array(
 				'ANSWERS' => $answer, 
 				'NBRVOTE' => (int)$nbrvote,
 				'WIDTH' => number_round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
@@ -198,11 +198,11 @@ elseif( !empty($poll['id']) && empty($archives) )
 			));
 		}
 
-		$template->pparse('poll');
+		$Template->Pparse('poll');
 	}
 	else //Questions.
 	{
-		$template->assign_block_vars('poll', array(
+		$Template->Assign_block_vars('poll', array(
 			'QUESTION' => $poll['question'],
 			'DATE' => gmdate_format('date_format_short'),
 			'VOTES' => 0
@@ -224,9 +224,9 @@ elseif( !empty($poll['id']) && empty($archives) )
 			$errstr = '';
 		}
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, $type);
+			$Errorh->Error_handler($errstr, $type);
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'SID' => SID,			
 			'ID_R' => transid('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
 			'QUESTION' => $poll['question'],
@@ -243,7 +243,7 @@ elseif( !empty($poll['id']) && empty($archives) )
 			'L_ON' => $LANG['on']
 		));
 	
-		$template->assign_block_vars('poll.question', array(
+		$Template->Assign_block_vars('poll.question', array(
 		));
 		
 		$z = 0;
@@ -252,7 +252,7 @@ elseif( !empty($poll['id']) && empty($archives) )
 		{
 			foreach($array_answer as $answer)
 			{						
-				$template->assign_block_vars('poll.question.radio', array(
+				$Template->Assign_block_vars('poll.question.radio', array(
 					'NAME' => $z,
 					'TYPE' => 'radio',
 					'ANSWERS' => $answer
@@ -265,7 +265,7 @@ elseif( !empty($poll['id']) && empty($archives) )
 			
 			foreach($array_answer as $answer)
 			{						
-				$template->assign_block_vars('poll.question.checkbox', array(
+				$Template->Assign_block_vars('poll.question.checkbox', array(
 					'NAME' => $z,
 					'TYPE' => 'checkbox',
 					'ANSWERS' => $answer
@@ -273,66 +273,66 @@ elseif( !empty($poll['id']) && empty($archives) )
 				$z++;	
 			}
 		}		
-		$template->pparse('poll');
+		$Template->Pparse('poll');
 	}
 }
 elseif( empty($archives) ) //Menu principal.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'poll' => '../templates/' . $CONFIG['theme'] . '/poll/poll.tpl'
 	));
 
-	$show_archives = $sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
+	$show_archives = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
 	$show_archives = !empty($show_archives) ? '<a href="poll' . transid('.php?archives=1', '.php?archives=1') . '">' . $LANG['archive'] . '</a>' : '';
 	
-	$template->assign_block_vars('main', array(
+	$Template->Assign_block_vars('main', array(
 	));
 	
 	$edit = '';	
-	if( $session->data['level'] === 2 )
+	if( $Member->Get_attribute('level') === 2 )
 		$edit = '<a href="../poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'EDIT' => $edit,
 		'U_ARCHIVE' => $show_archives,
 		'L_POLL' => $LANG['poll'],
 		'L_POLL_MAIN' => $LANG['poll_main']		
 	));
 	
-	$result = $sql->query_while("SELECT id, question 
+	$result = $Sql->Query_while("SELECT id, question 
 	FROM ".PREFIX."poll 
 	WHERE archive = 0 AND visible = 1
 	ORDER BY id DESC", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$template->assign_block_vars('main.poll', array(
+		$Template->Assign_block_vars('main.poll', array(
 			'U_POLL_ID' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 			'QUESTION' => $row['question']
 		));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->pparse('poll');	
+	$Template->Pparse('poll');	
 }
 elseif( !empty($archives) ) //Archives.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'poll' => '../templates/' . $CONFIG['theme'] . '/poll/poll.tpl'
 	));
 		
-	$nbrarchives = $sql->query("SELECT COUNT(*) as id FROM ".PREFIX."poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
+	$nbrarchives = $Sql->Query("SELECT COUNT(*) as id FROM ".PREFIX."poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
 	
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 	
-	$template->assign_block_vars('archives', array(
+	$Template->Assign_block_vars('archives', array(
 	));	
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'SID' => SID,
 		'THEME' => $CONFIG['theme'],		
-		'PAGINATION' => $pagination->show_pagin('poll' . transid('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),
-		'MODULE_DATA_PATH' => $template->module_data_path('poll'),
+		'PAGINATION' => $Pagination->Display_pagination('poll' . transid('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('poll'),
 		'L_ALERT_DELETE_POLL' => $LANG['alert_delete_poll'],
 		'L_ARCHIVE' => $LANG['archive'],
 		'L_BACK_POLL' => $LANG['poll_back'],		
@@ -340,12 +340,12 @@ elseif( !empty($archives) ) //Archives.
 	));	
 	
 	//On recupère les sondages archivés.
-	$result = $sql->query_while("SELECT id, question, votes, answers, type, timestamp
+	$result = $Sql->Query_while("SELECT id, question, votes, answers, type, timestamp
 	FROM ".PREFIX."poll
 	WHERE archive = 1 AND visible = 1
 	ORDER BY timestamp DESC
-	" . $sql->sql_limit($pagination->first_msg(10, 'archives'), 10), __LINE__, __FILE__); 
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit($Pagination->First_msg(10, 'archives'), 10), __LINE__, __FILE__); 
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$array_answer = explode('|', $row['answers']);
 		$array_vote = explode('|', $row['votes']);
@@ -353,7 +353,7 @@ elseif( !empty($archives) ) //Archives.
 		$sum_vote = array_sum($array_vote);
 		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 
-		$template->assign_block_vars('archives.main', array(
+		$Template->Assign_block_vars('archives.main', array(
 			'QUESTION' => $row['question'],
 			'EDIT' => '<a href="../poll/admin_poll' . transid('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>',
 			'DEL' => '&nbsp;&nbsp;<a href="../poll/admin_poll' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>',
@@ -365,7 +365,7 @@ elseif( !empty($archives) ) //Archives.
 		$array_poll = array_combine($array_answer, $array_vote);
 		foreach($array_poll as $answer => $nbrvote)
 		{
-			$template->assign_block_vars('archives.main.result', array(
+			$Template->Assign_block_vars('archives.main.result', array(
 				'ANSWERS' => $answer, 
 				'NBRVOTE' => $nbrvote,
 				'WIDTH' => number_round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
@@ -374,12 +374,12 @@ elseif( !empty($archives) ) //Archives.
 			));
 		}
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 
-	$template->pparse('poll');
+	$Template->Pparse('poll');
 }
 else
-	$errorh->error_handler('e_unexist_page', E_USER_REDIRECT); 
+	$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT); 
 	
 require_once('../includes/footer.php');
 

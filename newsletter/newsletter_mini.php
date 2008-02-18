@@ -30,21 +30,21 @@ if( defined('PHP_BOOST') !== true)	exit;
 //Chargement de la langue du module.
 @load_module_lang('newsletter', $CONFIG['lang']);
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'newsletter_mini' => '../templates/' . $CONFIG['theme'] . '/newsletter/newsletter_mini.tpl'
 ));
 
-$template->assign_vars(array(	
+$Template->Assign_vars(array(	
 	'SUBSCRIBE' => $LANG['subscribe'],
 	'UNSUBSCRIBE' => $LANG['unsubscribe'],
 	'ARCHIVES_LINK' => '../newsletter/newsletter' . transid('.php', '',''),
-	'USER_MAIL' => !empty($session->data['user_mail']) ? $session->data['user_mail'] : '',
+	'USER_MAIL' => ($Member->Get_attribute('user_mail') != '') ? $Member->Get_attribute('user_mail') : '',
 	'ACTION' => '../newsletter/newsletter' . transid('.php', '',''),
 	'L_NEWSLETTER' => $LANG['newsletter'],
 	'L_SUBMIT' => $LANG['submit'],
 	'L_ARCHIVES' => $LANG['archive']	
 ));
 
-$template->pparse('newsletter_mini'); 
+$Template->Pparse('newsletter_mini'); 
 
 ?>

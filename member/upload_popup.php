@@ -33,7 +33,7 @@ $id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 if( !empty($id) )
 {
 	$basedir = '../upload/';
-	$info_file = $sql->query_array("upload", "path", "type", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$info_file = $Sql->Query_array("upload", "path", "type", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	switch($info_file['type'])
 	{
 		//Images

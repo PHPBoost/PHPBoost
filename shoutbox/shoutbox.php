@@ -33,19 +33,19 @@ $shout_id = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 if( !empty($_POST['shoutbox']) && empty($shout_id) ) //Insertion
 {		
 	//Membre en lecture seule?
-	if( $session->data['user_readonly'] > time() ) 
-		$errorh->error_handler('e_readonly', E_USER_REDIRECT); 
+	if( $Member->Get_attribute('user_readonly') > time() ) 
+		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
 	$shout_pseudo = !empty($_POST['shout_pseudo']) ? clean_user($_POST['shout_pseudo']) : $LANG['guest']; //Pseudo posté.
 	$shout_contents = !empty($_POST['shout_contents']) ? trim($_POST['shout_contents']) : '';	
 	if( !empty($shout_pseudo) && !empty($shout_contents) )
 	{		
 		//Accès pour poster.		
-		if( $session->check_auth($session->data, $CONFIG_SHOUTBOX['shoutbox_auth']) )
+		if( $Member->Check_level($CONFIG_SHOUTBOX['shoutbox_auth']) )
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-			$check_time = ($session->data['user_id'] !== -1 && $CONFIG['anti_flood'] == 1) ? $sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__) : '';
-			if( !empty($check_time) && !$groups->max_value($groups->user_groups_auth, AUTH_FLOOD) )
+			$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->Query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+			if( !empty($check_time) && !$Member->Check_max_value(AUTH_FLOOD) )
 			{
 				if( $check_time >= (time() - $CONFIG['delay_flood']) )
 					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=flood', '', '&') . '#errorh');
@@ -58,7 +58,7 @@ if( !empty($_POST['shoutbox']) && empty($shout_id) ) //Insertion
 			if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
 				redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
-			$sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login,user_id,contents,timestamp) VALUES('" . $shout_pseudo . "', '" . $session->data['user_id'] . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."shoutbox (login,user_id,contents,timestamp) VALUES('" . $shout_pseudo . "', '" . $Member->Get_attribute('user_id') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
 			redirect(HOST . transid(SCRIPT . '?' . QUERY_STRING, '', '&'));
 		}
@@ -71,44 +71,44 @@ if( !empty($_POST['shoutbox']) && empty($shout_id) ) //Insertion
 elseif( !empty($shout_id) ) //Edition + suppression!
 {
 	//Membre en lecture seule?
-	if( $session->data['user_readonly'] > time() ) 
-		$errorh->error_handler('e_readonly', E_USER_REDIRECT); 
+	if( $Member->Get_attribute('user_readonly') > time() ) 
+		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
 	$del = !empty($_GET['del']) ? true : false;
 	$edit = !empty($_GET['edit']) ? true : false;
 	$update = !empty($_GET['update']) ? true : false;
 	
-	$row = $sql->query_array('shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
+	$row = $Sql->Query_array('shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
-	if( $session->check_auth($session->data, 1) || ($row['user_id'] === $session->data['user_id'] && $session->data['user_id'] !== -1) )
+	if( $Member->Check_level(1) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 	{
 		if( $del )
 		{
-			$sql->query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
 			redirect(HOST . SCRIPT . SID2);
 		}
 		elseif( $edit )
 		{
-			$template->set_filenames(array(
+			$Template->Set_filenames(array(
 				'shoutbox' => '../templates/' . $CONFIG['theme'] . '/shoutbox/shoutbox.tpl'
 			));
 			
 			//Pseudo du membre connecté.
-			if( $session->data['user_id'] !== -1 )
-				$template->assign_vars(array(
-					'SHOUTBOX_PSEUDO' => $session->data['login'],
+			if( $Member->Get_attribute('user_id') !== -1 )
+				$Template->Assign_vars(array(
+					'SHOUTBOX_PSEUDO' => $Member->Get_attribute('login'),
 					'C_HIDDEN_SHOUT' => true
 				));
 			else
-				$template->assign_vars(array(
+				$Template->Assign_vars(array(
 					'SHOUTBOX_PSEUDO' => $LANG['guest'],
 					'C_VISIBLE_SHOUT' => true
 				));
 			
 			$forbidden_tags = implode(', ', $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
-			$template->assign_vars(array(
+			$Template->Assign_vars(array(
 				'UPDATE' => transid('?update=1&amp;id=' . $row['id']),
 				'SID' => '',
 				'CONTENTS' => unparse($row['contents']),
@@ -130,7 +130,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 			$_field = 'shout_contents';
 			include_once('../includes/bbcode.php');
 			
-			$template->pparse('shoutbox'); 
+			$Template->Pparse('shoutbox'); 
 		}
 		elseif( $update )
 		{
@@ -143,7 +143,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 				if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
 					redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
-				$sql->query_inject("UPDATE ".PREFIX."shoutbox SET contents = '" . $shout_contents . "', login = '" . $shout_pseudo . "' WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."shoutbox SET contents = '" . $shout_contents . "', login = '" . $shout_pseudo . "' WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
 				redirect(HOST . SCRIPT. SID2);
 			}
@@ -158,18 +158,18 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 }
 else //Affichage.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'shoutbox' => '../templates/' . $CONFIG['theme'] . '/shoutbox/shoutbox.tpl'
 	));
 	
 	//Pseudo du membre connecté.
-	if( $session->data['user_id'] !== -1 )
-		$template->assign_vars(array(
-			'SHOUTBOX_PSEUDO' => $session->data['login'],
+	if( $Member->Get_attribute('user_id') !== -1 )
+		$Template->Assign_vars(array(
+			'SHOUTBOX_PSEUDO' => $Member->Get_attribute('login'),
 			'C_HIDDEN_SHOUT' => true
 		));
 	else
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'SHOUTBOX_PSEUDO' => $LANG['guest'],
 			'C_VISIBLE_SHOUT' => true
 		));
@@ -197,10 +197,10 @@ else //Affichage.
 		$errstr = '';
 	}	
 	if( !empty($errstr) )
-		$errorh->error_handler($errstr, E_USER_NOTICE);
+		$Errorh->Error_handler($errstr, E_USER_NOTICE);
 	
 	$forbidden_tags = implode(', ', $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'SID' => SID,
 		'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
 		'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
@@ -217,36 +217,36 @@ else //Affichage.
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$nbr_shout = $sql->count_table('shoutbox', __LINE__, __FILE__);
+	$nbr_shout = $Sql->Count_table('shoutbox', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de messages est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 		
-	$template->assign_vars(array(
-		'PAGINATION' => $pagination->show_pagin('shoutbox' . transid('.php?p=%d'), $nbr_shout, 'p', 10, 3)
+	$Template->Assign_vars(array(
+		'PAGINATION' => $Pagination->Display_pagination('shoutbox' . transid('.php?p=%d'), $nbr_shout, 'p', 10, 3)
 	));
 	
 	//Création du tableau des rangs.
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 
 	//Gestion des rangs.	
-	$cache->load_file('ranks');
-	$result = $sql->query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, s.contents
+	$Cache->Load_file('ranks');
+	$result = $Sql->Query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, s.contents
 	FROM ".PREFIX."shoutbox s
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id
 	LEFT JOIN ".PREFIX."sessions se ON se.user_id = s.user_id AND se.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 	GROUP BY s.id
 	ORDER BY s.timestamp DESC 
-	" . $sql->sql_limit($pagination->first_msg(10, 'p'), 10), __LINE__, __FILE__);	
-	while ($row = $sql->sql_fetch_assoc($result))
+	" . $Sql->Sql_limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);	
+	while ($row = $Sql->Sql_fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
 			$edit = '';
 			$del = '';
 			
 			$is_guest = ($row['user_id'] === -1);
-			$is_modo = $session->check_auth($session->data, 1);
+			$is_modo = $Member->Check_level(1);
 			$warning = '';
 			$readonly = '';
 			if( $is_modo && !$is_guest ) //Modération.
@@ -256,7 +256,7 @@ else //Affichage.
 			}
 			
 			//Edition/suppression.
-			if( $is_modo || ($row['user_id'] === $session->data['user_id'] && $session->data['user_id'] !== -1) )
+			if( $is_modo || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 			{
 				$edit = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
 				$del = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?del=1&id=' . $row['id']) . '" onClick="javascript:return Confirm_shout();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
@@ -341,7 +341,7 @@ else //Affichage.
 			}
 			else $user_local = '';
 			
-			$template->assign_block_vars('shoutbox',array(
+			$Template->Assign_block_vars('shoutbox',array(
 				'ID' => $row['id'],
 				'CONTENTS' => ucfirst(second_parse($row['contents'])),
 				'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
@@ -368,12 +368,12 @@ else //Affichage.
 				'U_ANCHOR' => 'shoutbox.php' . SID . '#m' . $row['id']
 			));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	$_field = 'shout_contents';
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('shoutbox'); 
+	$Template->Pparse('shoutbox'); 
 }
 
 require_once('../includes/footer.php'); 

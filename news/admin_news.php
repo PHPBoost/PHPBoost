@@ -95,22 +95,22 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		else
 			$timestamp = ' , timestamp = \'' . time() . '\'';
 			
-		$sql->query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . parse($contents) . "', extend_contents = '" . parse($extend_contents) . "', archive = '" . $archive . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
+		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . parse($contents) . "', extend_contents = '" . parse($extend_contents) . "', archive = '" . $archive . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
 		WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 
 		include_once('../includes/rss.class.php'); //Flux rss regénéré!
-		$rss = new Rss('news/rss.php');
-		$rss->cache_path('../cache/');
-		$rss->generate_file('javascript', 'rss_news');
-		$rss->generate_file('php', 'rss2_news');
+		$Rss = new Rss('news/rss.php');
+		$Rss->Cache_path('../cache/');
+		$Rss->Generate_file('javascript', 'rss_news');
+		$Rss->Generate_file('php', 'rss2_news');
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
-		$cache->load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
-		$CONFIG_NEWS['nbr_news'] = $sql->query("SELECT COUNT(*) FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
+		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
+		$CONFIG_NEWS['nbr_news'] = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 				
 		###### Régénération du cache des news #######
-		$cache->generate_module_file('news');
+		$Cache->Generate_module_file('news');
 		
 		redirect(HOST . SCRIPT);
 	}
@@ -120,34 +120,34 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 elseif( $del && !empty($id) ) //Suppression de la news.
 {
 	//On supprime dans la bdd.
-	$sql->query_inject("DELETE FROM ".PREFIX."news WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->Query_inject("DELETE FROM ".PREFIX."news WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
 	//On supprimes les éventuels commentaires associés.
-	$sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'news'", __LINE__, __FILE__);
+	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'news'", __LINE__, __FILE__);
 
 	include_once('../includes/rss.class.php'); //Flux rss regénéré!
-	$rss = new Rss('news/rss.php');
-	$rss->cache_path('../cache/');
-	$rss->generate_file('javascript', 'rss_news');
-	$rss->generate_file('php', 'rss2_news');
+	$Rss = new Rss('news/rss.php');
+	$Rss->Cache_path('../cache/');
+	$Rss->Generate_file('javascript', 'rss_news');
+	$Rss->Generate_file('php', 'rss2_news');
 	
 	//Mise à jour du nombre de news dans le cache de la configuration.
-	$cache->load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
-	$CONFIG_NEWS['nbr_news'] = $sql->query("SELECT COUNT(*) AS nbr_news FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
+	$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
+	$CONFIG_NEWS['nbr_news'] = $Sql->Query("SELECT COUNT(*) AS nbr_news FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 		
 	redirect(HOST . SCRIPT);
 }
 elseif( !empty($id) )
 {			
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_news_management' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_management.tpl',
 		'admin_news_management_bis' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_management_bis.tpl'
 	));
 
-	$row = $sql->query_array('news', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->Query_array('news', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
-	$template->assign_block_vars('news', array(
+	$Template->Assign_block_vars('news', array(
 		'TITLE' => $row['title'],
 		'IDNEWS' => $row['id'],
 		'CONTENTS' => unparse($row['contents']),
@@ -178,7 +178,7 @@ elseif( !empty($id) )
 		'ARCHIVE_DISABLED' => !$row['archive'] ? 'checked="checked"' : ''
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_UNTIL' => $LANG['until'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -214,41 +214,41 @@ elseif( !empty($id) )
 	//Catégories.	
 	$i = 0;
 	$idcat = $row['idcat'];
-	$result = $sql->query_while("SELECT id, name 
+	$result = $Sql->Query_while("SELECT id, name 
 	FROM ".PREFIX."news_cat", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-		$template->assign_block_vars('news.select', array(
+		$Template->Assign_block_vars('news.select', array(
 			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
 	}	
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);	
+		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 	
 	include('../includes/bbcode.php');
-	$template->pparse('admin_news_management');    
+	$Template->Pparse('admin_news_management');    
 
-	$template->unassign_block_vars('tinymce_mode');
-    $template->unassign_block_vars('bbcode_mode');
-    $template->unassign_block_vars('smiley');
-	$template->unassign_block_vars('more');
+	$Template->Unassign_block_vars('tinymce_mode');
+    $Template->Unassign_block_vars('bbcode_mode');
+    $Template->Unassign_block_vars('smiley');
+	$Template->Unassign_block_vars('more');
 	
 	$_field = 'extend_contents';
 	include('../includes/bbcode.php');
 	
-	$template->pparse('admin_news_management_bis'); 
+	$Template->Pparse('admin_news_management_bis'); 
 }
 elseif( !empty($_POST['previs']) && !empty($id_post) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_news_management' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_management.tpl',
 		'admin_news_management_bis' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_management_bis.tpl'
 	));
@@ -291,9 +291,9 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		$end = '';
 	}
 	
-	$template->assign_block_vars('news', array(
+	$Template->Assign_block_vars('news', array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $template->module_data_path('news'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('news'),
 		'IDNEWS' => $id_post,
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => stripslashes($contents),
@@ -324,34 +324,34 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	
 	//Catégories.	
 	$i = 0;
-	$result = $sql->query_while("SELECT id, name 
+	$result = $Sql->Query_while("SELECT id, name 
 	FROM ".PREFIX."news_cat", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-		$template->assign_block_vars('news.select', array(
+		$Template->Assign_block_vars('news.select', array(
 			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
 	}	
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
-		$errorh->error_handler($LANG['require_cat_create'], E_USER_WARNING);	
+		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 		
-	$template->assign_block_vars('news.preview', array(
+	$Template->Assign_block_vars('news.preview', array(
 		'THEME' => $CONFIG['theme'],
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(parse($contents))),
 		'EXTEND_CONTENTS' => second_parse(stripslashes(parse($extend_contents))) . '<br /><br />',
-		'PSEUDO' => $sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__),
+		'PSEUDO' => $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__),
 		'USER_ID' => $user_id,
 		'IMG_PREVIEW' => !empty($img) ? '<img src="' . $img . '" alt="" />': $LANG['no_img'],
 		'IMG' => !empty($img) ? '<img src="' . stripslashes($img) . '" alt="" class="img_right" />' : '',
 		'DATE' => gmdate_format('date_format_short')
 	));
 
-	$template->assign_vars(array(		
+	$Template->Assign_vars(array(		
 		'L_UNTIL' => $LANG['until'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -387,31 +387,31 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	));	
 	
 	include('../includes/bbcode.php');
-	$template->pparse('admin_news_management');    
+	$Template->Pparse('admin_news_management');    
 
-	$template->unassign_block_vars('tinymce_mode');
-    $template->unassign_block_vars('bbcode_mode');
-    $template->unassign_block_vars('smiley');
-	$template->unassign_block_vars('more');
+	$Template->Unassign_block_vars('tinymce_mode');
+    $Template->Unassign_block_vars('bbcode_mode');
+    $Template->Unassign_block_vars('smiley');
+	$Template->Unassign_block_vars('more');
 	
 	$_field = 'extend_contents';
 	include('../includes/bbcode.php');
 	
-	$template->pparse('admin_news_management_bis'); 
+	$Template->Pparse('admin_news_management_bis'); 
 }
 else
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_news_management' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_management.tpl'
 	));
 	
-	$nbr_news = $sql->count_table('news', __LINE__, __FILE__);
+	$nbr_news = $Sql->Count_table('news', __LINE__, __FILE__);
 	//On crée une pagination si le nombre de news est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 	
-	$template->assign_vars(array(
-		'PAGINATION' => $pagination->show_pagin('admin_news.php?p=%d', $nbr_news, 'p', 25, 3),
+	$Template->Assign_vars(array(
+		'PAGINATION' => $Pagination->Display_pagination('admin_news.php?p=%d', $nbr_news, 'p', 25, 3),
 		'LANG' => $CONFIG['lang'],
 		'THEME' => $CONFIG['theme'],
 		'L_CONFIRM_DEL_NEWS' => $LANG['confirm_del_news'],
@@ -429,16 +429,16 @@ else
 		'L_DELETE' => $LANG['delete']
 	));
 
-	$template->assign_block_vars('list', array(
+	$Template->Assign_block_vars('list', array(
 	));
 	
-	$result = $sql->query_while("SELECT nc.name, n.id, n.title, n.archive, n.timestamp, n.visible, n.start, n.end, m.login 
+	$result = $Sql->Query_while("SELECT nc.name, n.id, n.title, n.archive, n.timestamp, n.visible, n.start, n.end, m.login 
 	FROM ".PREFIX."news n
 	LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 	LEFT JOIN ".PREFIX."member m ON m.user_id = n.user_id
 	ORDER BY n.timestamp DESC 
-	" . $sql->sql_limit($pagination->first_msg(25, 'p'), 25), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( $row['visible'] == 2 )
 			$aprob = $LANG['waiting'];			
@@ -459,7 +459,7 @@ else
 		elseif( $row['end'] > 0 )
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 		
-		$template->assign_block_vars('list.news', array(
+		$Template->Assign_block_vars('list.news', array(
 			'TITLE' => $title,
 			'PSEUDO' => !empty($row['login']) ? $row['login'] : $LANG['guest'],		
 			'IDNEWS' => $row['id'],
@@ -470,9 +470,9 @@ else
 			'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : '')
 		));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->pparse('admin_news_management'); 
+	$Template->Pparse('admin_news_management'); 
 }			
 
 require_once('../includes/admin_footer.php');

@@ -44,33 +44,33 @@ if( !empty($_POST['update']) )  //Mise à jour
 	$auth_com = isset($_POST['groups_auth3']) ? $_POST['groups_auth3'] : '';
 	
 	//Génération du tableau des droits.
-	$array_auth_all = $groups->return_array_auth($auth_create, $auth_edit, $auth_com);
+	$array_auth_all = $Group->Return_array_auth($auth_create, $auth_edit, $auth_com);
 	
 	$_PAGES_CONFIG['auth'] = addslashes(serialize($array_auth_all));
 	$_PAGES_CONFIG['count_hits'] = $count_hits;
 	$_PAGES_CONFIG['activ_com'] = $activ_com;
 
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_PAGES_CONFIG)) . "' WHERE name = 'pages'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_PAGES_CONFIG)) . "' WHERE name = 'pages'", __LINE__, __FILE__);
 	//Régénération du cache
-	$cache->generate_module_file('pages');
+	$Cache->Generate_module_file('pages');
 	
 	redirect(HOST . SCRIPT);
 }
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'pages_config' => '../templates/' . $CONFIG['theme'] . '/pages/admin_pages.tpl'
 ));
 
-$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 $array_auth = isset($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'HITS_CHECKED' => $_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : '',
 	'NBR_GROUP' => count($array_groups),
 	'COM_CHECKED' => $_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : '',
-	'SELECT_READ_PAGE' => $groups->generate_select_groups(1, $array_auth, READ_PAGE),
-	'SELECT_EDIT_PAGE' => $groups->generate_select_groups(2, $array_auth, EDIT_PAGE),
-	'SELECT_READ_COM' => $groups->generate_select_groups(3, $array_auth, READ_COM),
+	'SELECT_READ_PAGE' => $Group->Generate_select_groups(1, $array_auth, READ_PAGE),
+	'SELECT_EDIT_PAGE' => $Group->Generate_select_groups(2, $array_auth, EDIT_PAGE),
+	'SELECT_READ_COM' => $Group->Generate_select_groups(3, $array_auth, READ_COM),
 	'L_READ_COM' => $LANG['pages_auth_read_com'],
 	'L_EDIT_PAGE' => $LANG['pages_auth_edit'],
 	'L_READ_PAGE' => $LANG['pages_auth_read'],
@@ -89,7 +89,7 @@ $template->assign_vars(array(
 ));
 	
 	
-$template->pparse('pages_config');
+$Template->Pparse('pages_config');
 
 require_once('../includes/admin_footer.php');
 

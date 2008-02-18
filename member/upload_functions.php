@@ -30,14 +30,14 @@ if( defined('PHP_BOOST') !== true)	exit;
 //Catégories (affichage si on connait la catégorie et qu'on veut reformer l'arborescence)
 function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 {
-	global $sql;
+	global $Sql;
 	if( $id > 0)
 	{
 		$id_cat = $id;
 		//On remonte l'arborescence des catégories afin de savoir quelle catégorie développer
 		do
 		{
-			$id_cat = $sql->query("SELECT id_parent FROM ".PREFIX."upload_cat WHERE id = '" . $id_cat . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$id_cat = $Sql->Query("SELECT id_parent FROM ".PREFIX."upload_cat WHERE id = '" . $id_cat . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			$cats[] = $id_cat;
 		}	
 		while( $id_cat > 0 );
@@ -66,14 +66,14 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 //Fonction récursive pour l'affichage des catégories
 function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 {
-	global $sql, $CONFIG;
+	global $Sql, $CONFIG;
 	$line = '';
-	$result = $sql->query_while("SELECT id, name
+	$result = $Sql->Query_while("SELECT id, name
 	FROM ".PREFIX."upload_cat
 	WHERE user_id = '" . $user_id . "'
 	AND id_parent = '" . $id_cat . "'
 	ORDER BY name", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( in_array($row['id'], $cats) ) //Si cette catégorie contient notre catégorie, on l'explore
 		{
@@ -84,7 +84,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 		else
 		{
 			//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
-			$sub_cats_number = $sql->query("SELECT COUNT(*) FROM ".PREFIX."upload_cat WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$sub_cats_number = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."upload_cat WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 			//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 			if( $sub_cats_number > 0 )
 				$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" id="img2_' . $row['id'] . '" style="vertical-align:middle" /></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/closed_cat.png" alt="" id="img_' . $row['id'] . '" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload_selected_cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
@@ -92,22 +92,22 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 				$line .= '<li style="padding-left:17px;"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload_selected_cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span></li>';
 		}
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	return "\n" . $line;
 }
 
 //Fonction qui détermine toutes les sous-catégories d'une catégorie (récursive)
 function upload_find_subcats(&$array, $id_cat, $user_id)
 {
-	global $sql;
-	$result = $sql->query_while("SELECT id FROM ".PREFIX."upload_cat WHERE id_parent = '" . $id_cat . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	global $Sql;
+	$result = $Sql->Query_while("SELECT id FROM ".PREFIX."upload_cat WHERE id_parent = '" . $id_cat . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$array[] = $row['id'];
 		//On rappelle la fonction pour la catégorie fille
 		upload_find_subcats($array, $row['id'], $user_id);
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 }
 
 ?>

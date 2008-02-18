@@ -35,7 +35,7 @@ class Newsletter_sender
 	
 	function send_html($mail_object, $message, $email_test = '')
 	{
-		global $_NEWSLETTER_CONFIG, $LANG, $sql;
+		global $_NEWSLETTER_CONFIG, $LANG, $Sql;
 		
 		$error_mailing_list = array();
 		$message = stripslashes($message);
@@ -53,17 +53,17 @@ class Newsletter_sender
 		
 		if( $email_test == '' ) // envoi définitif
 		{
-			$result = $sql->query_while("SELECT id, mail 
+			$result = $Sql->Query_while("SELECT id, mail 
 			FROM ".PREFIX."newsletter 
 			ORDER BY id", __LINE__, __FILE__);			
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				if( !@mail($row['mail'], $mail_object, str_replace('[UNSUBSCRIBE_LINK]', '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $row['id'] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a><br /><br />', $message), $headers) )
 					$error_mailing_list[] = $row['mail'];
 			}
-			$nbr = $sql->count_table('newsletter', __LINE__, __FILE__);
+			$nbr = $Sql->Count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$sql->query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "','" . addslashes($message) . "', '" . time() . "', 'html', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "','" . addslashes($message) . "', '" . time() . "', 'html', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			return $error_mailing_list;
 		}
@@ -76,7 +76,7 @@ class Newsletter_sender
 	
 	function send_bbcode($mail_object, $message, $email_test = '')
 	{
-		global $_NEWSLETTER_CONFIG, $LANG, $sql;
+		global $_NEWSLETTER_CONFIG, $LANG, $Sql;
 		
 		$error_mailing_list = array();
 		$message = stripslashes(parse($message));
@@ -94,18 +94,18 @@ class Newsletter_sender
 		
 		if( $email_test == '' ) // envoi définitif
 		{
-			$result = $sql->query_while("SELECT id, mail 
+			$result = $Sql->Query_while("SELECT id, mail 
 			FROM ".PREFIX."newsletter 
 			ORDER BY id", __LINE__, __FILE__);			
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				$mail_contents_end = '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $row['id'] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a></body></html>';
 				if( !@mail($row['mail'], $mail_object, $mail_contents . $mail_contents_end, $headers) )
 					$error_mailing_list[] = $row['mail'];
 			}
-			$nbr = $sql->count_table('newsletter', __LINE__, __FILE__);
+			$nbr = $Sql->Count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$sql->query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . securit($mail_object) . "', '" . addslashes($message) . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . securit($mail_object) . "', '" . addslashes($message) . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
 			return $error_mailing_list;
 		}
 		else
@@ -118,7 +118,7 @@ class Newsletter_sender
 	
 	function send_text($mail_object, $message, $email_test = '')
 	{
-		global $_NEWSLETTER_CONFIG, $LANG, $sql;
+		global $_NEWSLETTER_CONFIG, $LANG, $Sql;
 		
 		$error_mailing_list = array();
 		$header = 'From: ' . $_NEWSLETTER_CONFIG['newsletter_name'] . ' <' . $_NEWSLETTER_CONFIG['sender_mail'] . '>' . "\r\n"; 
@@ -126,19 +126,19 @@ class Newsletter_sender
 		
 		if( $email_test == '' ) // envoi définitif
 		{
-			$result = $sql->query_while("SELECT id, mail 
+			$result = $Sql->Query_while("SELECT id, mail 
 			FROM ".PREFIX."newsletter 
 			ORDER BY id", __LINE__, __FILE__);
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				$mail_contents = $message . "\n\n" . $LANG['newsletter_unscubscribe_text'] . HOST . DIR . '/membre/newsletter.php?id=' . $row['id'];			
 		
 				if( !@mail($row['mail'], $mail_object, $mail_contents, $header) )
 					$error_mailing_list[] = $row['mail'];
 			}
-			$nbr = $sql->count_table('newsletter', __LINE__, __FILE__);
+			$nbr = $Sql->Count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$sql->query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . addslashes($message) . "', '" . time() . "', 'text', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . addslashes($message) . "', '" . time() . "', 'text', '" . $nbr . "')", __LINE__, __FILE__);
 			return $error_mailing_list;
 		}
 		else

@@ -30,7 +30,7 @@ require_once('../includes/begin.php');
 define('TITLE', $LANG['title_register']);
 require_once('../includes/header.php'); 
 
-$cache->load_file('member');
+$Cache->Load_file('member');
 if( !$CONFIG_MEMBER['activ_register'] )
 	redirect(get_start_page());
 
@@ -40,16 +40,16 @@ $get_erroru = !empty($_GET['erroru']) ? trim($_GET['erroru']) : '';
 
 if( empty($key) )
 {
-	if( !$session->check_auth($session->data, 0) && !empty($CONFIG_MEMBER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru) )
+	if( !$Member->Check_level(0) && !empty($CONFIG_MEMBER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru) )
 	{
-		$template->set_filenames(array(
+		$Template->Set_filenames(array(
 			'register' => '../templates/' . $CONFIG['theme'] . '/register.tpl'
 		));
 		
-		$template->assign_block_vars('confirm', array(
+		$Template->Assign_block_vars('confirm', array(
 		));
 				
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'MSG_REGISTER' => $CONFIG_MEMBER['msg_register'],
 			'L_REGISTER' => $LANG['register'],
 			'L_REGISTRATION_TERMS' => $LANG['register_terms'],
@@ -57,15 +57,15 @@ if( empty($key) )
 			'L_SUBMIT' => $LANG['submit']			
 		));	
 		
-		$template->pparse('register');
+		$Template->Pparse('register');
 	}
-	elseif( $session->check_auth($session->data, 0) !== true && (!empty($_POST['confirm']) || empty($CONFIG_MEMBER['msg_register']) || !empty($get_error) || !empty($get_erroru)) )
+	elseif( $Member->Check_level(0) !== true && (!empty($_POST['confirm']) || empty($CONFIG_MEMBER['msg_register']) || !empty($get_error) || !empty($get_erroru)) )
 	{
-		$template->set_filenames(array(
+		$Template->Set_filenames(array(
 			'register' => '../templates/' . $CONFIG['theme'] . '/register.tpl'
 		));
 		
-		$template->assign_block_vars('register', array(
+		$Template->Assign_block_vars('register', array(
 		));
 		
 		//Gestion des erreurs.
@@ -96,21 +96,21 @@ if( empty($key) )
 			$errstr = '';
 		}
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, E_USER_NOTICE);  
+			$Errorh->Error_handler($errstr, E_USER_NOTICE);  
 
 		if( isset($LANG[$get_erroru]) )
-			$errorh->error_handler($LANG[$get_erroru], E_USER_WARNING);  
+			$Errorh->Error_handler($LANG[$get_erroru], E_USER_WARNING);  
 			
 		//Mode d'activation du membre.
 		if( $CONFIG_MEMBER['activ_mbr'] == '1' )
 		{
-			$template->assign_block_vars('register.activ_mbr', array(
+			$Template->Assign_block_vars('register.activ_mbr', array(
 				'L_ACTIV_MBR' => $LANG['activ_mbr_mail']
 			));
 		}
 		elseif( $CONFIG_MEMBER['activ_mbr'] == '2' )
 		{
-			$template->assign_block_vars('register.activ_mbr', array(
+			$Template->Assign_block_vars('register.activ_mbr', array(
 				'L_ACTIV_MBR' => $LANG['activ_mbr_admin']
 			));
 		}
@@ -118,21 +118,21 @@ if( empty($key) )
 		//Code de vérification, anti-bots.
 		if( $CONFIG_MEMBER['verif_code'] == '1' && @extension_loaded('gd') )
 		{
-			$template->assign_vars(array(
+			$Template->Assign_vars(array(
 				'L_REQUIRE_VERIF_CODE' => 'if(document.getElementById(\'verif_code\').value == "") {
 					alert("' . $LANG['require_verif_code'] . '");
 					return false;
 			    }'
 			));
 			
-			$template->assign_block_vars('register.verif_code', array(
+			$Template->Assign_block_vars('register.verif_code', array(
 			));
 		}
 		
 		//Autorisation d'uploader un avatar sur le serveur.
 		if( $CONFIG_MEMBER['activ_up_avatar'] == 1 )
 		{
-			$template->assign_block_vars('register.upload_avatar', array(
+			$Template->Assign_block_vars('register.upload_avatar', array(
 				'WEIGHT_MAX' => $CONFIG_MEMBER['weight_max'],
 				'HEIGHT_MAX' => $CONFIG_MEMBER['height_max'],
 				'WIDTH_MAX' => $CONFIG_MEMBER['width_max']
@@ -142,10 +142,10 @@ if( empty($key) )
 		//Gestion langue par défaut.
 		$array_identifier = '';
 		$lang_identifier = '../images/stats/other.png';
-		$result = $sql->query_while("SELECT lang 
+		$result = $Sql->Query_while("SELECT lang 
 		FROM ".PREFIX."lang
 		WHERE activ = 1 AND secure = -1", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{	
 			$lang_info = @parse_ini_file('../lang/' . $row['lang'] . '/config.ini');
 			if( $lang_info )
@@ -158,12 +158,12 @@ if( empty($key) )
 					$selected = 'selected="selected"';
 					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
 				}			
-				$template->assign_block_vars('register.select', array(
+				$Template->Assign_block_vars('register.select', array(
 					'LANG' => '<option value="' . $row['lang'] . '" ' . $selected . '>' . $lang_name . '</option>'
 				));
 			}
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 		
 		//Gestion éditeur par défaut.
 		$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
@@ -183,7 +183,7 @@ if( empty($key) )
 			$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 		}
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'JS_LANG_IDENTIFIER' => $array_identifier,
 			'IMG_LANG_IDENTIFIER' => $lang_identifier,
 			'SELECT_EDITORS' => $select_editors,
@@ -248,46 +248,46 @@ if( empty($key) )
 		//Gestion thème par défaut.
 		if( $CONFIG_MEMBER['force_theme'] == 0 ) //Thèmes aux membres autorisés.
 		{
-			$result = $sql->query_while("SELECT theme 
+			$result = $Sql->Query_while("SELECT theme 
 			FROM ".PREFIX."themes
 			WHERE activ = 1 AND secure = -1", __LINE__, __FILE__);
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{	
 				$theme_info = @parse_ini_file('../templates/' . $row['theme'] . '/config/' . $CONFIG['lang'] . '/config.ini');
 				if( $theme_info )
 				{
 					$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row['theme'];
 					$selected = ($row['theme'] == $CONFIG['theme']) ? 'selected="selected"' : '';
-					$template->assign_block_vars('register.select_theme', array(
+					$Template->Assign_block_vars('register.select_theme', array(
 						'THEME' => '<option value="' . $row['theme'] . '" ' . $selected . '>' . $theme_name . '</option>'
 					));
 				}
 			}
-			$sql->close($result);	
+			$Sql->Close($result);	
 		}
 		else //Thème par défaut forcé.
 		{
 			$theme_info = @parse_ini_file('../templates/' . $CONFIG['theme'] . '/config/' . $CONFIG['lang'] . '/config.ini');
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'];
-			$template->assign_block_vars('register.select_theme', array(
+			$Template->Assign_block_vars('register.select_theme', array(
 				'THEME' => '<option value="' . $CONFIG['theme'] . '" selected="selected">' . $theme_name . '</option>'
 			));
 		}
 
 		//Champs supplémentaires.
-		$extend_field_exist = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+		$extend_field_exist = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 		if( $extend_field_exist > 0 )
 		{
-			$template->assign_vars(array(			
+			$Template->Assign_vars(array(			
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
 			));
-			$template->assign_block_vars('register.miscellaneous', array(			
+			$Template->Assign_block_vars('register.miscellaneous', array(			
 			));
-			$result = $sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values
+			$result = $Sql->Query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values
 			FROM ".PREFIX."member_extend_cat AS exc
 			WHERE exc.display = 1
 			ORDER BY exc.class", __LINE__, __FILE__);
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{	
 				// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 				$field = '';
@@ -345,49 +345,49 @@ if( empty($key) )
 					break;
 				}				
 				
-				$template->assign_block_vars('register.miscellaneous.list', array(
+				$Template->Assign_block_vars('register.miscellaneous.list', array(
 					'NAME' => $row['require'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 					'ID' => $row['field_name'],
 					'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
 					'FIELD' => $field
 				));
 			}
-			$sql->close($result);	
+			$Sql->Close($result);	
 		}
 		
-		$template->pparse('register');
+		$Template->Pparse('register');
 	}
 	else
 		redirect(get_start_page());
 }
-elseif( !empty($key) && $session->check_auth($session->data, 0) !== true ) //Activation du compte membre
+elseif( !empty($key) && $Member->Check_level(0) !== true ) //Activation du compte membre
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'register' => '../templates/' . $CONFIG['theme'] . '/register.tpl'
 	));
 	
-	$template->assign_block_vars('activ', array(
+	$Template->Assign_block_vars('activ', array(
 	));	
 	
-	$check_mbr = $sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
+	$check_mbr = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 	if( $check_mbr == '1' ) //Activation du compte.
 	{
-		$sql->query_inject("UPDATE ".PREFIX."member SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."member SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'L_REGISTER' => $LANG['register'],
 			'L_ACTIVATION_REPORT' => $LANG['activ_mbr_mail_success']
 		));	
 	}
 	else
 	{
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'L_REGISTER' => $LANG['register'],
 			'L_ACTIVATION_REPORT' => $LANG['activ_mbr_mail_error']
 		));	
 	}
 	
-	$template->pparse('register');
+	$Template->Pparse('register');
 }
 else
 	redirect(get_start_page());

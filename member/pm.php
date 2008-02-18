@@ -27,16 +27,16 @@
 
 require_once('../includes/begin.php'); 
 define('TITLE', $LANG['title_pm']);
-$speed_bar->Add_link($LANG['member_area'], transid('member.php?id=' . $session->data['user_id'] . '&amp;view=1', 'member-' . $session->data['user_id'] . '.php?view=1'));
-$speed_bar->Add_link($LANG['title_pm'], transid('pm.php'));
+$Speed_bar->Add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
+$Speed_bar->Add_link($LANG['title_pm'], transid('pm.php'));
 require_once('../includes/header.php'); 
 
 //Interdit aux non membres.
-if( !$session->check_auth($session->data, 0) )
-	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+if( !$Member->Check_level(0) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 include_once('../includes/pm.class.php');
-$privatemsg = new Privatemsg();
+$Privatemsg = new Privatemsg();
 
 $pm_get = !empty($_GET['pm']) ? numeric($_GET['pm']) : '';
 $pm_id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
@@ -50,31 +50,31 @@ $pm_del = !empty($_GET['del']) ? numeric($_GET['del']) : '';
 //Marque les messages privés comme lus
 if( !empty($_GET['read']) )
 {
-	$nbr_pm = $privatemsg->get_total_convers_pm($session->data['user_id']);
-	$limit_group = $groups->max_value($groups->user_groups_auth, PM_GROUP_LIMIT, $CONFIG['pm_max']);
-	$unlimited_pm = $session->check_auth($session->data, 1) || ($limit_group === -1);	
+	$nbr_pm = $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id'));
+	$limit_group = $Member->Check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
+	$unlimited_pm = $Member->Check_level(1) || ($limit_group === -1);	
 
 	$nbr_waiting_pm = 0;
 	if( !$unlimited_pm && $nbr_pm > $limit_group )
 		$nbr_waiting_pm = $nbr_pm - $limit_group; //Nombre de messages privés non visibles.
 	
 	$j = 0;
-	$result = $sql->query_while("SELECT pm.last_msg_id, pm.user_view_pm
+	$result = $Sql->Query_while("SELECT pm.last_msg_id, pm.user_view_pm
 	FROM ".PREFIX."pm_topic pm
 	LEFT JOIN ".PREFIX."pm_msg msg ON msg.idconvers = pm.id AND msg.id = pm.last_msg_id
-	WHERE " . $session->data['user_id'] . " IN (pm.user_id, pm.user_id_dest) AND pm.last_user_id <> '" . $session->data['user_id'] . "' AND msg.view_status = 0
+	WHERE " . $Member->Get_attribute('user_id') . " IN (pm.user_id, pm.user_id_dest) AND pm.last_user_id <> '" . $Member->Get_attribute('user_id') . "' AND msg.view_status = 0
 	ORDER BY pm.last_timestamp DESC ", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		//On saute l'itération si la limite est dépassé.
 		$j++;
 		if( !$unlimited_pm && ($nbr_waiting_pm - $j) >= 0 )
 			continue;
-		$sql->query_inject("UPDATE ".PREFIX."pm_msg SET view_status = 1 WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__); 		
+		$Sql->Query_inject("UPDATE ".PREFIX."pm_msg SET view_status = 1 WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__); 		
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$sql->query_inject("UPDATE ".PREFIX."member SET user_pm = '" . $nbr_waiting_pm . "' WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__); 
+	$Sql->Query_inject("UPDATE ".PREFIX."member SET user_pm = '" . $nbr_waiting_pm . "' WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__); 
 	
 	redirect(HOST . DIR . transid('/member/pm.php', '', '&'));
 }
@@ -85,9 +85,9 @@ if( !empty($_POST['convers']) && empty($pm_edit) && empty($pm_del) ) //Envoi de 
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 	$login = !empty($_POST['login']) ? securit($_POST['login']) : '';
 	
-	$limit_group = $groups->max_value($groups->user_groups_auth, PM_GROUP_LIMIT, $CONFIG['pm_max']);
+	$limit_group = $Member->Check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
 	//Vérification de la boite de l'expéditeur.
-	if( $privatemsg->get_total_convers_pm($session->data['user_id']) >= $limit_group && (!$session->check_auth($session->data, 1) && !($limit_group === -1)) )
+	if( $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id')) >= $limit_group && (!$Member->Check_level(1) && !($limit_group === -1)) )
 	{
 		//Boîte de l'expéditeur pleine.
 		redirect(HOST . DIR . '/member/pm' . transid('.php?post=1&error=e_pm_full_post', '', '&') . '#errorh');
@@ -96,13 +96,13 @@ if( !empty($_POST['convers']) && empty($pm_edit) && empty($pm_del) ) //Envoi de 
 	if( !empty($title) && !empty($contents) && !empty($login) )
 	{	
 		//On essaye de récupérer le user_id, si le membre n'a pas cliqué une fois la recherche AJAX terminée.
-		$user_id_dest = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__); 
-		if( !empty($user_id_dest) && $user_id_dest != $session->data['user_id'] ) 
+		$user_id_dest = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__); 
+		if( !empty($user_id_dest) && $user_id_dest != $Member->Get_attribute('user_id') ) 
 		{
 			//Envoi de la conversation, vérification de la boite si pleine => erreur
-			$privatemsg->send_pm($user_id_dest, $title, $contents, $session->data['user_id']);
+			$Privatemsg->Send_pm($user_id_dest, $title, $contents, $Member->Get_attribute('user_id'));
 			//Succès redirection vers la conversation.
-			redirect(HOST . DIR . '/member/pm' . transid('.php?id=' . $privatemsg->pm_convers_id, '-0-' . $privatemsg->pm_convers_id . '.php', '&') . '#m' . $privatemsg->pm_msg_id);
+			redirect(HOST . DIR . '/member/pm' . transid('.php?id=' . $Privatemsg->pm_convers_id, '-0-' . $Privatemsg->pm_convers_id . '.php', '&') . '#m' . $Privatemsg->pm_msg_id);
 		}
 		else //Destinataire non trouvé.
 			redirect(HOST . DIR . '/member/pm' . transid('.php?post=1&error=e_unexist_user', '', '&') . '#errorh');
@@ -110,13 +110,13 @@ if( !empty($_POST['convers']) && empty($pm_edit) && empty($pm_del) ) //Envoi de 
 	else //Champs manquants.
 		redirect(HOST . DIR . '/member/pm' . transid('.php?post=1&error=e_incomplete', '', '&') . '#errorh');
 }
-elseif( !empty($post) || (!empty($pm_get) && $pm_get != $session->data['user_id']) && $pm_get > '0' ) //Interface pour poster la conversation.
+elseif( !empty($post) || (!empty($pm_get) && $pm_get != $Member->Get_attribute('user_id')) && $pm_get > '0' ) //Interface pour poster la conversation.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'pm' => '../templates/' . $CONFIG['theme'] . '/pm.tpl'
 	));
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'LANG' => $CONFIG['lang'],
 		'THEME' => $CONFIG['theme'],
 		'L_REQUIRE_RECIPIENT' => $LANG['require_recipient'],
@@ -134,19 +134,19 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $session->data['user_id'
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$login = !empty($pm_get) ? $sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $pm_get . "'", __LINE__, __FILE__) : '';
+	$login = !empty($pm_get) ? $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $pm_get . "'", __LINE__, __FILE__) : '';
 	
-	$template->assign_block_vars('post_convers', array(
+	$Template->Assign_block_vars('post_convers', array(
 		'U_ACTION_CONVERS' => transid('.php'),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
-		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $session->data['user_id'] . '&amp;view=1', 'member-' . $session->data['user_id'] . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
+		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
 		'LOGIN' => $login
 	));
 	
-	$limit_group = $groups->max_value($groups->user_groups_auth, PM_GROUP_LIMIT, $CONFIG['pm_max']);
-	$nbr_pm = $privatemsg->get_total_convers_pm($session->data['user_id']);
-	if( !$session->check_auth($session->data, 1) && !($limit_group === -1) && $nbr_pm >= $limit_group ) 
-		$errorh->error_handler($LANG['e_pm_full_post'], E_USER_WARNING);
+	$limit_group = $Member->Check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
+	$nbr_pm = $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id'));
+	if( !$Member->Check_level(1) && !($limit_group === -1) && $nbr_pm >= $limit_group ) 
+		$Errorh->Error_handler($LANG['e_pm_full_post'], E_USER_WARNING);
 	else
 	{
 		//Gestion des erreurs
@@ -169,23 +169,23 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $session->data['user_id'
 				$errstr = '';
 		}
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, $type);
+			$Errorh->Error_handler($errstr, $type);
 	}
 	
-	$template->assign_block_vars('post_convers.user_id_dest', array(
+	$Template->Assign_block_vars('post_convers.user_id_dest', array(
 	));
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('pm');
+	$Template->Pparse('pm');
 }
 elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de la conversation.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'pm' => '../templates/' . $CONFIG['theme'] . '/pm.tpl'
 	));
 	
-	$template->assign_vars(array(		
+	$Template->Assign_vars(array(		
 		'LANG' => $CONFIG['lang'],
 		'THEME' => $CONFIG['theme'],
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
@@ -202,37 +202,37 @@ elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$template->assign_block_vars('post_convers', array(
+	$Template->Assign_block_vars('post_convers', array(
 		'U_ACTION_CONVERS' => transid('.php'),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
-		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $session->data['user_id'] . '&amp;view=1', 'member-' . $session->data['user_id'] . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
+		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
 		'LOGIN' => !empty($_POST['login']) ? stripslashes($_POST['login']) : '',
 		'TITLE' => !empty($_POST['title']) ? stripslashes($_POST['title']) : '',
 		'CONTENTS' => !empty($_POST['contents']) ? stripslashes($_POST['contents']) : ''
 	));
 	
-	$template->assign_block_vars('post_convers.show_convers', array(
+	$Template->Assign_block_vars('post_convers.show_convers', array(
 		'DATE' => gmdate_format('date_format'),
 		'CONTENTS' => second_parse(stripslashes(parse($_POST['contents'])))
 	));
 	
-	$template->assign_block_vars('post_convers.user_id_dest', array(
+	$Template->Assign_block_vars('post_convers.user_id_dest', array(
 	));
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('pm');
+	$Template->Pparse('pm');
 }
 elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisualisation du message.
 {
 	//On récupère les info de la conversation.
-	$convers_title = $sql->query("SELECT title FROM ".PREFIX."pm_topic WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
+	$convers_title = $Sql->Query("SELECT title FROM ".PREFIX."pm_topic WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
 	
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'pm' => '../templates/' . $CONFIG['theme'] . '/pm.tpl'
 	));
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'LANG' => $CONFIG['lang'],
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
@@ -242,22 +242,22 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$template->assign_block_vars('show_pm', array(
+	$Template->Assign_block_vars('show_pm', array(
 		'DATE' => gmdate_format('date_format'),
 		'CONTENTS' => second_parse(stripslashes(parse($_POST['contents']))),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . transid('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers_title . '</a>',
-		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $session->data['user_id'] . '&amp;view=1', 'member-' . $session->data['user_id'] . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
+		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
 	));
 	
-	$template->assign_block_vars('post_pm', array(
+	$Template->Assign_block_vars('post_pm', array(
 		'CONTENTS' => !empty($_POST['contents']) ? stripslashes($_POST['contents']) : '',
 		'U_PM_ACTION_POST' => transid('.php?id=' . $pm_id_get)
 	));
 	
 	include_once('../includes/bbcode.php');
 
-	$template->pparse('pm');
+	$Template->Pparse('pm');
 }	
 elseif( !empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del) ) //Envoi de messages.
 {
@@ -267,33 +267,33 @@ elseif( !empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 		//user_view_pm => nombre de messages non lu par l'un des 2 participants.
 		
 		//On récupère les info de la conversation.
-		$convers = $sql->query_array('pm_topic', 'user_id', 'user_id_dest', 'user_convers_status', 'nbr_msg', 'user_view_pm', 'last_user_id', "WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
+		$convers = $Sql->Query_array('pm_topic', 'user_id', 'user_id_dest', 'user_convers_status', 'nbr_msg', 'user_view_pm', 'last_user_id', "WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
 		
 		//Récupération de l'id du destinataire.
-		$user_id_dest = ($convers['user_id_dest'] == $session->data['user_id']) ? $convers['user_id'] : $convers['user_id_dest'];
+		$user_id_dest = ($convers['user_id_dest'] == $Member->Get_attribute('user_id')) ? $convers['user_id'] : $convers['user_id_dest'];
 		
 		if( $convers['user_convers_status'] == '0' && $user_id_dest > '0' ) //On vérifie que la conversation n'a pas été supprimée chez le destinataire, et que ce n'est pas un mp automatique du site.
 		{
 			//Vu par exp et pas par dest  => 1
 			//Vu par dest et pas par exp  => 2	
-			if( $convers['user_id'] == $session->data['user_id'] ) //Le membre est le créateur de la conversation.
+			if( $convers['user_id'] == $Member->Get_attribute('user_id') ) //Le membre est le créateur de la conversation.
 				$status = 1;
-			elseif( $convers['user_id_dest'] == $session->data['user_id'] ) //Le membre est le destinataire de la conversation.
+			elseif( $convers['user_id_dest'] == $Member->Get_attribute('user_id') ) //Le membre est le destinataire de la conversation.
 				$status = 2;
 			
 			//Cas assez sournois, l'expediteur a reçu un message pendant qu'il lisait la conversation juste avant de répondre => on marque le message comme lu.
-			if( $convers['user_view_pm'] > 1 && $convers['last_user_id'] != $session->data['user_id'] )
-				$sql->query_inject("UPDATE ".PREFIX."member SET user_pm = user_pm - '" . $convers['user_view_pm'] . "' WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
+			if( $convers['user_view_pm'] > 1 && $convers['last_user_id'] != $Member->Get_attribute('user_id') )
+				$Sql->Query_inject("UPDATE ".PREFIX."member SET user_pm = user_pm - '" . $convers['user_view_pm'] . "' WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 				
 			//Envoi du message privé.
-			$privatemsg->send_single_pm($user_id_dest, $pm_id_get, $contents, $session->data['user_id'], $status);
+			$Privatemsg->Send_single_pm($user_id_dest, $pm_id_get, $contents, $Member->Get_attribute('user_id'), $status);
 
 			//Calcul de la page vers laquelle on redirige.
 			$last_page = ceil( ($convers['nbr_msg'] + 1) / 25);
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? '&p=' . $last_page : '';
 			
-			redirect(HOST . DIR . '/member/pm' . transid('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite . '.php', '&') . '#m' . $privatemsg->pm_msg_id);
+			redirect(HOST . DIR . '/member/pm' . transid('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite . '.php', '&') . '#m' . $Privatemsg->pm_msg_id);
 		}
 		else //Le destinataire a supprimé la conversation.
 			redirect(HOST . DIR . '/member/pm' . transid('.php?id=' . $pm_id_get . '&error=e_pm_del', '-0-' . $pm_id_get . '-0.php?error=e_pm_del', '&') . '#errorh');
@@ -304,73 +304,73 @@ elseif( !empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 elseif( !empty($pm_del_convers) ) //Suppression de conversation.
 {
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 	$pagination_pm = 25;
 
 	//Conversation présente chez les deux membres: user_convers_status => 0.
 	//Conversation supprimée chez l'expediteur: user_convers_status => 1.
 	//Conversation supprimée chez le destinataire: user_convers_status => 2.
-	$result = $sql->query_while("SELECT id, user_id, user_id_dest, user_convers_status, last_msg_id
+	$result = $Sql->Query_while("SELECT id, user_id, user_id_dest, user_convers_status, last_msg_id
 	FROM ".PREFIX."pm_topic
 	WHERE 
 	(
-		" . $session->data['user_id'] . " IN (user_id, user_id_dest)
+		" . $Member->Get_attribute('user_id') . " IN (user_id, user_id_dest)
 	) 
 	AND 
 	(
 		user_convers_status = 0 
 		OR 
 		(
-			(user_id_dest = '" . $session->data['user_id'] . "' AND user_convers_status = 1) 
+			(user_id_dest = '" . $Member->Get_attribute('user_id') . "' AND user_convers_status = 1) 
 			OR 
-			(user_id = '" . $session->data['user_id'] . "' AND user_convers_status = 2)
+			(user_id = '" . $Member->Get_attribute('user_id') . "' AND user_convers_status = 2)
 		)
 	)
 	ORDER BY last_timestamp DESC 
-	" . $sql->sql_limit($pagination->first_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit($Pagination->First_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$del_convers = isset($_POST[$row['id']]) ? trim($_POST[$row['id']]) : '';
 		if( $del_convers == 'on' )
 		{			
 			$del_convers = false;					
-			if( $row['user_id'] == $session->data['user_id'] ) //Expediteur.
+			if( $row['user_id'] == $Member->Get_attribute('user_id') ) //Expediteur.
 			{	
 				$expd = true;
 				if( $row['user_convers_status'] == 2 )
 					$del_convers = true;
 			}
-			elseif( $row['user_id_dest'] == $session->data['user_id'] ) //Destinataire
+			elseif( $row['user_id_dest'] == $Member->Get_attribute('user_id') ) //Destinataire
 			{	
 				$expd = false;
 				if( $row['user_convers_status'] == 1 )
 					$del_convers = true;
 			}
 			
-			$view_status = $sql->query("SELECT view_status FROM ".PREFIX."pm_msg WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__);	
+			$view_status = $Sql->Query("SELECT view_status FROM ".PREFIX."pm_msg WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__);	
 			$update_nbr_pm = ($view_status == '0') ? true : false;	
-			$privatemsg->del_pm($session->data['user_id'], $row['id'], $expd, $del_convers, $update_nbr_pm);
+			$Privatemsg->Del_pm($Member->Get_attribute('user_id'), $row['id'], $expd, $del_convers, $update_nbr_pm);
 		}
 	}
 	
-	redirect(HOST . DIR . '/member/pm' . transid('.php?pm=' . $session->data['user_id'], '-' . $session->data['user_id'] . '.php', '&'));
+	redirect(HOST . DIR . '/member/pm' . transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php', '&'));
 }
 elseif( !empty($pm_del) ) //Suppression du message privé, si le destinataire ne la pas encore lu.
 {
-	$pm = $sql->query_array('pm_msg', 'idconvers', 'contents', 'view_status', "WHERE id = '" . $pm_del . "' AND user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
+	$pm = $Sql->Query_array('pm_msg', 'idconvers', 'contents', 'view_status', "WHERE id = '" . $pm_del . "' AND user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
 	if( !empty($pm['idconvers']) ) //Permet de vérifier si le message appartient bien au membre.
 	{		
 		//On récupère les info de la conversation.
-		$convers = $sql->query_array('pm_topic', 'title', 'user_id', 'user_id_dest', 'last_msg_id', "WHERE id = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);	
+		$convers = $Sql->Query_array('pm_topic', 'title', 'user_id', 'user_id_dest', 'last_msg_id', "WHERE id = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);	
 		if( $pm_del ==  $convers['last_msg_id'] ) //On édite uniquement le dernier message.
 		{
-			if( $convers['user_id'] == $session->data['user_id'] ) //Expediteur.
+			if( $convers['user_id'] == $Member->Get_attribute('user_id') ) //Expediteur.
 			{	
 				$expd = true;
 				$pm_to = $convers['user_id_dest'];
 			}
-			elseif( $convers['user_id_dest'] == $session->data['user_id'] ) //Destinataire
+			elseif( $convers['user_id_dest'] == $Member->Get_attribute('user_id') ) //Destinataire
 			{	
 				$expd = false;
 				$pm_to = $convers['user_id'];
@@ -383,35 +383,35 @@ elseif( !empty($pm_del) ) //Suppression du message privé, si le destinataire ne 
 			//Le destinataire n'a pas lu le message => on peut éditer.
 			if( $view === false )
 			{
-				$id_first = $sql->query("SELECT MIN(id) FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);
+				$id_first = $Sql->Query("SELECT MIN(id) FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);
 				if( $pm_del > $id_first ) //Suppression du message.
 				{	
-					$pm_last_msg = $privatemsg->del_single_pm($pm_to, $pm_del, $pm['idconvers']);					
+					$pm_last_msg = $Privatemsg->Del_single_pm($pm_to, $pm_del, $pm['idconvers']);					
 					redirect(HOST . DIR . '/member/pm' . transid('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_last_msg);
 				}	
 				elseif( $pm_del == $id_first ) //Suppression de la conversation.
 				{	
-					$privatemsg->del_pm($pm_to, $pm['idconvers'], $expd, DEL_PM_CONVERS, UPDATE_MBR_PM);
+					$Privatemsg->Del_pm($pm_to, $pm['idconvers'], $expd, DEL_PM_CONVERS, UPDATE_MBR_PM);
 					redirect(HOST . DIR . '/member/pm.php' . SID2);
 				}					
 			}
 			else //Le membre a déjà lu le message on ne peux plus le supprimer.
-				$errorh->error_handler('e_pm_nodel', E_USER_REDIRECT);
+				$Errorh->Error_handler('e_pm_nodel', E_USER_REDIRECT);
 		}
 		else //Echec.
-			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	}
 	else //Echec.
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la pas encore lu.
 {		
-	$pm = $sql->query_array('pm_msg', 'idconvers', 'contents', 'view_status', "WHERE id = '" . $pm_edit . "' AND user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
+	$pm = $Sql->Query_array('pm_msg', 'idconvers', 'contents', 'view_status', "WHERE id = '" . $pm_edit . "' AND user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
 	if( !empty($pm['idconvers']) ) //Permet de vérifier si le message appartient bien au membre.
 	{		
 		//On récupère les info de la conversation.
-		$convers = $sql->query_array('pm_topic', 'title', 'user_id', 'user_id_dest', "WHERE id = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);	
+		$convers = $Sql->Query_array('pm_topic', 'title', 'user_id', 'user_id_dest', "WHERE id = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);	
 		
 		$view = false;
 		if( $pm['view_status'] == '1' ) //Le membre a déjà lu le message => échec.
@@ -420,7 +420,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 		//Le destinataire n'a pas lu le message => on peut éditer.
 		if( $view === false )
 		{
-			$id_first = $sql->query("SELECT MIN(id) as id FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);			
+			$id_first = $Sql->Query("SELECT MIN(id) as id FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);			
 			
 			if( !empty($_POST['convers']) XOR !empty($_POST['edit_pm']) )
 			{
@@ -430,33 +430,33 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 				if( !empty($_POST['edit_pm']) && !empty($contents) )
 				{
 					if( $pm_edit > $id_first ) //Maj du message.
-						$sql->query_inject("UPDATE ".PREFIX."pm_msg SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
+						$Sql->Query_inject("UPDATE ".PREFIX."pm_msg SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
 					else //Echec.
-						$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+						$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 				}
 				elseif( !empty($_POST['convers']) && !empty($title) ) //Maj de la conversation, si il s'agit du premier message.
 				{
 					if( $pm_edit == $id_first )
 					{	
-						$sql->query_inject("UPDATE ".PREFIX."pm_topic SET title = '" . $title . "', last_timestamp = '" . time() . "' WHERE id = '" . $pm['idconvers'] . "' AND last_msg_id = '" . $pm_edit . "'", __LINE__, __FILE__);
-						$sql->query_inject("UPDATE ".PREFIX."pm_msg SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
+						$Sql->Query_inject("UPDATE ".PREFIX."pm_topic SET title = '" . $title . "', last_timestamp = '" . time() . "' WHERE id = '" . $pm['idconvers'] . "' AND last_msg_id = '" . $pm_edit . "'", __LINE__, __FILE__);
+						$Sql->Query_inject("UPDATE ".PREFIX."pm_msg SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
 					}
 					else //Echec.
-						$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+						$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 				}						
 				else //Champs manquants.
-					$errorh->error_handler('e_incomplete', E_USER_REDIRECT);
+					$Errorh->Error_handler('e_incomplete', E_USER_REDIRECT);
 				
 				//Succès redirection vers la conversation.
 				redirect(HOST . DIR . '/member/pm' . transid('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_edit);
 			}
 			else //Interface d'édition
 			{
-				$template->set_filenames(array(
+				$Template->Set_filenames(array(
 					'pm' => '../templates/' . $CONFIG['theme'] . '/pm.tpl'
 				));
 				
-				$template->assign_vars(array(
+				$Template->Assign_vars(array(
 					'LANG' => $CONFIG['lang'],
 					'THEME' => $CONFIG['theme'],					
 					'L_REQUIRE_MESSAGE' => $LANG['require_text'],
@@ -472,16 +472,16 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 				$contents = !empty($_POST['contents']) ? stripslashes($_POST['contents']) : '';
 				$title = !empty($_POST['title']) ? stripslashes($_POST['title']) : '';
 				
-				$template->assign_block_vars('edit_pm', array(
+				$Template->Assign_block_vars('edit_pm', array(
 					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : unparse($pm['contents']),
 					'U_ACTION_EDIT' => transid('.php?edit=' . $pm_edit),
 					'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
-					'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $session->data['user_id'] . '&amp;view=1', 'member-' . $session->data['user_id'] . '.php?view=1') . '">' . $LANG['member_area'] . '</a>'
+					'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>'
 				));
 				
 				if( !empty($_POST['prw_convers']) XOR !empty($_POST['prw']) )
 				{				
-					$template->assign_block_vars('edit_pm.show_pm', array(
+					$Template->Assign_block_vars('edit_pm.show_pm', array(
 						'DATE' => gmdate_format('date_format'),
 						'CONTENTS' => second_parse(stripslashes(parse($_POST['contents']))),
 					));				
@@ -489,64 +489,64 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 
 				if( $id_first == $pm_edit ) //Premier message de la convers => Edition de celle-ci
 				{
-					$template->assign_vars(array(
+					$Template->Assign_vars(array(
 						'SUBMIT_NAME' => 'convers',
 						'L_TITLE' => $LANG['title'],
 					));
 					
-					$template->assign_block_vars('edit_pm.title', array(
+					$Template->Assign_block_vars('edit_pm.title', array(
 						'TITLE' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw']) ) ? $title : $convers['title']
 					));
 				}
 				else
-					$template->assign_vars(array(
+					$Template->Assign_vars(array(
 						'SUBMIT_NAME' => 'edit_pm',
 					));
 					
 				include_once('../includes/bbcode.php');
 				
-				$template->pparse('pm');
+				$Template->Pparse('pm');
 			}
 		}
 		else //Le membre a déjà lu le message on ne peux plus éditer.
-			$errorh->error_handler('e_pm_noedit', E_USER_REDIRECT); 
+			$Errorh->Error_handler('e_pm_noedit', E_USER_REDIRECT); 
 	}
 	else //Echec.
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'pm' => '../templates/' . $CONFIG['theme'] . '/pm.tpl'
 	));
 	
 	//On crée une pagination si le nombre de MP est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 
 	//On récupère les info de la conversation.
-	$convers = $sql->query_array('pm_topic', 'id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm', "WHERE id = '" . $pm_id_get . "' AND '" . $session->data['user_id'] . "' IN (user_id, user_id_dest)", __LINE__, __FILE__);
+	$convers = $Sql->Query_array('pm_topic', 'id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm', "WHERE id = '" . $pm_id_get . "' AND '" . $Member->Get_attribute('user_id') . "' IN (user_id, user_id_dest)", __LINE__, __FILE__);
 
 	//Vérification des autorisations.
-	if( empty($convers['id']) || ($convers['user_id'] != $session->data['user_id'] && $convers['user_id_dest'] != $session->data['user_id']) )
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	if( empty($convers['id']) || ($convers['user_id'] != $Member->Get_attribute('user_id') && $convers['user_id_dest'] != $Member->Get_attribute('user_id')) )
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
-	if( $convers['user_view_pm'] > 0 && $convers['last_user_id'] != $session->data['user_id'] ) //Membre n'ayant pas encore lu la conversation.
+	if( $convers['user_view_pm'] > 0 && $convers['last_user_id'] != $Member->Get_attribute('user_id') ) //Membre n'ayant pas encore lu la conversation.
 	{
-		$sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."member SET user_pm = user_pm - '" . $convers['user_view_pm'] . "' WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__); 
-		$sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."pm_topic SET user_view_pm = 0 WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."pm_msg SET view_status = 1 WHERE idconvers = '" . $convers['id'] . "' AND user_id <> '" . $session->data['user_id'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."member SET user_pm = user_pm - '" . $convers['user_view_pm'] . "' WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__); 
+		$Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."pm_topic SET user_view_pm = 0 WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."pm_msg SET view_status = 1 WHERE idconvers = '" . $convers['id'] . "' AND user_id <> '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 	}	
 	
 	$pagination_msg = 25;	
-	$template->assign_block_vars('pm', array(
-		'PAGINATION' => $pagination->show_pagin('pm' . transid('.php?id=' . $pm_id_get . '&amp;p=%d', '-0-' . $pm_id_get . '-%d.php'), $convers['nbr_msg'], 'p', $pagination_msg, 3),
+	$Template->Assign_block_vars('pm', array(
+		'PAGINATION' => $Pagination->Display_pagination('pm' . transid('.php?id=' . $pm_id_get . '&amp;p=%d', '-0-' . $pm_id_get . '-%d.php'), $convers['nbr_msg'], 'p', $pagination_msg, 3),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . transid('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers['title'] . '</a>',
-		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $session->data['user_id'] . '&amp;view=1', 'member-' . $session->data['user_id'] . '.php?view=1') . '">' . $LANG['member_area'] . '</a>'		
+		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>'		
 	));
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -565,18 +565,18 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	
 	//Gestion des rangs.	
-	$cache->load_file('ranks');
+	$Cache->Load_file('ranks');
 	$page = isset($_GET['pt']) ? numeric($_GET['pt']) : 0; //Redéfinition de la variable $page pour prendre en compte les redirections.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 	$i = 0;	
-	$result = $sql->query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, msg.contents
+	$result = $Sql->Query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, msg.contents
 	FROM ".PREFIX."pm_msg msg
 	LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
 	LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id <> -1
 	WHERE msg.idconvers = '" . $pm_id_get . "'
 	ORDER BY msg.timestamp 
-	" . $sql->sql_limit($pagination->first_msg($pagination_msg, 'p'), $pagination_msg), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit($Pagination->First_msg($pagination_msg, 'p'), $pagination_msg), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$row['user_id'] = (int)$row['user_id'];
 		$is_admin = ($row['user_id'] === -1);
@@ -586,7 +586,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		$edit = '';
 		$del = '';
 		//Dernier mp éditable.
-		if( $session->data['user_id'] === $row['user_id'] && $row['id'] === $convers['last_msg_id'] ) 
+		if( $Member->Get_attribute('user_id') === $row['user_id'] && $row['id'] === $convers['last_msg_id'] ) 
 		{
 			if( $row['view_status'] === '0' ) //Si le destinataire ne la pas encore lu
 			{
@@ -672,7 +672,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text_strong">' . $LANG['forum_quote_last_msg'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
 		$i++;
 		
-		$template->assign_block_vars('pm.msg', array(
+		$Template->Assign_block_vars('pm.msg', array(
 			'ID' => $row['id'],
 			'CONTENTS' => second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
@@ -703,13 +703,13 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		//Marqueur de suivis du sujet.
 		if( !empty($row['track']) ) $track = true;
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 
 	//Récupération du message quoté.
 	if( !empty($quote_get) )
 	{	
-		$quote_msg = $sql->query_array('pm_msg', 'user_id', 'contents', "WHERE id = '" . $quote_get . "'", __LINE__, __FILE__);
-		$pseudo = $sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $quote_msg['user_id'] . "'", __LINE__, __FILE__);
+		$quote_msg = $Sql->Query_array('pm_msg', 'user_id', 'contents', "WHERE id = '" . $quote_get . "'", __LINE__, __FILE__);
+		$pseudo = $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $quote_msg['user_id'] . "'", __LINE__, __FILE__);
 		
 		$contents = '[quote=' . $pseudo . ']' . unparse($quote_msg['contents']) . '[/quote]';
 	}
@@ -718,7 +718,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	
 	if( $convers['user_id'] != -1 )
 	{		
-		$template->assign_block_vars('post_pm', array(
+		$Template->Assign_block_vars('post_pm', array(
 			'CONTENTS' => $contents,
 			'U_PM_ACTION_POST' => transid('.php?id=' . $pm_id_get, '-0-' . $pm_id_get . '.php')
 		));
@@ -739,39 +739,39 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 				$errstr = '';
 		}
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, $type);
+			$Errorh->Error_handler($errstr, $type);
 		
 		include_once('../includes/bbcode.php');
 	}
 	
-	$template->pparse('pm');
+	$Template->Pparse('pm');
 }
 else //Liste des conversation, dans la boite du membre.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'pm' => '../templates/' . $CONFIG['theme'] . '/pm.tpl'
 	));
 
-	$nbr_pm = $privatemsg->get_total_convers_pm($session->data['user_id']);
+	$nbr_pm = $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id'));
 	
 	//On crée une pagination si le nombre de MP est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 
 	$pagination_pm = 25;
 	$pagination_msg = 25;
 	
-	$limit_group = $groups->max_value($groups->user_groups_auth, PM_GROUP_LIMIT, $CONFIG['pm_max']);
-	$unlimited_pm = $session->check_auth($session->data, 1) || ($limit_group === -1);	
+	$limit_group = $Member->Check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
+	$unlimited_pm = $Member->Check_level(1) || ($limit_group === -1);	
 	$pm_max = $unlimited_pm ? $LANG['illimited'] : $limit_group;
 	
-	$template->assign_block_vars('convers', array(
+	$Template->Assign_block_vars('convers', array(
 		'NBR_PM' => $pagination_pm,
 		'PM_POURCENT' => '<strong>' . $nbr_pm . '</strong> / <strong>' . $pm_max . '</strong>',
-		'PAGINATION' => $pagination->show_pagin('pm' . transid('.php?p=%d', '-0-0-%d.php'), $nbr_pm, 'p', $pagination_pm, 3),
+		'PAGINATION' => $Pagination->Display_pagination('pm' . transid('.php?p=%d', '-0-0-%d.php'), $nbr_pm, 'p', $pagination_pm, 3),
 		'U_MARK_AS_READ' => '<a href="pm.php?read=1" class="small_link">' . $LANG['mark_pm_as_read'] . '</a>',
 		'U_MEMBER_ACTION_PM' => transid('.php?del_convers=1&amp;p=' . $page),
-		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $session->data['user_id'] . '&amp;view=1', 'member-' . $session->data['user_id'] . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',	
+		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',	
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_POST_NEW_CONVERS' => '<a href="pm' . transid('.php?post=1', '') . '" title="' . $LANG['post_new_convers'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/post.png" alt="' . $LANG['post_new_convers'] . '" title="' . $LANG['post_new_convers'] . '" class="valign_middle" /></a>'
 	));
@@ -779,7 +779,7 @@ else //Liste des conversation, dans la boite du membre.
 	//Aucun message privé.
 	if( $nbr_pm == 0 )
 	{
-		$template->assign_block_vars('convers.no_pm', array(
+		$Template->Assign_block_vars('convers.no_pm', array(
 			'L_NO_PM' => $LANG['no_pm']
 		));
 	}
@@ -789,10 +789,10 @@ else //Liste des conversation, dans la boite du membre.
 		$nbr_waiting_pm = $nbr_pm - $limit_group; //Nombre de messages privés non visibles.
 		//Gestion erreur.
 		if( $nbr_waiting_pm > 0 )
-			$errorh->error_handler(sprintf($LANG['e_pm_full'], $nbr_waiting_pm), E_USER_WARNING);
+			$Errorh->Error_handler(sprintf($LANG['e_pm_full'], $nbr_waiting_pm), E_USER_WARNING);
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -815,7 +815,7 @@ else //Liste des conversation, dans la boite du membre.
 	//Conversation supprimée chez le destinataire: user_convers_status => 2.
 	$i = 0;
 	$j = 0;
-	$result = $sql->query_while("SELECT pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, m.login AS login, m1.login AS login_dest, m2.login AS last_login
+	$result = $Sql->Query_while("SELECT pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, m.login AS login, m1.login AS login_dest, m2.login AS last_login
 	FROM ".PREFIX."pm_topic pm
 	LEFT JOIN ".PREFIX."pm_msg msg ON msg.id = pm.last_msg_id
 	LEFT JOIN ".PREFIX."member m ON m.user_id = pm.user_id
@@ -823,21 +823,21 @@ else //Liste des conversation, dans la boite du membre.
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = pm.last_user_id
 	WHERE 
 	(
-		" . $session->data['user_id'] . " IN (pm.user_id, pm.user_id_dest)
+		" . $Member->Get_attribute('user_id') . " IN (pm.user_id, pm.user_id_dest)
 	) 
 	AND 
 	(
 		pm.user_convers_status = 0 
 		OR 
 		(
-			(pm.user_id_dest = '" . $session->data['user_id'] . "' AND pm.user_convers_status = 1) 
+			(pm.user_id_dest = '" . $Member->Get_attribute('user_id') . "' AND pm.user_convers_status = 1) 
 			OR 
-			(pm.user_id = '" . $session->data['user_id'] . "' AND pm.user_convers_status = 2)
+			(pm.user_id = '" . $Member->Get_attribute('user_id') . "' AND pm.user_convers_status = 2)
 		)
 	)
 	ORDER BY pm.last_timestamp DESC 
-	" . $sql->sql_limit($pagination->first_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit($Pagination->First_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		//On saute l'itération si la limite est dépassé, si ce n'est pas un message privé du système.
 		if( $row['user_id'] != -1 )
@@ -849,7 +849,7 @@ else //Liste des conversation, dans la boite du membre.
 		
 		$view = false;
 		$track = false;
-		if( $row['last_user_id'] == $session->data['user_id'] ) //Le membre est le dernier posteur.
+		if( $row['last_user_id'] == $Member->Get_attribute('user_id') ) //Le membre est le dernier posteur.
 		{	
 			$view = true;	
 			if( $row['view_status'] === '0' ) //Le déstinataire n'a pas encore lu le message.
@@ -880,15 +880,15 @@ else //Liste des conversation, dans la boite du membre.
 		else
 			$author = $LANG['guest'];
 			
-		$participants = ($row['login_dest'] != $session->data['login']) ? $row['login_dest'] : $row['login'];
-		$user_id_dest = $row['user_id_dest'] != $session->data['user_id'] ? $row['user_id_dest'] : $row['user_id'];
+		$participants = ($row['login_dest'] != $Member->Get_attribute('login')) ? $row['login_dest'] : $row['login'];
+		$user_id_dest = $row['user_id_dest'] != $Member->Get_attribute('user_id') ? $row['user_id_dest'] : $row['user_id'];
 		$participants = !empty($participants) ? '<a href="../member/member' . transid('.php?id=' . $user_id_dest, '-' . $user_id_dest . '.php') . '">' . $participants . '</a>' : '<strike>' . $LANG['admin']. '</strike>';
 		
 		//Affichage du dernier message posté.
 		$last_msg = '<a href="pm' . transid('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite . '.php') . '#m' . $row['last_msg_id'] . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />'; 
 		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="../member/member' . transid('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '" class="small_link">' . $row['last_login'] . '</a>';
 
-		$template->assign_block_vars('convers.list', array(
+		$Template->Assign_block_vars('convers.list', array(
 			'INCR' => $i,
 			'ID' => $row['id'],	
 			'ANNOUNCE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . $img_announce . '.gif" alt="" />',
@@ -901,9 +901,9 @@ else //Liste des conversation, dans la boite du membre.
 		));
 		$i++;
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->pparse('pm');
+	$Template->Pparse('pm');
 }
 
 	

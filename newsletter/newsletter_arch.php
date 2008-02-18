@@ -32,7 +32,7 @@ require_once('../includes/header_no_display.php');
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 if( !empty($id) )
 {
-	$newsletter = $sql->query_array('newsletter_arch', 'type', 'title', 'message', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$newsletter = $Sql->Query_array('newsletter_arch', 'type', 'title', 'message', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	if( $newsletter['type'] == 'html' )
 	{
 		$message = stripslashes($newsletter['message']);
