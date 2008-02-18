@@ -56,13 +56,13 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
 	foreach($searchModules as $module)
 	{
 		$requests[$module->name] = $module->Functionnality('GetSearchRequest', $modulesArgs[$module->name]);
-		array_push( $modulesNames, $module->name);
+		array_push($modulesNames, $module->name);
 	}
 	
-	$search = new Search($searchTxt, $modulesNames);
-	$search->InsertResults($request);
+	$Search = new Search($searchTxt, $modulesNames);
+	$Search->InsertResults($request);
 	
-	return $search->GetResults(&$results, &$id_modules, $offset = 0, $nbLines = NB_LINES);
+	return $Search->GetResults(&$results, &$id_modules, $offset = 0, $nbLines = NB_LINES);
 }
 
 ?>
