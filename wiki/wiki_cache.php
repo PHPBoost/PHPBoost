@@ -30,23 +30,23 @@ if( defined('PHP_BOOST') !== true) exit;
 
 function generate_module_file_wiki()
 {
-	global $sql;
+	global $Sql;
 	
 	//Catégories du wiki
 	$config = 'global $_WIKI_CATS;' . "\n";
 	$config .= '$_WIKI_CATS = array();' . "\n";
-	$result = $sql->query_while("SELECT c.id, c.id_parent, c.article_id, a.title
+	$result = $Sql->Query_while("SELECT c.id, c.id_parent, c.article_id, a.title
 		FROM ".PREFIX."wiki_cats c
 		LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.article_id 
 		ORDER BY a.title", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$config .= '$_WIKI_CATS[\'' . $row['id'] . '\'] = array(\'id_parent\' => ' . ( !empty($row['id_parent']) ? $row['id_parent'] : '0') . ', \'name\' => ' . var_export($row['title'], true) . ');' . "\n";
 	}
 
 	//Configuration du wiki
 	$code = 'global $_WIKI_CONFIG;' . "\n" . '$_WIKI_CONFIG = array();' . "\n";
-	$CONFIG_WIKI = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'wiki'", __LINE__, __FILE__));
+	$CONFIG_WIKI = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'wiki'", __LINE__, __FILE__));
 	$CONFIG_WIKI = is_array($CONFIG_WIKI) ? $CONFIG_WIKI : array();
 	foreach($CONFIG_WIKI as $key => $value)
 	{

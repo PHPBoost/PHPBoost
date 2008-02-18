@@ -27,8 +27,8 @@
 
 if( defined('PHP_BOOST') !== true)	exit;
 
-if( !$groups->check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) )
-	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+if( !$Member->Check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 require_once('../wiki/wiki_auth.php');
 
@@ -36,10 +36,10 @@ switch($speed_bar_key)
 {
 	case 'wiki':			
 		if( !empty($id_contents) )
-			$speed_bar->Add_link($LANG['wiki_history'], '');
+			$Speed_bar->Add_link($LANG['wiki_history'], '');
 		if( !empty($article_infos['title']) )
 		{
-			$speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
+			$Speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 			$id_cat = (int)$article_infos['id_cat'];
 		}
 		if( !empty($id_cat)  && is_array($_WIKI_CATS) ) //Catégories infinies
@@ -47,24 +47,24 @@ switch($speed_bar_key)
 			$id = $id_cat; //Premier id
 			do
 			{
-				$speed_bar->Add_link($_WIKI_CATS[$id]['name'], transid('wiki.php?title=' . url_encode_rewrite($_WIKI_CATS[$id]['name']), url_encode_rewrite($_WIKI_CATS[$id]['name'])));
+				$Speed_bar->Add_link($_WIKI_CATS[$id]['name'], transid('wiki.php?title=' . url_encode_rewrite($_WIKI_CATS[$id]['name']), url_encode_rewrite($_WIKI_CATS[$id]['name'])));
 				$id = (int)$_WIKI_CATS[$id]['id_parent'];
 			}	
 			while( $id > 0 );
 		}
-		$speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
-		$speed_bar->Reverse_links();
+		$Speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
+		$Speed_bar->Reverse_links();
 		break;
 	case 'wiki_history':
-		$speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']),transid('wiki.php'));
-		$speed_bar->Add_link($LANG['wiki_history'], transid('history.php'));
+		$Speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']),transid('wiki.php'));
+		$Speed_bar->Add_link($LANG['wiki_history'], transid('history.php'));
 			if( !empty($id_article) )
-				$speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
+				$Speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 		break;
 	case 'wiki_history_article':
-		$cache->load_file('wiki');
-		$speed_bar->Add_link($LANG['wiki_history'], transid('history.php?id=' . $id_article));
-		$speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . url_encode_rewrite($article_infos['title'])), url_encode_rewrite($article_infos['title']));
+		$Cache->Load_file('wiki');
+		$Speed_bar->Add_link($LANG['wiki_history'], transid('history.php?id=' . $id_article));
+		$Speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . url_encode_rewrite($article_infos['title'])), url_encode_rewrite($article_infos['title']));
 
 		$id_cat = (int)$article_infos['id_cat'];
 		if( !empty($id_cat)  && is_array($_WIKI_CATS) ) //Catégories infinies
@@ -72,66 +72,66 @@ switch($speed_bar_key)
 			$id = $id_cat; //Premier id
 			do
 			{
-				$speed_bar->Add_link($_WIKI_CATS[$id]['name'], transid('wiki.php?title=' . url_encode_rewrite($_WIKI_CATS[$id]['name']), url_encode_rewrite($_WIKI_CATS[$id]['name'])));
+				$Speed_bar->Add_link($_WIKI_CATS[$id]['name'], transid('wiki.php?title=' . url_encode_rewrite($_WIKI_CATS[$id]['name']), url_encode_rewrite($_WIKI_CATS[$id]['name'])));
 				$id = (int)$_WIKI_CATS[$id]['id_parent'];
 			}	
 			while( $id > 0 );
 		}
-		$speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
-		$speed_bar->Reverse_links();
+		$Speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
+		$Speed_bar->Reverse_links();
 		break;
 	case 'wiki_post':
-		$speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
-		$speed_bar->Add_link($LANG['wiki_contribuate'], '');
+		$Speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
+		$Speed_bar->Add_link($LANG['wiki_contribuate'], '');
 		break;
 	case 'wiki_property':
-		$cache->load_file('wiki');
+		$Cache->Load_file('wiki');
 		if( $id_auth > 0 )
-			$speed_bar->Add_link($LANG['wiki_auth_management'], transid('property.php?auth=' . $article_infos['id']));
+			$Speed_bar->Add_link($LANG['wiki_auth_management'], transid('property.php?auth=' . $article_infos['id']));
 		elseif( $wiki_status > 0 )
-			$speed_bar->Add_link($LANG['wiki_status_management'], transid('property.php?status=' . $article_infos['id']));
+			$Speed_bar->Add_link($LANG['wiki_status_management'], transid('property.php?status=' . $article_infos['id']));
 		elseif( $move > 0 )
-			$speed_bar->Add_link($LANG['wiki_moving_article'], transid('property.php?move=' . $move));
+			$Speed_bar->Add_link($LANG['wiki_moving_article'], transid('property.php?move=' . $move));
 		elseif( $rename > 0 )
-			$speed_bar->Add_link($LANG['wiki_renaming_article'], transid('property.php?rename=' . $rename));
+			$Speed_bar->Add_link($LANG['wiki_renaming_article'], transid('property.php?rename=' . $rename));
 		elseif( $redirect > 0 )
-			$speed_bar->Add_link($LANG['wiki_redirections'], transid('property.php?redirect=' . $redirect));
+			$Speed_bar->Add_link($LANG['wiki_redirections'], transid('property.php?redirect=' . $redirect));
 		elseif( $create_redirection > 0 )
-			$speed_bar->Add_link($LANG['wiki_create_redirection'], transid('property.php?create_redirection=' . $create_redirection));
+			$Speed_bar->Add_link($LANG['wiki_create_redirection'], transid('property.php?create_redirection=' . $create_redirection));
 		elseif( isset($_GET['i']) && $idcom > 0 )
-			$speed_bar->Add_link($LANG['wiki_article_com'], transid('property.php?com=' . $idcom . '&amp;i=0'));
+			$Speed_bar->Add_link($LANG['wiki_article_com'], transid('property.php?com=' . $idcom . '&amp;i=0'));
 		elseif( $del > 0 )
-			$speed_bar->Add_link($LANG['wiki_remove_cat'], transid('property.php?del=' . $del));
+			$Speed_bar->Add_link($LANG['wiki_remove_cat'], transid('property.php?del=' . $del));
 			
-		$speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . url_encode_rewrite($article_infos['title']), url_encode_rewrite($article_infos['title'])));
+		$Speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . url_encode_rewrite($article_infos['title']), url_encode_rewrite($article_infos['title'])));
 		$id_cat = !empty($article_infos['id_cat']) ? (int)$article_infos['id_cat'] : 0;
 		if( !empty($id_cat)  && is_array($_WIKI_CATS) ) //Catégories infinies
 		{
 			$id = $id_cat;
 			do
 			{
-				$speed_bar->Add_link($_WIKI_CATS[$id]['name'], transid('wiki.php?title=' . url_encode_rewrite($_WIKI_CATS[$id]['name']), url_encode_rewrite($_WIKI_CATS[$id]['name'])));
+				$Speed_bar->Add_link($_WIKI_CATS[$id]['name'], transid('wiki.php?title=' . url_encode_rewrite($_WIKI_CATS[$id]['name']), url_encode_rewrite($_WIKI_CATS[$id]['name'])));
 				$id = (int)$_WIKI_CATS[$id]['id_parent'];
 			}	
 			while( $id > 0 );
 		}
-		$speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
-		$speed_bar->Reverse_links();
+		$Speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
+		$Speed_bar->Reverse_links();
 		break;
 	case 'wiki_favorites':
-		$speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
-		$speed_bar->Add_link($LANG['wiki_favorites'], transid('favorites.php'));
+		$Speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
+		$Speed_bar->Add_link($LANG['wiki_favorites'], transid('favorites.php'));
 		break;
 	case 'wiki_explorer':
-		$speed_bar->Add_link(( !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
-		$speed_bar->Add_link($LANG['wiki_explorer'], transid('explorer.php'));
+		$Speed_bar->Add_link(( !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
+		$Speed_bar->Add_link($LANG['wiki_explorer'], transid('explorer.php'));
 		break;
 	case 'wiki_search':
-		$speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
-		$speed_bar->Add_link($LANG['wiki_search'], transid('search.php'));
+		$Speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
+		$Speed_bar->Add_link($LANG['wiki_search'], transid('search.php'));
 		break;
 	default:
-		$speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
+		$Speed_bar->Add_link((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), transid('wiki.php'));
 		break;
 }
 	

@@ -32,7 +32,7 @@ define('TITLE', $LANG['administration'] . ' : ' . $LANG['wiki']);
 require_once('../includes/admin_header.php');
 include_once('../wiki/wiki_functions.php');
 
-$cache->load_file('wiki');
+$Cache->Load_file('wiki');
 
 $wiki_name = !empty($_POST['wiki_name']) ? stripslashes(securit($_POST['wiki_name'])) : $LANG['wiki'];
 $index_text = !empty($_POST['contents']) ? stripslashes(wiki_parse($_POST['contents'])) : '';
@@ -49,20 +49,20 @@ if( !empty($_POST['update']) )  //Mise à jour
 	$_WIKI_CONFIG['count_hits'] = $count_hits;
 	$_WIKI_CONFIG['auth'] = serialize($_WIKI_CONFIG['auth']);
 
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
 	//Régénération du cache
-	$cache->generate_module_file('wiki');	
+	$Cache->Generate_module_file('wiki');	
 }
 
-$cache->load_file('wiki');
+$Cache->Load_file('wiki');
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 		'wiki_config' => '../templates/' . $CONFIG['theme'] . '/wiki/admin_wiki.tpl'
 	 ));
 
 include_once('../includes/bbcode.php');
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'L_UPDATE' => $LANG['update'],
 	'L_RESET' => $LANG['reset'],
 	'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
@@ -85,7 +85,7 @@ $template->assign_vars(array(
 	'DESCRIPTION' => wiki_unparse($_WIKI_CONFIG['index_text'])
 ));
 	
-$template->pparse('wiki_config');
+$Template->Pparse('wiki_config');
 
 require_once('../includes/admin_footer.php');
 

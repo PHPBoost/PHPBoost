@@ -25,9 +25,9 @@ if( !defined('PHP_BOOST') )
 	define('TITLE', $LANG['wiki_rss']);
 	require_once('../includes/header_no_display.php');
 	
-	$cache->load_file('wiki');	
+	$Cache->Load_file('wiki');	
 	
-	$template->set_filenames(array('rss' => '../templates/' . $CONFIG['theme'] . '/rss.tpl'));
+	$Template->Set_filenames(array('rss' => '../templates/' . $CONFIG['theme'] . '/rss.tpl'));
 
 	if( $cat > 0 && array_key_exists($cat, $_WIKI_CATS) )//Catégorie
 	{
@@ -40,7 +40,7 @@ if( !defined('PHP_BOOST') )
 		$where = "";
 	}
 	
-	$template->assign_vars(array(  
+	$Template->Assign_vars(array(  
 		'DATE' => gmdate_format('date_format_tiny'),
 		'TITLE_RSS' => (!empty($_WIKI_CONFIG['wiki_name']) ? html_entity_decode($_WIKI_CONFIG['wiki_name']) : $LANG['wiki']),
 		'HOST' => HOST,	
@@ -48,13 +48,13 @@ if( !defined('PHP_BOOST') )
 		'LANG' => $LANG['xml_lang']	
 	));
 	
-	$result = $sql->query_while("SELECT a.title, a.encoded_title, c.content, c.timestamp 
+	$result = $Sql->Query_while("SELECT a.title, a.encoded_title, c.content, c.timestamp 
 	FROM ".PREFIX."wiki_articles a
 	LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id_contents
 	WHERE a.redirect = 0 " . $where . "
 	ORDER BY c.timestamp DESC 
-	" . $sql->sql_limit(0, 10), __LINE__, __FILE__);
-	while ($row = $sql->sql_fetch_assoc($result))
+	" . $Sql->Sql_limit(0, 10), __LINE__, __FILE__);
+	while ($row = $Sql->Sql_fetch_assoc($result))
 	{ 
 		$rewrited_title = ($CONFIG['rewrite'] == 0) ? 'wiki.php?title=' . $row['encoded_title'] : $row['encoded_title'];
 		$link = HOST . DIR . '/wiki/' . $rewrited_title;
@@ -62,30 +62,30 @@ if( !defined('PHP_BOOST') )
 		//On convertit les accents en entitées normales, puis on remplace les caractères non supportés en xml.
 		$contents = htmlspecialchars(html_entity_decode(strip_tags($row['content'])));
 		$contents = preg_replace('`[\n\r]{1}[\-]{2,5}[\s]+(.+)[\s]+[\-]{2,5}(<br \/>|[\n\r]){1}`U', "\n" . '$1' . "\n", "\n" . $contents . "\n");
-		$template->assign_block_vars('rss', array(
+		$Template->Assign_block_vars('rss', array(
 			'LINK' => $link,
 			'TITLE' => htmlspecialchars(html_entity_decode($row['title'])),
 			'DESC' => ( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents,
 			'DATE' => gmdate_format('r', $row['timestamp']) //Conversion de la date au format rss 2.0.
 		));
 	}
-	$sql->close($result);
-	$sql->sql_close();
+	$Sql->Close($result);
+	$Sql->Sql_close();
 	
-	$template->pparse('rss');
+	$Template->Pparse('rss');
 }
 else //Récupération directe du contenu.
 {
-	global $sql, $LANG, $CONFIG;	
+	global $Sql, $LANG, $CONFIG;	
 	
 	$RSS_flux = array();
-	$result = $sql->query_while("SELECT a.title, a.encoded_title, c.content, c.timestamp 
+	$result = $Sql->Query_while("SELECT a.title, a.encoded_title, c.content, c.timestamp 
 	FROM ".PREFIX."wiki_articles a
 	LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id_contents
 	WHERE a.redirect = 0
 	ORDER BY c.timestamp DESC 
-	" . $sql->sql_limit(0, 10), __LINE__, __FILE__);
-	while ($row = $sql->sql_fetch_assoc($result))
+	" . $Sql->Sql_limit(0, 10), __LINE__, __FILE__);
+	while ($row = $Sql->Sql_fetch_assoc($result))
 	{ 
 		$rewrited_title = ($CONFIG['rewrite'] == 0) ? 'wiki.php?title=' . $row['encoded_title'] : $row['encoded_title'];
 		$link = HOST . DIR . '/wiki/' . $rewrited_title;
@@ -93,7 +93,7 @@ else //Récupération directe du contenu.
 		//Variable utilisé pour la récupération du flux par le lecteur rss.
 		$RSS_flux[] = array($row['title'], $link, gmdate_format('date_format_tiny', $row['timestamp']));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 }
 
 ?>
