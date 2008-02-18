@@ -34,7 +34,7 @@ require_once('../includes/admin_header.php');
 ##########################admin_news_config.tpl###########################
 if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
 {
-	$cache->load_file('articles');
+	$Cache->Load_file('articles');
 	
 	$config_articles = array();
 	$config_articles['nbr_articles_max'] = !empty($_POST['nbr_articles_max']) ? numeric($_POST['nbr_articles_max']) : 10;
@@ -43,37 +43,37 @@ if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
 	$config_articles['note_max'] = !empty($_POST['note_max']) ? numeric($_POST['note_max']) : 10;
 	$config_articles['auth_root'] = isset($CONFIG_ARTICLES['auth_root']) ? serialize($CONFIG_ARTICLES['auth_root']) : serialize(array());
 		
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
-	$cache->generate_module_file('articles');
+	$Cache->Generate_module_file('articles');
 	
 	redirect(HOST . SCRIPT);	
 }
 elseif( !empty($_POST['articles_count']) ) //Recompte le nombre d'articles de chaque catégories
 {
-	$cache->load_file('articles');
+	$Cache->Load_file('articles');
 	
 	$info_cat = array();
-	$result = $sql->query_while("SELECT idcat, COUNT(*) as nbr_articles_visible 
+	$result = $Sql->Query_while("SELECT idcat, COUNT(*) as nbr_articles_visible 
 	FROM ".PREFIX."articles 
 	WHERE visible = 1 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
-	while($row = $sql->sql_fetch_assoc($result) )
+	while($row = $Sql->Sql_fetch_assoc($result) )
 		$info_cat[$row['idcat']]['visible'] = $row['nbr_articles_visible'];
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$result = $sql->query_while("SELECT idcat, COUNT(*) as nbr_articles_unvisible 
+	$result = $Sql->Query_while("SELECT idcat, COUNT(*) as nbr_articles_unvisible 
 	FROM ".PREFIX."articles 
 	WHERE visible = 0 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
-	while($row = $sql->sql_fetch_assoc($result) )
+	while($row = $Sql->Sql_fetch_assoc($result) )
 		$info_cat[$row['idcat']]['unvisible'] = $row['nbr_articles_unvisible'];
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$result = $sql->query_while("SELECT id, id_left, id_right
+	$result = $Sql->Query_while("SELECT id, id_left, id_right
 	FROM ".PREFIX."articles_cats", __LINE__, __FILE__);
-	while($row = $sql->sql_fetch_assoc($result) )
+	while($row = $Sql->Sql_fetch_assoc($result) )
 	{			
 		$nbr_articles_visible = 0;
 		$nbr_articles_unvisible = 0;
@@ -85,24 +85,24 @@ elseif( !empty($_POST['articles_count']) ) //Recompte le nombre d'articles de ch
 				$nbr_articles_unvisible += isset($info_cat[$key]['unvisible']) ? $info_cat[$key]['unvisible'] : 0; 
 			}
 		}
-		$sql->query_inject("UPDATE ".PREFIX."articles_cats SET nbr_articles_visible = '" . $nbr_articles_visible . "', nbr_articles_unvisible = '" . $nbr_articles_unvisible . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);	
+		$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET nbr_articles_visible = '" . $nbr_articles_visible . "', nbr_articles_unvisible = '" . $nbr_articles_unvisible . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);	
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$cache->generate_module_file('articles');
+	$Cache->Generate_module_file('articles');
 	
 	redirect(HOST . DIR . '/articles/admin_articles_config.php'); 
 }
 //Sinon on rempli le formulaire
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_articles_config' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_config.tpl'
 	));
 	
-	$cache->load_file('articles');
+	$Cache->Load_file('articles');
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_ARTICLES['nbr_cat_max']) ? $CONFIG_ARTICLES['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : '2',
@@ -123,7 +123,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 		
-	$template->pparse('admin_articles_config'); // traitement du modele	
+	$Template->Pparse('admin_articles_config'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

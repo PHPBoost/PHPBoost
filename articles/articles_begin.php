@@ -29,14 +29,14 @@ if( defined('PHP_BOOST') !== true)
 	exit;
 	
 //Autorisation sur le module.
-if( !$groups->check_auth($SECURE_MODULE['articles'], ACCESS_MODULE) )
-	$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+if( !$Member->Check_auth($SECURE_MODULE['articles'], ACCESS_MODULE) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 define('READ_CAT_ARTICLES', 0x01);
 define('WRITE_CAT_ARTICLES', 0x02);
 define('EDIT_CAT_ARTICLES', 0x04);
 
-$cache->load_file('articles');
+$Cache->Load_file('articles');
 load_module_lang('articles', $CONFIG['lang']); //Chargement de la langue du module.
 
 
@@ -57,30 +57,30 @@ if( empty($idartcat) )//Racine.
 if( isset($_GET['cat']) )
 { 
 	//Création de l'arborescence des catégories.
-	$speed_bar->Add_link($LANG['title_articles'], transid('articles.php'));
+	$Speed_bar->Add_link($LANG['title_articles'], transid('articles.php'));
 	foreach($CAT_ARTICLES as $id => $array_info_cat)
 	{
 		if( $CAT_ARTICLES[$idartcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_ARTICLES[$idartcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_ARTICLES[$idartcat]['level'] )
-			$speed_bar->Add_link($array_info_cat['name'], 'articles' . transid('.php?cat=' . $id, '-' . $id . '.php'));
+			$Speed_bar->Add_link($array_info_cat['name'], 'articles' . transid('.php?cat=' . $id, '-' . $id . '.php'));
 	}
 	if( !empty($idart) )
 	{
-		$articles = $sql->query_array('articles', '*', "WHERE visible = 1 AND id = '" . $idart . "' AND idcat = " . $idartcat, __LINE__, __FILE__);
+		$articles = $Sql->Query_array('articles', '*', "WHERE visible = 1 AND id = '" . $idart . "' AND idcat = " . $idartcat, __LINE__, __FILE__);
 		
 		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($articles['title']));
-		$speed_bar->Add_link($articles['title'], 'articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $idart, '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php'));
+		$Speed_bar->Add_link($articles['title'], 'articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $idart, '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php'));
 		
 		if( !empty($get_note) )
-			$speed_bar->Add_link($LANG['note'], '');
+			$Speed_bar->Add_link($LANG['note'], '');
 		elseif( !empty($_GET['i']) )
-			$speed_bar->Add_link($LANG['com'], '');
+			$Speed_bar->Add_link($LANG['com'], '');
 	}
 	else
 		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($CAT_ARTICLES[$idartcat]['name']));
 }
 else
 {
-	$speed_bar->Add_link($LANG['title_articles'], '');
+	$Speed_bar->Add_link($LANG['title_articles'], '');
 	define('TITLE', $LANG['title_articles']);
 }
 

@@ -84,8 +84,8 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 
 	if( !empty($config['theme']) && !empty($CONFIG['lang']) ) //Nom de serveur obligatoire
 	{
-		$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-		$cache->generate_file('config');
+		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+		$Cache->Generate_file('config');
 		
 		redirect(HOST . SCRIPT);
 	}
@@ -94,7 +94,7 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 }
 elseif( !empty($check_advanced) && empty($_POST['advanced']) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_config2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_config2.tpl'
 	));	
 	
@@ -110,9 +110,9 @@ elseif( !empty($check_advanced) && empty($_POST['advanced']) )
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( isset($_GET['mail']) )
-		$errorh->error_handler($LANG['unlock_admin_confirm'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['unlock_admin_confirm'], E_USER_NOTICE);
 	
 	//Gestion fuseau horaire par défaut.
 	$select_timezone = '';
@@ -123,7 +123,7 @@ elseif( !empty($check_advanced) && empty($_POST['advanced']) )
 		$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'SERVER_NAME' => !empty($CONFIG['server_name']) ? $CONFIG['server_name'] : $server_name,
 		'SERVER_PATH' => isset($CONFIG['server_path']) ? $CONFIG['server_path'] : $server_path,
 		'SELECT_TIMEZONE' => $select_timezone,
@@ -174,7 +174,7 @@ elseif( !empty($check_advanced) && empty($_POST['advanced']) )
 		'L_RESET' => $LANG['reset']	
 	));
 	
-	$template->pparse('admin_config2');
+	$Template->Pparse('admin_config2');
 }
 elseif( !empty($_POST['advanced']) )
 {
@@ -191,22 +191,22 @@ elseif( !empty($_POST['advanced']) )
 	{
 		if( !empty($_POST['rewrite_engine']) && !strpos($_SERVER['SERVER_NAME'], 'free.fr') ) //Activation.
 		{
-			$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 			###### Régénération du cache $CONFIG #######
-			$cache->generate_file('config');
+			$Cache->Generate_file('config');
 			
 			//Régénération du htaccess.
-			$cache->generate_htaccess(); 
+			$Cache->Generate_htaccess(); 
 		}
 		else
 		{
 			$CONFIG['rewrite'] = 0;
-			$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 			###### Régénération du cache $CONFIG #######
-			$cache->generate_file('config');
+			$Cache->Generate_file('config');
 			
 			//Régénération du htaccess.
-			$cache->generate_htaccess();
+			$Cache->Generate_htaccess();
 		}
 	
 		redirect(HOST . DIR . '/admin/admin_config.php?adv=1');
@@ -216,18 +216,18 @@ elseif( !empty($_POST['advanced']) )
 }
 else //Sinon on rempli le formulaire	 
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_config' => '../templates/' . $CONFIG['theme'] . '/admin/admin_config.tpl'
 	));
 	
 	$theme_tmp = $CONFIG['theme'];
 	//On recupère toute les informations supplementaires.
-	$cache->load_file('config', RELOAD_CACHE);
+	$Cache->Load_file('config', RELOAD_CACHE);
 
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$select_page = '';
 	$start_page = '';
@@ -265,7 +265,7 @@ else //Sinon on rempli le formulaire
 	if( $i == 0 )
 		$select_page = '<option value="" selected="selected">' . $LANG['no_module_starteable'] . '</option>';
 
-	$template->assign_vars(array(		
+	$Template->Assign_vars(array(		
 		'THEME' => $CONFIG['theme'],
 		'SITE_NAME' => !empty($CONFIG['site_name']) ? $CONFIG['site_name'] : '',
 		'SITE_DESCRIPTION' => !empty($CONFIG['site_desc']) ? $CONFIG['site_desc'] : '',
@@ -341,15 +341,15 @@ else //Sinon on rempli le formulaire
 		closedir($dh); //On ferme le dossier
 		
 		$lang_array_bdd = array();
-		$result = $sql->query_while("SELECT lang 
+		$result = $Sql->Query_while("SELECT lang 
 		FROM ".PREFIX."lang", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
 			if( array_search($row['lang'], $lang_array) !== false)
 				$lang_array_bdd[] = $row['lang']; //On insère ces clées dans le tableau.
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 		
 		$array_identifier = '';
 		$lang_identifier = '../images/stats/other.png';
@@ -367,12 +367,12 @@ else //Sinon on rempli le formulaire
 					$selected = 'selected="selected"';
 					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
 				}
-				$template->assign_block_vars('select_lang', array(
+				$Template->Assign_block_vars('select_lang', array(
 					'LANG' => '<option value="' . $lang_value . '" ' . $selected . '>' . $lang_name . '</option>'
 				));
 			}
 		}
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'JS_LANG_IDENTIFIER' => $array_identifier,
 			'IMG_LANG_IDENTIFIER' => $lang_identifier
 		));
@@ -393,15 +393,15 @@ else //Sinon on rempli le formulaire
 		closedir($dh); //On ferme le dossier
 		
 		$theme_array_bdd = array();
-		$result = $sql->query_while("SELECT theme 
+		$result = $Sql->Query_while("SELECT theme 
 		FROM ".PREFIX."themes", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
 			if( array_search($row['theme'], $fichier_array) !== false)
 				$theme_array_bdd[] = $row['theme']; //On insère ces clées dans le tableau.
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 		
 		foreach($theme_array_bdd as $theme_array => $theme_value) //On effectue la recherche dans le tableau.
 		{
@@ -410,7 +410,7 @@ else //Sinon on rempli le formulaire
 			{
 				$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $theme_value;
 				$selected = $theme_value == $CONFIG['theme'] ? 'selected="selected"' : '';
-				$template->assign_block_vars('select', array(
+				$Template->Assign_block_vars('select', array(
 					'THEME' => '<option value="' . $theme_value . '" ' . $selected . '>' . $theme_name . '</option>'
 				));
 			}
@@ -425,31 +425,31 @@ else //Sinon on rempli le formulaire
 		$selected = ($code == $CONFIG['editor']) ? 'selected="selected"' : '';
 		$select_editors .= '<option value="' . $code . '" ' . $selected . '>' . $name . '</option>';
 	}
-	$template->assign_block_vars('select_editor', array(
+	$Template->Assign_block_vars('select_editor', array(
 		'EDITOR' => $select_editors
 	));
 	
 	$CONFIG['theme'] = $theme_tmp;
 	
-	$template->pparse('admin_config');
+	$Template->Pparse('admin_config');
 }
 
 //Renvoi du code de déblocage.
 if( !empty($_GET['unlock']) )
 {
 	include_once('../includes/mail.class.php');
-	$mail = new Mail();
+	$Mail = new Mail();
 	
 	$unlock_admin_clean = substr(md5(uniqid(mt_rand(), true)), 0, 18); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;
 	$unlock_admin = md5($unlock_admin_clean);
 	
 	$CONFIG['unlock_admin'] = $unlock_admin;
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 	
 	###### Régénération du cache $CONFIG #######
-	$cache->generate_file('config');
+	$Cache->Generate_file('config');
 	
-	$mail->send_mail($session->data['user_mail'], $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail']);	
+	$Mail->Send_mail($Member->Get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail']);	
 
 	redirect(HOST . DIR . '/admin/admin_config.php?adv=1&mail=1');
 }

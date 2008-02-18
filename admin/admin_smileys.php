@@ -41,10 +41,10 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //Mise à jour.
 	//On met à jour 
 	if( !empty($url_smiley) && !empty($code_smiley) )
 	{
-		$sql->query_inject("UPDATE ".PREFIX."smileys SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."smileys SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'", __LINE__, __FILE__);
 					
 		###### Régénération du cache des smileys #######
-		$cache->generate_file('smileys');
+		$Cache->Generate_file('smileys');
 		
 		redirect(HOST . SCRIPT);	
 	}
@@ -54,28 +54,28 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //Mise à jour.
 elseif( !empty($id) && $del ) //Suppression.
 {
 	//On supprime le smiley de la bdd.
-	$sql->query_inject("DELETE FROM ".PREFIX."smileys WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
+	$Sql->Query_inject("DELETE FROM ".PREFIX."smileys WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des smileys #######	
-	$cache->generate_file('smileys');
+	$Cache->Generate_file('smileys');
 	
 	redirect(HOST . SCRIPT); 
 }	
 elseif( !empty($id) && $edit ) //Edition.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_smileys_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_smileys_management2.tpl'
 	 ));
 
-	$row = $sql->query_array('smileys', 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->Query_array('smileys', 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
 	$url_smiley = $row['url_smiley'];
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'IDSMILEY' => $row['idsmiley'],
 		'URL_SMILEY' => $url_smiley,
 		'CODE_SMILEY' => $row['code_smiley'],
@@ -93,30 +93,30 @@ elseif( !empty($id) && $edit ) //Edition.
 		'L_RESET' => $LANG['reset'],
 	));	
 	
-	$result = $sql->query_while("SELECT url_smiley 
+	$result = $Sql->Query_while("SELECT url_smiley 
 	FROM ".PREFIX."smileys", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( $row['url_smiley'] == $url_smiley )
 			$selected = 'selected="selected"';
 		else
 			$selected = '';
 		
-		$template->assign_block_vars('select', array(
+		$Template->Assign_block_vars('select', array(
 			'URL_SMILEY' => '<option value="' . $row['url_smiley'] . '" ' . $selected . '>' . $row['url_smiley'] . '</option>'
 		));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->pparse('admin_smileys_management2');
+	$Template->Pparse('admin_smileys_management2');
 }		
 else
 {			
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_smileys_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_smileys_management.tpl'
 	));
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'L_CONFIRM_DEL_SMILEY' => $LANG['confirm_del_smiley'],
@@ -128,19 +128,19 @@ else
 		'L_DELETE' => $LANG['delete'],
 	));
 
-	$result = $sql->query_while("SELECT * 
+	$result = $Sql->Query_while("SELECT * 
 	FROM ".PREFIX."smileys", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$template->assign_block_vars('list', array(
+		$Template->Assign_block_vars('list', array(
 			'IDSMILEY' => $row['idsmiley'],
 			'URL_SMILEY' => $row['url_smiley'],
 			'CODE_SMILEY' => $row['code_smiley']
 		));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->pparse('admin_smileys_management'); 
+	$Template->Pparse('admin_smileys_management'); 
 }
 
 require_once('../includes/admin_footer.php');

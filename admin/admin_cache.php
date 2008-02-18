@@ -33,27 +33,27 @@ require_once('../includes/admin_header.php');
 //Si c'est confirmé on execute
 if( !empty($_POST['cache']) )
 {
-	$cache->generate_all_files();
+	$Cache->Generate_all_files();
 	redirect(HOST . DIR . '/admin/admin_cache.php?s=1');
 }
 else //Sinon on rempli le formulaire	 
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_cache' => '../templates/' . $CONFIG['theme'] . '/admin/admin_cache.tpl'
 	));
 
 	//Gestion erreur.
 	$get_error = !empty($_GET['s']) ? securit($_GET['s']) : '';
 	if( $get_error == 1 )
-		$errorh->error_handler($LANG['cache_success'], E_USER_SUCCESS);
+		$Errorh->Error_handler($LANG['cache_success'], E_USER_SUCCESS);
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_CACHE' => $LANG['cache'],
 		'L_EXPLAIN_SITE_CACHE' => $LANG['explain_site_cache'],
 		'L_GENERATE' => $LANG['generate']	
 	));
 	
-	$template->pparse('admin_cache');
+	$Template->Pparse('admin_cache');
 }
 
 require_once('../includes/admin_footer.php');

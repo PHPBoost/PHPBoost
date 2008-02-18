@@ -31,7 +31,7 @@ require_once('../includes/admin_header.php');
 
 $all = !empty($_GET['all']) ? true : false;
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'admin_errors_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_errors_management.tpl'
 ));
 
@@ -40,7 +40,7 @@ $file_path = '../cache/error.log';
 if( !empty($_POST['erase']) ) //Suppression de robots.txt
 	delete_file($file_path); //On supprime le fichier.
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'L_ERRORS_MANAGEMENT' => $LANG['error_management'],
 	'L_ERRORS' => $LANG['errors'],
 	'L_ALL_ERRORS' => $LANG['all_errors'],
@@ -78,7 +78,7 @@ if( is_file($file_path) && is_readable($file_path) ) //Fichier accessible en lec
 				case 5:
 				$errinfo['errline'] = $buffer;	
 				$i = 0;	
-				$errinfo['errclass'] = $errorh->get_errno_class($errinfo['errno']);
+				$errinfo['errclass'] = $Errorh->Get_errno_class($errinfo['errno']);
 				$array_errinfo[] = array(
 				'errclass' => $errinfo['errclass'], 
 				'errstr' => $errinfo['errstr'], 
@@ -106,7 +106,7 @@ if( is_file($file_path) && is_readable($file_path) ) //Fichier accessible en lec
 		{
 			$str_error = sprintf($LANG[$errinfo['errclass']], str_replace('&lt;br /&gt;', '<br />', htmlentities($errinfo['errstr'])), $errinfo['errline'], basename($errinfo['errfile']));
 			
-			$template->assign_block_vars('errors', array(
+			$Template->Assign_block_vars('errors', array(
 				'IMG' => $images[$errinfo['errclass']],
 				'CLASS' => $errinfo['errclass'],
 				'DATE' => $errinfo['errdate'],
@@ -120,7 +120,7 @@ if( is_file($file_path) && is_readable($file_path) ) //Fichier accessible en lec
 	}
 	else
 	{
-		$template->assign_block_vars('errors', array(
+		$Template->Assign_block_vars('errors', array(
 			'TYPE' => '&nbsp;',
 			'DESC' => '',
 			'FILE' => '',
@@ -131,7 +131,7 @@ if( is_file($file_path) && is_readable($file_path) ) //Fichier accessible en lec
 }	
 else
 {
-	$template->assign_block_vars('errors', array(
+	$Template->Assign_block_vars('errors', array(
 		'TYPE' => '&nbsp;',
 		'DESC' => '',
 		'FILE' => '',
@@ -140,7 +140,7 @@ else
 	));
 }
 
-$template->pparse('admin_errors_management');
+$Template->Pparse('admin_errors_management');
 
 require_once('../includes/admin_footer.php');
 

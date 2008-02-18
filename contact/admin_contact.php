@@ -36,23 +36,23 @@ if( !empty($_POST['valid'])  )
 	$config_contact = array();
 	$config_contact['contact_verifcode'] = isset($_POST['contact_verifcode']) ? numeric($_POST['contact_verifcode']) : 1;
 	
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_contact)) . "' WHERE name = 'contact'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_contact)) . "' WHERE name = 'contact'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
-	$cache->generate_module_file('contact');
+	$Cache->Generate_module_file('contact');
 	
 	redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_contact_config' => '../templates/' . $CONFIG['theme'] . '/contact/admin_contact_config.tpl'
 	));
 	
-	$cache->load_file('contact');
+	$Cache->Load_file('contact');
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'CONTACT_VERIFCODE_ENABLED' => ($CONFIG_CONTACT['contact_verifcode'] == '1') ? 'checked="checked"' : '',
 		'CONTACT_VERIFCODE_DISABLED' => ($CONFIG_CONTACT['contact_verifcode'] == '0') ? 'checked="checked"' : '',
 		'L_CONTACT' => $LANG['title_contact'],
@@ -65,7 +65,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$template->pparse('admin_contact_config'); // traitement du modele	
+	$Template->Pparse('admin_contact_config'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

@@ -30,12 +30,12 @@ if( defined('PHP_BOOST') !== true) exit;
 //Configuration des news
 function generate_module_file_contact()
 {
-	global $sql;
+	global $Sql;
 	
 	$contact_config = 'global $CONFIG_CONTACT;' . "\n";
 		
 	//Récupération du tableau linéarisé dans la bdd.
-	$CONFIG_CONTACT = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'contact'", __LINE__, __FILE__));
+	$CONFIG_CONTACT = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'contact'", __LINE__, __FILE__));
 	$CONFIG_CONTACT = is_array($CONFIG_CONTACT) ? $CONFIG_CONTACT : array();
 	foreach($CONFIG_CONTACT as $key => $value)
 			$contact_config .= '$CONFIG_CONTACT[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";

@@ -33,17 +33,17 @@ $page = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
 if( !empty($idart) && isset($_GET['cat']) )
 {
 	//Niveau d'autorisation de la catégorie
-	if( !isset($CAT_ARTICLES[$idartcat]) || !$groups->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	if( !isset($CAT_ARTICLES[$idartcat]) || !$Member->Check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	if( empty($articles['id']) )
-		$errorh->error_handler('e_unexist_articles', E_USER_REDIRECT); 
+		$Errorh->Error_handler('e_unexist_articles', E_USER_REDIRECT); 
 	
-	$template->set_filenames(array('articles' => '../templates/' . $CONFIG['theme'] . '/articles/articles.tpl'));		
+	$Template->Set_filenames(array('articles' => '../templates/' . $CONFIG['theme'] . '/articles/articles.tpl'));		
 	
 	//MAJ du compteur.
-	$sql->query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
+	$Sql->Query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
-	if( $session->data['level'] === 2 )
+	if( $Member->Get_attribute('level') === 2 )
 	{
 		$java = '<script type="text/javascript">
 		<!--
@@ -56,7 +56,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 		$edit = '&nbsp;&nbsp;<a href="../articles/admin_articles' . transid('.php?id=' . $articles['id']) . '" title="'  . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" alt="'  . $LANG['edit'] . '" /></a>';
 		$del = '&nbsp;&nbsp;<a href="../articles/admin_articles.php?delete=1&amp;id=' . $articles['id'] . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" alt="' . $LANG['delete'] . '" /></a>';
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'JAVA' => $java,
 			'EDIT' => $edit,
 			'DEL' => $del
@@ -64,7 +64,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 	}
 	
 	//Notation
-	if( $session->data['user_id'] !== -1 ) //Utilisateur connecté
+	if( $Member->Get_attribute('user_id') !== -1 ) //Utilisateur connecté
 		$link_note = '<a class="com" style="font-size:10px;" href="articles' . transid('.php?note=' . $idart . '&amp;id=' . $idart . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php?note=' . $idart) . '#note" title="' . $LANG['note'] . '">' . $LANG['note'] . '</a>';
 	else
 		$link_note = $LANG['note'];
@@ -89,17 +89,17 @@ if( !empty($idart) && isset($_GET['cat']) )
 	
 	//On crée une pagination si il y plus d'une page.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 	
-	$template->assign_block_vars('article', array(
+	$Template->Assign_block_vars('article', array(
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $LANG['title_articles'] . ' - ' . $articles['title'],
-		'PSEUDO' => $sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__),		
+		'PSEUDO' => $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__),		
 		'CONTENTS' => second_parse($array_contents[$page - 1]),
 		'CAT' => $CAT_ARTICLES[$idartcat]['name'],
 		'DATE' => gmdate_format('date_format_short', $articles['timestamp']),
-		'PAGINATION_ARTICLES' => $pagination->show_pagin('articles' . transid('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . url_encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3),
+		'PAGINATION_ARTICLES' => $Pagination->Display_pagination('articles' . transid('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . url_encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3),
 		'COM' => $link . $com,
 		'NOTE' => $note,
 		'U_MEMBER_ID' => transid('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
@@ -111,13 +111,13 @@ if( !empty($idart) && isset($_GET['cat']) )
 	//Affichage et gestion de la notation
 	if( !empty($get_note) && !empty($CAT_ARTICLES[$idartcat]['name']) )
 	{
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'L_ACTUAL_NOTE' => $LANG['actual_note'],
 			'L_VOTE' => $LANG['vote'],
 			'L_NOTE' => $LANG['note']
 		));
 				
-		if( $session->check_auth($session->data, 0) ) //Utilisateur connecté.
+		if( $Member->Check_level(0) ) //Utilisateur connecté.
 		{
 			if( !empty($_POST['valid_note']) )
 			{
@@ -125,19 +125,19 @@ if( !empty($idart) && isset($_GET['cat']) )
 				
 				//Echelle de notation.
 				$check_note = (($note >= 0) && ($note <= $CONFIG_ARTICLES['note_max'])) ? true : false;				
-				$users_note = $sql->query("SELECT users_note FROM ".PREFIX."articles WHERE idcat = " . $idartcat . " AND id = " . $get_note, __LINE__, __FILE__);
+				$users_note = $Sql->Query("SELECT users_note FROM ".PREFIX."articles WHERE idcat = " . $idartcat . " AND id = " . $get_note, __LINE__, __FILE__);
 				
 				$array_users_note = explode('/', $users_note);
-				if( !in_array($session->data['user_id'], $array_users_note) && !empty($session->data['user_id']) && $check_note === true )
+				if( !in_array($Member->Get_attribute('user_id'), $array_users_note) && $Member->Get_attribute('user_id') != '' && $check_note === true )
 				{
-					$row_note = $sql->query_array('articles', 'users_note', 'nbrnote', 'note', "WHERE id = " . $get_note, __LINE__, __FILE__);
+					$row_note = $Sql->Query_array('articles', 'users_note', 'nbrnote', 'note', "WHERE id = " . $get_note, __LINE__, __FILE__);
 					$note = ( ($row_note['note'] * $row_note['nbrnote']) + $note ) / ($row_note['nbrnote'] + 1);
 					
 					$row_note['nbrnote']++;
 					
-					$users_note = !empty($row_note['users_note']) ? $row_note['users_note'] . '/' . $session->data['user_id'] : $session->data['user_id']; //On ajoute l'id de l'utilisateur.
+					$users_note = !empty($row_note['users_note']) ? $row_note['users_note'] . '/' . $Member->Get_attribute('user_id') : $Member->Get_attribute('user_id'); //On ajoute l'id de l'utilisateur.
 					
-					$sql->query_inject("UPDATE ".PREFIX."articles SET note = " . $note . ", nbrnote = " . $row_note['nbrnote'] . ", 
+					$Sql->Query_inject("UPDATE ".PREFIX."articles SET note = " . $note . ", nbrnote = " . $row_note['nbrnote'] . ", 
 					users_note = '" . $users_note . "' WHERE id = " . $get_note . " AND idcat = " . $idartcat, __LINE__, __FILE__);
 					
 					//Success.
@@ -148,11 +148,11 @@ if( !empty($idart) && isset($_GET['cat']) )
 			}
 			else
 			{
-				$row = $sql->query_array('articles', 'users_note', 'nbrnote', 'note', "WHERE idcat = " . $idartcat . " AND id = " . $get_note, __LINE__, __FILE__);
+				$row = $Sql->Query_array('articles', 'users_note', 'nbrnote', 'note', "WHERE idcat = " . $idartcat . " AND id = " . $get_note, __LINE__, __FILE__);
 				
 				$array_users_note = explode('/', $row['users_note']);
 				$select = '';
-				if( in_array($session->data['user_id'], $array_users_note) ) //Déjà voté
+				if( in_array($Member->Get_attribute('user_id'), $array_users_note) ) //Déjà voté
 					$select .= '<option value="-1">' . $LANG['already_vote'] . '</option>';
 				else 
 				{
@@ -166,7 +166,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 					}
 				}
 				
-				$template->assign_block_vars('note', array(
+				$Template->Assign_block_vars('note', array(
 					'NOTE' => ($row['nbrnote'] > 0) ? $row['note'] : '<em>' . $LANG['no_note'] . '</em>',
 					'SELECT' => $select,
 					'U_ARTICLE_ACTION_NOTE' => transid('.php?note=' . $get_note . '&amp;id=' . $get_note . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $get_note . '.php?note=' . $get_note)
@@ -174,7 +174,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 			}
 		}
 		else 
-			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	}	
 	
 	//Affichage commentaires.
@@ -188,18 +188,18 @@ if( !empty($idart) && isset($_GET['cat']) )
 		include_once('../includes/com.php');
 	}	
 
-	$template->pparse('articles');	
+	$Template->Pparse('articles');	
 }
 else
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'articles_cat' => '../templates/' . $CONFIG['theme'] . '/articles/articles_cat.tpl'
 	));	
 
 	if( $idartcat > 0 )
 	{
 		if( !isset($CAT_ARTICLES[$idartcat]) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
-			$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 		$cat_links = '';
 		foreach($CAT_ARTICLES as $id => $array_info_cat)
@@ -216,11 +216,11 @@ else
 	}
 
 	//Niveau d'autorisation de la catégorie
-	if( !$groups->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) ) 
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	if( !$Member->Check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) ) 
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
-	$nbr_articles = $sql->query("SELECT COUNT(*) FROM ".PREFIX."articles WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);	
-	$total_cat = $sql->query("SELECT COUNT(*) FROM ".PREFIX."articles_cats ac " . $clause_cat, __LINE__, __FILE__);	
+	$nbr_articles = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."articles WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);	
+	$total_cat = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."articles_cats ac " . $clause_cat, __LINE__, __FILE__);	
 		
 	$rewrite_title = url_encode_rewrite($CAT_ARTICLES[$idartcat]['name']);
 	
@@ -234,10 +234,10 @@ else
 	$nbr_column_articles = !empty($nbr_column_articles) ? $nbr_column_articles : 1;
 	$column_width_articles = floor(100/$nbr_column_articles);
 	
-	$is_admin = ($session->data['level'] == 2) ? true : false;	
-	$module_data_path = $template->module_data_path('gallery');
+	$is_admin = ($Member->Get_attribute('level') == 2) ? true : false;	
+	$module_data_path = $Template->Module_data_path('gallery');
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
 		'COLUMN_WIDTH_PICS' => $column_width_articles,
 		'COLSPAN' => $CONFIG_ARTICLES['nbr_column'],
@@ -292,17 +292,17 @@ else
 
 	//On crée une pagination si le nombre de fichiers est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 
-	$template->assign_vars(array(
-		'PAGINATION' => $pagination->show_pagin('articles' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3)
+	$Template->Assign_vars(array(
+		'PAGINATION' => $Pagination->Display_pagination('articles' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3)
 	));  
 
 	//Catégories non autorisées.
 	$unauth_cats_sql = array();
 	foreach($CAT_ARTICLES as $id => $key)
 	{
-		if( !$groups->check_auth($CAT_ARTICLES[$id]['auth'], READ_CAT_ARTICLES) )
+		if( !$Member->Check_auth($CAT_ARTICLES[$id]['auth'], READ_CAT_ARTICLES) )
 			$unauth_cats_sql[] = $id;
 	}
 	$clause_unauth_cats = (count($unauth_cats_sql) > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
@@ -310,17 +310,17 @@ else
 	##### Catégorie disponibles #####	
 	if( $total_cat > 0 && count($unauth_cats_sql) < $total_cat )
 	{
-		$template->assign_block_vars('cat', array(			
+		$Template->Assign_block_vars('cat', array(			
 			'EDIT' => $is_admin ? '<a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));	
 			
 		$i = 0;	
-		$result = $sql->query_while("SELECT ac.id, ac.name, ac.contents, ac.icon, (ac.nbr_articles_visible + ac.nbr_articles_unvisible) AS nbr_articles, ac.nbr_articles_unvisible
+		$result = $Sql->Query_while("SELECT ac.id, ac.name, ac.contents, ac.icon, (ac.nbr_articles_visible + ac.nbr_articles_unvisible) AS nbr_articles, ac.nbr_articles_unvisible
 		FROM ".PREFIX."articles_cats ac
 		" . $clause_cat . $clause_unauth_cats . "
 		ORDER BY ac.id_left
-		" . $sql->sql_limit($pagination->first_msg(10, 'p'), 10), __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		" . $Sql->Sql_limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			//On genère le tableau pour $CONFIG_ARTICLES['nbr_column'] colonnes
 			$multiple_x = $i / $nbr_column_cats;
@@ -329,7 +329,7 @@ else
 			$multiple_x = $i / $nbr_column_cats;
 			$tr_end = is_int($multiple_x) ? '</tr>' : '';
 
-			$template->assign_block_vars('cat.list', array(
+			$Template->Assign_block_vars('cat.list', array(
 				'IDCAT' => $row['id'],
 				'CAT' => $row['name'],
 				'DESC' => $row['contents'],
@@ -341,13 +341,13 @@ else
 				'U_CAT' => transid('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 			));
 		}
-		$sql->close($result);	
+		$Sql->Close($result);	
 		
 		//Création des cellules du tableau si besoin est.
 		while( !is_int($i/$nbr_column_cats) )
 		{		
 			$i++;
-			$template->assign_block_vars('cat.end_td', array(
+			$Template->Assign_block_vars('cat.end_td', array(
 				'TD_END' => '<td class="row2" style="width:' . $column_width_cats . '%">&nbsp;</td>',
 				'TR_END' => (is_int($i/$nbr_column_cats)) ? '</tr>' : ''			
 			));	
@@ -357,17 +357,17 @@ else
 	##### Affichage des articles #####	
 	if( $nbr_articles > 0 )
 	{
-		$template->assign_block_vars('link', array(		
+		$Template->Assign_block_vars('link', array(		
 			'CAT' => $CAT_ARTICLES[$idartcat]['name'],
 			'EDIT' => $is_admin ? '<a href="admin_articles_cat.php?id=' . $idartcat . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));
 
-		$result = $sql->query_while("SELECT id, title, icon, timestamp, views, note, nbrnote, nbr_com
+		$result = $Sql->Query_while("SELECT id, title, icon, timestamp, views, note, nbrnote, nbr_com
 		FROM ".PREFIX."articles
 		WHERE visible = 1 AND idcat = '" . $idartcat .	"' 
 		ORDER BY " . $sort . " " . $mode . 
-		$sql->sql_limit($pagination->first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		$Sql->Sql_limit($Pagination->First_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			//On reccourci le lien si il est trop long.
 			$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
@@ -377,7 +377,7 @@ else
 			$link_current = '<a class="com" href="' . HOST . DIR . '/articles/articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;i=0', '-' . $idartcat . '-' . $row['id'] . '.php?i=0') . '#articles">';	
 			$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
 			
-			$template->assign_block_vars('link.articles', array(			
+			$Template->Assign_block_vars('link.articles', array(			
 				'NAME' => $fichier,
 				'ICON' => !empty($row['icon']) ? '<a href="articles' . transid('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
 				'CAT' => $CAT_ARTICLES[$idartcat]['name'],
@@ -389,10 +389,10 @@ else
 			));
 
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 	}
 	 
-	$template->pparse('articles_cat');
+	$Template->Pparse('articles_cat');
 }
 			
 require_once('../includes/footer.php'); 

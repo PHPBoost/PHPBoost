@@ -50,27 +50,27 @@ if( !empty($_POST['valid'])  )
 	$config_files['auth_extensions'] = $auth_extensions;
 
 	//Génération du tableau des droits.
-	$array_auth_all = $groups->return_array_auth($auth_read);
+	$array_auth_all = $Group->Return_array_auth($auth_read);
 	$config_files['auth_files'] = serialize($array_auth_all);
 	
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_files)) . "' WHERE name = 'files'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_files)) . "' WHERE name = 'files'", __LINE__, __FILE__);
 	
 	###### Régénération du cache dela configuration #######
-	$cache->generate_file('files');
+	$Cache->Generate_file('files');
 	
 	//Régénération du htaccess.
-	$cache->generate_htaccess(); 
+	$Cache->Generate_htaccess(); 
 	
 	redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_files_config' => '../templates/' . $CONFIG['theme'] . '/admin/admin_files_config.tpl'
 	));
 	
-	$cache->load_file('files');
+	$Cache->Load_file('files');
 	
 	$CONFIG_FILES['auth_extensions'] = isset($CONFIG_FILES['auth_extensions']) ? $CONFIG_FILES['auth_extensions'] : array();
 	$array_ext_sup = $CONFIG_FILES['auth_extensions'];
@@ -100,14 +100,14 @@ else
 		$auth_extensions .= '</optgroup>';
 	}
 
-	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_ranks = array(0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']); //Création du tableau des rangs.	 
 	$array_auth = isset($CONFIG_FILES['auth_files']) ? $CONFIG_FILES['auth_files'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'NBR_GROUP' => count($array_groups),
 		'NBR_EXTENSIONS' => $i,
-		'AUTH_FILES' => $groups->generate_select_groups('a', $array_auth, AUTH_FILES, array(2 => true)),
+		'AUTH_FILES' => $Group->Generate_select_groups('a', $array_auth, AUTH_FILES, array(2 => true)),
 		'SIZE_LIMIT' => isset($CONFIG_FILES['size_limit']) ? number_round($CONFIG_FILES['size_limit']/1024, 2) : '0.5',
 		'BANDWIDTH_PROTECT_ENABLED' => $CONFIG_FILES['bandwidth_protect'] == 1 ? 'checked="checked"' : '',
 		'BANDWIDTH_PROTECT_DISABLED' => $CONFIG_FILES['bandwidth_protect'] == 0 ? 'checked="checked"' : '',
@@ -132,7 +132,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$template->pparse('admin_files_config'); // traitement du modele	
+	$Template->Pparse('admin_files_config'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

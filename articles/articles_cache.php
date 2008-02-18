@@ -30,12 +30,12 @@ if( defined('PHP_BOOST') !== true) exit;
 //Configuration des news
 function generate_module_file_articles()
 {
-	global $sql;
+	global $Sql;
 	
 	$config_articles = 'global $CAT_ARTICLES;' . "\n" . 'global $CONFIG_ARTICLES;' . "\n";
 		
 	//Récupération du tableau linéarisé dans la bdd.
-	$CONFIG_ARTICLES = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'articles'", __LINE__, __FILE__));
+	$CONFIG_ARTICLES = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'articles'", __LINE__, __FILE__));
 	$CONFIG_ARTICLES = is_array($CONFIG_ARTICLES) ? $CONFIG_ARTICLES : array();
 	foreach($CONFIG_ARTICLES as $key => $value)
 	{
@@ -47,10 +47,10 @@ function generate_module_file_articles()
 	$config_articles .= "\n";
 	
 	$cat_articles = 'global $CAT_ARTICLES;' . "\n";
-	$result = $sql->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
+	$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, aprob, auth
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{		
 		if( empty($row['auth']) )
 			$row['auth'] = serialize(array());
@@ -62,7 +62,7 @@ function generate_module_file_articles()
 		$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
 		$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	return $config_articles . "\n" . $cat_articles;
 }

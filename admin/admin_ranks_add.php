@@ -40,11 +40,11 @@ if( !empty($_POST['add']) )
 	if( !empty($name) && $msg >= 0 )
 	{	
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
-		$sql->query_inject("INSERT INTO ".PREFIX."ranks (name,msg,icon,special) 
+		$Sql->Query_inject("INSERT INTO ".PREFIX."ranks (name,msg,icon,special) 
 		VALUES('" . $name . "', '" . $msg . "', '" . $icon . "', '0')", __LINE__, __FILE__);	
 				
 		###### Régénération du cache des rangs #######
-		$cache->generate_file('ranks');
+		$Cache->Generate_file('ranks');
 		
 		redirect(HOST . DIR . '/admin/admin_ranks.php');	
 	}
@@ -64,9 +64,9 @@ elseif( !empty($_FILES['upload_ranks']['name']) ) //Upload et décompression de l
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
 		include_once('../includes/upload.class.php');
-		$upload = new Upload($dir);
-		if( !$upload->upload_file('upload_ranks', '`([a-z0-9_-])+\.(jpg|gif|png|bmp)+`i') )
-			$error = $upload->error;
+		$Upload = new Upload($dir);
+		if( !$Upload->Upload_file('upload_ranks', '`([a-z0-9_-])+\.(jpg|gif|png|bmp)+`i') )
+			$error = $Upload->error;
 	}
 	else
 		$error = 'e_upload_failed_unwritable';
@@ -76,7 +76,7 @@ elseif( !empty($_FILES['upload_ranks']['name']) ) //Upload et décompression de l
 }
 else //Sinon on rempli le formulaire	 
 {	
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_ranks_add' => '../templates/' . $CONFIG['theme'] . '/admin/admin_ranks_add.tpl'
 	));
 
@@ -84,11 +84,11 @@ else //Sinon on rempli le formulaire
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable');
 	if( in_array($get_error, $array_error) )
-		$errorh->error_handler($LANG[$get_error], E_USER_WARNING);
+		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
@@ -108,7 +108,7 @@ else //Sinon on rempli le formulaire
 	));
 
 	//On recupère les images des groupes
-	$template->assign_block_vars('select', array(
+	$Template->Assign_block_vars('select', array(
 		'IMG_RANK' => '<option value="">--</option>'
 	));
 	
@@ -122,7 +122,7 @@ else //Sinon on rempli le formulaire
 		{	
 			if( $j > 1 && $fichier != 'index.php' && $fichier != 'Thumbs.db' )
 			{	
-				$template->assign_block_vars('select', array(
+				$Template->Assign_block_vars('select', array(
 					'IMG_RANK' => '<option value="' . $fichier . '">' . $fichier . '</option>'
 				));
 			}
@@ -131,7 +131,7 @@ else //Sinon on rempli le formulaire
 		closedir($dh); //On ferme le dossier
 	}	
 	
-	$template->pparse('admin_ranks_add');
+	$Template->Pparse('admin_ranks_add');
 }
 
 require_once('../includes/admin_footer.php');

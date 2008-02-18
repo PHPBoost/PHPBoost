@@ -36,7 +36,7 @@ $mail_contents = !empty($_POST['mail_contents']) ? trim($_POST['mail_contents'])
 ###########################Envoi##############################
 if( !empty($_POST['mail_valid']) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'contact' => '../templates/' . $CONFIG['theme'] . '/contact/contact.tpl'
 	));	
 		
@@ -45,21 +45,21 @@ if( !empty($_POST['mail_valid']) )
 	if( @extension_loaded('gd') && $CONFIG_CONTACT['contact_verifcode'] )
 	{
 		$user_id = substr(md5(USER_IP), 0, 8);
-		$verif_code = $sql->query("SELECT code FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
+		$verif_code = $Sql->Query("SELECT code FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
 		$get_verif_code = !empty($_POST['verif_code']) ? trim($_POST['verif_code']) : '';
 
 		if( empty($verif_code) || ($verif_code != $get_verif_code) )
 			$check_verif_code = false;
 		else //On efface le code qui a été utilisé.
-			$sql->query_inject("DELETE FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);			
+			$Sql->Query_inject("DELETE FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);			
 	}
 	
 	if( $check_verif_code || !$CONFIG_CONTACT['contact_verifcode'] ) //Code de vérification si activé
 	{
 		include_once('../includes/mail.class.php');
-		$mail = new Mail();
+		$Mail = new Mail();
 
-		if( $mail->send_mail($CONFIG['mail'], $mail_objet, $mail_contents, $mail_from, '', 'user') ) //Succès mail
+		if( $Mail->Send_mail($CONFIG['mail'], $mail_objet, $mail_contents, $mail_from, '', 'user') ) //Succès mail
 			redirect(HOST . SCRIPT . transid('?error=success', '', '&') . '#errorh');
 		else //Erreur mail
 			redirect(HOST . SCRIPT . transid('?error=error', '', '&') . '#errorh');
@@ -72,36 +72,36 @@ elseif( !empty($_POST['mail_valid']) && ( empty($mail_email) || empty($mail_cont
 else
 {	
 	###########################Affichage##############################
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'contact' => '../templates/' . $CONFIG['theme'] . '/contact/contact.tpl'
 	));
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $get_error == 'verif' )
-		$errorh->error_handler($LANG['e_incorrect_verif_code'], E_USER_WARNING);
+		$Errorh->Error_handler($LANG['e_incorrect_verif_code'], E_USER_WARNING);
 	elseif( $get_error == 'success' )//Message de succès.
-		$errorh->error_handler($LANG['success_mail'], E_USER_SUCCESS);
+		$Errorh->Error_handler($LANG['success_mail'], E_USER_SUCCESS);
 	elseif( $get_error == 'error' )//Message de succès.
-		$errorh->error_handler($LANG['error_mail'], E_USER_WARNING);
+		$Errorh->Error_handler($LANG['error_mail'], E_USER_WARNING);
 		
 	//Code de vérification, anti-bots.
 	if( @extension_loaded('gd') && $CONFIG_CONTACT['contact_verifcode'] )
 	{
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'L_REQUIRE_VERIF_CODE' => 'if(document.getElementById(\'verif_code\').value == "") {
 				alert("' . $LANG['require_verif_code'] . '");
 				return false;
 			}'
 		));		
-		$template->assign_block_vars('verif_code', array(
+		$Template->Assign_block_vars('verif_code', array(
 		));
 	}
 		
-	$template->assign_vars(array(
-		'MAIL' => $session->data['user_mail'],
+	$Template->Assign_vars(array(
+		'MAIL' => $Member->Get_attribute('user_mail'),
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'] ,
 		'L_CONTACT_MAIL' => $LANG['contact_mail'],
@@ -116,7 +116,7 @@ else
 		'U_ACTION_CONTACT' => SID
 	));
 
-	$template->pparse('contact'); 
+	$Template->Pparse('contact'); 
 }
 
 require_once('../includes/footer.php'); 
