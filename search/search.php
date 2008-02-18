@@ -34,7 +34,7 @@ load_module_lang('search', $CONFIG['lang']);
 require_once('../includes/modules.class.php');
 require_once('../search/search.inc.php');
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 'search_mini_form' => '../templates/'.$CONFIG['theme'].'/search/search_mini_form.tpl',
 'search_forms' => '../templates/'.$CONFIG['theme'].'/search/search_forms.tpl',
 'search_results' => '../templates/'.$CONFIG['theme'].'/search/search_results.tpl'
@@ -54,18 +54,18 @@ if( $search != '' )
 {
 	$results = array();
 	$modulesArgs = array();
-	$modules = new Modules();
+	$Modules = new Modules();
 	
 	// Listes des modules de recherches
-	$searchModules = $modules->GetAvailablesModules( 'GetSearchRequest');
+	$searchModules = $Modules->GetAvailablesModules( 'GetSearchRequest');
 	// Ajout du paramètre search à tous les modules
 	foreach( $searchModules as $module)
 	{
-		$modulesArgs[$module->name] = array('search' => $args);
+		$modulesArgs[$Module->name] = array('search' => $args);
 	}
 	
 	// Chargement des modules avec formulaires
-	$formsModule = $modules->GetAvailablesModules('GetSearchForm', $searchModules);
+	$formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
 	
 	// Ajout de la liste des paramètres de recherches spécifiques à chaque module
 	foreach( $formsModule as $formModule)
@@ -85,47 +85,47 @@ if( $search != '' )
 	
 	// Génération des formulaires précomplétés et passage aux templates
 	$searchForms = GetSearchForms($formsModule, $modulesArgs);
-	$template->assign_block_vars('forms', array($searchForms));
+	$Template->Assign_block_vars('forms', array($searchForms));
 	
 	// Génération des résultats et passage aux templates
 	$nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, ($p - 1), ($p - 1 + NB_RESULTS_PER_PAGE));
-	$template->assign_vars(array('nbResults' => $nbResults)) ;
+	$Template->Assign_vars(array('nbResults' => $nbResults)) ;
 	
 	$htmlResults = array();
 	foreach($results as $result)
 	{
 		// A vérifier que les résultats renvoyé par la méthode GetResults de la classe Search
 		// Renvoie bien un tableau associatif
-		$module = $modules->GetModule( $result['id_module']);
-		if( $module->HasFunctionnality( 'ParseSearchResult'))
-			array_push($htmlResults, $module->Functionnality('ParseSearchResult', array($result)));
+		$module = $Modules->GetModule( $result['id_module']);
+		if( $Module->HasFunctionnality( 'ParseSearchResult'))
+			array_push($htmlResults, $Module->Functionnality('ParseSearchResult', array($result)));
 		else
 			array_push($htmlResults, $result); 
 	}
 	
-	$template->assign_vars(array('htmlResults' => $htmlResults)) ;
+	$Template->Assign_vars(array('htmlResults' => $htmlResults)) ;
 	
 	// parsage des formulaires de recherches
-	$template->pparse('search_forms');
+	$Template->Pparse('search_forms');
 	// parsage des résultats de la recherche
-	$template->pparse('search_results');
+	$Template->Pparse('search_results');
 }
 else
 {
 	// Listes des modules de recherches
-	$searchModules = $modules->GetAvailablesModules('GetSearchRequest');
+	$searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
 	// Chargement des modules avec formulaires
-	$formsModule = $modules->GetAvailablesModules('GetSearchForm', $searchModules);
+	$formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
 	
 	// Génération des formulaires et passage aux templates
 	$searchForms = GetSearchForms($formsModule);
-	$template->assign_block_vars('forms', array( $searchForms));
+	$Template->Assign_block_vars('forms', array( $searchForms));
 	
 	// parsage de la page
-	$template->pparse('search_forms');
+	$Template->Pparse('search_forms');
 }
 
 //--------------------------------------------------------------------- Footer
-require_once( '../includes/footer.php');
+require_once('../includes/footer.php');
 
 ?>
