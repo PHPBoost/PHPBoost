@@ -30,20 +30,52 @@ if( defined('PHP_BOOST') !== true)	exit;
 if( @!include('../cache/modules_mini.php') )
 {
 	//Régénération du fichier
-	$code = '';
-	$result = $sql->query_while("SELECT name, code, side, secure 
-	FROM ".PREFIX."modules_mini
+	$modules_mini = array();
+	$result = $Sql->Query_while("SELECT name, code, contents, location, secure, added, use_tpl
+	FROM ".PREFIX."modules_mini 
 	WHERE activ = 1
-	ORDER BY side, class", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	ORDER BY location, class", __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		if( $row['side'] == '0' )
-			$code .= 'if( $BLOCK_top && $session->data[\'level\'] >= ' . $row['secure'] . ' ){' . $row['code'] . '}' . "\n";
-		else
-			$code .= 'if( $BLOCK_bottom && $session->data[\'level\'] >= ' . $row['secure'] . ' ){' . $row['code'] . '}' . "\n";
+		$modules_mini[$row['location']][] = array('name' => $row['name'], 'code' => $row['code'], 'contents' => $row['contents'], 'secure' => $row['secure'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 
+	$code = '';
+	$array_seek = array('subheader', 'left', 'right', 'topcentral', 'bottomcentral');
+	foreach($array_seek as $location)
+	{
+		$code .= 'if( isset($MODULES_MINI[\'' . $location . '\']) && $MODULES_MINI[\'' . $location . '\'] ){' . "\n";
+		foreach($modules_mini[$location] as $location_key => $info)
+		{
+			if( $info['added'] == '0' )
+				$code .= 'if( $Member->Get_attribute(\'level\') >= ' . $info['secure'] . ' ){' . $info['code'] . '}' . "\n";
+			else
+			{
+				if( $info['use_tpl'] == '0' )
+					$code .= 'echo ' . var_export($info['contents'], true) . ';' . "\n";
+				else
+				{
+					switch($location)
+					{
+						case 'left':
+						case 'right':
+						$code .= 'if( $Member->Get_attribute(\'level\') >= ' . $info['secure'] . ' ){' . 
+						"\$Template->Set_filenames(array('modules_mini' => '../templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\$Template->Pparse('modules_mini');" . '}' . "\n";
+						break;
+						case 'subheader':
+						case 'topcentral':
+						case 'bottomcentral':
+						$code .= 'if( $Member->Get_attribute(\'level\') >= ' . $info['secure'] . ' ){' . 
+						"\$Template->Set_filenames(array('modules_mini_horizontal' => '../templates/' . \$CONFIG['theme'] . '/modules_mini_horizontal.tpl'));\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\$Template->Pparse('modules_mini_horizontal');" . '}' . "\n";
+						break;					
+					}						
+				}
+			}
+		}
+		$code .= '}' . "\n";
+	}
+	
 	$file_path = '../cache/modules_mini.php';
 	if( is_file($file_path) )
 		@delete_file($file_path); //Supprime le fichier s'il existe déjà
@@ -52,11 +84,11 @@ if( @!include('../cache/modules_mini.php') )
 	@fclose($handle);
 	//Il est l'heure de vérifier si la génération a fonctionnée.
 	if( !is_file($file_path) || filesize($file_path) == '0' )
-		$errorh->error_handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
+		$Errorh->Error_handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 		
 	//On inclue une nouvelle fois
 	if( @!include('../cache/modules_mini.php') )
-		$errorh->error_handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
+		$Errorh->Error_handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 }
 
 ?>

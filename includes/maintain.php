@@ -35,7 +35,7 @@ if( $CONFIG['maintain'] <= time() )
 	exit;
 }
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'maintain' => '../templates/' . $CONFIG['theme'] . '/maintain.tpl')
 );
 
@@ -70,12 +70,12 @@ else //Délai indéterminé.
 	$array_release = array('', '', '', '', '', '');
 }
 
-$template->assign_vars(array(	
+$Template->Assign_vars(array(	
 	'SITE_NAME' => $CONFIG['site_name'],
 	'VERSION' => $CONFIG['version'],
 	'THEME' => $CONFIG['theme'],
 	'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
-	'U_INDEX' => !$session->check_auth($session->data, 2) ? '<a href="../admin/admin_index.php">' . $LANG['admin'] . '</a>' : '<a href="' . get_start_page() . '">' . $LANG['index'] . '</a>',	
+	'U_INDEX' => !$Member->Check_level(2) ? '<a href="../admin/admin_index.php">' . $LANG['admin'] . '</a>' : '<a href="' . get_start_page() . '">' . $LANG['index'] . '</a>',	
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'L_MAINTAIN' => (!empty($CONFIG['maintain_text']) ? $CONFIG['maintain_text'] : $LANG['maintain']),
 	'L_LOADING' => $LANG['loading'],
@@ -90,13 +90,13 @@ $template->assign_vars(array(
 
 if( $CONFIG['maintain_delay'] == 1 && $CONFIG['maintain'] != -1 )
 {
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'C_DISPLAY_DELAY' => true,
 		'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
 		'L_MAINTAIN_DELAY' => $LANG['maintain_delay']
 	));
 }
 
-$template->pparse('maintain');
+$Template->Pparse('maintain');
 
 ?>

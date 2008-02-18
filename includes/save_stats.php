@@ -41,13 +41,13 @@ if( !empty($referer) )
 		$query = !empty($referer['query']) ? $referer['query'] : '';
 		$keyword = securit(strtolower(str_replace('+', ' ', preg_replace('`(?:.*)(?:q|p|query|rdata)=([^&]+)(.*)`i', '$1', $query))));
 		
-		$check_search_engine = $sql->query("SELECT COUNT(*) FROM ".PREFIX."stats_referer WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
+		$check_search_engine = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."stats_referer WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
 		if( !empty($keyword) )
 		{
 			if( !empty($check_search_engine) )
-				$sql->query_inject("UPDATE ".PREFIX."stats_referer SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url ='" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);			
+				$Sql->Query_inject("UPDATE ".PREFIX."stats_referer SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url ='" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);			
 			else
-				$sql->query_inject("INSERT INTO ".PREFIX."stats_referer (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $search_engine . "', '" . $keyword . "', 1, 1, 1, 1, '" . time() . "', 1)", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."stats_referer (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $search_engine . "', '" . $keyword . "', 1, 1, 1, 1, '" . time() . "', 1)", __LINE__, __FILE__);
 		}
 	}
 	else
@@ -58,11 +58,11 @@ if( !empty($referer) )
 		{				
 			$relative_url = securit(((substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
 			
-			$check_url = $sql->query("SELECT COUNT(*) FROM ".PREFIX."stats_referer WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);
+			$check_url = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."stats_referer WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);
 			if( !empty($check_url) )
-				$sql->query_inject("UPDATE ".PREFIX."stats_referer SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url ='" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);			
+				$Sql->Query_inject("UPDATE ".PREFIX."stats_referer SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url ='" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);			
 			else
-				$sql->query_inject("INSERT INTO ".PREFIX."stats_referer (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $url . "', '" . $relative_url . "', 1, 1, 1, 1, '" . time() . "', 0)", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."stats_referer (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $url . "', '" . $relative_url . "', 1, 1, 1, 1, '" . time() . "', 0)", __LINE__, __FILE__);
 		}
 	}
 }

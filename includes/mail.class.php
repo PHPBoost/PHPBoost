@@ -27,69 +27,14 @@
 
 class Mail
 {
-	var $objet; //Objet du mail.
-	var $contents;	//Contenu du mail.
-	var $from; //Mail de l'envoyeur.
-	var $sender; //Nom de l'envoyeur.
-	var $header; //Contient le header du mail.
-
+	## Public Methods ##
 	//Constructeur.
 	function Mail() 
 	{
 	}
 	
-	//Nettoie les entrées.
-	function clean_mail($mail_objet, $mail_contents)
-	{
-		if( get_magic_quotes_gpc() )
-		{
-			$this->objet = stripslashes($mail_objet);
-			$this->contents = stripslashes($mail_contents);
-		}
-		else
-		{
-			$this->objet = $mail_objet;
-			$this->contents = $mail_contents;
-		}
-	}
-	
-	//Vérification de la validité du mail du posteur => Protection contre injection header.
-	function check_valid_mail()
-	{
-		global $LANG, $errorh;
-
-		$array_mail = explode(';', $this->from); //Récupération de l'adresse email du posteur.
-		$this->from = $array_mail[0];
-		
-		if( !preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $this->from) )
-		{
-			$errorh->error_handler('e_mail_format', E_USER_REDIRECT);
-			return false;
-		}
-		else
-		{ 
-			return true;
-		}
-	}
-	
-	//Génération des headers du mail.
-	function send_headers()
-	{
-		global $LANG;
-		
-		$array_cc = explode(';', $this->to); //Récupération des adresses mails auxquelles il faut envoyer le mail en copie.
-		$this->header .= 'From: "' . (($this->sender == 'admin') ? $LANG['admin'] : $LANG['user']) . ' ' . HOST . '" <' . $this->from . ">\r\n"; 
-
-		$nbr_cc = count($array_cc);
-		if( $nbr_cc > 1 ) 
-		{	
-			for($i = 0; $i < $nbr_cc; $i++) 
-				$this->header .= 'cc: ' . $array_cc[$i] . "\r\n";			
-		}
-	}
-	
 	//Envoi du mail valide.
-	function send_mail($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header = '', $mail_sender = 'admin')
+	function Send_mail($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header = '', $mail_sender = 'admin')
 	{
 		$this->sender = $mail_sender;
 		$this->from = $mail_from;
@@ -123,6 +68,66 @@ class Mail
 				return false;
 		}		
 	}	
+	
+	
+	## Private Methods ##
+	//Nettoie les entrées.
+	function clean_mail($mail_objet, $mail_contents)
+	{
+		if( get_magic_quotes_gpc() )
+		{
+			$this->objet = stripslashes($mail_objet);
+			$this->contents = stripslashes($mail_contents);
+		}
+		else
+		{
+			$this->objet = $mail_objet;
+			$this->contents = $mail_contents;
+		}
+	}
+	
+	//Vérification de la validité du mail du posteur => Protection contre injection header.
+	function check_valid_mail()
+	{
+		global $LANG, $Errorh;
+
+		$array_mail = explode(';', $this->from); //Récupération de l'adresse email du posteur.
+		$this->from = $array_mail[0];
+		
+		if( !preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $this->from) )
+		{
+			$Errorh->Error_handler('e_mail_format', E_USER_REDIRECT);
+			return false;
+		}
+		else
+		{ 
+			return true;
+		}
+	}
+	
+	//Génération des headers du mail.
+	function send_headers()
+	{
+		global $LANG;
+		
+		$array_cc = explode(';', $this->to); //Récupération des adresses mails auxquelles il faut envoyer le mail en copie.
+		$this->header .= 'From: "' . (($this->sender == 'admin') ? $LANG['admin'] : $LANG['user']) . ' ' . HOST . '" <' . $this->from . ">\r\n"; 
+
+		$nbr_cc = count($array_cc);
+		if( $nbr_cc > 1 ) 
+		{	
+			for($i = 0; $i < $nbr_cc; $i++) 
+				$this->header .= 'cc: ' . $array_cc[$i] . "\r\n";			
+		}
+	}
+	
+	
+	## Private Attribute ##
+	var $objet; //Objet du mail.
+	var $contents;	//Contenu du mail.
+	var $from; //Mail de l'envoyeur.
+	var $sender; //Nom de l'envoyeur.
+	var $header; //Contient le header du mail.
 }
 
 ?>

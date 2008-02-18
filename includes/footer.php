@@ -28,21 +28,21 @@
 if( defined('PHP_BOOST') !== true) exit;
 	
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'bottomcentral' => '../templates/' . $CONFIG['theme'] . '/bottomcentral.tpl'
 ));
-$template->pparse('bottomcentral');
+$Template->Pparse('bottomcentral');
 
 $MODULES_MINI['bottomcentral'] = true;
 include('../includes/modules_mini.php');
 
-$sql->sql_close(); //Fermeture de mysql
+$Sql->Sql_close(); //Fermeture de mysql
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'footer' => '../templates/' . $CONFIG['theme'] . '/footer.tpl'
 ));
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'HOST' => HOST,
 	'DIR' => DIR,
 	'THEME' => $CONFIG['theme'],
@@ -61,11 +61,11 @@ pages_displayed();
 
 if( $CONFIG['bench'] )
 {
-	$bench->end_bench('site'); //On arrête le bench.
-	$template->assign_vars(array(
+	$Bench->End_bench('site'); //On arrête le bench.
+	$Template->Assign_vars(array(
 		'C_DISPLAY_BENCH' => true,
-		'BENCH' => $bench->display_bench('site'), //Fin du benchmark
-		'REQ' => $sql->req,
+		'BENCH' => $Bench->Display_bench('site'), //Fin du benchmark
+		'REQ' => $Sql->Display_sql_request(),
 		'L_UNIT_SECOND' => HOST,
 		'L_REQ' => $LANG['sql_req'],
 		'L_ACHIEVED' => $LANG['achieved'],
@@ -73,7 +73,7 @@ if( $CONFIG['bench'] )
 	));
 }
 
-$template->pparse('footer');				
+$Template->Pparse('footer');				
 
 ob_end_flush();
 

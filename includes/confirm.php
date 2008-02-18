@@ -29,7 +29,7 @@ if( defined('PHP_BOOST') !== true )
 	exit;
 else
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'confirm' => '../templates/' . $CONFIG['theme'] . '/confirm.tpl'
 	));
 		
@@ -38,14 +38,14 @@ else
 	$DELAY_REDIRECT = isset($DELAY_REDIRECT) ? $DELAY_REDIRECT : '3';
 	$L_ERROR = isset($L_ERROR) ? $L_ERROR : '';
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'URL_ERROR' => $URL_ERROR,
 		'DELAY_REDIRECT' => $DELAY_REDIRECT,
 		'L_ERROR' => $L_ERROR,
 		'L_REDIRECT' => $LANG['redirect']
 	));
 	
-	$template->pparse('confirm'); 
+	$Template->Pparse('confirm'); 
 }	
 
 ?>

@@ -33,8 +33,8 @@ header('Pragma: no-cache');
 	
 //Inclusion des fichiers
 require_once('../includes/bench.class.php');
-$bench = new Bench; //Début du benchmark
-$bench->start_bench('site');
+$Bench = new Bench; //Début du benchmark
+$Bench->Start_bench('site');
 require_once('../includes/function.php'); //Fonctions de base.
 require_once('../includes/constant.php'); //Constante utiles.
 require_once('../includes/mathpublisher.php'); //Gestion des formules mathématiques.
@@ -43,27 +43,28 @@ require_once('../includes/template.class.php');
 require_once('../includes/db/' . DBTYPE . '.class.php');
 require_once('../includes/cache.class.php');
 require_once('../includes/sessions.class.php');
+require_once('../includes/member.class.php');
 require_once('../includes/groups.class.php');
 require_once('../includes/speed_bar.class.php');
 
 //Instanciation des objets indispensables au noyau.
-$errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
-$template = new Templates; //!\\Initialisation des templates//!\\
-$sql = new Sql; //!\\Initialisation  de la class sql//!\\
-$cache = new Cache; //!\\Initialisation  de la class de gestion du cache//!\\
-$speed_bar = new Speed_bar; //!\\Initialisation  de la class de la speed bar//!\\
+$Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
+$Template = new Templates; //!\\Initialisation des templates//!\\
+$Sql = new Sql; //!\\Initialisation  de la class sql//!\\
+$Cache = new Cache; //!\\Initialisation  de la class de gestion du cache//!\\
+$Speed_bar = new Speed_bar; //!\\Initialisation  de la class de la speed bar//!\\
 
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
 
 //Chargement ddes fichiers cache, indispensables au noyau.
 $CONFIG = array();
-$cache->load_file('config'); //Requête des configuration générales, $CONFIG variable globale.
-$cache->load_file('groups'); //Cache des groupes.
-$cache->load_file('member'); //Chargement de la configuration des membres.
+$Cache->Load_file('config'); //Requête des configuration générales, $CONFIG variable globale.
+$Cache->Load_file('groups'); //Cache des groupes.
+$Cache->Load_file('member'); //Chargement de la configuration des membres.
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
 
-$session = new Sessions; //!\\Initialisation  de la class des sessions//!\\
+$Session = new Sessions; //!\\Initialisation  de la class des sessions//!\\
 
 //Activation de la bufférisation de sortie
 if( $CONFIG['ob_gzhandler'] == 1 )
@@ -72,23 +73,16 @@ else
 	ob_start();
 	
 //Récupération des informations sur le membre.
-if( !isset($_POST['connect']) && !isset($_POST['disconnect']) ) 
-	$session->session_info();
-else
-{	
-	$session->data['user_id'] = -1;
-	$session->data['level'] = -1;
-	$session->data['user_groups'] = '';
-	$session->data['user_editor'] = $CONFIG['editor'];
-	$session->data['user_timezone'] = $CONFIG['timezone'];
-}
-$groups = new Groups($session->data, $_array_groups_auth); //!\\Initialisation  de la class de gestion des groupes//!\\
+$Session->Session_info();
+
+$Group = new Group($_array_groups_auth); //!\\Initialisation  de la class de gestion des groupes//!\\
+$Member = new Member($Session->data, $_array_groups_auth); //!\\Initialisation  de la class de gestion des membres//!\\
 
 //Définition de la constante de transmission des infos de session.
-if( $session->session_mod )
+if( $Session->session_mod )
 {
-	define('SID', '?sid=' . $session->data['session_id'] . '&amp;suid=' . $session->data['user_id']);
-	define('SID2', '?sid=' . $session->data['session_id'] . '&suid=' . $session->data['user_id']);
+	define('SID', '?sid=' . $Member->Get_attribute('session_id') . '&amp;suid=' . $Member->Get_attribute('user_id'));
+	define('SID2', '?sid=' . $Member->Get_attribute('session_id') . '&suid=' . $Member->Get_attribute('user_id'));
 }
 else
 {
@@ -97,22 +91,22 @@ else
 }
 
 //Si le thème n'existe pas on prend le suivant présent sur le serveur/
-$CONFIG['theme'] = find_require_dir('../templates/', (empty($session->data['user_theme']) || $CONFIG_MEMBER['force_theme'] == 1) ? $CONFIG['theme'] : $session->data['user_theme']);
+$CONFIG['theme'] = find_require_dir('../templates/', ($Member->Get_attribute('user_theme') == '' || $CONFIG_MEMBER['force_theme'] == 1) ? $CONFIG['theme'] : $Member->Get_attribute('user_theme'));
 
 //Si le dossier de langue n'existe pas on prend le suivant exisant.
-$CONFIG['lang'] = find_require_dir('../lang/', (empty($session->data['user_lang']) ? $CONFIG['lang'] : $session->data['user_lang']));
+$CONFIG['lang'] = find_require_dir('../lang/', ($Member->Get_attribute('user_lang') == '' ? $CONFIG['lang'] : $Member->Get_attribute('user_lang')));
 $LANG = array();
 require_once('../lang/' . $CONFIG['lang'] . '/main.php'); //!\\ Langues //!\\
 require_once('../lang/' . $CONFIG['lang'] . '/errors.php'); //Inclusion des langues des erreurs.
 
 //Chargement du cache du jour actuel.
-$cache->load_file('day');
+$Cache->Load_file('day');
 if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day) ) //On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
 	require_once('../includes/changeday.php');
 
 include_once('../includes/connect.php'); //Inclusion du gestionnaire de connexion.
 	
 //Cache des autorisations des modules
-$cache->load_file('modules'); 
+$Cache->Load_file('modules'); 
 
 ?>

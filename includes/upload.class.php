@@ -34,72 +34,20 @@ define('NO_UNIQ_NAME', false);
 
 class Upload
 {
-	var $base_directory; //Répertoire de destination des fichiers.
-	var $extension = array(); //Extension des fichiers.
-	var $filename = array(); //Nom des fichiers.
+	## Public Attributes ##
 	var $error = ''; //Gestion des erreurs
 	
+	
+	## Public Methods ##	
 	//Constructeur
 	function Upload($base_directory = 'upload')
 	{
 		$this->base_directory = $base_directory;
 		return;
 	}
-
-	//Vérification de la conformité du fichier
-	function check_file($filename, $regexp)
-	{
-		if( !empty($regexp) )
-		{
-			if( preg_match($regexp, $filename) && !preg_match('`\.php`', $filename) ) //Valide, sinon supprimé
-				return true;
-			return false;
-		}
-		return true;
-	}
-	
-	//Nettoie l'url de tous les caractères spéciaux, accents, etc....
-	function clean_filename($string)
-	{
-		$string = strtolower($string);
-
-		$chars_special = array(' ', 'é', 'è', 'ê', 'à', 'â', 'ù', 'ü', 'û', 'ï', 'î', 'ô', 'ç');
-		$chars_replace = array('-', 'e', 'e', 'e', 'a', 'a', 'u', 'u', 'u', 'i', 'i', 'o', 'c');
-		$string = str_replace($chars_special, $chars_replace, $string);
-
-		$string = preg_replace('`([^a-z0-9]|[\s])`', '_', $string);
-		$string = preg_replace('`[_]{2,}`', '_', $string);
-		$string = trim($string, ' _');
-		
-		return $string;
-	}
-
-	//Genère à partir du nom du fichier, un nom de fichier unique. Gère les colisions. Renseigne les informations du fichier à uploader.
-	function generate_info_file($filename, $filepostname, $uniq_name)
-	{
-		$this->extension[$filepostname] = strtolower(substr(strrchr($filename, '.'), 1));
-		
-		$filename = substr($filename, 0, strrpos($filename, '.'));
-		$filename = str_replace('.', '_', $filename);
-		$filename = $this->clean_filename($filename);
-
-		if( $uniq_name )
-		{
-			$filename_tmp = $filename;
-			while( file_exists($this->base_directory . $filename_tmp . '.' . $this->extension[$filepostname]) )
-			{
-				$filename_tmp = $filename;
-				$filename_tmp .= '_' . substr(md5(uniqid(mt_rand(), true)), 0, 5);
-			}
-			$filename = $filename_tmp;
-		}
-			
-		$filename .= '.' . $this->extension[$filepostname];		
-		$this->filename[$filepostname] = $filename;	
-	}
 	
 	//Upload d'un fichier
-	function upload_file($filepostname, $regexp = '', $uniq_name = false, $weight_max = 100000000, $check_exist = true)
+	function Upload_file($filepostname, $regexp = '', $uniq_name = false, $weight_max = 100000000, $check_exist = true)
 	{		
 		global $LANG;
 		
@@ -137,14 +85,73 @@ class Upload
 			
 		return false;
 	}
-	  
-	//Upload de tout les fichiers.
-	function upload_files($regexp = '')
-	{	
-		foreach($_FILES as $file => $array )
-			$this->upload_file($file['name'], '', $regexp);
 		
-		return;
+	//Validation des images, supprime l'image en cas d'erreur sir $delete à true.
+	function Validate_img($filepath, $width_max, $height_max, $delete = true)
+	{
+		$error = '';		
+		list($width, $height, $ext) = function_exists('getimagesize') ? @getimagesize($filepath) : array(0, 0, 0);
+		if( $width > $width_max || $height > $height_max  ) //Hauteur et largeur max.
+			$error = 'e_upload_max_dimension';
+
+		if( !empty($error) && $delete )
+			@unlink($filepath);
+			
+		return $error;
+	}
+	
+	
+	## Private Methods ##	
+	//Vérification de la conformité du fichier
+	function check_file($filename, $regexp)
+	{
+		if( !empty($regexp) )
+		{
+			if( preg_match($regexp, $filename) && !preg_match('`\.php`', $filename) ) //Valide, sinon supprimé
+				return true;
+			return false;
+		}
+		return true;
+	}
+	
+	//Nettoie l'url de tous les caractères spéciaux, accents, etc....
+	function clean_filename($string)
+	{
+		$string = strtolower($string);
+
+		$chars_special = array(' ', 'é', 'è', 'ê', 'à', 'â', 'ù', 'ü', 'û', 'ï', 'î', 'ô', 'ç');
+		$chars_replace = array('-', 'e', 'e', 'e', 'a', 'a', 'u', 'u', 'u', 'i', 'i', 'o', 'c');
+		$string = str_replace($chars_special, $chars_replace, $string);
+
+		$string = preg_replace('`([^a-z0-9]|[\s])`', '_', $string);
+		$string = preg_replace('`[_]{2,}`', '_', $string);
+		$string = trim($string, ' _');
+		
+		return $string;
+	}
+	
+	//Genère à partir du nom du fichier, un nom de fichier unique. Gère les colisions. Renseigne les informations du fichier à uploader.
+	function generate_info_file($filename, $filepostname, $uniq_name)
+	{
+		$this->extension[$filepostname] = strtolower(substr(strrchr($filename, '.'), 1));
+		
+		$filename = substr($filename, 0, strrpos($filename, '.'));
+		$filename = str_replace('.', '_', $filename);
+		$filename = $this->clean_filename($filename);
+
+		if( $uniq_name )
+		{
+			$filename_tmp = $filename;
+			while( file_exists($this->base_directory . $filename_tmp . '.' . $this->extension[$filepostname]) )
+			{
+				$filename_tmp = $filename;
+				$filename_tmp .= '_' . substr(md5(uniqid(mt_rand(), true)), 0, 5);
+			}
+			$filename = $filename_tmp;
+		}
+			
+		$filename .= '.' . $this->extension[$filepostname];		
+		$this->filename[$filepostname] = $filename;	
 	}
 	
 	//Gestion des erreurs d'upload.
@@ -170,20 +177,12 @@ class Upload
 		}
 		return $error;
 	}
-	
-	//Validation des images, supprime l'image en cas d'erreur sir $delete à true.
-	function validate_img($filepath, $width_max, $height_max, $delete = true)
-	{
-		$error = '';		
-		list($width, $height, $ext) = function_exists('getimagesize') ? @getimagesize($filepath) : array(0, 0, 0);
-		if( $width > $width_max || $height > $height_max  ) //Hauteur et largeur max.
-			$error = 'e_upload_max_dimension';
 
-		if( !empty($error) && $delete )
-			@unlink($filepath);
-			
-		return $error;
-	}
+
+	## Private Attributes ##
+	var $base_directory; //Répertoire de destination des fichiers.
+	var $extension = array(); //Extension des fichiers.
+	var $filename = array(); //Nom des fichiers.
 }
 
 ?>

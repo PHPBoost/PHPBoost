@@ -30,10 +30,28 @@
 
 class Bench
 {
-	var $bench = array(); //Array contenant le total du temps d'execution des différents bench en cours.
-	var $bench_part = array(); //Array contenant les différentes parties du bench en cours.
-	var $number_format = 3; //Nombre de décimales après la virgule, affichées dans le résultat.
+	## Public Methods ##
+	//Lancement du bench.
+	function Start_bench($name)
+	{
+		$this->bench_part[$name] = $this->get_microtime();
+	}
+
+	//Calcul et retourne le temps écoulé.
+	function End_bench($name)
+	{
+		$this->bench[$name] = isset($this->bench[$name]) ? $this->bench[$name] : 0;
+		$this->bench[$name] += ($this->get_microtime() - $this->bench_part[$name]);
+	}
 	
+	//Calcul et retourne le temps écoulé.
+	function Display_bench($name)
+	{
+		return number_round($this->bench[$name], $this->number_format);
+	}
+	
+	
+	## Private Methods ##
 	//Récupère l'heure en microsecondes 
 	function get_microtime() 
 	{
@@ -41,23 +59,9 @@ class Bench
 		return ((float)$usec + (float)$sec);
 	}
 	
-	//Lancement du bench.
-	function start_bench($name)
-	{
-		$this->bench_part[$name] = $this->get_microtime();
-	}
-
-	//Calcul et retourne le temps écoulé.
-	function end_bench($name)
-	{
-		$this->bench[$name] = isset($this->bench[$name]) ? $this->bench[$name] : 0;
-		$this->bench[$name] += ($this->get_microtime() - $this->bench_part[$name]);
-	}
-	
-	//Calcul et retourne le temps écoulé.
-	function display_bench($name)
-	{
-		return number_round($this->bench[$name], $this->number_format);
-	}
+	## Private Attributes ##
+	var $bench = array(); //Array contenant le total du temps d'execution des différents bench en cours.
+	var $bench_part = array(); //Array contenant les différentes parties du bench en cours.
+	var $number_format = 3; //Nombre de décimales après la virgule, affichées dans le résultat.
 }
 ?>

@@ -79,22 +79,22 @@ class CategoriesManagement
 	//Method which adds a category
 	function Add_category($id_parent, $name, $order = 0)
 	{
-		global $sql, $cache;
+		global $Sql, $Cache;
 		$this->clean_error();
 		
-		$max_order = $sql->query_inject("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE idcat = '" . $id_parent . "'", __LINE__, __FILE__);
+		$max_order = $Sql->Query_inject("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE idcat = '" . $id_parent . "'", __LINE__, __FILE__);
 		
 		if( $max_order > 0 )
 		{
 			//Whe add it at the end of the parent category
 			if( $order <= 0 || $order > $max_order )
-				$sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order) VALUES ('" . $name . "', '" . ($max_order + 1) . "')", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order) VALUES ('" . $name . "', '" . ($max_order + 1) . "')", __LINE__, __FILE__);
 			else
 			{
-				$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE idcat = '" . $id_parent . "' AND c_order >= '" . $order . "'", __LINE__, __FILE__);
-				$sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order) VALUES ('" . $name . "', '" . $order . "')", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE idcat = '" . $id_parent . "' AND c_order >= '" . $order . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order) VALUES ('" . $name . "', '" . $order . "')", __LINE__, __FILE__);
 			}
-			return $sql->sql_insert_id("SELECT MAX(id) FROM " . PREFIX . $this->table);
+			return $Sql->Sql_insert_id("SELECT MAX(id) FROM " . PREFIX . $this->table);
 		}
 		else
 		{
@@ -106,12 +106,12 @@ class CategoriesManagement
 	//Method which moves a category
 	function Move_category($id, $way)
 	{
-		global $sql, $cache;
+		global $Sql, $Cache;
 		$this->clean_error();
 		if( in_array($way, array('up', 'down')) )
 		
 		{
-			$cat_info = $sql->query_array($this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$cat_info = $Sql->Query_array($this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
 			//Checking that category exists
 			if( empty($cat_info['c_order']) )
@@ -123,16 +123,16 @@ class CategoriesManagement
 			if( $way == 'down' )
 			{
 				//Query which allows us to check if we don't want to move down the downest category
-				$max_order = $sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $cat_info['id_parent'] . "'", __LINE__, __FILE__);
+				$max_order = $Sql->Query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $cat_info['id_parent'] . "'", __LINE__, __FILE__);
 				if( $cat_info['c_order'] < $max_order )
 				{
 					//Switching category with that which is upper
 					//Updating other category
-					$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] + 1) . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] + 1) . "'", __LINE__, __FILE__);
 					//Updating current category
-					$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Regeneration of the cache file of the module
-					$cache->generate_module_file($this->cache_file_name);
+					$Cache->Generate_module_file($this->cache_file_name);
 					
 					return true;
 				}
@@ -148,11 +148,11 @@ class CategoriesManagement
 				{
 					//Switching category with that which is upper
 					//Updating other category
-					$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] - 1) . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] - 1) . "'", __LINE__, __FILE__);
 					//Updating current category
-					$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Regeneration of the cache file of the module
-					$cache->generate_module_file($this->cache_file_name);
+					$Cache->Generate_module_file($this->cache_file_name);
 					return true;
 				}
 				else
@@ -173,12 +173,12 @@ class CategoriesManagement
 	//You can choose its position in the new category, otherwise it will be placed at the end
 	function Move_category_into_another_category($id, $new_id_cat, $position = 0)
 	{
-		global $sql, $cache;
+		global $Sql, $Cache;
 		$this->clean_error();
 		
 		//Checking that both current category and new category exist and importing necessary information
-		$max_new_cat_order = $sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'", __LINE__, __FILE__);		
-		$cat_info = $sql->query_array($this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$max_new_cat_order = $Sql->Query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'", __LINE__, __FILE__);		
+		$cat_info = $Sql->Query_array($this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		if( $max_new_cat_order > 0 && $cat_info['c_order'] > 0 )
 		{
@@ -186,23 +186,23 @@ class CategoriesManagement
 			if( $position < 0 || $position > $max_new_cat_order )
 			{
 				//Moving the category $id
-				$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $max_new_cat_order . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $max_new_cat_order . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 				//Updating ex category
-				$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order > '" . $cat_info['c_order'] . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order > '" . $cat_info['c_order'] . "'", __LINE__, __FILE__);
 			}
 			//Inserting at a precise position
 			else
 			{
 				//Preparing the new parent category to receive a category at this position
-				$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $new_id_cat . "' AND c_order >= '" . $cat_info['c_order'] . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $new_id_cat . "' AND c_order >= '" . $cat_info['c_order'] . "'", __LINE__, __FILE__);
 				//Moving the category $id
-				$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $postion . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $postion . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 				//Updating ex category
-				$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order > '" . $cat_info['c_order'] . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order > '" . $cat_info['c_order'] . "'", __LINE__, __FILE__);
 			}
 			
 			//Regeneration of the cache file of the module
-			$cache->generate_module_file($this->cache_file_name);
+			$Cache->Generate_module_file($this->cache_file_name);
 			
 			return true;
 		}
@@ -220,10 +220,10 @@ class CategoriesManagement
 	//Deleting a category
 	function Delete_category($id)
 	{
-		global $sql, $cache;
+		global $Sql, $Cache;
 		$this->clean_error();
 		
-		$cat_order = $sql->query("SELECT c_order FROM " . PREFIX . $this->table . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$cat_order = $Sql->Query("SELECT c_order FROM " . PREFIX . $this->table . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//Checking that category exists
 		if( empty($cat_order) )
@@ -233,13 +233,13 @@ class CategoriesManagement
 		}
 		
 		//Deleting the category
-		$sql->query_inject("DELETE FROM " . PREFIX . $this->table . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("DELETE FROM " . PREFIX . $this->table . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//Decrementing all following categories
-		$sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '". $cat_infos['id_parent'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '". $cat_infos['id_parent'] . "'", __LINE__, __FILE__);
 		
 		//Regeneration of the cache file
-		$cache->generate_module_file($this->cache_file_name);
+		$Cache->Generate_module_file($this->cache_file_name);
 		
 		return true;
 	}
@@ -315,12 +315,9 @@ class CategoriesManagement
 				xhr_object.onreadystatechange = function() 
 				{
 					//Transfert finished and successful
-					if( xhr_object.readyState == 4 && xhr_object.responseText != \'\' )
-					{
+					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != \'\' )
 						document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
-					}
-					//Error
-					else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' )
+					else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' ) //Error
 						alert("' . $LANG['cats_managment_could_not_be_moved'] . '");
 				}
 				document.getElementById(\'l\' + id).innerHTML = \'\';
@@ -375,7 +372,7 @@ class CategoriesManagement
 				$string .= '
 				<span id="c' . $id . '">
 					<div style="margin-left:' . ($level * 50) . 'px;">
-						<div class="row3">
+						<div class="row3 management_cat_admin">
 							<span style="float:left;">
 								&nbsp;&nbsp;<img src="../templates/' . $CONFIG['theme'] . '/images/upload/folder.png" alt="" style="vertical-align:middle" />
 							&nbsp;';

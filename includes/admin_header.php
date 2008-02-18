@@ -26,31 +26,34 @@
  *
 ###################################################*/
 
-//On ne vérifie pas lors de la première connexion.
-if( !isset($_POST['connect']) ) 
-	$session->session_check(TITLE); //Vérification de la session.
+if( defined('PHP_BOOST') !== true) exit;
 
-$template->set_filenames(array(
+if( !defined('TITLE') )
+	define('TITLE', $LANG['unknow']);
+	
+$Session->Session_check(TITLE); //Vérification de la session.
+
+$Template->Set_filenames(array(
 	'admin_header' => '../templates/' . $CONFIG['theme'] . '/admin/admin_header.tpl'
 ));
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'SITE_NAME' => $CONFIG['site_name'],
 	'TITLE' => TITLE,
 	'THEME' => $CONFIG['theme'],
 ));
 
-$template->pparse('admin_header'); // traitement du modele
+$Template->Pparse('admin_header'); // traitement du modele
 
 //!\\ Connexion à l'administration //!\\
 require_once('../includes/admin_access.php');
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'admin_sub_header' => '../templates/' . $CONFIG['theme'] . '/admin/admin_sub_header.tpl'
 ));
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
 	'L_ADMINISTRATION' => $LANG['administration'],
@@ -97,7 +100,7 @@ foreach($SECURE_MODULE as $name => $auth)
 	{	
 		if( $modules_config[$name]['admin'] == 1 )
 		{
-			$template->assign_block_vars('modules', array(
+			$Template->Assign_block_vars('modules', array(
 				'DM_A_CLASS' => ' style="background-image:url(../' . $name . '/' . $name . '_mini.png);background-repeat:no-repeat;background-position:5px;"',
 				'NAME' => $modules_config[$name]['name'],
 				'U_ADMIN_MODULE' => '../' . $name . '/admin_' . $name . '.php'
@@ -106,6 +109,6 @@ foreach($SECURE_MODULE as $name => $auth)
 	}	
 }
 
-$template->pparse('admin_sub_header'); 
+$Template->Pparse('admin_sub_header'); 
 
 ?>

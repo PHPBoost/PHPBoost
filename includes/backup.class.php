@@ -26,14 +26,13 @@
 ###################################################*/
 
 //Fonction d'importation/exportation de base de donnée.
-class backup
+class Backup
 {
+	## Public Attributes ##
 	var $tables = array(); //Liste des tables.
 	var $save = ''; //Sauvegarde
-	var $values = array(); //tableau temporaire
-	var $mysql_base = ''; //base sur laquelle on travaille
-	var $array_req = ''; //Requête pour l'importation
-		
+	
+	## Public Methods ##	
 	//On modifie le temps d'exécution maximal si le serveur le permet
 	function backup()
 	{
@@ -42,16 +41,16 @@ class backup
 	}
 		
 	//On crée le tableau qui contient les tables
-	function list_table()
+	function List_table()
 	{
-		global $sql;
+		global $Sql;
 		
 		if( $this->tables === array() )
-			$this->tables = $sql->sql_list_tables();
+			$this->tables = $Sql->Sql_list_tables();
 	}
 	
 	//Suppression  des tables
-	function drop_tables($table_list = array())
+	function Drop_tables($table_list = array())
 	{
 		$selected_tables =  array();
 		$all_tables = count($table_list) == 0 ? true : false;
@@ -64,9 +63,9 @@ class backup
 	}
 	
 	//Création des tables (structure)
-	function create_tables($table_list = array())
+	function Create_tables($table_list = array())
 	{
-		global $sql;
+		global $Sql;
 		
 		$all_tables = count($table_list) == 0 ? true : false;
 			
@@ -74,18 +73,18 @@ class backup
 		{
 			if( in_array($properties['name'], $table_list) || $all_tables )
 			{
-				$result = $sql->query_while('SHOW CREATE TABLE ' . $properties['name'], __LINE__, __FILE__);
-				while($row = $sql->sql_fetch_row($result))
+				$result = $Sql->Query_while('SHOW CREATE TABLE ' . $properties['name'], __LINE__, __FILE__);
+				while($row = $Sql->Sql_fetch_row($result))
 					$this->save .=  $row[1] . ';' . "\n\n";
-				$sql->close($result);
+				$Sql->Close($result);
 			}				
 		}
 	}
 	
 	//Requêtes d'insertion
-	function insert_values($tables = array())
+	function Insert_values($tables = array())
 	{
-		global $sql;
+		global $Sql;
 		
 		$all_tables = count($tables) == 0 ? true : false;
 		
@@ -93,17 +92,17 @@ class backup
 		{
 			if( $all_tables || in_array($table_info['name'], $tables) ) //Table demandée
 			{
-				$rows_number = $sql->query("SELECT COUNT(*) FROM " . $table_info['name'], __LINE__, __FILE__);
+				$rows_number = $Sql->Query("SELECT COUNT(*) FROM " . $table_info['name'], __LINE__, __FILE__);
 				if( $rows_number > 0 )
 				{
 					$this->save .= "INSERT INTO " . $table_info['name'] . " (`";
-					$this->save .= implode('`, `', $sql->sql_list_fields($table_info['name']));
+					$this->save .= implode('`, `', $Sql->Sql_list_fields($table_info['name']));
 					$this->save .= "`) VALUES ";
 					
 					$i = 1;
-					$list_fields = $sql->sql_list_fields($table_info['name']);
-					$result = $sql->query_while('SELECT * FROM ' . $table_info['name'], __LINE__, __FILE__);			
-					while($row = $sql->sql_fetch_row($result))
+					$list_fields = $Sql->Sql_list_fields($table_info['name']);
+					$result = $Sql->Query_while('SELECT * FROM ' . $table_info['name'], __LINE__, __FILE__);			
+					while($row = $Sql->Sql_fetch_row($result))
 					{
 						if( $i % 10 == 0 ) //Toutes les 10 entrées on reforme une requête
 						{
@@ -121,39 +120,39 @@ class backup
 						$i++;
 					}
 					$this->save .= ";\n";
-					$sql->close($result);
+					$Sql->Close($result);
 				}
 			}
 		}
 	}
 	
 	//Création du fichier
-	function export_file($file_path)
+	function Export_file($file_path)
 	{
 		$file = @fopen($file_path, 'w+');	
 		fwrite($file, $this->save); //On stocke le tableau dans le fichier de données
 		fclose($file);
 	}
 	
-	function optimize_tables($table_array) //Optimisation des tables
+	function Optimize_tables($table_array) //Optimisation des tables
 	{		
-		global $sql;
+		global $Sql;
 		
 		if( count($table_array) != 0 )
-			$sql->query_inject("OPTIMIZE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+			$Sql->Query_inject("OPTIMIZE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
 	}
 	
 	//Réparation des tables
-	function repair_tables($table_array)
+	function Repair_tables($table_array)
 	{
-		global $sql;
+		global $Sql;
 		
 		if( count($table_array) != 0 )
-			$sql->query_inject("REPAIR TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+			$Sql->Query_inject("REPAIR TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
 	}
 	
 	//Coloration syntaxique du SQL
-	function sql_highlight_string($query)
+	function Sql_highlight_string($query)
 	{
 		$query = ' ' . strtolower($query) . ' ';
 		$query = preg_replace('`(' . implode('|', array_map('preg_quote', array('*', '=', ',', '!=', '>', '<', '.'))) . ')+`', '<span style="color:#FF00FF;">$1</span>', $query);
@@ -168,6 +167,14 @@ class backup
 
 		return nl2br($query);
 	}
+	
+	## Private Methods ##
+	
+	
+	## Private Attributes ##
+	var $values = array(); //tableau temporaire
+	var $mysql_base = ''; //base sur laquelle on travaille
+	var $array_req = ''; //Requête pour l'importation
 }
 
 ?>

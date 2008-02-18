@@ -30,25 +30,23 @@ define('RELOAD_CACHE', true);
 //Fonction d'importation/exportation de base de donnée.
 class Cache
 {
-    //Tableau qui contient tous les fichiers supportés dans cette classe
-    var $files = array('config', 'modules', 'modules_mini', 'day', 'groups', 'debug', 'member', 'files', 'com', 'ranks', 'smileys', 'stats');
-    
+    ## Public Methods ##
 	//On vérifie que le répertoire cache existe et est inscriptible
     function Cache()
     {
         if( !is_dir('../cache') || !is_writable('../cache') )
         {
-            global $errorh;
+            global $Errorh;
 		
 			//Enregistrement dans le log d'erreur.
-			$errorh->error_handler('Cache -> Le fichier cache doit être inscriptible, donc en CHMOD 777', E_USER_ERROR, __LINE__, __FILE__);
+			$Errorh->Error_handler('Cache -> Le fichier cache doit être inscriptible, donc en CHMOD 777', E_USER_ERROR, __LINE__, __FILE__);
         }
     }
         
     //Fonction de chargement d'un fichier cache
-    function load_file($file, $reload_cache = false)
+    function Load_file($file, $reload_cache = false)
     {
-		global $errorh, $sql;
+		global $Errorh, $Sql;
 		
 		//On charge le fichier
 		$include = !$reload_cache ? !include_once('../cache/' . $file . '.php') : !include('../cache/' . $file . '.php');
@@ -62,7 +60,7 @@ class Cache
 				if( !include('../cache/' . $file . '.php') )
 				{
 					//Enregistrement dans le log d'erreur.
-					$errorh->error_handler('Cache -> Impossible de lire le fichier cache, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
+					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
 				}
 			}
 			else
@@ -73,14 +71,14 @@ class Cache
 				if( !include('../cache/' . $file . '.php') )
 				{
 					//Enregistrement dans le log d'erreur.
-					$errorh->error_handler('Cache -> Impossible de lire le fichier cache, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
+					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
 				}
 			}
 		}
     }
     
     //Génération de tous les fichiers
-    function generate_all_files()
+    function Generate_all_files()
     {
         foreach( $this->files as $cache_file )
             $this->generate_file($cache_file);
@@ -89,32 +87,10 @@ class Cache
 		$this->generate_all_module_files();
     }
 	
-	//Parcours les dossiers, à la recherche de fichiers de configuration en vue de regénérer le cache des modules.
-	function generate_all_module_files()
-	{
-		global $CONFIG, $sql;
-		
-		$result = $sql->query_while("SELECT name 
-		FROM ".PREFIX."modules
-		WHERE activ = 1", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
-		{
-			$config = @parse_ini_file('../' . $row['name'] . '/lang/' . $CONFIG['lang'] . '/config.ini');
-			//On récupère l'information sur le cache, si le cache est activé, on va chercher les fonctions de régénération de cache.
-			if( !empty($config['cache']) && $config['cache'] )
-			{
-				//génération du cache.
-				@include_once('../' . $row['name'] . '/' . $row['name'] . '_cache.php');
-				$this->generate_module_file($row['name']);
-			}
-		}
-		$sql->close($result);
-	}
-	
     //Fonction d'enregistrement du fichier
-    function generate_file($file)
+    function Generate_file($file)
     {
-		global $errorh;
+		global $Errorh;
 		
 		$content = $this->{'generate_file_' . $file}();
 		$file_path = '../cache/' . $file . '.php';
@@ -130,13 +106,13 @@ class Cache
 		}
 		//Il est l'heure de vérifier si la génération a fonctionnée.
 		if( !file_exists($file_path) && filesize($file_path) == '0' )
-			$errorh->error_handler('Cache -> La génération du fichier de cache ' . $file . ' a échoué!', E_USER_ERROR, __LINE__, __FILE__);
+			$Errorh->Error_handler('Cache -> La génération du fichier de cache ' . $file . ' a échoué!', E_USER_ERROR, __LINE__, __FILE__);
     }
     
 	//Fonction d'enregistrement du fichier d'un module.
-    function generate_module_file($file)
+    function Generate_module_file($file)
     {
-		global $CONFIG, $errorh;
+		global $CONFIG, $Errorh;
 		
 		$root = '../';
 		$dir = $file;
@@ -163,28 +139,28 @@ class Cache
 		
 				//Il est l'heure de vérifier si la génération a fonctionnée.
 				if( !file_exists($file_path) && filesize($file_path) == '0' )
-					$errorh->error_handler('Cache -> La génération du fichier de cache ' . $file . ' a échoué!', E_USER_ERROR, __LINE__, __FILE__);
+					$Errorh->Error_handler('Cache -> La génération du fichier de cache ' . $file . ' a échoué!', E_USER_ERROR, __LINE__, __FILE__);
 			}
 		}	
 		else
 		{
 			//Enregistrement dans le log d'erreur.
-			$errorh->error_handler('Cache -> Impossible de lire le fichier cache, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
+			$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
 		}
     }
 	
 	//Génération du fichier htaccess
-	function generate_htaccess()
+	function Generate_htaccess()
 	{
-		global $CONFIG, $sql;
+		global $CONFIG, $Sql;
 		
 		if( $CONFIG['rewrite'] )
 		{
 			$htaccess_rules = 'Options +FollowSymlinks' . "\n" . 'RewriteEngine on' . "\n";
-			$result = $sql->query_while("SELECT name
+			$result = $Sql->Query_while("SELECT name
 			FROM ".PREFIX."modules
 			WHERE activ = 1", __LINE__, __FILE__);
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				//Récupération des infos de config.
 				$get_info_modules = @parse_ini_file('../' . $row['name'] . '/lang/' . $CONFIG['lang'] . '/config.ini');
@@ -228,22 +204,43 @@ class Cache
 	}
 	
 	
+	## Private Methods ##
+	//Parcours les dossiers, à la recherche de fichiers de configuration en vue de regénérer le cache des modules.
+	function generate_all_module_files()
+	{
+		global $CONFIG, $Sql;
+		
+		$result = $Sql->Query_while("SELECT name 
+		FROM ".PREFIX."modules
+		WHERE activ = 1", __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
+		{
+			$config = @parse_ini_file('../' . $row['name'] . '/lang/' . $CONFIG['lang'] . '/config.ini');
+			//On récupère l'information sur le cache, si le cache est activé, on va chercher les fonctions de régénération de cache.
+			if( !empty($config['cache']) && $config['cache'] )
+			{
+				//génération du cache.
+				@include_once('../' . $row['name'] . '/' . $row['name'] . '_cache.php');
+				$this->Generate_module_file($row['name']);
+			}
+		}
+		$Sql->Close($result);
+	}
 	
     ########## Fonctions de génération des fichiers un à un ##########
-			
 	//Gestions des modules installalés, configuration des autorisations.
 	function generate_file_modules()
 	{
-		global $sql;
+		global $Sql;
 		
 		$code = 'global $SECURE_MODULE;' . "\r\n";
-		$result = $sql->query_while("SELECT name, auth
+		$result = $Sql->Query_while("SELECT name, auth
 		FROM ".PREFIX."modules
 		WHERE activ = 1
 		ORDER BY name", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 			$code .= '$SECURE_MODULE[\'' . $row['name'] . '\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\r\n";
-		$sql->close($result);
+		$Sql->Close($result);
 
 		return $code;
 	}
@@ -251,18 +248,18 @@ class Cache
 	//Placements et autorisations des modules minis.
 	function generate_file_modules_mini()
 	{
-		global $sql;
+		global $Sql;
 		
 		$modules_mini = array();
-		$result = $sql->query_while("SELECT name, code, contents, location, secure, added, use_tpl
+		$result = $Sql->Query_while("SELECT name, code, contents, location, secure, added, use_tpl
 		FROM ".PREFIX."modules_mini 
 		WHERE activ = 1
 		ORDER BY location, class", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			$modules_mini[$row['location']][] = array('name' => $row['name'], 'code' => $row['code'], 'contents' => $row['contents'], 'secure' => $row['secure'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 
 		$code = '';
 		$array_seek = array('subheader', 'left', 'right', 'topcentral', 'bottomcentral');
@@ -272,7 +269,7 @@ class Cache
 			foreach($modules_mini[$location] as $location_key => $info)
 			{
 				if( $info['added'] == '0' )
-					$code .= 'if( $session->data[\'level\'] >= ' . $info['secure'] . ' ){' . $info['code'] . '}' . "\n";
+					$code .= 'if( $Member->Get_attribute(\'level\') >= ' . $info['secure'] . ' ){' . $info['code'] . '}' . "\n";
 				else
 				{
 					if( $info['use_tpl'] == '0' )
@@ -283,14 +280,14 @@ class Cache
 						{
 							case 'left':
 							case 'right':
-							$code .= 'if( $session->data[\'level\'] >= ' . $info['secure'] . ' ){' . 
-							"\$template->set_filenames(array('modules_mini' => '../templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\$template->assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\$template->pparse('modules_mini');" . '}' . "\n";
+							$code .= 'if( $Member->Get_attribute(\'level\') >= ' . $info['secure'] . ' ){' . 
+							"\$Template->Set_filenames(array('modules_mini' => '../templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\$Template->Pparse('modules_mini');" . '}' . "\n";
 							break;
 							case 'subheader':
 							case 'topcentral':
 							case 'bottomcentral':
-							$code .= 'if( $session->data[\'level\'] >= ' . $info['secure'] . ' ){' . 
-							"\$template->set_filenames(array('modules_mini_horizontal' => '../templates/' . \$CONFIG['theme'] . '/modules_mini_horizontal.tpl'));\$template->assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\$template->pparse('modules_mini_horizontal');" . '}' . "\n";
+							$code .= 'if( $Member->Get_attribute(\'level\') >= ' . $info['secure'] . ' ){' . 
+							"\$Template->Set_filenames(array('modules_mini_horizontal' => '../templates/' . \$CONFIG['theme'] . '/modules_mini_horizontal.tpl'));\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\$Template->Pparse('modules_mini_horizontal');" . '}' . "\n";
 							break;					
 						}						
 					}
@@ -305,12 +302,12 @@ class Cache
 	//Configuration du site
 	function generate_file_config()
 	{
-		global $sql;
+		global $Sql;
 		
 		$config = 'global $CONFIG;' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG = unserialize((string)$sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
+		$CONFIG = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
 		foreach($CONFIG as $key => $value)
 			$config .= '$CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ";\n";
 
@@ -326,17 +323,17 @@ class Cache
 	//Groupes
 	function generate_file_groups()
 	{
-		global $sql;
+		global $Sql;
 		
 		$code = 'global $_array_groups_auth;' . "\n" . '$_array_groups_auth = array(' . "\n";
-		$result = $sql->query_while("SELECT id, name, img, auth
+		$result = $Sql->Query_while("SELECT id, name, img, auth
 		FROM ".PREFIX."group	
 		ORDER BY id", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			$code .= $row['id'] . ' => array(\'name\' => ' . var_export($row['name'], true) . ', \'img\' => ' . var_export($row['img'], true) . ', \'auth\' => ' . var_export(unserialize($row['auth']), true) . '),' . "\n";
 		}			
-		$sql->close($result);
+		$Sql->Close($result);
 		$code .= ');';
 		
 		return $code;
@@ -345,10 +342,10 @@ class Cache
 	//Debug.
 	function generate_file_debug()
 	{
-		global $sql;
+		global $Sql;
 		
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG = unserialize((string)$sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
+		$CONFIG = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
 		
 		//Url rewriting.
 		if( function_exists('apache_get_modules') )
@@ -404,12 +401,12 @@ class Cache
 	//Configuration des membres
 	function generate_file_member()
 	{
-		global $sql;
+		global $Sql;
 		
 		$config_member = 'global $CONFIG_MEMBER;' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_MEMBER = unserialize((string)$sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
+		$CONFIG_MEMBER = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
 		foreach($CONFIG_MEMBER as $key => $value)
 			$config_member .= '$CONFIG_MEMBER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 
@@ -419,17 +416,17 @@ class Cache
 	//Rangs
 	function generate_file_ranks()
 	{
-		global $sql;
+		global $Sql;
 		
 		$stock_array_ranks = '$_array_rank = array(';	
-		$result = $sql->query_while("SELECT name, msg, icon
+		$result = $Sql->Query_while("SELECT name, msg, icon
 		FROM ".PREFIX."ranks 
 		ORDER BY msg DESC", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			$stock_array_ranks .= "\n" . var_export($row['msg'], true) . ' => array(' . var_export($row['name'], true) . ', ' . var_export($row['icon'], true) . '),';
 		}	
-		$sql->close($result);
+		$Sql->Close($result);
 		
 		$stock_array_ranks = trim($stock_array_ranks, ',');
 		$stock_array_ranks .= ');';	
@@ -439,12 +436,12 @@ class Cache
 	//Commentaires.
 	function generate_file_files()
 	{
-		global $sql;
+		global $Sql;
 		
 		$config_files = 'global $CONFIG_FILES;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_FILES = unserialize((string)$sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'files'", __LINE__, __FILE__));
+		$CONFIG_FILES = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'files'", __LINE__, __FILE__));
 		$CONFIG_FILES = is_array($CONFIG_FILES) ? $CONFIG_FILES : array();
 		foreach($CONFIG_FILES as $key => $value)
 		{	
@@ -459,12 +456,12 @@ class Cache
 	//Commentaires.
 	function generate_file_com()
 	{
-		global $sql;
+		global $Sql;
 		
 		$com_config = 'global $CONFIG_COM;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_COM = unserialize((string)$sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'com'", __LINE__, __FILE__));
+		$CONFIG_COM = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'com'", __LINE__, __FILE__));
 		$CONFIG_COM = is_array($CONFIG_COM) ? $CONFIG_COM : array();
 		foreach($CONFIG_COM as $key => $value)
 		{
@@ -479,19 +476,19 @@ class Cache
 	//Smileys
 	function generate_file_smileys()
 	{
-		global $sql;
+		global $Sql;
 		
 		$i = 0;
 		$stock_smiley_code = '$_array_smiley_code = array(';
-		$result = $sql->query_while("SELECT code_smiley, url_smiley 
+		$result = $Sql->Query_while("SELECT code_smiley, url_smiley 
 		FROM ".PREFIX."smileys", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			$coma = ($i != 0) ? ',' : '';
 			$stock_smiley_code .=  $coma . "\n" . '' . var_export($row['code_smiley'], true) . ' => ' . var_export($row['url_smiley'], true);
 			$i++;
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 		$stock_smiley_code .= "\n" . ');';
 		
 		return 'global $_array_smiley_code;' . "\n" . $stock_smiley_code;
@@ -500,11 +497,11 @@ class Cache
 	//Statistiques
 	function generate_file_stats()
 	{
-		global $sql;
+		global $Sql;
 		
 		$code = 'global $nbr_members, $last_member_login, $last_member_id;' . "\n";
-		$nbr_members = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member", __LINE__, __FILE__);
-		$last_member = $sql->query_array('member', 'user_id', 'login', "ORDER BY timestamp DESC " . $sql->sql_limit(0, 1), __LINE__, __FILE__);
+		$nbr_members = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member", __LINE__, __FILE__);
+		$last_member = $Sql->Query_array('member', 'user_id', 'login', "ORDER BY timestamp DESC " . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
 
 		$code .= '$nbr_members = ' . var_export($nbr_members, true) . ';' . "\n";
 		$code .= '$last_member_login = ' . var_export($last_member['login'], true) . ';' . "\n";
@@ -516,6 +513,10 @@ class Cache
 		
 		return $code;
 	}
+	
+	## Private Attributes ##
+	//Tableau qui contient tous les fichiers supportés dans cette classe
+    var $files = array('config', 'modules', 'modules_mini', 'day', 'groups', 'debug', 'member', 'files', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

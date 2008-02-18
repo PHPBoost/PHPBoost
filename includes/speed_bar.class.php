@@ -56,29 +56,29 @@ class Speed_bar
 	//Affichage
 	function Display_speed_bar()
 	{
-		global $template, $CONFIG, $LANG;
+		global $Template, $CONFIG, $LANG;
 		
 		if( empty($this->array_links) )
 			$this->Add_link(stripslashes(TITLE), HOST . SCRIPT . SID);
 		
-		$template->set_filenames(array(
+		$Template->Set_filenames(array(
 			'speed_bar' => '../templates/' . $CONFIG['theme'] . '/speed_bar.tpl'
 		));
 			
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'START_PAGE' => get_start_page(),
 			'L_INDEX' => $LANG['index']	
 		));
 		
 		foreach($this->array_links as $key => $array)
 		{
-			$template->assign_block_vars('link_speed_bar', array(
+			$Template->Assign_block_vars('link_speed_bar', array(
 				'URL' => $array[1],
 				'TITLE' => $array[0]
 			));	
 		}
 
-		$template->pparse('speed_bar');
+		$Template->Pparse('speed_bar');
 	}
 	
 	//Suppression des liens existants

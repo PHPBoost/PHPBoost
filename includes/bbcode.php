@@ -29,37 +29,37 @@ $get_show = !empty($_GET['show']) ? true : false;
 
 if( !$get_show && defined('PHP_BOOST') === true )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'handle_bbcode' => '../templates/' . $CONFIG['theme'] . '/bbcode.tpl'
 	));
 
 	$field = (!isset($_field) ? 'contents' : $_field);
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'FIELD' => $field ,
 		'L_REQUIRE_TEXT' => $LANG['require_text']
 	));
 	
 	//Mode bbcode activé.
-	if( $session->data['user_editor'] == 'tinymce' )
+	if( $Member->Get_attribute('user_editor') == 'tinymce' )
 	{
-		$template->assign_block_vars('tinymce_mode', array(
+		$Template->Assign_block_vars('tinymce_mode', array(
 		));
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'TINYMCE_TRIGGER' => 'TinyMCE.prototype.triggerSave();'
 		));
 	}
 	else
 	{	
-		$template->assign_block_vars('bbcode_mode', array(
+		$Template->Assign_block_vars('bbcode_mode', array(
 		));		
 		
 		//Chargement de la configuration.
-		$cache->load_file('files');
+		$Cache->Load_file('files');
 			
-		$template->assign_vars(array(	
-			'UPLOAD_MANAGEMENT' => $groups->check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) ? '<a style="font-size: 10px;" title="' . $LANG['bb_upload'] . '" href="#" onclick="window.open(\'../member/upload.php?popup=1&amp;fd=' . $field  . '\', \'\', \'height=435,width=680,resizable=yes,scrollbars=yes\');return false;"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/files_add.png" alt="" /></a>' : '',
+		$Template->Assign_vars(array(	
+			'UPLOAD_MANAGEMENT' => $Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) ? '<a style="font-size: 10px;" title="' . $LANG['bb_upload'] . '" href="#" onclick="window.open(\'../member/upload.php?popup=1&amp;fd=' . $field  . '\', \'\', \'height=435,width=680,resizable=yes,scrollbars=yes\');return false;"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/files_add.png" alt="" /></a>' : '',
 			'L_BB_SMILEYS' => $LANG['bb_smileys'],
 			'L_BB_BOLD' => $LANG['bb_bold'],
 			'L_BB_ITALIC' => $LANG['bb_italic'],
@@ -118,7 +118,7 @@ if( !$get_show && defined('PHP_BOOST') === true )
 		));
 		
 		//Inclusion du cache des smileys pour éviter une requête inutile.
-		$cache->load_file('smileys');
+		$Cache->Load_file('smileys');
 		
 		$smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
 		$smile_by_line = 5; //Smiley par ligne.
@@ -164,7 +164,7 @@ if( !$get_show && defined('PHP_BOOST') === true )
 			
 			$img = '<img src="../images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />'; 
 						
-			$template->assign_block_vars('bbcode_mode.smiley', array(
+			$Template->Assign_block_vars('bbcode_mode.smiley', array(
 				'IMG' => $img,
 				'CODE' => addslashes($code_smile),
 				'END_LINE' => is_int($i/$smile_by_line) ? '<br />' : ''
@@ -176,7 +176,7 @@ if( !$get_show && defined('PHP_BOOST') === true )
 
 		if( $z > $smile_max ) //Lien vers tous les smiley!
 		{		
-			$template->assign_block_vars('bbcode_mode.more', array(
+			$Template->Assign_block_vars('bbcode_mode.more', array(
 				'L_ALL_SMILEY' => $LANG['all_smiley'],
 				'L_SMILEY' => $LANG['smiley']
 			));
@@ -189,7 +189,7 @@ elseif( $get_show )
 	define('TITLE', '');
 	include_once('../includes/header_no_display.php');
 	
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'bbcode_smileys' => '../templates/' . $CONFIG['theme'] . '/bbcode_smileys.tpl'
 	));
 	
@@ -197,7 +197,7 @@ elseif( $get_show )
 	$smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
 	$smile_by_line = 4; //Smiley par ligne.
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'FIELD' => (!isset($_field) ? 'contents' : $_field),
 		'COLSPAN' => $smile_by_line + 1,
@@ -209,7 +209,7 @@ elseif( $get_show )
 	));
 	
 	//Inclusion du cache des smileys pour éviter une requête inutile.
-	$cache->load_file('smileys'); //include simple et non include_once car inclusion double avec unparse();.
+	$Cache->Load_file('smileys'); //include simple et non include_once car inclusion double avec unparse();.
 	
 	$height_max = 50;
 	$width_max = 50;
@@ -256,7 +256,7 @@ elseif( $get_show )
 		if( $nbr_smile == $j )
 			$tr_end = '</tr>';
 
-		$template->assign_block_vars('smiley', array(
+		$Template->Assign_block_vars('smiley', array(
 			'IMG' => $img,
 			'CODE' => addslashes($code_smile),
 			'TR_START' => $tr_start,
@@ -268,7 +268,7 @@ elseif( $get_show )
 		{
 			while( !is_int($j / $smile_by_line) )
 			{
-				$template->assign_block_vars('smiley.td', array(
+				$Template->Assign_block_vars('smiley.td', array(
 					'TD' => '<td>&nbsp;</td>'
 				));	
 				$j++;
@@ -276,7 +276,7 @@ elseif( $get_show )
 		}
 	}	
 	
-	$template->pparse('bbcode_smileys'); 
+	$Template->Pparse('bbcode_smileys'); 
 	include_once('../includes/footer_no_display.php');
 }
 

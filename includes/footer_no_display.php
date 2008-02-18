@@ -27,6 +27,6 @@
 
 if( defined('PHP_BOOST') !== true) exit;
 
-$sql->sql_close(); //Fermeture de mysql
+$Sql->Sql_close(); //Fermeture de mysql
 ob_end_flush();
 ?>

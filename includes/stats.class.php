@@ -33,23 +33,15 @@ define('NO_DRAW_VALUES', false);
 define('DRAW_VALUES', true);
 
 class Stats
-{	
-	//Tableau des couleurs.
-	var $array_color_stats = array(array(224, 118, 27), array(48, 149, 53), array(254, 249, 52), array(102, 133, 237), array(204, 42, 38), array(53, 144, 189), array(102, 102, 153), array(236, 230, 208), array(213, 171, 1), array(182, 0, 51), array(193, 73, 0), array(25, 119, 128), array(182, 181, 177), array(102, 133, 237));	
-	var $nbr_color = 14;
-	var $data_stats; //Tableau des données.
-	var $nbr_entry; //Nombre d'entrée à traiter.
-	var $array_allocated_color = array(); //Tableau des couleurs allouées.
-	var $color_index = 0; //Couleur courante.
-	var $decimal = 1; //Arrondi
-	
+{		
+	## Public Methods ##
 	//Constructeur
 	function Stats() 
 	{
 	}
 	
 	//Chargement des données.
-	function load_statsdata($array_stats, $draw_type = 'ellipse', $decimal = 1)
+	function Load_statsdata($array_stats, $draw_type = 'ellipse', $decimal = 1)
 	{
 		global $LANG;
 		
@@ -77,36 +69,9 @@ class Stats
 		else
 			$this->data_stats = array($LANG['other'] => 360);
 	}		
-
-	//Conversion valeur vers angle.
-	function value_to_angle($value)
-	{
-		return $this->number_round(($value * 360)/$this->nbr_entry, $this->decimal);
-	}
-		
-	//Allocation de la couleur et calcul de la version sombre. Paramètres couleur de l'effet 3D, mask_color: 0 pour sombre, 255 pour lumineux; similar_color: entre 0.40 (très différents et 0.99 très proche.
-	function imagecolorallocatedark($image, $allocate = true, $mask_color = 0, $similar_color = 0.50)
-	{
-		if( $this->color_index == $this->nbr_color )
-			$this->color_index = 0;
-			
-		if( !isset($this->array_allocated_color[$this->color_index]) )
-		{
-			list($r, $g, $b) = $this->array_color_stats[$this->color_index];
-			$rd = round($r * $similar_color) + round($mask_color * (1 - $similar_color));
-			$gd = round($g * $similar_color) + round($mask_color * (1 - $similar_color));
-			$bd = round($b * $similar_color) + round($mask_color * (1 - $similar_color));
-
-			$this->array_allocated_color[$this->color_index] = $allocate ? imagecolorallocate($image, $r, $g, $b) : array($r, $g, $b); // Allocation de la couleur de surface.
-			$this->array_allocated_color[$this->color_index . 'dark'] = $allocate ? imagecolorallocate($image, $rd, $gd, $bd) : array($rd, $gd, $bd); // Allocation de la couleur de l'effet 3d.
-		}
-		$this->color_index++;
-		
-		return ($this->color_index - 1);
-	}
 	
 	//Graphique camenbert en ellipse.
-	function draw_ellipse($w_arc, $h_arc, $img_cache = '', $height_3d = 20, $draw_percent = true, $draw_legend = true, $font_size = 10, $font = '../includes/data/fonts/franklinbc.ttf')
+	function Draw_ellipse($w_arc, $h_arc, $img_cache = '', $height_3d = 20, $draw_percent = true, $draw_legend = true, $font_size = 10, $font = '../includes/data/fonts/franklinbc.ttf')
 	{
 		if( @extension_loaded('gd') && version_compare(phpversion(), '4.0.6', '>=') )
 		{			
@@ -234,7 +199,7 @@ class Stats
 	}
 	
 	//Graphique en baton.
-	function draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = '../includes/data/fonts/franklinbc.ttf')
+	function Draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = '../includes/data/fonts/franklinbc.ttf')
 	{
 		if( @extension_loaded('gd') )
 		{					
@@ -434,10 +399,39 @@ class Stats
 	}
 	
 	//Courbe cassées.
-	function draw_graph()
+	function Draw_graph()
 	{
 	
 	
+	}
+	
+	
+	## Private Methods ##
+	//Conversion valeur vers angle.
+	function value_to_angle($value)
+	{
+		return $this->number_round(($value * 360)/$this->nbr_entry, $this->decimal);
+	}
+		
+	//Allocation de la couleur et calcul de la version sombre. Paramètres couleur de l'effet 3D, mask_color: 0 pour sombre, 255 pour lumineux; similar_color: entre 0.40 (très différents et 0.99 très proche.
+	function imagecolorallocatedark($image, $allocate = true, $mask_color = 0, $similar_color = 0.50)
+	{
+		if( $this->color_index == $this->nbr_color )
+			$this->color_index = 0;
+			
+		if( !isset($this->array_allocated_color[$this->color_index]) )
+		{
+			list($r, $g, $b) = $this->array_color_stats[$this->color_index];
+			$rd = round($r * $similar_color) + round($mask_color * (1 - $similar_color));
+			$gd = round($g * $similar_color) + round($mask_color * (1 - $similar_color));
+			$bd = round($b * $similar_color) + round($mask_color * (1 - $similar_color));
+
+			$this->array_allocated_color[$this->color_index] = $allocate ? imagecolorallocate($image, $r, $g, $b) : array($r, $g, $b); // Allocation de la couleur de surface.
+			$this->array_allocated_color[$this->color_index . 'dark'] = $allocate ? imagecolorallocate($image, $rd, $gd, $bd) : array($rd, $gd, $bd); // Allocation de la couleur de l'effet 3d.
+		}
+		$this->color_index++;
+		
+		return ($this->color_index - 1);
 	}
 	
 	//Génère une echelle.
@@ -512,6 +506,15 @@ class Stats
 	{
 		return trim(number_format($nombre, $dec, '.', ''));
 	}
+	
+	## Private attribute ##
+	var $array_color_stats = array(array(224, 118, 27), array(48, 149, 53), array(254, 249, 52), array(102, 133, 237), array(204, 42, 38), array(53, 144, 189), array(102, 102, 153), array(236, 230, 208), array(213, 171, 1), array(182, 0, 51), array(193, 73, 0), array(25, 119, 128), array(182, 181, 177), array(102, 133, 237));	//Tableau des couleurs.
+	var $nbr_color = 14;
+	var $data_stats; //Tableau des données.
+	var $nbr_entry; //Nombre d'entrée à traiter.
+	var $array_allocated_color = array(); //Tableau des couleurs allouées.
+	var $color_index = 0; //Couleur courante.
+	var $decimal = 1; //Arrondi
 }
 
 ?>

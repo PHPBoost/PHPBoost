@@ -30,10 +30,10 @@ if( defined('PHP_BOOST') !== true) exit;
 if( !defined('TITLE') )
 	define('TITLE', $LANG['unknow']);
 	
-$session->session_check(TITLE); //Vérification de la session.
+$Session->Session_check(TITLE); //Vérification de la session.
 
 //Gestion de la maintenance du site.
-if( $CONFIG['maintain'] > time() && !$session->check_auth($session->data, 2) )
+if( $CONFIG['maintain'] > time() && !$Member->Check_level(2) )
 {	
 	if( SCRIPT !== (DIR . '/member/maintain.php') )
 		redirect(HOST . DIR . '/includes/maintain.php');
