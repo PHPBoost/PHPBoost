@@ -45,20 +45,20 @@ if( !empty($_POST['msg_mbr']) ) //Message aux membres.
 	$config_member['activ_avatar'] = isset($_POST['activ_avatar']) ? numeric($_POST['activ_avatar']) : 0;
 	$config_member['avatar_url'] = !empty($_POST['avatar_url']) ? securit($_POST['avatar_url']) : '';
 	
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
 	
 	###### Régénération du cache $CONFIG_MEMBER #######
-	$cache->generate_file('member');
+	$Cache->Generate_file('member');
 	
 	redirect(HOST . SCRIPT); 	
 }
 else
 {			
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_members_config' => '../templates/' . $CONFIG['theme'] . '/admin/admin_members_config.tpl'
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'ACTIV_REGISTER_ENABLED' => $CONFIG_MEMBER['activ_register'] == 1 ? 'selected="selected"' : '',
 		'ACTIV_REGISTER_DISABLED' => $CONFIG_MEMBER['activ_register'] == 0 ? 'selected="selected"' : '',
 		'VERIF_CODE_ENABLED' => ($CONFIG_MEMBER['verif_code'] == 1 && @extension_loaded('gd')) ? 'checked="checked"' : '',
@@ -118,7 +118,7 @@ else
 	foreach($array as $key => $value )
 	{
 		$selected = ( $CONFIG_MEMBER['activ_mbr'] == $key ) ? 'selected="selected"' : '' ;		
-		$template->assign_block_vars('select_activ_mbr', array(
+		$Template->Assign_block_vars('select_activ_mbr', array(
 			'MODE' => '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>'
 		));
 	}
@@ -126,7 +126,7 @@ else
 	include_once('../includes/bbcode.php');
 
 	
-	$template->pparse('admin_members_config'); 
+	$Template->Pparse('admin_members_config'); 
 }
 
 require_once('../includes/admin_footer.php');

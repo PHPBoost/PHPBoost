@@ -36,7 +36,7 @@ $idcat = !empty($_GET['idcat']) ? numeric($_GET['idcat']) : 0;
 //Si c'est confirmé on execute
 if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 {
-	$cache->load_file('articles');
+	$Cache->Load_file('articles');
 	
 	$parent_category = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
 	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
@@ -46,7 +46,7 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 	$auth_read = isset($_POST['groups_authr']) ? $_POST['groups_authr'] : ''; 
 		
 	//Génération du tableau des droits.
-	$array_auth_all = $groups->return_array_auth($auth_read);
+	$array_auth_all = $Group->Return_array_auth($auth_read);
 			
 	if( !empty($name) )
 	{	
@@ -54,14 +54,14 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 		{
 			//Articles parente de la articles cible.
 			$list_parent_cats = '';
-			$result = $sql->query_while("SELECT id
+			$result = $Sql->Query_while("SELECT id
 			FROM ".PREFIX."articles_cats 
 			WHERE id_left <= '" . $CAT_ARTICLES[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$parent_category]['id_right'] . "'", __LINE__, __FILE__);
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				$list_parent_cats .= $row['id'] . ', ';
 			}
-			$sql->close($result);
+			$Sql->Close($result);
 			$list_parent_cats = trim($list_parent_cats, ', ');
 				
 			if( empty($list_parent_cats) )
@@ -70,22 +70,22 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 				$clause_parent = "id IN (" . $list_parent_cats . ")";
 				
 			$id_left = $CAT_ARTICLES[$parent_category]['id_right'];
-			$sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_right = id_right + 2 WHERE " . $clause_parent, __LINE__, __FILE__);
-			$sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET id_right = id_right + 2 WHERE " . $clause_parent, __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'", __LINE__, __FILE__);
 			$level = $CAT_ARTICLES[$parent_category]['level'] + 1;
 			
 		}
 		else //Insertion articles niveau 0.
 		{
-			$id_left = $sql->query("SELECT MAX(id_right) FROM ".PREFIX."articles_cats", __LINE__, __FILE__);
+			$id_left = $Sql->Query("SELECT MAX(id_right) FROM ".PREFIX."articles_cats", __LINE__, __FILE__);
 			$id_left++;
 			$level = 0;
 		}
 			
-		$sql->query_inject("INSERT INTO ".PREFIX."articles_cats (id_left, id_right, level, name, contents, nbr_articles_visible, nbr_articles_unvisible, icon, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $icon . "', '" . $aprob . "', '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
+		$Sql->Query_inject("INSERT INTO ".PREFIX."articles_cats (id_left, id_right, level, name, contents, nbr_articles_visible, nbr_articles_unvisible, icon, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $icon . "', '" . $aprob . "', '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
 
 		###### Regénération du cache #######
-		$cache->generate_module_file('articles');
+		$Cache->Generate_module_file('articles');
 			
 		redirect(HOST . DIR . '/articles/admin_articles_cat.php');	
 	}	
@@ -94,21 +94,21 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 }
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_articles_cat_add' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_cat_add.tpl'
 	));
 			
 	//Listing des catégories disponibles		
 	$galleries = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
-	$result = $sql->query_while("SELECT id, name, level
+	$result = $Sql->Query_while("SELECT id, name, level
 	FROM ".PREFIX."articles_cats 
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{	
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$galleries .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Images disponibles
 	$rep = './';
@@ -131,16 +131,16 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? $_GET['error'] : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 		
-	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $template->module_data_path('articles'),
+		'MODULE_DATA_PATH' => $Template->Module_data_path('articles'),
 		'NBR_GROUP' => count($array_groups),
 		'CATEGORIES' => $galleries,
-		'AUTH_READ' => $groups->generate_select_groups('r', array(), -1, array(-1 => true, 0 => true, 1 => true, 2 => true)),
+		'AUTH_READ' => $Group->Generate_select_groups('r', array(), -1, array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'IMG_LIST' => $image_list,
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
@@ -174,7 +174,7 @@ else
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 	
-	$template->pparse('admin_articles_cat_add'); // traitement du modele	
+	$Template->Pparse('admin_articles_cat_add'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

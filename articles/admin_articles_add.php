@@ -82,25 +82,25 @@ if( !empty($_POST['valid']) )
 		else //Ajout des heures et minutes
 			$timestamp = time();
 		
-		$cache->load_file('articles');
+		$Cache->Load_file('articles');
 		if( empty($idcat) )//Racine.
 		{
 			$CAT_ARTICLES[0]['id_left'] = 0;
 			$CAT_ARTICLES[0]['id_right'] = 0;
 		}
 			
-		$sql->query_inject("INSERT INTO ".PREFIX."articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . parse($contents) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $session->data['user_id'] . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
-		$last_articles_id = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."articles");
+		$Sql->Query_inject("INSERT INTO ".PREFIX."articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . parse($contents) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
+		$last_articles_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."articles");
 		
 		//Mise à jours du nombre d'articles des parents.
 		$clause_update = ($visible == 1) ? 'nbr_articles_visible = nbr_articles_visible + 1' : 'nbr_articles_unvisible = nbr_articles_unvisible + 1';
-		$sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 		
 		include_once('../includes/rss.class.php'); //Flux rss regénéré!
-		$rss = new Rss('articles/rss.php');
-		$rss->cache_path('../cache/');
-		$rss->generate_file('javascript', 'rss_articles');
-		$rss->generate_file('php', 'rss2_articles');
+		$Rss = new Rss('articles/rss.php');
+		$Rss->Cache_path('../cache/');
+		$Rss->Generate_file('javascript', 'rss_articles');
+		$Rss->Generate_file('php', 'rss2_articles');
 		
 		redirect(HOST . DIR . '/articles/admin_articles.php');
 	}
@@ -109,7 +109,7 @@ if( !empty($_POST['valid']) )
 }
 elseif( !empty($_POST['previs']) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_articles_add' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_add.tpl'
 	));
 
@@ -162,9 +162,9 @@ elseif( !empty($_POST['previs']) )
 		$end = '';
 	}	
 	
-	$pseudo = $sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = " . $session->data['user_id'], __LINE__, __FILE__);
+	$pseudo = $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = " . $Member->Get_attribute('user_id'), __LINE__, __FILE__);
 
-	$template->assign_block_vars('articles', array(
+	$Template->Assign_block_vars('articles', array(
 		'TITLE' => stripslashes($title),
 		'DATE' => gmdate_format('date_format_short'),
 		'CONTENTS' => second_parse(stripslashes(parse($contents))),
@@ -174,17 +174,17 @@ elseif( !empty($_POST['previs']) )
 	//Catégories.	
 	$i = 0;	
 	$categories = '<option value="0" %s>' . $LANG['root'] . '</option>';
-	$result = $sql->query_while("SELECT id, level, name 
+	$result = $Sql->Query_while("SELECT id, level, name 
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
 		$categories .= '<option value="' . $row['id'] . '" ' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 		$i++;
 	}		
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Images disponibles
 	$img_direct_path = (strpos($icon, '/') !== false);
@@ -208,7 +208,7 @@ elseif( !empty($_POST['previs']) )
 		}
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'TITLE' => stripslashes($title),
 		'CATEGORIES' => $categories,
 		'CONTENTS' => stripslashes($contents),
@@ -262,11 +262,11 @@ elseif( !empty($_POST['previs']) )
 
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_articles_add'); 
+	$Template->Pparse('admin_articles_add'); 
 }
 else
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_articles_add' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_add.tpl'
 	));
 	
@@ -275,16 +275,16 @@ else
 	//Catégories.	
 	$i = 0;	
 	$categories = '<option value="0">' . $LANG['root'] . '</option>';
-	$result = $sql->query_while("SELECT id, level, name 
+	$result = $Sql->Query_while("SELECT id, level, name 
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$categories .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 		$i++;
 	}		
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Images disponibles
 	$rep = './';
@@ -304,7 +304,7 @@ else
 			$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'TITLE' => '',
 		'IMG_PATH' => '',
 		'IMG_ICON' => '',		
@@ -339,11 +339,11 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_articles_add'); 
+	$Template->Pparse('admin_articles_add'); 
 }
 require_once('../includes/admin_footer.php');
 

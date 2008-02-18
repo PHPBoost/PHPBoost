@@ -28,37 +28,37 @@
 
 if( defined('PHP_BOOST') !== true) exit;
 
-if( $session->check_auth($session->data, 0) ) //Connecté.
+if( $Member->Check_level(0) ) //Connecté.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'connect_mini' => '../templates/' . $CONFIG['theme'] . '/connect/connect_mini.tpl'
 	));
 
-	$l_message = ($session->data['user_pm'] > 1) ? $LANG['message_s'] : $LANG['message'];
-	$user_pm = ($session->data['user_pm'] >= 1) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/new_pm.gif"  class="valign_middle" alt="" /> <a href="../member/pm' . transid('.php?pm=' . $session->data['user_id'], '-' . $session->data['user_id'] . '.php') . '" class="small_link">' . $session->data['user_pm'] . ' ' . $l_message . '</a>' : '<img src="../templates/' . $CONFIG['theme'] . '/images/pm_mini.png" alt="" class="valign_middle" /> <a href="../member/pm' . transid('.php?pm=' . $session->data['user_id'], '-' . $session->data['user_id'] . '.php') . '" class="small_link">' . $LANG['connect_private_message'] . '</a>';
+	$l_message = ($Member->Get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'];
+	$user_pm = ($Member->Get_attribute('user_pm') >= 1) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/new_pm.gif"  class="valign_middle" alt="" /> <a href="../member/pm' . transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php') . '" class="small_link">' . $Member->Get_attribute('user_pm') . ' ' . $l_message . '</a>' : '<img src="../templates/' . $CONFIG['theme'] . '/images/pm_mini.png" alt="" class="valign_middle" /> <a href="../member/pm' . transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php') . '" class="small_link">' . $LANG['connect_private_message'] . '</a>';
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'C_CONNECTED' => true,
 		'C_DISCONNECTED' => false,
 		'THEME' => $CONFIG['theme'],
-		'U_MEMBER_ID' => transid('.php?id=' . $session->data['user_id'] . '&amp;view=1', '-' . $session->data['user_id'] . '.php?view=1'),
+		'U_MEMBER_ID' => transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', '-' . $Member->Get_attribute('user_id') . '.php?view=1'),
 		'U_MEMBER_MP' => $user_pm,
-		'U_ADMIN' => ($session->data['level'] == 2) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/ranks_mini.png" alt="" style="vertical-align:middle" /> <a href="../admin/admin_index.php" class="small_link">' . $LANG['admin_panel'] . '</a></li>' : '',
-		'U_MODO' => ($session->data['level'] >= 1) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/modo_mini.png" alt="" style="vertical-align:middle" /> <a href="../member/moderation_panel.php" class="small_link">' . $LANG['modo_panel'] . '</a></li>' : '',
+		'U_ADMIN' => ($Member->Get_attribute('level') == 2) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/ranks_mini.png" alt="" style="vertical-align:middle" /> <a href="../admin/admin_index.php" class="small_link">' . $LANG['admin_panel'] . '</a></li>' : '',
+		'U_MODO' => ($Member->Get_attribute('level') >= 1) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/modo_mini.png" alt="" style="vertical-align:middle" /> <a href="../member/moderation_panel.php" class="small_link">' . $LANG['modo_panel'] . '</a></li>' : '',
 		'L_PROFIL' => $LANG['profil'],
 		'L_PRIVATE_PROFIL' => $LANG['connect_private_profil'],
 		'L_DISCONNECT' => $LANG['disconnect']
 	));
 	
-	$template->pparse('connect_mini'); 
+	$Template->Pparse('connect_mini'); 
 }
 else
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'connect_mini' => '../templates/' . $CONFIG['theme'] . '/connect/connect_mini.tpl'
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'C_CONNECTED' => false,
 		'C_DISCONNECTED' => true,
 		'U_CONNECT' => HOST . SCRIPT . ((QUERY_STRING != '') ? '?' . QUERY_STRING : ''),
@@ -69,7 +69,7 @@ else
 		'U_REGISTER' => $CONFIG_MEMBER['activ_register'] ? '<a href="../member/register.php">' . $LANG['register'] . '</a>' : ''
 	));
 	
-	$template->pparse('connect_mini'); 
+	$Template->Pparse('connect_mini'); 
 }
 
 ?>

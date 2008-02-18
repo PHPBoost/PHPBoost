@@ -34,27 +34,27 @@ $error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 
 if( isset($_GET['activ']) && !empty($id) ) //Activation
 {
-	$sql->query_inject("UPDATE ".PREFIX."lang SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."lang SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
 if( isset($_GET['secure']) && !empty($id) ) //Changement de niveau d'autorisation.
 {
-	$sql->query_inject("UPDATE ".PREFIX."lang SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."lang SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
 elseif( isset($_POST['valid']) ) //Mise à jour
 {
-	$result = $sql->query_while("SELECT id, name, activ, secure
+	$result = $Sql->Query_while("SELECT id, name, activ, secure
 	FROM ".PREFIX."lang
 	WHERE activ = 1 AND lang != '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$activ = isset($_POST[$row['id'] . 'activ']) ? numeric($_POST[$row['id'] . 'activ']) : '0';
 		$secure = isset($_POST[$row['id'] . 'secure']) ? numeric($_POST[$row['id'] . 'secure']) : '0';
 		if( $row['activ'] != $activ || $row['secure'] != $secure )
-			$sql->query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	redirect(HOST . SCRIPT);	
 }
@@ -65,14 +65,14 @@ elseif( $uninstall ) //Désinstallation.
 		$idlang = !empty($_POST['idlang']) ? numeric($_POST['idlang']) : '0'; 
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
 		
-		$previous_lang = $sql->query("SELECT lang FROM ".PREFIX."lang WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
+		$previous_lang = $Sql->Query("SELECT lang FROM ".PREFIX."lang WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
 		if( $previous_lang != $CONFIG['lang'] && !empty($idlang) && !empty($previous_lang) )
 		{
 			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!		
-			$sql->query_inject("UPDATE ".PREFIX."member SET user_lang = '" . $CONFIG['lang'] . "' WHERE user_lang = '" . $previous_lang . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_lang = '" . $CONFIG['lang'] . "' WHERE user_lang = '" . $previous_lang . "'", __LINE__, __FILE__);
 				
 			//On supprime le lang de la bdd.
-			$sql->query_inject("DELETE FROM ".PREFIX."lang WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("DELETE FROM ".PREFIX."lang WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
 		}
 		else
 		{
@@ -97,15 +97,15 @@ elseif( $uninstall ) //Désinstallation.
 			if( $value == $LANG['uninstall'] )
 				$idlang = $key;
 				
-		$template->set_filenames(array(
+		$Template->Set_filenames(array(
 			'admin_lang_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_lang_management.tpl'
 		));
 		
-		$template->assign_block_vars('del', array(			
+		$Template->Assign_block_vars('del', array(			
 			'IDLANG' => $idlang
 		));
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'THEME' => $CONFIG['theme'],
 			'L_LANG_ADD' => $LANG['lang_add'],	
 			'L_LANG_MANAGEMENT' => $LANG['lang_management'],
@@ -117,16 +117,16 @@ elseif( $uninstall ) //Désinstallation.
 			'L_DELETE' => $LANG['delete']
 		));
 
-		$template->pparse('admin_lang_management'); 
+		$Template->Pparse('admin_lang_management'); 
 	}
 }		
 else
 {			
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_lang_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_lang_management.tpl'
 	));
 	 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],		
 		'L_LANG_ADD' => $LANG['lang_add'],	
 		'L_LANG_MANAGEMENT' => $LANG['lang_management'],
@@ -144,15 +144,15 @@ else
 		'L_UNINSTALL' => $LANG['uninstall']		
 	));
 	
-	$template->assign_block_vars('main', array(		
+	$Template->Assign_block_vars('main', array(		
 	));
 		
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG[$get_error], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG[$get_error], E_USER_NOTICE);
 	elseif( !empty($get_error) && isset($LANG[$get_error]) )
-		$errorh->error_handler($LANG[$get_error], E_USER_WARNING);
+		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
 	 
 	
 	//On recupère les dossier des thèmes contenu dans le dossier templates	
@@ -171,22 +171,22 @@ else
 		closedir($dh); //On ferme le dossier		
 
 		$lang_bdd = array();
-		$result = $sql->query_while("SELECT id, lang, activ, secure 
+		$result = $Sql->Query_while("SELECT id, lang, activ, secure 
 		FROM ".PREFIX."lang", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
 			if( array_search($row['lang'], $file_array) !== false)
 				$lang_bdd[] = array('id' => $row['id'], 'name' => $row['lang'], 'activ' => $row['activ'], 'secure' => $row['secure']); //On supprime ces clées du tableau.
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 		
 		foreach($lang_bdd as $key => $lang) //On effectue la recherche dans le tableau.
 		{
 			//On selectionne le lang suivant les valeurs du tableau. 
 			$info_lang = @parse_ini_file('../lang/' . $lang['name'] . '/config.ini');
 			
-			$template->assign_block_vars('main.list', array(
+			$Template->Assign_block_vars('main.list', array(
 				'IDLANG' =>  $lang['id'],		
 				'LANG' =>  $info_lang['name'],
 				'IDENTIFIER' =>  $info_lang['identifier'],
@@ -234,25 +234,25 @@ else
 					<input type="submit" name="' . $lang['id'] . '" value="' . $LANG['uninstall'] . '" class="submit" />
 				</td>';
 					
-				$template->assign_block_vars('main.list.not_default', array(
+				$Template->Assign_block_vars('main.list.not_default', array(
 					'VALUE' => $value
 				));
 			}
 			else
-				$template->assign_block_vars('main.list.default', array(
+				$Template->Assign_block_vars('main.list.default', array(
 				));
 			$z++;
 		}
 	}	
 	
 	if( $z != 0 )
-		$template->assign_block_vars('main.lang', array(		
+		$Template->Assign_block_vars('main.lang', array(		
 		));
 	else
-		$template->assign_block_vars('main.no_lang', array(		
+		$Template->Assign_block_vars('main.no_lang', array(		
 		));
 		
-	$template->pparse('admin_lang_management'); 
+	$Template->Pparse('admin_lang_management'); 
 }
 
 require_once('../includes/admin_footer.php');

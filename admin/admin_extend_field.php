@@ -34,17 +34,17 @@ $del = !empty($_GET['del']) ? true : false;
 $top = !empty($_GET['top']) ? numeric($_GET['top']) : '';
 $bottom = !empty($_GET['bot']) ? numeric($_GET['bot']) : '';
 	
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'admin_extend_field' => '../templates/' . $CONFIG['theme'] . '/admin/admin_extend_field.tpl'
 ));
 	
 if( $del && !empty($id) )
 {
-	$field_name = $sql->query("SELECT field_name FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$field_name = $Sql->Query("SELECT field_name FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	if( !empty($field_name) ) 
 	{
-		$sql->query_inject("DELETE FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		$sql->query_inject("ALTER TABLE ".PREFIX."member_extend DROP " . $field_name, __LINE__, __FILE__);
+		$Sql->Query_inject("DELETE FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("ALTER TABLE ".PREFIX."member_extend DROP " . $field_name, __LINE__, __FILE__);
 	}
 	redirect(HOST . SCRIPT);
 }
@@ -82,14 +82,14 @@ elseif( !empty($_POST['valid']) )
 		}
 		$field_name = rewrite_field($name);
 		
-		$check_name = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE field_name = '" . $field_name . "' AND id <> '" . $id . "'", __LINE__, __FILE__);
+		$check_name = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE field_name = '" . $field_name . "' AND id <> '" . $id . "'", __LINE__, __FILE__);
 		if( empty($check_name) ) 
 		{
 			$new_field_name = $field_name . ' ' . $array_field[$field];
-			$previous_name = $sql->query("SELECT field_name FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$previous_name = $Sql->Query("SELECT field_name FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			if( $previous_name != $field_name )
-				$sql->query_inject("ALTER TABLE ".PREFIX."member_extend CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
-			$sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("ALTER TABLE ".PREFIX."member_extend CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."member_extend_cat SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
 			redirect(HOST . DIR . '/admin/admin_extend_field.php');
 		}
@@ -105,9 +105,9 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 	{	
 		$idmoins = ($top - 1);
 			
-		$sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = 0 WHERE class='" . $top . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class=" . $top . " WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class=" . $idmoins . " WHERE class = 0", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."member_extend_cat SET class = 0 WHERE class='" . $top . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."member_extend_cat SET class=" . $top . " WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."member_extend_cat SET class=" . $idmoins . " WHERE class = 0", __LINE__, __FILE__);
 		
 		redirect(HOST . SCRIPT . '#e' . $id);
 	}
@@ -115,16 +115,16 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 	{
 		$idplus = ($bottom + 1);
 			
-		$sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = 0 WHERE class = '" . $bottom . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = " . $bottom . " WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
-		$sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = " . $idplus . " WHERE class = 0", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."member_extend_cat SET class = 0 WHERE class = '" . $bottom . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."member_extend_cat SET class = " . $bottom . " WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."member_extend_cat SET class = " . $idplus . " WHERE class = 0", __LINE__, __FILE__);
 			
 		redirect(HOST . SCRIPT . '#e' . $id);
 	}
 }
 elseif( !empty($id) )
 {	
-	$extend_field = $sql->query_array("member_extend_cat", "id", "name", "contents", "field", "possible_values", "default_values", "regex", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$extend_field = $Sql->Query_array("member_extend_cat", "id", "name", "contents", "field", "possible_values", "default_values", "regex", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$regex_checked = 2;
 	$predef_regex = false;
@@ -134,7 +134,7 @@ elseif( !empty($id) )
 		$predef_regex = true;
 	}
 		
-	$template->assign_block_vars('field_edit', array(
+	$Template->Assign_block_vars('field_edit', array(
 		'ID' => $extend_field['id'],
 		'NAME' => $extend_field['name'],
 		'CONTENTS' => $extend_field['contents'],
@@ -149,9 +149,9 @@ elseif( !empty($id) )
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $get_error == 'exist_field' )
-		$errorh->error_handler($LANG['e_exist_field'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_exist_field'], E_USER_NOTICE);
 	
 	$array_field = array(
 		1 => $LANG['short_text'],
@@ -164,7 +164,7 @@ elseif( !empty($id) )
 	foreach($array_field as $key => $value)
 	{
 		$selected = ($key == $extend_field['field']) ? 'selected="selected"' : '';
-		$template->assign_block_vars('field_edit.field', array(
+		$Template->Assign_block_vars('field_edit.field', array(
 			'FIELD' => '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>'
 		));
 	}
@@ -178,18 +178,18 @@ elseif( !empty($id) )
 	);
 	
 	$selected = (!$predef_regex) ? 'selected="selected"' : ''; 
-	$template->assign_block_vars('field_edit.regex', array(
+	$Template->Assign_block_vars('field_edit.regex', array(
 		'REGEX' => '<option value="0" ' . $selected . '>--</option>'
 	));
 	foreach($array_regex as $key => $value)
 	{
 		$selected = ($key == $extend_field['regex']) ? 'selected="selected"' : '';
-		$template->assign_block_vars('field_edit.regex', array(
+		$Template->Assign_block_vars('field_edit.regex', array(
 			'REGEX' => '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>'
 		));
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'REGEX' => (!$predef_regex) ? $extend_field : '',
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_DEFAULT_FIELD_VALUE' => $LANG['default_field_possible_values'],
@@ -226,14 +226,14 @@ elseif( !empty($id) )
 }
 else
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_extend_field' => '../templates/' . $CONFIG['theme'] . '/admin/admin_extend_field.tpl'
 	));
 	
-	$template->assign_block_vars('field_management', array(
+	$Template->Assign_block_vars('field_management', array(
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_EXTEND_FIELD_MANAGEMENT' => $LANG['extend_field_management'],
 		'L_EXTEND_FIELD_ADD' => $LANG['extend_field_add'],
 		'L_EXTEND_FIELD' => $LANG['extend_field'],
@@ -244,14 +244,14 @@ else
 		'L_UPDATE' => $LANG['update'],
 	));
 	
-	$min_cat = $sql->query("SELECT MIN(class) FROM ".PREFIX."member_extend_cat", __LINE__, __FILE__);
-	$max_cat = $sql->query("SELECT MAX(class) FROM ".PREFIX."member_extend_cat", __LINE__, __FILE__);
+	$min_cat = $Sql->Query("SELECT MIN(class) FROM ".PREFIX."member_extend_cat", __LINE__, __FILE__);
+	$max_cat = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."member_extend_cat", __LINE__, __FILE__);
 	
-	$result = $sql->query_while("SELECT id, class, name
+	$result = $Sql->Query_while("SELECT id, class, name
 	FROM ".PREFIX."member_extend_cat
 	WHERE display = 1
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
 		$top_link = $min_cat != $row['class'] ? '<a href="admin_extend_field.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
@@ -259,17 +259,17 @@ else
 		$bottom_link = $max_cat != $row['class'] ? '<a href="admin_extend_field.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
 		<img src="../templates/' . $CONFIG['theme'] . '/images/admin/down.png" alt="" title="" /></a>' : '';
 
-		$template->assign_block_vars('field_management.field', array(
+		$Template->Assign_block_vars('field_management.field', array(
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'TOP' => $top_link,
 			'BOTTOM' => $bottom_link
 		));		
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 }
 
-$template->pparse('admin_extend_field');		
+$Template->Pparse('admin_extend_field');		
 	
 require_once('../includes/admin_footer.php');
 

@@ -37,23 +37,23 @@ if( !empty($_POST['valid'])  )
 	$config_calendar = array();
 	$config_calendar['calendar_auth'] = isset($_POST['calendar_auth']) ? numeric($_POST['calendar_auth']) : -1;
 		
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_calendar)) . "' WHERE name = 'calendar'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_calendar)) . "' WHERE name = 'calendar'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
-	$cache->generate_module_file('calendar');
+	$Cache->Generate_module_file('calendar');
 	
 	redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_calendar_config' => '../templates/' . $CONFIG['theme'] . '/calendar/admin_calendar_config.tpl'
 	));
 	
-	$cache->load_file('calendar');
+	$Cache->Load_file('calendar');
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_REQUIRE' => $LANG['require'],	
 		'L_CALENDAR' => $LANG['title_calendar'],
 		'L_CALENDAR_CONFIG' => $LANG['calendar_config'],
@@ -84,12 +84,12 @@ else
 		} 
 
 		$selected = ($CONFIG_CALENDAR['calendar_auth'] == $i) ? 'selected="selected"' : '' ;
-		$template->assign_block_vars('select_auth', array(
+		$Template->Assign_block_vars('select_auth', array(
 			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 		));
 	}
 		
-	$template->pparse('admin_calendar_config');
+	$Template->Pparse('admin_calendar_config');
 }
 
 require_once('../includes/admin_footer.php');

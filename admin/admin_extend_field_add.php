@@ -63,15 +63,15 @@ if( !empty($_POST['valid']) ) //Insertion du nouveau champs.
 			return 'f_' . $field;
 		}
 		$field_name = rewrite_field($name);
-		$check_name = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE field_name = '" . $field_name . "'", __LINE__, __FILE__);
+		$check_name = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE field_name = '" . $field_name . "'", __LINE__, __FILE__);
 		if( empty($check_name) ) 
 		{
-			$class = $sql->query("SELECT MAX(class) + 1 FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
-			$sql->query_inject("INSERT INTO ".PREFIX."member_extend_cat (name, class, field_name, contents, field, possible_values, default_values, display, regex) VALUES ('" . $name . "', '" . $class . "', '" . $field_name . "', '" . $contents . "', '" . $field . "', '" . $possible_values . "', '" . $default_values . "', 1, '" . $regex . "')", __LINE__, __FILE__);		
+			$class = $Sql->Query("SELECT MAX(class) + 1 FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."member_extend_cat (name, class, field_name, contents, field, possible_values, default_values, display, regex) VALUES ('" . $name . "', '" . $class . "', '" . $field_name . "', '" . $contents . "', '" . $field . "', '" . $possible_values . "', '" . $default_values . "', 1, '" . $regex . "')", __LINE__, __FILE__);		
 			
 			//Alteration de la table pour prendre en compte le nouveau champs.
 			$field_name = $field_name . ' ' . $array_field[$field];
-			$sql->query_inject("ALTER TABLE ".PREFIX."member_extend ADD " . $field_name, __LINE__, __FILE__);
+			$Sql->Query_inject("ALTER TABLE ".PREFIX."member_extend ADD " . $field_name, __LINE__, __FILE__);
 			
 			redirect(HOST . DIR . '/admin/admin_extend_field.php');
 		}
@@ -83,18 +83,18 @@ if( !empty($_POST['valid']) ) //Insertion du nouveau champs.
 }
 else
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_extend_field_add' => '../templates/' . $CONFIG['theme'] . '/admin/admin_extend_field_add.tpl'
 	));
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $get_error == 'exist_field' )
-		$errorh->error_handler($LANG['e_exist_field'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_exist_field'], E_USER_NOTICE);
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_DEFAULT_FIELD_VALUE' => $LANG['default_field_possible_values'],
 		'L_EXTEND_FIELD_MANAGEMENT' => $LANG['extend_field_management'],
@@ -127,7 +127,7 @@ else
 		'L_SUBMIT' => $LANG['submit'],
 	));
 	
-	$template->pparse('admin_extend_field_add');		
+	$Template->Pparse('admin_extend_field_add');		
 }
 
 require_once('../includes/admin_footer.php');

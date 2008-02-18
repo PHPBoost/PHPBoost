@@ -46,16 +46,16 @@ if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà exista
 	$location = !empty($_POST['location']) ? securit($_POST['location']) : 'left';
 	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
 
-	$previous_location = $sql->query("SELECT location FROM ".PREFIX."modules_mini WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+	$previous_location = $Sql->Query("SELECT location FROM ".PREFIX."modules_mini WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 	$clause_class = '';
 	if( $previous_location != $location )
 	{	
-		$class = $sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE activ = 1 AND location = '" . $location . "'", __LINE__, __FILE__);
+		$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE activ = 1 AND location = '" . $location . "'", __LINE__, __FILE__);
 		$clause_class = " class = '" . ($class + 1) . "', ";
 	}
-	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET " . $clause_class . " name = '" . $name . "', contents = '" . $contents ."', location = '" . $location . "', activ = '" . $activ . "', secure = '" . $secure . "', use_tpl = '" . $use_tpl . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET " . $clause_class . " name = '" . $name . "', contents = '" . $contents ."', location = '" . $location . "', activ = '" . $activ . "', secure = '" . $secure . "', use_tpl = '" . $use_tpl . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 	
-	$cache->generate_file('modules_mini');		
+	$Cache->Generate_file('modules_mini');		
 	
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id_post);	
 }
@@ -71,34 +71,34 @@ elseif( $action == 'add' ) //Ajout d'un menu.
 	if( empty($activ) )
 		$location = '';
 	
-	$class = $sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE activ = 1 AND location = '" . $location . "'", __LINE__, __FILE__);
-	$sql->query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, code, contents, location, secure, activ, added, use_tpl) VALUES 
+	$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE activ = 1 AND location = '" . $location . "'", __LINE__, __FILE__);
+	$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, code, contents, location, secure, activ, added, use_tpl) VALUES 
 	('" . ($class + 1) . "', '" . $name . "', '', '" . $contents ."', '" . $location . "', '" . $secure . "', '" . $activ . "', 1, '" . $use_tpl . "')", __LINE__, __FILE__);
-	$last_menu_id = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."modules_mini");
+	$last_menu_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."modules_mini");
 	
-	$cache->generate_file('modules_mini');		
+	$Cache->Generate_file('modules_mini');		
 	
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $last_menu_id);	
 }
 elseif( !empty($del) && !empty($id) ) //Suppression du menu.
 {
-	$info_menu = $sql->query_array("modules_mini", "class", "location", "WHERE id = " . $id, __LINE__, __FILE__);
-	$sql->query_inject("DELETE FROM ".PREFIX."modules_mini WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$info_menu = $Sql->Query_array("modules_mini", "class", "location", "WHERE id = " . $id, __LINE__, __FILE__);
+	$Sql->Query_inject("DELETE FROM ".PREFIX."modules_mini WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	//Réordonnement du classement.
-	$sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . addslashes($info_menu['location']) . "' AND activ = 1", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . addslashes($info_menu['location']) . "' AND activ = 1", __LINE__, __FILE__);
 	
-	$cache->generate_file('modules_mini');		
+	$Cache->Generate_file('modules_mini');		
 	
 	redirect(HOST . DIR . '/admin/admin_menus.php');	
 }
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_menus_add' => '../templates/' . $CONFIG['theme'] . '/admin/admin_menus_add.tpl'
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'IDMENU' => $id,
 		'ACTION' => ($edit) ? 'edit' : 'add',
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -131,7 +131,7 @@ else
 	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	if( $edit )
 	{
-		$menu = $sql->query_array('modules_mini', 'id', 'name', 'contents', 'activ', 'secure', 'location', 'use_tpl', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$menu = $Sql->Query_array('modules_mini', 'id', 'name', 'contents', 'activ', 'secure', 'location', 'use_tpl', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//Rangs d'autorisation.
 		$ranks = '';
@@ -150,7 +150,7 @@ else
 			$locations .= '<option value="' . $id . '" ' . $selected . '>' . $name . '</option>';
 		}
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'C_EDIT_MENU' => true,
 			'NAME' => $menu['name'],
 			'RANKS' => $ranks,
@@ -171,7 +171,7 @@ else
 			$ranks .= '<option value="' . $rank . '" ' . $selected . '>' . $name . '</option>';
 		}
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'C_ADD_MENU' => true,
 			'RANKS' => $ranks
 		));		
@@ -179,7 +179,7 @@ else
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_menus_add');
+	$Template->Pparse('admin_menus_add');
 }
 
 require_once('../includes/admin_footer.php');

@@ -30,11 +30,11 @@ require_once('../includes/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'admin_extend' => '../templates/' . $CONFIG['theme'] . '/admin/admin_extend.tpl'
 ));
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
 	'L_CONFIGURATION' => $LANG['configuration'],
@@ -63,18 +63,18 @@ $template->assign_vars(array(
 
 //Listing des modules disponibles:
 $i = 1;
-$result = $sql->query_while("SELECT name 
+$result = $Sql->Query_while("SELECT name 
 FROM ".PREFIX."modules
 WHERE activ = 1", __LINE__, __FILE__);
-$nbr_modules = $sql->sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."modules WHERE activ = 1 AND admin = 1");
-while( $row = $sql->sql_fetch_assoc($result) )
+$nbr_modules = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."modules WHERE activ = 1 AND admin = 1");
+while( $row = $Sql->Sql_fetch_assoc($result) )
 {
 	$config = @parse_ini_file('../' . $row['name'] . '/lang/' . $CONFIG['lang'] . '/config.ini');
 	if( is_array($config) )
 	{	
 		if( $config['admin'] == 1 )
 		{
-			$template->assign_block_vars('modules_extend', array(
+			$Template->Assign_block_vars('modules_extend', array(
 				'NAME' => $config['name'],
 				'IMG' => '../' . $row['name'] . '/' . $row['name'] . '.png',
 				'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
@@ -85,7 +85,7 @@ while( $row = $sql->sql_fetch_assoc($result) )
 		}
 	}
 }
-$sql->close($result);
+$Sql->Close($result);
 
 //Complétion éventuelle des cases du tableaux.
 if( $i != 0 )
@@ -93,14 +93,14 @@ if( $i != 0 )
 	$i--;
 	while( ($i % 5) != 0 )
 	{
-		$template->assign_block_vars('modules_extend.td', array(
+		$Template->Assign_block_vars('modules_extend.td', array(
 			'TD' => '<td class="row2" style="width:20%;">&nbsp;</td>'
 		));	
 		$i++;
 	}
 }
 
-$template->pparse('admin_extend'); 
+$Template->Pparse('admin_extend'); 
 
 require_once('../includes/admin_footer.php');
 

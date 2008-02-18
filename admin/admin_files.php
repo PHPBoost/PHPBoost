@@ -31,7 +31,7 @@ require_once('../includes/admin_header.php');
 
 //Initialisation  de la class de gestion des fichiers.
 include_once('../includes/files.class.php');
-$files = new Files; 
+$Files = new Files; 
 
 $folder = !empty($_GET['f']) ? numeric($_GET['f']) : 0;
 $folder_member = !empty($_GET['fm']) ? numeric($_GET['fm']) : 0;
@@ -49,7 +49,7 @@ $to = isset($_GET['to']) ? numeric($_GET['to']) : -1;
 
 if( $parent_folder ) //Changement de dossier
 {
-	$parent_folder = $sql->query_array("upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
+	$parent_folder = $Sql->Query_array("upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
 
 	if( $parent_folder['user_id'] == -1 )
 		redirect(HOST . DIR . '/admin/admin_files.php?showm=1');
@@ -72,16 +72,16 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
 		include_once('../includes/upload.class.php');
-		$upload = new Upload($dir);
-		$upload->upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+`i', UNIQ_NAME);
+		$Upload = new Upload($dir);
+		$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+`i', UNIQ_NAME);
 		
-		if( !empty($upload->error) ) //Erreur, on arrête ici
-			redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&erroru=' . $upload->error . '#errorh');
+		if( !empty($Upload->error) ) //Erreur, on arrête ici
+			redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->error . '#errorh');
 		else //Insertion dans la bdd
 		{
-			$check_user_folder = $sql->query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $folder . "'", __LINE__, __FILE__);
-			$user_id = ($check_user_folder <= 0) ? -1 : $session->data['user_id'];
-			$sql->query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . securit($_FILES['upload_file']['name']) . "', '" . securit($upload->filename['upload_file']) . "', '" . $user_id . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
+			$check_user_folder = $Sql->Query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $folder . "'", __LINE__, __FILE__);
+			$user_id = ($check_user_folder <= 0) ? -1 : $Member->Get_attribute('user_id');
+			$Sql->Query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . securit($_FILES['upload_file']['name']) . "', '" . securit($Upload->filename['upload_file']) . "', '" . $user_id . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
 		}
 	}
 	else
@@ -93,52 +93,52 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 elseif( !empty($del_folder) ) //Supprime un dossier.
 {
 	//Suppression du dossier et de tout le contenu	
-	$files->del_folder($del_folder);
+	$Files->Del_folder($del_folder);
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder);
 }
 elseif( !empty($empty_folder) ) //Vide un dossier membre.
 {
 	//Suppression de tout les dossiers enfants.
-	$files->del_folder($empty_folder, EMPTY_FOLDER);
+	$Files->Del_folder($empty_folder, EMPTY_FOLDER);
 
 	redirect(HOST . DIR . '/admin/admin_files.php?showm=1');
 }
 elseif( !empty($del_file) ) //Suppression d'un fichier
 {
 	//Suppression d'un fichier.
-	$files->del_file($del_file, -1, ADMIN_NO_CHECK);
+	$Files->Del_file($del_file, -1, ADMIN_NO_CHECK);
 	
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder);
 }
 elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 {
 	$move_list_parent = array();
-	$result = $sql->query_while("SELECT id, id_parent, name
+	$result = $Sql->Query_while("SELECT id, id_parent, name
 	FROM ".PREFIX."upload_cat
-	WHERE user_id = '" . $session->data['user_id'] . "'
+	WHERE user_id = '" . $Member->Get_attribute('user_id') . "'
 	ORDER BY id", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$move_list_parent[$row['id']] = $row['id_parent'];
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 
 	$array_child_folder = array();
-	$files->find_subfolder($move_list_parent, $move_folder, $array_child_folder);
+	$Files->Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
 	if( !in_array($to, $array_child_folder) ) //Dossier de destination non sous-dossier du dossier source.
-		$files->move_folder($move_folder, $to, $session->data['user_id'], ADMIN_NO_CHECK);
+		$Files->Move_folder($move_folder, $to, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);
 	
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $to);
 }
 elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
 {
-	$files->move_file($move_file, $to, $session->data['user_id'], ADMIN_NO_CHECK);
+	$Files->Move_file($move_file, $to, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);
 	
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $to);
 }
 else
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_files_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_files_management.tpl'
 	));
 
@@ -157,29 +157,29 @@ else
 		LEFT JOIN ".PREFIX."member m ON m.user_id = uc.user_id
 		WHERE uc.id = '" . $folder . "'");
 
-	$result = $sql->query_while($sql_request, __LINE__, __FILE__);
-	$folder_info = $sql->sql_fetch_assoc($result);
+	$result = $Sql->Query_while($sql_request, __LINE__, __FILE__);
+	$folder_info = $Sql->Sql_fetch_assoc($result);
 		
 	//Gestion des erreurs.
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled');
 	if( in_array($get_error, $array_error) )
-		$errorh->error_handler($LANG[$get_error], E_USER_WARNING);
+		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);  
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);  
 
 	if( isset($LANG[$get_l_error]) )
-		$errorh->error_handler($LANG[$get_l_error], E_USER_WARNING);  
+		$Errorh->Error_handler($LANG[$get_l_error], E_USER_WARNING);  
 
 	if( $show_member )
-		$url = $files->get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
+		$url = $Files->Get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
 	elseif( !empty($folder_member) || !empty($folder_info['user_id']) )
-		$url = $files->get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
+		$url = $Files->Get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
 	elseif( empty($folder) )
 		$url = '/';	
 	else
-		$url = $files->get_admin_url($folder, '');
+		$url = $Files->Get_admin_url($folder, '');
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'USER_ID' => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
 		'THEME' => $CONFIG['theme'],
@@ -212,7 +212,7 @@ else
 
 	if( $folder == 0 && !$show_member && empty($folder_member) )
 	{	
-		$template->assign_block_vars('folder', array(
+		$Template->Assign_block_vars('folder', array(
 			'NAME' => '<a class="com" href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>',
 			'IMG_FOLDER' => 'member_max.png',
 			'L_TYPE_DEL_FOLDER' => $LANG['empty_member_folder']
@@ -255,12 +255,12 @@ else
 		ORDER BY name";
 
 	//Affichage des dossiers
-	$result = $sql->query_while($sql_folder, __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	$result = $Sql->Query_while($sql_folder, __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
-		$template->assign_block_vars('folder', array(
+		$Template->Assign_block_vars('folder', array(
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
 			'IMG_FOLDER' => $show_member ? 'member_max.png' : 'folder_max.png',
@@ -276,17 +276,17 @@ else
 		));
 		$total_directories++;
 	}	
-	$sql->close($result);
+	$Sql->Close($result);
 		
 	if( !$show_member ) //Dossier membres.
 	{
 		//Affichage des fichiers contenu dans le dossier
-		$result = $sql->query_while($sql_files, __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		$result = $Sql->Query_while($sql_files, __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
-			$get_img_mimetype = $files->get_img_mimetype($row['type']);
+			$get_img_mimetype = $Files->Get_img_mimetype($row['type']);
 			$size_img = '';
 			switch($row['type'])
 			{
@@ -312,7 +312,7 @@ else
 				$link = '<a class="com" href="../upload/' . $row['path'] . '">';
 			}
 			
-			$template->assign_block_vars('files', array(
+			$Template->Assign_block_vars('files', array(
 				'ID' => $row['id'],
 				'IMG' => '<img src="../templates/' . $CONFIG['theme'] . '/images/upload/' . $get_img_mimetype['img'] . '" alt="" />',
 				'URL' => $link,
@@ -330,12 +330,12 @@ else
 			$total_folder_size += $row['size'];
 			$total_files++;
 		}	
-		$sql->close($result);
+		$Sql->Close($result);
 	}
 	
 
-	$total_size = $sql->query("SELECT SUM(size) FROM ".PREFIX."upload", __LINE__, __FILE__);
-	$template->assign_vars(array(
+	$total_size = $Sql->Query("SELECT SUM(size) FROM ".PREFIX."upload", __LINE__, __FILE__);
+	$Template->Assign_vars(array(
 		'TOTAL_SIZE' => ($total_size > 1024) ? number_round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? number_round($total_folder_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($total_folder_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDERS' => $total_directories,
@@ -344,11 +344,11 @@ else
 
 
 	if( $total_directories == 0 && $total_files == 0 && (!empty($folder) || !empty($show_member)) )
-		$template->assign_block_vars('empty_folder', array(
+		$Template->Assign_block_vars('empty_folder', array(
 			'EMPTY_FOLDER' => $LANG['empty_folder']
 		));
 		
-	$template->pparse('admin_files_management');
+	$Template->Pparse('admin_files_management');
 }
 	
 require_once('../includes/admin_footer.php');

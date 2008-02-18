@@ -54,11 +54,11 @@ if( $checkdate === true && empty($id) && empty($add) )
 	//Redirection vers l'évenement suivant/précédent.
 	if( $get_event == 'up' )
 	{
-		$event_up = $sql->query("SELECT timestamp 
+		$event_up = $Sql->Query("SELECT timestamp 
 		FROM ".PREFIX."calendar 
 		WHERE timestamp > '" . mktime(23, 59, 59, $month, $day, $year, 0) . "' 
 		ORDER BY timestamp 
-		" . $sql->sql_limit(0, 1), __LINE__, __FILE__);
+		" . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
 		
 		if( !empty($event_up) )
 		{
@@ -74,11 +74,11 @@ if( $checkdate === true && empty($id) && empty($add) )
 	}
 	elseif( $get_event == 'down' )
 	{
-		$event_down = $sql->query("SELECT timestamp 
+		$event_down = $Sql->Query("SELECT timestamp 
 		FROM ".PREFIX."calendar 
 		WHERE timestamp < '" . mktime(0, 0, 0, $month, $day, $year, 0) . "' 
 		ORDER BY timestamp DESC 
-		" . $sql->sql_limit(0, 1), __LINE__, __FILE__);
+		" . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
 			
 		if( !empty($event_down) )
 		{
@@ -93,11 +93,11 @@ if( $checkdate === true && empty($id) && empty($add) )
 			redirect(HOST . DIR . '/calendar/calendar' . transid('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
 	}
 	
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'calendar' => '../templates/' . $CONFIG['theme'] . '/calendar/calendar.tpl'
 	));
 	
-	$template->assign_block_vars('show', array(
+	$Template->Assign_block_vars('show', array(
 	));
 	
 	//Gestion erreur.
@@ -114,22 +114,22 @@ if( $checkdate === true && empty($id) && empty($add) )
 		$errstr = '';
 	}
 	if( !empty($errstr) )
-		$errorh->error_handler($errstr, E_USER_NOTICE);
+		$Errorh->Error_handler($errstr, E_USER_NOTICE);
 		
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 	$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'], 
 	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
 	$month_day = $array_month[$month - 1];
 	
-	if( $session->check_auth($session->data, $CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
+	if( $Member->Check_level($CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
 	{
 		$add_event = '<a href="calendar' . transid('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" /></a><br />';
 	}
 	else
 		$add_event = '';
 	
-	$template->assign_vars(array(
-		'ADMIN_CALENDAR' => ($session->check_auth($session->data, 2)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
+	$Template->Assign_vars(array(
+		'ADMIN_CALENDAR' => ($Member->Check_level(2)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
 		'ADD' => $add_event,
 		'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
 		'U_PREVIOUS' => ($month == 1) ? transid('.php?d=' . $day . '&amp;m=12&amp;y=' . ($year - 1), '-' . $day . '-12-' . ($year - 1) . '.php') :  transid('.php?d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year, '-1-' . ($month - 1) . '-' . $year . '.php'),
@@ -146,37 +146,37 @@ if( $checkdate === true && empty($id) && empty($add) )
 	for($i = 1; $i <= 12; $i++)
 	{
 		$selected = ($month == $i) ? 'selected="selected"' : '';
-		$template->assign_block_vars('show.month', array(
+		$Template->Assign_block_vars('show.month', array(
 			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . $array_l_month[$i - 1] . '</option>'
 		));
 	}			
 	for($i = 1970; $i <= 2037; $i++)
 	{
 		$selected = ($year == $i) ? 'selected="selected"' : '';
-		$template->assign_block_vars('show.year', array(
+		$Template->Assign_block_vars('show.year', array(
 			'YEAR' => '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>'
 		));
 	}			
 	
 	//Récupération des actions du mois en cours.	
-	$result = $sql->query_while("SELECT timestamp
+	$result = $Sql->Query_while("SELECT timestamp
 	FROM ".PREFIX."calendar 
 	WHERE timestamp BETWEEN '" . mktime(0, 0, 0, $month, 1, $year, 0) . "' AND '" . mktime(23, 59, 59, $month, $month_day, $year, 0) . "'
 	ORDER BY timestamp
-	" . $sql->sql_limit(0, ($array_month[$month - 1] - 1)), __LINE__, __FILE__);	
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit(0, ($array_month[$month - 1] - 1)), __LINE__, __FILE__);	
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{ 
 		$day_action = gmdate_format('j', $row['timestamp']);
 		$array_action[$day_action] = true;
 	}
-	$sql->close($result);	
+	$Sql->Close($result);	
 	
 	//Génération des jours du calendrier.
 	$array_l_days =  array($LANG['monday'], $LANG['tuesday'], $LANG['wenesday'], $LANG['thursday'], $LANG['friday'], $LANG['saturday'], 
 	$LANG['sunday']);
 	foreach($array_l_days as $l_day)
 	{
-		$template->assign_block_vars('show.day', array(
+		$Template->Assign_block_vars('show.day', array(
 			'L_DAY' => '<td class="row3"><span class="text_small">' . $l_day . '</span></td>'
 		));
 	}	
@@ -203,7 +203,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 		else
 			$contents = '<td style="padding:0px;height:21px;" class="row3">&nbsp;</td>';
 
-		$template->assign_block_vars('show.calendar', array(
+		$Template->Assign_block_vars('show.calendar', array(
 			'DAY' => $contents,
 			'TR' => (($i % 7) == 0 && $i != 42) ? '</tr><tr style="text-align:center;">' : ''
 		));
@@ -214,14 +214,14 @@ if( $checkdate === true && empty($id) && empty($add) )
 	if( !empty($day) )
 	{
 		$java = '';
-		$result = $sql->query_while("SELECT cl.id, cl.timestamp, cl.title, cl.contents, cl.user_id, cl.nbr_com, m.login
+		$result = $Sql->Query_while("SELECT cl.id, cl.timestamp, cl.title, cl.contents, cl.user_id, cl.nbr_com, m.login
 		FROM ".PREFIX."calendar cl
 		LEFT JOIN ".PREFIX."member m ON m.user_id=cl.user_id
 		WHERE cl.timestamp BETWEEN '" . mktime(0, 0, 0, $month, $day, $year, 0) . "' AND '" . mktime(23, 59, 59, $month, $day, $year, 0) . "'
 		GROUP BY cl.id", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			if( $session->data['level'] === 2 )
+			if( $Member->Get_attribute('level') === 2 )
 			{
 				$edit = '&nbsp;&nbsp;<a href="calendar' . transid('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" /></a>';
 				$del = '&nbsp;&nbsp;<a href="calendar' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm_del();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" /></a>';
@@ -251,7 +251,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 
 			$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
 								
-			$template->assign_block_vars('show.action', array(
+			$Template->Assign_block_vars('show.action', array(
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'TITLE' => $row['title'],
 				'CONTENTS' => second_parse($row['contents']),
@@ -264,11 +264,11 @@ if( $checkdate === true && empty($id) && empty($add) )
 			
 			$check_action = true;
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 			
 		if( !isset($check_action) )
 		{		
-			$template->assign_block_vars('show.action', array(
+			$Template->Assign_block_vars('show.action', array(
 				'TITLE' => '&nbsp;',
 				'LOGIN' => '',
 				'DATE' => gmdate_format('date_format_short', mktime(0, 0, 0, $month, $day, $year, 0)),
@@ -276,7 +276,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 			));	
 		}
 					
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'JAVA' => $java,
 			'L_ON' => $LANG['on']
 		));	
@@ -293,19 +293,19 @@ if( $checkdate === true && empty($id) && empty($add) )
 		include_once('../includes/com.php');
 	}	
 
-	$template->pparse('calendar');
+	$Template->Pparse('calendar');
 }
 elseif( !empty($id) )
 {
-	if( !$session->check_auth($session->data, 2) ) //Admins seulement autorisés à editer/supprimer!
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	if( !$Member->Check_level(2) ) //Admins seulement autorisés à editer/supprimer!
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	if( !empty($del) ) //Suppression simple.
 	{
-		$sql->query_inject("DELETE FROM ".PREFIX."calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("DELETE FROM ".PREFIX."calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//Suppression des commentaires associés.
-		$sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'calendar'", __LINE__, __FILE__);
+		$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'calendar'", __LINE__, __FILE__);
 		
 		redirect(HOST . SCRIPT . SID2);
 	}
@@ -332,7 +332,7 @@ elseif( !empty($id) )
 				if( !empty($title) && !empty($contents) ) //succès
 				{
 					$contents = parse($contents);
-					$sql->query_inject("UPDATE ".PREFIX."calendar SET title = '" . $title . "', contents = '" . $contents . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE ".PREFIX."calendar SET title = '" . $title . "', contents = '" . $contents . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					
 					$day = gmdate_format('d', $timestamp);
 					$month = gmdate_format('m', $timestamp);
@@ -348,14 +348,14 @@ elseif( !empty($id) )
 		}
 		else //Formulaire d'édition
 		{
-			$template->set_filenames(array(
+			$Template->Set_filenames(array(
 				'calendar' => '../templates/' . $CONFIG['theme'] . '/calendar/calendar.tpl'
 			));
 			
 			//Récupération des infos
-			$row = $sql->query_array('calendar', 'timestamp', 'title', 'contents', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$row = $Sql->Query_array('calendar', 'timestamp', 'title', 'contents', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 						
-			$template->assign_vars(array(				
+			$Template->Assign_vars(array(				
 				'L_REQUIRE_TITLE' => $LANG['require_title'],
 				'L_REQUIRE_TEXT' => $LANG['require_text'],				
 				'L_EDIT_EVENT' => $LANG['edit_event'],
@@ -369,7 +369,7 @@ elseif( !empty($id) )
 			));
 		
 			//Gestion de la date
-			$template->assign_block_vars('form', array(
+			$Template->Assign_block_vars('form', array(
 				'UPDATE' => transid('?edit=1&amp;id=' . $id),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'DAY_DATE' => !empty($row['timestamp']) ? gmdate_format('d', $row['timestamp']) : '',
@@ -395,12 +395,12 @@ elseif( !empty($id) )
 				$errstr = '';
 			}
 			if( !empty($errstr) )
-				$errorh->error_handler($errstr, E_USER_NOTICE);
+				$Errorh->Error_handler($errstr, E_USER_NOTICE);
 				
 			include_once('../includes/bbcode.php');
 			
 			
-			$template->pparse('calendar');
+			$Template->Pparse('calendar');
 		}
 	}
 	else
@@ -408,8 +408,8 @@ elseif( !empty($id) )
 }
 elseif( !empty($add) ) //Ajout d'un évenement
 {
-	if( !$session->check_auth($session->data, $CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	if( !$Member->Check_level($CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 	if( !empty($_POST['valid']) ) //Enregistrement
 	{
@@ -432,7 +432,7 @@ elseif( !empty($add) ) //Ajout d'un évenement
 			if( !empty($title) && !empty($contents) ) //succès
 			{
 				$contents = parse($contents);
-				$sql->query_inject("INSERT INTO ".PREFIX."calendar (timestamp,title,contents,user_id,nbr_com) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $session->data['user_id'] . "', 0)", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."calendar (timestamp,title,contents,user_id,nbr_com) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $Member->Get_attribute('user_id') . "', 0)", __LINE__, __FILE__);
 				
 				$day = gmdate_format('d', $timestamp);
 				$month = gmdate_format('m', $timestamp);
@@ -448,7 +448,7 @@ elseif( !empty($add) ) //Ajout d'un évenement
 	} 
 	else
 	{
-		$template->set_filenames(array(
+		$Template->Set_filenames(array(
 			'calendar' => '../templates/' . $CONFIG['theme'] . '/calendar/calendar.tpl'
 		));
 
@@ -462,7 +462,7 @@ elseif( !empty($add) ) //Ajout d'un évenement
 		$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'], 
 		$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
 						
-		$template->assign_vars(array(					
+		$Template->Assign_vars(array(					
 			'L_REQUIRE_TITLE' => $LANG['require_title'],
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_EDIT_EVENT' => $LANG['add_event'],
@@ -476,7 +476,7 @@ elseif( !empty($add) ) //Ajout d'un évenement
 		));
 		
 		//Gestion de la date
-		$template->assign_block_vars('form', array(
+		$Template->Assign_block_vars('form', array(
 			'UPDATE' => transid('?add=1'),			
 			'DATE' => gmdate_format('date_format_short'),
 			'DAY_DATE' => $day,
@@ -502,11 +502,11 @@ elseif( !empty($add) ) //Ajout d'un évenement
 			$errstr = '';
 		}
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, E_USER_NOTICE);
+			$Errorh->Error_handler($errstr, E_USER_NOTICE);
 		
 		include_once('../includes/bbcode.php');
 
-		$template->pparse('calendar');
+		$Template->Pparse('calendar');
 	}
 }
 else

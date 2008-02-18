@@ -35,43 +35,43 @@ $get_id = ( !empty($_GET['id'])) ? numeric($_GET['id']) : '' ;
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {
-	$result = $sql->query_while("SELECT id, special 
+	$result = $Sql->Query_while("SELECT id, special 
 	FROM ".PREFIX."ranks", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$name = !empty($_POST[$row['id'] . 'name']) ? securit($_POST[$row['id'] . 'name']) : '';
 		$msg = !empty($_POST[$row['id'] . 'msg']) ? numeric($_POST[$row['id'] . 'msg']) : '0';
 		$icon = !empty($_POST[$row['id'] . 'icon']) ? securit($_POST[$row['id'] . 'icon']) : '';
 
 		if( !empty($name) && $row['special'] != 1 )
-			$sql->query_inject("UPDATE ".PREFIX."ranks SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."ranks SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		else
-			$sql->query_inject("UPDATE ".PREFIX."ranks SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."ranks SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 
 	###### Régénération du cache des rangs #######
-	$cache->generate_file('ranks');
+	$Cache->Generate_file('ranks');
 		
 	redirect(HOST . SCRIPT);	
 }
 elseif( !empty($_GET['del']) && !empty($get_id) ) //Suppression du rang.
 {
 	//On supprime dans la bdd.
-	$sql->query_inject("DELETE FROM ".PREFIX."ranks WHERE id = '" . $get_id . "'", __LINE__, __FILE__);	
+	$Sql->Query_inject("DELETE FROM ".PREFIX."ranks WHERE id = '" . $get_id . "'", __LINE__, __FILE__);	
 
 	###### Régénération du cache des rangs #######
-	$cache->generate_file('ranks');
+	$Cache->Generate_file('ranks');
 	
 	redirect(HOST . SCRIPT); 	
 }
 else //Sinon on rempli le formulaire	 
 {	
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_ranks' => '../templates/' . $CONFIG['theme'] . '/admin/admin_ranks.tpl'
 	));
 
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
@@ -103,17 +103,17 @@ else //Sinon on rempli le formulaire
 		closedir($dh); //On ferme le dossier
 	}	
 	
-	$result = $sql->query_while("SELECT id, name, msg, icon, special
+	$result = $Sql->Query_while("SELECT id, name, msg, icon, special
 	FROM ".PREFIX."ranks 
 	ORDER BY msg", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{				
 		if( $row['special'] == 0 )
 			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" title="" /></a>';
 		else
 			$del = $LANG['special_rank'];
 
-		$template->assign_block_vars('rank', array(
+		$Template->Assign_block_vars('rank', array(
 			'ID' => $row['id'],
 			'RANK' => $row['name'],
 			'MSG' => ($row['special'] == 0) ? '<input type="text" maxlength="6" size="6" name="' . $row['id'] . 'msg" id="vmsg" value="' . $row['msg'] . '" class="text" />' : $LANG['special_rank'],
@@ -121,20 +121,20 @@ else //Sinon on rempli le formulaire
 			'DELETE' => $del
 		));
 		
-		$template->assign_block_vars('rank.select', array(
+		$Template->Assign_block_vars('rank.select', array(
 			'IMG_RANK' => '<option value="">--</option>'
 		));
 		foreach($array_files as $icon)
 		{			
 			$selected = ($icon == $row['icon']) ? ' selected="selected"' : '';
-			$template->assign_block_vars('rank.select', array(
+			$Template->Assign_block_vars('rank.select', array(
 				'IMG_RANK' => '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>'
 			));
 		}
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->pparse('admin_ranks');
+	$Template->Pparse('admin_ranks');
 }
 
 require_once('../includes/admin_footer.php');

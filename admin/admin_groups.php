@@ -48,10 +48,10 @@ if( !empty($_POST['valid']) && !empty($idgroup_post) ) //Modification du groupe.
 		
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);	
 	
-	$sql->query_inject("UPDATE ".PREFIX."group SET name = '" . $name . "', img = '" . $img . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."group SET name = '" . $name . "', img = '" . $img . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'", __LINE__, __FILE__);
 	
 	###### On régénère le fichier de cache des groupes #######
-	$cache->generate_file('groups');
+	$Cache->Generate_file('groups');
 	
 	redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup_post);
 }
@@ -68,62 +68,62 @@ elseif( !empty($_POST['valid']) && $add_post ) //ajout  du groupe.
 		$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);	
 
 		//Insertion
-		$sql->query_inject("INSERT INTO ".PREFIX."group (name, img, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."group (name, img, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
 			
 		###### On régénère le fichier de cache des groupes #######
-		$cache->generate_file('groups');	
+		$Cache->Generate_file('groups');	
 		
-		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."group"));		
+		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."group"));		
 	}
 	else
 		redirect(HOST . DIR . '/admin/admin_groups.php?error=incomplete#errorh');
 }
 elseif( !empty($idgroup) && $del_group ) //Suppression du groupe.
 {
-	$members = $sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+	$members = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 	$array_members = explode('|', $members);
 	foreach($array_members as $key => $user_id)
 	{
 		//Mise à jour des membres étant dans le groupe supprimé.
-		$user_groups = $sql->query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups = $Sql->Query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		if( !empty($user_groups) )
 		{
 			$user_groups = explode('|', $user_groups);
 			$user_groups_key = array_search($idgroup, $user_groups);
 			unset($user_groups[$user_groups_key]);
 			
-			$sql->query_inject("UPDATE ".PREFIX."member SET user_groups = '" . implode('|', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_groups = '" . implode('|', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		}
 	}
 	
 	//On supprime dans la bdd.
-	$sql->query_inject("DELETE FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);	
+	$Sql->Query_inject("DELETE FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);	
 		
 	###### On régénère le fichier de cache des groupes #######
-	$cache->generate_file('groups');	
+	$Cache->Generate_file('groups');	
 	
 	redirect(HOST . SCRIPT);
 }
 elseif( !empty($idgroup) && $add_mbr ) //Ajout du membre au groupe.
 {
 	$login = !empty($_POST['login_mbr']) ? securit($_POST['login_mbr']) : '';
-	$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
+	$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
 	if( !empty($user_id) )
 	{	
 		//On insère le groupe au champ membre.
-		$user_groups = $sql->query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
+		$user_groups = $Sql->Query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
 		$user_groups_key = array_search($idgroup, explode('|', $user_groups));
 		
 		if( !is_numeric($user_groups_key) ) //Le membre n'appartient pas déjà au groupe.
-			$sql->query_inject("UPDATE ".PREFIX."member SET user_groups = '" . $user_groups . $idgroup . "|' WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_groups = '" . $user_groups . $idgroup . "|' WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
 		else
 			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
 	
 		//On insère le membre dans le groupe.
-		$members = $sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$members = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		$members_key = array_search($user_id, explode('|', $members));
 		if( !is_numeric($members_key) ) //Le membre n'appartient pas déjà au groupe.
-			$sql->query_inject("UPDATE ".PREFIX."group SET members = CONCAT(members, '" . $user_id . "|') WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."group SET members = CONCAT(members, '" . $user_id . "|') WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		else
 			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
 		
@@ -134,21 +134,21 @@ elseif( !empty($idgroup) && $add_mbr ) //Ajout du membre au groupe.
 }
 elseif( $del_mbr && !empty($user_id) && !empty($idgroup) ) //Suppression du membre du groupe.
 {
-	$user_groups = $sql->query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+	$user_groups = $Sql->Query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 	if( !empty($user_groups) )
 	{
 		$user_groups = explode('|', $user_groups);
 		$user_groups_key = array_search($idgroup, $user_groups);
 		unset($user_groups[$user_groups_key]);
 
-		$sql->query_inject("UPDATE ".PREFIX."member SET user_groups = '" . implode('|', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."member SET user_groups = '" . implode('|', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		
-		$members_group = $sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$members_group = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		$members_group = explode('|', $members_group);
 		$members_group_key = array_search($user_id, $members_group);
 		unset($members_group[$members_group_key]);
 		
-		$sql->query_inject("UPDATE ".PREFIX."group SET members = '" . implode('|', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."group SET members = '" . implode('|', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 	
 		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add');	
 	}	
@@ -157,24 +157,24 @@ elseif( $del_mbr && !empty($user_id) && !empty($idgroup) ) //Suppression du memb
 }
 elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_groups_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_groups_management2.tpl'
 	));
 	
-	$group = $sql->query_array('group', 'id', 'name', 'img', 'auth', 'members', "WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+	$group = $Sql->Query_array('group', 'id', 'name', 'img', 'auth', 'members', "WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 	if( !empty($group['id']) )
 	{
 		//Gestion erreur.
 		$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 		if( $get_error == 'incomplete' )
-			$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+			$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		elseif( $get_error == 'already_group' )
-			$errorh->error_handler($LANG['e_already_group'], E_USER_NOTICE);
+			$Errorh->Error_handler($LANG['e_already_group'], E_USER_NOTICE);
 		
-		$nbr_member_group = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
+		$nbr_member_group = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
 		//On crée une pagination si le nombre de membre est trop important.
 		include_once('../includes/pagination.class.php'); 
-		$pagination = new Pagination();
+		$Pagination = new Pagination();
 		
 		//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
 		$img_groups = '<option value="" selected="selected">--</option>';
@@ -201,11 +201,11 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 		}
 		
 		$array_group = unserialize($group['auth']);
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'NAME' => $group['name'],
 			'IMG' => $group['img'],
 			'GROUP_ID' => $idgroup,
-			'PAGINATION' => $pagination->show_pagin('admin_groups.php?id=' . $idgroup . '&amp;p=%d', $nbr_member_group, 'p', 25, 3),
+			'PAGINATION' => $Pagination->Display_pagination('admin_groups.php?id=' . $idgroup . '&amp;p=%d', $nbr_member_group, 'p', 25, 3),
 			'THEME' => $CONFIG['theme'],
 			'LANG' => $CONFIG['lang'],	
 			'IMG_GROUPS' => $img_groups,	
@@ -242,14 +242,14 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 		));		
 		
 		//Liste des membres du groupe.
-		$members = $sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . numeric($group['id']) . "'", __LINE__, __FILE__);
+		$members = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . numeric($group['id']) . "'", __LINE__, __FILE__);
 		$members = explode('|', $members);
 		foreach($members as $key => $user_id)
 		{
-			$login = $sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
+			$login = $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
 			if( !empty($login) )
 			{	
-				$template->assign_block_vars('member', array(
+				$Template->Assign_block_vars('member', array(
 					'USER_ID' => $user_id,
 					'LOGIN' => $login,
 					'U_USER_ID' => transid('.php?id=' . $user_id, '-' . $user_id . '.php')
@@ -260,11 +260,11 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 	else
 		redirect(HOST . SCRIPT);
 	
-	$template->pparse('admin_groups_management2');
+	$Template->Pparse('admin_groups_management2');
 }
 elseif( $add ) //Interface d'ajout du groupe.
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 	'admin_groups_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_groups_management2.tpl'
 	));
 	
@@ -289,7 +289,7 @@ elseif( $add ) //Interface d'ajout du groupe.
 		}
 	}
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],	
 		'IMG_GROUPS' => $img_groups,
@@ -314,21 +314,21 @@ elseif( $add ) //Interface d'ajout du groupe.
 		'L_ADD' => $LANG['add']
 	));		
 	
-	$template->pparse('admin_groups_management2');
+	$Template->Pparse('admin_groups_management2');
 }
 else //Liste des groupes.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_groups_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_groups_management.tpl'
 	 ));
 	 
-	$nbr_group = $sql->count_table("group", __LINE__, __FILE__);
+	$nbr_group = $Sql->Count_table("group", __LINE__, __FILE__);
 	//On crée une pagination si le nombre de group est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 	
-	$template->assign_vars(array(
-		'PAGINATION' => $pagination->show_pagin('admin_groups', $nbr_group, 'p', 25, 3),	
+	$Template->Assign_vars(array(
+		'PAGINATION' => $Pagination->Display_pagination('admin_groups', $nbr_group, 'p', 25, 3),	
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'L_CONFIRM_DEL_GROUP' => $LANG['confirm_del_group'],
@@ -340,23 +340,23 @@ else //Liste des groupes.
 		'L_DELETE' => $LANG['delete']
 	));
 	  
-	$result = $sql->query_while("SELECT id, name, img
+	$result = $Sql->Query_while("SELECT id, name, img
 	FROM ".PREFIX."group 
-	" . $sql->sql_limit($pagination->first_msg(25, 'p'), 25), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	" . $Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$template->assign_block_vars('group', array(
+		$Template->Assign_block_vars('group', array(
 			'LINK' => transid('.php?g=' . $row['id'], '-0.php?g=' . $row['id']),
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'IMAGE' => !empty($row['img']) ? '<img src="../images/group/' . $row['img'] . '" alt="" />' : ''
 		));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_groups_management'); 
+	$Template->Pparse('admin_groups_management'); 
 }
 
 require_once('../includes/admin_footer.php');

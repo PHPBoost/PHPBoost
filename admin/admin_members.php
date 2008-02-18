@@ -41,10 +41,10 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 {
 	if( !empty($_POST['delete']) ) //Suppression du membre.
 	{
-		$sql->query_inject("DELETE FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->Query_inject("DELETE FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);	
 	
 		//On régénère le cache
-		$cache->generate_file('stats');
+		$Cache->Generate_file('stats');
 			
 		redirect(HOST . SCRIPT);
 	}
@@ -54,8 +54,8 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 	if( preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $user_mail) )
 	{	
 		//Vérirication de l'unicité du membre et du mail
-		$check_user = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE login = '" . $login . "' AND user_id <> '" . $id_post . "'", __LINE__, __FILE__);
-		$check_mail = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_id <> '" . $id_post . "' AND user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
+		$check_user = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member WHERE login = '" . $login . "' AND user_id <> '" . $id_post . "'", __LINE__, __FILE__);
+		$check_mail = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_id <> '" . $id_post . "' AND user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 		if( $check_user >= 1 ) 
 			redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pseudo_auth') . '#errorh');
 		elseif( $check_mail >= 1 ) 
@@ -74,7 +74,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 				{
 					if( strlen($password) >= 6 && strlen($password_bis) >= 6 )
 					{
-						$sql->query_inject("UPDATE ".PREFIX."member SET password = '" . $password_md5 . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__); 
+						$Sql->Query_inject("UPDATE ".PREFIX."member SET password = '" . $password_md5 . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__); 
 					}
 					else //Longueur minimale du password
 						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
@@ -121,10 +121,10 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 				$user_groups .= $idgroup . '|';
 
 			//Insertion du différentiel positif des groupes précédent du membre et ceux choisis dans la table des groupes.
-			$user_groups_old = $sql->query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+			$user_groups_old = $Sql->Query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 			$array_diff_pos = array_diff($array_user_groups, explode('|', $user_groups_old));
 			foreach($array_diff_pos as $key => $idgroup)				
-				$sql->query_inject("UPDATE ".PREFIX."group SET members = CONCAT(members, '" . $id_post . "|') WHERE id = '" . numeric($idgroup) . "'", __LINE__, __FILE__);		
+				$Sql->Query_inject("UPDATE ".PREFIX."group SET members = CONCAT(members, '" . $id_post . "|') WHERE id = '" . numeric($idgroup) . "'", __LINE__, __FILE__);		
 				
 			//Insertion du différentiel négatif des groupes précédent du membre et ceux choisis dans la table des groupes.
 			$array_diff_neg = array_diff(explode('|', $user_groups_old), $array_user_groups);
@@ -132,12 +132,12 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			{	
 				if( !empty($idgroup) )
 				{
-					$members_group = $sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+					$members_group = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 					$members_group = explode('|', $members_group);
 					$members_group_key = array_search($id_post, $members_group);
 					unset($members_group[$members_group_key]);
 					
-					$sql->query_inject("UPDATE ".PREFIX."group SET members = '" . implode('|', $members_group) . "' WHERE id = '" . numeric($idgroup) . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE ".PREFIX."group SET members = '" . implode('|', $members_group) . "' WHERE id = '" . numeric($idgroup) . "'", __LINE__, __FILE__);
 				}					
 			}			
 			
@@ -147,7 +147,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			//Gestion de la suppression de l'avatar.
 			if( !empty($_POST['delete_avatar']) )
 			{
-				$user_avatar_path = $sql->query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				$user_avatar_path = $Sql->Query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				
 				if( !empty($user_avatar_path) )
 				{
@@ -156,7 +156,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 					@unlink('../images/avatars/' . $user_avatar_path);
 				}
 				
-				$sql->query_inject("UPDATE ".PREFIX."member SET user_avatar = '' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."member SET user_avatar = '' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 			}
 
 			//Gestion upload d'avatar.					
@@ -164,25 +164,25 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			$dir = '../images/avatars/';
 			
 			include_once('../includes/upload.class.php');
-			$upload = new Upload($dir);
+			$Upload = new Upload($dir);
 			
 			if( is_writable($dir) )
 			{
 				if( $_FILES['avatars']['size'] > 0 )
 				{
-					$upload->upload_file('avatars', '`([a-z0-9])+\.(jpg|gif|png|bmp)+`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
-					if( !empty($upload->error) ) //Erreur, on arrête ici
-						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $upload->error) . '#errorh');
+					$Upload->Upload_file('avatars', '`([a-z0-9])+\.(jpg|gif|png|bmp)+`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
+					if( !empty($Upload->error) ) //Erreur, on arrête ici
+						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $Upload->error) . '#errorh');
 					else
 					{
-						$path = $dir . $upload->filename['avatars'];
-						$error = $upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
+						$path = $dir . $Upload->filename['avatars'];
+						$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 						if( !empty($error) ) //Erreur, on arrête ici
 							redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 						else
 						{
 							//Suppression de l'ancien avatar (sur le serveur) si il existe!
-							$user_avatar_path = $sql->query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+							$user_avatar_path = $Sql->Query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 							if( !empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match) )
 							{
 								if( is_file($user_avatar_path) && isset($match[1]) )
@@ -197,7 +197,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			if( !empty($_POST['avatar']) )
 			{
 				$path = securit($_POST['avatar']);
-				$error = $upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
+				$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
 					redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 				else
@@ -208,34 +208,34 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			if( !empty($login) && !empty($user_mail) )
 			{	
 				//Suppression des images des stats concernant les membres, si l'info à été modifiée.
-				$info_mbr = $sql->query_array("member", "user_theme", "user_sex", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				$info_mbr = $Sql->Query_array("member", "user_theme", "user_sex", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				if( $info_mbr['user_sex'] != $user_sex )
 					@unlink('../cache/sex.png');
 				if( $info_mbr['user_theme'] != $user_theme )
 					@unlink('../cache/theme.png');
 					
-				$sql->query_inject("UPDATE ".PREFIX."member SET login = '" . $login . "', level = '" . $user_level . "', user_groups = '" . $user_groups . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . $login . "', level = '" . $user_level . "', user_groups = '" . $user_groups . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 					
-				$sql->query_inject("UPDATE ".PREFIX."sessions SET level = '" . $user_level . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."sessions SET level = '" . $user_level . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				if( $user_ban > 0 )	//Suppression de la session si le membre se fait bannir.
 				{	
-					$sql->query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 					include_once('../includes/mail.class.php');
-					$mail = new Mail();
-					$mail->send_mail($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST), $CONFIG['mail']);
+					$Mail = new Mail();
+					$Mail->Send_mail($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST), $CONFIG['mail']);
 				}
 				
 				//Champs supplémentaires.
-				$extend_field_exist = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+				$extend_field_exist = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 				if( $extend_field_exist > 0 )
 				{
 					$req_update = '';
 					$req_field = '';
 					$req_insert = '';
-					$result = $sql->query_while("SELECT field_name, field, possible_values
+					$result = $Sql->Query_while("SELECT field_name, field, possible_values
 					FROM ".PREFIX."member_extend_cat
 					WHERE display = 1", __LINE__, __FILE__);
-					while( $row = $sql->sql_fetch_assoc($result) )
+					while( $row = $Sql->Sql_fetch_assoc($result) )
 					{
 						$field = isset($_POST[$row['field_name']]) ? trim($_POST[$row['field_name']]) : '';
 						if( $row['field'] == 2 )
@@ -268,18 +268,18 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 							$req_insert .= '\'' . trim($field, '|') . '\', ';
 						}
 					}
-					$sql->close($result);	
+					$Sql->Close($result);	
 										
-					$check_member = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+					$check_member = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 					if( $check_member )
 					{	
 						if( !empty($req_update) )
-							$sql->query_inject("UPDATE ".PREFIX."member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__); 
+							$Sql->Query_inject("UPDATE ".PREFIX."member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__); 
 					}
 					else
 					{	
 						if( !empty($req_insert) )
-							$sql->query_inject("INSERT INTO ".PREFIX."member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $id_post . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
+							$Sql->Query_inject("INSERT INTO ".PREFIX."member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $id_post . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
 				}	
 				
@@ -304,8 +304,8 @@ elseif( $add && !empty($_POST['add']) ) //Ajout  du membre.
 	if( preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$!", strtolower($mail)) )
 	{	
 		//Vérirication de l'unicité du membre et du mail
-		$check_user = $sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
-		$check_mail = $sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE user_mail = '" . $mail . "'", __LINE__, __FILE__);
+		$check_user = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
+		$check_mail = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE user_mail = '" . $mail . "'", __LINE__, __FILE__);
 		if( $check_user >= 1 ) 
 			redirect(HOST . DIR . '/admin/admin_members' . transid('.php?error=pseudo_auth&add=1') . '#errorh');
 		elseif( $check_mail >= 1 ) 
@@ -317,11 +317,11 @@ elseif( $add && !empty($_POST['add']) ) //Ajout  du membre.
 				if( !empty($login) )
 				{	
 					//On insere le nouveau membre.
-					$sql->query_inject("INSERT INTO ".PREFIX."member (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,user_readonly,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
+					$Sql->Query_inject("INSERT INTO ".PREFIX."member (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,user_readonly,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
 					VALUES('" . $login . "', '" . $password_md5 . "', '" . $level . "', '0', '" . $CONFIG['lang'] . "', '', '" . $mail . "', '1', '" . time() . "', '', '0', '', '', '', '', '', '', '', '', '', '', '0', '0', '0', '0', '0', '', '', '0', '1')", __LINE__, __FILE__);
 					
 					//On régénère le cache
-					$cache->generate_file('stats');
+					$Cache->Generate_file('stats');
 						
 					redirect(HOST . SCRIPT); 	
 				}
@@ -338,20 +338,20 @@ elseif( $add && !empty($_POST['add']) ) //Ajout  du membre.
 elseif( !empty($id) && $delete ) //Suppression du membre.
 {
 	//On supprime dans la bdd.
-	$sql->query_inject("DELETE FROM ".PREFIX."member WHERE user_id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->Query_inject("DELETE FROM ".PREFIX."member WHERE user_id = '" . $id . "'", __LINE__, __FILE__);	
 	
 	//On régénère le cache
-	$cache->generate_file('stats');
+	$Cache->Generate_file('stats');
 		
 	redirect(HOST . SCRIPT);
 }
 elseif( $add )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_members_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_members_management2.tpl'
 	));
 
-	$template->assign_block_vars('members_add', array(
+	$Template->Assign_block_vars('members_add', array(
 	));
 	
 	//Gestion des erreurs.
@@ -376,9 +376,9 @@ elseif( $add )
 		$errstr = '';
 	}
 	if( !empty($errstr) )
-		$errorh->error_handler($errstr, E_USER_NOTICE);  
+		$Errorh->Error_handler($errstr, E_USER_NOTICE);  
 		
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_MEMBERS_MANAGEMENT' => $LANG['members_management'],
 		'L_MEMBERS_ADD' => $LANG['members_add'],
 		'L_MEMBERS_CONFIG' => $LANG['members_config'],
@@ -395,19 +395,19 @@ elseif( $add )
 		'L_ADD' => $LANG['add']
 	));
 	
-	$template->pparse('admin_members_management2'); 	
+	$Template->Pparse('admin_members_management2'); 	
 }
 elseif( !empty($id) )	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_members_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_members_management2.tpl'
 	));
 	
-	$template->assign_block_vars('members_management', array(
-		'NBR_GROUP' => $sql->count_table('group', __LINE__, __FILE__)
+	$Template->Assign_block_vars('members_management', array(
+		'NBR_GROUP' => $Sql->Count_table('group', __LINE__, __FILE__)
 	));
 	
-	$mbr = $sql->query_array('member', '*', "WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
+	$mbr = $Sql->Query_array('member', '*', "WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
 
 	$user_born = '';
 	$array_user_born = explode('-', $mbr['user_born']);
@@ -457,17 +457,17 @@ elseif( !empty($id) )
 		$errstr = '';
 	}
 	if( !empty($errstr) )
-		$errorh->error_handler($errstr, E_USER_NOTICE);  
+		$Errorh->Error_handler($errstr, E_USER_NOTICE);  
 
 	if( isset($LANG[$get_l_error]) )
-		$errorh->error_handler($errstr, E_USER_WARNING);   
+		$Errorh->Error_handler($errstr, E_USER_WARNING);   
 
 	$user_sex = '';
 	if( !empty($mbr['user_sex']) )
 		$user_sex = ($mbr['user_sex'] == 1) ? '../templates/' . $CONFIG['theme'] . '/images/man.png' : '../templates/' . $CONFIG['theme'] . '/images/woman.png';
 	
 	//On assigne les variables pour le POST en précisant l'user_id.
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'IDMBR' => $mbr['user_id'],
 		'NAME' => $mbr['login'],
 		'MAIL' => $mbr['user_mail'],
@@ -583,28 +583,28 @@ elseif( !empty($id) )
 		} 
 			
 		$selected = ($mbr['level'] == $i) ? 'selected="selected"' : '' ;
-		$template->assign_block_vars('members_management.select_rank', array(
+		$Template->Assign_block_vars('members_management.select_rank', array(
 			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 		));
 	}
 	
 	//Groupes.	
 	$i = 0;
-	$result = $sql->query_while("SELECT id, name
+	$result = $Sql->Query_while("SELECT id, name
 	FROM ".PREFIX."group", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{		
 		$selected = '';		
 		$search_group = array_search($row['id'], explode('|', $mbr['user_groups']));		
 		if( is_numeric($search_group) )
 			$selected = 'selected="selected"';	
 			
-		$template->assign_block_vars('members_management.select_group', array(
+		$Template->Assign_block_vars('members_management.select_group', array(
 			'GROUP' => '<option value="' . $row['id'] . '" id="g' . $i . '" ' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 
 	//Temps de bannissement.
 	$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
@@ -629,7 +629,7 @@ elseif( !empty($id) )
 	foreach( $array_time as $key => $time)
 	{
 		$selected = ( $key_sanction == $key ) ? 'selected="selected"' : '' ;		
-		$template->assign_block_vars('members_management.select_ban', array(
+		$Template->Assign_block_vars('members_management.select_ban', array(
 			'TIME' => '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>'
 		));
 	}
@@ -660,7 +660,7 @@ elseif( !empty($id) )
 	foreach( $array_time as $key => $time)
 	{
 		$selected = ($key_sanction == $key) ? ' selected="selected"' : '' ;
-		$template->assign_block_vars('members_management.select_readonly', array(
+		$Template->Assign_block_vars('members_management.select_readonly', array(
 			'TIME' => '<option value="' . $time . '"' . $selected . '>' . $array_sanction[$key] . '</option>'
 		));
 	}
@@ -671,7 +671,7 @@ elseif( !empty($id) )
 	for($j = 0; $j <=10; $j++)
 	{
 		$selected = ((10 * $j) == $mbr['user_warning']) ? ' selected="selected"' : '';
-		$template->assign_block_vars('members_management.select_warning', array(
+		$Template->Assign_block_vars('members_management.select_warning', array(
 			'LEVEL' => '<option value="' . 10 * $j . '"' . $selected . '>' . 10 * $j . '%</option>'
 		));
 	}
@@ -679,9 +679,9 @@ elseif( !empty($id) )
 	//Gestion LANG par défaut.
 	$array_identifier = '';
 	$lang_identifier = '../images/stats/other.png';
-	$result = $sql->query_while("SELECT lang 
+	$result = $Sql->Query_while("SELECT lang 
 	FROM ".PREFIX."lang", __LINE__, __FILE__);
-	while( $row2 = $sql->sql_fetch_assoc($result) )
+	while( $row2 = $Sql->Sql_fetch_assoc($result) )
 	{	
 		$lang_info = @parse_ini_file('../lang/' . $row2['lang'] . '/config.ini');
 		if( $lang_info )
@@ -694,34 +694,34 @@ elseif( !empty($id) )
 				$selected = 'selected="selected"';
 				$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
 			}			
-			$template->assign_block_vars('members_management.select_lang', array(
+			$Template->Assign_block_vars('members_management.select_lang', array(
 				'LANG' => '<option value="' . $row2['lang'] . '" ' . $selected . '>' . $lang_name . '</option>'
 			));
 		}
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'JS_LANG_IDENTIFIER' => $array_identifier,
 		'IMG_LANG_IDENTIFIER' => $lang_identifier
 	));
 	
 	//Gestion thème par défaut.
-	$result = $sql->query_while("SELECT theme 
+	$result = $Sql->Query_while("SELECT theme 
 	FROM ".PREFIX."themes", __LINE__, __FILE__);
-	while( $row2 = $sql->sql_fetch_assoc($result) )
+	while( $row2 = $Sql->Sql_fetch_assoc($result) )
 	{	
 		$theme_info = @parse_ini_file('../templates/' . $row2['theme'] . '/config/' . $CONFIG['lang'] . '/config.ini');
 		if( $theme_info )
 		{
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];
 			$selected = ($row2['theme'] == $mbr['user_theme']) ? 'selected="selected"' : '';
-			$template->assign_block_vars('members_management.select_theme', array(
+			$Template->Assign_block_vars('members_management.select_theme', array(
 				'THEME' => '<option value="' . $row2['theme'] . '" ' . $selected . '>' . $theme_name . '</option>'
 			));
 		}
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Editeur texte par défaut.
 	$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
@@ -731,7 +731,7 @@ elseif( !empty($id) )
 		$selected = ($code == $mbr['user_editor']) ? 'selected="selected"' : '';
 		$select_editors .= '<option value="' . $code . '" ' . $selected . '>' . $name . '</option>';
 	}
-	$template->assign_block_vars('members_management.select_editor', array(
+	$Template->Assign_block_vars('members_management.select_editor', array(
 		'SELECT_EDITORS' => $select_editors
 	));
 	
@@ -743,7 +743,7 @@ elseif( !empty($id) )
 		$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
 		$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 	}
-	$template->assign_block_vars('members_management.select_timezone', array(
+	$Template->Assign_block_vars('members_management.select_timezone', array(
 		'SELECT_TIMEZONE' => $select_timezone
 	));
 		
@@ -754,7 +754,7 @@ elseif( !empty($id) )
 	{		
 		$selected = ($i == $mbr['user_sex']) ? 'selected="selected"' : '';
 
-		$template->assign_block_vars('members_management.select_sex', array(
+		$Template->Assign_block_vars('members_management.select_sex', array(
 			'SEX' => '<option value="' . $i . '" ' . $selected . '>' . $value_sex . '</option>'
 		));
 		
@@ -762,20 +762,20 @@ elseif( !empty($id) )
 	}
 
 	//Champs supplémentaires.
-	$extend_field_exist = $sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+	$extend_field_exist = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 	if( $extend_field_exist > 0 )
 	{
-		$template->assign_vars(array(			
+		$Template->Assign_vars(array(			
 			'L_MISCELLANEOUS' => $LANG['miscellaneous']
 		));
-		$template->assign_block_vars('members_management.miscellaneous', array(			
+		$Template->Assign_block_vars('members_management.miscellaneous', array(			
 		));
-		$result = $sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values, ex.*
+		$result = $Sql->Query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values, ex.*
 		FROM ".PREFIX."member_extend_cat exc
 		LEFT JOIN ".PREFIX."member_extend ex ON ex.user_id = '" . $id . "'
 		WHERE exc.display = 1
 		ORDER BY exc.class", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{	
 			// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 			$field = '';
@@ -834,21 +834,21 @@ elseif( !empty($id) )
 				break;
 			}				
 			
-			$template->assign_block_vars('members_management.miscellaneous.list', array(
+			$Template->Assign_block_vars('members_management.miscellaneous.list', array(
 				'NAME' => $row['require'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 				'ID' => $row['field_name'],
 				'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
 				'FIELD' => $field
 			));
 		}
-		$sql->close($result);	
+		$Sql->Close($result);	
 	}
 	
-	$template->pparse('admin_members_management2');
+	$Template->Pparse('admin_members_management2');
 }
 else
 {			
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_members_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_members_management.tpl'
 	));
 	 
@@ -857,34 +857,34 @@ else
 	{
 		$search = str_replace('*', '%', $search);
 		$req = "SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '".$search."%'";
-		$nbr_result = $sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login LIKE '%".$search."%'", __LINE__, __FILE__);
+		$nbr_result = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login LIKE '%".$search."%'", __LINE__, __FILE__);
 
 		if( !empty($nbr_result) )
 		{			
 			$i = 0;
-			$result = $sql->query_while($req, __LINE__, __FILE__);
-			while ($row = $sql->sql_fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
+			$result = $Sql->Query_while($req, __LINE__, __FILE__);
+			while ($row = $Sql->Sql_fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
 			{ 
 				$coma = ($i != 0) ? ', ' : '';
 				$i++;
-				$template->assign_block_vars('search', array(
+				$Template->Assign_block_vars('search', array(
 					'RESULT' => $coma . '<a href="../admin/admin_members.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a>'
 				));
 			}
-			$sql->close($result);
+			$Sql->Close($result);
 		}
 		else
 		{
-			$template->assign_block_vars('search', array(
+			$Template->Assign_block_vars('search', array(
 				'RESULT' => $LANG['no_result']
 			));
 		}		
 	}
 
-	$nbr_membre = $sql->count_table("member", __LINE__, __FILE__);
+	$nbr_membre = $Sql->Count_table("member", __LINE__, __FILE__);
 	//On crée une pagination si le nombre de membre est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 	 
 	$get_sort = !empty($_GET['sort']) ? trim($_GET['sort']) : '';	
 	switch($get_sort)
@@ -910,8 +910,8 @@ else
 	$mode = ($get_mode == 'asc' || $get_mode == 'desc') ? strtoupper(trim($_GET['mode'])) : '';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '&amp;sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
-	$template->assign_vars(array(
-		'PAGINATION' => $pagination->show_pagin('admin_members.php?p=%d' . $unget, $nbr_membre, 'p', 25, 3),	
+	$Template->Assign_vars(array(
+		'PAGINATION' => $Pagination->Display_pagination('admin_members.php?p=%d' . $unget, $nbr_membre, 'p', 25, 3),	
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
@@ -943,11 +943,11 @@ else
 		'L_DELETE' => $LANG['delete']
 	));
 		
-	$result = $sql->query_while("SELECT login, user_id, user_mail, timestamp, user_web, level, user_aprob
+	$result = $Sql->Query_while("SELECT login, user_id, user_mail, timestamp, user_web, level, user_aprob
 	FROM ".PREFIX."member 
 	ORDER BY " . $sort . " " . $mode . 
-	$sql->sql_limit($pagination->first_msg(25, 'p'), 25), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	$Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		switch ($row['level']) 
 		{	
@@ -968,7 +968,7 @@ else
 		
 		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
 		
-		$template->assign_block_vars('member', array(
+		$Template->Assign_block_vars('member', array(
 			'IDMBR' => $row['user_id'],
 			'NAME' => $row['login'],
 			'RANK' => $rank,
@@ -978,11 +978,11 @@ else
 			'APROB' => ($row['user_aprob'] == 0) ? $LANG['no'] : $LANG['yes']		
 		));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_members_management'); 
+	$Template->Pparse('admin_members_management'); 
 }
 require_once('../includes/admin_footer.php');
 

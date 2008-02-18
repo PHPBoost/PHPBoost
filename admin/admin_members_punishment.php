@@ -29,11 +29,11 @@ require_once('../includes/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'admin_members_punishment' => '../templates/' . $CONFIG['theme'] . '/admin/admin_members_punishment.tpl')
 );
 	
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'SID' => SID,
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
@@ -57,21 +57,21 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 	$readonly_contents = !empty($_POST['action_contents']) ? trim($_POST['action_contents']) : '';
 	if( !empty($id_get) && !empty($_POST['valid_user']) ) //On met à  jour le niveau d'avertissement
 	{
-		$info_mbr = $sql->query_array('member', 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);		
+		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);		
 		if( !empty($info_mbr['user_id']) )
 		{
-			$sql->query_inject("UPDATE ".PREFIX."member SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-			if( $info_mbr['user_id'] != $session->data['user_id'] )
+			if( $info_mbr['user_id'] != $Member->Get_attribute('user_id') )
 			{
 				if( !empty($readonly_contents) && !empty($readonly) )
 				{					
 					include_once('../includes/pm.class.php');
-					$privatemsg = new Privatemsg();
+					$Privatemsg = new Privatemsg();
 					
 					//Envoi du message.
-					$privatemsg->send_pm($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', SYSTEM_PM);
+					$Privatemsg->Send_pm($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', SYSTEM_PM);
 				}
 			}
 		}
@@ -79,7 +79,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=punish');
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['punishment_management'],
 		'U_XMLHTTPREQUEST' => 'punish_user',
@@ -91,17 +91,17 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		if( !empty($_POST['search_member']) )
 		{
 			$login = !empty($_POST['login_mbr']) ? securit($_POST['login_mbr']) : '';
-			$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=punish&id=' . $user_id);
 			else
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=punish');
 		}	
 		
-		$template->assign_block_vars('user_list', array(
+		$Template->Assign_block_vars('user_list', array(
 		));
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_punish_until'],
 			'L_ACTION_USER' => $LANG['punishment_management'],
@@ -112,13 +112,13 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		));	
 			
 		$i = 0;
-		$result = $sql->query_while("SELECT user_id, login, user_readonly
+		$result = $Sql->Query_while("SELECT user_id, login, user_readonly
 		FROM ".PREFIX."member
 		WHERE user_readonly > " . time() . "
 		ORDER BY user_readonly DESC", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			$template->assign_block_vars('user_list.list', array(
+			$Template->Assign_block_vars('user_list.list', array(
 				'LOGIN' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
 				'U_PROFILE' => '../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
@@ -131,14 +131,14 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		
 		if( $i === 0 )
 		{
-			$template->assign_block_vars('user_list.empty', array(
+			$Template->Assign_block_vars('user_list.empty', array(
 				'NO_USER' => $LANG['no_punish'],
 			));
 		}
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $sql->query_array('member', 'login', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->Query_array('member', 'login', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 				
 		//On crée le formulaire select
 		$select = '';
@@ -168,7 +168,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 			$select .= '<option value="' . $time . '" ' . $selected . '>' . strtolower($array_sanction[$key]) . '</option>';
 		}	
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
@@ -178,7 +178,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 			'L_CHANGE_INFO' => $LANG['submit']
 		));	
 		
-		$template->assign_block_vars('user_info', array(			
+		$Template->Assign_block_vars('user_info', array(			
 			'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
 			'INFO' => $array_sanction[$key_sanction],
 			'SELECT' => $select,
@@ -217,42 +217,42 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 	$warning_contents = !empty($_POST['action_contents']) ? trim($_POST['action_contents']) : '';
 	if( $new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user']) ) //On met à  jour le niveau d'avertissement
 	{
-		$info_mbr = $sql->query_array('member', 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);		
+		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);		
 		if( !empty($info_mbr['user_id']) )
 		{
 			if( $new_warning_level < 100 ) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
-				$sql->query_inject("UPDATE ".PREFIX."member SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."member SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if( $info_mbr['user_id'] != $session->data['user_id'] )
+				if( $info_mbr['user_id'] != $Member->Get_attribute('user_id') )
 				{					
 					if( !empty($warning_contents) )
 					{					
 						include_once('../includes/pm.class.php');
-						$privatemsg = new Privatemsg();
+						$Privatemsg = new Privatemsg();
 						
 						//Envoi du message.
-						$privatemsg->send_pm($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', SYSTEM_PM);
+						$Privatemsg->Send_pm($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', SYSTEM_PM);
 					}
 				}
 			}
 			elseif( $new_warning_level == 100 ) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
 			{
-				$sql->query_inject("UPDATE ".PREFIX."member SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-				$sql->query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."member SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
 				//Envoi du mail
 				include_once('../includes/mail.class.php');
-				$mail = new Mail();
-				$mail->send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
+				$Mail = new Mail();
+				$Mail->Send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 			}	
 		}
 		
 		redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=warning');
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['warning_management'],
 		'U_XMLHTTPREQUEST' => 'warning_user',		
@@ -264,14 +264,14 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		if( !empty($_POST['search_member']) )
 		{
 			$login = !empty($_POST['login_mbr']) ? securit($_POST['login_mbr']) : '';
-			$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=warning&id=' . $user_id);
 			else
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=warning');
 		}		
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_warning_level'],
 			'L_PM' => $LANG['user_contact_pm'],
@@ -281,17 +281,17 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 		));
 		
-		$template->assign_block_vars('user_list', array(
+		$Template->Assign_block_vars('user_list', array(
 		));
 		
 		$i = 0;
-		$result = $sql->query_while("SELECT user_id, login, user_warning
+		$result = $Sql->Query_while("SELECT user_id, login, user_warning
 		FROM ".PREFIX."member
 		WHERE user_warning > 0
 		ORDER BY user_warning", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			$template->assign_block_vars('user_list.list', array(
+			$Template->Assign_block_vars('user_list.list', array(
 				'LOGIN' => $row['login'],
 				'INFO' => $row['user_warning'] . '%',
 				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="" /></a>',
@@ -304,17 +304,17 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		
 		if( $i === 0 )
 		{
-			$template->assign_block_vars('user_list.empty', array(
+			$Template->Assign_block_vars('user_list.empty', array(
 				'NO_USER' => $LANG['no_user_warning'],
 			));
 		}
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $sql->query_array('member', 'login', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->Query_array('member', 'login', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_warning_explain'],
@@ -335,7 +335,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 		}
 		
-		$template->assign_block_vars('user_info', array(			
+		$Template->Assign_block_vars('user_info', array(			
 			'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
 			'SELECT' => $select,
@@ -355,25 +355,25 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 	$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
 	if( !empty($_POST['valid_user']) && !empty($id_get) ) //On banni le membre
 	{
-		$info_mbr = $sql->query_array('member', 'user_id', 'level', 'user_warning', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', 'user_warning', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		if( !empty($info_mbr['user_id']) )
 		{	
-			$sql->query_inject("UPDATE ".PREFIX."member SET user_ban = '" . $user_ban . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_ban = '" . $user_ban . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			//Si avertissement à 100% et débanni, on réduit l'avertissement à 90%.
 			if( $user_ban == 0 && $info_mbr['user_warning'] == 100 )
-				$sql->query_inject("UPDATE ".PREFIX."member SET user_warning = '90' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."member SET user_warning = '90' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
 			if( !empty($user_ban) ) //Envoi du mail
 			{
 				include_once('../includes/mail.class.php');
-				$mail = new Mail();
-				$mail->send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
+				$Mail = new Mail();
+				$Mail->Send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 			}				
 		}		
 		redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=ban');
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['ban_management'],
 		'U_XMLHTTPREQUEST' => 'ban_user',
@@ -385,17 +385,17 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		if( !empty($_POST['search_member']) )
 		{
 			$login = !empty($_POST['login_mbr']) ? securit($_POST['login_mbr']) : '';
-			$user_id = $sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=ban&id=' . $user_id);
 			else
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=ban');
 		}	
 		
-		$template->assign_block_vars('user_list', array(
+		$Template->Assign_block_vars('user_list', array(
 		));
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_ban_until'],
 			'L_ACTION_USER' => $LANG['ban_management'],
@@ -406,13 +406,13 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		));	
 			
 		$i = 0;
-		$result = $sql->query_while("SELECT user_id, login, user_ban, user_warning
+		$result = $Sql->Query_while("SELECT user_id, login, user_ban, user_warning
 		FROM ".PREFIX."member
 		WHERE user_ban > " . time() . " OR user_warning = 100
 		ORDER BY user_ban", __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) )
+		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			$template->assign_block_vars('user_list.list', array(
+			$Template->Assign_block_vars('user_list.list', array(
 				'LOGIN' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 				'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
 				'U_PROFILE' => '../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
@@ -425,23 +425,23 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		
 		if( $i === 0 )
 		{
-			$template->assign_block_vars('user_list.empty', array(
+			$Template->Assign_block_vars('user_list.empty', array(
 				'NO_USER' => $LANG['no_ban'],
 			));
 		}
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$mbr = $sql->query_array('member', 'login', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$mbr = $Sql->Query_array('member', 'login', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 				
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_LOGIN' => $LANG['pseudo'],
 			'L_BAN' => $LANG['ban_user'],
 			'L_DELAY_BAN' => $LANG['user_ban_delay'],
 		));	
 			
-		$template->assign_block_vars('user_ban', array(			
+		$Template->Assign_block_vars('user_ban', array(			
 			'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $mbr['login'] . '</a>',
 			'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get
@@ -473,7 +473,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		foreach( $array_time as $key => $time)
 		{
 			$selected = ($key_sanction == $key) ? 'selected="selected"' : '' ;
-			$template->assign_block_vars('user_ban.select_ban', array(
+			$Template->Assign_block_vars('user_ban.select_ban', array(
 				'TIME' => '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>'
 			));
 		}	
@@ -484,7 +484,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 	}
 }
 
-$template->pparse('admin_members_punishment');
+$Template->Pparse('admin_members_punishment');
 	
 require_once('../includes/admin_footer.php');
 

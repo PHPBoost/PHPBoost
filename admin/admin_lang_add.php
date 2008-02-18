@@ -45,10 +45,10 @@ if( $install )
 	$secure = isset($_POST[$lang.'secure']) ? numeric($_POST[$lang.'secure']) : '-1';
 	$activ = isset($_POST[$lang.'activ']) ? numeric($_POST[$lang.'activ']) : '0';
 		
-	$check_lang = $sql->query("SELECT lang FROM ".PREFIX."lang WHERE lang = '" . securit($lang) . "'", __LINE__, __FILE__);	
+	$check_lang = $Sql->Query("SELECT lang FROM ".PREFIX."lang WHERE lang = '" . securit($lang) . "'", __LINE__, __FILE__);	
 	if( empty($check_lang) && !empty($lang) )
 	{
-		$sql->query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES('" . securit($lang) . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES('" . securit($lang) . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
 		
 		redirect(HOST . SCRIPT); 
 	}
@@ -67,27 +67,27 @@ elseif( !empty($_FILES['upload_lang']['name']) ) //Upload et décompression de l'
 	$error = '';
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
-		$check_lang = $sql->query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . securit($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
+		$check_lang = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . securit($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
 		if( empty($check_lang) )
 		{
 			include_once('../includes/upload.class.php');
-			$upload = new Upload($dir);
-			if( $upload->upload_file('upload_lang', '`([a-z0-9_-])+\.(gzip|zip)+`i') )
+			$Upload = new Upload($dir);
+			if( $Upload->Upload_file('upload_lang', '`([a-z0-9_-])+\.(gzip|zip)+`i') )
 			{					
-				$archive_path = '../lang/' . $upload->filename['upload_lang'];
+				$archive_path = '../lang/' . $Upload->filename['upload_lang'];
 				//Place à la décompression.
-				if( $upload->extension['upload_lang'] == 'gzip' )
+				if( $Upload->extension['upload_lang'] == 'gzip' )
 				{
 					include_once('../includes/pcltar.lib.php');
-					if( !$zip_files = PclTarExtract($upload->filename['upload_lang'], '../lang/') )
-						$error = $upload->error;
+					if( !$zip_files = PclTarExtract($Upload->filename['upload_lang'], '../lang/') )
+						$error = $Upload->error;
 				}
-				elseif( $upload->extension['upload_lang'] == 'zip' )
+				elseif( $Upload->extension['upload_lang'] == 'zip' )
 				{
 					include_once('../includes/pclzip.lib.php');
-					$zip = new PclZip($archive_path);
-					if( !$zip_files = $zip->extract(PCLZIP_OPT_PATH, '../lang/', PCLZIP_OPT_SET_CHMOD, 0666) )
-						$error = $upload->error;
+					$Zip = new PclZip($archive_path);
+					if( !$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../lang/', PCLZIP_OPT_SET_CHMOD, 0666) )
+						$error = $Upload->error;
 				}
 				else
 					$error = 'e_upload_invalid_format';
@@ -110,11 +110,11 @@ elseif( !empty($_FILES['upload_lang']['name']) ) //Upload et décompression de l'
 }
 else
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_lang_add' => '../templates/' . $CONFIG['theme'] . '/admin/admin_lang_add.tpl'
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],		
 		'LANG' => $CONFIG['lang'],
 		'L_LANG_ADD' => $LANG['lang_add'],	
@@ -138,7 +138,7 @@ else
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	$array_error = array('e_upload_invalid_format', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_lang_already_exist', 'e_unlink_disabled');
 	if( in_array($get_error, $array_error) )
-		$errorh->error_handler($LANG[$get_error], E_USER_WARNING);
+		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
 		
 	//On recupère les dossier des thèmes contenu dans le dossier templates.
 	$z = 0;
@@ -156,21 +156,21 @@ else
 	
 		if( is_array($fichier_array) )
 		{			
-			$result = $sql->query_while("SELECT lang 
+			$result = $Sql->Query_while("SELECT lang 
 			FROM ".PREFIX."lang", __LINE__, __FILE__);
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				//On recherche les clées correspondante à celles trouvée dans la bdd.
 				$key = array_search($row['lang'], $fichier_array);
 				if( $key !== false)
 					unset($fichier_array[$key]); //On supprime ces clées du tableau.
 			}
-			$sql->close($result);
+			$Sql->Close($result);
 			
 			foreach($fichier_array as $lang_array => $value_array) //On effectue la recherche dans le tableau.
 			{
 				$info_lang = @parse_ini_file('../lang/' . $value_array . '/config.ini');
-				$template->assign_block_vars('list', array(
+				$Template->Assign_block_vars('list', array(
 					'IDLANG' =>  $value_array,		
 					'LANG' =>  $info_lang['name'],	
 					'IDENTIFIER' =>  $info_lang['identifier'],
@@ -200,7 +200,7 @@ else
 					}
 					
 					$selected = ($i == -1) ? 'selected="selected"' : '';
-					$template->assign_block_vars('list.select', array(	
+					$Template->Assign_block_vars('list.select', array(	
 						'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 					));
 				}
@@ -210,13 +210,13 @@ else
 	}	
 
 	if( $z != 0 )
-		$template->assign_block_vars('lang', array(		
+		$Template->Assign_block_vars('lang', array(		
 		));
 	else
-		$template->assign_block_vars('no_lang', array(		
+		$Template->Assign_block_vars('no_lang', array(		
 		));
 	
-	$template->pparse('admin_lang_add'); 
+	$Template->Pparse('admin_lang_add'); 
 }
 
 require_once('../includes/admin_footer.php');

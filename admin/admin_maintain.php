@@ -54,16 +54,16 @@ if( !empty($_POST['valid']) )
 	$CONFIG['maintain_delay'] = isset($_POST['display_delay']) ? numeric($_POST['display_delay']) : 0;
 	$CONFIG['maintain_display_admin'] = isset($_POST['maintain_display_admin']) ? numeric($_POST['maintain_display_admin']) : 0;
 	$CONFIG['maintain'] = $maintain;
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 	
 	###### Régénération du cache $CONFIG #######
-	$cache->generate_file('config');
+	$Cache->Generate_file('config');
 	
 	redirect(HOST . SCRIPT);
 }
 else //Sinon on rempli le formulaire	 
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_maintain' => '../templates/' . $CONFIG['theme'] . '/admin/admin_maintain.tpl'
 	));
 	
@@ -71,7 +71,7 @@ else //Sinon on rempli le formulaire
 	$CONFIG['maintain_display_admin'] = isset($CONFIG['maintain_display_admin']) ? $CONFIG['maintain_display_admin'] : 1;
 
 	$check_until = ($CONFIG['maintain'] > (time() + 86400));
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'MAINTAIN_CONTENTS' => !empty($CONFIG['maintain_text']) ? unparse($CONFIG['maintain_text']) : '',
 		'DISPLAY_DELAY_ENABLED' => ($CONFIG['maintain_delay'] == 1) ? 'checked="checked"' : '',
 		'DISPLAY_DELAY_DISABLED' => ($CONFIG['maintain_delay'] == 0) ? 'checked="checked"' : '',
@@ -120,14 +120,14 @@ else //Sinon on rempli le formulaire
 	foreach($array_time as $key => $time)
 	{
 		$selected = (($key_delay + 1) == $key) ? 'selected="selected"' : '' ;
-		$template->assign_block_vars('select_maintain', array(
+		$Template->Assign_block_vars('select_maintain', array(
 			'DELAY' => '<option value="' . $time . '" ' . $selected . '>' . $array_delay[$key] . '</option>'
 		));
 	}
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_maintain');
+	$Template->Pparse('admin_maintain');
 }
 
 require_once('../includes/admin_footer.php');

@@ -39,39 +39,39 @@ $del = !empty($_GET['delete']) ? true : false;
 if( $del && !empty($id) ) //Suppresion de l'article.
 {
 	//On supprime dans la bdd.
-	$sql->query_inject("DELETE FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
+	$Sql->Query_inject("DELETE FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
 	
-	$cache->load_file('articles');
+	$Cache->Load_file('articles');
 	if( empty($idcat) )//Racine.
 	{
 		$CAT_ARTICLES[0]['id_left'] = 0;
 		$CAT_ARTICLES[0]['id_right'] = 0;
 	}
 	//Mise à jours du nombre d'articles des parents.
-	$visible = $sql->query("SELECT visible FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
+	$visible = $Sql->Query("SELECT visible FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
 	$clause_update = ($visible == 1) ? 'nbr_articles_visible = nbr_articles_visible - 1' : 'nbr_articles_unvisible = nbr_articles_unvisible - 1';
-	$sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 		
 	//On supprimes les éventuels commentaires associés.
-	$sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = " . $id . " AND script = 'articles'", __LINE__, __FILE__);
+	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = " . $id . " AND script = 'articles'", __LINE__, __FILE__);
 	
 	include_once('../includes/rss.class.php'); //Flux rss regénéré!
-	$rss = new Rss('articles/rss.php');
-	$rss->cache_path('../cache/');
-	$rss->generate_file('javascript', 'rss_articles');
-	$rss->generate_file('php', 'rss2_articles');
+	$Rss = new Rss('articles/rss.php');
+	$Rss->Cache_path('../cache/');
+	$Rss->Generate_file('javascript', 'rss_articles');
+	$Rss->Generate_file('php', 'rss2_articles');
 	
 	redirect(HOST . SCRIPT);	
 }	
 elseif( !empty($id) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_articles_management' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_management.tpl'
 	));
 
-	$articles = $sql->query_array('articles', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$articles = $Sql->Query_array('articles', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
-	$template->assign_vars(array(	
+	$Template->Assign_vars(array(	
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_REQUIRE_CAT' => $LANG['require_cat'],
@@ -103,16 +103,16 @@ elseif( !empty($id) )
 		
 	//Catégories.
 	$categories = '<option value="0">' . $LANG['root'] . '</option>';
-	$result = $sql->query_while("SELECT id, level, name 
+	$result = $Sql->Query_while("SELECT id, level, name 
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $articles['idcat']) ? 'selected="selected"' : '';
 		$categories .= '<option value="' . $row['id'] . '" ' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 	}		
-	$sql->close($result);
+	$Sql->Close($result);
 		
 	//Images disponibles
 	$img_direct_path = (strpos($articles['icon'], '/') !== false);
@@ -136,7 +136,7 @@ elseif( !empty($id) )
 		}
 	}
 
-	$template->assign_block_vars('articles', array(
+	$Template->Assign_block_vars('articles', array(
 		'TITLE' => $articles['title'],
 		'IMG_ICON' => !empty($articles['icon']) ? '<img src="' . $articles['icon'] . '" alt="" class="valign_middle" />' : '',
 		'IMG_LIST' => $image_list,
@@ -168,15 +168,15 @@ elseif( !empty($id) )
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_articles_management'); 
+	$Template->Pparse('admin_articles_management'); 
 }	
 elseif( !empty($_POST['previs']) && !empty($id_post) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_articles_management' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_management.tpl'
 	));
 
@@ -223,17 +223,17 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	//Catégories.	
 	$i = 0;	
 	$categories = '<option value="0">' . $LANG['root'] . '</option>';
-	$result = $sql->query_while("SELECT id, level, name 
+	$result = $Sql->Query_while("SELECT id, level, name 
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
 		$categories .= '<option value="' . $row['id'] . '" ' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 		$i++;
 	}		
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Images disponibles
 	$img_direct_path = (strpos($icon, '/') !== false);
@@ -257,7 +257,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		}
 	}
 	
-	$template->assign_block_vars('articles', array(
+	$Template->Assign_block_vars('articles', array(
 		'IDARTICLES' => $id_post,
 		'TITLE' => stripslashes($title),		
 		'CATEGORIES' => $categories,
@@ -285,8 +285,8 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'VISIBLE_UNAPROB' => (($visible == 0) ? 'checked="checked"' : '')
 	));
 	
-	$pseudo = $sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-	$template->assign_block_vars('articles.preview', array(
+	$pseudo = $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+	$Template->Assign_block_vars('articles.preview', array(
 		'USER_ID' => $user_id,
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(parse($contents))),
@@ -294,7 +294,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'DATE' => gmdate_format('date_format_short')
 	));
 	
-	$template->assign_vars(array(	
+	$Template->Assign_vars(array(	
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_REQUIRE_CAT' => $LANG['require_cat'],
@@ -329,7 +329,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_articles_management'); 
+	$Template->Pparse('admin_articles_management'); 
 }
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
@@ -393,25 +393,25 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		
 		$cat_clause = ' ';
 		//Changement de catégorie parente?
-		$articles_info = $sql->query_array("articles", "id", "idcat", "visible", "WHERE id = '" . $id_post . "'", __LINE__, __FILE__);		
+		$articles_info = $Sql->Query_array("articles", "id", "idcat", "visible", "WHERE id = '" . $id_post . "'", __LINE__, __FILE__);		
 		if( $articles_info['idcat'] != $idcat && !empty($articles_info['id']) )
 		{
 			if( $articles_info['visible'] == 1 )
 				$is_visible = 'nbr_articles_visible';
 			else
 				$is_visible = 'nbr_articles_unvisible';
-			$sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " - 1 WHERE id = '" . $articles_info['idcat'] . "'", __LINE__, __FILE__);
-			$sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " + 1 WHERE id = '" . $idcat . "'", __LINE__, __FILE__);				
+			$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " - 1 WHERE id = '" . $articles_info['idcat'] . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " + 1 WHERE id = '" . $idcat . "'", __LINE__, __FILE__);				
 			$cat_clause = " idcat = '" . $idcat . "', ";
 		}	
 		
-		$sql->query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . $contents . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->Query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . $contents . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		include_once('../includes/rss.class.php'); //Flux rss regénéré!
-		$rss = new Rss('articles/rss.php');
-		$rss->cache_path('../cache/');
-		$rss->generate_file('javascript', 'rss_articles');
-		$rss->generate_file('php', 'rss2_articles');
+		$Rss = new Rss('articles/rss.php');
+		$Rss->Cache_path('../cache/');
+		$Rss->Generate_file('javascript', 'rss_articles');
+		$Rss->Generate_file('php', 'rss2_articles');
 		
 		redirect(HOST . SCRIPT);
 	}
@@ -420,20 +420,20 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 }		
 else
 {			
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_articles_management' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_management.tpl'
 	));
 	 
-	$nbr_articles = $sql->count_table('articles', __LINE__, __FILE__);
+	$nbr_articles = $Sql->Count_table('articles', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre d'articles est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 	
-	$template->assign_vars(array(		
+	$Template->Assign_vars(array(		
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'PAGINATION' => $pagination->show_pagin('admin_articles.php?p=%d', $nbr_articles, 'p', 25, 3),	
+		'PAGINATION' => $Pagination->Display_pagination('admin_articles.php?p=%d', $nbr_articles, 'p', 25, 3),	
 		'CHEMIN' => SCRIPT,
 		'L_CONFIRM_DEL_ARTICLE' => $LANG['confirm_del_article'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
@@ -452,16 +452,16 @@ else
 		'L_SHOW' => $LANG['show']
 	)); 
 
-	$template->assign_block_vars('list', array(
+	$Template->Assign_block_vars('list', array(
 	));
 	
-	$result = $sql->query_while("SELECT a.id, a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login 
+	$result = $Sql->Query_while("SELECT a.id, a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login 
 	FROM ".PREFIX."articles a
 	LEFT JOIN ".PREFIX."articles_cats ac ON ac.id = a.idcat
 	LEFT JOIN ".PREFIX."member m ON a.user_id = m.user_id	
 	ORDER BY a.timestamp DESC " .
-	$sql->sql_limit($pagination->first_msg(25, 'p'), 25), __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	$Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( $row['visible'] == 2 )
 			$aprob = $LANG['waiting'];			
@@ -481,7 +481,7 @@ else
 		elseif( $row['end'] > 0 )
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 		
-		$template->assign_block_vars('list.articles', array(
+		$Template->Assign_block_vars('list.articles', array(
 			'TITLE' => $title,
 			'IDCAT' => $row['idcat'],
 			'ID' => $row['id'],			
@@ -492,9 +492,9 @@ else
 			'U_CAT' => '<a href="articles/articles' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '">' . (!empty($row['idcat']) ? $row['name'] : '<em>' . $LANG['root'] . '</em>') . '</a>'
 		));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
-	$template->pparse('admin_articles_management'); 
+	$Template->Pparse('admin_articles_management'); 
 }
 
 require_once('../includes/admin_footer.php');

@@ -29,7 +29,7 @@ require_once('../includes/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
-$cache->load_file('member');
+$Cache->Load_file('member');
 
 if( !empty($_POST['msg_register']) ) //Message à l'inscription.
 {
@@ -48,30 +48,30 @@ if( !empty($_POST['msg_register']) ) //Message à l'inscription.
 	
 	$config_member['msg_register'] = !empty($_POST['contents']) ? stripslashes(parse($_POST['contents'])) : '';
 	
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
 	
 	###### Régénération du cache $CONFIG_MEMBER #######
-	$cache->generate_file('member');
+	$Cache->Generate_file('member');
 		
 	redirect(HOST . SCRIPT); 	
 }
 else
 {			
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_terms' => '../templates/' . $CONFIG['theme'] . '/admin/admin_terms.tpl'
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'L_TERMS' => $LANG['register_terms'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 	));
 	
-	$template->assign_block_vars('register', array(
+	$Template->Assign_block_vars('register', array(
 	));
 			
-	$msg_register = $sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__); //Message à l'inscription.
+	$msg_register = $Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__); //Message à l'inscription.
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'CONTENTS' => unparse($CONFIG_MEMBER['msg_register']),
 		'L_TERMS' => $LANG['register_terms'],
 		'L_EXPLAIN_TERMS' => $LANG['explain_terms'],
@@ -83,7 +83,7 @@ else
 	
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('admin_terms'); 
+	$Template->Pparse('admin_terms'); 
 }
 
 require_once('../includes/admin_footer.php');

@@ -35,33 +35,33 @@ $edit = !empty($_GET['edit']) ? true : false;
 $idcom = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $module = !empty($_GET['module']) ? securit($_GET['module']) : '';
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'admin_com_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_com_management.tpl'
 ));
 
 //Chargement du cache
-$cache->load_file('com');
+$Cache->Load_file('com');
 
 //On récupère le nombre de commentaires dans chaque modules.
 $array_com = array();
-$result = $sql->query_while("SELECT script, COUNT(*) as total
+$result = $Sql->Query_while("SELECT script, COUNT(*) as total
 FROM ".PREFIX."com 
 GROUP BY script", __LINE__, __FILE__);
-while($row = $sql->sql_fetch_assoc($result) )
+while($row = $Sql->Sql_fetch_assoc($result) )
 {
 	$array_com[$row['script']] = $row['total'];
 }
-$sql->close($result);
+$Sql->Close($result);
 
 //On crée une pagination si le nombre de commentaires est trop important.
 include_once('../includes/pagination.class.php'); 
-$pagination = new Pagination();
+$Pagination = new Pagination();
 
-$nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $sql->count_table('com', __LINE__, __FILE__);
-$template->assign_vars(array(
+$nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->Count_table('com', __LINE__, __FILE__);
+$Template->Assign_vars(array(
 	'THEME' => $CONFIG['theme'],
 	'LANG' => $CONFIG['lang'],
-	'PAGINATION_COM' => $pagination->show_pagin('admin_com.php?pc=%d', $nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
+	'PAGINATION_COM' => $Pagination->Display_pagination('admin_com.php?pc=%d', $nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
 	'L_DISPLAY_RECENT' => $LANG['display_recent_com'],
 	'L_DISPLAY_TOPIC_COM' => $LANG['display_topic_com'],
 	'L_CONFIRM_DELETE' => $LANG['alert_delete_msg'],
@@ -90,7 +90,7 @@ if( is_dir($root) ) //Si le dossier existe
 				$info_module = @parse_ini_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini');
 				if( isset($info_module['info']) && !empty($info_module['com']) )
 				{
-					$template->assign_block_vars('modules_com', array(
+					$Template->Assign_block_vars('modules_com', array(
 						'MODULES' => $info_module['name'] . (isset($array_com[$info_module['com']]) ? ' (' . $array_com[$info_module['com']] . ')' : ' (0)'),
 						'U_MODULES' => $info_module['com']
 					));
@@ -104,18 +104,18 @@ if( is_dir($root) ) //Si le dossier existe
 $array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 
 //Gestion des rangs.	
-$cache->load_file('ranks');
+$Cache->Load_file('ranks');
 
 $cond = !empty($module) ? "WHERE script = '" . $module . "'" : '';
-$result = $sql->query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, c.script, c.path, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents
+$result = $Sql->Query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, c.script, c.path, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents
 FROM ".PREFIX."com c
 LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
 LEFT JOIN ".PREFIX."sessions s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 " . $cond . "
 GROUP BY c.idcom
 ORDER BY c.timestamp DESC
-" . $sql->sql_limit($pagination->first_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
-while($row = $sql->sql_fetch_assoc($result) )
+" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
+while($row = $Sql->Sql_fetch_assoc($result) )
 {
 	$row['user_id'] = (int)$row['user_id'];
 	$is_guest = ($row['user_id'] === -1);
@@ -200,7 +200,7 @@ while($row = $sql->sql_fetch_assoc($result) )
 	
 	$row['path'] = preg_replace('`&quote=[0-9]+`', '', $row['path']);
 	
-	$template->assign_block_vars('com', array(
+	$Template->Assign_block_vars('com', array(
 		'ID' => $row['idcom'],
 		'CONTENTS' => ucfirst(second_parse($row['contents'])),
 		'COM_SCRIPT' => $row['script'],
@@ -227,7 +227,7 @@ while($row = $sql->sql_fetch_assoc($result) )
 	));
 }
 
-$template->pparse('admin_com_management'); // traitement du modele	
+$Template->Pparse('admin_com_management'); // traitement du modele	
 
 require_once('../includes/admin_footer.php');
 

@@ -34,9 +34,9 @@ $error = !empty($_GET['error']) ? trim($_GET['error']) : '';
  
 if( isset($_POST['valid']) )		
 {
-	$result = $sql->query_while("SELECT id, name, auth, activ 
+	$result = $Sql->Query_while("SELECT id, name, auth, activ 
 	FROM ".PREFIX."modules", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$activ = isset($_POST['activ' . $row['id']]) ? numeric($_POST['activ' . $row['id']]) : '0';
 		$array_auth = array();
@@ -48,11 +48,11 @@ if( isset($_POST['valid']) )
 		//Admin tous les droits.
 		$array_auth['r2'] = 1;
 		
-		$sql->query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', auth = '" . securit(serialize($array_auth), HTML_NO_PROTECT) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', auth = '" . securit(serialize($array_auth), HTML_NO_PROTECT) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	
 	//Génération du cache des modules
-	$cache->generate_file('modules');
+	$Cache->Generate_file('modules');
 	
 	redirect(HOST . SCRIPT);	
 }
@@ -63,26 +63,26 @@ elseif( $uninstall ) //Désinstallation du module
 		$idmodule = !empty($_POST['idmodule']) ? numeric($_POST['idmodule']) : '0';
 		$drop_files = !empty($_POST['drop_files']) ? true : false; 		
 		//Suppression du modules dans la bdd => module désinstallé.
-		$module_name = $sql->query("SELECT name FROM ".PREFIX."modules WHERE id = '" . $idmodule . "'", __LINE__, __FILE__);
+		$module_name = $Sql->Query("SELECT name FROM ".PREFIX."modules WHERE id = '" . $idmodule . "'", __LINE__, __FILE__);
 		
 		//Désinstallation du module
 		if( !empty($idmodule) && !empty($module_name) )
 		{
-			$sql->query_inject("DELETE FROM ".PREFIX."modules WHERE id = '" . $idmodule . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("DELETE FROM ".PREFIX."modules WHERE id = '" . $idmodule . "'", __LINE__, __FILE__);
 			
 			//Récupération des infos de config.
 			$info_module = @parse_ini_file('../' . $module_name . '/lang/' . $CONFIG['lang'] . '/config.ini');
 			
 			//Suppression des commentaires associés.
 			if( !empty($info_module['com']) )
-				$sql->query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . securit($info_module['com']) . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . securit($info_module['com']) . "'", __LINE__, __FILE__);
 			
 			//Suppression de la configuration.
 			if( !empty($info_module['config']) )
-				$sql->query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . securit($module_name) . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . securit($module_name) . "'", __LINE__, __FILE__);
 			
 			//Suppression du module mini.
-			$sql->query_inject("DELETE FROM ".PREFIX."modules_mini WHERE name = '" . securit($module_name) . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("DELETE FROM ".PREFIX."modules_mini WHERE name = '" . securit($module_name) . "'", __LINE__, __FILE__);
 			
 			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 			$dir_db_module = $CONFIG['lang'];
@@ -102,19 +102,19 @@ elseif( $uninstall ) //Désinstallation du module
 			}
 
 			if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql') ) //Parsage du fichier sql de désinstallation.
-				$sql->sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
+				$Sql->Sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
 			
 			if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php') ) //Parsage fichier php de désinstallation.
 				@include_once('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php');
 				
-			$cache->generate_file('modules');
-			$cache->generate_file('modules_mini');
+			$Cache->Generate_file('modules');
+			$Cache->Generate_file('modules_mini');
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if( $CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']) )
 			{
 				//Régénération du htaccess.
-				$cache->generate_htaccess(); 			
+				$Cache->Generate_htaccess(); 			
 			}
 			
 			//Suppression des fichiers du module
@@ -138,15 +138,15 @@ elseif( $uninstall ) //Désinstallation du module
 			if( $value == $LANG['uninstall'] )
 				$idmodule = $key;
 				
-		$template->set_filenames(array(
+		$Template->Set_filenames(array(
 			'admin_modules_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_modules_management.tpl'
 		));
 		
-		$template->assign_block_vars('del', array(			
+		$Template->Assign_block_vars('del', array(			
 			'IDMODULE' => $idmodule
 		));
 		
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'THEME' => $CONFIG['theme'],
 			'LANG' => $CONFIG['lang'],
 			'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
@@ -161,20 +161,20 @@ elseif( $uninstall ) //Désinstallation du module
 			'L_SUBMIT' => $LANG['submit']
 		));
 
-		$template->pparse('admin_modules_management'); 
+		$Template->Pparse('admin_modules_management'); 
 	}
 }	
 else
 {			
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_modules_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_modules_management.tpl'
 	));
 
-	$template->assign_block_vars('main', array(
-		'NBR_GROUP' => $sql->count_table('group', __LINE__, __FILE__)
+	$Template->Assign_block_vars('main', array(
+		'NBR_GROUP' => $Sql->Count_table('group', __LINE__, __FILE__)
 	));
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
@@ -208,25 +208,25 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$errorh->error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( !empty($get_error) && isset($LANG[$get_error]) )
-		$errorh->error_handler($LANG[$get_error], E_USER_WARNING);
+		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
 		
-	$array_groups = $groups->create_groups_array(); //Création du tableau des groupes.
+	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 
 	//Modules installé
 	$i = 0;	
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	$result = $sql->query_while("SELECT id, name, auth, activ 
+	$result = $Sql->Query_while("SELECT id, name, auth, activ 
 	FROM ".PREFIX."modules
 	ORDER BY name", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		//Récupération des infos de config.
 		$info_module = @parse_ini_file('../' . $row['name'] . '/lang/' . $CONFIG['lang'] . '/config.ini');
 
 		$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
-		$template->assign_block_vars('main.installed', array(
+		$Template->Assign_block_vars('main.installed', array(
 			'ID' => $row['id'],
 			'NAME' => ucfirst($info_module['name']),
 			'ICON' => $row['name'],
@@ -250,7 +250,7 @@ else
 
 		$j = 0;
 		//Liste des rangs
-		$template->assign_block_vars('main.installed.select_group', array(
+		$Template->Assign_block_vars('main.installed.select_group', array(
 			'GROUP' => '<optgroup label="' . $LANG['ranks'] . '">'
 		));
 		
@@ -262,18 +262,18 @@ else
 				
 			$selected = ($j == 3) ? 'selected="selected"' : $selected;
 			
-			$template->assign_block_vars('main.installed.select_group', array(
+			$Template->Assign_block_vars('main.installed.select_group', array(
 				'GROUP' => '<option value="r' . $idgroup . '" id="' . $row['id'] . 'r' . $j . '" ' . $selected . '" onclick="check_select_multiple_ranks(\'' .  $row['id'] . 'r\', ' . $j . ')">' . $group_name . '</option>'
 			));
 			$j++;
 		}
-		$template->assign_block_vars('main.installed.select_group', array(
+		$Template->Assign_block_vars('main.installed.select_group', array(
 			'GROUP' => '</optgroup>'
 		));
 		
 		//Liste des groupes.
 		$j = 0;
-		$template->assign_block_vars('main.installed.select_group', array(
+		$Template->Assign_block_vars('main.installed.select_group', array(
 			'GROUP' => '<optgroup label="' . $LANG['groups'] . '">'
 		));
 		foreach($array_groups as $idgroup => $group_name)
@@ -282,27 +282,27 @@ else
 			if( array_key_exists($idgroup, $array_auth) )
 				$selected = 'selected="selected"';
 
-			$template->assign_block_vars('main.installed.select_group', array(
+			$Template->Assign_block_vars('main.installed.select_group', array(
 				'GROUP' => '<option value="' . $idgroup . '" id="' . $row['id'] . 'g' . $j . '" ' . $selected . '>' . $group_name . '</option>'
 			));
 			$j++;
 		}
-		$template->assign_block_vars('main.installed.select_group', array(
+		$Template->Assign_block_vars('main.installed.select_group', array(
 			'GROUP' => '</optgroup>'
 		));
 		
 		$i++;
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 
 	if( $i == 0 )
-		$template->assign_block_vars('main.no_module_installed', array(
+		$Template->Assign_block_vars('main.no_module_installed', array(
 		));
 	else
-		$template->assign_block_vars('main.modules_installed', array(
+		$Template->Assign_block_vars('main.modules_installed', array(
 		));
 	
-	$template->pparse('admin_modules_management'); 
+	$Template->Pparse('admin_modules_management'); 
 }
 
 require_once('../includes/admin_footer.php');

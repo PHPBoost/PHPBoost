@@ -29,7 +29,7 @@ require_once('../includes/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'admin_index' => '../templates/' . $CONFIG['theme'] . '/admin/admin_index.tpl'
 ));
 
@@ -86,7 +86,7 @@ else
 	$l_modules_update = $LANG['unknow_update'];
 }
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'VERSION' => $CONFIG['version'],
 	'WARNING_CORE' => ($check_core_update) ? ' error_warning' : '',
 	'WARNING_MODULES' => ($check_modules_update) ? ' error_warning' : '',
@@ -109,23 +109,23 @@ $template->assign_vars(array(
 //Listing des modules mis à jour.
 foreach($modules_update as $name => $version)
 {
-	$template->assign_block_vars('modules_available', array(
+	$Template->Assign_block_vars('modules_available', array(
 		'ID' => $name,
 		'NAME' => $modules_config[$name]['name'],
 		'VERSION' => $version
 	));
 }
   
-$result = $sql->query_while("SELECT s.user_id, s.level, s.session_ip, s.session_time, s.session_script, s.session_script_get, 
+$result = $Sql->Query_while("SELECT s.user_id, s.level, s.session_ip, s.session_time, s.session_script, s.session_script_get, 
 s.session_script_title, m.login 
 FROM ".PREFIX."sessions s
 LEFT JOIN ".PREFIX."member m ON s.user_id = m.user_id
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $sql->sql_fetch_assoc($result) )
+while( $row = $Sql->Sql_fetch_assoc($result) )
 {
 	//On vérifie que la session ne correspond pas à un robot.
-	$robot = $session->check_robot($row['session_ip']);
+	$robot = $Session->check_robot($row['session_ip']);
 
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
@@ -149,16 +149,16 @@ while( $row = $sql->sql_fetch_assoc($result) )
 	
 	$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 	
-	$template->assign_block_vars('user', array(
+	$Template->Assign_block_vars('user', array(
 		'USER' => !empty($login) ? $login : $LANG['guest'],
 		'USER_IP' => $row['session_ip'],
 		'WHERE' => '<a href="' . HOST . DIR . $row['session_script'] . $row['session_script_get'] . '">' . stripslashes($row['session_script_title']) . '</a>',
 		'TIME' => gmdate_format('date_format_long', $row['session_time'])
 	));	
 }
-$sql->close($result);
+$Sql->Close($result);
 	
-$template->pparse('admin_index'); // traitement du modele
+$Template->Pparse('admin_index'); // traitement du modele
 
 require_once('../includes/admin_footer.php');
 
