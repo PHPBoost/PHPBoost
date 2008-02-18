@@ -41,7 +41,9 @@ class Search
      *  Nb requêtes : 1
      */
     {
-        $nbReqSEARCH = 0;
+        global $Sql;
+		
+		$nbReqSEARCH = 0;
         $reqSEARCH = '';
         
         $nbReqInsert = 0;
@@ -62,12 +64,12 @@ class Search
         }
         
         $reqSEARCH = "INSERT ( ".$reqSEARCH." ) INTO ".PREFIX."search_results;";
-        $this->sql->query_inject($reqSEARCH, __LINE__, __FILE__ );
+        $Sql->Query_inject($reqSEARCH, __LINE__, __FILE__ );
         
         // Au cas ou le insert select into ne soit pas portable.
 //         $reqInsert = '';
-//         $request = $this->sql->query_while( $reqSEARCH, __LINE__, __FILE__ );
-//         while( $result = $this->sql->sql_fetch_assoc($request) )
+//         $request = $Sql->Query_while( $reqSEARCH, __LINE__, __FILE__ );
+//         while( $result = $Sql->Sql_fetch_assoc($request) )
 //         {
 //             $reqInsert .= " ('".$this->id_search[$id_module]."','".$id_module."','".$result['id_content']."',";
 //             $reqInsert .= "'".$result['relevance']."','".$result['id_content']."'), ";
@@ -75,7 +77,7 @@ class Search
 //             // Exécution de 10 requêtes d'insertions
 //             if ( $nbReqInsert == 10 )
 //             {
-//                 $this-sql->query_insert("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__);
+//                 $Sql->Query_insert("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__);
 //                 $reqInsert = '';
 //                 $nbReqInsert = 0;
 //             }
@@ -84,16 +86,18 @@ class Search
 //         
 //         // Exécution des derniéres requêtes d'insertions
 //         if ( $nbReqInsert > 1 )
-//         { $sql->query_inject("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__); }
+//         { $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__); }
     }
     
     function GetResults ( &$results, &$id_modules, $offset = 0, $nbLines = NB_LINES)
     /**
      *  Renvoie le nombre de résultats de la recherche
      *  et mets les résultats dans le tableau &results
-     *  Nb requêtes : 1, 2 si le SGBD ne supporte pas 'sql->sql_num_rows'
+     *  Nb requêtes : 1, 2 si le SGBD ne supporte pas 'sql->Sql_num_rows'
      */
     {
+        global $Sql;
+
         $results = Array ( );
         $numModules = 0;
         $modulesConditions = '';
@@ -115,20 +119,20 @@ class Search
         
         // Récupération des $nbLines résultats é partir de l'$offset
         $reqResults  = "SELECT id_module, id_content, relevance, link FROM ".PREFIX."search_results WHERE ";
-        $reqResults .= $modulesConditions." ORDER BY relevance DESC ".$this->sql->sql_limit($offset, $nbLines);
+        $reqResults .= $modulesConditions." ORDER BY relevance DESC ".$Sql->Sql_limit($offset, $nbLines);
         
         // Exécution de la requête
-        $request = $this->sql->query_while( $reqResults, __LINE__, __FILE__ );
-        while( $result = $this->sql->sql_fetch_assoc($request) )
+        $request = $Sql->Query_while( $reqResults, __LINE__, __FILE__ );
+        while( $result = $Sql->Sql_fetch_assoc($request) )
         {   // Ajout des résultats
             array_push($results, $result);
         }
         // Récupération du nombre de résultats correspondant é la recherche
         $reqNbResults  = "SELECT COUNT(*) ".PREFIX."search_results ".$modulesConditions;
-        $nbResults = $this->sql->sql_num_rows( $request, $reqNbResults );
+        $nbResults = $Sql->Sql_num_rows( $request, $reqNbResults );
         
         //On libére la mémoire
-        $this->sql->close($request);
+        $Sql->Close($request);
         
         return $nbResults;
     }
@@ -160,17 +164,15 @@ class Search
      *  avec k nombre de module n'ayant pas de cache de recherche
      */
     {
+        global $Sql, $Member;
+		
         $this->errors = 0;
         $this->search = $search;
         $this->modules = $modules;
         $this->id_search = Array ( );
 
-        global $session;
-        $this->id_user = $session->data['user_id'];
-        
-        global $sql;
-        $this->sql = $sql;
-        $this->modulesConditions = $this->getModulesConditions ( $modules );
+        $this->id_user = $Member->Get_attribute('user_id');
+        $this->modulesConditions = $this->getModulesConditions($modules);
 
         // Délestage
         $reqDelete  = "DELETE FROM ".PREFIX."search_index WHERE ";
@@ -180,19 +182,19 @@ class Search
         $reqCache  = "SELECT id_search, id_module FROM".PREFIX."search_index WHERE ";
         $reqCache .= "search='".$search."' AND id_user='".$this->id_user."' AND ".$this->modulesConditions;
         
-        $request = $this->sql->query_while( $reqCache, __LINE__, __FILE__ );
-        while( $row = $this->sql->sql_fetch_assoc($request) )
+        $request = $Sql->Query_while( $reqCache, __LINE__, __FILE__ );
+        while( $row = $Sql->Sql_fetch_assoc($request) )
         {   // Ajout des résultats s'ils font partie de la liste des modules é traiter
             $this->id_search[$row[1]] = $row[0];
         }
-        $this->sql->close($request);
+        $Sql->Close($request);
         
         // Mise é jours des résultats du cache
         if ( count ( $this->id_search ) > 0 )
         {
             $reqUpdate  = "UPDATE ".PREFIX."search_index SET times_used=(times_used + 1), last_search_use='".$time()."' WHERE ";
             $reqUpdate .= "id_search IN ( ".implode($this->id_search)." ) AND user_id='".$this->id_user."';";
-            $this->sql->query_insert($reqDelete.$reqUpdate, __LINE__, __FILE__);
+            $Sql->Query_insert($reqDelete.$reqUpdate, __LINE__, __FILE__);
         }
         
         $nbReqInsert = 0;
@@ -208,7 +210,7 @@ class Search
                 if ( $nbReqInsert == 10 )
                 {
                     $reqInsert = "INSERT INTO ".PREFIX."search_index VALUES ( ".$reqInsert." )";
-                    $this->sql->query_insert($reqInsert, __LINE__, __FILE__);
+                    $Sql->Query_insert($reqInsert, __LINE__, __FILE__);
                     $reqInsert = '';
                     $nbReqInsert = 0;
                 }
@@ -218,7 +220,7 @@ class Search
         
         // Exécution des derniéres requêtes d'insertions
         if ( $nbReqInsert > 1 )
-        { $sql->query_inject("INSERT INTO ".PREFIX."search_index VALUES ( ".$reqInsert." )", __LINE__, __FILE__); }
+        { $Sql->Query_inject("INSERT INTO ".PREFIX."search_index VALUES ( ".$reqInsert." )", __LINE__, __FILE__); }
         
         // Récupération des résultats et de leurs id dans le cache.
         
@@ -234,12 +236,12 @@ class Search
         $reqCache  = "SELECT id_search, id_module FROM".PREFIX."search_index ";
         $reqCache .= "WHERE search='".$search."' AND ".$this->modulesConditions;
         
-        $request = $this->sql->query_while( $reqCache, __LINE__, __FILE__ );
-        while( $row = $this->sql->sql_fetch_assoc($request) )
+        $request = $Sql->Query_while( $reqCache, __LINE__, __FILE__ );
+        while( $row = $Sql->Sql_fetch_assoc($request) )
         {   // Ajout des résultats s'il fait partie de la liste des modules é traiter
             $this->id_search[$row[1]] = $row[0];
         }
-        $this->sql->close($request);
+        $Sql->Close($request);
     }
     
     //------------------------------------------------------------------ PRIVE
@@ -294,7 +296,6 @@ class Search
     var $modules;
     var $modulesConditions;
     var $id_user;
-    var $sql;
     var $errors;
 
 }

@@ -42,24 +42,24 @@ if( isset($_array_group_forum_level) )
 	}
 }
 
-$cache->load_file('moderation_panel');
+$Cache->Load_file('moderation_panel');
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'moderation_panel_mini' => '../templates/' . $CONFIG['theme'] . '/moderation_panel_mini.tpl'
 ));
 
-if( $session->check_auth($session->data, 1) || $check_auth_by_group )
+if( $Member->Check_level(1) || $check_auth_by_group )
 {
 	$nbr_alerts = 0;
 	
-	/*if( $session->check_auth($session->data, 2) )
+	/*if( $Member->Check_level(2) )
 		$nbr_alerts = $nbr_alerts_for_admins;
-	elseif( $session->check_auth($session->data, 2) )
+	elseif( $Member->Check_level(2) )
 		$nbr_alerts = $nbr_alerts_for_modos;
-	elseif( isset($nbr_alerts_for_groups[$session->data['user_groups']]) )
-		$nbr_alerts = $nbr_alerts_for_groups[$session->data['user_groups']];
+	elseif( isset($nbr_alerts_for_groups[$Member->Get_attribute('user_groups')]) )
+		$nbr_alerts = $nbr_alerts_for_groups[$Member->Get_attribute('user_groups')];
 	*/
-	$template->assign_block_vars('moderation_panel', array(
+	$Template->Assign_block_vars('moderation_panel', array(
 		'IMG' => ($nbr_alerts > 0) ? 'moderation_panel_new.gif' : 'moderation_panel.png',
 		'NBR_ALERTS' => $nbr_alerts,
 		'L_MODERATION_PANEL' => $LANG['moderation_panel']		

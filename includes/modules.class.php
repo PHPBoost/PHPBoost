@@ -59,9 +59,9 @@ class Modules
             $module = $this->GetModule ( $moduleName );
             // Si le module à déjà été appelé et a déjà eu une erreur,
             // On nettoie le bit d'erreur correspondant.
-            $module->clearFunctionnalityError ( );
-            if ( $module->hasFunctionnality ( $functionnality ) == true )
-            { $results[$moduleName] = $module->Functionnality ( $functionnality, $args ); }
+            $Module->clearFunctionnalityError ( );
+            if ( $Module->hasFunctionnality ( $functionnality ) == true )
+            { $results[$moduleName] = $Module->Functionnality ( $functionnality, $args ); }
         }
         return $results;
     }
@@ -80,7 +80,7 @@ class Modules
             foreach( array_keys($SECURE_MODULE) as $moduleName )
             {
                 $module = $this->GetModule ( $moduleName );
-                if ( $module->GetErrors == 0 and $module->HasFunctionnality ($functionnality ) )
+                if ( $Module->GetErrors == 0 and $Module->HasFunctionnality ($functionnality ) )
                 {
                     array_push( $modules, $module );
                 }
@@ -90,7 +90,7 @@ class Modules
         {
             foreach( $modulesList as $module )
             {
-                if ( $module->GetErrors == 0 and $module->HasFunctionnality ($functionnality ) )
+                if ( $Module->GetErrors == 0 and $Module->HasFunctionnality ($functionnality ) )
                 {
                     array_push( $modules, $module );
                 }
@@ -108,22 +108,22 @@ class Modules
         {
             if ( in_array( $moduleName, $this->availablesModules ) )
             {
-                global $groups, $SECURE_MODULE;
-                if ( $groups->check_auth ( $SECURE_MODULE[$moduleName], 1 ) )
+                global $Group, $SECURE_MODULE;
+                if ( $Group->check_auth ( $SECURE_MODULE[$moduleName], 1 ) )
                 {
                     if ( @include_once ( '../'.$moduleName.'/'.$moduleName.'_interface.class.php' ) )
                     {
                         $moduleConstructor = ucfirst ( $moduleName.'Interface' );
-                        $module = new $moduleConstructor ( );
+                        $Module = new $moduleConstructor ( );
                     }
                     else
-                    { $module = new ModuleInterface ( $moduleName, MODULE_NOT_YET_IMPLEMENTED ); }
+                    { $Module = new ModuleInterface ( $moduleName, MODULE_NOT_YET_IMPLEMENTED ); }
                 }
                 else
-                { $module = new ModuleInterface ( $moduleName, ACCES_DENIED ); }
+                { $Module = new ModuleInterface ( $moduleName, ACCES_DENIED ); }
             }
             else
-            { $module = new ModuleInterface ( $moduleName, MODULE_NOT_AVAILABLE ); }
+            { $Module = new ModuleInterface ( $moduleName, MODULE_NOT_AVAILABLE ); }
             $this->loadedModules[$moduleName] = $module;
         }
         return $this->loadedModules[$moduleName];

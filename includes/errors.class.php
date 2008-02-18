@@ -37,9 +37,7 @@ define('NO_FILE_ERROR', ''); //N'affiche pas le fichier de l'erreur courante.
 
 class Errors
 {
-	var $archive_all; //Enregistrement des logs d'erreurs, pour tout les types d'erreurs.
-	var $redirect;
-	
+	## Public Methods ##
 	//Constructeur
 	function Errors($archive_all = false)
 	{
@@ -49,9 +47,9 @@ class Errors
 	}	
 	
 	//Gestionnaire d'erreurs controlées par le développeur.
-	function error_handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false)
+	function Error_handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false)
 	{
-		global $LANG, $template;
+		global $LANG, $Template;
 		
 		//Parsage du bloc seulement si une erreur à afficher.
 		if( !empty($errstr) )
@@ -66,7 +64,7 @@ class Errors
 				//Message de succès, étrange pour une classe d'erreur non?
 				case E_USER_SUCCESS:
 				$errstr = sprintf($LANG['error_success'], $errstr, '', '');
-				$template->assign_vars(array(
+				$Template->Assign_vars(array(
 					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
 					'ERRORH_IMG' => 'success',
 					'ERRORH_CLASS' => 'error_success',
@@ -77,7 +75,7 @@ class Errors
 				case E_USER_NOTICE:
 				case E_NOTICE:
 				$errstr = sprintf($LANG['error_notice'], $errstr, '', '');
-				$template->assign_vars(array(
+				$Template->Assign_vars(array(
 					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
 					'ERRORH_IMG' => 'notice',
 					'ERRORH_CLASS' => 'error_notice',
@@ -88,7 +86,7 @@ class Errors
 				case E_USER_WARNING:
 				case E_WARNING:
 				$errstr = sprintf($LANG['error_warning'], $errstr, '', '');
-				$template->assign_vars(array(
+				$Template->Assign_vars(array(
 					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
 					'ERRORH_IMG' => 'important',
 					'ERRORH_CLASS' => 'error_warning',
@@ -100,7 +98,7 @@ class Errors
 				case E_ERROR:
 				//Enregistrement de l'erreur fatale dans tout les cas.
 				$error_id = $this->error_log($errfile, $errline, $errno, $errstr, true);
-				if( !empty($session) && is_object($session) )
+				if( !empty($Session) && is_object($Session) )
 					redirect($this->redirect . '/member/fatal' . transid('.php?error=' . $error_id, '', '&'));
 				else
 					redirect($this->redirect . '/member/fatal.php?error=' . $error_id);
@@ -115,6 +113,68 @@ class Errors
 		return false;
 	}
 	
+	//Récupération des informations de la dernière erreur.
+	function Get_last_error_log()
+	{
+		$errinfo = '';		
+		$handle = @fopen('../cache/error.log', 'r');
+		if( $handle ) 
+		{
+			$i = 1;
+			while( !feof($handle) ) 
+			{
+				$buffer = fgets($handle, 4096);
+				if( $i == 2 )
+					$errinfo['errno'] = $buffer;
+				if( $i == 3 )
+					$errinfo['errstr'] = $buffer;
+				if( $i == 4 )
+					$errinfo['errfile'] = $buffer;
+				if( $i == 5 )
+				{
+					$errinfo['errline'] = $buffer;		
+					$i = 0;	
+				}
+				$i++;				
+			}
+			@fclose($handle);
+		}
+		return $errinfo;
+	}
+	
+	//Récupération du type de l'erreur.
+	function Get_errno_class($errno)
+	{
+		switch($errno)
+		{
+			//Redirection utilisateur.
+			case E_USER_REDIRECT:
+			$class = 'error_fatal';
+			break;
+			//Notice utilisateur.
+			case E_USER_NOTICE:
+			case E_NOTICE:
+			$class = 'error_notice';
+			break;
+			//Warning utilisateur.
+			case E_USER_WARNING:
+			case E_WARNING:
+			$class = 'error_warning';
+			break;
+			//Erreur fatale.
+			case E_USER_ERROR:
+			case E_ERROR:	
+			$class = 'error_fatal';
+			break;
+			//Erreur inconnue.
+			default:
+			$class = 'error_unknow';
+		}
+		return $class;
+	}
+	
+	
+	## Private Methods ##
 	//Enregistre l'erreur dans le fichier de log.
 	function error_log($errfile, $errline, $errno, $errstr, $archive)
 	{		
@@ -145,65 +205,10 @@ class Errors
 		return $errstr;
 	}
 	
-	//Récupération des informations de la dernière erreur.
-	function get_last_error_log()
-	{
-		$errinfo = '';		
-		$handle = @fopen('../cache/error.log', 'r');
-		if( $handle ) 
-		{
-			$i = 1;
-			while( !feof($handle) ) 
-			{
-				$buffer = fgets($handle, 4096);
-				if( $i == 2 )
-					$errinfo['errno'] = $buffer;
-				if( $i == 3 )
-					$errinfo['errstr'] = $buffer;
-				if( $i == 4 )
-					$errinfo['errfile'] = $buffer;
-				if( $i == 5 )
-				{
-					$errinfo['errline'] = $buffer;		
-					$i = 0;	
-				}
-				$i++;				
-			}
-			@fclose($handle);
-		}
-		return $errinfo;
-	}
 	
-	//Récupération du type de l'erreur.
-	function get_errno_class($errno)
-	{
-		switch($errno)
-		{
-			//Redirection utilisateur.
-			case E_USER_REDIRECT:
-			$class = 'error_fatal';
-			break;
-			//Notice utilisateur.
-			case E_USER_NOTICE:
-			case E_NOTICE:
-			$class = 'error_notice';
-			break;
-			//Warning utilisateur.
-			case E_USER_WARNING:
-			case E_WARNING:
-			$class = 'error_warning';
-			break;
-			//Erreur fatale.
-			case E_USER_ERROR:
-			case E_ERROR:	
-			$class = 'error_fatal';
-			break;
-			//Erreur inconnue.
-			default:
-			$class = 'error_unknow';
-		}
-		return $class;
-	}
+	## Private Attribute ##
+	var $archive_all; //Enregistrement des logs d'erreurs, pour tout les types d'erreurs.
+	var $redirect;
 }
 
 ?>

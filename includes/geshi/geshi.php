@@ -2897,13 +2897,13 @@ if( !function_exists('geshi_highlight') ) {
      * @since 1.0.2
      */
     function geshi_highlight($string, $language, $path = null, $return = false) {
-        $geshi = new GeSHi($string, $language, $path);
-        $geshi->set_header_type(GESHI_HEADER_NONE);
+        $Geshi = new GeSHi($string, $language, $path);
+        $Geshi->set_header_type(GESHI_HEADER_NONE);
         if( $return ) {
-            return '<code>' . $geshi->parse_code() . '</code>';
+            return '<code>' . $Geshi->parse_code() . '</code>';
         }
-        echo '<code>' . $geshi->parse_code() . '</code>';
-        if( $geshi->error() ) {
+        echo '<code>' . $Geshi->parse_code() . '</code>';
+        if( $Geshi->error() ) {
             return false;
         }
         return true;

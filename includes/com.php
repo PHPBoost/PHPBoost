@@ -57,7 +57,7 @@ else
 				
 if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_com_vars_e) )
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'handle_com' => '../templates/' . $CONFIG['theme'] . '/com.tpl'
 	));
 					
@@ -66,7 +66,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 	$update = !empty($_GET['updatecom']) ? true : false;
 				
 	//Chargement du cache
-	$cache->load_file('com');
+	$Cache->Load_file('com');
 
 	$info_module = @parse_ini_file('../' . $_module_folder . '/lang/' . $CONFIG['lang'] . '/config.ini');
 	$check_script = false;
@@ -74,35 +74,35 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 	{
 		if( $info_module['com'] == $_com_script )
 		{
-			$info_sql_module = $sql->query_array(securit($info_module['com']), "id", "nbr_com", "lock_com", "WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
+			$info_sql_module = $Sql->Query_array(securit($info_module['com']), "id", "nbr_com", "lock_com", "WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
 			if( !empty($info_sql_module['id']) )
 				$check_script = true;
 		}
 	}
 	if( $check_script === false )
-		$errorh->error_handler('e_unexist_page', E_USER_REDIRECT);
+		$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT);
 	
 	###########################Insertion##############################
 	if( !empty($_POST['valid']) && !$update )
 	{
 		//Membre en lecture seule?
-		if( $session->data['user_readonly'] > time() ) 
-			$errorh->error_handler('e_auth', E_USER_REDIRECT);
+		if( $Member->Get_attribute('user_readonly') > time() ) 
+			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 		
 		$login = !empty($_POST['login']) ? securit($_POST['login']) : ''; //Pseudo posté.
 		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 		if( !empty($login) && !empty($contents) && !empty($_com_script) && !empty($_com_idprov) )
 		{
 			//Status des commentaires, verrouillé/déverrouillé?
-			if( $info_sql_module['lock_com'] >= 1 && !$session->check_auth($session->data, 1) )
+			if( $info_sql_module['lock_com'] >= 1 && !$Member->Check_level(1) )
 				redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&'));
 			
 			//Autorisation de poster des commentaires? 
-			if( $session->check_auth($session->data, $CONFIG_COM['com_auth']) )
+			if( $Member->Check_level($CONFIG_COM['com_auth']) )
 			{
 				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-				$check_time = ($session->data['user_id'] !== -1 && $CONFIG['anti_flood'] == 1) ? $sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."com WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__) : '';
-				if( !empty($check_time) && !$groups->max_value($groups->user_groups_auth, AUTH_FLOOD) )
+				$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->Query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."com WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+				if( !empty($check_time) && !$Member->Check_max_value(AUTH_FLOOD) )
 				{				
 					if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcul la fin du delai.	
 						redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=flood#errorh');
@@ -116,12 +116,12 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 				
 				//Récupération de l'adresse de la page.
 				$path_com = '..' . str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING;
-				$sql->query_inject("INSERT INTO ".PREFIX."com (idprov, login, user_id, contents, timestamp, script, path) VALUES('" . $_com_idprov . "', '" . $login . "', '" . $session->data['user_id'] . "', '" . $contents . "', '" . time() . "', '" . $_com_script . "', '" . $path_com . "')", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."com (idprov, login, user_id, contents, timestamp, script, path) VALUES('" . $_com_idprov . "', '" . $login . "', '" . $Member->Get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $_com_script . "', '" . $path_com . "')", __LINE__, __FILE__);
 				
-				$_com_idcom = $sql->sql_insert_id("SELECT MAX(idcom) FROM ".PREFIX."com");
+				$_com_idcom = $Sql->Sql_insert_id("SELECT MAX(idcom) FROM ".PREFIX."com");
 				
 				//Incrémente le nombre de commentaire dans la table du script concerné.
-				$sql->query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET nbr_com = nbr_com + 1 WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET nbr_com = nbr_com + 1 WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
 				
 				//Rédirection vers la page pour éviter le double post!
 				redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '#m' . $_com_idcom);
@@ -135,27 +135,27 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 	elseif( !empty($_com_script) && ($update || $del || $edit) ) //Edition + suppression
 	{
 		//Membre en lecture seule?
-		if( $session->data['user_readonly'] > time() ) 
-			$errorh->error_handler('e_auth', E_USER_REDIRECT);
+		if( $Member->Get_attribute('user_readonly') > time() ) 
+			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 		
-		$row = $sql->query_array('com', '*', "WHERE idcom = '" . $_com_idcom . "' AND idprov = '" . $_com_idprov . "' AND script = '" . $_com_script . "'", __LINE__, __FILE__);
+		$row = $Sql->Query_array('com', '*', "WHERE idcom = '" . $_com_idcom . "' AND idprov = '" . $_com_idprov . "' AND script = '" . $_com_script . "'", __LINE__, __FILE__);
 		$row['user_id'] = (int)$row['user_id'];
 
 		if( !empty($_com_idprov) && !empty($_com_idcom) )
 		{
-			if( $session->check_auth($session->data, 1) || ($row['user_id'] === $session->data['user_id'] && $session->data['user_id'] !== -1) )
+			if( $Member->Check_level(1) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 			{	
 				if( $del )
 				{
 					//Sélectionne le message précédent à celui qui va être supprimé.
-					$lastid = $sql->query("SELECT idcom 
+					$lastid = $Sql->Query("SELECT idcom 
 					FROM ".PREFIX."com 
 					WHERE idcom < '" . $_com_idcom . "' AND script = '" . $_com_script . "' AND idprov = '" . $_com_idprov . "' 
 					ORDER BY idcom DESC 
-					" . $sql->sql_limit(0, 1), __LINE__, __FILE__);
+					" . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
 					
-					$sql->query_inject("DELETE FROM ".PREFIX."com WHERE idcom = '" . $_com_idcom . "' AND script = '" . $_com_script . "' AND idprov = '" . $_com_idprov . "'", __LINE__, __FILE__);				
-					$sql->query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET nbr_com= nbr_com - 1 WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idcom = '" . $_com_idcom . "' AND script = '" . $_com_script . "' AND idprov = '" . $_com_idprov . "'", __LINE__, __FILE__);				
+					$Sql->Query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET nbr_com= nbr_com - 1 WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
 					
 					$lastid = !empty($lastid) ? '#m' . $lastid : '';
 					
@@ -165,29 +165,29 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 				elseif( $edit )
 				{
 					$block = ($CONFIG['com_popup'] == 0 && $POPUP !== true); 
-					$template->assign_vars(array(
+					$Template->Assign_vars(array(
 						'CURRENT_PAGE_COM' => $block ? true : false,
 						'POPUP_PAGE_COM' => $block ? false : true
 					));
 
-					$template->assign_vars(array(
+					$Template->Assign_vars(array(
 						'AUTH_POST_COM' => true
 					));
 					
 					//Pseudo du membre connecté.
-					if( $session->data['user_id'] !== -1 )
-						$template->assign_vars(array(
+					if( $Member->Get_attribute('user_id') !== -1 )
+						$Template->Assign_vars(array(
 							'HIDDEN_COM' => true,
-							'LOGIN' => $session->data['login']
+							'LOGIN' => $Member->Get_attribute('login')
 						));
 					else
-						$template->assign_vars(array(
+						$Template->Assign_vars(array(
 							'VISIBLE_COM' => true,
 							'LOGIN' => $LANG['guest']
 						));
 					
 					$forbidden_tags = implode(', ', $CONFIG_COM['forbidden_tags']);
-					$template->assign_vars(array(					
+					$Template->Assign_vars(array(					
 						'IDPROV' => $row['idprov'],
 						'IDCOM' => $row['idcom'],
 						'SCRIPT' => $_com_script,
@@ -224,7 +224,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 						if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
 							redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=l_flood#errorh');
 
-						$sql->query_inject("UPDATE ".PREFIX."com SET contents = '" . $contents . "', login = '" . $login . "' WHERE idcom = '" . $_com_idcom . "' AND idprov = '" . $_com_idprov . "' AND script = '" . $_com_script . "'", __LINE__, __FILE__);
+						$Sql->Query_inject("UPDATE ".PREFIX."com SET contents = '" . $contents . "', login = '" . $login . "' WHERE idcom = '" . $_com_idcom . "' AND idprov = '" . $_com_idprov . "' AND script = '" . $_com_script . "'", __LINE__, __FILE__);
 						
 						//Succès redirection.
 						redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '#m' . $_com_idcom);
@@ -236,19 +236,19 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 					redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=incomplete#errorh');
 			}
 			else
-				$errorh->error_handler('e_auth', E_USER_REDIRECT);
+				$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 		}
 	}
 	elseif( isset($_GET['lock']) && !empty($_com_script) && !empty($_com_idprov) ) //Verrouillage des commentaires.
 	{
-		if( $session->data['level'] === 2 || $session->check_auth($session->data, 1) )
+		if( $Member->Get_attribute('level') === 2 || $Member->Check_level(1) )
 		{
-			$sql->query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET lock_com = '" . numeric($_GET['lock']) . "' WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET lock_com = '" . numeric($_GET['lock']) . "' WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
 			
 			redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '#' . $_com_script);
 		}
 		else
-			$errorh->error_handler('e_auth', E_USER_REDIRECT);
+			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	}
 	else
 	{
@@ -257,24 +257,24 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		$contents = '';
 		if( !empty($get_quote) )
 		{
-			$com = $sql->query_array('com', 'login', 'contents', "WHERE script = '" . $_com_script . "' AND idprov = '" . $_com_idprov . "' AND idcom = '" . $get_quote . "'", __LINE__, __FILE__);
+			$com = $Sql->Query_array('com', 'login', 'contents', "WHERE script = '" . $_com_script . "' AND idprov = '" . $_com_idprov . "' AND idcom = '" . $get_quote . "'", __LINE__, __FILE__);
 			$contents = '[quote=' . $com['login'] . ']' . $com['contents'] . '[/quote]';
 		}
 
 		//On crée une pagination si le nombre de commentaires est trop important.
 		include_once('../includes/pagination.class.php'); 
-		$pagination = new Pagination();
+		$Pagination = new Pagination();
 
 		$block = ($CONFIG['com_popup'] == 0 && $POPUP !== true); 
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'CURRENT_PAGE_COM' => $block ? true : false,
 			'POPUP_PAGE_COM' => $block ? false : true
 		));
 		
 		//Affichage du lien de verrouillage/déverrouillage.
-		if( $session->data['level'] === 2 || $session->check_auth($session->data, 1) )
+		if( $Member->Get_attribute('level') === 2 || $Member->Check_level(1) )
 		{
-			$template->assign_vars(array(
+			$Template->Assign_vars(array(
 				'COM_LOCK' => true,
 				'IMG' => ($info_sql_module['lock_com'] >= 1) ? 'unlock' : 'lock',
 				'L_LOCK' => ($info_sql_module['lock_com'] >= 1) ? $LANG['unlock'] : $LANG['lock'],
@@ -307,32 +307,32 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 			$errstr = '';
 		}
 		if( !empty($errstr) )
-			$errorh->error_handler($errstr, E_USER_NOTICE);
+			$Errorh->Error_handler($errstr, E_USER_NOTICE);
 		
 		//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
-		if( empty($info_sql_module['lock_com']) || $session->check_auth($session->data, 1) )
+		if( empty($info_sql_module['lock_com']) || $Member->Check_level(1) )
 		{	
-			if( $session->check_auth($session->data, $CONFIG_COM['com_auth']) )
-				$template->assign_vars(array(
+			if( $Member->Check_level($CONFIG_COM['com_auth']) )
+				$Template->Assign_vars(array(
 					'AUTH_POST_COM' => true
 				));
 			else
-				$errorh->error_handler($LANG['e_unauthorized'], E_USER_NOTICE);
+				$Errorh->Error_handler($LANG['e_unauthorized'], E_USER_NOTICE);
 			
 			//Pseudo du membre connecté.
-			if( $session->data['user_id'] !== -1 )
-				$template->assign_vars(array(
+			if( $Member->Get_attribute('user_id') !== -1 )
+				$Template->Assign_vars(array(
 					'HIDDEN_COM' => true,
-					'LOGIN' => $session->data['login']
+					'LOGIN' => $Member->Get_attribute('login')
 				));
 			else
-				$template->assign_vars(array(
+				$Template->Assign_vars(array(
 					'VISIBLE_COM' => true,
 					'LOGIN' => $LANG['guest']
 				));
 		}	
 		else
-			$errorh->error_handler($LANG['com_locked'], E_USER_NOTICE);
+			$Errorh->Error_handler($LANG['com_locked'], E_USER_NOTICE);
 
 		
 		$get_pos = strpos($_SERVER['QUERY_STRING'], '&pc');
@@ -342,8 +342,8 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 			$get_page = $_SERVER['QUERY_STRING'] . '&amp;pc';
 
 		$forbidden_tags = implode(', ', $CONFIG_COM['forbidden_tags']);
-		$template->assign_vars(array(
-			'PAGINATION_COM' => $pagination->show_pagin($_com_path . transid($_com_vars_simple, $_com_vars_r_simple) . '&amp;pc=%d#' . $_com_script, $info_sql_module['nbr_com'], 'pc', $CONFIG_COM['com_max'], 3),
+		$Template->Assign_vars(array(
+			'PAGINATION_COM' => $Pagination->Display_pagination($_com_path . transid($_com_vars_simple, $_com_vars_r_simple) . '&amp;pc=%d#' . $_com_script, $info_sql_module['nbr_com'], 'pc', $CONFIG_COM['com_max'], 3),
 			'LANG' => $CONFIG['lang'],
 			'IDCOM' => '',
 			'IDPROV' => $_com_idprov,
@@ -374,23 +374,23 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	
 		//Gestion des rangs.	
-		$cache->load_file('ranks');
-		$result = $sql->query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents
+		$Cache->Load_file('ranks');
+		$result = $Sql->Query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents
 		FROM ".PREFIX."com c
 		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
 		LEFT JOIN ".PREFIX."sessions s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 		WHERE c.script = '" . $_com_script . "' AND c.idprov = '" . $_com_idprov . "'
 		GROUP BY c.idcom
 		ORDER BY c.timestamp DESC 
-		" . $sql->sql_limit($pagination->first_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
-		while ($row = $sql->sql_fetch_assoc($result))
+		" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
+		while ($row = $Sql->Sql_fetch_assoc($result))
 		{
 			$row['user_id'] = (int)$row['user_id'];
 			$edit = '';
 			$del = '';
 			
 			$is_guest = ($row['user_id'] === -1);
-			$is_modo = $session->check_auth($session->data, 1);
+			$is_modo = $Member->Check_level(1);
 			$warning = '';
 			$readonly = '';
 			if( $is_modo && !$is_guest ) //Modération.
@@ -400,7 +400,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 			}
 			
 			//Edition/suppression.
-			if( $is_modo || ($row['user_id'] === $session->data['user_id'] && $session->data['user_id'] !== -1) )
+			if( $is_modo || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 			{
 				$edit = '&nbsp;&nbsp;<a href="' . $_com_path . transid(sprintf($_com_vars, $row['idcom']) . '&editcom=1') .  '#' . $_com_script . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
 				$del = '&nbsp;&nbsp;<a href="' . $_com_path . transid(sprintf($_com_vars, $row['idcom']) . '&delcom=1') . '#' . $_com_script . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
@@ -485,7 +485,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 			}
 			else $user_local = '';
 			
-			$template->assign_block_vars('com_list',array(
+			$Template->Assign_block_vars('com_list',array(
 				'ID' => $row['idcom'],
 				'CONTENTS' => ucfirst(second_parse($row['contents'])),
 				'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
@@ -513,14 +513,14 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 				'U_QUOTE' => $_com_path . transid(sprintf($_com_vars, $row['idcom']) . '&amp;quote=' . $row['idcom'], sprintf($_com_vars_r, $row['idcom'], '&amp;quote=' . $row['idcom'])) . '#' . $_com_script
 			));
 		}
-		$sql->close($result);
+		$Sql->Close($result);
 		
 		include_once('../includes/bbcode.php');
 	}  
 
 	//Com en popup
 	if( $DEFINED_PHPBOOST )
-		$template->pparse('handle_com'); 
+		$Template->Pparse('handle_com'); 
 }
 
 if( $POPUP )

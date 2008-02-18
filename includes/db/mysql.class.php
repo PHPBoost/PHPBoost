@@ -30,18 +30,14 @@ define('DB_NO_CONNECT', false);
 
 class Sql
 {
-	var $query = 0; //Compteur des requêtes sql.
-	var $link; //Lien avec la base de donnée.
-	var $result = array(); //Resultat de la requête.
-	var $req = 0; //Nombre de requêtes.
-	
+	## Public Methods ##
 	function Sql($connect = true) //Constructeur
 	{
 		global $sql_host, $sql_login, $sql_pass, $sql_base;
 		static $connected = false;
 		if( $connect == true && !$connected )
 		{
-			$this->link = @$this->sql_connect($sql_host, $sql_login, $sql_pass) or $this->sql_error('', 'Connexion base de donnée impossible!', __LINE__, __FILE__);
+			$this->link = @$this->Sql_connect($sql_host, $sql_login, $sql_pass) or $this->sql_error('', 'Connexion base de donnée impossible!', __LINE__, __FILE__);
 			@$this->sql_select_db($sql_base, $this->link) or $this->sql_error('', 'Selection de la base de donnée impossible!', __LINE__, __FILE__);
 			$connected = true;			
 		}
@@ -49,19 +45,19 @@ class Sql
 	}
 	
 	//Connexion
-	function sql_connect($sql_host, $sql_login, $sql_pass)
+	function Sql_connect($sql_host, $sql_login, $sql_pass)
 	{
 		return mysql_connect($sql_host, $sql_login, $sql_pass);
 	}
 	
 	//Connexion
-	function sql_select_db($sql_base, $link)
+	function Sql_select_db($sql_base, $link)
 	{
 		return mysql_select_db($sql_base, $link);
 	}
 
 	//Requête simple
-	function query($query, $errline, $errfile) 
+	function Query($query, $errline, $errfile) 
 	{		
 		$this->result = mysql_query($query) or $this->sql_error($query, 'Requête simple invalide', $errline, $errfile);		
 		$this->result = mysql_fetch_row($this->result);
@@ -72,7 +68,7 @@ class Sql
 	}
 
 	//Requête multiple.
-	function query_array()
+	function Query_array()
 	{
 		$table = func_get_arg(0);
 		$nbr_arg = func_num_args();
@@ -106,7 +102,7 @@ class Sql
 	}
 
 	//Requete d'injection (insert, update, et requêtes complexes..)
-	function query_inject($query, $errline, $errfile) 
+	function Query_inject($query, $errline, $errfile) 
 	{
 		$resource = mysql_query($query) or $this->sql_error($query, 'Requête inject invalide', $errline, $errfile);
 		$this->req++;
@@ -115,7 +111,7 @@ class Sql
 	}
 
 	//Requête de boucle.
-	function query_while($query, $errline, $errfile) 
+	function Query_while($query, $errline, $errfile) 
 	{
 		$this->result = mysql_query($query) or $this->sql_error($query, 'Requête while invalide', $errline, $errfile);
 		$this->req++;
@@ -124,7 +120,7 @@ class Sql
 	}
 	
 	//Nombre d'entrées dans la table.
-	function count_table($table, $errline, $errfile)
+	function Count_table($table, $errline, $errfile)
 	{ 
 		$this->result = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table) or $this->sql_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Requête count invalide', $errline, $errfile);
 		$this->result = mysql_fetch_assoc($this->result);
@@ -135,87 +131,63 @@ class Sql
 	}
 
 	//Limite des résultats de la requete sql.
-	function sql_limit($start, $end = 0)
+	function Sql_limit($start, $end = 0)
 	{
 		return ' LIMIT ' . $start . ', ' .  $end;
 	}
 		
 	//Balayage du retour de la requête sous forme de tableau indexé par le nom des champs.
-	function sql_fetch_assoc($result)
+	function Sql_fetch_assoc($result)
 	{	
 		return mysql_fetch_assoc($result);
 	}
 	
 	//Balayage du retour de la requête sous forme de tableau indexé numériquement.
-	function sql_fetch_row($result)
+	function Sql_fetch_row($result)
 	{	
 		return mysql_fetch_row($result);
 	}
 	
 	//Lignes affectées lors de requêtes de mise à jour ou d'insertion.
-	function sql_affected_rows($ressource, $query)
+	function Sql_affected_rows($ressource, $query)
 	{
 		return mysql_affected_rows();
 	}
 	
 	//Nombres de lignes retournées.
-	function sql_num_rows($ressource, $query)
+	function Sql_num_rows($ressource, $query)
 	{
 		return mysql_num_rows($ressource);
 	}
 	
 	//Retourne l'id de la dernière insertion
-	function sql_insert_id($query)
+	function Sql_insert_id($query)
 	{
 		return mysql_insert_id();
 	}
 	
-	//Retourne la fonction de récupération de la date actuelle.
-	function sql_now()
-	{
-		return 'NOW()';
-	}
-	
-	//Retourne la fonction de récupération du jour.
-	function sql_day($field)
-	{
-		return 'DAYOFMONTH(' . $field . ')';
-	}
-	
-	//Retourne la fonction de récupération du mois.
-	function sql_month($field)
-	{
-		return 'MONTH(' . $field . ')';
-	}
-	
-	//Retourne la fonction de récupération de l'année.
-	function sql_year($field)
-	{
-		return 'YEAR(' . $field . ')';
-	}
-	
 	//Retourne le nombre d'année entre la date et aujourd'hui.
-	function sql_date_diff($field)
+	function Sql_date_diff($field)
 	{
 		return '(YEAR(CURRENT_DATE) - YEAR(' . $field . ')) - (RIGHT(CURRENT_DATE, 5) < RIGHT(' . $field . ', 5))';
 	}
 	
 	//Déchargement mémoire.
-	function close($result)
+	function Close($result)
 	{
 		if( is_resource($result) )
 			return mysql_free_result($result);		
 	}
 
 	//Fermeture de la connexion mysql ouverte.
-	function sql_close()
+	function Sql_close()
 	{
 		if( $this->link ) // si la connexion est établie
 			return mysql_close($this->link); // on ferme la connexion ouverte.
 	}
 	
 	//Liste les champs d'une table.
-	function sql_list_fields($table)
+	function Sql_list_fields($table)
 	{
 		global $sql_base;
 		
@@ -232,7 +204,7 @@ class Sql
 	}
 	
 	//Liste les tables + infos.
-	function sql_list_tables()
+	function Sql_list_tables()
 	{
 		global $sql_base;
 		
@@ -255,7 +227,7 @@ class Sql
 	}
 		
 	//Parsage d'un fichier SQL => exécution des requêtes.
-	function sql_parse($file_path, $tableprefix = '')
+	function Sql_parse($file_path, $tableprefix = '')
 	{
 		$handle_sql = @fopen($file_path, 'r');
 		if( $handle_sql ) 
@@ -289,13 +261,27 @@ class Sql
 		}
 	}	
 	
+	//Affichage du nombre de requête sql.
+	function Display_sql_request()
+	{
+		return $this->req;
+	}
+	
+	
+	## Private Methods ##
 	//Gestion des erreurs.
 	function sql_error($query, $errstr, $errline = '', $errfile = '') 
 	{
-		global $errorh;
+		global $Errorh;
 		
 		//Enregistrement dans le log d'erreur.
-		$errorh->error_handler($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile);
-	}
+		$Errorh->Error_handler($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile);
+	}	
+	
+	
+	## Private attributes ##
+	var $link; //Lien avec la base de donnée.
+	var $result = array(); //Resultat de la requête.
+	var $req = 0; //Nombre de requêtes.
 }		
 ?>

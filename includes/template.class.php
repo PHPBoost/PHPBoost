@@ -28,18 +28,82 @@
  
 class Templates
 {
-	var $template = ''; //Chaîne contenant le tpl en cours de parsage.
-	var $files = array(); //Tableau contenant le chemin vers le tpl (vérifié).
+	## Public Attribute ##
 	var $_var = array(); //Tableau contenant les variables de remplacement des variables simples.
 	var $_block = array(); //Tableau contenant les variables de remplacement des variables simples.
 	
 	//Stock les différents tpl en cours de traitement.
-	function set_filenames($array_tpl)
+	function Set_filenames($array_tpl)
 	{
 		foreach($array_tpl as $parse_name => $filename)
 			$this->files[$parse_name] = $this->check_file($filename);
 	}
 	
+	//Récupération du chemin des données du module.
+	function Module_data_path($module)
+	{
+		if( isset($this->module_data_path[$module]) )
+			return $this->module_data_path[$module];
+		return '';
+	}
+	
+	//Stock les variables simple.
+	function Assign_vars($array_vars)
+	{
+		foreach($array_vars as $key => $val)
+			$this->_var[$key] = $val;
+	}
+		
+	//Stock les variables des différents blocs.
+	function Assign_block_vars($block_name, $array_vars)
+	{
+		if( strpos($block_name, '.') !== false ) //Bloc imbriqué.
+		{
+			$blocks = explode('.', $block_name);
+			$blockcount = count($blocks) - 1;
+
+			$str = &$this->_block;
+			for($i = 0; $i < $blockcount; $i++)
+			{
+				$str = &$str[$blocks[$i]];
+				$str = &$str[count($str) - 1];
+			}
+			$str[$blocks[$blockcount]][] = $array_vars;
+		}
+		else
+			$this->_block[$block_name][] = $array_vars;
+	}
+	
+	//Supprime un bloc.
+	function Unassign_block_vars($block_name)
+	{
+		if( isset($this->_block[$block_name]) )
+			unset($this->_block[$block_name]);
+	}
+	
+	//Affichage du traitement du tpl.
+	function Pparse($parse_name)
+	{
+		$file_cache_path = '../cache/tpl/' . trim(str_replace(array('/', '.', '..', 'tpl', 'templates'), array('_', '', '', '', 'tpl'), $this->files[$parse_name]), '_') . '.php';
+
+		//Vérification du statut du fichier de cache associé au template.
+		if( !$this->check_cache_file($this->files[$parse_name], $file_cache_path) )
+		{
+			//Chargement du template.
+			if( !$this->load_tpl($parse_name) ) 
+				die('Template->load_tpl(): Chargement impossible template: ' . $parse_name . '!');
+
+			//Parse
+			$this->parse($parse_name);
+			$this->clean(); //On nettoie avant d'envoyer le flux.
+			$this->save($file_cache_path); //Enregistrement du fichier de cache.
+		}	
+			
+		include($file_cache_path);		
+	}
+	
+	
+	## Private Methods ##
 	//Vérification de l'existence du tpl perso, sinon tentative de chargement du tpl de base.
 	function check_file($filename)
 	{
@@ -65,15 +129,7 @@ class Templates
 		//Chargement de fichier par défaut du module.	
 		return $module_path . '/' . $get_module[4];
 	}
-	
-	//Récupération du chemin des données du module.
-	function module_data_path($module)
-	{
-		if( isset($this->module_data_path[$module]) )
-			return $this->module_data_path[$module];
-		return '';
-	}
-	
+		
 	//Vérifie le statut du fichier en cache, il sera regénéré s'il n'existe pas ou si il est périmé.
 	function check_cache_file($tpl_path, $file_cache_path)
 	{
@@ -101,45 +157,11 @@ class Templates
 		return true;
 	}
 	
-	//Stock les variables simple.
-	function assign_vars($array_vars)
-	{
-		foreach($array_vars as $key => $val)
-			$this->_var[$key] = $val;
-	}
-		
-	//Stock les variables des différents blocs.
-	function assign_block_vars($block_name, $array_vars)
-	{
-		if( strpos($block_name, '.') !== false ) //Bloc imbriqué.
-		{
-			$blocks = explode('.', $block_name);
-			$blockcount = count($blocks) - 1;
-
-			$str = &$this->_block;
-			for($i = 0; $i < $blockcount; $i++)
-			{
-				$str = &$str[$blocks[$i]];
-				$str = &$str[count($str) - 1];
-			}
-			$str[$blocks[$blockcount]][] = $array_vars;
-		}
-		else
-			$this->_block[$block_name][] = $array_vars;
-	}
-	
-	//Supprime un bloc.
-	function unassign_block_vars($block_name)
-	{
-		if( isset($this->_block[$block_name]) )
-			unset($this->_block[$block_name]);
-	}
-	
 	//Inclusion d'un template dans un autre.
 	function tpl_include($parse_name)
 	{
  		if( isset($this->files[$parse_name]) )
-			$this->pparse($parse_name);
+			$this->Pparse($parse_name);
 	}
 	
 	//Parse du tpl.
@@ -240,26 +262,11 @@ class Templates
 		}
 	}
 	
-	//Affichage du traitement du tpl.
-	function pparse($parse_name)
-	{
-		$file_cache_path = '../cache/tpl/' . trim(str_replace(array('/', '.', '..', 'tpl', 'templates'), array('_', '', '', '', 'tpl'), $this->files[$parse_name]), '_') . '.php';
 
-		//Vérification du statut du fichier de cache associé au template.
-		if( !$this->check_cache_file($this->files[$parse_name], $file_cache_path) )
-		{
-			//Chargement du template.
-			if( !$this->load_tpl($parse_name) ) 
-				die('Template->load_tpl(): Chargement impossible template: ' . $parse_name . '!');
-
-			//Parse
-			$this->parse($parse_name);
-			$this->clean(); //On nettoie avant d'envoyer le flux.
-			$this->save($file_cache_path); //Enregistrement du fichier de cache.
-		}	
-			
-		include($file_cache_path);		
-	}
+	## Private Attribute ##
+	var $template = ''; //Chaîne contenant le tpl en cours de parsage.
+	var $files = array(); //Tableau contenant le chemin vers le tpl (vérifié).
+	var $module_data_path; //Chemin vers les données du module.
 }
 
 ?>

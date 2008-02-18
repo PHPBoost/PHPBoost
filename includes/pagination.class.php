@@ -30,36 +30,9 @@ define('LINK_START_PAGE', false);
 
 class Pagination
 {
-	var $page; //Valeur courante de la page.
-	var $nbr_start_links = 3; //Nombre de liens affichés en début de chaîne.
-	var $nbr_end_links = 3; //Nombre de liens affichés en fin de chaîne.	
-	//$nbr_max_link => Nombre de lien max avant et après la page courante. 
-	
-	//Récupère la valeur de la page courante.
-	function get_var_page($var_page)
-	{
-		$_GET[$var_page] = isset($_GET[$var_page]) ? numeric($_GET[$var_page]) : 0;
-		if( !empty($_GET[$var_page]) )
-			return $_GET[$var_page];
-		else 
-			return 1;
-	}
-		
-	//Vérifie si la page sur laquelle on se trouve est valide, sinon renvoi sur une page d'erreur.
-	function check_page($nbr_page)
-	{		
-		global $errorh;
-		
-		if( $this->page < 0 ) //Erreur => redirection! 
-			$errorh->error_handler('e_unexist_page', E_USER_REDIRECT);
-		elseif( $this->page > $nbr_page ) //Erreur => redirection! 
-			$errorh->error_handler('e_unexist_page', E_USER_REDIRECT); 
-
-		return $this->page;
-	}
-
+	## Public Methods ##
 	//Renvoi la chaîne de liens formatée.
-	function show_pagin($path, $total_msg, $var_page, $nbr_msg_page, $nbr_max_link, $font_size = 11, $previous_next = true, $link_start_page = true)
+	function Display_pagination($path, $total_msg, $var_page, $nbr_msg_page, $nbr_max_link, $font_size = 11, $previous_next = true, $link_start_page = true)
 	{
 		if( $total_msg > $nbr_msg_page )
 		{
@@ -114,12 +87,43 @@ class Pagination
 	}
 	
 	//Calcule le numéro du premier message de la page actuelle.
-	function first_msg($nbr_msg_page, $var_page)
+	function First_msg($nbr_msg_page, $var_page)
 	{
 		$page = !empty($_GET[$var_page]) ? numeric($_GET[$var_page]) : 1;	
 		$page = $page > 0 ? $page : 1;	
 		return (($page - 1) * $nbr_msg_page); 
 	}
+	
+	
+	## Private Methods ##
+	//Récupère la valeur de la page courante.
+	function get_var_page($var_page)
+	{
+		$_GET[$var_page] = isset($_GET[$var_page]) ? numeric($_GET[$var_page]) : 0;
+		if( !empty($_GET[$var_page]) )
+			return $_GET[$var_page];
+		else 
+			return 1;
+	}
+		
+	//Vérifie si la page sur laquelle on se trouve est valide, sinon renvoi sur une page d'erreur.
+	function check_page($nbr_page)
+	{		
+		global $Errorh;
+		
+		if( $this->page < 0 ) //Erreur => redirection! 
+			$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT);
+		elseif( $this->page > $nbr_page ) //Erreur => redirection! 
+			$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT); 
+
+		return $this->page;
+	}
+	
+	## Private Attribute ##
+	var $page; //Valeur courante de la page.
+	var $nbr_start_links = 3; //Nombre de liens affichés en début de chaîne.
+	var $nbr_end_links = 3; //Nombre de liens affichés en fin de chaîne.	
+	//$nbr_max_link => Nombre de lien max avant et après la page courante. 
 }
 
 ?>

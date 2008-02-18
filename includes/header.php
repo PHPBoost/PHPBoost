@@ -30,12 +30,12 @@ if( defined('PHP_BOOST') !== true) exit;
 if( !defined('TITLE') )
 	define('TITLE', $LANG['unknow']);
 	
-$session->session_check(TITLE); //Vérification de la session.
+$Session->Session_check(TITLE); //Vérification de la session.
 
 //Gestion de la maintenance du site.
 if( $CONFIG['maintain'] > time() )
 {	
-	if( $session->data['level'] !== 2 ) //Non admin.
+	if( $Member->Get_attribute('level') !== 2 ) //Non admin.
 	{
 		if( SCRIPT !== (DIR . '/includes/maintain.php') ) //Evite de créer une boucle infine.
 			redirect(HOST . DIR . '/member/maintain.php');
@@ -73,7 +73,7 @@ if( $CONFIG['maintain'] > time() )
 			$array_release = array('', '', '', '', '', '');
 		}
 
-		$template->assign_vars(array(	
+		$Template->Assign_vars(array(	
 			'C_ALERT_MAINTAIN' => true,
 			'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
 			'L_MAINTAIN_DELAY' => $LANG['maintain_delay'],
@@ -87,7 +87,7 @@ if( $CONFIG['maintain'] > time() )
 	}
 }
 	
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'header' => '../templates/' . $CONFIG['theme'] . '/header.tpl',
 	'subheader' => '../templates/' . $CONFIG['theme'] . '/subheader.tpl',
 	'topcentral' => '../templates/' . $CONFIG['theme'] . '/topcentral.tpl'
@@ -106,7 +106,7 @@ if( defined('ALTERNATIVE_CSS') )
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
 $THEME = @parse_ini_file('../templates/' . $CONFIG['theme'] . '/config/' . $CONFIG['lang'] . '/config.ini');
 	
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'SERVER_NAME' => $CONFIG['site_name'],
 	'SITE_NAME' => $CONFIG['site_name'],
 	'TITLE' => stripslashes(TITLE),
@@ -114,7 +114,7 @@ $template->assign_vars(array(
 	'SITE_KEYWORD' => $CONFIG['site_keyword'],
 	'THEME' => $CONFIG['theme'],
 	'ALTERNATIVE_CSS' => $alternative_css,
-	'C_SESSION_MEMBER_CONNECTED' => ($session->data['level'] >= 0) ? true : false,
+	'C_SESSION_MEMBER_CONNECTED' => ($Member->Get_attribute('level') >= 0) ? true : false,
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],	
 	'L_VISIT' => $LANG['guest_s'],
 	'L_TODAY' => $LANG['today'],
@@ -125,11 +125,11 @@ $template->assign_vars(array(
 //Si le compteur de visites est activé, on affiche le tout.
 if( $CONFIG['compteur'] == 1 )
 {
-	$compteur = $sql->query_array('compteur', 'ip AS nbr_ip', 'total', 'WHERE id = "1"', __LINE__, __FILE__);
+	$compteur = $Sql->Query_array('compteur', 'ip AS nbr_ip', 'total', 'WHERE id = "1"', __LINE__, __FILE__);
 	$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 	$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'C_COMPTEUR' => true,
 		'COMPTEUR_TOTAL' => $compteur_total,
 		'COMPTEUR_DAY' => $compteur_day
@@ -148,22 +148,22 @@ $right_column = ($THEME['right_column'] && !NO_RIGHT_COLUMN);
 //Début de la colonne de gauche.
 if( $left_column )
 {	
-	$template->assign_vars(array(	
+	$Template->Assign_vars(array(	
 		'C_START_LEFT' => true
 	));
 }
-$template->pparse('header');
+$Template->Pparse('header');
 
 //Gestion des blocs de subheader.
 $MODULES_MINI['subheader'] = true;
 include('../includes/modules_mini.php');	
 $MODULES_MINI['subheader'] = false;
 
-$template->pparse('subheader');
+$Template->Pparse('subheader');
 
 if( $left_column ) //Gestion des blocs de gauche.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'end_left' => '../templates/' . $CONFIG['theme'] . '/end_left.tpl',
 	));
 	
@@ -178,15 +178,15 @@ if( $left_column ) //Gestion des blocs de gauche.
 		$MODULES_MINI['right'] = false;
 	}
 
-	$template->pparse('end_left');
+	$Template->Pparse('end_left');
 }	
 if( $right_column )  //Gestion des blocs de droite.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'start_right' => '../templates/' . $CONFIG['theme'] . '/start_right.tpl'
 	));
 
-	$template->pparse('start_right');	
+	$Template->Pparse('start_right');	
 	$MODULES_MINI['right'] = true;
 	include('../includes/modules_mini.php');
 	$MODULES_MINI['right'] = false;
@@ -198,18 +198,18 @@ if( $right_column )  //Gestion des blocs de droite.
 		$MODULES_MINI['left'] = false;
 	}
 	
-	$template->assign_vars(array(	
+	$Template->Assign_vars(array(	
 		'C_END_RIGHT' => true
 	));
 }
 
 //Gestion du fil d'ariane, et des titres des pages dynamiques.
-$speed_bar->Display_speed_bar();
+$Speed_bar->Display_speed_bar();
 
 $MODULES_MINI['topcentral'] = true;
 include('../includes/modules_mini.php');
 $MODULES_MINI['topcentral'] = false;
 
-$template->pparse('topcentral');
+$Template->Pparse('topcentral');
 
 ?>

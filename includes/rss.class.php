@@ -27,10 +27,7 @@
 
 class Rss
 {
-	var $path_cache = ''; //Chemin du cache, lien relatif sur le serveur.
-	var $flux = ''; //Stock le flux du rss qui va être parsé.
-	var $mode = 'include'; //Type de récupération du contenu du rss.
-	
+	## Public Methods #	
 	//Constructeur.
 	function Rss($path_flux, $mode = 'include') 
 	{
@@ -38,13 +35,34 @@ class Rss
 		$this->load_rss('/' . $path_flux);
 		$this->mode = $mode;
 	}
-
+	
 	//Assigne le chemin vers le dossier du cache.
-	function cache_path($path_cache)
+	function Cache_path($path_cache)
 	{
 		$this->path_cache = $path_cache;
 	}
 	
+	//Génère les fichier du cache, suivant le type demandé.
+	function Generate_file($type, $name)
+	{		
+		if( $type == 'javascript' ) //Génération du 1er fichier javascript.
+		{						
+			$file_path = $this->path_cache . $name . '.html';
+			$file = fopen($file_path, 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
+			fputs($file, "document.write('" . str_replace('\'', '\\\'', $this->flux) . "');");
+			fclose($file);
+		}		
+		elseif( $type == 'php' ) //Génération du 2ème fichier PHP.
+		{			
+			$file_path2 = $this->path_cache . $name . '.html';
+			$file = fopen($file_path2, 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
+			fputs($file, $this->flux);
+			fclose($file);
+		}
+	}
+	
+	
+	## Private Methods ##
 	//Charge le rss non parsé.
 	function load_rss($path_flux)
 	{
@@ -97,24 +115,10 @@ class Rss
 		$this->flux .= '</ul>';	
 	}
 	
-	//Génère les fichier du cache, suivant le type demandé.
-	function generate_file($type, $name)
-	{		
-		if( $type == 'javascript' ) //Génération du 1er fichier javascript.
-		{						
-			$file_path = $this->path_cache . $name . '.html';
-			$file = fopen($file_path, 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
-			fputs($file, "document.write('" . str_replace('\'', '\\\'', $this->flux) . "');");
-			fclose($file);
-		}		
-		elseif( $type == 'php' ) //Génération du 2ème fichier PHP.
-		{			
-			$file_path2 = $this->path_cache . $name . '.html';
-			$file = fopen($file_path2, 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
-			fputs($file, $this->flux);
-			fclose($file);
-		}
-	}
+	## Private attributes ##
+	var $path_cache = ''; //Chemin du cache, lien relatif sur le serveur.
+	var $flux = ''; //Stock le flux du rss qui va être parsé.
+	var $mode = 'include'; //Type de récupération du contenu du rss.
 }
 
 ?>
