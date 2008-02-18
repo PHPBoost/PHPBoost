@@ -29,9 +29,9 @@ if( defined('PHP_BOOST') !== true) exit;
 
 function generate_module_file_faq()
 {
-	global $sql;
+	global $Sql;
 	//Configuration
-	$config = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'faq'", __LINE__, __FILE__));
+	$config = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'faq'", __LINE__, __FILE__));
 	$config['root']['auth'] = unserialize(stripslashes($config['root']['auth']));
 	$root_config = $config['root'];
 	unset($config['root']);
@@ -41,11 +41,11 @@ function generate_module_file_faq()
 	//List of categories and their own properties
 	$string .= '$FAQ_CATS = array();' . "\n\n";
 	$string .= '$FAQ_CATS[0] = ' . var_export($root_config, true) . ';' . "\n";
-	$result = $sql->query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, description
+	$result = $Sql->Query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, description
 	FROM ".PREFIX."faq_cats
 	ORDER BY id_parent, c_order", __LINE__, __FILE__);
 	
-	while ($row = $sql->sql_fetch_assoc($result))
+	while ($row = $Sql->Sql_fetch_assoc($result))
 	{
 		$string .= '$FAQ_CATS[' . $row['id'] . '] = ' . 
 			var_export(array(
@@ -55,7 +55,7 @@ function generate_module_file_faq()
 				'desc' => $row['description'],
 				'visible' => $row['visible'],
 				'display_mode' => $row['display_mode'],
-				'num_questions' => $sql->query("SELECT COUNT(*) FROM ".PREFIX."faq WHERE idcat = '" . $row['id'] . "'", __LINE__, __FILE__),
+				'num_questions' => $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."faq WHERE idcat = '" . $row['id'] . "'", __LINE__, __FILE__),
 				'image' => $row['image'],
 				'description' => $row['description'],
 				'auth' => unserialize($row['auth'])

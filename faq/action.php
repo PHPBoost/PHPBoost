@@ -47,64 +47,64 @@ $description = !empty($_POST['description']) ? parse($_POST['description']) : ''
 
 if( $faq_del_id > 0 )
 {
-	$faq_infos = $sql->query_array('faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__);
+	$faq_infos = $Sql->Query_array('faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__);
 	$id_cat_for_speed_bar = $faq_infos['idcat'];
 	include('faq_speed_bar.php');
 	if( $auth_write )
 	{
 		if( !empty($faq_infos['question']) ) //If the id corresponds to a question existing in the database
 		{
-			$sql->query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order > '" . $faq_infos['q_order'] . "'", __LINE__, __FILE__); //Decrementation of the order of every question which are after
-			$sql->query_inject("DELETE FROM ".PREFIX."faq WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__); //Deleting question
+			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order > '" . $faq_infos['q_order'] . "'", __LINE__, __FILE__); //Decrementation of the order of every question which are after
+			$Sql->Query_inject("DELETE FROM ".PREFIX."faq WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__); //Deleting question
 			header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'], '', '&'));
 			exit;
 		}
 	}
 	else
 	{
-		$errorh->error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 		exit;
 	}
 }
 elseif( $down > 0 )
 {
-	$faq_infos = $sql->query_array('faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $down . "'", __LINE__, __FILE__);
+	$faq_infos = $Sql->Query_array('faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $down . "'", __LINE__, __FILE__);
 	$id_cat_for_speed_bar = $faq_infos['idcat'];
 	include('faq_speed_bar.php');
 	if( $auth_write && !empty($faq_infos['question']) ) //If the id corresponds to a question existing in the database
 	{
 		if( $faq_infos['q_order'] < $FAQ_CATS[$faq_infos['idcat']]['num_questions'] ) //If it's not the last question we exchange it and its previous neighboor
 		{
-			$sql->query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] + 1) . "'", __LINE__, __FILE__);
-			$sql->query_inject("UPDATE ".PREFIX."faq SET q_order = q_order + 1 WHERE id = '" . $down . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] + 1) . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order + 1 WHERE id = '" . $down . "'", __LINE__, __FILE__);
 			header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . ($faq_infos['q_order'] + 1), '', '&'));
 			exit;
 		}
 	}
 	else
 	{
-		$errorh->error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 		exit;
 	}
 }
 elseif( $up > 0 )
 {
-	$faq_infos = $sql->query_array('faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $up . "'", __LINE__, __FILE__);
+	$faq_infos = $Sql->Query_array('faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $up . "'", __LINE__, __FILE__);
 	$id_cat_for_speed_bar = $faq_infos['idcat'];
 	include('faq_speed_bar.php');
 	if( $auth_write && !empty($faq_infos['question']) ) //If the id corresponds to a question existing in the database
 	{
 		if( $faq_infos['q_order'] > 1 ) //If it's not the first question we exchange it and its following
 		{
-			$sql->query_inject("UPDATE ".PREFIX."faq SET q_order = q_order + 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] - 1) . "'", __LINE__, __FILE__);
-			$sql->query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE id = '" . $up . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order + 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] - 1) . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE id = '" . $up . "'", __LINE__, __FILE__);
 			header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . ($faq_infos['q_order'] - 1), '', '&'));
 			exit;
 		}
 	}
 	else
 	{
-		$errorh->error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 		exit;
 	}
 }
@@ -113,18 +113,18 @@ elseif( !empty($entitled) && !empty($answer) )
 {
 	if( $id_question > 0 )
 	{
-		$faq_infos = $sql->query_array('faq', 'idcat', 'q_order', "WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
+		$faq_infos = $Sql->Query_array('faq', 'idcat', 'q_order', "WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
 		$id_cat_for_speed_bar = $faq_infos['idcat'];
 		include('faq_speed_bar.php');
 		if( $auth_write )//If authorized user
 		{			
-			$sql->query_inject("UPDATE ".PREFIX."faq SET question = '" . $entitled . "', answer = '" . $answer . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."faq SET question = '" . $entitled . "', answer = '" . $answer . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
 			header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . $faq_infos['q_order'], '', '&'));
 			exit;
 		}
 		else
 		{
-			$errorh->error_handler('e_auth', E_USER_REDIRECT);
+			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 			exit;
 		}
 	}
@@ -135,15 +135,15 @@ elseif( !empty($entitled) && !empty($answer) )
 		if( $auth_write )//If authorized user
 		{
 			//shifting right all questions which will be after this
-			$sql->query_inject("UPDATE ".PREFIX."faq SET q_order = q_order + 1 WHERE idcat = '" . $new_id_cat . "' AND q_order > '" . $id_after . "'", __LINE__, __FILE__);
-			$sql->query_inject("INSERT INTO ".PREFIX."faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $new_id_cat . "', '" . ($id_after + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . $session->data['user_id'] . "', '" . time() . "')", __LINE__, __FILE__);
-			$cache->generate_module_file('faq');
+			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order + 1 WHERE idcat = '" . $new_id_cat . "' AND q_order > '" . $id_after . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $new_id_cat . "', '" . ($id_after + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . $Member->Get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
+			$Cache->Generate_module_file('faq');
 			header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $new_id_cat . '#q' . ($id_after + 1), '', '&'));
 			exit;
 		}
 		else
 		{
-			$errorh->error_handler('e_auth', E_USER_REDIRECT);
+			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 			exit;
 		}
 	}
@@ -158,7 +158,7 @@ elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
 		{
 			$auth_read = isset($_POST['groups_auth1']) ? $_POST['groups_auth1'] : '';
 			$auth_write = isset($_POST['groups_auth2']) ? $_POST['groups_auth2'] : '';
-			$array_auth_all = $groups->return_array_auth($auth_read, $auth_write);
+			$array_auth_all = $Group->Return_array_auth($auth_read, $auth_write);
 			$new_auth = addslashes(serialize($array_auth_all));
 		}
 		else
@@ -169,7 +169,7 @@ elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
 		//Category existing into database
 		if( $id_cat > 0 )
 		{
-			$sql->query_inject("UPDATE ".PREFIX."faq_cats SET display_mode = '" . $display_mode . "', auth = '" . $new_auth . "', description = '" . $description . "', name = '" . $cat_name . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET display_mode = '" . $display_mode . "', auth = '" . $new_auth . "', description = '" . $description . "', name = '" . $cat_name . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
 		}
 		//Root : properties into cache
 		else
@@ -180,15 +180,15 @@ elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
 				'auth' => $FAQ_CATS[0]['auth'],
 				'description' => $description
 			);
-			$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
 		}
-		$cache->generate_module_file('faq');
+		$Cache->Generate_module_file('faq');
 		header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $id_cat, '', '&'));
 		exit;
 	}
 	else
 	{
-		$errorh->error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 		exit;
 	}
 }

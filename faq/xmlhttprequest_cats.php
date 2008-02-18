@@ -29,12 +29,12 @@ require_once('../includes/begin.php');
 define('TITLE', 'Ajax faq');
 require_once('../includes/header_no_display.php');
 
-if( $session->data['level'] === 2 ) //Admin
+if( $Member->Get_attribute('level') === 2 ) //Admin
 {	
-	$cache->load_file('faq');
+	$Cache->Load_file('faq');
 	include_once('../includes/cats_management.class.php');
 	// Only those two parameters must be changed if you want to use again this file in another context
-	$categories = new CategoriesManagement('faq_cats', 'faq');
+	$Categories = new CategoriesManagement('faq_cats', 'faq');
 	
 	$id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
 	$id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
@@ -43,9 +43,9 @@ if( $session->data['level'] === 2 ) //Admin
 	$result = false;
 	
 	if( $id_up > 0 )
-		$result = $categories->Move_category($id_up, 'up');
+		$result = $Categories->Move_category($id_up, 'up');
 	elseif( $id_down > 0 )
-		$result = $categories->Move_category($id_down, 'down');
+		$result = $Categories->Move_category($id_down, 'down');
 	
 	//Operation was successfully
 	if( $result )
@@ -58,11 +58,11 @@ if( $session->data['level'] === 2 ) //Admin
 				'rewrited' => '../faq/faq-%d+%s.php'),
 			);
 		
-		$categories->Set_displaying_configuration($cat_config);
+		$Categories->Set_displaying_configuration($cat_config);
 		
-		$cache->load_file('faq', RELOAD_CACHE);
+		$Cache->Load_file('faq', RELOAD_CACHE);
 	
-		echo $categories->Build_administration_list($FAQ_CATS, AJAX_MODE);
+		echo $Categories->Build_administration_list($FAQ_CATS, AJAX_MODE);
 	}
 }
 include_once('../includes/footer_no_display.php');

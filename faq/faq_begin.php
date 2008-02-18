@@ -27,7 +27,7 @@
 
 if( defined('PHP_BOOST') !== true)	exit;
 
-$cache->load_file('faq');
+$Cache->Load_file('faq');
 
 include_once('../faq/lang/' . $CONFIG['lang'] . '/faq_' . $CONFIG['lang'] . '.php');
 

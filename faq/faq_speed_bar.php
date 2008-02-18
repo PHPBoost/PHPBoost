@@ -27,26 +27,26 @@
 
 if( defined('PHP_BOOST') !== true)	exit;
 
-$auth_read = $groups->check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
-$auth_write = $groups->check_auth($FAQ_CONFIG['global_auth'], AUTH_WRITE);
+$auth_read = $Member->Check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
+$auth_write = $Member->Check_auth($FAQ_CONFIG['global_auth'], AUTH_WRITE);
 
 //Speed_bar : we read categories list recursively
 
 while( $id_cat_for_speed_bar > 0 )
 {
-	$speed_bar->Add_link($FAQ_CATS[$id_cat_for_speed_bar]['name'], transid('faq.php?id=' . $id_cat_for_speed_bar, 'faq-' . $id_cat_for_speed_bar . '+' . url_encode_rewrite($FAQ_CATS[$id_cat_for_speed_bar]['name']) . '.php'));
+	$Speed_bar->Add_link($FAQ_CATS[$id_cat_for_speed_bar]['name'], transid('faq.php?id=' . $id_cat_for_speed_bar, 'faq-' . $id_cat_for_speed_bar . '+' . url_encode_rewrite($FAQ_CATS[$id_cat_for_speed_bar]['name']) . '.php'));
 	$id_cat_for_speed_bar = (int)$FAQ_CATS[$id_cat_for_speed_bar]['id_parent'];
 	if( !empty($FAQ_CATS[$id_cat_for_speed_bar]['auth']) )
 	{
 			//If we can't read a category, we can't read sub elements.
-			$auth_read = $auth_read && $groups->check_auth($FAQ_CATS[$id_cat_for_speed_bar]['auth'], AUTH_READ);
-			$auth_write = $groups->check_auth($FAQ_CATS[$id_cat_for_speed_bar]['auth'], AUTH_WRITE);
+			$auth_read = $auth_read && $Member->Check_auth($FAQ_CATS[$id_cat_for_speed_bar]['auth'], AUTH_READ);
+			$auth_write = $Member->Check_auth($FAQ_CATS[$id_cat_for_speed_bar]['auth'], AUTH_WRITE);
 	}
 
 }
 
-$speed_bar->Add_link($FAQ_CONFIG['faq_name'], transid('faq.php'));
+$Speed_bar->Add_link($FAQ_CONFIG['faq_name'], transid('faq.php'));
 
-$speed_bar->Reverse_links();
+$Speed_bar->Reverse_links();
 
 ?>

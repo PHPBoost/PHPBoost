@@ -53,7 +53,7 @@ class FaqCats extends CategoriesManagement
 	//Method which deletes a category and move its content in another category
 	function Delete_category_and_move_content($id_category, $new_id_cat_content)
 	{
-		global $FAQ_CATS, $sql;
+		global $FAQ_CATS, $Sql;
 		
 		if( !array_key_exists($id_category, $FAQ_CATS) )
 		{
@@ -66,7 +66,7 @@ class FaqCats extends CategoriesManagement
 			if( $properties['id_parent'] == $id_category )
 				parent::Move_category_into_another_category($id_category, $new_id_cat_content);			
 		}
-		$sql->query_inject("UPDATE ".PREFIX."faq SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."faq SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
 		return true;
 	}
 	
@@ -75,12 +75,12 @@ class FaqCats extends CategoriesManagement
 	//method which deletes a category and its content (not recursive)
 	function delete_category_with_content($id)
 	{
-		global $sql;
+		global $Sql;
 		//If the category is successfully deleted
 		if( parent::Delete_category($id) )
 		{
 			//We remove its whole content
-			$sql->query_inject("DELETE FROM ".PREFIX."faq WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("DELETE FROM ".PREFIX."faq WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
 			return true;
 		}
 		else
