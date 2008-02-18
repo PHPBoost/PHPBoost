@@ -31,10 +31,10 @@ include_once('faq_begin.php'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 include_once('../includes/admin_header.php');
 
-$cache->load_file('faq');
+$Cache->Load_file('faq');
 
 include_once('faq_cats.class.php');
-$categories = new FaqCats();
+$Categories = new FaqCats();
 
 $id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
 $id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
@@ -42,10 +42,11 @@ $cat_to_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 $id_edit = !empty($_GET['edit']) ? numeric($_GET['edit']) : 0;
 $new_cat = !empty($_GET['new']) ? true : false;
 
-$template->set_filenames(array(
-'admin_faq_cat' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq_cats.tpl'
+$Template->Set_filenames(array(
+	'admin_faq_cat' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq_cats.tpl'
 ));
-$template->assign_vars(array(
+
+$Template->Assign_vars(array(
 	'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
 	'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
 	'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],
@@ -54,12 +55,12 @@ $template->assign_vars(array(
 
 if( $id_up > 0 )
 {
-	$categories->Move_category($id_up, 'up');
+	$Categories->Move_category($id_up, 'up');
 	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $id_down > 0 )
 {
-	$categories->Move_category($id_down, 'down');
+	$Categories->Move_category($id_down, 'down');
 	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $cat_to_del > 0 )
@@ -68,9 +69,9 @@ elseif( $cat_to_del > 0 )
 }
 elseif( $new_cat XOR $id_edit > 0 )
 {
-	$template->assign_block_vars('edit_category', array(
-			'' => ''
-		));
+	$Template->Assign_block_vars('edit_category', array(
+		'' => ''
+	));
 }
 else
 {	
@@ -82,14 +83,14 @@ else
 			'rewrited' => '../faq/faq-%d+%s.php'),
 		);
 		
-	$categories->Set_displaying_configuration($cat_config);
+	$Categories->Set_displaying_configuration($cat_config);
 	
-	$template->assign_block_vars('categories_list', array(
-		'CATEGORIES' => $categories->Build_administration_list($FAQ_CATS)
-		));
+	$Template->Assign_block_vars('categories_list', array(
+		'CATEGORIES' => $Categories->Build_administration_list($FAQ_CATS)
+	));
 }
 
-$template->pparse('admin_faq_cat');
+$Template->Pparse('admin_faq_cat');
 
 include_once('../includes/admin_footer.php');
 

@@ -46,22 +46,22 @@ include_once('faq_speed_bar.php');
 //checking authorization
 if( !$auth_read )
 {
-	$errorh->error_handler('e_auth', E_USER_REDIRECT);
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	exit;
 }
 
 include_once('../includes/header.php');
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'faq' => '../templates/' . $CONFIG['theme'] . '/faq/faq.tpl'
 ));
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'THEME' => $CONFIG['theme'],
-	'MODULE_DATA_PATH' => $template->module_data_path('faq')
+	'MODULE_DATA_PATH' => $Template->Module_data_path('faq')
 ));
 
 if( $auth_write )
-	$template->assign_block_vars('management', array());
+	$Template->Assign_block_vars('management', array());
 
 //let's check if there are some subcategories
 $num_subcats = 0;
@@ -74,22 +74,22 @@ foreach( $FAQ_CATS as $id => $value )
 //listing of subcategories
 if( $num_subcats > 0 )
 {
-	$template->assign_block_vars('cats', array());	
+	$Template->Assign_block_vars('cats', array());	
 	$i = 1;
 	foreach( $FAQ_CATS as $id => $value )
 	{
-		if( $id != 0 && $value['visible'] == 1 && $value['id_parent'] == $id_faq && (empty($value['auth']) || $groups->check_auth($value['auth'], AUTH_READ)) )
+		if( $id != 0 && $value['visible'] == 1 && $value['id_parent'] == $id_faq && (empty($value['auth']) || $Member->Check_auth($value['auth'], AUTH_READ)) )
 		{
 			if ( $i % $FAQ_CONFIG['num_cols'] == 1 )
-				$template->assign_block_vars('cats.row', array());
-			$template->assign_block_vars('cats.row.col', array(
+				$Template->Assign_block_vars('cats.row', array());
+			$Template->Assign_block_vars('cats.row.col', array(
 				'ID' => $id,
 				'NAME' => $value['name'],
 				'U_CAT' => transid('faq.php?id=' . $id, 'faq-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
 				'WIDTH' => floor(100 / (float)$FAQ_CONFIG['num_cols'])
 			));
 			if( !empty($value['image']) )
-				$template->assign_block_vars('cats.row.col.image', array(
+				$Template->Assign_block_vars('cats.row.col.image', array(
 					'SRC' => $value['image'],
 					'NAME' => addslashes($value['name'])
 				));
@@ -99,26 +99,26 @@ if( $num_subcats > 0 )
 }
 
 //Displaying the questions that this cat contains
-$result = $sql->query_while("SELECT id, question, answer
+$result = $Sql->Query_while("SELECT id, question, answer
 FROM ".PREFIX."faq
 WHERE idcat = '" . $id_faq . "'
 ORDER BY q_order",
 __LINE__, __FILE__);
 
-if( $sql->sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__) > 0 )
+if( $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__) > 0 )
 {
 	//Display mode : if this category has a particular display mode we use it, else we use default display mode. If the category is the root we use default mode.
 	$faq_display_block = $FAQ_CATS[$id_faq]['display_mode'] > 0 ? ($FAQ_CATS[$id_faq]['display_mode'] == 2 ? true : false ) : $FAQ_CONFIG['display_block'];
 
 	if( !$faq_display_block )
-		$template->assign_block_vars('questions', array());
+		$Template->Assign_block_vars('questions', array());
 	else
-		$template->assign_block_vars('questions_block', array());
+		$Template->Assign_block_vars('questions_block', array());
 		
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( !$faq_display_block )
-			$template->assign_block_vars('questions.faq', array(
+			$Template->Assign_block_vars('questions.faq', array(
 				'ID_QUESTION' => $row['id'],
 				'QUESTION' => $row['question'],
 				'DISPLAY_ANSWER' => $row['id'] != $id_question ? 'display:none' : 'display:block', //If user has disabled javascript $id_question corresponds to the answer he wants to read
@@ -127,11 +127,11 @@ if( $sql->sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE i
 			));
 		else
 		{
-			$template->assign_block_vars('questions_block.header', array(
+			$Template->Assign_block_vars('questions_block.header', array(
 				'QUESTION' => $row['question'],
 				'ID' => $row['id']
 			));
-			$template->assign_block_vars('questions_block.contents', array(
+			$Template->Assign_block_vars('questions_block.contents', array(
 				'ANSWER' => $row['answer'],
 				'QUESTION' => $row['question'],
 				'ID' => $row['id']
@@ -141,16 +141,16 @@ if( $sql->sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE i
 }
 else
 {
-	$template->assign_block_vars('no_question', array());
+	$Template->Assign_block_vars('no_question', array());
 }
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'L_NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
 	'L_CAT_MANAGEMENT' => $FAQ_LANG['category_manage'],
 	'U_MANAGEMENT' => transid('management.php?faq=' . $id_faq)
 ));
 
-$template->pparse('faq');
+$Template->Pparse('faq');
 
 include_once('../includes/footer.php'); 
 
