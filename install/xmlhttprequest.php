@@ -55,16 +55,16 @@ elseif( $db )
 	//Tentative de connexion
 	if( !@include_once('../includes/db/' . $dbms . '.class.php') )
 		die('<div class="error">' . $LANG['db_error_dbms'] . '</div>');
-	$sql = new Sql(false);
+	$Sql = new Sql(false);
 	//Connexion
-	$result = @$sql->sql_connect($host, $login, $password);
+	$result = @$Sql->Sql_connect($host, $login, $password);
 	if( !$result )
 		die('<div class="error">' . $LANG['db_error_connexion'] . '</div>');
 	//Sélection de la base de données
-	if( !@$sql->sql_select_db($database, $result) )
+	if( !@$Sql->Sql_select_db($database, $result) )
 		die('<div class="warning">' . $LANG['db_error_selection'] . '</div>');
 	//Déconnexion
-	$sql->sql_close();
+	$Sql->Sql_close();
 	echo '<div class="success">' . $LANG['db_success'] . '</div>';
 }
 

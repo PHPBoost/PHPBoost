@@ -1,3 +1,5 @@
+		# INCLUDE forum_top #
+		
 		<script type='text/javascript'>
 		<!--
 		function check_form_post(){
@@ -6,11 +8,8 @@
 				return false;
 			}
 		}
-
 		-->
-		</script>
-
-		# INCLUDE forum_top #
+		</script>	
 		
 		<div class="module_position">					
 			<div class="module_top_l"></div>		

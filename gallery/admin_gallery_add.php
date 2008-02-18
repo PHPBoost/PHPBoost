@@ -31,9 +31,9 @@ load_module_lang('gallery', $CONFIG['lang']); //Chargement de la langue du modul
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
-$cache->load_file('gallery');
+$Cache->Load_file('gallery');
 include_once('../gallery/gallery.class.php');
-$gallery = new Gallery;
+$Gallery = new Gallery;
 
 $idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 $idcat_post = !empty($_POST['idcat_post']) ? numeric($_POST['idcat_post']) : 0;
@@ -44,36 +44,36 @@ if( isset($_FILES['gallery']) && isset($_POST['idcat_post']) ) //Upload
 { 
 	$dir = 'pics/';
 	include_once('../includes/upload.class.php');
-	$upload = new Upload($dir);
+	$Upload = new Upload($dir);
 	
 	$idpic = 0;
 	if( is_writable($dir) )
 	{
 		if( $_FILES['gallery']['size'] > 0 )
 		{
-			$upload->upload_file('gallery', '`([a-z0-9])+\.(jpg|gif|png)+`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
-			if( !empty($upload->error) ) //Erreur, on arrête ici
-				redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $upload->error . '#errorh');
+			$Upload->Upload_file('gallery', '`([a-z0-9])+\.(jpg|gif|png)+`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
+			if( !empty($Upload->error) ) //Erreur, on arrête ici
+				redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Upload->error . '#errorh');
 			else
 			{
-				$path = $dir . $upload->filename['gallery'];
-				$error = $upload->validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
+				$path = $dir . $Upload->filename['gallery'];
+				$error = $Upload->Validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
 					redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $error . '#errorh');
 				else
 				{					
 					//Enregistrement de l'image dans la bdd.
-					$gallery->resize_pics($path);		
-					if( !empty($gallery->error) )
-						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $gallery->error . '#errorh');
+					$Gallery->Resize_pics($path);		
+					if( !empty($Gallery->error) )
+						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Gallery->error . '#errorh');
 					
 					$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
-					$idpic = $gallery->add_pics($idcat_post, $name, $upload->filename['gallery'], $session->data['user_id']);
-					if( !empty($gallery->error) )
-						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $gallery->error . '#errorh');
+					$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->filename['gallery'], $Member->Get_attribute('user_id'));
+					if( !empty($Gallery->error) )
+						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Gallery->error . '#errorh');
 					
 					//Régénération du cache des photos aléatoires.
-					$cache->generate_module_file('gallery');
+					$Cache->Generate_module_file('gallery');
 				}				
 			}
 		}
@@ -94,20 +94,20 @@ elseif( !empty($_POST['valid']) && !empty($nbr_pics_post) ) //Ajout massif d'ima
 			$del = !empty($_POST[$i . 'del']) ? numeric($_POST[$i . 'del']) : 0;
 			
 			if( $del )
-				$gallery->delete_file('pics/' . $uniq);
+				delete_file('pics/' . $uniq);
 			else
-				$gallery->add_pics($cat, $name, $uniq, $session->data['user_id']);
+				$Gallery->Add_pics($cat, $name, $uniq, $Member->Get_attribute('user_id'));
 		}		
 	}
 	
 	//Régénération du cache des photos aléatoires.
-	$cache->generate_module_file('gallery');
+	$Cache->Generate_module_file('gallery');
 					
 	redirect(HOST . DIR . '/gallery/admin_gallery_add.php');
 }
 else
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_gallery_add' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_add.tpl'
 	));
 	
@@ -115,29 +115,29 @@ else
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails');
 	if( in_array($get_error, $array_error) )
-		$errorh->error_handler($LANG[$get_error], E_USER_WARNING);
+		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
 	
 	//Création de la liste des catégories.
 	$cat_list = '<option value="0" selected="selected">' . $LANG['root'] . '</option>';
 	$cat_list_unselect = '<option value="0" selected="selected">' . $LANG['root'] . '</option>';
-	$result = $sql->query_while("SELECT id, level, name 
+	$result = $Sql->Query_while("SELECT id, level, name 
 	FROM ".PREFIX."gallery_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $sql->sql_fetch_assoc($result) )
+	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
 		$cat_list .= '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';			
 		$cat_list_unselect .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';			
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 	
 	//Aficchage de la photo uploadée.
 	if( !empty($add_pic) )
 	{	
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
-		$imageup = $sql->query_array("gallery", "idcat", "name", "path", "WHERE id = '" . $add_pic . "'", __LINE__, __FILE__);
-		$template->assign_block_vars('image_up', array(
+		$imageup = $Sql->Query_array("gallery", "idcat", "name", "path", "WHERE id = '" . $add_pic . "'", __LINE__, __FILE__);
+		$Template->Assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
@@ -145,7 +145,7 @@ else
 		));
 	}
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'WIDTH_MAX' => $CONFIG_GALLERY['width_max'],
 		'HEIGHT_MAX' => $CONFIG_GALLERY['height_max'],
 		'WEIGHT_MAX' => $CONFIG_GALLERY['weight_max'],
@@ -191,16 +191,16 @@ else
 		
 		if( is_array($array_pics) )
 		{
-			$result = $sql->query_while("SELECT path
+			$result = $Sql->Query_while("SELECT path
 			FROM ".PREFIX."gallery", __LINE__, __FILE__);
-			while( $row = $sql->sql_fetch_assoc($result) )
+			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				//On recherche les clées correspondante à celles trouvée dans la bdd.
 				$key = array_search($row['path'], $array_pics);
 				if( $key !== false)
 					unset($array_pics[$key]); //On supprime ces clées du tableau.
 			}
-			$sql->close($result);
+			$Sql->Close($result);
 			
 			//Colonnes des images.
 			$nbr_pics = count($array_pics);
@@ -208,7 +208,7 @@ else
 			$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 			$column_width_pics = floor(100/$nbr_column_pics);
 			
-			$template->assign_vars(array(
+			$Template->Assign_vars(array(
 				'NBR_PICS' => $nbr_pics,
 				'COLUMN_WIDTH_PICS' => $column_width_pics
 			));
@@ -258,9 +258,9 @@ else
 
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 				if( !file_exists('pics/thumbnails/' . $pics) && file_exists('pics/' . $pics) )
-					$gallery->resize_pics('pics/' . $pics); //Redimensionnement + création miniature
+					$Gallery->Resize_pics('pics/' . $pics); //Redimensionnement + création miniature
 
-				$template->assign_block_vars('list', array(
+				$Template->Assign_block_vars('list', array(
 					'ID' => $j,
 					'THUMNAILS' => '<img src="pics/thumbnails/' .  $pics . '" alt="" />',
 					'NAME' => $pics,
@@ -275,7 +275,7 @@ else
 			while( !is_int($j/$nbr_column_pics) )
 			{		
 				$j++;
-				$template->assign_block_vars('end_td_pics', array(
+				$Template->Assign_block_vars('end_td_pics', array(
 					'TD_END' => '<td class="row1" style="width:' . $column_width_pics . '%;padding:0">&nbsp;</td>',
 					'TR_END' => (is_int($j/$nbr_column_pics)) ? '</tr>' : ''			
 				));	
@@ -285,12 +285,12 @@ else
 	
 	if( $j == 0 )
 	{
-		$template->assign_block_vars('no_img', array(
+		$Template->Assign_block_vars('no_img', array(
 			'L_NO_IMG' => $LANG['no_pics']
 		));
 	}
 	
-	$template->pparse('admin_gallery_add'); 
+	$Template->Pparse('admin_gallery_add'); 
 }
 
 require_once('../includes/admin_footer.php');

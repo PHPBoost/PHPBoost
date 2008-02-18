@@ -28,8 +28,8 @@
 
 require_once('../includes/begin.php'); 
 require_once('../forum/forum_begin.php');
-$speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
-$speed_bar->Add_link($LANG['title_search'], '');
+$Speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Speed_bar->Add_link($LANG['title_search'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['title_search']);
 require_once('../includes/header.php');
 
@@ -40,19 +40,19 @@ $where = !empty($_POST['where']) ? securit($_POST['where']) : '';
 $colorate_result = !empty($_POST['colorate_result']) ? true : false;
 $valid_search = !empty($_POST['valid_search']) ? securit($_POST['valid_search']) : '';
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'search' => '../templates/' . $CONFIG['theme'] . '/forum/forum_search.tpl',
 	'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
 	'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
 ));
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-	'MODULE_DATA_PATH' => $template->module_data_path('forum'),
+	'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 	'LANG' => $CONFIG['lang'],
 	'SID' => SID,
 	'SEARCH' => $search,
-	'SELECT_CAT' => forum_list_cat($session->data), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+	'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'CONTENTS_CHECKED' => ($where == 'contents' || empty($where)) ? 'checked="checked"' : '',
 	'TITLE_CHECKED' => ($where == 'title') ? 'checked="checked"' : '',
 	'ALL_CHECKED' => ($where == 'all') ? 'checked="checked"' : '',
@@ -87,29 +87,29 @@ if( is_array($CAT_FORUM) )
 {	
 	foreach($CAT_FORUM as $id => $key)
 	{
-		if( !$groups->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
+		if( !$Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
 			$auth_cats .= $id . ',';
 	}
 }
 $auth_cats_select = !empty($auth_cats) ? " AND id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 
 $selected = ($idcat == '-1') ? ' selected="selected"' : '';	
-$template->assign_block_vars('cat', array(
+$Template->Assign_block_vars('cat', array(
 	'CAT' => '<option value="-1"' . $selected . '>' . $LANG['all'] . '</option>'
 ));	
-$result = $sql->query_while("SELECT id, name, level
+$result = $Sql->Query_while("SELECT id, name, level
 FROM ".PREFIX."forum_cats 
 WHERE aprob = 1 " . $auth_cats_select . "
 ORDER BY id_left", __LINE__, __FILE__);
-while( $row = $sql->sql_fetch_assoc($result) )
+while( $row = $Sql->Sql_fetch_assoc($result) )
 {	
 	$margin = ($row['level'] > 0) ? str_repeat('----------', $row['level']) : '----';
 	$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';	
-	$template->assign_block_vars('cat', array(
+	$Template->Assign_block_vars('cat', array(
 		'CAT' => '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>'
 	));	
 }
-$sql->close($result);
+$Sql->Close($result);
 
 //Coloration de l'item recherché en dehors des balises html.
 function token_colorate($matches)
@@ -146,7 +146,7 @@ if( !empty($valid_search) && !empty($search) )
 		" . (!empty($idcat) ? " AND t.idcat = '" . $idcat . "'" : '') . $auth_cats . "
 		GROUP BY msg.id
 		ORDER BY relevance DESC
-		" . $sql->sql_limit(0, 24);
+		" . $Sql->Sql_limit(0, 24);
 
 		$req_title = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, 0 AS relevance2
 		FROM ".PREFIX."forum_msg msg
@@ -159,7 +159,7 @@ if( !empty($valid_search) && !empty($search) )
 		" . (!empty($idcat) ? " AND t.idcat = '" . $idcat . "'" : '') . $auth_cats . "
 		GROUP BY t.id
 		ORDER BY relevance DESC
-		" . $sql->sql_limit(0, 24);
+		" . $Sql->Sql_limit(0, 24);
 		
 		$req_all = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, MATCH(msg.contents) AGAINST('" . $search . "') AS relevance2
 		FROM ".PREFIX."forum_msg msg
@@ -172,7 +172,7 @@ if( !empty($valid_search) && !empty($search) )
 		" . (!empty($idcat) ? " AND t.idcat = '" . $idcat . "'" : '') . $auth_cats . "
 		GROUP BY t.id
 		ORDER BY relevance DESC
-		" . $sql->sql_limit(0, 24);
+		" . $Sql->Sql_limit(0, 24);
 		
 		switch($where)
 		{
@@ -188,8 +188,8 @@ if( !empty($valid_search) && !empty($search) )
 
 		$max_relevance = 4.5;		
 		$check_result = false;
-		$result = $sql->query_while($req, __LINE__, __FILE__);
-		while( $row = $sql->sql_fetch_assoc($result) ) //On execute la requête dans une boucle pour afficher tout les résultats.
+		$result = $Sql->Query_while($req, __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) ) //On execute la requête dans une boucle pour afficher tout les résultats.
 		{ 
 			$title = $row['title'];
 			if( !empty($row['title']) )
@@ -212,7 +212,7 @@ if( !empty($valid_search) && !empty($search) )
 				}
 			}
 			
-			$template->assign_block_vars('list', array(
+			$Template->Assign_block_vars('list', array(
 				'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($row['connect']) && $row['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 				'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
 				'CONTENTS' => second_parse($contents),
@@ -223,25 +223,25 @@ if( !empty($valid_search) && !empty($search) )
 			
 			$check_result = true;
 		}	
-		$sql->close($result);
+		$Sql->Close($result);
 		
 		if( $check_result !== true )
-			$errorh->error_handler($LANG['no_result'], E_USER_NOTICE);
+			$Errorh->Error_handler($LANG['no_result'], E_USER_NOTICE);
 	}
 	else //Gestion erreur.
-		$errorh->error_handler($LANG['invalid_req'], E_USER_NOTICE);
+		$Errorh->Error_handler($LANG['invalid_req'], E_USER_NOTICE);
 }
 elseif( !empty($valid_search) )
-	$errorh->error_handler($LANG['invalid_req'], E_USER_WARNING);
+	$Errorh->Error_handler($LANG['invalid_req'], E_USER_WARNING);
 	
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-$result = $sql->query_while("SELECT s.user_id, s.level, m.login 
+$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
 FROM ".PREFIX."sessions s 
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/search.php'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $sql->sql_fetch_assoc($result) )
+while( $row = $Sql->Sql_fetch_assoc($result) )
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
@@ -265,10 +265,10 @@ while( $row = $sql->sql_fetch_assoc($result) )
 	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 }
-$sql->close($result);
+$Sql->Close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,
@@ -286,7 +286,7 @@ $template->assign_vars(array(
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search']
 ));
 
-$template->pparse('search');
+$Template->Pparse('search');
 
 include('../includes/footer.php');
 

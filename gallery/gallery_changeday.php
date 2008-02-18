@@ -28,6 +28,6 @@
 if( defined('PHP_BOOST') !== true) exit;
 
 //Régénération du cache des photos aléatoires.
-$cache->generate_module_file('gallery');
+$Cache->Generate_module_file('gallery');
 
 ?>

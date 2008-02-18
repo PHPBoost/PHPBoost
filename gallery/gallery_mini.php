@@ -27,13 +27,13 @@
 
 if( defined('PHP_BOOST') !== true ) exit;
 
-$template->set_filenames(array(
+$Template->Set_filenames(array(
 	'gallery_mini' => '../templates/' . $CONFIG['theme'] . '/gallery/gallery_mini.tpl'
 ));
 
 //Chargement de la langue du module.
 @load_module_lang('gallery', $CONFIG['lang']);
-$cache->load_file('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
+$Cache->Load_file('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
 
 $array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
 list($nbr_pics, $sum_height, $sum_width, $scoll_mode, $height_max, $width_max) = array(0, 0, 0, 0, 142, 142);
@@ -51,7 +51,7 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 	$break = 0;
 	foreach($_array_random_pics as $key => $array_pics_info)
 	{
-		if( $groups->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY) )
+		if( $Member->Check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY) )
 		{	
 			$gallery_mini[] = $array_pics_info;
 			$break++;
@@ -63,19 +63,19 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 	//Aucune photo ne correspond, on fait une requête pour vérifier.
 	if( count($gallery_mini) == 0 ) 
 	{
-		$result = $sql->query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth 
+		$result = $Sql->Query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth 
 		FROM ".PREFIX."gallery g
 		LEFT JOIN ".PREFIX."gallery_cats gc on gc.id = g.idcat
 		WHERE g.aprob = 1 AND gc.aprob = 1
 		ORDER BY RAND() 
-		" . $sql->sql_limit(0, $CONFIG_GALLERY['nbr_pics_mini']), __LINE__, __FILE__);
-		$_array_random_pics = $sql->sql_fetch_assoc($result);
+		" . $Sql->Sql_limit(0, $CONFIG_GALLERY['nbr_pics_mini']), __LINE__, __FILE__);
+		$_array_random_pics = $Sql->Sql_fetch_assoc($result);
 		
 		//Vérification des autorisations.
 		$break = 0;
 		foreach($_array_random_pics as $key => $array_pics_info)
 		{
-			if( $groups->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY) )
+			if( $Member->Check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY) )
 			{	
 				$gallery_mini[] = $array_pics_info;
 				$break++;
@@ -91,13 +91,13 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 		$scoll_mode = 'static_scroll';
 		break;
 		case 1:
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'C_VERTICAL_SCROLL' => true
 		));
 		$scoll_mode = 'dynamic_scroll_v';
 		break;
 		case 2:
-		$template->assign_vars(array(
+		$Template->Assign_vars(array(
 			'C_HORIZONTAL_SCROLL' => true
 		));
 		$scoll_mode = 'dynamic_scroll_h';
@@ -105,7 +105,7 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 	}	
 	
 	include_once('../gallery/gallery.class.php'); 
-	$gallery = new Gallery;	
+	$Gallery = new Gallery;	
 			
 	//Affichage des miniatures disponibles
 	$i = 0;
@@ -113,7 +113,7 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 	{	
 		//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 		if( !is_file('../gallery/pics/thumbnails/' . $row['path']) )
-			$gallery->resize_pics('../gallery/pics/' . $row['path']); //Redimensionnement + création miniature
+			$Gallery->Resize_pics('../gallery/pics/' . $row['path']); //Redimensionnement + création miniature
 		
 		// On recupère la hauteur et la largeur de l'image.
 		if( $row['width'] == 0 || $row['height'] == 0 )
@@ -123,7 +123,7 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 			
 		if( $CONFIG_GALLERY['scroll_type'] == 1 || $CONFIG_GALLERY['scroll_type'] == 2 )
 		{
-			$template->assign_block_vars('pics_mini', array(
+			$Template->Assign_block_vars('pics_mini', array(
 				'ID' => $i,
 				'PICS' => '../gallery/pics/thumbnails/' . $row['path'],		
 				'NAME' => $row['name'],		
@@ -145,9 +145,9 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 	}
 }
 
-$template->assign_vars(array(
+$Template->Assign_vars(array(
 	'SID' => SID,
-	'MODULE_DATA_PATH' => $template->module_data_path('gallery'),
+	'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
 	'ARRAY_PICS' => $array_pics_mini,
 	'HEIGHT_DIV' => ($CONFIG_GALLERY['nbr_pics_mini'] > 2 && $CONFIG_GALLERY['scroll_type'] == 1) ? ($CONFIG_GALLERY['height'] * 2) : $CONFIG_GALLERY['height'],
 	'SUM_HEIGHT' => $sum_height + 10,
@@ -162,6 +162,6 @@ $template->assign_vars(array(
 	'L_GALLERY' => $LANG['gallery']
 ));
 
-$template->pparse('gallery_mini');	
+$Template->Pparse('gallery_mini');	
 
 ?>

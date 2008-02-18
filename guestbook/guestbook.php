@@ -31,7 +31,7 @@ require_once('../includes/header.php');
 
 $id_get = ( !empty($_GET['id'])) ? numeric($_GET['id']) : '' ;
 //Chargement du cache
-$cache->load_file('guestbook');
+$Cache->Load_file('guestbook');
 		
 if( !empty($_POST['guestbook']) && empty($id_get) ) //Enregistrement
 {
@@ -39,16 +39,16 @@ if( !empty($_POST['guestbook']) && empty($id_get) ) //Enregistrement
 	$guestbook_pseudo = !empty($_POST['guestbook_pseudo']) ? securit($_POST['guestbook_pseudo']) : $LANG['guest'];
 
 	//Membre en lecture seule?
-	if( $session->data['user_readonly'] > time() ) 
-		$errorh->error_handler('e_readonly', E_USER_REDIRECT); 
+	if( $Member->Get_attribute('user_readonly') > time() ) 
+		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
 	if( !empty($guestbook_contents) && !empty($guestbook_pseudo) )
 	{	
 		//Accès pour poster.			
-		if( $session->check_auth($session->data, $CONFIG_GUESTBOOK['guestbook_auth']) )
+		if( $Member->Check_level($CONFIG_GUESTBOOK['guestbook_auth']) )
 		{
 			//Mod anti-flood
-			$check_time = ($session->data['user_id'] !== -1 && $CONFIG['anti_flood'] == 1) ? $sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."guestbook WHERE user_id = '" . $session->data['user_id'] . "'", __LINE__, __FILE__) : '';
+			$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->Query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."guestbook WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
 			if( !empty($check_time) )
 			{			
 				if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcul la fin du delai.	
@@ -61,8 +61,8 @@ if( !empty($_POST['guestbook']) && empty($id_get) ) //Enregistrement
 			if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
 				redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
-			$sql->query_inject("INSERT INTO ".PREFIX."guestbook (contents,login,user_id,timestamp) VALUES('" . $guestbook_contents . "', '" . $guestbook_pseudo . "', '" . $session->data['user_id'] . "', '" . time() . "')", __LINE__, __FILE__);
-			$last_msg_id = $sql->sql_insert_id("SELECT MAX(id) FROM ".PREFIX."guestbook"); //Dernier message inséré.
+			$Sql->Query_inject("INSERT INTO ".PREFIX."guestbook (contents,login,user_id,timestamp) VALUES('" . $guestbook_contents . "', '" . $guestbook_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
+			$last_msg_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."guestbook"); //Dernier message inséré.
 			
 			redirect(HOST . SCRIPT . SID2 . '#m' . $last_msg_id);
 		}
@@ -74,11 +74,11 @@ if( !empty($_POST['guestbook']) && empty($id_get) ) //Enregistrement
 }
 elseif( !empty($_POST['previs']) ) //Prévisualisation.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'guestbook' => '../templates/' . $CONFIG['theme'] . '/guestbook/guestbook.tpl'
 	));
 
-	$user_id = $sql->query("SELECT user_id FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+	$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	$user_id = (int)$user_id;
 	
 	$guestbook_contents = !empty($_POST['guestbook_contents']) ? trim($_POST['guestbook_contents']) : '';
@@ -86,16 +86,16 @@ elseif( !empty($_POST['previs']) ) //Prévisualisation.
 	
 	//Pseudo du membre connecté.
 	if( $user_id !== -1)
-		$template->assign_block_vars('hidden_guestbook', array(
+		$Template->Assign_block_vars('hidden_guestbook', array(
 			'PSEUDO' => $guestbook_pseudo
 		));
 	else
-		$template->assign_block_vars('visible_guestbook', array(
+		$Template->Assign_block_vars('visible_guestbook', array(
 			'PSEUDO' => stripslashes($guestbook_pseudo)
 		));
 
 	$forbidden_tags = implode(', ', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
-	$template->assign_block_vars('guestbook', array(
+	$Template->Assign_block_vars('guestbook', array(
 		'CONTENTS' => second_parse(stripslashes(parse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']))),
 		'PSEUDO' => stripslashes($guestbook_pseudo),
 		'DATE' => gmdate_format('date_format_short'),
@@ -108,7 +108,7 @@ elseif( !empty($_POST['previs']) ) //Prévisualisation.
 	//On met à jour en cas d'édition après prévisualisation du message
 	$update = (!empty($_GET['update']) && !empty($id_get)) ? '?update=1&amp;id=' . $id_get : '';
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'CONTENTS' => stripslashes($guestbook_contents),
 		'PSEUDO' => stripslashes($guestbook_pseudo),
 		'DATE' => gmdate_format('date_format_short'),
@@ -128,7 +128,7 @@ elseif( !empty($_POST['previs']) ) //Prévisualisation.
 	$_field = 'guestbook_contents';
 	include_once('../includes/bbcode.php');
 	
-	$template->pparse('guestbook'); 
+	$Template->Pparse('guestbook'); 
 }
 elseif( !empty($id_get) ) //Edition + suppression!
 {
@@ -136,35 +136,35 @@ elseif( !empty($id_get) ) //Edition + suppression!
 	$edit = !empty($_GET['edit']) ? true : false;
 	$update = !empty($_GET['update']) ? true : false;
 	
-	$row = $sql->query_array('guestbook', '*', 'WHERE id="' . $id_get . '"', __LINE__, __FILE__);
+	$row = $Sql->Query_array('guestbook', '*', 'WHERE id="' . $id_get . '"', __LINE__, __FILE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
-	if( $session->check_auth($session->data, 1) || ($row['user_id'] === $session->data['user_id'] && $session->data['user_id'] !== -1) )
+	if( $Member->Check_level(1) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 	{
 		if( $del )
 		{
-			$sql->query_inject("DELETE FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
-			$previous_id = $sql->query("SELECT MAX(id) FROM ".PREFIX."guestbook", __LINE__, __FILE__);
+			$Sql->Query_inject("DELETE FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+			$previous_id = $Sql->Query("SELECT MAX(id) FROM ".PREFIX."guestbook", __LINE__, __FILE__);
 			
 			redirect(HOST . SCRIPT . SID2 . '#m' . $previous_id);
 		}
 		elseif( $edit )
 		{
-			$template->set_filenames(array(
+			$Template->Set_filenames(array(
 				'guestbook' => '../templates/' . $CONFIG['theme'] . '/guestbook/guestbook.tpl'
 			));
 
 			if( $row['user_id'] !== -1 )
-				$template->assign_block_vars('hidden_guestbook', array(
+				$Template->Assign_block_vars('hidden_guestbook', array(
 					'PSEUDO' => $row['login']
 				));
 			else
-				$template->assign_block_vars('visible_guestbook', array(
+				$Template->Assign_block_vars('visible_guestbook', array(
 					'PSEUDO' => $row['login']
 				));		
 			
 			$forbidden_tags = implode(', ', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
-			$template->assign_vars(array(
+			$Template->Assign_vars(array(
 				'UPDATE' => transid('?update=1&amp;id=' . $id_get),
 				'CONTENTS' => unparse($row['contents']),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
@@ -185,7 +185,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 			$_field = 'guestbook_contents';
 			include_once('../includes/bbcode.php');
 			
-			$template->pparse('guestbook'); 
+			$Template->Pparse('guestbook'); 
 		}
 		elseif( $update )
 		{
@@ -197,12 +197,12 @@ elseif( !empty($id_get) ) //Edition + suppression!
 				if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
 					redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
-				$sql->query_inject("UPDATE ".PREFIX."guestbook SET contents = '" . $guestbook_contents . "', login = '" . $guestbook_pseudo . "' WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."guestbook SET contents = '" . $guestbook_contents . "', login = '" . $guestbook_pseudo . "' WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 			
 				redirect(HOST . SCRIPT. SID2 . '#m' . $id_get);
 			}
 			else
-				$errorh->error_handler('e_incomplete', E_USER_REDIRECT);
+				$Errorh->Error_handler('e_incomplete', E_USER_REDIRECT);
 		}
 		else
 			redirect(HOST . SCRIPT . SID2);
@@ -212,17 +212,17 @@ elseif( !empty($id_get) ) //Edition + suppression!
 }
 else //Affichage.
 {
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'guestbook' => '../templates/' . $CONFIG['theme'] . '/guestbook/guestbook.tpl'
 	));
 		
 	//Pseudo du membre connecté.
-	if( $session->data['user_id'] !== -1 )
-		$template->assign_block_vars('hidden_guestbook', array(
-			'PSEUDO' => $session->data['login']
+	if( $Member->Get_attribute('user_id') !== -1 )
+		$Template->Assign_block_vars('hidden_guestbook', array(
+			'PSEUDO' => $Member->Get_attribute('login')
 		));
 	else
-		$template->assign_block_vars('visible_guestbook', array(
+		$Template->Assign_block_vars('visible_guestbook', array(
 			'PSEUDO' => $LANG['guest']
 		));
 	
@@ -249,17 +249,17 @@ else //Affichage.
 		$errstr = '';
 	}
 	if( !empty($errstr) )
-		$errorh->error_handler($errstr, E_USER_NOTICE);
+		$Errorh->Error_handler($errstr, E_USER_NOTICE);
 	
-	$nbr_guestbook = $sql->count_table('guestbook', __LINE__, __FILE__);
+	$nbr_guestbook = $Sql->Count_table('guestbook', __LINE__, __FILE__);
 	//On crée une pagination si le nombre de msg est trop important.
 	include_once('../includes/pagination.class.php'); 
-	$pagination = new Pagination();
+	$Pagination = new Pagination();
 		
 	$forbidden_tags = implode(', ', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'UPDATE' => transid(''),
-		'PAGINATION' => $pagination->show_pagin('guestbook' . transid('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
+		'PAGINATION' => $Pagination->Display_pagination('guestbook' . transid('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
 		'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
 		'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
 		'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
@@ -279,22 +279,22 @@ else //Affichage.
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	
 	//Gestion des rangs.	
-	$cache->load_file('ranks');
-	$result = $sql->query_while("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, g.contents
+	$Cache->Load_file('ranks');
+	$result = $Sql->Query_while("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, g.contents
 	FROM ".PREFIX."guestbook g
 	LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id
 	LEFT JOIN ".PREFIX."sessions s ON s.user_id = g.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 	GROUP BY g.id
 	ORDER BY g.timestamp DESC 
-	" . $sql->sql_limit($pagination->first_msg(10, 'p'), 10), __LINE__, __FILE__);	
-	while ($row = $sql->sql_fetch_assoc($result))
+	" . $Sql->Sql_limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);	
+	while ($row = $Sql->Sql_fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
 			$edit = '';
 			$del = '';
 			
 			$is_guest = ($row['user_id'] === -1);
-			$is_modo = $session->check_auth($session->data, 1);
+			$is_modo = $Member->Check_level(1);
 			$warning = '';
 			$readonly = '';
 			if( $is_modo && !$is_guest ) //Modération.
@@ -304,7 +304,7 @@ else //Affichage.
 			}
 			
 			//Edition/suppression.
-			if( $is_modo || ($row['user_id'] === $session->data['user_id'] && $session->data['user_id'] !== -1) )
+			if( $is_modo || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 			{
 				$edit = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . transid('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
 				$del = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . transid('.php?del=1&id=' . $row['id']) . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
@@ -389,7 +389,7 @@ else //Affichage.
 			}
 			else $user_local = '';
 			
-			$template->assign_block_vars('guestbook',array(
+			$Template->Assign_block_vars('guestbook',array(
 				'ID' => $row['id'],
 				'CONTENTS' => ucfirst(second_parse($row['contents'])),
 				'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
@@ -416,12 +416,12 @@ else //Affichage.
 				'U_ANCHOR' => 'guestbook.php' . SID . '#m' . $row['id']
 			));
 	}
-	$sql->close($result);
+	$Sql->Close($result);
 		
 	$_field = 'guestbook_contents';
 	include_once('../includes/bbcode.php');
 		
-	$template->pparse('guestbook'); 
+	$Template->Pparse('guestbook'); 
 }
 
 require_once('../includes/footer.php'); 

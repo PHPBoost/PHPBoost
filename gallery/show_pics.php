@@ -46,25 +46,25 @@ if( !empty($g_idpics) )
 		$CAT_GALLERY[0]['aprob'] = 1;
 	}
 	//Niveau d'autorisation de la catégorie
-	if( !$groups->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) )
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+	if( !$Member->Check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) )
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	//Mise à jour du nombre de vues.
-	$sql->query_inject("UPDATE LOW_PRIORITY ".PREFIX."gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE LOW_PRIORITY ".PREFIX."gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'", __LINE__, __FILE__);
 	
-	$clause_admin = $session->data['level'] == 2 ? '' : ' AND aprob = 1';
-	$path = $sql->query("SELECT path FROM ".PREFIX."gallery WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'" . $clause_admin, __LINE__, __FILE__);
+	$clause_admin = $Member->Get_attribute('level') == 2 ? '' : ' AND aprob = 1';
+	$path = $Sql->Query("SELECT path FROM ".PREFIX."gallery WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'" . $clause_admin, __LINE__, __FILE__);
 	if( empty($path) )
-		$errorh->error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 	include_once('../gallery/gallery.class.php');
-	$gallery = new Gallery;
+	$Gallery = new Gallery;
 		
-	list($width_s, $height_s, $weight_s, $ext) = $gallery->arg_pics('pics/' . $path);
-	$gallery->send_header($ext); //Header image.
-	if( !empty($gallery->error) )
-		die($gallery->error);
-	$gallery->incrust_pics('pics/' . $path); // => logo.
+	list($width_s, $height_s, $weight_s, $ext) = $Gallery->Arg_pics('pics/' . $path);
+	$Gallery->Send_header($ext); //Header image.
+	if( !empty($Gallery->error) )
+		die($Gallery->error);
+	$Gallery->incrust_pics('pics/' . $path); // => logo.
 }
 else
 {

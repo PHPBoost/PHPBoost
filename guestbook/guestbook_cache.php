@@ -30,12 +30,12 @@ if( defined('PHP_BOOST') !== true) exit;
 //Configuration du livre d'or
 function generate_module_file_guestbook()
 {
-	global $sql;
+	global $Sql;
 	
 	$guestbook_config = 'global $CONFIG_GUESTBOOK;' . "\n";
 		
 	//Récupération du tableau linéarisé dans la bdd.
-	$CONFIG_GUESTBOOK = unserialize($sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'guestbook'", __LINE__, __FILE__));
+	$CONFIG_GUESTBOOK = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'guestbook'", __LINE__, __FILE__));
 	$CONFIG_GUESTBOOK = is_array($CONFIG_GUESTBOOK) ? $CONFIG_GUESTBOOK : array();
 	foreach($CONFIG_GUESTBOOK as $key => $value)
 		if( $key == 'guestbook_forbidden_tags' )

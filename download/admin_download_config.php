@@ -40,23 +40,23 @@ if( !empty($_POST['valid']) )
 	$config_download['nbr_column'] = !empty($_POST['nbr_column']) ? numeric($_POST['nbr_column']) : 2;
 	$config_download['note_max'] = !empty($_POST['note_max']) ? numeric($_POST['note_max']) : 10;
 	
-	$sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_download)) . "' WHERE name = 'download'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_download)) . "' WHERE name = 'download'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
-	$cache->generate_module_file('download');
+	$Cache->Generate_module_file('download');
 	
 	redirect(HOST . SCRIPT);	
 }
 //Sinon on rempli le formulaire
 else	
 {		
-	$template->set_filenames(array(
+	$Template->Set_filenames(array(
 		'admin_download_config' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_config.tpl'
 	));
 	
-	$cache->load_file('download');
+	$Cache->Load_file('download');
 	
-	$template->assign_vars(array(
+	$Template->Assign_vars(array(
 		'NBR_FILE_MAX' => !empty($CONFIG_DOWNLOAD['nbr_file_max']) ? $CONFIG_DOWNLOAD['nbr_file_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_DOWNLOAD['nbr_cat_max']) ? $CONFIG_DOWNLOAD['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_DOWNLOAD['nbr_column']) ? $CONFIG_DOWNLOAD['nbr_column'] : '2',
@@ -75,7 +75,7 @@ else
 		'L_RESET' => $LANG['reset'],
 	));
 		
-	$template->pparse('admin_download_config'); // traitement du modele	
+	$Template->Pparse('admin_download_config'); // traitement du modele	
 }
 
 require_once('../includes/admin_footer.php');

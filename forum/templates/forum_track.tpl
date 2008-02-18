@@ -1,3 +1,5 @@
+		# INCLUDE forum_top #
+		
 		<script type="text/javascript">
 		<!--
 			function check_convers(status, id)
@@ -7,8 +9,6 @@
 			}	 
 		-->
 		</script>
-		
-		# INCLUDE forum_top #
 		
 		<form action="track{U_TRACK_ACTION}" method="post" name="track">	
 			<div class="module_position">					

@@ -1,3 +1,5 @@
+		# INCLUDE forum_top #
+		
 		<script type='text/javascript'>
 		<!--
 		function check_form_move(){
@@ -17,8 +19,6 @@
 		}
 		-->
 		</script>
-
-		# INCLUDE forum_top #
 		
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
