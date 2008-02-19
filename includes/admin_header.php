@@ -59,6 +59,7 @@ $Template->Assign_vars(array(
 	'L_ADMINISTRATION' => $LANG['administration'],
 	'L_INDEX' => $LANG['index'],
 	'L_SITE' => $LANG['site'],
+	'L_DISCONNECT' => $LANG['disconnect'],
 	'L_TOOLS' => $LANG['tools'],
 	'L_CONFIGURATION' => $LANG['configuration'],
 	'L_INDEX_SITE' => $LANG['site'],

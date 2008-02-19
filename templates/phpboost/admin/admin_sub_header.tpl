@@ -4,8 +4,8 @@
 					<h5 onclick="temporise_menu(1)" class="horizontal"><img src="../templates/{THEME}/images/admin/index_mini.png" class="valign_middle" alt="" /> {L_INDEX}</h5>					
 					<div id="smenu1" class="horizontal_block">
 						<ul>
-							<li><a href="{U_INDEX_SITE}" style="background-image:url(../templates/{THEME}/images/admin/home_mini.png);background-repeat:no-repeat;background-position:5px;">{L_INDEX_SITE}</a></li>
-							<li><a href="../admin/admin_index.php" style="background-image:url(../templates/{THEME}/images/admin/admin_mini.png);background-repeat:no-repeat;background-position:5px;">{L_INDEX_ADMIN}</a></li>								
+							<li><a href="{U_INDEX_SITE}" style="background-image:url(../templates/{THEME}/images/admin/admin_mini.png);background-repeat:no-repeat;background-position:5px;">{L_INDEX_SITE}</a></li>
+							<li><a href="../admin/admin_index.php" style="background-image:url(../templates/{THEME}/images/admin/ranks_mini.png);background-repeat:no-repeat;background-position:5px;">{L_INDEX_ADMIN}</a></li>								<li><a href="../admin/admin_index.php?disconnect=true" style="background-image:url(../templates/{THEME}/images/admin/home_mini.png);background-repeat:no-repeat;background-position:5px;">{L_DISCONNECT}</a></li>
 						</ul>
 						<span class="dm_bottom"></span>
 					</div>						

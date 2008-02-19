@@ -117,7 +117,7 @@ class Forum
 		$Sql->Query_inject("INSERT INTO ".PREFIX."forum_topics (idcat, title, subtitle, user_id, nbr_msg, nbr_views, last_user_id, last_msg_id, last_timestamp, first_msg_id, type, status, aprob, display_msg) VALUES ('" . $idcat . "', '" . $title . "', '" . $subtitle . "', '" . $Member->Get_attribute('user_id') . "', 1, 0, '" . $Member->Get_attribute('user_id') . "', '0', '" . time() . "', 0, '" . $type . "', 1, 0, 0)", __LINE__, __FILE__);
 		$last_topic_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."forum_topics");	//Dernier topic inseré
 		
-		$last_msg_id = $this->Add_msg($last_topic_id, $idcat, $contents, $title, $last_page, $last_page_rewrite, true); //Insertion du message.
+		$last_msg_id = $this->Add_msg($last_topic_id, $idcat, $contents, $title, 0, 0, true); //Insertion du message.
 		$Sql->Query_inject("UPDATE ".PREFIX."forum_topics SET first_msg_id = '" . $last_msg_id . "' WHERE id = '" . $last_topic_id . "'", __LINE__, __FILE__);
 				
 		forum_generate_rss(); //Regénération du flux rss.
@@ -432,35 +432,26 @@ class Forum
 	}
 		
 	//Ajout d'un sondage.
-	function Add_poll($idtopic, $question, $answers, $voter_id, $votes, $type)
+	function Add_poll($idtopic, $question, $answers, $nbr_votes, $type)
 	{	
 		global $Sql;
 		
-		$Sql->Query_inject("INSERT INTO ".PREFIX."forum_poll (idtopic, question, answers, voter_id, votes,type) VALUES ('" . $idtopic . "', '" . $question . "', '" . trim($answers, '|') . "', '" . numeric($voter_id) . "', '" . trim($votes, '|') . "', '" . numeric($type) . "')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."forum_poll (idtopic, question, answers, voter_id, votes,type) VALUES ('" . $idtopic . "', '" . $question . "', '" . implode('|', $answers) . "', '0', '" . trim(str_repeat('0|', $nbr_votes), '|') . "', '" . numeric($type) . "')", __LINE__, __FILE__);
 	}
 	
 	//Edition d'un sondage.
-	function Update_poll($idtopic, $question, $answers, $votes, $type)
+	function Update_poll($idtopic, $question, $answers, $type)
 	{
 		global $Sql;
 		
 		//Vérification => vérifie si il n'y a pas de nouvelle réponses à ajouter.
-		$array_answer = explode('|', $Sql->Query("SELECT answers FROM ".PREFIX."forum_poll WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__));
-		$nbr_answer	= count($array_answer);
-
-		$new_nbr_answer = $check_nbr_answer - $nbr_answer;
-		$votes = '';
-		if( $new_nbr_answer > 0 ) //Insertion de nouvelles réponses => ajout de nouveaux 0 dans le champ vote.
-		{
-			$votes = "votes = CONCAT(votes, '";
-			for($i = $nbr_answer; $i < $check_nbr_answer; $i++) 
-				$votes .= '|0';
-			$votes .= "'), ";							
-		}
-		elseif( $new_nbr_answer < 0 ) //Suppression d'une réponse => suppréssion des votes associés.
-			$votes = "votes = SUBSTRING(votes FROM 1 FOR (CHAR_LENGTH(votes) " . ($new_nbr_answer * 2) . ")), "; //On coupe la chaîne du nombre de réponses en moins.
-
-		$Sql->Query_inject("UPDATE ".PREFIX."forum_poll SET question = '" . $question . "', answers = '" . trim($answers, '|') . "', " . $votes . "type = '" . $type . "' WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+		$previous_votes = explode('|', $Sql->Query("SELECT votes FROM ".PREFIX."forum_poll WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__));
+		
+		$votes = array();
+		foreach($answers as $key => $answer_value) //Récupération des votes précédents.
+			$votes[$key] = isset($previous_votes[$key]) ? $previous_votes[$key] : 0;
+	
+		$Sql->Query_inject("UPDATE ".PREFIX."forum_poll SET question = '" . $question . "', answers = '" . implode('|', $answers) . "', votes = '" . implode('|', $votes) . "', type = '" . $type . "' WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 	}
 	
 	//Suppression d'un sondage.
@@ -511,6 +502,39 @@ class Forum
 			$this->Update_last_topic_id($idcat_parent); //Appel recursif.
 		}
 	}
+	
+	//Emulation de la fonction PHP 5 array_diff_key
+	function array_diff_key_emulate()
+    {
+        $args = func_get_args();
+        if (count($args) < 2) {
+            user_error('Wrong parameter count for array_diff_key()', E_USER_WARNING);
+            return;
+        }
+
+        // Check arrays
+        $array_count = count($args);
+        for ($i = 0; $i !== $array_count; $i++) {
+            if (!is_array($args[$i])) {
+                user_error('array_diff_key() Argument #' .
+                    ($i + 1) . ' is not an array', E_USER_WARNING);
+                return;
+            }
+        }
+
+        $result = $args[0];
+        foreach ($args[0] as $key1 => $value1) {
+            for ($i = 1; $i !== $array_count; $i++) {
+                foreach ($args[$i] as $key2 => $value2) {
+                    if ((string) $key1 === (string) $key2) {
+                        unset($result[$key2]);
+                        break 2;
+                    }
+                }
+            }
+        }
+        return $result;
+    }
 }
 
 ?>
