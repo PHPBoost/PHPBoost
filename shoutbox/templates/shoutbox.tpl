@@ -86,7 +86,7 @@
 						{shoutbox.USER_MSG}<br />
 						{shoutbox.USER_LOCAL}
 					</div>
-					<div class="msg_contents">
+					<div class="msg_contents{shoutbox.CLASS_COLOR}">
 						<div class="msg_contents_overflow">
 							{shoutbox.CONTENTS}
 						</div>

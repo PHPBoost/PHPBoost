@@ -183,7 +183,7 @@
 						{msg.USER_MSG}<br />
 						{msg.USER_LOCAL}		
 					</div>
-					<div class="msg_contents">
+					<div class="msg_contents{msg.CLASS_COLOR}">
 						<div class="msg_contents_overflow">
 							{msg.CONTENTS}
 							{msg.USER_EDIT}

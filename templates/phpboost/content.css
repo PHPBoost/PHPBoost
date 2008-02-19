@@ -12,7 +12,13 @@ th{ /* Entête des tableaux */
 	font-size:0.75em;
 	text-transform:uppercase;
 }
-
+hr {
+	background:#C4CED6;
+	border:none;
+	margin:1px;
+	height:1px;
+	width:99%;
+}
 /* Formulaires 
 --------------------------------------*/
 .fieldset_mini{	
@@ -286,11 +292,16 @@ a.msg_link_pseudo:hover {
 }
 .msg_contents_container{ /* Case contenant l'ensemble du message, infos membre + contenu */
 	margin-right:1px;
+	background:#E3EDF5;
 }
-.msg_contents{ /* Case du message */
+.msg_contents, .msg_contents2{ /* Case du message */
 	margin-left:135px;
+	background:#FFFFFF;
 	padding:0px 5px;
 	border-left:1px dotted #C4CED6;
+}
+.msg_contents2{ /* Case du message => Couleur alternative */
+	background:#F4F9FA;
 }
 .msg_contents_overflow{	/* Case du contents du message, évite que les images trop grandes déforme */ 
 	width:99%;

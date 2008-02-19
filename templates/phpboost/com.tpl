@@ -102,7 +102,7 @@
 						{com_list.USER_MSG}<br />
 						{com_list.USER_LOCAL}
 					</div>
-					<div class="msg_contents">
+					<div class="msg_contents{com_list.CLASS_COLOR}">
 						<div class="msg_contents_overflow">
 							{com_list.CONTENTS}
 						</div>
@@ -252,7 +252,7 @@
 						{com_list.USER_MSG}<br />
 						{com_list.USER_LOCAL}
 					</div>
-					<div class="msg_contents">
+					<div class="msg_contents{com_list.CLASS_COLOR}">
 						<div class="msg_contents_overflow">
 							{com_list.CONTENTS}
 						</div>
