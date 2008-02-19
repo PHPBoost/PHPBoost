@@ -185,7 +185,7 @@
 		</div>		
 		# START pm.msg #		
 		<div class="msg_position">
-			<div class="msg_container">				
+			<div class="msg_container{pm.msg.CLASS_COLOR}">				
 				<div class="msg_top_row">
 					<span id="m{pm.msg.ID}"></span>
 					<div class="msg_pseudo_mbr">
@@ -212,7 +212,7 @@
 					</div>
 				</div>
 			</div>	
-			<div class="msg_sign">				
+			<div class="msg_sign{pm.msg.CLASS_COLOR}">				
 				<div class="msg_sign_overflow">
 					{pm.msg.USER_SIGN}
 				</div>				

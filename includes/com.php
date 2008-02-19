@@ -375,6 +375,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 	
 		//Gestion des rangs.	
 		$Cache->Load_file('ranks');
+		$j = 0;
 		$result = $Sql->Query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents
 		FROM ".PREFIX."com c
 		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
@@ -489,6 +490,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 				'ID' => $row['idcom'],
 				'CONTENTS' => ucfirst(second_parse($row['contents'])),
 				'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
+				'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 				'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
 				'USER_PSEUDO' => $com_pseudo,			
 				'USER_RANK' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
@@ -512,6 +514,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 				'U_ANCHOR' => $_com_path . transid($_com_vars_simple, $_com_vars_r_simple) . '#m' . $row['idcom'],
 				'U_QUOTE' => $_com_path . transid(sprintf($_com_vars, $row['idcom']) . '&amp;quote=' . $row['idcom'], sprintf($_com_vars_r, $row['idcom'], '&amp;quote=' . $row['idcom'])) . '#' . $_com_script
 			));
+			$j++;
 		}
 		$Sql->Close($result);
 		

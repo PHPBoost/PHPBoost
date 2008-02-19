@@ -163,14 +163,14 @@
 
 		# START msg #		
 		<div class="msg_position" id="d{msg.ID}">
-			<div class="msg_container">
+			<div class="msg_container{msg.CLASS_COLOR}">
 				<span id="m{msg.ID}">
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
 						{msg.USER_ONLINE} {msg.USER_PSEUDO}
 					</div>
 					<div style="float:left;">&nbsp;&nbsp;<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> {msg.DATE}</div>
-					<div style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" /></a>{msg.EDIT}{msg.DEL}{msg.CUT}&nbsp;&nbsp;<a href="topic{msg.U_VARS_ANCRE}#go_top"><img src="../templates/{THEME}/images/top.png" alt="" /></a> <a href="topic{msg.U_VARS_ANCRE}#go_bottom"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>&nbsp;&nbsp;</div>
+					<div style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" /></a>{msg.EDIT}{msg.DEL}{msg.CUT}&nbsp;&nbsp;<a href="#go_top"><img src="../templates/{THEME}/images/top.png" alt="" /></a> <a href="#go_bottom"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>&nbsp;&nbsp;</div>
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">
@@ -191,7 +191,7 @@
 					</div>
 				</div>
 			</div>	
-			<div class="msg_sign">				
+			<div class="msg_sign{msg.CLASS_COLOR}">				
 				<div class="msg_sign_overflow">
 					{msg.USER_SIGN}
 				</div>			

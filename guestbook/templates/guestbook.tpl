@@ -72,7 +72,7 @@
 		</div>
 		# START guestbook #
 		<div class="msg_position">
-			<div class="msg_container">
+			<div class="msg_container{guestbook.CLASS_COLOR}">
 				<span id="m{guestbook.ID}"></span>
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
@@ -99,7 +99,7 @@
 					</div>
 				</div>
 			</div>	
-			<div class="msg_sign">				
+			<div class="msg_sign{guestbook.CLASS_COLOR}">				
 				<div class="msg_sign_overflow">
 					{guestbook.USER_SIGN}	
 				</div>				

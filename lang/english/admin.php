@@ -45,7 +45,7 @@ $LANG['maintain'] = 'Maintenance';
 $LANG['updater'] = 'Updater';
 $LANG['database'] = 'Database';
 $LANG['extend_field'] = 'Member field';
-$LANG['ranks'] = 'Rangs';
+$LANG['ranks'] = 'Ranks';
 $LANG['terms'] = 'Terms';
 $LANG['pages'] = 'Pages';
 $LANG['files'] = 'Files';
@@ -58,7 +58,7 @@ $LANG['stats'] = 'Statistics';
 $LANG['errors'] = 'Archived errors';
 $LANG['phpinfo'] = 'PHP info';
 $LANG['cache'] = 'Cache';
-$LANG['extend_menu'] = 'Menu étendu';
+$LANG['extend_menu'] = 'Extend menu';
 
 //Form
 $LANG['add'] = 'Add';
