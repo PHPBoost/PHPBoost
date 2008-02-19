@@ -13,6 +13,7 @@
 				</div>
 			</div>
 			<div class="module_contents">
+				&nbsp;
 				# START cat.download #
 				<div style="float:left;text-align:center;width:{cat.download.WIDTH}%;height:80px;">
 					{cat.download.U_IMG_CAT}
@@ -25,7 +26,7 @@
 				<div class="text_small" style="text-align:center;clear:both">
 					{cat.TOTAL_FILE} {cat.L_HOW_DOWNLOAD}
 				</div>
-				<div class="spacer">&nbsp;</div>
+				&nbsp;
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
