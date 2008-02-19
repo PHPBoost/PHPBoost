@@ -252,7 +252,6 @@ $Template->Assign_vars(array(
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'L_FORUM' => $LANG['forum'],
-
 	'L_TOPIC' => ($total_topic > 1) ? $LANG['topic_s'] : $LANG['topic'],
 	'L_MESSAGE' => ($total_msg > 1) ? $LANG['message_s'] : $LANG['message'],
 	'L_LAST_MESSAGE' => $LANG['last_message'],

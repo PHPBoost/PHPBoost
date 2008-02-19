@@ -22,12 +22,22 @@
 					document.getElementById('hidepoll_link').style.display = 'none';
 			}
 		}
-		function add_field(i, i_max) 
+		function add_poll_field(nbr_field) 
 		{
-			var i2 = i + 1;
-
-			document.getElementById('a'+i).innerHTML = '<input type="text" size="25" name="a'+i+'" value="" class="text" /><br /></span>';
-			document.getElementById('a'+i).innerHTML += (i < i_max) ? '<p id="a'+i2+'"style="text-align:center"><a href="javascript:add_field('+i2+', '+i_max+')"><img src="../templates/{THEME}/images/form/plus.png" alt="+" /></a></a></p>' : '';
+			if ( typeof this.max_field_p == 'undefined' )
+				this.max_field_p = nbr_field;
+			else
+				this.max_field_p++;
+			
+			if( this.max_field_p < 20 )
+			{
+				if( this.max_field_p == 19 )
+				{	
+					if( document.getElementById('add_poll_field_link') )
+						document.getElementById('add_poll_field_link').innerHTML = '';
+				}
+				document.getElementById('add_poll_field' + this.max_field_p).innerHTML += '<label><input type="text" size="25" name="a' + (this.max_field_p + 1) + '" value="" class="text" /></label><br /><span id="add_poll_field' + (this.max_field_p + 1) + '"></span>';
+			}
 		}
 		function XMLHttpRequest_change_statut()
 		{
@@ -152,7 +162,7 @@
 						<fieldset>	
 							<legend>{L_POLL}</legend>
 							<p id="hidepoll_link" style="text-align:center"><a href="javascript:hide_poll('hidepoll')">{L_OPEN_MENU_POLL}</a></p>
-							<div style="display:none;" id="hidepoll">
+							<div id="hidepoll">
 								<dl>
 									<dt><label for="question">* {L_QUESTION}</label></dt>
 									<dd><label><input type="text" size="40" name="question" id="question" value="{QUESTION}" class="text" /></label></dd>
@@ -164,38 +174,34 @@
 										<label><input type="radio" name="poll_type" value="1" {SELECTED_MULTIPLE} /> {L_MULTIPLE}</label>	
 									</dd>
 								</dl>
-								# START delete_poll #
+								# IF C_DELETE_POLL #
 								<dl>
 									<dt><label for="del_poll">{L_DELETE_POLL}</label></dt>
 									<dd><label><input type="checkbox" name="del_poll" id="del_poll" value="true" /></label></dd>
 								</dl>
-								# END delete_poll #
+								# ENDIF #
 								<dl>
 									<dt><label>{L_ANSWERS}</label></dt>
-									<dd><label>									
-										<table style="border:0">
-											<tr>
-												<td>								
-													<input type="text" size="25" name="a0" value="{ANSWER0}" class="text" /><br />
-													<input type="text" size="25" name="a1" value="{ANSWER1}" class="text" /><br />
-													<input type="text" size="25" name="a2" value="{ANSWER2}" class="text" /><br />
-													<input type="text" size="25" name="a3" value="{ANSWER3}" class="text" /><br />
-													<input type="text" size="25" name="a4" value="{ANSWER4}" class="text" /><br />
-													<p id="a11"style="text-align:center"><a href="javascript:add_field(11, 15)"><img src="../templates/{THEME}/images/form/plus.png" alt="+" /></a></a></p>
-												</td>
-												<td>
-													<input type="text" size="25" name="a5" value="{ANSWER5}" class="text" /><br />
-													<input type="text" size="25" name="a6" value="{ANSWER6}" class="text" /><br />
-													<input type="text" size="25" name="a7" value="{ANSWER7}" class="text" /><br />
-													<input type="text" size="25" name="a8" value="{ANSWER8}" class="text" /><br />
-													<input type="text" size="25" name="a9" value="{ANSWER9}" class="text" /><br />
-													<p id="a16"style="text-align:center"><a href="javascript:add_field(16, 20)"><img src="../templates/{THEME}/images/form/plus.png" alt="+" /></a></a></p>
-												</td>
-											</tr>	
-										</table>
-									</label></dd>
+									<dd>								
+										# START answers_poll #
+										<label><input type="text" size="25" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" class="text" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em</label><br />						
+										# END answers_poll #											
+										<span id="add_poll_field{NBR_POLL_FIELD}"></span>	
+										
+										<p style="text-align:center;width:165px;" id="add_poll_field_link">
+											# IF C_ADD_POLL_FIELD #
+											<a href="javascript:add_poll_field({NBR_POLL_FIELD})"><img src="../templates/{THEME}/images/form/plus.png" alt="+" /></a>
+											# ENDIF #
+										</p>										
+									</dd>
 								</dl>
 							</div>
+							<script type='text/javascript'>
+							<!--
+							if( {NO_DISPLAY_POLL} )
+								document.getElementById('hidepoll').style.display = 'none';
+							-->
+							</script>
 						</fieldset>	
 						
 						<fieldset class="fieldset_submit">

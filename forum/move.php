@@ -228,6 +228,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['cut_topic'],
 		'SID' => SID,			
+		'IDTOPIC' => 0,
 		'U_ACTION' => 'move.php',
 		'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $msg['idtopic'], '-' . $msg['idtopic'] . '.php') . '">' . ucfirst($topic['title']) . '</a>',	
 		'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php') . '">' . $cat['name'] . '</a>',
@@ -262,12 +263,26 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			'L_ANOUNCE' => $LANG['forum_announce']
 		));
 		
+		//Liste des choix des sondages => 20 maxi
+		$nbr_poll_field = 0;
+		for($i = 0; $i < 5; $i++)
+		{	
+			$Template->Assign_block_vars('answers_poll', array(
+				'ID' => $i,
+				'ANSWER' => ''
+			));
+		}
+		
 		$Template->Assign_vars(array(
 			'TITLE' => '',
 			'DESC' => '',
 			'CONTENTS' => unparse($msg['contents']),
 			'SELECTED_SIMPLE' => 'checked="ckecked"',
 			'IDM' => $id_get_msg,
+			'SELECTED_SIMPLE' => 'checked="checked"',
+			'NO_DISPLAY_POLL' => 'true',
+			'NBR_POLL_FIELD' => 0,
+			'C_ADD_POLL_FIELD' => true
 		));
 	}
 	elseif( !empty($preview_topic) && !empty($id_post_msg) )
@@ -280,7 +295,44 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		$checked_normal = ($type == 0) ? 'checked="ckecked"' : '';
 		$checked_postit = ($type == 1) ? 'checked="ckecked"' : '';
 		$checked_annonce = ($type == 2) ? 'checked="ckecked"' : '';
+						
+		//Liste des choix des sondages => 20 maxi
+		$nbr_poll_field = 0;
+		for($i = 0; $i < 20; $i++)
+		{	
+			if( !empty($_POST['a'.$i]) )
+			{
+				$Template->Assign_block_vars('answers_poll', array(
+					'ID' => $i,
+					'ANSWER' => stripslashes($_POST['a'.$i])
+				));
+				$nbr_poll_field++;
+			}	
+			elseif( $i <= 5 ) //On complète s'il y a moins de 5 réponses.
+			{
+				$Template->Assign_block_vars('answers_poll', array(
+					'ID' => $i,
+					'ANSWER' => ''
+				));
+			}			
+		}
 		
+		//Type de réponses du sondage.
+		$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
+		
+		$Template->Assign_vars(array(	
+			'TITLE' => stripslashes($title),
+			'DESC' => stripslashes($subtitle),
+			'CONTENTS' => stripslashes($contents),
+			'QUESTION' => !empty($_POST['question']) ? stripslashes($_POST['question']) : '',
+			'IDM' => $id_post_msg,
+			'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
+			'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',
+			'NO_DISPLAY_POLL' => !empty($_POST['question']) ? 'false' : 'true',
+			'NBR_POLL_FIELD' => $nbr_poll_field,
+			'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 18) ? true : false
+		));
+				
 		$Template->Assign_block_vars('type', array(
 			'CHECKED_NORMAL' => $checked_normal,
 			'CHECKED_POSTIT' => $checked_postit,
@@ -295,31 +347,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			'L_PREVIEW' => $LANG['preview'],
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
 			'CONTENTS' => second_parse(stripslashes(parse($contents)))
-		));
-		
-		$Template->Assign_vars(array(	
-			'TITLE' => stripslashes($title),
-			'DESC' => stripslashes($subtitle),
-			'CONTENTS' => stripslashes($contents),
-			'QUESTION' => !empty($_POST['question']) ? stripslashes($_POST['question']) : '',
-			'IDM' => $id_post_msg,
-		));
-		
-		//Liste des choix des sondages => 20 maxi
-		for($i = 0; $i < 20; $i++)
-			$Template->Assign_vars(array(
-				'ANSWER' . $i => !empty($_POST['a'.$i]) ? stripslashes($_POST['a'.$i]) : ''
-			));
-		
-		//Type de réponses du sondage.
-		if( isset($_POST['poll_type']) && $_POST['poll_type'] == '0' )
-			$Template->Assign_vars(array(
-				'SELECTED_SIMPLE' => 'checked="ckecked"'
-			));
-		elseif( isset($_POST['poll_type']) && $_POST['poll_type'] == '1' )				
-			$Template->Assign_vars(array(
-				'SELECTED_MULTIPLE' => 'checked="ckecked"'
-			));
+		));		
 	}
 			
 	include_once('../includes/bbcode.php');
@@ -413,16 +441,18 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 			{
 				$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
 				$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
-				$answers = '';
-				$votes = '';
+				
+				$answers = array();
+				$nbr_votes = 0;
 				for($i = 0; $i < 20; $i++)
+				{
 					if( !empty($_POST['a'.$i]) )
 					{				
-						$answers .= securit($_POST['a'.$i]) . '|';
-						$votes .= '0|';
+						$answers[$i] = securit(str_replace('|', '', $_POST['a'.$i]));
+						$nbr_votes++;
 					}
-					
-				$Forumfct->Add_poll($last_topic_id, $question, $answers, 0, $votes, $poll_type); //Ajout du sondage.
+				}
+				$Forumfct->Add_poll($last_topic_id, $question, $answers, $nbr_votes, $poll_type); //Ajout du sondage.
 			}
 			
 			redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));

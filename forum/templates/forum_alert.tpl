@@ -34,29 +34,32 @@
 							</td>			
 						</tr>
 						<tr>
-							<td class="row2" style="text-align:center;">
+							<td class="row2">
+								<p style="text-align:center;">
+									<label>{L_ALERT_TITLE} <input type="text" name="title" id="title" class="text" size="50" /></label>
+								</p>
 								<br />
-								{L_ALERT_TITLE}
-								<input type="text" name="title" id="title" class="text" size="50" /><br /><br />
-								<br />
-								{L_ALERT_CONTENTS} 
+								<p style="text-align:center;"><label for="contents">{L_ALERT_CONTENTS}</label></p>
 								# INCLUDE handle_bbcode #
 								<textarea type="text" class="post" style="width:70%" rows="15" cols="40" id="contents" name="contents"></textarea> 
 								<br />
 								<input type="hidden" name="id" value="{alert_form.ID_ALERT}" />
-								&nbsp;&nbsp; 									
-								<script type="text/javascript">
-								<!--				
-								document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
-								-->
-								</script>						
-								<noscript><input value="{L_PREVIEW}" type="submit" name="prw_t" class="submit" /></noscript>
-								&nbsp;&nbsp;
-								<input type="submit" name="edit_msg" value="{L_SUBMIT}" class="submit" /><br /><br />
+								<p style="text-align:center;">
+									<input type="submit" name="edit_msg" value="{L_SUBMIT}" class="submit" />
+									&nbsp;&nbsp; 
+									<script type="text/javascript">
+									<!--				
+									document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+									-->
+									</script>	
+									&nbsp;&nbsp; 	
+									<input type="reset" value="{L_RESET}" class="reset" />								
+								</p>
 							</td>
 						</tr>
 					</table> 
 				</form>
+				<br />
 				# END alert_form #
 
 
@@ -74,7 +77,8 @@
 							<br /><br />
 						</td>
 					</tr>
-				</table>			
+				</table>	
+				<br />
 				# END alert_confirm #
 			</div>
 			<div class="module_bottom_l"></div>		

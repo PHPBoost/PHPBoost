@@ -181,17 +181,18 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					{
 						$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
 						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
-						$answers = '';
-						$votes = '';
+
+						$answers = array();
+						$nbr_votes = 0;
 						for($i = 0; $i < 20; $i++)
-						{	
+						{
 							if( !empty($_POST['a'.$i]) )
 							{				
-								$answers .= securit(str_replace('|', '', $_POST['a'.$i])) . '|';
-								$votes .= '0|';
+								$answers[$i] = securit(str_replace('|', '', $_POST['a'.$i]));
+								$nbr_votes++;
 							}
 						}
-						$Forumfct->Add_poll($last_topic_id, $question, $answers, 0, $votes, $poll_type); //Ajout du sondage.
+						$Forumfct->Add_poll($last_topic_id, $question, $answers, $nbr_votes, $poll_type); //Ajout du sondage.
 					}
 					
 					redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&') . '#m' . $last_msg_id);
@@ -245,6 +246,22 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'CONTENTS' => second_parse(stripslashes(parse($contents)))
 			));
 			
+			//Liste des choix des sondages => 20 maxi
+			$nbr_poll_field = 0;
+			for($i = 0; $i < 20; $i++)
+			{	
+				if( !empty($_POST['a'.$i]) )
+				{
+					$Template->Assign_block_vars('answers_poll', array(
+						'ID' => $i,
+						'ANSWER' => stripslashes($_POST['a'.$i])
+					));
+					$nbr_poll_field++;
+				}				
+			}
+			//Type de réponses du sondage.
+			$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
+				
 			$Template->Assign_vars(array(
 				'THEME' => $CONFIG['theme'],
 				'LANG' => $CONFIG['lang'],
@@ -255,6 +272,12 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'DESC' => stripslashes($subtitle),
 				'CONTENTS' => stripslashes($contents),
 				'QUESTION' => !empty($_POST['question']) ? stripslashes($_POST['question']) : '',
+				'IDTOPIC' => $idt_get,
+				'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
+				'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',	
+				'NO_DISPLAY_POLL' => 'true',
+				'NBR_POLL_FIELD' => $nbr_poll_field,
+				'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 18) ? true : false,
 				'U_ACTION' => 'post.php' . transid('?new=topic&amp;id=' . $id_get),
 				'U_FORUM_CAT' => $forum_cats,
 				'U_TITLE_T' => '<a href="post' . transid('.php?new=topic&amp;id=' . $id_get) . '">' . stripslashes($title) . '</a>',
@@ -277,27 +300,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'L_SINGLE' => $LANG['simple_answer'],
 				'L_MULTIPLE' => $LANG['multiple_answer']
 			));
-			
-			//Liste des choix des sondages => 20 maxi
-			for($i = 0; $i < 20; $i++)
-				$Template->Assign_vars(array(
-					'ANSWER' . $i => !empty($_POST['a'.$i]) ? stripslashes($_POST['a'.$i]) : ''
-				));
-			
-			//Type de réponses du sondage.
-			$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
-			if( $poll_type == 0 )
-			{
-				$Template->Assign_vars(array(
-					'SELECTED_SIMPLE' => 'checked="ckecked"'
-				));
-			}
-			elseif( $poll_type == 1 )				
-			{
-				$Template->Assign_vars(array(
-					'SELECTED_MULTIPLE' => 'checked="ckecked"'
-				));
-			}	
 			
 			include_once('../includes/bbcode.php');
 			
@@ -325,6 +327,16 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				));
 			}
 			
+			//Liste des choix des sondages => 20 maxi
+			$nbr_poll_field = 0;
+			for($i = 0; $i < 5; $i++)
+			{	
+				$Template->Assign_block_vars('answers_poll', array(
+					'ID' => $i,
+					'ANSWER' => ''
+				));
+			}
+			
 			$Template->Assign_vars(array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'SID' => SID,
@@ -332,7 +344,10 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'TITLE' => '',
 				'DESC' => '',
 				'SELECTED_SIMPLE' => 'checked="ckecked"',
-				'IDTOPIC' => '0',
+				'IDTOPIC' => $idt_get,
+				'NO_DISPLAY_POLL' => 'true',
+				'NBR_POLL_FIELD' => 0,
+				'C_ADD_POLL_FIELD' => true,
 				'U_ACTION' => 'post.php' . transid('?new=topic&amp;id=' . $id_get),
 				'U_FORUM_CAT' => $forum_cats,
 				'U_TITLE_T' => '<a href="post' . transid('.php?new=topic&amp;id=' . $id_get) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/post.png" alt="" class="valign_middle" /></a>',
@@ -463,24 +478,22 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						
 						$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
 						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
-						$answers = '';
-						$votes = ($check_poll == 1) ? 'votes = "' : '';
-						$check_nbr_answer = 0;
+						
+						$answers = array();
+						$nbr_votes = 0;
 						for($i = 0; $i < 20; $i++)
 						{
 							if( !empty($_POST['a'.$i]) )
 							{				
-								$answers .= securit(str_replace('|', '', $_POST['a'.$i])) . '|';
-								$votes .= '0|';
-								$check_nbr_answer++;
+								$answers[$i] = securit(str_replace('|', '', $_POST['a'.$i]));
+								$nbr_votes++;
 							}
-						}
-						$votes .= ($check_poll == 1) ? '", ' : '';						
+						}						
 
 						if( $check_poll == 1 ) //Mise à jour.
-							$Forumfct->Update_poll($idt_get, $question, $answers, $votes, $poll_type);
+							$Forumfct->Update_poll($idt_get, $question, $answers, $poll_type);
 						elseif( $check_poll == 0 ) //Ajout du sondage.
-							$Forumfct->Add_poll($idt_get, $question, $answers, 0, $votes, $poll_type); 
+							$Forumfct->Add_poll($idt_get, $question, $answers, $nbr_votes, $poll_type); 
 					}
 					elseif( !empty($del_poll) && $Member->Check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM) ) //Suppression du sondage, admin et modo seulement biensûr...
 						$Forumfct->Del_poll($idt_get);
@@ -529,12 +542,31 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
 					'CONTENTS' => second_parse(stripslashes(parse($contents)))
 				));
+					
+				//Liste des choix des sondages => 20 maxi
+				$nbr_poll_field = 0;
+				for($i = 0; $i < 20; $i++)
+				{	
+					if( !empty($_POST['a'.$i]) )
+					{
+						$Template->Assign_block_vars('answers_poll', array(
+							'ID' => $i,
+							'ANSWER' => stripslashes($_POST['a'.$i])
+						));
+						$nbr_poll_field++;
+					} 
+					elseif( $i <= 5 ) //On complète s'il y a moins de 5 réponses.
+					{
+						$Template->Assign_block_vars('answers_poll', array(
+							'ID' => $i,
+							'ANSWER' => ''
+						));
+					}					
+				}
 				
-				//Suppression d'un sondage => modo uniquement.
-				if( $is_modo )
-					$Template->Assign_block_vars('delete_poll', array(
-					));
-				
+				//Type de réponses du sondage.
+				$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
+						
 				$Template->Assign_vars(array(
 					'THEME' => $CONFIG['theme'],
 					'LANG' => $CONFIG['lang'],
@@ -545,7 +577,14 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'DESC' => stripslashes($subtitle),
 					'CONTENTS' => stripslashes($contents),
 					'QUESTION' => !empty($_POST['question']) ? stripslashes($_POST['question']) : '',
+					'IDTOPIC' => $idt_get,
 					'SELECTED_SIMPLE' => 'checked="ckecked"',
+					'NO_DISPLAY_POLL' => !empty($_POST['question']) ? 'false' : 'true',
+					'NBR_POLL_FIELD' => $nbr_poll_field,
+					'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
+					'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',
+					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
+					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 18) ? true : false,
 					'U_ACTION' => 'post.php' . transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 					'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . stripslashes($title) . '</a>',
@@ -569,30 +608,8 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'L_MULTIPLE' => $LANG['multiple_answer'],
 					'L_DELETE_POLL' => $LANG['delete_poll']
 				));
-				
-				//Liste des choix des sondages => 20 maxi
-				for($i = 0; $i < 20; $i++)
-					$Template->Assign_vars(array(
-						'ANSWER' . $i => !empty($_POST['a'.$i]) ? stripslashes($_POST['a'.$i]) : ''
-					));
 					
-				//Type de réponses du sondage.
-				$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
-				if( $poll_type == 0 )
-				{
-					$Template->Assign_vars(array(
-						'SELECTED_SIMPLE' => 'checked="ckecked"'
-					));
-				}
-				elseif( $poll_type == 1 )				
-				{
-					$Template->Assign_vars(array(
-						'SELECTED_MULTIPLE' => 'checked="ckecked"'
-					));
-				}
-				
 				include_once('../includes/bbcode.php');
-				
 				
 				$Template->Pparse('forum_post');
 			}
@@ -625,8 +642,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				}
 	
 				//Récupération des infos du sondage associé si il existe
-				$poll = $Sql->Query_array('forum_poll', 'question', 'answers', 'type', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
+				$poll = $Sql->Query_array('forum_poll', 'question', 'answers', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 				$array_answer = explode('|', $poll['answers']);
+				$array_votes = explode('|', $poll['votes']);
 	
 				$module_data_path = $Template->Module_data_path('forum');
 				
@@ -645,11 +663,26 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					));
 				}
 				
-				//Suppression d'un sondage => modo uniquement.
-				if( $is_modo )
-					$Template->Assign_block_vars('delete_poll', array(
+				//Liste des choix des sondages => 20 maxi
+				$nbr_poll_field = 0;
+				foreach($array_answer as $key => $answer)
+				{	
+					$Template->Assign_block_vars('answers_poll', array(
+						'ID' => $nbr_poll_field,
+						'ANSWER' => $answer,
+						'NBR_VOTES' => $array_votes[$key],
+						'L_VOTES' => ($array_votes[$key] > 1) ? $LANG['votes'] : $LANG['vote']
 					));
-					
+					$nbr_poll_field++;
+				}
+				for($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
+				{	
+					$Template->Assign_block_vars('answers_poll', array(
+						'ID' => $i,
+						'ANSWER' => ''
+					));
+				}					
+
 				$Template->Assign_vars(array(
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 					'SID' => SID,
@@ -660,6 +693,10 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'SELECTED_SIMPLE' => 'checked="ckecked"',
 					'MODULE_DATA_PATH' => $module_data_path,
 					'IDTOPIC' => $idt_get,
+					'NBR_POLL_FIELD' => $nbr_poll_field,
+					'NO_DISPLAY_POLL' => !empty($poll['question']) ? 'false' : 'true',
+					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
+					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 18) ? true : false,
 					'U_ACTION' => 'post.php' . transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 					'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
@@ -683,12 +720,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'L_MULTIPLE' => $LANG['multiple_answer'],
 					'L_DELETE_POLL' => $LANG['delete_poll']
 				));
-				
-				//Liste des choix des sondages => 20 maxi
-				for($i = 0; $i < 20; $i++)
-					$Template->Assign_vars(array(
-						'ANSWER' . $i => !empty($array_answer[$i]) ? $array_answer[$i] : ''
-					));
 				
 				//Type de réponses du sondage.
 				if( isset($poll['type']) && $poll['type'] == '0' )
@@ -880,12 +911,26 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			if( !empty($errstr) )
 				$Errorh->Error_handler($errstr, $type);
 				
+			//Liste des choix des sondages => 20 maxi
+			$nbr_poll_field = 0;
+			for($i = 0; $i < 5; $i++)
+			{	
+				$Template->Assign_block_vars('answers_poll', array(
+					'ID' => $i,
+					'ANSWER' => ''
+				));
+			}
+				
 			$Template->Assign_vars(array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'SID' => SID,
 				'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 				'TITLE' => '',
 				'SELECTED_SIMPLE' => 'checked="checked"',
+				'IDTOPIC' => $idt_get,
+				'NO_DISPLAY_POLL' => 'true',
+				'NBR_POLL_FIELD' => 0,
+				'C_ADD_POLL_FIELD' => true,
 				'U_ACTION' => 'post.php' . transid('?new=topic&amp;id=' . $id_get),
 				'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 				'U_TITLE_T' => '<a href="post' . transid('.php?new=topic&amp;id=' . $id_get) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/post.png" alt="" /></a>',

@@ -133,13 +133,15 @@ elseif( !empty($idt_get) )
 			{
 				//On boucle pour vérifier toutes les réponses du sondage.
 				$nbr_answer = count($array_votes);
-				for( $i = 0; $i < $nbr_answer; $i++)
+				for($i = 0; $i < $nbr_answer; $i++)
 				{
 					if( isset($_POST[$i]) ) 
 						$array_votes[$i]++;
+					else
+						$array_votes[$i] = 0;
 				}
 			}
-				
+
 			$Sql->Query_inject("UPDATE ".PREFIX."forum_poll SET " . $add_voter_id . " votes = '" . implode('|', $array_votes) . "' WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 		}
 		

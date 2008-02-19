@@ -33,6 +33,12 @@ $password = !empty($_POST['password']) ? md5($_POST['password']) : '';
 $autoconnexion = !empty($_POST['auto']) ? true : false;
 $unlock = !empty($_POST['unlock']) ? md5($_POST['unlock']) : '';
 
+if( !empty($_GET['disconnect']) ) //Déconnexion.
+{
+	$Session->Session_end();
+	redirect(get_start_page());
+}
+
 //On vérifie si l'ip est valide sinon on refuse le lancement de la session!
 //Lancement de la session
 if( !empty($_POST['connect']) && !empty($login) && !empty($password) )
