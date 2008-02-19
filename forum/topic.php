@@ -169,7 +169,8 @@ $poll_done = false; //N'execute qu'une fois les actions propres au sondage.
 $Cache->Load_file('ranks'); //Récupère les rangs en cache.
 $page = isset($_GET['pt']) ? numeric($_GET['pt']) : 0; //Redéfinition de la variable $page pour prendre en compte les redirections.
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
-$i = 0;		
+$i = 0;	
+$j = 0;	
 $result = $Sql->Query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_readonly, m.user_ban, m2.login as login_edit, s.user_id AS connect, tr.id AS track, msg.contents
 FROM ".PREFIX."forum_msg msg
 LEFT JOIN ".PREFIX."forum_poll p ON p.idtopic = '" . $id_get . "'
@@ -362,6 +363,7 @@ while ( $row = $Sql->Sql_fetch_assoc($result) )
 		'CONTENTS' => second_parse($row['contents']),
 		'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 		'ID' => $row['id'],
+		'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 		'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($row['connect']) && !$is_guest) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 		'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
 		'USER_RANK' => ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned'],
@@ -388,7 +390,9 @@ while ( $row = $Sql->Sql_fetch_assoc($result) )
 	));
 	
 	//Marqueur de suivis du sujet.
-	if( !empty($row['track']) ) $track = true;
+	if( !empty($row['track']) ) 
+		$track = true;
+	$j++;
 }
 $Sql->Close($result);
 

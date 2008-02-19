@@ -232,6 +232,7 @@ else //Affichage.
 
 	//Gestion des rangs.	
 	$Cache->Load_file('ranks');
+	$j = 0;
 	$result = $Sql->Query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, s.contents
 	FROM ".PREFIX."shoutbox s
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id
@@ -242,131 +243,133 @@ else //Affichage.
 	while ($row = $Sql->Sql_fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
-			$edit = '';
-			$del = '';
-			
-			$is_guest = ($row['user_id'] === -1);
-			$is_modo = $Member->Check_level(1);
-			$warning = '';
-			$readonly = '';
-			if( $is_modo && !$is_guest ) //Modération.
-			{
-				$warning = '&nbsp;<a href="../member/moderation_panel' . transid('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
-				$readonly = '<a href="../member/moderation_panel' . transid('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
-			}
-			
-			//Edition/suppression.
-			if( $is_modo || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
-			{
-				$edit = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-				$del = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?del=1&id=' . $row['id']) . '" onClick="javascript:return Confirm_shout();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
-			}
-			
-			//Pseudo.
-			if( !$is_guest ) 
-				$shout_pseudo = '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
-			else
-				$shout_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
-			
-			//Rang de l'utilisateur.
-			$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
+		$edit = '';
+		$del = '';
+		
+		$is_guest = ($row['user_id'] === -1);
+		$is_modo = $Member->Check_level(1);
+		$warning = '';
+		$readonly = '';
+		if( $is_modo && !$is_guest ) //Modération.
+		{
+			$warning = '&nbsp;<a href="../member/moderation_panel' . transid('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
+			$readonly = '<a href="../member/moderation_panel' . transid('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
+		}
+		
+		//Edition/suppression.
+		if( $is_modo || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
+		{
+			$edit = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+			$del = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?del=1&id=' . $row['id']) . '" onClick="javascript:return Confirm_shout();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+		}
+		
+		//Pseudo.
+		if( !$is_guest ) 
+			$shout_pseudo = '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
+		else
+			$shout_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
+		
+		//Rang de l'utilisateur.
+		$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
+		$user_group = $user_rank;
+		$user_rank_icon = '';
+		if( $row['level'] === '2' ) //Rang spécial (admins).  
+		{
+			$user_rank = $_array_rank[-2][0];
 			$user_group = $user_rank;
-			$user_rank_icon = '';
-			if( $row['level'] === '2' ) //Rang spécial (admins).  
+			$user_rank_icon = $_array_rank[-2][1];
+		}
+		elseif( $row['level'] === '1' ) //Rang spécial (modos).  
+		{
+			$user_rank = $_array_rank[-1][0];
+			$user_group = $user_rank;
+			$user_rank_icon = $_array_rank[-1][1];
+		}
+		else
+		{
+			foreach($_array_rank as $msg => $ranks_info)
 			{
-				$user_rank = $_array_rank[-2][0];
-				$user_group = $user_rank;
-				$user_rank_icon = $_array_rank[-2][1];
-			}
-			elseif( $row['level'] === '1' ) //Rang spécial (modos).  
-			{
-				$user_rank = $_array_rank[-1][0];
-				$user_group = $user_rank;
-				$user_rank_icon = $_array_rank[-1][1];
-			}
-			else
-			{
-				foreach($_array_rank as $msg => $ranks_info)
-				{
-					if( $msg >= 0 && $msg <= $row['user_msg'] )
-					{ 
-						$user_rank = $ranks_info[0];
-						$user_rank_icon = $ranks_info[1];
-						break;
-					}
+				if( $msg >= 0 && $msg <= $row['user_msg'] )
+				{ 
+					$user_rank = $ranks_info[0];
+					$user_rank_icon = $ranks_info[1];
+					break;
 				}
 			}
-				
-			//Image associée au rang.
-			$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
-						
-			//Affichage des groupes du membre.		
-			if( !empty($row['user_groups']) && $_array_groups_auth ) 
-			{	
-				$user_groups = '';
-				$array_user_groups = explode('|', $row['user_groups']);
-				foreach($_array_groups_auth as $idgroup => $array_group_info)
-				{
-					if( is_numeric(array_search($idgroup, $array_user_groups)) )
-						$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
-				}
-			}
-			else
-				$user_groups = $LANG['group'] . ': ' . $user_group;
+		}
 			
-			//Membre en ligne?
-			$user_online = !empty($row['connect']) ? 'online' : 'offline';
-			
-			//Avatar			
-			if( empty($row['user_avatar']) ) 
-				$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
-			else
-				$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
-			
-			//Affichage du sexe et du statut (connecté/déconnecté).	
-			$user_sex = '';
-			if( $row['user_sex'] == 1 )	
-				$user_sex = $LANG['sex'] . ': <img src="../templates/' . $CONFIG['theme'] . '/images/man.png" alt="" /><br />';	
-			elseif( $row['user_sex'] == 2 ) 
-				$user_sex = $LANG['sex'] . ': <img src="../templates/' . $CONFIG['theme'] . '/images/woman.png" alt="" /><br />';
+		//Image associée au rang.
+		$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 					
-			//Nombre de message.
-			$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
-			
-			//Localisation.
-			if( !empty($row['user_local']) ) 
+		//Affichage des groupes du membre.		
+		if( !empty($row['user_groups']) && $_array_groups_auth ) 
+		{	
+			$user_groups = '';
+			$array_user_groups = explode('|', $row['user_groups']);
+			foreach($_array_groups_auth as $idgroup => $array_group_info)
 			{
-				$user_local = $LANG['place'] . ': ' . $row['user_local'];
-				$user_local = $user_local > 15 ? htmlentities(substr(html_entity_decode($user_local), 0, 15)) . '...<br />' : $user_local . '<br />';			
+				if( is_numeric(array_search($idgroup, $array_user_groups)) )
+					$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
 			}
-			else $user_local = '';
-			
-			$Template->Assign_block_vars('shoutbox',array(
-				'ID' => $row['id'],
-				'CONTENTS' => ucfirst(second_parse($row['contents'])),
-				'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
-				'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
-				'USER_PSEUDO' => $shout_pseudo,			
-				'USER_RANK' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
-				'USER_IMG_ASSOC' => $user_assoc_img,
-				'USER_AVATAR' => $user_avatar,			
-				'USER_GROUP' => $user_groups,
-				'USER_DATE' => !$is_guest ? $LANG['registered_on'] . ': ' . gmdate_format('date_format_short', $row['registered']) : '',
-				'USER_SEX' => $user_sex,
-				'USER_MSG' => !$is_guest ? $user_msg : '',
-				'USER_LOCAL' => $user_local,
-				'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
-				'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
-				'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
-				'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . $row['user_sign'] : '',
-				'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
-				'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
-				'PUNISHMENT' => $readonly,			
-				'DEL' => $del,
-				'EDIT' => $edit,
-				'U_MEMBER_PM' => !$is_guest ? '<a href="../member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>' : '',
-				'U_ANCHOR' => 'shoutbox.php' . SID . '#m' . $row['id']
-			));
+		}
+		else
+			$user_groups = $LANG['group'] . ': ' . $user_group;
+		
+		//Membre en ligne?
+		$user_online = !empty($row['connect']) ? 'online' : 'offline';
+		
+		//Avatar			
+		if( empty($row['user_avatar']) ) 
+			$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
+		else
+			$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
+		
+		//Affichage du sexe et du statut (connecté/déconnecté).	
+		$user_sex = '';
+		if( $row['user_sex'] == 1 )	
+			$user_sex = $LANG['sex'] . ': <img src="../templates/' . $CONFIG['theme'] . '/images/man.png" alt="" /><br />';	
+		elseif( $row['user_sex'] == 2 ) 
+			$user_sex = $LANG['sex'] . ': <img src="../templates/' . $CONFIG['theme'] . '/images/woman.png" alt="" /><br />';
+				
+		//Nombre de message.
+		$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
+		
+		//Localisation.
+		if( !empty($row['user_local']) ) 
+		{
+			$user_local = $LANG['place'] . ': ' . $row['user_local'];
+			$user_local = $user_local > 15 ? htmlentities(substr(html_entity_decode($user_local), 0, 15)) . '...<br />' : $user_local . '<br />';			
+		}
+		else $user_local = '';
+		
+		$Template->Assign_block_vars('shoutbox',array(
+			'ID' => $row['id'],
+			'CONTENTS' => ucfirst(second_parse($row['contents'])),
+			'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
+			'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
+			'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
+			'USER_PSEUDO' => $shout_pseudo,			
+			'USER_RANK' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
+			'USER_IMG_ASSOC' => $user_assoc_img,
+			'USER_AVATAR' => $user_avatar,			
+			'USER_GROUP' => $user_groups,
+			'USER_DATE' => !$is_guest ? $LANG['registered_on'] . ': ' . gmdate_format('date_format_short', $row['registered']) : '',
+			'USER_SEX' => $user_sex,
+			'USER_MSG' => !$is_guest ? $user_msg : '',
+			'USER_LOCAL' => $user_local,
+			'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
+			'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
+			'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+			'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . $row['user_sign'] : '',
+			'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+			'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
+			'PUNISHMENT' => $readonly,			
+			'DEL' => $del,
+			'EDIT' => $edit,
+			'U_MEMBER_PM' => !$is_guest ? '<a href="../member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>' : '',
+			'U_ANCHOR' => 'shoutbox.php' . SID . '#m' . $row['id']
+		));
+		$j++;
 	}
 	$Sql->Close($result);
 	

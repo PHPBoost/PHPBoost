@@ -82,7 +82,7 @@
 		</div>
 		# START com_list #
 		<div class="msg_position">
-			<div class="msg_container">
+			<div class="msg_container{com_list.CLASS_COLOR}">
 				<span id="m{com_list.ID}"></span>
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
@@ -109,7 +109,7 @@
 					</div>
 				</div>
 			</div>	
-			<div class="msg_sign">				
+			<div class="msg_sign{com_list.CLASS_COLOR}">				
 				<div class="msg_sign_overflow">
 					{com_list.USER_SIGN}
 				</div>				
@@ -231,7 +231,7 @@
 		</div>
 		# START com_list #
 		<div class="msg_position">
-			<div class="msg_container">
+			<div class="msg_container{com_list.CLASS_COLOR}">
 				<span id="m{com_list.ID}">
 				<span id="com"></span>
 				<div class="msg_top_row">
@@ -259,7 +259,7 @@
 					</div>
 				</div>
 			</div>	
-			<div class="msg_sign">				
+			<div class="msg_sign{com_list.CLASS_COLOR}">				
 				<div class="msg_sign_overflow">
 					{com_list.USER_SIGN}	
 				</div>			

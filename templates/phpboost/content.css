@@ -6,9 +6,8 @@ Contient les formulaires, les modules (et modules minis), et messages.
 th{ /* Entête des tableaux */
 	padding:5px 6px;
 	color:#FFFFFF;
-	background:#1C618C;
-	border:1px solid #0A2D43;
-	border-bottom:1px solid #000000;
+	background:url(images/msg_top_row.png) repeat-x;
+	border:1px solid #325889;
 	text-align:left;
 	font-size:0.75em;
 	text-transform:uppercase;
@@ -209,9 +208,9 @@ a.msg_link_pseudo:hover {
 .msg_position{ /* Conteneur des messages */
 	width:98%;
 	margin:auto;
-	background:#C6D6E6 url(images/border.gif) repeat-y left;
+	background:#E3EDF5 url(images/border.gif) repeat-y left;
 }
-.msg_container{ /* Case contenant l'ensemble du message */
+.msg_container, .msg_container2{ /* Case contenant l'ensemble du message */
 	background:#FFFFFF url(images/border.gif) repeat-y right;
 	margin-left:1px;
 	overflow:hidden !important;
@@ -219,6 +218,9 @@ a.msg_link_pseudo:hover {
 	overflow:visible;
 	height:1%;
 	clear:both;
+}
+.msg_container2{ /*  Case contenant l'ensemble du message => Couleur alternative */
+	background:#F4F9FA url(images/border.gif) repeat-y right;
 }
 /* Barre supérieur des messages */
 .msg_top_l{
@@ -250,7 +252,7 @@ a.msg_link_pseudo:hover {
 }
 .msg_pseudo_mbr{ /* Pseudo du membre */
 	width:127px;
-	background:#7289A2;
+	background:url(images/msg_top_row.png) repeat-x;
 	padding:2px 4px;
 	float:left;
 	margin-right:0px !important;
@@ -261,12 +263,12 @@ a.msg_link_pseudo:hover {
 }
 .msg_top_row{ /* Case au dessus du message, indique la date et les boutons d'administration */
 	height:16px;
-	background:#7289A2;
+	background:url(images/msg_top_row.png) repeat-x;
 	font-size:10px;
 	color:#e8eaeb;
 	margin-right:1px;
-	border-top:1px solid #092139;
-	border-bottom:1px solid #092139;
+	border-top:1px solid #325889;
+	border-bottom:1px solid #325889;
 	padding-top:4px;
 	padding-left:127px;
 	overflow:hidden !important;
@@ -275,22 +277,20 @@ a.msg_link_pseudo:hover {
 	height:1%;
 }
 .msg_info_mbr{	/* Case des informations du membre */ 
-	background:#C6D6E6;
+	background:#E3EDF5;
 	width:127px;
 	padding:4px;
 	float:left;
 	font-size:10px;
-	border-right:1px solid #092139;
+	border-right:1px dotted #C4CED6;
 }
 .msg_contents_container{ /* Case contenant l'ensemble du message, infos membre + contenu */
 	margin-right:1px;
-	background:#C6D6E6;
 }
 .msg_contents{ /* Case du message */
-	background:#FFFFFF;
 	margin-left:135px;
-	border-left:1px solid #092139;
 	padding:0px 5px;
+	border-left:1px dotted #C4CED6;
 }
 .msg_contents_overflow{	/* Case du contents du message, évite que les images trop grandes déforme */ 
 	width:99%;
@@ -299,12 +299,15 @@ a.msg_link_pseudo:hover {
 	overflow:auto;
 	padding:10px 0px;
 }
-.msg_sign{ /* Signature du membre */
+.msg_sign, .msg_sign2{ /* Signature du membre */
 	background:#FFFFFF url(images/border.gif) repeat-y right;
 	padding:4px;
 	font-size:11px;
 	margin-left:136px;
-	border-left:1px solid #092139;
+	border-left:1px dotted #C4CED6;
+}
+.msg_sign2{ /* Signature du membre => Couleur alternative */
+	background:#F4F9FA url(images/border.gif) repeat-y right;
 }
 .msg_sign_overflow{ /* Signature du membre, fixe la hauteur maximale */
 	height:auto !important;
@@ -323,8 +326,8 @@ a.msg_link_pseudo:hover {
 	background:#FFFFFF;
 	padding-top:6px;
 	padding-left:6px;
-	border-top:1px solid #092139;
 	border:1px solid #335B87;
+	border-top:1px dotted #C4CED6;
 }
 
 
@@ -374,16 +377,30 @@ a.msg_link_pseudo:hover {
 	clear:both;
 }
 .module_bottom_l{ /* Barre inférieure des modules */
+	margin-right:0px !important;
+	margin-right:-3px;
+	width:8px;
+	height:24px;
+	background:url(images/msg_bottom_l.png) no-repeat left;
+	float:left;
 }
 .module_bottom_r{
+	margin-left:0px !important;
+	margin-left:-3px;
+	width:8px;
+	height:24px;
+	background:url(images/msg_bottom_r.png) no-repeat right;
+	float:right;
 }
 .module_bottom{
-	height:23px;
-	background:#FFFFFF;
-	border:1px solid #295F8D;
-	border-top:none;
-	padding-top:6px;
+	height:20px;
+	background:url(images/msg_bottom.png) repeat-x;
+	padding-top:4px;
 	padding-left:6px;
+	margin-left:8px !important;
+	margin-left:0px;
+	margin-right:8px !important;
+	margin-right:0px;
 	font-size:12px;
 }
 .module_table{ /* Tableau global, utilisé dans les différents modules */

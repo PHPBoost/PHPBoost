@@ -569,6 +569,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	$page = isset($_GET['pt']) ? numeric($_GET['pt']) : 0; //Redéfinition de la variable $page pour prendre en compte les redirections.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 	$i = 0;	
+	$j = 0;	
 	$result = $Sql->Query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, msg.contents
 	FROM ".PREFIX."pm_msg msg
 	LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
@@ -676,6 +677,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 			'ID' => $row['id'],
 			'CONTENTS' => second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
+			'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 			'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
 			'USER_PSEUDO' => ($is_admin) ? $LANG['admin'] : (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']),			
 			'USER_RANK' => ($is_admin) ? '' : (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
@@ -701,7 +703,9 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		));
 		
 		//Marqueur de suivis du sujet.
-		if( !empty($row['track']) ) $track = true;
+		if( !empty($row['track']) ) 
+			$track = true;
+		$j++;
 	}
 	$Sql->Close($result);
 
