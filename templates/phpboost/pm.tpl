@@ -205,7 +205,7 @@
 						{pm.msg.USER_MSG}<br />
 						{pm.msg.USER_LOCAL}
 					</div>
-					<div class="msg_contents">
+					<div class="msg_contents{pm.msg.CLASS_COLOR}">
 						<div class="msg_contents_overflow">
 							{pm.msg.CONTENTS}
 						</div>

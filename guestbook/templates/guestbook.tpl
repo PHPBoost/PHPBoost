@@ -92,7 +92,7 @@
 						{guestbook.USER_MSG}<br />
 						{guestbook.USER_LOCAL}
 					</div>
-					<div class="msg_contents">
+					<div class="msg_contents{guestbook.CLASS_COLOR}">
 						<div class="msg_contents_overflow">
 							{guestbook.CONTENTS}
 						</div>
