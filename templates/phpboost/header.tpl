@@ -13,7 +13,6 @@
 		<link rel="stylesheet" href="../templates/{THEME}/generic.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="../templates/{THEME}/content.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="../templates/{THEME}/bbcode.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="../templates/{THEME}/links/links.css" type="text/css" media="screen, print, handheld" />
 		{ALTERNATIVE_CSS}
 		<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
 		<link rel="alternate" type="application/rss+xml" href="../news/rss.php" title="RSS {SITE_NAME}" />
