@@ -6,7 +6,7 @@ Contient les formulaires, les modules (et modules minis), et messages.
 th{ /* Entête des tableaux */
 	padding:5px 6px;
 	color:#FFFFFF;
-	background:url(images/msg_top_row.png) repeat-x;
+	background:#52718E url(images/msg_top_row.png) repeat-x;
 	border:1px solid #325889;
 	text-align:left;
 	font-size:0.75em;
