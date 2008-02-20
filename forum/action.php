@@ -114,18 +114,17 @@ elseif( !empty($idt_get) )
 	}	
 	elseif( $poll && $Member->Get_attribute('user_id') !== -1 ) //Enregistrement vote du sondage
 	{
-		$info_poll = $Sql->Query_array('forum_poll', 'voter_id', 'votes', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
+		$info_poll = $Sql->Query_array('forum_poll', 'voter_id', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 		//Si l'utilisateur n'est pas dans le champ on prend en compte le vote.
 		if( !in_array($Member->Get_attribute('user_id'), explode('|', $info_poll['voter_id'])) )
 		{		
 			//On concatène avec les votans existants.
 			$add_voter_id = "voter_id = CONCAT(voter_id, '|" . $Member->Get_attribute('user_id') . "'),"; 
-				
 			$array_votes = explode('|', $info_poll['votes']);
 				
-			$id_answer = isset($_POST['radio']) ? numeric($_POST['radio']) : '-1'; //Réponse simple.
-			if( $id_answer >= 0 ) 
-			{	
+			if( $info_poll['type'] == 0 ) //Réponse simple.
+			{
+				$id_answer = isset($_POST['radio']) ? numeric($_POST['radio']) : '-1'; 
 				if( isset($array_votes[$id_answer]) )
 					$array_votes[$id_answer]++;
 			}
@@ -137,8 +136,6 @@ elseif( !empty($idt_get) )
 				{
 					if( isset($_POST[$i]) ) 
 						$array_votes[$i]++;
-					else
-						$array_votes[$i] = 0;
 				}
 			}
 

@@ -135,7 +135,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		
 		$Template->Pparse('edit_msg');
 	}
-	elseif( $new_get === 'topic' && empty($error_get) )
+	elseif( $new_get === 'topic' && empty($error_get) ) //Nouveau topic.
 	{			
 		if( !empty($post_topic) && !empty($id_get) )
 		{
@@ -272,12 +272,12 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'DESC' => stripslashes($subtitle),
 				'CONTENTS' => stripslashes($contents),
 				'QUESTION' => !empty($_POST['question']) ? stripslashes($_POST['question']) : '',
-				'IDTOPIC' => $idt_get,
+				'IDTOPIC' => 0,
 				'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
 				'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',	
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD' => $nbr_poll_field,
-				'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 18) ? true : false,
+				'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
 				'U_ACTION' => 'post.php' . transid('?new=topic&amp;id=' . $id_get),
 				'U_FORUM_CAT' => $forum_cats,
 				'U_TITLE_T' => '<a href="post' . transid('.php?new=topic&amp;id=' . $id_get) . '">' . stripslashes($title) . '</a>',
@@ -344,7 +344,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'TITLE' => '',
 				'DESC' => '',
 				'SELECTED_SIMPLE' => 'checked="ckecked"',
-				'IDTOPIC' => $idt_get,
+				'IDTOPIC' => 0,
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD' => 0,
 				'C_ADD_POLL_FIELD' => true,
@@ -488,7 +488,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 								$answers[$i] = securit(str_replace('|', '', $_POST['a'.$i]));
 								$nbr_votes++;
 							}
-						}						
+						}	
 
 						if( $check_poll == 1 ) //Mise à jour.
 							$Forumfct->Update_poll($idt_get, $question, $answers, $poll_type);
@@ -577,14 +577,14 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'DESC' => stripslashes($subtitle),
 					'CONTENTS' => stripslashes($contents),
 					'QUESTION' => !empty($_POST['question']) ? stripslashes($_POST['question']) : '',
-					'IDTOPIC' => $idt_get,
+					'IDTOPIC' => 0,
 					'SELECTED_SIMPLE' => 'checked="ckecked"',
 					'NO_DISPLAY_POLL' => !empty($_POST['question']) ? 'false' : 'true',
 					'NBR_POLL_FIELD' => $nbr_poll_field,
 					'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
 					'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',
 					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
-					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 18) ? true : false,
+					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
 					'U_ACTION' => 'post.php' . transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 					'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . stripslashes($title) . '</a>',
@@ -696,7 +696,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'NBR_POLL_FIELD' => $nbr_poll_field,
 					'NO_DISPLAY_POLL' => !empty($poll['question']) ? 'false' : 'true',
 					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
-					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 18) ? true : false,
+					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
 					'U_ACTION' => 'post.php' . transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 					'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
@@ -927,7 +927,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 				'TITLE' => '',
 				'SELECTED_SIMPLE' => 'checked="checked"',
-				'IDTOPIC' => $idt_get,
+				'IDTOPIC' => 0,
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD' => 0,
 				'C_ADD_POLL_FIELD' => true,
