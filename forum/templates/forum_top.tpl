@@ -29,8 +29,9 @@
 					document.getElementById('forum_blockforum_unread').innerHTML = array_unread_topics[2];
 					document.getElementById('forum_blockforum_unread2').innerHTML = array_unread_topics[2];
 				}
-				else if( xhr_object.readyState == 4 && xhr_object.responseText == '-1' )
+				else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 				{	
+					alert("{L_AUTH_ERROR}");
 					if( document.getElementById('refresh_unread' + divID) )
 						document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/refresh_mini.png';
 				}
@@ -113,7 +114,7 @@
 					<img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
 					
 					<div style="position:relative;float:left;">
-						<div style="position:absolute;z-index:100;float:left;margin-left:140px;display:none;" id="forum_blockforum_unread">
+						<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread">
 						</div>
 					</div>
 					<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><img src="../templates/{THEME}/images/refresh_mini.png" alt="" id="refresh_unread" class="valign_middle" /></a>

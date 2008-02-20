@@ -12,7 +12,7 @@
 					# END links.title #
 					# START links.subtitle #
 					<li style="text-align:left;text-indent:20px;padding:3px;">
-						<a href="{links.subtitle.URL}" style="font-size:10px;" title="{links.subtitle.NAME}">{links.subtitle.NAME}</a>			
+						<a href="{links.subtitle.URL}" style="font-size:11px;" title="{links.subtitle.NAME}">{links.subtitle.NAME}</a>			
 					</li>
 					# END links.subtitle #		
 				# END links #
