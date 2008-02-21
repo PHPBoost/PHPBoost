@@ -116,6 +116,7 @@ class Cache
 		
 		$root = '../';
 		$dir = $file;
+		
 		//On vérifie que le fichier de configuration est présent.
 		if( file_exists($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini') && file_exists($root . $dir . '/' . $dir . '_cache.php') )
 		{

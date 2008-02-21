@@ -332,7 +332,7 @@ class CategoriesManagement
 		}
 		
 		//Categories list
-		$this->create_cat_administration($string, 0, 0, $cache_var);
+		$this->create_cat_administration($string, 0, 0, $cache_var, $ajax_mode);
 		
 		$string .= $ajax_mode ? '</div>' : '';
 		return $string;
@@ -403,7 +403,7 @@ class CategoriesManagement
 								if( $values['order'] > 1 )
 								{
 									$string .= '
-									<a href="' . (!$ajax_mode ? $this->display_config['xmlhttprequest_file'] . '?id_up=' . $id . '" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');') . '">
+									<a href="' . ($ajax_mode ? $this->display_config['administration_file_name'] . '?id_up=' . $id . '" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');') . '">
 										<img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="" class="valign_middle" />
 									</a>';
 									
@@ -420,7 +420,7 @@ class CategoriesManagement
 								if( $i != $num_cats  - 1 && $cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat )
 								{
 									$string .= '
-									<a href="' . (!$ajax_mode ? transid($this->display_config['xmlhttprequest_file'] . '?id_down=' . $id . '" id="down_' . $id) : 'javascript:ajax_move_cat(' . $id . ', \'down\');') . '">
+									<a href="' . ($ajax_mode ? transid($this->display_config['administration_file_name'] . '?id_down=' . $id . '" id="down_' . $id) : 'javascript:ajax_move_cat(' . $id . ', \'down\');') . '">
 										<img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="" class="valign_middle" />
 									</a>';
 									if( $ajax_mode )
