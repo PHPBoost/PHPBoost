@@ -424,7 +424,7 @@ elseif( $step == 5 )
 			//Si c'est un répertoire un regarde si c'est effectivement un dossier de langues
 			if( !preg_match('`\.`', $file) )
 			{
-				$lang_info = @parse_ini_file('../lang/' . $file . '/config.ini');
+				$lang_info = load_ini_file('../lang/', $file);
 				$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $lang;
 				
 				if( $lang_info )
@@ -458,7 +458,7 @@ elseif( $step == 5 )
 			//Si c'est un répertoire un regarde si c'est effectivement un dossier de langues
 			if( !preg_match('`\.`', $file) )
 			{
-				$theme_info = @parse_ini_file('../templates/' . $file . '/config/' . $lang . '/config.ini');
+				$theme_info = load_ini_file('../templates/' . $file . '/config/', $lang);
 				if( $theme_info )
 				{
 					$Template->Assign_block_vars('site_config.theme', array(
@@ -593,7 +593,7 @@ elseif( $step == 6 )
 			//Si c'est un répertoire un regarde si c'est effectivement un dossier de langues
 			if( !preg_match('`\.`', $file) )
 			{
-				$lang_info = @parse_ini_file('../lang/' . $file . '/config.ini');
+				$lang_info = load_ini_file('../lang/', $file);
 				$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $lang;
 				
 				if( $lang_info )
@@ -664,7 +664,8 @@ elseif( $step == 7 )
 	{
 		foreach( $supported_modules as $module_name )
 		{
-			if( !@parse_ini_file('../' . $module_name . '/lang/' . $lang . '/config.ini') )
+			$lang_info = load_ini_file('../' . $module_name . '/lang/', $lang);
+			if( $lang_info == array() )
 				$unexisting_modules[] = $module_name;
 		}
 		
@@ -703,7 +704,7 @@ elseif( $step == 7 )
 				if( !in_array($module_name, $unexisting_modules) )
 				{
 					//Récupération des infos de config.
-					$info_module = @parse_ini_file('../' . $module_name . '/lang/' . $lang . '/config.ini');
+					$info_module = load_ini_file('../' . $module_name . '/lang/', $lang);
 					
 					//Si le dossier de base de données de la langue n'existe pas on prend le suivant exisant.
 					$dir_db_module = $lang;
@@ -736,7 +737,8 @@ elseif( $step == 7 )
 			$Cache->Load_file('config');
 			
 			//Page de démarrage
-			if( $preselections_configs[$preselection][0] != 'member' && $module_infos = @parse_ini_file('../' . $preselections_configs[$preselection][0] . '/lang/' . $lang . '/config.ini') )
+			$module_infos = load_ini_file('../' . $preselections_configs[$preselection][0] . '/lang/', $lang);
+			if( $preselections_configs[$preselection][0] != 'member' && $module_infos != array() )
 			{
 				if( !empty($module_infos['starteable_page']) )
 					$start_page = $preselections_configs[$preselection][0] . '/' . $module_infos['starteable_page'];
@@ -775,7 +777,7 @@ elseif( $step == 7 )
 					if( !empty($_POST['install_' . $module_name]) )
 					{
 						//Récupération des infos de config.
-						$info_module = @parse_ini_file('../' . $module_name . '/lang/' . $lang . '/config.ini');
+						$info_module = load_ini_file('../' . $module_name . '/lang/', $lang);
 
 						//Si le dossier de base de données de la langue n'existe pas on prend le suivant exisant.
 						$dir_db_module = $lang;
@@ -816,7 +818,7 @@ elseif( $step == 7 )
 			//Traitement de la page de démarrage
 			if( !empty($_POST['install_' . $index_module]) && in_array($index_module, $supported_modules) )
 			{
-				$info_module = @parse_ini_file('../' . $index_module . '/lang/' . $lang . '/config.ini');
+				$info_module = load_ini_file('../' . $index_module . '/lang/', $lang);
 				if( !empty($info_module['starteable_page']) )
 					$index_module_url = '/' . $index_module . '/' . $info_module['starteable_page'];
 				else
@@ -862,7 +864,7 @@ elseif( $step == 7 )
 			ORDER BY name", __LINE__, __FILE__);
 			while($row = $Sql->Sql_fetch_assoc($result) )
 			{
-				$info_module = @parse_ini_file('../' . $row['name'] . '/lang/' . $lang . '/config.ini');
+				$info_module = load_ini_file('../' . $row['name'] . '/lang/', $lang);
 				if( !empty($info_module['name']) && !empty($info_module['starteable_page']) )
 					$Sql->Query_inject("INSERT INTO ".PREFIX."links (class, name, url, activ, secure, added, sep) VALUES ('" . $i . "', '" . addslashes($info_module['name']) . "', '../" . $row['name'] . "/" . addslashes($info_module['starteable_page']) . "', 1, '-1', 0, 0)", __LINE__, __FILE__);
 				$i++;
@@ -899,7 +901,8 @@ elseif( $step == 7 )
 	
 	foreach( $supported_modules as $module_name )
 	{
-		if( $module_info = @parse_ini_file('../' . $module_name . '/lang/' . $lang . '/config.ini') )
+		$module_info = load_ini_file('../' . $module_name . '/lang/', $lang);
+		if( $module_info != array() )
 		{
 			$Template->Assign_block_vars('modules.module_list', array(
 				'MODULE_NAME' => $module_info['name'],
@@ -1008,7 +1011,7 @@ if( is_dir($rep) ) //Si le dossier existe
 		//Si c'est un répertoire un regarde si c'est effectivement un dossier de langues
 		if( !preg_match('`\.`', $file) )
 		{
-			$info_lang = @parse_ini_file('../lang/' . $file . '/config.ini');
+			$info_lang = load_ini_file('../lang/', $file);
 			if( !empty($info_lang['name']) )
 			{	
 				$Template->Assign_block_vars('lang', array(
