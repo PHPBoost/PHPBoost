@@ -315,15 +315,13 @@ INSERT INTO `phpboost_smileys` (`idsmiley`, `code_smiley`, `url_smiley`) VALUES
 DROP TABLE IF EXISTS `phpboost_search_index`;
 CREATE TABLE `phpboost_search_results` (
     `id_search`         int(11)         NOT NULL auto_increment,
-    `id_module`         VARCHAR(255)    NOT NULL default '0',
-    `id_user`           int(11)         NOT NULL default '0',
+    `id_module`         int(11)         NOT NULL default '0',
     `search`            VARCHAR(255)    NOT NULL default '',
     `options`           VARCHAR(255)    NOT NULL default '',
     `last_search_use`   timestamp       NOT NULL,
-    `times_used`        int(11)         NOT NULL default '0',
     PRIMARY KEY (`id_search`, `id_module`),
     INDEX `last_search_use` (`last_search_use`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
 -- Contenu de la table `phpboost_search_index`
@@ -336,13 +334,12 @@ CREATE TABLE `phpboost_search_results` (
 DROP TABLE IF EXISTS `phpboost_search_results`;
 CREATE TABLE `phpboost_search_results` (
     `id_search`         int(11)         NOT NULL auto_increment,
-    `id_module`         VARCHAR(255)    NOT NULL default '0',
+    `id_module`         int(11)         NOT NULL default '0',
     `id_module_content` int(11)         NOT NULL default '0',
-    `relevance`         decimal         NOT NULL default '0',
+    `relevance`         decimal(5,2)    NOT NULL,
     `link`              varchar(255)    NOT NULL default '',
-    PRIMARY KEY (`id_search`,`id_module`,`id_module_content`),
-    FOREIGN KEY (`id_search`,`id_module`),
-) ENGINE=MyISAM;
+    PRIMARY KEY (`id_search`,`id_module`,`id_module_content`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
 -- Contenu de la table `phpboost_search_results`
