@@ -17,7 +17,6 @@ require_once('../includes/function.php'); //Fonctions de base.
 require_once('../includes/constant.php'); //Constante utiles.
 require_once('../includes/errors.class.php');
 require_once('../includes/template.class.php');
-require_once('../includes/sessions.class.php');
 
 $Errorh = new Errors(); //!\\Initialisation  de la class des erreurs//!\\
 $Template = new Templates; //!\\Initialisation des templates//!\\ 
@@ -29,8 +28,6 @@ if( !isset($CONFIG) )
 	die('Unable to load config cache!');
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
-	
-$Session = new Sessions; //!\\Initialisation  de la class des sessions//!\\
 
 $get_error_id = !empty($_GET['error']) ? numeric($_GET['error']) : '';
 

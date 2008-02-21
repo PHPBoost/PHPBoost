@@ -126,7 +126,7 @@ elseif( !empty($id_error) )
 	//Inclusion des langues des erreurs pour le module si elle existe.
 	$module = substr(strrchr($id_error, '_'), 1);
 	if( is_dir('../' . $module) )
-		load_module_lang($module, $CONFIG['lang']); //Chargement de la langue du module.
+		load_module_lang($module); //Chargement de la langue du module.
 
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],		

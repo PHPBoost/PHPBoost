@@ -58,7 +58,7 @@ elseif( $select_cat && empty($open_cat) && $root == 0 )
 	}
 	else
 	{
-		load_module_lang('wiki', $CONFIG['lang']);
+		load_module_lang('wiki');
 		echo $LANG['wiki_no_selected_cat'];
 	}
 }

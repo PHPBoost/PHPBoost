@@ -27,7 +27,7 @@
 ###################################################*/
 
 require_once('../includes/admin_begin.php');
-load_module_lang('pages', $CONFIG['lang']);
+load_module_lang('pages');
 define('TITLE', $LANG['administration'] . ' : ' . $LANG['pages']);
 require_once('../includes/admin_header.php');
 

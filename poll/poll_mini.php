@@ -34,7 +34,7 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 	$poll_mini = $_array_poll[array_rand($_array_poll)];
 		
 	//Chargement de la langue du module.
-	@load_module_lang('poll', $CONFIG['lang']);
+	load_module_lang('poll');
 	#####################Résultats######################
 	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
 	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();

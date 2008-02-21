@@ -158,7 +158,7 @@ if( !empty($id_get) ) //Espace membre
 		WHERE activ = 1 AND secure <= '" . $Member->Get_attribute('level') . "'", __LINE__, __FILE__);
 		while( $row2 = $Sql->Sql_fetch_assoc($result) )
 		{	
-			$lang_info = @parse_ini_file('../lang/' . $row2['lang'] . '/config.ini');
+			$lang_info = load_ini_file('../lang/', $row2['lang']);
 			if( $lang_info )
 			{
 				$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $row2['lang'];
@@ -189,7 +189,7 @@ if( !empty($id_get) ) //Espace membre
 			WHERE activ = 1 AND secure <= '" . $Member->Get_attribute('level') . "'", __LINE__, __FILE__);
 			while( $row2 = $Sql->Sql_fetch_assoc($result) )
 			{	
-				$theme_info = @parse_ini_file('../templates/' . $row2['theme'] . '/config/' . $CONFIG['lang'] . '/config.ini');
+				$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', $CONFIG['lang']);
 				if( $theme_info )
 				{
 					$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];
@@ -203,7 +203,7 @@ if( !empty($id_get) ) //Espace membre
 		}
 		else //Thème par défaut forcé.
 		{
-			$theme_info = @parse_ini_file('../templates/' . $CONFIG['theme'] . '/config/' . $CONFIG['lang'] . '/config.ini');
+			$theme_info = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'];
 			$Template->Assign_block_vars('update.select_theme', array(
 				'THEME' => '<option value="' . $CONFIG['theme'] . '" selected="selected">' . $theme_name . '</option>'

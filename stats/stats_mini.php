@@ -29,7 +29,7 @@
 if( defined('PHP_BOOST') !== true) exit;
 
 //Chargement de la langue du module.
-@load_module_lang('stats', $CONFIG['lang']);
+load_module_lang('stats');
 
 #########################Stats.tpl###########################
 $Template->Set_filenames(array(

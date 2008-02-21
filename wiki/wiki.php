@@ -26,7 +26,7 @@
 ###################################################*/
 
 require_once('../includes/begin.php'); 
-load_module_lang('wiki', $CONFIG['lang']);
+load_module_lang('wiki');
 
 define('ALTERNATIVE_CSS', 'wiki');
 

@@ -27,7 +27,7 @@
 ###################################################*/
 
 require_once('../includes/admin_begin.php');
-load_module_lang('wiki', $CONFIG['lang']);
+load_module_lang('wiki');
 define('TITLE', $LANG['administration'] . ' : ' . $LANG['wiki']);
 require_once('../includes/admin_header.php');
 include_once('../wiki/wiki_functions.php');

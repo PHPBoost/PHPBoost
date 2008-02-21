@@ -32,7 +32,7 @@ if( defined('PHP_BOOST') !== true)
 if( !$Member->Check_auth($SECURE_MODULE['newsletter'], ACCESS_MODULE) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-load_module_lang('newsletter', $CONFIG['lang']); //Chargement de la langue du module.
+load_module_lang('newsletter'); //Chargement de la langue du module.
 define('TITLE', $LANG['newsletter']);
 
 //Chargement du cache

@@ -30,7 +30,7 @@ if( defined('PHP_BOOST') !== true)	exit;
 if( !$Member->Check_auth($SECURE_MODULE['pages'], ACCESS_MODULE) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-load_module_lang('pages', $CONFIG['lang']);
+load_module_lang('pages');
 
 define('READ_PAGE', 0x01);
 define('EDIT_PAGE', 0x02);

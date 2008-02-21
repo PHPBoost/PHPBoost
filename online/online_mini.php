@@ -30,7 +30,7 @@ if( defined('PHP_BOOST') !== true)	exit;
 if( strpos(SCRIPT, '/online/online.php') === false )
 {
 	//Chargement de la langue du module.
-	@load_module_lang('online', $CONFIG['lang']);
+	load_module_lang('online');
 	$Cache->Load_file('online');
 	
 	$Template->Set_filenames(array(

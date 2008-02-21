@@ -63,7 +63,7 @@ elseif( $select_cat && empty($open_cat) && $root == 0 )
 	}
 	else
 	{
-		load_module_lang('pages', $CONFIG['lang']);
+		load_module_lang('pages');
 		echo $LANG['pages_no_selected_cat'];
 	}
 }

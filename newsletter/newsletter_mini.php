@@ -28,7 +28,7 @@
 if( defined('PHP_BOOST') !== true)	exit;
 
 //Chargement de la langue du module.
-@load_module_lang('newsletter', $CONFIG['lang']);
+load_module_lang('newsletter');
 
 $Template->Set_filenames(array(
 	'newsletter_mini' => '../templates/' . $CONFIG['theme'] . '/newsletter/newsletter_mini.tpl'

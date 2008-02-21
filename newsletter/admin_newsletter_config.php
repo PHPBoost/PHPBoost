@@ -27,7 +27,7 @@
 ###################################################*/
 
 require_once('../includes/admin_begin.php');
-load_module_lang('newsletter', $CONFIG['lang']); //Chargement de la langue du module.
+load_module_lang('newsletter'); //Chargement de la langue du module.
 define('TITLE', $LANG['newsletter']);
 require_once('../includes/admin_header.php');
 
