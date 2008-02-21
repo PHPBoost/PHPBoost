@@ -68,7 +68,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 	//Chargement du cache
 	$Cache->Load_file('com');
 
-	$info_module = @parse_ini_file('../' . $_module_folder . '/lang/' . $CONFIG['lang'] . '/config.ini');
+	$info_module = load_ini_file('../' . $_module_folder . '/lang/', $CONFIG['lang']);
 	$check_script = false;
 	if( isset($info_module['com']) )
 	{

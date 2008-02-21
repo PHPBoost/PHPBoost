@@ -96,7 +96,7 @@ $Template->Assign_vars(array(
 $modules_config = array();
 foreach($SECURE_MODULE as $name => $auth)
 {
-	$modules_config[$name] = @parse_ini_file('../' . $name . '/lang/' . $CONFIG['lang'] . '/config.ini');
+	$modules_config[$name] = load_ini_file('../' . $name . '/lang/', $CONFIG['lang']);
 	if( is_array($modules_config) )
 	{	
 		if( $modules_config[$name]['admin'] == 1 )
