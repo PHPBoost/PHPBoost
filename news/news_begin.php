@@ -32,7 +32,7 @@ if( defined('PHP_BOOST') !== true)
 if( !$Member->Check_auth($SECURE_MODULE['news'], ACCESS_MODULE) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-load_module_lang('news', $CONFIG['lang']); //Chargement de la langue du module.
+load_module_lang('news'); //Chargement de la langue du module.
 
 $idnews = !empty($_GET['id']) ? numeric($_GET['id']) : 0;	
 $idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;

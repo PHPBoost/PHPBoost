@@ -27,7 +27,7 @@
 ###################################################*/
 
 require_once('../includes/admin_begin.php');
-load_module_lang('shoutbox', $CONFIG['lang']); //Chargement de la langue du module.
+load_module_lang('shoutbox'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 

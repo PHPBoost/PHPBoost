@@ -27,7 +27,7 @@
 
 //------------------------------------------------------- Headers and Language
 require_once('../includes/begin.php');
-load_module_lang('search', $CONFIG['lang']);
+load_module_lang('search');
 // define('ALTERNATIVE_CSS', 'search');
 
 //------------------------------------------------------------- Other includes

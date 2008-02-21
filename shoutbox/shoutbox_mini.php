@@ -30,7 +30,7 @@ if( defined('PHP_BOOST') !== true ) exit;
 //Mini Shoutbox non activée si sur la page archive shoutbox.
 if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 {
-	load_module_lang('shoutbox', $CONFIG['lang']);
+	load_module_lang('shoutbox');
 	$Cache->Load_file('shoutbox'); //Chargement du cache
 	
 	###########################Insertion##############################

@@ -32,7 +32,7 @@ if( defined('PHP_BOOST') !== true)
 if( !$Member->Check_auth($SECURE_MODULE['web'], ACCESS_MODULE) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-load_module_lang('web', $CONFIG['lang']); //Chargement de la langue du module.
+load_module_lang('web'); //Chargement de la langue du module.
 
 $get_note =  !empty($_GET['note']) ? numeric($_GET['note']) : 0;
 $idweb = !empty($_GET['id']) ? numeric($_GET['id']) : 0;

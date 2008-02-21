@@ -27,7 +27,7 @@
 
 require_once('../includes/begin.php'); 
 include_once('../wiki/wiki_functions.php'); 
-load_module_lang('wiki', $CONFIG['lang']);
+load_module_lang('wiki');
 
 if( !$Member->Check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 

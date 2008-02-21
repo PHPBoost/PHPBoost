@@ -27,7 +27,7 @@
 
 require_once('../includes/begin.php'); 
 include_once('../wiki/wiki_functions.php'); 
-load_module_lang('wiki', $CONFIG['lang']);
+load_module_lang('wiki');
 define('ALTERNATIVE_CSS', 'wiki');
 
 require_once('../wiki/wiki_auth.php');

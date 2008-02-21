@@ -26,7 +26,7 @@
 ###################################################*/
 
 require_once('../includes/begin.php'); 
-load_module_lang('wiki', $CONFIG['lang']);
+load_module_lang('wiki');
 
 $id_article = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $field = !empty($_GET['field']) ? securit($_GET['field']) : '';

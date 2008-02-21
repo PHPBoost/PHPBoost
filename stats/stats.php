@@ -86,7 +86,7 @@ if( $members )
 	ORDER BY compt DESC", __LINE__, __FILE__);
 	while($row = $Sql->Sql_fetch_assoc($result))
 	{
-		$info_theme = @parse_ini_file('../templates/' . $row['theme'] . '/config/' . $CONFIG['lang'] . '/config.ini');
+		$info_theme = load_ini_file('../templates/' . $row['theme'] . '/config/', $CONFIG['lang']);
 		$name = isset($info_theme['name']) ? $info_theme['name'] : $row['theme'];
 		$stats_array[$name] = $row['compt'];
 	}	
