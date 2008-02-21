@@ -25,19 +25,19 @@
 				# END description #
 				# START cats #
 					<table style="width:100%;">
-					# START row #
+					# START cats.row #
 						<tr>
-							# START col #
+							# START cats.row.col #
 								<td style="width:{cats.row.col.WIDTH}%;text-align:center;padding-bottom:40px;">
-									# START image #
+									# START cats.row.col.image #
 										<a href="{cats.row.col.U_CAT}" title="{cats.row.col.image.NAME}"><img src="{cats.row.col.image.SRC}" alt="{cats.row.col.image.NAME}" /></a>
 										<br />
-									# END image #
+									# END cats.row.col.image #
 									<a href="{cats.row.col.U_CAT}">{cats.row.col.NAME}</a>
 								</td>
-							# END col #
+							# END cats.row.col #
 						</tr>
-					# END row #
+					# END cats.row #
 					</table>
 					<hr style="margin:20px 0;" />
 				# END cats #		
@@ -53,7 +53,7 @@
 				# END management #
 				
 				# START questions #
-					# START faq #
+					# START questions.faq #
 						<div style="margin-bottom:10px;" id="q{questions.faq.ID_QUESTION}">
 							<div class="row1">
 								<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
@@ -73,19 +73,19 @@
 								{questions.faq.ANSWER}
 							</div>
 						</div>
-					# END faq #
+					# END questions.faq #
 				# END questions #
 				
 				# START questions_block #		
 					<ol class="bb_ol">
-					# START header #
+					# START questions_block.header #
 						<li>
 							<a href="#q{questions_block.header.ID}">{questions_block.header.QUESTION}</a>
 						</li>
-					# END header #
+					# END questions_block.header #
 					</ol>			
 					<hr style="margin:20px 0;" />			
-					# START contents #
+					# START questions_block.contents #
 						<div class="row1">
 							<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
 							{questions_block.contents.QUESTION}
@@ -94,12 +94,12 @@
 						<div class="blockquote" id="q{questions_block.contents.ID}" style="margin-bottom:30px;">
 							{questions_block.contents.ANSWER}
 						</div>	
-					# END contents #		
+					# END questions_block.contents #		
 				# END questions_block #
 				
-				# START no_question #
+				# START questions_block.no_question #
 					{L_NO_QUESTION_THIS_CATEGORY}
-				# END no_question #
+				# END questions_block.no_question #
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>

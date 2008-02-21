@@ -34,7 +34,7 @@ include_once('../includes/admin_header.php');
 $Cache->Load_file('faq');
 
 include_once('faq_cats.class.php');
-$Categories = new FaqCats();
+$faq_categories = new FaqCats();
 
 $id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
 $id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
@@ -55,12 +55,12 @@ $Template->Assign_vars(array(
 
 if( $id_up > 0 )
 {
-	$Categories->Move_category($id_up, 'up');
+	$faq_categories->Move_category($id_up, 'up');
 	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $id_down > 0 )
 {
-	$Categories->Move_category($id_down, 'down');
+	$faq_categories->Move_category($id_down, 'down');
 	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $cat_to_del > 0 )
@@ -83,10 +83,10 @@ else
 			'rewrited' => '../faq/faq-%d+%s.php'),
 		);
 		
-	$Categories->Set_displaying_configuration($cat_config);
+	$faq_categories->Set_displaying_configuration($cat_config);
 	
 	$Template->Assign_block_vars('categories_list', array(
-		'CATEGORIES' => $Categories->Build_administration_list($FAQ_CATS)
+		'CATEGORIES' => $faq_categories->Build_administration_list($FAQ_CATS)
 	));
 }
 

@@ -154,10 +154,10 @@ function load_module_lang($module_name, $lang)
 		$lang = find_require_dir('../' . $module_name . '/lang/', $lang, NO_FATAL_ERROR);
 		if( !@include_once('../' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php') )
 		{
-			global $errorh;
+			global $Errorh;
 			
 			//Déclenchement d'une erreur fatale.
-			$errorh->error_handler(sprintf('Unable to load lang file \'%s\'!', '../' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__); 
+			$Errorh->Error_handler(sprintf('Unable to load lang file \'%s\'!', '../' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__); 
 			exit;
 		}
 	}
@@ -185,10 +185,10 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
 		
 	if( $fatal_error )
 	{
-		global $errorh;
+		global $Errorh;
 	
 		//Déclenchement d'une erreur fatale.
-		$errorh->error_handler(sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir), E_USER_ERROR, __LINE__, __FILE__); 
+		$Errorh->Error_handler(sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir), E_USER_ERROR, __LINE__, __FILE__); 
 		exit;
 	}
 }
@@ -202,10 +202,10 @@ function sql_to_cache($str)
 //Redirection.
 function redirect($url)
 {
-	global $sql;
+	global $Sql;
 	
-	if( !empty($sql) && is_object($sql) ) //Coupure de la connexion mysql.
-		$sql->sql_close();
+	if( !empty($Sql) && is_object($Sql) ) //Coupure de la connexion mysql.
+		$Sql->Sql_close();
 		
 	header('Location:' . $url);
 	exit;
@@ -233,42 +233,24 @@ function get_install_page()
 	return 'http://' . $server_name . preg_replace('`(.*)/[a-z]+/(install/install\.php)(.*)`i', '$1/$2', $install_path);
 }
 
-//Génération de la speed_bar.
-function speed_bar_generate(&$SPEED_BAR)
-{
-	if( !isset($SPEED_BAR) )
-		$SPEED_BAR = array();
-		
-	$nbr_arg = func_num_args() - 1;
-	for($i = 1; $i <= $nbr_arg; $i += 2)
-	{
-		$arg = func_get_arg($i);
-		$arg_bis = func_get_arg($i + 1);
-		if( !empty($arg) && isset($arg_bis) )
-			$SPEED_BAR[] = array($arg, $arg_bis);
-	}
-}
-
 //Charge le parseur.
 function parse($contents, $forbidden_tags = array(), $html_protect = true, $magic_quotes_activ = true)
 {
-	global $LANG, $session;
+	global $LANG, $Member;
 	
 	include_once('../includes/parse.class.php');
-	$text = new Parse($contents);
+	$Parse = new Parse($Member->Get_attribute('user_editor'));
 
-	$text->parse_content($forbidden_tags, $html_protect, $magic_quotes_activ);
-	
-	return $text->get_content();
+	return $Parse->parse_content($contents, $forbidden_tags, $html_protect, $magic_quotes_activ);
 }
 
 //Charge l'unparseur.
 function unparse($contents, $editor_unparse = true)
 {
-	global $LANG, $session;
+	global $LANG, $Member;
 	
 	include_once('../includes/parse.class.php');
-	$parse = new Parse($session->data['user_editor']);	
+	$parse = new Parse($Member->Get_attribute('user_editor'));	
 	
 	return $parse->unparse_content($contents, $editor_unparse);
 }
@@ -278,7 +260,9 @@ function check_nbr_links($contents, $max_nbr)
 {
 	if( $max_nbr == -1 )
 		return true;
-	elseif( substr_count($contents, 'http://') > $max_nbr )
+		
+	$nbr_link = preg_match_all('`(?:ftp|https?)://`', $contents, $array);
+	if( $nbr_link !== false && $nbr_link > $max_nbr )
 		return false;
 	
 	return true;
@@ -290,12 +274,12 @@ function highlight_code($contents, $language, $line_number)
 	if( $language != '' )
 	{
 		include_once('../includes/geshi/geshi.php');
-		$geshi =& new GeSHi($contents, $language);
+		$Geshi =& new GeSHi($contents, $language);
 		
 		if( $line_number ) //Affichage des numéros de lignes.
-			$geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+			$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
 
-		$contents = $geshi->parse_code();
+		$contents = $Geshi->parse_code();
 	}
 	else
 	{
@@ -356,17 +340,17 @@ function second_parse($contents)
 function transid($url, $mod_rewrite = '', $esperluette = '&amp;')
 {
 	global $CONFIG;
-	global $session;
+	global $Session;
 	
-	if( $session->session_mod == 0 )
+	if( $Session->session_mod == 0 )
 	{	
 		if( $CONFIG['rewrite'] == 1 && !empty($mod_rewrite) ) //Activation du mod rewrite => cookies activés.
 			return $mod_rewrite;	
 		else
 			return $url;
 	}	
-	elseif( $session->session_mod == 1 )
-		return $url . ((strpos($url, '?') === false) ? '?' : $esperluette) . 'sid=' . $session->session['session_id'] . $esperluette . 'suid=' . $session->session['user_id'];	
+	elseif( $Session->session_mod == 1 )
+		return $url . ((strpos($url, '?') === false) ? '?' : $esperluette) . 'sid=' . $Session->session['session_id'] . $esperluette . 'suid=' . $Session->session['user_id'];	
 }
 
 //Nettoie l'url de tous les caractères spéciaux, accents, etc....
@@ -388,7 +372,7 @@ function url_encode_rewrite($string)
 //Formate la date au format GMT, suivant la configuration du fuseau horaire du serveur.
 function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 {
-	global $session, $CONFIG, $LANG;
+	global $Member, $CONFIG, $LANG;
 	
 	if( strpos($format, 'date_format') !== false ) //Inutile de tout tester si ce n'est pas un formatage prédéfini.
 	{
@@ -419,7 +403,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	elseif( $timezone_system == 2 ) //Timestamp du serveur, non dépendant de l'utilisateur et du fuseau par défaut du site.
 		$timezone = 0;
 	else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
-		$timezone = $session->data['user_timezone'] - $serveur_hour;
+		$timezone = $Member->Get_attribute('user_timezone') - $serveur_hour;
 
 	if( $timezone != 0 )
 		$timestamp += $timezone * 3600;
@@ -430,7 +414,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 //Converti une chaîne au format $LANG['date_format'] (ex:d/m/y) en timestamp, si la date saisie est valide sinon retourne 0.
 function strtotimestamp($str, $date_format)
 {
-	global $CONFIG, $session;
+	global $CONFIG, $Member;
 	
 	list($month, $day, $year) = array(0, 0, 0);
 	$array_timestamp = explode('/', $str);
@@ -458,7 +442,7 @@ function strtotimestamp($str, $date_format)
 		$timestamp = time();
 		
 	$serveur_hour = number_round(date('Z')/3600, 0); //Décallage du serveur par rapport au méridien de greenwitch.
-	$timezone = $session->data['user_timezone'] - $serveur_hour;
+	$timezone = $Member->Get_attribute('user_timezone') - $serveur_hour;
 	if( $timezone != 0 )
 		$timestamp -= $timezone * 3600;	
 		
