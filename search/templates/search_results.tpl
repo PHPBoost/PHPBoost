@@ -3,7 +3,6 @@
             <div class="module_top_r"></div>
             <div class="module_top">{TITLE}</div>
             <div class="module_contents">
-                # INCLUDE wiki_tools #
                 
                 # START warning #
                     <br /><br />
