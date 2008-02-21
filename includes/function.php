@@ -146,12 +146,13 @@ function substr_html($str, $start, $end = '')
 }
 
 //Chercher le dossier langue d'un module, s'il n'est pas trouvé on retourne la première langue.
-function load_module_lang($module_name, $lang)
+function load_module_lang($module_name)
 {
-	global $LANG;
-	if( !@include_once('../' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php') )
+	global $CONFIG, $LANG;
+	
+	if( !@include_once('../' . $module_name . '/lang/' . $CONFIG['lang'] . '/' . $module_name . '_' . $CONFIG['lang'] . '.php') )
 	{	
-		$lang = find_require_dir('../' . $module_name . '/lang/', $lang, NO_FATAL_ERROR);
+		$lang = find_require_dir('../' . $module_name . '/lang/', $CONFIG['lang'], NO_FATAL_ERROR);
 		if( !@include_once('../' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php') )
 		{
 			global $Errorh;
@@ -161,6 +162,13 @@ function load_module_lang($module_name, $lang)
 			exit;
 		}
 	}
+}
+
+//Charge un fichier de configuration. S'il n'est pas trouvé, on parcourt le dossier passé en argument à la recherche du premier dossier.
+function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
+{
+	$dir = find_require_dir($dir_path, $require_dir, false);
+	return @parse_ini_file($dir_path . $dir . '/' . $ini_name);
 }
 
 //Cherche un dossier s'il n'est pas trouvé, on parcourt le dossier passé en argument à la recherche du premier dossier.
@@ -339,17 +347,21 @@ function second_parse($contents)
 //Transmet le session_id et le user_id à traver l'url pour les connexions sans cookies. Permet le support de l'url rewritting!
 function transid($url, $mod_rewrite = '', $esperluette = '&amp;')
 {
-	global $CONFIG;
-	global $Session;
+	global $CONFIG, $session;
 	
-	if( $Session->session_mod == 0 )
+	if( !is_object($session) )
+		$session_mod = 0;
+	else
+		$session_mod = $session->session_mod;
+		
+	if( $session_mod == 0 )
 	{	
 		if( $CONFIG['rewrite'] == 1 && !empty($mod_rewrite) ) //Activation du mod rewrite => cookies activés.
 			return $mod_rewrite;	
 		else
 			return $url;
 	}	
-	elseif( $Session->session_mod == 1 )
+	elseif( $session_mod == 1 )
 		return $url . ((strpos($url, '?') === false) ? '?' : $esperluette) . 'sid=' . $Session->session['session_id'] . $esperluette . 'suid=' . $Session->session['user_id'];	
 }
 
