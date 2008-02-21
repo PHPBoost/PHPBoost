@@ -35,6 +35,13 @@ $refresh = !empty($_GET['refresh']) ? true : false;
 
 if( $add )
 {
+	//Membre en lecture seule?
+	if( $Member->Get_attribute('user_readonly') > time() ) 
+	{
+		echo -6;
+		exit;
+	}
+		
 	$shout_pseudo = !empty($_POST['pseudo']) ? securit(utf8_decode($_POST['pseudo'])) : $LANG['guest'];
 	$shout_contents = !empty($_POST['contents']) ? trim(utf8_decode($_POST['contents'])) : '';
 	if( !empty($shout_pseudo) && !empty($shout_contents) )

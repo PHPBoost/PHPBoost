@@ -61,7 +61,7 @@ else
 	$Template->Assign_vars(array(
 		'C_CONNECTED' => false,
 		'C_DISCONNECTED' => true,
-		'U_CONNECT' => HOST . SCRIPT . ((QUERY_STRING != '') ? '?' . QUERY_STRING : ''),
+		'U_CONNECT' => (QUERY_STRING != '') ? '?' . QUERY_STRING : '',
 		'L_CONNECT' => $LANG['connect'],
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_PASSWORD' => $LANG['password'],

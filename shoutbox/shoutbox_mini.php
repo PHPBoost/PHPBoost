@@ -96,6 +96,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 		'L_ALERT_LINK_FLOOD' => sprintf($LANG['e_l_flood'], $CONFIG_SHOUTBOX['shoutbox_max_link']),
 		'L_ALERT_LINK_PSEUDO' => $LANG['e_link_pseudo'],
 		'L_ALERT_INCOMPLETE' => $LANG['e_incomplete'],
+		'L_ALERT_READONLY' => $LANG['e_readonly'],
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
 		'L_SHOUTBOX' => $LANG['title_shoutbox'],
 		'L_MESSAGE' => $LANG['message'],
