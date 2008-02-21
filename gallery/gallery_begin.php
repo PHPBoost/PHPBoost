@@ -31,7 +31,7 @@ if( defined('PHP_BOOST') !== true)
 if( !$Member->Check_auth($SECURE_MODULE['gallery'], ACCESS_MODULE) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-load_module_lang('gallery', $CONFIG['lang']); //Chargement de la langue du module.
+load_module_lang('gallery'); //Chargement de la langue du module.
 $Cache->Load_file('gallery');
 
 define('READ_CAT_GALLERY', 0x01);

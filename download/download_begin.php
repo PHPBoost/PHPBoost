@@ -32,7 +32,7 @@ if( defined('PHP_BOOST') !== true)
 if( !$Member->Check_auth($SECURE_MODULE['download'], ACCESS_MODULE) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-load_module_lang('download', $CONFIG['lang']); //Chargement de la langue du module.
+load_module_lang('download'); //Chargement de la langue du module.
 $Cache->Load_file('download');
 
 define('READ_CAT_DOWNLOAD', 0x01);

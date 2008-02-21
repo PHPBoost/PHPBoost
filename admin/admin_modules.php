@@ -71,7 +71,7 @@ elseif( $uninstall ) //Désinstallation du module
 			$Sql->Query_inject("DELETE FROM ".PREFIX."modules WHERE id = '" . $idmodule . "'", __LINE__, __FILE__);
 			
 			//Récupération des infos de config.
-			$info_module = @parse_ini_file('../' . $module_name . '/lang/' . $CONFIG['lang'] . '/config.ini');
+			$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
 			
 			//Suppression des commentaires associés.
 			if( !empty($info_module['com']) )
@@ -223,8 +223,8 @@ else
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		//Récupération des infos de config.
-		$info_module = @parse_ini_file('../' . $row['name'] . '/lang/' . $CONFIG['lang'] . '/config.ini');
-
+		$info_module = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
+		
 		$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
 		$Template->Assign_block_vars('main.installed', array(
 			'ID' => $row['id'],

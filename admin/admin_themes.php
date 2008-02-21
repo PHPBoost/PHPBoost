@@ -189,27 +189,7 @@ else
 		foreach($themes_bdd as $key => $theme) //On effectue la recherche dans le tableau.
 		{
 			//On selectionne le theme suivant les valeurs du tableau. 
-			$info_theme = @parse_ini_file('../templates/' . $theme['name'] . '/config/' . $CONFIG['lang'] . '/config.ini');
-			if( !$info_theme ) //Echec, on cherche d'autres langues présentes.
-			{
-				$lang = '';
-				$rep = '../templates/' . $theme['name'] . '/config/';
-				$dh = @opendir( $rep);
-				while( !is_bool($folder = @readdir($dh)) )
-				{	
-					//Si c'est un repertoire, on affiche.
-					if( !preg_match('`\.`', $folder) )
-					{
-						$lang = $folder;
-						break;
-					}
-				}	
-				@closedir($dh); //On ferme le dossier
-				
-				$info_theme = @parse_ini_file('../templates/' . $theme['name'] . '/config/' . $lang . '/config.ini');
-				if( !$info_theme ) //Echec, on passe ce thème défectueux.
-					continue;
-			}
+			$info_theme = load_ini_file('../templates/' . $theme['name'] . '/config/', $CONFIG['lang']);
 			
 			$Template->Assign_block_vars('main.list', array(
 				'IDTHEME' =>  $theme['id'],		

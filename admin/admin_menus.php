@@ -132,7 +132,7 @@ else
 	));
 	
 	//On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
-	$info_theme = parse_ini_file('../templates/' . $CONFIG['theme'] . '/config/' . $CONFIG['lang'] . '/config.ini');
+	$info_theme = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
 	
 	$array_max = array();
 	$result = $Sql->Query_while("SELECT MAX(class) AS max, location
@@ -152,7 +152,7 @@ else
 	ORDER BY class", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$config = @parse_ini_file('../' . $row['name'] . '/lang/' . $CONFIG['lang'] . '/config.ini');
+		$config = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
 		if( is_array($config) )
 			$row['name'] = !empty($config['name']) ? $config['name'] : '';		
 		

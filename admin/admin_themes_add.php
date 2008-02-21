@@ -176,27 +176,7 @@ else
 			
 			foreach($fichier_array as $theme_array => $value_array) //On effectue la recherche dans le tableau.
 			{
-				$info_theme = @parse_ini_file('../templates/' . $value_array . '/config/' . $CONFIG['lang'] . '/config.ini');
-				if( !$info_theme ) //Echec, on cherche d'autres langues présentes.
-				{
-					$lang = '';
-					$rep = '../templates/' . $value_array . '/config/';
-					$dh = @opendir( $rep);
-					while( !is_bool($folder = readdir($dh)) )
-					{	
-						//Si c'est un repertoire, on affiche.
-						if( !preg_match('`\.`', $folder) )
-						{
-							$lang = $folder;
-							break;
-						}
-					}	
-					closedir($dh); //On ferme le dossier
-					
-					$info_theme = @parse_ini_file('../templates/' . $value_array . '/config/' . $lang . '/config.ini');
-					if( !$info_theme ) //Echec, on passe ce thème défectueux.
-						continue;
-				}
+				$info_theme = load_ini_file('../templates/' . $value_array . '/config/', $CONFIG['lang']);
 			
 				$Template->Assign_block_vars('list', array(
 					'IDTHEME' =>  $value_array,		

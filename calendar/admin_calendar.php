@@ -27,7 +27,7 @@
 ###################################################*/
 
 require_once('../includes/admin_begin.php');
-load_module_lang('calendar', $CONFIG['lang']); //Chargement de la langue du module.
+load_module_lang('calendar'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 

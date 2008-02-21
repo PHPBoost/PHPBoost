@@ -184,7 +184,7 @@ else
 		foreach($lang_bdd as $key => $lang) //On effectue la recherche dans le tableau.
 		{
 			//On selectionne le lang suivant les valeurs du tableau. 
-			$info_lang = @parse_ini_file('../lang/' . $lang['name'] . '/config.ini');
+			$info_lang = load_ini_file('../lang/', $lang['name']);
 			
 			$Template->Assign_block_vars('main.list', array(
 				'IDLANG' =>  $lang['id'],		
