@@ -37,7 +37,7 @@ define('WRITE_CAT_ARTICLES', 0x02);
 define('EDIT_CAT_ARTICLES', 0x04);
 
 $Cache->Load_file('articles');
-load_module_lang('articles', $CONFIG['lang']); //Chargement de la langue du module.
+load_module_lang('articles'); //Chargement de la langue du module.
 
 
 $get_note =  !empty($_GET['note']) ? numeric($_GET['note']) : 0;

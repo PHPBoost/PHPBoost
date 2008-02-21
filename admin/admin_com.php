@@ -87,7 +87,7 @@ if( is_dir($root) ) //Si le dossier existe
 			if( is_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini') )
 			{
 				//Récupération des infos de config.
-				$info_module = @parse_ini_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini');
+				$info_module = load_ini_file($root . $dir . '/lang/', $CONFIG['lang']);
 				if( isset($info_module['info']) && !empty($info_module['com']) )
 				{
 					$Template->Assign_block_vars('modules_com', array(

@@ -169,7 +169,7 @@ else
 			
 			foreach($fichier_array as $lang_array => $value_array) //On effectue la recherche dans le tableau.
 			{
-				$info_lang = @parse_ini_file('../lang/' . $value_array . '/config.ini');
+				$info_lang = load_ini_file('../lang/', $value_array);
 				$Template->Assign_block_vars('list', array(
 					'IDLANG' =>  $value_array,		
 					'LANG' =>  $info_lang['name'],	

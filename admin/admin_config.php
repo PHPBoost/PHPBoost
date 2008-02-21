@@ -245,7 +245,7 @@ else //Sinon on rempli le formulaire
 				//Désormais on vérifie que le fichier de configuration est présent.
 				if( is_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini') )
 				{
-					$config = @parse_ini_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini');
+					$config = load_ini_file($root . $dir . '/lang/', $CONFIG['lang']);
 					if( !empty($config['starteable_page']) ) //Module possible comme page de démarrage.
 					{	
 						$selected = '';
@@ -355,7 +355,7 @@ else //Sinon on rempli le formulaire
 		$lang_identifier = '../images/stats/other.png';
 		foreach($lang_array_bdd as $lang_key => $lang_value) //On effectue la recherche dans le tableau.
 		{
-			$lang_info = @parse_ini_file('../lang/' . $lang_value . '/config.ini');
+			$lang_info = load_ini_file('../lang/', $lang_value);
 			if( $lang_info )
 			{
 				$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $lang_value;
@@ -405,7 +405,7 @@ else //Sinon on rempli le formulaire
 		
 		foreach($theme_array_bdd as $theme_array => $theme_value) //On effectue la recherche dans le tableau.
 		{
-			$theme_info = @parse_ini_file('../templates/' . $theme_value . '/config/' . $CONFIG['lang'] . '/config.ini');
+			$theme_info = load_ini_file('../templates/' . $theme_value . '/config/', $CONFIG['lang']);
 			if( $theme_info )
 			{
 				$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $theme_value;

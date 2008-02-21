@@ -32,7 +32,7 @@ if( defined('PHP_BOOST') !== true)
 if( !$Member->Check_auth($SECURE_MODULE['calendar'], ACCESS_MODULE) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-load_module_lang('calendar', $CONFIG['lang']); //Chargement de la langue du module.
+load_module_lang('calendar'); //Chargement de la langue du module.
 define('TITLE', $LANG['title_calendar']);
 $Cache->Load_file('calendar');
 

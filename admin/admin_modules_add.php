@@ -47,7 +47,7 @@ if( $install ) //Installation du module
 	if( !empty($module_name) && empty($ckeck_module) )
 	{
 		//Récupération des infos de config.
-		$info_module = @parse_ini_file('../' . $module_name . '/lang/' . $CONFIG['lang'] . '/config.ini');
+		$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
 		
 		//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 		$dir_db_module = $CONFIG['lang'];
@@ -220,7 +220,7 @@ else
 				if( is_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini') )
 				{
 					//Récupération des infos de config.
-					$info_module = @parse_ini_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini');
+					$info_module = load_ini_file($root . $dir . '/lang/', $CONFIG['lang']);
 					if( isset($info_module['info']) )
 					{
 						$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];

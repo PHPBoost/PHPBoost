@@ -683,7 +683,7 @@ elseif( !empty($id) )
 	FROM ".PREFIX."lang", __LINE__, __FILE__);
 	while( $row2 = $Sql->Sql_fetch_assoc($result) )
 	{	
-		$lang_info = @parse_ini_file('../lang/' . $row2['lang'] . '/config.ini');
+		$lang_info = load_ini_file('../lang/', $row2['lang']);
 		if( $lang_info )
 		{
 			$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $row2['lang'];
@@ -711,7 +711,7 @@ elseif( !empty($id) )
 	FROM ".PREFIX."themes", __LINE__, __FILE__);
 	while( $row2 = $Sql->Sql_fetch_assoc($result) )
 	{	
-		$theme_info = @parse_ini_file('../templates/' . $row2['theme'] . '/config/' . $CONFIG['lang'] . '/config.ini');
+		$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', $CONFIG['lang']);
 		if( $theme_info )
 		{
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];

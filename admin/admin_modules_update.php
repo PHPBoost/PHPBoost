@@ -47,7 +47,7 @@ if( $update ) //Mise à jour du module
 	if( !empty($ckeck_module) )
 	{
 		//Récupération des infos de config.
-		$info_module = @parse_ini_file('../' . $module_name . '/lang/' . $CONFIG['lang'] . '/config.ini');
+		$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
 		
 		//Récupération de l'ancienne version du module
 		$previous_version = $Sql->Query("SELECT version FROM ".PREFIX."modules WHERE name = '" . securit($module_name) . "'", __LINE__, __FILE__);
@@ -244,7 +244,7 @@ else
 				if( is_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini') )
 				{
 					//Récupération des infos de config.
-					$info_module = @parse_ini_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini');					
+					$info_module = load_ini_file($root . $dir . '/lang/', $CONFIG['lang']);					
 					if( $info_module['version'] != $updated_modules[$dir] )
 					{
 						$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];

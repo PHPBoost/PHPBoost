@@ -32,7 +32,7 @@ if( defined('PHP_BOOST') !== true)
 if( !$Member->Check_auth($SECURE_MODULE['contact'], ACCESS_MODULE) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-load_module_lang('contact', $CONFIG['lang']); //Chargement de la langue du module.
+load_module_lang('contact'); //Chargement de la langue du module.
 define('TITLE', $LANG['title_contact']);
 $Cache->Load_file('contact');
 

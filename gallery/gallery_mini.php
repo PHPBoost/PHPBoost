@@ -32,7 +32,7 @@ $Template->Set_filenames(array(
 ));
 
 //Chargement de la langue du module.
-@load_module_lang('gallery', $CONFIG['lang']);
+load_module_lang('gallery');
 $Cache->Load_file('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
 
 $array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
