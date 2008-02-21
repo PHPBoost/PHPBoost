@@ -15,7 +15,7 @@
 				var xhr_object = xmlhttprequest_init('../shoutbox/xmlhttprequest.php?add=1');
 				xhr_object.onreadystatechange = function() 
 				{
-					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' && xhr_object.responseText != '-2' && xhr_object.responseText != '-3' && xhr_object.responseText != '-4' )
+					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' && xhr_object.responseText != '-2' && xhr_object.responseText != '-3' && xhr_object.responseText != '-4' && xhr_object.responseText != '-5' && xhr_object.responseText != '-6' )
 					{	
 						var array_shout = new Array('', '');
 						eval(xhr_object.responseText);
@@ -39,8 +39,12 @@
 							break;
 							case '-4': 
 								alert("{L_ALERT_LINK_FLOOD}");
+							break;
 							case '-5': 
 								alert("{L_ALERT_INCOMPLETE}");
+							break;
+							case '-6': 
+								alert("{L_ALERT_READONLY}");
 							break;
 						}
 					}
