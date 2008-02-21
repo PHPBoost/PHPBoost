@@ -39,7 +39,7 @@ class Cache
             global $Errorh;
 		
 			//Enregistrement dans le log d'erreur.
-			$Errorh->Error_handler('Cache -> Le fichier cache doit être inscriptible, donc en CHMOD 777', E_USER_ERROR, __LINE__, __FILE__);
+			$Errorh->Error_handler('Cache -> Le dossier /cache doit être inscriptible, donc en CHMOD 777', E_USER_ERROR, __LINE__, __FILE__);
         }
     }
         
@@ -60,7 +60,7 @@ class Cache
 				if( !include('../cache/' . $file . '.php') )
 				{
 					//Enregistrement dans le log d'erreur.
-					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
+					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache ' . $file . ', ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
 				}
 			}
 			else
@@ -71,7 +71,7 @@ class Cache
 				if( !include('../cache/' . $file . '.php') )
 				{
 					//Enregistrement dans le log d'erreur.
-					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
+					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache ' . $file . ', ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
 				}
 			}
 		}
@@ -118,9 +118,9 @@ class Cache
 		$dir = $file;
 		
 		//On vérifie que le fichier de configuration est présent.
-		if( file_exists($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini') && file_exists($root . $dir . '/' . $dir . '_cache.php') )
+		if( file_exists($root . $dir . '/' . $dir . '_cache.php') )
 		{
-			$config = @parse_ini_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini');
+			$config = load_ini_file($root . $dir . '/lang/', $CONFIG['lang']);
 			//On récupère l'information sur le cache, si le cache est activé, on va chercher les fonctions de régénération de cache.
 			if( !empty($config['cache']) && $config['cache'] )
 			{
@@ -141,12 +141,17 @@ class Cache
 				//Il est l'heure de vérifier si la génération a fonctionnée.
 				if( !file_exists($file_path) && filesize($file_path) == '0' )
 					$Errorh->Error_handler('Cache -> La génération du fichier de cache ' . $file . ' a échoué!', E_USER_ERROR, __LINE__, __FILE__);
+			}	
+			else
+			{
+				//Enregistrement dans le log d'erreur.
+				$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache ' . $file . ', ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
 			}
 		}	
 		else
 		{
 			//Enregistrement dans le log d'erreur.
-			$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
+			$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache ' . $file . ', ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
 		}
     }
 	
