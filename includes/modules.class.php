@@ -80,7 +80,7 @@ class Modules
             foreach( array_keys($SECURE_MODULE) as $moduleName )
             {
                 $module = $this->GetModule ( $moduleName );
-                if ( $Module->GetErrors == 0 and $Module->HasFunctionnality ($functionnality ) )
+                if ( $module->GetErrors ( ) == 0 and $module->HasFunctionnality ( $functionnality ) )
                 {
                     array_push( $modules, $module );
                 }
@@ -90,7 +90,7 @@ class Modules
         {
             foreach( $modulesList as $module )
             {
-                if ( $Module->GetErrors == 0 and $Module->HasFunctionnality ($functionnality ) )
+                if ( $module->GetErrors == 0 and $module->HasFunctionnality ( $functionnality ) )
                 {
                     array_push( $modules, $module );
                 }
@@ -108,8 +108,8 @@ class Modules
         {
             if ( in_array( $moduleName, $this->availablesModules ) )
             {
-                global $Group, $SECURE_MODULE;
-                if ( $Group->check_auth ( $SECURE_MODULE[$moduleName], 1 ) )
+                global $Member, $SECURE_MODULE;
+                if ( $Member->Check_auth ( $SECURE_MODULE[$moduleName], 1 ) )
                 {
                     if ( @include_once ( '../'.$moduleName.'/'.$moduleName.'_interface.class.php' ) )
                     {
@@ -124,7 +124,7 @@ class Modules
             }
             else
             { $Module = new ModuleInterface ( $moduleName, MODULE_NOT_AVAILABLE ); }
-            $this->loadedModules[$moduleName] = $module;
+            $this->loadedModules[$moduleName] = $Module;
         }
         return $this->loadedModules[$moduleName];
     }
