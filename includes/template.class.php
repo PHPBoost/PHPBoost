@@ -151,8 +151,10 @@ class Templates
 			die('Template->load_tpl(): Aucun fichier specifié pour parser ' . $parse_name);
 			
 		$this->template = @file_get_contents_emulate($this->files[$parse_name]); //Charge le contenu du fichier tpl.
-		if( $this->template !== false && empty($this->template) )
+		if( $this->template === false )
 			die('Template->load_tpl(): Le chargement du fichier ' . $this->files[$parse_name] . ' pour parser ' . $parse_name . ' a échoué');
+		if( empty($this->template) )
+			die('Template->load_tpl(): Le fichier ' . $this->files[$parse_name] . ' pour parser ' . $parse_name . ' est vide');
 			
 		return true;
 	}
