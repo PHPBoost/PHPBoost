@@ -11,8 +11,8 @@
 					</li>
 					# END links.title #
 					# START links.subtitle #
-					<li style="text-align:left;text-indent:20px;padding:3px;">
-						<a href="{links.subtitle.URL}" style="font-size:11px;" title="{links.subtitle.NAME}">{links.subtitle.NAME}</a>			
+					<li style="text-align:left;text-indent:7px;padding:3px;">
+						<span style="font-size:8px;color:#ACCCE2">&bull;</span> <a href="{links.subtitle.URL}" style="font-size:11px;" title="{links.subtitle.NAME}">{links.subtitle.NAME}</a>			
 					</li>
 					# END links.subtitle #		
 				# END links #
