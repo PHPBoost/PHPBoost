@@ -58,7 +58,7 @@ function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 	global $Sql, $Member, $CONFIG_FORUM;
 	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-	$last_view_forum = ($Member->Get_attribute('last_view_forum') > 0) ? $Member->Get_attribute('last_view_forum') : time();
+	$last_view_forum = ($Member->Get_attribute('last_view_forum') > 0) ? $Member->Get_attribute('last_view_forum') : 0;
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
 	if( $Member->Get_attribute('user_id') !== -1 && $last_timestamp >= $max_time_msg )
