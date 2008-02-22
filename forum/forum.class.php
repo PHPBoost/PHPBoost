@@ -401,12 +401,12 @@ class Forum
 	//Passe en résolu une alerte sur un sujet.
 	function Solve_alert_topic($id_alert)
 	{
-		global $Sql;
+		global $Sql, $Member;
 		
 		$Sql->Query_inject("UPDATE ".PREFIX."forum_alerts SET status = 1, idmodo = '" . $Member->Get_attribute('user_id') . "' WHERE id = '" . $id_alert . "'", __LINE__, __FILE__);
 		
 		//Insertion de l'action dans l'historique.
-		$Forumfct->history_collector(H_SOLVE_ALERT, 0, 'moderation_forum.php?action=alert&id=' . $id_alert, '', '&');
+		forum_history_collector(H_SOLVE_ALERT, 0, 'moderation_forum.php?action=alert&id=' . $id_alert, '', '&');
 	}
 	
 	//Passe en attente une alerte sur un sujet.

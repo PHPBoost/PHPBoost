@@ -99,7 +99,7 @@ else
 		}
 		$auth_extensions .= '</optgroup>';
 	}
-
+	
 	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_ranks = array(0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']); //Création du tableau des rangs.	 
 	$array_auth = isset($CONFIG_FILES['auth_files']) ? $CONFIG_FILES['auth_files'] : array(); //Récupération des tableaux des autorisations et des groupes.

@@ -21,7 +21,7 @@
 				<br /><br />
 				
 				
-				# START main #
+				# IF C_FORUM_MODO_MAIN #
 				<script type="text/javascript">
 				<!--
 
@@ -53,47 +53,45 @@
 							</td>
 						</tr>
 						
-						# START main.list # 
+						# START action_list # 
 						<tr style="text-align:center;">
 							<td class="row2" style="width: 150px">
-								<a href="../member/member{main.list.U_MEMBER_ID}">{main.list.LOGIN}</a>
+								<a href="../member/member{action_list.U_MEMBER_ID}">{action_list.LOGIN}</a>
 							</td>
 							<td class="row2">
-								{main.list.U_ACTION}
+								{action_list.U_ACTION}
 							</td>
 							<td class="row2" style="width: 150px">
-								{main.list.U_MEMBER_CONCERN}
+								{action_list.U_MEMBER_CONCERN}
 							</td>
 							<td class="row2" style="width: 150px">
-								{main.list.DATE}
+								{action_list.DATE}
 							</td>
 						</tr>
-						# END main.list #
+						# END action_list #
 						
-						# START main.no_action #
+						# IF C_FORUM_NO_ACTION #
 						<tr style="text-align:center;">
 							<td class="row2" colspan="4">
-								{main.no_action.L_NO_ACTION}
+								L_NO_ACTION}
 							</td>
 						</tr>
-						# END main.no_action #
+						# ENDIF #
 						
 						<tr>
 							<td class="row3" colspan="4" style="text-align:center;">
-								# START main.admin #
+								# IF C_FORUM_ADMIN #
 								<span style="float:left"><input type="submit" name="valid" value="{L_DELETE}" class="submit" /></span> 
-								# END main.admin #
-								
+								# ENDIF #
 								<a href="moderation_forum{main.U_MORE_ACTION}">{L_MORE_ACTION}</a>
 							</td>
 						</tr>
 					</table>
 				</form>	
-				# END main #
+				# ENDIF #
 
-				
 
-				# START alert #
+				# IF C_FORUM_ALERTS #
 				<script type="text/javascript">
 				<!--
 				function check_alert(status)
@@ -104,14 +102,14 @@
 					}
 				}
 				function Confirm_msg() {
-					return confirm("{alert.L_DELETE_MESSAGE}");
+					return confirm("{L_DELETE_MESSAGE}");
 				}
 				-->
 				</script>
 		
 				<table class="module_table">
 					<tr>			
-						<th style="width:31px;"><input type="checkbox" onClick="if(this.checked) {check_convers(true)} else {check_convers(false)};" /></th>
+						<th style="width:25px;"><input type="checkbox" onClick="if(this.checked) {check_convers(true)} else {check_convers(false)};" /></th>
 						<th style="width:20%;">{L_TITLE}</th>
 						<th style="width:20%;">{L_TOPIC}</th>
 						<th style="width:100px;">{L_STATUS}</th>
@@ -122,36 +120,36 @@
 				
 				<form name="alert" action="moderation_forum{U_ACTION_ALERT}" method="post" onsubmit="javascript:return Confirm_alert();">
 					<table class="module_table">
-						# START alert.list #
+						# START alert_list #
 						<tr>
 							<td class="row1" style="text-align:center;width:25px;">
-								<input type="checkbox" name="{alert.list.ID}" />
+								<input type="checkbox" name="{alert_list.ID}" />
 							</td>
 							<td class="row1" style="text-align:center;width:20%;">
-								{alert.list.TITLE}
+								{alert_list.TITLE} {alert_list.EDIT}
 							</td>
 							<td class="row1" style="text-align:center;width:20%;">
-								{alert.list.TOPIC}
+								{alert_list.TOPIC}
 							</td>
-							<td class="row1" style="text-align:center;width:100px;{alert.list.BACKGROUND_COLOR}">
-								{alert.list.STATUS}
-							</td>
-							<td class="row1" style="text-align:center;width:70px;">
-								{alert.list.LOGIN}
+							<td class="row1" style="text-align:center;width:100px;{alert_list.BACKGROUND_COLOR}">
+								{alert_list.STATUS}
 							</td>
 							<td class="row1" style="text-align:center;width:70px;">
-								{alert.list.TIME}
+								{alert_list.LOGIN}
+							</td>
+							<td class="row1" style="text-align:center;width:70px;">
+								{alert_list.TIME}
 							</td>
 						</tr>
-						# END alert.list #
+						# END alert_list #
 											
-						# START alert.empty #		
+						# IF C_FORUM_NO_ALERT #		
 						<tr>
 							<td class="row2" colspan="6" style="text-align:center;">
-								{alert.empty.NO_ALERT}
+								{L_NO_ALERT}
 							</td>
 						</tr>		
-						# END alert.empty #					
+						# ENDIF #				
 						<tr>
 							<td class="row2" colspan="6">
 								&nbsp;<input type="submit" value="{L_DELETE}" class="submit" />
@@ -159,75 +157,83 @@
 						</tr>
 					</table>
 				</form>
-				# END alert #
-
+				# ENDIF #
 				
 
-				# START alert_id #
+				# IF C_FORUM_ALERT_LIST #
 				<table class="module_table">
 					<tr>
-						<td class="row1" style="width:180px;">
-							{alert_id.L_TITLE}
+						<th colspan="2" style="text-align:center;">
+							{TOPIC}
+						</th>
+					</tr>
+					<tr>
+						<td class="row1" style="width:25%;">
+							{L_TITLE}
 						</td>
 						<td class="row2">
-							{alert_id.TITLE}
+							{TITLE}
 						</td>
 					</tr>
 					<tr>
 						<td class="row1">
-							{alert_id.L_TOPIC}
+							{L_TOPIC}
 						</td>
 						<td class="row2">
-							{alert_id.TOPIC}
+							{TOPIC}
 						</td>
 					</tr>
 					<tr>
 						<td class="row1">
-							{alert_id.L_CAT}
+							{L_CAT}
 						</td>
 						<td class="row2">
-							{alert_id.CAT}
+							{CAT}
 						</td>
 					</tr>
 					<tr>
 						<td class="row1">
-							{alert_id.L_CONTENTS}
+							{L_CONTENTS}
 						</td>
 						<td class="row2">
-							{alert_id.CONTENTS}
+							{CONTENTS}
 						</td>
 					</tr>
 					<tr>
 						<td class="row1">
-							{alert_id.L_STATUS}
+							{L_STATUS}
 						</td>
 						<td class="row2">
-							<span style="float:left;">{alert_id.STATUS}</span>
-							<span style="float:right;">{alert_id.CHANGE_STATUS}</span>
+							{STATUS}
 						</td>
 					</tr>
 					<tr>
 						<td class="row1">
-							{alert_id.L_LOGIN}
+							{L_LOGIN}
 						</td>
 						<td class="row2">
-							{alert_id.LOGIN}
+							{LOGIN}
 						</td>
 					</tr>
 					<tr>
 						<td class="row1">
-							{alert_id.L_TIME}
+							{L_TIME}
 						</td>
 						<td class="row2">
-							{alert_id.TIME}
+							{TIME}
 						</td>
 					</tr>
-				</table>					
-				# END alert_id #
+				</table>	
 
-				
+				<form action="{U_CHANGE_STATUS}" method="get">
+					<fieldset class="fieldset_submit" style="padding-top:25px;">
+						<legend></legend>
+						<input type="submit" name="valid" value="{L_CHANGE_STATUS}" class="submit" />
+					</fieldset>		
+				</form>
+				# ENDIF #
 
-				# START alert_id_not_auth #
+				# IF C_FORUM_ALERT_NOT_AUTH #
 				<table class="module_table">
 					<tr>
 						<th colspan="2">
@@ -237,16 +243,16 @@
 					<tr>
 						<td style="text-align:center;" colspan="2">
 							<br /><br />
-							{alert_id_not_auth.NO_ALERT}
+							{L_NO_ALERT}
 							<br /><br />
 						</td>
 					</tr>
 				</table>
-				# END alert_id_not_auth #
+				# ENDIF #
 
 
 				
-				# START user_list #
+				# IF C_FORUM_USER_LIST #
 				<script type="text/javascript">
 				<!--
 					function XMLHttpRequest_search()
@@ -307,55 +313,55 @@
 					</tr>
 				</table>
 				<table class="module_table">	
-					# START user_list.list #
+					# START user_list #
 					<tr>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="../member/{user_list.list.U_PROFILE}">{user_list.list.LOGIN}</a>
+							<a href="../member/{user_list.U_PROFILE}">{user_list.LOGIN}</a>
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
-							{user_list.list.INFO}
+							{user_list.INFO}
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
-							{user_list.list.U_ACTION_USER}
+							{user_list.U_ACTION_USER}
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="../member/pm{user_list.list.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+							<a href="../member/pm{user_list.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 						</td>
 					</tr>
-					# END user_list.list #
+					# END user_list #
 					
-					# START user_list.empty #
+					# IF C_FORUM_NO_USER #
 					<tr>
 						<td class="row1" style="text-align:center;">
-							{user_list.empty.NO_USER}
+							{L_NO_USER}
 						</td>
 					</tr>		
-					# END user_list.empty #
+					# ENDIF #
 				</table>
 				</form>
-				# END user_list #
+				# ENDIF #
 
 
-				# START user_info #
+				# IF C_FORUM_USER_INFO #
 				<script type="text/javascript">
 				<!--
 				function change_textarea_level(replace_value, regex)
 				{
 					var contents = document.getElementById('action_contents').innerHTML;
-					{user_info.REPLACE_VALUE}		
+					{REPLACE_VALUE}		
 					
 					document.getElementById('action_contents').innerHTML = contents;	
 				}
 				-->
 				</script>
-				<form action="moderation_forum{user_info.U_ACTION_INFO}" method="post">		
+				<form action="moderation_forum{U_ACTION_INFO}" method="post">		
 					<table class="module_table">
 						<tr>
 							<td class="row1" style="width:30%;">
 								{L_LOGIN}
 							</td>
 							<td class="row2">
-								{user_info.LOGIN}
+								{LOGIN}
 							</td>
 						</tr>
 						<tr>
@@ -363,7 +369,7 @@
 								{L_PM}
 							</td>
 							<td class="row2">
-								<a href="../member/pm{user_info.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
+								<a href="../member/pm{U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
 							</td>
 						</tr>
 						<tr>
@@ -380,20 +386,20 @@
 								<label for="new_info">{L_INFO_EXPLAIN}</label>
 							</td>
 							<td class="row2">
-								<span id="action_info">{user_info.INFO}</span>
+								<span id="action_info">{INFO}</span>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<label><select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {user_info.REGEX})">
-									{user_info.SELECT}
+								<label><select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
+									{SELECT}
 								</select></label>	
 								<input type="submit" name="valid_user" value="{L_CHANGE_INFO}" class="submit" />				
 							</td>
 						</tr>
 					</table>
 				</form>				
-				# END user_info #
+				# ENDIF #
 
 
-				
+				<br /><br />
 			</div>	
 			<div class="module_bottom_r"></div>	
 			<div class="module_bottom_l"></div>

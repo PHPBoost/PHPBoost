@@ -169,7 +169,7 @@ class Cache
 			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				//Récupération des infos de config.
-				$get_info_modules = @parse_ini_file('../' . $row['name'] . '/lang/' . $CONFIG['lang'] . '/config.ini');
+				$get_info_modules = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
 				if( !empty($get_info_modules['url_rewrite']) )
 					$htaccess_rules .= str_replace('\n', "\n", str_replace('DIR', DIR, $get_info_modules['url_rewrite'])) . "\n\n";
 			}
@@ -221,7 +221,7 @@ class Cache
 		WHERE activ = 1", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			$config = @parse_ini_file('../' . $row['name'] . '/lang/' . $CONFIG['lang'] . '/config.ini');
+			$config = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
 			//On récupère l'information sur le cache, si le cache est activé, on va chercher les fonctions de régénération de cache.
 			if( !empty($config['cache']) && $config['cache'] )
 			{
