@@ -85,7 +85,7 @@
 				<div class="module_top">&bull; {convers.U_MEMBER_VIEW} &raquo; {convers.U_PM_BOX} &raquo; {convers.U_POST_NEW_CONVERS}</div>
 				<div class="module_contents">					
 					<div style="float:left;">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
-					<div style="float:right;">{convers.U_MARK_AS_READ}</div>
+					<div style="float:right;"><img src="../templates/{THEME}/images/read_mini.png" alt="" class="valign_middle" /> {convers.U_MARK_AS_READ}</div>
 					<br /><br />
 					
 					<table class="module_table">	
