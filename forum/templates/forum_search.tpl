@@ -79,11 +79,15 @@
 					</div>		
 					# ENDIF #
 					
-					# START list #
+					# IF C_FORUM_SEARCH #
 					<div class="module_position" style="width:100%;">					
-						<div class="msg_top_l"></div>		
-						<div class="msg_top_r"></div>
-						<div class="msg_top"></div>
+						<div class="module_top_l"></div>		
+						<div class="module_top_r"></div>
+						<div class="module_top">&nbsp;</div>
+					</div>
+					# ENDIF #
+					# START list #
+					<div class="msg_position" style="width:100%;">					
 						<div class="msg_container">
 							<div class="msg_top_row">
 								<div class="msg_pseudo_mbr">
@@ -106,8 +110,8 @@
 						<div class="msg_bottom_r"></div>
 						<div class="msg_bottom"><span class="text_small">{L_RELEVANCE}: {list.RELEVANCE}%</span></div>
 					</div>
+					# END list #
 					<br />
-					# END list #	
 				</form>			
 			</div>	
 			<div class="module_bottom_l"></div>		

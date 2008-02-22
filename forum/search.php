@@ -227,6 +227,12 @@ if( !empty($valid_search) && !empty($search) )
 		
 		if( $check_result !== true )
 			$Errorh->Error_handler($LANG['no_result'], E_USER_NOTICE);
+		else
+		{
+			$Template->Assign_vars(array(
+				'C_FORUM_SEARCH'  => true
+			));
+		}
 	}
 	else //Gestion erreur.
 		$Errorh->Error_handler($LANG['invalid_req'], E_USER_NOTICE);
