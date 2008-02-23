@@ -401,6 +401,9 @@ class Sessions
 					$line = file($file_path);
 					$data = unserialize($line[0]); //Renvoi la première ligne du fichier (le array précédement crée).
 					
+					if( !isset($data[$robot]) )
+						$data[$robot] = $robot . '/1/' . $time; //Création du array contenant les valeurs.
+						
 					$array_info = explode('/', $data[$robot]); //Récuperation des valeurs.
 					if( $array_robots[$r] === $array_info[0] ) //Robo repasse.
 					{
