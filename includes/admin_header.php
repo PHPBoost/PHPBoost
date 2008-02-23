@@ -66,6 +66,7 @@ $Template->Assign_vars(array(
 	'L_CONFIGURATION' => $LANG['configuration'],
 	'L_CONFIG_ADVANCED' => $LANG['config_advanced'],
 	'L_ADD' => $LANG['add'],
+	'L_MANAGEMENT' => $LANG['management'],
 	'L_PUNISHEMENT' => $LANG['punishement'],
 	'L_UPDATE_MODULES' => $LANG['update_module'],
 	'L_SITE_LINK' => $LANG['link_management'],
