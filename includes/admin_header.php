@@ -59,14 +59,19 @@ $Template->Assign_vars(array(
 	'L_ADMINISTRATION' => $LANG['administration'],
 	'L_INDEX' => $LANG['index'],
 	'L_SITE' => $LANG['site'],
+	'L_INDEX_SITE' => $LANG['site'],
+	'L_INDEX_ADMIN' => $LANG['administration'],
 	'L_DISCONNECT' => $LANG['disconnect'],
 	'L_TOOLS' => $LANG['tools'],
 	'L_CONFIGURATION' => $LANG['configuration'],
-	'L_INDEX_SITE' => $LANG['site'],
-	'L_INDEX_ADMIN' => $LANG['administration'],
+	'L_CONFIG_ADVANCED' => $LANG['config_advanced'],
+	'L_ADD' => $LANG['add'],
+	'L_PUNISHEMENT' => $LANG['punishement'],
+	'L_UPDATE_MODULES' => $LANG['update_module'],
 	'L_SITE_LINK' => $LANG['link_management'],
 	'L_SITE_MENU' => $LANG['menu_management'],
 	'L_MODERATION' => $LANG['moderation'],
+	'L_DATABASE_QUERY' => $LANG['db_executed_query'],
 	'L_MAINTAIN' => $LANG['maintain'],
 	'L_MEMBER' => $LANG['member_s'],
 	'L_EXTEND_FIELD' => $LANG['extend_field'],
@@ -102,7 +107,7 @@ foreach($SECURE_MODULE as $name => $auth)
 		if( $modules_config[$name]['admin'] == 1 )
 		{
 			$Template->Assign_block_vars('modules', array(
-				'DM_A_CLASS' => ' style="background-image:url(../' . $name . '/' . $name . '_mini.png);background-repeat:no-repeat;background-position:5px;"',
+				'DM_A_STYLE' => ' style="background-image:url(../' . $name . '/' . $name . '_mini.png);"',
 				'NAME' => $modules_config[$name]['name'],
 				'U_ADMIN_MODULE' => '../' . $name . '/admin_' . $name . '.php'
 			));

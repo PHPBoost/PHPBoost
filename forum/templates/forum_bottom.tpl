@@ -15,7 +15,7 @@
 					<a href="javascript:XMLHttpRequest_unread_topics('2');" onmouseover="forum_hide_block('forum_unread2', 1);" onmouseout="forum_hide_block('forum_unread2', 0);"><img src="../templates/{THEME}/images/refresh_mini.png" alt="" id="refresh_unread2" class="valign_middle" /></a>
 					
 					&bull;
-					<img src="{MODULE_DATA_PATH}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
+					<img src="../templates/{THEME}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
 				</span>
 				<div class="spacer"></div>
 			</div>

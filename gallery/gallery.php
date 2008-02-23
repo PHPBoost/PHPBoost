@@ -321,7 +321,7 @@ else
 	foreach($array_order as $type => $name)
 	{
 		$Template->Assign_block_vars('order', array(
-			'ORDER_BY' => '<a href="gallery' . transid('.php?sort=' . $type . '_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=' . $type . '_desc') . '" style="background-image:url(' . $module_data_path . '/images/' . $type . '.png);background-repeat:no-repeat;background-position:5px;">' . $name . '</a>'
+			'ORDER_BY' => '<a href="gallery' . transid('.php?sort=' . $type . '_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=' . $type . '_desc') . '" style="background-image:url(' . $module_data_path . '/images/' . $type . '.png);">' . $name . '</a>'
 		));
 	}
 	
@@ -364,10 +364,10 @@ else
 		'L_VOTE' => $LANG['vote'],
 		'U_INDEX' => transid('.php'),
 		'U_GALLERY_CAT_LINKS' => $cat_links,
-		'U_BEST_VIEWS' => '<a class="com" href="gallery' . transid('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1') . '" style="background-image:url(' . $module_data_path . '/images/views.png);background-repeat:no-repeat;background-position:5px;">' . $LANG['best_views'] . '</a>',
-		'U_BEST_NOTES' => '<a class="com" href="gallery' . transid('.php?notes=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?notes=1') . '" style="background-image:url(' . $module_data_path . '/images/notes.png);background-repeat:no-repeat;background-position:5px;">' . $LANG['best_notes'] . '</a>',
-		'U_ASC' => '<a class="com" href="gallery' . transid('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc') . '" style="background-image:url(' . $module_data_path . '/images/up.png);background-repeat:no-repeat;background-position:5px;">' . $LANG['asc'] . '</a>',
-		'U_DESC' => '<a class="com" href="gallery' . transid('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '" style="background-image:url(' . $module_data_path . '/images/down.png);background-repeat:no-repeat;background-position:5px;">' . $LANG['desc'] . '</a>',
+		'U_BEST_VIEWS' => '<a class="com" href="gallery' . transid('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1') . '" style="background-image:url(' . $module_data_path . '/images/views.png);">' . $LANG['best_views'] . '</a>',
+		'U_BEST_NOTES' => '<a class="com" href="gallery' . transid('.php?notes=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?notes=1') . '" style="background-image:url(' . $module_data_path . '/images/notes.png);">' . $LANG['best_notes'] . '</a>',
+		'U_ASC' => '<a class="com" href="gallery' . transid('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc') . '" style="background-image:url(' . $module_data_path . '/images/up.png);">' . $LANG['asc'] . '</a>',
+		'U_DESC' => '<a class="com" href="gallery' . transid('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '" style="background-image:url(' . $module_data_path . '/images/down.png);">' . $LANG['desc'] . '</a>',
 	));
 	
 	//Catégories non autorisées.

@@ -24,61 +24,86 @@
  *
 ###################################################*/
 
-var delay_menu = 800; //Durée après laquelle le menu est cachée lors du départ de la souris.
-var delay_onmouseover = 180; //Durée après laquelle la menu est affiché lors du passage de la souris dessus.
-var previous_menu;
-var timeout;
-var timeout_tmp;
-var started = false;
+var menu_delay = 800; //Durée après laquelle le menu est cachée lors du départ de la souris.
+var menu_delay_onmouseover = 180; //Durée après laquelle la menu est affiché lors du passage de la souris dessus.
+var menu_previous = new Array('', '', '');
+var menu_timeout = new Array(null, null, null);
+var menu_timeout_tmp = new Array(null, null, null);
+var menu_started = new Array(false, false, false);
+var max_level = 3;
 
 //Fonction de temporisation, permet d'éviter que le menu déroulant perturbe la navigation lors du survol rapide de la souris.
-function show_menu(num)
+function show_menu(idmenu, level)
 {
-	if( !started )
-		timeout_tmp = setTimeout('temporise_menu(' + num + ')', delay_onmouseover);
+	if( !menu_started[level] )
+		menu_timeout_tmp[level] = setTimeout('temporise_menu(\'' + idmenu + '\', ' + level + ')', menu_delay_onmouseover);
+	else if( menu_previous[level] != idmenu )
+		temporise_menu(idmenu, level);
 	else
-		temporise_menu(num);
+	{
+		if( menu_timeout[level] )
+			clearTimeout(menu_timeout[level]);
+		if( menu_timeout_tmp[level] )
+			clearTimeout(menu_timeout_tmp[level]);
+	}
 }
 
 //Fonction d'affichage du menu déroulant.
-function temporise_menu(num) 
+function temporise_menu(idmenu, level) 
 {
-	var id = 'smenu' + num;
-	var id = document.getElementById(id);
-	var i;
-	
+	var divID = str_repeat('s', level) + 'smenu';
+	var	id = document.getElementById(divID + idmenu);
+
 	//Destruction du timeout.
-	if( timeout )
-		clearTimeout(timeout);
-	if( timeout_tmp )
-		clearTimeout(timeout_tmp);
+	if( menu_timeout[level] )
+		clearTimeout(menu_timeout[level]);
+	if( menu_timeout_tmp[level] )
+		clearTimeout(menu_timeout_tmp[level]);
 	
 	//Masque les menus
-	if( document.getElementById(previous_menu) ) 
+	if( document.getElementById(divID + menu_previous[level]) ) 
 	{
-		document.getElementById(previous_menu).style.display = 'none';
-		started = false;
+		document.getElementById(divID + menu_previous[level]).style.visibility = 'hidden';
+		menu_started[level] = false;
+		
+		for(var i = level; i < max_level; i++) //Masque le sous menus.
+		{
+			var divID2 = str_repeat('s', i) + 'smenu';
+			if( document.getElementById(divID2 + menu_previous[i]) )
+				document.getElementById(divID2 + menu_previous[i]).style.visibility = 'hidden';
+		}
 	}
 	
 	//Affichage du menu, et enregistrement dans le tableau de gestion.
 	if( id ) 
 	{	
-		id.style.display = 'block';
-		previous_menu = 'smenu' + num;
-		started = true;
+		id.style.visibility = 'visible';
+		menu_previous[level] = idmenu;
+		menu_started[level] = true;
 	}
 }	
 
 //Cache le menu déroulant lorsque le curseur de la souris n'y est plus pendant delay_menu millisecondes.
-function hide_menu()
+function hide_menu(level)
 {			
 	//Destruction du timeout lors du départ de la souris.
-	if( timeout_tmp && !started )
-		clearTimeout(timeout_tmp);
+	for(var i = 0; i < max_level; i++)
+	{
+		if( menu_timeout_tmp[i] && !menu_started[i] )
+			clearTimeout(menu_timeout_tmp[i]);
+	}
 	
 	//Masque le menu, après le délai défini.
-	if( started )
-		timeout = setTimeout('temporise_menu()', delay_menu);	
+	if( menu_started[level] )
+		menu_timeout[level] = setTimeout('temporise_menu(\'\', ' + level + ')', menu_delay);
+}
+
+function str_repeat(charrepeat, nbr)
+{
+	var string = '';
+	for(var i = 0; i < nbr; i++)
+		string += charrepeat;
+	return string;
 }
 
 //Affichage/Masquage de la balise hide.

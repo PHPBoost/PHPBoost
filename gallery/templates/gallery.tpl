@@ -280,44 +280,34 @@
 				</div>
 			</div>
 			<div class="module_contents">
-				<div id="dynamic_menu">
-					<div style="float:right;">
-						<div style="float:left;" onmouseover="show_menu(1);" onmouseout="hide_menu();">
-							<h5 onclick="temporise_menu(1)" style="margin-right:20px;" class="horizontal"><img src="../wiki/templates/images/contribuate.png" class="valign_middle" alt="" />&nbsp;{L_DISPLAY}&nbsp;</h5>
-							<div id="smenu1" class="horizontal_block">
-								<ul>
+				<div style="margin-bottom:50px;">
+					<div id="dynamic_menu" style="float:right;margin-right:55px;">
+						<ul>
+							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
+								<h5 style="margin-right:20px;"><img src="../wiki/templates/images/contribuate.png" class="valign_middle" alt="" /> {L_DISPLAY}</h5>
+								<ul id="smenu1">
 									<li>{U_BEST_VIEWS}</li>
 									<li>{U_BEST_NOTES}</li>
 								</ul>
-								<span class="dm_bottom"></span>
-							</div>
-						</div>
-						<div style="float:left;" onmouseover="show_menu(2);" onmouseout="hide_menu();">
-							<h5 onclick="temporise_menu(2)" style="margin-right:5px;" class="horizontal"><img src="../wiki/templates/images/tools.png" class="valign_middle" alt="" />&nbsp;{L_ORDER_BY}&nbsp;</h5>
-							<div id="smenu2" class="horizontal_block">
-
-								<ul>
+							</li>
+							<li onmouseover="show_menu(2, 0);" onmouseout="hide_menu(0);">
+								<h5 style="margin-right:20px;"><img src="../wiki/templates/images/tools.png" class="valign_middle" alt="" /> {L_ORDER_BY}</h5>
+								<ul id="smenu2">
 									# START order #
 									<li>{order.ORDER_BY}</li>
 									# END order #
 								</ul>
-								<span class="dm_bottom"></span>
-							</div>
-						</div>
-						<div style="float:left;" onmouseover="show_menu(3);" onmouseout="hide_menu();">
-							<h5 onclick="temporise_menu(3)" style="margin-right:5px;" class="horizontal"><img src="../wiki/templates/images/tools.png" class="valign_middle" alt="" />&nbsp;{L_DIRECTION}&nbsp;</h5>
-							<div id="smenu3" class="horizontal_block">
-								<ul>
+							</li>
+							<li onmouseover="show_menu(3, 0);" onmouseout="hide_menu(0);">
+								<h5 style="margin-right:5px;"><img src="../wiki/templates/images/tools.png" class="valign_middle" alt="" /> {L_DIRECTION}</h5>
+								<ul id="smenu3">
 									<li>{U_ASC}</li>
-									<li>{U_DESC}</li>
+									<li>{U_DESC}</li>	
 								</ul>
-								<span class="dm_bottom"></span>
-							</div>
-						</div>
+							</li>
+						</ul>
 					</div>
 				</div>
-				
-				<br /><br />
 				
 				# START cat #
 				<table class="module_table" style="width:100%">
