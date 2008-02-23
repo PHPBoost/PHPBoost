@@ -91,5 +91,6 @@
 	
 		
 	<div id="sub_header">						
-		<div id="sub_header_left">
+		<div id="sub_header_left">&nbsp;</div>
+		<div id="sub_header_right">&nbsp;</div>
 	

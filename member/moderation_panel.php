@@ -51,7 +51,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 		if( isset($config['moderation_panel']) && $config['moderation_panel'] == 1 )
 		{
 			$Template->Assign_block_vars('list_modules', array(
-				'DM_A_CLASS' => ' style="background-image:url(../' . $row['name'] . '/' . $row['name'] . '_mini.png);background-repeat:no-repeat ;background-position:5px;"',
+				'DM_A_CLASS' => ' style="background-image:url(../' . $row['name'] . '/' . $row['name'] . '_mini.png);"',
 				'NAME' => $config['name'],
 				'MOD_NAME' => !empty($row['name']) ? $row['name'] : '',
 				'U_LINK' => transid('moderation_'. $row['name'] . '.php')
@@ -66,7 +66,6 @@ $Template->Assign_vars(array(
 	'SID' => SID,
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
-	'C_MODULES_MODO' => ($i > 0) ? true : false,
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 	'L_MEMBERS' => $LANG['member_s'],
 	'L_PUNISHMENT' => $LANG['punishment'],

@@ -132,7 +132,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 			$Template->Assign_block_vars('link.separation', array());
 			
 		$Template->Assign_block_vars('links_list', array(
-			'DM_A_CLASS' => ' style="background-image:url(' . $pages_data_path . '/images/' . $value[1] . ');background-repeat:no-repeat;background-position:5px;"',
+			'DM_A_CLASS' => ' style="background-image:url(' . $pages_data_path . '/images/' . $value[1] . ');"',
 			'U_ACTION' => $value[0],
 			'L_ACTION' => $key,
 			'ONCLICK' => array_key_exists(2, $value) ? $value[2] : ''
@@ -151,10 +151,13 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	
 	//Affichage des commentaires si il y en a la possibilité
 	if( $page_infos['activ_com'] == 1 && (($special_auth && $Member->Check_auth($array_auth, READ_COM)) || (!$special_auth && $Member->Check_auth($_PAGES_CONFIG['auth'], READ_COM))) )
-		$Template->Assign_block_vars('com', array(
+	{	
+		$Template->Assign_vars(array(
+			'C_ACTIV_COM' => true,
 			'U_COM' => transid('pages.php?id=' . $page_infos['id'] . '&amp;i=0'),
 			'L_COM' => $page_infos['nbr_com'] > 0 ? sprintf($LANG['pages_display_coms'], $page_infos['nbr_com']) : $LANG['pages_post_com']
 		));
+	}
 	
 	//On compte le nombre de vus
 	if( $page_infos['count_hits'] == 1 )

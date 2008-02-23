@@ -58,6 +58,7 @@ $LANG['stats'] = 'Statistics';
 $LANG['errors'] = 'Archived errors';
 $LANG['phpinfo'] = 'PHP info';
 $LANG['cache'] = 'Cache';
+$LANG['punishement'] = 'Punishement';
 $LANG['extend_menu'] = 'Extend menu';
 
 //Form

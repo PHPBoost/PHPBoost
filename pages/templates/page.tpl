@@ -22,29 +22,26 @@
 					</div>
 				</noscript>
 
-				<div id="dynamic_menu">
-					<div style="float:right;">
-						# START com #
-						<div style="float:left;">
-							<h5 style="margin-right:20px;" class="horizontal">
-								<img src="{PAGES_PATH}/images/com.png" class="valign_middle" alt="" />&nbsp;<a href="{com.U_COM}">{com.L_COM}</a>
-							</h5>
-						</div>
-						# END com #
-						<div style="float:left;" onmouseover="show_menu(1);" onmouseout="hide_menu();">
-							<h5 onclick="temporise_menu(1)" style="margin-right:20px;" class="horizontal"><img src="{PAGES_PATH}/images/tools.png" class="valign_middle" alt="" />&nbsp;{L_LINKS}&nbsp;</h5>					
-							<div id="smenu1" class="horizontal_block">
-								<ul>
+				<div style="margin-bottom:10px;">
+					<div id="dynamic_menu" style="float:right;margin-right:85px;">
+						<ul>
+							# IF C_ACTIV_COM #
+							<li>
+								<h5 style="margin-right:20px;"><img src="{PAGES_PATH}/images/com.png" class="valign_middle" alt="" /> <a href="{U_COM}">{L_COM}</a></h5>
+							</li>
+							# ENDIF #
+							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
+								<h5 style="margin-right:5px;"><img src="{PAGES_PATH}/images/tools.png" class="valign_middle" alt="" > {L_LINKS}</h5>
+								<ul id="smenu1">
 									# START links_list #
 									<li><a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" {links_list.DM_A_CLASS}>{links_list.L_ACTION}</a></li>
-									# END links_list #	
+									# END links_list #
 								</ul>
-								<span class="dm_bottom"></span>
-							</div>						
-						</div>
+							</li>
+						</ul>
 					</div>
-				</div>
-				<br /><br /><br />
+				</div>				
+				
 				{CONTENTS}
 				<br /><br />
 				<div class="spacer">&nbsp;</div>

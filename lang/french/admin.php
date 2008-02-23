@@ -58,6 +58,7 @@ $LANG['stats'] = 'Statistiques';
 $LANG['errors'] = 'Erreurs archivées';
 $LANG['phpinfo'] = 'PHP info';
 $LANG['cache'] = 'Cache';
+$LANG['punishement'] = 'Sanction';
 $LANG['extend_menu'] = 'Menu étendu';
 
 //Form
@@ -557,7 +558,7 @@ $LANG['select_type_bbcode'] = 'BBCode';
 $LANG['select_type_html'] = 'HTML';
 
 //Module de gestion de la base de données
-$LANG['database_management'] = 'Gestion de la base de données';
+$LANG['database_management'] = 'Gestion base de données';
 $LANG['db_explain_actions'] = 'Ce panneau vous permet de gérer votre base de données. Vous pouvez y voir la liste des tables utilisées par PHPBoost, leurs propriétés. Aussi divers outils vous permettront de faire quelques opérations basiques sur certaines tables. Vous pouvez aussi effectuer une sauvegarde de votre base de données, ou de seulement quelques tables que vous sélectionnerez ici.
 <br /><br />
 <div class="question">L\'optimisation de la base de données permet de réorganiser la structure de la table afin de faciliter les opérations au serveur SQL. Cette opération est effectuée automatiquement sur chaque table une fois par jour. Vous pouvez optimiser les tables manuellement via ce panneau d\'administration.
