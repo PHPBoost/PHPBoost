@@ -12,21 +12,11 @@
 	padding:4px 2px;
 	cursor:pointer;
 }
- .pages_selected_cat
- {
+.pages_selected_cat
+{
 	background:#788EA0;
 	border:1px solid #5B6974;
- }
- /*Menu dynamique des liens*/
-#dynamic_menu h5 a
-{
-	color:#edfff0;
-	text-align:center;
-	font-weight:bold;
-	font-size:12px;
-	cursor:pointer;
-	text-decoration:none;
 }
- ol{
+ol{
 	margin-left:25px;
- }
+}
