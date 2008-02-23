@@ -41,6 +41,7 @@
 						</ul>
 					</div>
 				</div>				
+				<div class="spacer">&nbsp;</div>
 				
 				{CONTENTS}
 				<br /><br />
