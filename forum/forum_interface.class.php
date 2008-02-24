@@ -38,13 +38,13 @@ class ForumInterface extends ModuleInterface
     }
 	
 	//Récupère le lien vers la listes des messages du membre.
-	function GetMembermsgLink($memberId) 
+	function GetMembermsgLink($memberId)
     {
         return '../forum/membermsg.php?id=' . $memberId[0];
     }
 	
 	//Récupère le nom associé au lien.
-	function GetMembermsgName() 
+	function GetMembermsgName()
     {
         global $LANG;
 		load_module_lang('forum'); //Chargement de la langue du module.
@@ -53,7 +53,7 @@ class ForumInterface extends ModuleInterface
     }
 	
 	//Récupère l'image associé au lien.
-	function GetMembermsgImg() 
+	function GetMembermsgImg()
     {
 		return '../forum/forum_mini.png';
     }

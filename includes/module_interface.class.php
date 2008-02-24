@@ -102,12 +102,10 @@ class ModuleInterface
 			foreach($methods as $key => $function)
 			{
 				// Si la méthode est une méthode générique de la classe ModuleInterface => Alors ce n'est pas une fonctionnalité.
-				if( in_array($function, $moduleMethods) || $function == $moduleName.'interface' )
-					unset($methods[$key]);
+				if( !(in_array($function, $moduleMethods) || $function == $moduleName.'interface') )
+					array_push($this->functionnalities, strtolower($methods[$key]));
 			}
-			$this->functionnalities = $methods;
 		}
-		
 		$this->errors = $error;
 	}
 	
