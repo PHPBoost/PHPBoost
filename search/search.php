@@ -30,6 +30,12 @@ require_once('../includes/begin.php');
 load_module_lang('search');
 // define('ALTERNATIVE_CSS', 'search');
 
+$Template->Set_filenames(array(
+'search_mini_form' => '../templates/'.$CONFIG['theme'].'/search/search_mini_form.tpl',
+'search_forms' => '../templates/'.$CONFIG['theme'].'/search/search_forms.tpl',
+'search_results' => '../templates/'.$CONFIG['theme'].'/search/search_results.tpl'
+));
+
 //--------------------------------------------------------------------- Params
 define ( 'NB_RESULTS_PER_PAGE', 10);
 
@@ -41,22 +47,16 @@ $search = !empty($_GET['search']) ? securit($_GET['search']) : '';
 //--------------------------------------------------------------------- Header
 
 if( !empty($search) )
-    define('TITLE', $LANG['title_search'].' - '.addslashes($search));
+    define('TITLE', $LANG['title_search'].' : '.addslashes($search));
 else
     define('TITLE', $LANG['title_search']);
 require_once('../includes/header.php');
 
+$Template->Assign_vars(Array('title_search' => TITLE));
+
 //------------------------------------------------------------- Other includes
 require_once('../includes/modules.class.php');
 require_once('../search/search.inc.php');
-
-$Template->Set_filenames(array(
-'search_mini_form' => '../templates/'.$CONFIG['theme'].'/search/search_mini_form.tpl',
-'search_forms' => '../templates/'.$CONFIG['theme'].'/search/search_forms.tpl',
-'search_results' => '../templates/'.$CONFIG['theme'].'/search/search_results.tpl'
-));
-
-
 
 //----------------------------------------------------------------------- Main
 
