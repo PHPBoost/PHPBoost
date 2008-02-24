@@ -67,7 +67,7 @@ class Modules
     function GetAvailablesModules($functionnality, $modulesList = array())
     /**
      *  Renvoie la liste des modules disposant de la fonctionnalité demandée.
-     *  Si $modulesList est spécifié, alors on ne recherche que le sous ensemble de celui-ci
+     *  Si $modulesList est spécifié, alors on ne recherche que le sous ensemble de celui-ci 
      */
     {
         $modules = array();
