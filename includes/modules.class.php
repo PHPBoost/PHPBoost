@@ -102,7 +102,7 @@ class Modules
             if( in_array($moduleName, $this->availablesModules) )
             {
                 global $Member, $SECURE_MODULE;
-                if( $Member->check_level($SECURE_MODULE[$moduleName]) )
+                if( $Member->check_auth($SECURE_MODULE[$moduleName]) )
                 {
                     if( @include_once('../'.$moduleName.'/'.$moduleName.'_interface.class.php') )
                     {
