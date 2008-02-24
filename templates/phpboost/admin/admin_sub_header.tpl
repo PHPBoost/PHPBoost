@@ -46,6 +46,13 @@
 									<li><a href="../admin/admin_lang_add.php" style="background-image:url(../templates/{THEME}/images/admin/languages_mini.png);">{L_ADD}</a></li>
 								</ul>
 							</li>
+							<li class="extend" onmouseover="show_menu(25, 1);" onmouseout="hide_menu(1);">
+								<a href="../admin/admin_smileys.php" style="background-image:url(../templates/{THEME}/images/admin/smileys_mini.png);">{L_SMILEY}</a>
+								<ul id="ssmenu25">
+									<li><a href="../admin/admin_smileys.php" style="background-image:url(../templates/{THEME}/images/admin/smileys_mini.png);">{L_MANAGEMENT}</a></li>
+									<li><a href="../admin/admin_smileys_add.php" style="background-image:url(../templates/{THEME}/images/admin/smileys_mini.png);">{L_ADD}</a></li>
+								</ul>
+							</li>
 						</ul>
 					</li>
 					<li onmouseover="show_menu(3, 0);" onmouseout="hide_menu(0);">
