@@ -62,7 +62,7 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
 	$Search = new Search($searchTxt, $modulesNames);
 	$Search->InsertResults($requests);
 	
-	return $Search->GetResults($results, $id_modules, $offset = 0, $nbLines = NB_LINES);
+	return $Search->GetResults($results, $modulesNames, $offset = 0, $nbLines = NB_LINES);
 }
 
 ?>
