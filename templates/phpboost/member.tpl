@@ -450,7 +450,7 @@
 
 
 
-		# IF C_MEMBER_PROFIL_EDIT #
+		# IF C_PROFIL_MEMBER_VIEW #
 		<div class="fieldset_content">
 			<fieldset>
 				<legend>{L_PROFIL}</legend>

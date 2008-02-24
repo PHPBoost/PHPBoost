@@ -647,11 +647,11 @@ if( !empty($id_get) ) //Espace membre
 		
 		if( empty($row['user_id']) ) //Vérification de l'existance du membre. 
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-		
+
 		//Dernière connexion, si vide => date d'enregistrement du membre.
 		$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']; 
 	
-		$user_mail = ( $row['user_show_mail'] == 1 ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;';
+		$user_mail = ($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;';
 		
 		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '&nbsp;';
 		$user_avatar = !empty($row['user_avatar']) ? '<img src="' . $row['user_avatar'] . '" alt="" />' : '<em>' . $LANG['no_avatar'] . '</em>';
@@ -698,7 +698,7 @@ if( !empty($id_get) ) //Espace membre
 		//Droit d'édition du profil, au membre en question et à l'admin uniquement	.
 		$Template->Assign_vars(array(
 			'C_MEMBER_PROFIL_EDIT' => ($Member->Get_attribute('user_id') === $id_get || $Member->Check_level(2)) ? true : false,
-			'C_PROFIL_MEMBER' => true,
+			'C_PROFIL_MEMBER_VIEW' => true,
 			'SID' => SID,
 			'LANG' => $CONFIG['lang'],
 			'USER_NAME' => $row['login'],
