@@ -6,10 +6,10 @@
         <div class="spacer">&nbsp;</div>
             <form action="../search/search.php" method="post">
                 <fieldset>
-                    <legend>{title_search}</legend>
+                    <legend>{TITLE_SEARCH}</legend>
                     <dl>
                         <dt><label for="search">Mots clés (4 caractères minimum)</label></dt>
-                        <dd><label><input type="text" size="35" id="search" name="search" value="{search}"  class="text" /></label></dd>
+                        <dd><label><input type="text" size="35" id="search" name="search" value="{TEXT_SEARCHED}"  class="text" /></label></dd>
                     </dl>
                 </fieldset>
                 # START forms #
@@ -22,7 +22,7 @@
                 # END forms #
                 <fieldset class="fieldset_submit">
                     <legend>{title_search}</legend>
-                    <input type="submit" name="valid_search" value="{title_search}" class="submit" />
+                    <input type="submit" name="valid_search" value="{SEARCH}" class="submit" />
                 </fieldset>
             </form>
         </div>
