@@ -57,9 +57,9 @@ class Modules
             $module = $this->GetModule($moduleName);
             // Si le module à déjà été appelé et a déjà eu une erreur,
             // On nettoie le bit d'erreur correspondant.
-            $Module->clearFunctionnalityError();
-            if( $Module->hasFunctionnality($functionnality) == true )
-				$results[$moduleName] = $Module->Functionnality($functionnality, $args);
+            $module->clearFunctionnalityError();
+            if( $module->hasFunctionnality($functionnality) == true )
+				$results[$moduleName] = $module->Functionnality($functionnality, $args);
         }
         return $results;
     }
