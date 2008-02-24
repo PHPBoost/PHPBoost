@@ -59,18 +59,12 @@ class ForumInterface extends ModuleInterface
     }
     
     // Recherche
-    function GetSearchForm()
+    function GetSearchForm($args=null)
     /**
      *  Renvoie le formulaire de recherche du forum
      */
     {
         $form  = '<fieldset>
-        <legend>Recherche sur le Forum</legend>
-        <dl>
-            <dt><label for="search">Mots clés (4 caractères minimum)</label></dt>
-            <dd><label><input type="text" size="35" id="search" name="search" value=""  class="text" /></label></dd>
-        </dl>
-
         <dl>
             <dt><label for="time">Date</label></dt>
             <dd><label> 
@@ -78,7 +72,6 @@ class ForumInterface extends ModuleInterface
                     <option value="30000" selected="selected">Tout</option>
                     <option value="1">1 jour</option>
                     <option value="7">7 Jours</option>
-
                     <option value="15">15 Jours</option>
                     <option value="30">1 Mois</option>
                     <option value="180">6 Mois</option>
@@ -86,7 +79,6 @@ class ForumInterface extends ModuleInterface
                 </select>
             </label></dd>
         </dl>
-
         <dl>
             <dt><label for="idcat">Catégorie</label></dt>
             <dd><label>
@@ -95,7 +87,6 @@ class ForumInterface extends ModuleInterface
                     <option value="4">---- Support PHPBoost</option>
                     <option value="2">---------- Annonces</option>
                 </select>
-
             </label></dd>
         </dl>
         <dl>
@@ -103,7 +94,6 @@ class ForumInterface extends ModuleInterface
             <dd>
                 <label><input type="radio" name="where" id="where" value="contents" checked="checked" /> Contenu</label>
                 <br />
-
                 <label><input type="radio" name="where" value="title"  /> Titre</label>
                 <br />
                 <label><input type="radio" name="where" value="all"  /> Titre/Contenu</label>
@@ -111,7 +101,6 @@ class ForumInterface extends ModuleInterface
         </dl>
         <dl>
             <dt><label for="colorate_result">Colorer les résultats</label></dt>
-
             <dd>
                 <label><input type="checkbox" name="colorate_result" id="colorate_result" value="1" checked="checked" /></label>
             </dd>
