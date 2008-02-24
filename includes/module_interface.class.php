@@ -51,15 +51,15 @@ class ModuleInterface
 	/**
 	*  Teste l'existance de la fonctionnalité et l'appelle le cas échéant.
 	*  Si elle n'est pas disponible, le flag
-	*  FUNCTIONNALITY__NOT_IMPLEMENTED de la variable errors est
+	*  FUNCTIONNALITY_NOT_IMPLEMENTED de la variable errors est
 	*  alors positionné.
 	*/
 	{
 		$this->clearFunctionnalityError();
-		if( $this->hasFunctionnality($functionnality) )
+		if( $this->HasFunctionnality($functionnality) )
 			return $this->$functionnality($args);
 		else
-			$this->setError(FUNCTIONNALITY__NOT_IMPLEMENTED);
+			$this->setError(FUNCTIONNALITY_NOT_IMPLEMENTED);
 	}
 	
 	function HasFunctionnality($functionnality)
@@ -67,7 +67,7 @@ class ModuleInterface
 	*  Teste que la fonctionnalité est bien implémentée
 	*/
 	{
-		return in_array($functionnality, $this->functionnalities);
+		return in_array(strtolower($functionnality), $this->functionnalities);
 	}
 	
 	function GetErrors()
@@ -85,9 +85,7 @@ class ModuleInterface
 	*/
 	{
 		global $CONFIG;
-		
 		$this->name = $moduleName;
-		
 		$this->infos = array();
 		$this->functionnalities = array();
 		if( $error == 0 )
@@ -96,24 +94,18 @@ class ModuleInterface
 			$this->infos = load_ini_file('../' . $this->name . '/lang/', $CONFIG['lang']);
 			
 			// Récupération des méthodes du module
-			$methods = get_class_methods(ucfirst($moduleName).'Interface');
+			$methods = get_class_methods(ucfirst($moduleName).'Interface'); //PHP4 retourne en minuscules...
 			// Méthode de la classe générique ModuleInterface
-			$moduleMethods = get_class_methods('ModuleInterface');
+			$moduleMethods = get_class_methods('ModuleInterface'); //PHP4 retourne en minuscules...
 			
-			// Enlévement de toutes les méthodes auxquelles le developpeur n'a pas accés
-			$nbr_methods = count($methods);
-			for($i = 0; $i < $nbr_methods; $i++)
+			//Suppression de toutes les méthodes auxquelles le developpeur n'a pas accés
+			foreach($methods as $key => $function)
 			{
-				// Si la méthode est une méthode générique de la classe ModuleInterface
-				//  Ou si c'est le constructeur de l'interface de son module
-				// Alors ce n'est pas une fonctionnalité.
-				if( in_array($methods[$i], $moduleMethods) || ($methods[$i] == ucfirst($moduleName).'Interface') )
-					array_splice($methods, $i);
+				// Si la méthode est une méthode générique de la classe ModuleInterface => Alors ce n'est pas une fonctionnalité.
+				if( in_array($function, $moduleMethods) || $function == $moduleName.'interface' )
+					unset($methods[$key]);
 			}
 			$this->functionnalities = $methods;
-			echo '<hr/><pre>';
-			print_r($this->functionnalities);
-			echo '</pre><hr/>';
 		}
 		
 		$this->errors = $error;
@@ -146,7 +138,7 @@ class ModuleInterface
 	*  Nettoie le bit d'erreur de la fonctionnalité, pour en tester une autre
 	*/
 	{
-		$this->errors &= (~FUNCTIONNALITY__NOT_IMPLEMENTED);
+		$this->errors &= (~FUNCTIONNALITY_NOT_IMPLEMENTED);
 	}
 	
 	//----------------------------------------------------- Attributs protégés

@@ -58,7 +58,7 @@ class Modules
             // Si le module à déjà été appelé et a déjà eu une erreur,
             // On nettoie le bit d'erreur correspondant.
             $module->clearFunctionnalityError();
-            if( $module->hasFunctionnality($functionnality) == true )
+            if( $module->HasFunctionnality($functionnality) == true )
 				$results[$moduleName] = $module->Functionnality($functionnality, $args);
         }
         return $results;
@@ -97,12 +97,12 @@ class Modules
      *  Instancie et renvoie le module demandé.
      */
     {
-        if( !isset($this->loadedModules[$moduleName]) )
+		if( !isset($this->loadedModules[$moduleName]) )
         {
             if( in_array($moduleName, $this->availablesModules) )
             {
-                global $Member, $SECURE_MODULE;
-                if( $Member->check_auth($SECURE_MODULE[$moduleName]) )
+				global $Member, $SECURE_MODULE;
+                if( $Member->check_auth($SECURE_MODULE[$moduleName], ACCESS_MODULE) )
                 {
                     if( @include_once('../'.$moduleName.'/'.$moduleName.'_interface.class.php') )
                     {
