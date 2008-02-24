@@ -109,7 +109,7 @@ class Search
         foreach ( $id_modules as $id_module )
         {
             // Teste l'existence de la recherche dans la base sinon signale l'erreur
-            if ( in_array ( $id_module, array_keys ( $this->search ) ) )
+            if ( in_array($id_module, array_keys($this->id_search)) )
             {
                 // Conditions de la recherche
                 if ( $numModules > 0 )
