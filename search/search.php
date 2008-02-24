@@ -53,7 +53,7 @@ else
     define('TITLE', $LANG['title_search']);
 require_once('../includes/header.php');
 
-$Template->Assign_vars(Array('title_search' => TITLE));
+$Template->Assign_vars(Array('TITLE_SEARCH' => TITLE, 'SEARCH' => $LANG['title_search'], 'TEXT_SEARCHED' => $search));
 
 //------------------------------------------------------------- Other includes
 require_once('../includes/modules.class.php');
@@ -97,11 +97,17 @@ if( $search != '' )
 	
 	// Génération des formulaires précomplétés et passage aux templates
 	$searchForms = GetSearchForms($formsModule, $modulesArgs);
-	$Template->Assign_block_vars('forms', array( $searchForms) );
+    foreach ( $searchForms as $moduleName => $form )
+    {
+        $Template->Assign_block_vars('forms', array(
+            'MODULE_NAME' => $moduleName,
+            'SEARCH_FORM' => $form
+        ));
+    }
 	
 	// Génération des résultats et passage aux templates
 	$nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, ($p - 1), ($p - 1 + NB_RESULTS_PER_PAGE));
-	$Template->Assign_vars( array('nbResults' => $nbResults) ) ;
+	$Template->Assign_vars( array('NB_RESULTS' => $nbResults) ) ;
 	
 	$htmlResults = array();
 	foreach( $results as $result )
@@ -130,7 +136,7 @@ else
 	$formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
 	
 	// Génération des formulaires et passage aux templates
-	$searchForms = GetSearchForms($formsModule, $modulesArgs);
+	$searchForms = GetSearchForms($formsModule);
     foreach ( $searchForms as $moduleName => $form )
     {
         $Template->Assign_block_vars('forms', array(
