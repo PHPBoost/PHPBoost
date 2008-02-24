@@ -106,12 +106,12 @@ class ModuleInterface
 			{
 				// Si la méthode est une méthode générique de la classe ModuleInterface
 				//  Ou si c'est le constructeur de l'interface de son module
-				//  Ou si c'est une méthode privé de l'interface de son module,
 				// Alors ce n'est pas une fonctionnalité.
 				if( in_array($methods[$i], $moduleMethods) or ($methods[$i] == ucfirst($moduleName).'Interface') )
 					array_splice($methods, $i);
 			}
 			$this->functionnalities = $methods;
+			print_r($$this->functionnalities);
 		}
 		
 		$this->errors = $error;

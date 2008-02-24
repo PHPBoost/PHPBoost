@@ -73,7 +73,6 @@ class Modules
         $modules = array();
         if( $modulesList === array() )
         {
-			echo 't\'es un gros con :) !';
             global $SECURE_MODULE;
             foreach(array_keys($SECURE_MODULE) as $moduleName)
             {
