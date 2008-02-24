@@ -37,7 +37,7 @@ class Search
     function InsertResults ( &$requests )
     /**
      *  Enregistre les résultats de la recherche dans la base des résultats
-     *  si ils n'y sont pas déjé
+     *  si ils n'y sont pas déjà
      *  Nb requêtes : 1
      */
     {
@@ -62,9 +62,12 @@ class Search
                 $reqSEARCH .= trim( $request, ' ;' );
             }
         }
-        
-        $reqSEARCH = "INSERT ( ".$reqSEARCH." ) INTO ".PREFIX."search_results;";
-        $Sql->Query_inject($reqSEARCH, __LINE__, __FILE__ );
+        // Vérification de la présence de la requête
+        if ( $reqSEARCH != "" )
+        {
+            $reqSEARCH = "INSERT ( ".$reqSEARCH." ) INTO ".PREFIX."search_results;";
+            $Sql->Query_inject($reqSEARCH, __LINE__, __FILE__ );
+        }
         
         // Au cas ou le insert select into ne soit pas portable.
 //         $reqInsert = '';
@@ -118,7 +121,9 @@ class Search
         }
         
         // Récupération des $nbLines résultats é partir de l'$offset
-        $reqResults  = "SELECT id_module, id_content, relevance, link FROM ".PREFIX."search_results WHERE ";
+        $reqResults  = "SELECT id_module, id_module_content, relevance, link FROM ".PREFIX."search_results ";
+        if ( $modulesConditions != "" )
+            $reqResults .= " WHERE ".$modulesConditions;
         $reqResults .= $modulesConditions." ORDER BY relevance DESC ".$Sql->Sql_limit($offset, $nbLines);
         
         // Exécution de la requête
@@ -176,10 +181,10 @@ class Search
 
         // Délestage
         $reqDelete  = "DELETE FROM ".PREFIX."search_index WHERE ";
-        $reqDelete .= "last_search_use < '".($time() - (CACHE_TIME * 60))."' OR times_used > '".CACHE_TIMES_USED."' ";
+        $reqDelete .= "last_search_use < '".(time() - (CACHE_TIME * 60))."' OR times_used > '".CACHE_TIMES_USED."' ";
         
         // Vérifications des résultats dans le cache.
-        $reqCache  = "SELECT id_search, id_module FROM".PREFIX."search_index WHERE ";
+        $reqCache  = "SELECT id_search, id_module FROM ".PREFIX."search_index WHERE ";
         $reqCache .= "search='".$search."' AND id_user='".$this->id_user."' AND ".$this->modulesConditions;
         
         $request = $Sql->Query_while( $reqCache, __LINE__, __FILE__ );
@@ -189,7 +194,7 @@ class Search
         }
         $Sql->Close($request);
         
-        // Mise é jours des résultats du cache
+        // Mise à jours des résultats du cache
         if ( count ( $this->id_search ) > 0 )
         {
             $reqUpdate  = "UPDATE ".PREFIX."search_index SET times_used=(times_used + 1), last_search_use='".$time()."' WHERE ";
@@ -199,8 +204,9 @@ class Search
         
         $nbReqInsert = 0;
         $reqInsert = '';
-        foreach ( $requests as $id_module => $request )
+        foreach ( $this->modules as $module )
         {
+            $id_module = $module->name;
             if ( !$this->IsInCache ( $id_module ) )
             {
                 $reqInsert .= "('".$this->id_search[$id_module]."','".$id_module."','".$this->id_user."','".$result['id_content']."',";
@@ -233,7 +239,7 @@ class Search
         // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k (nb non dans le cache) = 3 + k
         // cela permet donc de grouper les insertions dans l'index du cache.
         
-        $reqCache  = "SELECT id_search, id_module FROM".PREFIX."search_index ";
+        $reqCache  = "SELECT id_search, id_module FROM ".PREFIX."search_index ";
         $reqCache .= "WHERE search='".$search."' AND ".$this->modulesConditions;
         
         $request = $Sql->Query_while( $reqCache, __LINE__, __FILE__ );

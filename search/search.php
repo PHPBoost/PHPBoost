@@ -40,9 +40,10 @@ $Template->Set_filenames(array(
 define ( 'NB_RESULTS_PER_PAGE', 10);
 
 // A protéger impérativement;
-$pageNum = !empty($_GET['pageNum']) ? numeric($_GET['pageNum']) : 1;
-$module = !empty($_GET['module']) ? securit($_GET['module']) : '';
-$search = !empty($_GET['search']) ? securit($_GET['search']) : '';
+$pageNum = !empty($_POST['pageNum']) ? numeric($_POST['pageNum']) : 1;
+$module = !empty($_POST['module']) ? securit($_POST['module']) : '';
+$search = !empty($_POST['search']) ? securit($_POST['search']) : '';
+$p = 0;
 
 //--------------------------------------------------------------------- Header
 
@@ -72,7 +73,7 @@ if( $search != '' )
 	// Ajout du paramètre search à tous les modules
 	foreach( $searchModules as $module)
 	{
-		$modulesArgs[$module->name] = array('search' => $args);
+		$modulesArgs[$module->name] = array('search' => $search);
 	}
 	
 	// Chargement des modules avec formulaires
