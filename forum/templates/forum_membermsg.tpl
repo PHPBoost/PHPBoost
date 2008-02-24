@@ -31,14 +31,6 @@
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">
-						<p style="text-align:center;">{list.USER_RANK}</p>
-						<p style="text-align:center;">{list.USER_IMG_ASSOC}</p>
-						<p style="text-align:center;">{list.USER_AVATAR}</p>
-						<p style="text-align:center;">{list.USER_GROUP}</p>
-						{list.USER_SEX}
-						{list.USER_DATE}<br />
-						{list.USER_MSG}<br />
-						{list.USER_LOCAL}		
 					</div>
 					<div class="msg_contents">
 						<div class="msg_contents_overflow">
@@ -46,17 +38,7 @@
 						</div>
 					</div>
 				</div>
-			</div>	
-			<div class="msg_sign">				
-				{list.USER_SIGN}				
-				<hr />
-				<span style="float:left;">
-					<a href="../member/pm{list.U_MEMBER_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="pm" /></a> {list.USER_MAIL} {list.USER_MSN} {list.USER_YAHOO} {list.USER_WEB}
-				</span>
-				<span style="float:right;font-size:10px;">
-					{list.WARNING}
-				</span>&nbsp;
-			</div>	
+			</div>		
 		</div>	
 		# END list #
 		
