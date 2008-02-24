@@ -45,15 +45,19 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 
 	foreach($modules as $module)
 	{
-	    array_push($actions, $module->Functionnalitie('GetMemberAction', array($memberId)));
+		echo 'test';
+		$Template->Assign_block_vars('available_modules_msg', array(
+			'NAME' => $module->Functionnalitie('GetMembermsgLink', array($memberId))
+		));
 	}
-	print_r($actions);
 	
-	
-	$Template->Assign_block_vars('available_modules_msg', array(
-		'NAME' => ''
+	$Template->Assign_vars(array(
+		'L_MEMBER_MSG' => $LANG['member_msg'],
+		'L_MEMBER_MSG_DISPLAY' => $LANG['member_msg_display'],
+		'L_COMMENTS' => $LANG['com_s'],
+		'U_COMMENTS' => transid('.php?script=com')
 	));
-	
+		
 	if( isset($_GET['script']) )
 	{
 		//On crée une pagination si le nombre de commentaires est trop important.
@@ -65,12 +69,8 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 			'C_START_MSG' => true,
 			'USER_PSEUDO' => '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $memberId, '-' . $memberId . '.php') . '"><span class="text_strong">' . wordwrap_html($Member->Get_attribute('login'), 13) . '</span></a>',
 			'PAGINATION' => $Pagination->Display_pagination('membermsg.php?pmsg=%d', $nbr_msg, 'pmsg', 25, 3),
-			'L_MEMBER_MSG' => $LANG['member_msg'],
-			'L_MEMBER_MSG_DISPLAY' => $LANG['member_msg_display'],
-			'L_COMMENTS' => $LANG['com_s'],
 			'L_GO_MSG' => $LANG['go_msg'],
-			'L_ON' => $LANG['on'],
-			'U_COMMENTS' => transid('.php?script=com')
+			'L_ON' => $LANG['on']
 		));
 
 		$result = $Sql->Query_while("SELECT c.timestamp, c.script, c.path, c.contents
