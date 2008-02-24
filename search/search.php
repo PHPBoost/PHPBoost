@@ -25,10 +25,26 @@
 *
 ###################################################*/
 
-//------------------------------------------------------- Headers and Language
+//------------------------------------------------------------------- Language
 require_once('../includes/begin.php');
 load_module_lang('search');
 // define('ALTERNATIVE_CSS', 'search');
+
+//--------------------------------------------------------------------- Params
+define ( 'NB_RESULTS_PER_PAGE', 10);
+
+// A protéger impérativement;
+$pageNum = !empty($_GET['pageNum']) ? numeric($_GET['pageNum']) : 1;
+$module = !empty($_GET['module']) ? securit($_GET['module']) : '';
+$search = !empty($_GET['search']) ? securit($_GET['search']) : '';
+
+//--------------------------------------------------------------------- Header
+
+if( !empty($search) )
+    define('TITLE', $LANG['title_search'].' - '.addslashes($search));
+else
+    define('TITLE', $LANG['title_search']);
+require_once('../includes/header.php');
 
 //------------------------------------------------------------- Other includes
 require_once('../includes/modules.class.php');
@@ -40,13 +56,7 @@ $Template->Set_filenames(array(
 'search_results' => '../templates/'.$CONFIG['theme'].'/search/search_results.tpl'
 ));
 
-//--------------------------------------------------------------------- Params
-define ( 'NB_RESULTS_PER_PAGE', 10);
 
-// A protéger impérativement;
-$pageNum = !empty($_GET['pageNum']) ? numeric($_GET['pageNum']) : 1;
-$module = !empty($_GET['module']) ? securit($_GET['module']) : '';
-$search = !empty($_GET['search']) ? securit($_GET['search']) : '';
 
 //----------------------------------------------------------------------- Main
 
