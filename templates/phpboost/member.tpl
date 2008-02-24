@@ -35,7 +35,7 @@
 		-->
 		</script>
 
-		# START update #
+		# IF C_MEMBER_UPDATE_PROFIL #
 
 		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
@@ -47,12 +47,12 @@
 		# ENDIF #
 		
 		<script type="text/javascript" src="../templates/{THEME}/images/calendar.js"></script>
-		<form action="member{update.U_MEMBER_ACTION_UPDATE}" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
+		<form action="member{U_MEMBER_ACTION_UPDATE}" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_PROFIL_EDIT}</legend>
 				<dl>
 					<dt><label for="mail">* {L_MAIL}</label><br /><span>{L_VALID}</span></dt>
-					<dd><label><input type="text" maxlength="50" size="30" id="mail" name="mail" value="{update.MAIL}" class="text" /></label></dd>
+					<dd><label><input type="text" maxlength="50" size="30" id="mail" name="mail" value="{MAIL}" class="text" /></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="pass_old">(*) {L_PREVIOUS_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
@@ -75,9 +75,9 @@
 					<dd>
 						<label>
 							<select name="user_lang" id="user_lang" onchange="change_img_lang('img_lang', this.options[this.selectedIndex].value)">	
-								# START update.select_lang #
-								{update.select_lang.LANG}
-								# END update.select_lang #
+								# START select_lang #
+								{select_lang.LANG}
+								# END select_lang #
 							</select> <img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
 						</label>
 					</dd>
@@ -91,11 +91,11 @@
 					<dd>
 						<label>
 							<select name="user_theme" id="user_theme" onChange="change_img_theme('img_theme', this.options[selectedIndex].value)">
-								# START update.select_theme #
-								{update.select_theme.THEME}
-								# END update.select_theme #
+								# START select_theme #
+								{select_theme.THEME}
+								# END select_theme #
 							</select>
-							<img id="img_theme" src="../templates/{update.USER_THEME}/images/theme.jpg" alt="" style="vertical-align:top" />
+							<img id="img_theme" src="../templates/{USER_THEME}/images/theme.jpg" alt="" style="vertical-align:top" />
 						</label>
 					</dd>
 				</dl>
@@ -104,9 +104,9 @@
 					<dd>
 						<label>
 							<select name="user_editor" id="user_editor">
-								# START update.select_editor #
-								{update.select_editor.SELECT_EDITORS}
-								# END update.select_editor #
+								# START select_editor #
+								{select_editor.SELECT_EDITORS}
+								# END select_editor #
 							</select>
 						</label>
 					</dd>
@@ -116,16 +116,16 @@
 					<dd>
 						<label>
 							<select name="user_timezone" id="user_timezone">	
-								# START update.select_timezone #
-								{update.select_timezone.SELECT_TIMEZONE}
-								# END update.select_timezone #						
+								# START select_timezone #
+								{select_timezone.SELECT_TIMEZONE}
+								# END select_timezone #						
 							</select>
 						</label>
 					</dd>			
 				</dl>
 				<dl>
 					<dt><label for="user_show_mail">{L_HIDE_MAIL}</label><br /><span>{L_HIDE_MAIL_WHO}</span></dt>
-					<dd><label><input type="checkbox" {update.SHOW_MAIL_CHECKED} name="user_show_mail" id="user_show_mail" /></label></dd>
+					<dd><label><input type="checkbox" {SHOW_MAIL_CHECKED} name="user_show_mail" id="user_show_mail" /></label></dd>
 				</dl>
 			</fieldset>	
 			
@@ -133,50 +133,50 @@
 				<legend>{L_INFO}</legend>
 				<dl>
 					<dt><label for="user_web">{L_SITE_WEB}</label><br /><span>{L_VALID}</span></dt>
-					<dd><label><input size="30" type="text" class="text" name="user_web" id="user_web" value="{update.WEB}" maxlength="70" /></label></dd>
+					<dd><label><input size="30" type="text" class="text" name="user_web" id="user_web" value="{WEB}" maxlength="70" /></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="user_local">{L_LOCALISATION}</label></dt>
-					<dd><label><input size="30" type="text" class="text" name="user_local" id="user_local" value="{update.LOCAL}" maxlength="25" /></label></dd>
+					<dd><label><input size="30" type="text" class="text" name="user_local" id="user_local" value="{LOCAL}" maxlength="25" /></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="user_occupation">{L_JOB}</label></dt>
-					<dd><label><input size="30" type="text" class="text" name="user_occupation" id="user_occupation" value="{update.OCCUPATION}" maxlength="50" /></label></dd>
+					<dd><label><input size="30" type="text" class="text" name="user_occupation" id="user_occupation" value="{OCCUPATION}" maxlength="50" /></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="user_hobbies">{L_HOBBIES}</label></dt>
-					<dd><label><input size="30" type="text" class="text" name="user_hobbies" id="user_hobbies" value="{update.HOBBIES}" maxlength="50" /></label></dd>
+					<dd><label><input size="30" type="text" class="text" name="user_hobbies" id="user_hobbies" value="{HOBBIES}" maxlength="50" /></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="user_sex">{L_SEX}</label></dt>
 					<dd><label>
 						<select name="user_sex" id="user_sex" onchange="img_sex(this.options[selectedIndex].value)">
-							# START update.select_sex #							
-							{update.select_sex.SEX}							
-							# END update.select_sex #
+							# START select_sex #							
+							{select_sex.SEX}							
+							# END select_sex #
 						</select>
-						<span id="img_sex">{update.USER_SEX}</span>
+						<span id="img_sex">{USER_SEX}</span>
 					</label></dd>
 				</dl>
 				<dl class="overflow_visible">
 					<dt><label for="user_born">{L_DATE_OF_BIRTH}</label><br /><span>{L_DATE_FORMAT}</span></dt>
 					<dd><label>
-						<input size="10" maxlength="10" type="text" class="text" id="user_born" name="user_born" value="{update.USER_BORN}" /> 
+						<input size="10" maxlength="10" type="text" class="text" id="user_born" name="user_born" value="{USER_BORN}" /> 
 
 						<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
 							<div id="calendar" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 							</div>
 						</div>
-						<a onClick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={update.BORN_DAY}&amp;m={update.BORN_MONTH}&amp;y={update.BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+						<a onClick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={BORN_DAY}&amp;m={BORN_MONTH}&amp;y={BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 					</label></dd>
 				</dl>
 				<dl>
 					<dt><label for="user_sign">{L_SIGN}</label><br /><span>{L_SIGN_WHERE}</span></dt>
-					<dd><label><textarea class="post" rows="4" cols="27" name="user_sign" id="user_sign">{update.USER_SIGN}</textarea></label></dd>
+					<dd><label><textarea class="post" rows="4" cols="27" name="user_sign" id="user_sign">{USER_SIGN}</textarea></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="user_desc">{L_BIOGRAPHY}</label></dt>
-					<dd><label><textarea class="post" rows="6" cols="27" id="user_desc" name="user_desc">{update.USER_DESC}</textarea> </label></dd>
+					<dd><label><textarea class="post" rows="6" cols="27" id="user_desc" name="user_desc">{USER_DESC}</textarea> </label></dd>
 				</dl>
 			</fieldset>
 				
@@ -184,11 +184,11 @@
 				<legend>{L_CONTACT}</legend>
 				<dl>
 					<dt><label for="user_msn">MSN</label></dt>
-					<dd><label><input size="30" type="text" class="text" name="user_msn" id="user_msn" value="{update.USER_MSN}" maxlength="50" /></label></dd>
+					<dd><label><input size="30" type="text" class="text" name="user_msn" id="user_msn" value="{USER_MSN}" maxlength="50" /></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="user_yahoo">Yahoo</label></dt>
-					<dd><input size="30" type="text" class="text" name="user_yahoo" id="user_yahoo" value="{update.USER_YAHOO}" maxlength="50" /></label></dd>
+					<dd><input size="30" type="text" class="text" name="user_yahoo" id="user_yahoo" value="{USER_YAHOO}" maxlength="50" /></label></dd>
 				</dl>
 			</fieldset>	
 				
@@ -196,25 +196,23 @@
 				<legend>{L_AVATAR_MANAGEMENT}</legend>
 				<dl>
 					<dt><label>{L_CURRENT_AVATAR}</label></dt>
-					<dd>{update.USER_AVATAR}</label></dd>
+					<dd>{USER_AVATAR}</label></dd>
 				</dl>	
-				
-				# START update.upload_avatar #
+				# IF C_UPLOAD_AVATAR #
 				<dl>
 					<dt><label for="avatars">{L_UPLOAD_AVATAR}</label><br /><span>{L_UPLOAD_AVATAR_WHERE}</span></dt>
 					<dd><label>
 						<input type="file" name="avatars" id="avatars" size="30" class="submit" />					
 						<input type="hidden" name="max_file_size" value="2000000" />
 						<br />
-						{L_WEIGHT_MAX}: {update.upload_avatar.WEIGHT_MAX} ko
+						{L_WEIGHT_MAX}: {WEIGHT_MAX} ko
 						<br />
-						{L_HEIGHT_MAX}: {update.upload_avatar.HEIGHT_MAX} pixels
+						{L_HEIGHT_MAX}: {HEIGHT_MAX} pixels
 						<br />
-						{L_WIDTH_MAX}: {update.upload_avatar.WIDTH_MAX} pixels
+						{L_WIDTH_MAX}: {WIDTH_MAX} pixels
 					</label></dd>
 				</dl>
-				# END update.upload_avatar #
-				
+				# ENDIF #
 				<dl>
 					<dt><label for="avatar">{L_AVATAR_LINK}</label><br /><span>{L_AVATAR_LINK_WHERE}</span></dt>
 					<dd><label><input type="text" name="avatar" id="avatar" size="30" class="text" /></label></dd>
@@ -225,18 +223,18 @@
 				</dl>
 			</fieldset>
 			
-			# START update.miscellaneous #
+			# IF C_PROFIL_MISCELLANEOUS #
 			<fieldset>
 				<legend>{L_MISCELLANEOUS}</legend>	
 					
-				# START update.miscellaneous.list #
+				# START miscellaneous_list #
 				<dl>
-					<dt><label for="{update.miscellaneous.list.ID}">{update.miscellaneous.list.NAME}</label><br /><span>{update.miscellaneous.list.DESC}</span></dt>
-					<dd><label>{update.miscellaneous.list.FIELD}</label></dd>
+					<dt><label for="{miscellaneous_list.ID}">{miscellaneous_list.NAME}</label><br /><span>{miscellaneous_list.DESC}</span></dt>
+					<dd><label>{miscellaneous_list.FIELD}</label></dd>
 				</dl>
-				# END update.miscellaneous.list #	
+				# END miscellaneous_list #	
 			</fieldset>
-			# END update.miscellaneous #	
+			# ENDIF #
 
 			<fieldset class="fieldset_submit">
 				<legend>{L_UPDATE}</legend>
@@ -245,57 +243,54 @@
 				<input type="reset" value="{L_RESET}" class="reset" />
 			</fieldset>
 		</form>
-
-		# END update #
-
+		# ENDIF #
 
 
-		# START msg_mbr #
 
+		# IF C_MEMBER_INDEX #
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top"><strong>{L_PROFIL}</strong></div>
 			<div class="module_contents">
-				<p style="text-align:center;" class="text_strong">{L_WELCOME} {msg_mbr.USER_NAME}</p>
+				<p style="text-align:center;" class="text_strong">{L_WELCOME} {USER_NAME}</p>
 				<table class="module_table">
 					<tr>
 						<td class="row2" style="text-align:center;width:33%">
-							<a href="member{msg_mbr.U_MEMBER_ID}">{L_PROFIL_EDIT}</a>
+							<a href="member{U_MEMBER_ID}">{L_PROFIL_EDIT}</a>
 							<br /><br />
-							<a href="member{msg_mbr.U_MEMBER_ID}" title="">
+							<a href="member{U_MEMBER_ID}" title="">
 								<img src="../templates/{THEME}/images/upload/member.png" alt="{L_PROFIL_EDIT}" title="{L_PROFIL_EDIT}" />
 							</a>
 						</td>
 						<td class="row2" style="text-align:center;width:34%">
-							<a href="pm{msg_mbr.U_MEMBER_PM}">{msg_mbr.PM} {L_PRIVATE_MESSAGE}</a> <br /><br />
-							<a href="pm{msg_mbr.U_MEMBER_PM}">
-								<img src="../templates/{THEME}/images/{msg_mbr.IMG_PM}" alt="{L_PRIVATE_MESSAGE}" title="{L_PRIVATE_MESSAGE}" />
+							<a href="pm{U_MEMBER_PM}">{PM} {L_PRIVATE_MESSAGE}</a> <br /><br />
+							<a href="pm{U_MEMBER_PM}">
+								<img src="../templates/{THEME}/images/{IMG_PM}" alt="{L_PRIVATE_MESSAGE}" title="{L_PRIVATE_MESSAGE}" />
 							</a>
 						</td>
-						# START msg_mbr.files_management #
+						# IF C_MEMBER_AUTH_FILES #
 						<td class="row2" style="text-align:center;width:33%">
 							<a href="upload.php{SID}">{L_FILES_MANAGEMENT}</a> <br /><br />
 							<a href="upload.php{SID}">
 								<img src="../templates/{THEME}/images/upload/files_add.png" alt="{L_FILES_MANAGEMENT}" title="{L_FILES_MANAGEMENT}" />
 							</a>
 						</td>				
-						# END msg_mbr.files_management #
+						# ENDIF #
 					</tr>
 				</table>
 				<br /><br />
-				{msg_mbr.MSG_MBR}
+				{MSG_MBR}
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom"></div>
 		</div>
-		# END msg_mbr #
+		# ENDIF #
 
 
 
-		# START all #
-
+		# IF C_MEMBER_LIST #
 		<script type="text/javascript">
 		<!--
 		function XMLHttpRequest_search()
@@ -328,16 +323,15 @@
 		}
 		-->
 		</script>
-
 		<table class="module_table" style="width:98%;">	
 			<tr>
 				<td style="vertical-align:top;" class="row2">
 					<form action="../member/member.php{SID}" method="post">
 						{L_SELECT_GROUP}: <select name="show_group" style="text-align:center;" onchange="document.location = {U_SELECT_SHOW_GROUP};">
 							<option value="0" selected="selected">-- {L_LIST} --</option>
-							# START all.group #
-								{all.group.OPTION}
-							# END all.group #
+							# START group_select #
+								{group_select.OPTION}
+							# END group_select #
 						</select>
 						
 						<noscript>
@@ -372,9 +366,7 @@
 				</td>
 			</tr>
 		</table>	
-
 		<br /><br />
-			
 		<table class="module_table" style="width: 98%;">	
 			<tr>
 				<th colspan="8">
@@ -419,117 +411,110 @@
 				<td class="row3">
 					{L_WEB_SITE}
 				</td>
-							
 			</tr>
-			
-			# START all.member #
+			# START member_list #
 			<tr> 
 				<td class="row2" style="text-align:center;padding:4px 0px;">
-					<a href="member{all.member.U_MEMBER_ID}">{all.member.PSEUDO}</a>
+					<a href="member{member_list.U_MEMBER_ID}">{member_list.PSEUDO}</a>
 				</td>
 				<td class="row2" style="text-align:center;padding:4px 0px;"> 
-					{all.member.MAIL}
+					{member_list.MAIL}
 				</td>
 				<td class="row2" style="text-align:center;padding:4px 0px;"> 
-					{all.member.DATE}
+					{member_list.DATE}
 				</td>
 				<td class="row2" style="text-align:center;padding:4px 0px;"> 
-					{all.member.MSG}
+					{member_list.MSG}
 				</td>
 				<td class="row2" style="text-align:center;padding:4px 0px;"> 
-					{all.member.LOCAL}
+					{member_list.LOCAL}
 				</td>
 				<td class="row2" style="text-align:center;padding:4px 0px;"> 
-					{all.member.LAST_CONNECT}
+					{member_list.LAST_CONNECT}
 				</td>
 				<td class="row2" style="text-align:center;padding:4px 0px;"> 
-					<a href="pm{all.member.U_MEMBER_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="{L_PRIVATE_MESSAGE}" /></a>
+					<a href="pm{member_list.U_MEMBER_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="{L_PRIVATE_MESSAGE}" /></a>
 				</td>
 				<td class="row2" style="text-align:center;padding:4px 0px;"> 
-					{all.member.WEB}
+					{member_list.WEB}
 				</td>
 			</tr>
-			# END all.member #
-
+			# END member_list #
 			<tr>
 				<td colspan="8" class="row1">
 					<span style="float:left;">{PAGINATION}</span>
 				</td>
 			</tr>
 		</table>
-		# END all #
+		# ENDIF #
 
 
 
-		# START profil #
+		# IF C_MEMBER_PROFIL_EDIT #
 		<div class="fieldset_content">
 			<fieldset>
 				<legend>{L_PROFIL}</legend>
-				# START profil.edit #
+				# IF C_MEMBER_PROFIL_EDIT #
 				<dl>
 					<dt>{L_PROFIL_EDIT}</dt>
-					<dd><a href="{profil.edit.U_MEMBER_SCRIPT}" title="{L_PROFIL_EDIT}"><img src="../templates/{profil.edit.THEME}/images/{LANG}/edit.png" alt="{L_PROFIL_EDIT}" /></a></dd>
+					<dd><a href="{U_MEMBER_SCRIPT}" title="{L_PROFIL_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_PROFIL_EDIT}" /></a></dd>
 				</dl>
-				# END profil.edit #				
+				# ENDIF #				
 				<dl>
 					<dt>{L_PSEUDO}</dt>
-					<dd>{profil.USER_NAME}</dd>
+					<dd>{USER_NAME}</dd>
 				</dl>
 				<dl>
 					<dt>{L_AVATAR}</dt>
-					<dd>{profil.USER_AVATAR}</dd>
+					<dd>{USER_AVATAR}</dd>
 				</dl>
 				<dl>
 					<dt>{L_STATUT}</dt>
-					<dd>{profil.STATUT}</dd>
+					<dd>{STATUT}</dd>
 				</dl>
 				<dl>
 					<dt>{L_GROUPS}</dt>
-					<dd>
-						# START profil.groups #
-						{profil.groups.USER_GROUP}
-						# END profil.groups #
-					</dd>
+					<dd>{USER_GROUPS_LIST}</dd>
 				</dl>
 				<dl>
 					<dt>{L_REGISTERED}</dt>
-					<dd>{profil.DATE}</dd>
+					<dd>{DATE}</dd>
 				</dl>
 				<dl>
-					<dt>{L_NBR_MESSAGE}</dt>
-					<dd>{profil.USER_MSG}</dd>
+					<dt>{L_NBR_MSG}</dt>
+					<dd>{USER_MSG} <br /><a href="membermsg{U_MEMBER_MSG}">{L_DISPLAY_MEMBER_MSG}</a></dd>
 				</dl>
 				<dl>
 					<dt>{L_LAST_CONNECT}</dt>
-					<dd>{profil.LAST_CONNECT}</dd>
+					<dd>{LAST_CONNECT}</dd>
 				</dl>
 				<dl>
 					<dt>{L_WEB_SITE}</dt>
-					<dd>{profil.WEB}</dd>
+					<dd>{WEB}</dd>
 				</dl>
 				<dl>
 					<dt>{L_LOCALISATION}</dt>
-					<dd>{profil.LOCAL}</dd>
+					<dd>{LOCAL}</dd>
 				</dl>
 				<dl>
 					<dt>{L_JOB}</dt>
-					<dd>{profil.OCCUPATION}</dd>
+					<dd>{OCCUPATION}</dd>
 				</dl>
 				<dl>
 					<dt>{L_HOBBIES}</dt>
-					<dd>{profil.HOBBIES}</dd>
+					<dd>{HOBBIES}</dd>
 				</dl>
 				<dl>
 					<dt>{L_SEX}</dt>
-					<dd>{profil.USER_SEX}</dd>
+					<dd>{USER_SEX}</dd>
 				</dl>
 				<dl>
 					<dt>{L_AGE}</dt>
-					<dd>{profil.USER_AGE}</dd>
+					<dd>{USER_AGE}</dd>
 				</dl>
 				<dl>
 					<dt>{L_BIOGRAPHY}</dt>
-					<dd><div>{profil.USER_DESC}</div></dd>
+					<dd><div>{USER_DESC}</div></dd>
 				</dl>
 			</fieldset>
 			
@@ -537,48 +522,48 @@
 				<legend>{L_CONTACT}</legend>
 				<dl>
 					<dt>{L_MAIL}</dt>
-					<dd>{profil.MAIL}</dd>
+					<dd>{MAIL}</dd>
 				</dl>
 				<dl>
 					<dt>{L_PRIVATE_MESSAGE}</dt>
-					<dd><a href="pm{profil.U_MEMBER_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="{L_PRIVATE_MESSAGE}" /></a></dd>
+					<dd><a href="pm{U_MEMBER_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="{L_PRIVATE_MESSAGE}" /></a></dd>
 				</dl>
 				<dl>
 					<dt>MSN</dt>
-					<dd>{profil.USER_MSN}</dd>
+					<dd>{USER_MSN}</dd>
 				</dl>
 				<dl>
 					<dt>Yahoo</dt>
-					<dd>{profil.USER_YAHOO}</dd>
+					<dd>{USER_YAHOO}</dd>
 				</dl>
 			</fieldset>
 			
-			# START profil.miscellaneous #
+			# IF C_PROFIL_MISCELLANEOUS #
 			<fieldset>
 				<legend>{L_MISCELLANEOUS}</legend>						
-				# START profil.miscellaneous.list #
+				# START miscellaneous_list #
 				<dl>
-					<dt>{profil.miscellaneous.list.NAME}<br /><span>{profil.miscellaneous.list.DESC}</span></dt>
-					<dd>{profil.miscellaneous.list.FIELD}</dd>
+					<dt>{miscellaneous_list.NAME}<br /><span>{miscellaneous_list.DESC}</span></dt>
+					<dd>{miscellaneous_list.FIELD}</dd>
 				</dl>
-				# END profil.miscellaneous.list #	
+				# END miscellaneous_list #	
 			</fieldset>
-			# END profil.miscellaneous #
+			# ENDIF #
 		</div>		
-		# END profil #
+		# ENDIF #
 
 		
 
-		# START group #
+		# IF C_GROUP_LIST #
 		<table class="module_table" style="width:70%;">	
 			<tr>
 				<td style="vertical-align:top;" class="row2">
 					<form action="member.php{SID}" method="post">
 						{L_SELECT_GROUP}: <select name="show_group" style="text-align:center;" onchange="document.location = {U_SELECT_SHOW_GROUP};">  
 							<option value="0" selected="selected">-- {L_LIST} --</option>
-							# START group.select #
-								{group.select.OPTION}
-							# END group.select #
+							# START group_select #
+								{group_select.OPTION}
+							# END group_select #
 						</select>
 						&nbsp;&nbsp;{group.ADMIN_GROUPS}
 						<noscript>
@@ -594,7 +579,7 @@
 		<table class="module_table" style="width: 70%;text-align:center;">
 			<tr>
 				<th colspan="3">
-					{group.GROUP_NAME}
+					{GROUP_NAME}
 				</th>
 			</tr>
 			<tr>
@@ -614,18 +599,18 @@
 				</td>
 			</tr>
 			
-			# START group.list #
+			# START group_list #
 			<tr>
 				<td class="row1">
-					{group.list.USER_AVATAR}
+					{group_list.USER_AVATAR}
 				</td>
 				<td class="row1">
-					{group.list.U_MEMBER}
+					{group_list.U_MEMBER}
 				</td>
 				<td class="row1">
-					{group.list.USER_RANK}
+					{group_list.USER_RANK}
 				</td>
 			</tr>	
-			# END group.list #
+			# END group_list #
 		</table>
-		# END group #
+		# ENDIF #
