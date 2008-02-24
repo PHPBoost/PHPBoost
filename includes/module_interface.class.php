@@ -111,7 +111,9 @@ class ModuleInterface
 					array_splice($methods, $i);
 			}
 			$this->functionnalities = $methods;
-			print_r($$this->functionnalities);
+			echo '<hr/>';
+			print_r($this->functionnalities);
+			echo '<hr/>';
 		}
 		
 		$this->errors = $error;
