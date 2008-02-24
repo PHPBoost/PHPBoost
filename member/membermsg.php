@@ -39,8 +39,8 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 	));
 	
 	require_once('../includes/modules.class.php');
-	$Modules = new Modules();
-	$module = $Modules->GetAvailablesModules('GetMembermsgLink');
+	$modulesLoader = new Modules();
+	$modules = $modulesLoader->GetAvailablesModules('GetMembermsgLink');
 	$actions = array();
 
 	foreach($modules as $module)
