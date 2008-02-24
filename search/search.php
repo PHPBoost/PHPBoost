@@ -68,7 +68,7 @@ if( $search != '' )
 	$results = array();
 	
 	// Listes des modules de recherches
-	$searchModules = $Modules->GetAvailablesModules( 'GetSearchRequest');
+	$searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
 	// Ajout du paramètre search à tous les modules
 	foreach( $searchModules as $module)
 	{
@@ -95,26 +95,26 @@ if( $search != '' )
 	}
 	
 	// Génération des formulaires précomplétés et passage aux templates
-	$searchForms = GetSearchForms( $formsModule, $modulesArgs );
-	$Template->Assign_block_vars( 'forms', array( $searchForms ) );
+	$searchForms = GetSearchForms($formsModule, $modulesArgs);
+	$Template->Assign_block_vars('forms', array( $searchForms) );
 	
 	// Génération des résultats et passage aux templates
-	$nbResults = GetSearchResults( $search, $searchModules, $modulesArgs, $results, ($p - 1), ($p - 1 + NB_RESULTS_PER_PAGE));
-	$Template->Assign_vars( array( 'nbResults' => $nbResults ) ) ;
+	$nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, ($p - 1), ($p - 1 + NB_RESULTS_PER_PAGE));
+	$Template->Assign_vars( array('nbResults' => $nbResults) ) ;
 	
 	$htmlResults = array();
 	foreach( $results as $result )
 	{
 		// A vérifier que les résultats renvoyé par la méthode GetResults de la classe Search
 		// Renvoie bien un tableau associatif
-		$module = $Modules->GetModule( $result['id_module'] );
-		if( $module->HasFunctionnality( 'ParseSearchResult' ) )
-			array_push( $htmlResults, $module->Functionnality( 'ParseSearchResult', array( $result ) ) );
+		$module = $Modules->GetModule($result['id_module']);
+		if( $module->HasFunctionnality('ParseSearchResult') )
+			array_push($htmlResults, $module->Functionnality('ParseSearchResult', array($result)) );
 		else
-			array_push( $htmlResults, $result );
+			array_push($htmlResults, $result);
 	}
 	
-	$Template->Assign_vars( array( 'htmlResults' => $htmlResults ) ) ;
+	$Template->Assign_vars( array('htmlResults' => $htmlResults) ) ;
 	
 	// parsage des formulaires de recherches
 	$Template->Pparse('search_forms');
@@ -124,16 +124,16 @@ if( $search != '' )
 else
 {
 	// Listes des modules de recherches
-	$searchModules = $Modules->GetAvailablesModules( 'GetSearchRequest' );
+	$searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
 	// Chargement des modules avec formulaires
-	$formsModule = $Modules->GetAvailablesModules( 'GetSearchForm', $searchModules );
+	$formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
 	
 	// Génération des formulaires et passage aux templates
-	$searchForms = GetSearchForms( $formsModule, $modulesArgs );
-	$Template->Assign_block_vars( 'forms', array( $searchForms ) );
-	
+	$searchForms = GetSearchForms($formsModule, $modulesArgs);
+	$Template->Assign_block_vars('forms', array('SEARCH_FORMS' => $searchForms));
+    
 	// parsage de la page
-	$Template->Pparse ( 'search_forms' );
+	$Template->Pparse ('search_forms');
 }
 
 //--------------------------------------------------------------------- Footer

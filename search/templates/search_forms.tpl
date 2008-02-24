@@ -3,13 +3,19 @@
     <div class="module_top_r"></div>
     <div class="module_top">{TITLE}</div>
     <div class="module_contents">
-        {title_search}
         <div class="spacer">&nbsp;</div>
-        # START forms #
-            <div class="module_position">
-                
-            </div>
-        # END forms #
+            <fieldset>
+                <legend>{title_search}</legend>
+                <dl>
+                    <dt><label for="search">Mots clés (4 caractères minimum)</label></dt>
+                    <dd><label><input type="text" size="35" id="search" name="search" value="{search}"  class="text" /></label></dd>
+                </dl>
+            </fieldset>
+            # START forms #
+                <div class="module_position">
+                    {forms.SEARCH_FORMS}
+                </div>
+            # END forms #
     </div>
     <div class="module_bottom_l"></div>
     <div class="module_bottom_r"></div>
