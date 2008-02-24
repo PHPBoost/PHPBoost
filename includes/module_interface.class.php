@@ -107,13 +107,13 @@ class ModuleInterface
 				// Si la méthode est une méthode générique de la classe ModuleInterface
 				//  Ou si c'est le constructeur de l'interface de son module
 				// Alors ce n'est pas une fonctionnalité.
-				if( in_array($methods[$i], $moduleMethods) or ($methods[$i] == ucfirst($moduleName).'Interface') )
+				if( in_array($methods[$i], $moduleMethods) || ($methods[$i] == ucfirst($moduleName).'Interface') )
 					array_splice($methods, $i);
 			}
 			$this->functionnalities = $methods;
-			echo '<hr/>';
+			echo '<hr/><pre>';
 			print_r($this->functionnalities);
-			echo '<hr/>';
+			echo '</pre><hr/>';
 		}
 		
 		$this->errors = $error;
