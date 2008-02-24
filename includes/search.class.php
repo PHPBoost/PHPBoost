@@ -162,7 +162,7 @@ class Search
     
     //---------------------------------------------------------- Constructeurs
     
-    function Search ( $search = '', $modules = Array ( ) )
+    function Search ( $search = '', $modules = Array ( ), $options = '' )
     /**
      *  Constructeur de la classe Search
      *  Nb requêtes : 4 + k / 10
@@ -189,7 +189,7 @@ class Search
         
         $request = $Sql->Query_while( $reqCache, __LINE__, __FILE__ );
         while( $row = $Sql->Sql_fetch_assoc($request) )
-        {   // Ajout des résultats s'ils font partie de la liste des modules é traiter
+        {   // Ajout des résultats s'ils font partie de la liste des modules à traiter
             $this->id_search[$row[1]] = $row[0];
         }
         $Sql->Close($request);
@@ -204,13 +204,12 @@ class Search
         
         $nbReqInsert = 0;
         $reqInsert = '';
-        foreach ( $this->modules as $module )
+        // Pour chaque module n'étant pas dans le cache
+        foreach ( $modules as $id_module )
         {
-            $id_module = $module->name;
             if ( !$this->IsInCache ( $id_module ) )
             {
-                $reqInsert .= "('".$this->id_search[$id_module]."','".$id_module."','".$this->id_user."','".$result['id_content']."',";
-                $reqInsert .= "'".$result['relevance']."','".time()."', '0'), ";
+                $reqInsert .= "('','".$id_module."','".$this->id_user."','".$search."','".$options."','".time()."', '0'), ";
                 
                 // Exécution de 10 requêtes d'insertions
                 if ( $nbReqInsert == 10 )
