@@ -26,8 +26,7 @@
  *
 ###################################################*/
 
-
-require_once ( '../includes/module_interface.class.php' );
+require_once('../includes/module_interface.class.php');
 
 /**
  *  Les arguments de fonction nommé "$modules" sont assez particulier.
@@ -41,104 +40,98 @@ require_once ( '../includes/module_interface.class.php' );
  *
  */
 
-
 class Modules
 {
     //----------------------------------------------------------------- PUBLIC
     //----------------------------------------------------- Méthodes publiques
-    function Functionnality ( $functionnality, $modules )
+    function Functionnality($functionnality, $modules)
     /**
      *  Vérifie les fonctionnalités des modules et appelle la méthode
      *  du/des module(s) sélectionné(s) avec les bons arguments.
      */
     {
-        $results = Array ( );
-        foreach( $modules as $moduleName => $args )
+        $results = array();
+        foreach($modules as $moduleName => $args)
         {
             // Instanciation de l'objet $module
-            $module = $this->GetModule ( $moduleName );
+            $module = $this->GetModule($moduleName);
             // Si le module à déjà été appelé et a déjà eu une erreur,
             // On nettoie le bit d'erreur correspondant.
-            $Module->clearFunctionnalityError ( );
-            if ( $Module->hasFunctionnality ( $functionnality ) == true )
-            { $results[$moduleName] = $Module->Functionnality ( $functionnality, $args ); }
+            $Module->clearFunctionnalityError();
+            if( $Module->hasFunctionnality($functionnality) == true )
+				$results[$moduleName] = $Module->Functionnality($functionnality, $args);
         }
         return $results;
     }
 
-    function GetAvailablesModules ( $functionnality, $modulesList = Array ( ) )
+    function GetAvailablesModules($functionnality, $modulesList = array())
     /**
      *  Renvoie la liste des modules disposant de la fonctionnalité demandée.
      *  Si $modulesList est spécifié, alors on ne recherche que le sous ensemble de celui-ci
      */
     {
-        $modules = Array (  );
-        
-        if ( $modulesList === Array ( ) )
+        $modules = array();
+        if( $modulesList === array() )
         {
             global $SECURE_MODULE;
-            foreach( array_keys($SECURE_MODULE) as $moduleName )
+            foreach(array_keys($SECURE_MODULE) as $moduleName)
             {
-                $module = $this->GetModule ( $moduleName );
-                if ( $module->GetErrors ( ) == 0 && $module->HasFunctionnality ( $functionnality ) )
-                {
-                    array_push( $modules, $module );
-                }
+                $module = $this->GetModule($moduleName);
+                if( $Module->GetErrors == 0 && $Module->HasFunctionnality($functionnality) )
+                    array_push($modules, $module);
             }
         }
         else
         {
-            foreach( $modulesList as $module )
+            foreach($modulesList as $module)
             {
-                if ( $module->GetErrors == 0 && $module->HasFunctionnality ( $functionnality ) )
-                {
-                    array_push( $modules, $module );
-                }
+                if( $Module->GetErrors == 0 && $Module->HasFunctionnality($functionnality) )
+                    array_push($modules, $module);
             }
         }
         return $modules;
     }
 
-    function GetModule ( $moduleName = '' )
+    function GetModule($moduleName = '')
     /**
      *  Instancie et renvoie le module demandé.
      */
     {
-        if ( !isset( $this->loadedModules[$moduleName] ) )
+        if( !isset($this->loadedModules[$moduleName]) )
         {
-            if ( in_array( $moduleName, $this->availablesModules ) )
+            if( in_array($moduleName, $this->availablesModules) )
             {
                 global $Member, $SECURE_MODULE;
-                if ( $Member->Check_auth ( $SECURE_MODULE[$moduleName], 1 ) )
+                if( $Member->check_level($SECURE_MODULE[$moduleName]) )
                 {
-                    if ( @include_once ( '../'.$moduleName.'/'.$moduleName.'_interface.class.php' ) )
+                    if( @include_once('../'.$moduleName.'/'.$moduleName.'_interface.class.php') )
                     {
-                        $moduleConstructor = ucfirst ( $moduleName.'Interface' );
-                        $Module = new $moduleConstructor ( );
+                        $moduleConstructor = ucfirst($moduleName.'Interface');
+                        $Module = new $moduleConstructor();
                     }
                     else
-                    { $Module = new ModuleInterface ( $moduleName, MODULE_NOT_YET_IMPLEMENTED ); }
+						$Module = new ModuleInterface($moduleName, MODULE_NOT_YET_IMPLEMENTED);
                 }
                 else
-                { $Module = new ModuleInterface ( $moduleName, ACCES_DENIED ); }
+					$Module = new ModuleInterface($moduleName, ACCES_DENIED);
             }
             else
-            { $Module = new ModuleInterface ( $moduleName, MODULE_NOT_AVAILABLE ); }
+				$Module = new ModuleInterface($moduleName, MODULE_NOT_AVAILABLE); 
             $this->loadedModules[$moduleName] = $Module;
         }
         return $this->loadedModules[$moduleName];
     }
 
     //---------------------------------------------------------- Constructeurs
-    function Modules (  )
+    function Modules()
     /**
      *  Constructeur de la classe Modules
      */
     {
         global $SECURE_MODULE;
         
-        $this->loadedModules = Array (  );
-        $this->availablesModules = array_keys ( $SECURE_MODULE );
+        $this->loadedModules = array();
+        $this->availablesModules = array_keys($SECURE_MODULE);
     }
 
     //------------------------------------------------------------------ PRIVE
