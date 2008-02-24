@@ -85,7 +85,7 @@ class Modules
         {
             foreach($modulesList as $module)
             {
-                if( $module->GetErrors( ) == 0 && $module->HasFunctionnality($functionnality) )
+                if( $module->GetErrors() == 0 && $module->HasFunctionnality($functionnality) )
                     array_push($modules, $module);
             }
         }
