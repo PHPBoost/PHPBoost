@@ -3,7 +3,7 @@
  *                              search_english.php
  *                            -------------------
  *   begin                : January 27, 2008
- *   copyright            : (C) 2008 Rouchon Loic
+ *   copyright            : (C) 2008 Rouchon Loïc
  *   email                : horn@phpboost.com
  *
  *  
@@ -31,7 +31,7 @@
 ####################################################
 
 //Généralités
-$LANG['search'] = 'Search';
+$LANG['title_search'] = 'Search';
 
 //Actions
 
