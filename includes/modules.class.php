@@ -80,7 +80,7 @@ class Modules
             foreach( array_keys($SECURE_MODULE) as $moduleName )
             {
                 $module = $this->GetModule ( $moduleName );
-                if ( $module->GetErrors ( ) == 0 and $module->HasFunctionnality ( $functionnality ) )
+                if ( $module->GetErrors ( ) == 0 && $module->HasFunctionnality ( $functionnality ) )
                 {
                     array_push( $modules, $module );
                 }
@@ -90,7 +90,7 @@ class Modules
         {
             foreach( $modulesList as $module )
             {
-                if ( $module->GetErrors == 0 and $module->HasFunctionnality ( $functionnality ) )
+                if ( $module->GetErrors == 0 && $module->HasFunctionnality ( $functionnality ) )
                 {
                     array_push( $modules, $module );
                 }
