@@ -13,7 +13,10 @@
             </fieldset>
             # START forms #
                 <div class="module_position">
-                    {forms.SEARCH_FORMS}
+                    <fieldset>
+                        <legend>{forms.MODULE_NAME}</legend>
+                        {forms.SEARCH_FORM}
+                    </fieldset>
                 </div>
             # END forms #
     </div>
