@@ -64,7 +64,7 @@ class ForumInterface extends ModuleInterface
      *  Renvoie le formulaire de recherche du forum
      */
     {
-        $form  = '<fieldset>
+        $form  = '
         <dl>
             <dt><label for="time">Date</label></dt>
             <dd><label> 
@@ -104,8 +104,7 @@ class ForumInterface extends ModuleInterface
             <dd>
                 <label><input type="checkbox" name="colorate_result" id="colorate_result" value="1" checked="checked" /></label>
             </dd>
-        </dl>
-    </fieldset>';
+        </dl>';
         return $form;
     }
     

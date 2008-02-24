@@ -130,7 +130,13 @@ else
 	
 	// Génération des formulaires et passage aux templates
 	$searchForms = GetSearchForms($formsModule, $modulesArgs);
-	$Template->Assign_block_vars('forms', array('SEARCH_FORMS' => $searchForms));
+    foreach ( $searchForms as $moduleName => $form )
+    {
+        $Template->Assign_block_vars('forms', array(
+            'MODULE_NAME' => $moduleName,
+            'SEARCH_FORM' => $form
+        ));
+    }
     
 	// parsage de la page
 	$Template->Pparse ('search_forms');
