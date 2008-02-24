@@ -32,7 +32,7 @@ require_once('../includes/header.php');
 $idnews = !empty($_GET['id']) ? numeric($_GET['id']) : 0;	
 $idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 
-$is_admin = $Member->Get_attribute('level') === 2;
+$is_admin = $Member->Check_level(2);
 if( empty($idnews) && empty($idcat) ) 
 {
 	$Template->Set_filenames(array(

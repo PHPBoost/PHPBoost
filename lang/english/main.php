@@ -345,6 +345,8 @@ $LANG['registered_s'] = 'Registered';
 $LANG['registered_on'] = 'Registered on';
 $LANG['last_connect'] = 'Last connection';
 $LANG['private_message'] = 'Private message';
+$LANG['member_msg_display'] = 'Display member messages';
+$LANG['member_msg'] = 'Member messages';
 $LANG['nbr_message'] = 'Total posts';
 $LANG['member_online'] = 'Members Online';
 $LANG['no_member_online'] = 'No Member Online';
@@ -359,6 +361,7 @@ $LANG['date_of_birth'] = 'Date of birth';
 $LANG['date_birth_format'] = 'MM/DD/YYYY';
 $LANG['date_birth_parse'] = 'MM/DD/YYYY';
 $LANG['banned'] = 'Banni';
+$LANG['go_msg'] = 'Go to message';
 
 //Register
 $LANG['pseudo_how'] = 'Minimal username\'s length: 3 characters';

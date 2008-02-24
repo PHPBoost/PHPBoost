@@ -83,6 +83,25 @@ if( !empty($id_get) ) //Espace membre
 			$user_sex = ($row['user_sex'] == 1) ? '../templates/' . $CONFIG['theme'] . '/images/man.png' : '../templates/' . $CONFIG['theme'] . '/images/woman.png';
 	
 		$Template->Assign_vars(array(
+			'C_MEMBER_UPDATE_PROFIL' => true,
+			'USER_THEME' => $row['user_theme'],
+			'MAIL' => $row['user_mail'],
+			'LOCAL' => $row['user_local'],
+			'WEB' => $row['user_web'],
+			'OCCUPATION' => $row['user_occupation'],
+			'HOBBIES' => $row['user_hobbies'],			
+			'USER_AVATAR' => (!empty($row['user_avatar'])) ? '<img src="' . $row['user_avatar'] . '" alt="" />' : '<em>' . $LANG['no_avatar'] . '</em>',
+			'SHOW_MAIL_CHECKED' => ($row['user_show_mail'] == 0) ? 'checked="checked"' : '',
+			'USER_BORN' => $user_born,
+			'BORN_DAY' => $born_day,
+			'BORN_MONTH' => $born_month,
+			'BORN_YEAR' => $born_year,
+			'USER_SEX' => !empty($user_sex) ? '<img src="' . $user_sex . '" alt="" />' : '',
+			'USER_SIGN' => unparse($row['user_sign'], NO_EDITOR_UNPARSE),
+			'USER_DESC' => unparse($row['user_desc'], NO_EDITOR_UNPARSE),
+			'USER_MSN' => $row['user_msn'],
+			'USER_YAHOO' => $row['user_yahoo'],
+			'U_MEMBER_ACTION_UPDATE' => transid('.php?id=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php'),
 			'L_REQUIRE_MAIL' => $LANG['require_mail'],
 			'L_MEMBER_AREA' => $LANG['member_area'],
 			'L_PROFIL_EDIT' => $LANG['profil_edit'],
@@ -129,27 +148,6 @@ if( !empty($id_get) ) //Espace membre
 			'L_RESET' => $LANG['reset']
 		));
 		
-		$Template->Assign_block_vars('update', array(
-			'USER_THEME' => $row['user_theme'],
-			'MAIL' => $row['user_mail'],
-			'LOCAL' => $row['user_local'],
-			'WEB' => $row['user_web'],
-			'OCCUPATION' => $row['user_occupation'],
-			'HOBBIES' => $row['user_hobbies'],			
-			'USER_AVATAR' => (!empty($row['user_avatar'])) ? '<img src="' . $row['user_avatar'] . '" alt="" />' : '<em>' . $LANG['no_avatar'] . '</em>',
-			'SHOW_MAIL_CHECKED' => ($row['user_show_mail'] == 0) ? 'checked="checked"' : '',
-			'USER_BORN' => $user_born,
-			'BORN_DAY' => $born_day,
-			'BORN_MONTH' => $born_month,
-			'BORN_YEAR' => $born_year,
-			'USER_SEX' => !empty($user_sex) ? '<img src="' . $user_sex . '" alt="" />' : '',
-			'USER_SIGN' => unparse($row['user_sign'], NO_EDITOR_UNPARSE),
-			'USER_DESC' => unparse($row['user_desc'], NO_EDITOR_UNPARSE),
-			'USER_MSN' => $row['user_msn'],
-			'USER_YAHOO' => $row['user_yahoo'],
-			'U_MEMBER_ACTION_UPDATE' => transid('.php?id=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php')
-		));
-				
 		//Gestion langue par défaut.
 		$array_identifier = '';
 		$lang_identifier = '../images/stats/other.png';
@@ -169,7 +167,7 @@ if( !empty($id_get) ) //Espace membre
 					$selected = 'selected="selected"';
 					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
 				}			
-				$Template->Assign_block_vars('update.select_lang', array(
+				$Template->Assign_block_vars('select_lang', array(
 					'LANG' => '<option value="' . $row2['lang'] . '" ' . $selected . '>' . $lang_name . '</option>'
 				));
 			}
@@ -194,7 +192,7 @@ if( !empty($id_get) ) //Espace membre
 				{
 					$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];
 					$selected = ($row2['theme'] == $row['user_theme']) ? 'selected="selected"' : '';
-					$Template->Assign_block_vars('update.select_theme', array(
+					$Template->Assign_block_vars('select_theme', array(
 						'THEME' => '<option value="' . $row2['theme'] . '" ' . $selected . '>' . $theme_name . '</option>'
 					));
 				}
@@ -205,7 +203,7 @@ if( !empty($id_get) ) //Espace membre
 		{
 			$theme_info = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'];
-			$Template->Assign_block_vars('update.select_theme', array(
+			$Template->Assign_block_vars('select_theme', array(
 				'THEME' => '<option value="' . $CONFIG['theme'] . '" selected="selected">' . $theme_name . '</option>'
 			));
 		}
@@ -218,7 +216,7 @@ if( !empty($id_get) ) //Espace membre
 			$selected = ($code == $row['user_editor']) ? 'selected="selected"' : '';
 			$select_editors .= '<option value="' . $code . '" ' . $selected . '>' . $name . '</option>';
 		}
-		$Template->Assign_block_vars('update.select_editor', array(
+		$Template->Assign_block_vars('select_editor', array(
 			'SELECT_EDITORS' => $select_editors
 		));
 		
@@ -230,7 +228,7 @@ if( !empty($id_get) ) //Espace membre
 			$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
 			$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 		}
-		$Template->Assign_block_vars('update.select_timezone', array(
+		$Template->Assign_block_vars('select_timezone', array(
 			'SELECT_TIMEZONE' => $select_timezone
 		));
 					
@@ -241,7 +239,7 @@ if( !empty($id_get) ) //Espace membre
 		{		
 			$selected = ($i == $row['user_sex']) ? 'selected="selected"' : '';
 
-			$Template->Assign_block_vars('update.select_sex', array(
+			$Template->Assign_block_vars('select_sex', array(
 				'SEX' => '<option value="' . $i . '" ' . $selected . '>' . $value_sex . '</option>'
 			));
 			
@@ -251,7 +249,8 @@ if( !empty($id_get) ) //Espace membre
 		//Autorisation d'uploader un avatar sur le serveur.
 		if( $CONFIG_MEMBER['activ_up_avatar'] == 1 )
 		{
-			$Template->Assign_block_vars('update.upload_avatar', array(			
+			$Template->Assign_vars(array(			
+				'C_UPLOAD_AVATAR' => true,
 				'WEIGHT_MAX' => $CONFIG_MEMBER['weight_max'],
 				'HEIGHT_MAX' => $CONFIG_MEMBER['height_max'],
 				'WIDTH_MAX' => $CONFIG_MEMBER['width_max']
@@ -263,10 +262,10 @@ if( !empty($id_get) ) //Espace membre
 		if( $extend_field_exist > 0 )
 		{
 			$Template->Assign_vars(array(			
+				'C_PROFIL_MISCELLANEOUS' => true,
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
 			));
-			$Template->Assign_block_vars('update.miscellaneous', array(			
-			));
+
 			$result = $Sql->Query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values, ex.*
 			FROM ".PREFIX."member_extend_cat exc
 			LEFT JOIN ".PREFIX."member_extend ex ON ex.user_id = '" . $id_get . "'
@@ -331,7 +330,7 @@ if( !empty($id_get) ) //Espace membre
 					break;
 				}				
 				
-				$Template->Assign_block_vars('update.miscellaneous.list', array(
+				$Template->Assign_block_vars('miscellaneous_list', array(
 					'NAME' => $row['require'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 					'ID' => $row['field_name'],
 					'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
@@ -616,9 +615,16 @@ if( !empty($id_get) ) //Espace membre
 		$is_auth_files = $Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES);
 	
 		$Template->Assign_vars(array(
+			'C_MEMBER_INDEX' => true,
 			'SID' => SID,
 			'LANG' => $CONFIG['lang'],
 			'COLSPAN' => $is_auth_files ? 3 : 2,
+			'USER_NAME' => $Member->Get_attribute('login'),
+			'PM' => $Member->Get_attribute('user_pm'),
+			'IMG_PM' => ($Member->Get_attribute('user_pm') > 0) ? 'new_pm.gif' : 'pm.png',
+			'MSG_MBR' => $msg_mbr,
+			'U_MEMBER_ID' => transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;edit=true'),
+			'U_MEMBER_PM' => transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php'),
 			'L_PROFIL' => $LANG['profil'],
 			'L_WELCOME' => $LANG['welcome'],
 			'L_PROFIL_EDIT' => $LANG['profil_edit'],
@@ -626,19 +632,11 @@ if( !empty($id_get) ) //Espace membre
 			'L_PRIVATE_MESSAGE' =>  $LANG['private_message']
 		));
 		
-		$Template->Assign_block_vars('msg_mbr', array(
-			'USER_NAME' => $Member->Get_attribute('login'),
-			'PM' => $Member->Get_attribute('user_pm'),
-			'IMG_PM' => ($Member->Get_attribute('user_pm') > 0) ? 'new_pm.gif' : 'pm.png',
-			'MSG_MBR' => $msg_mbr,
-			'U_MEMBER_ID' => transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;edit=true'),
-			'U_MEMBER_PM' => transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php')
-		));
-		
 		//Affichage du lien vers l'interface des fichiers.
 		if( $is_auth_files )
 		{
-			$Template->Assign_block_vars('msg_mbr.files_management', array(
+			$Template->Assign_vars(array(
+				'C_MEMBER_AUTH_FILES' => true
 			));
 		}
 	}
@@ -665,15 +663,14 @@ if( !empty($id_get) ) //Espace membre
 			$user_sex = '&nbsp;';
 			break;
 			case 1:
-			$user_sex = $LANG['male'] . ' <img src="../templates/' . $CONFIG['theme'] . '/images/man.png" alt="" style="vertical-align:middle;" />';
+			$user_sex = $LANG['male'] . ' <img src="../templates/' . $CONFIG['theme'] . '/images/man.png" alt="" class="valign_middle" />';
 			break;
 			case 2:
-			$user_sex = $LANG['female'] . ' <img src="../templates/' . $CONFIG['theme'] . '/images/woman.png" alt="" style="vertical-align:middle;" />';
+			$user_sex = $LANG['female'] . ' <img src="../templates/' . $CONFIG['theme'] . '/images/woman.png" alt="" class="valign_middle" />';
 			break;
 			default:
 			$user_sex = '&nbsp;';
-		}
-		
+		}		
 		switch($row['level'])
 		{		
 			case 0:
@@ -687,30 +684,23 @@ if( !empty($id_get) ) //Espace membre
 			break;
 		}
 		
+		//Liste des groupes du membre.		
+		$user_group_list = '';
+		$user_groups = explode('|', $row['user_groups']);
+		foreach($user_groups as $key => $group_id)
+		{
+			$group = $Sql->Query_array('group', 'id', 'name', 'img', "WHERE id = '" . numeric($group_id) . "'", __LINE__, __FILE__);
+			if( !empty($group['id']) )
+				$user_group_list .= ($i != 0 ? '<br /><br />' : '') . '<a href="member' . transid('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . (!empty($group['img']) ? '<img src="../images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />'  : '') . '</a> <a href="member' . transid('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . $group['name'] . '</a>';
+		}
+		$user_group_list = !empty($user_group_list) ? $user_group_list : $LANG['member'];
+		
+		//Droit d'édition du profil, au membre en question et à l'admin uniquement	.
 		$Template->Assign_vars(array(
+			'C_MEMBER_PROFIL_EDIT' => ($Member->Get_attribute('user_id') === $id_get || $Member->Check_level(2)) ? true : false,
+			'C_PROFIL_MEMBER' => true,
+			'SID' => SID,
 			'LANG' => $CONFIG['lang'],
-			'L_PROFIL' => $LANG['profil'],
-			'L_PROFIL_EDIT' => $LANG['profil_edit'],
-			'L_AVATAR' => $LANG['avatar'],
-			'L_PSEUDO' => $LANG['pseudo'],
-			'L_STATUT' => $LANG['status'],
-			'L_GROUPS' => $LANG['groups'],
-			'L_REGISTERED' => $LANG['registered_on'],
-			'L_LAST_CONNECT' => $LANG['last_connect'],
-			'L_NBR_MESSAGE' => $LANG['nbr_message'],			
-			'L_WEB_SITE' => $LANG['web_site'],
-			'L_LOCALISATION' => $LANG['localisation'],
-			'L_JOB' => $LANG['job'],
-			'L_HOBBIES' => $LANG['hobbies'],
-			'L_SEX' => $LANG['sex'],
-			'L_AGE' => $LANG['age'],
-			'L_BIOGRAPHY' => $LANG['biography'],
-			'L_CONTACT' => $LANG['contact'],
-			'L_MAIL' => $LANG['mail'],
-			'L_PRIVATE_MESSAGE' => $LANG['private_message']
-		));							
-				
-		$Template->Assign_block_vars('profil', array(
 			'USER_NAME' => $row['login'],
 			'MAIL' => $user_mail,
 			'STATUT' => ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned'],
@@ -718,6 +708,7 @@ if( !empty($id_get) ) //Espace membre
 			'LAST_CONNECT' => gmdate_format('date_format_short', $row['last_connect']),
 			'USER_AVATAR' => $user_avatar,
 			'USER_MSG' => $row['user_msg'],			
+			'USER_GROUPS_LIST' => $user_group_list,
 			'LOCAL' => !empty($row['user_local']) ? $row['user_local'] : '&nbsp;',
 			'WEB' => $user_web,
 			'OCCUPATION' => !empty($row['user_occupation']) ? $row['user_occupation'] : '&nbsp;',
@@ -727,55 +718,40 @@ if( !empty($id_get) ) //Espace membre
 			'USER_DESC' => !empty($row['user_desc']) ? $row['user_desc'] : '&nbsp;',
 			'USER_MSN' => !empty($row['user_msn']) ? $row['user_msn'] : '&nbsp;',
 			'USER_YAHOO' => !empty($row['user_yahoo']) ? $row['user_yahoo'] : '&nbsp;',
+			'L_PROFIL' => $LANG['profil'],
+			'L_PROFIL_EDIT' => $LANG['profil_edit'],
+			'L_AVATAR' => $LANG['avatar'],
+			'L_PSEUDO' => $LANG['pseudo'],
+			'L_STATUT' => $LANG['status'],
+			'L_GROUPS' => $LANG['groups'],
+			'L_REGISTERED' => $LANG['registered_on'],
+			'L_LAST_CONNECT' => $LANG['last_connect'],
+			'L_NBR_MSG' => $LANG['nbr_message'],			
+			'L_DISPLAY_MEMBER_MSG' => $LANG['member_msg_display'],
+			'L_WEB_SITE' => $LANG['web_site'],
+			'L_LOCALISATION' => $LANG['localisation'],
+			'L_JOB' => $LANG['job'],
+			'L_HOBBIES' => $LANG['hobbies'],
+			'L_SEX' => $LANG['sex'],
+			'L_AGE' => $LANG['age'],
+			'L_BIOGRAPHY' => $LANG['biography'],
+			'L_CONTACT' => $LANG['contact'],
+			'L_MAIL' => $LANG['mail'],
+			'L_PRIVATE_MESSAGE' => $LANG['private_message'],
+			'U_MEMBER_SCRIPT' => ($Member->Get_attribute('user_id') === $id_get) ? ('../member/member' . transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;edit=1')) : ('../admin/admin_members.php?id=' . $id_get . '&amp;edit=1'),
+			'U_MEMBER_MSG' => transid('.php?id=' . $id_get),
 			'U_MEMBER_PM' => transid('.php?pm=' . $id_get, '-' . $id_get . '.php')
 		));
 				
-		//Liste des groupes du membre.		
-		$i = 0;
-		$user_groups = explode('|', $row['user_groups']);
-		foreach($user_groups as $key => $group_id)
-		{
-			$group = $Sql->Query_array('group', 'id', 'name', 'img', "WHERE id = '" . numeric($group_id) . "'", __LINE__, __FILE__);
-			if( !empty($group['id']) )
-			{	
-				
-				$Template->Assign_block_vars('profil.groups', array(
-					'USER_GROUP' => ($i != 0 ? '<br /><br />' : '') . '<a href="member' . transid('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . (!empty($group['img']) ? '<img src="../images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" style="vertical-align:middle;" />'  : '') . '</a> <a href="member' . transid('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . $group['name'] . '</a>'
-				));
-			}
-			$i++;
-		}
-		if( $i == 0 ) 
-		{	
-			$Template->Assign_block_vars('profil.groups', array(
-					'USER_GROUP' => $LANG['member']
-			));
-		}
-		
-		if( $Member->Get_attribute('user_id') === $id_get )
-		{
-			$Template->Assign_block_vars('profil.edit', array(
-				'THEME' => $CONFIG['theme'],
-				'U_MEMBER_SCRIPT' => HOST . DIR . '/member/member' . transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;edit=1')
-			));
-		}
-		elseif( $Member->Get_attribute('level') === 2 )
-		{ 
-			$Template->Assign_block_vars('profil.edit', array(
-				'THEME' => $CONFIG['theme'],
-				'U_MEMBER_SCRIPT' => HOST . DIR . '/admin/admin_members.php?id=' . $id_get . '&amp;edit=1'
-			));
-		}
-		
 		//Champs supplémentaires.
 		$extend_field_exist = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 		if( $extend_field_exist > 0 )
 		{
 			$Template->Assign_vars(array(			
+				'C_PROFIL_MISCELLANEOUS' => true,
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
 			));
-			$Template->Assign_block_vars('profil.miscellaneous', array(			
-			));
+
 			$result = $Sql->Query_while("SELECT exc.name, exc.contents, exc.field, exc.field_name, exc.possible_values, exc.default_values, ex.*
 			FROM ".PREFIX."member_extend_cat exc
 			LEFT JOIN ".PREFIX."member_extend ex ON ex.user_id = '" . $id_get . "'
@@ -808,7 +784,7 @@ if( !empty($id_get) ) //Espace membre
 					break;
 				}				
 				
-				$Template->Assign_block_vars('profil.miscellaneous.list', array(
+				$Template->Assign_block_vars('miscellaneous_list', array(
 					'NAME' => ucfirst($row['name']),
 					'DESC' => !empty($row['contents']) ? $row['contents'] : '',
 					'FIELD' => $field
@@ -829,9 +805,11 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 	));
 	
 	$group = $Sql->Query_array('group', 'name', 'img', "WHERE id = '" . $user_group . "'", __LINE__, __FILE__);
-	
 	$Template->Assign_vars(array(
 		'SID' => SID,
+		'C_GROUP_LIST' => true,
+		'ADMIN_GROUPS' => ($Member->Check_level(2)) ? '<a href="../admin/admin_groups.php?id=' . $user_group . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" class="valign_middle" /></a>' : '',
+		'GROUP_NAME' => $group['name'],
 		'L_BACK' => $LANG['back'],
 		'L_SELECT_GROUP' => $LANG['select_group'],
 		'L_LIST' => $LANG['liste'],
@@ -842,16 +820,11 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 		'U_SELECT_SHOW_GROUP' => "'member.php?g=' + this.options[this.selectedIndex].value"
 	));
 		
-	$Template->Assign_block_vars('group', array(
-		'ADMIN_GROUPS' => ($Member->Check_level(2)) ? '<a href="' . HOST . DIR . '/admin/admin_groups.php?id=' . $user_group . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
-		'GROUP_NAME' => $group['name']
-	));
-		
 	//Liste des groupes.
 	$result = $Sql->Query_while("SELECT id, name FROM ".PREFIX."group", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('group.select', array(
+		$Template->Assign_block_vars('group_select', array(
 			'OPTION' => '<option value="' . $row['id'] .'">' . $row['name'] . '</option>'
 		));
 	}
@@ -882,9 +855,9 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 			//Avatar	.
 			$user_avatar = !empty($row['user_avatar']) ? '<img class="valign_middle" src="' . $row['user_avatar'] . '" alt=""	/>' : '';
 			if( empty($row['user_avatar']) && $CONFIG_MEMBER['activ_avatar'] == '1') 
-				$user_avatar = '<img style="vertical-align:middle;" src="../templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />';
+				$user_avatar = '<img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />';
 			
-			$Template->Assign_block_vars('group.list', array(
+			$Template->Assign_block_vars('group_list', array(
 				'USER_AVATAR' => $user_avatar,
 				'USER_RANK' => ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned'],
 				'U_MEMBER' => '<a href="member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>'
@@ -911,14 +884,12 @@ else //Show all member!
 		else
 			$login = $LANG['no_result'];
 	}
-	
-	$Template->Assign_block_vars('all', array(
-		'LOGIN' => $login
-	));	
 
 	$Template->Assign_vars(array(
+		'C_MEMBER_LIST' => true,
 		'SID' => SID,
 		'LANG' => $CONFIG['lang'],
+		'LOGIN' => $login,
 		'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
 		'L_SELECT_GROUP' => $LANG['select_group'],
 		'L_SEARCH_MEMBER' => $LANG['search_member'],
@@ -949,7 +920,7 @@ else //Show all member!
 	FROM ".PREFIX."group", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('all.group', array(
+		$Template->Assign_block_vars('group_select', array(
 			'OPTION' => '<option value="' . $row['id'] .'">' . $row['name'] . '</option>'
 		));
 	}
@@ -1000,7 +971,7 @@ else //Show all member!
 		
 		$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
 		
-		$Template->Assign_block_vars('all.member', array(
+		$Template->Assign_block_vars('member_list', array(
 			'PSEUDO' => $row['login'],
 			'MAIL' => $user_mail,
 			'MSG' => $user_msg,

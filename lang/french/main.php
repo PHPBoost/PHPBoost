@@ -303,11 +303,11 @@ $LANG['friday'] = 'Ven';
 $LANG['saturday'] = 'Sam';
 $LANG['sunday']	= 'Dim';
 
-//Comments
+//Commentaires
 $LANG['add_comment'] = 'Ajout commentaire';
 $LANG['edit_comment'] = 'Editer commentaire';
 
-//Members
+//Membres
 $LANG['member_area'] = 'Zone membre';
 $LANG['profil'] = 'Profil';
 $LANG['profil_edit'] = 'Edition du profil';
@@ -346,6 +346,8 @@ $LANG['registered_on'] = 'Inscrit le';
 $LANG['last_connect'] = 'Dernière connexion';
 $LANG['private_message'] = 'Message(s) privé(s)';
 $LANG['nbr_message'] = 'Nombre de message(s)';
+$LANG['member_msg_display'] = 'Afficher les messages du membre';
+$LANG['member_msg'] = 'Messages du membre';
 $LANG['member_online'] = 'Membres en ligne';
 $LANG['no_member_online'] = 'Aucun membre connecté';
 $LANG['del_member'] = 'Suppression du compte <span class="text_small">(Définitif!)</span>';
@@ -359,6 +361,7 @@ $LANG['date_of_birth'] = 'Date de naissance';
 $LANG['date_birth_format'] = 'JJ/MM/AAAA';
 $LANG['date_birth_parse'] = 'DD/MM/YYYY';
 $LANG['banned'] = 'Banni';
+$LANG['go_msg'] = 'Aller au message';
 
 //Register
 $LANG['pseudo_how'] = 'Longueur minimale du pseudo: 3 caractères';
