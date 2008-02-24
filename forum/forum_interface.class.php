@@ -26,7 +26,7 @@
 ###################################################*/
  
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once('../includes/module.class.php');
+require_once('../includes/module_interface.class.php');
  
 // Classe ForumInterface qui hérite de la classe ModuleInterface
 class ForumInterface extends ModuleInterface
@@ -37,10 +37,25 @@ class ForumInterface extends ModuleInterface
         parent::ModuleInterface('forum');
     }
 	
-	function GetMembermsgLink($memberId) //Récupère le lien vers la listes des messages du membre.
+	//Récupère le lien vers la listes des messages du membre.
+	function GetMembermsgLink($memberId) 
     {
-        // Mon traitement
-        return '../forum/membermsg.php?id=' . $memberId;
+        return '../forum/membermsg.php?id=' . $memberId[0];
+    }
+	
+	//Récupère le nom associé au lien.
+	function GetMembermsgName() 
+    {
+        global $LANG;
+		load_module_lang('forum'); //Chargement de la langue du module.
+		
+		return $LANG['forum'];
+    }
+	
+	//Récupère l'image associé au lien.
+	function GetMembermsgImg() 
+    {
+		return '../forum/forum_mini.png';
     }
 }
  

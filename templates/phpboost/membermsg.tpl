@@ -3,15 +3,21 @@
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
-			<div class="module_top"><a href="">{L_MEMBER_MSG}</a></div>
+			<div class="module_top">&bull; <a href="member{U_BACK}">{L_BACK}</a> &raquo; <a href="membermsg{U_MEMBER_MSG}">{L_MEMBER_MSG}</a></div>
 			<div class="module_contents">
-				<p style="text-align:center" class="text_strong">{L_MEMBER_MSG_DISPLAY}</p>			
-				<p style="text-align:center">
-					<a href="membermsg{U_COMMENTS}">{L_COMMENTS}</a>
-					# START available_modules_msg #
-						| {available_modules_msg.NAME}
-					# END available_modules_msg #
-				</p>			
+				<p style="text-align:center;margin-bottom:25px;" class="text_strong">{L_MEMBER_MSG_DISPLAY}</p>			
+				<p style="text-align:center;margin-bottom:15px;"><a href="membermsg{U_COMMENTS}"><img src="../templates/{THEME}/images/admin/com_mini.png" alt="" class="valign_middle" /> {L_COMMENTS}</a></p>	
+				# START available_modules_msg #
+				<p style="text-align:center;margin-bottom:15px;"> 
+					<a href="{available_modules_msg.U_LINK_MEMBER_MSG}">
+					# IF available_modules_msg.C_IMG_MEMBER_MSG #
+					<img src="{available_modules_msg.IMG_MEMBER_MSG}" alt="" class="valign_middle" />
+					# ENDIF #
+					{available_modules_msg.NAME_MEMBER_MSG}</a>
+				</p>
+				# END available_modules_msg #
+				
+				<br />
 				
 				# IF C_START_MSG #
 				<div class="module_position" style="width:100%;">					
@@ -23,7 +29,7 @@
 				<div class="msg_position" style="width:100%;">			
 					<div class="msg_container">
 						<div class="msg_top_row">
-							<div class="msg_pseudo_mbr">&nbsp;&nbsp;{USER_PSEUDO}</div>
+							<div class="msg_pseudo_mbr">{msg_list.USER_ONLINE} {msg_list.USER_PSEUDO}</div>
 							<span class="text_strong" style="float:left;">&nbsp;&nbsp;<a href="{msg_list.U_TITLE}"><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> <a href="{msg_list.U_TITLE}">{L_GO_MSG}</a></span>
 							<span class="text_small" style="float: right;">{L_ON} : {msg_list.DATE}</span>&nbsp;
 						</div>
@@ -46,9 +52,9 @@
 				</div>
 				# ENDIF #
 				
-				<br />				
+				<br /><br />			
 			</div>		
 			<div class="msg_bottom_l"></div>		
 			<div class="msg_bottom_r"></div>
-			<div class="msg_bottom"><a href="">{L_MEMBER_MSG}</a></div>
+			<div class="msg_bottom">&bull; <a href="member{U_BACK}">{L_BACK}</a> &raquo; <a href="membermsg{U_MEMBER_MSG}">{L_MEMBER_MSG}</a></div>
 		</div>
