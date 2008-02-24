@@ -45,6 +45,7 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 
 	foreach($modules as $module)
 	{
+	    array_push($actions, $module->Functionnalitie('GetMembermsgLink', array($memberId)));
 		echo 'test';
 		$Template->Assign_block_vars('available_modules_msg', array(
 			'NAME' => $module->Functionnalitie('GetMembermsgLink', array($memberId))
