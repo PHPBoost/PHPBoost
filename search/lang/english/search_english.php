@@ -35,6 +35,7 @@ $LANG['title_search'] = 'Search';
 $LANG['search_results'] = 'Search results';
 $LANG['warning_length_string_searched'] = 'The size of the string you\'re searching for must be at least 4 characters!';
 $LANG['search_min_length'] = 'Keywords (at least 4 characters)';
+$LANG['title_all_results'] = 'All results';
 
 //Actions
 

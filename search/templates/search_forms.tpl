@@ -1,5 +1,35 @@
 <script type="text/javascript">
-    <!--
+<!--
+    var modules = new Array("ResultsAll" # START forms # , "Form{name}" # END forms #);
+    
+    function ShowForm(module)
+    /*
+     * Montre les résultats de ce module
+     */
+    {
+        document.getElementById('Form'.module).style.display = 'block';
+    }
+    
+    function HideForms()
+    /*
+     * Cache tous les résultats
+     */
+    {
+        for ( var i = 0; i < modules.length; i++)
+        {
+            document.getElementById('Form'.modules[i]).style.display = 'none';
+        }
+    }
+    
+    function ChangeForm(module)
+    /*
+     * Change le cadre des résultats
+     */
+    {
+        HideForms();
+        ShowForm(module);
+    }
+    
     function check_form_post()
     {
         var textSearched = document.getElementById("search").value;
@@ -15,7 +45,7 @@
             return false;
         }
     }
-    -->
+-->
 </script>
 
 <div class="module_position">
@@ -24,7 +54,7 @@
     <div class="module_top">{TITLE}</div>
     <div class="module_contents">
         <div class="spacer">&nbsp;</div>
-        <form action="../search/search.php" onsubmit="return check_form_post();" method="post">
+        <form action="../search/search.php#results" onsubmit="return check_form_post();" method="post">
             <fieldset>
                 <legend>{TITLE_SEARCH}</legend>
                 <dl>
@@ -35,7 +65,7 @@
             # START forms #
                 <div class="module_position">
                     <fieldset>
-                        <legend>{forms.MODULE_NAME}</legend>
+                        <legend><a href="" onClick="ChangeForm('Form{forms.MODULE_NAME}')">{forms.MODULE_NAME}</a></legend>
                         {forms.SEARCH_FORM}
                     </fieldset>
                 </div>
