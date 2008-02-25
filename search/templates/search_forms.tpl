@@ -1,12 +1,18 @@
 <script type="text/javascript">
     <!--
-    function search_submit()
+    function check_form_post()
     {
         var textSearched = document.getElementById("search").value;
-        alert('{WARNING_LENGTH_STRING_SEARCH}');
-        if ( textSearched == '' )
+        
+        if ( textSearched.length > 3 )
         {
-           alert('{WARNING_LENGTH_STRING_SEARCH}');
+            textSearched = escape_xmlhttprequest(textSearched);
+            return true;
+        }
+        else
+        {
+            alert('{WARNING_LENGTH_STRING_SEARCH}');
+            return false;
         }
     }
     -->
@@ -18,7 +24,7 @@
     <div class="module_top">{TITLE}</div>
     <div class="module_contents">
         <div class="spacer">&nbsp;</div>
-        <form action="../search/search.php" method="post">
+        <form action="../search/search.php" onsubmit="return check_form_post();" method="post">
             <fieldset>
                 <legend>{TITLE_SEARCH}</legend>
                 <dl>
@@ -37,13 +43,6 @@
             <fieldset class="fieldset_submit">
                 <legend>{title_search}</legend>
                 <input type="submit" name="search_submit" id="search_submit" value="{SEARCH}" class="submit" />
-                <script type="text/javascript">
-                    <!--
-                        document.getElementById('search_submit').style.display = 'none';
-                        document.write('<input value="{SEARCH}" onclick="search_submit();" type="button" class="submit" />');
-                        alert('{WARNING_LENGTH_STRING_SEARCH}');
-                    -->
-                </script>
             </fieldset>
         </form>
     </div>
