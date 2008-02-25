@@ -105,6 +105,7 @@ class ForumInterface extends ModuleInterface
                 <label><input type="checkbox" name="colorate_result" id="colorate_result" value="1" checked="checked" /></label>
             </dd>
         </dl>';
+        
         return $form;
     }
     
@@ -121,7 +122,19 @@ class ForumInterface extends ModuleInterface
      *  Renvoie la requête de recherche dans le forum
      */
     {
-        
+        return "";
+//         SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, 0 AS relevance2
+//         FROM ".PREFIX."forum_msg msg
+//         LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+//         LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
+//         JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
+//         JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
+//         JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
+//         WHERE MATCH(t.title) AGAINST('" . $search . "') AND msg.timestamp > '" . (time() - $time) . "'
+//         " . (!empty($idcat) ? " AND t.idcat = '" . $idcat . "'" : '') . $auth_cats . "
+//         GROUP BY t.id
+//         ORDER BY relevance DESC
+//         " . $Sql->Sql_limit(0, 24);
     }
 }
  

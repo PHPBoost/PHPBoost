@@ -53,7 +53,13 @@ else
     define('TITLE', $LANG['title_search']);
 require_once('../includes/header.php');
 
-$Template->Assign_vars(Array('TITLE_SEARCH' => TITLE, 'SEARCH' => $LANG['title_search'], 'TEXT_SEARCHED' => $search));
+$Template->Assign_vars(Array(
+    'TITLE_SEARCH' => TITLE,
+    'SEARCH' => $LANG['title_search'],
+    'TEXT_SEARCHED' => $search,
+    'SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
+    'WARNING_LENGTH_STRING_SEARCH' => $LANG['warning_length_string_searched']
+));
 
 //------------------------------------------------------------- Other includes
 require_once('../includes/modules.class.php');
@@ -70,7 +76,7 @@ if( $search != '' )
 	
 	// Listes des modules de recherches
 	$searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
-	// Ajout du paramètre search à tous les modules
+	// Ajout du paramétre search à tous les modules
 	foreach( $searchModules as $module)
 	{
 		$modulesArgs[$module->name] = array('search' => $search);
@@ -86,7 +92,7 @@ if( $search != '' )
 		{
 			// Récupération de la liste des paramètres
 			$formModuleArgs = $formModule->Functionnality('GetSearchArgs');
-			// Ajout des paramètres optionnels sans les sécurisés.
+			// Ajout des paramètres optionnels sans les sécuriser.
 			// Ils sont sécurisés à l'intérieur de chaque module.
 			foreach( $formModuleArgs as $arg)
 			{
@@ -107,7 +113,6 @@ if( $search != '' )
 	
 	// Génération des résultats et passage aux templates
 	$nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, ($p - 1), ($p - 1 + NB_RESULTS_PER_PAGE));
-	$Template->Assign_vars( array('NB_RESULTS' => $nbResults) ) ;
 	
 	$htmlResults = array();
 	foreach( $results as $result )
@@ -121,7 +126,11 @@ if( $search != '' )
 			array_push($htmlResults, $result);
 	}
 	
-	$Template->Assign_vars( array('htmlResults' => $htmlResults) ) ;
+	$Template->Assign_vars(array(
+        'SEARCH_RESULTS' => $LANG['search_results'],
+        'NB_RESULTS' => $nbResults,
+        'htmlResults' => $htmlResults
+    ));
 	
 	// parsage des formulaires de recherches
 	$Template->Pparse('search_forms');
