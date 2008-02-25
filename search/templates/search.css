@@ -1,5 +1,3 @@
-div.form_choice { }
-div.form_choice div.choice { }
-
-div.results_choice { }
-div.results_choice div.choice { }
+div.choices ul { text-align:center; width:100%; }
+div.choices li { display:inline; border-left:1px solid #aaa; border-right:1px solid #aaa; padding:5px; }
+a.choice { font-weight:bold; cursor:pointer; }

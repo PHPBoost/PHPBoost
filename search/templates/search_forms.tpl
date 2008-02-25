@@ -1,13 +1,17 @@
+<link rel="stylesheet" href="../search/templates/search.css" type="text/css" media="screen, print, handheld" />
 <script type="text/javascript">
 <!--
-    var modules = new Array("ResultsAll" # START forms # , "Form{name}" # END forms #);
+    var modules = new Array();
+    # START forms #
+        modules.push("{forms.MODULE_NAME}");
+    # END forms #
     
     function ShowForm(module)
     /*
      * Montre les résultats de ce module
      */
     {
-        document.getElementById('Form'.module).style.display = 'block';
+        document.getElementById('Form'+module).style.display = 'block';
     }
     
     function HideForms()
@@ -17,7 +21,7 @@
     {
         for ( var i = 0; i < modules.length; i++)
         {
-            document.getElementById('Form'.modules[i]).style.display = 'none';
+            document.getElementById('Form'+modules[i]).style.display = 'none';
         }
     }
     
@@ -65,19 +69,16 @@
             <div class="choices">
                 <fieldset>
                     <legend>{FORMS}</legend>
-                    <dl>
+                    <ul>
+                        <li><a class="choice" onClick="HideForms();">Cacher les formulaires</a></li>
                         # START forms #
-                            <dt>
-                                <div class="choice">
-                                    <span onClick="ChangeForm('{forms.MODULE_NAME}');">{forms.MODULE_NAME}</span>
-                                </div>
-                            </dt>
+                            <li><a class="choice" onClick="ChangeForm('{forms.MODULE_NAME}');">{forms.MODULE_NAME}</a></li>
                         # END forms #
-                    </dl>
+                    </ul>
                 </fieldset>
             </div>
             # START forms #
-                <div class="module_position">
+                <div id="Form{forms.MODULE_NAME}" class="module_position">
                     <fieldset>
                         <legend>{forms.MODULE_NAME}</legend>
                         {forms.SEARCH_FORM}
@@ -89,6 +90,11 @@
                 <input type="submit" name="search_submit" id="search_submit" value="{SEARCH}" class="submit" />
             </fieldset>
         </form>
+        <script type="text/javascript">
+        <!--
+            HideForms();
+        -->
+        </script>
     </div>
     <div class="module_bottom_l"></div>
     <div class="module_bottom_r"></div>
