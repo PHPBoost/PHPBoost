@@ -39,13 +39,32 @@
     <div class="module_top">{SEARCH_RESULTS}</div>
     <div class="module_contents">
         <div class="spacer">&nbsp;</div>
+        <div class="choices">
+                <fieldset>
+                    <legend>{RESULTS}</legend>
+                    <dl>
+                        <dt>
+                            <div class="choice">
+                                <span onClick="ChangeResults('{All}');">{TITLE_ALL_RESULTS}</span>
+                            </div>
+                        </dt>
+                        # START results #
+                            <dt>
+                                <div class="choice">
+                                    <span onClick="ChangeResults('{results.MODULE_NAME}');">{results.MODULE_NAME}</span>
+                                </div>
+                            </dt>
+                        # END results #
+                    </dl>
+                </fieldset>
+            </div>
         <div id="ResultsAll">
             <fieldset>
                 <legend>{TITLE_ALL_RESULTS}</legend>
                 {ALL_RESULTS}
             </fieldset>
         </div>
-        # START modules #
+        # START results #
             <div id="Results{results.MODULE_NAME}">
                 <fieldset>
                     <legend>{results.MODULE_NAME}</legend>
