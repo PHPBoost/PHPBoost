@@ -2,9 +2,9 @@
     <!--
     function search_submit()
     {
-        var search = document.getElementById("search").value;
+        var textSearched = document.getElementById("search").value;
         alert('{WARNING_LENGTH_STRING_SEARCH}');
-        if( search == '' )
+        if ( textSearched == '' )
         {
            alert('{WARNING_LENGTH_STRING_SEARCH}');
         }
@@ -36,11 +36,11 @@
             # END forms #
             <fieldset class="fieldset_submit">
                 <legend>{title_search}</legend>
-                <input type="submit" name="search" id="search_submit" value="{SEARCH}" class="submit" />
+                <input type="submit" name="search_submit" id="search_submit" value="{SEARCH}" class="submit" />
                 <script type="text/javascript">
                     <!--
                         document.getElementById('search_submit').style.display = 'none';
-                        document.write('<input type="button" value="{SEARCH}" onclick="search_submit();" class="submit" />');
+                        document.write('<input value="{SEARCH}" onclick="search_submit();" type="button" class="submit" />');
                         alert('{WARNING_LENGTH_STRING_SEARCH}');
                     -->
                 </script>
