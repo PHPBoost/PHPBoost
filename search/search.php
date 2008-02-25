@@ -72,37 +72,39 @@ $modulesArgs = array();
 
 if( $search != '' )
 {
-	$results = array();
-	
-	// Listes des modules de recherches
-	$searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
-	// Ajout du paramétre search à tous les modules
-	foreach( $searchModules as $module)
-	{
-		$modulesArgs[$module->name] = array('search' => $search);
-	}
-	
-	// Chargement des modules avec formulaires
-	$formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
-	
-	// Ajout de la liste des paramètres de recherches spécifiques à chaque module
-	foreach( $formsModule as $formModule)
-	{
-		if( $formModule->HasFunctionnality('GetSearchArgs') )
-		{
-			// Récupération de la liste des paramètres
-			$formModuleArgs = $formModule->Functionnality('GetSearchArgs');
-			// Ajout des paramètres optionnels sans les sécuriser.
-			// Ils sont sécurisés à l'intérieur de chaque module.
-			foreach( $formModuleArgs as $arg)
-			{
-				$modulesArgs[$formModule->name][$arg] = $_POST[$arg];
-			}
-		}
-	}
-	
-	// Génération des formulaires précomplétés et passage aux templates
-	$searchForms = GetSearchForms($formsModule, $modulesArgs);
+    $Template->Assign_vars(Array('TITLE_ALL_RESULTS' => $LANG['title_all_results']));
+    
+    $results = array();
+    
+    // Listes des modules de recherches
+    $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
+    // Ajout du paramétre search à tous les modules
+    foreach( $searchModules as $module)
+    {
+        $modulesArgs[$module->name] = array('search' => $search);
+    }
+    
+    // Chargement des modules avec formulaires
+    $formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
+    
+    // Ajout de la liste des paramètres de recherches spécifiques à chaque module
+    foreach( $formsModule as $formModule)
+    {
+        if( $formModule->HasFunctionnality('GetSearchArgs') )
+        {
+            // Récupération de la liste des paramètres
+            $formModuleArgs = $formModule->Functionnality('GetSearchArgs');
+            // Ajout des paramètres optionnels sans les sécuriser.
+            // Ils sont sécurisés à l'intérieur de chaque module.
+            foreach( $formModuleArgs as $arg)
+            {
+                $modulesArgs[$formModule->name][$arg] = $_POST[$arg];
+            }
+        }
+    }
+    
+    // Génération des formulaires précomplétés et passage aux templates
+    $searchForms = GetSearchForms($formsModule, $modulesArgs);
     foreach ( $searchForms as $moduleName => $form )
     {
         $Template->Assign_block_vars('forms', array(
@@ -110,44 +112,53 @@ if( $search != '' )
             'SEARCH_FORM' => $form
         ));
     }
-	
-	// Génération des résultats et passage aux templates
-	$nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, ($p - 1), ($p - 1 + NB_RESULTS_PER_PAGE));
-	
-	$htmlResults = array();
-	foreach( $results as $result )
-	{
-		// A vérifier que les résultats renvoyé par la méthode GetResults de la classe Search
-		// Renvoie bien un tableau associatif
-		$module = $Modules->GetModule($result['id_module']);
-		if( $module->HasFunctionnality('ParseSearchResult') )
-			array_push($htmlResults, $module->Functionnality('ParseSearchResult', array($result)) );
-		else
-			array_push($htmlResults, $result);
-	}
-	
-	$Template->Assign_vars(array(
+    
+    // Génération des résultats et passage aux templates
+    $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, ($p - 1), ($p - 1 + NB_RESULTS_PER_PAGE));
+    
+    $htmlResults = array();
+    foreach( $results as $result )
+    {
+        // A vérifier que les résultats renvoyé par la méthode GetResults de la classe Search
+        // Renvoie bien un tableau associatif
+        $module = $Modules->GetModule($result['id_module']);
+        if( $module->HasFunctionnality('ParseSearchResult') )
+        {
+            $Template->Assign_block_vars('results', array(
+                'MODULE_NAME' => $moduleName,
+                'RESULTS' => $module->Functionnality('ParseSearchResult', array($result))
+            ));
+        }
+        else
+        {
+            $Template->Assign_block_vars('results', array(
+                'MODULE_NAME' => $moduleName,
+                'RESULTS' => $result
+            ));
+        }
+    }
+    
+    $Template->Assign_vars(array(
         'SEARCH_RESULTS' => $LANG['search_results'],
         'NB_RESULTS' => $nbResults,
-        'htmlResults' => $htmlResults
     ));
-	
-	// parsage des formulaires de recherches
-	$Template->Pparse('search_forms');
-	// parsage des résultats de la recherche
-	$Template->Pparse('search_results');
+    
+    // parsage des formulaires de recherches
+    $Template->Pparse('search_forms');
+    // parsage des résultats de la recherche
+    $Template->Pparse('search_results');
 }
 else
 {
-	// Listes des modules de recherches
-	$searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
-	// Chargement des modules avec formulaires
-	$formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
-	
+    // Listes des modules de recherches
+    $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
+    // Chargement des modules avec formulaires
+    $formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
+    
     $modulesArgs = array();
     
-	// Génération des formulaires et passage aux templates
-	$searchForms = GetSearchForms($formsModule, $modulesArgs);
+    // Génération des formulaires et passage aux templates
+    $searchForms = GetSearchForms($formsModule, $modulesArgs);
     foreach ( $searchForms as $moduleName => $form )
     {
         $Template->Assign_block_vars('forms', array(
@@ -156,8 +167,8 @@ else
         ));
     }
     
-	// parsage de la page
-	$Template->Pparse ('search_forms');
+    // parsage de la page
+    $Template->Pparse ('search_forms');
 }
 
 //--------------------------------------------------------------------- Footer
