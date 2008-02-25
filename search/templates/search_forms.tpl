@@ -62,10 +62,24 @@
                     <dd><label><input type="text" size="35" id="search" name="search" value="{TEXT_SEARCHED}"  class="text" /></label></dd>
                 </dl>
             </fieldset>
+            <div class="choices">
+                <fieldset>
+                    <legend>{FORMS}</legend>
+                    <dl>
+                        # START forms #
+                            <dt>
+                                <div class="choice">
+                                    <span onClick="ChangeForm('{forms.MODULE_NAME}');">{forms.MODULE_NAME}</span>
+                                </div>
+                            </dt>
+                        # END forms #
+                    </dl>
+                </fieldset>
+            </div>
             # START forms #
                 <div class="module_position">
                     <fieldset>
-                        <legend><a href="" onClick="ChangeForm('Form{forms.MODULE_NAME}')">{forms.MODULE_NAME}</a></legend>
+                        <legend>{forms.MODULE_NAME}</legend>
                         {forms.SEARCH_FORM}
                     </fieldset>
                 </div>

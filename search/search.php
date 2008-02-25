@@ -58,7 +58,8 @@ $Template->Assign_vars(Array(
     'SEARCH' => $LANG['title_search'],
     'TEXT_SEARCHED' => $search,
     'SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
-    'WARNING_LENGTH_STRING_SEARCH' => $LANG['warning_length_string_searched']
+    'WARNING_LENGTH_STRING_SEARCH' => $LANG['warning_length_string_searched'],
+    'FORMS' => $LANG['forms']
 ));
 
 //------------------------------------------------------------- Other includes
@@ -72,7 +73,10 @@ $modulesArgs = array();
 
 if( $search != '' )
 {
-    $Template->Assign_vars(Array('TITLE_ALL_RESULTS' => $LANG['title_all_results']));
+    $Template->Assign_vars(Array(
+        'TITLE_ALL_RESULTS' => $LANG['title_all_results'],
+        'RESULTS' => $LANG['results']
+    ));
     
     $results = array();
     
