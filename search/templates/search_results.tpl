@@ -8,7 +8,7 @@
      * Montre les résultats de ce module
      */
     {
-        document.getElementById('Results'.module).style.display = 'block';
+        document.getElementById('Results'+module).style.display = 'block';
     }
     
     function HideResults()
@@ -18,7 +18,7 @@
     {
         for ( var i = 0; i < modules.length; i++)
         {
-            document.getElementById('Results'.modules[i]).style.display = 'none';
+            document.getElementById('Results'+modules[i]).style.display = 'none';
         }
     }
     
