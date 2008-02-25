@@ -77,11 +77,6 @@ class Modules
             foreach(array_keys($SECURE_MODULE) as $moduleName)
             {
                 $module = $this->GetModule($moduleName);
-                if ( $moduleName == 'wiki' )
-                {
-                    echo $moduleName.'<hr />';
-                    echo $module->GetErrors().'<hr />';
-                }
                 if( $module->GetErrors() == 0 && $module->HasFunctionnality($functionnality) )
                     array_push($modules, $module);
             }
@@ -109,7 +104,6 @@ class Modules
 				global $Member, $SECURE_MODULE;
                 if( $Member->check_auth($SECURE_MODULE[$moduleName], ACCESS_MODULE) )
                 {
-                    echo $moduleName.'<hr />';
                     if( @include_once('../'.$moduleName.'/'.$moduleName.'_interface.class.php') )
                     {
                         $moduleConstructor = ucfirst($moduleName.'Interface');
