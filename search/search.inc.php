@@ -34,7 +34,7 @@ function GetSearchForms(&$modules, &$args)
 */
 {
 	$searchForms = array();
-	foreach($modules as $module)
+	foreach( $modules as $module )
 	{
 		if( isset($args[$module->name]) )
 			$searchForms[$module->name] = $module->Functionnality('GetSearchForm', $args[$module->name]);
