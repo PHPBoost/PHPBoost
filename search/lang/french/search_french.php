@@ -33,7 +33,7 @@
 //Généralités
 $LANG['title_search'] = 'Recherche';
 $LANG['search_results'] = 'Résultats de la recherche';
-$LANG['warning_length_string_searched'] = 'La chaine recherché doit faire plus de 4 caratères!';
+$LANG['warning_length_string_searched'] = 'La chaine recherchée doit faire plus de 4 caratères!';
 $LANG['search_min_length'] = 'Mots clés (4 caractères minimum)';
 
 //Actions

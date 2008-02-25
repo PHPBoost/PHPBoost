@@ -144,8 +144,10 @@ else
 	// Chargement des modules avec formulaires
 	$formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
 	
+    $modulesArgs = array();
+    
 	// Génération des formulaires et passage aux templates
-	$searchForms = GetSearchForms($formsModule);
+	$searchForms = GetSearchForms($formsModule, $modulesArgs);
     foreach ( $searchForms as $moduleName => $form )
     {
         $Template->Assign_block_vars('forms', array(

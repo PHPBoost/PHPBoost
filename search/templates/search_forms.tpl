@@ -3,10 +3,10 @@
     function search_submit()
     {
         var search = document.getElementById("search").value;
-        alert({WARNING_LENGTH_STRING_SEARCH});
+        alert('{WARNING_LENGTH_STRING_SEARCH}');
         if( search == '' )
         {
-           alert({WARNING_LENGTH_STRING_SEARCH});
+           alert('{WARNING_LENGTH_STRING_SEARCH}');
         }
     }
     -->
@@ -41,6 +41,7 @@
                     <!--
                         document.getElementById('search_submit').style.display = 'none';
                         document.write('<input type="button" value="{SEARCH}" onclick="search_submit();" class="submit" />');
+                        alert('{WARNING_LENGTH_STRING_SEARCH}');
                     -->
                 </script>
             </fieldset>
