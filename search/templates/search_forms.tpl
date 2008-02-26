@@ -102,7 +102,8 @@
                     <dd>
                         <select id="FormsChoice" name="FormsSelection" onChange="ChangeForm();">
                             # START forms #
-                                <option value="{forms.MODULE_NAME}">{forms.MODULE_NAME}</option>
+                                <option value="{forms.MODULE_NAME}">{forms.MODULE_NAME}
+                                </option>
                             # END forms #
                         </select>
                     </dd>
