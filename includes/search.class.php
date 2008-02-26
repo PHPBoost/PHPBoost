@@ -209,12 +209,12 @@ class Search
         {
             if ( !$this->IsInCache ( $id_module ) )
             {
-                $reqInsert .= "('','".$id_module."','".$this->id_user."','".$search."','".$options."','".time()."', '0'), ";
+                $reqInsert .= "('','".$id_module."','".$this->id_user."','".$search."','".$options."','".time()."', '0'),";
                 
                 // Exécution de 10 requêtes d'insertions
                 if ( $nbReqInsert == 10 )
                 {
-                    $reqInsert = "INSERT INTO ".PREFIX."search_index VALUES ( ".$reqInsert." )";
+                    $reqInsert = "INSERT INTO ".PREFIX."search_index VALUES ".$reqInsert."";
                     $Sql->Query_insert($reqInsert, __LINE__, __FILE__);
                     $reqInsert = '';
                     $nbReqInsert = 0;
@@ -225,7 +225,7 @@ class Search
         
         // Exécution des derniéres requêtes d'insertions
         if ( $nbReqInsert > 1 )
-        { $Sql->Query_inject("INSERT INTO ".PREFIX."search_index VALUES ( ".$reqInsert." )", __LINE__, __FILE__); }
+        { $Sql->Query_inject("INSERT INTO ".PREFIX."search_index VALUES ".substr($reqInsert, 0, strlen($reqInsert) - 1)."", __LINE__, __FILE__); }
         
         // Récupération des résultats et de leurs id dans le cache.
         

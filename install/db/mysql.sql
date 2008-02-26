@@ -320,6 +320,7 @@ CREATE TABLE `phpboost_search_index` (
     `search`            VARCHAR(255)    NOT NULL default '',
     `options`           VARCHAR(255)    NOT NULL default '',
     `last_search_use`   timestamp       NOT NULL,
+    `times_used`        int(3)          NOT NULL default '0',
     PRIMARY KEY (`id_search`, `id_module`),
     INDEX `last_search_use` (`last_search_use`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
