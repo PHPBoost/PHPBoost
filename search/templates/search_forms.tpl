@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="../search/templates/search.css" type="text/css" media="screen, print, handheld" />
 <script type="text/javascript">
 <!--
-    var modules = new Array();
+    var modulesForms = new Array();
     # START forms #
-        modules.push("{forms.MODULE_NAME}");
+        modulesForms.push("{forms.MODULE_NAME}");
     # END forms #
     
     function ShowAdvancedSearchForms()
@@ -38,8 +38,8 @@
             document.getElementById('Form'+module).style.display = 'block';
         else
         {
-            if ( modules.length > 0 )
-                document.getElementById('Form'+modules[0]).style.display = 'block';
+            if ( modulesForms.length > 0 )
+                document.getElementById('Form'+modulesForms[0]).style.display = 'block';
         }
     }
     
@@ -48,9 +48,9 @@
      * Cache tous les résultats
      */
     {
-        for ( var i = 0; i < modules.length; i++)
+        for ( var i = 0; i < modulesForms.length; i++)
         {
-            document.getElementById('Form'+modules[i]).style.display = 'none';
+            document.getElementById('Form'+modulesForms[i]).style.display = 'none';
         }
     }
     

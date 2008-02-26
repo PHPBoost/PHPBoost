@@ -1,14 +1,20 @@
 <br />
 <script language="text/javascript">
 <!--
-    var modules = new Array("ResultsAll" # START results # , "Results{name}" # END results #);
+    var modulesResults = new Array("ResultsAll" # START results # , "Results{name}" # END results #);
     
     function ShowResults(module)
     /*
      * Montre les résultats de ce module
      */
     {
-        document.getElementById('Results'+module).style.display = 'block';
+        if ( module != '' )
+            document.getElementById('Results'+module).style.display = 'block';
+        else
+        {
+            if ( modulesResults.length > 0 )
+                document.getElementById('Results'+modulesResults[0]).style.display = 'block';
+        }
     }
     
     function HideResults()
@@ -16,9 +22,9 @@
      * Cache tous les résultats
      */
     {
-        for ( var i = 0; i < modules.length; i++)
+        for ( var i = 0; i < modulesResults.length; i++)
         {
-            document.getElementById('Results'+modules[i]).style.display = 'none';
+            document.getElementById('Results'+modulesResults[i]).style.display = 'none';
         }
     }
     
@@ -28,7 +34,7 @@
      */
     {
         HideResults();
-        ShowResults(module);
+        ShowResults(document.getElementById('ResultsChoice').value);
     }
 -->
 </script>
@@ -48,13 +54,14 @@
                                 <span onClick="ChangeResults('{All}');">{TITLE_ALL_RESULTS}</span>
                             </div>
                         </dt>
-                        # START results #
-                            <dt>
-                                <div class="choice">
-                                    <span onClick="ChangeResults('{results.MODULE_NAME}');">{results.MODULE_NAME}</span>
-                                </div>
-                            </dt>
-                        # END results #
+                        <dd>
+                            <select id="ResultsChoice" name="ResultsSelection" onChange="ChangeResults();">
+                                # START results #
+                                    <option value="{results.MODULE_NAME}">{results.MODULE_NAME}
+                                    </option>
+                                # END results #
+                            </select>
+                        </dd>
                     </dl>
                 </fieldset>
             </div>
@@ -77,3 +84,10 @@
     <div class="module_bottom_r"></div>
     <div class="module_bottom" style="text-align:center;">{HITS}</div>
 </div>
+<script type="text/javascript">
+<!--
+    // On cache les éléments ne devant pas s'afficher au début
+    HideResults();
+    ShowResults('');
+-->
+</script>
