@@ -195,7 +195,7 @@ class CategoriesManagement
 			$subcats_list = array($id);
 			$this->build_children_id_list($id, $subcats_list);
 			if( !in_array($new_id_cat, $subcats_list) )
-			{			
+			{
 				$max_new_cat_order = $Sql->Query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'", __LINE__, __FILE__);	
 				//Default : inserting at the end of the list
 				if( $position <= 0 || $position > $max_new_cat_order )
@@ -209,7 +209,7 @@ class CategoriesManagement
 				else
 				{
 					//Preparing the new parent category to receive a category at this position
-					$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $new_id_cat . "' AND c_order >= '" . $this->cache_var[$id]['order'] . "'", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $new_id_cat . "' AND c_order >= '" . $position . "'", __LINE__, __FILE__);
 					//Moving the category $id
 					$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $position . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Updating ex category
@@ -243,20 +243,20 @@ class CategoriesManagement
 		global $Sql, $Cache;
 		$this->clean_error();
 		
-		$cat_order = $Sql->Query("SELECT c_order FROM " . PREFIX . $this->table . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		
 		//Checking that category exists
-		if( empty($cat_order) )
+		if( !array_key_exists($id, $this->cache_var) )
 		{
 			$this->add_error(CATEGORY_DOES_NOT_EXIST);
 			return false;
 		}
 		
+		$cat_infos = $this->cache_var[$id];
+		
 		//Deleting the category
 		$Sql->Query_inject("DELETE FROM " . PREFIX . $this->table . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//Decrementing all following categories
-		$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '". $cat_infos['id_parent'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '". $cat_infos['id_parent'] . "' AND c_order > '" . $cat_infos['order'] . "'", __LINE__, __FILE__);
 		
 		//Regeneration of the cache file
 		$Cache->Generate_module_file($this->cache_file_name);
@@ -376,7 +376,7 @@ class CategoriesManagement
 	}
 	
 	//Method which builds a select form to choose a category
-	function Build_select_form(&$selected_id, $form_id, $form_name, $current_id_cat = 0)
+	function Build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0)
 	{
 		global $LANG;
 		$string = '<select id="' . $form_id . '" name="' . $form_name . '">';

@@ -37,6 +37,7 @@ $faq_categories = new FaqCats();
 $id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
 $id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
 $cat_to_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+$cat_to_del_post = !empty($_POST['cat_to_del']) ? numeric($_POST['cat_to_del']) : 0;
 $id_edit = !empty($_GET['edit']) ? numeric($_GET['edit']) : 0;
 $new_cat = !empty($_GET['new']) ? true : false;
 $error = !empty($_GET['error']) ? securit($_GET['error']) : '';
@@ -64,21 +65,52 @@ elseif( $id_down > 0 )
 }
 elseif( $cat_to_del > 0 )
 {
-	
+	$Template->Assign_vars(array(
+		'L_REMOVING_CATEGORY' => $FAQ_LANG['removing_category'],
+		'L_EXPLAIN_REMOVING' => $FAQ_LANG['explain_removing_category'],
+		'L_DELETE_CATEGORY_AND_CONTENT' => $FAQ_LANG['delete_category_and_its_content'],
+		'L_MOVE_CONTENT' => $FAQ_LANG['move_category_content'],
+		'L_SUBMIT' => $LANG['delete']
+	));
+	$Template->Assign_block_vars('removing_interface', array(
+		'CATEGORY_TREE' => $faq_categories->Build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
+		'IDCAT' => $cat_to_del,
+	));
 }
 elseif( !empty($_POST['submit']) )
 {
-	$id_cat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
-	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
-	$image = !empty($_POST['image']) ? securit($_POST['image']) : '';
-	$description = !empty($_POST['description']) ? parse($_POST['description']) : '';
-	$error_string = '';
-	
-	if( $id_cat > 0 )
-		$error_string = $faq_categories->Update_category($id_cat, $id_parent, $name, $description, $image);
+	$error_string = 'e_success';
+	//Deleting a category
+	if( !empty( $cat_to_del_post) )
+	{
+		$delete_content = !empty($_POST['action']) && $_POST['action'] == 'move' ? false : true;
+		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
+		
+		if( $delete_content )
+		{
+			$faq_categories->Delete_category_recursively($cat_to_del_post);
+		}
+		else
+		{
+			$faq_categories->Delete_category_and_move_content($cat_to_del_post, $id_parent);
+		}
+	}
 	else
-		$error_string = $faq_categories->Add_category($id_parent, $name, $description, $image);
+	{
+		$id_cat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
+		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
+		$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
+		$image = !empty($_POST['image']) ? securit($_POST['image']) : '';
+		$description = !empty($_POST['description']) ? parse($_POST['description']) : '';
+		
+		if( empty($name) )
+			redirect(transid(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+		
+		if( $id_cat > 0 )
+			$error_string = $faq_categories->Update_category($id_cat, $id_parent, $name, $description, $image);
+		else
+			$error_string = $faq_categories->Add_category($id_parent, $name, $description, $image);
+	}
 
 	$Cache->Generate_module_file('faq');
 	
@@ -95,7 +127,8 @@ elseif( $new_cat XOR $id_edit > 0 )
 		'L_IMAGE' => $FAQ_LANG['category_image'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
-		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add']
+		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add'],
+		'L_REQUIRE_TITLE' => $LANG['require_title']
 	));
 	
 	if( $id_edit > 0 && array_key_exists($id_edit, $FAQ_CATS) )	

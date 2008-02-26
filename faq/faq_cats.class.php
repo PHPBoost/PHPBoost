@@ -42,9 +42,12 @@ class FaqCats extends CategoriesManagement
 	//Method which removes all subcategories and their content
 	function Delete_category_recursively($id)
 	{
+		//We delete the category
+		$this->delete_category_with_content($id);
+		//Then its content
 		foreach( $this->cache_var as $id_cat => $properties )
 		{
-			if( $properties['id_parent'] == $id )
+			if( $id_cat != 0 && $properties['id_parent'] == $id )
 				$this->Delete_category_recursively($id_cat);
 		}
 		
@@ -55,18 +58,21 @@ class FaqCats extends CategoriesManagement
 	{
 		global $Sql;
 		
-		if( !array_key_exists($id_category, $FAQ_CATS) )
+		if( !array_key_exists($id_category, $this->cache_var) )
 		{
 			parent::add_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST);
 			return false;
 		}
 		
+		parent::Delete_category($id_category);
 		foreach( $this->cache_var as $id_cat => $properties )
 		{
-			if( $properties['id_parent'] == $id_category )
-				parent::Move_category_into_another_category($id_category, $new_id_cat_content);			
+			if( $id_cat != 0 && $properties['id_parent'] == $id_category )
+				parent::Move_category_into_another_category($id_cat, $new_id_cat_content);			
 		}
-		$Sql->Query_inject("UPDATE ".PREFIX."faq SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
+		
+		$max_q_order = $Sql->Query("SELECT MAX(q_order) FROM ".PREFIX."faq WHERE idcat = '" . $new_id_cat_content . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."faq SET idcat = '" . $new_id_cat_content . "', q_order = q_order + " . $max_q_order . " WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
 		return true;
 	}
 	
@@ -115,8 +121,9 @@ class FaqCats extends CategoriesManagement
 	function delete_category_with_content($id)
 	{
 		global $Sql;
+		
 		//If the category is successfully deleted
-		if( parent::Delete_category($id) )
+		if( $test = parent::Delete_category($id) )
 		{
 			//We remove its whole content
 			$Sql->Query_inject("DELETE FROM ".PREFIX."faq WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
