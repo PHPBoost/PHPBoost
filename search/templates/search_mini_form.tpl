@@ -1,4 +1,4 @@
-		<div class="module_position">					
+		<div class="module_position">
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">{TITLE}</div>
@@ -22,7 +22,7 @@
 					{L_NO_CAT}
 				# END cat_list #
 				
-				# START last_articles #				
+				# START last_articles #
 				<hr /><br />
 				<table class="module_table">
 					<tr>

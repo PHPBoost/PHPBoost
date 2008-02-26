@@ -38,6 +38,8 @@ $LANG['search_min_length'] = 'Mots clés (4 caractères minimum)';
 $LANG['title_all_results'] = 'Tous les résultats';
 $LANG['forms'] = 'Formulaires';
 $LANG['results'] = 'Résultats';
+$LANG['advanced_search'] = 'Recherche avancée';
+$LANG['simple_search'] = 'Recherche simple';
 
 //Actions
 

@@ -59,7 +59,9 @@ $Template->Assign_vars(Array(
     'TEXT_SEARCHED' => $search,
     'SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
     'WARNING_LENGTH_STRING_SEARCH' => $LANG['warning_length_string_searched'],
-    'FORMS' => $LANG['forms']
+    'FORMS' => $LANG['forms'],
+    'ADVANCED_SEARCH' => $LANG['advanced_search'],
+    'SIMPLE_SEARCH' => $LANG['simple_search']
 ));
 
 //------------------------------------------------------------- Other includes
