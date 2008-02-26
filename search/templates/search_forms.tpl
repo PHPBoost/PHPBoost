@@ -6,12 +6,41 @@
         modules.push("{forms.MODULE_NAME}");
     # END forms #
     
+    function ShowAdvancedSearchForms()
+    /*
+     *  Montre les champs de recherche avancée
+     */
+    {
+        HideAdvancedSearchForms();
+        document.getElementById('FormsChoice').style.display = 'block';
+        ShowForm('');
+        document.getElementById('AdvancedSearch').style.display = 'none';
+        document.getElementById('SimpleSearch').style.display = 'block';
+    }
+    
+    function HideAdvancedSearchForms()
+    /*
+     *  Cache les champs de recherche avancée
+     */
+    {
+        HideForms();
+        document.getElementById('FormsChoice').style.display = 'none';
+        document.getElementById('SimpleSearch').style.display = 'none';
+        document.getElementById('AdvancedSearch').style.display = 'block';
+    }
+    
     function ShowForm(module)
     /*
      * Montre les résultats de ce module
      */
     {
-        document.getElementById('Form'+module).style.display = 'block';
+        if ( module != '' )
+            document.getElementById('Form'+module).style.display = 'block';
+        else
+        {
+            if ( modules.length > 0 )
+                document.getElementById('Form'+modules[0]).style.display = 'block';
+        }
     }
     
     function HideForms()
@@ -31,7 +60,7 @@
      */
     {
         HideForms();
-        ShowForm(module);
+        ShowForm(document.getElementById('FormsChoice').value);
     }
     
     function check_form_post()
@@ -65,18 +94,20 @@
                     <dt><label for="search">{SEARCH_MIN_LENGTH}</label></dt>
                     <dd><label><input type="text" size="35" id="search" name="search" value="{TEXT_SEARCHED}"  class="text" /></label></dd>
                 </dl>
+                <dl>
+                    <dt>
+                        <label id="AdvancedSearch"><a onClick="ShowAdvancedSearchForms();">{ADVANCED_SEARCH}</a></label>
+                        <label id="SimpleSearch"><a onClick="HideAdvancedSearchForms();">{SIMPLE_SEARCH}</a></label>
+                    </dt>
+                    <dd>
+                        <select id="FormsChoice" name="FormsSelection" onChange="ChangeForm();">
+                            # START forms #
+                                <option value="{forms.MODULE_NAME}">{forms.MODULE_NAME}</option>
+                            # END forms #
+                        </select>
+                    </dd>
+                </dl>
             </fieldset>
-            <div class="choices">
-                <fieldset>
-                    <legend>{FORMS}</legend>
-                    <ul>
-                        <li><a class="choice" onClick="HideForms();">Cacher les formulaires</a></li>
-                        # START forms #
-                            <li><a class="choice" onClick="ChangeForm('{forms.MODULE_NAME}');">{forms.MODULE_NAME}</a></li>
-                        # END forms #
-                    </ul>
-                </fieldset>
-            </div>
             # START forms #
                 <div id="Form{forms.MODULE_NAME}" class="module_position">
                     <fieldset>
@@ -90,13 +121,16 @@
                 <input type="submit" name="search_submit" id="search_submit" value="{SEARCH}" class="submit" />
             </fieldset>
         </form>
-        <script type="text/javascript">
-        <!--
-            HideForms();
-        -->
-        </script>
     </div>
     <div class="module_bottom_l"></div>
     <div class="module_bottom_r"></div>
     <div class="module_bottom" style="text-align:center;">{HITS}</div>
 </div>
+
+<script type="text/javascript">
+<!--
+    // On cache les éléments ne devant pas s'afficher au début
+    document.getElementById('SimpleSearch').style.display = 'none';
+    HideAdvancedSearchForms();
+-->
+</script>
