@@ -85,6 +85,10 @@ $FAQ_LANG['category'] = 'Catégorie';
 $FAQ_LANG['category_name'] = 'Nom de la catégorie';
 $FAQ_LANG['category_location'] = 'Emplacement de la catégorie';
 $FAQ_LANG['category_image'] = 'Image de la catégorie';
+$FAQ_LANG['removing_category'] = 'Suppression d\'une catégorie';
+$FAQ_LANG['explain_removing_category'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (questions et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de son catégorie. <strong>Attention, cette action est irréversible !</strong>';
+$FAQ_LANG['delete_category_and_its_content'] = 'Supprimer la catégorie et tout son contenu';
+$FAQ_LANG['move_category_content'] = 'Déplacer son contenu dans :';
 
 //Others
 $LANG['ranks'] = 'Rangs';

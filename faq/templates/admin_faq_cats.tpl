@@ -47,7 +47,30 @@
 			# END categories_management #
 			
 			# START removing_interface #
-
+			
+			<form action="admin_faq_cats.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+				<fieldset>
+					<legend>{L_REMOVING_CATEGORY}</legend>
+					<p>{L_EXPLAIN_REMOVING}</p>
+					
+					<label>
+						<input type="radio" name="action" value="delete" /> {L_DELETE_CATEGORY_AND_CONTENT}
+					</label>
+					<br /> <br />
+					<label>
+						<input type="radio" name="action" value="move" checked="checked" /> {L_MOVE_CONTENT}
+					</label>
+					&nbsp;
+					{removing_interface.CATEGORY_TREE}
+				</fieldset>
+				
+				<fieldset class="fieldset_submit">
+					<legend>{L_SUBMIT}</legend>
+					<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}" />
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />	
+				</fieldset>
+			</form>
+			
 			# END removing_interface #
 
 			# START edition_interface #
@@ -55,7 +78,7 @@
 			<script type="text/javascript">
 			<!--
 			function check_form(){
-				if(document.getElementById('title').value == "")
+				if(document.getElementById('name').value == "")
 				{
 					alert("{L_REQUIRE_TITLE}");
 					return false;
