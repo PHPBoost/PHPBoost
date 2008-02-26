@@ -25,6 +25,7 @@
  *
 ###################################################*/
 
+$Cache->Load_file('faq');
 include_once('../includes/cats_management.class.php');
 
 class FaqCats extends CategoriesManagement
@@ -34,15 +35,14 @@ class FaqCats extends CategoriesManagement
 	//Constructor
 	function FaqCats()
 	{
-		parent::CategoriesManagement('faq_cats', 'xmlhttprequest_faq.php');
+		global $FAQ_CATS;
+		parent::CategoriesManagement('faq_cats', 'faq', $FAQ_CATS);
 	}
 	
 	//Method which removes all subcategories and their content
 	function Delete_category_recursively($id)
 	{
-		global $FAQ_CATS;
-		
-		foreach( $FAQ_CATS as $id_cat => $properties )
+		foreach( $this->cache_var as $id_cat => $properties )
 		{
 			if( $properties['id_parent'] == $id )
 				$this->Delete_category_recursively($id_cat);
@@ -53,7 +53,7 @@ class FaqCats extends CategoriesManagement
 	//Method which deletes a category and move its content in another category
 	function Delete_category_and_move_content($id_category, $new_id_cat_content)
 	{
-		global $FAQ_CATS, $Sql;
+		global $Sql;
 		
 		if( !array_key_exists($id_category, $FAQ_CATS) )
 		{
@@ -61,13 +61,52 @@ class FaqCats extends CategoriesManagement
 			return false;
 		}
 		
-		foreach( $FAQ_CATS as $id_cat => $properties )
+		foreach( $this->cache_var as $id_cat => $properties )
 		{
 			if( $properties['id_parent'] == $id_category )
 				parent::Move_category_into_another_category($id_category, $new_id_cat_content);			
 		}
 		$Sql->Query_inject("UPDATE ".PREFIX."faq SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
 		return true;
+	}
+	
+	//Function which adds a category
+	function Add_category($id_parent, $name, $description, $image)
+	{
+		global $Sql;
+		if( array_key_exists($id_parent, $this->cache_var) )
+		{
+			$new_id_cat = parent::Add_category($id_parent, $name);
+			$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET description = '" . $description . "', image = '" . $image . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
+			return 'e_success';
+		}
+		else
+			return 'e_unexisting_cat';
+	}
+	
+	//Function which updates a category
+	function Update_category($id_cat, $id_parent, $name, $description, $image)
+	{
+		global $Sql;
+		if( array_key_exists($id_cat, $this->cache_var) )
+		{
+			if( $id_parent != $this->cache_var[$id_cat]['id_parent'] )
+			{
+				if( !$this->Move_category_into_another_category($id_cat, $id_parent) )			
+				{
+					if( $this->Check_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST) )
+						return 'e_new_cat_does_not_exist';
+					if( $this->Check_error(NEW_CATEGORY_IS_IN_ITS_CHILDREN) )
+						return 'e_infinite_loop';
+				}
+			}
+			
+			$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+			
+			return 'e_success';
+		}
+		else
+			return 'e_unexisting_category';
 	}
 	
 	## Private methods ##

@@ -260,8 +260,9 @@
 			<span id="errorh"></span>
 			<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
 				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-			</div>
-		# END move.error_handler #
+			</div>		
+		# ENDIF #
+		
 		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
 			<fieldset>
 				<legend>{move.L_TITLE}</legend>	

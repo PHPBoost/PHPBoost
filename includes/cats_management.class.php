@@ -35,10 +35,13 @@ parent::method().
 	* You must have an integer attribute whose name is id and which represents the identifier of each category. It must be a primary key.
 	* You also must have an integer attribute named id_parent which represents the identifier of the parent category (it will be 0 if its parent category is the root of the tree).
 	* To maintain order, you must have a field containing the rank of the category which be an integer named c_order.
+	* A field visible boolean (tynint 1 sur mysql)
 - In this class the user are supposed to be an administrator, no checking of his auth is done.
 - To be correctly displayed, you must supply to functions a variable extracted from a file cache. Use the Cache class to build your file cache. Your variable must be an array in which keys are categories identifiers, an values are still arrays which are as this :
 	* key id_parent containing the id_parent field of the database
 	* key name containing the name of the category
+	* key order 
+	* key visible which is a boolean 
 You can also have other fields such as auth level, description, visible, that class won't modify them.
 - To display the list of categories and actions you can do on them, you may want to customize it. For that you must build an array that you will give to Set_displaying_configuration() containing your choices :
 	* Key 'xmlhttprequest_file' which corresponds to the name of the file which will treat the AJAX requests. We usually call it xmlhttprequest.php.
@@ -65,34 +68,43 @@ define('ERROR_CAT_IS_AT_BOTTOM', 4);
 define('CATEGORY_DOES_NOT_EXIST', 8);
 define('NEW_PARENT_CATEGORY_DOES_NOT_EXIST', 16);
 define('DISPLAYING_CONFIGURATION_NOT_SET', 32);
-define('INCORRECT_DISPLAY_CONFIGURATION', 64);
+define('INCORRECT_DISPLAYING_CONFIGURATION', 64);
+define('NEW_CATEGORY_IS_IN_ITS_CHILDREN', 128);
 
 class CategoriesManagement
 {
 	## Public methods ##
-	function CategoriesManagement($table, $cache_file_name)
+	function CategoriesManagement($table, $cache_file_name, &$cache_var)
 	{
 		$this->table = $table;
 		$this->cache_file_name = $cache_file_name;
+		$this->cache_var = $cache_var;
+	}
+	
+	//Method which updates cache file
+	function Update_cache_var($cache_var)
+	{
+	$this->cache_var = $cache_var;
 	}
 	
 	//Method which adds a category
-	function Add_category($id_parent, $name, $order = 0)
+	function Add_category($id_parent, $name, $visible = 1, $order = 0)
 	{
 		global $Sql, $Cache;
 		$this->clean_error();
 		
-		$max_order = $Sql->Query_inject("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE idcat = '" . $id_parent . "'", __LINE__, __FILE__);
+		$max_order = $Sql->Query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $id_parent . "'", __LINE__, __FILE__);
+		$max_order = numeric($max_order);
 		
-		if( $max_order > 0 )
+		if( array_key_exists($id_parent, $this->cache_var) )
 		{
 			//Whe add it at the end of the parent category
 			if( $order <= 0 || $order > $max_order )
-				$Sql->Query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order) VALUES ('" . $name . "', '" . ($max_order + 1) . "')", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . ($max_order + 1) . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
 			else
 			{
-				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE idcat = '" . $id_parent . "' AND c_order >= '" . $order . "'", __LINE__, __FILE__);
-				$Sql->Query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order) VALUES ('" . $name . "', '" . $order . "')", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $id_parent . "' AND c_order >= '" . $order . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . $order . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
 			}
 			return $Sql->Sql_insert_id("SELECT MAX(id) FROM " . PREFIX . $this->table);
 		}
@@ -177,40 +189,48 @@ class CategoriesManagement
 		$this->clean_error();
 		
 		//Checking that both current category and new category exist and importing necessary information
-		$max_new_cat_order = $Sql->Query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'", __LINE__, __FILE__);		
-		$cat_info = $Sql->Query_array($this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		
-		if( $max_new_cat_order > 0 && $cat_info['c_order'] > 0 )
+		if( array_key_exists($id, $this->cache_var) && array_key_exists($new_id_cat, $this->cache_var) )
 		{
-			//Default : inserting at the end of the list
-			if( $position < 0 || $position > $max_new_cat_order )
-			{
-				//Moving the category $id
-				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $max_new_cat_order . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
-				//Updating ex category
-				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order > '" . $cat_info['c_order'] . "'", __LINE__, __FILE__);
+			//Checking that the new parent category is not the this category or one of its children
+			$subcats_list = array($id);
+			$this->build_children_id_list($id, $subcats_list);
+			if( !in_array($new_id_cat, $subcats_list) )
+			{			
+				$max_new_cat_order = $Sql->Query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'", __LINE__, __FILE__);	
+				//Default : inserting at the end of the list
+				if( $position <= 0 || $position > $max_new_cat_order )
+				{
+					//Moving the category $id
+					$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . ($max_new_cat_order + 1). "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					//Updating ex parent category
+					$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'", __LINE__, __FILE__);
+				}
+				//Inserting at a precise position
+				else
+				{
+					//Preparing the new parent category to receive a category at this position
+					$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $new_id_cat . "' AND c_order >= '" . $this->cache_var[$id]['order'] . "'", __LINE__, __FILE__);
+					//Moving the category $id
+					$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $position . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					//Updating ex category
+					$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'", __LINE__, __FILE__);
+				}
+				
+				//Regeneration of the cache file of the module
+				$Cache->Generate_module_file($this->cache_file_name);
+				return true;
 			}
-			//Inserting at a precise position
 			else
 			{
-				//Preparing the new parent category to receive a category at this position
-				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $new_id_cat . "' AND c_order >= '" . $cat_info['c_order'] . "'", __LINE__, __FILE__);
-				//Moving the category $id
-				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $postion . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
-				//Updating ex category
-				$Sql->Query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order > '" . $cat_info['c_order'] . "'", __LINE__, __FILE__);
+				$this->add_error(NEW_CATEGORY_IS_IN_ITS_CHILDREN);
+				return false;
 			}
-			
-			//Regeneration of the cache file of the module
-			$Cache->Generate_module_file($this->cache_file_name);
-			
-			return true;
 		}
 		else
 		{
-			if( empty($max_new_cat_order) )
+			if( !array_key_exists($new_id_cat, $this->cache_var) )
 				$this->add_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST);
-			if( ($cat_info['c_order']) )
+			if( !array_key_exists($id, $this->cache_var) )
 				$this->add_error(CATEGORY_DOES_NOT_EXIST);
 				
 			return false;
@@ -242,6 +262,22 @@ class CategoriesManagement
 		$Cache->Generate_module_file($this->cache_file_name);
 		
 		return true;
+	}
+	
+	//Method which changes the visibility of a category
+	function Change_category_visibility($category_id, $visibility)
+	{
+		global $Sql;
+		if( array_key_exists($category_id, $this->cache_var) )
+		{
+			$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET visible = '" . $visibility . "' WHERE id = '" . $category_id . "'", __LINE__, __FILE__);
+			return true;
+		}
+		else
+		{
+			$this->add_error(CATEGORY_DOES_NOT_EXIST);
+			return false;
+		}
 	}
 
 	//Method which sets the displaying configuration
@@ -283,14 +319,14 @@ class CategoriesManagement
 
 	//Method which builds the list of categories and links to makes operations to administrate them (delete, move, add...), it's return string is ready to be displayed
 	//This method doesn't allow you tu use templates, it's not so important because you are in the administration panel
-	function Build_administration_list(&$cache_var, $ajax_mode = true)
+	function Build_administration_list($ajax_mode = true)
 	{
 		global $CONFIG, $LANG;
 		$this->clean_error();
 		//If displaying configuration hasn't bee already set
 		if( !$this->Check_displaying_configuration() )
 		{
-			$this->add_error(INCORRECT_DISPLAY_CONFIGURATION);
+			$this->add_error(INCORRECT_DISPLAYING_CONFIGURATION);
 			return false;
 		}
 		
@@ -298,8 +334,8 @@ class CategoriesManagement
 		$string = '';
 		
 		//AJAX functions
-		{
 		if( $ajax_mode )
+		{
 			$string .= '
 			<script type="text/javascript">
 			<!--
@@ -320,7 +356,6 @@ class CategoriesManagement
 					else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' ) //Error
 						alert("' . $LANG['cats_managment_could_not_be_moved'] . '");
 				}
-				document.getElementById(\'l\' + id).innerHTML = \'\';
 				xmlhttprequest_sender(xhr_object, null);
 			}
 			-->
@@ -332,9 +367,24 @@ class CategoriesManagement
 		}
 		
 		//Categories list
-		$this->create_cat_administration($string, 0, 0, $cache_var, $ajax_mode);
+		$this->create_cat_administration($string, 0, 0, $ajax_mode);
 		
-		$string .= $ajax_mode ? '</div>' : '';
+		if( $ajax_mode )
+			$string .= '</div>';
+		
+		return $string;
+	}
+	
+	//Method which builds a select form to choose a category
+	function Build_select_form(&$selected_id, $form_id, $form_name, $current_id_cat = 0)
+	{
+		global $LANG;
+		$string = '<select id="' . $form_id . '" name="' . $form_name . '">';
+		$string .= '<option value="0"' . ($selected_id == 0 ? ' selected="selected"' : '') . '>' . $LANG['root'] . '</option>';
+		
+		$this->create_select_row($string, 0, 1, $selected_id, $current_id_cat);
+		
+		$string .= '</select>';
 		return $string;
 	}
 
@@ -347,11 +397,11 @@ class CategoriesManagement
 
 	## Private methods ##
 	//Recursive method allowing to display the administration panel of a category and its daughters
-	function create_cat_administration(&$string, $id_cat, $level, &$cache_var, $ajax_mode = true)
+	function create_cat_administration(&$string, $id_cat, $level, $ajax_mode = true)
 	{
 		global $CONFIG, $LANG;
 		
-		$id_categories = @array_keys($cache_var);
+		$id_categories = @array_keys($this->cache_var);
 		$num_cats = count($id_categories);
 		
 		//If there is no category
@@ -365,7 +415,7 @@ class CategoriesManagement
 		for( $i = 0; $i < $num_cats; $i++ )
 		{
 			$id = $id_categories[$i];
-			$values = $cache_var[$id];
+			$values = $this->cache_var[$id];
 			//If this category is in the category $id_cat
 			if( $id != 0 && $values['id_parent'] == $id_cat )
 			{
@@ -417,7 +467,7 @@ class CategoriesManagement
 								}
 								
 								//If it's not the last of the category we can make it going upper
-								if( $i != $num_cats  - 1 && $cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat )
+								if( $i != $num_cats  - 1 && $this->cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat )
 								{
 									$string .= '
 									<a href="' . ($ajax_mode ? transid($this->display_config['administration_file_name'] . '?id_down=' . $id . '" id="down_' . $id) : 'javascript:ajax_move_cat(' . $id . ', \'down\');') . '">
@@ -447,7 +497,33 @@ class CategoriesManagement
 				</span>';
 				
 				//We call the function for its daughter categories
-				$this->create_cat_administration($string, $id, $level + 1, $cache_var, $ajax_mode);
+				$this->create_cat_administration($string, $id, $level + 1, $ajax_mode);
+			}
+		}
+	}
+	
+	//Recursive method which adds the category informations and thoses of its children
+	function create_select_row(&$string, $id_cat, $level, &$selected_id, &$current_id_cat)
+	{
+		foreach( $this->cache_var as $id => $value )
+		{
+			if( $id != 0 && $id != $current_id_cat && $value['id_parent'] == $id_cat )
+			{
+				$string .= '<option value="' . $id . '"' . ($id == $selected_id ? ' selected="selected"' : '') . '>' . str_repeat('--', $level) . ' ' . $value['name'] . '</option>';
+				$this->create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat);
+			}
+		}
+	}
+	
+	//Recursive method which builds the list of all chlidren of one category
+	function build_children_id_list($category_id, &$list)
+	{
+		foreach( $this->cache_var as $id => $value )
+		{
+			if( $id != 0 && $value['id_parent'] == $category_id )
+			{
+				$list[] = $id;
+				$this->build_children_id_list($id, $list);
 			}
 		}
 	}
@@ -479,7 +555,9 @@ class CategoriesManagement
 	//Last error
 	var $errors = 0;
 	//Displaying configuration
-	var $display_config = array();    
+	var $display_config = array();
+	//Cache variable
+	var $cache_var = array();
 }
 
 ?>

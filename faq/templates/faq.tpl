@@ -19,10 +19,12 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">{TITLE}</div>
 			<div class="module_contents">
+			
 				# START description #
 					{description.DESCRIPTION}
 					<hr style="margin:20px 0;" />
 				# END description #
+				
 				# START cats #
 					<table style="width:100%;">
 					# START cats.row #
@@ -97,9 +99,11 @@
 					# END questions_block.contents #		
 				# END questions_block #
 				
-				# START questions_block.no_question #
-					{L_NO_QUESTION_THIS_CATEGORY}
-				# END questions_block.no_question #
+				# START no_question #
+					<div class="notice">
+						{L_NO_QUESTION_THIS_CATEGORY}
+					</div>
+				# END no_question #
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>

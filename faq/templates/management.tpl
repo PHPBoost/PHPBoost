@@ -68,7 +68,7 @@
 				<form action="{TARGET}" method="post" onsubmit="javascript:return check_form_faq();">
 					<fieldset>
 						<legend>{L_CAT_PROPERTIES}</legend>
-						# START not_root_name #
+						# START category.not_root_name #
 						<dl>
 							<dt>
 								<label for="cat_title">{L_CAT_NAME}</label>
@@ -77,9 +77,9 @@
 								<input type="text" name="cat_name" id="cat_name" value="{category.not_root_name.CAT_TITLE}" />
 							</dd>
 						</dl>
-						# END not_root_name #
+						# END category.not_root_name #
 						<label for="contents">{L_DESCRIPTION}</label>
-						{BBCODE}
+						# INCLUDE handle_bbcode #
 						<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
 						<br />
 						<div style="text-align:center;">
@@ -100,7 +100,7 @@
 								</select>
 							</dd>					
 						</dl>
-						# START not_root_auth #
+						# START category.not_root_auth #
 						<dl>
 							<dt><label for="global_auth">{L_GLOBAL_AUTH}</label>
 							<br />
@@ -130,7 +130,7 @@
 								{category.WRITE_AUTH}
 							</dd>					
 						</dl>
-						# END not_root_auth #
+						# END category.not_root_auth #
 						</div>
 					</fieldset>
 					<fieldset class="fieldset_submit">
@@ -145,22 +145,22 @@
 				<fieldset>
 					<legend>{L_QUESTIONS_LIST}</legend>
 					<div style="text-align:center;">
-							<a href="{category.U_CREATE_BEFORE}" title="{L_INSERT_QUESTION_BEFORE}"><img src="{MODULE_DATA_PATH}/images/new.png" alt="{L_INSERT_QUESTION_BEFORE}" /></a>
+							<a href="{category.U_CREATE_BEFORE}" title="{L_INSERT_QUESTION_BEFORE}"><img src="../templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION_BEFORE}" /></a>
 					</div>
 					<br />
-					# START questions #
+					# START category.questions #
 						<div class="row1" id="q{category.questions.ID}">
 							<span style="float:left;">
 								<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
 								{category.questions.QUESTION}
 							</span>
 							<span class="row2" style="float:right;">
-								# START up #
+								# START category.up #
 									<a href="{category.questions.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
-								# END up #
-								# START down #
+								# END category.up #
+								# START category.down #
 									<a href="{category.questions.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
-								# END down #
+								# END category.down #
 								<a href="{category.questions.U_EDIT}" title="{L_EDIT}"><img src="{MODULE_DATA_PATH}/images/edit.png" alt="{L_EDIT}" /></a>
 								<a href="{category.questions.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{MODULE_DATA_PATH}/images/delete.png" alt="{L_DELETE}" /></a>
 							</span>
@@ -168,10 +168,10 @@
 						</div>
 						<br />
 						<div style="text-align:center;">
-							<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}"><img src="{MODULE_DATA_PATH}/images/new.png" alt="{L_INSERT_QUESTION}" /></a>
+							<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}"><img src="../templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION}" /></a>
 						</div>
 						<br />
-					# END questions #
+					# END category.questions #
 				</fieldset>
 			</div>
 			<div class="module_bottom_l"></div>		
@@ -218,7 +218,7 @@
 							</dd>
 						</dl>
 						<label for="contents">{L_ANSWER}</label>
-						{BBCODE}
+						# INCLUDE handle_bbcode #
 						<textarea id="contents" rows="15" cols="66" name="answer">{edit_question.ANSWER}</textarea>
 					</fieldset>
 					<fieldset class="fieldset_submit">

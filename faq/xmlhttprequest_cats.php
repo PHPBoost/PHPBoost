@@ -31,11 +31,8 @@ require_once('../includes/header_no_display.php');
 
 if( $Member->Get_attribute('level') === 2 ) //Admin
 {	
-	$Cache->Load_file('faq');
-	
-	include_once('../includes/cats_management.class.php');
-	// Only those two parameters must be changed if you want to use again this file in another context
-	$faq_categories = new CategoriesManagement('faq_cats', 'faq');
+	include_once('faq_cats.class.php');
+	$faq_categories = new FaqCats();
 	
 	$id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
 	$id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
@@ -62,8 +59,10 @@ if( $Member->Get_attribute('level') === 2 ) //Admin
 		$faq_categories->Set_displaying_configuration($cat_config);
 		
 		$Cache->Load_file('faq', RELOAD_CACHE);
+		
+		$faq_categories->Update_cache_var($FAQ_CATS);
 	
-		echo $faq_categories->Build_administration_list($FAQ_CATS, AJAX_MODE);
+		echo $faq_categories->Build_administration_list(AJAX_MODE);
 	}
 }
 include_once('../includes/footer_no_display.php');
