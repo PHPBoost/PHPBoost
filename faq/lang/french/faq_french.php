@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                              pages_french.php
+ *                              faq_english.php
  *                            -------------------
- *   begin                : August 07, 2007
+ *   begin                : October 20, 2007
  *   copyright          : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -37,11 +37,6 @@ $FAQ_LANG['faq'] = 'FAQ';
 $FAQ_LANG['faq_no_question_here'] = 'Aucune question présente dans cette catégorie';
 $FAQ_LANG['faq_page_title'] = 'FAQ - %s';
 $FAQ_LANG['cat_name'] = 'Nom de la catégorie';
-
-//Avertissement
-$FAQ_LANG['require_entitled'] = 'Veuillez entrer l\'intitulé de la question';
-$FAQ_LANG['require_answer'] = 'Veuillez entrer la réponse';
-$FAQ_LANG['require_cat_name'] = 'Veuillez entrer le nom de la catégorie';
 
 //Gestion
 $FAQ_LANG['cat_properties'] = 'Propriétés de la catégorie';
@@ -78,5 +73,20 @@ $FAQ_LANG['faq_management'] = 'Gestion de la FAQ';
 $FAQ_LANG['faq_configuration'] = 'Configuration de la FAQ';
 $FAQ_LANG['cats_management'] = 'Gestion des catégories';
 $FAQ_LANG['add_cat'] = 'Ajouter une catégorie';
+
+//Avertissement
+$FAQ_LANG['required_fields'] = 'Les champs marqués * sont obligatoires !';
+$FAQ_LANG['require_entitled'] = 'Veuillez entrer l\'intitulé de la question';
+$FAQ_LANG['require_answer'] = 'Veuillez entrer la réponse';
+$FAQ_LANG['require_cat_name'] = 'Veuillez entrer le nom de la catégorie';
+
+//Administration
+$FAQ_LANG['category'] = 'Catégorie';
+$FAQ_LANG['category_name'] = 'Nom de la catégorie';
+$FAQ_LANG['category_location'] = 'Emplacement de la catégorie';
+$FAQ_LANG['category_image'] = 'Image de la catégorie';
+
+//Others
+$LANG['ranks'] = 'Rangs';
 
 ?>

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                              pages_english.php
+ *                              faq_english.php
  *                            -------------------
- *   begin                : August 18, 2007
+ *   begin                : October 20, 2007
  *   copyright          : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *

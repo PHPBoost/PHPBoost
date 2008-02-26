@@ -108,8 +108,6 @@ if( $edit_question > 0 )
 		'L_REQUIRE_ANSWER' => $FAQ_LANG['require_answer']
 	));
 	include_once('../includes/bbcode.php');
-
-	$Template->assign_var_from_handle('BBCODE', 'bbcode');
 }
 elseif( $cat_of_new_question >= 0 && $new )
 {
@@ -128,54 +126,12 @@ elseif( $cat_of_new_question >= 0 && $new )
 		'L_REQUIRE_ANSWER' => $FAQ_LANG['require_answer']
 	));
 	include_once('../includes/bbcode.php');
-
-	$Template->assign_var_from_handle('BBCODE', 'bbcode');
 }
 else
 {
 	//Création du tableau des groupes.
-	$array_groups = array();
-	foreach($_array_groups_auth as $idgroup => $array_group_info)
-		$array_groups[$idgroup] = $array_group_info[0];
-		
-	//Création du tableau des rangs.
-	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-
-	//Génération d'une liste à sélection multiple des rangs et groupes
-	function generate_select_groups($array_auth, $auth_id, $auth_level)
-	{
-		global $array_groups, $array_ranks, $LANG, $FAQ_LANG;
-
-		$j = 0;
-		//Liste des rangs
-		$select_groups = '<select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $FAQ_LANG['ranks'] . '">';
-		foreach($array_ranks as $idgroup => $group_name)
-		{
-			$selected = '';	
-			if( isset($array_auth['r' . $idgroup]) && ((int)$array_auth['r' . $idgroup] & (int)$auth_level) !== 0 )
-				$selected = 'selected="selected"';
-							
-			$select_groups .=  '<option value="r' . $idgroup . '" id="' . $auth_id . 'r' . $j . '" ' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_id . 'r\', ' . $j . ')">' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .=  '</optgroup>';
-		
-		//Liste des groupes.
-		$j = 0;
-		$select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
-		foreach($array_groups as $idgroup => $group_name)
-		{
-			$selected = '';		
-			if( isset($array_auth[$idgroup]) && ((int)$array_auth[$idgroup] & (int)$auth_level) !== 0 )
-				$selected = 'selected="selected"';
-
-			$select_groups .= '<option value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '" ' . $selected . '>' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .= '</optgroup></select>';
-		
-		return $select_groups;
-	}
+	$array_groups = $Group->Create_groups_array();
+	
 	$Template->Assign_vars(array(
 		'L_CAT_PROPERTIES' => $FAQ_LANG['cat_properties'],
 		'L_DESCRIPTION' => $FAQ_LANG['cat_description'],
@@ -224,11 +180,11 @@ else
 			'JS_GLOBAL' => 'false'
 		));
 	}
-	
+
 	//Category properties
 	$Template->Assign_block_vars('category', array(
-		'READ_AUTH' => generate_select_groups(!empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth'], 1, AUTH_READ),
-		'WRITE_AUTH' => generate_select_groups(!empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth'], 2, AUTH_WRITE),
+		'READ_AUTH' => 	$Group->Generate_select_groups(1, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth'], AUTH_READ),
+		'WRITE_AUTH' => $Group->Generate_select_groups(2, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth'], AUTH_WRITE),
 		'NBR_GROUP' => count($array_groups),
 		'U_CREATE_BEFORE' => transid('management.php?new=1&amp;idcat=' . $id_faq . '&amp;after=0'),
 		'ID_FAQ' => $id_faq
@@ -239,7 +195,7 @@ else
 		$Template->Assign_block_vars('category.not_root_name', array(
 			'CAT_TITLE' => $FAQ_CATS[$id_faq]['name'],
 		));
-		$Template->Assign_block_vars('category.not_root_auth', array());
+		$Template->Assign_block_vars('category.not_root_auth', array('WRITE_AUTH' => $Group->Generate_select_groups(2, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth'], AUTH_WRITE)));
 	}
 	
 	//Questions management
@@ -269,8 +225,6 @@ else
 		}
 	}
 	include_once('../includes/bbcode.php');
-
-	$Template->assign_var_from_handle('BBCODE', 'bbcode');
 }
 
 $Template->Assign_vars(array(
@@ -280,7 +234,9 @@ $Template->Assign_vars(array(
 	'L_SUBMIT' => $LANG['submit'],
 	'L_UPDATE' => $LANG['update'],
 	'L_PREVIEW' => $LANG['preview'],
-	'L_RESET' => $LANG['reset']
+	'L_RESET' => $LANG['reset'],
+	'LANG' => $CONFIG['lang'],
+	'THEME' => $CONFIG['theme']
 ));
 
 

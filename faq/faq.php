@@ -60,6 +60,11 @@ $Template->Assign_vars(array(
 	'MODULE_DATA_PATH' => $Template->Module_data_path('faq')
 ));
 
+if( !empty($FAQ_CATS[$id_faq]['description']) )
+	$Template->Assign_block_vars('description', array(
+		'DESCRIPTION' => $FAQ_CATS[$id_faq]['description']
+	));
+
 if( $auth_write )
 	$Template->Assign_block_vars('management', array());
 
@@ -67,7 +72,7 @@ if( $auth_write )
 $num_subcats = 0;
 foreach( $FAQ_CATS as $id => $value )
 {
-	if( $id !=0 && $value['id_parent'] == $id_faq )
+	if( $id != 0 && $value['id_parent'] == $id_faq )
 		$num_subcats ++;
 }
 
@@ -83,7 +88,7 @@ if( $num_subcats > 0 )
 			//If we have a new row
 			if ( $i % $FAQ_CONFIG['num_cols'] == 1 )
 				$Template->Assign_block_vars('cats.row', array());
-				
+			
 			$Template->Assign_block_vars('cats.row.col', array(
 				'ID' => $id,
 				'NAME' => $value['name'],
@@ -96,6 +101,7 @@ if( $num_subcats > 0 )
 					'SRC' => $value['image'],
 					'NAME' => addslashes($value['name'])
 				));
+				
 			$i++;
 		}
 	}
