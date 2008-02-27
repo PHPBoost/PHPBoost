@@ -120,7 +120,7 @@ if( $search != '' )
     }
     
     // Génération des résultats et passage aux templates
-    $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, ($p - 1), ($p - 1 + NB_RESULTS_PER_PAGE));
+    $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, ($p), ($p + NB_RESULTS_PER_PAGE));
     
     $htmlResults = array();
     foreach( $results as $result )
