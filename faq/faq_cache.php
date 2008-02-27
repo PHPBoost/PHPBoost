@@ -32,7 +32,6 @@ function generate_module_file_faq()
 	global $Sql;
 	//Configuration
 	$config = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'faq'", __LINE__, __FILE__));
-	$config['root']['auth'] = unserialize(stripslashes($config['root']['auth']));
 	$root_config = $config['root'];
 	unset($config['root']);
 	$string = 'global $FAQ_CONFIG, $FAQ_CATS;' . "\n\n";

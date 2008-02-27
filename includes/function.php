@@ -146,12 +146,14 @@ function substr_html($str, $start, $end = '')
 }
 
 //Chercher le dossier langue d'un module, s'il n'est pas trouvé on retourne la première langue.
-function load_module_lang($module_name)
+function load_module_lang($module_name, $lang_var = '')
 {
 	global $CONFIG, $LANG;
+	if( !empty($lang_var) )
+		global $$lang_var;
 	
 	if( !@include_once('../' . $module_name . '/lang/' . $CONFIG['lang'] . '/' . $module_name . '_' . $CONFIG['lang'] . '.php') )
-	{	
+	{
 		$lang = find_require_dir('../' . $module_name . '/lang/', $CONFIG['lang'], NO_FATAL_ERROR);
 		if( !@include_once('../' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php') )
 		{

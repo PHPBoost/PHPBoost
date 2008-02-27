@@ -74,7 +74,7 @@ if( $install ) //Installation du module
 			@include_once('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.php');
 		
 		//Génération du cache du module si il l'utilise
-		if( $info_module['use_cache'] == '1' )
+		if( !empty($info_module['cache']) )
 			$Cache->Generate_module_file($module_name);
 
 		//Insertion du modules dans la bdd => module installé.

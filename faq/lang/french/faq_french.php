@@ -80,7 +80,7 @@ $FAQ_LANG['require_entitled'] = 'Veuillez entrer l\'intitulé de la question';
 $FAQ_LANG['require_answer'] = 'Veuillez entrer la réponse';
 $FAQ_LANG['require_cat_name'] = 'Veuillez entrer le nom de la catégorie';
 
-//Administration
+//Administration / categories
 $FAQ_LANG['category'] = 'Catégorie';
 $FAQ_LANG['category_name'] = 'Nom de la catégorie';
 $FAQ_LANG['category_location'] = 'Emplacement de la catégorie';
@@ -89,6 +89,20 @@ $FAQ_LANG['removing_category'] = 'Suppression d\'une catégorie';
 $FAQ_LANG['explain_removing_category'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (questions et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de son catégorie. <strong>Attention, cette action est irréversible !</strong>';
 $FAQ_LANG['delete_category_and_its_content'] = 'Supprimer la catégorie et tout son contenu';
 $FAQ_LANG['move_category_content'] = 'Déplacer son contenu dans :';
+$FAQ_LANG['faq_name'] = 'Nom de la FAQ';
+$FAQ_LANG['faq_name_explain'] = 'Le nom de la FAQ apparaîtra dans le titre et dans l\'arborescence de chaque page';
+$FAQ_LANG['nbr_cols'] = 'Nombre de catégories par ligne';
+$FAQ_LANG['nbr_cols_explain'] = 'Ce nombre est le nombre de colonnes dans lesquelles seront présentées les sous catégories d\'une catégorie';
+$FAQ_LANG['display_mode_admin_explain'] = 'Vous pouvez choisir la façon dont les questions seront affichées. Le mode en bloc permet d\'afficher les questions et un clic sur la question affiche la réponse, alors que le mode en ligne affiche l\'enchaînement des questions et des réponses. Il sera possible de choisir pour chaque catégorie le mode d\'affichage, il ne s\'agit ici que de la configuration par défaut.';
+$FAQ_LANG['general_auth'] = 'Autorisations générales';
+$FAQ_LANG['general_auth_explain'] = 'Vous configurez ici les autorisations générales de lecture et d\'écriture sur la FAQ. Vous pourrez ensuite pour chaque catégorie lui appliquer des autorisations particulières.';
+
+//Errors
+$FAQ_LANG['successful_operation'] = 'L\'opération que vous avez demandée a été effectuée avec succès';
+$LANG['required_fields_empty'] = 'Des champs requis n\'ont pas été renseignés, merci de renouveler l\'opération correctement';
+$LANG['unexisting_category'] = 'La catégorie que vous avez sélectionnée n\'existe pas';
+$LANG['new_cat_does_not_exist'] = 'La catégorie cible n\'existe pas';
+$LANG['infinite_loop'] = 'Vous voulez déplacer la catégorie dans une de ses catégories filles ou dans elle-même, ce qui n\'a pas de sens. Merci de choisir une autre catégorie';
 
 //Others
 $LANG['ranks'] = 'Rangs';

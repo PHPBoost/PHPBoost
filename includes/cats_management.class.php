@@ -330,6 +330,10 @@ class CategoriesManagement
 			return false;
 		}
 		
+		//If there is no category
+		if( count($this->cache_var) <= 1 )
+			return '<div class="notice">' . $LANG['cats_managment_no_category_existing'] . '</div>';
+		
 		//Let's display
 		$string = '';
 		
@@ -403,13 +407,6 @@ class CategoriesManagement
 		
 		$id_categories = @array_keys($this->cache_var);
 		$num_cats = count($id_categories);
-		
-		//If there is no category
-		if( $num_cats == 0 )
-		{
-			$string .= '<div class="notice">' . $LANG['cats_managment_no_category_existing'] . '</div>';
-			return;
-		}
 		
 		// Browsing categories
 		for( $i = 0; $i < $num_cats; $i++ )

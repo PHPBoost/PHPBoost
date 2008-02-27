@@ -73,6 +73,10 @@ elseif( $uninstall ) //Désinstallation du module
 			//Récupération des infos de config.
 			$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
 			
+			//Suppression du fichier cache si il en  aun
+			if( !empty($info_module['cache']) )
+				$Cache->Delete_file($module_name);
+			
 			//Suppression des commentaires associés.
 			if( !empty($info_module['com']) )
 				$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . securit($info_module['com']) . "'", __LINE__, __FILE__);

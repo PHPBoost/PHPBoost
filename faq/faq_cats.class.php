@@ -50,7 +50,6 @@ class FaqCats extends CategoriesManagement
 			if( $id_cat != 0 && $properties['id_parent'] == $id )
 				$this->Delete_category_recursively($id_cat);
 		}
-		
 	}
 	
 	//Method which deletes a category and move its content in another category
