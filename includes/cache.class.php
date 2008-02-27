@@ -209,6 +209,15 @@ class Cache
 		}
 	}
 	
+	//Suppression d'un fichier cache
+	function Delete_file($file)
+	{
+		if( is_file('../cache/' . $file . '.php') )
+			return @unlink('../cache/' . $file . '.php');
+		else
+			return false;
+	}
+	
 	
 	## Private Methods ##
 	//Parcours les dossiers, à la recherche de fichiers de configuration en vue de regénérer le cache des modules.

@@ -29,7 +29,11 @@ if( defined('PHP_BOOST') !== true)	exit;
 
 $Cache->Load_file('faq');
 
-include_once('../faq/lang/' . $CONFIG['lang'] . '/faq_' . $CONFIG['lang'] . '.php');
+//Accès au module.
+if( !$Member->Check_auth($SECURE_MODULE['faq'], ACCESS_MODULE) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+
+load_module_lang('faq', 'FAQ_LANG'); //Chargement de la langue du module.
 
 define('AUTH_READ', 0x01);
 define('AUTH_WRITE', 0x02);

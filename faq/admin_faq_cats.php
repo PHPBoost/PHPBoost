@@ -159,23 +159,20 @@ else
 	{
 		switch($error)
 		{
-			case 'e_page_not_found' :
-				$Errorh->Error_handler($LANG['pages_not_found'], E_USER_WARNING);
+			case 'e_required_fields_empty' :
+				$Errorh->Error_handler($LANG['required_fields_empty'], E_USER_WARNING);
 				break;
-			case 'e_auth' :
-				$Errorh->Error_handler($LANG['pages_error_auth_read'], E_USER_WARNING);
+			case 'e_unexisting_category' :
+				$Errorh->Error_handler($LANG['unexisting_category'], E_USER_WARNING);
 				break;
-			case 'e_auth_com' :
-				$Errorh->Error_handler($LANG['pages_error_auth_com'], E_USER_WARNING);
+			case 'e_new_cat_does_not_exist' :
+				$Errorh->Error_handler($LANG['new_cat_does_not_exist'], E_USER_WARNING);
 				break;
-			case 'e_unactiv_com' :
-				$Errorh->Error_handler($LANG['pages_error_unactiv_com'], E_USER_WARNING);
-				break;
-			case 'delete_success' :
-				$Errorh->Error_handler($LANG['pages_delete_success'], E_USER_NOTICE);
+				case 'e_infinite_loop' :
+				$Errorh->Error_handler($LANG['infinite_loop'], E_USER_WARNING);
 				break;
 			case 'e_success' :
-				$Errorh->Error_handler('bingo', E_USER_SUCCESS);
+				$Errorh->Error_handler($FAQ_LANG['successful_operation'], E_USER_SUCCESS);
 				break;
 		}
 	}
