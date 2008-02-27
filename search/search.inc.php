@@ -30,39 +30,46 @@ require_once ( '../includes/search.class.php' );
 
 function GetSearchForms(&$modules, &$args)
 /**
-*  Affiche les formulaires de recherches pour tous les modules.
-*/
+ *  Affiche les formulaires de recherches pour tous les modules.
+ */
 {
-	$searchForms = array();
-	foreach( $modules as $module )
-	{
-		if( isset($args[$module->name]) )
-			$searchForms[$module->name] = $module->Functionnality('GetSearchForm', $args[$module->name]);
-		else
-			$searchForms[$module->name] = $module->Functionnality('GetSearchForm', array('search' => ''));
-	}
-	
-	return $searchForms;
+    $searchForms = array();
+    foreach( $modules as $module )
+    {
+        if( isset($args[$module->name]) )
+            $searchForms[$module->name] = $module->Functionnality('GetSearchForm', $args[$module->name]);
+        else
+            $searchForms[$module->name] = $module->Functionnality('GetSearchForm', array('search' => ''));
+    }
+    
+    return $searchForms;
 }
 
 function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results, $offset = 0, $nbResults = 10)
 /**
-*  Exécute la recherche si les résultats ne sont pas dans le cache et
-*  renvoie les résultats.
-*/
+ *  Exécute la recherche si les résultats ne sont pas dans le cache et
+ *  renvoie les résultats.
+ */
 {
-	$requests = array();
-	$modulesNames = array();
-	foreach($searchModules as $module)
-	{
-		$requests[$module->name] = $module->Functionnality('GetSearchRequest', $modulesArgs[$module->name]);
-		array_push($modulesNames, $module->name);
-	}
-	
-	$Search = new Search($searchTxt, $modulesNames);
-	$Search->InsertResults($requests);
-	
-	return $Search->GetResults($results, $modulesNames, $offset = 0, $nbLines = NB_LINES);
+    $requests = array();
+    $modulesNames = array();
+    
+    // Génération des noms des modules utilisés
+    foreach($searchModules as $module)
+        array_push($modulesNames, $module->name);
+    
+    $Search = new Search($searchTxt, $modulesArgs);
+    
+    foreach($searchModules as $module)
+    {
+        // On rajoute l'identifiant de recherche comme paramètre pour faciliter la requête
+        $modulesArgs[$module->name]['id_search'] = $Search->id_search[$module->name];
+        $requests[$module->name] = $module->Functionnality('GetSearchRequest', $modulesArgs[$module->name]);
+    }
+    
+    $Search->InsertResults($requests);
+    
+    return $Search->GetResults($results, $modulesNames, $offset, $nbLines);
 }
 
 ?>
