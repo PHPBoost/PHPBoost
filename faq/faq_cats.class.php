@@ -71,6 +71,7 @@ class FaqCats extends CategoriesManagement
 		}
 		
 		$max_q_order = $Sql->Query("SELECT MAX(q_order) FROM ".PREFIX."faq WHERE idcat = '" . $new_id_cat_content . "'", __LINE__, __FILE__);
+		$max_q_order = $max_q_order > 0 ? $max_q_order : 1;
 		$Sql->Query_inject("UPDATE ".PREFIX."faq SET idcat = '" . $new_id_cat_content . "', q_order = q_order + " . $max_q_order . " WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
 		return true;
 	}
