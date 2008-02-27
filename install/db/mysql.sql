@@ -338,9 +338,11 @@ DROP TABLE IF EXISTS `phpboost_search_results`;
 CREATE TABLE `phpboost_search_results` (
     `id_search`         int(11)         NOT NULL auto_increment,
     `id_content`        int(11)         NOT NULL default '0',
+    `title`             varchar(255)    NOT NULL default '',
     `relevance`         decimal(5,2)    NOT NULL,
     `link`              varchar(255)    NOT NULL default '',
-    PRIMARY KEY (`id_search`,`id_content`)
+    PRIMARY KEY (`id_search`,`id_content`),
+    INDEX (`relevance`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
