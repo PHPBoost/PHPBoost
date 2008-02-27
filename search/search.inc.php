@@ -53,12 +53,19 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
 {
     $requests = array();
     $modulesNames = array();
+    $modulesOptions = array();
     
-    // Génération des noms des modules utilisés
+    // Génération des noms des modules utilisés et de la chaine options
     foreach($searchModules as $module)
+    {
         array_push($modulesNames, $module->name);
+        // enlève la chaine search de la chaine options et la tronque à 255 caractères
+        $options = $modulesArgs[$module->name];
+        unset($options['search']);
+        $modulesOptions[$module->name] = substr(implode('|', $options), 0, 255);
+    }
     
-    $Search = new Search($searchTxt, $modulesArgs);
+    $Search = new Search($searchTxt, $modulesOptions);
     
     foreach($searchModules as $module)
     {
