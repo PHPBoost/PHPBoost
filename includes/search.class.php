@@ -250,7 +250,6 @@ class Search
         while( $row = $Sql->Sql_fetch_assoc($request) )
         {   // Ajout des résultats s'ils font partie de la liste des modules à traiter
             $this->id_search[$row['module']] = $row['id_search'];
-            echo '|'.$row['module'].'-'.$row['id_search'].'|<br />|';
         }
         $Sql->Close($request);
     }

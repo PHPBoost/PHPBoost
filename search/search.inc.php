@@ -69,7 +69,7 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
     
     $Search->InsertResults($requests);
     
-    return $Search->GetResults($results, $modulesNames, $offset, $nbLines);
+    return $Search->GetResults($results, $modulesNames, $offset, $nbResults);
 }
 
 ?>
