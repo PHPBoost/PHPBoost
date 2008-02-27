@@ -122,12 +122,9 @@ if( $search != '' )
     // Génération des résultats et passage aux templates
     $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, ($p), ($p + NB_RESULTS_PER_PAGE));
     
-    $htmlResults = array();
     foreach( $results as $result )
     {
-        // A vérifier que les résultats renvoyé par la méthode GetResults de la classe Search
-        // Renvoie bien un tableau associatif
-        $module = $Modules->GetModule($result['id_module']);
+        $module = $Modules->GetModule($result['module']);
         if( $module->HasFunctionnality('ParseSearchResult') )
         {
             $Template->Assign_block_vars('results', array(
@@ -137,9 +134,12 @@ if( $search != '' )
         }
         else
         {
+            $htmlResult  = '<div class="result">';
+            $htmlResult .= '<a href="'.$result['link'].'">'.$result['title'].'</a>';
+            $htmlResult .= '</div>';
             $Template->Assign_block_vars('results', array(
                 'MODULE_NAME' => $moduleName,
-                'RESULTS' => $result
+                'RESULTS' => $htmlResult
             ));
         }
     }

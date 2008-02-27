@@ -119,7 +119,7 @@ class Search
         }
         
         // Récupération des $nbLines résultats à partir de l'$offset
-        $reqResults  = "SELECT module, id_content, title relevance, link
+        $reqResults  = "SELECT module, id_content, title, relevance, link
                         FROM ".PREFIX."search_index idx, ".PREFIX."search_results rst
                         WHERE (idx.id_search = rst.id_search) ";
         if ( $modulesConditions != '' )
