@@ -33,7 +33,7 @@ $CONFIG = array();
 @include_once('./cache/config.php');
 if( !defined('PHPBOOST_INSTALLED') )
 	redirect(get_install_page());
-elseif( $CONFIG == array() )
+elseif( $CONFIG === array() )
 {
 	$server_name = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
 	$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
@@ -41,7 +41,7 @@ elseif( $CONFIG == array() )
 		$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
 	$install_path = trim(dirname($server_path)) . '/member/member.php';
 	
-	//Suppression du dossier courant, et trim du chemin de l'installateur.
+	//Suppression du dossier courant, et trim du chemin.
 	redirect('http://' . $server_name . preg_replace('`(.*)/[a-z]+/(member/member\.php)(.*)`i', '$1/$2', $install_path));
 }
 define('DIR', $CONFIG['server_path']);

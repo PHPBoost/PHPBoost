@@ -49,7 +49,7 @@ class Cache
 		global $Errorh, $Sql;
 		
 		//On charge le fichier
-		$include = !$reload_cache ? !include_once('../cache/' . $file . '.php') : !include('../cache/' . $file . '.php');
+		$include = !$reload_cache ? !@include_once('../cache/' . $file . '.php') : !@include('../cache/' . $file . '.php');
 		if( $include )
 		{
 			if( in_array($file, $this->files) )
@@ -57,7 +57,7 @@ class Cache
 				//Régénération du fichier
 				$this->generate_file($file);
 				//On inclue une nouvelle fois				
-				if( !include('../cache/' . $file . '.php') )
+				if( !@include('../cache/' . $file . '.php') )
 				{
 					//Enregistrement dans le log d'erreur.
 					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache ' . $file . ', ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
@@ -68,7 +68,7 @@ class Cache
 				//Régénération du fichier du module.
 				$this->generate_module_file($file);
 				//On inclue une nouvelle fois
-				if( !include('../cache/' . $file . '.php') )
+				if( !@include('../cache/' . $file . '.php') )
 				{
 					//Enregistrement dans le log d'erreur.
 					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache ' . $file . ', ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
@@ -87,7 +87,7 @@ class Cache
 		$this->generate_all_module_files();
     }
 	
-    //Fonction d'enregistrement du fichier
+    //Fonction d'enregistrement du fichier.
     function Generate_file($file)
     {
 		global $Errorh;
@@ -97,7 +97,7 @@ class Cache
 		@delete_file($file_path); //Supprime le fichier
 		if( $handle = @fopen($file_path, 'wb') ) //On crée le fichier avec droit d'écriture et lecture.
 		{
-			@flock($handle, LOCK_EX);
+			@flock($handle, LOCK_EX); //Pose d'un verrou, pour éviter les conflits.
 			@fwrite($handle, "<?php\n" . $content . "\n?>");
 			@flock($handle, LOCK_UN);
 			@fclose;

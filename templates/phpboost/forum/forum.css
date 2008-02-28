@@ -50,6 +50,12 @@ a.forum_link_pseudo:hover {
 .forum_links a{ /* Couleur des liens */
 	color:#FFFFFF;
 }
+.forum_notread{ /* Message non lus */
+	background:#52718E;
+	padding:4px;
+	font-size:10px;
+	color:#FFFFFF;
+}
 /* Barre des textes relatifs aux colonnes */
 .forum_text_column {	
 	height:20px;

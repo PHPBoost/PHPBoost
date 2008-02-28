@@ -146,8 +146,19 @@
 								</ul>
 							</li>
 							<li class="separator"></li>
+							
 							# START modules #
+							# IF modules.C_DEFAULT_LINK #
 							<li><a href="{modules.U_ADMIN_MODULE}" {modules.DM_A_STYLE}>{modules.NAME}</a></li>				
+							# ENDIF #
+							# IF modules.C_ADVANCED_LINK #							
+							<li class="extend" onmouseover="show_menu('7{modules.ID}', 1);" onmouseout="hide_menu(1);">
+								<a href="{modules.U_ADMIN_MODULE}" {modules.DM_A_STYLE}>{modules.NAME}</a>
+								<ul id="ssmenu7{modules.ID}">
+									{modules.LINKS}
+								</ul>
+							</li>				
+							# ENDIF #
 							# END modules #
 						</ul>
 					</li>
