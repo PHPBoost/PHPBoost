@@ -205,7 +205,9 @@ else
 	ORDER BY q_order",
 	__LINE__, __FILE__);
 	
-	if( $FAQ_CATS[$id_faq]['num_questions'] > 0 || $id_faq == 0 )
+	$num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
+	
+	if( $num_rows > 0 || $id_faq == 0 )
 	{
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
@@ -220,7 +222,7 @@ else
 			));
 			if( $row['q_order'] > 1 )
 				$Template->Assign_block_vars('category.questions.up', array());
-			if( $row['q_order'] < $FAQ_CATS[$id_faq]['num_questions'] )
+			if( $row['q_order'] < $num_rows )
 				$Template->Assign_block_vars('category.questions.down', array());
 		}
 	}

@@ -154,14 +154,14 @@
 								{category.questions.QUESTION}
 							</span>
 							<span class="row2" style="float:right;">
-								# START category.up #
+								# START category.questions.up #
 									<a href="{category.questions.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
-								# END category.up #
-								# START category.down #
+								# END category.questions.up #
+								# START category.questions.down #
 									<a href="{category.questions.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
-								# END category.down #
+								# END category.questions.down #
 								<a href="{category.questions.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
-								<a href="{category.questions.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{MODULE_DATA_PATH}/images/delete.png" alt="{L_DELETE}" /></a>
+								<a href="{category.questions.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
 							</span>
 							<div style="clear:both"></div>
 						</div>
