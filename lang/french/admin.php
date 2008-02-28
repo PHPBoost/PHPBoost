@@ -66,7 +66,7 @@ $LANG['add'] = 'Ajouter';
 
 //Alertes formulaires
 $LANG['alert_same_pass'] = 'Les mots de passe ne sont pas identiques!';
-$LANG['alert_max_dim'] = 'Le fichier dépasse les largeurs et hauteurs maximum spécifiées !';
+$LANG['alert_max_dim'] = 'Le fichier dépasse les largeurs et hauteurs maximales spécifiées !';
 $LANG['alert_error_avatar'] = 'Erreur d\'enregistrement de l\'avatar!';
 $LANG['alert_error_img'] = 'Erreur d\'enregistrement de l\'image!';
 $LANG['alert_invalid_file'] = 'Le fichier image n\'est pas valide (jpg, gif, png!)';
@@ -96,11 +96,11 @@ $LANG['require_rank'] = 'Veuillez entrer un rang!';
 $LANG['require_code'] = 'Veuillez entrer un code pour le smiley!';
 $LANG['require_max_width'] = 'Veuillez entrer une largeur maximale pour les avatars!';
 $LANG['require_height'] = 'Veuillez entrer une hauteur maximale pour les avatars!';
-$LANG['require_weight'] = 'Veuillez entrer un poids maximal pour les avatars!';
+$LANG['require_weight'] = 'Veuillez entrer un poids maximum pour les avatars!';
 $LANG['require_rank_name'] = 'Veuillez entrer un nom pour le rang!';
 $LANG['require_nbr_msg_rank'] = 'Veuillez entrer un nombre de messages pour le rang!';
 $LANG['require_subcat'] = 'Veuillez sélectionner une sous-catégorie!';
-$LANG['require_file_name'] = 'Vous devez rentrer un nom de fichier';
+$LANG['require_file_name'] = 'Vous devez saisir un nom de fichier';
 
 //Confirmations.
 $LANG['redirect'] = 'Redirection en cours...';
@@ -228,7 +228,7 @@ $LANG['rank_name'] = 'Nom du Rang';
 $LANG['nbr_msg'] = 'Nombre de message(s)';
 $LANG['img_assoc'] = 'Image associée';
 $LANG['guest'] = 'Visiteur';
-$LANG['a_member'] = 'member';
+$LANG['a_member'] = 'membre';
 $LANG['member'] = 'Membre';
 $LANG['a_modo'] = 'modo';
 $LANG['modo'] = 'Modérateur';
@@ -239,7 +239,7 @@ $LANG['admin'] = 'Administrateur';
 $LANG['extend_field_management'] = 'Gestion des champs membres';
 $LANG['extend_field_add'] = 'Ajouter un champ membre';
 $LANG['regex'] = 'Regex';
-$LANG['regex_explain'] = 'Permet de controller de façon sûre l\'entrée utilisateur';
+$LANG['regex_explain'] = 'Permet de contrôler de façon sûre l\'entrée utilisateur';
 $LANG['possible_values'] = 'Valeurs possibles';
 $LANG['possible_values_explain'] = 'Séparez les différentes valeurs par le symbole |';
 $LANG['default_values'] = 'Valeurs par défaut';
@@ -249,8 +249,8 @@ $LANG['long_text'] = 'Texte long (illimité)';
 $LANG['sel_uniq'] = 'Sélection unique (parmi plusieurs valeurs)';
 $LANG['sel_mult'] = 'Sélection multiple (parmi plusieurs valeurs)';
 $LANG['check_uniq'] = 'Choix unique (parmi plusieurs valeurs)';
-$LANG['check_mult'] = 'Choix multiple (parmi plusieurs valeurs)';
-$LANG['personnal_regex'] = 'Regex personalisée';
+$LANG['check_mult'] = 'Choix multiples (parmi plusieurs valeurs)';
+$LANG['personnal_regex'] = 'Regex personnalisée';
 $LANG['predef_regexp'] = 'Regex prédéfinie';
 $LANG['figures'] = 'Chiffres';
 $LANG['letters'] = 'Lettres';
@@ -260,7 +260,7 @@ $LANG['extend_field_edit'] = 'Editer le champs';
 
 //Index
 $LANG['admin_index'] = 'Bienvenue sur <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost %s</a>, et merci d\'avoir choisi ce portail pour votre site.<br /><br />Vous pouvez administrer l\'ensemble du site à partir de ce panneau d\'administration.<br />
-Celui-ci est divisé en sous-catégories dans lesquelles vous trouverez tous les outils nécessaires de maintenance et de configuration du site.<br /><br />Pour tout bug ou suggestion contactez le support sur le <a href="http://www.phpboost.com/forum/index.php" title="Forum PHPBoost officiel">forum officiel</a>.<br />Pensez également à consulter la <a href="http://www.phpboost.com/wiki/wiki.php">documentation officielle</a>.<br /><br /><br />Suivez les mises à jour sur <a href="http://www.phpboost.com">http://www.phpboost.com</a>';
+Celui-ci est divisé en sous-catégories dans lesquelles vous trouverez tous les outils nécessaires à la maintenance et à la configuration du site.<br /><br />Pour tout bug ou suggestion contactez le support sur le <a href="http://www.phpboost.com/forum/index.php" title="Forum PHPBoost officiel">forum officiel</a>.<br />Pensez également à consulter la <a href="http://www.phpboost.com/wiki/wiki.php">documentation officielle</a>.<br /><br /><br />Suivez les mises à jour sur <a href="http://www.phpboost.com">http://www.phpboost.com</a>';
 $LANG['update_available'] = 'Mises à jour disponibles';
 $LANG['core_update_available'] = 'Nouvelle version <strong>%s</strong> du noyau disponible, pensez à mettre à jour PHPBoost! <a href="http://www.phpboost.com">Plus d\'informations</a>';
 $LANG['no_core_update_available'] = 'Aucune nouvelle version du noyau, vous êtes à jour!';
@@ -289,14 +289,14 @@ $LANG['other_start_page'] = 'Autre adresse relative ou absolue';
 $LANG['activ_gzhandler'] = 'Activation de la compression des pages, ceci accélère la vitesse d\'affichage';
 $LANG['activ_gzhandler_explain'] = 'Attention votre serveur doit le supporter';
 $LANG['view_com'] = 'Affichage des commentaires';
-$LANG['rewrite'] = 'Activation de la réecriture des urls';
+$LANG['rewrite'] = 'Activation de la réécriture des urls';
 $LANG['explain_rewrite'] = 'L\'activation de la réécriture des urls permet d\'obtenir des urls bien plus simples et claires sur votre site. Ces adresses seront donc bien mieux compréhensibles pour vos visiteurs, mais surtout pour les robots d\'indexation. Votre référencement sera grandement optimisé grâce à cette option.<br /><br />Cette option n\'est malheureusement pas disponible chez tous les hébergeurs. Cette page va vous permettre de tester si votre serveur supporte la réécriture des urls. Si après le test vous tombez sur des erreurs serveur, ou pages blanches, supprimez le fichier <strong>.htaccess</strong> à la racine de votre site.';
-$LANG['server_rewrite'] = 'Réecriture des urls sur votre serveur';
+$LANG['server_rewrite'] = 'Réécriture des urls sur votre serveur';
 $LANG['current_page'] = 'Page courante';
 $LANG['new_page'] = 'Nouvelle fenêtre';
 $LANG['compt'] = 'Compteur';
 $LANG['bench'] = 'Benchmark';
-$LANG['bench_explain'] = 'Affiche le temps de rendu de la page, et le nombre de requêtes SQL';
+$LANG['bench_explain'] = 'Affiche le temps de rendu de la page et le nombre de requêtes SQL';
 $LANG['theme_author'] = 'Info sur le thème';
 $LANG['theme_author_explain'] = 'Affiche des informations sur le thème dans le pied de page';
 $LANG['user_connexion'] = 'Connexion utilisateurs';
@@ -306,7 +306,7 @@ $LANG['session_time_explain'] = '3600 secondes conseillé';
 $LANG['session invit'] = 'Durée utilisateurs actifs';
 $LANG['session invit_explain'] = '300 secondes conseillé';
 $LANG['post_management'] = 'Gestion des posts';
-$LANG['pm_max'] = 'Nombre de messages privés maximum';
+$LANG['pm_max'] = 'Nombre maximum de messages privés';
 $LANG['anti_flood'] = 'Anti-flood';
 $LANG['int_flood'] = 'Intervalle minimal de temps entre les messages';
 $LANG['pm_max_explain'] = 'Illimité pour administrateurs et modérateurs';
@@ -321,14 +321,14 @@ $LANG['admin_admin_status_explain'] = 'Lors d\'ajout d\'alertes générées par le 
 $LANG['admin_sign_explain'] = 'En bas de tous les mails envoyés par le site';
 $LANG['cache_success'] = 'Le cache a été régénéré avec succès!';
 $LANG['explain_site_cache'] = 'Rénégération totale du cache du site à partir de la base de données.
-<br /><br />Le cache permet d\'améliorer notablement la vitesse d\'exécution des pages, et allège le travail du serveur SQL. A noter que si vous faites des modifications vous-même dans la base de données, elles ne seront visibles qu\'après avoir regénéré le cache';
+<br /><br />Le cache permet d\'améliorer notablement la vitesse d\'exécution des pages, et allège le travail du serveur SQL. A noter que si vous faites des modifications vous-même dans la base de données, elles ne seront visibles qu\'après avoir régénéré le cache';
 $LANG['confirm_unlock_admin'] = 'Un email va vous être envoyé avec le code de déverrouillage';
 $LANG['unlock_admin_confirm'] = 'Le code de déverrouillage a été renvoyé avec succès';
 $LANG['unlock_admin'] = 'Code de déverrouillage';
 $LANG['unlock_admin_explain'] = 'Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.';
 $LANG['send_unlock_admin'] = 'Renvoyer le code de déverrouillage';
 $LANG['unlock_title_mail'] = 'Mail à conserver';
-$LANG['unlock_mail'] = 'A conserver ce code (Il ne vous sera plus délivré) : %s
+$LANG['unlock_mail'] = 'Code à conserver (Il ne vous sera plus délivré) : %s
 
 Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.
 Il vous sera demandé dans le formulaire de connexion directe à l\'administration (votreserveur/admin/admin_index.php) 
@@ -373,7 +373,7 @@ $LANG['explain_archive_upload'] = 'L\'archive uploadée doit être au format zip o
 
 //Gestion des fichiers
 $LANG['auth_files'] = 'Autorisation requise pour l\'activation de l\'interface de fichiers';
-$LANG['size_limit'] = 'Taille maximum des uploads autorisés aux membres';
+$LANG['size_limit'] = 'Taille maximuale des uploads autorisés aux membres';
 $LANG['bandwidth_protect'] = 'Protection de la bande passante';
 $LANG['bandwidth_protect_explain'] = 'Interdiction d\'accès aux fichiers du répertoire upload depuis un autre serveur';
 $LANG['auth_extensions'] = 'Extensions autorisées';
@@ -443,7 +443,7 @@ $LANG['lang'] = 'Langue';
 $LANG['e_lang_already_exist'] = 'La langue existe déjà';
 $LANG['del_lang'] = 'Suppression de la langue';
 $LANG['del_lang_files'] = 'Supprimer les fichiers de la langue';
-$LANG['explain_default_lang'] = 'La langue par défaut ne peut pas être désinstallée, désactivée, ou réservée';
+$LANG['explain_default_lang'] = 'La langue par défaut ne peut pas être désinstallée, désactivée ou réservée';
 	
 //Comments
 $LANG['com_management'] = 'Gestion des commentaires';		
@@ -493,8 +493,8 @@ $LANG['avatar_link_where'] = 'Adresse directe de l\'avatar';
 $LANG['avatar_del'] = 'Supprimer l\'avatar courant';
 $LANG['no_avatar'] = 'Aucun avatar';
 $LANG['weight_max'] = 'Poids maximum';
-$LANG['height_max'] = 'Hauteur maximum';
-$LANG['width_max'] = 'Largeur maximum';			
+$LANG['height_max'] = 'Hauteur maximale';
+$LANG['width_max'] = 'Largeur maximale';			
 $LANG['sex'] = 'Sexe';
 $LANG['male'] = 'Homme';
 $LANG['female'] = 'Femme';
@@ -515,7 +515,7 @@ $LANG['avatar_management'] = 'Gestion des avatars';
 $LANG['activ_defaut_avatar'] = 'Activer l\'avatar par défaut';
 $LANG['activ_defaut_avatar_explain'] = 'Met un avatar aux membres qui n\'en ont pas';
 $LANG['url_defaut_avatar'] = 'Adresse de l\'avatar par défaut';
-$LANG['url_defaut_avatar_explain'] = 'Mettre dans votre thème dans le dossier images ';
+$LANG['url_defaut_avatar_explain'] = 'Mettre dans le dossier images de votre thème ';
 $LANG['user_punish_until'] = 'Sanction jusqu\'au';
 $LANG['user_readonly_explain'] = 'Membre en lecture seule, celui-ci peut lire mais ne peut plus poster sur le site entier (commentaires, etc...)';
 $LANG['weeks'] = 'semaines';
@@ -594,7 +594,7 @@ Ensuite vous devez choisir ce que vous souhaitez sauvegarder.';
 $LANG['db_backup_all'] = 'Données et structure';
 $LANG['db_backup_struct'] = 'Structure seulement';
 $LANG['db_backup_data'] = 'Données seulement';
-$LANG['db_backup_success'] = 'Votre base de données a été correctement sauvegardée. Vous pouvez la télécharger en suivant le lien suivant : <a href="admin_database.php?read_file=%s">%s</a>';
+$LANG['db_backup_success'] = 'Votre base de données a été correctement sauvegardée. Vous pouvez la télécharger en cliquant sur le lien suivant : <a href="admin_database.php?read_file=%s">%s</a>';
 $LANG['db_execute_query'] = 'Exécuter une requête dans la base de données';
 $LANG['db_tools'] = 'Outils de gestion de la base de données';
 $LANG['db_query_explain'] = 'Vous pouvez dans ce panneau d\'administration exécuter des requêtes dans la base de données. Cette interface ne devrait servir que lorsque le support vous demande d\'exécuter une requête dans la base de données qui vous sera communiquée.<br />
