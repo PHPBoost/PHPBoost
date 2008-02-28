@@ -69,11 +69,13 @@ if( $faq_del_id > 0 )
 elseif( $down > 0 )
 {
 	$faq_infos = $Sql->Query_array('faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $down . "'", __LINE__, __FILE__);
+	
+	$num_questions = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."faq WHERE idcat = '" . $faq_infos['idcat'] . "'", __LINE__, __FILE__);
 	$id_cat_for_speed_bar = $faq_infos['idcat'];
 	include('faq_speed_bar.php');
 	if( $auth_write && !empty($faq_infos['question']) ) //If the id corresponds to a question existing in the database
 	{
-		if( $faq_infos['q_order'] < $FAQ_CATS[$faq_infos['idcat']]['num_questions'] ) //If it's not the last question we exchange it and its previous neighboor
+		if( $faq_infos['q_order'] < $num_questions ) //If it's not the last question we exchange it and its previous neighboor
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] + 1) . "'", __LINE__, __FILE__);
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order + 1 WHERE id = '" . $down . "'", __LINE__, __FILE__);
@@ -176,7 +178,6 @@ elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
 		{
 			$FAQ_CONFIG['root'] = array(
 				'display_mode' => $display_mode,
-				'num_questions' => $FAQ_CATS[0]['num_questions'],
 				'auth' => $FAQ_CATS[0]['auth'],
 				'description' => $description
 			);

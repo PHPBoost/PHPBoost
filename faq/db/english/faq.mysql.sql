@@ -24,4 +24,4 @@ CREATE TABLE `phpboost_faq_cats` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM;
 
-INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('faq', 'a:5:{s:8:"faq_name";s:12:"PHPBoost FAQ";s:8:"num_cols";i:3;s:13:"display_block";b:1;s:11:"global_auth";a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:3;s:2:"r2";i:3;}s:4:"root";a:4:{s:12:"display_mode";i:0;s:13:"num_questions";i:3;s:4:"auth";N;s:11:"description";s:27:"Welcome on the PHPBoost FAQ";}}');
+INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('faq', 'a:5:{s:8:"faq_name";s:12:"PHPBoost FAQ";s:8:"num_cols";i:3;s:13:"display_block";b:1;s:11:"global_auth";a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:3;s:2:"r2";i:3;}s:4:"root";a:3:{s:12:"display_mode";i:0;s:4:"auth";N;s:11:"description";s:27:"Welcome on the PHPBoost FAQ";}}');
