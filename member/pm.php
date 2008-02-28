@@ -868,7 +868,7 @@ else //Liste des conversation, dans la boite du membre.
 		$img_announce = 'announce';
 		//Vérifications des messages Lu/non Lus.
 		if( $view === false ) //Nouveau message (non lu).
-			$img_announce = ($row['nbr_msg'] > $pagination_msg) ? 'new_' . $img_announce . '_hot' : 'new_' . $img_announce;
+			$img_announce = 'new_' . $img_announce;
 		if( $track === true ) //Marqueur de reception du message
 			$img_announce = $img_announce . '_track';
 			
