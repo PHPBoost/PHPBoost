@@ -107,5 +107,5 @@
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
-			<div class="module_bottom" style="text-align:center"></div>
+			<div class="module_bottom"></div>
 		</div>
