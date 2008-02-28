@@ -79,7 +79,12 @@ foreach( $FAQ_CATS as $id => $value )
 //listing of subcategories
 if( $num_subcats > 0 )
 {
+	$Template->Assign_vars(array(
+		'C_ADMIN' => $Member->Check_level(2)
+	));
+	
 	$Template->Assign_block_vars('cats', array());	
+	
 	$i = 1;
 	foreach( $FAQ_CATS as $id => $value )
 	{
@@ -93,6 +98,7 @@ if( $num_subcats > 0 )
 				'ID' => $id,
 				'NAME' => $value['name'],
 				'U_CAT' => transid('faq.php?id=' . $id, 'faq-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
+				'U_ADMIN_CAT' => transid('admin_faq_cats.php?edit=' . $id),
 				'WIDTH' => floor(100 / (float)$FAQ_CONFIG['num_cols'])
 			));
 			
@@ -156,7 +162,10 @@ else
 $Template->Assign_vars(array(
 	'L_NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
 	'L_CAT_MANAGEMENT' => $FAQ_LANG['category_manage'],
-	'U_MANAGEMENT' => transid('management.php?faq=' . $id_faq)
+	'LANG' => $CONFIG['lang'],
+	'THEME' => $CONFIG['theme'],
+	'U_MANAGEMENT' => transid('management.php?faq=' . $id_faq),
+	'U_ADMIN_CAT' => $Member->Check_level(2) ? ( $id_faq > 0 ? transid('admin_faq_cats.php?edit=' . $id_faq) : transid('admin_faq.php')) : ''
 ));
 
 $Template->Pparse('faq');

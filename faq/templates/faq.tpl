@@ -17,7 +17,12 @@
 		<div class="module_position">			
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
-			<div class="module_top">{TITLE}</div>
+			<div class="module_top">
+				{TITLE}
+				<a href="{U_ADMIN_CAT}">
+					<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+				</a>
+			</div>
 			<div class="module_contents">
 			
 				# START description #
@@ -36,6 +41,11 @@
 										<br />
 									# END cats.row.col.image #
 									<a href="{cats.row.col.U_CAT}">{cats.row.col.NAME}</a>
+									# IF C_ADMIN #
+									<a href="{cats.row.col.U_ADMIN_CAT}">
+										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+									</a>
+									# ENDIF #
 								</td>
 							# END cats.row.col #
 						</tr>
