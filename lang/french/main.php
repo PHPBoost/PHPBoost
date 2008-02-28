@@ -40,7 +40,7 @@ $LANG['date_format_long'] = 'd/m/y \à H\hi\m\i\ns\s';
 $LANG['unit_megabytes'] = 'Mo';
 $LANG['unit_kilobytes'] = 'Ko';
 $LANG['unit_bytes'] = 'Octets';
-$LANG['unit_pixels'] = 'Px';
+$LANG['unit_pixels'] = 'px';
 $LANG['unit_seconds'] = 'Secondes';
 $LANG['unit_seconds_short'] = 's';
 	
@@ -374,8 +374,8 @@ $LANG['activ_mbr_admin'] = 'Un administrateur devra activer votre compte avant d
 $LANG['activ_mbr_mail_success'] = 'Votre compte est désormais activé, vous pouvez vous connecter avec vos identifiants!';
 $LANG['activ_mbr_mail_error'] = 'Echec de l\'activation du compte';
 $LANG['weight_max'] = 'Poids maximum';
-$LANG['height_max'] = 'Hauteur maximum';
-$LANG['width_max'] = 'Largeur maximum';
+$LANG['height_max'] = 'Hauteur maximale';
+$LANG['width_max'] = 'Largeur maximale';
 $LANG['verif_code'] = 'Code de vérification';
 $LANG['verif_code_explain'] = 'Recopier le code sur l\'image, attention aux majuscules';
 $LANG['require_verif_code'] = 'Veuillez saisir le code de vérification!';
@@ -389,7 +389,7 @@ $LANG['register_valid_admin'] = 'Attention: Votre compte devra être activé par u
 $LANG['register_mail'] = 'Cher %s,
 
 Tout d\'abord, merci de vous être inscrit sur %s. Vous faites partie dès maintenant des membres du site. 
-En vous inscrivant sur %s, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez entre autre être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.                                              
+En vous inscrivant sur %s, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez, entre autre, être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.                                              
 
 Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de passe. 
 
@@ -525,5 +525,5 @@ S\'il s\'agit d\'une erreur veuillez contacter l\'administrateur du site.
 $LANG['powered_by'] = 'Boosté par';
 $LANG['phpboost_right'] = '&copy; 2005-2008';
 $LANG['sql_req'] = 'Requêtes';
-$LANG['achieved'] = 'Executé en';
+$LANG['achieved'] = 'Exécuté en';
 ?>
