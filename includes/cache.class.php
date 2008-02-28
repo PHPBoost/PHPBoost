@@ -60,7 +60,7 @@ class Cache
 				if( !@include('../cache/' . $file . '.php') )
 				{
 					//Enregistrement dans le log d'erreur.
-					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache ' . $file . ', ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
+					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
 				}
 			}
 			else
@@ -71,7 +71,7 @@ class Cache
 				if( !@include('../cache/' . $file . '.php') )
 				{
 					//Enregistrement dans le log d'erreur.
-					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache ' . $file . ', ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
+					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
 				}
 			}
 		}
@@ -106,7 +106,7 @@ class Cache
 		}
 		//Il est l'heure de vérifier si la génération a fonctionnée.
 		if( !file_exists($file_path) && filesize($file_path) == '0' )
-			$Errorh->Error_handler('Cache -> La génération du fichier de cache ' . $file . ' a échoué!', E_USER_ERROR, __LINE__, __FILE__);
+			$Errorh->Error_handler('Cache -> La génération du fichier de cache <strong>' . $file . '</strong> a échoué!', E_USER_ERROR, __LINE__, __FILE__);
     }
     
 	//Fonction d'enregistrement du fichier d'un module.
@@ -140,18 +140,18 @@ class Cache
 		
 				//Il est l'heure de vérifier si la génération a fonctionnée.
 				if( !file_exists($file_path) && filesize($file_path) == '0' )
-					$Errorh->Error_handler('Cache -> La génération du fichier de cache ' . $file . ' a échoué!', E_USER_ERROR, __LINE__, __FILE__);
+					$Errorh->Error_handler('Cache -> La génération du fichier de cache <strong>' . $file . '</strong> a échoué!', E_USER_ERROR, __LINE__, __FILE__);
 			}	
 			else
 			{
 				//Enregistrement dans le log d'erreur.
-				$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache ' . $file . ', ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
+				$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
 			}
 		}	
 		else
 		{
 			//Enregistrement dans le log d'erreur.
-			$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache ' . $file . ', ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
+			$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
 		}
     }
 	

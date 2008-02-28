@@ -35,9 +35,9 @@
 				-->
 				</script>
 				
-				<div style="text-align:center;">
+				<p style="text-align:center;">
 					<a href="{U_GO_BACK_TO_CAT}">{L_GO_BACK_TO_CAT}</a>
-				</div>
+				</p>
 				
 				<script type="text/javascript">
 				<!--
@@ -131,7 +131,6 @@
 							</dd>					
 						</dl>
 						# END category.not_root_auth #
-						</div>
 					</fieldset>
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
@@ -144,39 +143,39 @@
 				
 				<fieldset>
 					<legend>{L_QUESTIONS_LIST}</legend>
-					<div style="text-align:center;">
-							<a href="{category.U_CREATE_BEFORE}" title="{L_INSERT_QUESTION_BEFORE}"><img src="../templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION_BEFORE}" /></a>
-					</div>
+					<p style="text-align:center;">
+						<a href="{category.U_CREATE_BEFORE}" title="{L_INSERT_QUESTION_BEFORE}"><img src="../templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION_BEFORE}" /></a>
+					</p>
 					<br />
 					# START category.questions #
-						<div class="row1" id="q{category.questions.ID}">
-							<span style="float:left;">
-								<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
-								{category.questions.QUESTION}
-							</span>
-							<span class="row2" style="float:right;">
-								# START category.up #
-									<a href="{category.questions.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
-								# END category.up #
-								# START category.down #
-									<a href="{category.questions.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
-								# END category.down #
-								<a href="{category.questions.U_EDIT}" title="{L_EDIT}"><img src="{MODULE_DATA_PATH}/images/edit.png" alt="{L_EDIT}" /></a>
-								<a href="{category.questions.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{MODULE_DATA_PATH}/images/delete.png" alt="{L_DELETE}" /></a>
-							</span>
-							<div style="clear:both"></div>
-						</div>
-						<br />
-						<div style="text-align:center;">
-							<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}"><img src="../templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION}" /></a>
-						</div>
-						<br />
+					<div class="row1" id="q{category.questions.ID}">
+						<span style="float:left;">
+							<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left valign_middle" />
+							{category.questions.QUESTION}
+						</span>
+						<span class="row2" style="float:right;">
+							# START category.up #
+								<a href="{category.questions.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
+							# END category.up #
+							# START category.down #
+								<a href="{category.questions.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
+							# END category.down #
+							<a href="{category.questions.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
+							<a href="{category.questions.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{MODULE_DATA_PATH}/images/delete.png" alt="{L_DELETE}" /></a>
+						</span>
+						<div style="clear:both"></div>
+					</div>
+					<br />
+					<p style="text-align:center;">
+						<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}"><img src="../templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION}" /></a>
+					</p>
+					<br />
 					# END category.questions #
-				</fieldset>
+				</fieldset>&nbsp;
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
-			<div class="module_bottom" style="text-align:center"></div>
+			<div class="module_bottom"></div>
 		</div>
 
 		# END category #
@@ -229,12 +228,12 @@
 						<input type="hidden" name="id_question" value="{edit_question.ID_QUESTION}" />
 						<input type="hidden" name="id_cat" value="{edit_question.ID_CAT}" />
 						<input type="hidden" name="after" value="{edit_question.ID_AFTER}" />
-					</fieldset>
-					
+					</fieldset>					
 				</form>
+				&nbsp;
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
-			<div class="module_bottom" style="text-align:center"></div>
+			<div class="module_bottom"></div>
 		</div>
 		# END edit_question #
