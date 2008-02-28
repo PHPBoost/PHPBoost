@@ -4,22 +4,19 @@ Contient les formulaires, les modules (et modules minis), et messages.
 --------------------------------------*/
 
 /* Titres */
-h3.title
-{
+h3.title{
 	font-size:12px;
 	font-weight:bold;
 	display:inline;
 	color:#FFFFFF;
 }
 /* Sous-Titres */
-h5.sub_title /* Titre des menu */
-{
+h5.sub_title{ /* Titre des menu */
 	font-size:12px;
 	color:#FFFFFF;
 	font-weight:bold;
 }
-h6.sub_title2 /* Sous titre dans les menu */
-{	
+h6.sub_title2{ /* Sous titre dans les menu */
 	font-size:12px;
 	font-weight:bold;
 	padding:3px;
@@ -27,7 +24,7 @@ h6.sub_title2 /* Sous titre dans les menu */
 	border:1px dotted #C4CED6;
 }
 
-th{ /* Entête des tableaux */
+.block_top, th{ /* Entête de conteneur et des tableaux */
 	padding:5px 6px;
 	color:#FFFFFF;
 	background:#52718E url(images/msg_top_row.png) repeat-x;

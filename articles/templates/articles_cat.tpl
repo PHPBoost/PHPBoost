@@ -4,49 +4,33 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<div style="float:left" class="text_strong">
-					<a href="articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {ADD_ARTICLES}
-				</div>
-				<div style="float:right">
-					{PAGINATION}
-				</div>
+				<a href="articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {ADD_ARTICLES}
 			</div>
 			<div class="module_contents">
-				# START cat #
-				<table class="module_table">
-					<tr>
-						<th colspan="{COLSPAN}">
-							{L_CATEGORIES} {cat.EDIT}
-						</th>
-					</tr>
-					
-					# START cat.list #
-					{cat.list.TR_START}								
-						<td class="row2" style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%">
-							{cat.list.ICON_CAT}
-							<a href="articles{cat.list.U_CAT}">{cat.list.CAT}</a> {cat.list.EDIT}
-							<br />
-							<span class="text_small">{cat.list.DESC}</span> 
-							<br />
-							<span class="text_small">{cat.list.L_NBR_ARTICLES}</span> 
-						</td>	
-					{list.TR_END}
-					# END cat.list #						
+				# IF C_ARTICLES_CAT #
+				<p style="text-align:center;" class="text_strong">{L_CATEGORIES} {EDIT}</p>
+				<hr style="margin-bottom:20px;" />
+				# START cat_list #
+				<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
+					{cat_list.ICON_CAT}
+					<a href="articles{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
+					<br />
+					<span class="text_small">{cat_list.DESC}</span> 
+					<br />
+					<span class="text_small">{cat_list.L_NBR_ARTICLES}</span> 
+				</div>
+				# END cat_list #
+				<div class="spacer">&nbsp;</div>				
+				<p style="text-align:center;">{PAGINATION_CAT}</p>
+				<hr />
+				# ENDIF #
 				
-					# START cat.end_td #
-						{cat.end_td.TD_END}
-					{cat.end_td.TR_END}
-					# END cat.end_td #
-					
-				</table>	
-				# END cat #
-				
-				# START link #
-				<br />
+				# IF C_ARTICLES_LINK #
+				<br /><br />
 				<table class="module_table">
 					<tr>
 						<th colspan="6">
-							{link.CAT} &nbsp;{link.EDIT}
+							{CAT} &nbsp;{EDIT}
 						</th>	
 					</tr>
 					<tr>
@@ -81,25 +65,25 @@
 							<a href="articles{U_ARTICLES_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
 						</td>
 					</tr>
-					# START link.articles #
+					# START articles #
 					<tr>	
 						<td class="row2" style="padding-left:25px">
-							{link.articles.ICON} &nbsp;&nbsp;<a href="articles{link.articles.U_ARTICLES_LINK}">{link.articles.NAME}</a>
+							{articles.ICON} &nbsp;&nbsp;<a href="articles{articles.U_ARTICLES_LINK}">{articles.NAME}</a>
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.articles.DATE}
+							{articles.DATE}
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.articles.COMPT} 
+							{articles.COMPT} 
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.articles.NOTE}
+							{articles.NOTE}
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.articles.COM} 
+							{articles.COM} 
 						</td>
 					</tr>
-					# END link.articles #
+					# END articles #
 					<tr>
 						<td colspan="6" class="row3">
 							{PAGINATION}
@@ -107,7 +91,7 @@
 					</tr>
 				</table>
 				<br />
-				# END link #
+				# ENDIF #
 				
 				<p style="text-align:center" class="text_small">
 					{L_NO_ARTICLES} {L_TOTAL_ARTICLE}
@@ -116,13 +100,8 @@
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-				<div style="float:left" class="text_strong">
-					<a href="articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {ADD_ARTICLES}
-				</div>
-				<div style="float:right">
-					{PAGINATION}
-				</div>
+			<div class="module_bottom text_strong">
+				<a href="articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {ADD_ARTICLES}
 			</div>
 		</div>
 		

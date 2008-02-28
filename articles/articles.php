@@ -43,7 +43,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 	//MAJ du compteur.
 	$Sql->Query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
-	if( $Member->Get_attribute('level') === 2 )
+	if( $Member->Check_level(2) )
 	{
 		$java = '<script type="text/javascript">
 		<!--
@@ -91,7 +91,8 @@ if( !empty($idart) && isset($_GET['cat']) )
 	include_once('../includes/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
-	$Template->Assign_block_vars('article', array(
+	$Template->Assign_vars(array(
+		'C_DISPLAY_ARTICLE' => true,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $LANG['title_articles'] . ' - ' . $articles['title'],
@@ -165,8 +166,8 @@ if( !empty($idart) && isset($_GET['cat']) )
 							$select .= '<option value="' . $i . '">' . $i . '</option>';
 					}
 				}
-				
-				$Template->Assign_block_vars('note', array(
+				$Template->Assign_vars(array(
+					'C_DISPLAY_ARTICLE_NOTE' => true,
 					'NOTE' => ($row['nbrnote'] > 0) ? $row['note'] : '<em>' . $LANG['no_note'] . '</em>',
 					'SELECT' => $select,
 					'U_ARTICLE_ACTION_NOTE' => transid('.php?note=' . $get_note . '&amp;id=' . $get_note . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $get_note . '.php?note=' . $get_note)
@@ -229,18 +230,9 @@ else
 	$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 	$column_width_cats = floor(100/$nbr_column_cats);
 	
-	//Colonnes des images.
-	$nbr_column_articles = ($nbr_articles > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $nbr_articles;
-	$nbr_column_articles = !empty($nbr_column_articles) ? $nbr_column_articles : 1;
-	$column_width_articles = floor(100/$nbr_column_articles);
-	
-	$is_admin = ($Member->Get_attribute('level') == 2) ? true : false;	
-	$module_data_path = $Template->Module_data_path('gallery');
-	
+	$is_admin = $Member->Check_level(2) ? true : false;	
 	$Template->Assign_vars(array(
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
-		'COLUMN_WIDTH_PICS' => $column_width_articles,
-		'COLSPAN' => $CONFIG_ARTICLES['nbr_column'],
 		'ADD_ARTICLES' => $is_admin ? '<a href="admin_articles_add.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'L_ARTICLES' => $LANG['articles'],
 		'L_DATE' => $LANG['date'],
@@ -294,10 +286,6 @@ else
 	include_once('../includes/pagination.class.php'); 
 	$Pagination = new Pagination();
 
-	$Template->Assign_vars(array(
-		'PAGINATION' => $Pagination->Display_pagination('articles' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3)
-	));  
-
 	//Catégories non autorisées.
 	$unauth_cats_sql = array();
 	foreach($CAT_ARTICLES as $id => $key)
@@ -305,12 +293,15 @@ else
 		if( !$Member->Check_auth($CAT_ARTICLES[$id]['auth'], READ_CAT_ARTICLES) )
 			$unauth_cats_sql[] = $id;
 	}
-	$clause_unauth_cats = (count($unauth_cats_sql) > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
+	$nbr_unauth_cats = count($unauth_cats_sql);
+	$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
 	##### Catégorie disponibles #####	
-	if( $total_cat > 0 && count($unauth_cats_sql) < $total_cat )
+	if( $total_cat > 0 && $nbr_unauth_cats < $total_cat )
 	{
-		$Template->Assign_block_vars('cat', array(			
+		$Template->Assign_vars(array(			
+			'C_ARTICLES_CAT' => true,
+			'PAGINATION_CAT' => $Pagination->Display_pagination('articles' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3),
 			'EDIT' => $is_admin ? '<a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));	
 			
@@ -319,45 +310,28 @@ else
 		FROM ".PREFIX."articles_cats ac
 		" . $clause_cat . $clause_unauth_cats . "
 		ORDER BY ac.id_left
-		" . $Sql->Sql_limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);
+		" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			//On genère le tableau pour $CONFIG_ARTICLES['nbr_column'] colonnes
-			$multiple_x = $i / $nbr_column_cats;
-			$tr_start = is_int($multiple_x) ? '<tr>' : '';
-			$i++;	
-			$multiple_x = $i / $nbr_column_cats;
-			$tr_end = is_int($multiple_x) ? '</tr>' : '';
-
-			$Template->Assign_block_vars('cat.list', array(
+			$Template->Assign_block_vars('cat_list', array(
 				'IDCAT' => $row['id'],
 				'CAT' => $row['name'],
 				'DESC' => $row['contents'],
 				'ICON_CAT' => !empty($row['icon']) ? '<a href="articles' . transid('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a><br />' : '',
 				'EDIT' => $is_admin ? '<a href="admin_articles_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : '',
-				'TR_START' => $tr_start,
-				'TR_END' => $tr_end,
 				'L_NBR_ARTICLES' => sprintf($LANG['nbr_articles_info'], $row['nbr_articles']),
 				'U_CAT' => transid('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 			));
 		}
 		$Sql->Close($result);	
-		
-		//Création des cellules du tableau si besoin est.
-		while( !is_int($i/$nbr_column_cats) )
-		{		
-			$i++;
-			$Template->Assign_block_vars('cat.end_td', array(
-				'TD_END' => '<td class="row2" style="width:' . $column_width_cats . '%">&nbsp;</td>',
-				'TR_END' => (is_int($i/$nbr_column_cats)) ? '</tr>' : ''			
-			));	
-		}
 	}
 	
 	##### Affichage des articles #####	
 	if( $nbr_articles > 0 )
 	{
-		$Template->Assign_block_vars('link', array(		
+		$Template->Assign_vars(array(		
+			'C_ARTICLES_LINK' => true,
+			'PAGINATION' => $Pagination->Display_pagination('articles' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
 			'CAT' => $CAT_ARTICLES[$idartcat]['name'],
 			'EDIT' => $is_admin ? '<a href="admin_articles_cat.php?id=' . $idartcat . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));
@@ -373,11 +347,11 @@ else
 			$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 
 			//Commentaires
-			$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $row['id'] . "articles") . "', 'articles');\">";
-			$link_current = '<a class="com" href="' . HOST . DIR . '/articles/articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;i=0', '-' . $idartcat . '-' . $row['id'] . '.php?i=0') . '#articles">';	
+			$link_pop = "<a href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $row['id'] . "articles") . "', 'articles');\">";
+			$link_current = '<a href="' . HOST . DIR . '/articles/articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;i=0', '-' . $idartcat . '-' . $row['id'] . '.php?i=0') . '#articles">';	
 			$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
 			
-			$Template->Assign_block_vars('link.articles', array(			
+			$Template->Assign_block_vars('articles', array(			
 				'NAME' => $fichier,
 				'ICON' => !empty($row['icon']) ? '<a href="articles' . transid('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
 				'CAT' => $CAT_ARTICLES[$idartcat]['name'],

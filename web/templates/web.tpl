@@ -1,29 +1,29 @@
 		{JAVA} 
 
-		# START cat #
+		# IF C_WEB_CAT #
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					<strong>{cat.L_CATEGORIES}</strong> {cat.EDIT}
+					<strong>{L_CATEGORIES}</strong> {EDIT}
 				</div>
 				<div style="float:right">
-					{cat.PAGINATION}
+					{PAGINATION}
 				</div>
 			</div>
 			<div class="module_contents">
-				# START cat.web #
-				<div style="float:left;text-align:center;width:{cat.web.WIDTH}%;height:80px;">
-					{cat.web.U_IMG_CAT}
-					<a href="../web/web{cat.web.U_WEB_CAT}">{cat.web.CAT}</a> ({cat.web.TOTAL})<br />
-					<span class="text_small">{cat.web.CONTENTS}</span>
+				# START cat_list #
+				<div style="float:left;text-align:center;width:{cat_list.WIDTH}%;height:80px;">
+					{cat_list.U_IMG_CAT}
+					<a href="../web/web{cat_list.U_WEB_CAT}">{cat_list.CAT}</a> ({cat_list.TOTAL})<br />
+					<span class="text_small">{cat_list.CONTENTS}</span>
 					<br /><br /><br />
 				</div>	
-				# END cat.web #
+				# END cat_list #
 				
 				<div class="text_small" style="text-align:center;clear:both">
-					{cat.TOTAL_FILE} {cat.L_HOW_LINK}
+					{TOTAL_FILE} {L_HOW_LINK}
 				</div>
 				<div class="spacer">&nbsp;</div>
 			</div>
@@ -31,21 +31,21 @@
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
 				<div style="float:right">
-					{cat.PAGINATION}
+					{PAGINATION}
 				</div>
 			</div>
 		</div>
-		# END cat #
+		# ENDIF #
 
 		
 		
-		# START link #
+		# IF C_WEB_LINK #
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					<strong>{link.CAT_NAME}</strong>
+					<strong>{CAT_NAME}</strong>
 				</div>
 				<div style="float:right">
 					{PAGINATION}
@@ -80,97 +80,96 @@
 							<a href="web{U_WEB_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
 						</th>
 					</tr>
-					# START link.web #
+					# START web #
 					<tr>	
 						<td class="row2">
-							&raquo; <a href="web{link.web.U_WEB_LINK}">{link.web.NAME}</a>
+							&raquo; <a href="web{web.U_WEB_LINK}">{web.NAME}</a>
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.web.DATE}
+							{web.DATE}
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.web.COMPT} 
+							{web.COMPT} 
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.web.NOTE}
+							{web.NOTE}
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.web.COM} 
+							{web.COM} 
 						</td>
 					</tr>
-					# END link.web #
+					# END web #
 				</table>
-				<p style="text-align:center;padding:6px;">{link.NO_CAT}</p>
+				<p style="text-align:center;padding:6px;">{NO_CAT}</p>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
 				<div style="float:left">
-					<strong>{link.CAT_NAME}</strong>
+					<strong>{CAT_NAME}</strong>
 				</div>
 				<div style="float:right">
 					{PAGINATION}
 				</div>
 			</div>
 		</div>		
-		# END link #
+		# ENDIF #
 
 		
 
-		# START web #
+		# IF C_DISPLAY_WEB #
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					<strong>{web.NAME}</strong> {EDIT}{DEL}
+					<strong>{NAME}</strong> {EDIT}{DEL}
 				</div>
 				<div style="float:right">
-					{web.COM}
+					{COM}
 				</div>
 			</div>
 			<div class="module_contents">
 				<p>					
-					<strong>{web.L_DESC}:</strong> {web.CONTENTS}
+					<strong>{L_DESC}:</strong> {CONTENTS}
 					<br /><br />
-					<strong>{web.L_CAT}:</strong> 
-					<a href="../web/web{web.U_WEB_CAT}" title="{web.CAT}">{web.CAT}</a><br />
+					<strong>{L_CAT}:</strong> 
+					<a href="../web/web{U_WEB_CAT}" title="{CAT}">{CAT}</a><br />
 					
-					<strong>{web.L_DATE}:</strong> {web.DATE}<br />						
-					<strong>{web.L_VIEWS}:</strong> {web.COMPT} {web.L_TIMES}
+					<strong>{L_DATE}:</strong> {DATE}<br />						
+					<strong>{L_VIEWS}:</strong> {COMPT} {L_TIMES}
 					<div class="spacer">&nbsp;</div>
 				</p>
 				<p style="text-align: center;">					
-					<a href="{web.URL}" title="{web.NAME}" onclick="document.location = 'count.php?id={web.IDWEB}';"><img src="{web.MODULE_DATA_PATH}/images/{web.LANG}/bouton_url.gif" alt="" /></a>
+					<a href="{URL}" title="{NAME}" onclick="document.location = 'count.php?id={IDWEB}';"><img src="{MODULE_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" /></a>
 					<br />
-					{web.URL}
+					{URL}
 				</p>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<strong>{web.L_NOTE}:</strong> {web.NOTE}&nbsp;
+				<strong>{L_NOTE}:</strong> {NOTE}&nbsp;
 			</div>
 		</div>
 			
 		<br /><br />
 		# INCLUDE handle_com #
-		
-		# END web #
+		# ENDIF #
 
 
-		# START note #
-		<form action="../web/web{note.U_WEB_ACTION_NOTE}" method="post" class="fieldset_content">
+		# IF C_DISPLAY_WEB_NOTE #
+		<form action="../web/web{U_WEB_ACTION_NOTE}" method="post" class="fieldset_content">
 			<span id="note"></span>
 			<fieldset>
 				<legend>{L_NOTE}</legend>
 				<dl>
 					<dt><label for="note_select">{L_NOTE}</label></dt>
 					<dd>
-						<span class="text_small">{L_ACTUAL_NOTE}: {note.NOTE}</span>	
+						<span class="text_small">{L_ACTUAL_NOTE}: {NOTE}</span>	
 						<label>
 							<select id="note_select" name="note">
-								{note.SELECT}
+								{SELECT}
 							</select>
 						</label>
 					</dd>					
@@ -181,5 +180,5 @@
 				<input type="submit" name="valid_note" value="{L_VOTE}" class="submit" />
 			</fieldset>
 		</form>
-		# END note #
+		# ENDIF #
 		

@@ -38,7 +38,7 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 	if( empty($web['id']) )
 		$Errorh->Error_handler('e_unexist_link_web', E_USER_REDIRECT);
 		
-	if( $Member->Get_attribute('level') === 2 )
+	if( $Member->Check_level(2) )
 	{
 		$java = "<script language='JavaScript' type='text/javascript'>
 		<!--
@@ -81,7 +81,8 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 	$com_false = $LANG['post_com'] . '</a>';
 	$l_com = !empty($web['nbr_com']) ? $com_true . ' (' . $web['nbr_com'] . ')</a>' : $com_false;
 	
-	$Template->Assign_block_vars('web', array(
+	$Template->Assign_vars(array(
+		'C_DISPLAY_WEB' => true,
 		'MODULE_DATA_PATH' => $Template->Module_data_path('web'),
 		'IDWEB' => $web['id'],		
 		'NAME' => $web['title'],
@@ -161,7 +162,8 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 					}
 				}
 				
-				$Template->Assign_block_vars('note', array(
+				$Template->Assign_vars(array(
+					'C_DISPLAY_WEB_NOTE' => true,
 					'NOTE' => ($row['nbrnote'] > 0) ? $row['note'] : '<em>' . $LANG['no_note'] . '</em>',
 					'SELECT' => $select,
 					'U_WEB_ACTION_NOTE' => transid('.php?note=' . $get_note . '&amp;id=' . $get_note . '&amp;cat=' . $idcat, '-' . $idcat . '-' . $get_note . '.php?note=' . $get_note)
@@ -198,12 +200,10 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 	FROM ".PREFIX."web 
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 	
-	$Template->Assign_block_vars('link', array(
-		'CAT_NAME' => $CAT_WEB[$idcat]['name'],		
-		'NO_CAT' => ($nbr_web == 0) ? $LANG['none_link'] : ''
-	));	
-	
 	$Template->Assign_vars(array(
+		'C_WEB_LINK' => true,
+		'CAT_NAME' => $CAT_WEB[$idcat]['name'],		
+		'NO_CAT' => ($nbr_web == 0) ? $LANG['none_link'] : '',
 		'MAX_NOTE' => $CONFIG_WEB['note_max'],
 		'L_LINK' => $LANG['link'],
 		'L_DATE' => $LANG['date'],
@@ -267,12 +267,11 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 		$row['title'] = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 		
 		//Commentaires
-		$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $row['id'] . "web") . "', 'web');\">";
-		$link_current = '<a class="com" href="' . HOST . DIR . '/web/web' . transid('.php?cat=' . $idcat . '&amp;id=' . $row['id'] . '&amp;i=0', '-' . $idcat . '-' . $row['id'] . '.php?i=0') . '#web">';	
+		$link_pop = "<a href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $row['id'] . "web") . "', 'web');\">";
+		$link_current = '<a href="' . HOST . DIR . '/web/web' . transid('.php?cat=' . $idcat . '&amp;id=' . $row['id'] . '&amp;i=0', '-' . $idcat . '-' . $row['id'] . '.php?i=0') . '#web">';	
 		$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
 	
-	
-		$Template->Assign_block_vars('link.web', array(			
+		$Template->Assign_block_vars('web', array(			
 			'NAME' => $row['title'],
 			'CAT' => $CAT_WEB[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
@@ -306,7 +305,8 @@ else
 	$CONFIG_WEB['nbr_column'] = ($total_cat > $CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : $total_cat;
 	$CONFIG_WEB['nbr_column'] = !empty($CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : 1;
 	
-	$Template->Assign_block_vars('cat', array(
+	$Template->Assign_vars(array(
+		'C_WEB_CAT' => true,
 		'PAGINATION' => $Pagination->Display_pagination('web' . transid('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $CONFIG_WEB['nbr_cat_max'], 3),
 		'EDIT' => $edit,
 		'TOTAL_FILE' => $total_link,
@@ -328,7 +328,7 @@ else
 	" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_WEB['nbr_cat_max'], 'p'), $CONFIG_WEB['nbr_cat_max']), __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('cat.web', array(
+		$Template->Assign_block_vars('cat_list', array(
 			'WIDTH' => $column_width,
 			'TOTAL' => $row['count'],
 			'CAT' => $row['name'],
