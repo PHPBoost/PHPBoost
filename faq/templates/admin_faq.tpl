@@ -28,7 +28,7 @@
 				</div>		
 			# ENDIF #
 		
-			<form action="admin_faq.php" method="post">
+			<form action="admin_faq.php" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_MANAGEMENT}</legend>
 					<dl>
@@ -91,4 +91,5 @@
 					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 				</fieldset>
 			</form>
+		</div>		
 		
