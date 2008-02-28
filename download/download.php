@@ -40,7 +40,7 @@ if( !empty($idurl) && !empty($CAT_DOWNLOAD[$idcat]['name']) && !empty($idcat) ) 
 	if( empty($download['id']) )
 		$Errorh->Error_handler('e_unexist_file_download', E_USER_REDIRECT); 
 	
-	if( $Member->Get_attribute('level') === 2 )
+	if( $Member->Check_level(2) )
 	{
 		$java = '<script type="text/javascript">
 		<!--
@@ -106,7 +106,8 @@ if( !empty($idurl) && !empty($CAT_DOWNLOAD[$idcat]['name']) && !empty($idcat) ) 
 	$com_false = $LANG['post_com'] . '</a>';
 	$l_com = !empty($download['nbr_com']) ? $com_true . ' (' . $download['nbr_com'] . ')</a>' : $com_false;
 	
-	$Template->Assign_block_vars('download', array(
+	$Template->Assign_vars(array(
+		'C_DISPLAY_DOWNLOAD' => true,
 		'MODULE_DATA_PATH' => $Template->Module_data_path('download'),
 		'IDURL' => $download['id'],		
 		'NAME' => $download['title'],
@@ -189,7 +190,8 @@ if( !empty($idurl) && !empty($CAT_DOWNLOAD[$idcat]['name']) && !empty($idcat) ) 
 					}
 				}
 				
-				$Template->Assign_block_vars('note', array(
+				$Template->Assign_vars(array(
+					'C_DISPLAY_DOWNLOAD_NOTE' => true,
 					'NOTE' => ($row['nbrnote'] > 0) ? $row['note'] : '<em>' . $LANG['no_note'] . '</em>',
 					'SELECT' => $select,
 					'U_DOWNLOAD_ACTION_NOTE' => transid('.php?note=' . $get_note . '&amp;id=' . $get_note . '&amp;cat=' . $idcat, '-' . $idcat . '-' . $get_note . '.php?note=' . $get_note)
@@ -221,15 +223,12 @@ elseif( !empty($idcat) && empty($idurl) ) //Contenu de la catégorie!
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	$nbr_dl = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."download WHERE visible = 1 AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
-
-	$Template->Assign_block_vars('link', array(
-		'CAT_NAME' => $CAT_DOWNLOAD[$idcat]['name'],		
-		'NO_CAT' => ($nbr_dl == 0) ? $LANG['none_download'] : ''
-	));		
-	
 	$rewrite_title = url_encode_rewrite($CAT_DOWNLOAD[$idcat]['name']);
 	
 	$Template->Assign_vars(array(
+		'C_DOWNLOAD_LINK' => true,
+		'CAT_NAME' => $CAT_DOWNLOAD[$idcat]['name'],		
+		'NO_CAT' => ($nbr_dl == 0) ? $LANG['none_download'] : '',
 		'L_FILE' => $LANG['file'],
 		'L_SIZE' => $LANG['size'],
 		'L_DATE' => $LANG['date'],
@@ -301,11 +300,11 @@ elseif( !empty($idcat) && empty($idurl) ) //Contenu de la catégorie!
 		$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 
 		//Commentaires
-		$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $row['id'] . "download") . "', 'download');\">";
-		$link_current = '<a class="com" href="' . HOST . DIR . '/download/download' . transid('.php?cat=' . $idcat . '&amp;id=' . $row['id'] . '&amp;i=0', '-' . $idcat . '-' . $row['id'] . '.php?i=0') . '#download">';	
+		$link_pop = "<a href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $row['id'] . "download") . "', 'download');\">";
+		$link_current = '<a href="' . HOST . DIR . '/download/download' . transid('.php?cat=' . $idcat . '&amp;id=' . $row['id'] . '&amp;i=0', '-' . $idcat . '-' . $row['id'] . '.php?i=0') . '#download">';	
 		$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
 		
-		$Template->Assign_block_vars('link.download', array(			
+		$Template->Assign_block_vars('download', array(			
 			'NAME' => $fichier,
 			'CAT' => $CAT_DOWNLOAD[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
@@ -341,7 +340,8 @@ else
 	$CONFIG_DOWNLOAD['nbr_column'] = ($total_cat > $CONFIG_DOWNLOAD['nbr_column']) ? $CONFIG_DOWNLOAD['nbr_column'] : $total_cat;
 	$CONFIG_DOWNLOAD['nbr_column'] = !empty($CONFIG_DOWNLOAD['nbr_column']) ? $CONFIG_DOWNLOAD['nbr_column'] : 1;
 	
-	$Template->Assign_block_vars('cat', array(
+	$Template->Assign_vars(array(
+		'C_DOWNLOAD_CAT' => true,
 		'PAGINATION' => $show_pagin = $Pagination->Display_pagination('download' . transid('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $CONFIG_DOWNLOAD['nbr_cat_max'], 3),
 		'EDIT' => $edit,
 		'TOTAL_FILE' => $total_file,
@@ -363,7 +363,7 @@ else
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 		$rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? url_encode_rewrite($row['name']) : '';
 
-		$Template->Assign_block_vars('cat.download', array(
+		$Template->Assign_block_vars('cat_list', array(
 			'WIDTH' => $column_width,
 			'TOTAL' => $row['count'],
 			'CAT' => $row['name'],

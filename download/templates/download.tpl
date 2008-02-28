@@ -1,30 +1,29 @@
 		{JAVA}
 
-		# START cat #
+		# IF C_DOWNLOAD_CAT #
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					{cat.L_CATEGORIE} {cat.EDIT}
+					{L_CATEGORIE} {EDIT}
 				</div>
 				<div style="float:right">
-					{cat.PAGINATION}
+					{PAGINATION}
 				</div>
 			</div>
 			<div class="module_contents">
 				&nbsp;
-				# START cat.download #
-				<div style="float:left;text-align:center;width:{cat.download.WIDTH}%;height:80px;">
-					{cat.download.U_IMG_CAT}
-					<a href="../download/download{cat.download.U_DOWNLOAD_CAT}">{cat.download.CAT}</a> ({cat.download.TOTAL})<br />
-					<span class="text_small">{cat.download.CONTENTS}</span>
-					<br /><br /><br />
+				# START cat_list #
+				<div style="float:left;text-align:center;width:{cat_list.WIDTH}%;padding-bottom:20px;">
+					{cat_list.U_IMG_CAT}
+					<a href="../download/download{cat_list.U_DOWNLOAD_CAT}">{cat_list.CAT}</a> ({cat_list.TOTAL})<br />
+					<span class="text_small">{cat_list.CONTENTS}</span>
 				</div>	
-				# END cat.download #
+				# END cat_list #
 				
 				<div class="text_small" style="text-align:center;clear:both">
-					{cat.TOTAL_FILE} {cat.L_HOW_DOWNLOAD}
+					{TOTAL_FILE} {L_HOW_DOWNLOAD}
 				</div>
 				&nbsp;
 			</div>
@@ -32,21 +31,21 @@
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
 				<div style="float:right">
-					{cat.PAGINATION}
+					{PAGINATION}
 				</div>
 			</div>
 		</div>
-		# END cat #
+		# ENDIF #
 		
 
 
-		# START link #
+		# IF C_DOWNLOAD_LINK #
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					{link.CAT_NAME}
+					{CAT_NAME}
 				</div>
 				<div style="float:right">
 					{PAGINATION}
@@ -86,50 +85,50 @@
 							<a href="download{U_DOWNLOAD_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
 						</th>
 					</tr>
-					# START link.download #
+					# START download #
 					<tr>	
 						<td class="row2">
-							&raquo; <a href="download{link.download.U_DOWNLOAD_LINK}">{link.download.NAME}</a>
+							&raquo; <a href="download{download.U_DOWNLOAD_LINK}">{download.NAME}</a>
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.download.SIZE}
+							{download.SIZE}
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.download.DATE}
+							{download.DATE}
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.download.COMPT} 
+							{download.COMPT} 
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.download.NOTE}
+							{download.NOTE}
 						</td>
 						<td class="row2" style="text-align: center;">
-							{link.download.COM} 
+							{download.COM} 
 						</td>
 					</tr>
-					# END link.download #
+					# END download #
 				</table>
-				<p style="text-align:center;padding:6px;">{link.NO_CAT}</p>
+				<p style="text-align:center;padding:6px;">{NO_CAT}</p>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
 				<div style="float:left">
-					<strong>{link.CAT_NAME}</strong>
+					<strong>{CAT_NAME}</strong>
 				</div>
 				<div style="float:right">
 					{PAGINATION}
 				</div>
 			</div>
 		</div>
-		# END link #
+		# ENDIF #
 
 
-		# START download #
+		# IF C_DISPLAY_DOWNLOAD #
 		
 		<script type="text/javascript">
 		<!--
-		var note_max = {download.NOTE_MAX};
+		var note_max = {NOTE_MAX};
 		var array_note = new Array();		
 		var timeout = null;
 		var on_img = 0;
@@ -208,52 +207,51 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					{download.NAME} {EDIT}{DEL}
+					{NAME} {EDIT}{DEL}
 				</div>
 				<div style="float:right">
-					{download.COM}
+					{COM}
 				</div>
 			</div>
 			<div class="module_contents">
 				<p>					
-					<strong>{download.L_DESC}:</strong> {download.CONTENTS}						
+					<strong>{L_DESC}:</strong> {CONTENTS}						
 					<br /><br />						
-					<strong>{download.L_CAT}:</strong> 
-					<a href="../download/download{download.U_DOWNLOAD_CAT}" title="{download.CAT}">{download.CAT}</a><br />						
-					<strong>{download.L_DATE}:</strong> {download.DATE}<br />						
-					<strong>{download.L_SIZE}:</strong> {download.SIZE}<br />						
-					<strong>{download.L_DOWNLOAD}:</strong> {download.COMPT} {download.L_TIMES}
+					<strong>{L_CAT}:</strong> 
+					<a href="../download/download{U_DOWNLOAD_CAT}" title="{CAT}">{CAT}</a><br />						
+					<strong>{L_DATE}:</strong> {DATE}<br />						
+					<strong>{L_SIZE}:</strong> {SIZE}<br />						
+					<strong>{L_DOWNLOAD}:</strong> {COMPT} {L_TIMES}
 					<div class="spacer">&nbsp;</div>
 				</p>
 				<p style="text-align: center;">					
-					<a href="../download/count.php?id={download.IDURL}"><img src="{download.MODULE_DATA_PATH}/images/{download.LANG}/bouton_dl.gif" alt="" /></a>
+					<a href="../download/count.php?id={IDURL}"><img src="{MODULE_DATA_PATH}/images/{LANG}/bouton_dl.gif" alt="" /></a>
 				</p>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				{download.NOTE} <span id="download_loading"></span>
+				{NOTE} <span id="download_loading"></span>
 			</div>
 		</div>
 		
 		<br /><br />
 		# INCLUDE handle_com #
-		
-		# END download #
+		# ENDIF #
 
 
-		# START note #
-		<form action="../download/download{note.U_DOWNLOAD_ACTION_NOTE}" method="post" class="fieldset_content">
+		# IF C_DISPLAY_DOWNLOAD_NOTE #
+		<form action="../download/download{U_DOWNLOAD_ACTION_NOTE}" method="post" class="fieldset_content">
 			<span id="note"></span>
 			<fieldset>
 				<legend>{L_NOTE}</legend>
 				<dl>
 					<dt><label for="note_select">{L_NOTE}</label></dt>
 					<dd>
-						<span class="text_small">{L_ACTUAL_NOTE}: {note.NOTE}</span>	
+						<span class="text_small">{L_ACTUAL_NOTE}: {NOTE}</span>	
 						<label>
 							<select id="note_select" name="note">
-								{note.SELECT}
+								{SELECT}
 							</select>
 						</label>
 					</dd>					
@@ -264,4 +262,4 @@
 				<input type="submit" name="valid_note" value="{L_VOTE}" class="submit" />
 			</fieldset>
 		</form>
-		# END note #
+		# ENDIF #
