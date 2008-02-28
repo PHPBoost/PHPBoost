@@ -178,7 +178,7 @@ class Forum
 			$Sql->Query_inject("UPDATE ".PREFIX."forum_topics SET nbr_msg = nbr_msg - 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
 			//On retranche d'un messages la catégorie concernée.
 			$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET nbr_msg = nbr_msg - 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'", __LINE__, __FILE__);
-			//Récupération du message suivant celui supprimé afin de rediriger vers la bonne ancre.
+			//Récupération du message précédent celui supprimé afin de rediriger vers la bonne ancre.
 			$previous_msg_id = $Sql->Query("SELECT id FROM ".PREFIX."forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "' ORDER BY timestamp DESC " . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
 
 			if( $last_msg_id == $idmsg ) //On met à jour le dernier message posté dans la liste des topics.
@@ -197,8 +197,9 @@ class Forum
 			
 			//Mise à jour du dernier message lu par les membres.
 			$Sql->Query_inject("UPDATE ".PREFIX."forum_view SET last_view_id = '" . $previous_msg_id . "' WHERE last_view_id = '" . $idmsg . "'", __LINE__, __FILE__);
-			//On marque le topic comme lu.
-			mark_topic_as_read($idtopic, $previous_msg_id, $last_timestamp);
+			//On marque le topic comme lu, si c'est le dernier du message du topic.
+			if( $last_msg_id == $idmsg )
+				mark_topic_as_read($idtopic, $previous_msg_id, $last_timestamp);
 			
 			//Insertion de l'action dans l'historique.
 			if( $msg_user_id != $Member->Get_attribute('user_id') ) 

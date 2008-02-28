@@ -29,8 +29,6 @@ require_once('../includes/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
-ob_end_flush();
-
 ob_start();
 phpinfo();
 $phpinfo = ob_get_contents();
