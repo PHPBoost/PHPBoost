@@ -114,6 +114,7 @@
 						{L_NO_QUESTION_THIS_CATEGORY}
 					</div>
 				# END no_question #
+				<div class="spacer">&nbsp;</div>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
