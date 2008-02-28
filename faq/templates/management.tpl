@@ -134,7 +134,7 @@
 					</fieldset>
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
-						<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
 						&nbsp;&nbsp; 
 						<input type="reset" value="{L_RESET}" class="reset" />
 						<input type="hidden" id="id_faq" name="id_faq" value="{category.ID_FAQ}" />
@@ -148,28 +148,28 @@
 					</p>
 					<br />
 					# START category.questions #
-					<div class="row1" id="q{category.questions.ID}">
-						<span style="float:left;">
-							<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left valign_middle" />
-							{category.questions.QUESTION}
-						</span>
-						<span class="row2" style="float:right;">
-							# START category.up #
-								<a href="{category.questions.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
-							# END category.up #
-							# START category.down #
-								<a href="{category.questions.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
-							# END category.down #
-							<a href="{category.questions.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
-							<a href="{category.questions.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{MODULE_DATA_PATH}/images/delete.png" alt="{L_DELETE}" /></a>
-						</span>
-						<div style="clear:both"></div>
-					</div>
-					<br />
-					<p style="text-align:center;">
-						<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}"><img src="../templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION}" /></a>
-					</p>
-					<br />
+						<div class="row1" id="q{category.questions.ID}">
+							<span style="float:left;">
+								<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
+								{category.questions.QUESTION}
+							</span>
+							<span class="row2" style="float:right;">
+								# START category.up #
+									<a href="{category.questions.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
+								# END category.up #
+								# START category.down #
+									<a href="{category.questions.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
+								# END category.down #
+								<a href="{category.questions.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
+								<a href="{category.questions.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{MODULE_DATA_PATH}/images/delete.png" alt="{L_DELETE}" /></a>
+							</span>
+							<div style="clear:both"></div>
+						</div>
+						<br />
+						<div style="text-align:center;">
+							<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}"><img src="../templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION}" /></a>
+						</div>
+						<br />
 					# END category.questions #
 				</fieldset>&nbsp;
 			</div>
@@ -222,7 +222,7 @@
 					</fieldset>
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
-						<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
 						&nbsp;&nbsp; 
 						<input type="reset" value="{L_RESET}" class="reset" />
 						<input type="hidden" name="id_question" value="{edit_question.ID_QUESTION}" />

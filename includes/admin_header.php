@@ -104,10 +104,10 @@ function extract_admin_links($links_format)
 	$links_format = preg_replace(' ?, ?', ',', $links_format) . ' ';
 	list($key, $value, $open, $cursor, $check_value, $admin_links) = array('', '', '', 0, false, array());
 	$string_length = strlen($links_format);
-	while( $cursor < $string_length ) //Parcour linéaire.
+	while( $cursor < $string_length ) //Parcours linéaire.
 	{
 		$char = substr($links_format, $cursor, 1);
-		if( !$check_value ) //On récupère la clée.
+		if( !$check_value ) //On récupère la clé.
 		{
 			if( $char != '=' )
 				$key .= $char;
@@ -123,7 +123,7 @@ function extract_admin_links($links_format)
 				$value .= $char;
 			else
 			{
-				if( !empty($open) && !empty($value)) //On insère dans la clée marqué précédemment à l'ouveture de la parenthèse.
+				if( !empty($open) && !empty($value)) //On insère dans la clé marqué précédemment à l'ouveture de la parenthèse.
 					$admin_links[$open][$key] = $value;
 				else
 					$admin_links[$key] = $value; //Ajout simple.
