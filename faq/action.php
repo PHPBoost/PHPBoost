@@ -179,7 +179,7 @@ elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
 			$FAQ_CONFIG['root'] = array(
 				'display_mode' => $display_mode,
 				'auth' => $FAQ_CATS[0]['auth'],
-				'description' => $description
+				'description' => stripslashes($description)
 			);
 			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
 		}
