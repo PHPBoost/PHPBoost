@@ -36,7 +36,6 @@ load_module_lang('news'); //Chargement de la langue du module.
 
 $idnews = !empty($_GET['id']) ? numeric($_GET['id']) : 0;	
 $idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
-$show_archive = !empty($_GET['arch']) ? 1 : 0;
 if( !empty($idnews) && empty($idcat) )
 {
 	$result = $Sql->Query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.archive, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login

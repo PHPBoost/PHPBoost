@@ -43,7 +43,6 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 	$extend_contents = !empty($_POST['extend_contents']) ? trim($_POST['extend_contents']) : '';
 	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$archive = !empty($_POST['archive']) ? numeric($_POST['archive']) : 0;
 	$img = !empty($_POST['img']) ? securit($_POST['img']) : '';
 	$alt = !empty($_POST['alt']) ? securit($_POST['alt']) : '';	
 	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
@@ -95,7 +94,7 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		else
 			$timestamp = ' , timestamp = \'' . time() . '\'';
 			
-		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . parse($contents) . "', extend_contents = '" . parse($extend_contents) . "', archive = '" . $archive . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
+		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . parse($contents) . "', extend_contents = '" . parse($extend_contents) . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
 		WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 
 		include_once('../includes/rss.class.php'); //Flux rss regénéré!
@@ -173,9 +172,7 @@ elseif( !empty($id) )
 		'IMG_PREVIEW' => !empty($row['img']) ? '<img src="' . $row['img'] . '" alt="" />': $LANG['no_img'],
 		'IMG' => $row['img'],
 		'ALT' => $row['alt'],
-		'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-		'ARCHIVE_ENABLED' => $row['archive'] ? 'checked="checked"' : '',
-		'ARCHIVE_DISABLED' => !$row['archive'] ? 'checked="checked"' : ''
+		'DATE' => gmdate_format('date_format_short', $row['timestamp'])
 	));
 	
 	$Template->Assign_vars(array(
@@ -198,7 +195,6 @@ elseif( !empty($id) )
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_NEWS_DATE' => $LANG['news_date'],
-		'L_NEWS_ARCHIVE' => $LANG['news_archive'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_AT' => $LANG['at'],
@@ -258,7 +254,6 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 	$extend_contents = !empty($_POST['extend_contents']) ? trim($_POST['extend_contents']) : '';
 	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$archive = !empty($_POST['archive']) ? numeric($_POST['archive']) : 0;
 	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : '';
 	$img = !empty($_POST['img']) ? trim($_POST['img']) : '';
 	$alt = !empty($_POST['alt']) ? trim($_POST['alt']) : '';
@@ -317,9 +312,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'YEAR_DATE' => !empty($current_date_timestamp) ? gmdate_format('Y', $current_date_timestamp) : '',
 		'VISIBLE_WAITING' => (($visible == 2) ? 'checked="checked"' : ''),
 		'VISIBLE_ENABLED' => (($visible == 1) ? 'checked="checked"' : ''),
-		'VISIBLE_UNAPROB' => (($visible == 0) ? 'checked="checked"' : ''),
-		'ARCHIVE_ENABLED' => $archive ? 'checked="checked"' : '',
-		'ARCHIVE_DISABLED' => !$archive ? 'checked="checked"' : '',
+		'VISIBLE_UNAPROB' => (($visible == 0) ? 'checked="checked"' : '')
 	));
 	
 	//Catégories.	
@@ -374,7 +367,6 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_NEWS_DATE' => $LANG['news_date'],
 		'L_AT' => $LANG['at'],
-		'L_NEWS_ARCHIVE' => $LANG['news_archive'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_IMG_MANAGEMENT' => $LANG['img_management'],
@@ -424,7 +416,6 @@ else
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_DATE' => $LANG['date'],
 		'L_APROB' => $LANG['aprob'],
-		'L_ARCHIVE' => $LANG['archived'],
 		'L_UPDATE' => $LANG['update'],
 		'L_DELETE' => $LANG['delete']
 	));
@@ -432,7 +423,7 @@ else
 	$Template->Assign_block_vars('list', array(
 	));
 	
-	$result = $Sql->Query_while("SELECT nc.name, n.id, n.title, n.archive, n.timestamp, n.visible, n.start, n.end, m.login 
+	$result = $Sql->Query_while("SELECT nc.name, n.id, n.title, n.timestamp, n.visible, n.start, n.end, m.login 
 	FROM ".PREFIX."news n
 	LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 	LEFT JOIN ".PREFIX."member m ON m.user_id = n.user_id
@@ -466,7 +457,6 @@ else
 			'CATEGORY' => $row['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'APROBATION' => $aprob,
-			'ARCHIVE' => $row['archive'] ? $LANG['yes'] : $LANG['no'],
 			'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : '')
 		));
 	}

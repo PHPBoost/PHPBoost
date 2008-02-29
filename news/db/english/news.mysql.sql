@@ -5,7 +5,6 @@ CREATE TABLE `phpboost_news` (
 	`title` varchar(100) NOT NULL default '',
 	`contents` text NOT NULL,
 	`extend_contents` text NOT NULL,
-	`archive` tinyint(1) NOT NULL default '0',
 	`timestamp` int(11) NOT NULL default '0',
 	`visible` tinyint(1) NOT NULL default '0',
 	`start` int(11) NOT NULL default '0',
@@ -29,5 +28,5 @@ CREATE TABLE `phpboost_news_cat` (
 ) ENGINE=MyISAM;
 
 INSERT INTO `phpboost_news_cat` (`id`, `name`, `contents`, `icon`) VALUES (1, 'Test', 'Test category', 'news.png');
-INSERT INTO `phpboost_news` (`id`, `idcat`, `title`, `contents`, `extend_contents`, `archive`, `timestamp`, `visible`, `start`, `end`, `user_id`, `img`, `alt`, `nbr_com`, `lock_com`) VALUES (1, 1, 'Test', 'Test of news', 'End of the news', 0, unix_timestamp(current_timestamp), 1, 0, 0, 1, '', '', 0, 0);
+INSERT INTO `phpboost_news` (`id`, `idcat`, `title`, `contents`, `extend_contents`, `timestamp`, `visible`, `start`, `end`, `user_id`, `img`, `alt`, `nbr_com`, `lock_com`) VALUES (1, 1, 'Test', 'Test of news', 'End of the news', unix_timestamp(current_timestamp), 1, 0, 0, 1, '', '', 0, 0);
 INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('news', 'a:11:{s:4:"type";i:1;s:11:"activ_pagin";i:1;s:11:"activ_edito";i:1;s:15:"pagination_news";i:5;s:15:"pagination_arch";i:10;s:9:"activ_com";i:1;s:10:"activ_icon";i:1;s:8:"nbr_news";s:1:"0";s:10:"nbr_column";i:1;s:5:"edito";s:19:"Welcom on the site!";s:11:"edito_title";s:19:"Welcom on the site!";}');

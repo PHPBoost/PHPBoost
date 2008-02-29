@@ -273,7 +273,6 @@ $LANG['add_msg'] = 'Ajout message';
 $LANG['update_msg'] = 'Modifier le message';
 $LANG['category'] = 'Catégorie';
 $LANG['categories'] = 'Catégories';
-$LANG['archive'] = 'Voir les Archives';
 $LANG['refresh'] = 'Rafraichir';
 
 //Dates.

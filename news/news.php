@@ -31,6 +31,7 @@ require_once('../includes/header.php');
 
 $idnews = !empty($_GET['id']) ? numeric($_GET['id']) : 0;	
 $idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
+$show_archive = !empty($_GET['arch']) ? true : false;
 
 $is_admin = $Member->Check_level(2);
 if( empty($idnews) && empty($idcat) ) 
@@ -48,41 +49,33 @@ if( empty($idnews) && empty($idcat) )
 		));
 	}	
 
-	if( $show_archive )
-	{
-		$CONFIG_NEWS['pagination_news'] = $CONFIG_NEWS['pagination_arch'];
-		$url_pagin = transid('.php?arch=1&amp;p=%d');
-		$show_archive = 1;
-	}
-	else
-	{
-		$url_pagin = transid('.php?p=%d', '-0-0-%d.php');
-		$show_archive = 0;
-	}	
+	//On crée une pagination (si activé) si le nombre de news est trop important.
+	include_once('../includes/pagination.class.php'); 
+	$Pagination = new Pagination();
 		
 	//Pagination activée, sinon affichage lien vers les archives.
 	if( $CONFIG_NEWS['activ_pagin'] == '1' )
 	{
-		//On crée une pagination (si activé) si le nombre de news est trop important.
-		include_once('../includes/pagination.class.php'); 
-		$Pagination = new Pagination();
-		$show_pagin = $Pagination->Display_pagination('news' . $url_pagin, $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
+		$show_pagin = $Pagination->Display_pagination('news' . transid('.php?p=%d', '-0-0-%d.php'), $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
 		$first_msg = $Pagination->First_msg($CONFIG_NEWS['pagination_news'], 'p'); 
-		$archives= '';
 	}
-	else
+	elseif( $show_archive ) //Pagination des archives.
 	{
+		$show_pagin = $Pagination->Display_pagination('news' . transid('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $CONFIG_NEWS['nbr_news'] - $CONFIG_NEWS['pagination_news'], 'p', $CONFIG_NEWS['pagination_arch'], 3);
+		$first_msg = $CONFIG_NEWS['pagination_news'] + $Pagination->First_msg($CONFIG_NEWS['pagination_arch'], 'p'); 
+		$CONFIG_NEWS['pagination_news'] = $CONFIG_NEWS['pagination_arch'];
+	}
+	else //Affichage du lien vers les archives.
+	{
+		$show_pagin = (($CONFIG_NEWS['nbr_news'] > $CONFIG_NEWS['pagination_news']) && ($CONFIG_NEWS['nbr_news'] != 0)) ? '<a href="news.php?arch=1" title="' . $LANG['display_archive'] . '">' . $LANG['display_archive'] . '</a>' : '';
 		$first_msg = 0;
-		$archives = ( ($CONFIG_NEWS['nbr_news'] > $CONFIG_NEWS['pagination_news']) && ($CONFIG_NEWS['nbr_news'] != 0) ) ? '<a href="news.php?arch=1" title="' . $LANG['archive'] . '">' . $LANG['archive'] . '</a>' : '';
-		$show_pagin = '';
 	}
 		
 	$Template->Assign_vars(array(
 		'PAGINATION' => $show_pagin,
-		'ARCHIVES' => $archives,
 		'THEME' => $CONFIG['theme'],
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
-		'L_LAST_NEWS' => $LANG['last_news'],
+		'L_LAST_NEWS' => !$show_archive ? $LANG['last_news'] : $LANG['archive'],
 		'L_ON' => $LANG['on']
 	));
 	
@@ -110,7 +103,7 @@ if( empty($idnews) && empty($idcat) )
 		FROM ".PREFIX."news n
 		LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 		LEFT JOIN ".PREFIX."member m ON m.user_id = n.user_id		
-		WHERE n.visible = 1 AND n.archive = '" . $show_archive . "'
+		WHERE n.visible = 1
 		ORDER BY n.timestamp DESC 
 		" . $Sql->Sql_limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
 		while($row = $Sql->Sql_fetch_assoc($result) )
@@ -197,7 +190,7 @@ if( empty($idnews) && empty($idcat) )
 		$result = $Sql->Query_while("SELECT n.id, n.title, n.timestamp, nc.id AS idcat, nc.icon
 		FROM ".PREFIX."news n
 		LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
-		WHERE n.visible = 1 AND n.archive = '" . $show_archive . "'
+		WHERE n.visible = 1
 		ORDER BY n.timestamp DESC 
 		" . $Sql->Sql_limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
 		while ($row = $Sql->Sql_fetch_assoc($result))

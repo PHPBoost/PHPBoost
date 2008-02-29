@@ -103,5 +103,4 @@
 		# END news_link #
 		
 		<div style="text-align: center;">{PAGINATION}</div>
-		<div style="text-align: center;">{ARCHIVES}</div>
 		
