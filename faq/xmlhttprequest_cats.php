@@ -29,7 +29,7 @@ require_once('../includes/begin.php');
 define('TITLE', 'Ajax faq');
 require_once('../includes/header_no_display.php');
 
-if( $Member->Check_level(2) ) //Admin
+if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 {	
 	include_once('faq_cats.class.php');
 	$faq_categories = new FaqCats();

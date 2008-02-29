@@ -159,9 +159,9 @@ $Template->Assign_vars(array(
 	'L_CAT_MANAGEMENT' => $FAQ_LANG['category_manage'],
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
-	'C_ADMIN' => $Member->Check_level(2),
+	'C_ADMIN' => $Member->Check_level(ADMIN_LEVEL),
 	'U_MANAGEMENT' => transid('management.php?faq=' . $id_faq),
-	'U_ADMIN_CAT' => $Member->Check_level(2) ? ( $id_faq > 0 ? transid('admin_faq_cats.php?edit=' . $id_faq) : transid('admin_faq_cats.php')) : ''
+	'U_ADMIN_CAT' => $Member->Check_level(ADMIN_LEVEL) ? ( $id_faq > 0 ? transid('admin_faq_cats.php?edit=' . $id_faq) : transid('admin_faq_cats.php')) : ''
 ));
 
 $Template->Pparse('faq');
