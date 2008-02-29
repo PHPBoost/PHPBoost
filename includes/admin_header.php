@@ -123,7 +123,7 @@ function extract_admin_links($links_format)
 				$value .= $char;
 			else
 			{
-				if( !empty($open) && !empty($value)) //On insère dans la clé marqué précédemment à l'ouveture de la parenthèse.
+				if( !empty($open) && !empty($value) ) //On insère dans la clé marqué précédemment à l'ouveture de la parenthèse.
 					$admin_links[$open][$key] = $value;
 				else
 					$admin_links[$key] = $value; //Ajout simple.
