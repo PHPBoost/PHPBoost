@@ -47,12 +47,12 @@
 						<dd><label><input type="text" maxlength="6" size="6" name="pagination_news" id="pagination_news" value="{PAGINATION}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="nbr_column">* {L_NBR_COLUMN_MAX}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="nbr_column" name="nbr_column" value="{NBR_COLUMN}" class="text" /></label></dd>
-					</dl>
-					<dl>
 						<dt><label for="pagination_arch">* {L_NBR_ARCH_P}</label></dt>
 						<dd><label><input type="text" maxlength="6" size="6" name="pagination_arch" id="pagination_arch" value="{PAGINATION_ARCH}" class="text" /></label></dd>
+					</dl>
+					<dl>
+						<dt><label for="nbr_column">* {L_NBR_COLUMN_MAX}</label></dt>
+						<dd><label><input type="text" size="3" maxlength="3" id="nbr_column" name="nbr_column" value="{NBR_COLUMN}" class="text" /></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="activ_pagin">{L_ACTIV_PAGINATION}</label></dt>
