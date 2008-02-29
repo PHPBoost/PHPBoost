@@ -86,6 +86,7 @@ if( $num_subcats > 0 )
 	$i = 1;
 	foreach( $FAQ_CATS as $id => $value )
 	{
+		//List of children categories
 		if( $id != 0 && $value['visible'] == 1 && $value['id_parent'] == $id_faq && (empty($value['auth']) || $Member->Check_auth($value['auth'], AUTH_READ)) )
 		{
 			$Template->Assign_block_vars('list_cats', array(

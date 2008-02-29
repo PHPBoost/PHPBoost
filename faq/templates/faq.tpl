@@ -95,12 +95,12 @@
 					</ol>			
 					<hr style="margin:20px 0;" />			
 					# START questions_block.contents #
-						<div class="row1">
+						<div class="row1" id="q{questions_block.contents.ID}">
 							<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
 							{questions_block.contents.QUESTION}
 						</div>
 						<br />
-						<div class="blockquote" id="q{questions_block.contents.ID}" style="margin-bottom:30px;">
+						<div class="blockquote" style="margin-bottom:30px;">
 							{questions_block.contents.ANSWER}
 						</div>	
 					# END questions_block.contents #		
