@@ -19,9 +19,11 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				{TITLE}
+				# IF C_ADMIN #
 				<a href="{U_ADMIN_CAT}">
 					<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
 				</a>
+				# END IF #
 			</div>
 			<div class="module_contents">
 			
