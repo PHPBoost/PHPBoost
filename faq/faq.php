@@ -79,29 +79,28 @@ foreach( $FAQ_CATS as $id => $value )
 //listing of subcategories
 if( $num_subcats > 0 )
 {	
-	$Template->Assign_block_vars('cats', array());	
+	$Template->Assign_vars(array(
+		'C_FAQ_CATS' => true
+	));	
 	
 	$i = 1;
 	foreach( $FAQ_CATS as $id => $value )
 	{
 		if( $id != 0 && $value['visible'] == 1 && $value['id_parent'] == $id_faq && (empty($value['auth']) || $Member->Check_auth($value['auth'], AUTH_READ)) )
 		{
-			//If we have a new row
-			if ( $i % $FAQ_CONFIG['num_cols'] == 1 )
-				$Template->Assign_block_vars('cats.row', array());
-			
-			$Template->Assign_block_vars('cats.row.col', array(
+			$Template->Assign_block_vars('list_cats', array(
 				'ID' => $id,
 				'NAME' => $value['name'],
 				'U_CAT' => transid('faq.php?id=' . $id, 'faq-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
 				'U_ADMIN_CAT' => transid('admin_faq_cats.php?edit=' . $id),
-				'WIDTH' => floor(100 / (float)$FAQ_CONFIG['num_cols'])
+				'WIDTH' => floor(100 / (float)$FAQ_CONFIG['num_cols']),
+				'SRC' => $value['image'],
+				'IMG_NAME' => addslashes($value['name'])
 			));
 			
 			if( !empty($value['image']) )
-				$Template->Assign_block_vars('cats.row.col.image', array(
-					'SRC' => $value['image'],
-					'NAME' => addslashes($value['name'])
+				$Template->Assign_vars(array(
+					'C_CAT_IMG' => true
 				));
 				
 			$i++;

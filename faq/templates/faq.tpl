@@ -29,32 +29,27 @@
 			
 				# START description #
 					{description.DESCRIPTION}
-					<hr style="margin:20px 0;" />
+					<hr style="margin:25px 0px;" />
 				# END description #
 				
-				# START cats #
-					<table style="width:100%;">
-					# START cats.row #
-						<tr>
-							# START cats.row.col #
-								<td style="width:{cats.row.col.WIDTH}%;text-align:center;padding-bottom:40px;">
-									# START cats.row.col.image #
-										<a href="{cats.row.col.U_CAT}" title="{cats.row.col.image.NAME}"><img src="{cats.row.col.image.SRC}" alt="{cats.row.col.image.NAME}" /></a>
-										<br />
-									# END cats.row.col.image #
-									<a href="{cats.row.col.U_CAT}">{cats.row.col.NAME}</a>
-									# IF C_ADMIN #
-									<a href="{cats.row.col.U_ADMIN_CAT}">
-										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
-									</a>
-									# ENDIF #
-								</td>
-							# END cats.row.col #
-						</tr>
-					# END cats.row #
-					</table>
-					<hr style="margin:20px 0;" />
-				# END cats #		
+				# IF C_FAQ_CATS #
+					# START list_cats #
+						<div style="float:left;width:{list_cats.WIDTH}%;text-align:center;margin-bottom:30px;">
+							# IF C_CAT_IMG #
+								<a href="{list_cats.U_CAT}" title="{list_cats.IMG_NAME}"><img src="{list_cats.SRC}" alt="{list_cats.IMG_NAME}" /></a>
+								<br />
+							# ENDIF #
+							<a href="{list_cats.U_CAT}">{list_cats.NAME}</a>
+							# IF C_ADMIN #
+							<a href="{list_cats.U_ADMIN_CAT}">
+								<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+							</a>
+							# ENDIF #
+						</div>
+					# END list_cats #
+					<div class="spacer">&nbsp;</div>
+					<hr style="margin-bottom:25px;" />
+				# ENDIF #		
 				
 				# START management #
 					<div style="text-align:center; margin:10px;">
