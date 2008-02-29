@@ -44,6 +44,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
 	$contents = !empty($_POST['desc']) ? securit($_POST['desc']) : '';
 	$icon = !empty($_POST['icon']) ? securit($_POST['icon']) : '';
+	$icon_path = !empty($_POST['icon_path']) ? securit($_POST['icon_path']) : '';
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 1;  
 	$auth_read = isset($_POST['groups_authr']) ? $_POST['groups_authr'] : ''; 
 
@@ -52,6 +53,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 	
 	if( !empty($name) )
 	{
+		$icon = !empty($icon) ? $icon : $icon_path;
 		$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET name = '" . $name . "', contents = '"  . $contents . "', aprob = '" . $aprob . "', icon = '" . $icon . "', auth = '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 		//Empêche le déplacement dans une catégorie fille.
