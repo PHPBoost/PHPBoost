@@ -110,17 +110,22 @@ if( $num_subcats > 0 )
 }
 
 //Displaying the questions that this cat contains
-$result = $Sql->Query_while("SELECT id, question, answer
+$result = $Sql->Query_while("SELECT id, question, q_order, answer
 FROM ".PREFIX."faq
 WHERE idcat = '" . $id_faq . "'
 ORDER BY q_order",
 __LINE__, __FILE__);
 
-if( $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__) > 0 )
+if( ($num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__)) > 0 )
 {
 	//Display mode : if this category has a particular display mode we use it, else we use default display mode. If the category is the root we use default mode.
 	$faq_display_block = $FAQ_CATS[$id_faq]['display_mode'] > 0 ? ($FAQ_CATS[$id_faq]['display_mode'] == 2 ? true : false ) : $FAQ_CONFIG['display_block'];
-
+	
+	//Displaying administration tools
+	$Template->Assign_vars(array(
+		'C_ADMIN_TOOLS' => $auth_write
+	));
+	
 	if( !$faq_display_block )
 		$Template->Assign_block_vars('questions', array());
 	else
@@ -129,13 +134,23 @@ if( $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE i
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( !$faq_display_block )
+		{
 			$Template->Assign_block_vars('questions.faq', array(
 				'ID_QUESTION' => $row['id'],
 				'QUESTION' => $row['question'],
 				'DISPLAY_ANSWER' => $row['id'] != $id_question ? 'display:none' : 'display:block', //If user has disabled javascript $id_question corresponds to the answer he wants to read
 				'ANSWER' => $row['answer'],
-				'U_QUESTION' => transid('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id'])
+				'U_QUESTION' => transid('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']),
+				'U_DEL' => 'action.php?del=' . $row['id'],
+				'U_DOWN' => 'action.php?down=' . $row['id'],
+				'U_UP' => 'action.php?up=' . $row['id'],
+				'U_EDIT' => 'management.php?edit=' . $row['id'],
 			));
+			if( $row['q_order'] > 1 )
+				$Template->Assign_block_vars('questions.faq.up', array());
+			if( $row['q_order'] < $num_rows )
+				$Template->Assign_block_vars('questions.faq.down', array());
+		}
 		else
 		{
 			$Template->Assign_block_vars('questions_block.header', array(
@@ -145,8 +160,16 @@ if( $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE i
 			$Template->Assign_block_vars('questions_block.contents', array(
 				'ANSWER' => $row['answer'],
 				'QUESTION' => $row['question'],
-				'ID' => $row['id']
+				'ID' => $row['id'],
+				'U_DEL' => 'action.php?del=' . $row['id'],
+				'U_DOWN' => 'action.php?down=' . $row['id'],
+				'U_UP' => 'action.php?up=' . $row['id'],
+				'U_EDIT' => 'management.php?edit=' . $row['id'],
 			));
+			if( $row['q_order'] > 1 )
+				$Template->Assign_block_vars('questions_block.contents.up', array());
+			if( $row['q_order'] < $num_rows )
+				$Template->Assign_block_vars('questions_block.contents.down', array());
 		}
 	}
 }
@@ -158,6 +181,10 @@ else
 $Template->Assign_vars(array(
 	'L_NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
 	'L_CAT_MANAGEMENT' => $FAQ_LANG['category_manage'],
+	'L_EDIT' => $FAQ_LANG['update'],
+	'L_DELETE' => $FAQ_LANG['delete'],
+	'L_UP' => $FAQ_LANG['up'],
+	'L_DOWN' => $FAQ_LANG['down'],
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
 	'C_ADMIN' => $Member->Check_level(ADMIN_LEVEL),

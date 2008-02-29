@@ -149,6 +149,7 @@ else
 		'L_INSERT_QUESTION_BEFORE' => $FAQ_LANG['insert_question_begening'],
 		'L_EDIT' => $FAQ_LANG['update'],
 		'L_DELETE' => $FAQ_LANG['delete'],
+		'L_UP' => $FAQ_LANG['up'],
 		'L_DOWN' => $FAQ_LANG['down'],
 		'L_CONFIRM_DELETE' => addslashes($FAQ_LANG['confirm_delete']),
 		'L_GO_BACK_TO_CAT' => $FAQ_LANG['go_back_to_cat'],
@@ -232,7 +233,6 @@ else
 $Template->Assign_vars(array(
 	'THEME' => $CONFIG['theme'],
 	'MODULE_DATA_PATH' => $Template->Module_data_path('faq'),
-	'L_UP' => $FAQ_LANG['up'],
 	'L_SUBMIT' => $edit_question > 0 ? $LANG['update'] : $LANG['submit'],
 	'L_PREVIEW' => $LANG['preview'],
 	'L_RESET' => $LANG['reset'],
