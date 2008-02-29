@@ -32,7 +32,7 @@ $Speed_bar->Add_link($LANG['title_pm'], transid('pm.php'));
 require_once('../includes/header.php'); 
 
 //Interdit aux non membres.
-if( !$Member->Check_level(0) )
+if( !$Member->Check_level(MEMBER_LEVEL) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 include_once('../includes/pm.class.php');
@@ -52,7 +52,7 @@ if( !empty($_GET['read']) )
 {
 	$nbr_pm = $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id'));
 	$limit_group = $Member->Check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
-	$unlimited_pm = $Member->Check_level(1) || ($limit_group === -1);	
+	$unlimited_pm = $Member->Check_level(MODO_LEVEL) || ($limit_group === -1);	
 
 	$nbr_waiting_pm = 0;
 	if( !$unlimited_pm && $nbr_pm > $limit_group )
@@ -87,7 +87,7 @@ if( !empty($_POST['convers']) && empty($pm_edit) && empty($pm_del) ) //Envoi de 
 	
 	$limit_group = $Member->Check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
 	//Vérification de la boite de l'expéditeur.
-	if( $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id')) >= $limit_group && (!$Member->Check_level(1) && !($limit_group === -1)) )
+	if( $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id')) >= $limit_group && (!$Member->Check_level(MODO_LEVEL) && !($limit_group === -1)) )
 	{
 		//Boîte de l'expéditeur pleine.
 		redirect(HOST . DIR . '/member/pm' . transid('.php?post=1&error=e_pm_full_post', '', '&') . '#errorh');
@@ -145,7 +145,7 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $Member->Get_attribute('
 	
 	$limit_group = $Member->Check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
 	$nbr_pm = $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id'));
-	if( !$Member->Check_level(1) && !($limit_group === -1) && $nbr_pm >= $limit_group ) 
+	if( !$Member->Check_level(MODO_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group ) 
 		$Errorh->Error_handler($LANG['e_pm_full_post'], E_USER_WARNING);
 	else
 	{
@@ -766,7 +766,7 @@ else //Liste des conversation, dans la boite du membre.
 	$pagination_msg = 25;
 	
 	$limit_group = $Member->Check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
-	$unlimited_pm = $Member->Check_level(1) || ($limit_group === -1);	
+	$unlimited_pm = $Member->Check_level(MODO_LEVEL) || ($limit_group === -1);	
 	$pm_max = $unlimited_pm ? $LANG['illimited'] : $limit_group;
 	
 	$Template->Assign_block_vars('convers', array(

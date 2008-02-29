@@ -43,7 +43,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 	//MAJ du compteur.
 	$Sql->Query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
-	if( $Member->Check_level(2) )
+	if( $Member->Check_level(ADMIN_LEVEL) )
 	{
 		$java = '<script type="text/javascript">
 		<!--
@@ -118,7 +118,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 			'L_NOTE' => $LANG['note']
 		));
 				
-		if( $Member->Check_level(0) ) //Utilisateur connecté.
+		if( $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
 		{
 			if( !empty($_POST['valid_note']) )
 			{
@@ -230,7 +230,7 @@ else
 	$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 	$column_width_cats = floor(100/$nbr_column_cats);
 	
-	$is_admin = $Member->Check_level(2) ? true : false;	
+	$is_admin = $Member->Check_level(ADMIN_LEVEL) ? true : false;	
 	$Template->Assign_vars(array(
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
 		'ADD_ARTICLES' => $is_admin ? '<a href="admin_articles_add.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',

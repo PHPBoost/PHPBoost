@@ -113,7 +113,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$row['user_id'] = (int)$row['user_id'];		
-		if( $Member->Check_level(1) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
+		if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 			$del = '<script type="text/javascript"><!-- 
 			document.write(\'<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a>\'); 
 			--></script><noscript><a href="../shoutbox/shoutbox' . transid('.php?del=true&amp;id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a></noscript>';

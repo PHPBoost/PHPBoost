@@ -176,13 +176,13 @@ elseif( !empty($idt_get) )
 	else
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( !empty($track) && $Member->Check_level(0) ) //Ajout du sujet aux sujets suivis.
+elseif( !empty($track) && $Member->Check_level(MEMBER_LEVEL) ) //Ajout du sujet aux sujets suivis.
 {
 	$Forumfct->Track_topic($track); //Ajout du sujet aux sujets suivis.
 	
 	redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $track, '-' . $track . '.php', '&') . '#go_bottom');
 }
-elseif( !empty($untrack) && $Member->Check_level(0) ) //Retrait du sujet, aux sujets suivis.
+elseif( !empty($untrack) && $Member->Check_level(MEMBER_LEVEL) ) //Retrait du sujet, aux sujets suivis.
 {
 	$Forumfct->Untrack_topic($untrack); //Retrait du sujet aux sujets suivis.
 	
@@ -190,7 +190,7 @@ elseif( !empty($untrack) && $Member->Check_level(0) ) //Retrait du sujet, aux su
 }
 elseif( $read ) //Marquer comme lu.
 {
-	if( !$Member->Check_level(0) ) //Réservé aux membres.
+	if( !$Member->Check_level(MEMBER_LEVEL) ) //Réservé aux membres.
 	{
 		header('location: ' . HOST . DIR . '/member/error.php'); 
 		exit;

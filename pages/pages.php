@@ -257,7 +257,7 @@ else
 		$LANG['pages_redirections'] => transid('action.php'),
 		$LANG['pages_explorer'] => transid('explorer.php')
 	);
-	if( $Member->Check_level(2) )
+	if( $Member->Check_level(ADMIN_LEVEL) )
 		$tools[$LANG['pages_config']] = transid('admin_pages.php');
 	
 	foreach($tools as $tool => $url )

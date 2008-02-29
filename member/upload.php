@@ -72,7 +72,7 @@ else //Affichage de l'interface de gestion.
 	$popup_noamp = '';
 }
 
-if( !$Member->Check_level(0) ) //Visiteurs interdits!
+if( !$Member->Check_level(MEMBER_LEVEL) ) //Visiteurs interdits!
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 //Chargement de la configuration.
@@ -104,7 +104,7 @@ if( isset($_GET['fup']) ) //Changement de dossier
 		redirect(HOST . DIR . transid('/member/upload.php?f=0&' . $popup_noamp, '', '&'));
 	
 	$info_folder = $Sql->Query_array("upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
-	if( $info_folder['id_parent'] != 0 || $Member->Check_level(2) )
+	if( $info_folder['id_parent'] != 0 || $Member->Check_level(ADMIN_LEVEL) )
 	{
 		if( $parent_folder['user_id'] == -1 )
 			redirect(HOST . DIR . transid('/member/upload.php?showm=1', '', '&'));
@@ -122,7 +122,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	$error = '';
 	//Autorisation d'upload aux groupes.
 	$group_limit = $Member->Check_max_value(DATA_GROUP_LIMIT, $CONFIG_FILES['size_limit']);
-	$unlimited_data = ($group_limit === -1) || $Member->Check_level(2);
+	$unlimited_data = ($group_limit === -1) || $Member->Check_level(ADMIN_LEVEL);
 	
 	$member_memory_used = $Files->Member_memory_used($Member->Get_attribute('user_id'));
 	if( $member_memory_used >= $group_limit && !$unlimited_data )
@@ -163,7 +163,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 }
 elseif( !empty($del_folder) ) //Supprime un dossier.
 {
-	if( $Member->Check_level(2) )
+	if( $Member->Check_level(ADMIN_LEVEL) )
 		$Files->Del_folder($del_folder);
 	else
 	{
@@ -177,7 +177,7 @@ elseif( !empty($del_folder) ) //Supprime un dossier.
 	
 	redirect(HOST . DIR . transid('/member/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
 }
-elseif( !empty($empty_folder) && $Member->Check_level(2) ) //Vide un dossier membre.
+elseif( !empty($empty_folder) && $Member->Check_level(ADMIN_LEVEL) ) //Vide un dossier membre.
 {
 	//Suppression de tout les dossiers enfants.
 	$Files->Del_folder($empty_folder, EMPTY_FOLDER);
@@ -186,7 +186,7 @@ elseif( !empty($empty_folder) && $Member->Check_level(2) ) //Vide un dossier mem
 }
 elseif( !empty($del_file) ) //Suppression d'un fichier
 {
-	if( $Member->Check_level(2) )
+	if( $Member->Check_level(ADMIN_LEVEL) )
 		$Files->Del_file($del_file, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);
 	else
 	{
@@ -331,7 +331,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 }
 else
 {	
-	$is_admin = $Member->Check_level(2);
+	$is_admin = $Member->Check_level(ADMIN_LEVEL);
 	
 	$Template->Set_filenames(array(
 		'upload' => '../templates/' . $CONFIG['theme'] . '/upload.tpl'
@@ -470,7 +470,7 @@ else
 	
 	//Autorisation d'uploader sans limite aux groupes.
 	$group_limit = $Member->Check_max_value(DATA_GROUP_LIMIT, $CONFIG_FILES['size_limit']);
-	$unlimited_data = ($group_limit === -1) || $Member->Check_level(2);
+	$unlimited_data = ($group_limit === -1) || $Member->Check_level(ADMIN_LEVEL);
 	
 	$total_size = !empty($folder) ? $Files->Member_memory_used($Member->Get_attribute('user_id')) : $Sql->Query("SELECT SUM(size) FROM ".PREFIX."upload WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 	$Template->Assign_vars(array(

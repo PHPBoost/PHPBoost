@@ -101,7 +101,7 @@ if( !empty($_POST['connect']) && !empty($login) && !empty($password) )
 	redirect(HOST . SCRIPT);
 }
 
-if( !$Member->Check_level(2) )
+if( !$Member->Check_level(ADMIN_LEVEL) )
 {
 	$Template->Set_filenames(array(
 		'formulaire' => '../templates/' . $CONFIG['theme'] . '/admin/formulaire.tpl'

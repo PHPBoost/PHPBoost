@@ -32,7 +32,7 @@ require_once('../includes/header_no_display.php');
 include_once('../download/download_begin.php');
 
 //Notation des images.
-if( !empty($_GET['note_pics']) && $Member->Check_level(0) ) //Utilisateur connecté.
+if( !empty($_GET['note_pics']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
 {	
 	$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
 	$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;

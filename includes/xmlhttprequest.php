@@ -190,7 +190,7 @@ elseif( !empty($_GET['new_folder']) ) //Ajout d'un dossier dans la gestion des f
 
 	if( $Member->Get_attribute('user_id') != $user_id )
 	{	
-		if( $Member->Check_level(2) )
+		if( $Member->Check_level(ADMIN_LEVEL) )
 			echo $Files->Add_folder($id_parent, $user_id, $name);
 		else
 			echo $Files->Add_folder($id_parent, $Member->Get_attribute('user_id'), $name);		
@@ -213,7 +213,7 @@ elseif( !empty($_GET['rename_folder']) ) //Renomme un dossier dans la gestion de
 	{
 		if( $Member->Get_attribute('user_id') != $user_id )
 		{	
-			if( $Member->Check_level(2) )
+			if( $Member->Check_level(ADMIN_LEVEL) )
 				echo $Files->Rename_folder($id_folder, $name, $previous_name, $user_id, ADMIN_NO_CHECK);
 			else
 				echo $Files->Rename_folder($id_folder, $name, $previous_name, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);
@@ -239,7 +239,7 @@ elseif( !empty($_GET['rename_file']) ) //Renomme un fichier d'un dossier dans la
 	{		
 		if( $Member->Get_attribute('user_id') != $user_id )
 		{	
-			if( $Member->Check_level(2) )
+			if( $Member->Check_level(ADMIN_LEVEL) )
 				echo $Files->Rename_file($id_file, $name, $previous_name, $user_id, ADMIN_NO_CHECK);
 			else
 				echo $Files->Rename_file($id_file, $name, $previous_name, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);

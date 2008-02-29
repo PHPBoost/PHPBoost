@@ -129,7 +129,7 @@ elseif( !empty($_GET['del']) ) //Suppression d'un message.
 	else
 		echo '-1';	
 }
-elseif( !empty($track) && $Member->Check_level(0) ) //Ajout du sujet aux sujets suivis.
+elseif( !empty($track) && $Member->Check_level(MEMBER_LEVEL) ) //Ajout du sujet aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
@@ -138,7 +138,7 @@ elseif( !empty($track) && $Member->Check_level(0) ) //Ajout du sujet aux sujets 
 	$Forumfct->Track_topic($track); //Ajout du sujet aux sujets suivis.
 	echo 1;
 }
-elseif( !empty($untrack) && $Member->Check_level(0) ) //Retrait du sujet, aux sujets suivis.
+elseif( !empty($untrack) && $Member->Check_level(MEMBER_LEVEL) ) //Retrait du sujet, aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');

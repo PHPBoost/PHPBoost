@@ -33,7 +33,7 @@ if( !defined('TITLE') )
 $Session->Session_check(TITLE); //Vérification de la session.
 
 //Gestion de la maintenance du site.
-if( $CONFIG['maintain'] > time() && !$Member->Check_level(2) )
+if( $CONFIG['maintain'] > time() && !$Member->Check_level(ADMIN_LEVEL) )
 {	
 	if( SCRIPT !== (DIR . '/member/maintain.php') )
 		redirect(HOST . DIR . '/includes/maintain.php');

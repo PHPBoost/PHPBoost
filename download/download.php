@@ -40,7 +40,7 @@ if( !empty($idurl) && !empty($CAT_DOWNLOAD[$idcat]['name']) && !empty($idcat) ) 
 	if( empty($download['id']) )
 		$Errorh->Error_handler('e_unexist_file_download', E_USER_REDIRECT); 
 	
-	if( $Member->Check_level(2) )
+	if( $Member->Check_level(ADMIN_LEVEL) )
 	{
 		$java = '<script type="text/javascript">
 		<!--
@@ -141,7 +141,7 @@ if( !empty($idurl) && !empty($CAT_DOWNLOAD[$idcat]['name']) && !empty($idcat) ) 
 			'L_NOTE' => $LANG['note']
 		));
 				
-		if( $Member->Check_level(0) ) //Utilisateur connecté.
+		if( $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
 		{
 			if( !empty($_POST['valid_note']) )
 			{
@@ -328,7 +328,7 @@ else
 	WHERE d.visible = 1 AND dc.aprob = 1 AND dc.secure <= '" . $Member->Get_attribute('level') . "'", __LINE__, __FILE__);
 	$total_cat = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."download_cat WHERE aprob = 1 AND secure <= '" . $Member->Get_attribute('level') . "'", __LINE__, __FILE__);
 	
-	if( $Member->Check_level(2) )
+	if( $Member->Check_level(ADMIN_LEVEL) )
 		$edit = '&nbsp;&nbsp;<a href="admin_download_cat.php' .  SID . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
 	else
 		$edit = '';

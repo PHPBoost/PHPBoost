@@ -81,7 +81,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 	$row = $Sql->Query_array('shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
-	if( $Member->Check_level(1) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
+	if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 	{
 		if( $del )
 		{
@@ -247,7 +247,7 @@ else //Affichage.
 		$del = '';
 		
 		$is_guest = ($row['user_id'] === -1);
-		$is_modo = $Member->Check_level(1);
+		$is_modo = $Member->Check_level(MODO_LEVEL);
 		$warning = '';
 		$readonly = '';
 		if( $is_modo && !$is_guest ) //Modération.

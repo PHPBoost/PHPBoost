@@ -33,7 +33,7 @@ $activ_confirm = !empty($_GET['activate']) ? securit($_GET['activate']) : '';
 $activ_get = !empty($_GET['activ']) ? securit($_GET['activ']) : '';
 $user_get = !empty($_GET['u']) ? numeric($_GET['u']) : '';
 
-if( !$Member->Check_level(0) )
+if( !$Member->Check_level(MEMBER_LEVEL) )
 {
 	if( empty($activ_confirm) )
 	{	

@@ -48,13 +48,13 @@ $Template->Set_filenames(array(
 	'moderation_panel_mini' => '../templates/' . $CONFIG['theme'] . '/moderation_panel_mini.tpl'
 ));
 
-if( $Member->Check_level(1) || $check_auth_by_group )
+if( $Member->Check_level(MODO_LEVEL) || $check_auth_by_group )
 {
 	$nbr_alerts = 0;
 	
-	/*if( $Member->Check_level(2) )
+	/*if( $Member->Check_level(ADMIN_LEVEL) )
 		$nbr_alerts = $nbr_alerts_for_admins;
-	elseif( $Member->Check_level(2) )
+	elseif( $Member->Check_level(ADMIN_LEVEL) )
 		$nbr_alerts = $nbr_alerts_for_modos;
 	elseif( isset($nbr_alerts_for_groups[$Member->Get_attribute('user_groups')]) )
 		$nbr_alerts = $nbr_alerts_for_groups[$Member->Get_attribute('user_groups')];
