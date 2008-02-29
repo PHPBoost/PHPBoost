@@ -52,9 +52,6 @@
 							{L_APROB}
 						</th>
 						<th>
-							{L_ARCHIVE}
-						</th>
-						<th>
 							{L_UPDATE}
 						</th>
 						<th>
@@ -80,9 +77,6 @@
 							{list.news.APROBATION} 
 							<br />
 							<span class="text_small">{list.news.VISIBLE}</span>
-						</td>
-						<td class="row2">
-							{list.news.ARCHIVE} 
 						</td>
 						<td class="row2"> 
 							<a href="admin_news.php?id={list.news.IDNEWS}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>

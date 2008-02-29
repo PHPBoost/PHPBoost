@@ -38,7 +38,6 @@ if( !empty($_POST['valid']) )
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 	$extend_contents = !empty($_POST['extend_contents']) ? parse($_POST['extend_contents']) : '';
 	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$archive = !empty($_POST['archive']) ? numeric($_POST['archive']) : 0;	
 	$img = !empty($_POST['img']) ? securit($_POST['img']) : '';
 	$alt = !empty($_POST['alt']) ? securit($_POST['alt']) : '';
 	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
@@ -85,8 +84,8 @@ if( !empty($_POST['valid']) )
 		else //Ajout des heures et minutes
 			$timestamp = time();
 		
-		$Sql->Query_inject("INSERT INTO ".PREFIX."news (idcat,title,contents,extend_contents,archive,timestamp,visible,start,end,user_id,img,alt,nbr_com) 
-		VALUES('" . $idcat . "', '" . $title . "', '" . parse($contents) . "', '" . $extend_contents . "', '" . $archive . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."news (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com) 
+		VALUES('" . $idcat . "', '" . $title . "', '" . parse($contents) . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
 		
 		//Regénération du flux rss.
 		include_once('../includes/rss.class.php'); //Flux rss regénéré!
@@ -223,7 +222,6 @@ elseif( !empty($_POST['previs']) )
 		'L_TITLE' => $LANG['title'],
 		'L_NEWS_DATE' => $LANG['news_date'],
 		'L_AT' => $LANG['at'],
-		'L_NEWS_ARCHIVE' => $LANG['news_archive'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_TEXT' => $LANG['contents'],
@@ -284,7 +282,6 @@ else
 		'L_RELEASE_DATE' => $LANG['release_date'],
 		'L_NEWS_DATE' => $LANG['news_date'],
 		'L_AT' => $LANG['at'],
-		'L_NEWS_ARCHIVE' => $LANG['news_archive'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_UNTIL' => $LANG['until'],

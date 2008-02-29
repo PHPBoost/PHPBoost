@@ -61,7 +61,6 @@ $LANG['extended_news'] = 'Extended news';
 $LANG['icon_cat'] = 'Category icon';
 $LANG['news_date'] = 'News date';
 $LANG['news_date_explain'] = '(dd/mm/yy) Leave empty to set today date';
-$LANG['news_archive'] = 'News archivé';
 $LANG['nbr_news_column'] = 'Column number to display news';
 $LANG['no_img'] = 'No image';
 
@@ -83,6 +82,8 @@ $LANG['add_news'] = 'Add a News';
 $LANG['last_news'] = 'Last news';
 $LANG['extend_contents'] = 'Read the rest...';
 $LANG['no_news_available'] = 'No news currently available';
+$LANG['archive'] = 'Archives';
+$LANG['display_archive'] = 'Display archives';
 
 //Add news.
 $MAIL['new_news_website'] = 'New news on your website';
