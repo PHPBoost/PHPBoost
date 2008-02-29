@@ -46,7 +46,7 @@ require_once('../includes/header.php');
 if( empty($alert) && empty($alert_post) || empty($topic['idcat']) ) 
 	redirect(HOST . DIR . '/forum/index' . transid('.php'));  
 
-if( !$Member->Check_level(0) ) //Si c'est un invité
+if( !$Member->Check_level(MEMBER_LEVEL) ) //Si c'est un invité
     $Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 $Template->Set_filenames(array(

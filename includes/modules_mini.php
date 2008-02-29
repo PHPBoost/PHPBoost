@@ -49,7 +49,7 @@ if( @!include('../cache/modules_mini.php') )
 		foreach($modules_mini[$location] as $location_key => $info)
 		{
 			if( $info['added'] == '0' )
-				$code .= 'if( $Member->Get_attribute(\'level\') >= ' . $info['secure'] . ' ){' . $info['code'] . '}' . "\n";
+				$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . $info['code'] . '}' . "\n";
 			else
 			{
 				if( $info['use_tpl'] == '0' )
@@ -60,13 +60,13 @@ if( @!include('../cache/modules_mini.php') )
 					{
 						case 'left':
 						case 'right':
-						$code .= 'if( $Member->Get_attribute(\'level\') >= ' . $info['secure'] . ' ){' . 
+						$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . 
 						"\$Template->Set_filenames(array('modules_mini' => '../templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\$Template->Pparse('modules_mini');" . '}' . "\n";
 						break;
 						case 'subheader':
 						case 'topcentral':
 						case 'bottomcentral':
-						$code .= 'if( $Member->Get_attribute(\'level\') >= ' . $info['secure'] . ' ){' . 
+						$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . 
 						"\$Template->Set_filenames(array('modules_mini_horizontal' => '../templates/' . \$CONFIG['theme'] . '/modules_mini_horizontal.tpl'));\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\$Template->Pparse('modules_mini_horizontal');" . '}' . "\n";
 						break;					
 					}						

@@ -33,7 +33,7 @@ $idnews = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 $show_archive = !empty($_GET['arch']) ? true : false;
 
-$is_admin = $Member->Check_level(2);
+$is_admin = $Member->Check_level(ADMIN_LEVEL);
 if( empty($idnews) && empty($idcat) ) 
 {
 	$Template->Set_filenames(array(

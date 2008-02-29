@@ -31,7 +31,7 @@ include_once('../gallery/gallery_begin.php');
 require_once('../includes/header_no_display.php');
 
 //Notation des images.
-if( !empty($_GET['note_pics']) && $Member->Check_level(0) ) //Utilisateur connecté.
+if( !empty($_GET['note_pics']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
 {	
 	//Initialisation  de la class de gestion des fichiers.
 	include_once('../gallery/gallery.class.php');
@@ -53,7 +53,7 @@ if( !empty($_GET['note_pics']) && $Member->Check_level(0) ) //Utilisateur connec
 		echo 0;
 }
 	
-if( $Member->Check_level(1) ) //Modo
+if( $Member->Check_level(MODO_LEVEL) ) //Modo
 {	
 	if( !empty($_GET['rename_pics']) ) //Renomme une image.
 	{

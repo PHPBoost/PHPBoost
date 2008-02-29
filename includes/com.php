@@ -94,7 +94,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		if( !empty($login) && !empty($contents) && !empty($_com_script) && !empty($_com_idprov) )
 		{
 			//Status des commentaires, verrouillé/déverrouillé?
-			if( $info_sql_module['lock_com'] >= 1 && !$Member->Check_level(1) )
+			if( $info_sql_module['lock_com'] >= 1 && !$Member->Check_level(MODO_LEVEL) )
 				redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&'));
 			
 			//Autorisation de poster des commentaires? 
@@ -143,7 +143,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 
 		if( !empty($_com_idprov) && !empty($_com_idcom) )
 		{
-			if( $Member->Check_level(1) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
+			if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 			{	
 				if( $del )
 				{
@@ -241,7 +241,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 	}
 	elseif( isset($_GET['lock']) && !empty($_com_script) && !empty($_com_idprov) ) //Verrouillage des commentaires.
 	{
-		if( $Member->Check_level(1) )
+		if( $Member->Check_level(MODO_LEVEL) )
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET lock_com = '" . numeric($_GET['lock']) . "' WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
 			
@@ -272,7 +272,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		));
 		
 		//Affichage du lien de verrouillage/déverrouillage.
-		if( $Member->Check_level(1) )
+		if( $Member->Check_level(MODO_LEVEL) )
 		{
 			$Template->Assign_vars(array(
 				'COM_LOCK' => true,
@@ -310,7 +310,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 			$Errorh->Error_handler($errstr, E_USER_NOTICE);
 		
 		//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
-		if( empty($info_sql_module['lock_com']) || $Member->Check_level(1) )
+		if( empty($info_sql_module['lock_com']) || $Member->Check_level(MODO_LEVEL) )
 		{	
 			if( $Member->Check_level($CONFIG_COM['com_auth']) )
 				$Template->Assign_vars(array(
@@ -391,7 +391,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 			$del = '';
 			
 			$is_guest = ($row['user_id'] === -1);
-			$is_modo = $Member->Check_level(1);
+			$is_modo = $Member->Check_level(MODO_LEVEL);
 			$warning = '';
 			$readonly = '';
 			if( $is_modo && !$is_guest ) //Modération.

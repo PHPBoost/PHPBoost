@@ -100,7 +100,7 @@ elseif( $refresh )
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$row['user_id'] = (int)$row['user_id'];		
-		if( $Member->Check_level(1) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
+		if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 			$del = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a>';
 		else
 			$del = '';
@@ -120,7 +120,7 @@ elseif( $del )
 	if( !empty($shout_id) )
 	{
 		$user_id = (int)$Sql->Query("SELECT user_id FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
-		if( $Member->Check_level(1) || ($user_id === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
+		if( $Member->Check_level(MODO_LEVEL) || ($user_id === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 		{
 			$Sql->Query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			echo 1;

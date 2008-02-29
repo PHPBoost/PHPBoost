@@ -129,7 +129,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 		$add_event = '';
 	
 	$Template->Assign_vars(array(
-		'ADMIN_CALENDAR' => ($Member->Check_level(2)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
+		'ADMIN_CALENDAR' => ($Member->Check_level(ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
 		'ADD' => $add_event,
 		'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
 		'U_PREVIOUS' => ($month == 1) ? transid('.php?d=' . $day . '&amp;m=12&amp;y=' . ($year - 1), '-' . $day . '-12-' . ($year - 1) . '.php') :  transid('.php?d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year, '-1-' . ($month - 1) . '-' . $year . '.php'),
@@ -221,7 +221,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 		GROUP BY cl.id", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			if( $Member->Check_level(2) )
+			if( $Member->Check_level(ADMIN_LEVEL) )
 			{
 				$edit = '&nbsp;&nbsp;<a href="calendar' . transid('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" /></a>';
 				$del = '&nbsp;&nbsp;<a href="calendar' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm_del();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" /></a>';
@@ -297,7 +297,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 }
 elseif( !empty($id) )
 {
-	if( !$Member->Check_level(2) ) //Admins seulement autorisés à editer/supprimer!
+	if( !$Member->Check_level(ADMIN_LEVEL) ) //Admins seulement autorisés à editer/supprimer!
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	if( !empty($del) ) //Suppression simple.

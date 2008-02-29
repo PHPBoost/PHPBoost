@@ -130,7 +130,7 @@ elseif( $page_type == 'index' )
 {
 	$tools = array();
 	$tools[$LANG['wiki_history']] = array(transid('history.php'), 'history');
-	if( $Member->Check_level(2) )
+	if( $Member->Check_level(ADMIN_LEVEL) )
 		$tools[$LANG['wiki_update_index']] = array(transid('admin_wiki.php#index'), 'edit_index');
 }
 
@@ -146,7 +146,7 @@ $other_tools[$LANG['wiki_random_page']] = array(transid('property.php?random=1')
 //Recherche
 $other_tools[$LANG['wiki_search']] = array(transid('search.php'), 'search');
 //Sujets suivis (membres seulement)
-if( $Member->Check_level(0) )
+if( $Member->Check_level(MEMBER_LEVEL) )
 {
 	$other_tools[$LANG['wiki_followed_articles']] = array(transid('favorites.php'), 'followed-articles');
 	//Suivre ce sujet (articles)

@@ -29,7 +29,7 @@ require_once('../includes/begin.php');
 define('TITLE', 'Ajax forum');
 require_once('../includes/header_no_display.php');
 
-if( $Member->Check_level(2) ) //Admin
+if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 {			
 	$Cache->Load_file('forum');
 

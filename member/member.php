@@ -50,7 +50,7 @@ if( !empty($id_get) ) //Espace membre
 		'member' => '../templates/' . $CONFIG['theme'] . '/member.tpl'
 	));
 
-	if( !empty($edit_get) && $Member->Get_attribute('user_id') === $id_get && ($Member->Check_level(0)) ) //Edition du profil
+	if( !empty($edit_get) && $Member->Get_attribute('user_id') === $id_get && ($Member->Check_level(MEMBER_LEVEL)) ) //Edition du profil
 	{
 		//Update profil
 		$row = $Sql->Query_array('member', 'user_lang', 'user_theme', 'user_mail', 'user_local', 'user_web', 'user_occupation', 'user_hobbies', 'user_avatar', 'user_show_mail', 'user_editor', 'user_timezone', 'user_sex', 'user_born', 'user_sign', 'user_desc', 'user_msn', 'user_yahoo', "WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
@@ -367,7 +367,7 @@ if( !empty($id_get) ) //Espace membre
 		if( isset($LANG[$get_l_error]) )
 			$Errorh->Error_handler($LANG[$get_l_error], E_USER_WARNING);
 	}
-	elseif( !empty($_POST['valid']) && ($Member->Get_attribute('user_id') === $id_get) && ($Member->Check_level(0)) ) //Update du profil
+	elseif( !empty($_POST['valid']) && ($Member->Get_attribute('user_id') === $id_get) && ($Member->Check_level(MEMBER_LEVEL)) ) //Update du profil
 	{
 		$check_pass = !empty($_POST['pass']) ? true : false;
 		$check_pass_bis = !empty($_POST['pass_bis']) ? true : false;
@@ -602,7 +602,7 @@ if( !empty($id_get) ) //Espace membre
 		else
 			redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#errorh');
 	}	
-	elseif( !empty($view_get) && $Member->Get_attribute('user_id') === $id_get && ($Member->Check_level(0)) ) //Zone membre
+	elseif( !empty($view_get) && $Member->Get_attribute('user_id') === $id_get && ($Member->Check_level(MEMBER_LEVEL)) ) //Zone membre
 	{
 		//Info membre
 		$msg_mbr = !empty($CONFIG_MEMBER['msg_mbr']) ? $CONFIG_MEMBER['msg_mbr'] : ''; //On parse le message!
@@ -697,7 +697,7 @@ if( !empty($id_get) ) //Espace membre
 		
 		//Droit d'édition du profil, au membre en question et à l'admin uniquement	.
 		$Template->Assign_vars(array(
-			'C_MEMBER_PROFIL_EDIT' => ($Member->Get_attribute('user_id') === $id_get || $Member->Check_level(2)) ? true : false,
+			'C_MEMBER_PROFIL_EDIT' => ($Member->Get_attribute('user_id') === $id_get || $Member->Check_level(ADMIN_LEVEL)) ? true : false,
 			'C_PROFIL_MEMBER_VIEW' => true,
 			'SID' => SID,
 			'LANG' => $CONFIG['lang'],
@@ -808,7 +808,7 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 	$Template->Assign_vars(array(
 		'SID' => SID,
 		'C_GROUP_LIST' => true,
-		'ADMIN_GROUPS' => ($Member->Check_level(2)) ? '<a href="../admin/admin_groups.php?id=' . $user_group . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" class="valign_middle" /></a>' : '',
+		'ADMIN_GROUPS' => ($Member->Check_level(ADMIN_LEVEL)) ? '<a href="../admin/admin_groups.php?id=' . $user_group . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" class="valign_middle" /></a>' : '',
 		'GROUP_NAME' => $group['name'],
 		'L_BACK' => $LANG['back'],
 		'L_SELECT_GROUP' => $LANG['select_group'],

@@ -38,7 +38,7 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 	if( empty($web['id']) )
 		$Errorh->Error_handler('e_unexist_link_web', E_USER_REDIRECT);
 		
-	if( $Member->Check_level(2) )
+	if( $Member->Check_level(ADMIN_LEVEL) )
 	{
 		$java = "<script language='JavaScript' type='text/javascript'>
 		<!--
@@ -113,7 +113,7 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 			'L_NOTE' => $LANG['note']
 		));
 				
-		if( $Member->Check_level(0) ) //Utilisateur connecté.
+		if( $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
 		{
 			if( !empty($_POST['valid_note']) )
 			{
@@ -295,7 +295,7 @@ else
 	$total_cat = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."web_cat WHERE aprob = 1 AND secure <= '" . $Member->Get_attribute('level') . "'", __LINE__, __FILE__);
 	
 	$edit = '';
-	if( $Member->Check_level(2) )
+	if( $Member->Check_level(ADMIN_LEVEL) )
 		$edit = '&nbsp;&nbsp;<a href="admin_web_cat.php' .  SID . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
 
 	//On crée une pagination si le nombre de catégories est trop important.
