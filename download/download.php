@@ -328,7 +328,7 @@ else
 	WHERE d.visible = 1 AND dc.aprob = 1 AND dc.secure <= '" . $Member->Get_attribute('level') . "'", __LINE__, __FILE__);
 	$total_cat = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."download_cat WHERE aprob = 1 AND secure <= '" . $Member->Get_attribute('level') . "'", __LINE__, __FILE__);
 	
-	if( $Member->Get_attribute('level') === 2 )
+	if( $Member->Check_level(2) )
 		$edit = '&nbsp;&nbsp;<a href="admin_download_cat.php' .  SID . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
 	else
 		$edit = '';

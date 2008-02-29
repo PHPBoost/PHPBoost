@@ -92,7 +92,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Get_attribute('level') === 2) )
+		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Check_level(2)) )
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
@@ -256,7 +256,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Get_attribute('level') === 2) )
+		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Check_level(2)) )
 		{
 			if( $new_warning_level < 100 ) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
@@ -399,7 +399,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 	{
 		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', 'user_warning', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Get_attribute('level') === 2) )
+		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Check_level(2)) )
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_ban = '" . $user_ban . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);			
 			

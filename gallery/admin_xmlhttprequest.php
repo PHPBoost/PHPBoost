@@ -32,7 +32,7 @@ require_once('../includes/begin.php');
 define('TITLE', 'Ajax Galerie');
 require_once('../includes/header_no_display.php');
 
-if( $Member->Get_attribute('level') === 2 ) //Admin
+if( $Member->Check_level(2) ) //Admin
 {	
 	$Cache->Load_file('gallery');
 

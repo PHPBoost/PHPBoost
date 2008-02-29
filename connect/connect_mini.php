@@ -43,8 +43,8 @@ if( $Member->Check_level(0) ) //Connecté.
 		'THEME' => $CONFIG['theme'],
 		'U_MEMBER_ID' => transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', '-' . $Member->Get_attribute('user_id') . '.php?view=1'),
 		'U_MEMBER_MP' => $user_pm,
-		'U_ADMIN' => ($Member->Get_attribute('level') == 2) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/ranks_mini.png" alt="" style="vertical-align:middle" /> <a href="../admin/admin_index.php" class="small_link">' . $LANG['admin_panel'] . '</a></li>' : '',
-		'U_MODO' => ($Member->Get_attribute('level') >= 1) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/modo_mini.png" alt="" style="vertical-align:middle" /> <a href="../member/moderation_panel.php" class="small_link">' . $LANG['modo_panel'] . '</a></li>' : '',
+		'U_ADMIN' => $Member->Check_level(2) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/ranks_mini.png" alt="" style="vertical-align:middle" /> <a href="../admin/admin_index.php" class="small_link">' . $LANG['admin_panel'] . '</a></li>' : '',
+		'U_MODO' => $Member->Check_level(1) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/modo_mini.png" alt="" style="vertical-align:middle" /> <a href="../member/moderation_panel.php" class="small_link">' . $LANG['modo_panel'] . '</a></li>' : '',
 		'L_PROFIL' => $LANG['profil'],
 		'L_PRIVATE_PROFIL' => $LANG['connect_private_profil'],
 		'L_DISCONNECT' => $LANG['disconnect']

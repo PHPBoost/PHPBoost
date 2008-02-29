@@ -140,7 +140,7 @@ elseif( !empty($poll['id']) && empty($archives) )
 	));
 	
 	list($java, $edit, $del) = array('','','');	
-	if( $Member->Get_attribute('level') === 2 )
+	if( $Member->Check_level(2) )
 	{
 		$java = "<script type='text/javascript'>
 		<!--
@@ -289,7 +289,7 @@ elseif( empty($archives) ) //Menu principal.
 	));
 	
 	$edit = '';	
-	if( $Member->Get_attribute('level') === 2 )
+	if( $Member->Check_level(2) )
 		$edit = '<a href="../poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
 	
 	$Template->Assign_vars(array(
