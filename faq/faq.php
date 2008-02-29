@@ -78,11 +78,7 @@ foreach( $FAQ_CATS as $id => $value )
 
 //listing of subcategories
 if( $num_subcats > 0 )
-{
-	$Template->Assign_vars(array(
-		'C_ADMIN' => $Member->Check_level(2)
-	));
-	
+{	
 	$Template->Assign_block_vars('cats', array());	
 	
 	$i = 1;
@@ -164,6 +160,7 @@ $Template->Assign_vars(array(
 	'L_CAT_MANAGEMENT' => $FAQ_LANG['category_manage'],
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
+	'C_ADMIN' => $Member->Check_level(2),
 	'U_MANAGEMENT' => transid('management.php?faq=' . $id_faq),
 	'U_ADMIN_CAT' => $Member->Check_level(2) ? ( $id_faq > 0 ? transid('admin_faq_cats.php?edit=' . $id_faq) : transid('admin_faq_cats.php')) : ''
 ));
