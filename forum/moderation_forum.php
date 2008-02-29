@@ -268,7 +268,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Get_attribute('level') === 2) )
+		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Check_level(2)) )
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
@@ -436,7 +436,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Get_attribute('level') === 2) )
+		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Check_level(2)) )
 		{
 			if( $new_warning_level < 100 ) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
@@ -573,7 +573,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		include_once('../includes/bbcode.php');
 	}	
 }
-elseif( !empty($_GET['del_h']) && $Member->Get_attribute('level') === 2 ) //Suppression de l'historique.
+elseif( !empty($_GET['del_h']) && $Member->Check_level(2) ) //Suppression de l'historique.
 {
 	$Sql->Query_inject("DELETE FROM ".PREFIX."forum_history");
 	
@@ -590,7 +590,7 @@ else //Panneau de modération
 	));
 	
 	//Bouton de suppression de l'historique, visible uniquement pour l'admin.
-	if( $Member->Get_attribute('level') === 2 )
+	if( $Member->Check_level(2) )
 	{
 		$Template->Assign_vars(array(
 			'C_FORUM_ADMIN' => true

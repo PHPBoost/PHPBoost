@@ -241,7 +241,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 	}
 	elseif( isset($_GET['lock']) && !empty($_com_script) && !empty($_com_idprov) ) //Verrouillage des commentaires.
 	{
-		if( $Member->Get_attribute('level') === 2 || $Member->Check_level(1) )
+		if( $Member->Check_level(1) )
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET lock_com = '" . numeric($_GET['lock']) . "' WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
 			
@@ -272,7 +272,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		));
 		
 		//Affichage du lien de verrouillage/déverrouillage.
-		if( $Member->Get_attribute('level') === 2 || $Member->Check_level(1) )
+		if( $Member->Check_level(1) )
 		{
 			$Template->Assign_vars(array(
 				'COM_LOCK' => true,

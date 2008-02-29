@@ -53,7 +53,7 @@ if( !empty($_GET['note_pics']) && $Member->Check_level(0) ) //Utilisateur connec
 		echo 0;
 }
 	
-if( $Member->Get_attribute('level') >= 1 ) //Modo
+if( $Member->Check_level(1) ) //Modo
 {	
 	if( !empty($_GET['rename_pics']) ) //Renomme une image.
 	{

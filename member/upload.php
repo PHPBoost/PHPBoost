@@ -122,7 +122,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	$error = '';
 	//Autorisation d'upload aux groupes.
 	$group_limit = $Member->Check_max_value(DATA_GROUP_LIMIT, $CONFIG_FILES['size_limit']);
-	$unlimited_data = ($group_limit === -1) || $Member->Get_attribute('level') == 2;
+	$unlimited_data = ($group_limit === -1) || $Member->Check_level(2);
 	
 	$member_memory_used = $Files->Member_memory_used($Member->Get_attribute('user_id'));
 	if( $member_memory_used >= $group_limit && !$unlimited_data )
@@ -470,7 +470,7 @@ else
 	
 	//Autorisation d'uploader sans limite aux groupes.
 	$group_limit = $Member->Check_max_value(DATA_GROUP_LIMIT, $CONFIG_FILES['size_limit']);
-	$unlimited_data = ($group_limit === -1) || $Member->Get_attribute('level') == 2;
+	$unlimited_data = ($group_limit === -1) || $Member->Check_level(2);
 	
 	$total_size = !empty($folder) ? $Files->Member_memory_used($Member->Get_attribute('user_id')) : $Sql->Query("SELECT SUM(size) FROM ".PREFIX."upload WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 	$Template->Assign_vars(array(

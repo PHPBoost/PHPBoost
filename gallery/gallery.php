@@ -310,7 +310,7 @@ else
 	$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 	$column_width_pics = floor(100/$nbr_column_pics);
 	
-	$is_admin = ($Member->Get_attribute('level') == 2) ? true : false;
+	$is_admin = $Member->Check_level(2) ? true : false;
 	$is_modo = ($Member->Check_auth($CAT_GALLERY[$g_idcat]['auth'], EDIT_CAT_GALLERY)) ? true : false;
 	
 	$module_data_path = $Template->Module_data_path('gallery');

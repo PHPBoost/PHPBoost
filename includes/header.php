@@ -35,7 +35,7 @@ $Session->Session_check(TITLE); //Vérification de la session.
 //Gestion de la maintenance du site.
 if( $CONFIG['maintain'] > time() )
 {	
-	if( $Member->Get_attribute('level') !== 2 ) //Non admin.
+	if( !$Member->Check_level(2) ) //Non admin.
 	{
 		if( SCRIPT !== (DIR . '/includes/maintain.php') ) //Evite de créer une boucle infine.
 			redirect(HOST . DIR . '/member/maintain.php');
@@ -114,7 +114,7 @@ $Template->Assign_vars(array(
 	'SITE_KEYWORD' => $CONFIG['site_keyword'],
 	'THEME' => $CONFIG['theme'],
 	'ALTERNATIVE_CSS' => $alternative_css,
-	'C_SESSION_MEMBER_CONNECTED' => ($Member->Get_attribute('level') >= 0) ? true : false,
+	'C_SESSION_MEMBER_CONNECTED' => $Member->Check_level(0) ? true : false,
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],	
 	'L_VISIT' => $LANG['guest_s'],
 	'L_TODAY' => $LANG['today'],
