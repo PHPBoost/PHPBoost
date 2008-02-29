@@ -223,7 +223,9 @@
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
 						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
-						&nbsp;&nbsp; 
+						&nbsp;&nbsp;
+						<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" class="submit" type="button" />
+						&nbsp;&nbsp;
 						<input type="reset" value="{L_RESET}" class="reset" />
 						<input type="hidden" name="id_question" value="{edit_question.ID_QUESTION}" />
 						<input type="hidden" name="id_cat" value="{edit_question.ID_CAT}" />
