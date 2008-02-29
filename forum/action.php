@@ -191,10 +191,7 @@ elseif( !empty($untrack) && $Member->Check_level(MEMBER_LEVEL) ) //Retrait du su
 elseif( $read ) //Marquer comme lu.
 {
 	if( !$Member->Check_level(MEMBER_LEVEL) ) //Réservé aux membres.
-	{
-		header('location: ' . HOST . DIR . '/member/error.php'); 
-		exit;
-	}
+		redirect(HOST . DIR . '/member/error.php'); 
 			
 	//Calcul du temps de péremption, ou de dernière vue des messages.
 	$check_last_view_forum = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);

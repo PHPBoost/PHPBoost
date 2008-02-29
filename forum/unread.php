@@ -36,10 +36,7 @@ require_once('../includes/header.php');
 if( !empty($_POST['change_cat']) )
 	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
 if( !$Member->Check_level(MEMBER_LEVEL) ) //Réservé aux membres.
-{
-	header('location: ' . HOST . DIR . '/member/error.php'); 
-	exit;
-}
+	redirect(HOST . DIR . '/member/error.php'); 
 	
 if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
 {

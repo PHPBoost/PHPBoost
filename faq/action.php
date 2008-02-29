@@ -56,15 +56,11 @@ if( $faq_del_id > 0 )
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order > '" . $faq_infos['q_order'] . "'", __LINE__, __FILE__); //Decrementation of the order of every question which are after
 			$Sql->Query_inject("DELETE FROM ".PREFIX."faq WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__); //Deleting question
-			header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'], '', '&'));
-			exit;
+			redirect(HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'], '', '&'));
 		}
 	}
 	else
-	{
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-		exit;
-	}
 }
 elseif( $down > 0 )
 {
@@ -79,15 +75,11 @@ elseif( $down > 0 )
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] + 1) . "'", __LINE__, __FILE__);
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order + 1 WHERE id = '" . $down . "'", __LINE__, __FILE__);
-			header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . ($faq_infos['q_order'] + 1), '', '&'));
-			exit;
+			redirect(HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . ($faq_infos['q_order'] + 1), '', '&'));
 		}
 	}
 	else
-	{
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-		exit;
-	}
 }
 elseif( $up > 0 )
 {
@@ -100,15 +92,11 @@ elseif( $up > 0 )
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order + 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] - 1) . "'", __LINE__, __FILE__);
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE id = '" . $up . "'", __LINE__, __FILE__);
-			header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . ($faq_infos['q_order'] - 1), '', '&'));
-			exit;
+			redirect(HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . ($faq_infos['q_order'] - 1), '', '&'));
 		}
 	}
 	else
-	{
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-		exit;
-	}
 }
 //Updating or creating a question
 elseif( !empty($entitled) && !empty($answer) )
@@ -121,14 +109,10 @@ elseif( !empty($entitled) && !empty($answer) )
 		if( $auth_write )//If authorized user
 		{			
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET question = '" . $entitled . "', answer = '" . $answer . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
-			header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . $faq_infos['q_order'], '', '&'));
-			exit;
+			redirect(HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . $faq_infos['q_order'], '', '&'));
 		}
 		else
-		{
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-			exit;
-		}
 	}
 	else
 	{
@@ -140,14 +124,10 @@ elseif( !empty($entitled) && !empty($answer) )
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order + 1 WHERE idcat = '" . $new_id_cat . "' AND q_order > '" . $id_after . "'", __LINE__, __FILE__);
 			$Sql->Query_inject("INSERT INTO ".PREFIX."faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $new_id_cat . "', '" . ($id_after + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . $Member->Get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
 			$Cache->Generate_module_file('faq');
-			header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $new_id_cat . '#q' . ($id_after + 1), '', '&'));
-			exit;
+			redirect(HOST . DIR . transid('/faq/management.php?faq=' . $new_id_cat . '#q' . ($id_after + 1), '', '&'));
 		}
 		else
-		{
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-			exit;
-		}
 	}
 }
 elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
@@ -184,19 +164,12 @@ elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
 			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
 		}
 		$Cache->Generate_module_file('faq');
-		header('Location:' . HOST . DIR . transid('/faq/management.php?faq=' . $id_cat, '', '&'));
-		exit;
+		redirect(HOST . DIR . transid('/faq/management.php?faq=' . $id_cat, '', '&'));
 	}
 	else
-	{
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-		exit;
-	}
 }
 else
-{
-	header('Location:' . HOST . DIR . transid('/faq/faq.php', '', '&'));
-	exit;
-}
+	redirect(HOST . DIR . transid('/faq/faq.php', '', '&'));
 
 ?>
