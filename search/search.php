@@ -125,36 +125,37 @@ if( $search != '' )
     // Génération des résultats et passage aux templates
     $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, ($p), ($p + NB_RESULTS_PER_PAGE));
     
-    $mResults = array();
     $resultsByModules = array();
     foreach( $results as $result )
     {
         $module = $Modules->GetModule($result['module']);
         
         // Récupération des noms des modules disposant de résultats
-        if ( !in_array($module->name, $mResults) )
+        if ( !in_array($module->name, array_keys($resultsByModules)) )
         {
-            $Template->Assign_block_vars('mResults', array(
-                'MODULE_NAME' => $module->name,
-            ));
-            array_push($mResults, $module->name);
             $resultsByModules[$module->name] = array();
         }
         
         if( $module->HasFunctionnality('ParseSearchResult') )
         {
-            array_push($resultsByModules[$module->name], $module->Functionnality('ParseSearchResult', array($result)));
+            $htmlResult = $module->Functionnality('ParseSearchResult', array($result));
         }
         else
         {
             $htmlResult  = '<div class="result">';
+            $htmlResult .= '<span><i>'.$result['relevance'].'</i></span> - ';
+            $htmlResult .= '<span><b>'.$result['module'].'</b></span> - ';
             $htmlResult .= '<a href="'.$result['link'].'">'.$result['title'].'</a>';
             $htmlResult .= '</div>';
-            array_push($resultsByModules[$module->name], $htmlResult);
         }
+        array_push($resultsByModules[$module->name], $htmlResult);
+        
+        $Template->Assign_block_vars('allResults', array(
+            'RESULT' => $htmlResult
+        ));
     }
     
-    // Assignation des résultats
+    // Assignation des résultats de chaque module
     foreach ( $resultsByModules as $moduleName => $results )
     {
         $Template->Assign_block_vars('results', array(
@@ -163,9 +164,6 @@ if( $search != '' )
         foreach ( $results as $result )
         {
             $Template->Assign_block_vars('results.module', array(
-                'RESULT' => $result
-            ));
-            $Template->Assign_block_vars('allResults', array(
                 'RESULT' => $result
             ));
         }
