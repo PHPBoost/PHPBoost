@@ -29,12 +29,12 @@
 			
 				# START description #
 					{description.DESCRIPTION}
-					<hr style="margin:25px 0px;" />
 				# END description #
+					<hr style="margin-top:25px;" />
 				
 				# IF C_FAQ_CATS #
 					# START list_cats #
-						<div style="float:left;width:{list_cats.WIDTH}%;text-align:center;margin-bottom:30px;">
+						<div style="float:left;width:{list_cats.WIDTH}%;text-align:center;margin:30px 0px;">
 							# IF C_CAT_IMG #
 								<a href="{list_cats.U_CAT}" title="{list_cats.IMG_NAME}"><img src="{list_cats.SRC}" alt="{list_cats.IMG_NAME}" /></a>
 								<br />
@@ -66,16 +66,14 @@
 						<div style="margin-bottom:10px;" id="q{questions.faq.ID_QUESTION}">
 							<div class="row1">
 								<span style="float:left;">
-									<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
+									<a href="javascript:show_answer({questions.faq.ID_QUESTION});"><img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" /></a>
 									<script type="text/javascript">
 									<!--
 										document.write("<a href=\"javascript:show_answer({questions.faq.ID_QUESTION});\">{questions.faq.QUESTION}</a>");
 									-->
 									</script>
 									<noscript>
-										<a href="{questions.faq.U_QUESTION}">
-										{questions.faq.QUESTION}
-										</a>
+										<a href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
 									</noscript>
 								</span>
 								# IF C_ADMIN_TOOLS #

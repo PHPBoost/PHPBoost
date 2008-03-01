@@ -101,7 +101,7 @@
 							<input type="hidden" name="colorate_result" value="1" />
 						</form>
 					</span>	
-					<div class="spacer"></div>					
+					<div class="spacer"></div>		
 				</div>
 			</div>
 			<div class="forum_links" style="border-top:none;">
