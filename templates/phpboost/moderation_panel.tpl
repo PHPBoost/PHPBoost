@@ -1,32 +1,6 @@
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">&bull; <a href="moderation_panel.php">{L_MODERATION_PANEL}</a></div>
-			<div class="module_contents">
-				<div style="margin-bottom:45px;">
-					<div id="dynamic_menu" style="float:right;margin-right:55px;">
-						<ul>
-							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:20px;"><img src="../templates/{THEME}/images/admin/members_mini.png" class="valign_middle" alt="" /> {L_MEMBERS}</h5>
-								<ul id="smenu1">
-									<li><a href="moderation_panel{U_WARNING}" style="background-image:url(../templates/{THEME}/images/admin/important.png);">{L_WARNING}</a></li>
-									<li><a href="moderation_panel{U_PUNISH}" style="background-image:url(../templates/{THEME}/images/admin/stop.png);background-repeat:no-repeat;background-position:5px;">{L_PUNISHMENT}</a></li>
-									<li><a href="moderation_panel{U_BAN}" style="background-image:url(../templates/{THEME}/images/admin/forbidden.png);background-repeat:no-repeat;background-position:5px;">{L_BAN}</a></li>
-								</ul>
-							</li>
-							<li onmouseover="show_menu(2, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:20px;"><img src="../templates/{THEME}/images/admin/modules_mini.png" class="valign_middle" alt="" /> {L_MODULES}</h5>
-								<ul id="smenu2">
-									# START list_modules #
-									<li><a href="../{list_modules.MOD_NAME}/{list_modules.U_LINK}" {list_modules.DM_A_CLASS}>{list_modules.NAME}</a></li>
-									# END list_modules #
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</div>
+				# INCLUDE moderation_panel_top #
 				
-				# START all_action #
+			# IF C_MODO_PANEL_MEMBER #
 				<table class="module_table">
 					<tr>
 						<th colspan="3">
@@ -45,9 +19,8 @@
 						</td>
 					</tr>
 				</table>
-				# END all_action #
 				
-				# START user_list #
+				# IF C_MODO_PANEL_USER_LIST #
 				<script type="text/javascript">
 				<!--
 					function XMLHttpRequest_search()
@@ -107,57 +80,61 @@
 						<th style="width:25%;">{L_ACTION_USER}</th>
 						<th style="width:25%;">{L_PM}</th>
 					</tr>	
-					# START user_list.list #
+					# START member_list #
 					<tr>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="../member/{user_list.list.U_PROFILE}">{user_list.list.LOGIN}</a>
+							<a href="../member/{member_list.U_PROFILE}">{member_list.LOGIN}</a>
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
-							{user_list.list.INFO}
+							{member_list.INFO}
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
-							{user_list.list.U_ACTION_USER}
+							{member_list.U_ACTION_USER}
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="../member/pm{user_list.list.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+							<a href="../member/pm{member_list.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 						</td>
 					</tr>
-					# END user_list.list #
+					# END member_list #
 					
-					# START user_list.empty #
+					# IF C_EMPTY_LIST #
 					<tr>
 						<td class="row1" style="text-align:center;" colspan="4">
-							{user_list.empty.NO_USER}
+							{L_NO_USER}
 						</td>
 					</tr>		
-					# END user_list.empty #
+					# ENDIF #
 				</table>
 				</form>
-				# END user_list #
+				# ENDIF #
 
 				
 
-				# START user_info #
+				# IF C_MODO_PANEL_USER_INFO #
 				<script type="text/javascript">
 				<!--
 				function change_textarea_level(replace_value, regex)
 				{
 					var contents = document.getElementById('action_contents').innerHTML;
-					{user_info.REPLACE_VALUE}		
+					{REPLACE_VALUE}		
 					
 					document.getElementById('action_contents').innerHTML = contents;	
 				}
 				-->
 				</script>
 				
-				<form action="moderation_panel{user_info.U_ACTION_INFO}" method="post">		
+				<br /><br />
+				<form action="moderation_panel{U_ACTION_INFO}" method="post">		
 					<table class="module_table">
+						<tr>
+							<th colspan="2">{L_ACTION_INFO}</th>
+						</tr>
 						<tr>
 							<td class="row1" style="width:30%;">
 								{L_LOGIN}
 							</td>
 							<td class="row2">
-								{user_info.LOGIN}
+								{LOGIN}
 							</td>
 						</tr>
 						<tr>
@@ -165,7 +142,7 @@
 								{L_PM}
 							</td>
 							<td class="row2">
-								<a href="../member/pm{user_info.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
+								<a href="../member/pm{U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
 							</td>
 						</tr>
 						<tr>
@@ -182,29 +159,33 @@
 								{L_INFO_EXPLAIN}
 							</td>
 							<td class="row2">
-								<span id="action_info">{user_info.INFO}</span>
+								<span id="action_info">{INFO}</span>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<select name="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {user_info.REGEX})">
-									{user_info.SELECT}
+								<select name="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
+									{SELECT}
 								</select>
 								<input type="submit" name="valid_user" value="{L_CHANGE_INFO}" class="submit" />					
 							</td>
 						</tr>
 					</table>
 				</form>					
-				# END user_info #
+				# ENDIF #
 				
 				
 				
-				# START user_ban #					
-				<form action="moderation_panel{user_ban.U_ACTION_INFO}" method="post">		
+				# IF C_MODO_PANEL_USER_BAN #					
+				<br /><br />
+				<form action="moderation_panel{U_ACTION_INFO}" method="post">		
 					<table class="module_table">
+						<tr>
+							<th colspan="2">{L_ACTION_INFO}</th>
+						</tr>
 						<tr>
 							<td class="row1" style="width:30%;">
 								{L_LOGIN}
 							</td>
 							<td class="row2">
-								{user_ban.LOGIN}
+								{LOGIN}
 							</td>
 						</tr>
 						<tr>
@@ -212,7 +193,7 @@
 								{L_PM}
 							</td>
 							<td class="row2">
-								<a href="../member/pm{user_ban.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+								<a href="../member/pm{U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 							</td>
 						</tr>
 						<tr>
@@ -220,10 +201,10 @@
 								{L_DELAY_BAN}
 							</td>
 							<td class="row2">
-							<select name="user_ban">					
-									# START user_ban.select_ban #	
-										{user_ban.select_ban.TIME}
-									# END user_ban.select_ban #						
+								<select name="user_ban">					
+									# START select_ban #	
+										{select_ban.TIME}
+									# END select_ban #						
 								</select>
 							</td>
 						</tr>
@@ -234,20 +215,8 @@
 						</tr>
 					</table>
 				</form>					
-				# END user_ban #
-				
-				<br /><br /><br />				
-			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-				<div style="float:left" class="text_strong">
-					&bull; <a href="moderation_panel.php">{L_MODERATION_PANEL}</a>
-				</div>
-				<div style="float:right">
-					{PAGINATION}
-				</div>
-			</div>
-		</div>
+				# ENDIF #
+			# ENDIF #
 		
+		# INCLUDE moderation_panel_bottom #
 		

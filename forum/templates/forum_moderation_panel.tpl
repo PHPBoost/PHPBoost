@@ -31,7 +31,7 @@
 				}
 				-->
 				</script>
-				<form action="moderation_forum{main.U_ACTION_HISTORY}" method="post" onsubmit="javascript:return Confirm_history();">					
+				<form action="moderation_forum{U_ACTION_HISTORY}" method="post" onsubmit="javascript:return Confirm_history();">					
 					<table class="module_table">	
 						<tr>
 							<th colspan="4">
@@ -83,7 +83,7 @@
 								# IF C_FORUM_ADMIN #
 								<span style="float:left"><input type="submit" name="valid" value="{L_DELETE}" class="submit" /></span> 
 								# ENDIF #
-								<a href="moderation_forum{main.U_MORE_ACTION}">{L_MORE_ACTION}</a>
+								<a href="moderation_forum{U_MORE_ACTION}">{L_MORE_ACTION}</a>
 							</td>
 						</tr>
 					</table>
