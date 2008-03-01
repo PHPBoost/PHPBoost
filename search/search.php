@@ -107,7 +107,8 @@ if( $search != '' )
             // Ils sont sécurisés à l'intérieur de chaque module.
             foreach( $formModuleArgs as $arg)
             {
-                $modulesArgs[$formModule->name][$arg] = $_POST[$arg];
+                if ( isset($_POST[$arg]) )
+                    $modulesArgs[$formModule->name][$arg] = $_POST[$arg];
             }
         }
     }
@@ -117,7 +118,7 @@ if( $search != '' )
     foreach ( $searchForms as $moduleName => $form )
     {
         $Template->Assign_block_vars('forms', array(
-            'MODULE_NAME' => $moduleName,
+            'MODULE_NAME' => ucfirst($moduleName),
             'SEARCH_FORM' => $form
         ));
     }
@@ -144,7 +145,7 @@ if( $search != '' )
         {
             $htmlResult  = '<div class="result">';
             $htmlResult .= '<span><i>'.$result['relevance'].'</i></span> - ';
-            $htmlResult .= '<span><b>'.$result['module'].'</b></span> - ';
+            $htmlResult .= '<span><b>'.ucfirst($result['module']).'</b></span> - ';
             $htmlResult .= '<a href="'.$result['link'].'">'.$result['title'].'</a>';
             $htmlResult .= '</div>';
         }
@@ -159,7 +160,7 @@ if( $search != '' )
     foreach ( $resultsByModules as $moduleName => $results )
     {
         $Template->Assign_block_vars('results', array(
-            'MODULE_NAME' => $moduleName,
+            'MODULE_NAME' => ucfirst($moduleName),
         ));
         foreach ( $results as $result )
         {

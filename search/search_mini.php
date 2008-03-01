@@ -25,8 +25,6 @@
 *
 ###################################################*/
 
-echo '<hr /><h1>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</h1><hr />';
-
 if( defined('PHP_BOOST') !== true ) exit;
 
 //------------------------------------------------------------------- Language

@@ -1,3 +1,5 @@
+div.search_mini input { width:120px; margin:2px; }
+
 select#FormsChoice { width:265px; }
 ul.search_results { margin-left:30px; padding:10px; }
 ul.search_results li { padding:5px; }
