@@ -38,8 +38,10 @@ $LANG['search_min_length'] = 'Keywords (at least 4 characters)';
 $LANG['title_all_results'] = 'All results';
 $LANG['forms'] = 'Forms';
 $LANG['results'] = 'Results';
+$LANG['results_choice'] = 'Results choice';
 $LANG['advanced_search'] = 'Advanced search';
 $LANG['simple_search'] = 'Simple search';
+$LANG['print'] = 'Print';
 
 //Actions
 

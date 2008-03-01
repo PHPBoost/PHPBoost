@@ -54,7 +54,7 @@
         }
     }
     
-    function ChangeForm(module)
+    function ChangeForm()
     /*
      * Change le cadre des résultats
      */
