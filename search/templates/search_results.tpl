@@ -2,9 +2,9 @@
 <script type="text/javascript">
 <!--
     var modulesResults = new Array('All');
-    # START mResults #
-        modulesResults.push('{mResults.MODULE_NAME}');
-    # END mResults #
+    # START results #
+        modulesResults.push('{results.MODULE_NAME}');
+    # END results #
     
     function ShowResults(module)
     /*
