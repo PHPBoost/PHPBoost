@@ -77,13 +77,16 @@ if( $search != '' )
 {
     $Template->Assign_vars(Array(
         'TITLE_ALL_RESULTS' => $LANG['title_all_results'],
-        'RESULTS' => $LANG['results']
+        'RESULTS' => $LANG['results'],
+        'RESULTS_CHOICE' => $LANG['results_choice'],
+        'PRINT' => $LANG['print']
     ));
     
     $results = array();
     
     // Listes des modules de recherches
     $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
+    
     // Ajout du paramétre search à tous les modules
     foreach( $searchModules as $module)
     {
@@ -122,24 +125,48 @@ if( $search != '' )
     // Génération des résultats et passage aux templates
     $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, ($p), ($p + NB_RESULTS_PER_PAGE));
     
+    $mResults = array();
+    $resultsByModules = array();
     foreach( $results as $result )
     {
         $module = $Modules->GetModule($result['module']);
+        
+        // Récupération des noms des modules disposant de résultats
+        if ( !in_array($module->name, $mResults) )
+        {
+            $Template->Assign_block_vars('mResults', array(
+                'MODULE_NAME' => $module->name,
+            ));
+            array_push($mResults, $module->name);
+            $resultsByModules[$module->name] = array();
+        }
+        
         if( $module->HasFunctionnality('ParseSearchResult') )
         {
-            $Template->Assign_block_vars('results', array(
-                'MODULE_NAME' => $moduleName,
-                'RESULTS' => $module->Functionnality('ParseSearchResult', array($result))
-            ));
+            array_push($resultsByModules[$module->name], $module->Functionnality('ParseSearchResult', array($result)));
         }
         else
         {
             $htmlResult  = '<div class="result">';
             $htmlResult .= '<a href="'.$result['link'].'">'.$result['title'].'</a>';
             $htmlResult .= '</div>';
-            $Template->Assign_block_vars('results', array(
-                'MODULE_NAME' => $moduleName,
-                'RESULTS' => $htmlResult
+            array_push($resultsByModules[$module->name], $htmlResult);
+        }
+    }
+    
+    // Assignation des résultats
+    foreach ( $resultsByModules as $moduleName => $results )
+    {
+        $Template->Assign_block_vars('results', array(
+            'MODULE_NAME' => $moduleName,
+        ));
+        foreach ( $results as $result )
+        {
+            $Template->Assign_block_vars('results.module', array(
+                'RESULT' => $result
+            ));
+            $Template->Assign_block_vars('allResults', array(
+                'RESULT' => $result
             ));
         }
     }

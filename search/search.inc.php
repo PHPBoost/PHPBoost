@@ -25,6 +25,8 @@
 *
 ###################################################*/
 
+if( defined('PHP_BOOST') !== true ) exit;
+
 require_once ( '../includes/modules.class.php' );
 require_once ( '../includes/search.class.php' );
 
@@ -69,9 +71,12 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
     
     foreach($searchModules as $module)
     {
-        // On rajoute l'identifiant de recherche comme paramètre pour faciliter la requête
-        $modulesArgs[$module->name]['id_search'] = $Search->id_search[$module->name];
-        $requests[$module->name] = $module->Functionnality('GetSearchRequest', $modulesArgs[$module->name]);
+        if ( !$Search->IsInCache($module->name) )
+        {
+            // On rajoute l'identifiant de recherche comme paramètre pour faciliter la requête
+            $modulesArgs[$module->name]['id_search'] = $Search->id_search[$module->name];
+            $requests[$module->name] = $module->Functionnality('GetSearchRequest', $modulesArgs[$module->name]);
+        }
     }
     
     $Search->InsertResults($requests);
