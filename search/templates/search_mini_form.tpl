@@ -1,49 +1,29 @@
-		<div class="module_position">
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">{TITLE}</div>
-			<div class="module_contents">
-				<br />		
-				# INCLUDE wiki_tools #
-				<br /><br />
-				{INDEX_TEXT}
-				<br /><br /><br />
-				<div style="text-align:center;" class="row3">
-					<a href="{U_EXPLORER}"><img src="{WIKI_PATH}/images/explorer.png" alt="{L_EXPLORER}" class="valign_middle" /></a> &nbsp; <a href="{U_EXPLORER}">{L_EXPLORER}</a>
-				</div>
-				<br />
-				# START cat_list #
-					<hr /><br />
-					<strong><em>{cat_list.L_CATS}</em></strong>
-					<br /><br />
-					# START cat_list.list #
-						<img src="{WIKI_PATH}/images/cat.png" class="valign_middle" alt="" />&nbsp;<a href="{cat_list.list.U_CAT}">{cat_list.list.CAT}</a><br />
-					# END cat_list.list #
-					{L_NO_CAT}
-				# END cat_list #
-				
-				# START last_articles #
-				<hr /><br />
-				<table class="module_table">
-					<tr>
-						<th colspan="2">
-							<strong><em>{last_articles.L_ARTICLES}</em></strong> {last_articles.RSS}
-						</th>
-					</tr>
-					<tr>
-						# START last_articles.list #
-						{last_articles.list.TR}
-							<td class="row2" style="width:50%">
-								<img src="{WIKI_PATH}/images/article.png" class="valign_middle" alt="" />&nbsp;<a href="{last_articles.list.U_ARTICLE}">{last_articles.list.ARTICLE}</a>
-							</td>
-						# END last_articles.list #
-						{L_NO_ARTICLE}
-					</tr>
-				</table>
-				# END last_articles #
-			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom"></div>
-		</div>
-		
+<script language="text/javascript">
+<!--
+function check_form_post()
+{
+    var textSearched = document.getElementById("search").value;
+    
+    if ( textSearched.length > 3 )
+    {
+        textSearched = escape_xmlhttprequest(textSearched);
+        return true;
+    }
+    else
+    {
+        alert('{WARNING_LENGTH_STRING_SEARCH}');
+        return false;
+    }
+}
+-->
+</script>
+<div class="module_mini_container">
+    <div class="module_mini_top"><h5 class="sub_title">{TITLE_SEARCH}</h5></div>
+    <div class="module_mini_table">
+        <form action="../search/search.php#results" onsubmit="return check_form_post();" method="post">
+            <input type="text" size="35" id="search" name="search" value="{TEXT_SEARCHED}"  class="text" /><br />
+            <input type="submit" name="search_submit" id="search_submit" value="{SEARCH}" class="submit" />
+        </form>
+    </div>
+    <div class="module_mini_bottom"></div>
+</div>
