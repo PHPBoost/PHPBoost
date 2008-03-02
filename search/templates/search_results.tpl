@@ -67,7 +67,7 @@
         }
     }
     
-    function XMLHttpRequest_search_module(module)
+    function XMLHttpRequest_search_moduleBak(module)
     /*
      * Calcul de nouveaux résultats de recherche
      */
@@ -96,6 +96,27 @@
 //                 if( document.getElementById('refresh_unread' + divID) )
 //                     document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/refresh_mini.png';
 //             }
+        }
+        xmlhttprequest_sender(xhr_object, null);
+        calculatedResults.push(module);
+        return results;
+    }
+    
+    function XMLHttpRequest_search_module(module)
+    /*
+     * Calcul de nouveaux résultats de recherche
+     */
+    {
+        var results = 'RESULTATS : ...';
+        
+        var xhr_object = xmlhttprequest_init('../search/searchXMLHttpRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
+        xhr_object.onreadystatechange = function()
+        {
+            alert(xhr_object.responseText);
+            if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
+            {
+                document.getElementById(INFOS_RESULTS + module).innerHTML = xhr_object.responseText;
+            }
         }
         xmlhttprequest_sender(xhr_object, null);
         calculatedResults.push(module);
