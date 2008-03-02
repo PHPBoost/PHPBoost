@@ -128,7 +128,9 @@ if( $search != '' )
     $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, $idsSearch, ($p), ($p + NB_RESULTS_PER_PAGE));
     
     $Template->Assign_vars(Array(
-        'NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : $LANG['one_result_found']
+        'NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : $LANG['one_result_found'],
+        'SEARCH_RESULTS' => $LANG['search_results'],
+        'NB_RESULTS' => $nbResults
     ));
     
     foreach( $searchModules as $module)
@@ -168,25 +170,6 @@ if( $search != '' )
             'RESULT' => $htmlResult
         ));
     }
-    
-    // Assignation des résultats de chaque module
-//     foreach ( $resultsByModules as $moduleName => $results )
-//     {
-//         $Template->Assign_block_vars('results', array(
-//             'MODULE_NAME' => ucfirst($moduleName),
-//         ));
-//         foreach ( $results as $result )
-//         {
-//             $Template->Assign_block_vars('results.module', array(
-//                 'RESULT' => $result
-//             ));
-//         }
-//     }
-    
-    $Template->Assign_vars(array(
-        'SEARCH_RESULTS' => $LANG['search_results'],
-        'NB_RESULTS' => $nbResults,
-    ));
     
     // parsage des formulaires de recherches
     $Template->Pparse('search_forms');
