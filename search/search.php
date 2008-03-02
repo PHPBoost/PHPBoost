@@ -123,8 +123,17 @@ if( $search != '' )
         ));
     }
     
+    $idsSearch = array();
     // Génération des résultats et passage aux templates
-    $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, ($p), ($p + NB_RESULTS_PER_PAGE));
+    $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, $idsSearch, ($p), ($p + NB_RESULTS_PER_PAGE));
+    
+    foreach( $searchModules as $module)
+    {
+        $Template->Assign_block_vars('results', array(
+            'MODULE_NAME' => ucfirst($module->name),
+            'ID_SEARCH' => $idsSearch[$module->name],
+        ));
+    }
     
     $resultsByModules = array();
     foreach( $results as $result )
@@ -157,18 +166,18 @@ if( $search != '' )
     }
     
     // Assignation des résultats de chaque module
-    foreach ( $resultsByModules as $moduleName => $results )
-    {
-        $Template->Assign_block_vars('results', array(
-            'MODULE_NAME' => ucfirst($moduleName),
-        ));
-        foreach ( $results as $result )
-        {
-            $Template->Assign_block_vars('results.module', array(
-                'RESULT' => $result
-            ));
-        }
-    }
+//     foreach ( $resultsByModules as $moduleName => $results )
+//     {
+//         $Template->Assign_block_vars('results', array(
+//             'MODULE_NAME' => ucfirst($moduleName),
+//         ));
+//         foreach ( $results as $result )
+//         {
+//             $Template->Assign_block_vars('results.module', array(
+//                 'RESULT' => $result
+//             ));
+//         }
+//     }
     
     $Template->Assign_vars(array(
         'SEARCH_RESULTS' => $LANG['search_results'],
