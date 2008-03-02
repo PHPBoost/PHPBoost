@@ -127,7 +127,7 @@ class ForumInterface extends ModuleInterface
 			`id` AS `id_content`,
 			`title` AS `title`,
 			MATCH(`title`) AGAINST('".$args['search']."') AS `relevance`,
-			CONCAT('../wiki/wiki.php?page=',encoded_title) AS link
+			CONCAT('../wiki/wiki.php?title=',encoded_title) AS link
 		FROM ".
 			PREFIX."wiki_articles
 		WHERE

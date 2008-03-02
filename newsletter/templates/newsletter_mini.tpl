@@ -1,7 +1,7 @@
 		<div class="module_mini_container">
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_NEWSLETTER}</h5>
-			</div>		
+			</div>
 			<div class="module_mini_table">
 				<form action="{ACTION}" method="post">
 					<p>
@@ -17,8 +17,8 @@
 					</p>
 					<p>
 						<a href="{ARCHIVES_LINK}" style=" font-size:10px;">{L_ARCHIVES}</a>
-					</p>&nbsp;
-				</form>		
+					</p>
+				</form>&nbsp;
 			</div>
 			<div class="module_mini_bottom">
 			</div>

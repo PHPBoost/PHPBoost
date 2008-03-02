@@ -1,5 +1,26 @@
 div.search_mini input { width:120px; margin:2px; }
 
+div.results { background-color: #bfd9ef; border: 1px solid #2c5169; }
+
+div.results div.legend {
+    background:#526F8E;
+    color:#FFFFFF;
+    font-family:'Verdana', 'Bitstream Vera Sans', 'Times', 'serif';
+    font-size:0.75em;
+    font-weight:bold;
+    border:1px solid #2C5169;
+    position:relative;
+    top:-0.6em;
+    left:5px;
+    right:5px;
+    margin-top:-0.4em;
+    padding:2px 8px;
+    line-height:1.2em;
+    vertical-align:middle;
+    text-transform:uppercase;
+/*     width:3%; */
+}
+
 select#FormsChoice { width:265px; }
 ul.search_results { margin-left:30px; padding:10px; }
 ul.search_results li { padding:5px; }
