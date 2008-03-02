@@ -33,7 +33,7 @@
      * Cache tous les résultats
      */
     {
-        for ( var i = 0; i < modulesResults.length; i++)
+        for ( var i = 0; i < modulesResults.length; i++ )
         {
             document.getElementById(RESULTS + modulesResults[i]).style.display = 'none';
         }
@@ -67,16 +67,33 @@
         }
     }
     
+    function GetFormData()
+    {
+        var data1 = "";
+        var form = document.getElementById('SearchForm');
+        var elements = form.elements;
+        
+        for( var i = 0; i < form.length; i++ )
+        {
+            data1 += elements[i].name + "=" + escape(elements[i].value);
+            if( (i + 1) < form.length )
+                data1+="&";
+        }
+        
+        return data1;
+    }
+    
     function XMLHttpRequest_regenerate_search()
     /*
      * Affiche les résultats de la recherche pour le module particulier <module>
      */
     {
-        var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php?pageNum={PAGE_NUM}');
-        xhr_object.onreadystatechange = function()
+        var xhr = xmlhttprequest_init('../search/searchXMLHTTPRequest.php');
+        xhr.onreadystatechange = function()
         {
         }
-        xmlhttprequest_sender(xhr_object, null);
+//         xmlhttprequest_sender(xhr, document.getElementById('SearchForm'));
+        xmlhttprequest_sender(xhr, GetFormData());
     }
     
     function XMLHttpRequest_search_module(module)
@@ -95,6 +112,10 @@
                     eval(xhr_object.responseText);
                     document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
                     document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
+                    
+                    // Met à jour la liste des résultats affiché, pour ne pas les rechercher
+                    // dans la base de donnée si ils sont déjà dans le html.
+                    calculatedResults.push(module);
                 }
                 else    // Sinon, on les recalcule, et on les récupère.
                 {
@@ -104,9 +125,6 @@
             }
         }
         xmlhttprequest_sender(xhr_object, null);
-        // Met à jour la liste des résultats affiché, pour ne pas les rechercher
-        // dans la base de donnée si ils sont déjà dans le html.
-        calculatedResults.push(module);
     }
 -->
 </script>

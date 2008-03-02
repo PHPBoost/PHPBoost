@@ -86,7 +86,7 @@
     <div class="module_top">{TITLE}</div>
     <div class="module_contents">
         <div class="spacer">&nbsp;</div>
-        <form action="../search/search.php#results" onsubmit="return check_search_form_post();" method="post">
+        <form id="SearchForm" action="../search/search.php#results" onsubmit="return check_search_form_post();" method="post">
             <fieldset>
                 <legend>{TITLE_SEARCH}</legend>
                 <dl>
