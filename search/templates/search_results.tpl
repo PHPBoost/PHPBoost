@@ -67,23 +67,45 @@
         }
     }
     
+    function XMLHttpRequest_regenerate_search()
+    /*
+     * Affiche les résultats de la recherche pour le module particulier <module>
+     */
+    {
+        var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
+        xhr_object.onreadystatechange = function()
+        {
+        }
+        xmlhttprequest_sender(xhr_object, null);
+    }
+    
     function XMLHttpRequest_search_module(module)
     /*
      * Affiche les résultats de la recherche pour le module particulier <module>
      */
     {
-        var results = 'RESULTATS : ...';
-        var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
+        var xhr_object = xmlhttprequest_init('../search/searchModuleXMLHTTPRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
         xhr_object.onreadystatechange = function()
         {
-            if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
+            if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '')
             {
-                eval(xhr_object.responseText);
-                document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
-                document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
+                // Si les résultats sont toujours en cache, on les récupère.
+                if ( xhr_object.responseText != 'NO RESULTS IN CACHE' )
+                {
+                    eval(xhr_object.responseText);
+                    document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
+                    document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
+                }
+                else    // Sinon, on les recalcule, et on les récupère.
+                {
+                    XMLHttpRequest_regenerate_search();
+                    XMLHttpRequest_search_module(module);
+                }
             }
         }
         xmlhttprequest_sender(xhr_object, null);
+        // Met à jour la liste des résultats affiché, pour ne pas les rechercher
+        // dans la base de donnée si ils sont déjà dans le html.
         calculatedResults.push(module);
     }
 -->
