@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="../search/templates/search.css" type="text/css" media="screen, print, handheld" />
 <script type="text/javascript">
 <!--
     var modulesForms = new Array();

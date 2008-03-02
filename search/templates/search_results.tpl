@@ -107,7 +107,7 @@
 <!--         <div class="spacer">&nbsp;</div> -->
         <div id="ResultsAll" class="results">
             <span id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</span><br />
-            <span id="infosResultsAll" class="infosResults">{NB_RESULTS} {RESULTS} ont été trouvés.</span>
+            <span id="infosResultsAll" class="infosResults">{NB_RESULTS} {NB_RESULTS_FOUND}</span>
             <div id="ResultsListAll" class="ResultsList">
                 <ul class="search_results">
                     # START allResults #
