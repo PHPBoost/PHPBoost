@@ -54,6 +54,14 @@ div.results span.infosResults {
     font-weight:bold;
 }
 
+div.results span.infosResults {
+    width:90%;
+    margin:10px;
+    font-family:'Verdana', 'Bitstream Vera Sans', 'Times', 'serif';
+    font-size:0.75em;
+    font-weight:bold;
+}
+
 select#FormsChoice {
     width:265px;
 }
