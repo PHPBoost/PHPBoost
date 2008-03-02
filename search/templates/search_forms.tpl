@@ -13,7 +13,7 @@
     {
         HideAdvancedSearchForms();
         document.getElementById('FormsChoice').style.display = 'block';
-        ShowForm('');
+        ShowForm(document.getElementById('FormsChoice').value);
         document.getElementById('AdvancedSearch').style.display = 'none';
         document.getElementById('SimpleSearch').style.display = 'block';
     }

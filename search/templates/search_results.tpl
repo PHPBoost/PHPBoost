@@ -3,6 +3,7 @@
 <!--
     const RESULTS = 'Results';
     const RESULTS_TITLE = 'ResultsTitle';
+    const INFOS_RESULTS = 'infosResults';
     var modulesResults = new Array('All');
     # START results #
         modulesResults.push('{results.MODULE_NAME}');
@@ -17,11 +18,8 @@
     {
         if ( module != '' )
             document.getElementById(RESULTS + module).style.display = 'block';
-        else
-        {
-            if ( modulesResults.length > 0 )
-                document.getElementById(RESULTS + modulesResults[0]).style.display = 'block';
-        }
+        else if ( modulesResults.length > 0 )
+            document.getElementById(RESULTS + modulesResults[0]).style.display = 'block';
     }
     
     function HideResults()
@@ -55,11 +53,12 @@
     {
         var module = document.getElementById('ResultsChoice').value;
         HideResults();
-        ShowResults(document.getElementById('ResultsChoice').value);
+        ShowResults(module);
         if ( !inArray(module, calculatedResults) )
         {
-            document.getElementById(RESULTS_TITLE + module).innerHTML = 'Calcul des résultats en cours';
-            XMLHttpRequest_search_module(module);
+            document.getElementById(INFOS_RESULTS + module).innerHTML = 'Calcul des résultats en cours...';
+            var results = XMLHttpRequest_search_module(module);
+            document.getElementById(INFOS_RESULTS + module).innerHTML = results;
         }
     }
     
@@ -68,6 +67,7 @@
      * Calcul de nouveaux résultats de recherche
      */
     {
+        var results = 'RESULTATS : ...';
 //         if( document.getElementById('refresh_unread' + divID) )
 //             document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/loading_mini.gif';
 //             
@@ -98,8 +98,8 @@
 //             }
 //         }
 //         xmlhttprequest_sender(xhr_object, null);
-        document.getElementById(RESULTS_TITLE + module).innerHTML = 'RESULTATS : ...';
         calculatedResults.push(module);
+        return results;
     }
 -->
 </script>
@@ -107,33 +107,22 @@
 <div id="results" class="module_position">
     <div class="module_top_l"></div>
     <div class="module_top_r"></div>
-    <div class="module_top">{SEARCH_RESULTS}</div>
+    <div class="module_top">{SEARCH_RESULTS}
+        <div class="resultsChoices">
+            <select id="ResultsChoice" name="ResultsSelection" onChange="ChangeResults();">
+                <option value="All">{TITLE_ALL_RESULTS}</option>
+                # START results #
+                    <option value="{results.MODULE_NAME}">---> {results.MODULE_NAME}</option>
+                # END results #
+            </select>
+        </div>
+    </div>
     <div class="module_contents">
         <div class="spacer">&nbsp;</div>
-        <div class="choices">
-                <fieldset>
-                    <legend>{RESULTS_CHOICE}</legend>
-                    <dl>
-                        <dt>
-                            <div class="choice">
-                                <span>{PRINT}</span>
-                            </div>
-                        </dt>
-                        <dd>
-                            <select id="ResultsChoice" name="ResultsSelection" onChange="ChangeResults();">
-                                <option value="All">{TITLE_ALL_RESULTS}</option>
-                                # START results #
-                                    <option value="{results.MODULE_NAME}">---> {results.MODULE_NAME}</option>
-                                # END results #
-                            </select>
-                        </dd>
-                    </dl>
-                </fieldset>
-            </div>
         <div id="ResultsAll" class="results">
-            <div id="ResultsTitleAll" class="legend">{TITLE_ALL_RESULTS}</div>
-            <div id="nbResultsAll" class="nbResults"></div>
+            <span id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</span>
             <div id="ResultsListAll">
+                <span id="infosResultsAll" class="infosResults">{NB_RESULTS} {RESULTS} ont été trouvés.</span>
                 <ul class="search_results">
                     # START allResults #
                         <li>{allResults.RESULT}</li>
@@ -143,9 +132,9 @@
         </div>
         # START results #
             <div id="Results{results.MODULE_NAME}" class="results">
-                <div id="ResultsTitle{results.MODULE_NAME}" class="legend">{results.MODULE_NAME}</div>
-                <div id="nbResults{results.MODULE_NAME}" class="nbResults"></div>
+                <span id="ResultsTitle{results.MODULE_NAME}" class="title">{results.MODULE_NAME}</span>
                 <div id="ResultsList{results.MODULE_NAME}">
+                    <span id="infosResults{results.MODULE_NAME}" class="infosResults"></span>
                     <ul class="search_results">
                         # START results.module #
                             <li>{results.module.RESULT}</li>
