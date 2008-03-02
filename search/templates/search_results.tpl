@@ -72,7 +72,7 @@
      * Affiche les résultats de la recherche pour le module particulier <module>
      */
     {
-        var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
+        var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php?pageNum={PAGE_NUM}');
         xhr_object.onreadystatechange = function()
         {
         }
