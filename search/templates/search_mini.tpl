@@ -1,4 +1,4 @@
-<script language="text/javascript">
+<script type="text/javascript">
 <!--
 function check_form_post()
 {

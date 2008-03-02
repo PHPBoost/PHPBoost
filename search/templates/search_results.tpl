@@ -1,10 +1,14 @@
 <br />
 <script type="text/javascript">
 <!--
+    const RESULTS = 'Results';
+    const RESULTS_TITLE = 'ResultsTitle';
     var modulesResults = new Array('All');
     # START results #
         modulesResults.push('{results.MODULE_NAME}');
     # END results #
+    
+    var calculatedResults = new Array('All');
     
     function ShowResults(module)
     /*
@@ -12,11 +16,11 @@
      */
     {
         if ( module != '' )
-            document.getElementById('Results'+module).style.display = 'block';
+            document.getElementById(RESULTS + module).style.display = 'block';
         else
         {
             if ( modulesResults.length > 0 )
-                document.getElementById('Results'+modulesResults[0]).style.display = 'block';
+                document.getElementById(RESULTS + modulesResults[0]).style.display = 'block';
         }
     }
     
@@ -27,8 +31,21 @@
     {
         for ( var i = 0; i < modulesResults.length; i++)
         {
-            document.getElementById('Results'+modulesResults[i]).style.display = 'none';
+            document.getElementById(RESULTS + modulesResults[i]).style.display = 'none';
         }
+    }
+    
+    function inArray(aValue, anArray)
+    /*
+     * Teste la présence d'une valeur dans un tableau
+     */
+    {
+        for ( var i = 0; i < anArray.length; i++)
+        {
+            if ( anArray[i] == aValue )
+                return true;
+        }
+        return false;
     }
     
     function ChangeResults()
@@ -36,8 +53,53 @@
      * Change le cadre des résultats
      */
     {
+        var module = document.getElementById('ResultsChoice').value;
         HideResults();
         ShowResults(document.getElementById('ResultsChoice').value);
+        if ( !inArray(module, calculatedResults) )
+        {
+            document.getElementById(RESULTS_TITLE + module).innerHTML = 'Calcul des résultats en cours';
+            XMLHttpRequest_search_module(module);
+        }
+    }
+    
+    function XMLHttpRequest_search_module(module)
+    /*
+     * Calcul de nouveaux résultats de recherche
+     */
+    {
+//         if( document.getElementById('refresh_unread' + divID) )
+//             document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/loading_mini.gif';
+//             
+//         var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?refresh_unread=1');
+//         xhr_object.onreadystatechange = function() 
+//         {
+//             if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
+//             {   
+//                 if( document.getElementById('refresh_unread' + divID) )
+//                     document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/refresh_mini.png';
+//                 
+//                 var array_unread_topics = new Array('', '');
+//                 eval(xhr_object.responseText);
+//                 
+//                 if( array_unread_topics[0] > 0 )
+//                     forum_display_block('forum_unread' + divID);
+//                     
+//                 document.getElementById('nbr_unread_topics').innerHTML = array_unread_topics[1];
+//                 document.getElementById('nbr_unread_topics2').innerHTML = array_unread_topics[1];
+//                 document.getElementById('forum_blockforum_unread').innerHTML = array_unread_topics[2];
+//                 document.getElementById('forum_blockforum_unread2').innerHTML = array_unread_topics[2];
+//             }
+//             else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
+//             {   
+//                 alert("{L_AUTH_ERROR}");
+//                 if( document.getElementById('refresh_unread' + divID) )
+//                     document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/refresh_mini.png';
+//             }
+//         }
+//         xmlhttprequest_sender(xhr_object, null);
+        document.getElementById(RESULTS_TITLE + module).innerHTML = 'RESULTATS : ...';
+        calculatedResults.push(module);
     }
 -->
 </script>
@@ -68,26 +130,28 @@
                     </dl>
                 </fieldset>
             </div>
-        <div id="ResultsAll">
-            <fieldset>
-                <legend>{TITLE_ALL_RESULTS}</legend>
+        <div id="ResultsAll" class="results">
+            <div id="ResultsTitleAll" class="legend">{TITLE_ALL_RESULTS}</div>
+            <div id="nbResultsAll" class="nbResults"></div>
+            <div id="ResultsListAll">
                 <ul class="search_results">
                     # START allResults #
                         <li>{allResults.RESULT}</li>
                     # END allResults #
                 </ul>
-            </fieldset>
+            </div>
         </div>
         # START results #
-            <div id="Results{results.MODULE_NAME}">
-                <fieldset>
-                    <legend>{results.MODULE_NAME}</legend>
+            <div id="Results{results.MODULE_NAME}" class="results">
+                <div id="ResultsTitle{results.MODULE_NAME}" class="legend">{results.MODULE_NAME}</div>
+                <div id="nbResults{results.MODULE_NAME}" class="nbResults"></div>
+                <div id="ResultsList{results.MODULE_NAME}">
                     <ul class="search_results">
                         # START results.module #
                             <li>{results.module.RESULT}</li>
                         # END results.module #
                     </ul>
-                </fieldset>
+                </div>
             </div>
         # END results #
     </div>
