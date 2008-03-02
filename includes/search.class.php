@@ -65,8 +65,8 @@ class Search
         
         // Récupération des $nbLines résultats à partir de l'$offset
         $reqResults  = "SELECT module, id_content, title, relevance, link
-                        FROM ".PREFIX."search_results
-                        WHERE id_search = ".$isSearch.")
+                        FROM ".PREFIX."search_index idx, ".PREFIX."search_results rst
+                        WHERE idx.id_search = ".$idSearch." AND rst.id_search = ".$idSearch."
                         ORDER BY relevance DESC ".$Sql->Sql_limit($offset, $nbLines);
         
         // Exécution de la requête
@@ -75,8 +75,8 @@ class Search
         {   // Ajout des résultats
             array_push($results, $result);
         }
-        // Récupération du nombre de résultats correspondant é la recherche
-        $reqNbResults  = "SELECT COUNT(*) ".PREFIX."search_results ".$modulesConditions;
+        // Récupération du nombre de résultats correspondant à la recherche
+        $reqNbResults  = "SELECT COUNT(*) ".PREFIX."search_results WHERE id_search = ".$idSearch;
         $nbResults = $Sql->Sql_num_rows( $request, $reqNbResults );
         
         //On libére la mémoire

@@ -4,6 +4,7 @@
     const RESULTS = 'Results';
     const RESULTS_TITLE = 'ResultsTitle';
     const INFOS_RESULTS = 'infosResults';
+    const RESULTS_LIST = 'ResultsList';
     var modulesResults = new Array('All');
     # START results #
         modulesResults.push('{results.MODULE_NAME}');
@@ -62,65 +63,28 @@
         if ( !inArray(module, calculatedResults) )
         {
             document.getElementById(INFOS_RESULTS + module).innerHTML = 'Calcul des résultats en cours...';
-            var results = XMLHttpRequest_search_module(module);
-//             document.getElementById(INFOS_RESULTS + module).innerHTML = results;
+            XMLHttpRequest_search_module(module);
         }
-    }
-    
-    function XMLHttpRequest_search_moduleBak(module)
-    /*
-     * Calcul de nouveaux résultats de recherche
-     */
-    {
-        var results = 'RESULTATS : ...';
-        
-        var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php?idSearch=' + idSearch[module] + '&amp;pageNum={PAGE_NUM}');
-        xhr_object.onreadystatechange = function()
-        {
-            if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-            { 
-//                 var array_unread_topics = new Array('', '');
-//                 eval(xhr_object.responseText);
-//                 
-//                 if( array_unread_topics[0] > 0 )
-//                     forum_display_block('forum_unread' + divID);
-//                     
-                document.getElementById(INFOS_RESULTS + module).innerHTML = xhr_object.responseText;
-//                 document.getElementById('nbr_unread_topics2').innerHTML = array_unread_topics[1];
-//                 document.getElementById('forum_blockforum_unread').innerHTML = array_unread_topics[2];
-//                 document.getElementById('forum_blockforum_unread2').innerHTML = array_unread_topics[2];
-            }
-//             else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
-//             {   
-//                 alert("{L_AUTH_ERROR}");
-//                 if( document.getElementById('refresh_unread' + divID) )
-//                     document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/refresh_mini.png';
-//             }
-        }
-        xmlhttprequest_sender(xhr_object, null);
-        calculatedResults.push(module);
-        return results;
     }
     
     function XMLHttpRequest_search_module(module)
     /*
-     * Calcul de nouveaux résultats de recherche
+     * Affiche les résultats de la recherche pour le module particulier <module>
      */
     {
         var results = 'RESULTATS : ...';
-        
-        var xhr_object = xmlhttprequest_init('../search/searchXMLHttpRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
+        var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
         xhr_object.onreadystatechange = function()
         {
-            alert(xhr_object.responseText);
             if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
             {
-                document.getElementById(INFOS_RESULTS + module).innerHTML = xhr_object.responseText;
+                eval(xhr_object.responseText);
+                document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
+                document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
             }
         }
         xmlhttprequest_sender(xhr_object, null);
         calculatedResults.push(module);
-        return results;
     }
 -->
 </script>
@@ -142,9 +106,9 @@
     <div class="module_contents">
 <!--         <div class="spacer">&nbsp;</div> -->
         <div id="ResultsAll" class="results">
-            <span id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</span>
-            <div id="ResultsListAll">
-                <span id="infosResultsAll" class="infosResults">{NB_RESULTS} {RESULTS} ont été trouvés.</span>
+            <span id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</span><br />
+            <span id="infosResultsAll" class="infosResults">{NB_RESULTS} {RESULTS} ont été trouvés.</span>
+            <div id="ResultsListAll" class="ResultsList">
                 <ul class="search_results">
                     # START allResults #
                         <li>{allResults.RESULT}</li>
@@ -154,15 +118,9 @@
         </div>
         # START results #
             <div id="Results{results.MODULE_NAME}" class="results">
-                <span id="ResultsTitle{results.MODULE_NAME}" class="title">{results.MODULE_NAME}</span>
-                <div id="ResultsList{results.MODULE_NAME}">
-                    <span id="infosResults{results.MODULE_NAME}" class="infosResults"></span>
-<!--                     <ul class="search_results"> -->
-<!--                         # START results.module # -->
-<!--                             <li>{results.module.RESULT}</li> -->
-<!--                         # END results.module # -->
-<!--                     </ul> -->
-                </div>
+                <span id="ResultsTitle{results.MODULE_NAME}" class="title">{results.MODULE_NAME}</span><br />
+                <span id="infosResults{results.MODULE_NAME}" class="infosResults"></span>
+                <div id="ResultsList{results.MODULE_NAME}"></div>
             </div>
         # END results #
     </div>

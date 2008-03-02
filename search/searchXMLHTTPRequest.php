@@ -3,7 +3,7 @@
 *                         searchXMLHTTPRequest.php
 *                            -------------------
 *   begin                : January 27, 2008
-*   copyright            : (C) 2008 Rouchon LoÃ¯c
+*   copyright            : (C) 2008 Rouchon Loïc
 *   email                : horn@phpboost.com
 *
 *
@@ -25,7 +25,10 @@
 *
 ###################################################*/
 
+require_once('../includes/begin.php');
 //------------------------------------------------------------------- Language
+load_module_lang('search');
+
 //--------------------------------------------------------------------- Params
 
 define ( 'NB_RESULTS_PER_PAGE', 10);
@@ -43,17 +46,16 @@ require_once('../search/search.inc.php');
 $Modules = new Modules();
 $modulesArgs = array();
 
-
 if( $idSearch >= 0 )
 {
     $Search = new Search();
     if ( $Search->IsSearchIdInCache($idSearch) )
     {
-        $nbResults = $Search->GetResultsById($results, $idSearch, $pageNum *  NB_RESULTS_PER_PAGE, NB_LINES);
+        $nbResults = $Search->GetResultsById($results, $idSearch, ($pageNum - 1) *  NB_RESULTS_PER_PAGE, NB_LINES);
         if ( $nbResults > 0 )
         {
-            $module = $Module->GetModule($results[0]['module']);
-            echo '<ul>';
+            $module = $Modules->GetModule($results[0]['module']);
+            $htmlResults = '<ul class="search_results">';
             foreach ( $results as $result )
             {
                 if( $module->HasFunctionnality('ParseSearchResult') )
@@ -68,10 +70,14 @@ if( $idSearch >= 0 )
                     $htmlResult .= '<a href="'.$result['link'].'">'.$result['title'].'</a>';
                     $htmlResult .= '</div>';
                 }
-                echo '<li>'.$htmlResult.'</li>';
+                $htmlResults .= '<li>'.$htmlResult.'</li>';
             }
-            echo '</ul>';
+            $htmlResults .= '</ul>';
         }
+        $return = ' var resultsAJAX = new Array();
+                    resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.addslashes($LANG['nb_results_found']).'\';
+                    resultsAJAX[\'results\'] = \''.$htmlResults.'\';';
+        echo $return;
     }
 }
 
