@@ -68,6 +68,9 @@
     }
     
     function GetFormData()
+    /*
+     *  Reconstitution d'une chaine "POSTABLE" à partir des formulaires
+     */
     {
         var data1 = "";
         var form = document.getElementById('SearchForm');
