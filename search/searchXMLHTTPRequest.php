@@ -75,7 +75,8 @@ if( $idSearch >= 0 )
             $htmlResults .= '</ul>';
         }
         $return = ' var resultsAJAX = new Array();
-                    resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.addslashes($LANG['nb_results_found']).'\';
+                    resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.
+                    addslashes($nbResults > 1 ? $LANG['nb_results_found']:$LANG['one_result_found']).'\';
                     resultsAJAX[\'results\'] = \''.$htmlResults.'\';';
         echo $return;
     }

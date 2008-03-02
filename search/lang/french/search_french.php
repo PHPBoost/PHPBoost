@@ -43,6 +43,7 @@ $LANG['advanced_search'] = 'Recherche avancée';
 $LANG['simple_search'] = 'Recherche simple';
 $LANG['print'] = 'Afficher';
 $LANG['nb_results_found'] = 'résultats ont été trouvés';
+$LANG['one_result_found'] = 'résultat a été trouvé';
 
 //Actions
 

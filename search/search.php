@@ -28,7 +28,7 @@
 //------------------------------------------------------------------- Language
 require_once('../includes/begin.php');
 load_module_lang('search');
-// define('ALTERNATIVE_CSS', 'search');
+define('ALTERNATIVE_CSS', 'search');
 
 $Template->Set_filenames(array(
 'search_mini_form' => '../templates/'.$CONFIG['theme'].'/search/search_mini_form.tpl',
@@ -126,6 +126,10 @@ if( $search != '' )
     $idsSearch = array();
     // Génération des résultats et passage aux templates
     $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, $idsSearch, ($p), ($p + NB_RESULTS_PER_PAGE));
+    
+    $Template->Assign_vars(Array(
+        'NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : $LANG['one_result_found']
+    ));
     
     foreach( $searchModules as $module)
     {
