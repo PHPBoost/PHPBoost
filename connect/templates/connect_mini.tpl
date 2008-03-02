@@ -16,34 +16,34 @@
 		-->
 		</script>
 				
+		<form action="{U_CONNECT}" method="post" onsubmit="return check_conect();">
 		<div class="module_mini_container">
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_CONNECT}</h5>
 			</div>
 			<div class="module_mini_table">
-				<form action="{U_CONNECT}" method="post" onsubmit="return check_conect();">
-					<p>
-						<label>{L_PSEUDO}
-						<br />
-						<input size="15" type="text" class="text" id="login" name="login" maxlength="25" /></label>
-						<br />
-						<label>{L_PASSWORD}
-						<br />
-						<input size="15" type="password" id="password" name="password" class="text" maxlength="30" /></label>
-						<br />
-						<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto" /></label>
-					</p>
-					<p>	
-						<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
-					</p>
-					<p>
-						{U_REGISTER}
-					</p>&nbsp;
-				</form>	
+				<p>
+					<label>{L_PSEUDO}
+					<br />
+					<input size="15" type="text" class="text" id="login" name="login" maxlength="25" /></label>
+					<br />
+					<label>{L_PASSWORD}
+					<br />
+					<input size="15" type="password" id="password" name="password" class="text" maxlength="30" /></label>
+					<br />
+					<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto" /></label>
+				</p>
+				<p>	
+					<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
+				</p>
+				<p>
+					{U_REGISTER}
+				</p>&nbsp;
 			</div>		
 			<div class="module_mini_bottom">
 			</div>
 		</div>				
+		</form>	
 		# ENDIF #		
 		
 		
