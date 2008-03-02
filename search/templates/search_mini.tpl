@@ -1,8 +1,8 @@
 <script type="text/javascript">
 <!--
-function check_form_post()
+function check_search_mini_form_post()
 {
-    var textSearched = document.getElementById("search").value;
+    var textSearched = document.getElementById('TxTMiniSearched').value;
     
     if ( textSearched.length > 3 )
     {
@@ -18,11 +18,11 @@ function check_form_post()
 -->
 </script>
 <div class="module_mini_container">
-    <div class="module_mini_top"><h5 class="sub_title">{TITLE_SEARCH}</h5></div>
+    <div class="module_mini_top"><h5 class="sub_title">{SEARCH}</h5></div>
     <div class="module_mini_table">
         <div class="search_mini">
-            <form action="../search/search.php#results" onsubmit="return check_form_post();" method="post">
-                <input type="text" id="search" name="search" value="{TEXT_SEARCHED}"  class="text" /><br />
+            <form action="../search/search.php#results" onsubmit="return check_search_mini_form_post();" method="post">
+                <input type="text" id="TxTMiniSearched" name="search" value="{TEXT_SEARCHED}"  class="text" /><br />
                 <input type="submit" name="search_submit" id="search_submit" value="{SEARCH}" class="submit" />
             </form>
         </div>

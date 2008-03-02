@@ -47,7 +47,7 @@ function GetSearchForms(&$modules, &$args)
     return $searchForms;
 }
 
-function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results, $offset = 0, $nbResults = 10)
+function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results, &$idsSearch, $offset = 0, $nbResults = 10)
 /**
  *  Exécute la recherche si les résultats ne sont pas dans le cache et
  *  renvoie les résultats.
@@ -80,7 +80,7 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
     }
     
     $Search->InsertResults($requests);
-    
+    $idsSearch = $Search->id_search;
     return $Search->GetResults($results, $modulesNames, $offset, $nbResults);
 }
 

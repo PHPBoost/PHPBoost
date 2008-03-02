@@ -63,9 +63,9 @@
         ShowForm(document.getElementById('FormsChoice').value);
     }
     
-    function check_form_post()
+    function check_search_form_post()
     {
-        var textSearched = document.getElementById("search").value;
+        var textSearched = document.getElementById("TxTsearched").value;
         
         if ( textSearched.length > 3 )
         {
@@ -87,12 +87,12 @@
     <div class="module_top">{TITLE}</div>
     <div class="module_contents">
         <div class="spacer">&nbsp;</div>
-        <form action="../search/search.php#results" onsubmit="return check_form_post();" method="post">
+        <form action="../search/search.php#results" onsubmit="return check_search_form_post();" method="post">
             <fieldset>
                 <legend>{TITLE_SEARCH}</legend>
                 <dl>
                     <dt><label for="search">{SEARCH_MIN_LENGTH}</label></dt>
-                    <dd><label><input type="text" size="35" id="search" name="search" value="{TEXT_SEARCHED}"  class="text" /></label></dd>
+                    <dd><label><input type="text" size="35" id="TxTsearched" name="search" value="{TEXT_SEARCHED}"  class="text" /></label></dd>
                 </dl>
                 <dl>
                     <dt>

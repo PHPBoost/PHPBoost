@@ -5,14 +5,18 @@ div.search_mini input {
 
 div.resultsChoices {
     position:relative;
-    top:-19px;
+    top:-18px;
     width:100%;
     text-align:right;
 }
 
+div.resultsChoices span {
+    position:relative;
+    top:2px;
+}
 
-div.resultsChoices select{
-    height:20px;
+div.resultsChoices select {
+    height:18px;
 }
 
 div.results {
