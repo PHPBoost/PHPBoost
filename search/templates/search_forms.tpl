@@ -82,8 +82,8 @@
                 </dl>
                 <dl>
                     <dt>
-                        <label id="AdvancedSearch"><a onClick="ShowAdvancedSearchForms();">{ADVANCED_SEARCH}</a></label>
-                        <label id="SimpleSearch"><a onClick="HideAdvancedSearchForms();">{SIMPLE_SEARCH}</a></label>
+                        <label id="AdvancedSearch"><a href="javascript:ShowAdvancedSearchForms();">{ADVANCED_SEARCH}</a></label>
+                        <label id="SimpleSearch"><a href="javascript:HideAdvancedSearchForms();">{SIMPLE_SEARCH}</a></label>
                     </dt>
                     <dd>
                         <select id="FormsChoice" name="FormsSelection" onChange="ChangeForm();">
