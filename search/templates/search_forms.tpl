@@ -7,9 +7,7 @@
     # END forms #
     
     function ShowAdvancedSearchForms()
-    /*
-     *  Montre les champs de recherche avancée
-     */
+    // Montre les champs de recherche avancée
     {
         HideAdvancedSearchForms();
         show_div('FormsChoice');
@@ -19,9 +17,7 @@
     }
     
     function HideAdvancedSearchForms()
-    /*
-     *  Cache les champs de recherche avancée
-     */
+    // Cache les champs de recherche avancée
     {
         HideForms();
         hide_div('FormsChoice');
@@ -30,9 +26,7 @@
     }
     
     function HideForms()
-    /*
-     * Cache tous les résultats
-     */
+    // Cache tous les résultats
     {
         for ( var i = 0; i < modulesForms.length; i++)
         {
@@ -41,15 +35,14 @@
     }
     
     function ChangeForm()
-    /*
-     * Change le cadre des résultats
-     */
+    // Change le cadre des résultats
     {
         HideForms();
         show_div(FORM + document.getElementById('FormsChoice').value);
     }
     
     function check_search_form_post()
+    // Vérifie la validité du formulaire
     {
         var textSearched = document.getElementById("TxTsearched").value;
         
