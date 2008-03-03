@@ -17,17 +17,6 @@
     
     var calculatedResults = new Array('All');
     
-    function ShowResults(module)
-    /*
-     * Montre les résultats de ce module
-     */
-    {
-        if ( module != '' )
-            document.getElementById(RESULTS + module).style.display = 'block';
-        else if ( modulesResults.length > 0 )
-            document.getElementById(RESULTS + modulesResults[0]).style.display = 'block';
-    }
-    
     function HideResults()
     /*
      * Cache tous les résultats
@@ -35,21 +24,8 @@
     {
         for ( var i = 0; i < modulesResults.length; i++ )
         {
-            document.getElementById(RESULTS + modulesResults[i]).style.display = 'none';
+            hide_div(RESULTS + modulesResults[i]);
         }
-    }
-    
-    function inArray(aValue, anArray)
-    /*
-     * Teste la présence d'une valeur dans un tableau
-     */
-    {
-        for ( var i = 0; i < anArray.length; i++)
-        {
-            if ( anArray[i] == aValue )
-                return true;
-        }
-        return false;
     }
     
     function ChangeResults()
@@ -59,7 +35,7 @@
     {
         var module = document.getElementById('ResultsChoice').value;
         HideResults();
-        ShowResults(module);
+        show_div(RESULTS + module);
         if ( !inArray(module, calculatedResults) )
         {
             document.getElementById(INFOS_RESULTS + module).innerHTML = 'Calcul des résultats en cours...';
@@ -72,15 +48,18 @@
      *  Reconstitution d'une chaine "POSTABLE" à partir des formulaires
      */
     {
-        var data1 = "";
+        var dataString = "";
         var form = document.getElementById('SearchForm');
         var elements = form.elements;
         
         for( var i = 0; i < form.length; i++ )
         {
-            data1 += elements[i].name + "=" + escape(elements[i].value);
-            if( (i + 1) < form.length )
-                data1+="&";
+            if ( elements[i].name )
+            {
+                dataString += elements[i].name + "=" + escape(elements[i].value);
+                if ( (i + 1) < form.length )
+                    dataString += "&";
+            }
         }
         
         return data1;
@@ -147,7 +126,6 @@
         </div>
     </div>
     <div class="module_contents">
-<!--         <div class="spacer">&nbsp;</div> -->
         <div id="ResultsAll" class="results">
             <span id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</span><br />
             <span id="infosResultsAll" class="infosResults">{NB_RESULTS} {NB_RESULTS_FOUND}</span>
@@ -175,6 +153,6 @@
 <!--
     // On cache les éléments ne devant pas s'afficher au début
     HideResults();
-    ShowResults('All');
+    show_div(RESULTS + 'All');
 -->
 </script>

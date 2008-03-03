@@ -170,6 +170,17 @@ function popup(page,name)
 		window.open(page, name, "width=672, height=620,location=no,status=no,toolbar=no,scrollbars=yes");
 }
 
+//Teste la présence d'une valeur dans un tableau
+function inArray(aValue, anArray)
+{
+    for ( var i = 0; i < anArray.length; i++)
+    {
+        if ( anArray[i] == aValue )
+            return true;
+    }
+    return false;
+}
+
 //Fonction de préparation de l'ajax.
 function xmlhttprequest_init(filename)
 {
@@ -199,4 +210,13 @@ function escape_xmlhttprequest(contents)
 	contents = contents.replace(/&/g, '%26');
 	
 	return contents;
+}
+
+//Informe sur la capacité du navigateur à supporter AJAX
+function isBrowserAJAXFriendly()
+{
+    if ( window.XMLHttpRequest || window.ActiveXObject )
+        return true;
+    else
+        return false;
 }
