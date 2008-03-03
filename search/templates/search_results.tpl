@@ -115,7 +115,7 @@
     <div class="module_top_l"></div>
     <div class="module_top_r"></div>
     <div class="module_top">{SEARCH_RESULTS}
-        <div class="resultsChoices">
+        <div id="resultsChoices" class="resultsChoices">
             <span>{PRINT}</span>
             <select id="ResultsChoice" name="ResultsSelection" onChange="ChangeResults();">
                 <option value="All">{TITLE_ALL_RESULTS}</option>
@@ -154,5 +154,7 @@
     // On cache les éléments ne devant pas s'afficher au début
     HideResults();
     show_div(RESULTS + 'All');
+    if ( !browserAJAXFriendly() )
+        hide_div('resultsChoices');
 -->
 </script>
