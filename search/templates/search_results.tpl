@@ -18,9 +18,7 @@
     var calculatedResults = new Array('All');
     
     function HideResults()
-    /*
-     * Cache tous les résultats
-     */
+    // Cache tous les résultats
     {
         for ( var i = 0; i < modulesResults.length; i++ )
         {
@@ -29,9 +27,7 @@
     }
     
     function ChangeResults()
-    /*
-     * Change le cadre des résultats
-     */
+    // Change le cadre des résultats
     {
         var module = document.getElementById('ResultsChoice').value;
         HideResults();
@@ -44,9 +40,7 @@
     }
     
     function GetFormData()
-    /*
-     *  Reconstitution d'une chaine "POSTABLE" à partir des formulaires
-     */
+    // Reconstitution d'une chaine "POSTABLE" à partir des formulaires
     {
         var dataString = "";
         var form = document.getElementById('SearchForm');
@@ -66,9 +60,7 @@
     }
     
     function XMLHttpRequest_regenerate_search()
-    /*
-     * Affiche les résultats de la recherche pour le module particulier <module>
-     */
+    // Affiche les résultats de la recherche pour le module particulier <module>
     {
         var xhr = xmlhttprequest_init('../search/searchXMLHTTPRequest.php');
         xhr.onreadystatechange = function()
@@ -79,9 +71,7 @@
     }
     
     function XMLHttpRequest_search_module(module)
-    /*
-     * Affiche les résultats de la recherche pour le module particulier <module>
-     */
+    // Affiche les résultats de la recherche pour le module particulier <module>
     {
         var xhr_object = xmlhttprequest_init('../search/searchModuleXMLHTTPRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
         xhr_object.onreadystatechange = function()
