@@ -213,7 +213,7 @@ function escape_xmlhttprequest(contents)
 }
 
 //Informe sur la capacité du navigateur à supporter AJAX
-function isBrowserAJAXFriendly()
+function browserAJAXFriendly()
 {
     if ( window.XMLHttpRequest || window.ActiveXObject )
         return true;
