@@ -1,5 +1,6 @@
 <script type="text/javascript">
 <!--
+    const FORM = 'Form';
     var modulesForms = new Array();
     # START forms #
         modulesForms.push("{forms.MODULE_NAME}");
@@ -11,10 +12,10 @@
      */
     {
         HideAdvancedSearchForms();
-        document.getElementById('FormsChoice').style.display = 'block';
-        ShowForm(document.getElementById('FormsChoice').value);
-        document.getElementById('AdvancedSearch').style.display = 'none';
-        document.getElementById('SimpleSearch').style.display = 'block';
+        show_div('FormsChoice');
+        show_div(FORM + document.getElementById('FormsChoice').value);
+        hide_div('AdvancedSearch');
+        show_div('SimpleSearch');
     }
     
     function HideAdvancedSearchForms()
@@ -23,23 +24,9 @@
      */
     {
         HideForms();
-        document.getElementById('FormsChoice').style.display = 'none';
-        document.getElementById('SimpleSearch').style.display = 'none';
-        document.getElementById('AdvancedSearch').style.display = 'block';
-    }
-    
-    function ShowForm(module)
-    /*
-     * Montre les résultats de ce module
-     */
-    {
-        if ( module != '' )
-            document.getElementById('Form'+module).style.display = 'block';
-        else
-        {
-            if ( modulesForms.length > 0 )
-                document.getElementById('Form'+modulesForms[0]).style.display = 'block';
-        }
+        hide_div('FormsChoice');
+        hide_div('SimpleSearch');
+        show_div('AdvancedSearch');
     }
     
     function HideForms()
@@ -49,7 +36,7 @@
     {
         for ( var i = 0; i < modulesForms.length; i++)
         {
-            document.getElementById('Form'+modulesForms[i]).style.display = 'none';
+            hide_div(FORM + modulesForms[i]);
         }
     }
     
@@ -59,7 +46,7 @@
      */
     {
         HideForms();
-        ShowForm(document.getElementById('FormsChoice').value);
+        show_div(FORM + document.getElementById('FormsChoice').value);
     }
     
     function check_search_form_post()
@@ -130,7 +117,7 @@
 <script type="text/javascript">
 <!--
     // On cache les éléments ne devant pas s'afficher au début
-    document.getElementById('SimpleSearch').style.display = 'none';
+    hide_div('SimpleSearch');
     HideAdvancedSearchForms();
 -->
 </script>
