@@ -73,13 +73,13 @@
                     <dt><label for="search">{SEARCH_MIN_LENGTH}</label></dt>
                     <dd><label><input type="text" size="35" id="TxTsearched" name="search" value="{TEXT_SEARCHED}"  class="text" /></label></dd>
                 </dl>
-                <dl>
+                <dl id="SimpleOrAdvancedForms">
                     <dt>
-                        <label id="AdvancedSearch"><a href="javascript:ShowAdvancedSearchForms();">{ADVANCED_SEARCH}</a></label>
-                        <label id="SimpleSearch"><a href="javascript:HideAdvancedSearchForms();">{SIMPLE_SEARCH}</a></label>
+                        <label id="AdvancedSearch" style="display:none"><a href="javascript:ShowAdvancedSearchForms();">{ADVANCED_SEARCH}</a></label>
+                        <label id="SimpleSearch" style="display:none"><a href="javascript:HideAdvancedSearchForms();">{SIMPLE_SEARCH}</a></label>
                     </dt>
                     <dd>
-                        <select id="FormsChoice" name="FormsSelection" onChange="ChangeForm();">
+                        <select id="FormsChoice" name="FormsSelection" onChange="ChangeForm();" style="display:none">
                             # START forms #
                                 <option value="{forms.MODULE_NAME}">{forms.MODULE_NAME}
                                 </option>
@@ -89,7 +89,7 @@
                 </dl>
             </fieldset>
             # START forms #
-                <div id="Form{forms.MODULE_NAME}" class="module_position">
+                <div id="Form{forms.MODULE_NAME}" class="module_position" style="display:none">
                     <fieldset>
                         <legend>{forms.MODULE_NAME}</legend>
                         {forms.SEARCH_FORM}
@@ -110,7 +110,6 @@
 <script type="text/javascript">
 <!--
     // On cache les éléments ne devant pas s'afficher au début
-    hide_div('SimpleSearch');
-    HideAdvancedSearchForms();
+    show_div('AdvancedSearch');
 -->
 </script>

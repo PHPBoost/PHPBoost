@@ -105,7 +105,7 @@
     <div class="module_top_l"></div>
     <div class="module_top_r"></div>
     <div class="module_top">{SEARCH_RESULTS}
-        <div id="resultsChoices" class="resultsChoices">
+        <div id="resultsChoices" class="resultsChoices" style="display:none">
             <span>{PRINT}</span>
             <select id="ResultsChoice" name="ResultsSelection" onChange="ChangeResults();">
                 <option value="All">{TITLE_ALL_RESULTS}</option>
@@ -128,7 +128,7 @@
             </div>
         </div>
         # START results #
-            <div id="Results{results.MODULE_NAME}" class="results">
+            <div id="Results{results.MODULE_NAME}" class="results" style="display:none">
                 <span id="ResultsTitle{results.MODULE_NAME}" class="title">{results.MODULE_NAME}</span><br />
                 <span id="infosResults{results.MODULE_NAME}" class="infosResults"></span>
                 <div id="ResultsList{results.MODULE_NAME}"></div>
@@ -141,10 +141,7 @@
 </div>
 <script type="text/javascript">
 <!--
-    // On cache les éléments ne devant pas s'afficher au début
-    HideResults();
-    show_div(RESULTS + 'All');
-    if ( !browserAJAXFriendly() )
-        hide_div('resultsChoices');
+    if ( browserAJAXFriendly() )
+        show_div('resultsChoices');
 -->
 </script>
