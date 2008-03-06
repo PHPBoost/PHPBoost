@@ -25,8 +25,8 @@
 					</span>
 					<span style="float:right;">
 						{list.U_FORUM_CAT} &raquo; {list.U_TITLE_T}
-						<a href="#go_top"><img src="../templates/{THEME}/images/top.png" alt="" /></a> 
-						<a href="#go_bottom"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+						<a href="#go_top"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a> 
+						<a href="#go_bottom"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</span>
 				</div>
 				<div class="msg_contents_container">
