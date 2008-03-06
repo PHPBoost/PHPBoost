@@ -122,15 +122,17 @@ elseif( !empty($_POST['previs']) )
 	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
 	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
 	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$get_visible = isset($_POST['visible']) ? numeric($_POST['visible']) : 0;
 		
 	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 	$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 
-	$visible = 1;		
-	if( $get_visible == 2 )
-	{	
+	$visible = $get_visible;
+	list($start, $end) = array('', '');	
+	if( $visible == 2 )
+	{		
+		$visible = 1;
 		if( $start_timestamp > time() )
 			$visible = 2;
 		else
@@ -140,18 +142,7 @@ elseif( !empty($_POST['previs']) )
 			$visible = 2;
 		else
 			$end = '';
-	}	
-	elseif( $get_visible == 1 )
-	{
-		$start = '';
-		$end = '';
 	}
-	else
-	{
-		$visible = 0;
-		$start = '';
-		$end = '';
-	}	
 		
 	$Template->Assign_block_vars('news', array(
 		'TITLE' => stripslashes($title),
