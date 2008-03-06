@@ -642,7 +642,7 @@ if( !empty($id_get) ) //Espace membre
 	}
 	else  //Profil public du membre.
 	{
-		$row = $Sql->Query_array('member', 'user_id', 'level', 'login', 'user_groups', 'user_mail', 'user_local', 'user_web', 'user_occupation', 'user_hobbies', 'user_avatar', 'user_show_mail', 'timestamp', 'user_sex', 'user_born', 'user_sign', 'user_desc', 'user_msn', 'user_msg', 'user_yahoo', 'last_connect', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$row = $Sql->Query_array('member', 'user_id', 'level', 'login', 'user_groups', 'user_mail', 'user_local', 'user_web', 'user_occupation', 'user_hobbies', 'user_avatar', 'user_show_mail', 'timestamp', 'user_sex', 'user_born', 'user_sign', 'user_desc', 'user_msn', 'user_msg', 'user_yahoo', 'last_connect', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "' AND user_aprob = 1", __LINE__, __FILE__);
 		$user_born = $Sql->Query("SELECT " . $Sql->Sql_date_diff('user_born') . " FROM ".PREFIX."member WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		if( empty($row['user_id']) ) //Vérification de l'existance du membre. 
@@ -821,7 +821,8 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 	));
 		
 	//Liste des groupes.
-	$result = $Sql->Query_while("SELECT id, name FROM ".PREFIX."group", __LINE__, __FILE__);
+	$result = $Sql->Query_while("SELECT id, name 
+	FROM ".PREFIX."group", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$Template->Assign_block_vars('group_select', array(
@@ -960,6 +961,7 @@ else //Show all member!
 
 	$result = $Sql->Query_while("SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, user_local, user_web, last_connect 
 	FROM ".PREFIX."member
+	WHERE user_aprob = 1
 	ORDER BY " . $sort . " " . $mode . 
 	$Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )

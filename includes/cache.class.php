@@ -515,8 +515,8 @@ class Cache
 		global $Sql;
 		
 		$code = 'global $nbr_members, $last_member_login, $last_member_id;' . "\n";
-		$nbr_members = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member", __LINE__, __FILE__);
-		$last_member = $Sql->Query_array('member', 'user_id', 'login', "ORDER BY timestamp DESC " . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
+		$nbr_members = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_aprob = 1", __LINE__, __FILE__);
+		$last_member = $Sql->Query_array('member', 'user_id', 'login', "WHERE user_aprob = 1 ORDER BY timestamp DESC " . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
 
 		$code .= '$nbr_members = ' . var_export($nbr_members, true) . ';' . "\n";
 		$code .= '$last_member_login = ' . var_export($last_member['login'], true) . ';' . "\n";
