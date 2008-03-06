@@ -43,13 +43,6 @@
 								<input type="text" size="2" maxlength="2" name="hour" value="{news.HOUR}" class="text" /> H <input type="text" size="2" maxlength="2" name="min" value="{news.MIN}" class="text" />
 							</label></dd>
 						</dl>
-						<dl>
-							<dt><label for="archive">* {L_NEWS_ARCHIVE}</label></dt>
-							<dd>
-								<label><input type="radio" value="1" name="archive" {news.ARCHIVE_ENABLED} /> {L_YES}</label>
-								<label><input type="radio" value="0" name="archive" {news.ARCHIVE_DISABLED} id="archive" /> {L_NO}</label>
-							</dd>
-						</dl>
 					</fieldset>	
 					
 					<fieldset>

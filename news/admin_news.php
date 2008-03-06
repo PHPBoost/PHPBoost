@@ -137,7 +137,7 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 		
 	redirect(HOST . SCRIPT);
 }
-elseif( !empty($id) )
+elseif( !empty($id) ) //Vue de la news
 {			
 	$Template->Set_filenames(array(
 		'admin_news_management' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_management.tpl',
@@ -242,7 +242,7 @@ elseif( !empty($id) )
 	
 	$Template->Pparse('admin_news_management_bis'); 
 }
-elseif( !empty($_POST['previs']) && !empty($id_post) )
+elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la news.
 {
 	$Template->Set_filenames(array(
 		'admin_news_management' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_management.tpl',
@@ -261,15 +261,17 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
 	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
 	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;	
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$get_visible = isset($_POST['visible']) ? numeric($_POST['visible']) : 0;
 
 	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 	$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 	
-	$visible = 1;		
-	if( $get_visible == 2 )
+	$visible = $get_visible;
+	list($start, $end) = array('', '');	
+	if( $visible == 2 )
 	{		
+		$visible = 1;
 		if( $start_timestamp > time() )
 			$visible = 2;
 		else
@@ -279,11 +281,6 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 			$visible = 2;
 		else
 			$end = '';
-	}
-	else
-	{
-		$start = '';
-		$end = '';
 	}
 	
 	$Template->Assign_block_vars('news', array(
