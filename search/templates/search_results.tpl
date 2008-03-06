@@ -5,6 +5,7 @@
     const RESULTS_TITLE = 'ResultsTitle';
     const INFOS_RESULTS = 'infosResults';
     const RESULTS_LIST = 'ResultsList';
+    const PAGINATION_RESULTS = 'PaginationResults';
     var modulesResults = new Array('All');
     # START results #
         modulesResults.push('{results.MODULE_NAME}');
@@ -84,6 +85,7 @@
                     eval(xhr_object.responseText);
                     document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
                     document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
+                    document.getElementById(PAGINATION_RESULTS + module).innerHTML = resultsAJAX['pagination'];
                     
                     // Met à jour la liste des résultats affiché, pour ne pas les rechercher
                     // dans la base de donnée si ils sont déjà dans le html.
@@ -126,12 +128,14 @@
                     # END allResults #
                 </ul>
             </div>
+            <div id="PaginationResultsAll">{PAGINATION}</div>
         </div>
         # START results #
             <div id="Results{results.MODULE_NAME}" class="results" style="display:none">
                 <span id="ResultsTitle{results.MODULE_NAME}" class="title">{results.MODULE_NAME}</span><br />
                 <span id="infosResults{results.MODULE_NAME}" class="infosResults"></span>
                 <div id="ResultsList{results.MODULE_NAME}"></div>
+                <div id="PaginationResults{results.MODULE_NAME}"></div>
             </div>
         # END results #
     </div>

@@ -40,8 +40,8 @@ $Template->Set_filenames(array(
 define ( 'NB_RESULTS_PER_PAGE', 10);
 
 // A protéger impérativement;
-$pageNum = !empty($_POST['pageNum']) ? numeric($_POST['pageNum']) : 1;
-$module = !empty($_POST['module']) ? securit($_POST['module']) : '';
+$pageNum = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
+$modName = !empty($_GET['module']) ? securit($_GET['module']) : 'All';
 $search = !empty($_POST['search']) ? securit($_POST['search']) : '';
 $p = 0;
 
@@ -126,6 +126,25 @@ if( $search != '' )
     $idsSearch = array();
     // Génération des résultats et passage aux templates
     $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, $idsSearch, ($p), ($p + NB_RESULTS_PER_PAGE));
+    
+    echo '<pre>';
+    print_r($results);
+    echo '</pre>';
+    
+    // Création de la pagination si le nombre de commentaires est trop important.
+    include_once('../includes/pagination.class.php');
+    $Pagination = new Pagination();
+    $showPagin = $Pagination->Display_pagination(
+        transid('search.php?module=All&amp;p=%d'),
+        $nbResults,
+        'p',
+        NB_RESULTS_PER_PAGE,
+        3
+    );
+    
+    $Template->Assign_vars(array(
+        'PAGINATION' => ($nbResults > NB_RESULTS_PER_PAGE  ?  $showPagin : '')
+    ));
     
     $Template->Assign_vars(Array(
         'NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : $LANG['one_result_found'],

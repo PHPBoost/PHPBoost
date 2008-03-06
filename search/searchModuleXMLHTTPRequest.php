@@ -3,7 +3,7 @@
 *                         searchXMLHTTPRequest.php
 *                            -------------------
 *   begin                : January 27, 2008
-*   copyright            : (C) 2008 Rouchon Loïc
+*   copyright            : (C) 2008 Rouchon Loï¿½c
 *   email                : horn@phpboost.com
 *
 *
@@ -74,10 +74,23 @@ if( $idSearch >= 0 )
             }
             $htmlResults .= '</ul>';
         }
+        // CrÃ©ation de la pagination si le nombre de commentaires est trop important.
+        include_once('../includes/pagination.class.php');
+        $Pagination = new Pagination();
+        $showPagin = $Pagination->Display_pagination(
+            transid('search.php?module='.$module->name.'&amp;p=%d'),
+            $nbResults,
+            'p',
+            NB_RESULTS_PER_PAGE,
+            3
+        );
+        $showPagin = $nbResults > NB_RESULTS_PER_PAGE  ?  $showPagin : '';
+        
         $return = ' var resultsAJAX = new Array();
                     resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.
                     addslashes($nbResults > 1 ? $LANG['nb_results_found']:$LANG['one_result_found']).'\';
-                    resultsAJAX[\'results\'] = \''.$htmlResults.'\';';
+                    resultsAJAX[\'results\'] = \''.$htmlResults.'\';
+                    resultsAJAX[\'pagination\'] = \''.$showPagin.'\';';
         echo $return;
     }
     else echo 'NO RESULTS IN CACHE';
