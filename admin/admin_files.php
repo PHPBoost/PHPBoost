@@ -47,12 +47,14 @@ $move_folder = !empty($_GET['movef']) ? numeric($_GET['movef']) : 0;
 $move_file = !empty($_GET['movefi']) ? numeric($_GET['movefi']) : 0;
 $to = isset($_GET['to']) ? numeric($_GET['to']) : -1;
 
-if( $parent_folder ) //Changement de dossier
+if( isset($_GET['fup']) ) //Changement de dossier
 {
 	$parent_folder = $Sql->Query_array("upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
-
-	if( $parent_folder['user_id'] == -1 )
+	//die('test'.$parent_folder['id_parent'] );
+	if( !empty($folder_member) ) 
 		redirect(HOST . DIR . '/admin/admin_files.php?showm=1');
+	elseif( $parent_folder['user_id'] != -1 && empty($parent_folder['id_parent']) )
+		redirect(HOST . DIR . '/admin/admin_files.php?fm=' . $parent_folder['user_id']);
 	else
 		redirect(HOST . DIR . '/admin/admin_files.php?f=' . $parent_folder['id_parent']);
 }
@@ -60,7 +62,6 @@ elseif( $home_folder ) //Retour à la racine.
 	redirect(HOST . DIR . '/admin/admin_files.php');
 elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'un fichier.
 {
-	$folder = !empty($_GET['f']) ? numeric($_GET['f']) : 0;
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = '../upload/';
@@ -81,6 +82,8 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 		{
 			$check_user_folder = $Sql->Query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $folder . "'", __LINE__, __FILE__);
 			$user_id = ($check_user_folder <= 0) ? -1 : $Member->Get_attribute('user_id');
+			$user_id = max($user_id, $folder_member);
+			
 			$Sql->Query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . securit($_FILES['upload_file']['name']) . "', '" . securit($Upload->filename['upload_file']) . "', '" . $user_id . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
 		}
 	}
@@ -88,7 +91,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '&error=' . $error . '#errorh' : '';
-	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . $error);
+	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&fm=' . $folder_member . $error);
 }
 elseif( !empty($del_folder) ) //Supprime un dossier.
 {
@@ -108,7 +111,7 @@ elseif( !empty($del_file) ) //Suppression d'un fichier
 	//Suppression d'un fichier.
 	$Files->Del_file($del_file, -1, ADMIN_NO_CHECK);
 	
-	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder);
+	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&fm=' . $folder_member);
 }
 elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 {
@@ -181,6 +184,7 @@ else
 		
 	$Template->Assign_vars(array(
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
+		'FOLDERM_ID' => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
 		'USER_ID' => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
@@ -230,11 +234,12 @@ else
 		$sql_folder = "SELECT uc.user_id as id, uc.user_id, m.login as name, 0 as id_parent
 		FROM ".PREFIX."upload_cat uc
 		LEFT JOIN ".PREFIX."member m ON m.user_id = uc.user_id
-		WHERE uc.id_parent = '" . $folder . "' AND uc.user_id != -1 
+		WHERE uc.id_parent = '" . $folder . "' AND uc.user_id <> -1 
 		UNION
 		SELECT u.user_id as id, u.user_id, m.login as name, 0 as id_parent
 		FROM ".PREFIX."upload u
 		LEFT JOIN ".PREFIX."member m ON m.user_id = u.user_id
+		WHERE u.user_id <> -1
 		ORDER BY name
 		";
 	elseif( !empty($folder_member) )
