@@ -51,10 +51,7 @@ if( !empty($id_get) ) //Déplacement du sujet.
 	$topic = $Sql->Query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	if( !$Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-	
-	$Template->Assign_block_vars('move', array(
-	));
-	
+
 	$cat = $Sql->Query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
 	
 	$auth_cats = '';
@@ -218,11 +215,9 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	}
 	$Sql->Close($result);
 	
-	$Template->Assign_block_vars('cut_cat', array(
-		'CATEGORIES' => $cat_forum
-	));
-	
 	$Template->Assign_vars(array(
+		'C_FORUM_CUT_CAT' => true,
+		'CATEGORIES' => $cat_forum,
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
@@ -255,14 +250,6 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		
 	if( empty($post_topic) && empty($preview_topic) )
 	{
-		$Template->Assign_block_vars('type', array(
-			'CHECKED_NORMAL' => 'checked="checked"',
-			'L_TYPE' => '* ' . $LANG['type'],
-			'L_DEFAULT' => $LANG['default'],
-			'L_POST_IT' => $LANG['forum_postit'],
-			'L_ANOUNCE' => $LANG['forum_announce']
-		));
-		
 		//Liste des choix des sondages => 20 maxi
 		$nbr_poll_field = 0;
 		for($i = 0; $i < 5; $i++)
@@ -277,11 +264,16 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			'TITLE' => '',
 			'DESC' => '',
 			'CONTENTS' => unparse($msg['contents']),
-			'SELECTED_SIMPLE' => 'checked="ckecked"',
 			'IDM' => $id_get_msg,
+			'CHECKED_NORMAL' => 'checked="checked"',
 			'SELECTED_SIMPLE' => 'checked="checked"',
 			'NO_DISPLAY_POLL' => 'true',
 			'NBR_POLL_FIELD' => 0,
+			'L_TYPE' => '* ' . $LANG['type'],
+			'L_DEFAULT' => $LANG['default'],
+			'L_POST_IT' => $LANG['forum_postit'],
+			'L_ANOUNCE' => $LANG['forum_announce'],
+			'C_FORUM_POST_TYPE' => true,
 			'C_ADD_POLL_FIELD' => true
 		));
 	}
@@ -325,29 +317,25 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			'DESC' => stripslashes($subtitle),
 			'CONTENTS' => stripslashes($contents),
 			'QUESTION' => !empty($_POST['question']) ? stripslashes($_POST['question']) : '',
-			'IDM' => $id_post_msg,
+			'IDM' => $id_post_msg,			
+			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
+			'CONTENTS_PREVIEW' => second_parse(stripslashes(parse($contents))),
+			'CHECKED_NORMAL' => $checked_normal,
+			'CHECKED_POSTIT' => $checked_postit,
+			'CHECKED_ANNONCE' => $checked_annonce,
 			'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
 			'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',
 			'NO_DISPLAY_POLL' => !empty($_POST['question']) ? 'false' : 'true',
 			'NBR_POLL_FIELD' => $nbr_poll_field,
-			'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 18) ? true : false
-		));
-				
-		$Template->Assign_block_vars('type', array(
-			'CHECKED_NORMAL' => $checked_normal,
-			'CHECKED_POSTIT' => $checked_postit,
-			'CHECKED_ANNONCE' => $checked_annonce,
+			'C_FORUM_PREVIEW_MSG' => true,
+			'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 18) ? true : false,
+			'C_FORUM_POST_TYPE' => true,
+			'L_PREVIEW' => $LANG['preview'],
 			'L_TYPE' => '* ' . $LANG['type'],
 			'L_DEFAULT' => $LANG['default'],
 			'L_POST_IT' => $LANG['forum_postit'],
 			'L_ANOUNCE' => $LANG['forum_announce']
 		));
-
-		$Template->Assign_block_vars('show_msg', array(
-			'L_PREVIEW' => $LANG['preview'],
-			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
-			'CONTENTS' => second_parse(stripslashes(parse($contents)))
-		));		
 	}
 			
 	include_once('../includes/bbcode.php');
@@ -422,7 +410,7 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 	if( !empty($to) && $level > 0 )
 	{
 		$type = isset($_POST['type']) ? numeric($_POST['type']) : 0; 
-		$contents = !empty($msg['contents']) ? parse($msg['contents']) : ''; 
+		$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : ''; 
 		$title = !empty($_POST['title']) ? securit($_POST['title']) : ''; 
 		$subtitle = !empty($_POST['desc']) ? securit($_POST['desc']) : ''; 
 		

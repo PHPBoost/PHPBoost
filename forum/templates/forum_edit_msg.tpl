@@ -26,12 +26,12 @@
 					<br />		
 					# ENDIF #
 
-					# START show_msg #
+					# IF C_FORUM_PREVIEW_MSG #		
 					<div class="module_position">					
 						<div class="module_top_l"></div>		
 						<div class="module_top_r"></div>
 						<div class="module_top">
-							<span style="float:left;">{show_msg.L_PREVIEW}</span>
+							<span style="float:left;">{L_PREVIEW}</span>
 							<span style="float:right;"></span>&nbsp;
 						</div>
 					</div>	
@@ -39,7 +39,7 @@
 						<div class="msg_container">
 							<div class="msg_pseudo_mbr"></div>
 							<div class="msg_top_row">
-								<div style="float:left;">&nbsp;&nbsp;<img src="../templates/{THEME}/images/ancre.png" alt="" /> {show_msg.DATE}</div>
+								<div style="float:left;">&nbsp;&nbsp;<img src="../templates/{THEME}/images/ancre.png" alt="" /> {DATE}</div>
 								<div style="float:right;"><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="" title="" />&nbsp;&nbsp;</div>
 							</div>
 							<div class="msg_contents_container">
@@ -47,7 +47,7 @@
 								</div>
 								<div class="msg_contents">
 									<div class="msg_contents_overflow">
-										{show_msg.CONTENTS}
+										{CONTENTS}
 									</div>
 								</div>
 							</div>
@@ -67,7 +67,7 @@
 						<div class="msg_bottom">&nbsp;</div>
 					</div>
 					<br /><br />
-					# END show_msg #
+					# ENDIF #
 					
 					<div class="fieldset_content">
 						<fieldset>

@@ -75,12 +75,12 @@
 					<br />		
 					# ENDIF #
 
-					# START show_msg #		
+					# IF C_FORUM_PREVIEW_MSG #		
 					<div class="module_position">					
 						<div class="module_top_l"></div>		
 						<div class="module_top_r"></div>
 						<div class="module_top">
-							<span style="float:left;">{show_msg.L_PREVIEW}</span>
+							<span style="float:left;">{L_PREVIEW}</span>
 							<span style="float:right;"></span>&nbsp;
 						</div>
 					</div>	
@@ -88,7 +88,7 @@
 						<div class="msg_container">
 							<div class="msg_pseudo_mbr"></div>
 							<div class="msg_top_row">
-								<div style="float:left;">&nbsp;&nbsp;<img src="../templates/{THEME}/images/ancre.png" alt="" /> {show_msg.DATE}</div>
+								<div style="float:left;">&nbsp;&nbsp;<img src="../templates/{THEME}/images/ancre.png" alt="" /> {DATE}</div>
 								<div style="float:right;"><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="" title="" />&nbsp;&nbsp;</div>
 							</div>
 							<div class="msg_contents_container">
@@ -96,7 +96,7 @@
 								</div>
 								<div class="msg_contents">
 									<div class="msg_contents_overflow">
-										{show_msg.CONTENTS}
+										{CONTENTS_PREVIEW}
 									</div>
 								</div>
 							</div>
@@ -116,22 +116,22 @@
 						<div class="msg_bottom">&nbsp;</div>
 					</div>
 					<br /><br />
-					# END show_msg #			
+					# ENDIF #		
 					
 					<div class="fieldset_content">
 						<fieldset>
 							<legend>{L_ACTION}</legend>
 							<p>{L_REQUIRE}</p>
-							# START cut_cat #
+							# IF C_FORUM_CUT_CAT #
 							<dl>
 								<dt><label for="to">* {L_CAT}</label></dt>
 								<dd><label>
 									<select id="to" name="to">
-										{cut_cat.CATEGORIES}
+										{CATEGORIES}
 									</select>
 								</label></dd>
 							</dl>
-							# END cut_cat #
+							# ENDIF #
 							<dl>
 								<dt><label for="title">* {L_TITLE}</label></dt>
 								<dd><label><input type="text" size="65" maxlength="100" id="title" name="title" value="{TITLE}" class="text" /></label></dd>
@@ -147,16 +147,16 @@
 							
 							<br /><br />
 							
-							# START type #
+							# IF C_FORUM_POST_TYPE #
 							<dl>
-								<dt><label for="type">{type.L_TYPE}</label></dt>
+								<dt><label for="type">{L_TYPE}</label></dt>
 								<dd>
-									<label><input type="radio" name="type" id="type" value="0" {type.CHECKED_NORMAL} /> {type.L_DEFAULT}</label>
-									<label><input type="radio" name="type" value="1" {type.CHECKED_POSTIT} /> {type.L_POST_IT}</label>
-									<label><input type="radio" name="type" value="2" {type.CHECKED_ANNONCE} /> {type.L_ANOUNCE}</label>
+									<label><input type="radio" name="type" id="type" value="0" {CHECKED_NORMAL} /> {L_DEFAULT}</label>
+									<label><input type="radio" name="type" value="1" {CHECKED_POSTIT} /> {L_POST_IT}</label>
+									<label><input type="radio" name="type" value="2" {CHECKED_ANNONCE} /> {L_ANOUNCE}</label>
 								</dd>
 							</dl>	
-							# END type #	
+							# ENDIF #	
 						</fieldset>	
 
 						<fieldset>	

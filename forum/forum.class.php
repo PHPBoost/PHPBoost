@@ -342,7 +342,7 @@ class Forum
 		//Calcul du nombre de messages déplacés.
 		$nbr_msg = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."forum_msg WHERE idtopic = '" . $idtopic . "' AND id >= '" . $id_msg_cut . "'", __LINE__, __FILE__);
 		$nbr_msg = !empty($nbr_msg) ? numeric($nbr_msg) : 1;
-		
+
 		//Insertion nouveau topic.
 		$Sql->Query_inject("INSERT INTO ".PREFIX."forum_topics (idcat, title, subtitle, user_id, nbr_msg, nbr_views, last_user_id, last_msg_id, last_timestamp, first_msg_id, type, status, aprob) VALUES ('" . $idcat_dest . "', '" . $title . "', '" . $subtitle . "', '" . $msg_user_id . "', '" . $nbr_msg . "', 0, '" . $last_user_id . "', '" . $last_msg_id . "', '" . $last_timestamp . "', '" . $id_msg_cut . "', '" . $type . "', 1, 0)", __LINE__, __FILE__);
 		$last_topic_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."forum_topics");	//Dernier topic inseré

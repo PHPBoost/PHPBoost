@@ -43,22 +43,20 @@ if( !$get_show && defined('PHP_BOOST') === true )
 	//Mode bbcode activé.
 	if( $Member->Get_attribute('user_editor') == 'tinymce' )
 	{
-		$Template->Assign_block_vars('tinymce_mode', array(
-		));
-		
 		$Template->Assign_vars(array(
+			'C_BBCODE_TINYMCE_MODE' => true,
+			'C_BBCODE_NORMAL_MODE' => false,
 			'TINYMCE_TRIGGER' => 'TinyMCE.prototype.triggerSave();'
 		));
 	}
 	else
 	{	
-		$Template->Assign_block_vars('bbcode_mode', array(
-		));		
-		
 		//Chargement de la configuration.
 		$Cache->Load_file('files');
 			
 		$Template->Assign_vars(array(	
+			'C_BBCODE_TINYMCE_MODE' => false,
+			'C_BBCODE_NORMAL_MODE' => true,
 			'UPLOAD_MANAGEMENT' => $Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) ? '<a style="font-size: 10px;" title="' . $LANG['bb_upload'] . '" href="#" onclick="window.open(\'../member/upload.php?popup=1&amp;fd=' . $field  . '\', \'\', \'height=435,width=680,resizable=yes,scrollbars=yes\');return false;"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/files_add.png" alt="" /></a>' : '',
 			'L_BB_SMILEYS' => $LANG['bb_smileys'],
 			'L_BB_BOLD' => $LANG['bb_bold'],
@@ -164,7 +162,7 @@ if( !$get_show && defined('PHP_BOOST') === true )
 			
 			$img = '<img src="../images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />'; 
 						
-			$Template->Assign_block_vars('bbcode_mode.smiley', array(
+			$Template->Assign_block_vars('smiley', array(
 				'IMG' => $img,
 				'CODE' => addslashes($code_smile),
 				'END_LINE' => is_int($i/$smile_by_line) ? '<br />' : ''
@@ -176,7 +174,8 @@ if( !$get_show && defined('PHP_BOOST') === true )
 
 		if( $z > $smile_max ) //Lien vers tous les smiley!
 		{		
-			$Template->Assign_block_vars('bbcode_mode.more', array(
+			$Template->Assign_vars(array(
+				'C_BBCODE_SMILEY_MORE' => true,
 				'L_ALL_SMILEY' => $LANG['all_smiley'],
 				'L_SMILEY' => $LANG['smiley']
 			));

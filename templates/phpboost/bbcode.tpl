@@ -1,4 +1,4 @@
-		# START tinymce_mode #			
+		# IF C_BBCODE_TINYMCE_MODE #			
 		<script language="javascript" type="text/javascript" src="../includes/tinymce/tiny_mce.js"></script>
 		<script language="javascript" type="text/javascript">
 		<!--
@@ -21,7 +21,7 @@
 		});
 		-->
 		</script>
-		# END tinymce_mode #
+		# ENDIF #
 		
 		<script type="text/javascript" src="../templates/{THEME}/images/bbcode.js"></script>
 		<script type="text/javascript">
@@ -58,7 +58,7 @@
 		</script>
 		<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview"></div>
 		
-		# START bbcode_mode #
+		# IF C_BBCODE_NORMAL_MODE #
 		<script type="text/javascript">
 		<!--
 		function bbcode_color_{FIELD}()
@@ -142,13 +142,13 @@
 
 								<div style="position:relative;z-index:100;margin-left:-70px;float:left;display:none;" id="bb_block1{FIELD}">
 									<div class="bbcode_block" style="width:130px;" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);">
-										# START bbcode_mode.smiley #
-										<a onclick="insertbbcode('{bbcode_mode.smiley.CODE}', 'smile', '{FIELD}');" class="bbcode_hover" title="{bbcode_mode.smiley.CODE}">{bbcode_mode.smiley.IMG}</a>{bbcode_mode.smiley.END_LINE}
-										# END bbcode_mode.smiley #
-										# START bbcode_mode.more #
+										# START smiley #
+										<a onclick="insertbbcode('{smiley.CODE}', 'smile', '{FIELD}');" class="bbcode_hover" title="{smiley.CODE}">{smiley.IMG}</a>{smiley.END_LINE}
+										# END smiley #
+										# IF C_BBCODE_SMILEY_MORE #
 										<br />
-										<a style="font-size: 10px;" href="#" onclick="window.open('../includes/bbcode.php?show=true&amp;field={FIELD}', '{bbcode_mode.more.L_SMILEY}', 'height=550,width=650,resizable=yes,scrollbars=yes');return false;">{bbcode_mode.more.L_ALL_SMILEY}</a>
-										# END bbcode_mode.more #
+										<a style="font-size: 10px;" href="#" onclick="window.open('../includes/bbcode.php?show=true&amp;field={FIELD}', '{more.L_SMILEY}', 'height=550,width=650,resizable=yes,scrollbars=yes');return false;">{L_ALL_SMILEY}</a>
+										# ENDIF #
 									</div>
 								</div>
 								<a href="javascript:bb_display_block('1', '{FIELD}');" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_SMILEYS}"><img src="../templates/{THEME}/images/form/smileys.png" alt="{L_BB_SMILEYS}" /></a>
@@ -343,5 +343,4 @@
 		set_bbcode_preference('bbcode_more{FIELD}');
 		-->
 		</script>
-		# END bbcode_mode #
-		
+		# ENDIF #
