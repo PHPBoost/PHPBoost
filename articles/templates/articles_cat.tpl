@@ -4,7 +4,7 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {ADD_ARTICLES}
+				<a href="articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
 			</div>
 			<div class="module_contents">
 				# IF C_ARTICLES_CAT #
@@ -29,41 +29,31 @@
 				<br /><br />
 				<table class="module_table">
 					<tr>
-						<th colspan="6">
-							{CAT} &nbsp;{EDIT}
-						</th>	
-					</tr>
-					<tr>
-						<td colspan="6" class="row3">
-							{PAGINATION}
-						</td>	
-					</tr>
-					<tr style="font-weight:bold;text-align: center;">
-						<td class="row2">
-							<a href="articles{U_ARTICLES_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+						<th style="text-align:center;">
+							<a href="articles{U_ARTICLES_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_ARTICLES}
-							<a href="articles{U_ARTICLES_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
-						</td>
-						<td class="row2">
-							<a href="articles{U_ARTICLES_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="articles{U_ARTICLES_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						</th>
+						<th style="text-align:center;">
+							<a href="articles{U_ARTICLES_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_DATE}					
-							<a href="articles{U_ARTICLES_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
-						</td>
-						<td class="row2">
-							<a href="articles{U_ARTICLES_VIEW_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="articles{U_ARTICLES_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						</th>
+						<th style="text-align:center;">
+							<a href="articles{U_ARTICLES_VIEW_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_VIEW}					
-							<a href="articles{U_ARTICLES_VIEW_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
-						</td>
-						<td class="row2">
-							<a href="articles{U_ARTICLES_NOTE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="articles{U_ARTICLES_VIEW_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						</th>
+						<th style="text-align:center;">
+							<a href="articles{U_ARTICLES_NOTE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_NOTE}					
-							<a href="articles{U_ARTICLES_NOTE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
-						</td>
-						<td class="row2">
-							<a href="articles{U_ARTICLES_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="articles{U_ARTICLES_NOTE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						</th>
+						<th style="text-align:center;">
+							<a href="articles{U_ARTICLES_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_COM}
-							<a href="articles{U_ARTICLES_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
-						</td>
+							<a href="articles{U_ARTICLES_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						</th>
 					</tr>
 					# START articles #
 					<tr>	

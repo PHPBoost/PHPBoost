@@ -55,34 +55,34 @@
 				<table class="module_table">
 					<tr>
 						<th style="text-align:center;">
-							<a href="download{U_DOWNLOAD_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="download{U_DOWNLOAD_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_FILE}
-							<a href="download{U_DOWNLOAD_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+							<a href="download{U_DOWNLOAD_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="download{U_DOWNLOAD_SIZE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="download{U_DOWNLOAD_SIZE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_SIZE}
-							<a href="download{U_DOWNLOAD_SIZE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+							<a href="download{U_DOWNLOAD_SIZE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="download{U_DOWNLOAD_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="download{U_DOWNLOAD_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_DATE}					
-							<a href="download{U_DOWNLOAD_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+							<a href="download{U_DOWNLOAD_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="download{U_DOWNLOAD_VIEW_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="download{U_DOWNLOAD_VIEW_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_DOWNLOAD}					
-							<a href="download{U_DOWNLOAD_VIEW_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+							<a href="download{U_DOWNLOAD_VIEW_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="download{U_DOWNLOAD_NOTE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="download{U_DOWNLOAD_NOTE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_NOTE}					
-							<a href="download{U_DOWNLOAD_NOTE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+							<a href="download{U_DOWNLOAD_NOTE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="download{U_DOWNLOAD_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="download{U_DOWNLOAD_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_COM}
-							<a href="download{U_DOWNLOAD_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+							<a href="download{U_DOWNLOAD_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 					</tr>
 					# START download #

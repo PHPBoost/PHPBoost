@@ -55,29 +55,29 @@
 				<table class="module_table">
 					<tr>
 						<th style="text-align:center;">
-							<a href="web{U_WEB_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="web{U_WEB_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_LINK}
-							<a href="web{U_WEB_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+							<a href="web{U_WEB_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="web{U_WEB_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="web{U_WEB_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_DATE}					
-							<a href="web{U_WEB_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+							<a href="web{U_WEB_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="web{U_WEB_VIEW_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="web{U_WEB_VIEW_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_VIEW}					
-							<a href="web{U_WEB_VIEW_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+							<a href="web{U_WEB_VIEW_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="web{U_WEB_NOTE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="web{U_WEB_NOTE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_NOTE}					
-							<a href="web{U_WEB_NOTE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+							<a href="web{U_WEB_NOTE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="web{U_WEB_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+							<a href="web{U_WEB_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_COM}
-							<a href="web{U_WEB_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+							<a href="web{U_WEB_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 					</tr>
 					# START web #

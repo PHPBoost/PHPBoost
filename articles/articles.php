@@ -233,7 +233,7 @@ else
 	$is_admin = $Member->Check_level(ADMIN_LEVEL) ? true : false;	
 	$Template->Assign_vars(array(
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
-		'ADD_ARTICLES' => $is_admin ? '<a href="admin_articles_add.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
+		'ADD_ARTICLES' => $is_admin ? '&raquo; <a href="admin_articles_add.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'L_ARTICLES' => $LANG['articles'],
 		'L_DATE' => $LANG['date'],
 		'L_VIEW' => $LANG['views'],
@@ -243,7 +243,7 @@ else
 		'L_NO_ARTICLES' => ($nbr_articles == 0) ? $LANG['none_article'] : '',
 		'L_ARTICLES_INDEX' => $LANG['title_articles'],
 		'L_CATEGORIES' => ($CAT_ARTICLES[$idartcat]['level'] >= 0) ? $LANG['sub_categories'] : $LANG['categories'],	
-		'U_ARTICLES_CAT_LINKS' => $cat_links,
+		'U_ARTICLES_CAT_LINKS' => trim($cat_links, ' &raquo;'),
 		'U_ARTICLES_ALPHA_TOP' => transid('.php?sort=alpha&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=desc'),
 		'U_ARTICLES_ALPHA_BOTTOM' => transid('.php?sort=alpha&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=asc'),
 		'U_ARTICLES_DATE_TOP' => transid('.php?sort=date&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=date&amp;mode=desc'),
