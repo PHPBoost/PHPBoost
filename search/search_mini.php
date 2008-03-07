@@ -31,7 +31,7 @@ if( defined('PHP_BOOST') !== true ) exit;
 load_module_lang('search');
 
 $Template->Set_filenames(array(
-'search_mini' => '../templates/'.$CONFIG['theme'].'/search/search_mini.tpl',
+	'search_mini' => '../templates/'.$CONFIG['theme'].'/search/search_mini.tpl',
 ));
 
 //--------------------------------------------------------------------- Params
@@ -52,7 +52,7 @@ $Template->Assign_vars(Array(
 //----------------------------------------------------------------------- Main
 
 // parsage de la page
-$Template->Pparse ('search_mini');
+$Template->Pparse('search_mini');
 
 //--------------------------------------------------------------------- Footer
 
