@@ -8,7 +8,7 @@
 			</div>
 			<div class="module_contents">
 				# IF C_ARTICLES_CAT #
-				<p style="text-align:center;" class="text_strong">{L_CATEGORIES} {EDIT}</p>
+				<p style="text-align:center;" class="text_strong">{L_CATEGORIES} {EDIT_CAT}</p>
 				<hr style="margin-bottom:20px;" />
 				# START cat_list #
 				<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
@@ -91,7 +91,7 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom text_strong">
-				<a href="articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {ADD_ARTICLES}
+				<a href="articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
 			</div>
 		</div>
 		
