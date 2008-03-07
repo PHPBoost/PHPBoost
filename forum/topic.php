@@ -490,11 +490,14 @@ else
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
 	if( $CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $Member->Get_attribute('user_id') == $topic['user_id']) )
 	{
-		$img_display = $topic['display_msg'] ? 'msg_display2.png' : 'msg_display.png';
+		$img_msg_display = $topic['display_msg'] ? 'msg_display2.png' : 'msg_display.png';
+		$img_favorite_display = $track ? 'unfavorite.png' : 'favorite.png';
 		$Template->Assign_vars(array(
 			'C_DISPLAY_MSG' => true,
-			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_display . '" alt="" class="valign_middle" />' : '',
-			'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
+			'ICON_FAVORITE' => '<img src="' . $module_data_path . '/images/' . $img_favorite_display . '" alt="" class="valign_middle" />',
+			'ICON_FAVORITE2' => '<img src="' . $module_data_path . '/images/' . $img_favorite_display . '" alt="" class="valign_middle" id="forum_favorite_img" />',
+			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_msg_display . '" alt="" class="valign_middle"  />' : '',
+			'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_msg_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG_BIS' => $CONFIG_FORUM['explain_display_msg_bis'],

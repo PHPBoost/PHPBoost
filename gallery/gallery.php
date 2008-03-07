@@ -664,7 +664,7 @@ else
 						'RENAME' => addslashes($info_pics['name']),
 						'RENAME_CUT' => addslashes($info_pics['name']),		
 						'IMG_APROB' => $CONFIG['lang'] . '/' . (($info_pics['aprob'] == 1) ? 'unaprob.png' : 'aprob.png'),
-						'U_DEL' => transid('php?del=' . $info_pics['id'] . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?del=' . $info_pics['id']),
+						'U_DEL' => transid('.php?del=' . $info_pics['id'] . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?del=' . $info_pics['id']),
 						'U_MOVE' => transid('.php?id=' . $info_pics['id'] . '&amp;move=\' + this.options[this.selectedIndex].value', '-0-' . $info_pics['id'] . '.php?move=\' + this.options[this.selectedIndex].value')
 					));			
 				}
