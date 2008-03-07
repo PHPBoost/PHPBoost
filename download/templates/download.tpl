@@ -17,7 +17,7 @@
 				# START cat_list #
 				<div style="float:left;text-align:center;width:{cat_list.WIDTH}%;padding-bottom:20px;">
 					{cat_list.U_IMG_CAT}
-					<a href="../download/download{cat_list.U_DOWNLOAD_CAT}">{cat_list.CAT}</a> ({cat_list.TOTAL})<br />
+					<a href="../download/download{cat_list.U_DOWNLOAD_CAT}">{cat_list.CAT}</a> <span class="text_small">({cat_list.TOTAL})</span><br />
 					<span class="text_small">{cat_list.CONTENTS}</span>
 				</div>	
 				# END cat_list #
