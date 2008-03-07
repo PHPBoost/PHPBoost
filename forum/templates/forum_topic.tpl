@@ -67,7 +67,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{	
 					if( document.getElementById('forum_favorite_img') )
-						document.getElementById('forum_favorite_img').src = '{MODULE_DATA_PATH}/images/favorite.png';
+						document.getElementById('forum_favorite_img').src = xhr_object.responseText == '1' ? '{MODULE_DATA_PATH}/images/unfavorite.png' : '{MODULE_DATA_PATH}/images/favorite.png';
 					if( document.getElementById('forum_favorite_msg') )
 						document.getElementById('forum_favorite_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE}" : "{L_SUSCRIBE}";
 					is_favorite = xhr_object.responseText == '1' ? true : false;
@@ -256,12 +256,12 @@
 				# ENDIF #			
 				<td>				
 					<span id="forum_favorite">
-						<a href="action{U_SUSCRIBE}#go_bottom"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/favorite.png" alt="" /></a> <a href="action{U_SUSCRIBE}#go_bottom">{L_SUSCRIBE_DEFAULT}</a>
+						<a href="action{U_SUSCRIBE}#go_bottom">{ICON_FAVORITE}</a> <a href="action{U_SUSCRIBE}#go_bottom">{L_SUSCRIBE_DEFAULT}</a>
 					</span>
 					<script type="text/javascript">
 					<!--				
 					document.getElementById('forum_favorite').style.display = 'none';
-					document.write('<a href="javascript:XMLHttpRequest_favorite()"><img id="forum_favorite_img" class="valign_middle" src="{MODULE_DATA_PATH}/images/favorite.png" alt="" /></a> <a href="javascript:XMLHttpRequest_favorite()"><span id="forum_favorite_msg">{L_SUSCRIBE_DEFAULT}</span></a>');
+					document.write('<a href="javascript:XMLHttpRequest_favorite()">{ICON_FAVORITE2}</a> <a href="javascript:XMLHttpRequest_favorite()"><span id="forum_favorite_msg">{L_SUSCRIBE_DEFAULT}</span></a>');
 					-->
 					</script>
 				</td>

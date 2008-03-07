@@ -48,7 +48,7 @@ if( in_array($id_error, $array_error) )
 				if( $ban > 0 )
 				{
 					if( $ban < 60 )
-						$delay_ban = $ban . ' ' . ($ban > 1) ? $LANG['minutes'] : $LANG['minute'];
+						$delay_ban = $ban . ' ' . (($ban > 1) ? $LANG['minutes'] : $LANG['minute']);
 					elseif( $ban < 1440 )
 					{
 						$delay_ban = number_round($ban/60, 0);
