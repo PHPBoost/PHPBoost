@@ -95,7 +95,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 		'C_DISPLAY_ARTICLE' => true,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
-		'NAME' => $LANG['title_articles'] . ' - ' . $articles['title'],
+		'NAME' => $articles['title'],
 		'PSEUDO' => $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__),		
 		'CONTENTS' => second_parse($array_contents[$page - 1]),
 		'CAT' => $CAT_ARTICLES[$idartcat]['name'],
