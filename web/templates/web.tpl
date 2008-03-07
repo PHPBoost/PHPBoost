@@ -123,10 +123,10 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					<strong>{NAME}</strong> {EDIT}{DEL}
+					<strong>{NAME}</strong>
 				</div>
 				<div style="float:right">
-					{COM}
+					{COM} {EDIT}{DEL}
 				</div>
 			</div>
 			<div class="module_contents">

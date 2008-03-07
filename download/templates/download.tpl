@@ -207,10 +207,10 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					{NAME} {EDIT}{DEL}
+					{NAME}
 				</div>
 				<div style="float:right">
-					{COM}
+					{COM} {EDIT}{DEL}
 				</div>
 			</div>
 			<div class="module_contents">
