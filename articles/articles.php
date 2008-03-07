@@ -233,7 +233,7 @@ else
 	$is_admin = $Member->Check_level(ADMIN_LEVEL) ? true : false;	
 	$Template->Assign_vars(array(
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
-		'ADD_ARTICLES' => $is_admin ? '&raquo; <a href="admin_articles_add.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
+		'ADD_ARTICLES' => $is_admin ? (!empty($idartcat) ? '&raquo; ' : '') . '<a href="admin_articles_add.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'L_ARTICLES' => $LANG['articles'],
 		'L_DATE' => $LANG['date'],
 		'L_VIEW' => $LANG['views'],
@@ -302,7 +302,7 @@ else
 		$Template->Assign_vars(array(			
 			'C_ARTICLES_CAT' => true,
 			'PAGINATION_CAT' => $Pagination->Display_pagination('articles' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3),
-			'EDIT' => $is_admin ? '<a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
+			'EDIT_CAT' => $is_admin ? '<a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));	
 			
 		$i = 0;	
@@ -333,7 +333,7 @@ else
 			'C_ARTICLES_LINK' => true,
 			'PAGINATION' => $Pagination->Display_pagination('articles' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
 			'CAT' => $CAT_ARTICLES[$idartcat]['name'],
-			'EDIT' => $is_admin ? '<a href="admin_articles_cat.php?id=' . $idartcat . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
+			'EDIT' => ($is_admin && !empty($idartcat)) ? '<a href="admin_articles_cat.php?id=' . $idartcat . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));
 
 		$result = $Sql->Query_while("SELECT id, title, icon, timestamp, views, note, nbrnote, nbr_com
