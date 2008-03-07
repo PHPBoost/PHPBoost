@@ -185,10 +185,9 @@ function inArray(aValue, anArray)
 function xmlhttprequest_init(filename)
 {
 	var xhr_object = null;
-
-	if(window.XMLHttpRequest) //Firefox
+	if( window.XMLHttpRequest ) //Firefox
 	   xhr_object = new XMLHttpRequest();
-	else if(window.ActiveXObject) //Internet Explorer
+	else if( window.ActiveXObject ) //Internet Explorer
 	   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 
 	xhr_object.open('POST', filename, true);
