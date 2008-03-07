@@ -71,7 +71,7 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
     
     foreach($searchModules as $module)
     {
-        if ( !$Search->IsInCache($module->name) )
+        if( !$Search->IsInCache($module->name) )
         {
             // On rajoute l'identifiant de recherche comme paramètre pour faciliter la requête
             $modulesArgs[$module->name]['id_search'] = $Search->id_search[$module->name];

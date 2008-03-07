@@ -31,7 +31,7 @@ load_module_lang('search');
 
 //--------------------------------------------------------------------- Params
 
-define ( 'NB_RESULTS_PER_PAGE', 10);
+define( 'NB_RESULTS_PER_PAGE', 10);
 
 $idSearch = !empty($_GET['idSearch']) ? numeric($_GET['idSearch']) : -1;
 $pageNum = !empty($_GET['pageNum']) ? numeric($_GET['pageNum']) : 1;
@@ -49,14 +49,14 @@ $modulesArgs = array();
 if( $idSearch >= 0 )
 {
     $Search = new Search();
-    if ( $Search->IsSearchIdInCache($idSearch) )
+    if( $Search->IsSearchIdInCache($idSearch) )
     {
         $nbResults = $Search->GetResultsById($results, $idSearch, ($pageNum - 1) *  NB_RESULTS_PER_PAGE, NB_LINES);
-        if ( $nbResults > 0 )
+        if( $nbResults > 0 )
         {
             $module = $Modules->GetModule($results[0]['module']);
             $htmlResults = '<ul class="search_results">';
-            foreach ( $results as $result )
+            foreach( $results as $result )
             {
                 if( $module->HasFunctionnality('ParseSearchResult') )
                 {

@@ -31,9 +31,9 @@ load_module_lang('search');
 define('ALTERNATIVE_CSS', 'search');
 
 $Template->Set_filenames(array(
-'search_mini_form' => '../templates/'.$CONFIG['theme'].'/search/search_mini_form.tpl',
-'search_forms' => '../templates/'.$CONFIG['theme'].'/search/search_forms.tpl',
-'search_results' => '../templates/'.$CONFIG['theme'].'/search/search_results.tpl'
+	'search_mini_form' => '../templates/'.$CONFIG['theme'].'/search/search_mini_form.tpl',
+	'search_forms' => '../templates/'.$CONFIG['theme'].'/search/search_forms.tpl',
+	'search_results' => '../templates/'.$CONFIG['theme'].'/search/search_results.tpl'
 ));
 
 //--------------------------------------------------------------------- Params
@@ -166,7 +166,7 @@ if( $search != '' )
         $module = $Modules->GetModule($result['module']);
         
         // Récupération des noms des modules disposant de résultats
-        if ( !in_array($module->name, array_keys($resultsByModules)) )
+        if( !in_array($module->name, array_keys($resultsByModules)) )
         {
             $resultsByModules[$module->name] = array();
         }
@@ -206,7 +206,7 @@ else
     
     // Génération des formulaires et passage aux templates
     $searchForms = GetSearchForms($formsModule, $modulesArgs);
-    foreach ( $searchForms as $moduleName => $form )
+    foreach( $searchForms as $moduleName => $form )
     {
         $Template->Assign_block_vars('forms', array(
             'MODULE_NAME' => $moduleName,
@@ -215,7 +215,7 @@ else
     }
     
     // parsage de la page
-    $Template->Pparse ('search_forms');
+    $Template->Pparse('search_forms');
 }
 
 //--------------------------------------------------------------------- Footer
