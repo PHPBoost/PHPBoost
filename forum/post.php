@@ -96,13 +96,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		));
 		
 		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';	
-			
-		$Template->Assign_block_vars('show_msg', array(
-			'L_PREVIEW' => $LANG['preview'],
-			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
-			'CONTENTS' => second_parse(stripslashes(parse($contents)))
-		));
-		
 		$post_update = isset($_POST['p_update']) ? trim($_POST['p_update']) : '';
 		
 		$update = !empty($post_update) ? $post_update : transid('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get);
@@ -117,6 +110,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 			'DESC' => $topic['subtitle'],
 			'CONTENTS' => stripslashes($contents),
+			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
+			'CONTENTS_PREVIEW' => second_parse(stripslashes(parse($contents))),
+			'C_FORUM_PREVIEW_MSG' => true,
 			'U_ACTION' => 'post.php' . $update,
 			'U_FORUM_CAT' => $forum_cats,
 			'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . ucfirst($topic['title']) . '</a>',
@@ -229,7 +225,8 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			
 			if( $is_modo )
 			{
-				$Template->Assign_block_vars('type', array(
+				$Template->Assign_vars(array(
+					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL' => (($type == '0') ? 'checked="ckecked"' : ''),
 					'CHECKED_POSTIT' => (($type == '1') ? 'checked="ckecked"' : ''),
 					'CHECKED_ANNONCE' => (($type == '2') ? 'checked="ckecked"' : ''),
@@ -240,12 +237,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				));
 			}
 
-			$Template->Assign_block_vars('show_msg', array(
-				'L_PREVIEW' => $LANG['preview'],
-				'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
-				'CONTENTS' => second_parse(stripslashes(parse($contents)))
-			));
-			
 			//Liste des choix des sondages => 20 maxi
 			$nbr_poll_field = 0;
 			for($i = 0; $i < 20; $i++)
@@ -257,8 +248,16 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						'ANSWER' => stripslashes($_POST['a'.$i])
 					));
 					$nbr_poll_field++;
-				}				
+				} 					
 			}
+			for($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
+			{	
+				$Template->Assign_block_vars('answers_poll', array(
+					'ID' => $i,
+					'ANSWER' => ''
+				));
+			}
+				
 			//Type de réponses du sondage.
 			$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
 				
@@ -277,6 +276,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',	
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD' => $nbr_poll_field,
+				'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
+				'CONTENTS_PREVIEW' => second_parse(stripslashes(parse($contents))),
+				'C_FORUM_PREVIEW_MSG' => true,
 				'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
 				'U_ACTION' => 'post.php' . transid('?new=topic&amp;id=' . $id_get),
 				'U_FORUM_CAT' => $forum_cats,
@@ -318,7 +320,8 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 
 			if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM) )
 			{
-				$Template->Assign_block_vars('type', array(
+				$Template->Assign_vars(array(
+					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL' => 'checked="ckecked"',
 					'L_TYPE' => '* ' . $LANG['type'],
 					'L_DEFAULT' => $LANG['default'],
@@ -526,7 +529,8 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 
 				if( $is_modo )
 				{
-					$Template->Assign_block_vars('type', array(
+					$Template->Assign_vars(array(
+						'C_FORUM_POST_TYPE' => true,
 						'CHECKED_NORMAL' => (($type == 0) ? 'checked="ckecked"' : ''),
 						'CHECKED_POSTIT' => (($type == 1) ? 'checked="ckecked"' : ''),
 						'CHECKED_ANNONCE' => (($type == 2) ? 'checked="ckecked"' : ''),
@@ -536,12 +540,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						'L_ANOUNCE' => $LANG['forum_announce']
 					));
 				}
-					
-				$Template->Assign_block_vars('show_msg', array(
-					'L_PREVIEW' => $LANG['preview'],
-					'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
-					'CONTENTS' => second_parse(stripslashes(parse($contents)))
-				));
 					
 				//Liste des choix des sondages => 20 maxi
 				$nbr_poll_field = 0;
@@ -555,13 +553,13 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						));
 						$nbr_poll_field++;
 					} 
-					elseif( $i <= 5 ) //On complète s'il y a moins de 5 réponses.
-					{
-						$Template->Assign_block_vars('answers_poll', array(
-							'ID' => $i,
-							'ANSWER' => ''
-						));
-					}					
+				}
+				for($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
+				{	
+					$Template->Assign_block_vars('answers_poll', array(
+						'ID' => $i,
+						'ANSWER' => ''
+					));
 				}
 				
 				//Type de réponses du sondage.
@@ -583,6 +581,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'NBR_POLL_FIELD' => $nbr_poll_field,
 					'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
 					'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',
+					'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
+					'CONTENTS_PREVIEW' => second_parse(stripslashes(parse($contents))),
+					'C_FORUM_PREVIEW_MSG' => true,
 					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
 					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
 					'U_ACTION' => 'post.php' . transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
@@ -630,7 +631,8 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 
 				if( $is_modo )
 				{
-					$Template->Assign_block_vars('type', array(
+					$Template->Assign_vars(array(
+						'C_FORUM_POST_TYPE' => true,
 						'CHECKED_NORMAL' => (($topic['type'] == '0') ? 'checked="ckecked"' : ''),
 						'CHECKED_POSTIT' => (($topic['type'] == '1') ? 'checked="ckecked"' : ''),
 						'CHECKED_ANNONCE' => (($topic['type'] == '2') ? 'checked="ckecked"' : ''),
@@ -667,13 +669,16 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$nbr_poll_field = 0;
 				foreach($array_answer as $key => $answer)
 				{	
-					$Template->Assign_block_vars('answers_poll', array(
-						'ID' => $nbr_poll_field,
-						'ANSWER' => $answer,
-						'NBR_VOTES' => $array_votes[$key],
-						'L_VOTES' => ($array_votes[$key] > 1) ? $LANG['votes'] : $LANG['vote']
-					));
-					$nbr_poll_field++;
+					if( !empty($answer) )
+					{
+						$Template->Assign_block_vars('answers_poll', array(
+							'ID' => $nbr_poll_field,
+							'ANSWER' => $answer,
+							'NBR_VOTES' => $array_votes[$key],
+							'L_VOTES' => ($array_votes[$key] > 1) ? $LANG['votes'] : $LANG['vote']
+						));
+						$nbr_poll_field++;
+					}
 				}
 				for($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
 				{	
@@ -878,7 +883,8 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		
 			if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM) )
 			{
-				$Template->Assign_block_vars('type', array(
+				$Template->Assign_vars(array(
+					'C_FORUM_POST_TYPE' => true,
 					'L_TYPE' => '* ' . $LANG['type'],
 					'L_DEFAULT' => $LANG['default'],
 					'L_POST_IT' => $LANG['forum_postit'],
