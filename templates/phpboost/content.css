@@ -31,12 +31,13 @@ h6.sub_title2{ /* Sous titre dans les menu */
 	border:1px solid #325889;
 	text-align:left;
 	font-size:0.75em;
+	font-weight:bold;
 	text-transform:uppercase;
 }
 hr {
 	background:#C4CED6;
 	border:none;
-	margin:1px;
+	margin:1px auto;
 	height:1px;
 	width:99%;
 }

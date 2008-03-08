@@ -291,6 +291,7 @@ if( $Comments->Com_loaded() )
 
 		$forbidden_tags = implode(', ', $CONFIG_COM['forbidden_tags']);
 		$Template->Assign_vars(array(
+			'C_COM_DISPLAY' => $Comments->Get_attribute('nbr_com') > 0 ? true : false,
 			'PAGINATION_COM' => $Pagination->Display_pagination($Comments->Get_attribute('path') . $_com_vars_simple . '&amp;pc=%d#' . $Comments->Get_attribute('script'), $Comments->Get_attribute('nbr_com'), 'pc', $CONFIG_COM['com_max'], 3),
 			'LANG' => $CONFIG['lang'],
 			'IDCOM' => '',

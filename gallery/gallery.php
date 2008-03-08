@@ -47,7 +47,6 @@ if( preg_match('`([a-z]+)_([a-z]+)`', $g_sort, $array_match) )
 else
 	list($g_type, $g_mode) = array('date', 'asc');
 
-
 include_once('../gallery/gallery.class.php');
 $Gallery = new Gallery;
 
@@ -71,7 +70,7 @@ elseif( !empty($g_idpics) && isset($_GET['move']) ) //Déplacement d'une image.
 	redirect(HOST . DIR . '/gallery/gallery' . transid('.php?cat=' . $move, '-' . $move . '.php', '&'));
 }
 elseif( isset($_FILES['gallery']) ) //Upload
-{ 
+{
 	if( !empty($g_idcat) )
 	{
 		if( !isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0 ) 
@@ -335,13 +334,12 @@ else
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'PAGINATION' => $Pagination->Display_pagination('gallery' . transid('.php?p=%d&amp;cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;' . $g_sort, '-' . $g_idcat . '-' . $g_idpics . '-%d.php?&' . $g_sort), $total_cat, 'p', $CONFIG_GALLERY['nbr_pics_max'], 3),	
-		'COLUMN_WIDTH_CAT' => $column_width_cats,
+		'COLUMN_WIDTH_CATS' => $column_width_cats,
 		'COLUMN_WIDTH_PICS' => $column_width_pics,
-		'COLSPAN' => $CONFIG_GALLERY['nbr_column'],
 		'NOTE_MAX' => $CONFIG_GALLERY['note_max'],
 		'CAT_ID' => $g_idcat,
 		'GALLERY' => !empty($g_idcat) ? $CAT_GALLERY[$g_idcat]['name'] : $LANG['gallery'],
-		'HEIGHT_MAX' => ($CONFIG_GALLERY['height'] + 6),
+		'HEIGHT_MAX' => $CONFIG_GALLERY['height'],
 		'WIDTH_MAX' => $column_width_pics,
 		'MODULE_DATA_PATH' => $module_data_path,
 		'ADD_PICS' => $Member->Check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="gallery' . transid('.php?add=1&amp;cat=' . $g_idcat) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
@@ -364,10 +362,10 @@ else
 		'L_VOTE' => $LANG['vote'],
 		'U_INDEX' => transid('.php'),
 		'U_GALLERY_CAT_LINKS' => $cat_links,
-		'U_BEST_VIEWS' => '<a class="com" href="gallery' . transid('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1') . '" style="background-image:url(' . $module_data_path . '/images/views.png);">' . $LANG['best_views'] . '</a>',
-		'U_BEST_NOTES' => '<a class="com" href="gallery' . transid('.php?notes=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?notes=1') . '" style="background-image:url(' . $module_data_path . '/images/notes.png);">' . $LANG['best_notes'] . '</a>',
-		'U_ASC' => '<a class="com" href="gallery' . transid('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc') . '" style="background-image:url(' . $module_data_path . '/images/up.png);">' . $LANG['asc'] . '</a>',
-		'U_DESC' => '<a class="com" href="gallery' . transid('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '" style="background-image:url(' . $module_data_path . '/images/down.png);">' . $LANG['desc'] . '</a>',
+		'U_BEST_VIEWS' => '<a class="small_link" href="gallery' . transid('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1') . '" style="background-image:url(' . $module_data_path . '/images/views.png);">' . $LANG['best_views'] . '</a>',
+		'U_BEST_NOTES' => '<a class="small_link" href="gallery' . transid('.php?notes=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?notes=1') . '" style="background-image:url(' . $module_data_path . '/images/notes.png);">' . $LANG['best_notes'] . '</a>',
+		'U_ASC' => '<a class="small_link" href="gallery' . transid('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc') . '" style="background-image:url(' . $module_data_path . '/images/up.png);">' . $LANG['asc'] . '</a>',
+		'U_DESC' => '<a class="small_link" href="gallery' . transid('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '" style="background-image:url(' . $module_data_path . '/images/down.png);">' . $LANG['desc'] . '</a>',
 	));
 	
 	//Catégories non autorisées.
@@ -386,16 +384,18 @@ else
 			}
 		}
 	}
-	$clause_unauth_cats = (count($unauth_cats_sql) > 0) ? " AND gc.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
+	$nbr_unauth_cats = count($unauth_cats_sql);
+	$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND gc.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
 	##### Catégorie disponibles #####	
-	if( $total_cat > 0 && count($unauth_cats_sql) < $total_cat )
+	if( $total_cat > 0 && $nbr_unauth_cats < $total_cat && empty($g_idpics) )
 	{
-		$Template->Assign_block_vars('cat', array(			
-			'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
-		));	
+		$Template->Assign_vars(array(			
+			'C_GALLERY_CATS' => true,
+			'EDIT_CAT' => $is_admin ? '<a href="admin_gallery_cat.php"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
+		));
 			
-		$i = 0;	
+		$j = 0;	
 		$result = $Sql->Query_while("SELECT gc.id, gc.name, gc.contents, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path 
 		FROM ".PREFIX."gallery_cats gc
 		LEFT JOIN ".PREFIX."gallery g ON g.idcat = gc.id AND g.aprob = 1
@@ -405,26 +405,19 @@ else
 		" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_GALLERY['nbr_pics_max'], 'p'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			//On genère le tableau pour $CONFIG_GALLERY['nbr_column'] colonnes
-			$multiple_x = $i / $nbr_column_cats;
-			$tr_start = is_int($multiple_x) ? '<tr>' : '';
-			$i++;	
-			$multiple_x = $i / $nbr_column_cats;
-			$tr_end = is_int($multiple_x) ? '</tr>' : '';
-
 			//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 			if( !file_exists('pics/thumbnails/' . $row['path']) )
 				$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
-			$Template->Assign_block_vars('cat.list', array(
+			$Template->Assign_block_vars('cat_list', array(
 				'IDCAT' => $row['id'],
 				'CAT' => $row['name'],
 				'DESC' => $row['contents'],
 				'IMG' => !empty($row['path']) ? '<img src="pics/thumbnails/' . $row['path'] . '" alt="" />' : '',
 				'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : '',
-				'TR_START' => $tr_start,
-				'TR_END' => $tr_end,			
 				'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
+				'OPEN_TR' => is_int($j++/$nbr_column_cats) ? '<tr>' : '',
+				'CLOSE_TR' => is_int($j/$nbr_column_cats) ? '</tr>' : '',
 				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info'], $row['nbr_pics']),
 				'U_CAT' => transid('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 			));
@@ -432,12 +425,11 @@ else
 		$Sql->Close($result);	
 		
 		//Création des cellules du tableau si besoin est.
-		while( !is_int($i/$nbr_column_cats) )
+		while( !is_int($j/$nbr_column_cats) )
 		{		
-			$i++;
-			$Template->Assign_block_vars('cat.end_td', array(
-				'TD_END' => '<td class="row2" style="width:' . $column_width_cats . '%">&nbsp;</td>',
-				'TR_END' => (is_int($i/$nbr_column_cats)) ? '</tr>' : ''			
+			$Template->Assign_block_vars('end_table_cats', array(
+				'TD_END' => '<td style="margin:15px 0px;width:' . $nbr_column_cats . '%">&nbsp;</td>',
+				'TR_END' => (is_int(++$j/$nbr_column_cats)) ? '</tr>' : ''			
 			));	
 		}
 	}	
@@ -482,7 +474,8 @@ else
 		elseif( $g_notes )
 			$g_sql_sort = ' ORDER BY g.note DESC';	
 	
-		$Template->Assign_block_vars('pics', array(
+		$Template->Assign_vars(array(
+			'C_GALLERY_PICS' => true,
 			'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));	
 				
@@ -524,7 +517,7 @@ else
 				$com_true = $l_com . ' (' . $info_pics['nbr_com'] . ')</a>';
 				$com_false = $LANG['post_com'] . '</a>';
 				$com = (!empty($info_pics['nbr_com'])) ? $com_true : $com_false;
-							
+				
 				//Affichage miniatures.		
 				$id_previous = 0;
 				$id_next = 0;
@@ -554,7 +547,6 @@ else
 					}
 					else
 					{	
-						
 						if( !$reach_pics_pos )
 						{
 							$thumbnails_before++;
@@ -567,39 +559,13 @@ else
 								$id_next = $row['id'];
 						}
 					}	
-					
 					$array_js .= 'array_pics[' . $i . '] = new Array();' . "\n"; 
 					$array_js .= 'array_pics[' . $i . '][\'link\'] = \'' . transid('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max' . "';\n";
 					$array_js .= 'array_pics[' . $i . '][\'path\'] = \'' . $row['path'] . "';\n";
 					$i++;
 				}
 				$Sql->Close($result);
-								
-				if( $thumbnails_before < $nbr_pics_display_before )	
-					$end_thumbnails += $nbr_pics_display_before - $thumbnails_before;				
-				if( $thumbnails_after < $nbr_pics_display_after )
-					$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;	
 					
-				$Template->Assign_vars(array(
-					'ARRAY_JS' => $array_js,
-					'NBR_PICS' => ($i - 1),
-					'MAX_START' => ($i - 1) - $nbr_column_pics,
-					'START_THUMB' => (($pos_pics - $start_thumbnails) > 0) ? ($pos_pics - $start_thumbnails) : 0,
-					'END_THUMB' => ($pos_pics + $end_thumbnails),					
-					'L_INFORMATIONS' => $LANG['informations'],
-					'L_NAME' => $LANG['name'],
-					'L_POSTOR' => $LANG['postor'],					
-					'L_VIEWS' => $LANG['views'],
-					'L_ADD_ON' => $LANG['add_on'],
-					'L_DIMENSION' => $LANG['dimension'],
-					'L_SIZE' => $LANG['size'],
-					'L_NOTE' => $LANG['note'],
-					'L_COM' => $LANG['com'],
-					'L_EDIT' => $LANG['edit'],
-					'L_APROB_IMG' => ($info_pics['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
-					'L_THUMBNAILS' => $LANG['thumbnails']		
-				));	
-
 				//Liste des catégories.
 				$cat_list = '';
 				foreach($array_cat_list as $key_cat => $option_value)
@@ -637,12 +603,19 @@ else
 					$img_note .= ($CONFIG_GALLERY['display_nbrnote']) ? '<span id="' . $info_pics['id'] . '_note" class="text_small">(' . $info_pics['nbrnote'] . ' ' . (($info_pics['nbrnote'] > 1) ? $LANG['votes'] : $LANG['vote']) . ')</span>' : '';
 				}			
 				
+				if( $thumbnails_before < $nbr_pics_display_before )	
+					$end_thumbnails += $nbr_pics_display_before - $thumbnails_before;				
+				if( $thumbnails_after < $nbr_pics_display_after )
+					$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;	
+					
 				//Affichage de l'image et de ses informations.
-				$Template->Assign_block_vars('pics.pics_max', array(
+				$Template->Assign_vars(array(
+					'C_GALLERY_PICS_MAX' => true,
+					'C_GALLERY_PICS_MODO' => $is_modo ? true : false,
 					'ID' => $info_pics['id'],
-					'IMG' => '<img src="show_pics' . transid('.php?id=' . $g_idpics . '&amp;cat=' . $g_idcat) . '" alt="" />',
+					'IMG_MAX' => '<img src="show_pics' . transid('.php?id=' . $g_idpics . '&amp;cat=' . $g_idcat) . '" alt="" />',
 					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . $info_pics['name'] . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
-					'POSTOR' => '<a class="com" href="../member/member' . transid('.php?id=' . $info_pics['user_id'], '-' . $info_pics['user_id'] . '.php') . '">' . $info_pics['login'] . '</a>',
+					'POSTOR' => '<a class="small_link" href="../member/member' . transid('.php?id=' . $info_pics['user_id'], '-' . $info_pics['user_id'] . '.php') . '">' . $info_pics['login'] . '</a>',
 					'DATE' => gmdate_format('date_format_short', $info_pics['timestamp']),
 					'VIEWS' => ($info_pics['views'] + 1),
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
@@ -651,31 +624,42 @@ else
 					'COM' => $link . $com,
 					'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),	
 					'CAT' => $cat_list,	
+					'RENAME' => addslashes($info_pics['name']),
+					'RENAME_CUT' => addslashes($info_pics['name']),		
+					'IMG_APROB' => $CONFIG['lang'] . '/' . (($info_pics['aprob'] == 1) ? 'unaprob.png' : 'aprob.png'),
+					'ARRAY_JS' => $array_js,
+					'NBR_PICS' => ($i - 1),
+					'MAX_START' => ($i - 1) - $nbr_column_pics,
+					'START_THUMB' => (($pos_pics - $start_thumbnails) > 0) ? ($pos_pics - $start_thumbnails) : 0,
+					'END_THUMB' => ($pos_pics + $end_thumbnails),					
+					'L_KB' => $LANG['unit_kilobytes'],
+					'L_INFORMATIONS' => $LANG['informations'],
+					'L_NAME' => $LANG['name'],
+					'L_POSTOR' => $LANG['postor'],					
+					'L_VIEWS' => $LANG['views'],
+					'L_ADD_ON' => $LANG['add_on'],
+					'L_DIMENSION' => $LANG['dimension'],
+					'L_SIZE' => $LANG['size'],
+					'L_NOTE' => $LANG['note'],
+					'L_COM' => $LANG['com'],
+					'L_EDIT' => $LANG['edit'],
+					'L_APROB_IMG' => ($info_pics['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
+					'L_THUMBNAILS' => $LANG['thumbnails'],
+					'U_DEL' => transid('.php?del=' . $info_pics['id'] . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?del=' . $info_pics['id']),
+					'U_MOVE' => transid('.php?id=' . $info_pics['id'] . '&amp;move=\' + this.options[this.selectedIndex].value', '-0-' . $info_pics['id'] . '.php?move=\' + this.options[this.selectedIndex].value'),
 					'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="gallery' . transid('.php?cat=' . $g_idcat . '&amp;id=' . $id_previous, '-' . $g_idcat . '-' . $id_previous . '.php') . '#pics_max"><img src="../templates/' . $CONFIG['theme'] . '/images/left.png" alt="" class="valign_middle" /></a> <a href="gallery' . transid('.php?cat=' . $g_idcat . '&amp;id=' . $id_previous, '-' . $g_idcat . '-' . $id_previous . '.php') . '#pics_max">' . $LANG['previous'] . '</a>' : '',
 					'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="gallery' . transid('.php?cat=' . $g_idcat . '&amp;id=' . $id_next, '-' . $g_idcat . '-' . $id_next . '.php') . '#pics_max">' . $LANG['next'] . '</a> <a href="gallery' . transid('.php?cat=' . $g_idcat . '&amp;id=' . $id_next, '-' . $g_idcat . '-' . $id_next . '.php') . '#pics_max"><img src="../templates/' . $CONFIG['theme'] . '/images/right.png" alt="" class="valign_middle" /></a>' : '',
 					'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><img src="../templates/' . $CONFIG['theme'] . '/images/left.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_left"></span>',
 					'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><img src="../templates/' . $CONFIG['theme'] . '/images/right.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_right"></span>'
 				));				
 
-				//Modo?
-				if( $is_modo )
-				{
-					$Template->Assign_block_vars('pics.pics_max.modo', array(
-						'RENAME' => addslashes($info_pics['name']),
-						'RENAME_CUT' => addslashes($info_pics['name']),		
-						'IMG_APROB' => $CONFIG['lang'] . '/' . (($info_pics['aprob'] == 1) ? 'unaprob.png' : 'aprob.png'),
-						'U_DEL' => transid('.php?del=' . $info_pics['id'] . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?del=' . $info_pics['id']),
-						'U_MOVE' => transid('.php?id=' . $info_pics['id'] . '&amp;move=\' + this.options[this.selectedIndex].value', '-0-' . $info_pics['id'] . '.php?move=\' + this.options[this.selectedIndex].value')
-					));			
-				}
-				
 				//Affichage de la liste des miniatures sous l'image.
 				$i = 0;
 				foreach($array_pics as $pics)
 				{
 					if( $i >= ($pos_pics - $start_thumbnails) && $i <= ($pos_pics + $end_thumbnails) )
 					{
-						$Template->Assign_block_vars('pics.pics_max.list_preview_pics', array(
+						$Template->Assign_block_vars('list_preview_pics', array(
 							'PICS' => $pics
 						));
 					}
@@ -698,6 +682,7 @@ else
 			$Pagination = new Pagination();
 			
 			$Template->Assign_vars(array(
+				'C_GALLERY_MODO' => $is_modo ? true : false,
 				'PAGINATION_PICS' => $Pagination->Display_pagination('gallery' . transid('.php?pp=%d&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $CONFIG_GALLERY['nbr_pics_max'], 3),
 				'L_EDIT' => $LANG['edit']
 			));
@@ -716,20 +701,15 @@ else
 				if( !file_exists('pics/thumbnails/' . $row['path']) )
 					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 				
-				//On genère le tableau pour x colonnes
-				$tr_start = is_int($j / $nbr_column_pics) ? '<tr>' : '';
-				$j++;	
-				$tr_end = is_int($j / $nbr_column_pics) ? '</tr>' : '';
-
 				//Affichage de l'image en grand.
 				if( $CONFIG_GALLERY['display_pics'] == 3 ) //Ouverture en popup plein écran.
-					$display_link = '<a class="com" href="' . HOST . DIR . '/gallery/show_pics' . transid('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[1]" title="' . $row['name'] . '">';
+					$display_link = HOST . DIR . '/gallery/show_pics' . transid('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[1]" title="' . $row['name'];
 				elseif( $CONFIG_GALLERY['display_pics'] == 2 ) //Ouverture en popup simple.
-					$display_link = '<a class="com" href="javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . transid('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')">';
+					$display_link = 'javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . transid('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
 				elseif( $CONFIG_GALLERY['display_pics'] == 1 ) //Ouverture en agrandissement simple.
-					$display_link = '<a class="com" href="javascript:display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . transid('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', 0)">';
+					$display_link = 'javascript:display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . transid('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', 0)';
 				else //Ouverture nouvelle page.
-					$display_link = '<a class="com" href="' . transid('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max">';
+					$display_link = transid('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
 				
 				//Liste des catégories.
 				$cat_list = '';
@@ -756,7 +736,7 @@ else
 					array_note[' . $row['id'] . '] = \'' . $row['note'] . '\';
 					-->
 					</script>
-					<div style="width:' . ($CONFIG_GALLERY['note_max']*16) . 'px;margin:auto;" onmouseout="out_div(' . $row['id'] . ', array_note[' . $row['id'] . '])" onmouseover="over_div()">';
+					<div onmouseout="out_div(' . $row['id'] . ', array_note[' . $row['id'] . '])" onmouseover="over_div()">';
 					for($i = 1; $i <= $CONFIG_GALLERY['note_max']; $i++)
 					{
 						$star_img = 'stars.png';
@@ -773,49 +753,42 @@ else
 								$star_img = 'stars3.png';
 						}	
 						
-						$img_note .= '<a href="javascript:send_note(' . $row['id'] . ', ' . $row['idcat'] . ', ' . $i . ')" onmouseover="select_stars(' . $row['id'] . ', ' . $i . ');"><img src="../templates/'. $CONFIG['theme'] . '/images/' . $star_img . '" alt="" id="' . $row['id'] . '_stars' . $i . '" /></a>';
+						$img_note .= '<a href="javascript:send_note(' . $row['id'] . ', ' . $row['idcat'] . ', ' . $i . ')" onmouseover="select_stars(' . $row['id'] . ', ' . $i . ');"><img src="../templates/'. $CONFIG['theme'] . '/images/' . $star_img . '" alt="" id="' . $row['id'] . '_stars' . $i . '" class="valign_middle" /></a>';
 					}
 					$img_note .= '</div>'; 
 					$img_note .= ($CONFIG_GALLERY['display_nbrnote']) ? '<span id="' . $row['id'] . '_note" class="text_small">(' . $row['nbrnote'] . ' ' . (($row['nbrnote'] > 1) ? $LANG['votes'] : $LANG['vote']) . ')</span>' : '';
 				}
-				
-				$Template->Assign_block_vars('pics.list', array(
+
+				$Template->Assign_block_vars('pics_list', array(
 					'ID' => $row['id'],
 					'APROB' => $row['aprob'],
-					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['name'] . '" />',
+					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['name'] . '" class="gallery_image" />',
 					'PATH' => $row['path'],
-					'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? $display_link . '<span id="fi_' . $row['id'] . '">' . wordwrap_html($row['name'], 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',	
-					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="com" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
+					'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? '<a class="small_link" href="' . $display_link . '"><span id="fi_' . $row['id'] . '">' . wordwrap_html($row['name'], 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',	
+					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
 					'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br />' . $row['views'] . ' ' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) : '',
 					'COM' => ($CONFIG_GALLERY['activ_com'] == 1) ? '<br />' . $link . $com  : '',
-					'NOTE' => $activ_note ? '<br />' . $img_note : '',
-					'TR_START' => $tr_start,
-					'TR_END' => $tr_end,
+					'NOTE' => $activ_note ? ' ' . $img_note : '',
 					'CAT' => $cat_list,
+					'RENAME' => addslashes($row['name']),
+					'RENAME_CUT' => addslashes($row['name']),		
+					'IMG_APROB' => $CONFIG['lang'] . '/' . (($row['aprob'] == 1) ? 'unaprob.png' : 'aprob.png'),
+					'OPEN_TR' => is_int($j++/$nbr_column_pics) ? '<tr>' : '',
+					'CLOSE_TR' => is_int($j/$nbr_column_pics) ? '</tr>' : '',
 					'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
+					'U_DEL' => transid('.php?del=' . $row['id'] . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?del=' . $row['id']),
+					'U_MOVE' => transid('.php?id=' . $row['id'] . '&amp;move=\' + this.options[this.selectedIndex].value', '-0-' . $row['id'] . '.php?move=\' + this.options[this.selectedIndex].value'),
 					'U_DISPLAY' => $display_link
-				));	
-				
-				if( $is_modo )
-				{
-					$Template->Assign_block_vars('pics.list.modo', array(
-						'RENAME' => addslashes($row['name']),
-						'RENAME_CUT' => addslashes($row['name']),		
-						'IMG_APROB' => $CONFIG['lang'] . '/' . (($row['aprob'] == 1) ? 'unaprob.png' : 'aprob.png'),
-						'U_DEL' => transid('.php?del=' . $row['id'] . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?del=' . $row['id']),
-						'U_MOVE' => transid('.php?id=' . $row['id'] . '&amp;move=\' + this.options[this.selectedIndex].value', '-0-' . $row['id'] . '.php?move=\' + this.options[this.selectedIndex].value')
-					));			
-				}
+				));
 			}
 			$Sql->Close($result);
 			
 			//Création des cellules du tableau si besoin est.
 			while( !is_int($j/$nbr_column_pics) )
 			{		
-				$j++;
-				$Template->Assign_block_vars('pics.end_td_pics', array(
-					'TD_END' => '<td class="row2" style="padding:0;padding-top:2px;width:' . $column_width_pics . '%">&nbsp;</td>',
-					'TR_END' => (is_int($j/$nbr_column_pics)) ? '</tr>' : ''			
+				$Template->Assign_block_vars('end_table', array(
+					'TD_END' => '<td style="margin:15px 0px;width:' . $column_width_pics . '%">&nbsp;</td>',
+					'TR_END' => (is_int(++$j/$nbr_column_pics)) ? '</tr>' : ''			
 				));	
 			}
 		}

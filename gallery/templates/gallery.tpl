@@ -309,225 +309,183 @@
 					</div>
 				</div>
 				
-				# START cat #
-				<table class="module_table" style="width:100%">
-					<tr>
-						<th colspan="{COLSPAN}">
-							{L_CATEGORIES} {cat.EDIT}
-						</th>
-					</tr>
-					
-					# START cat.list #
-					{cat.list.TR_START}								
-						<td class="row2" style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%">
-							<a href="gallery{cat.list.U_CAT}">{cat.list.IMG}</a>
-							
+				# IF C_GALLERY_CATS #
+				<div class="block_top">{L_CATEGORIES} {EDIT_CAT}</div>
+				<div class="row1" style="margin-bottom:25px;border-top:none;">
+					<table style="width:100%">
+						# START cat_list #
+						{cat_list.OPEN_TR}								
+						<td style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%;margin:15px 0px;">
+							<a href="gallery{cat_list.U_CAT}">{cat_list.IMG}</a>
 							<br />
-							<a href="gallery{cat.list.U_CAT}">{cat.list.CAT}</a> {cat.list.EDIT}
+							<a href="gallery{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
 							<br />
-							<span class="text_small">{cat.list.DESC}</span> 
+							<span class="text_small">{cat_list.DESC}</span> 
 							<br />
-							{cat.list.LOCK} <span class="text_small">{cat.list.L_NBR_PICS}</span> 
+							{cat_list.LOCK} <span class="text_small">{cat_list.L_NBR_PICS}</span>
 						</td>	
-					{list.TR_END}
-					# END cat.list #						
-				
-					# START cat.end_td #
-						{cat.end_td.TD_END}
-					{cat.end_td.TR_END}
-					# END cat.end_td #					
-				</table>	
-				# END cat #
-				
-				
-				# START pics #
-				<p style="text-align:center">		
-					<span id="pics_max"></span>
-					<br />
-					{PAGINATION_PICS}
-				</p>				
-				<table class="module_table" style="width:100%">				
-					<tr>
-						<th colspan="{COLSPAN}">
-							{GALLERY} {pics.EDIT}
-						</th>
-					</tr>
+						{cat_list.CLOSE_TR}
+						# END cat_list #
 					
-					# START pics.pics_max #
-					<tr>
-						<td colspan="{COLSPAN}" class="row1">
-							<p style="text-align:center">
-								{pics.pics_max.IMG}	
-							</p>
-							<table style="border-collapse:collapse;margin:auto;width:400px" class="row2">
-								<tr>
-									<td>
-										&nbsp;&nbsp;&nbsp;{pics.pics_max.U_PREVIOUS} 
-									</td>	
-									<td style="text-align:right;">
-										{pics.pics_max.U_NEXT}&nbsp;&nbsp;&nbsp;
-									</td>
-								</tr>
-							</table>
-							<br />
-							<table style="border-collapse:collapse;margin:auto;width:100%" class="row2">
-								<tr>
-									<th colspan="2">
-										{L_INFORMATIONS}
-									</th>
-								</tr>
-								<tr>
-									<td class="row2 text_small" style="width:50%;border:none;padding:4px;">
-										<strong>{L_NAME}:</strong> {pics.pics_max.NAME}
-									</td>
-									<td class="row2 text_small" style="border:none;padding:4px;">
-										<strong>{L_POSTOR}:</strong> {pics.pics_max.POSTOR}
-									</td>
-								</tr>
-								<tr>										
-									<td class="row2 text_small" style="border:none;padding:4px;">
-										<strong>{L_VIEWS}:</strong> {pics.pics_max.VIEWS}
-									</td>
-									<td class="row2 text_small" style="border:none;padding:4px;">
-										<strong>{L_ADD_ON}:</strong> {pics.pics_max.DATE}
-									</td>
-								</tr>
-								<tr>										
-									<td class="row2 text_small" style="border:none;padding:4px;">
-										<strong>{L_DIMENSION}:</strong> {pics.pics_max.DIMENSION}
-									</td>
-									<td class="row2 text_small" style="border:none;padding:4px;">
-										<strong>{L_SIZE}:</strong> {pics.pics_max.SIZE} Ko
-									</td>
-								</tr>
-								<tr>										
-									<td class="row2 text_small" style="border:none;padding:4px;">
-										<strong>{L_NOTE}:</strong> {pics.pics_max.NOTE}
-									</td>
-									<td class="row2 text_small" style="border:none;padding:4px;vertical-align:top">
-										<strong>{L_COM}:</strong> {pics.pics_max.COM}
-									</td>
-								</tr>
-								
-								# START pics.pics_max.modo #
-								<tr>										
-									<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
-										&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.modo.RENAME}', '{pics.pics_max.modo.RENAME_CUT}');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>
-										
-										<a href="gallery{pics.pics_max.modo.U_DEL}" onClick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 
+						# START end_table_cats #
+							{end_table_cats.TD_END}
+						{end_table_cats.TR_END}
+						# END end_table_cats #
+					</table>
+				</div>
+				# ENDIF #
+				
+				
+				# IF C_GALLERY_PICS #
+				<div class="block_top">{GALLERY} {EDIT}</div>
+				<div class="row1" style="margin-bottom:25px;border-top:none;clear:both;">
+					<p style="text-align:center" id="pics_max">{PAGINATION_PICS}</p>				
+					
+					# IF C_GALLERY_PICS_MAX #
+						<p style="text-align:center;padding:15px 0px;">{IMG_MAX}</p>
+						<div style="margin:auto;width:400px;height:32px;padding:0;" class="row2">
+							<span style="float:left">&nbsp;&nbsp;&nbsp;{U_PREVIOUS}</span>
+							<span style="float:right">{U_NEXT}&nbsp;&nbsp;&nbsp;</span>
+						</div>
+						<br />
+						<table style="border-collapse:collapse;margin:auto;width:100%" class="row2">
+							<tr>
+								<th colspan="2">
+									{L_INFORMATIONS}
+								</th>
+							</tr>
+							<tr>
+								<td class="row2 text_small" style="width:50%;border:none;padding:4px;">
+									<strong>{L_NAME}:</strong> {NAME}
+								</td>
+								<td class="row2 text_small" style="border:none;padding:4px;">
+									<strong>{L_POSTOR}:</strong> {POSTOR}
+								</td>
+							</tr>
+							<tr>										
+								<td class="row2 text_small" style="border:none;padding:4px;">
+									<strong>{L_VIEWS}:</strong> {VIEWS}
+								</td>
+								<td class="row2 text_small" style="border:none;padding:4px;">
+									<strong>{L_ADD_ON}:</strong> {DATE}
+								</td>
+							</tr>
+							<tr>										
+								<td class="row2 text_small" style="border:none;padding:4px;">
+									<strong>{L_DIMENSION}:</strong> {DIMENSION}
+								</td>
+								<td class="row2 text_small" style="border:none;padding:4px;">
+									<strong>{L_SIZE}:</strong> {SIZE} {L_KB}
+								</td>
+							</tr>
+							<tr>										
+								<td class="row2 text_small" style="border:none;padding:4px;">
+									<strong>{L_NOTE}:</strong> {NOTE}
+								</td>
+								<td class="row2 text_small" style="border:none;padding:4px;vertical-align:top">
+									<strong>{L_COM}:</strong> {COM}
+								</td>
+							</tr>
 							
-										<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.pics_max.ID}">
-											<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
-												<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-												<select class="valign_middle" name="{pics.pics_max.ID}cat" onchange="document.location = 'gallery{pics.pics_max.modo.U_MOVE}">
-													{pics.pics_max.CAT}
+							# IF C_GALLERY_PICS_MODO #
+							<tr>										
+								<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
+									&nbsp;&nbsp;&nbsp;<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>
+									
+									<a href="gallery{U_DEL}" onClick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 
+						
+									<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
+										<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
+											<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
+											<select class="valign_middle" name="{ID}cat" onchange="document.location = 'gallery{U_MOVE}">
+												{CAT}
+											</select>
+											<br /><br />
+										</div>
+									</div>
+									<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
+									
+									
+									<a href="javascript:pics_aprob({ID});" title="{L_APROB_IMG}"><img id="img_aprob{ID}" src="../templates/{THEME}/images/{IMG_APROB}" alt="{L_APROB_IMG}" title="{L_APROB_IMG}" class="valign_middle" /></a>
+									&nbsp;<span id="img{ID}"></span>
+								</td>
+							</tr>
+							# ENDIF #						
+						</table>					
+						<br /><br />					
+						<table class="module_table" style="width:100%;">
+							<tr>
+								<th colspan="{COLSPAN}">
+									{L_THUMBNAILS}
+								</th>
+							</tr>
+							<tr>
+								<td class="row2" style="width:50px;text-align:center">
+									{U_LEFT_THUMBNAILS}
+								</td>
+								
+								# START list_preview_pics #
+									{list_preview_pics.PICS}
+								# END list_preview_pics #
+								
+								<td class="row2" style="width:50px;text-align:center">
+									{U_RIGHT_THUMBNAILS}
+								</td>
+							</tr>
+						</table>
+					# INCLUDE handle_com #
+					# ENDIF #
+					
+					<table style="margin:auto;width:96%">
+						# START pics_list #
+							{pics_list.OPEN_TR}
+							<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle" class="text_small">
+								<div style="margin-bottom:5px;" id="pics{pics_list.ID}"><a class="small_link" href="{pics_list.U_DISPLAY}">{pics_list.IMG}</a></div>
+								{pics_list.NAME}
+								{pics_list.POSTOR}
+								{pics_list.VIEWS}
+								{pics_list.COM}
+								{pics_list.NOTE}
+									
+								<div style="width:180px;margin:auto;">										
+									# IF C_GALLERY_MODO #
+									<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>
+									
+									<a href="gallery{pics_list.U_DEL}" onClick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>
+									
+									<div style="position:relative;margin:auto;width:170px;display:none;float:right" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" id="move{pics_list.ID}">
+										<div style="position:absolute;z-index:100;margin-top:90px;">
+											<div class="bbcode_block" style="width:170px;overflow:auto;">
+												<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
+												<select class="valign_middle" name="{pics_list.ID}cat" onchange="document.location = 'gallery{pics_list.U_MOVE}">
+													{pics_list.CAT}
 												</select>
 												<br /><br />
 											</div>
 										</div>
-										<a href="javascript:pics_display_block({pics.pics_max.ID});" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
+									</div>
+									<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
 										
-										
-										<a href="javascript:pics_aprob({pics.pics_max.ID});" title="{L_APROB_IMG}"><img id="img_aprob{pics.pics_max.ID}" src="../templates/{THEME}/images/{pics.pics_max.modo.IMG_APROB}" alt="{L_APROB_IMG}" title="{L_APROB_IMG}" class="valign_middle" /></a>
-										&nbsp;<span id="img{pics.pics_max.ID}"></span>
-									</td>
-								</tr>
-								# END pics.pics_max.modo #
-								
-							</table>
+									<a href="javascript:pics_aprob({pics_list.ID});" title="{pics_list.L_APROB_IMG}"><img id="img_aprob{pics_list.ID}" src="../templates/{THEME}/images/{pics_list.IMG_APROB}" alt="{pics_list.L_APROB_IMG}" title="{pics_list.L_APROB_IMG}" class="valign_middle" /></a>
+									# ENDIF #											
+									<span id="img{pics_list.ID}"></span>										
+								</div>
+							</td>
+							{pics_list.CLOSE_TR}
+						# END pics_list #
+						
+						# START end_table #
+							{end_table.TD_END}
 							
-							<br /><br />
-							
-							<table class="module_table" style="width:100%;">
-								<tr>
-									<th colspan="{pics.pics_max.COLSPAN}">
-										{L_THUMBNAILS}
-									</th>
-								</tr>
-								<tr>
-									<td class="row2" style="width:50px;text-align:center">
-										{pics.pics_max.U_LEFT_THUMBNAILS}
-									</td>
-									
-									# START pics.pics_max.list_preview_pics #
-										{pics.pics_max.list_preview_pics.PICS}
-									# END pics.pics_max.list_preview_pics #
-									
-									<td class="row2" style="width:50px;text-align:center">
-										{pics.pics_max.U_RIGHT_THUMBNAILS}
-									</td>
-								</tr>
-							</table>
-							
-							<br />
-							# INCLUDE handle_com #
-						</td>
-					</tr>
-					# END pics.pics_max #
+						{end_table.TR_END}
+						# END end_table #
+						
+					</table>
+					<p style="text-align:center">{PAGINATION_PICS}</p>			
+					# ENDIF #
 					
-					# START pics.list #
-					{pics.list.TR_START}
-						<td class="row2" style="padding:0;padding-top:2px;width:{COLUMN_WIDTH_PICS}%;vertical-align:top">
-							<table style="border:none;border-collapse:collapse;width:100%">
-								<tr>
-									<td style="height:{HEIGHT_MAX}px;padding:0;text-align:center;">
-										<span id="pics{pics.list.ID}">{pics.list.U_DISPLAY}{pics.list.IMG}</a></span>
-									</td>
-								</tr>
-								<tr>
-									<td class="row1 text_small" style="height:90px;text-align:center;vertical-align:top;">
-										{pics.list.NAME}
-										{pics.list.POSTOR}
-										{pics.list.VIEWS}
-										{pics.list.COM}
-										{pics.list.NOTE}
-										
-										<div>
-										
-										# START pics.list.modo #
-											<span id="fihref{pics.list.ID}"><a href="javascript:display_rename_file('{pics.list.ID}', '{pics.list.modo.RENAME}', '{pics.list.modo.RENAME_CUT}');" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>
-											
-											<a href="gallery{pics.list.modo.U_DEL}" onClick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 
-								
-											<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.list.ID}">
-												<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
-													<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-													<select class="valign_middle" name="{pics.list.ID}cat" onchange="document.location = 'gallery{pics.list.modo.U_MOVE}">
-														{pics.list.CAT}
-													</select>
-													<br /><br />
-												</div>
-											</div>
-											<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
-											
-											
-											<a href="javascript:pics_aprob({pics.list.ID});" title="{pics.list.L_APROB_IMG}"><img id="img_aprob{pics.list.ID}" src="../templates/{THEME}/images/{pics.list.modo.IMG_APROB}" alt="{pics.list.L_APROB_IMG}" title="{pics.list.L_APROB_IMG}" class="valign_middle" /></a>
-										
-										# END pics.list.modo #											
-										&nbsp;<span id="img{pics.list.ID}"></span>
-										
-										</div>
-									</td>
-								</tr>
-							</table>
-						</td>
-					{pics.list.TR_END}
-					# END pics.list #				
-				
-					# START pics.end_td_pics #
-						{pics.end_td_pics.TD_END}
-					{pics.end_td_pics.TR_END}
-					# END pics.end_td_pics #					
-				</table>	
-				
-				<p style="text-align:center">		
-					{PAGINATION_PICS}
-				</p>			
-				# END pics #
-				<br />
-				<p style="text-align:center" class="text_small">
-					{L_TOTAL_IMG}
-				</p>	
+					<p style="text-align:center;padding-top:15px;" class="text_small">{L_TOTAL_IMG}</p>
+				</div>				
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
