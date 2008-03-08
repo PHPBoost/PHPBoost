@@ -20,12 +20,12 @@
 				<legend>{L_ADD_MSG}{L_UPDATE_MSG}</legend>
 				<p>{L_REQUIRE}</p>
 				
-				# START visible_guestbook #
+				# IF C_VISIBLE_GUESTBOOK #
 				<dl>
 					<dt><label for="guestbook_pseudo">* {L_PSEUDO}</label></dt>
-					<dd><label><input type="text" size="25" maxlength="25" name="guestbook_pseudo" id="guestbook_pseudo" value="{visible_guestbook.PSEUDO}" class="text" /></label></dd>
+					<dd><label><input type="text" size="25" maxlength="25" name="guestbook_pseudo" id="guestbook_pseudo" value="{PSEUDO}" class="text" /></label></dd>
 				</dl>
-				# END visible_guestbook #			
+				# ENDIF #			
 				
 				<label for="guestbook_contents">* {L_MESSAGE}</label>
 				# INCLUDE handle_bbcode #
@@ -36,9 +36,9 @@
 			</fieldset>
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				# START hidden_guestbook #
-					<input type="hidden" size="25" maxlength="25" name="guestbook_pseudo" value="{hidden_guestbook.PSEUDO}" class="text" />
-				# END hidden_guestbook #
+				# IF C_HIDDEN_GUESTBOOK #
+					<input type="hidden" size="25" maxlength="25" name="guestbook_pseudo" value="{PSEUDO}" class="text" />
+				# ENDIF #
 				
 				<input type="hidden" name="guestbook_contents_ftags" id="guestbook_contents_ftags" value="{FORBIDDEN_TAGS}" />
 				<input type="submit" name="guestbook" value="{L_SUBMIT}" class="submit" />
