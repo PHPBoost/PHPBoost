@@ -24,7 +24,7 @@
 			<fieldset>
 				<legend>{L_EDIT_COMMENT}{L_ADD_COMMENT}</legend>
 				
-				# IF VISIBLE_COM #
+				# IF C_VISIBLE_COM #
 				<dl>
 					<dt><label for="{SCRIPT}login">* {L_LOGIN}</label></dt>
 					<dd><label><input type="text" maxlength="25" size="25" id="{SCRIPT}login" name="login" value="{LOGIN}" class="text" /></label></dd>
@@ -39,7 +39,7 @@
 			</fieldset>			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				# IF HIDDEN_COM #
+				# IF C_HIDDEN_COM #
 				<input type="hidden" maxlength="25" size="25" name="login" value="{LOGIN}" class="text" />
 				# ENDIF #
 				<input type="hidden" name="contents_ftags" id="contents_ftags" value="{FORBIDDEN_TAGS}" />
@@ -172,7 +172,7 @@
 			<fieldset>
 				<legend>{L_EDIT_COMMENT}{L_ADD_COMMENT}</legend>
 				
-				# IF VISIBLE_COM #
+				# IF C_VISIBLE_COM #
 				<dl> 
 					<dd><label for="login">* {L_LOGIN}</label></dd>
 					<dt><label><input type="text" maxlength="25" size="25" id="login" name="login" value="{LOGIN}" class="text" /></label></dt>
@@ -188,7 +188,7 @@
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				# IF HIDDEN_COM #
+				# IF C_HIDDEN_COM #
 				<input type="hidden" maxlength="25" size="25" name="login" value="{LOGIN}" class="text" />
 				# ENDIF #
 				<input type="hidden" name="contents_ftags" id="shout_contents_ftags" value="{FORBIDDEN_TAGS}" />
