@@ -97,9 +97,6 @@ if( $checkdate === true && empty($id) && empty($add) )
 		'calendar' => '../templates/' . $CONFIG['theme'] . '/calendar/calendar.tpl'
 	));
 	
-	$Template->Assign_block_vars('show', array(
-	));
-	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	switch($get_error)
@@ -129,6 +126,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 		$add_event = '';
 	
 	$Template->Assign_vars(array(
+		'C_CALENDAR_DISPLAY' => true,
 		'ADMIN_CALENDAR' => ($Member->Check_level(ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
 		'ADD' => $add_event,
 		'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
@@ -146,14 +144,14 @@ if( $checkdate === true && empty($id) && empty($add) )
 	for($i = 1; $i <= 12; $i++)
 	{
 		$selected = ($month == $i) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('show.month', array(
+		$Template->Assign_block_vars('month', array(
 			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . $array_l_month[$i - 1] . '</option>'
 		));
 	}			
 	for($i = 1970; $i <= 2037; $i++)
 	{
 		$selected = ($year == $i) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('show.year', array(
+		$Template->Assign_block_vars('year', array(
 			'YEAR' => '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>'
 		));
 	}			
@@ -176,7 +174,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 	$LANG['sunday']);
 	foreach($array_l_days as $l_day)
 	{
-		$Template->Assign_block_vars('show.day', array(
+		$Template->Assign_block_vars('day', array(
 			'L_DAY' => '<td class="row3"><span class="text_small">' . $l_day . '</span></td>'
 		));
 	}	
@@ -203,7 +201,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 		else
 			$contents = '<td style="padding:0px;height:21px;" class="row3">&nbsp;</td>';
 
-		$Template->Assign_block_vars('show.calendar', array(
+		$Template->Assign_block_vars('calendar', array(
 			'DAY' => $contents,
 			'TR' => (($i % 7) == 0 && $i != 42) ? '</tr><tr style="text-align:center;">' : ''
 		));
@@ -223,8 +221,8 @@ if( $checkdate === true && empty($id) && empty($add) )
 		{
 			if( $Member->Check_level(ADMIN_LEVEL) )
 			{
-				$edit = '&nbsp;&nbsp;<a href="calendar' . transid('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" /></a>';
-				$del = '&nbsp;&nbsp;<a href="calendar' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm_del();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" /></a>';
+				$edit = '&nbsp;&nbsp;<a href="calendar' . transid('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
+				$del = '&nbsp;&nbsp;<a href="calendar' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm_del();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>';
 				$java = '<script type="text/javascript">
 				<!--
 				function Confirm_del() {
@@ -251,7 +249,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 
 			$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
 								
-			$Template->Assign_block_vars('show.action', array(
+			$Template->Assign_block_vars('action', array(
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'TITLE' => $row['title'],
 				'CONTENTS' => second_parse($row['contents']),
@@ -268,7 +266,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 			
 		if( !isset($check_action) )
 		{		
-			$Template->Assign_block_vars('show.action', array(
+			$Template->Assign_block_vars('action', array(
 				'TITLE' => '&nbsp;',
 				'LOGIN' => '',
 				'DATE' => gmdate_format('date_format_short', mktime(0, 0, 0, $month, $day, $year, 0)),
@@ -285,11 +283,8 @@ if( $checkdate === true && empty($id) && empty($add) )
 	//Affichage commentaires.
 	if( isset($_GET['i']) )
 	{
-		$_com_vars = 'calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;i=%d';
-		$_com_vars_e = 'calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&e=' . $get_event . '&i=1';
-		$_com_vars_r = 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?i=%d%s';
-		$_com_idprov = $get_event;
-		$_com_script = 'calendar';
+		include_once('../includes/com.class.php'); 
+		$Comments = new Comments('calendar', $get_event, transid('calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;i=%s', 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?i=%s'));
 		include_once('../includes/com.php');
 	}	
 
@@ -354,8 +349,18 @@ elseif( !empty($id) )
 			
 			//Récupération des infos
 			$row = $Sql->Query_array('calendar', 'timestamp', 'title', 'contents', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-						
+			
 			$Template->Assign_vars(array(				
+				'C_CALENDAR_FORM' => true,
+				'UPDATE' => transid('?edit=1&amp;id=' . $id),
+				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+				'DAY_DATE' => !empty($row['timestamp']) ? gmdate_format('d', $row['timestamp']) : '',
+				'MONTH_DATE' => !empty($row['timestamp']) ? gmdate_format('m', $row['timestamp']) : '',
+				'YEAR_DATE' => !empty($row['timestamp']) ? gmdate_format('Y', $row['timestamp']) : '',
+				'HOUR' => !empty($row['timestamp']) ? gmdate_format('h', $row['timestamp']) : '',
+				'MIN' => !empty($row['timestamp']) ? gmdate_format('i', $row['timestamp']) : '',
+				'CONTENTS' => unparse($row['contents']),					
+				'TITLE'	 => stripslashes($row['title']),
 				'L_REQUIRE_TITLE' => $LANG['require_title'],
 				'L_REQUIRE_TEXT' => $LANG['require_text'],				
 				'L_EDIT_EVENT' => $LANG['edit_event'],
@@ -368,19 +373,6 @@ elseif( !empty($id) )
 				'L_RESET' => $LANG['reset']
 			));
 		
-			//Gestion de la date
-			$Template->Assign_block_vars('form', array(
-				'UPDATE' => transid('?edit=1&amp;id=' . $id),
-				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-				'DAY_DATE' => !empty($row['timestamp']) ? gmdate_format('d', $row['timestamp']) : '',
-				'MONTH_DATE' => !empty($row['timestamp']) ? gmdate_format('m', $row['timestamp']) : '',
-				'YEAR_DATE' => !empty($row['timestamp']) ? gmdate_format('Y', $row['timestamp']) : '',
-				'HOUR' => !empty($row['timestamp']) ? gmdate_format('h', $row['timestamp']) : '',
-				'MIN' => !empty($row['timestamp']) ? gmdate_format('i', $row['timestamp']) : '',
-				'CONTENTS' => unparse($row['contents']),					
-				'TITLE'	 => stripslashes($row['title'])
-			));
-			
 			//Gestion erreur.
 			$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 			switch($get_error)
@@ -445,7 +437,7 @@ elseif( !empty($add) ) //Ajout d'un évenement
 		}
 		else
 			redirect(HOST . SCRIPT . transid('?add=1&error=invalid_date', '', '&') . '#errorh');
-	} 
+	}
 	else
 	{
 		$Template->Set_filenames(array(
@@ -461,8 +453,18 @@ elseif( !empty($add) ) //Ajout d'un évenement
 
 		$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'], 
 		$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
-						
+		
 		$Template->Assign_vars(array(					
+			'C_CALENDAR_FORM' => true,
+			'UPDATE' => transid('?add=1'),			
+			'DATE' => gmdate_format('date_format_short'),
+			'DAY_DATE' => $day,
+			'MONTH_DATE' => $month,
+			'YEAR_DATE' => $year,
+			'HOUR' => $hour,
+			'MIN' => $min,
+			'CONTENTS' => '',					
+			'TITLE'	 => '',
 			'L_REQUIRE_TITLE' => $LANG['require_title'],
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_EDIT_EVENT' => $LANG['add_event'],
@@ -473,19 +475,6 @@ elseif( !empty($add) ) //Ajout d'un évenement
 			'L_ACTION' => $LANG['action'],						
 			'L_SUBMIT' => $LANG['submit'],
 			'L_RESET' => $LANG['reset']
-		));
-		
-		//Gestion de la date
-		$Template->Assign_block_vars('form', array(
-			'UPDATE' => transid('?add=1'),			
-			'DATE' => gmdate_format('date_format_short'),
-			'DAY_DATE' => $day,
-			'MONTH_DATE' => $month,
-			'YEAR_DATE' => $year,
-			'HOUR' => $hour,
-			'MIN' => $min,
-			'CONTENTS' => '',					
-			'TITLE'	 => ''
 		));
 		
 		//Gestion erreur.

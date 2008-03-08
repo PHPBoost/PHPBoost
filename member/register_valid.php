@@ -64,7 +64,7 @@ if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-z
 	$user_yahoo = !empty($_POST['user_yahoo']) ? securit($_POST['user_yahoo']) : '';
 	
 	//Gestion de la date de naissance.
-	$user_born = !empty($_POST['user_born'] ? $_POST['user_born'] : 0;
+	$user_born = !empty($_POST['user_born']) ? $_POST['user_born'] : 0;
 	$user_born = strtodate($user_born, $LANG['date_birth_parse']);
 		
 	//Validité de l'adresse du site.

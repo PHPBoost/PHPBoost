@@ -205,11 +205,8 @@ if( !empty($idurl) && !empty($CAT_DOWNLOAD[$idcat]['name']) && !empty($idcat) ) 
 	//Affichage commentaires.
 	if( isset($_GET['i']) )
 	{
-		$_com_vars = 'download.php?cat=' . $idcat . '&amp;id=' . $idurl . '&amp;i=%d';
-		$_com_vars_e = 'download.php?cat=' . $idcat . '&id=' . $idurl . '&i=1';
-		$_com_vars_r = 'download-' . $idcat . '-' . $idurl . '.php?i=%d%s';
-		$_com_idprov = $idurl;
-		$_com_script = 'download';
+		include_once('../includes/com.class.php'); 
+		$Comments = new Comments('download', $idurl, transid('download.php?cat=' . $idcat . '&amp;id=' . $idurl . '&amp;i=%s', 'download-' . $idcat . '-' . $idurl . '.php?i=%s'));
 		include_once('../includes/com.php');
 	}	
 

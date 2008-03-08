@@ -307,12 +307,8 @@ elseif( $create_redirection > 0 ) //Création d'une redirection
 }
 elseif( isset($_GET['i']) && $idcom > 0 ) //Affichage des commentaires
 {
-	$_com_vars = 'property.php?com=' . $idcom . '&amp;i=%d';
-	$_com_vars_e = 'property.php?com=' . $idcom . '&i=1';
-	$_com_vars_r = '';
-	$_com_idprov = $idcom;
-	$_com_script = 'wiki_articles';
-	$_module_folder = 'wiki';
+	include_once('../includes/com.class.php'); 
+	$Comments = new Comments('wiki_articles', $idcom, transid('property.php?com=' . $idcom . '&amp;i=%s', ''), 'wiki');
 	include_once('../includes/com.php');
 }
 elseif( $del > 0 ) //Suppression d'un article ou d'une catégorie

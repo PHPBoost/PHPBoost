@@ -179,11 +179,8 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 	//Affichage commentaires.
 	if( isset($_GET['i']) )
 	{
-		$_com_vars = 'web.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;i=%d';
-		$_com_vars_e = 'web.php?cat=' . $idcat . '&id=' . $idweb . '&i=1';
-		$_com_vars_r = 'web-' . $idcat . '-' . $idweb . '.php?i=%d%s';
-		$_com_idprov = $idweb;
-		$_com_script = 'web';
+		include_once('../includes/com.class.php'); 
+		$Comments = new Comments('web', $idweb, transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;i=%s', 'web-' . $idcat . '-' . $idweb . '.php?i=%s'));
 		include_once('../includes/com.php');
 	}	
 

@@ -181,11 +181,8 @@ if( !empty($idart) && isset($_GET['cat']) )
 	//Affichage commentaires.
 	if( isset($_GET['i']) )
 	{
-		$_com_vars = 'articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;i=%d';
-		$_com_vars_e = 'articles.php?cat=' . $idartcat . '&id=' . $idart . '&i=1';
-		$_com_vars_r = 'articles-' . $idartcat . '-' . $idart . '.php?i=%d%s';
-		$_com_idprov = $idart;
-		$_com_script = 'articles';
+		include_once('../includes/com.class.php'); 
+		$Comments = new Comments('articles', $idart, transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;i=%s', 'articles-' . $idartcat . '-' . $idart . '.php?i=%s'));
 		include_once('../includes/com.php');
 	}	
 
