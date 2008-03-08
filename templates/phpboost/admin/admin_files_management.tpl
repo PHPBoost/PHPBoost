@@ -200,7 +200,6 @@
 		var delay = 300; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
 		var timeout;
 		var displayed = false;
-
 		//Affiche le bloc.
 		function upload_display_block(divID)
 		{
@@ -384,7 +383,6 @@
 						</form>				
 					</td>
 				</tr>
-				
 				<tr> 
 					<th>
 						&nbsp;

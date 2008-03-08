@@ -68,6 +68,7 @@
 		<br /><br />	
 		# ENDIF #
 		
+		# IF C_COM_DISPLAY #
 		<div class="msg_position">
 			<div class="msg_top_l"></div>			
 			<div class="msg_top_r"></div>
@@ -128,6 +129,7 @@
 			<div class="msg_bottom_r"></div>
 			<div class="msg_bottom" style="text-align:center;">{PAGINATION_COM}&nbsp;</div>
 		</div>
+		# ENDIF #
 	# ENDIF #
 
 
@@ -217,6 +219,7 @@
 			<br /><br />	
 		# ENDIF #
 		
+		# IF C_COM_DISPLAY #
 		<div class="msg_position">
 			<div class="msg_top_l"></div>			
 			<div class="msg_top_r"></div>
@@ -278,6 +281,7 @@
 			<div class="msg_bottom_r"></div>
 			<div class="msg_bottom" style="text-align:center;">{PAGINATION_COM}&nbsp;</div>
 		</div>
+		# ENDIF #
 	</body>
 	</html>
 

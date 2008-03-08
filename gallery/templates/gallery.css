@@ -6,6 +6,10 @@
 	padding:4px 0px;
 }
 
+.gallery_image{ /*Classe de l'image */
+	
+}
+
 /* Lightbox*/
 #lightbox{
 	position:absolute;
