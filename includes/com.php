@@ -126,23 +126,20 @@ if( $Comments->Com_loaded() )
 				$block = ($CONFIG['com_popup'] == 0 && $DEFINED_PHPBOOST !== true); 
 				$Template->Assign_vars(array(
 					'CURRENT_PAGE_COM' => $block ? true : false,
-					'POPUP_PAGE_COM' => $block ? false : true
-				));
-
-				$Template->Assign_vars(array(
+					'POPUP_PAGE_COM' => $block ? false : true,
 					'AUTH_POST_COM' => true
 				));
 				
 				//Pseudo du membre connecté.
-				if( $Member->Get_attribute('user_id') !== -1 )
+				if( $row['user_id'] !== -1 )
 					$Template->Assign_vars(array(
-						'HIDDEN_COM' => true,
+						'C_HIDDEN_COM' => true,
 						'LOGIN' => $Member->Get_attribute('login')
 					));
 				else
 					$Template->Assign_vars(array(
-						'VISIBLE_COM' => true,
-						'LOGIN' => $LANG['guest']
+						'C_VISIBLE_COM' => true,
+						'LOGIN' => $row['login']
 					));
 				
 				$forbidden_tags = implode(', ', $CONFIG_COM['forbidden_tags']);
@@ -151,7 +148,6 @@ if( $Comments->Com_loaded() )
 					'IDCOM' => $row['idcom'],
 					'SCRIPT' => $Comments->Get_attribute('script'),
 					'CONTENTS' => unparse($row['contents']),
-					'LOGIN' => $row['login'],
 					'DATE' => gmdate_format('date_format', $row['timestamp']),
 					'THEME' => $CONFIG['theme'],
 					'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
@@ -275,18 +271,17 @@ if( $Comments->Com_loaded() )
 			//Pseudo du membre connecté.
 			if( $Member->Get_attribute('user_id') !== -1 )
 				$Template->Assign_vars(array(
-					'HIDDEN_COM' => true,
+					'C_HIDDEN_COM' => true,
 					'LOGIN' => $Member->Get_attribute('login')
 				));
 			else
 				$Template->Assign_vars(array(
-					'VISIBLE_COM' => true,
+					'C_VISIBLE_COM' => true,
 					'LOGIN' => $LANG['guest']
 				));
 		}	
 		else
 			$Errorh->Error_handler($LANG['com_locked'], E_USER_NOTICE);
-
 		
 		$get_pos = strpos($_SERVER['QUERY_STRING'], '&pc');
 		if( $get_pos !== false )
