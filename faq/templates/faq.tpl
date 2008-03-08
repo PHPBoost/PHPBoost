@@ -11,8 +11,6 @@
 			}
 		-->
 		</script>
-		<script type="text/javascript" src="{MODULE_DATA_PATH}/images/faq.js">
-		</script>
 
 		<div class="module_position">			
 			<div class="module_top_l"></div>		
@@ -67,14 +65,13 @@
 							<div class="row1">
 								<span style="float:left;">
 									<a href="javascript:show_answer({questions.faq.ID_QUESTION});"><img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" /></a>
+									<a id="l{ID_QUESTION}" href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
 									<script type="text/javascript">
 									<!--
-										document.write("<a href=\"javascript:show_answer({questions.faq.ID_QUESTION});\">{questions.faq.QUESTION}</a>");
+										document.getElementById("l{ID_QUESTION}").href = 'javascript:show_answer({questions.faq.ID_QUESTION});';
+										
 									-->
 									</script>
-									<noscript>
-										<a href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
-									</noscript>
 								</span>
 								# IF C_ADMIN_TOOLS #
 								<span class="row2" style="float:right;">
@@ -91,9 +88,14 @@
 								<div style="clear:both"></div>
 							</div>
 							<br />
-							<div id="a{questions.faq.ID_QUESTION}" class="blockquote" style="{questions.faq.DISPLAY_ANSWER}">
+							<div id="a{questions.faq.ID_QUESTION}" class="blockquote" style="display:none;">
 								{questions.faq.ANSWER}
 							</div>
+							# IF C_DISPLAY_ANSWER #
+							<script type="text/javascript">
+								document.getElementById("a{questions.faq.ID_QUESTION}").style.display = "block";
+							</script>
+							# ENDIF #
 						</div>
 					# END questions.faq #
 				# END questions #

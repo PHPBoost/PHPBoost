@@ -73,6 +73,11 @@ $FAQ_LANG['faq_management'] = 'Gestion de la FAQ';
 $FAQ_LANG['faq_configuration'] = 'Configuration de la FAQ';
 $FAQ_LANG['cats_management'] = 'Gestion des catégories';
 $FAQ_LANG['add_cat'] = 'Ajouter une catégorie';
+$FAQ_LANG['show_all_answers'] = 'Afficher toutes les réponses';
+$FAQ_LANG['hide_all_answers'] = 'Cacher toutes les réponses';
+$FAQ_LANG['move'] = 'Déplacer';
+$FAQ_LANG['moving_a_question'] = 'Déplacement d\'une question';
+$FAQ_LANG['target_category'] = 'Catégorie cible';
 
 //Avertissement
 $FAQ_LANG['required_fields'] = 'Les champs marqués * sont obligatoires !';

@@ -62,6 +62,30 @@
 							return true;
 					}
 					
+					# IF C_DISPLAY_ANSWERS #
+					var display_answers = false;
+					
+					function show_hide_questions ( )
+					{
+						display_answers = !display_answers;
+						var string_display = "";
+						if( display_answers )
+						{
+							string_display = "block";
+							document.getElementById("l_change_answers_status").innerHTML = "{L_HIDE_ANSWERS}";
+						}
+						else
+						{
+							string_display = "none";
+							document.getElementById("l_change_answers_status").innerHTML = "{L_DISPLAY_ANSWERS}";
+						}
+						
+						for( var i = 1; i <= {NUM_QUESTIONS}; i++ )
+						{
+							document.getElementById("a" + i).style.display = string_display;
+						}
+					}
+					# ENDIF #
 				-->
 				</script>
 				
@@ -143,6 +167,11 @@
 				
 				<fieldset>
 					<legend>{L_QUESTIONS_LIST}</legend>
+					# IF C_DISPLAY_ANSWERS #
+						<script type="text/javascript">
+							document.write('<div style="text-align:center;"><a href="javascript:show_hide_questions();" id="l_change_answers_status">{L_DISPLAY_ANSWERS}</a></div><br />');
+						</script>
+					# ENDIF #
 					<p style="text-align:center;">
 						<a href="{category.U_CREATE_BEFORE}" title="{L_INSERT_QUESTION_BEFORE}"><img src="../templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION_BEFORE}" /></a>
 					</p>
@@ -154,17 +183,28 @@
 								{category.questions.QUESTION}
 							</span>
 							<span class="row2" style="float:right;">
+								<a href="{category.questions.U_MOVE}" title="{L_MOVE}">
+									<img src="../templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" />
+								</a>
 								# START category.questions.up #
-									<a href="{category.questions.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
+									<a href="{category.questions.U_UP}" title="{L_UP}">
+										<img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" />
+									</a>
 								# END category.questions.up #
 								# START category.questions.down #
-									<a href="{category.questions.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
+									<a href="{category.questions.U_DOWN}" title="{L_DOWN}">
+										<img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" />
+									</a>
 								# END category.questions.down #
 								<a href="{category.questions.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
 								<a href="{category.questions.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
 							</span>
 							<div style="clear:both"></div>
 						</div>
+						<br />
+						<div id="a{category.questions.ID}" class="blockquote" style="display:none;">
+							{category.questions.ANSWER}
+						</div>	
 						<br />
 						<div style="text-align:center;">
 							<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}"><img src="../templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION}" /></a>
@@ -239,3 +279,37 @@
 			<div class="module_bottom"></div>
 		</div>
 		# END edit_question #
+
+		
+		# START move_question #
+		<div class="module_position">			
+			<div class="module_top_l"></div>		
+			<div class="module_top_r"></div>
+			<div class="module_top">{TITLE}</div>
+			<div class="module_contents">
+				<form action="{U_FORM_TARGET}" method="post">
+					<fieldset>
+						<legend>{L_TARGET}</legend>
+						<dl>
+							<dt>
+								<label for="target">{L_TARGET}</label>
+							</dt>
+							<dd>
+								{move_question.CATEGORIES_TREE}
+							</dd>
+						</dl>
+					</fieldset>
+					<fieldset class="fieldset_submit">
+						<legend>{L_MOVE}</legend>
+						<input type="submit" name="submit" value="{L_MOVE}" class="submit" />
+						<input type="hidden" name="id_question" value="{move_question.ID_QUESTION}" />
+						<input type="hidden" name="move_question" value="true" />
+					</fieldset>					
+				</form>
+				&nbsp;
+			</div>
+			<div class="module_bottom_l"></div>		
+			<div class="module_bottom_r"></div>
+			<div class="module_bottom"></div>
+		</div>
+		# END move_question #

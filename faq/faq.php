@@ -62,7 +62,7 @@ $Template->Assign_vars(array(
 
 if( !empty($FAQ_CATS[$id_faq]['description']) )
 	$Template->Assign_block_vars('description', array(
-		'DESCRIPTION' => $FAQ_CATS[$id_faq]['description']
+		'DESCRIPTION' => second_parse($FAQ_CATS[$id_faq]['description'])
 	));
 
 if( $auth_write )
@@ -138,8 +138,7 @@ if( ($num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq
 			$Template->Assign_block_vars('questions.faq', array(
 				'ID_QUESTION' => $row['id'],
 				'QUESTION' => $row['question'],
-				'DISPLAY_ANSWER' => $row['id'] != $id_question ? 'display:none' : 'display:block', //If user has disabled javascript $id_question corresponds to the answer he wants to read
-				'ANSWER' => $row['answer'],
+				'ANSWER' => second_parse($row['answer']),
 				'U_QUESTION' => transid('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']),
 				'U_DEL' => 'action.php?del=' . $row['id'],
 				'U_DOWN' => 'action.php?down=' . $row['id'],
@@ -150,6 +149,11 @@ if( ($num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq
 				$Template->Assign_block_vars('questions.faq.up', array());
 			if( $row['q_order'] < $num_rows )
 				$Template->Assign_block_vars('questions.faq.down', array());
+			
+			//If we show only one question
+			$Template->Assign_vars(array(
+				'C_DISPLAY_ANSWER' => $row['id'] == $id_question
+			));
 		}
 		else
 		{

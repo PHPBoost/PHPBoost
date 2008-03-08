@@ -38,12 +38,15 @@ $answer = !empty($_POST['answer']) ? parse($_POST['answer']) : '';
 $new_id_cat = !empty($_POST['id_cat']) ? numeric($_POST['id_cat']) : 0;
 $id_after = !empty($_POST['after']) ? numeric($_POST['after']) : 0;
 //Properties of the category
-$cat_properties = !empty($_GET['cat_properties']) ? true : false;
+$cat_properties = !empty($_GET['cat_properties']);
 $id_cat = !empty($_POST['id_faq']) ? numeric($_POST['id_faq']) : 0;
 $display_mode = !empty($_POST['display_mode']) ? numeric($_POST['display_mode']) : 0;
-$global_auth = !empty($_POST['global_auth']) ? true : false;
+$global_auth = !empty($_POST['global_auth']);
 $cat_name = !empty($_POST['cat_name']) ? securit($_POST['cat_name']) : '';
 $description = !empty($_POST['description']) ? parse($_POST['description']) : '';
+
+$target = !empty($_POST['target']) ? numeric($_POST['target']) : 0;
+$move_question = !empty($_POST['move_question']);
 
 if( $faq_del_id > 0 )
 {
@@ -168,6 +171,34 @@ elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
 	}
 	else
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+}
+//Moving a question
+elseif( $id_question > 0 && $move_question && $target >= 0 )
+{
+	//We check if new category exists
+	if( array_key_exists($target, $FAQ_CATS) || $target == 0 )
+	{
+		$question_infos = $Sql->Query_array("faq", "*", "WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
+		$id_cat_for_speed_bar = $question_infos['idcat'];
+		$auth_write = $Member->Check_auth($FAQ_CONFIG['global_auth'], AUTH_WRITE);
+		while( $id_cat_for_speed_bar > 0 )
+		{
+			$id_cat_for_speed_bar = (int)$FAQ_CATS[$id_cat_for_speed_bar]['id_parent'];
+			if( !empty($FAQ_CATS[$id_cat_for_speed_bar]['auth']) )
+				$auth_write = $Member->Check_auth($FAQ_CATS[$id_cat_for_speed_bar]['auth'], AUTH_WRITE);
+		}
+		if( $auth_write )
+		{
+			if( $target != $question_infos['idcat'])
+			{
+				$max_order = $Sql->Query("SELECT MAX(q_order) FROM ".PREFIX."faq WHERE idcat = '" . $target . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."faq SET idcat = '" . $target . "', q_order = '" . ($max_order + 1) . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE idcat = '" . $question_infos['idcat'] . "' AND q_order > '" . $question_infos['q_order'] . "'", __LINE__, __FILE__);
+			}
+			redirect(HOST . DIR . transid('/faq/management.php?faq=' . $target, '', '&'));
+		}
+	}
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 }
 else
 	redirect(HOST . DIR . transid('/faq/faq.php', '', '&'));
