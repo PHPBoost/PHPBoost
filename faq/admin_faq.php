@@ -31,8 +31,6 @@ include_once('faq_begin.php'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 include_once('../includes/admin_header.php');
 
-include_once('faq_begin.php');
-
 $Template->Set_filenames(array(
 	'admin_faq' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq.tpl'
 ));

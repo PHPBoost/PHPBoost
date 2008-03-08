@@ -31,21 +31,23 @@
 					<hr style="margin-top:25px;" />
 				
 				# IF C_FAQ_CATS #
-					# START list_cats #
-						<div style="float:left;width:{list_cats.WIDTH}%;text-align:center;margin:30px 0px;">
-							# IF C_CAT_IMG #
-								<a href="{list_cats.U_CAT}" title="{list_cats.IMG_NAME}"><img src="{list_cats.SRC}" alt="{list_cats.IMG_NAME}" /></a>
-								<br />
-							# ENDIF #
-							<a href="{list_cats.U_CAT}">{list_cats.NAME}</a>
-							# IF C_ADMIN #
-							<a href="{list_cats.U_ADMIN_CAT}">
-								<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
-							</a>
-							# ENDIF #
-						</div>
-					# END list_cats #
-					<div class="spacer">&nbsp;</div>
+					# START row #
+						# START row.list_cats #
+							<div style="float:left;width:{row.list_cats.WIDTH}%;text-align:center;margin:20px 0px;">
+								# IF C_CAT_IMG #
+									<a href="{row.list_cats.U_CAT}" title="{row.list_cats.IMG_NAME}"><img src="{row.list_cats.SRC}" alt="{row.list_cats.IMG_NAME}" /></a>
+									<br />
+								# ENDIF #
+								<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
+								# IF C_ADMIN #
+								<a href="{row.list_cats.U_ADMIN_CAT}">
+									<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+								</a>
+								# ENDIF #
+							</div>
+						# END row.list_cats #
+						<div class="spacer">&nbsp;</div>
+					# END row #
 					<hr style="margin-bottom:25px;" />
 				# ENDIF #		
 				
@@ -75,6 +77,7 @@
 								</span>
 								# IF C_ADMIN_TOOLS #
 								<span class="row2" style="float:right;">
+									<a href="{questions.faq.U_MOVE}" title="{L_MOVE}"><img src="../templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
 									# START questions.faq.up #
 										<a href="{questions.faq.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
 									# END questions.faq.up #
