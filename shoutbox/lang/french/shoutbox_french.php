@@ -37,4 +37,5 @@ $LANG['shoutbox_config'] = 'Configuration de la discussion rapide';
 $LANG['rank_post'] = 'Rang pour pouvoir poster';
 
 $LANG['title_shoutbox'] = 'Discussion';
+$LANG['archives'] = 'Archives';
 ?>

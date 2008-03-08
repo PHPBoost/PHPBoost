@@ -103,7 +103,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_REFRESH' => $LANG['refresh'],
-		'L_ARCHIVE' => $LANG['archive']
+		'L_ARCHIVES' => $LANG['archives']
 	));
 	
 	$result = $Sql->Query_while("SELECT id, login, user_id, contents 
