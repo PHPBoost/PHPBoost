@@ -89,7 +89,9 @@ if( $num_subcats > 0 )
 		//List of children categories
 		if( $id != 0 && $value['visible'] == 1 && $value['id_parent'] == $id_faq && (empty($value['auth']) || $Member->Check_auth($value['auth'], AUTH_READ)) )
 		{
-			$Template->Assign_block_vars('list_cats', array(
+			if ( $i % $FAQ_CONFIG['num_cols'] == 1 )
+				$Template->Assign_block_vars('row', array());
+			$Template->Assign_block_vars('row.list_cats', array(
 				'ID' => $id,
 				'NAME' => $value['name'],
 				'U_CAT' => transid('faq.php?id=' . $id, 'faq-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
@@ -140,10 +142,11 @@ if( ($num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq
 				'QUESTION' => $row['question'],
 				'ANSWER' => second_parse($row['answer']),
 				'U_QUESTION' => transid('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']),
-				'U_DEL' => 'action.php?del=' . $row['id'],
-				'U_DOWN' => 'action.php?down=' . $row['id'],
-				'U_UP' => 'action.php?up=' . $row['id'],
-				'U_EDIT' => 'management.php?edit=' . $row['id'],
+				'U_DEL' => transid('action.php?del=' . $row['id']),
+				'U_DOWN' => transid('action.php?down=' . $row['id']),
+				'U_UP' => transid('action.php?up=' . $row['id']),
+				'U_MOVE' => transid('management.php?move=' . $row['id']),
+				'U_EDIT' => transid('management.php?edit=' . $row['id'])
 			));
 			if( $row['q_order'] > 1 )
 				$Template->Assign_block_vars('questions.faq.up', array());
@@ -189,6 +192,7 @@ $Template->Assign_vars(array(
 	'L_DELETE' => $FAQ_LANG['delete'],
 	'L_UP' => $FAQ_LANG['up'],
 	'L_DOWN' => $FAQ_LANG['down'],
+	'L_MOVE' => $FAQ_LANG['move'],
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
 	'C_ADMIN' => $Member->Check_level(ADMIN_LEVEL),
