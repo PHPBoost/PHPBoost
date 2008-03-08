@@ -155,11 +155,13 @@ elseif( !empty($id_get) ) //Edition + suppression!
 			));
 
 			if( $row['user_id'] !== -1 )
-				$Template->Assign_block_vars('hidden_guestbook', array(
+				$Template->Assign_vars(array(
+					'C_HIDDEN_GUESTBOOK' => true,
 					'PSEUDO' => $row['login']
 				));
 			else
-				$Template->Assign_block_vars('visible_guestbook', array(
+				$Template->Assign_vars(array(
+					'C_VISIBLE_GUESTBOOK' => true,
 					'PSEUDO' => $row['login']
 				));		
 			
@@ -218,11 +220,13 @@ else //Affichage.
 		
 	//Pseudo du membre connecté.
 	if( $Member->Get_attribute('user_id') !== -1 )
-		$Template->Assign_block_vars('hidden_guestbook', array(
+		$Template->Assign_vars(array(
+			'C_HIDDEN_GUESTBOOK' => true,
 			'PSEUDO' => $Member->Get_attribute('login')
 		));
 	else
-		$Template->Assign_block_vars('visible_guestbook', array(
+		$Template->Assign_vars(array(
+			'C_VISIBLE_GUESTBOOK' => true,
 			'PSEUDO' => $LANG['guest']
 		));
 	
