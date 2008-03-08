@@ -685,11 +685,8 @@ else
 				//Commentaires
 				if( isset($_GET['i']) )
 				{
-					$_com_vars = 'gallery.php?cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;i=%d';
-					$_com_vars_e = 'gallery.php?cat=' . $g_idcat . '&id=' . $g_idpics . '&i=1';
-					$_com_vars_r = 'gallery-' . $g_idcat . '-' . $g_idpics . '.php?i=%d%s';
-					$_com_idprov = $g_idpics;
-					$_com_script = 'gallery';
+					include_once('../includes/com.class.php'); 
+					$Comments = new Comments('gallery', $g_idpics, transid('gallery.php?cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;i=%s', 'gallery-' . $g_idcat . '-' . $g_idpics . '.php?i=%s'));
 					include_once('../includes/com.php');
 				}
 			}

@@ -12,6 +12,10 @@
  
 ***************************************************************************/
 
+$delcom = !empty($_GET['delcom']) ? true : false;
+$editcom = !empty($_GET['editcom']) ? true : false;
+$updatecom = !empty($_GET['updatecom']) ? true : false;
+
 //Com en popup
 $DEFINED_PHPBOOST = !defined('PHP_BOOST');
 if( $DEFINED_PHPBOOST )
@@ -19,71 +23,43 @@ if( $DEFINED_PHPBOOST )
 	include_once('../includes/begin.php');	
 	define('TITLE', $LANG['title_com']);	
 	include_once('../includes/header_no_display.php');
-
-	$POPUP = true;	
+	
 	if( !empty($_GET['i']) )
 	{
 		if( !preg_match('`([0-9]+)([a-z]+)([0-9]*)`', trim($_GET['i']), $array_get) )
 			$array_get = array('', '', '', '');
-			
-		$_com_idprov = $array_get[1];
-		$_com_script = $array_get[2];
-		$_com_idcom = $array_get[3];
-		$_com_idcom = (empty($_com_idcom) && !empty($_POST['idcom'])) ? numeric($_POST['idcom']) : $_com_idcom;	
-		$_module_folder = isset($_GET['folder']) ? trim($_GET['folder']) : $_com_script;
-		
-		$_com_path = HOST . DIR . '/includes/com.php';
-		$_com_vars = '?i=' . $_com_idprov . $_com_script . '%s';
-		$_com_vars_simple = '?i=' . $_com_idprov . $_com_script;
-		$_com_vars_e = '?i=' . $_com_idprov . $_com_script;
-		$_com_vars_r = '';
-		$_com_vars_r_simple = '';			
+		$idcom = (empty($array_get[3]) && !empty($_POST['idcom'])) ? numeric($_POST['idcom']) : $array_get[3];	
+	
+		include_once('../includes/com.class.php'); 
+		$Comments = new Comments($array_get[2], $array_get[1], transid('?i=' . $array_get[1] . $array_get[2] . '%s', ''), $array_get[2]);
+		$Comments->Set_arg($idcom, '../includes/com.php'); //On met à jour les attributs de l'objet.
+		$_com_vars_simple = sprintf($Comments->Get_attribute('vars'), 0);
 	}
 }
 else
 {	
-	$POPUP = false;
-	$_com_vars = !empty($_com_vars) ? $_com_vars : '%d';
-	$_com_script = !empty($_com_script) ? $_com_script : '';
-	$_com_vars_simple = sprintf($_com_vars, 0);
-	$_com_vars_r = isset($_com_vars_r) ? $_com_vars_r : '';
-	$_com_vars_r_simple = !empty($_com_vars_r) ? sprintf($_com_vars_r, 0, '') : '';			
-	$_module_folder = isset($_module_folder) ? $_module_folder : $_com_script;
-	
-	$_com_path = HOST . DIR . '/' . $_module_folder . '/';
-	$_com_idcom = !empty($_GET['i']) ? numeric($_GET['i']) : 0;
-	$_com_idcom = (empty($_com_idcom) && !empty($_POST['idcom'])) ? numeric($_POST['idcom']) : $_com_idcom;
+	$idcom = !empty($_GET['i']) ? numeric($_GET['i']) : 0;
+	$idcom = (!empty($idcom) && !empty($_POST['idcom'])) ? numeric($_POST['idcom']) : $idcom;
+	$Comments->Set_arg($idcom); //On met à jour les attributs de l'objet.
+	$_com_vars_simple = sprintf($Comments->Get_attribute('vars'), 0);
 }
-				
-if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_com_vars_e) )
+$path_redirect = $Comments->Get_attribute('path') . sprintf(str_replace('&amp;', '&', $Comments->Get_attribute('vars')), 0);
+
+//Commentaires chargés?
+if( $Comments->Com_loaded() )
 {
+	if( $Comments->Get_attribute('sql_table') == '' ) //Erreur avec le module non prévu pour gérer les commentaires.
+		$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT);
+		
 	$Template->Set_filenames(array(
 		'handle_com' => '../templates/' . $CONFIG['theme'] . '/com.tpl'
 	));
-					
-	$del = !empty($_GET['delcom']) ? true : false;
-	$edit = !empty($_GET['editcom']) ? true : false;
-	$update = !empty($_GET['updatecom']) ? true : false;
-				
+	
 	//Chargement du cache
 	$Cache->Load_file('com');
 
-	$info_module = load_ini_file('../' . $_module_folder . '/lang/', $CONFIG['lang']);
-	$check_script = false;
-	if( isset($info_module['com']) )
-	{
-		if( $info_module['com'] == $_com_script )
-		{
-			$info_sql_module = $Sql->Query_array(securit($info_module['com']), "id", "nbr_com", "lock_com", "WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
-			if( !empty($info_sql_module['id']) )
-				$check_script = true;
-		}
-	}
-	if( $check_script === false )
-		$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT);
-	
 	###########################Insertion##############################
-	if( !empty($_POST['valid']) && !$update )
+	if( !empty($_POST['valid']) && !$updatecom )
 	{
 		//Membre en lecture seule?
 		if( $Member->Get_attribute('user_readonly') > time() ) 
@@ -91,11 +67,11 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		
 		$login = !empty($_POST['login']) ? securit($_POST['login']) : ''; //Pseudo posté.
 		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-		if( !empty($login) && !empty($contents) && !empty($_com_script) && !empty($_com_idprov) )
+		if( !empty($login) && !empty($contents) )
 		{
 			//Status des commentaires, verrouillé/déverrouillé?
-			if( $info_sql_module['lock_com'] >= 1 && !$Member->Check_level(MODO_LEVEL) )
-				redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&'));
+			if( $Comments->Get_attribute('lock_com') >= 1 && !$Member->Check_level(MODO_LEVEL) )
+				redirect($path_redirect);
 			
 			//Autorisation de poster des commentaires? 
 			if( $Member->Check_level($CONFIG_COM['com_auth']) )
@@ -105,150 +81,126 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 				if( !empty($check_time) && !$Member->Check_max_value(AUTH_FLOOD) )
 				{				
 					if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcul la fin du delai.	
-						redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=flood#errorh');
+						redirect($path_redirect . '&error=flood#errorh');
 				}
 				
 				$contents = parse($contents, $CONFIG_COM['forbidden_tags']);
 				if( !check_nbr_links($login, 0) ) //Nombre de liens max dans le pseudo.
-					redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=l_pseudo#errorh');
+					redirect($path_redirect . '&error=l_pseudo#errorh');
 				if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
-					redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=l_flood#errorh');
+					redirect($path_redirect . '&error=l_flood#errorh');
 				
 				//Récupération de l'adresse de la page.
-				$path_com = '..' . str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING;
-				$Sql->Query_inject("INSERT INTO ".PREFIX."com (idprov, login, user_id, contents, timestamp, script, path) VALUES('" . $_com_idprov . "', '" . $login . "', '" . $Member->Get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $_com_script . "', '" . $path_com . "')", __LINE__, __FILE__);
-				
-				$_com_idcom = $Sql->Sql_insert_id("SELECT MAX(idcom) FROM ".PREFIX."com");
-				
-				//Incrémente le nombre de commentaire dans la table du script concerné.
-				$Sql->Query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET nbr_com = nbr_com + 1 WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
+				$last_idcom = $Comments->Add_com($contents, $login);
 				
 				//Rédirection vers la page pour éviter le double post!
-				redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '#m' . $_com_idcom);
+				redirect($path_redirect . '#m' . $last_idcom);
 			}
 			else //utilisateur non autorisé!
-				redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=auth#errorh');
+				redirect($path_redirect . '&error=auth#errorh');
 		}
 		else
-			redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=incomplete#errorh');
+			redirect($path_redirect . '&error=incomplete#errorh');
 	}
-	elseif( !empty($_com_script) && ($update || $del || $edit) ) //Edition + suppression
+	elseif( $updatecom || $delcom || $editcom ) //Modération des commentaires.
 	{
 		//Membre en lecture seule?
 		if( $Member->Get_attribute('user_readonly') > time() ) 
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 		
-		$row = $Sql->Query_array('com', '*', "WHERE idcom = '" . $_com_idcom . "' AND idprov = '" . $_com_idprov . "' AND script = '" . $_com_script . "'", __LINE__, __FILE__);
+		$row = $Sql->Query_array('com', '*', "WHERE idcom = '" . $Comments->Get_attribute('idcom') . "' AND idprov = '" . $Comments->Get_attribute('idprov') . "' AND script = '" . $Comments->Get_attribute('script') . "'", __LINE__, __FILE__);
 		$row['user_id'] = (int)$row['user_id'];
 
-		if( !empty($_com_idprov) && !empty($_com_idcom) )
-		{
-			if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
-			{	
-				if( $del )
+		if( $Comments->Get_attribute('idcom') != '0' && ($Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1)) ) //Modération des commentaires.
+		{	
+			if( $delcom ) //Suppression du commentaire.
+			{
+				$lastid_com = $Comments->Del_com();
+				$lastid_com = !empty($lastid_com) ? '#m' . $lastid_com : '';
+				
+				//Succès redirection.
+				redirect($path_redirect . $lastid_com);
+			}
+			elseif( $editcom ) //Edition du commentaire.
+			{
+				$block = ($CONFIG['com_popup'] == 0 && $DEFINED_PHPBOOST !== true); 
+				$Template->Assign_vars(array(
+					'CURRENT_PAGE_COM' => $block ? true : false,
+					'POPUP_PAGE_COM' => $block ? false : true
+				));
+
+				$Template->Assign_vars(array(
+					'AUTH_POST_COM' => true
+				));
+				
+				//Pseudo du membre connecté.
+				if( $Member->Get_attribute('user_id') !== -1 )
+					$Template->Assign_vars(array(
+						'HIDDEN_COM' => true,
+						'LOGIN' => $Member->Get_attribute('login')
+					));
+				else
+					$Template->Assign_vars(array(
+						'VISIBLE_COM' => true,
+						'LOGIN' => $LANG['guest']
+					));
+				
+				$forbidden_tags = implode(', ', $CONFIG_COM['forbidden_tags']);
+				$Template->Assign_vars(array(					
+					'IDPROV' => $row['idprov'],
+					'IDCOM' => $row['idcom'],
+					'SCRIPT' => $Comments->Get_attribute('script'),
+					'CONTENTS' => unparse($row['contents']),
+					'LOGIN' => $row['login'],
+					'DATE' => gmdate_format('date_format', $row['timestamp']),
+					'THEME' => $CONFIG['theme'],
+					'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
+					'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
+					'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
+					'L_LANGUAGE' => substr($CONFIG['lang'], 0, 2),				   
+					'L_EDIT_COMMENT' => $LANG['edit_comment'],
+					'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
+					'L_REQUIRE_TEXT' => $LANG['require_text'],
+					'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
+					'L_LOGIN' => $LANG['pseudo'],
+					'L_MESSAGE' => $LANG['message'],
+					'L_RESET' => $LANG['reset'],
+					'L_PREVIEW' => $LANG['preview'],
+					'L_PREVIEW' => $LANG['preview'],
+					'L_SUBMIT' => $LANG['update'],
+					'U_ACTION' => $Comments->Get_attribute('path') . sprintf($Comments->Get_attribute('vars'), $Comments->Get_attribute('idcom')) . '&amp;updatecom=1'
+				));
+				
+				include_once('../includes/bbcode.php');
+			}
+			elseif( $updatecom ) //Mise à jour du commentaire.
+			{
+				$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';			
+				$login = !empty($_POST['login']) ? securit($_POST['login']) : '';			
+				if( !empty($contents) && !empty($login) )
 				{
-					//Sélectionne le message précédent à celui qui va être supprimé.
-					$lastid = $Sql->Query("SELECT idcom 
-					FROM ".PREFIX."com 
-					WHERE idcom < '" . $_com_idcom . "' AND script = '" . $_com_script . "' AND idprov = '" . $_com_idprov . "' 
-					ORDER BY idcom DESC 
-					" . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
-					
-					$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idcom = '" . $_com_idcom . "' AND script = '" . $_com_script . "' AND idprov = '" . $_com_idprov . "'", __LINE__, __FILE__);				
-					$Sql->Query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET nbr_com= nbr_com - 1 WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
-					
-					$lastid = !empty($lastid) ? '#m' . $lastid : '';
+					$contents = parse($contents, $CONFIG_COM['forbidden_tags']);
+					if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
+						redirect($path_redirect . '&error=l_flood#errorh');
+
+					$Comments->Update_com($contents, $login);
 					
 					//Succès redirection.
-					redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . $lastid);
+					redirect($path_redirect . '#m' . $Comments->Get_attribute('idcom'));
 				}
-				elseif( $edit )
-				{
-					$block = ($CONFIG['com_popup'] == 0 && $POPUP !== true); 
-					$Template->Assign_vars(array(
-						'CURRENT_PAGE_COM' => $block ? true : false,
-						'POPUP_PAGE_COM' => $block ? false : true
-					));
-
-					$Template->Assign_vars(array(
-						'AUTH_POST_COM' => true
-					));
-					
-					//Pseudo du membre connecté.
-					if( $Member->Get_attribute('user_id') !== -1 )
-						$Template->Assign_vars(array(
-							'HIDDEN_COM' => true,
-							'LOGIN' => $Member->Get_attribute('login')
-						));
-					else
-						$Template->Assign_vars(array(
-							'VISIBLE_COM' => true,
-							'LOGIN' => $LANG['guest']
-						));
-					
-					$forbidden_tags = implode(', ', $CONFIG_COM['forbidden_tags']);
-					$Template->Assign_vars(array(					
-						'IDPROV' => $row['idprov'],
-						'IDCOM' => $row['idcom'],
-						'SCRIPT' => $_com_script,
-						'CONTENTS' => unparse($row['contents']),
-						'LOGIN' => $row['login'],
-						'DATE' => gmdate_format('date_format', $row['timestamp']),
-						'THEME' => $CONFIG['theme'],
-						'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
-						'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
-						'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
-						'L_LANGUAGE' => substr($CONFIG['lang'], 0, 2),				   
-						'L_EDIT_COMMENT' => $LANG['edit_comment'],
-						'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
-						'L_REQUIRE_TEXT' => $LANG['require_text'],
-						'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
-						'L_LOGIN' => $LANG['pseudo'],
-						'L_MESSAGE' => $LANG['message'],
-						'L_RESET' => $LANG['reset'],
-						'L_PREVIEW' => $LANG['preview'],
-						'L_PREVIEW' => $LANG['preview'],
-						'L_SUBMIT' => $LANG['update'],
-						'U_ACTION' => $_com_path . transid(sprintf($_com_vars, $_com_idcom) . '&amp;updatecom=1')
-					));
-					
-					include_once('../includes/bbcode.php');
-				}
-				elseif( $update )
-				{
-					$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';			
-					$login = !empty($_POST['login']) ? securit($_POST['login']) : '';			
-					if( !empty($contents) && !empty($login) )
-					{
-						$contents = parse($contents, $CONFIG_COM['forbidden_tags']);
-						if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
-							redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=l_flood#errorh');
-
-						$Sql->Query_inject("UPDATE ".PREFIX."com SET contents = '" . $contents . "', login = '" . $login . "' WHERE idcom = '" . $_com_idcom . "' AND idprov = '" . $_com_idprov . "' AND script = '" . $_com_script . "'", __LINE__, __FILE__);
-						
-						//Succès redirection.
-						redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '#m' . $_com_idcom);
-					}
-					else //Champs incomplet!
-						redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=incomplete#errorh');
-				}
-				else
-					redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '&error=incomplete#errorh');
+				else //Champs incomplet!
+					redirect($path_redirect . '&error=incomplete#errorh');
 			}
 			else
-				$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-		}
-	}
-	elseif( isset($_GET['lock']) && !empty($_com_script) && !empty($_com_idprov) ) //Verrouillage des commentaires.
-	{
-		if( $Member->Check_level(MODO_LEVEL) )
-		{
-			$Sql->Query_inject("UPDATE ".PREFIX.securit($info_module['com'])." SET lock_com = '" . numeric($_GET['lock']) . "' WHERE id = '" . $_com_idprov . "'", __LINE__, __FILE__);
-			
-			redirect($_com_path . transid($_com_vars_e, $_com_vars_r_simple, '&') . '#' . $_com_script);
+				redirect($path_redirect . '&error=incomplete#errorh');
 		}
 		else
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	}
+	elseif( isset($_GET['lock']) && $Member->Check_level(MODO_LEVEL) ) //Verrouillage des commentaires.
+	{
+		$Comments->Lock_com(numeric($_GET['lock']));
+		redirect($path_redirect . '#' . $Comments->Get_attribute('script'));
 	}
 	else
 	{
@@ -257,15 +209,16 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		$contents = '';
 		if( !empty($get_quote) )
 		{
-			$com = $Sql->Query_array('com', 'login', 'contents', "WHERE script = '" . $_com_script . "' AND idprov = '" . $_com_idprov . "' AND idcom = '" . $get_quote . "'", __LINE__, __FILE__);
-			$contents = '[quote=' . $com['login'] . ']' . $com['contents'] . '[/quote]';
+			$info_com = $Sql->Query_array('com', 'login', 'contents', "WHERE script = '" . $Comments->Get_attribute('script') . "' AND idprov = '" . $Comments->Get_attribute('idprov') . "' AND idcom = '" . $get_quote . "'", __LINE__, __FILE__);
+			$contents = '[quote=' . $info_com['login'] . ']' . $info_com['contents'] . '[/quote]';
 		}
 
 		//On crée une pagination si le nombre de commentaires est trop important.
 		include_once('../includes/pagination.class.php'); 
 		$Pagination = new Pagination();
 
-		$block = ($CONFIG['com_popup'] == 0 && $POPUP !== true); 
+		$block = ($CONFIG['com_popup'] == 0 && $DEFINED_PHPBOOST !== true); 
+
 		$Template->Assign_vars(array(
 			'CURRENT_PAGE_COM' => $block ? true : false,
 			'POPUP_PAGE_COM' => $block ? false : true
@@ -276,9 +229,9 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		{
 			$Template->Assign_vars(array(
 				'COM_LOCK' => true,
-				'IMG' => ($info_sql_module['lock_com'] >= 1) ? 'unlock' : 'lock',
-				'L_LOCK' => ($info_sql_module['lock_com'] >= 1) ? $LANG['unlock'] : $LANG['lock'],
-				'U_LOCK' => $_com_path . (($info_sql_module['lock_com'] >= 1) ? transid($_com_vars_simple . '&amp;lock=0') : transid($_com_vars_simple . '&amp;lock=1'))
+				'IMG' => ($Comments->Get_attribute('lock_com') >= 1) ? 'unlock' : 'lock',
+				'L_LOCK' => ($Comments->Get_attribute('lock_com') >= 1) ? $LANG['unlock'] : $LANG['lock'],
+				'U_LOCK' => $Comments->Get_attribute('path') . (($Comments->Get_attribute('lock_com') >= 1) ? $_com_vars_simple . '&amp;lock=0' : $_com_vars_simple . '&amp;lock=1')
 			));
 		}
 		
@@ -310,7 +263,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 			$Errorh->Error_handler($errstr, E_USER_NOTICE);
 		
 		//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
-		if( empty($info_sql_module['lock_com']) || $Member->Check_level(MODO_LEVEL) )
+		if( $Comments->Get_attribute('lock_com') || $Member->Check_level(MODO_LEVEL) )
 		{	
 			if( $Member->Check_level($CONFIG_COM['com_auth']) )
 				$Template->Assign_vars(array(
@@ -343,19 +296,19 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 
 		$forbidden_tags = implode(', ', $CONFIG_COM['forbidden_tags']);
 		$Template->Assign_vars(array(
-			'PAGINATION_COM' => $Pagination->Display_pagination($_com_path . transid($_com_vars_simple, $_com_vars_r_simple) . '&amp;pc=%d#' . $_com_script, $info_sql_module['nbr_com'], 'pc', $CONFIG_COM['com_max'], 3),
+			'PAGINATION_COM' => $Pagination->Display_pagination($Comments->Get_attribute('path') . $_com_vars_simple . '&amp;pc=%d#' . $Comments->Get_attribute('script'), $Comments->Get_attribute('nbr_com'), 'pc', $CONFIG_COM['com_max'], 3),
 			'LANG' => $CONFIG['lang'],
 			'IDCOM' => '',
-			'IDPROV' => $_com_idprov,
-			'SCRIPT' => $_com_script,
+			'IDPROV' => $Comments->Get_attribute('idprov'),
+			'SCRIPT' => $Comments->Get_attribute('script'),
 			'PATH' => SCRIPT,
-			'UPDATE' => ($POPUP == true) ? SID : '',
-			'VAR' => transid($_com_vars_simple, $_com_vars_r_simple),
+			'UPDATE' => ($DEFINED_PHPBOOST == true) ? SID : '',
+			'VAR' => $_com_vars_simple,
 			'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
 			'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
 			'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
 			'L_XML_LANGUAGE' => $LANG['xml_lang'],
-			'L_TITLE' => ($CONFIG['com_popup'] == 0 || $POPUP === true) ? $LANG['title_com'] : '',
+			'L_TITLE' => ($CONFIG['com_popup'] == 0 || $DEFINED_PHPBOOST === true) ? $LANG['title_com'] : '',
 			'THEME' => $CONFIG['theme'],
 			'CONTENTS' => unparse($contents),
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
@@ -380,7 +333,7 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		FROM ".PREFIX."com c
 		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
 		LEFT JOIN ".PREFIX."sessions s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
-		WHERE c.script = '" . $_com_script . "' AND c.idprov = '" . $_com_idprov . "'
+		WHERE c.script = '" . $Comments->Get_attribute('script') . "' AND c.idprov = '" . $Comments->Get_attribute('idprov') . "'
 		GROUP BY c.idcom
 		ORDER BY c.timestamp DESC 
 		" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
@@ -403,8 +356,8 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 			//Edition/suppression.
 			if( $is_modo || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 			{
-				$edit = '&nbsp;&nbsp;<a href="' . $_com_path . transid(sprintf($_com_vars, $row['idcom']) . '&editcom=1') .  '#' . $_com_script . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-				$del = '&nbsp;&nbsp;<a href="' . $_com_path . transid(sprintf($_com_vars, $row['idcom']) . '&delcom=1') . '#' . $_com_script . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+				$edit = '&nbsp;&nbsp;<a href="' . $Comments->Get_attribute('path') . sprintf($Comments->Get_attribute('vars'), $row['idcom']) . '&editcom=1#' . $Comments->Get_attribute('script') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+				$del = '&nbsp;&nbsp;<a href="' . $Comments->Get_attribute('path') . sprintf($Comments->Get_attribute('vars'), $row['idcom']) . '&delcom=1#' . $Comments->Get_attribute('script') . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 			}
 			
 			//Pseudo.
@@ -511,8 +464,8 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 				'DEL' => $del,
 				'EDIT' => $edit,
 				'U_MEMBER_PM' => '<a href="../member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>',
-				'U_ANCHOR' => $_com_path . transid($_com_vars_simple, $_com_vars_r_simple) . '#m' . $row['idcom'],
-				'U_QUOTE' => $_com_path . transid(sprintf($_com_vars, $row['idcom']) . '&amp;quote=' . $row['idcom'], sprintf($_com_vars_r, $row['idcom'], '&amp;quote=' . $row['idcom'])) . '#' . $_com_script
+				'U_ANCHOR' => $Comments->Get_attribute('path') . $Comments->Get_attribute('vars') . '#m' . $row['idcom'],
+				'U_QUOTE' => $Comments->Get_attribute('path') . sprintf($Comments->Get_attribute('vars'), $row['idcom']) . '&amp;quote=' . $row['idcom'] . '#' . $Comments->Get_attribute('script')
 			));
 			$j++;
 		}
@@ -526,6 +479,6 @@ if( isset($_com_script) && isset($_com_idprov) && isset($_com_vars) && isset($_c
 		$Template->Pparse('handle_com'); 
 }
 
-if( $POPUP )
+if( $DEFINED_PHPBOOST )
 	include_once('../includes/footer_no_display.php');
 ?>

@@ -1,7 +1,7 @@
 		{JAVA}
 
 
-		# START show #
+		# IF C_CALENDAR_DISPLAY #
 
 		<form action="calendar.php" method="get">
 			<div class="module_position">					
@@ -13,15 +13,15 @@
 				<div class="module_contents" style="text-align:center;">
 					{ADD}	
 					<select name="m">
-						# START show.month #
-						{show.month.MONTH}
-						# END show.month #	
+						# START month #
+						{month.MONTH}
+						# END month #	
 					</select>
 					&nbsp;
 					<select class="nav" name="y">
-					# START show.year #
-						{show.year.YEAR}
-					# END show.year #
+					# START year #
+						{year.YEAR}
+					# END year #
 					</select>	
 					<input type="hidden" name="d" value="1" />
 					&nbsp;
@@ -42,15 +42,15 @@
 							</td> 
 						</tr>
 						<tr style="text-align:center;">
-							# START show.day #
-							{show.day.L_DAY}
-							# END show.day #
+							# START day #
+							{day.L_DAY}
+							# END day #
 						</tr>
 						<tr style="text-align:center;">			
-							# START show.calendar #					
-							{show.calendar.DAY}
-							{show.calendar.TR}
-							# END show.calendar #
+							# START calendar #					
+							{calendar.DAY}
+							{calendar.TR}
+							# END calendar #
 						</tr>
 						<tr>
 							<td style="width:16px;" class="row3">
@@ -82,25 +82,26 @@
 		# ENDIF #
 		<br /><br />
 		
-		# START show.action #
+		# START action #
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<span class="text_strong" style="float:left;">{show.action.TITLE}</span>
-				<span style="float:right;">{show.action.COM}{show.action.EDIT}{show.action.DEL}</span>
+				<span class="text_strong" style="float:left;">{action.TITLE}</span>
+				<span style="float:right;">{action.COM}{action.EDIT}{action.DEL}</span>
 			</div>
 			<div class="module_contents">
-				{show.action.CONTENTS}
+				{action.CONTENTS}
+				<br /><br /><br />
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
 				<div style="float:left;padding-top:4px;padding-bottom:4px;">
-					{show.action.LOGIN}
+					{action.LOGIN}
 				</div>				
 				<div class="text_small" style="padding:4px;text-align: right;">
-					{L_ON}:&nbsp;&nbsp;{show.action.DATE}
+					{L_ON}:&nbsp;&nbsp;{action.DATE}
 				</div>
 			</div>
 		</div>
@@ -108,13 +109,12 @@
 
 		# INCLUDE handle_com #
 		
-		# END show.action #
+		# END action #
+		# ENDIF #
 
-		# END show #
+		
 
-
-		# START form #
-
+		# IF C_CALENDAR_FORM #
 		<script type="text/javascript">
 		<!--
 		function check_form_cl(){
@@ -141,33 +141,33 @@
 		</div>
 		# ENDIF #
 		
-		<form action="calendar.php{form.UPDATE}" method="post" onsubmit="return check_form_cl();" class="fieldset_content" style="width:70%">
+		<form action="calendar.php{UPDATE}" method="post" onsubmit="return check_form_cl();" class="fieldset_content" style="width:70%">
 			<fieldset>
 				<legend>{L_EDIT_EVENT}</legend>
 				<dl class="overflow_visible">
 					<dt><label for="date">* {L_DATE_CALENDAR}</label></dt>
 					<dd><label>
 						{L_ON}&nbsp;
-						<label><input type="text" size="8" maxlength="8" id="date" name="date" value="{form.DATE}" class="text" /></label> 
+						<label><input type="text" size="8" maxlength="8" id="date" name="date" value="{DATE}" class="text" /></label> 
 						
 						<div style="position:relative;z-index:100;top:220px;left:90px;float:left;display:none;" id="calendar1">
 							<div id="cl_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 							</div>
 						</div>
-						<a onClick="xmlhttprequest_calendar('cl_date', '?input_field=date&amp;field=cl_date&amp;d={form.DAY_DATE}&amp;m={form.MONTH_DATE}&amp;y={form.YEAR_DATE}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+						<a onClick="xmlhttprequest_calendar('cl_date', '?input_field=date&amp;field=cl_date&amp;d={DAY_DATE}&amp;m={MONTH_DATE}&amp;y={YEAR_DATE}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 					
 						{L_AT}
-						<label><input type="text" size="2" maxlength="2" name="hour" value="{form.HOUR}" class="text" /></label> H <label><input type="text" size="2" maxlength="2" name="min" value="{form.MIN}" class="text" /></label>
+						<label><input type="text" size="2" maxlength="2" name="hour" value="{HOUR}" class="text" /></label> H <label><input type="text" size="2" maxlength="2" name="min" value="{MIN}" class="text" /></label>
 					</dd>
 				</dl>
 				<dl>
 					<dt><label for="title">* {L_TITLE}</label></dt>
-					<dd><label><input type="text" maxlength="50" size="50" maxlength="150" id="title" name="title" value="{form.TITLE}" class="text" /></label></dd>
+					<dd><label><input type="text" maxlength="50" size="50" maxlength="150" id="title" name="title" value="{TITLE}" class="text" /></label></dd>
 				</dl>
 				<br />
 				<label for="contents">* {L_ACTION}</label>
 				# INCLUDE handle_bbcode #
-				<label><textarea type="text" rows="10" cols="60" id="contents" name="contents">{form.CONTENTS}</textarea> </label>
+				<label><textarea type="text" rows="10" cols="60" id="contents" name="contents">{CONTENTS}</textarea> </label>
 			</fieldset>	
 			
 			<fieldset class="fieldset_submit">
@@ -178,4 +178,4 @@
 			</fieldset>
 		</form>
 
-		# END form #
+		# ENDIF #

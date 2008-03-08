@@ -31,7 +31,7 @@ define('SYSTEM_PM', true); //Message privé envoyé par le système.
 define('DEL_PM_CONVERS', true); //Suppression de la conversation complète.
 define('UPDATE_MBR_PM', true); //Met à jour le nombre de mp du membre.
 
-class Privatemsg extends Sql
+class Privatemsg
 {
 	## Public Methods ##
 	//Constructeur.

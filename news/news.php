@@ -295,11 +295,8 @@ elseif( !empty($idcat) )
 //Affichage commentaires.
 if( isset($_GET['i']) && !empty($idnews) )
 {
-	$_com_vars = 'news.php?cat=0&amp;id=' . $idnews . '&amp;i=%d';
-	$_com_vars_e = 'news.php?cat=0&id=' . $idnews . '&i=1';
-	$_com_vars_r = 'news-0-' . $idnews . '.php?i=%d%s';
-	$_com_idprov = $idnews;
-	$_com_script = 'news';
+	include_once('../includes/com.class.php'); 
+	$Comments = new Comments('news', $idnews, transid('news.php?cat=0&amp;id=' . $idnews . '&amp;i=%s', 'news-0-' . $idnews . '.php?i=%s'));
 	include_once('../includes/com.php');
 }	
 $Template->Pparse('news');

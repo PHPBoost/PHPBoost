@@ -261,12 +261,15 @@
 			</div>	
 			<div class="msg_sign{com_list.CLASS_COLOR}">				
 				<div class="msg_sign_overflow">
-					{com_list.USER_SIGN}	
-				</div>			
+					{com_list.USER_SIGN}
+				</div>				
 				<hr />
+				<div style="float:left;">
+					{com_list.U_MEMBER_PM} {com_list.USER_MAIL} {com_list.USER_MSN} {com_list.USER_YAHOO} {com_list.USER_WEB}
+				</div>
 				<div style="float:right;font-size:10px;">
 					{com_list.WARNING} {com_list.PUNISHMENT}
-				</div>
+				</div>&nbsp;
 			</div>	
 		</div>				
 		# END com_list #		

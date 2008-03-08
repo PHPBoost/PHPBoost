@@ -192,13 +192,10 @@ elseif( $id_com > 0 )
 	
 	$Template->Set_filenames(array('com' => '../templates/' . $CONFIG['theme'] . '/pages/com.tpl'));
 	
-	$_com_vars = 'pages.php?id=' . $id_com . '&amp;i=%d';
-	$_com_vars_e = 'pages.php?id=' . $id_com . '&i=1';
-	$_com_vars_r = '';
-	$_com_idprov = $id_com;
-	$_com_script = 'pages';
-	$_module_folder = 'pages';
+	include_once('../includes/com.class.php'); 
+	$Comments = new Comments('pages', $id_com, transid('pages.php?id=' . $id_com . '&amp;i=%s', ''));
 	include_once('../includes/com.php');
+
 	$Template->Assign_block_vars('com', array());
 	$Template->Pparse('com');
 }
