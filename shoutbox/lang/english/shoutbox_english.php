@@ -37,4 +37,5 @@ $LANG['shoutbox_config'] = 'Shoutbox configuration';
 $LANG['rank_post'] = 'Rank to post';
 
 $LANG['title_shoutbox'] = 'Shoutbox';
+$LANG['archives'] = 'Archives';
 ?>

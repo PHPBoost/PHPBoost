@@ -133,7 +133,7 @@
 				</script>
 				<a href="javascript:XMLHttpRequest_shoutrefresh();" title="{L_REFRESH}"><img src="../templates/{THEME}/images/refresh_mini.png" id="shoutimg" alt="{L_REFRESH}" class="valign_middle" /></a>					
 				<p style="margin-top:10px">
-					<a class="small_link" href="../shoutbox/shoutbox.php{SID}" title="">{L_ARCHIVE}</a>
+					<a class="small_link" href="../shoutbox/shoutbox.php{SID}" title="">{L_ARCHIVES}</a>
 				</p>&nbsp;
 			</div>
 			<div class="module_mini_bottom">
