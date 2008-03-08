@@ -33,6 +33,7 @@ $edit_question = !empty($_GET['edit']) ? numeric($_GET['edit']) : 0;
 $cat_of_new_question = !empty($_GET['idcat']) ? numeric($_GET['idcat']) : 0;
 $new = !empty($_GET['new']) ? true : false;
 $new_after_id = !empty($_GET['after']) ? numeric($_GET['after']) : 0;
+$id_move = !empty($_GET['move']) ? numeric($_GET['move']) : 0;
 
 if( $edit_question > 0 )
 {
@@ -45,6 +46,12 @@ elseif( $cat_of_new_question >= 0 && $new )
 	define('TITLE', $FAQ_LANG['question_creation']);
 	$id_cat_for_speed_bar = $cat_of_new_question;
 }
+elseif( $id_move > 0 )
+{
+	define('TITLE', $FAQ_LANG['moving_a_question']);
+	$question_infos = $Sql->Query_array("faq", "*", "WHERE id = '" . $id_move . "'", __LINE__, __FILE__);
+	$id_cat_for_speed_bar = $question_infos['idcat'];
+}
 else
 {
 	define('TITLE', $FAQ_LANG['category_management']);
@@ -53,37 +60,32 @@ else
 //Generation of speed_bar
 include_once('faq_speed_bar.php');
 
+//checking authorization
+if( !$auth_write )
+{
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	exit;
+}
+
 if( $edit_question > 0 )
 {
-	//checking authorization
-	if( !$auth_write )
-	{
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-		exit;
-	}
 	$Speed_bar->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $question_infos['idcat'])); 
 	$Speed_bar->Add_link($FAQ_LANG['question_edition'], transid('management.php?edit=' . $edit_question)); 
 }
 elseif( $cat_of_new_question >= 0 && $new )
 {
-	//checking authorization
-	if( !$auth_write )
-	{
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-		exit;
-	}
 	$Speed_bar->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $cat_of_new_question)); 
-	$Speed_bar->Add_link($FAQ_LANG['question_creation'], transid('management.php?new=1&amp;idcat' . $cat_of_new_question . '&amp;after=' . $new_after_id)); 
+	$Speed_bar->Add_link($FAQ_LANG['question_creation'], transid('management.php?new=1&amp;idcat=' . $cat_of_new_question . '&amp;after=' . $new_after_id)); 
+}
+//Moving interface
+elseif( $id_move > 0 )
+{
+	$Speed_bar->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $cat_of_new_question)); 
+	$Speed_bar->Add_link($FAQ_LANG['moving_a_question'], transid('management.php?move=' . $id_move)); 
 }
 else
 {
 	$Speed_bar->Add_link($FAQ_LANG['category_management'], transid('management.php' . ($id_faq > 0 ? '?faq=' . $id_faq : ''))); 
-	//checking authorization
-	if( !$auth_write )
-	{
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-		exit;
-	}
 }
 	
 include_once('../includes/header.php');
@@ -127,6 +129,22 @@ elseif( $cat_of_new_question >= 0 && $new )
 	));
 	include_once('../includes/bbcode.php');
 }
+elseif( $id_move > 0 )
+{
+	include_once('faq_cats.class.php');
+	$faq_cats = new Faqcats();
+	
+	$Template->Assign_block_vars('move_question', array(
+		'CATEGORIES_TREE' => $faq_cats->Build_select_form(0, 'target', 'target', 0, AUTH_WRITE, $FAQ_CONFIG['global_auth']),
+		'ID_QUESTION' => $id_move
+	));
+	$Template->Assign_vars(array(
+		'L_TARGET' => $FAQ_LANG['target_category'],
+		'L_MOVE' => $FAQ_LANG['move'],
+		'ID_QUESTION' => $id_move,
+		'U_FORM_TARGET' => transid('action.php')
+	));
+}
 else
 {
 	//Création du tableau des groupes.
@@ -151,6 +169,7 @@ else
 		'L_DELETE' => $FAQ_LANG['delete'],
 		'L_UP' => $FAQ_LANG['up'],
 		'L_DOWN' => $FAQ_LANG['down'],
+		'L_MOVE' => $FAQ_LANG['move'],
 		'L_CONFIRM_DELETE' => addslashes($FAQ_LANG['confirm_delete']),
 		'L_GO_BACK_TO_CAT' => $FAQ_LANG['go_back_to_cat'],
 		'L_PREVIEW' => $LANG['preview'],
@@ -210,16 +229,25 @@ else
 	
 	if( $num_rows > 0 || $id_faq == 0 )
 	{
+		$Template->Assign_vars(array(
+			'C_DISPLAY_ANSWERS' => true,
+			'NUM_QUESTIONS' => $num_rows,
+			'L_HIDE_ANSWERS' => addslashes($FAQ_LANG['hide_all_answers']),
+			'L_DISPLAY_ANSWERS' => addslashes($FAQ_LANG['show_all_answers'])
+		));
+		
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			$Template->Assign_block_vars('category.questions', array(
 				'QUESTION' => $row['question'],
 				'ID' => $row['q_order'],
-				'U_DEL' => 'action.php?del=' . $row['id'],
-				'U_DOWN' => 'action.php?down=' . $row['id'],
-				'U_UP' => 'action.php?up=' . $row['id'],
-				'U_EDIT' => 'management.php?edit=' . $row['id'],
-				'U_CREATE_AFTER' => 'management.php?new=1&amp;idcat=' . $id_faq . '&after=' . $row['q_order'],
+				'U_DEL' => transid('action.php?del=' . $row['id']),
+				'U_DOWN' => transid('action.php?down=' . $row['id']),
+				'U_UP' => transid('action.php?up=' . $row['id']),
+				'U_EDIT' => transid('management.php?edit=' . $row['id']),
+				'U_MOVE' => transid('management.php?move=' . $row['id']),
+				'U_CREATE_AFTER' => transid('management.php?new=1&amp;idcat=' . $id_faq . '&after=' . $row['q_order']),
+				'ANSWER' => $row['answer']
 			));
 			if( $row['q_order'] > 1 )
 				$Template->Assign_block_vars('category.questions.up', array());

@@ -380,13 +380,19 @@ class CategoriesManagement
 	}
 	
 	//Method which builds a select form to choose a category
-	function Build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0)
+	function Build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_global_auth = array())
 	{
-		global $LANG;
+		global $LANG, $Member;
+		
+		$general_auth = false;
+		
+		if( $num_auth != 0 )
+			$general_auth = $Member->Check_auth($array_global_auth, $num_auth);
+		
 		$string = '<select id="' . $form_id . '" name="' . $form_name . '">';
 		$string .= '<option value="0"' . ($selected_id == 0 ? ' selected="selected"' : '') . '>' . $LANG['root'] . '</option>';
 		
-		$this->create_select_row($string, 0, 1, $selected_id, $current_id_cat);
+		$this->create_select_row($string, 0, 1, $selected_id, $current_id_cat, $num_auth, $general_auth);
 		
 		$string .= '</select>';
 		return $string;
@@ -500,14 +506,18 @@ class CategoriesManagement
 	}
 	
 	//Recursive method which adds the category informations and thoses of its children
-	function create_select_row(&$string, $id_cat, $level, &$selected_id, &$current_id_cat)
+	function create_select_row(&$string, $id_cat, $level, &$selected_id, &$current_id_cat, &$num_auth, &$general_auth)
 	{
+		global $Member;
 		foreach( $this->cache_var as $id => $value )
 		{
 			if( $id != 0 && $id != $current_id_cat && $value['id_parent'] == $id_cat )
 			{
-				$string .= '<option value="' . $id . '"' . ($id == $selected_id ? ' selected="selected"' : '') . '>' . str_repeat('--', $level) . ' ' . $value['name'] . '</option>';
-				$this->create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat);
+				if( $num_auth == 0 || $general_auth || $Member->Check_auth($value['auth'], $num_auth) )
+				{
+					$string .= '<option value="' . $id . '"' . ($id == $selected_id ? ' selected="selected"' : '') . '>' . str_repeat('--', $level) . ' ' . $value['name'] . '</option>';
+					$this->create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $num_auth, $general_auth);
+				}
 			}
 		}
 	}
