@@ -32,7 +32,8 @@ $edit_get = !empty($_GET['edit']) ? trim($_GET['edit']) : '';
 $id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 
 $title_mbr = !empty($id_get) ? (!empty($edit_get) ? $LANG['profil_edit'] : $LANG['member']) : $LANG['member_s'];
-$Speed_bar->Add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
+if( $Member->Check_level(MEMBER_LEVEL) )
+	$Speed_bar->Add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
 $Speed_bar->Add_link($title_mbr, '');
 
 require_once('../includes/header.php'); 

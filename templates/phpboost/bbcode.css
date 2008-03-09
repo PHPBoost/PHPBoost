@@ -162,7 +162,7 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 .hide{
 	cursor:pointer;
 	height:10px;
-	overflow:hidden;
+	overflow:auto;
 }
 .hide2{
 	visibility:hidden;
