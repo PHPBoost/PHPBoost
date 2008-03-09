@@ -58,7 +58,7 @@ if( !empty($_POST['shoutbox']) && empty($shout_id) ) //Insertion
 			if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
 				redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
-			$Sql->Query_inject("INSERT INTO ".PREFIX."shoutbox (login,user_id,contents,timestamp) VALUES('" . $shout_pseudo . "', '" . $Member->Get_attribute('user_id') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . $Member->Get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
 			redirect(HOST . transid(SCRIPT . '?' . QUERY_STRING, '', '&'));
 		}

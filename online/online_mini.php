@@ -41,6 +41,7 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 	list($count_visit, $count_member, $count_modo, $count_admin) = array(0, 0, 0, 0);  
 
 	$i = 0;
+	$array_class = array('member', 'modo', 'admin');
 	$result = $Sql->Query_while("SELECT s.user_id, s.level, s.session_time, m.login
 	FROM ".PREFIX."sessions s 
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
@@ -50,29 +51,11 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 	{
 		if( $i < $CONFIG_ONLINE['online_displayed'] )
 		{
-			switch($row['level']) //Coloration du membre suivant son level d'autorisation. 
-			{ 		
-				case '0':
-				$status = 'member';
-				break;
-				
-				case '1': 
-				$status = 'modo';
-				break;
-				
-				case '2': 
-				$status = 'admin';
-				break;
-				
-				default:
-				$status = 'member';
-			} 
-			
 			//Visiteurs non pris en compte.
 			if( $row['level'] !== '-1' )
 			{
 				$Template->Assign_block_vars('online', array(
-					'MEMBER' => '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . wordwrap_html($row['login'], 19) . '</a><br />'	
+					'MEMBER' => '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '">' . wordwrap_html($row['login'], 19) . '</a><br />'	
 				));
 				$i++;
 			}		 
