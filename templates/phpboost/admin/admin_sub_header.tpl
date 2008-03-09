@@ -4,7 +4,7 @@
 			<div id="sub_header_right">
 			</div>		
 			
-			<div id="dynamic_menu" style="padding-top:9px;">
+			<div class="dynamic_menu" style="padding-top:9px;">
 				<ul>
 					<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
 						<h5 class="links"><img src="../templates/{THEME}/images/admin/admin_mini.png" class="valign_middle" alt="" /> {L_INDEX}</h5>

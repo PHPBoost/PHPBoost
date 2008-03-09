@@ -4,7 +4,7 @@
 			<div class="module_top">&bull; <a href="moderation_panel.php">{L_MODERATION_PANEL}</a></div>
 			<div class="module_contents" style="padding-bottom:75px;">
 				<div style="margin-bottom:50px;">
-					<div id="dynamic_menu" style="float:right;margin-right:55px;">
+					<div class="dynamic_menu" style="float:right;margin-right:55px;">
 						<ul>
 							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
 								<h5 style="margin-right:25px;"><img src="../templates/{THEME}/images/admin/members_mini.png" class="valign_middle" alt="" /> {L_MEMBERS}</h5>

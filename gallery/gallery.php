@@ -45,7 +45,7 @@ if( preg_match('`([a-z]+)_([a-z]+)`', $g_sort, $array_match) )
 	$g_mode = $array_match[2];	
 }
 else
-	list($g_type, $g_mode) = array('date', 'asc');
+	list($g_type, $g_mode) = array('date', 'desc');
 
 include_once('../gallery/gallery.class.php');
 $Gallery = new Gallery;
@@ -466,14 +466,14 @@ else
 			$sort_mode = 'ASC';
 			break;		
 			default:
-			$sort_mode = 'ASC';
+			$sort_mode = 'DESC';
 		}	
 		$g_sql_sort = ' ORDER BY ' . $sort_type . ' ' . $sort_mode;	
 		if( $g_views )
 			$g_sql_sort = ' ORDER BY g.views DESC';	
 		elseif( $g_notes )
 			$g_sql_sort = ' ORDER BY g.note DESC';	
-	
+
 		$Template->Assign_vars(array(
 			'C_GALLERY_PICS' => true,
 			'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
