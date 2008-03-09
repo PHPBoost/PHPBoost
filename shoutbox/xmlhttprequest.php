@@ -94,7 +94,8 @@ if( $add )
 }
 elseif( $refresh )
 {
-	$result = $Sql->Query_while("SELECT id, login, user_id, contents 
+	$array_class = array('member', 'modo', 'admin');
+	$result = $Sql->Query_while("SELECT id, login, user_id, level, contents 
 	FROM ".PREFIX."shoutbox 
 	ORDER BY timestamp DESC 
 	" . $Sql->Sql_limit(0, 25), __LINE__, __FILE__);
@@ -107,7 +108,7 @@ elseif( $refresh )
 			$del = '';
 	
 		if( $row['user_id'] !== -1 ) 
-			$row['login'] = $del . ' <a class="small_link" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
+			$row['login'] = $del . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
 		else
 			$row['login'] = $del . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
 		
