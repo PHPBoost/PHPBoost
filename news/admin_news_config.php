@@ -41,6 +41,8 @@ if( !empty($_POST['valid']) )
 	$config_news['pagination_arch'] = isset($_POST['pagination_arch']) ? numeric($_POST['pagination_arch']) : '15';
 	$config_news['activ_com'] = isset($_POST['activ_com']) ? numeric($_POST['activ_com']) : 0;  
 	$config_news['activ_icon'] = isset($_POST['activ_icon']) ? numeric($_POST['activ_icon']) : 0;  
+	$config_news['display_author'] = isset($_POST['display_author']) ? numeric($_POST['display_author']) : 0;  
+	$config_news['display_date'] = isset($_POST['display_date']) ? numeric($_POST['display_date']) : 0;  
 	$config_news['nbr_news'] = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
 	$config_news['nbr_column'] = !empty($_POST['nbr_column']) ? numeric($_POST['nbr_column']) : 1;
 	$config_news['edito'] = !empty($_POST['edito']) ? stripslashes(parse($_POST['edito'])) : '';
@@ -78,6 +80,10 @@ else
 		'COM_DISABLED' => ($CONFIG_NEWS['activ_com'] == '0') ? 'checked="checked"' : '',
 		'ICON_ENABLED' => ($CONFIG_NEWS['activ_icon'] == '1') ? 'checked="checked"' : '',
 		'ICON_DISABLED' => ($CONFIG_NEWS['activ_icon'] == '0') ? 'checked="checked"' : '',
+		'AUTHOR_ENABLED' => ($CONFIG_NEWS['display_author'] == '1') ? 'checked="checked"' : '',
+		'AUTHOR_DISABLED' => ($CONFIG_NEWS['display_author'] == '0') ? 'checked="checked"' : '',
+		'DATE_ENABLED' => ($CONFIG_NEWS['display_date'] == '1') ? 'checked="checked"' : '',
+		'DATE_DISABLED' => ($CONFIG_NEWS['display_date'] == '0') ? 'checked="checked"' : '',
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_REQUIRE' => $LANG['require'],
@@ -109,7 +115,9 @@ else
 		'L_ACTIV_EDITO_EXPLAIN' => $LANG['activ_edito_explain'],
 		'L_ACTIV_NEWS_BLOCK' => $LANG['activ_news_block'],
 		'L_ACTIV_COM_NEWS' => $LANG['activ_com_n'],
-		'L_ACTIV_ICON_NEWS' => $LANG['activ_icon_n']
+		'L_ACTIV_ICON_NEWS' => $LANG['activ_icon_n'],
+		'L_DISPLAY_NEWS_AUTHOR' => $LANG['display_news_author'],
+		'L_DISPLAY_NEWS_DATE' => $LANG['display_news_date']
 	));
 
 	include_once('../includes/bbcode.php');

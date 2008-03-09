@@ -94,6 +94,22 @@
 							<label><input type="radio" {ICON_DISABLED} name="activ_icon" value="0" /> {L_NO}</label>
 						</dd>
 					</dl>
+					<dl>
+						<dt><label for="display_author">{L_DISPLAY_NEWS_AUTHOR}</label></dt>
+						<dd>
+							<label><input type="radio" {AUTHOR_ENABLED} name="display_author" id="display_author" value="1" />	{L_YES}</label>
+							&nbsp;&nbsp; 
+							<label><input type="radio" {AUTHOR_DISABLED} name="display_author" value="0" /> {L_NO}</label>
+						</dd>
+					</dl>
+					<dl>
+						<dt><label for="display_date">{L_DISPLAY_NEWS_DATE}</label></dt>
+						<dd>
+							<label><input type="radio" {DATE_ENABLED} name="display_date" id="display_date" value="1" />	{L_YES}</label>
+							&nbsp;&nbsp; 
+							<label><input type="radio" {DATE_DISABLED} name="display_date" value="0" /> {L_NO}</label>
+						</dd>
+					</dl>
 				</fieldset>	
 				
 				<fieldset>

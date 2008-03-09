@@ -17,9 +17,8 @@
 		}
 
 		function Confirm() {
-		return confirm("{L_CONFIRM_DEL_MEMBER_GROUP}");
+			return confirm("{L_CONFIRM_DEL_MEMBER_GROUP}");
 		}
-
 		function img_change(url)
 		{
 			if (document.images)
@@ -27,20 +26,29 @@
 				document.images['img_group'].src = "../images/group/" + url;
 			}
 		}
-
 		function XMLHttpRequest_search()
 		{
 			var login = document.getElementById("login_mbr").value;
 			if( login != "" )
 			{
+				if( document.getElementById('loading_groups') )
+					document.getElementById('loading_groups').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+							
 				data = 'login=' + login;
 				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?group_member=1');
 				xhr_object.onreadystatechange = function() 
 				{
-					if( xhr_object.readyState == 4 ) 
+					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 					{
 						document.getElementById("xmlhttprequest_result_search").innerHTML = xhr_object.responseText;
 						show_div("xmlhttprequest_result_search");
+						if( document.getElementById('loading_groups') )
+							document.getElementById('loading_groups').innerHTML = '';
+					}
+					else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
+					{	
+						if( document.getElementById('loading_groups') )
+							document.getElementById('loading_groups').innerHTML = '';
 					}
 				}
 				xmlhttprequest_sender(xhr_object, data);
@@ -150,13 +158,13 @@
 					<dl>
 						<dt><label for="login_mbr">* {L_PSEUDO}</label></dt>
 						<dd><label>
-							<input type="text" size="20 maxlenght="25" id="login_mbr" value="{LOGIN}" name="login_mbr" class="text" />
+							<input type="text" size="20 maxlenght="25" id="login_mbr" value="{LOGIN}" name="login_mbr" class="text" /> <span id="loading_groups"></span>
 							<script type="text/javascript">
 							<!--								
 								document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search(this.form);" type="button" class="submit">');
 							-->
 							</script>
-							<div id="xmlhttprequest_result_search" onblur="this.style.display = 'none'" style="display:none;" class="xmlhttprequest_result_search"></div>
+							<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
 						</label></dd>
 					</dl>
 				</fieldset>	

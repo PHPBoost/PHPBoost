@@ -215,7 +215,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 			'PM_GROUP_LIMIT' => $array_group['pm_group_limit'],
 			'DATA_GROUP_LIMIT' => number_round($array_group['data_group_limit']/1024, 2),
 			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
-			'L_REQUIRE_NAME' => $LANG['require_name'],
+			'L_REQUIRE_LOGIN' => $LANG['require_name'],
 			'L_CONFIRM_DEL_MEMBER_GROUP' => $LANG['confirm_del_member_group'],			
 			'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
 			'L_ADD_GROUPS' => $LANG['groups_add'],
