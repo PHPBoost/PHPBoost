@@ -75,8 +75,7 @@ if( empty($idnews) && empty($idcat) )
 		'PAGINATION' => $show_pagin,
 		'THEME' => $CONFIG['theme'],
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
-		'L_LAST_NEWS' => !$show_archive ? $LANG['last_news'] : $LANG['archive'],
-		'L_ON' => $LANG['on']
+		'L_LAST_NEWS' => !$show_archive ? $LANG['last_news'] : $LANG['archive']
 	));
 	
 	//Si les news en block sont activées on recupère la page.
@@ -143,8 +142,8 @@ if( empty($idnews) && empty($idcat) )
 				'CONTENTS' => second_parse($row['contents']),
 				'EXTEND_CONTENTS' => (!empty($row['extend_contents']) ? '<a style="font-size:10px" href="news' . transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $LANG['extend_contents'] . ']</a><br /><br />' : ''),
 				'IMG' => (!empty($row['img']) ? '<img src="' . $row['img'] . '" alt="' . $row['alt'] . '" title="' . $row['alt'] . '" class="img_right" />' : ''),
-				'PSEUDO' => $row['login'],				
-				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+				'PSEUDO' => $CONFIG_NEWS['display_author'] ? $row['login'] : '',				
+				'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $row['timestamp']) : '',
 				'COM' => $link . $com,
 				'EDIT' => $admin,
 				'DEL' => $del,
