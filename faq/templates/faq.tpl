@@ -91,12 +91,12 @@
 								<div style="clear:both"></div>
 							</div>
 							<br />
-							<div id="a{questions.faq.ID_QUESTION}" class="blockquote" style="display:none;">
+							<div id="a{questions.faq.ID_QUESTION}" class="blockquote" style="display:block;">
 								{questions.faq.ANSWER}
 							</div>
 							# IF C_DISPLAY_ANSWER #
 							<script type="text/javascript">
-								document.getElementById("a{questions.faq.ID_QUESTION}").style.display = "block";
+								document.getElementById("a{questions.faq.ID_QUESTION}").style.display = "none";
 							</script>
 							# ENDIF #
 						</div>

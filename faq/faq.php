@@ -155,7 +155,7 @@ if( ($num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq
 			
 			//If we show only one question
 			$Template->Assign_vars(array(
-				'C_DISPLAY_ANSWER' => $row['id'] == $id_question
+				'C_DISPLAY_ANSWER' => $row['id'] != $id_question
 			));
 		}
 		else
