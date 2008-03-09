@@ -481,9 +481,12 @@ elseif( !$Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORU
 }
 else
 {
+	$img_favorite_display = $track ? 'unfavorite.png' : 'favorite.png';
 	$Template->Assign_vars(array(
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
+		'ICON_FAVORITE' => '<img src="' . $module_data_path . '/images/' . $img_favorite_display . '" alt="" class="valign_middle" />',
+		'ICON_FAVORITE2' => '<img src="' . $module_data_path . '/images/' . $img_favorite_display . '" alt="" class="valign_middle" id="forum_favorite_img" />',
 		'U_FORUM_ACTION_POST' => transid('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg')
 	));
 
@@ -491,11 +494,8 @@ else
 	if( $CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $Member->Get_attribute('user_id') == $topic['user_id']) )
 	{
 		$img_msg_display = $topic['display_msg'] ? 'msg_display2.png' : 'msg_display.png';
-		$img_favorite_display = $track ? 'unfavorite.png' : 'favorite.png';
 		$Template->Assign_vars(array(
 			'C_DISPLAY_MSG' => true,
-			'ICON_FAVORITE' => '<img src="' . $module_data_path . '/images/' . $img_favorite_display . '" alt="" class="valign_middle" />',
-			'ICON_FAVORITE2' => '<img src="' . $module_data_path . '/images/' . $img_favorite_display . '" alt="" class="valign_middle" id="forum_favorite_img" />',
 			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_msg_display . '" alt="" class="valign_middle"  />' : '',
 			'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_msg_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
