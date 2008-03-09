@@ -13,7 +13,7 @@
 		</noscript>
 
 		<div style="margin-bottom:10px;">
-			<div id="dynamic_menu" style="float:right;margin-right:55px;">
+			<div class="dynamic_menu" style="float:right;margin-right:55px;">
 				<ul>
 					<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
 						<h5 style="margin-right:20px;"><img src="{WIKI_PATH}/images/contribuate.png" class="valign_middle" alt="" /> {L_OTHER_TOOLS}</h5>

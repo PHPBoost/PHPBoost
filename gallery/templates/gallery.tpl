@@ -281,7 +281,7 @@
 			</div>
 			<div class="module_contents">
 				<div style="margin-bottom:50px;">
-					<div id="dynamic_menu" style="float:right;margin-right:55px;">
+					<div class="dynamic_menu" style="float:right;margin-right:55px;">
 						<ul>
 							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
 								<h5 style="margin-right:20px;"><img src="../wiki/templates/images/contribuate.png" class="valign_middle" alt="" /> {L_DISPLAY}</h5>
@@ -482,10 +482,10 @@
 						
 					</table>
 					<p style="text-align:center">{PAGINATION_PICS}</p>			
-					# ENDIF #
+				</div>
+				# ENDIF #
 					
-					<p style="text-align:center;padding-top:15px;" class="text_small">{L_TOTAL_IMG}</p>
-				</div>				
+				<p style="text-align:center;padding-top:15px;" class="text_small">{L_TOTAL_IMG}</p>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
