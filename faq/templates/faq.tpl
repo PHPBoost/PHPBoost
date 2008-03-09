@@ -67,10 +67,10 @@
 							<div class="row1">
 								<span style="float:left;">
 									<a href="javascript:show_answer({questions.faq.ID_QUESTION});"><img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" /></a>
-									<a id="l{ID_QUESTION}" href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
+									<a id="faq_l{questions.faq.ID_QUESTION}" href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
 									<script type="text/javascript">
 									<!--
-										document.getElementById("l{ID_QUESTION}").href = 'javascript:show_answer({questions.faq.ID_QUESTION});';
+										document.getElementById("faq_l{questions.faq.ID_QUESTION}").href = 'javascript:show_answer({questions.faq.ID_QUESTION});';
 										
 									-->
 									</script>
