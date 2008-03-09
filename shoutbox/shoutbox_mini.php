@@ -62,7 +62,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 				if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
 					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=l_flood', '', '&'));
 					
-				$Sql->Query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . $Member->Get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
 				redirect(HOST . transid(SCRIPT . '?' . QUERY_STRING, '', '&'));
 			}
@@ -106,7 +106,8 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 		'L_ARCHIVES' => $LANG['archives']
 	));
 	
-	$result = $Sql->Query_while("SELECT id, login, user_id, contents 
+	$array_class = array('member', 'modo', 'admin');
+	$result = $Sql->Query_while("SELECT id, login, user_id, level, contents 
 	FROM ".PREFIX."shoutbox 
 	ORDER BY timestamp DESC 
 	" . $Sql->Sql_limit(0, 25), __LINE__, __FILE__);
@@ -121,11 +122,11 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 			$del = '';
 	
 		if( $row['user_id'] !== -1 ) 
-			$row['login'] = $del . ' <a class="small_link" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
+			$row['login'] = $del . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
 		else
 			$row['login'] = $del . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
 		
-		$Template->Assign_block_vars('shout',array(
+		$Template->Assign_block_vars('shout', array(
 			'IDMSG' => $row['id'],
 			'PSEUDO' => $row['login'],
 			'CONTENTS' => ucfirst($row['contents']) //Majuscule premier caractère.
