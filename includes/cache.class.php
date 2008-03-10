@@ -81,7 +81,7 @@ class Cache
     function Generate_all_files()
     {
         foreach( $this->files as $cache_file )
-            $this->generate_file($cache_file);
+            $this->Generate_file($cache_file);
 		
 		//Génération de tout les fichiers de cache des modules.
 		$this->generate_all_module_files();
