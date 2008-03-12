@@ -172,6 +172,7 @@ if( ($num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq
 				'U_DOWN' => transid('action.php?down=' . $row['id']),
 				'U_UP' => transid('action.php?up=' . $row['id']),
 				'U_EDIT' => transid('management.php?edit=' . $row['id']),
+				'U_MOVE' => transid('management.php?move=' . $row['id']),
 				'U_QUESTION' => transid('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id']
 			));
 			if( $row['q_order'] > 1 )
