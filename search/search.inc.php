@@ -79,10 +79,6 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
         }
     }
     
-    echo '<pre>';
-    print_r($requests);
-    echo '</pre>';
-    
     $Search->InsertResults($requests);
     $idsSearch = $Search->id_search;
     return $Search->GetResults($results, $modulesNames, $offset, $nbResults);

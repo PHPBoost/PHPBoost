@@ -28,7 +28,7 @@
 
 define('NB_LINES', 10);
 define('CACHE_TIME', 30);
-define('CACHE_TIMES_USED', 0);
+define('CACHE_TIMES_USED', 5);
 
 class Search
 {
@@ -216,7 +216,7 @@ class Search
     function Search($search = '', $modules = array())
     /**
      *  Constructeur de la classe Search
-     *  Nb requêtes : 5 + k / 10
+     *  Nb requêtes : 6 + k / 10
      *  avec k nombre de module n'ayant pas de cache de recherche
      */
     {
@@ -234,10 +234,34 @@ class Search
         // Si on demande une recherche directe par id, on ne calcule pas de résultats
         if( $search != '' )
         {
-            // Délestage
-            $reqDelete  = "DELETE FROM ".PREFIX."search_index WHERE ";
-            $reqDelete .= "`last_search_use` <= '".(time() - (CACHE_TIME * 60))."' OR `times_used` >= '".CACHE_TIMES_USED."' ";
-            $Sql->Query_inject($reqDelete, __LINE__, __FILE__);
+            // Suppression des vieux résultats du cache
+            
+            // Liste des résultats à supprimer
+            $reqOldIndex = "SELECT `id_search` FROM ".PREFIX."search_index
+                            WHERE  `last_search_use` <= '".(time() - (CACHE_TIME * 60))."'
+                                OR `times_used` >= '".CACHE_TIMES_USED."'";
+            
+            $nbIdsToDelete = 0;
+            $idsToDelete = '';
+            $request = $Sql->Query_while($reqOldIndex, __LINE__, __FILE__);
+            while($row = $Sql->Sql_fetch_assoc($request))
+            {
+                if ( $nbIdsToDelete > 0 )
+                    $idsToDelete .= ',';
+                $idsToDelete .= "'".$row['id_search']."'";
+                $nbIdsToDelete++;
+            }
+            $Sql->Close($request);
+            
+            // Si il y a des résultats à supprimer, on les supprime
+            if ( $nbIdsToDelete > 0 )
+            {
+                $reqDeleteIdx = "DELETE FROM ".PREFIX."search_index WHERE `id_search` IN (".$idsToDelete.")";
+                $reqDeleteRst = "DELETE FROM ".PREFIX."search_results WHERE `id_search` IN (".$idsToDelete.")";
+                
+                $Sql->Query_inject($reqDeleteIdx, __LINE__, __FILE__);
+                $Sql->Query_inject($reqDeleteRst, __LINE__, __FILE__);
+            }
             
             // Vérifications des résultats dans le cache.
             $reqCache  = "SELECT `id_search`, `module` FROM ".PREFIX."search_index WHERE ";

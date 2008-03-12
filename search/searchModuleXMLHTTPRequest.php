@@ -3,7 +3,7 @@
 *                         searchXMLHTTPRequest.php
 *                            -------------------
 *   begin                : January 27, 2008
-*   copyright            : (C) 2008 Rouchon Loï¿½c
+*   copyright            : (C) 2008 Rouchon Loïc
 *   email                : horn@phpboost.com
 *
 *
