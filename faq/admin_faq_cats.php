@@ -116,6 +116,12 @@ elseif( !empty($_POST['submit']) )
 	
 	redirect(transid(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
+//Updating the number of subquestions of each category
+elseif( !empty($_GET['recount']) )
+{
+	$faq_categories->Recount_subquestions();
+	redirect(transid(HOST . SCRIPT, '', '&'));
+}
 elseif( $new_cat XOR $id_edit > 0 )
 {
 	$Template->Assign_vars(array(

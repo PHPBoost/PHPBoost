@@ -33,6 +33,7 @@ function generate_module_file_faq()
 	//Configuration
 	$config = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'faq'", __LINE__, __FILE__));
 	$root_config = $config['root'];
+	$root_config['auth'] = $config['global_auth'];
 	unset($config['root']);
 	$string = 'global $FAQ_CONFIG, $FAQ_CATS;' . "\n\n";
 	$string .= '$FAQ_CONFIG = ' . var_export($config, true) . ';' . "\n\n";
@@ -40,7 +41,7 @@ function generate_module_file_faq()
 	//List of categories and their own properties
 	$string .= '$FAQ_CATS = array();' . "\n\n";
 	$string .= '$FAQ_CATS[0] = ' . var_export($root_config, true) . ';' . "\n";
-	$result = $Sql->Query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, description
+	$result = $Sql->Query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, num_questions, description
 	FROM ".PREFIX."faq_cats
 	ORDER BY id_parent, c_order", __LINE__, __FILE__);
 	
@@ -55,6 +56,7 @@ function generate_module_file_faq()
 				'visible' => (bool)$row['visible'],
 				'display_mode' => $row['display_mode'],
 				'image' => $row['image'],
+				'num_questions' => $row['num_questions'],
 				'description' => $row['description'],
 				'auth' => unserialize($row['auth'])
 				),

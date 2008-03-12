@@ -37,6 +37,9 @@ $FAQ_LANG['faq'] = 'FAQ';
 $FAQ_LANG['faq_no_question_here'] = 'Aucune question présente dans cette catégorie';
 $FAQ_LANG['faq_page_title'] = 'FAQ - %s';
 $FAQ_LANG['cat_name'] = 'Nom de la catégorie';
+$FAQ_LANG['num_questions_singular'] = '%d question';
+$FAQ_LANG['num_questions_plural'] = '%d questions';
+$FAQ_LANG['url_of_question'] = 'URL de la question';
 
 //Gestion
 $FAQ_LANG['cat_properties'] = 'Propriétés de la catégorie';

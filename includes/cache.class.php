@@ -249,6 +249,7 @@ class Cache
 		global $Sql;
 		
 		$code = 'global $SECURE_MODULE;' . "\r\n";
+		$code .= '$SECURE_MODULE = array();' . "\r\n";
 		$result = $Sql->Query_while("SELECT name, auth
 		FROM ".PREFIX."modules
 		WHERE activ = 1

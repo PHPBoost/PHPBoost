@@ -39,7 +39,8 @@ switch($speed_bar_key)
 			$Speed_bar->Add_link($LANG['wiki_history'], '');
 		if( !empty($article_infos['title']) )
 		{
-			$Speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
+			if( $article_infos['is_cat'] == 0 )
+				$Speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 			$id_cat = (int)$article_infos['id_cat'];
 		}
 		if( !empty($id_cat)  && is_array($_WIKI_CATS) ) //Catégories infinies

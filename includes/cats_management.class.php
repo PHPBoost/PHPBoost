@@ -62,14 +62,14 @@ You can also have other fields such as auth level, description, visible, that cl
 
 define('DEBUG_MODE', true);
 define('AJAX_MODE', false);
-define('ERROR_UNKNOWN_MOTION', 1);
-define('ERROR_CAT_IS_AT_TOP', 2);
-define('ERROR_CAT_IS_AT_BOTTOM', 4);
-define('CATEGORY_DOES_NOT_EXIST', 8);
-define('NEW_PARENT_CATEGORY_DOES_NOT_EXIST', 16);
-define('DISPLAYING_CONFIGURATION_NOT_SET', 32);
-define('INCORRECT_DISPLAYING_CONFIGURATION', 64);
-define('NEW_CATEGORY_IS_IN_ITS_CHILDREN', 128);
+define('ERROR_UNKNOWN_MOTION', 0x01);
+define('ERROR_CAT_IS_AT_TOP', 0x02);
+define('ERROR_CAT_IS_AT_BOTTOM', 0x04);
+define('CATEGORY_DOES_NOT_EXIST', 0x08);
+define('NEW_PARENT_CATEGORY_DOES_NOT_EXIST', 0x10);
+define('DISPLAYING_CONFIGURATION_NOT_SET', 0x20);
+define('INCORRECT_DISPLAYING_CONFIGURATION', 0x40);
+define('NEW_CATEGORY_IS_IN_ITS_CHILDREN', 0x80);
 
 class CategoriesManagement
 {
@@ -506,7 +506,7 @@ class CategoriesManagement
 	}
 	
 	//Recursive method which adds the category informations and thoses of its children
-	function create_select_row(&$string, $id_cat, $level, &$selected_id, &$current_id_cat, &$num_auth, &$general_auth)
+	function create_select_row(&$string, $id_cat, $level, $selected_id, $current_id_cat, $num_auth, $general_auth)
 	{
 		global $Member;
 		foreach( $this->cache_var as $id => $value )

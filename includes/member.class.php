@@ -2,7 +2,7 @@
 /*##################################################
  *                                member.class.php
  *                            -------------------
- *   begin                : Februar 18, 2008
+ *   begin                : February 18, 2008
  *   copyright          : (C) 2008 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
