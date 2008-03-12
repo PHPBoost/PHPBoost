@@ -16,6 +16,11 @@
 					<br />
 					<a href="admin_faq_cats.php?new=1" class="quick_link">{L_ADD_CAT}</a>
 				</li>
+				<li>
+					<a href="admin_faq.php?p=1"><img src="faq.png" alt="{L_QUESTIONS_LIST}" /></a>
+					<br />
+					<a href="admin_faq.php?p=1" class="quick_link">{L_QUESTIONS_LIST}</a>
+				</li>
 			</ul>
 		</div>
 
