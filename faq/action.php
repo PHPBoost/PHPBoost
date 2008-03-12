@@ -58,7 +58,15 @@ if( $faq_del_id > 0 )
 		if( !empty($faq_infos['question']) ) //If the id corresponds to a question existing in the database
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order > '" . $faq_infos['q_order'] . "'", __LINE__, __FILE__); //Decrementation of the order of every question which are after
-			$Sql->Query_inject("DELETE FROM ".PREFIX."faq WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__); //Deleting question
+			$Sql->Query_inject("DELETE FROM ".PREFIX."faq WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__);			 //Updating number of subcategories
+			if( $faq_infos['idcat'] != 0 )
+			{
+				include_once('faq_cats.class.php');
+				$faq_cats = new FaqCats();
+				$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->Compute_parent_cats_id($faq_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
+			}
+			
+			$Cache->Generate_module_file('faq');
 			redirect(HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'], '', '&'));
 		}
 	}
@@ -126,6 +134,15 @@ elseif( !empty($entitled) && !empty($answer) )
 			//shifting right all questions which will be after this
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order + 1 WHERE idcat = '" . $new_id_cat . "' AND q_order > '" . $id_after . "'", __LINE__, __FILE__);
 			$Sql->Query_inject("INSERT INTO ".PREFIX."faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $new_id_cat . "', '" . ($id_after + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . $Member->Get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
+			
+			//Updating number of subcategories
+			if( $new_id_cat != 0 )
+			{
+				include_once('faq_cats.class.php');
+				$faq_cats = new FaqCats();
+				$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_cats->Compute_parent_cats_id($new_id_cat, ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
+			}
+			
 			$Cache->Generate_module_file('faq');
 			redirect(HOST . DIR . transid('/faq/management.php?faq=' . $new_id_cat . '#q' . ($id_after + 1), '', '&'));
 		}
@@ -194,6 +211,25 @@ elseif( $id_question > 0 && $move_question && $target >= 0 )
 				$max_order = $Sql->Query("SELECT MAX(q_order) FROM ".PREFIX."faq WHERE idcat = '" . $target . "'", __LINE__, __FILE__);
 				$Sql->Query_inject("UPDATE ".PREFIX."faq SET idcat = '" . $target . "', q_order = '" . ($max_order + 1) . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
 				$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order - 1 WHERE idcat = '" . $question_infos['idcat'] . "' AND q_order > '" . $question_infos['q_order'] . "'", __LINE__, __FILE__);
+				
+				//Updating number of subcategories of its old parents
+				if( $question_infos['idcat'] != 0 )
+				{
+					include_once('faq_cats.class.php');
+					$faq_cats = new FaqCats();
+					$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->Compute_parent_cats_id($question_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
+				}
+				
+				//Updating number of subcategories of its new parents
+				if( $target != 0 )
+				{
+					include_once('faq_cats.class.php');
+					$faq_cats = new FaqCats();
+					$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_cats->Compute_parent_cats_id($target, ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
+				}
+				
+				if( $question_infos['idcat'] != 0 || $target != 0 )
+					$Cache->Generate_module_file('faq');
 			}
 			redirect(HOST . DIR . transid('/faq/management.php?faq=' . $target, '', '&'));
 		}

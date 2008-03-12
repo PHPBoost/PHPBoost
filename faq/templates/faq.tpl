@@ -5,9 +5,15 @@
 			function show_answer(id_question)
 			{
 				if( document.getElementById("a" + id_question).style.display == "block" )
+				{
 					document.getElementById("a" + id_question).style.display = "none";
+					document.getElementById("faq_i" + id_question).src = "{MODULE_DATA_PATH}/images/line.png";
+				}
 				else
+				{
 					document.getElementById("a" + id_question).style.display = "block";
+					document.getElementById("faq_i" + id_question).src = "{MODULE_DATA_PATH}/images/opened_line.png";
+				}
 			}
 		-->
 		</script>
@@ -27,8 +33,8 @@
 			
 				# START description #
 					{description.DESCRIPTION}
-				# END description #
 					<hr style="margin-top:25px;" />
+				# END description #
 				
 				# IF C_FAQ_CATS #
 					# START row #
@@ -39,11 +45,15 @@
 									<br />
 								# ENDIF #
 								<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
+								
 								# IF C_ADMIN #
 								<a href="{row.list_cats.U_ADMIN_CAT}">
 									<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
 								</a>
 								# ENDIF #
+								<div class="text_small">
+									{row.list_cats.NUM_QUESTIONS}
+								</div>
 							</div>
 						# END row.list_cats #
 						<div class="spacer">&nbsp;</div>
@@ -66,8 +76,9 @@
 						<div style="margin-bottom:10px;" id="q{questions.faq.ID_QUESTION}">
 							<div class="row1">
 								<span style="float:left;">
-									<a href="javascript:show_answer({questions.faq.ID_QUESTION});"><img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" /></a>
+									<a href="javascript:show_answer({questions.faq.ID_QUESTION});"><img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" id="faq_i{questions.faq.ID_QUESTION}" class="image_left" style="vertical-align:middle;" /></a>
 									<a id="faq_l{questions.faq.ID_QUESTION}" href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
+									<a href="{questions.faq.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{MODULE_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" style="margin-left:10px; vertical-align:middle;" /></a>
 									<script type="text/javascript">
 									<!--
 										document.getElementById("faq_l{questions.faq.ID_QUESTION}").href = 'javascript:show_answer({questions.faq.ID_QUESTION});';
@@ -94,11 +105,16 @@
 							<div id="a{questions.faq.ID_QUESTION}" class="blockquote" style="display:block;">
 								{questions.faq.ANSWER}
 							</div>
-							# IF C_DISPLAY_ANSWER #
+							# IF questions.faq.C_HIDE_ANSWER #
 							<script type="text/javascript">
 								document.getElementById("a{questions.faq.ID_QUESTION}").style.display = "none";
 							</script>
 							# ENDIF #
+							# IF questions.faq.C_SHOW_ANSWER #
+							<script type="text/javascript">
+								document.getElementById("faq_i{questions.faq.ID_QUESTION}").src = "{MODULE_DATA_PATH}/images/opened_line.png";
+							</script>
+							# ENDIF #		
 						</div>
 					# END questions.faq #
 				# END questions #
@@ -117,6 +133,7 @@
 							<span style="float:left;">
 								<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
 								{questions_block.contents.QUESTION}
+								<a href="{questions_block.contents.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{MODULE_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" style="margin-left:10px; vertical-align:middle;" /></a>
 							</span>
 							# IF C_ADMIN_TOOLS #
 							<span class="row2" style="float:right;">
