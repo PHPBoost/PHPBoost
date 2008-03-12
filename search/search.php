@@ -127,10 +127,6 @@ if( $search != '' )
     // Génération des résultats et passage aux templates
     $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, $idsSearch, ($p), ($p + NB_RESULTS_PER_PAGE));
     
-    echo '<pre>';
-    print_r($results);
-    echo '</pre>';
-    
     // Création de la pagination si le nombre de commentaires est trop important.
     include_once('../includes/pagination.class.php');
     $Pagination = new Pagination();
