@@ -31,9 +31,7 @@ include_once('faq_begin.php'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 include_once('../includes/admin_header.php');
 
-$Template->Set_filenames(array(
-	'admin_faq' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq.tpl'
-));
+$page = !empty($_GET['p']) ? numeric($_GET['p']) : 0;
 
 if( !empty($_POST['submit']) )
 {
@@ -52,38 +50,88 @@ if( !empty($_POST['submit']) )
 	redirect(transid('admin_faq.php', '', '&'));
 }
 
-//Création du tableau des groupes.
-$array_groups = $Group->Create_groups_array();
-
-$Template->Assign_vars(array(
-	'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
-	'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
-	'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],
-	'L_ADD_CAT' => $FAQ_LANG['add_cat'],
-	'L_FAQ_NAME' => $FAQ_LANG['faq_name'],
-	'L_FAQ_NAME_EXPLAIN' => $FAQ_LANG['faq_name_explain'],
-	'L_NBR_COLS' => $FAQ_LANG['nbr_cols'],
-	'L_NBR_COLS_EXPLAIN' => $FAQ_LANG['nbr_cols_explain'],
-	'L_DISPLAY_MODE' => $FAQ_LANG['display_mode'],
-	'L_DISPLAY_MODE_EXPLAIN' => $FAQ_LANG['display_mode_admin_explain'],
-	'L_BLOCKS' => $FAQ_LANG['display_block'],
-	'L_INLINE' => $FAQ_LANG['display_inline'],
-	'L_AUTH' => $FAQ_LANG['general_auth'],
-	'L_AUTH_EXPLAIN' => $FAQ_LANG['general_auth_explain'],
-	'L_AUTH_READ' => $FAQ_LANG['read_auth'],
-	'L_AUTH_WRITE' => $FAQ_LANG['write_auth'],
-	'L_SUBMIT' => $LANG['submit'],
-	'AUTH_READ' => $Group->Generate_select_groups(1, $FAQ_CONFIG['global_auth'], AUTH_READ),
-	'AUTH_WRITE' => $Group->Generate_select_groups(2, $FAQ_CONFIG['global_auth'], AUTH_WRITE),
-	'FAQ_NAME' => $FAQ_CONFIG['faq_name'],
-	'NUM_COLS' => $FAQ_CONFIG['num_cols'],
-	'SELECTED_BLOCK' => $FAQ_CONFIG['display_block'] ? ' selected="selected"' : '',
-	'SELECTED_INLINE' => !$FAQ_CONFIG['display_block'] ? ' selected="selected"' : ''
+//Questions list
+if( $page > 0 )
+{
+	$Template->Set_filenames(array(
+		'admin_faq_questions' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq_questions.tpl'
+	));
+	
+	include_once('../includes/pagination.class.php'); 
+	$Pagination = new Pagination();
+	
+	$result = $Sql->Query_while("SELECT q.id, q.question, q.timestamp, q.idcat, c.name
+	FROM ".PREFIX."faq q
+	LEFT JOIN ".PREFIX."faq_cats c ON c.id = q.idcat
+	ORDER BY q.timestamp DESC
+	" . $Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	
+	$nbr_questions = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."faq", __LINE__, __FILE__);
+	
+	while( $row = $Sql->Sql_fetch_assoc($result) )
+	{
+		$Template->Assign_block_vars('question', array(
+			'QUESTION' => $row['question'],
+			'CATEGORY' => $row['name'],
+			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+			'U_QUESTION' => transid('faq.php?id=' . $row['idcat'] . '&amp;question=' . $row['id'], 'faq-' . $row['idcat'] . '+' . url_encode_rewrite($row['name']) . '.php?question=' . $row['id']) . '#q' . $row['id'],
+			'U_CATEGORY' => transid('faq.php?id=' . $row['idcat'], 'faq-' . $row['idcat'] . '+' . url_encode_rewrite($row['name']) . '.php')
+		));
+	}
+	
+	$Template->Assign_vars(array(
+		'PAGINATION' => $Pagination->Display_pagination('admin_faq.php?p=%d', $nbr_questions, 'p', 25, 3),
+		'L_QUESTION' => $FAQ_LANG['question'],
+		'L_CATEGORY' => $FAQ_LANG['category'],
+		'L_DATE' => $LANG['date'],
+		'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
+		'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
+		'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],
+		'L_QUESTIONS_LIST' => $FAQ_LANG['faq_questions_list'],
+		'L_ADD_CAT' => $FAQ_LANG['add_cat'],
+	));
+	
+	$Template->Pparse('admin_faq_questions');
+}
+else
+{
+	$Template->Set_filenames(array(
+		'admin_faq' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq.tpl'
 	));
 
+	//Créating the groups table
+	$array_groups = $Group->Create_groups_array();
 
+	$Template->Assign_vars(array(
+		'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
+		'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
+		'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],
+		'L_QUESTIONS_LIST' => $FAQ_LANG['faq_questions_list'],
+		'L_ADD_CAT' => $FAQ_LANG['add_cat'],
+		'L_FAQ_NAME' => $FAQ_LANG['faq_name'],
+		'L_FAQ_NAME_EXPLAIN' => $FAQ_LANG['faq_name_explain'],
+		'L_NBR_COLS' => $FAQ_LANG['nbr_cols'],
+		'L_NBR_COLS_EXPLAIN' => $FAQ_LANG['nbr_cols_explain'],
+		'L_DISPLAY_MODE' => $FAQ_LANG['display_mode'],
+		'L_DISPLAY_MODE_EXPLAIN' => $FAQ_LANG['display_mode_admin_explain'],
+		'L_BLOCKS' => $FAQ_LANG['display_block'],
+		'L_INLINE' => $FAQ_LANG['display_inline'],
+		'L_AUTH' => $FAQ_LANG['general_auth'],
+		'L_AUTH_EXPLAIN' => $FAQ_LANG['general_auth_explain'],
+		'L_AUTH_READ' => $FAQ_LANG['read_auth'],
+		'L_AUTH_WRITE' => $FAQ_LANG['write_auth'],
+		'L_SUBMIT' => $LANG['submit'],
+		'AUTH_READ' => $Group->Generate_select_groups(1, $FAQ_CONFIG['global_auth'], AUTH_READ),
+		'AUTH_WRITE' => $Group->Generate_select_groups(2, $FAQ_CONFIG['global_auth'], AUTH_WRITE),
+		'FAQ_NAME' => $FAQ_CONFIG['faq_name'],
+		'NUM_COLS' => $FAQ_CONFIG['num_cols'],
+		'SELECTED_BLOCK' => $FAQ_CONFIG['display_block'] ? ' selected="selected"' : '',
+		'SELECTED_INLINE' => !$FAQ_CONFIG['display_block'] ? ' selected="selected"' : ''
+		));
 
-$Template->Pparse('admin_faq');
+	$Template->Pparse('admin_faq');
+
+}
 
 include_once('../includes/admin_footer.php');
 

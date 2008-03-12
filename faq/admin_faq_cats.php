@@ -50,6 +50,7 @@ $Template->Assign_vars(array(
 	'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
 	'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
 	'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],
+	'L_QUESTIONS_LIST' => $FAQ_LANG['faq_questions_list'],
 	'L_ADD_CAT' => $FAQ_LANG['add_cat']
 ));
 
@@ -120,7 +121,7 @@ elseif( !empty($_POST['submit']) )
 elseif( !empty($_GET['recount']) )
 {
 	$faq_categories->Recount_subquestions();
-	redirect(transid(HOST . SCRIPT, '', '&'));
+	redirect(transid(HOST . SCRIPT . '?error=e_recount_success', '', '&'));
 }
 elseif( $new_cat XOR $id_edit > 0 )
 {
@@ -180,6 +181,9 @@ else
 			case 'e_success' :
 				$Errorh->Error_handler($FAQ_LANG['successful_operation'], E_USER_SUCCESS);
 				break;
+				case 'e_recount_success' :
+				$Errorh->Error_handler($FAQ_LANG['recount_success'], E_USER_SUCCESS);
+				break;
 		}
 	}
 	
@@ -195,6 +199,10 @@ else
 	
 	$Template->Assign_block_vars('categories_management', array(
 		'CATEGORIES' => $faq_categories->Build_administration_list()
+	));
+	
+	$Template->Assign_vars(array(
+		'L_RECOUNT_QUESTIONS' => $FAQ_LANG['recount_questions_number']
 	));
 }
 

@@ -16,34 +16,49 @@
 					<br />
 					<a href="admin_faq_cats.php?new=1" class="quick_link">{L_ADD_CAT}</a>
 				</li>
+				<li>
+					<a href="admin_faq.php?p=1"><img src="faq.png" alt="{L_QUESTIONS_LIST}" /></a>
+					<br />
+					<a href="admin_faq.php?p=1" class="quick_link">{L_QUESTIONS_LIST}</a>
+				</li>
 			</ul>
 		</div>
 
 		<div id="admin_contents">
-		
 			# IF C_ERROR_HANDLER #
-				<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-				</div>		
+					<span id="errorh"></span>
+					<div id="error_msg">
+						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+						</div>
+					<br />
+					</div>
+					<script type="text/javascript">
+					<!--
+						//Javascript timeout to hide this message
+						setTimeout('document.getElementById("error_msg").innerHTML = "";', 5000);
+					-->
+					</script>
 			# ENDIF #
-		
-			# START categories_management #
-			<table class="module_table" style="width:99%;">
-				<tr>			
-					<th colspan="3">
-						{L_CATS_MANAGEMENT}
-					</th>
-				</tr>							
-				<tr>
-					<td style="padding-left:20px;" class="row2">
-						<br />
-						{categories_management.CATEGORIES}
-						<br />
-					</td>
-				</tr>
-			</table>
 			
+			# START categories_management #
+				<div style="text-align:center; margin:0 20px;" class="row1">
+					<a href="admin_faq_cats.php?recount=1">{L_RECOUNT_QUESTIONS}</a>
+				</div>
+				<table class="module_table" style="width:99%;">
+					<tr>			
+						<th colspan="3">
+							{L_CATS_MANAGEMENT}
+						</th>
+					</tr>							
+					<tr>
+						<td style="padding-left:20px;" class="row2">
+							<br />
+							{categories_management.CATEGORIES}
+							<br />
+						</td>
+					</tr>
+				</table>
 			# END categories_management #
 			
 			# START removing_interface #
