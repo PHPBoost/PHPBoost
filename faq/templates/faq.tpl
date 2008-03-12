@@ -78,7 +78,6 @@
 								<span style="float:left;">
 									<a href="javascript:show_answer({questions.faq.ID_QUESTION});"><img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" id="faq_i{questions.faq.ID_QUESTION}" class="image_left" style="vertical-align:middle;" /></a>
 									<a id="faq_l{questions.faq.ID_QUESTION}" href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
-									<a href="{questions.faq.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{MODULE_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" style="margin-left:10px; vertical-align:middle;" /></a>
 									<script type="text/javascript">
 									<!--
 										document.getElementById("faq_l{questions.faq.ID_QUESTION}").href = 'javascript:show_answer({questions.faq.ID_QUESTION});';
@@ -86,19 +85,20 @@
 									-->
 									</script>
 								</span>
-								# IF C_ADMIN_TOOLS #
 								<span class="row2" style="float:right;">
-									<a href="{questions.faq.U_MOVE}" title="{L_MOVE}"><img src="../templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
-									# START questions.faq.up #
-										<a href="{questions.faq.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
-									# END questions.faq.up #
-									# START questions.faq.down #
-										<a href="{questions.faq.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
-									# END questions.faq.down #
-									<a href="{questions.faq.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
-									<a href="{questions.faq.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+									<a href="{questions.faq.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{MODULE_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" /></a>
+									# IF C_ADMIN_TOOLS #
+										<a href="{questions.faq.U_MOVE}" title="{L_MOVE}"><img src="../templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
+										# START questions.faq.up #
+											<a href="{questions.faq.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
+										# END questions.faq.up #
+										# START questions.faq.down #
+											<a href="{questions.faq.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
+										# END questions.faq.down #
+										<a href="{questions.faq.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
+										<a href="{questions.faq.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+									# ENDIF #
 								</span>
-								# ENDIF #
 								<div style="clear:both"></div>
 							</div>
 							<br />
@@ -133,20 +133,21 @@
 							<span style="float:left;">
 								<img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
 								{questions_block.contents.QUESTION}
-								<a href="{questions_block.contents.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{MODULE_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" style="margin-left:10px; vertical-align:middle;" /></a>
 							</span>
-							# IF C_ADMIN_TOOLS #
 							<span class="row2" style="float:right;">
-								# START questions_block.contents.up #
-									<a href="{questions_block.contents.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
-								# END questions_block.contents.up #
-								# START questions_block.contents.down #
-									<a href="{questions_block.contents.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
-								# END questions_block.contents.down #
-								<a href="{questions_block.contents.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
-								<a href="{questions_block.contents.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+								<a href="{questions_block.contents.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{MODULE_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" /></a>
+								# IF C_ADMIN_TOOLS #
+									<a href="{questions_block.contents.U_MOVE}" title="{L_MOVE}"><img src="../templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
+									# START questions_block.contents.up #
+										<a href="{questions_block.contents.U_UP}" title="{L_UP}"><img src="{MODULE_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
+									# END questions_block.contents.up #
+									# START questions_block.contents.down #
+										<a href="{questions_block.contents.U_DOWN}" title="{L_DOWN}"><img src="{MODULE_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
+									# END questions_block.contents.down #
+									<a href="{questions_block.contents.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
+									<a href="{questions_block.contents.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+								# ENDIF #
 							</span>
-							# ENDIF #
 							<div style="clear:both"></div>
 						</div>
 						<br />
