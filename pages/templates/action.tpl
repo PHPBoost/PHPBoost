@@ -94,7 +94,7 @@
 				<dl>
 					<dt><label for="new_title">{L_NEW_TITLE}</label></dt>
 					<dd>
-						<label><input type="text" id="new_title" name="new_title" class="text" size="70" maxlength="250" /></label>
+						<label><input type="text" id="new_title" name="new_title" value="{FORMER_TITLE}" class="text" size="70" maxlength="250" /></label>
 						<input type="hidden" name="id_rename" value="{ID_RENAME}" />
 					</dd>					
 				</dl>

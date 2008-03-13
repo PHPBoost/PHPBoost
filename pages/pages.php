@@ -89,8 +89,11 @@ elseif( $id_com > 0 )
 else
 {
 	define('TITLE', $LANG['pages']);
-	if( $Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE) )
+	$auth_index = $Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE);
+	if( $auth_index )
 		$Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
+	elseif( !$auth_index && empty($error) )
+		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 }
 require_once('../includes/header.php');
 

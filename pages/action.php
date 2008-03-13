@@ -294,7 +294,8 @@ elseif( $id_rename > 0 )
 		'L_TITLE' => sprintf($LANG['pages_rename_page'], $page_infos['title']),
 		'L_NEW_TITLE' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
-		'L_EXPLAIN_RENAME' => $LANG['pages_explain_rename']
+		'L_EXPLAIN_RENAME' => $LANG['pages_explain_rename'],
+		'FORMER_TITLE' => $page_infos['title']
 	));
 	$Template->Assign_block_vars('rename', array());
 	

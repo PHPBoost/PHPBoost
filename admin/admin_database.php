@@ -195,6 +195,7 @@ elseif( $action == 'restore' )
 	$Template->Assign_vars(array(
 		'L_LIST_FILES' => $LANG['db_file_list'],
 		'L_CONFIRM_RESTORE' => $LANG['db_confirm_restore'],
+		'L_CONFIRM_DEL' => $LANG['db_confirm_delete_file'],
 		'L_NAME' => $LANG['db_file_name'],
 		'L_WEIGHT' => $LANG['db_file_weight'],
 		'L_DELETE' => $LANG['delete'],
