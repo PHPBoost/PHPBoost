@@ -103,7 +103,7 @@ if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-z
 				{
 					if( $_FILES['avatars']['size'] > 0 )
 					{
-						$Upload->Upload_file('avatars', '`([a-z0-9])+\.(jpg|gif|png|bmp)+`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
+						$Upload->Upload_file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 						
 						if( !empty($Upload->error) ) //Erreur, on arrête ici
 							redirect(HOST . DIR . '/member/register' . transid('.php?erroru=' . $Upload->error) . '#errorh');

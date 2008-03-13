@@ -51,7 +51,7 @@ if( isset($_GET['popup']) ) //Popup.
 
 <body>';
 	$footer = '<br />
-		<fieldset class="fieldset_submit">
+		<fieldset class="fieldset_submit" style="width:96%;margin:auto;">
 			<legend>' . $LANG['close'] . '</legend>
 			<input type="button" class="reset" onclick="javascript:close_popup()" value="' . $LANG['close'] . '" />	
 		</fieldset>
@@ -218,7 +218,7 @@ elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 			}
 		}
 		else
-			redirect(HOST . DIR . transid('/member/upload.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder' . $popup_noamp, '', '&'));
+			redirect(HOST . DIR . transid('/member/upload.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder&' . $popup_noamp, '', '&'));
 	}
 	else
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -288,7 +288,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 		$Template->Assign_vars(array(
 			'SELECTED_CAT' => $id_cat,
 			'ID_FILE' => $move_folder,
-			'TARGET' => transid('upload.php?movefd=' . $move_folder . '&amp;f=0')
+			'TARGET' => transid('upload.php?movefd=' . $move_folder . '&amp;f=0&amp;' . $popup)
 		));
 		$cat_explorer = display_cat_explorer($id_cat, $cats, 1, $Member->Get_attribute('user_id'));
 	}
@@ -318,7 +318,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 		));
 		$Template->Assign_vars(array(
 			'SELECTED_CAT' => $info_move['idcat'],
-			'TARGET' => transid('upload.php?movefi=' . $move_file . '&amp;f=0')
+			'TARGET' => transid('upload.php?movefi=' . $move_file . '&amp;f=0&amp;' . $popup)
 		));
 	}
 	

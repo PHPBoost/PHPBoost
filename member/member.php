@@ -437,7 +437,7 @@ if( !empty($id_get) ) //Espace membre
 			if( !empty($_POST['delete_avatar']) )
 			{
 				$user_avatar_path = $Sql->Query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
-				if( !empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match) )
+				if( !empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match) )
 				{
 					if( is_file($user_avatar_path) && isset($match[1]) )
 						@unlink('../images/avatars/' . $match[1]);
@@ -456,7 +456,7 @@ if( !empty($id_get) ) //Espace membre
 			{
 				if( $_FILES['avatars']['size'] > 0 )
 				{
-					$Upload->Upload_file('avatars', '`([a-z0-9])+\.(jpg|gif|png|bmp)+`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
+					$Upload->Upload_file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 					if( !empty($Upload->error) ) //Erreur, on arrête ici
 						redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->error) . '#errorh');
 					else
