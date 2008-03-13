@@ -1,4 +1,13 @@
 	{HEADER}
+	<script type="text/javascript">
+	<!--
+	function close_popup()
+	{
+		opener=self;
+		self.close();
+	}
+	-->
+	</script>
 	<br />		
 	<table class="module_table">
 		<tr> 
