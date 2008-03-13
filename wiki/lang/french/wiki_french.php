@@ -55,7 +55,7 @@ $LANG['wiki_add_cat'] = 'Ajouter une catégorie';
 $LANG['wiki_article_cat'] = 'Catégorie de l\'article';
 $LANG['wiki_create_cat'] = 'Créer une catégorie';
 $LANG['wiki_update_index'] = 'Modifier l\'accueil';
-$LANG['wiki_warning_updated_article'] = '<span class="warning"><strong>Attention:</strong> Cet article a été mis à jour, vous consultez ici une archive de cet article!</span>';
+$LANG['wiki_warning_updated_article'] = '<span class="warning"><strong>Attention :</strong> Cet article a été mis à jour, vous consultez ici une archive de cet article!</span>';
 $LANG['wiki_article_cat'] = 'Catégorie de l\'article';
 $LANG['wiki_current_cat'] = 'Catégorie courante';
 $LANG['wiki_contribuate'] = 'Contribuer au wiki';
@@ -73,7 +73,7 @@ $LANG['wiki_please_enter_a_link_name'] = 'Veuillez entrer un nom de lien';
 $LANG['wiki_insert_a_link'] = 'Insérer un lien vers un article';
 $LANG['wiki_insert_link'] = 'Insérer';
 $LANG['wiki_title_link'] = 'Titre de l\'article';
-$LANG['wiki_no_js_insert_link'] = 'Pour insérer un lien vers un article veuillez utiliser la balise link:
+$LANG['wiki_no_js_insert_link'] = 'Pour insérer un lien vers un article veuillez utiliser la balise link :
 [link=$a]$b[/link] où $a représente le titre de l\'article (sans caractères spéciaux, tel qu\'il apparaît dans l\'adresse) et $b représente le nom du lien';
 $LANG['wiki_explain_paragraph'] = 'Insérer un paragraphe de niveau %d';
 $LANG['wiki_help_tags'] = 'En savoir plus sur les balises spécifiques au BBCode';
@@ -97,16 +97,16 @@ $LANG['wiki_explain_restore_default_auth'] = 'Ne pas considérer de restriction p
 $LANG['wiki_restore_default_auth'] = 'Autorisations par défaut';
 
 //Catégories
-$LANG['wiki_last_articles_list'] = 'Derniers articles mis à jour:';
-$LANG['wiki_cats_list'] = 'Liste des catégories principales:';
+$LANG['wiki_last_articles_list'] = 'Derniers articles mis à jour :';
+$LANG['wiki_cats_list'] = 'Liste des catégories principales :';
 $LANG['wiki_articles_of_this_cat'] = 'Articles présents dans cette catégorie';
-$LANG['wiki_subcats'] = 'Catégories contenues par cette catégorie:';
-$LANG['wiki_subarticles'] = 'Articles contenus par cette catégorie:';
+$LANG['wiki_subcats'] = 'Catégories contenues par cette catégorie :';
+$LANG['wiki_subarticles'] = 'Articles contenus par cette catégorie :';
 
 //Archives
 $LANG['wiki_version_list'] = 'Versions';
 $LANG['wiki_article_does_not_exist'] = 'L\'article que vous demandez n\'existe pas, si vous le désirez vous pouvez le créer en cliquant <a href="' . transid('post.php') . '">ici</a>.';
-$LANG['wiki_cat_does_not_exist'] = 'Erreur: la catégorie demandée n\'existe pas. <a href="wiki.php">Retour au wiki</a>';
+$LANG['wiki_cat_does_not_exist'] = 'Erreur : la catégorie demandée n\'existe pas. <a href="wiki.php">Retour au wiki</a>';
 $LANG['wiki_consult_article'] = 'Consulter';
 $LANG['wiki_restore_version'] = 'Restaurer';
 $LANG['wiki_possible_actions'] = 'Actions possibles';
@@ -116,7 +116,7 @@ $LANG['wiki_current_version'] = 'Version courante';
 //Statut de l'article
 $LANG['wiki_status_management'] = 'Gestion des statuts des articles';
 $LANG['wiki_status_management_article'] = 'Gestion des statuts de l\' article %s';
-$LANG['wiki_status_management_article'] = 'Gestion du statut de l\'article: <em>%s</em>';
+$LANG['wiki_status_management_article'] = 'Gestion du statut de l\'article : <em>%s</em>';
 $LANG['wiki_defined_status'] = 'Statut préféfini';
 $LANG['wiki_undefined_status'] = 'Statut personnalisé';
 $LANG['wiki_no_status'] = 'Aucun statut';
@@ -133,13 +133,13 @@ $LANG['wiki_status_list'] = array(
 
 //Déplacement de l'article
 $LANG['wiki_moving_article'] = 'Déplacement d\'un article';
-$LANG['wiki_moving_this_article'] = 'Déplacement de l\'article: %s';
+$LANG['wiki_moving_this_article'] = 'Déplacement de l\'article : %s';
 $LANG['wiki_change_cat'] = 'Changer de catégorie';
 $LANG['wiki_cat_contains_cat'] = 'Vous souhaitez placer cette catégorie dans une de ses catégories filles ou dans elle-même, ce qui est impossible!';
 
 //Renommer l'article
 $LANG['wiki_renaming_article'] = 'Renommer un article';
-$LANG['wiki_renaming_this_article'] = 'Renommer l\'article: %s';
+$LANG['wiki_renaming_this_article'] = 'Renommer l\'article : %s';
 $LANG['wiki_new_article_title'] = 'Nouveau titre de l\'article';
 $LANG['wiki_explain_renaming'] = 'Vous êtes sur le point de renommer un article. Attention, vous devez savoir que tous les liens menant à cet article seront rompus. Cependant vous pouvez demander à laisser une redirection vers le nouvel article, ce qui permettra de ne pas briser les liens.';
 $LANG['wiki_create_redirection_after_renaming'] = 'Créer une redirection automatique depuis l\'ancien article vers le nouveau';
@@ -151,7 +151,7 @@ $LANG['wiki_remove_redirection'] = 'Supprimer la redirection';
 $LANG['wiki_redirections'] = 'Redirections';
 $LANG['wiki_redirections_management'] = 'Gestion des redirections';
 $LANG['wiki_edit_redirection'] = 'Edition d\'une redirection';
-$LANG['wiki_redirections_to_this_article'] = 'Redirections menant à l\'article: <em>%s</em>';
+$LANG['wiki_redirections_to_this_article'] = 'Redirections menant à l\'article : <em>%s</em>';
 $LANG['wiki_redirection_name'] = 'Titre de la redirection';
 $LANG['wiki_redirection_delete'] = 'Supprimer la redirection';
 $LANG['wiki_alert_delete_redirection'] = 'Etes-vous sur de vouloir supprimer cette redirection?';
@@ -173,10 +173,10 @@ $LANG['wiki_article_com_article'] = 'Discussion';
 //Suppression
 $LANG['wiki_confirm_delete_archive'] = 'Etes-vous sûr de vouloir supprimer cette version de l\'article?';
 $LANG['wiki_remove_cat'] = 'Suppression d\'une catégorie';
-$LANG['wiki_remove_this_cat'] = 'Suppression de la catégorie: <em>%s</em>';
+$LANG['wiki_remove_this_cat'] = 'Suppression de la catégorie : <em>%s</em>';
 $LANG['wiki_explain_remove_cat'] = 'Vous souhaitez supprimer cette catégorie. Vous pouvez supprimer tout son contenu ou transférer son contenu ailleurs. L\'article associé à cette catégorie sera quant à lui obligatoirement supprimé.';
 $LANG['wiki_remove_all_contents'] = 'Supprimer tout son contenu (action irréversible)';
-$LANG['wiki_move_all_contents'] = 'Déplacer tout son contenu dans le dossier suivant:';
+$LANG['wiki_move_all_contents'] = 'Déplacer tout son contenu dans le dossier suivant :';
 $LANG['wiki_future_cat'] = 'Catégorie dans laquelle vous souhaitez déplacer ses éléments';
 $LANG['wiki_alert_removing_cat'] = 'Etes-vous sûr de vouloir supprimer cette catégorie (définitif)';
 $LANG['wiki_confirm_remove_article'] = 'Etes-vous sur de vouloir supprimer cet article?';
@@ -185,7 +185,7 @@ $LANG['wiki_not_a_cat'] = 'Vous n\'avez pas sélectionné de catégorie valide!';
 //RSS
 $LANG['wiki_rss'] = 'Flux RSS';
 $LANG['wiki_rss_cat'] = 'Derniers articles de la catégorie %s';
-$LANG['wiki_rss_last_articles'] = '%s: derniers articles';
+$LANG['wiki_rss_last_articles'] = '%s : derniers articles';
 
 //Favoris
 $LANG['wiki_favorites'] = 'Favoris';

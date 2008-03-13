@@ -62,7 +62,7 @@ $LANG['e_upload_already_exist'] = 'Le fichier existe déjà, écrasement non autori
 $LANG['e_max_data_reach'] = 'Taille maximale atteinte, supprimez d\'anciens fichiers';
 
 //Membres
-$LANG['e_pass_mini'] = 'Longueur minimale du nouveau password: 6 caractères';
+$LANG['e_pass_mini'] = 'Longueur minimale du nouveau password : 6 caractères';
 $LANG['e_pass_same'] = 'Les mots de passe doivent être identiques';
 $LANG['e_pseudo_auth'] = 'Le pseudo entré est déjà utilisé!';
 $LANG['e_mail_auth'] = 'Le mail entré est déjà utilisé!';

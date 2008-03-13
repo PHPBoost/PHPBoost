@@ -320,7 +320,7 @@
 				<br />
 				<dl>
 					<dt><label for="new_title">{L_NEW_TITLE}</label></dt>
-					<dd><label><input type="text" name="new_title" id="new_title" class="text" size="70" maxlength="250" value="" /></label></dd>					
+					<dd><input type="text" name="new_title" id="new_title" class="text" size="70" maxlength="250" value="{rename.FORMER_NAME}" /></dd>					
 				</dl>
 				<dl>
 					<dt><label for="create_redirection_while_renaming">{rename.L_CREATE_REDIRECTION}</label></dt>

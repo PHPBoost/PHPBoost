@@ -46,11 +46,11 @@ $LANG['unit_seconds_short'] = 's';
 	
 //Erreurs
 $LANG['error'] = 'Erreur';
-$LANG['error_fatal'] = '<strong>Erreur fatale:</strong> %s<br/><br/><br/><strong>Ligne %s: %s</strong>';
-$LANG['error_warning'] = '<strong>Attention:</strong> %s %s %s';
-$LANG['error_notice'] = '<strong>Remarque:</strong> %s %s %s';
-$LANG['error_success'] = '<strong>Succès:</strong> %s %s %s';
-$LANG['error_unknow'] = '<strong>Erreur:</strong> Cause inconnue %s %s %s';
+$LANG['error_fatal'] = '<strong>Erreur fatale :</strong> %s<br/><br/><br/><strong>Ligne %s : %s</strong>';
+$LANG['error_warning'] = '<strong>Attention :</strong> %s %s %s';
+$LANG['error_notice'] = '<strong>Remarque :</strong> %s %s %s';
+$LANG['error_success'] = '<strong>Succès :</strong> %s %s %s';
+$LANG['error_unknow'] = '<strong>Erreur :</strong> Cause inconnue %s %s %s';
 
 //Titres divers
 $LANG['title_pm'] = 'Messages privés';
@@ -102,18 +102,18 @@ $LANG['alert_delete_file'] = 'Supprimer ce fichier ?';
 
 //bbcode
 $LANG['bb_smileys'] = 'Smileys';
-$LANG['bb_bold'] = 'Texte en gras: [b]texte[/b]';
-$LANG['bb_italic'] = 'Texte en italique: [i]texte[/i]';
-$LANG['bb_underline'] = 'Texte souligné: [u]texte[/u]';
-$LANG['bb_strike'] = 'Texte barré: [s]texte[/s]';
-$LANG['bb_link'] = 'Ajouter un lien: [url]lien[/url], ou [url=lien]nom du lien[/url]';
-$LANG['bb_picture'] = 'Ajouter une image: [img]url image[/img]';
-$LANG['bb_size'] = 'Taille du texte (X entre 0 - 49): [size=X]texte de taille X[/size]';
-$LANG['bb_color'] = 'Couleur du texte: [color=X]texte de couleur X[/color]';
+$LANG['bb_bold'] = 'Texte en gras : [b]texte[/b]';
+$LANG['bb_italic'] = 'Texte en italique : [i]texte[/i]';
+$LANG['bb_underline'] = 'Texte souligné : [u]texte[/u]';
+$LANG['bb_strike'] = 'Texte barré : [s]texte[/s]';
+$LANG['bb_link'] = 'Ajouter un lien : [url]lien[/url], ou [url=lien]nom du lien[/url]';
+$LANG['bb_picture'] = 'Ajouter une image : [img]url image[/img]';
+$LANG['bb_size'] = 'Taille du texte (X entre 0 - 49) : [size=X]texte de taille X[/size]';
+$LANG['bb_color'] = 'Couleur du texte : [color=X]texte de couleur X[/color]';
 $LANG['bb_quote'] = 'Faire une citation [quote=pseudo]texte[/quote]';
-$LANG['bb_left'] = 'Positionner à gauche: [align=left]objet à gauche[/align]';
-$LANG['bb_center'] = 'Centrer: [align=center]objet centré[/align]';
-$LANG['bb_right'] = 'Positionner à droite: [align=right]objet à droite[/align]';
+$LANG['bb_left'] = 'Positionner à gauche : [align=left]objet à gauche[/align]';
+$LANG['bb_center'] = 'Centrer : [align=center]objet centré[/align]';
+$LANG['bb_right'] = 'Positionner à droite : [align=right]objet à droite[/align]';
 $LANG['bb_code'] = 'Insérer du code [code]texte[/code]';
 $LANG['bb_math'] = 'Insérer du code mathématique [math]texte[/math]';
 $LANG['bb_swf'] = 'Insérer du flash [swf=largeur,hauteur]adresse animation[/swf]';
@@ -147,7 +147,7 @@ $LANG['head_add'] = 'Ajouter l\'entête';
 $LANG['insert_table'] = 'Insérer le tableau';
 $LANG['ordered_list'] = 'Liste ordonnée';
 $LANG['insert_list'] = 'Insérer la liste';
-$LANG['forbidden_tags'] = 'Balises BBcode interdites:';
+$LANG['forbidden_tags'] = 'Balises BBcode interdites :';
 
 //Connexion
 $LANG['connect_private_message'] = 'Messagerie privée';
@@ -155,7 +155,7 @@ $LANG['connect_private_profil'] = 'Mon profil';
 
 //Maintain
 $LANG['maintain'] = 'Le site est actuellement en maintenance merci de votre patience, seul(s) le(s) administrateur(s) du site peuvent y accèder.';
-$LANG['maintain_delay'] = 'Délai estimé avant réouverture du site:';
+$LANG['maintain_delay'] = 'Délai estimé avant réouverture du site :';
 $LANG['title_maintain'] = 'Site en maintenance';
 $LANG['loading'] = 'Chargement';
 
@@ -363,8 +363,8 @@ $LANG['banned'] = 'Banni';
 $LANG['go_msg'] = 'Aller au message';
 
 //Register
-$LANG['pseudo_how'] = 'Longueur minimale du pseudo: 3 caractères';
-$LANG['password_how'] = 'Longueur minimale du password: 6 caractères';
+$LANG['pseudo_how'] = 'Longueur minimale du pseudo : 3 caractères';
+$LANG['password_how'] = 'Longueur minimale du password : 6 caractères';
 $LANG['confirm_register'] = 'Merci de vous être enregistré %s. Un mail vous sera envoyé pour confirmer votre inscription.';
 $LANG['register_terms'] = 'Règlement';
 $LANG['register_accept'] = 'J\'accepte';
@@ -383,8 +383,8 @@ $LANG['timezone_choose_explain'] = 'Permet d\'ajuster l\'heure à votre localisat
 $LANG['register_title_mail'] = 'Confirmation inscription sur %s';
 $LANG['register_ready'] = 'Vous pouvez désormais vous connecter à votre compte directement sur le site.';
 $LANG['register_valid_email_confirm'] = 'Vous devrez activer votre compte dans l\'email que vous reçevrez avant de pouvoir vous connecter.';
-$LANG['register_valid_email'] = 'Vous devez activer votre compte avant de pouvoir vous connecter en cliquant sur ce lien: %s';
-$LANG['register_valid_admin'] = 'Attention: Votre compte devra être activé par un administrateur avant de pouvoir vous connecter. Merci de votre patience.';
+$LANG['register_valid_email'] = 'Vous devez activer votre compte avant de pouvoir vous connecter en cliquant sur ce lien : %s';
+$LANG['register_valid_admin'] = 'Attention : Votre compte devra être activé par un administrateur avant de pouvoir vous connecter. Merci de votre patience.';
 $LANG['register_mail'] = 'Cher %s,
 
 Tout d\'abord, merci de vous être inscrit sur %s. Vous faites partie dès maintenant des membres du site. 
@@ -394,8 +394,8 @@ Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de pa
 
 Nous vous rappelons vos identifiants.
 
-Identifiant: %s
-Password: %s 
+Identifiant : %s
+Password : %s 
 
 %s 
 
@@ -425,9 +425,9 @@ Pour utiliser le nouveau mot de passe, vous avez besoin de le confirmer. Pour le
 
 %s/member/forget.php?activate=true&u=%d&activ=%s
 
-Après cela vous pourrez vous connecter avec le nouveau mot de passe suivant:
+Après cela vous pourrez vous connecter avec le nouveau mot de passe suivant :
 
-Mot de passe: %s
+Mot de passe : %s
 
 Vous pourrez bien sur changer vous-même ce mot de passe par la suite via votre profil membre. Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site.
 
@@ -437,8 +437,8 @@ Vous pourrez bien sur changer vous-même ce mot de passe par la suite via votre p
 $LANG['confim_del_file'] = 'Supprimer ce fichier?';
 $LANG['confirm_del_folder'] = 'Supprimer ce dossier, et tout son contenu?';
 $LANG['confirm_empty_folder'] = 'Vider tout le contenu de ce dossier?';
-$LANG['file_forbidden_chars'] = 'Le nom du fichier ne peut contenir aucun des caractères suivants: \\\ / . | ? < > \"';
-$LANG['folder_forbidden_chars'] = 'Le nom du dossier ne peut contenir aucun des caractères suivants: \\\ / . | ? < > \"';
+$LANG['file_forbidden_chars'] = 'Le nom du fichier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
+$LANG['folder_forbidden_chars'] = 'Le nom du dossier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
 $LANG['files_management'] = 'Gestion des fichiers';
 $LANG['files_config'] = 'Configuration des fichiers';
 $LANG['file_add'] = 'Ajouter un fichier';

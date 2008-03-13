@@ -115,18 +115,18 @@ $LANG['confirm_del_group'] = 'Supprimer ce groupe ?';
 $LANG['confirm_del_member_group'] = 'Supprimer ce membre du groupe ?';
 
 //bbcode
-$LANG['bb_bold'] = 'Texte en gras: [b]texte[/b]';
-$LANG['bb_italic'] = 'Texte en italique: [i]texte[/i]';
-$LANG['bb_underline'] = 'Texte souligné: [u]texte[/u]';
-$LANG['bb_link'] = 'Ajouter un lien: [url]lien[/url], ou [url=lien]nom du lien[/url]';
-$LANG['bb_picture'] = 'Ajouter une image: [img]url image[/img]';
-$LANG['bb_size'] = 'Taille du texte (X entre 0 - 49): [size=X]texte de taille X[/size]';
-$LANG['bb_color'] = 'Couleur du texte: [color=X]texte de taille X[/color]';
+$LANG['bb_bold'] = 'Texte en gras : [b]texte[/b]';
+$LANG['bb_italic'] = 'Texte en italique : [i]texte[/i]';
+$LANG['bb_underline'] = 'Texte souligné : [u]texte[/u]';
+$LANG['bb_link'] = 'Ajouter un lien : [url]lien[/url], ou [url=lien]nom du lien[/url]';
+$LANG['bb_picture'] = 'Ajouter une image : [img]url image[/img]';
+$LANG['bb_size'] = 'Taille du texte (X entre 0 - 49) : [size=X]texte de taille X[/size]';
+$LANG['bb_color'] = 'Couleur du texte : [color=X]texte de taille X[/color]';
 $LANG['bb_quote'] = 'Faire une citation [quote=pseudo]texte[/quote]';
 $LANG['bb_code'] = 'Insérer du code (PHP coloré) [code]texte[/code]';
-$LANG['bb_left'] = 'Positionner à gauche: [align=left]objet à gauche[/align]';
-$LANG['bb_center'] = 'Centrer: [align=center]objet centré[/align]';
-$LANG['bb_right'] = 'Positionner à droite: [align=right]objet à droite[/align]';
+$LANG['bb_left'] = 'Positionner à gauche : [align=left]objet à gauche[/align]';
+$LANG['bb_center'] = 'Centrer : [align=center]objet centré[/align]';
+$LANG['bb_right'] = 'Positionner à droite : [align=right]objet à droite[/align]';
 
 //Commun
 $LANG['pseudo'] = 'Pseudo';
@@ -275,9 +275,9 @@ $LANG['config_main'] = 'Configuration générale';
 $LANG['config_advanced'] = 'Configuration avancée';
 $LANG['serv_name'] = 'Nom du serveur';
 $LANG['serv_path'] = 'Chemin de PHPBoost';
-$LANG['serv_path_explain'] = 'Vide par défaut: site à la racine du serveur';
+$LANG['serv_path_explain'] = 'Vide par défaut : site à la racine du serveur';
 $LANG['site_name'] = 'Nom du site';
-$LANG['serv_name_explain'] = 'Ex: http://www.phpboost.com';
+$LANG['serv_name_explain'] = 'Ex : http://www.phpboost.com';
 $LANG['site_desc'] = 'Description du site';
 $LANG['site_keyword'] = 'Mots clés du site';
 $LANG['default_language'] = 'Langue (par défaut) du site';
@@ -408,7 +408,7 @@ $LANG['use_tpl'] = 'Utiliser la structure des templates';
 $LANG['upload_smiley'] = 'Uploader un smiley';
 $LANG['smiley'] = 'Smiley';
 $LANG['add_smiley'] = 'Ajouter smiley';
-$LANG['smiley_code'] = 'Code du smiley (ex: :D)';
+$LANG['smiley_code'] = 'Code du smiley (ex : :D)';
 $LANG['smiley_available'] = 'Smileys disponibles';
 $LANG['edit_smiley'] = 'Edition des smileys';
 $LANG['smiley_management'] = 'Gestion des smileys';
@@ -598,7 +598,7 @@ $LANG['db_backup_success'] = 'Votre base de données a été correctement sauvegard
 $LANG['db_execute_query'] = 'Exécuter une requête dans la base de données';
 $LANG['db_tools'] = 'Outils de gestion de la base de données';
 $LANG['db_query_explain'] = 'Vous pouvez dans ce panneau d\'administration exécuter des requêtes dans la base de données. Cette interface ne devrait servir que lorsque le support vous demande d\'exécuter une requête dans la base de données qui vous sera communiquée.<br />
-<strong>Attention:</strong> si cette requête n\'a pas été proposée par le support vous êtes responsable de son exécution et des pertes de données qu\'elle pourrait provoquer. Il est donc fortement déconseillé d\'utiliser ce module si vous ne maîtrisez pas complètement la structure des tables de PHPBoost.';
+<strong>Attention :</strong> si cette requête n\'a pas été proposée par le support vous êtes responsable de son exécution et des pertes de données qu\'elle pourrait provoquer. Il est donc fortement déconseillé d\'utiliser ce module si vous ne maîtrisez pas complètement la structure des tables de PHPBoost.';
 $LANG['db_submit_query'] = 'Exécuter';
 $LANG['db_query_result'] = 'Résultat de la requête suivante';
 $LANG['db_executed_query'] = 'Requête SQL';
@@ -611,6 +611,7 @@ $LANG['db_upload_failure'] = 'Une erreur est survenue lors du transfert du fichi
 $LANG['db_file_already_exists'] = 'Un fichier du répertoire cache/backup porte le même nom que celui que vous souhaitez importer. Merci de renommer un des deux fichiers pour pouvoir l\'importer.';
 $LANG['db_unlink_success'] = 'Le fichier a été supprimé avec succès !';
 $LANG['db_unlink_failure'] = 'Le fichier n\'a pas pu être supprimé';
+$LANG['db_confirm_delete_file'] = 'Etes-vous sur de vouloir supprimer ce fichier ?';
 $LANG['db_file_does_not_exist'] = 'Le fichier que vous souhaitez supprimer n\'existe pas ou n\'est pas un fichier SQL';
 $LANG['db_empty_dir'] = 'Le dossier est vide';
 $LANG['db_file_name'] = 'Nom du fichier';
@@ -633,7 +634,7 @@ $LANG['10_langs'] = 'Voir les 10 principaux pays des visiteurs';
 $LANG['visits_year'] = 'Voir les statistiques de l\'année';
 $LANG['unknown'] = 'Inconnu';
 $LANG['last_member'] = 'Dernier membre';
-$LANG['top_10_posters'] = 'Top 10: posteurs';
+$LANG['top_10_posters'] = 'Top 10 : posteurs';
 $LANG['version'] = 'Version';
 $LANG['colors'] = 'Couleurs';
 $LANG['calendar'] = 'Calendrier';

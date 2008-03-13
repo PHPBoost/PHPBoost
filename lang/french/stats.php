@@ -57,7 +57,7 @@ $LANG['10_langs'] = 'Voir les 10 principaux pays des visiteurs';
 $LANG['visits_year'] = 'Voir les statistiques de l\'année';
 $LANG['unknown'] = 'Inconnu';
 $LANG['last_member'] = 'Dernier membre';
-$LANG['top_10_posters'] = 'Top 10: posteurs';
+$LANG['top_10_posters'] = 'Top 10 : posteurs';
 $LANG['version'] = 'Version';
 $LANG['colors'] = 'Couleurs';
 

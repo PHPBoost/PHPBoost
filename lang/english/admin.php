@@ -611,6 +611,7 @@ $LANG['db_upload_failure'] = 'Une erreur est survenue lors du transfert du fichi
 $LANG['db_file_already_exists'] = 'Un fichier du répertoire cache/backup porte le même nom que celui que vous souhaitez importer. Merci de renommer un des deux fichiers pour pouvoir l\'importer.';
 $LANG['db_unlink_success'] = 'Le fichier a été supprimé avec succès !';
 $LANG['db_unlink_failure'] = 'Le fichier n\'a pas pu être supprimé';
+$LANG['db_confirm_delete_file'] = 'Do you really want to delete this file?';
 $LANG['db_file_does_not_exist'] = 'Le fichier que vous souhaitez supprimer n\'existe pas ou n\'est pas un fichier SQL';
 $LANG['db_empty_dir'] = 'Le dossier est vide';
 $LANG['db_file_name'] = 'Nom du fichier';

@@ -239,9 +239,10 @@ elseif( $rename > 0 )//On renomme un article
 {
 	$Template->Assign_block_vars('rename', array(
 		'L_TITLE' => sprintf($LANG['wiki_renaming_this_article'], $article_infos['title']),
-		'ID_ARTICLE' => $rename,
 		'L_RENAMING_ARTICLE' => $LANG['wiki_explain_renaming'],
-		'L_CREATE_REDIRECTION' => $LANG['wiki_create_redirection_after_renaming']
+		'L_CREATE_REDIRECTION' => $LANG['wiki_create_redirection_after_renaming'],
+		'ID_ARTICLE' => $rename,
+		'FORMER_NAME' => $article_infos['title'],
 	));
 	
 	//Gestion des erreurs

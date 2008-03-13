@@ -40,7 +40,7 @@ $own_auth = !empty($_POST['own_auth']) ? 1 : 0;
 $is_cat = !empty($_POST['is_cat']) ? 1 : 0;
 $id_cat = !empty($_POST['id_cat']) ? numeric($_POST['id_cat']) : 0;
 $preview = !empty($_POST['preview']) ? true : false;
-$del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+$del_article = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 
 //Variable d'erreur
 $error = '';
@@ -172,9 +172,9 @@ if( !empty($contents) )
 		$error = 'preview';
 }
 //Suppression d'une page
-elseif( $del > 0 )
+elseif( $del_article > 0 )
 {
-	$page_infos = $Sql->Query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $del . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->Query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -185,9 +185,9 @@ elseif( $del > 0 )
 	//la page existe bien, on supprime
 	if( !empty($page_infos['title']) )
 	{
-		$Sql->Query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del . "'", __LINE__, __FILE__);
-		$Sql->Query_inject("DELETE FROM ".PREFIX."pages WHERE redirect = '" . $del . "'", __LINE__, __FILE__);
-		$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE script = 'pages' AND idprov = '" . $del . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("DELETE FROM ".PREFIX."pages WHERE redirect = '" . $del_article . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE script = 'pages' AND idprov = '" . $del_article . "'", __LINE__, __FILE__);
 		redirect(HOST . DIR . '/pages/pages.php?error=delete_success');
 	}
 	else
