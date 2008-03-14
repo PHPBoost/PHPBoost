@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../includes/begin.php');
 load_module_lang('wiki');
 
 define('TITLE' , $LANG['wiki'] . ' - ' . $LANG['wiki_search']);
@@ -33,10 +33,10 @@ define('TITLE' , $LANG['wiki'] . ' - ' . $LANG['wiki_search']);
 $speed_bar_key = 'wiki_search';
 require_once('../wiki/wiki_speed_bar.php');
 
-require_once('../includes/header.php'); 
+require_once('../includes/header.php');
 
 if( !$Member->Check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) || !$Member->Check_level(MEMBER_LEVEL) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 
 $search_string = !empty($_GET['search']) ? securit($_GET['search']) : '';
 $where_search = !empty($_GET['where']) ? ($_GET['where'] == 'contents' ? 'contents' : 'title') : 'title';
@@ -86,27 +86,26 @@ if( $search_string != '' ) //recherche
 	$Pagination = new Pagination();
 	$pages_links = $Pagination->Display_pagination('search' . transid('.php?search=' . $search_string . '&amp;where=' . $where_search . '&amp;page=%d'), $num_rows, 'page', 10, 3);
 	
-	$Template->Assign_block_vars('search_result', array(
-		'PAGES' => !empty($pages_links) ? $pages_links : '&nbsp;'
-	));
+	if( $num_rows > 0 )
+		$Template->Assign_block_vars('search_result', array(
+			'PAGES' => !empty($pages_links) ? $pages_links : '&nbsp;'
+		));
+	else
+		$Errorh->Error_handler($LANG['wiki_empty_search'], E_NOTICE);
 	
 	$i = 1; //On émule le "limit" 10 résultats par page
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		if( $i > ($page - 1) * 10 && $i <= $page * 2 ) //On affiche
+		if( $i > ($page - 1) * 10 && $i <= $page * 10 ) //On affiche
 			$Template->Assign_block_vars('search_result.item', array(
 				'TITLE' => $row['title'],
 				'U_TITLE' => transid('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 				'RELEVANCE' => number_round(($row['relevance'] / 5.5), 2) * 100 . ' %'
 			));	
 		$i++;
-		if( $i > $page * 2 )
+		if( $i > $page * 10 )
 			break;
-	}
-	
-	if( $num_rows == 0 )
-		$Errorh->Error_handler($LANG['wiki_empty_search'], E_NOTICE);
-	
+	}	
 }
 
 $Template->Pparse('wiki_search');

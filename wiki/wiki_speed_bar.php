@@ -104,9 +104,11 @@ switch($speed_bar_key)
 		elseif( $del > 0 )
 			$Speed_bar->Add_link($LANG['wiki_remove_cat'], transid('property.php?del=' . $del));
 			
-		$Speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . url_encode_rewrite($article_infos['title']), url_encode_rewrite($article_infos['title'])));
+		if( $article_infos['is_cat'] == 0 )
+			$Speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . url_encode_rewrite($article_infos['title']), url_encode_rewrite($article_infos['title'])));
+			
 		$id_cat = !empty($article_infos['id_cat']) ? (int)$article_infos['id_cat'] : 0;
-		if( !empty($id_cat)  && is_array($_WIKI_CATS) ) //Catégories infinies
+		if( $id_cat > 0 && is_array($_WIKI_CATS) ) //Catégories infinies
 		{
 			$id = $id_cat;
 			do

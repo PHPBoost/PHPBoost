@@ -55,7 +55,6 @@ $action_pictures = array(
 	'search' => 'search.png',
 	'follow-article' => 'follow-article.png',
 	'followed-articles' => 'followed-articles.png',
-	'com' => 'com.png',
 	'rss' => 'rss.png',
 	'explorer' => 'explorer.png'
 );
@@ -163,8 +162,11 @@ if( $Member->Check_level(MEMBER_LEVEL) )
 }
 //Discussion
 if( ($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_COM)) )
-	$other_tools[$LANG['wiki_article_com_article'] . ($article_infos['nbr_com'] > 0 ? ' (' . $article_infos['nbr_com'] . ')' : '')] = array(transid('property.php?com=' . $id_article . '&amp;i=0'), 'com');
-
+	$Template->Assign_vars(array(
+		'C_ACTIV_COM' => true,
+		'U_COM' => transid('property.php?com=' . $id_article . '&amp;i=0'),
+		'L_COM' => $LANG['wiki_article_com_article'] . ($article_infos['nbr_com'] > 0 ? ' (' . $article_infos['nbr_com'] . ')' : '')
+	));
 
 //Explorateur du wiki
 $other_tools[$LANG['wiki_explorer_short']] = array(transid('explorer.php'), 'explorer');	

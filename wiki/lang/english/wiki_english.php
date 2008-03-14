@@ -104,7 +104,7 @@ $LANG['wiki_subcats'] = 'Categories contained by this category :';
 
 //Archives
 $LANG['wiki_version_list'] = 'Releases';
-$LANG['wiki_article_does_not_exist'] = 'The article you want to read doesn\'t exist, if you want to create it you can by clicking <a href="' . transid('post.php') . '">here</a>.';
+$LANG['wiki_article_does_not_exist'] = 'The article you want to read doesn\'t exist, if you want to create it you can do it on this page.';
 $LANG['wiki_cat_does_not_exist'] = 'Error : the category you want to read doesn\'t exist. <a href="wiki.php">Go back to wiki index.</a>';
 $LANG['wiki_consult_article'] = 'Read';
 $LANG['wiki_restore_version'] = 'Restore';

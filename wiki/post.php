@@ -41,6 +41,7 @@ $is_cat_get = (!empty($_GET['type']) && $_GET['type'] == 'cat')  ? 1 : 0;
 $is_cat = $is_cat > 0 ? $is_cat : $is_cat_get;
 $id_edit = !empty($_POST['id_edit']) ? numeric($_POST['id_edit']) : 0;
 $title = !empty($_POST['title']) ? securit($_POST['title']) : '';
+$encoded_title = !empty($_GET['title']) ? securit($_GET['title']) : '';
 $contents = !empty($_POST['contents']) ? wiki_parse($_POST['contents']) : '';
 $contents_preview = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 $id_cat = !empty($_GET['id_parent']) ? numeric($_GET['id_parent']) : 0;
@@ -206,12 +207,15 @@ if( $id_edit > 0 )//On édite
 	));
 }
 else
-{	
+{
 	//autorisations
 	if( $is_cat && !$Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	elseif( !$is_cat && !$Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	
+	if( !empty($encoded_title) )
+		$Errorh->Error_handler($LANG['wiki_article_does_not_exist'], E_USER_WARNING);	
 	
 	if( $id_cat > 0 && array_key_exists($id_cat, $_WIKI_CATS) ) //Catégorie préselectionnée
 	{
@@ -293,7 +297,7 @@ $Template->Assign_vars(array(
 	'ID_EDIT' => $id_edit,
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
-	'ARTICLE_TITLE' => stripslashes($title),
+	'ARTICLE_TITLE' => !empty($encoded_title) ? $encoded_title : stripslashes($title),
 	'L_PREVIEWING' => $LANG['wiki_previewing'],
 	'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
 	'TARGET' => transid('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
