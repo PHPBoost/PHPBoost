@@ -48,8 +48,11 @@ $modulesArgs = array();
 
 $results = array();
 
-if ( $searchInCache )
+$searchInCache = false;
+
+if ( !$searchInCache )
 {
+	echo 'DEBUT MAJ RESULTATS';
     // Listes des modules de recherches
     $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
     
