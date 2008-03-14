@@ -84,8 +84,8 @@
 											{mod_subheader.DOWN}
 										</div>
 										<div style="position:relative;float:right">
-											<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-100px;float:left;display:none;" id="move{mod_subheader.IDMENU}">
-												<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_subheader.IDMENU}, 1);" onmouseout="menu_hide_block({mod_subheader.IDMENU}, 0);">
+											<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-100px;float:left;display:none;" id="movemenu{mod_subheader.IDMENU}">
+												<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block('menu{mod_subheader.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_subheader.IDMENU}', 0);">
 													<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
 													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_subheader.IDMENU}">{L_SUB_HEADER}</a></div>
 													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_subheader.IDMENU}">{L_LEFT_MENU}</a></div>
@@ -95,7 +95,7 @@
 												</div>
 											</div>
 										</div>
-										<a href="javascript:menu_display_block({mod_subheader.IDMENU});" onmouseover="menu_hide_block({mod_subheader.IDMENU}, 1);" onmouseout="menu_hide_block({mod_subheader.IDMENU}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
+										<a href="javascript:menu_display_block('menu{mod_subheader.IDMENU}');" onmouseover="menu_hide_block('menu{mod_subheader.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_subheader.IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
 									</div>
 									<p>{mod_subheader.CONTENTS}</p>&nbsp;
 								</div>
@@ -131,8 +131,8 @@
 											{mod_left.DOWN}
 										</div>
 										<div style="position:relative;float:right">
-											<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-70px;float:left;display:none;" id="move{mod_left.IDMENU}">
-												<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_left.IDMENU}, 1);" onmouseout="menu_hide_block({mod_left.IDMENU}, 0);">
+											<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-70px;float:left;display:none;" id="movemenu{mod_left.IDMENU}">
+												<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block('menu{mod_left.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_left.IDMENU}', 0);">
 													<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
 													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_left.IDMENU}">{L_SUB_HEADER}</a></div>
 													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_left.IDMENU}">{L_LEFT_MENU}</a></div>
@@ -141,7 +141,7 @@
 													<div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=right&amp;id={mod_left.IDMENU}">{L_RIGHT_MENU}</a></div>
 												</div>
 											</div>
-											<a href="javascript:menu_display_block({mod_left.IDMENU});" onmouseover="menu_hide_block({mod_left.IDMENU}, 1);" onmouseout="menu_hide_block({mod_left.IDMENU}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
+											<a href="javascript:menu_display_block('menu{mod_left.IDMENU}');" onmouseover="menu_hide_block('menu{mod_left.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_left.IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
 										</div>
 									</div>
 									
@@ -187,8 +187,8 @@
 												{mod_topcentral.UP}
 												{mod_topcentral.DOWN}
 											</div>
-											<div style="position:relative;float:right"><div style="position:absolute;z-index:100;margin-top:155px;margin-left:-70px;float:left;display:none;" id="move{mod_topcentral.IDMENU}">
-												<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_topcentral.IDMENU}, 1);" onmouseout="menu_hide_block({mod_topcentral.IDMENU}, 0);">
+											<div style="position:relative;float:right"><div style="position:absolute;z-index:100;margin-top:155px;margin-left:-70px;float:left;display:none;" id="movemenu{mod_topcentral.IDMENU}">
+												<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block('menu{mod_topcentral.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_topcentral.IDMENU}', 0);">
 													<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_topcentral.IDMENU}">{L_SUB_HEADER}</a></div>
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_topcentral.IDMENU}">{L_LEFT_MENU}</a></div>
@@ -197,7 +197,7 @@
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=right&amp;id={mod_topcentral.IDMENU}">{L_RIGHT_MENU}</a></div>
 												</div>
 											</div>
-											<a href="javascript:menu_display_block({mod_topcentral.IDMENU});" onmouseover="menu_hide_block({mod_topcentral.IDMENU}, 1);" onmouseout="menu_hide_block({mod_topcentral.IDMENU}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
+											<a href="javascript:menu_display_block('menu{mod_topcentral.IDMENU}');" onmouseover="menu_hide_block('menu{mod_topcentral.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_topcentral.IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
 											</div>
 										</div>
 										<p>{mod_topcentral.CONTENTS}</p>&nbsp;
@@ -219,8 +219,8 @@
 									<div class="module_mini_table">
 										<p>
 											<select name="{mod_main.IDMENU}activ" onchange="document.location = {mod_main.U_ONCHANGE_ACTIV}">								
-												<option value="1" {mod_main.ACTIV_ENABLED}>{L_ACTIV}</option>
-												<option value="0" {mod_main.ACTIV_DISABLED}>{L_UNACTIV}</option>					
+												<option value="1">{L_ACTIV}</option>
+												<option value="0" selected="selected">{L_UNACTIV}</option>					
 											</select>
 										</p>
 										<p>							
@@ -232,8 +232,8 @@
 											<div style="float:left">
 											</div>
 											<div style="position:relative;float:right">
-												<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-130px;float:left;display:none;" id="move{mod_main.IDMENU}">
-													<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_main.IDMENU}, 1);" onmouseout="menu_hide_block({mod_main.IDMENU}, 0);">
+												<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-130px;float:left;display:none;" id="movemenu{mod_main.IDMENU}">
+													<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block('menu{mod_main.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_main.IDMENU}', 0);">
 														<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_main.IDMENU}">{L_SUB_HEADER}</a></div>
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_main.IDMENU}">{L_LEFT_MENU}</a></div>
@@ -243,7 +243,7 @@
 													</div>
 												</div>
 											</div>
-											<a href="javascript:menu_display_block({mod_main.IDMENU});" onmouseover="menu_hide_block({mod_main.IDMENU}, 1);" onmouseout="menu_hide_block({mod_main.IDMENU}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
+											<a href="javascript:menu_display_block('menu{mod_main.IDMENU}');" onmouseover="menu_hide_block('menu{mod_main.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_main.IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
 										</div>
 										
 										<p>{mod_main.CONTENTS}</p>&nbsp;
@@ -284,8 +284,8 @@
 												{mod_bottomcentral.DOWN}
 											</div>
 											<div style="position:relative;float:right">
-												<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-70px;float:left;display:none;" id="move{mod_bottomcentral.IDMENU}">
-													<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_bottomcentral.IDMENU}, 1);" onmouseout="menu_hide_block({mod_bottomcentral.IDMENU}, 0);">
+												<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-70px;float:left;display:none;" id="movemenu{mod_bottomcentral.IDMENU}">
+													<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block('menu{mod_bottomcentral.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_bottomcentral.IDMENU}', 0);">
 														<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
 															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_bottomcentral.IDMENU}">{L_SUB_HEADER}</a></div>
 															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_bottomcentral.IDMENU}">{L_LEFT_MENU}</a></div>
@@ -294,7 +294,7 @@
 															<div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=right&amp;id={mod_bottomcentral.IDMENU}">{L_RIGHT_MENU}</a></div>
 													</div>
 												</div>
-												<a href="javascript:menu_display_block({mod_bottomcentral.IDMENU});" onmouseover="menu_hide_block({mod_bottomcentral.IDMENU}, 1);" onmouseout="menu_hide_block({mod_bottomcentral.IDMENU}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
+												<a href="javascript:menu_display_block('menu{mod_bottomcentral.IDMENU}');" onmouseover="menu_hide_block('menu{mod_bottomcentral.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_bottomcentral.IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
 											</div>
 										</div>
 										
@@ -334,8 +334,8 @@
 											{mod_right.DOWN}
 										</div>
 										<div style="position:relative;float:right">
-											<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-110px;float:left;display:none;" id="move{mod_right.IDMENU}">
-												<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block({mod_right.IDMENU}, 1);" onmouseout="menu_hide_block({mod_right.IDMENU}, 0);">
+											<div style="position:absolute;z-index:100;margin-top:155px;margin-left:-110px;float:left;display:none;" id="movemenu{mod_right.IDMENU}">
+												<div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block('menu{mod_right.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_right.IDMENU}', 0);">
 													<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=subheader&amp;id={mod_right.IDMENU}">{L_SUB_HEADER}</a></div>
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=left&amp;id={mod_right.IDMENU}">{L_LEFT_MENU}</a></div>
@@ -344,7 +344,7 @@
 														<div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="admin_menus.php?move=right&amp;id={mod_right.IDMENU}">{L_RIGHT_MENU}</a></div>
 												</div>
 											</div>
-											<a href="javascript:menu_display_block({mod_right.IDMENU});" onmouseover="menu_hide_block({mod_right.IDMENU}, 1);" onmouseout="menu_hide_block({mod_right.IDMENU}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
+											<a href="javascript:menu_display_block('menu{mod_right.IDMENU}');" onmouseover="menu_hide_block('menu{mod_right.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_right.IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
 										</div>
 									</div>
 									

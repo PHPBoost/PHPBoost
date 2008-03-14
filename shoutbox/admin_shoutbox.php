@@ -38,6 +38,7 @@ if( !empty($_POST['valid'])  )
 	$config_shoutbox['shoutbox_auth'] = isset($_POST['shoutbox_auth']) ? numeric($_POST['shoutbox_auth']) : -1;
 	$config_shoutbox['shoutbox_forbidden_tags'] = isset($_POST['shoutbox_forbidden_tags']) ? serialize($_POST['shoutbox_forbidden_tags']) : serialize(array());
 	$config_shoutbox['shoutbox_max_link'] = isset($_POST['shoutbox_max_link']) ? numeric($_POST['shoutbox_max_link']) : -1;
+	$config_shoutbox['shoutbox_refresh_delay'] = isset($_POST['shoutbox_refresh_delay']) ? numeric($_POST['shoutbox_refresh_delay'] * 60000, 'float') : 0;
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_shoutbox)) . "' WHERE name = 'shoutbox'", __LINE__, __FILE__);
 	
@@ -60,17 +61,31 @@ else
 	'img' => 1, 'quote' => 1, 'hide' => 1, 'list' => 1, 'color' => 0, 'bgcolor' => 0, 'font' => 0, 'size' => 0, 'align' => 1, 'float' => 1, 'sup' => 0, 
 	'sub' => 0, 'indent' => 1, 'pre' => 0, 'table' => 1, 'swf' => 1, 'movie' => 1, 'sound' => 1, 'code' => 1, 'math' => 1, 'anchor' => 0, 'acronym' => 0);
 	
+	//Rang d'autorisation.
+	$CONFIG_SHOUTBOX['shoutbox_auth'] = isset($CONFIG_SHOUTBOX['shoutbox_auth']) ? $CONFIG_SHOUTBOX['shoutbox_auth'] : '-1';	
+	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
+	$ranks = '';
+	foreach($array_auth_ranks as $rank => $name)
+	{
+		$selected = ($CONFIG_SHOUTBOX['shoutbox_auth'] == $rank) ? ' selected="selected"' : '' ;
+		$ranks .= '<option value="' . $rank . '"' . $selected . '>' . $name . '</option>';
+	}
+	
 	$Template->Assign_vars(array(
 		'NBR_TAGS' => count($array_tags),
 		'SHOUTBOX_MAX_MSG' => !empty($CONFIG_SHOUTBOX['shoutbox_max_msg']) ? $CONFIG_SHOUTBOX['shoutbox_max_msg'] : '100',
-		'SHOUTBOX_AUTH' => isset($CONFIG_SHOUTBOX['shoutbox_auth']) ? $CONFIG_SHOUTBOX['shoutbox_auth'] : '-1',
+		'SHOUTBOX_AUTH' => $ranks,
 		'MAX_LINK' => isset($CONFIG_SHOUTBOX['shoutbox_max_link']) ? $CONFIG_SHOUTBOX['shoutbox_max_link'] : '-1',
+		'SHOUTBOX_REFRESH_DELAY' => isset($CONFIG_SHOUTBOX['shoutbox_refresh_delay']) ? ($CONFIG_SHOUTBOX['shoutbox_refresh_delay']/60000) : 1,
 		'L_REQUIRE' => $LANG['require'],	
 		'L_SHOUTBOX' => $LANG['title_shoutbox'],
 		'L_SHOUTBOX_CONFIG' => $LANG['shoutbox_config'],
 		'L_SHOUTBOX_MAX_MSG' => $LANG['shoutbox_max_msg'],
 		'L_SHOUTBOX_MAX_MSG_EXPLAIN' => $LANG['shoutbox_max_msg_explain'],
 		'L_RANK' => $LANG['rank_post'],
+		'L_SHOUTBOX_REFRESH_DELAY' => $LANG['shoutbox_refresh_delay'],
+		'L_SHOUTBOX_REFRESH_DELAY_EXPLAIN' => $LANG['shoutbox_refresh_delay_explain'],
+		'L_MINUTES' => $LANG['minutes'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
 		'L_FORBIDDEN_TAGS' => $LANG['forbidden_tags'],
@@ -81,33 +96,6 @@ else
 		'L_MAX_LINK_EXPLAIN' => $LANG['max_link_explain']
 	));
 		
-	//Rang d'autorisation.
-	$CONFIG_SHOUTBOX['shoutbox_auth'] = isset($CONFIG_SHOUTBOX['shoutbox_auth']) ? $CONFIG_SHOUTBOX['shoutbox_auth'] : '-1';	
-	for($i = -1; $i <= 2; $i++)
-	{
-		switch($i) 
-		{	
-			case -1:
-				$rank = $LANG['guest'];
-			break;				
-			case 0:
-				$rank = $LANG['member'];
-			break;				
-			case 1: 
-				$rank = $LANG['modo'];
-			break;		
-			case 2:
-				$rank = $LANG['admin'];
-			break;					
-			default: -1;
-		} 
-
-		$selected = ($CONFIG_SHOUTBOX['shoutbox_auth'] == $i) ? 'selected="selected"' : '' ;
-		$Template->Assign_block_vars('select_auth', array(
-			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
-		));
-	}
-	
 	//Balises interdites
 	$i = 0;
 	foreach($array_tags as $name => $is_selected)

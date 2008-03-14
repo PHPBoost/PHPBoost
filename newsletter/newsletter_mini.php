@@ -42,7 +42,7 @@ $Template->Assign_vars(array(
 	'ACTION' => '../newsletter/newsletter' . transid('.php', '',''),
 	'L_NEWSLETTER' => $LANG['newsletter'],
 	'L_SUBMIT' => $LANG['submit'],
-	'L_ARCHIVES' => $LANG['archive']	
+	'L_ARCHIVES' => $LANG['archives']	
 ));
 
 $Template->Pparse('newsletter_mini'); 

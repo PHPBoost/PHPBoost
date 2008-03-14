@@ -20,10 +20,10 @@
 						<br /><br />	
 						# END question.checkbox #
 					</p>
-					<p>
+					<p style="margin:0;margin-top:10px;">
 						<input class="submit" name="valid_poll" type="submit" value="{L_VOTE}" /><br />
 						<a class="small_link" href="../poll/poll{U_POLL_RESULT}">{L_POLL_RESULT}</a>
-					</p>&nbsp;
+					</p>
 				</div>	
 				<div class="module_mini_bottom">
 				</div>
@@ -52,9 +52,9 @@
 				</p>			
 				# END result.answers #
 				
-				<div class="text_small" style="margin-top:10px;">
+				<p class="text_small" style="margin:0;margin-top:10px;">
 					{result.VOTES} {L_VOTE}
-				</div>&nbsp;
+				</p>
 			</div>		
 			<div class="module_mini_bottom">
 			</div>

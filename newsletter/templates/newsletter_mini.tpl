@@ -12,12 +12,12 @@
 					<br />
 					<label><input type="radio" name="subscribe" value="unsubscribe" /> {UNSUBSCRIBE}</label>
 				</p>
-				<p>		
+				<p>
 					<input type="submit" value="{L_SUBMIT}" class="submit" />	
 				</p>
-				<p>
-					<a href="{ARCHIVES_LINK}" style=" font-size:10px;">{L_ARCHIVES}</a>
-				</p>&nbsp;
+				<p style="margin:0;margin-top:10px;">
+					<a href="{ARCHIVES_LINK}" class="small_link">{L_ARCHIVES}</a>
+				</p>
 			</div>
 			<div class="module_mini_bottom">
 			</div>

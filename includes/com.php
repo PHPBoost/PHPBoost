@@ -259,7 +259,7 @@ if( $Comments->Com_loaded() )
 			$Errorh->Error_handler($errstr, E_USER_NOTICE);
 		
 		//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
-		if( $Comments->Get_attribute('lock_com') || $Member->Check_level(MODO_LEVEL) )
+		if( !$Comments->Get_attribute('lock_com') || $Member->Check_level(MODO_LEVEL) )
 		{	
 			if( $Member->Check_level($CONFIG_COM['com_auth']) )
 				$Template->Assign_vars(array(
