@@ -71,6 +71,7 @@
 			}
 			xmlhttprequest_sender(xhr_object, data);
 		}
+
 		function XMLHttpRequest_shoutrefresh()
 		{
 			document.getElementById('shoutimg').src = '../templates/{THEME}/images/loading_mini.gif';
@@ -86,6 +87,8 @@
 					document.getElementById('shoutimg').src = '../templates/{THEME}/images/refresh_mini.png';
 			}
 			xmlhttprequest_sender(xhr_object, null);
+			if( {SHOUT_REFRESH_DELAY} > 0 )
+				setTimeout('XMLHttpRequest_shoutrefresh()', {SHOUT_REFRESH_DELAY});
 		}
 		function check_form_shout(){
 			if(document.getElementById('shout_contents').value == "") {
@@ -98,7 +101,8 @@
 			if( confirm("{L_DELETE_MSG}") )
 				XMLHttpRequest_shoutdelmsg(idmsg);
 		}
-		
+		if( {SHOUT_REFRESH_DELAY} > 0 )
+			setTimeout('XMLHttpRequest_shoutrefresh()', {SHOUT_REFRESH_DELAY});
 		-->
 		</script>
 
@@ -132,9 +136,9 @@
 				-->
 				</script>
 				<a href="javascript:XMLHttpRequest_shoutrefresh();" title="{L_REFRESH}"><img src="../templates/{THEME}/images/refresh_mini.png" id="shoutimg" alt="{L_REFRESH}" class="valign_middle" /></a>					
-				<p style="margin-top:10px">
+				<p style="margin:0;margin-top:10px;">
 					<a class="small_link" href="../shoutbox/shoutbox.php{SID}" title="">{L_ARCHIVES}</a>
-				</p>&nbsp;
+				</p>
 			</div>
 			<div class="module_mini_bottom">
 			</div>

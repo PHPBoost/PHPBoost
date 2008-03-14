@@ -71,6 +71,7 @@ $LANG['newsletter_archives_explain'] = 'You will find here precedent newsletters
 To receive them automatically please register to the mailing list.';
 $LANG['newsletter_email_address_is_not_valid'] = 'The email address you have given hasn\'t the good syntax. Please try again';
 $LANG['newsletter_error_list'] = 'The newsletter hasn\'t been sent to folowing addresses : <em>%s</em>';
+$LANG['archives'] = 'Archives';
 
 //Config
 $LANG['newsletter_config'] = 'Newsletter configuration';

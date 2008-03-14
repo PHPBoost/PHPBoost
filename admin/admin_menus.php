@@ -30,8 +30,8 @@ require_once('../includes/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
-$id = ( !empty($_GET['id'])) ? numeric($_GET['id']) : '' ;
-$id_post = ( !empty($_POST['id'])) ? numeric($_POST['id']) : '' ;
+$id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
+$id_post = !empty($_POST['id']) ? numeric($_POST['id']) : '' ;
 
 $top = !empty($_GET['top']) ? securit($_GET['top']) : '' ;
 $bottom = !empty($_GET['bot']) ? securit($_GET['bot']) : '' ;
@@ -146,12 +146,16 @@ else
 	$Sql->Close($result);
 	
 	$i = 0;
+	$uninstalled_modules = $SECURE_MODULE;
 	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	$result = $Sql->Query_while("SELECT id, class, name, contents, location, activ, secure, added
 	FROM ".PREFIX."modules_mini
 	ORDER BY class", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
+		if( $row['added'] == 0 )
+			unset($uninstalled_modules[$row['name']]); //On supprime de la liste des modules non installés.
+			
 		$config = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
 		if( is_array($config) )
 			$row['name'] = !empty($config['name']) ? $config['name'] : '';		
@@ -195,8 +199,6 @@ else
 				'NAME' => ucfirst($row['name']),
 				'EDIT' => ($row['added'] == 1) ? '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>' : '',
 				'DEL' => ($row['added'] == 1) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['location'] . '&amp;id=' . $row['id'] . '" onClick="javascript:return Confirm_menu();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" /></a>' : '',
-				'ACTIV_ENABLED' => ($row['activ'] == '1') ? 'selected="selected"' : '',
-				'ACTIV_DISABLED' => ($row['activ'] == '0') ? 'selected="selected"' : '',
 				'CONTENTS' => !empty($row['contents']) ? '<br />' . second_parse($row['contents']) : '',
 				'RANK' => $ranks,
 				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $row['id'] . "&amp;pos=" . $row['location'] . "&amp;activ=' + this.options[this.selectedIndex].value",
@@ -206,6 +208,29 @@ else
 		$i++;
 	}
 	$Sql->Close($result);
+	
+	//On liste les menus non installés.
+	$i = 0;
+	foreach($uninstalled_modules as $name => $auth)
+	{
+		$modules_config[$name] = load_ini_file('../' . $name . '/lang/', $CONFIG['lang']);
+		if( is_array($modules_config[$name]) )
+		{	
+			if( $modules_config[$name]['mini_module'] == 1 && file_exists('../' . $name . '/' . $name . '_mini.php') ) //Menu présent.
+			{
+				$Template->Assign_block_vars('mod_main', array(
+					'IDMENU' => 'install' . ++$i,
+					'NAME' => ucfirst($modules_config[$name]['name']),
+					'EDIT' => '',
+					'DEL' => '',
+					'CONTENTS' => '',
+					'RANK' => $ranks,
+					'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=-1&amp;pos=left&amp;activ=' + this.options[this.selectedIndex].value",
+					'U_ONCHANGE_SECURE' => "'admin_menus.php?id=-1&amp;secure=' + this.options[this.selectedIndex].value"
+				));
+			}
+		}
+	}
 	
 	$colspan = 1;
 	$colspan += (int)$info_theme['right_column'];

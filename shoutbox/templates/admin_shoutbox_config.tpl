@@ -43,19 +43,21 @@
 				<fieldset>
 					<legend>{L_SHOUTBOX_CONFIG}</legend>
 					<dl>
-						<dt><label for="shoutbox_max_msg">* {L_SHOUTBOX_MAX_MSG}</label><br /><span>{L_SHOUTBOX_MAX_MSG_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="shoutbox_max_msg" name="shoutbox_max_msg" value="{SHOUTBOX_MAX_MSG}" class="text" /></label></dd>
-					</dl>
-					<dl>
 						<dt><label for="shoutbox_auth">* {L_RANK}</label></dt>
 						<dd><label>
 							<select name="shoutbox_auth" id="shoutbox_auth">
-								# START select_auth #
-									{select_auth.RANK}
-								# END select_auth #
+								{SHOUTBOX_AUTH}
 							</select>
 						</label></dd>
 					</dl>
+					<dl>
+						<dt><label for="shoutbox_refresh_delay">* {L_SHOUTBOX_REFRESH_DELAY}</label><br /><span>{L_SHOUTBOX_REFRESH_DELAY_EXPLAIN}</span></dt>
+						<dd><label><input type="text" size="3" id="shoutbox_refresh_delay" name="shoutbox_refresh_delay" value="{SHOUTBOX_REFRESH_DELAY}" class="text" /> {L_MINUTES}</label></dd>
+					</dl>
+					<dl>
+						<dt><label for="shoutbox_max_msg">* {L_SHOUTBOX_MAX_MSG}</label><br /><span>{L_SHOUTBOX_MAX_MSG_EXPLAIN}</span></dt>
+						<dd><label><input type="text" size="3" id="shoutbox_max_msg" name="shoutbox_max_msg" value="{SHOUTBOX_MAX_MSG}" class="text" /></label></dd>
+					</dl>					
 					<dl>
 						<dt><label>* {L_FORBIDDEN_TAGS}</label></dt>
 						<dd><label>

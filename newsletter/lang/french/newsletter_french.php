@@ -70,6 +70,7 @@ $LANG['newsletter_archives_explain'] = 'Vous trouverez ici toutes les archives d
 Pour les recevoir régulièrement vous devez vous inscrire.';
 $LANG['newsletter_email_address_is_not_valid'] = 'L\'adresse email que vous avez proposée n\'a pas un format valide. Merci de corriger.';
 $LANG['newsletter_error_list'] = 'La newsletter n\'a pas pu être envoyée aux destinataires suivants : <em>%s</em>';
+$LANG['archives'] = 'Archives';
 
 //Config
 $LANG['newsletter_config'] = 'Configuration de la newsletter';

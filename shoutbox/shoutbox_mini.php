@@ -90,6 +90,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 		
 	$Template->Assign_vars(array(
 		'SID' => SID,		
+		'SHOUT_REFRESH_DELAY' => max($CONFIG_SHOUTBOX['shoutbox_refresh_delay'], 0),
 		'L_ALERT_TEXT' => $LANG['require_text'],
 		'L_ALERT_UNAUTH_POST' => $LANG['e_unauthorized'],
 		'L_ALERT_FLOOD' => $LANG['e_flood'],
