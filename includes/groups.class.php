@@ -150,49 +150,68 @@ class Group
 		return $select_groups;
 	}
 	
-	//Ajout du membre au groupe	
-	function Add_member($idgroup)
+	//Ajout du membre au groupe, retourne true si le membre est bien ajouté, false si le membre appartient déjà au groupe.
+	function Add_member($user_id, $idgroup)
 	{
 		global $Sql;
- 
-		//On insère le groupe au champ membre.
-		$user_groups_key = array_search($idgroup, explode('|', $this->user_groups));
- 
-		if( !is_numeric($user_groups_key) ) //Le membre n'appartient pas déjà au groupe.
-			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_groups = CONCAT(user_groups, '" . $idgroup . "|') WHERE user_id = '" . numeric($this->user_id) . "'", __LINE__, __FILE__);
 
-			//On insère le membre dans le groupe.
-		$members = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-		$members_key = array_search($this->user_id, explode('|', $members));
- 
-		if( !is_numeric($members_key) ) //Le membre n'appartient pas déjà au groupe.
-			$Sql->Query_inject("UPDATE ".PREFIX."group SET members = CONCAT(members, '" . $this->user_id . "|') WHERE id = '" . numeric($idgroup) . "'", __LINE__, __FILE__);
+		//On insère le groupe au champ membre.
+		$user_groups = $Sql->Query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		if( strpos($user_groups, $idgroup . '|') === false ) //Le membre n'appartient pas déjà au groupe.
+			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_groups = '" . $user_groups . $idgroup . "|' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		else
+			return false;
+
+		//On insère le membre dans le groupe.
+		$group_members = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		if( strpos($group_members, $user_id . '|') === false ) //Le membre n'appartient pas déjà au groupe.
+			$Sql->Query_inject("UPDATE ".PREFIX."group SET members = '" . $group_members . $user_id . "|' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		else
+			return false;
+			
+		return true;
 	}
  
-	//Suppression le membre d'un groupe
-	function Del_member($idgroup)
+	//Change les groupes du membre, calcul la différence entre les groupes précédent et nouveaux.
+	function Edit_member($user_id, $array_user_groups)
 	{
 		global $Sql;
 		
-		$user_groups_key = array_search($idgroup, $this->user_groups);
-		if( is_numeric($user_groups_key) ) // le membre est bien dans le groupe
-		{ 
-			unset($this->user_groups[$user_groups_key]);
-			$user_groups_bis=$this->user_groups; // on travaille sur une autre varaible pour enlever le level
-			array_pop($this->user_groups); // on vire la dernière case qui est le level
-			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_groups = '" . implode('|', $this->user_groups) . "' WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
-		}
- 
-		$members_group = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-		$members_group = explode('|', $members_group);
-		$members_group_key = array_search($this->user_id, $members_group);
- 
-		if( is_numeric($members_group_key) ) // le membre est bien dans le groupe
-		{ 
-			unset($members_group[$members_group_key]);
-			$Sql->Query_inject("UPDATE ".PREFIX."group SET members = '" . implode('|', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		//Récupération des groupes précédent du membre.
+		$user_groups_old = $Sql->Query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$array_user_groups_old = explode('|', $user_groups_old);
+		
+		//Insertion du différentiel positif des groupes précédent du membre et ceux choisis dans la table des groupes.		
+		$array_diff_pos = array_diff($array_user_groups, $array_user_groups_old);
+		foreach($array_diff_pos as $key => $idgroup)				
+		{	
+			if( !empty($idgroup) )	
+				$this->Add_member($user_id, $idgroup);
+		}	
+		
+		//Insertion du différentiel négatif des groupes précédent du membre et ceux choisis dans la table des groupes.
+		$array_diff_neg = array_diff($array_user_groups_old, $array_user_groups);
+		foreach($array_diff_neg as $key => $idgroup)				
+		{	
+			if( !empty($idgroup) )
+				$this->Del_member($user_id, $idgroup);
 		}
 	}
+ 
+	//Suppression le membre d'un groupe.
+	function Del_member($user_id, $idgroup)
+	{
+		global $Sql;
+
+		//Suppression dans la table des membres.
+		$user_groups = $Sql->Query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."member SET user_groups = '" . str_replace($idgroup . '|', '', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			
+		//Suppression dans la table des groupes.
+		$members_group = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."group SET members = '" . str_replace($user_id . '|', '', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+	}
+	
 	
 	
 	##  Private methods ##

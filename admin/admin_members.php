@@ -73,9 +73,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 				if( $password_md5 === $password_bis_md5 )
 				{
 					if( strlen($password) >= 6 && strlen($password_bis) >= 6 )
-					{
 						$Sql->Query_inject("UPDATE ".PREFIX."member SET password = '" . $password_md5 . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__); 
-					}
 					else //Longueur minimale du password
 						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
 				}
@@ -97,7 +95,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			$user_local = !empty($_POST['user_local']) ? securit($_POST['user_local']) : '';
 			//Validité de l'adresse du site.
 			$user_web = !empty($_POST['user_web']) ? securit($_POST['user_web']) : '';
-			$user_web = ( !empty($user_web) && preg_match('`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`', trim($_POST['user_web'])) ) ? $user_web : '';
+			$user_web = (!empty($user_web) && preg_match('`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`', trim($_POST['user_web']))) ? $user_web : '';
 					
 			$user_occupation = !empty($_POST['user_occupation']) ? securit($_POST['user_occupation']) : '';
 			$user_hobbies = !empty($_POST['user_hobbies']) ? securit($_POST['user_hobbies']) : '';
@@ -112,34 +110,10 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			$user_readonly = ($user_readonly > 0) ? (time() + $user_readonly) : 0; //Lecture seule!
 			$user_ban = isset($_POST['user_ban']) ? numeric($_POST['user_ban']) : 0;
 			$user_ban = ($user_ban > 0) ? (time() + $user_ban) : 0; //Bannissement!
-								
+			
 			//Gestion des groupes.				
-			$array_user_groups = isset($_POST['user_groups']) ? $_POST['user_groups'] : '';
-			//Récupération des groupes choisis.		
-			$user_groups = '';
-			foreach($array_user_groups as $key => $idgroup)
-				$user_groups .= $idgroup . '|';
-
-			//Insertion du différentiel positif des groupes précédent du membre et ceux choisis dans la table des groupes.
-			$user_groups_old = $Sql->Query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-			$array_diff_pos = array_diff($array_user_groups, explode('|', $user_groups_old));
-			foreach($array_diff_pos as $key => $idgroup)				
-				$Sql->Query_inject("UPDATE ".PREFIX."group SET members = CONCAT(members, '" . $id_post . "|') WHERE id = '" . numeric($idgroup) . "'", __LINE__, __FILE__);		
-				
-			//Insertion du différentiel négatif des groupes précédent du membre et ceux choisis dans la table des groupes.
-			$array_diff_neg = array_diff(explode('|', $user_groups_old), $array_user_groups);
-			foreach($array_diff_neg as $key => $idgroup)				
-			{	
-				if( !empty($idgroup) )
-				{
-					$members_group = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-					$members_group = explode('|', $members_group);
-					$members_group_key = array_search($id_post, $members_group);
-					unset($members_group[$members_group_key]);
-					
-					$Sql->Query_inject("UPDATE ".PREFIX."group SET members = '" . implode('|', $members_group) . "' WHERE id = '" . numeric($idgroup) . "'", __LINE__, __FILE__);
-				}					
-			}			
+			$array_user_groups = isset($_POST['user_groups']) ? $_POST['user_groups'] : array();
+			$Group->Edit_member($id_post, $array_user_groups); //Change les groupes du membre, calcul la différence entre les groupes précédent et nouveaux.
 			
 			//Gestion de la date de naissance.
 			$user_born = strtodate($_POST['user_born'], $LANG['date_birth_parse']);
@@ -170,7 +144,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			{
 				if( $_FILES['avatars']['size'] > 0 )
 				{
-					$Upload->Upload_file('avatars', '`([a-z0-9])+\.(jpg|gif|png|bmp)+`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
+					$Upload->Upload_file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 					if( !empty($Upload->error) ) //Erreur, on arrête ici
 						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $Upload->error) . '#errorh');
 					else
@@ -183,7 +157,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 						{
 							//Suppression de l'ancien avatar (sur le serveur) si il existe!
 							$user_avatar_path = $Sql->Query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-							if( !empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match) )
+							if( !empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match) )
 							{
 								if( is_file($user_avatar_path) && isset($match[1]) )
 									@unlink('../images/avatars/' . $match[1]);
@@ -214,7 +188,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 				if( $info_mbr['user_theme'] != $user_theme )
 					@unlink('../cache/theme.png');
 					
-				$Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . $login . "', level = '" . $user_level . "', user_groups = '" . $user_groups . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . $login . "', level = '" . $user_level . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 					
 				$Sql->Query_inject("UPDATE ".PREFIX."sessions SET level = '" . $user_level . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				if( $user_ban > 0 )	//Suppression de la session si le membre se fait bannir.

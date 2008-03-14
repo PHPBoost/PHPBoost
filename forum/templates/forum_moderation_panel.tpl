@@ -225,7 +225,7 @@
 					</tr>
 				</table>	
 
-				<form action="{U_CHANGE_STATUS}" method="get">
+				<form action="{U_CHANGE_STATUS}" method="post">
 					<fieldset class="fieldset_submit" style="padding-top:25px;">
 						<legend></legend>
 						<input type="submit" name="valid" value="{L_CHANGE_STATUS}" class="submit" />
