@@ -46,7 +46,7 @@
 		
 		<form action="{TARGET}" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
 			<fieldset>
-				<legend>{TITLE}</legend>				
+				<legend>{TITLE}</legend>
 				# START create #
 				<dl>
 					<dt><label for="title">{L_TITLE_FIELD}</label></dt>

@@ -27,10 +27,12 @@
 
 require_once('../includes/begin.php'); 
 include_once('../wiki/wiki_functions.php'); 
+
 load_module_lang('wiki');
 
 if( !$Member->Check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+
 require('../wiki/wiki_auth.php');
 
 $id_auth = !empty($_POST['id_auth']) ? numeric($_POST['id_auth']) : 0;
@@ -60,7 +62,7 @@ if( $id_auth > 0 )
 
 	$encoded_title = $Sql->Query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE id = '" . $id_auth . "'", __LINE__, __FILE__);
 	if( empty($encoded_title) )
-		redirect(HOST . DIR . '/wiki/' . transid('wiki.php'), '', '&');
+		redirect(HOST . DIR . '/wiki/' . transid('wiki.php', '', '&'));
 		
 	if( !empty($_POST['default']) ) //Configuration par défaut
 		$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET auth = '' WHERE id= '" . $id_auth . "'", __LINE__, __FILE__);
@@ -83,7 +85,7 @@ if( $id_auth > 0 )
 	}
 
 	//Redirection vers l'article
-	redirect(transid('wiki.php?title=' . $encoded_title, $encoded_title, '&'));
+	redirect(HOST . DIR . transid('wiki.php?title=' . $encoded_title, $encoded_title, '&'));
 }
 if( $id_change_status > 0 )
 {
@@ -113,14 +115,14 @@ if( $id_change_status > 0 )
 		//On met à jour dans la base de données
 		$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET defined_status = '" . $id_status . "', undefined_status = '" . $contents . "' WHERE id = '" . $id_change_status . "'", __LINE__, __FILE__);
 		//Redirection vers l'article
-		redirect(transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
+		redirect(HOST . DIR . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 }
 elseif( $move > 0 ) //Déplacement d'un article
 {
 	$article_infos = $Sql->Query_array("wiki_articles", "is_cat", "encoded_title", "id_cat", "auth", "WHERE id = '" . $move . "'", __LINE__, __FILE__);
 	if(  empty($article_infos['encoded_title']) )//Ce n'est pas un article ou une catégorie
-		redirect(HOST . DIR . '/wiki/' . transid('wiki.php'), '', '&');
+		redirect(HOST . DIR . '/wiki/' . transid('wiki.php', '', '&'));
 		
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();

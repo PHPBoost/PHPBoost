@@ -36,7 +36,7 @@ $title = !empty($_POST['title']) ? securit($_POST['title']) : '';
 $contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 $count_hits = !empty($_POST['count_hits']) ? 1 : 0;
 $activ_com = !empty($_POST['activ_com']) ? 1 : 0;
-$own_auth = !empty($_POST['own_auth']) ? 1 : 0;
+$own_auth = !empty($_POST['own_auth']);
 $is_cat = !empty($_POST['is_cat']) ? 1 : 0;
 $id_cat = !empty($_POST['id_cat']) ? numeric($_POST['id_cat']) : 0;
 $preview = !empty($_POST['preview']) ? true : false;
@@ -66,7 +66,7 @@ if( $id_edit > 0 )
 }
 else
 	$Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
-	$Speed_bar->Add_link(TITLE, '');
+
 require_once('../includes/header.php');
 
 //On crée ou on édite une page
@@ -99,7 +99,7 @@ if( !empty($contents) )
 			$array_auth = unserialize($page_infos['auth']);
 			//Vérification de l'autorisation d'éditer la page
 			if( ($special_auth && !$Member->Check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-				redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+				redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
 			
 			//on vérifie que la catégorie ne s'insère pas dans un de ses filles
 			if( $page_infos['is_cat'] == 1 )
@@ -139,7 +139,7 @@ if( !empty($contents) )
 		elseif( !empty($title) )
 		{
 			if( !$Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-				redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+				redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
 			
 			$encoded_title = url_encode_rewrite($title);
 			$is_already_page = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
@@ -180,7 +180,7 @@ elseif( $del_article > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	if( ($special_auth && !$Member->Check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
 		
 	//la page existe bien, on supprime
 	if( !empty($page_infos['title']) )
@@ -188,10 +188,10 @@ elseif( $del_article > 0 )
 		$Sql->Query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 		$Sql->Query_inject("DELETE FROM ".PREFIX."pages WHERE redirect = '" . $del_article . "'", __LINE__, __FILE__);
 		$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE script = 'pages' AND idprov = '" . $del_article . "'", __LINE__, __FILE__);
-		redirect(HOST . DIR . '/pages/pages.php?error=delete_success');
+		redirect(HOST . DIR . transid('/pages/pages.php?error=delete_success', '', '&'));
 	}
 	else
-		redirect(HOST . DIR . '/pages/pages.php?error=delete_failure');
+		redirect(HOST . DIR . transid('/pages/pages.php?error=delete_failure', '', '&'));
 }
 
 $Template->Set_filenames(array('post' => '../templates/' . $CONFIG['theme'] . '/pages/post.tpl'));
@@ -203,7 +203,7 @@ if( $id_edit > 0 )
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation d'éditer la page
 	if( ($special_auth && !$Member->Check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
 	
 	//Erreur d'enregistrement ?
 	if( $error == 'cat_contains_cat' )
@@ -216,7 +216,7 @@ if( $id_edit > 0 )
 			'TITLE' => stripslashes($title)
 		));
 	}
-	
+
 	//Génération de l'arborescence des catégories
 	$cats = array();
 	//numéro de la catégorie de la page ou de la catégorie

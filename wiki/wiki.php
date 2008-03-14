@@ -217,10 +217,7 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 //Si l'article n'existe pas
 elseif( !empty($encoded_title) && $num_rows == 0 )
 {
-	$Template->Assign_block_vars('message', array(
-		'ARTICLE_DOES_NOT_EXIST' => $LANG['wiki_article_does_not_exist']
-	));
-	$Template->Pparse('wiki');	
+	redirect(HOST . DIR . '/wiki/' . transid('post.php?title=' . $encoded_title, '', '&'));
 }
 //Sinon c'est l'accueil
 else

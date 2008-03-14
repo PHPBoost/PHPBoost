@@ -45,7 +45,7 @@ $del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 if( $id_auth > 0 ) //Autorisations de l'article
 {
 	define('TITLE', $LANG['wiki_auth_management']);
-	$article_infos = $Sql->Query_array('wiki_articles', 'id', 'title', 'encoded_title', 'auth', "WHERE id = '" . $id_auth . "'", __LINE__, __FILE__);
+	$article_infos = $Sql->Query_array('wiki_articles', 'id', 'title', 'encoded_title', 'auth', 'is_cat', 'id_cat', "WHERE id = '" . $id_auth . "'", __LINE__, __FILE__);
 	
 	if( !$Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 

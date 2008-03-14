@@ -105,7 +105,7 @@ $LANG['wiki_subarticles'] = 'Articles contenus par cette catégorie :';
 
 //Archives
 $LANG['wiki_version_list'] = 'Versions';
-$LANG['wiki_article_does_not_exist'] = 'L\'article que vous demandez n\'existe pas, si vous le désirez vous pouvez le créer en cliquant <a href="' . transid('post.php') . '">ici</a>.';
+$LANG['wiki_article_does_not_exist'] = 'L\'article que vous demandez n\'existe pas, vous pouvez le créer ici.';
 $LANG['wiki_cat_does_not_exist'] = 'Erreur : la catégorie demandée n\'existe pas. <a href="wiki.php">Retour au wiki</a>';
 $LANG['wiki_consult_article'] = 'Consulter';
 $LANG['wiki_restore_version'] = 'Restaurer';
@@ -126,7 +126,7 @@ $LANG['wiki_current_status'] = 'Statut courant';
 $LANG['wiki_status_list'] = array(
 	array('Article de qualité', '<span class="notice">Cet article est de grande qualité il est complet et fiable.</span>'),
 	array('Article incomplet', '<span class="question">Cet article manque de sources.<br />Vos connaissances sont les bienvenues afin de le compléter.</span>'),
-	array('Article en cours de travaux', '<span class="notice">Cet article est incomplet, vous pouvez apporter vos connaissances afin de le compléter.</span>'),
+	array('Article en cours de travaux', '<span class="notice">Cet article est en cours de travaux, des modifications sont en cours de réalisation, revenez plus tard le reconsulter. Merci.</span>'),
 	array('Article à refaire', '<span class="warning">Cet article est à refaire, son contenu n\'est pas très fiable.</span>'),
 	array('Article remis en cause', '<span class="error">Cet article a été discuté et son contenu ne paraît pas correct. Vous pouvez éventuellement consulter les discussions à ce propos et peut-être y apporter vos connaissances.</span>')
 );

@@ -27,10 +27,6 @@
 					<br />
 				# END status #
 				
-				# START message #
-					{message.ARTICLE_DOES_NOT_EXIST}
-				# END message #
-				
 				# START menu #
 					<div class="row3" style="width:60%">
 						<div style="text-align:center;"><strong>{L_TABLE_OF_CONTENTS}</strong></div>
