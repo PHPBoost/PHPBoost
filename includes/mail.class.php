@@ -53,7 +53,7 @@ class Mail
 		}
 		else
 		{
-			if( $this->check_valid_mail($this->from) )
+			if( $this->Check_mail_validity($this->from) )
 			{
 				$this->clean_mail($mail_objet, $mail_contents);
 				if( empty($mail_header) )
@@ -69,6 +69,24 @@ class Mail
 		}		
 	}	
 	
+    //Vérification de la validité du mail du posteur => Protection contre injection header.
+    function Check_mail_validity()
+    {
+        global $LANG, $Errorh;
+
+        $array_mail = explode(';', $this->from); //Récupération de l'adresse email du posteur.
+        $this->from = $array_mail[0];
+        
+        if( !preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $this->from) )
+        {
+            $Errorh->Error_handler('e_mail_format', E_USER_REDIRECT);
+            return false;
+        }
+        else
+        { 
+            return true;
+        }
+    }
 	
 	## Private Methods ##
 	//Nettoie les entrées.
@@ -83,25 +101,6 @@ class Mail
 		{
 			$this->objet = $mail_objet;
 			$this->contents = $mail_contents;
-		}
-	}
-	
-	//Vérification de la validité du mail du posteur => Protection contre injection header.
-	function check_valid_mail()
-	{
-		global $LANG, $Errorh;
-
-		$array_mail = explode(';', $this->from); //Récupération de l'adresse email du posteur.
-		$this->from = $array_mail[0];
-		
-		if( !preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $this->from) )
-		{
-			$Errorh->Error_handler('e_mail_format', E_USER_REDIRECT);
-			return false;
-		}
-		else
-		{ 
-			return true;
 		}
 	}
 	
