@@ -46,43 +46,51 @@ require_once('../search/search.inc.php');
 $Modules = new Modules();
 $modulesArgs = array();
 
-if( $idSearch >= 0 )
-{
-    $Search = new Search();
-    if( $Search->IsSearchIdInCache($idSearch) )
-    {
-        $nbResults = $Search->GetResultsById($results, $idSearch, ($pageNum - 1) *  NB_RESULTS_PER_PAGE, NB_LINES);
-        if( $nbResults > 0 )
-        {
-            $module = $Modules->GetModule($results[0]['module']);
-            $htmlResults = '<ul class="search_results">';
-            foreach( $results as $result )
-            {
-                if( $module->HasFunctionnality('ParseSearchResult') )
-                {
-                    $htmlResult = $module->Functionnality('ParseSearchResult', array($result));
-                }
-                else
-                {
-                    $htmlResult  = '<div class="result">';
-                    $htmlResult .= '<span><i>'.$result['relevance'].'</i></span> - ';
-                    $htmlResult .= '<span><b>'.ucfirst($result['module']).'</b></span> - ';
-                    $htmlResult .= '<a href="'.$result['link'].'">'.$result['title'].'</a>';
-                    $htmlResult .= '</div>';
-                }
-                $htmlResults .= '<li>'.$htmlResult.'</li>';
-            }
-            $htmlResults .= '</ul>';
-        }
-        $return = ' var resultsAJAX = new Array();
-                    resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.
-                    addslashes($nbResults > 1 ? $LANG['nb_results_found']:$LANG['one_result_found']).'\';
-                    resultsAJAX[\'results\'] = \''.$htmlResults.'\';';
-        echo $return;
-    }
-    else echo 'NO RESULTS IN CACHE';
-}
+$results = array();
 
+if ( $searchInCache )
+{
+    // Listes des modules de recherches
+    $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
+    
+    // Ajout du paramétre search à tous les modules
+    foreach( $searchModules as $module)
+    {
+        $modulesArgs[$module->name] = array('search' => $search);
+    }
+    
+    // Ajout de la liste des paramètres de recherches spécifiques à chaque module
+    foreach( $formsModule as $formModule)
+    {
+        if( $formModule->HasFunctionnality('GetSearchArgs') )
+        {
+            // Récupération de la liste des paramètres
+            $formModuleArgs = $formModule->Functionnality('GetSearchArgs');
+            // Ajout des paramètres optionnels sans les sécuriser.
+            // Ils sont sécurisés à l'intérieur de chaque module.
+            foreach( $formModuleArgs as $arg)
+            {
+                if ( isset($_POST[$arg]) )
+                    $modulesArgs[$formModule->name][$arg] = $_POST[$arg];
+            }
+        }
+    }
+    
+    $Search = new Search($searchTxt, $modulesOptions);
+    
+    $requests = array();
+    foreach($searchModules as $module)
+    {
+        if( !$Search->IsInCache($module->name) )
+        {
+            // On rajoute l'identifiant de recherche comme paramètre pour faciliter la requête
+            $modulesArgs[$module->name]['id_search'] = $Search->id_search[$module->name];
+            $requests[$module->name] = $module->Functionnality('GetSearchRequest', $modulesArgs[$module->name]);
+        }
+    }
+    
+    $Search->InsertResults($requests);
+}
 //--------------------------------------------------------------------- Footer
 
 ?>
