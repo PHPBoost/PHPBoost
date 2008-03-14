@@ -47,11 +47,9 @@ if( !empty($_POST['valid']) && !empty($idgroup_post) ) //Modification du groupe.
 	$data_group_limit = isset($_POST['data_group_limit']) ? numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';	
 		
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);	
-	
 	$Sql->Query_inject("UPDATE ".PREFIX."group SET name = '" . $name . "', img = '" . $img . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'", __LINE__, __FILE__);
 	
-	###### On régénère le fichier de cache des groupes #######
-	$Cache->Generate_file('groups');
+	$Cache->Generate_file('groups'); //On régénère le fichier de cache des groupes
 	
 	redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup_post);
 }
@@ -65,13 +63,11 @@ elseif( !empty($_POST['valid']) && $add_post ) //ajout  du groupe.
 	
 	if( !empty($name) )
 	{
-		$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);	
-
 		//Insertion
+		$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);	
 		$Sql->Query_inject("INSERT INTO ".PREFIX."group (name, img, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
-			
-		###### On régénère le fichier de cache des groupes #######
-		$Cache->Generate_file('groups');	
+		
+		$Cache->Generate_file('groups'); //On régénère le fichier de cache des groupes
 		
 		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."group"));		
 	}
@@ -80,27 +76,13 @@ elseif( !empty($_POST['valid']) && $add_post ) //ajout  du groupe.
 }
 elseif( !empty($idgroup) && $del_group ) //Suppression du groupe.
 {
-	$members = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-	$array_members = explode('|', $members);
+	$array_members = explode('|', $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__));
 	foreach($array_members as $key => $user_id)
-	{
-		//Mise à jour des membres étant dans le groupe supprimé.
-		$user_groups = $Sql->Query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		if( !empty($user_groups) )
-		{
-			$user_groups = explode('|', $user_groups);
-			$user_groups_key = array_search($idgroup, $user_groups);
-			unset($user_groups[$user_groups_key]);
-			
-			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_groups = '" . implode('|', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		}
-	}
-	
-	//On supprime dans la bdd.
-	$Sql->Query_inject("DELETE FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);	
+		$Group->Del_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
+
+	$Sql->Query_inject("DELETE FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__); //On supprime dans la bdd.	
 		
-	###### On régénère le fichier de cache des groupes #######
-	$Cache->Generate_file('groups');	
+	$Cache->Generate_file('groups'); //On régénère le fichier de cache des groupes
 	
 	redirect(HOST . SCRIPT);
 }
@@ -110,50 +92,18 @@ elseif( !empty($idgroup) && $add_mbr ) //Ajout du membre au groupe.
 	$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
 	if( !empty($user_id) )
 	{	
-		//On insère le groupe au champ membre.
-		$user_groups = $Sql->Query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
-		$user_groups_key = array_search($idgroup, explode('|', $user_groups));
-		
-		if( !is_numeric($user_groups_key) ) //Le membre n'appartient pas déjà au groupe.
-			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_groups = '" . $user_groups . $idgroup . "|' WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
+		if( $Group->Add_member($user_id, $idgroup) ) //Succès.
+			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add'); 	
 		else
 			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
-	
-		//On insère le membre dans le groupe.
-		$members = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-		$members_key = array_search($user_id, explode('|', $members));
-		if( !is_numeric($members_key) ) //Le membre n'appartient pas déjà au groupe.
-			$Sql->Query_inject("UPDATE ".PREFIX."group SET members = CONCAT(members, '" . $user_id . "|') WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-		else
-			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
-		
-		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add'); 	
 	}
 	else
 		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#errorh');
 }
 elseif( $del_mbr && !empty($user_id) && !empty($idgroup) ) //Suppression du membre du groupe.
 {
-	$user_groups = $Sql->Query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-	if( !empty($user_groups) )
-	{
-		$user_groups = explode('|', $user_groups);
-		$user_groups_key = array_search($idgroup, $user_groups);
-		unset($user_groups[$user_groups_key]);
-
-		$Sql->Query_inject("UPDATE ".PREFIX."member SET user_groups = '" . implode('|', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		
-		$members_group = $Sql->Query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-		$members_group = explode('|', $members_group);
-		$members_group_key = array_search($user_id, $members_group);
-		unset($members_group[$members_group_key]);
-		
-		$Sql->Query_inject("UPDATE ".PREFIX."group SET members = '" . implode('|', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-	
-		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add');	
-	}	
-	else
-		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#errorh');
+	$Group->Del_member($user_id, $idgroup);
+	redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add');
 }
 elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 {		
