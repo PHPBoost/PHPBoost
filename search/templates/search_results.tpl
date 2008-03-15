@@ -128,7 +128,7 @@
 		                    # END allResults #
 		                </ul>
 		            </div>
-		            <div id="PaginationResultsAll">{PAGINATION}</div>
+		            <div id="PaginationResultsAll" class="PaginationResults">{PAGINATION}</div>
 		        </div>
 		        # START results #
 		            <div id="Results{results.MODULE_NAME}" class="results" style="display:none">
