@@ -188,12 +188,14 @@ var info_progress_tmp = '';
 var speed_progress = 20; //Vitesse de la progression.
 var idbar = ''; //Identifiant de la barre de progression.
 var restart_progress = false;
+var theme = '';
 
 //Configuration de la barre de progression.
-function load_progress_bar(speed_progress, idbar)
+function load_progress_bar(speed_progress, theme, idbar)
 {
 	speed_progress = speed_progress;
 	restart_progress = true;
+	theme = theme;
 	idbar = idbar;
 }
 
@@ -226,7 +228,7 @@ function progress_bar(percent_progress, info_progress)
 	if( this.percent_begin <= bar_progress )
 	{
 		if( document.getElementById('progress_bar' + idbar) )
-			document.getElementById('progress_bar' + idbar).innerHTML += '<img src="templates/images/loading.png" alt="" />';
+			document.getElementById('progress_bar' + idbar).innerHTML += '<img src="../templates/' + theme + '/images/loading.png" alt="" />';
 		if( document.getElementById('progress_percent' + idbar) )
 			document.getElementById('progress_percent' + idbar).innerHTML = Math.round((this.percent_begin * 100) / 55);
 		if( document.getElementById('progress_info' + idbar) )
