@@ -148,8 +148,8 @@
 		                <div id="infosResults{results.MODULE_NAME}" class="infosResults">
                             <div style="margin:auto;width:500px;"> 
                                 <div id="progress_info{results.MODULE_NAME}" style="text-align:center;"></div>
-                                <div style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;" id="progress_bar"></div> 
-                                &nbsp;<span id="progress_percent">0</span>%
+                                <div id="progress_bar{results.MODULE_NAME}" style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;"></div> 
+                                &nbsp;<span id="progress_percent{results.MODULE_NAME}">0</span>%
                             </div>
                         </div>
 		                <div id="ResultsList{results.MODULE_NAME}" class="ResultsList"></div>
