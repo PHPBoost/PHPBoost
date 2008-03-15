@@ -21,10 +21,8 @@
 		    function HideResults()
 		    // Cache tous les résultats
 		    {
-		        for ( var i = 0; i < modulesResults.length; i++ )
-		        {
+		        for( var i = 0; i < modulesResults.length; i++ )
 		            hide_div(RESULTS + modulesResults[i]);
-		        }
 		    }
 		    
 		    function ChangeResults()
@@ -33,12 +31,12 @@
 		        var module = document.getElementById('ResultsChoice').value;
 		        HideResults();
 		        show_div(RESULTS + module);
-		        if ( !inArray(module, calculatedResults) )
-		        {
-                    load_progress_bar(20, '{THEME}', module);
+				if( !inArray(module, calculatedResults) )
+				{
+					load_progress_bar(20, '{THEME}', module);
 		            XMLHttpRequest_search_module(module);
-		        }
-		    }
+				}
+			}
 		    
 		    function GetFormData()
 		    // Reconstitution d'une chaine "POSTABLE" à partir des formulaires
@@ -49,10 +47,10 @@
 		        
 		        for( var i = 0; i < form.length; i++ )
 		        {
-		            if ( elements[i].name )
+					if( elements[i].name )
 		            {
 		                dataString += elements[i].name + "=" + escape(elements[i].value);
-		                if ( (i + 1) < form.length )
+						if( (i + 1) < form.length )
 		                    dataString += "&";
 		            }
 		        }
@@ -67,14 +65,14 @@
 		        xhr.onreadystatechange = function()
 		        {
 		        }
-		//         xmlhttprequest_sender(xhr, document.getElementById('SearchForm'));
+				//xmlhttprequest_sender(xhr, document.getElementById('SearchForm'));
 		        xmlhttprequest_sender(xhr, GetFormData());
 		    }
 		    
 		    function XMLHttpRequest_search_module(module)
 		    // Affiche les résultats de la recherche pour le module particulier <module>
 		    {
-		        var xhr_object = xmlhttprequest_init('../search/searchModuleXMLHTTPRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
+				var xhr_object = xmlhttprequest_init('../search/searchModuleXMLHTTPRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
 		        xhr_object.onreadystatechange = function()
 		        {
                     if( xhr_object.readyState == 1 ) 
@@ -89,7 +87,7 @@
                         {
                             progress_bar(100, "{L_QUERY_SUCCESS}");
                             // Si les résultats sont toujours en cache, on les récupère.
-                            if ( xhr_object.responseText != 'NO RESULTS IN CACHE' )
+							if( xhr_object.responseText != 'NO RESULTS IN CACHE' )
                             {
                                 eval(xhr_object.responseText);
                                 //document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
@@ -163,7 +161,7 @@
 		</div>
 		<script type="text/javascript">
 		<!--
-		    if ( browserAJAXFriendly() )
+		   if( browserAJAXFriendly() )
 		        show_div('resultsChoices');
 		-->
 		</script>
