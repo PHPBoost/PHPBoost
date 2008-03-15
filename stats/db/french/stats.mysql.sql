@@ -1,1 +1,0 @@
-INSERT INTO `phpboost_modules_mini` (`name`, `code`, `contents`, `side`, `secure`, `activ`, `added`) VALUES ('stats', 'include_once(''../stats/stats_mini.php'');', '', 0, -1, 1, 0);

@@ -14,5 +14,3 @@ CREATE TABLE `phpboost_links` (
 INSERT INTO `phpboost_links` (`id`, `class`, `name`, `url`, `activ`, `secure`, `added`, `sep`) VALUES (1, 1, 'Membres', '', 1, '-1', 0, 1);
 INSERT INTO `phpboost_links` (`id`, `class`, `name`, `url`, `activ`, `secure`, `added`, `sep`) VALUES (2, 2, 'Membres', '../member/member.php', 1, '-1', 0, 0);
 INSERT INTO `phpboost_links` (`id`, `class`, `name`, `url`, `activ`, `secure`, `added`, `sep`) VALUES (3, 3, 'Menu', '', 1, '-1', 0, 1);
-                                                                                             
-INSERT INTO `phpboost_modules_mini` (`name`, `code`, `contents`, `side`, `secure`, `activ`, `added`) VALUES ('links', 'include_once(''../links/links_mini.php'');', '', 0, -1, 1, 0);

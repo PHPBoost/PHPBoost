@@ -72,8 +72,8 @@ elseif( $action == 'add' ) //Ajout d'un menu.
 		$location = '';
 	
 	$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE activ = 1 AND location = '" . $location . "'", __LINE__, __FILE__);
-	$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, code, contents, location, secure, activ, added, use_tpl) VALUES 
-	('" . ($class + 1) . "', '" . $name . "', '', '" . $contents ."', '" . $location . "', '" . $secure . "', '" . $activ . "', 1, '" . $use_tpl . "')", __LINE__, __FILE__);
+	$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES 
+	('" . ($class + 1) . "', '" . $name . "', '" . $contents ."', '" . $location . "', '" . $secure . "', '" . $activ . "', 1, '" . $use_tpl . "')", __LINE__, __FILE__);
 	$last_menu_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."modules_mini");
 	
 	$Cache->Generate_file('modules_mini');		

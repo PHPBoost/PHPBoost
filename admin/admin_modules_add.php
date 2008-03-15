@@ -76,6 +76,22 @@ if( $install ) //Installation du module
 		//Génération du cache du module si il l'utilise
 		if( !empty($info_module['cache']) )
 			$Cache->Generate_module_file($module_name);
+		
+		//Installation du mini module s'il existe
+		if( !empty($info_module['mini_module']) )
+		{
+			$array_menus = parse_ini_array($info_module['mini_module']);
+			$links = '';
+			foreach($array_menus as $path => $location)
+			{
+				$module_mini_path = '../' . addslashes($module_name) . '/' . addslashes($path);
+				if( file_exists($module_mini_path) )
+				{	
+					$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  addslashes($location) . "'", __LINE__, __FILE__) + 1;
+					$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . securit($module_name) . "', 'include_once(\'" . $module_mini_path . "\');', '" . addslashes($location) . "', -1, 1, 0, 0)", __LINE__, __FILE__);
+				}
+			}
+		}
 
 		//Insertion du modules dans la bdd => module installé.
 		$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . securit($module_name) . "', '" . securit($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . $activ_module . "')", __LINE__, __FILE__);

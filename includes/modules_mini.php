@@ -31,13 +31,13 @@ if( @!include('../cache/modules_mini.php') )
 {
 	//Régénération du fichier
 	$modules_mini = array();
-	$result = $Sql->Query_while("SELECT name, code, contents, location, secure, added, use_tpl
+	$result = $Sql->Query_while("SELECT name, contents, location, secure, added, use_tpl
 	FROM ".PREFIX."modules_mini 
 	WHERE activ = 1
 	ORDER BY location, class", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$modules_mini[$row['location']][] = array('name' => $row['name'], 'code' => $row['code'], 'contents' => $row['contents'], 'secure' => $row['secure'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
+		$modules_mini[$row['location']][] = array('name' => $row['name'], 'contents' => $row['contents'], 'secure' => $row['secure'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
 	}
 	$Sql->Close($result);
 
@@ -49,7 +49,7 @@ if( @!include('../cache/modules_mini.php') )
 		foreach($modules_mini[$location] as $location_key => $info)
 		{
 			if( $info['added'] == '0' )
-				$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . $info['code'] . '}' . "\n";
+				$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . $info['contents'] . '}' . "\n";
 			else
 			{
 				if( $info['use_tpl'] == '0' )

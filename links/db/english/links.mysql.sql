@@ -17,5 +17,3 @@ INSERT INTO `phpboost_links` (`id`, `class`, `name`, `url`, `activ`, `secure`, `
 INSERT INTO `phpboost_links` (`id`, `class`, `name`, `url`, `activ`, `secure`, `added`, `sep`) VALUES (3, 3, 'Members', '', 1, '-1', 0, 1);
 INSERT INTO `phpboost_links` (`id`, `class`, `name`, `url`, `activ`, `secure`, `added`, `sep`) VALUES (4, 4, 'Members', '../member/member.php', 1, '-1', 0, 0);
 INSERT INTO `phpboost_links` (`id`, `class`, `name`, `url`, `activ`, `secure`, `added`, `sep`) VALUES (5, 5, 'Menu', '', 1, '-1', 0, 1);
-
-INSERT INTO `phpboost_modules_mini` (`name`, `code`, `contents`, `side`, `secure`, `activ`, `added`) VALUES ('links', 'include_once(''../links/links_mini.php'');', '', 0, -1, 1, 0);

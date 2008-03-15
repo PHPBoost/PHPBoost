@@ -97,49 +97,6 @@ $Template->Assign_vars(array(
 	'U_INDEX_SITE' => ((substr($CONFIG['start_page'], 0, 1) == '/') ? '..' . $CONFIG['start_page'] : $CONFIG['start_page']) 
 ));
 
-//Parcours d'une chaine sous la forme d'un simili tableau php. Retourne un tableau correctement construit.
-function extract_admin_links($links_format)
-{
-	$links_format = preg_replace('` ?=> ?`', '=', $links_format);
-	$links_format = preg_replace(' ?, ?', ',', $links_format) . ' ';
-	list($key, $value, $open, $cursor, $check_value, $admin_links) = array('', '', '', 0, false, array());
-	$string_length = strlen($links_format);
-	while( $cursor < $string_length ) //Parcours linéaire.
-	{
-		$char = substr($links_format, $cursor, 1);
-		if( !$check_value ) //On récupère la clé.
-		{
-			if( $char != '=' )
-				$key .= $char;
-			else
-				$check_value =  true;
-		}
-		else //On récupère la valeur associé à la clée, une fois celle-ci récupérée.
-		{
-			if( $char == '(' ) //On marque l'ouverture de la parenthèse.
-				$open = $key;
-			
-			if( $char != ',' && $char != '(' && $char != ')' && ($cursor+1) < $string_length ) //Si ce n'est pas un caractère délimiteur, on la fin => on concatène.
-				$value .= $char;
-			else
-			{
-				if( !empty($open) && !empty($value) ) //On insère dans la clé marqué précédemment à l'ouveture de la parenthèse.
-					$admin_links[$open][$key] = $value;
-				else
-					$admin_links[$key] = $value; //Ajout simple.
-				list($key, $value, $check_value) = array('', '', false);
-			}
-			if( $char == ')' )
-			{
-				$open = ''; //On supprime le marqueur.
-				$cursor++; //On avance le curseur pour faire sauter la virugle après la parenthèse.
-			}
-		}
-		$cursor++;
-	}
-	return $admin_links;
-}
-
 //Listing des modules disponibles:
 $modules_config = array();
 foreach($SECURE_MODULE as $name => $auth)
@@ -151,7 +108,7 @@ foreach($SECURE_MODULE as $name => $auth)
 		{
 			if( !empty($modules_config[$name]['admin_links']) )
 			{	
-				$admin_links = extract_admin_links($modules_config[$name]['admin_links']);
+				$admin_links = parse_ini_array($modules_config[$name]['admin_links']);
 				$links = '';
 				foreach($admin_links as $key => $value)
 				{
