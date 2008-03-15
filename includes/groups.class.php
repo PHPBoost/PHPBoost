@@ -190,7 +190,8 @@ class Group
         $array_ranks = is_array($array_ranks) ? $array_ranks : array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
         $j = 0;
         //Liste des rangs
-        $select_groups = '<select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="' . (empty($disabled) ? 'if(disabled == 0)' : '') . 'document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
+		$select_groups = '<span class="text_small">(' . $LANG['explain_select_multiple'] . ')</span>
+		<br /><select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="' . (empty($disabled) ? 'if(disabled == 0)' : '') . 'document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
         foreach($array_ranks as $idgroup => $group_name)
         {
             $selected = '';   
@@ -215,23 +216,37 @@ class Group
             $select_groups .= '<option ' . $disabled . 'value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '"' . $selected . '>' . $group_name . '</option>';
             $j++;
         }
-        $select_groups .= '</optgroup></select>';
-		$LANG['select_all'];
-		$LANG['select_none'];
+        $select_groups .= '</optgroup></select>
+		<br />
+		<a class="small_link" href="javascript:check_select_multiple(\'' . $auth_id . '\', true);">' . $LANG['select_all'] . '</a>
+		&nbsp;/&nbsp;
+		<a class="small_link" href="javascript:check_select_multiple(\'' . $auth_id . '\', false);">' . $LANG['select_none'] . '</a>';
+		
         return $select_groups;
     }
 
     //Génération du formulaire pour les autorisations membre par membre.
     function generate_select_members($auth_id, $array_auth, $auth_level)
-    {
-        $select_members = '';
-        foreach($auth_id as $key => $value)
-        {
-            $select_members .= ;
-        }      
+	{
+		global $Sql, $LANG;
 
-        return $select_members;
-    }
+		$select_members = '<select id="members_auth' . $auth_id . '" name="members_auth' . $auth_id . '[]" size="8" multiple="multiple">';
+		if( count($array_auth) > 0 )
+		{
+			$result = $Sql->Query_while("SELECT user_id, login 
+			FROM ".PREFIX."member
+			WHERE user_id IN(" . implode($array_auth, ', ') . ")", __LINE__, __FILE__);
+			while( $row = $Sql->Sql_fetch_assoc($result) )
+			{
+				$select = '';
+				$select_members .= '<option value="' . $row['user_id'] . '" id="' . $auth_id . 'm' . $row['user_id'] . '"' . $selected . '>' . $row['login'] . '</option>';
+			}
+			$Sql->Close($result);
+		}
+		$select_members .= '</select>';
+
+		return $select_members;
+	}
 	
 	//Ajoute un droit à l'ensemble des autorisations.
 	function add_auth_group($auth_group, $add_auth)
