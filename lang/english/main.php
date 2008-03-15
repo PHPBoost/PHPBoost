@@ -1,28 +1,28 @@
 <?php
 /*##################################################
- *                                main.php
- *                            -------------------
- *   begin                : November 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
- *   email                : mickaelhemri@gmail.com
- *
- *  
- ###################################################
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
+*                                main.php
+*                            -------------------
+*   begin                : November 20, 2005
+*   copyright          : (C) 2005 Viarre Régis
+*   email                : mickaelhemri@gmail.com
+*
+*  
+###################################################
+*
+*   This program is free software; you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation; either version 2 of the License, or
+*   (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*
 ###################################################*/
 
 
@@ -73,7 +73,7 @@ $LANG['password'] = 'Password';
 $LANG['respond'] = 'Respond';
 $LANG['go'] = 'Go';
 
-$LANG['pseudo'] = 'Pseudo';
+$LANG['pseudo'] = 'Nickname';
 $LANG['message'] = 'Message';
 $LANG['message_s'] = 'Messages';
 $LANG['forget_pass'] = 'Forgot password';
@@ -83,8 +83,8 @@ $LANG['require'] = 'The marked Fields * are obligatory!';
 //Alert Form
 $LANG['require_title'] = 'Please enter a title !';
 $LANG['require_text'] = 'Please enter a text!';
-$LANG['require_pseudo'] = 'Please enter a pseudo!';
-$LANG['require_mail'] = 'Please enter a mail!';
+$LANG['require_pseudo'] = 'Please enter a nickname!';
+$LANG['require_mail'] = 'Please enter a mail adress!';
 $LANG['require_subcat'] = 'Please select a subcat !';
 $LANG['require_url'] = 'Please enter an valid url !';
 $LANG['require_password'] = 'Please enter a password !';
@@ -108,7 +108,7 @@ $LANG['bb_underline'] = 'Underlined text: [u]text[/u]';
 $LANG['bb_strike'] = 'Strike text: [s]text[/s]';
 $LANG['bb_link'] = 'Add a weblink: [url]link[/url], or [url=link]name of the link[/url]';
 $LANG['bb_picture'] = 'Add a picture: [img]url picture[/img]';
-$LANG['bb_size'] = 'Size of texte (X between 0 - 49): [size=X]text on size X[/size]';
+$LANG['bb_size'] = 'Size of text (X between 0 - 49): [size=X]text on size X[/size]';
 $LANG['bb_color'] = 'Text color: [color=X]text on X color[/color]';
 $LANG['bb_quote'] = 'Make a quote [quote=pseudo]text[/quote]';
 $LANG['bb_left'] = 'Align on left: [align=left]object on left[/align]';
@@ -140,7 +140,7 @@ $LANG['bb_text'] = 'Text';
 $LANG['bb_script'] = 'Script';
 $LANG['bb_web'] = 'Web';
 $LANG['bb_prog'] = 'Programation';
-$LANG['lines'] = 'Number of lines';
+$LANG['lines'] = 'Number of rows';
 $LANG['cols'] = 'Number of columns';
 $LANG['head_table'] = 'Head';
 $LANG['head_add'] = 'Add table head';
@@ -151,23 +151,23 @@ $LANG['forbidden_tags'] = 'Forbidden BBcode tags:';
 
 //Connexion
 $LANG['connect_private_message'] = 'Private message';
-$LANG['connect_private_profil'] = 'Personnal profil';
+$LANG['connect_private_profil'] = 'Personnal profile';
 
 //Maintain
-$LANG['maintain'] = 'Website is in maintenance please wait, only administrator are authorized to access.';
+$LANG['maintain'] = 'Website is in maintenance please wait, only administrators are authorized to access.';
 $LANG['maintain_delay'] = 'Delay before ending:';
 $LANG['title_maintain'] = 'Website in maintenance';
 $LANG['loading'] = 'Loading';
 
 //All
-$LANG['user'] = 'User'; 
-$LANG['user_s'] = 'Users'; 
-$LANG['guest'] = 'Visitor'; 
-$LANG['guest_s'] = 'Visitors'; 
+$LANG['user'] = 'User';
+$LANG['user_s'] = 'Users';
+$LANG['guest'] = 'Visitor';
+$LANG['guest_s'] = 'Visitors';
 $LANG['member'] = 'Member';
-$LANG['member_s'] = 'Members';   
-$LANG['modo'] = 'Moderator'; 
-$LANG['modo_s'] = 'Moderators';   
+$LANG['member_s'] = 'Members';  
+$LANG['modo'] = 'Moderator';
+$LANG['modo_s'] = 'Moderators';  
 $LANG['admin'] = 'Administrator';
 $LANG['admin_s'] = 'Administrators';
 $LANG['index'] = 'Index';
@@ -183,14 +183,14 @@ $LANG['description'] = 'Description';
 $LANG['view'] = 'Seen';
 $LANG['views'] = 'Views';
 $LANG['name'] = 'Name';
-$LANG['image'] = 'Image';
+$LANG['image'] = 'Picture';
 $LANG['note'] = 'Note';
 $LANG['notes'] = 'Notes';
 $LANG['previous'] = 'Previous';
 $LANG['next'] = 'Next';
 $LANG['mail'] = 'Mail';
-$LANG['objet'] = 'Objet';
-$LANG['contents'] = 'Contenu';
+$LANG['objet'] = 'Subject';
+$LANG['contents'] = 'Content';
 $LANG['options'] = 'Options';
 $LANG['all'] = 'All';
 $LANG['title'] = 'Title';
@@ -217,7 +217,7 @@ $LANG['back'] = 'Back';
 $LANG['close'] = 'Close';
 $LANG['smiley'] = 'Smiley';
 $LANG['all_smiley'] = 'Show all smileys';
-$LANG['total'] = 'Total'; 
+$LANG['total'] = 'Total';
 $LANG['average'] = 'Average';
 $LANG['page'] = 'Page';
 $LANG['illimited'] = 'Illimited';
@@ -250,8 +250,8 @@ $LANG['question'] = 'Question';
 $LANG['notice'] = 'Notice';
 $LANG['warning'] = 'Warning';
 $LANG['success'] = 'Success';
-$LANG['vote'] = 'Vote';
-$LANG['votes'] = 'Votes';
+$LANG['vote'] = 'Poll';
+$LANG['votes'] = 'Polls';
 $LANG['already_vote'] = 'Already vote';
 $LANG['miscellaneous'] = 'Miscellaneous';
 $LANG['unknow'] = 'Unknow';
@@ -274,6 +274,7 @@ $LANG['update_msg'] = 'Update the message';
 $LANG['category'] = 'Category';
 $LANG['categories'] = 'Categories';
 $LANG['refresh'] = 'Refresh';
+
 
 //Dates.
 $LANG['on'] = 'On';
@@ -300,7 +301,7 @@ $LANG['wenesday'] = 'Wen';
 $LANG['thursday'] = 'Thu';
 $LANG['friday'] = 'Fri';
 $LANG['saturday'] = 'Sat';
-$LANG['sunday']	= 'Sun';
+$LANG['sunday'] = 'Sun';
 
 //Comments
 $LANG['add_comment'] = 'Add comment';
@@ -309,12 +310,12 @@ $LANG['edit_comment'] = 'Edit comment';
 //Members
 $LANG['member_area'] = 'Member Area';
 $LANG['profil'] = 'Profile';
-$LANG['profil_edit'] = 'Edit profil';
+$LANG['profil_edit'] = 'Edit profile';
 $LANG['previous_pass'] = 'Previous password';
 $LANG['edit_if_modif'] = 'Fill only in the event of modification';
-$LANG['new_pass'] = 'New pass';
+$LANG['new_pass'] = 'New password';
 $LANG['confirm_pass'] = 'Confirm your password';
-$LANG['hide_mail'] = 'Hide your email';
+$LANG['hide_mail'] = 'Hide your email adress';
 $LANG['hide_mail_who'] = 'To the other users';
 $LANG['mail_track_topic'] = 'Send me an email when a reply is posted in a tracked topic';
 $LANG['web_site'] = 'Web site';
@@ -327,7 +328,7 @@ $LANG['female'] = 'Female';
 $LANG['age'] = 'Age';
 $LANG['biography'] = 'Biography';
 $LANG['years_old'] = 'Years old';
-$LANG['sign'] = 'Sign';
+$LANG['sign'] = 'Signature';
 $LANG['sign_where'] = 'Appears under each one of your messages';
 $LANG['contact'] = 'Contact';
 $LANG['avatar'] = 'Avatar';
@@ -359,7 +360,7 @@ $LANG['search_member'] = 'Search a member';
 $LANG['date_of_birth'] = 'Date of birth';
 $LANG['date_birth_format'] = 'MM/DD/YYYY';
 $LANG['date_birth_parse'] = 'MM/DD/YYYY';
-$LANG['banned'] = 'Banni';
+$LANG['banned'] = 'Banned';
 $LANG['go_msg'] = 'Go to message';
 
 //Register
@@ -385,17 +386,17 @@ $LANG['register_ready'] = ' You can now connect to your account directly on the 
 $LANG['register_valid_email_confirm'] = 'You will have to activate your account in the confirmation email before being able to connect.';
 $LANG['register_valid_email'] = 'You have to click on this link to activate your account: %s';
 $LANG['register_valid_admin'] = 'Warning: Your account must be activated by an administrator. Thanks for you your patience';
-$LANG['register_mail'] = 'Dear %s, 
+$LANG['register_mail'] = 'Dear %s,
 
-First, thank you to have been registered on %s. You are now member of the site. 
+First, thank you to have been registered on %s. You are now member of the site.
 By registering you on %s, you obtain an access to the member zone which offers several advantages to you. You could for example be recognized automatically on all the site, send messages, modify your profile, change main languages and theme, reach categories reserved to the members, etc...  You are now in the community of the site.  
 
 To connect yourself, don\'t forget your login and your password (we can find them).  
 
-Here your identifiers. 
- 
-Identifier: %s 
-Password: %s 
+Here your identifiers.
+
+Identifier: %s
+Password: %s
 
 %s
 
@@ -403,7 +404,7 @@ Password: %s
 
 //Mp
 $LANG['pm_box'] = 'Private message box';
-$LANG['pm_track'] = 'Non read by recipient';
+$LANG['pm_track'] = 'Unread by recipient';
 $LANG['recipient'] = 'Recipient';
 $LANG['post_new_convers'] = 'Create new conversation';
 $LANG['read'] = 'Read';
@@ -463,7 +464,7 @@ $LANG['adobe_pdf'] = 'Adobe Document';
 $LANG['document_type'] = 'Document %s';
 $LANG['moveto'] = 'Move to';
 $LANG['success_upload'] = 'Your file has been uploaded successfully !';
-$LANG['upload_folder_contains_folder'] = 'Vous souhaitez placer cette catégorie dans une de ses catégories filles ou dans elle-même, ce qui est impossible !';
+$LANG['upload_folder_contains_folder'] = 'You wish to put this category in its subcategory or in it, that\'s impossible !';
 
 //gestion des catégories
 $LANG['cats_managment_could_not_be_moved'] = 'An error occured, the category couldn\'t be moved';
@@ -474,6 +475,7 @@ $LANG['cats_management_confirm_delete'] = 'Are you sure you really want to delet
 $LANG['moderation_panel'] = 'Moderation panel';
 $LANG['user_contact_pm'] = 'Contact by private message';
 $LANG['user_alternative_pm'] = 'Private message send to the member <span class="text_small">(Leave empty for no private message)</span>. Member won\'t be able to reply to this message, won\'t know who has sent it';
+
 
 //Punishment management
 $LANG['punishment'] = 'Punishment';

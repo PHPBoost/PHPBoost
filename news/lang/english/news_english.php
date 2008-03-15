@@ -37,7 +37,7 @@ $LANG['configuration_news'] = 'News configuration';
 $LANG['category_news'] = 'News category';
 $LANG['img_management'] = 'Picture management';
 $LANG['preview_image'] = 'Picture preview';
-$LANG['preview_image_explain'] = 'Defaut: on right';
+$LANG['preview_image_explain'] = 'Default: on right';
 $LANG['img_link'] = 'Url\'s picture';
 $LANG['img_desc'] = 'Picture description';
 $LANG['news_management'] = 'News management';
@@ -48,7 +48,7 @@ $LANG['config_news'] = 'News configuration';
 $LANG['nbr_news_p'] = 'Number of news per page';
 $LANG['nbr_news_p_explain'] = 'Default 6';
 $LANG['nbr_arch_p'] = 'Number of archives';
-$LANG['nbr_arch_p_explain'] = 'Defaut 15';
+$LANG['nbr_arch_p_explain'] = 'Default 15';
 $LANG['module_management'] = 'Modules management';
 $LANG['activ_pagination'] = 'Activate pagination';
 $LANG['activ_pagination_explain'] = 'If not show a link to archives';
@@ -64,7 +64,7 @@ $LANG['icon_cat'] = 'Category icon';
 $LANG['news_date'] = 'News date';
 $LANG['news_date_explain'] = '(dd/mm/yy) Leave empty to set today date';
 $LANG['nbr_news_column'] = 'Column number to display news';
-$LANG['no_img'] = 'No image';
+$LANG['no_img'] = 'No picture';
 
 //Errors
 $LANG['e_unexist_news'] = 'This news doesn\'t exist';
@@ -77,7 +77,7 @@ $LANG['alert_delete_news'] = 'Delete this News ?';
 
 //News
 $LANG['news'] = 'News';
-$LANG['propose_news'] = 'Propose news';
+$LANG['propose_news'] = 'Suggest news';
 $LANG['xml_news_desc'] = 'Track the last actualitées on';
 $LANG['add_succes_news'] = 'News sent successfully, please wait approval';
 $LANG['add_news'] = 'Add a News';

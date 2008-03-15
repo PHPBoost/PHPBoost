@@ -46,8 +46,8 @@ $LANG['title_web'] = 'Weblinks';
 
 //Web
 $LANG['link'] = 'Link';
-$LANG['propose_link'] = 'Propose link';
-$LANG['none_link'] = 'No links in this categorie';
+$LANG['propose_link'] = 'Suggest link';
+$LANG['none_link'] = 'No links in this category';
 $LANG['how_link'] = 'Link(s) in the database!';
 $LANG['no_note'] = 'No note';
 $LANG['actual_note'] = 'Actual note';
