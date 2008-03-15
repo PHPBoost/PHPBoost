@@ -81,10 +81,11 @@ function progress_bar(percent_progress, info_progress)
 			}
 			document.getElementById('progress_info' + idbar).innerHTML = info_progress_tmp;
 		}
+		
 		//Message de fin
 		if( this.percent_begin == 55 && result_id != "" && result_msg != "" )
 			document.getElementById(result_id).innerHTML = result_msg;
-		timeout_progress_bar = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", 0, "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")');
+		timeout_progress_bar = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")');
 	}
 	else
 		this.percent_begin = this.percent_begin - 1;
