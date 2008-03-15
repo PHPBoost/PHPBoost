@@ -110,13 +110,6 @@ class Group
 		return $array_auth_all;
 	}
 	
-    //Génération d'une liste à sélection multiple des rangs et groupes
-    function Generate_select($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '')
-    {
-        generate_select_groups($auth_id, $array_auth, $auth_level, $array_ranks_default, $disabled);
-        generate_select_members($auth_id, $array_auth, $auth_level);
-    }
-    
     //Génération du formulaire pour les autorisations membre par membre.
     function generate_select_members($auth_id, $array_auth, $auth_level)
     {
@@ -136,7 +129,7 @@ class Group
     }
     
 	//Génération d'une liste à sélection multiple des rangs et groupes
-	function generate_select_groups($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '')
+	function Generate_select_groups($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '')
 	{
 		global $array_groups, $array_ranks, $LANG;
 		
