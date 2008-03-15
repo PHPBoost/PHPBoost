@@ -171,7 +171,7 @@ class Sessions
 
 		$session_script = str_replace(DIR, '', SCRIPT);
 		$session_script_get = QUERY_STRING;
-		if( !empty($this->data['session_id']) && !empty($this->data['user_id']) && $this->data['user_id'] !== -1 )
+		if( !empty($this->data['session_id']) && $this->data['user_id'] > 0 )
 		{
 			//On modifie le session_flag pour forcer mysql à modifier l'entrée, pour prendre en compte la mise à jour par mysql_affected_rows().
 			$ressource = $Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . time() . "', session_script = '" . addslashes($session_script) . "', session_script_get = '" . addslashes($session_script_get) . "', session_script_title = '" . addslashes($session_script_title) . "', session_flag = 1 - session_flag WHERE session_id = '" . $this->data['session_id'] . "' AND user_id = '" . $this->data['user_id'] . "'", __LINE__, __FILE__);
@@ -181,9 +181,7 @@ class Sessions
 				if( $this->get_session_autoconnect($session_script, $session_script_get, $session_script_title) === false )
 				{					
 					if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
-					{
 						setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.						
-					}	
 					
 					if( QUERY_STRING != '' )
 						redirect(HOST . SCRIPT . '?' . QUERY_STRING);
@@ -200,9 +198,7 @@ class Sessions
 			if( $Sql->Sql_affected_rows($ressource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE user_id = -1 AND session_ip = '" . USER_IP . "'") == 0 ) //Aucune session lancée.
 			{
 				if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
-				{
 					setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
-				}
 				$this->Session_begin('-1', '', '-1', $session_script, $session_script_get, $session_script_title); //Session visiteur
 				
 				if( QUERY_STRING != '' )
@@ -281,9 +277,7 @@ class Sessions
 				}
 			}
 			else
-			{
 				return false;
-			}
 		}	
 		return false;
 	}

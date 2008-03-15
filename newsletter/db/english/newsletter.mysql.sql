@@ -17,4 +17,3 @@ CREATE TABLE `phpboost_newsletter_arch` (
 ) ENGINE=MyISAM;
 
 INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('newsletter', 'a:2:{s:11:"sender_mail";s:0:"";s:15:"newsletter_name";s:0:"";}');
-INSERT INTO `phpboost_modules_mini` (`name`, `code`, `contents`, `side`, `secure`, `activ`, `added`) VALUES ('newsletter', 'include_once(''../newsletter/newsletter_mini.php'');', '', 0, -1, 1, 0);
