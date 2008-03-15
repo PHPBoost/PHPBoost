@@ -1064,7 +1064,7 @@ for($i = 1; $i <= 9; $i++ )
 	$Template->Assign_block_vars('link_menu', array(
 		'ROW' => '<tr>
 				<td class="' . $row . '">
-					<img src="templates/images/' . $steps[$i - 1][1] . '" alt="' . $steps[$i - 1][0] . '" style="vertical-align:middle;" />&nbsp;&nbsp;' . $steps[$i - 1][0] . '
+					<img src="templates/images/' . $steps[$i - 1][1] . '" alt="' . $steps[$i - 1][0] . '" class=\"valign_middle\" />&nbsp;&nbsp;' . $steps[$i - 1][0] . '
 				</td>				
 			</tr>'
 	));

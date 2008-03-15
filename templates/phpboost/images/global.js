@@ -173,12 +173,79 @@ function popup(page,name)
 //Teste la présence d'une valeur dans un tableau
 function inArray(aValue, anArray)
 {
-    for ( var i = 0; i < anArray.length; i++)
+    for( var i = 0; i < anArray.length; i++)
     {
-        if ( anArray[i] == aValue )
+        if( anArray[i] == aValue )
             return true;
     }
     return false;
+}
+
+//Barre de progression, 
+var timeout_progress_bar = null;
+var max_percent = 0;
+var info_progress_tmp = '';
+var speed_progress = 20; //Vitesse de la progression.
+var idbar = ''; //Identifiant de la barre de progression.
+var restart_progress = false;
+
+//Configuration de la barre de progression.
+function load_progress_bar(speed_progress, idbar)
+{
+	speed_progress = speed_progress;
+	restart_progress = true;
+	idbar = idbar;
+}
+
+//Barre de progression.
+function progress_bar(percent_progress, info_progress)
+{
+	bar_progress = (percent_progress * 55) / 100;
+	if( arguments.length == 4 )
+	{
+		result_id = arguments[2];
+		result_msg = arguments[3];
+	}
+	else
+	{
+		result_id = "";
+		result_msg = "";
+	}	
+	
+	// Déclaration et initialisation d'une variable statique
+	if( restart_progress ) 
+	{	
+		clearTimeout(timeout_progress_bar);
+		this.percent_begin = 0;
+		max_percent = 0;
+		if( document.getElementById('progress_bar' + idbar) )
+			document.getElementById('progress_bar' + idbar).innerHTML = '';
+		restart_progress = false;
+	}
+
+	if( this.percent_begin <= bar_progress )
+	{
+		if( document.getElementById('progress_bar' + idbar) )
+			document.getElementById('progress_bar' + idbar).innerHTML += '<img src="templates/images/loading.png" alt="" />';
+		if( document.getElementById('progress_percent' + idbar) )
+			document.getElementById('progress_percent' + idbar).innerHTML = Math.round((this.percent_begin * 100) / 55);
+		if( document.getElementById('progress_info' + idbar) )
+		{	
+			if( percent_progress > max_percent )
+			{	
+				max_percent = percent_progress;
+				info_progress_tmp = info_progress;
+			}
+			document.getElementById('progress_info' + idbar).innerHTML = info_progress_tmp;
+		}
+		//Message de fin
+		if( this.percent_begin == 55 && result_id != "" && result_msg != "" )
+			document.getElementById(result_id).innerHTML = result_msg;
+		timeout_progress_bar = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", 0, "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")');
+	}
+	else
+		this.percent_begin = this.percent_begin - 1;
+	this.percent_begin++;
 }
 
 //Fonction de préparation de l'ajax.

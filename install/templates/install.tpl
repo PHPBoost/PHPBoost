@@ -5,67 +5,13 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta name="description" content="PHPBoost" />
 		<link type="text/css" href="templates/install.css" title="phpboost" rel="stylesheet" />
-		<link type="text/css" href="templates/global.js" title="phpboost" rel="stylesheet" />
+		<script type="text/javascript" src="templates/global.js"></script>
 		<link rel="shortcut" href="../favicon.ico" />
 	</head>
 	<body>
 		<script type="text/javascript">
 		<!--
-			var speed_progress = 20;
-			var timeout = null;
-			var max_percent = 0;
-			var info_progress_tmp = '';
 			var step = {NUM_STEP};
-			
-			function progress_bar(percent_progress, info_progress, restart_progress)
-			{
-				bar_progress = (percent_progress * 55) / 100;
-				
-				if (arguments.length == 5)
-				{
-					result_id = arguments[3];
-					result_msg = arguments[4];
-				}
-				else
-				{
-					result_id = "";
-					result_msg = "";
-				}	
-				
-				// Déclaration et initialisation d'une variable statique
-			    if( typeof this.percent_begin == 'undefined' || restart_progress == 1 ) 
-				{	
-					this.percent_begin = 0;
-					max_percent = 0;
-					if( document.getElementById('progress_bar') )
-						document.getElementById('progress_bar').innerHTML = '';
-				}
-			
-				if( this.percent_begin <= bar_progress )
-				{
-					if( document.getElementById('progress_bar') )
-						document.getElementById('progress_bar').innerHTML += '<img src="templates/images/loading.png" alt="" />';
-					if( document.getElementById('progress_percent') )
-						document.getElementById('progress_percent').innerHTML = Math.round((this.percent_begin * 100) / 55);
-					if( document.getElementById('progress_info') )
-					{	
-						if( percent_progress > max_percent )
-						{	
-							max_percent = percent_progress;
-							info_progress_tmp = info_progress;
-						}
-						document.getElementById('progress_info').innerHTML = info_progress_tmp;
-					
-					}
-					//Message de fin
-					if( this.percent_begin == 55 && result_id != "" && result_msg != "" )
-						document.getElementById(result_id).innerHTML = result_msg;
-					timeout = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", 0, "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")', speed_progress);
-				}
-				else
-					this.percent_begin = this.percent_begin - 1;
-				this.percent_begin++;
-			}
 		-->
 		</script>
 		<div id="header">
@@ -93,10 +39,10 @@
 								<option value="{lang.LANG}" {lang.SELECTED}>{lang.LANG_NAME}</option>
 								# END lang #
 							</select>
-							<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" style="vertical-align:middle" />
+							<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" class="valign_middle" />
 							<noscript>
 								<br /><br />
-								<input type="submit" class="sibmit" value="{L_CHANGE}" />
+								<input type="submit" class="submit" value="{L_CHANGE}" />
 							</noscript>
 						</form>
 					</td>
@@ -241,24 +187,25 @@
 							if( !display_result )
 								document.getElementById('result_box').style.display = 'block';
 							
+							data = null;
 							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?lang={LANG}&chmod=1');
 							xhr_object.onreadystatechange = function() 
 							{
 								if( xhr_object.readyState == 1 )
-									progress_bar(25, "{L_QUERY_LOADING}", 1);
+									progress_bar(25, "{L_QUERY_LOADING}");
 								else if( xhr_object.readyState == 2 )
-									progress_bar(50, "{L_QUERY_SENT}", 0);
+									progress_bar(50, "{L_QUERY_SENT}");
 								else if( xhr_object.readyState == 3 )
-									progress_bar(75, "{L_QUERY_PROCESSING}", 0);
+									progress_bar(75, "{L_QUERY_PROCESSING}");
 								else if( xhr_object.readyState == 4 )
 								{
 									if( xhr_object.status == 200 )
 									{
 										document.getElementById("chmod").innerHTML = xhr_object.responseText;
-										progress_bar(100, "{L_QUERY_SUCCESS}", 0);
+										progress_bar(100, "{L_QUERY_SUCCESS}");
 									}
 									else
-										progress_bar(99, "{L_QUERY_FAILURE}", 0);
+										progress_bar(99, "{L_QUERY_FAILURE}");
 								}									
 							}
 							xmlhttprequest_sender(xhr_object, data);
@@ -324,7 +271,7 @@
 								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
 								<script type="text/javascript">
 								<!--
-									document.write("<a title=\"{L_REFRESH}\" href=\"javascript:refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" style=\"vertical-align:middle;\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
+									document.write("<a title=\"{L_REFRESH}\" href=\"javascript:load_progress_bar(20, '');refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" class=\"valign_middle\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
 								-->
 								</script>
 								<noscript>
@@ -353,17 +300,17 @@
 							xhr_object.onreadystatechange = function() 
 							{
 								if( xhr_object.readyState == 1 )
-									progress_bar(25, "{L_QUERY_LOADING}", 1);
+									progress_bar(25, "{L_QUERY_LOADING}");
 								else if( xhr_object.readyState == 2 )
-									progress_bar(50, "{L_QUERY_SENT}", 0);
+									progress_bar(50, "{L_QUERY_SENT}");
 								else if( xhr_object.readyState == 3 )
-									progress_bar(75, "{L_QUERY_PROCESSING}", 0);
+									progress_bar(75, "{L_QUERY_PROCESSING}");
 								else if( xhr_object.readyState == 4 )
 								{
 									if( xhr_object.status == 200 )
-										progress_bar(100, "{L_QUERY_SUCCESS}", 0, "db_result", xhr_object.responseText);
+										progress_bar(100, "{L_QUERY_SUCCESS}", "db_result", xhr_object.responseText);
 									else
-										progress_bar(99, "{L_QUERY_FAILURE}", 0);
+										progress_bar(99, "{L_QUERY_FAILURE}");
 								}									
 							}
 							xmlhttprequest_sender(xhr_object, data);
@@ -451,7 +398,7 @@
 								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
 								<script type="text/javascript">
 								<!--
-									document.write("<a href=\"javascript:send_infos();\" title=\"{L_TEST_DB_CONFIG}\" /><img src=\"templates/images/refresh.png\" style=\"vertical-align:middle;\" title=\"{L_TEST_DB_CONFIG}\" /></a>&nbsp;");
+									document.write("<a href=\"javascript:load_progress_bar(20, '');send_infos();\" title=\"{L_TEST_DB_CONFIG}\" /><img src=\"templates/images/refresh.png\" class=\"valign_middle\" title=\"{L_TEST_DB_CONFIG}\" /></a>&nbsp;");
 								-->
 								</script>
 								<input title="{L_NEXT_STEP}" class="img_submit" src="templates/images/right.png" type="image" />
@@ -626,11 +573,6 @@
 						-->
 						</script>
 						<p>{L_EXPLAIN_ADMIN_ACCOUNT}</p>
-						
-						
-						
-						
-						
 						<form action="{U_CURRENT_STEP}" method="post" onsubmit="return check_form_admin();" class="fieldset_content">
 							# START admin.error #
 							<fieldset>
