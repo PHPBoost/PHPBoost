@@ -125,9 +125,9 @@ else
 		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 		'NBR_GROUP' => count($array_groups),
 		'CATEGORIES' => $forums,
-		'AUTH_READ' => $Group->Generate_select_groups('r', array(), -1, array(-1 => true, 0 => true, 1 => true, 2 => true)),
-		'AUTH_WRITE' => $Group->Generate_select_groups('w', array(), -1, array(0 => true, 1 => true, 2 => true)),
-		'AUTH_EDIT' => $Group->Generate_select_groups('x', array(), -1, array(1 => true, 2 => true)),
+		'AUTH_READ' => $Group->Generate_select_auth('r', array(), -1, array(-1 => true, 0 => true, 1 => true, 2 => true)),
+		'AUTH_WRITE' => $Group->Generate_select_auth('w', array(), -1, array(0 => true, 1 => true, 2 => true)),
+		'AUTH_EDIT' => $Group->Generate_select_auth('x', array(), -1, array(1 => true, 2 => true)),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
@@ -154,10 +154,7 @@ else
 		'L_ADD' => $LANG['add'],
 		'L_AUTH_READ' => $LANG['auth_read'],
 		'L_AUTH_WRITE' => $LANG['auth_write'],
-		'L_AUTH_EDIT' => $LANG['auth_edit'],
-		'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
-		'L_SELECT_ALL' => $LANG['select_all'],
-		'L_SELECT_NONE' => $LANG['select_none']
+		'L_AUTH_EDIT' => $LANG['auth_edit']
 	));
 	
 	$Template->Pparse('admin_forum_add'); // traitement du modele	

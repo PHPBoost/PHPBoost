@@ -140,7 +140,7 @@ else
 		'MODULE_DATA_PATH' => $Template->Module_data_path('articles'),
 		'NBR_GROUP' => count($array_groups),
 		'CATEGORIES' => $galleries,
-		'AUTH_READ' => $Group->Generate_select_groups('r', array(), -1, array(-1 => true, 0 => true, 1 => true, 2 => true)),
+		'AUTH_READ' => $Group->Generate_select_auth('r', array(), -1, array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'IMG_LIST' => $image_list,
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
@@ -168,10 +168,7 @@ else
 		'L_MODO' => $LANG['modo'],
 		'L_ADMIN' => $LANG['admin'],
 		'L_ADD' => $LANG['add'],
-		'L_AUTH_READ' => $LANG['auth_read'],
-		'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
-		'L_SELECT_ALL' => $LANG['select_all'],
-		'L_SELECT_NONE' => $LANG['select_none']
+		'L_AUTH_READ' => $LANG['auth_read']
 	));
 	
 	$Template->Pparse('admin_articles_cat_add'); // traitement du modele	
