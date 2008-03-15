@@ -129,7 +129,7 @@
 		    </div>
 		    <div class="module_contents">
 		        <div id="ResultsAll" class="results">
-		            <p id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</p><br />
+		            <span id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</span><br />
 		            <div id="infosResultsAll" class="infosResults">{NB_RESULTS} {NB_RESULTS_FOUND}</div>
 		            <div id="ResultsListAll" class="ResultsList">
 		                <ul class="search_results">
@@ -142,7 +142,7 @@
 		        </div>
 		        # START results #
 		            <div id="Results{results.MODULE_NAME}" class="results" style="display:none">
-		                <p id="ResultsTitle{results.MODULE_NAME}" class="title">{results.MODULE_NAME}</p><br />
+		                <span id="ResultsTitle{results.MODULE_NAME}" class="title">{results.MODULE_NAME}</span><br />
 		                <div id="infosResults{results.MODULE_NAME}" class="infosResults">
                             <div style="margin:auto;width:500px;"> 
                                 <div id="progress_info{results.MODULE_NAME}" style="text-align:center;"></div>

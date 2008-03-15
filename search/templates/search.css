@@ -27,7 +27,7 @@ div.results {
     vertical-align:middle;
 }
 
-div.results p.title {
+div.results span.title {
     background:#526F8E;
     color:#FFFFFF;
     font-family:'Verdana', 'Bitstream Vera Sans', 'Times', 'serif';
