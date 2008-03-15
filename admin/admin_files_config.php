@@ -107,7 +107,7 @@ else
 	$Template->Assign_vars(array(
 		'NBR_GROUP' => count($array_groups),
 		'NBR_EXTENSIONS' => $i,
-		'AUTH_FILES' => $Group->Generate_select_groups('a', $array_auth, AUTH_FILES, array(2 => true)),
+		'AUTH_FILES' => $Group->Generate_select_auth('a', $array_auth, AUTH_FILES, array(2 => true)),
 		'SIZE_LIMIT' => isset($CONFIG_FILES['size_limit']) ? number_round($CONFIG_FILES['size_limit']/1024, 2) : '0.5',
 		'BANDWIDTH_PROTECT_ENABLED' => $CONFIG_FILES['bandwidth_protect'] == 1 ? 'checked="checked"' : '',
 		'BANDWIDTH_PROTECT_DISABLED' => $CONFIG_FILES['bandwidth_protect'] == 0 ? 'checked="checked"' : '',
@@ -124,8 +124,6 @@ else
 		'L_AUTH_EXTENSIONS' => $LANG['auth_extensions'],
 		'L_EXTEND_EXTENSIONS' => $LANG['extend_extensions'],
 		'L_EXTEND_EXTENSIONS_EXPLAIN' => $LANG['extend_extensions_explain'],
-		'L_SELECT_ALL' => $LANG['select_all'],
-		'L_SELECT_NONE' => $LANG['select_none'],
 		'L_ACTIV' => $LANG['activ'],
 		'L_UNACTIV' => $LANG['unactiv'],
 		'L_UPDATE' => $LANG['update'],

@@ -66,9 +66,9 @@ else
 	
 	$Template->Assign_vars(array(
 		'NBR_GROUP' => count($array_groups),
-		'FLOOD_AUTH' => $Group->Generate_select_groups(1, $array_auth, 0x01),
-		'EDIT_MARK_AUTH' => $Group->Generate_select_groups(2, $array_auth, 0x02),
-		'TRACK_TOPIC_AUTH' => $Group->Generate_select_groups(3, $array_auth, 0x04),
+		'FLOOD_AUTH' => $Group->Generate_select_auth(1, $array_auth, 0x01),
+		'EDIT_MARK_AUTH' => $Group->Generate_select_auth(2, $array_auth, 0x02),
+		'TRACK_TOPIC_AUTH' => $Group->Generate_select_auth(3, $array_auth, 0x04),
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
 		'L_ADD_CAT' => $LANG['cat_add'],
@@ -79,10 +79,7 @@ else
 		'L_EDIT_MARK' => $LANG['edit_mark_auth'],
 		'L_TRACK_TOPIC' => $LANG['track_topic_auth'],
 		'L_UPDATE' => $LANG['update'],
-		'L_RESET' => $LANG['reset'],
-		'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
-		'L_SELECT_ALL' => $LANG['select_all'],
-		'L_SELECT_NONE' => $LANG['select_none']
+		'L_RESET' => $LANG['reset']
 	));
 
 	$Template->Pparse('admin_forum_groups'); // traitement du modele	

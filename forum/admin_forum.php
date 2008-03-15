@@ -244,9 +244,9 @@ elseif( !empty($id) )
 		'UNCHECKED_APROB' => ($forum_info['aprob'] == 0) ? 'checked="checked"' : '',
 		'CHECKED_STATUS' => ($forum_info['status'] == 1) ? 'checked="checked"' : '',
 		'UNCHECKED_STATUS' => ($forum_info['status'] == 0) ? 'checked="checked"' : '',
-		'AUTH_READ' => $Group->Generate_select_groups('r', $array_auth, 0x01),
-		'AUTH_WRITE' => $is_root ? $Group->Generate_select_groups('w', $array_auth, 0x02) : $Group->Generate_select_groups('w', $array_auth, 0x02, array(), GROUP_DISABLE_SELECT),
-		'AUTH_EDIT' => $is_root ? $Group->Generate_select_groups('x', $array_auth, 0x04) : $Group->Generate_select_groups('x', $array_auth, 0x04, array(), GROUP_DISABLE_SELECT),
+		'AUTH_READ' => $Group->Generate_select_auth('r', $array_auth, 0x01),
+		'AUTH_WRITE' => $is_root ? $Group->Generate_select_auth('w', $array_auth, 0x02) : $Group->Generate_select_auth('w', $array_auth, 0x02, array(), GROUP_DISABLE_SELECT),
+		'AUTH_EDIT' => $is_root ? $Group->Generate_select_auth('x', $array_auth, 0x04) : $Group->Generate_select_auth('x', $array_auth, 0x04, array(), GROUP_DISABLE_SELECT),
 		'DISABLED' => $is_root ? '0' : '1',
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
@@ -275,10 +275,7 @@ elseif( !empty($id) )
 		'L_UPDATE' => $LANG['update'],
 		'L_AUTH_READ' => $LANG['auth_read'],
 		'L_AUTH_WRITE' => $LANG['auth_write'],
-		'L_AUTH_EDIT' => $LANG['auth_edit'],
-		'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
-		'L_SELECT_ALL' => $LANG['select_all'],
-		'L_SELECT_NONE' => $LANG['select_none']
+		'L_AUTH_EDIT' => $LANG['auth_edit']
 	));
 	
 	$Template->Pparse('admin_forum_cat_edit'); // traitement du modele

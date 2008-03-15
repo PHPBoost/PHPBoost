@@ -110,64 +110,13 @@ class Group
 		return $array_auth_all;
 	}
 	
-    //Génération du formulaire pour les autorisations membre par membre.
-    function generate_select_members($auth_id, $array_auth, $auth_level)
+	//Génération d'une liste à sélection multiple des rangs, groupes et membres
+    function Generate_select_auth($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '')
     {
-        global $sql;
-
-        $reqUsers = "SELECT user_id, login FROM ".PREFIX."member";
-        $request = $Sql->query_while($request, __LINE__, __FILE__);
-        
-        $select_members = '<select id="members_auth' . $auth_id . '" name="members_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="' . (empty($disabled) ? 'if(disabled == 0)' : '') . 'document.getElementById(\'' . $auth_id . 'r3\').selected = true;">';
-        while( $row = $Sql->Sql_fetch_assoc($request) )
-        {
-            $select_members .= '<option  ' . $disabled . 'value="m' . $row['user_id'] . '" id="m' . $row['user_id'] . '" ' . $selected . '>' . $row['login'] . '</option>';
-        }
-        $select_members .= '</select>';
-
-        return $select_members;
+        $this->generate_select_groups($auth_id, $array_auth, $auth_level, $array_ranks_default, $disabled);
+        $this->generate_select_members($auth_id, $array_auth, $auth_level);
     }
-    
-	//Génération d'une liste à sélection multiple des rangs et groupes
-	function Generate_select_groups($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '')
-	{
-		global $array_groups, $array_ranks, $LANG;
-		
-		$array_ranks = is_array($array_ranks) ? $array_ranks : array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-		 
-		$j = 0;
-		//Liste des rangs
-		$select_groups = '<select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="' . (empty($disabled) ? 'if(disabled == 0)' : '') . 'document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
-		foreach($array_ranks as $idgroup => $group_name)
-		{
-			$selected = '';	
-			if( array_key_exists('r' . $idgroup, $array_auth) && ((int)$array_auth['r' . $idgroup] & (int)$auth_level) !== 0 && empty($disabled) )
-				$selected = 'selected="selected"';
-				
-			$selected = (isset($array_ranks_default[$idgroup]) && $array_ranks_default[$idgroup] === true && empty($disabled)) ? 'selected="selected"' : $selected;
-			
-			$select_groups .=  '<option ' . $disabled . 'value="r' . $idgroup . '" id="' . $auth_id . 'r' . $j . '" ' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_id . 'r\', ' . $j . ')">' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .=  '</optgroup>';
-		
-		//Liste des groupes.
-		$j = 0;
-		$select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
-		foreach($array_groups as $idgroup => $group_name)
-		{
-			$selected = '';		
-			if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_level) !== 0 && empty($disabled) )
-				$selected = 'selected="selected"';
 
-			$select_groups .= '<option  ' . $disabled . 'value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '" ' . $selected . '>' . $group_name . '</option>';
-			$j++;
-		}
-		$select_groups .= '</optgroup></select>';
-		
-		return $select_groups;
-	}
-	
 	//Ajout du membre au groupe, retourne true si le membre est bien ajouté, false si le membre appartient déjà au groupe.
 	function Add_member($user_id, $idgroup)
 	{
@@ -233,6 +182,57 @@ class Group
 	
 	
 	##  Private methods ##
+	//Génération d'une liste à sélection multiple des rangs et membres
+    function generate_select_groups($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '')
+    {
+        global $array_groups, $array_ranks, $LANG;
+       
+        $array_ranks = is_array($array_ranks) ? $array_ranks : array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
+        $j = 0;
+        //Liste des rangs
+        $select_groups = '<select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="' . (empty($disabled) ? 'if(disabled == 0)' : '') . 'document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
+        foreach($array_ranks as $idgroup => $group_name)
+        {
+            $selected = '';   
+            if( array_key_exists('r' . $idgroup, $array_auth) && ((int)$array_auth['r' . $idgroup] & (int)$auth_level) !== 0 && empty($disabled) )
+                $selected = ' selected="selected"';
+               
+            $selected = (isset($array_ranks_default[$idgroup]) && $array_ranks_default[$idgroup] === true && empty($disabled)) ? 'selected="selected"' : $selected;
+            $select_groups .= '<option ' . $disabled . 'value="r' . $idgroup . '" id="' . $auth_id . 'r' . $j . '"' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_id . 'r\', ' . $j . ')">' . $group_name . '</option>';
+            $j++;
+        }
+        $select_groups .= '</optgroup>';
+       
+        //Liste des groupes.
+        $j = 0;
+        $select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
+        foreach($array_groups as $idgroup => $group_name)
+        {
+            $selected = '';       
+            if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_level) !== 0 && empty($disabled) )
+                $selected = ' selected="selected"';
+
+            $select_groups .= '<option ' . $disabled . 'value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '"' . $selected . '>' . $group_name . '</option>';
+            $j++;
+        }
+        $select_groups .= '</optgroup></select>';
+		$LANG['select_all'];
+		$LANG['select_none'];
+        return $select_groups;
+    }
+
+    //Génération du formulaire pour les autorisations membre par membre.
+    function generate_select_members($auth_id, $array_auth, $auth_level)
+    {
+        $select_members = '';
+        foreach($auth_id as $key => $value)
+        {
+            $select_members .= ;
+        }      
+
+        return $select_members;
+    }
+	
 	//Ajoute un droit à l'ensemble des autorisations.
 	function add_auth_group($auth_group, $add_auth)
 	{
