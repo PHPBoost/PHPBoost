@@ -228,7 +228,7 @@ function progress_bar(percent_progress, info_progress)
 	if( this.percent_begin <= bar_progress )
 	{
 		if( document.getElementById('progress_bar' + idbar) )
-			document.getElementById('progress_bar' + idbar).innerHTML += '<img src="../templates/' + theme + '/images/loading.png" alt="" />';
+			document.getElementById('progress_bar' + idbar).innerHTML += '<img src="../templates/' + theme + '/images/progress.png" alt="" />';
 		if( document.getElementById('progress_percent' + idbar) )
 			document.getElementById('progress_percent' + idbar).innerHTML = Math.round((this.percent_begin * 100) / 55);
 		if( document.getElementById('progress_info' + idbar) )
