@@ -35,7 +35,7 @@
 		        show_div(RESULTS + module);
 		        if ( !inArray(module, calculatedResults) )
 		        {
-		            document.getElementById(INFOS_RESULTS + module).innerHTML = '<img src="../templates/phpboost/images/loading.gif" /> Calcul des résultats en cours...';
+		            document.getElementById(INFOS_RESULTS + module).innerHTML = '<div style="vertical-align:middle"><img src="../templates/phpboost/images/loading.gif" /> Calcul des résultats en cours...</div>';
 		            XMLHttpRequest_search_module(module);
 		        }
 		    }
