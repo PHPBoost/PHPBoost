@@ -21,7 +21,7 @@
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_CONNECT}</h5>
 			</div>
-			<div class="module_mini_table">
+			<div class="module_mini_contents">
 				<p>
 					<label>{L_PSEUDO}
 					<br />
@@ -52,7 +52,7 @@
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_PROFIL}</h5>
 			</div>
-			<div class="module_mini_table" style="text-align:left;">
+			<div class="module_mini_contents" style="text-align:left;">
 				<ul style="margin:0;padding:0;padding-left:4px;list-style-type:none;line-height:18px">
 					<li><img src="../templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="../member/member{U_MEMBER_ID}" class="small_link">{L_PRIVATE_PROFIL}</a></li>
 					<li>{U_MEMBER_MP}</li>

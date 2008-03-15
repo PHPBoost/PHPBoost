@@ -62,11 +62,14 @@
 					<tr>
 						<td colspan="{COLSPAN}" style="border:1px solid black;background:#CCFF99">
 							# START mod_subheader #
-							<div style="margin:15px;" class="module_mini_container_horizontal">
-								<div class="module_mini_top_horizontal">
-									<span id="m{mod_subheader.IDMENU}"></span><h5 class="sub_title">{mod_subheader.NAME} {mod_subheader.EDIT}{mod_subheader.DEL}</h5>
+							<div style="margin:15px;width:auto" class="module_position">					
+								<div class="module_top_l"></div>		
+								<div class="module_top_r"></div>
+								<div class="module_top">
+									<strong><span id="m{mod_subheader.IDMENU}"></span><h5 class="sub_title">{mod_subheader.NAME} {mod_subheader.EDIT}{mod_subheader.DEL}</h5></strong>
 								</div>
-								<div class="module_mini_table_horizontal">
+									
+								<div class="module_contents">
 									<p>
 										<select name="{mod_subheader.IDMENU}activ" onchange="document.location = {mod_subheader.U_ONCHANGE_ACTIV}">								
 											<option value="1" {mod_subheader.ACTIV_ENABLED}>{L_ACTIV}</option>
@@ -99,8 +102,9 @@
 									</div>
 									<p>{mod_subheader.CONTENTS}</p>&nbsp;
 								</div>
-								<div class="module_mini_bottom_horizontal">
-								</div>
+								<div class="module_bottom_l"></div>		
+								<div class="module_bottom_r"></div>
+								<div class="module_bottom"></div>
 							</div>
 							# END mod_subheader #	
 						</td>
@@ -113,7 +117,7 @@
 								<div class="module_mini_top">
 									<span id="m{mod_left.IDMENU}"></span><h5 class="sub_title">{mod_left.NAME} {mod_left.EDIT} {mod_left.DEL}</h5>
 								</div>
-								<div class="module_mini_table">
+								<div class="module_mini_contents">
 									<p>
 										<select name="{mod_left.IDMENU}activ" onchange="document.location = {mod_left.U_ONCHANGE_ACTIV}">								
 											<option value="1" {mod_left.ACTIV_ENABLED}>{L_ACTIV}</option>
@@ -164,11 +168,7 @@
 									<div class="module_top_l"></div>		
 									<div class="module_top_r"></div>
 									<div class="module_top">
-										<div style="float:left">
-											<strong><span id="m{mod_topcentral.IDMENU}"></span><h5 class="sub_title">{mod_topcentral.NAME} {mod_topcentral.EDIT}{mod_topcentral.DEL}</h5></strong>
-										</div>
-										<div style="float:right">
-										</div>
+										<strong><span id="m{mod_topcentral.IDMENU}"></span><h5 class="sub_title">{mod_topcentral.NAME} {mod_topcentral.EDIT}{mod_topcentral.DEL}</h5></strong>
 									</div>
 									<div class="module_contents">
 										<p>
@@ -216,7 +216,7 @@
 									<div class="module_mini_top">
 										<span id="m{mod_main.IDMENU}"></span><h5 class="sub_title">{mod_main.NAME} {mod_main.DEL} {mod_main.EDIT}</h5>
 									</div>
-									<div class="module_mini_table">
+									<div class="module_mini_contents">
 										<p>
 											<select name="{mod_main.IDMENU}activ" onchange="document.location = {mod_main.U_ONCHANGE_ACTIV}">								
 												<option value="1">{L_ACTIV}</option>
@@ -260,11 +260,7 @@
 									<div class="module_top_l"></div>		
 									<div class="module_top_r"></div>
 									<div class="module_top">
-										<div style="float:left">
-											<strong><span id="m{mod_bottomcentral.IDMENU}"></span><h5 class="sub_title">{mod_bottomcentral.NAME} {mod_bottomcentral.EDIT}{mod_bottomcentral.DEL}</h5></strong>
-										</div>
-										<div style="float:right">
-										</div>
+										<strong><span id="m{mod_bottomcentral.IDMENU}"></span><h5 class="sub_title">{mod_bottomcentral.NAME} {mod_bottomcentral.EDIT}{mod_bottomcentral.DEL}</h5></strong>
 									</div>
 									<div class="module_contents">
 										<p>
@@ -316,7 +312,7 @@
 								<div class="module_mini_top">
 									<span id="m{mod_right.IDMENU}"></span><h5 class="sub_title">{mod_right.NAME} {mod_right.EDIT}{mod_right.DEL}</h5>
 								</div>
-								<div class="module_mini_table">
+								<div class="module_mini_contents">
 									<p>
 										<select name="{mod_right.IDMENU}activ" onchange="document.location = {mod_right.U_ONCHANGE_ACTIV}">								
 											<option value="1" {mod_right.ACTIV_ENABLED}>{L_ACTIV}</option>

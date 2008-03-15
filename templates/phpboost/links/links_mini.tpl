@@ -2,7 +2,7 @@
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_MENU}Menu</h5>
 			</div>		
-			<div class="module_mini_table">
+			<div class="module_mini_contents">
 				<ul style="margin:0px;padding:0px;list-style-type:none;">
 				# START links #		
 					# START links.title #			
