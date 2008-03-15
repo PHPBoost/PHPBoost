@@ -2,7 +2,7 @@
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_STATS}</h5>
 			</div>
-			<div class="module_mini_table">
+			<div class="module_mini_contents">
 				<p>
 					{L_MEMBER_REGISTERED}
 				</p>	

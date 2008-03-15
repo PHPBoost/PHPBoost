@@ -19,7 +19,7 @@
 		</script>
 		<div class="module_mini_container">
 		    <div class="module_mini_top"><h5 class="sub_title">{SEARCH}</h5></div>
-		    <div class="module_mini_table">
+		    <div class="module_mini_contents">
 		        <div class="search_mini">
 		            <form action="../search/search.php#results" onsubmit="return check_search_mini_form_post();" method="post">
 		                <input type="text" id="TxTMiniSearched" name="search" value="{TEXT_SEARCHED}"  class="text" /><br />

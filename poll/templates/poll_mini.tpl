@@ -4,7 +4,7 @@
 				<div class="module_mini_top">
 					<h5 class="sub_title">{L_MINI_POLL}</h5>
 				</div>
-				<div class="module_mini_table" style="text-align:center">
+				<div class="module_mini_contents" style="text-align:center">
 					<span style="font-size:10px;">{question.QUESTION}</span>
 
 					<hr style="width:90%;" />
@@ -36,7 +36,7 @@
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_MINI_POLL}</h5>
 			</div>
-			<div class="module_mini_table" style="text-align:center">			
+			<div class="module_mini_contents" style="text-align:center">			
 				<span style="font-size:10px;">{result.QUESTION}</span>
 				
 				<hr style="width:90%;" />

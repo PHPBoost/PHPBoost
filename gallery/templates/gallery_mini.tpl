@@ -14,7 +14,7 @@
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_RANDOM_PICS}</h5>
 			</div>
-			<div class="module_mini_table">
+			<div class="module_mini_contents">
 				<div style="width:{WIDTH_DIV}px;margin:auto;">	
 					<div style="position:relative;width:{WIDTH_DIV}px;height:{HEIGHT_DIV}px;overflow:hidden;">	
 						<div id="thumb_mini" style="left:0px;top:0px;position:relative;margin-top:5px;" onmouseover="temporize_scroll()" onmouseout="temporize_scroll();">

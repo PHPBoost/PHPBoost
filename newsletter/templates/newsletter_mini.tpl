@@ -3,7 +3,7 @@
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_NEWSLETTER}</h5>
 			</div>
-			<div class="module_mini_table">
+			<div class="module_mini_contents">
 				<p>
 					<input type="text" name="mail_newsletter" maxlength="50" size="18" class="text" value="{USER_MAIL}" />
 				</p>
