@@ -32,7 +32,7 @@
 
 $LANG['xml_lang'] = 'en';
 $LANG['administration'] = 'Administration';
-$LANG['no_administration'] = 'No administration associated with this module!';
+$LANG['no_administration'] = 'No administration is associated with this module!';
 
 //Default module
 $LANG['index'] = 'Index';
@@ -65,8 +65,8 @@ $LANG['extend_menu'] = 'Extend menu';
 $LANG['add'] = 'Add';
 
 //Alertes formulaires
-$LANG['alert_same_pass'] = 'The passwords arn\'t identical!';
-$LANG['alert_max_dim'] = 'The file exceeds the specified width and height maximum !';
+$LANG['alert_same_pass'] = 'The passwords are not the same!';
+$LANG['alert_max_dim'] = 'The file exceeds the specified maximum width and height !';
 $LANG['alert_error_avatar'] = 'Error while uploadind avatar!';
 $LANG['alert_error_img'] = 'Erreur while uploadind pics!';
 $LANG['alert_invalid_file'] = 'The file isn\'t valid (jpg, gif, png!)';
@@ -74,15 +74,15 @@ $LANG['alert_max_weight'] = 'Too heavy image';
 $LANG['alert_s_already_use'] = 'Smiley code already used!';
 $LANG['alert_no_cat'] = 'No name/category selected';
 $LANG['alert_fct_unlink'] = 'Impossible to delete picture. You must remove manually on the ftp!';
-$LANG['alert_no_login'] = 'The input pseudo doesn\'t exist!';
+$LANG['alert_no_login'] = 'The input nickname doesn\'t exist!';
 
 //Requis
 $LANG['require'] = 'The marked Fields * are obligatory!';
 $LANG['require_title'] = 'Please enter a title !';
 $LANG['require_text'] = 'Please enter a text!';
-$LANG['require_pseudo'] = 'Please enter pseudo!';
+$LANG['require_pseudo'] = 'Please enter nickname!';
 $LANG['require_password'] = 'Please enter a password!';
-$LANG['require_mail'] = 'Please enter a valid mail!';
+$LANG['require_mail'] = 'Please enter a valid mail adress!';
 $LANG['require_cat'] = 'Please enter a category!';
 $LANG['require_cat_create'] = 'No category found, please create one';
 $LANG['require_url'] = 'Please enter a valid URL!';
@@ -104,15 +104,15 @@ $LANG['require_file_name'] = 'Please enter a file name';
 
 //Confirmations.
 $LANG['redirect'] = 'Redirect in progress...';
-$LANG['del_entry'] = 'Delete entry?';
-$LANG['confirm_del_member'] = 'Delete member? (final !)';
-$LANG['confirm_theme'] = 'Delete the theme?';
-$LANG['confirm_del_smiley'] = 'Delete smiley?';
-$LANG['confirm_del_cat'] = 'Delete category ?';
-$LANG['confirm_del_article'] = 'Delete thist article?';
-$LANG['confirm_del_rank'] = 'Delete this rank ?';
-$LANG['confirm_del_group'] = 'Delete this group ?';
-$LANG['confirm_del_member_group'] = 'Delete this member of group ?';
+$LANG['del_entry'] = 'Do you want to delete this entry?';
+$LANG['confirm_del_member'] = 'Do you want to delete this member? (final !)';
+$LANG['confirm_theme'] = 'Do you want to delete this theme?';
+$LANG['confirm_del_smiley'] = 'Do you want to delete this smiley?';
+$LANG['confirm_del_cat'] = 'Do you want to delete this category ?';
+$LANG['confirm_del_article'] = 'Do you want to delete thisarticle?';
+$LANG['confirm_del_rank'] = 'Do you want to delete this rank ?';
+$LANG['confirm_del_group'] = 'Do you want to delete this group ?';
+$LANG['confirm_del_member_group'] = 'DDo you want to delete this member of group ?';
 
 //bbcode
 $LANG['bb_bold'] = 'Text in bold: [b]text[/b]';
@@ -120,7 +120,7 @@ $LANG['bb_italic'] = 'Text in italic: [i]text[/i]';
 $LANG['bb_underline'] = 'Underlined text: [u]text[/u]';
 $LANG['bb_link'] = 'Add a weblink: [url]link[/url], or [url=link]name of the link[/url]';
 $LANG['bb_picture'] = 'Add a picture: [img]url picture[/img]';
-$LANG['bb_size'] = 'Size of texte (X between 0 - 49): [size=X]text on size X[/size]';
+$LANG['bb_size'] = 'Size of text (X between 0 - 49): [size=X]text on size X[/size]';
 $LANG['bb_color'] = 'Text color: [color=X]text on X color[/color]';
 $LANG['bb_quote'] = 'Make a quote [quote=pseudo]text[/quote]';
 $LANG['bb_code'] = 'Insert code (color PHP) [code]text[/code]';
@@ -129,7 +129,7 @@ $LANG['bb_center'] = 'Center : [align=center]center object[/align]';
 $LANG['bb_right'] = 'Align on right: [align=right]object on right[/align]';
 
 //Commun
-$LANG['pseudo'] = 'Pseudo';
+$LANG['pseudo'] = 'Nickname';
 $LANG['yes'] = 'Yes';
 $LANG['no'] = 'No';
 $LANG['description'] = 'Description';
@@ -154,8 +154,8 @@ $LANG['total_users'] = 'Registered user(s)';
 $LANG['user_ip'] = 'Ip adress';
 $LANG['localisation'] = 'Localisation';
 $LANG['activ'] = 'Activate';
-$LANG['unactiv'] = 'Unactiv';
-$LANG['img'] = 'Image';
+$LANG['unactiv'] = 'Unactivate';
+$LANG['img'] = 'Picture';
 $LANG['activation'] = 'Activation';
 $LANG['position'] = 'Position';
 $LANG['path'] = 'Path';
@@ -194,8 +194,8 @@ $LANG['add'] = 'Add';
 $LANG['category'] = 'Category';
 $LANG['site'] = 'Site';
 $LANG['modules'] = 'Modules';
-$LANG['powered_by'] = 'Boost by';
-$LANG['release_date'] = 'Realease date <span class="text_small">dd/mm/yy</span>';
+$LANG['powered_by'] = 'Boosted by';
+$LANG['release_date'] = 'Release date <span class="text_small">dd/mm/yy</span>';
 $LANG['immediate'] = 'Immediat';
 $LANG['waiting'] = 'Waiting';
 $LANG['stats'] = 'Statistics'; 
@@ -255,12 +255,12 @@ $LANG['predef_regexp'] = 'Predefined regex';
 $LANG['figures'] = 'Figures';
 $LANG['letters'] = 'Letters';
 $LANG['figures_letters'] = 'Figures and letters';
-$LANG['default_field_possible_values'] = 'Yest|No';
+$LANG['default_field_possible_values'] = 'Yes|No';
 $LANG['extend_field_edit'] = 'Edit field';
 
 //Index
-$LANG['admin_index'] = 'Welcome on <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost %s</a>, thank you to have chosen this CMS for your site.<br /><br />You can manage all the site with this administration panel.<br />
-This one is divided into subcategories in which you will find the tools necessary for maintenance and configuration of the site.<br /><br />For any bugs or suggestions contact the support on the <a href="http://www.phpboost.com/forum/index.php" title="Official PHPBoost Forum">official forum</a>.<br />You can also consult the <a href="http://www.phpboost.com/wiki/wiki.php">official documentation</a>.<br /><br /><br />Follow the updates on <a href="http://www.phpboost.com">http://www.phpboost.com</a>';
+$LANG['admin_index'] = 'Welcome on <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost %s</a>, thank you to have chosen this CMS for your site.<br /><br />You can manage all the website with this administration panel.<br />
+This one is divided into subcategories in which you will find the tools necessary for maintenance and configuration of the website.<br /><br />If you find any bugs or if you have some suggestions, please contact the support on the <a href="http://www.phpboost.com/forum/index.php" title="Official PHPBoost Forum">official forum</a>.<br />You can also consult the <a href="http://www.phpboost.com/wiki/wiki.php">official documentation</a>.<br /><br /><br />Follow the updates on <a href="http://www.phpboost.com">http://www.phpboost.com</a>';
 $LANG['update_available'] = 'Update available';
 $LANG['core_update_available'] = 'New core version available, please update PHPBoost! <a href="http://www.phpboost.com">More informations</a>';
 $LANG['no_core_update_available'] = 'No new core version available, you are up to date!';
@@ -276,10 +276,10 @@ $LANG['config_advanced'] = 'Advanced configs';
 $LANG['serv_name'] = 'Server name';
 $LANG['serv_path'] = 'PHPBoost path, empty by default';
 $LANG['serv_path_explain'] = 'Website, on the server root';
-$LANG['site_name'] = 'Site name';
+$LANG['site_name'] = 'Website name';
 $LANG['serv_name_explain'] = 'Ex: http://www.phpboost.com';
-$LANG['site_desc'] = 'Description of the site';
-$LANG['site_keyword'] = 'Keywords for the site';
+$LANG['site_desc'] = 'Description of the website';
+$LANG['site_keyword'] = 'Keywords for the website';
 $LANG['default_language'] = 'Language (default) of the website';
 $LANG['default_theme'] = 'Website\'s (default) theme';
 $LANG['default_editor'] = 'Website\'s (default) text editor';
@@ -313,7 +313,7 @@ $LANG['pm_max_explain'] = 'Unllimited for administrators et moderators';
 $LANG['anti_flood_explain'] = 'Block too closer messages, except if the visitors are authorized';
 $LANG['int_flood_explain'] = '7 seconds by default</span>';
 $LANG['email_management'] = 'Emails management';
-$LANG['email_admin'] = 'Adminsitrators\'s mails';
+$LANG['email_admin'] = 'Adminitrators\'s mails';
 $LANG['admin_admin_status'] = 'Send mail to the Administrator ';
 $LANG['admin_sign'] = 'Signature of the mail';
 $LANG['email_admin_explain'] = 'Tape ; between each mail';
@@ -327,7 +327,7 @@ $LANG['unlock_admin_confirm'] = 'Unlock code has been send succefully';
 $LANG['unlock_admin'] = 'Unlock code';
 $LANG['unlock_admin_explain'] = 'This code can unlock the administration panel in case of intrusive tentative.';
 $LANG['send_unlock_admin'] = 'Send unlock admin code';
-$LANG['unlock_title_mail'] = 'Mail à conserver';
+$LANG['unlock_title_mail'] = 'Mail to keep';
 $LANG['unlock_mail'] = 'Conserved this code (it will never be redelivered): %s
 
 This code can unlock the administration panel in case of intrusive tentative. 
@@ -412,7 +412,7 @@ $LANG['smiley_code'] = 'Smiley code (ex: :D)';
 $LANG['smiley_available'] = 'Available smileys';
 $LANG['edit_smiley'] = 'Edit smileys';
 $LANG['smiley_management'] = 'Smileys management';
-$LANG['e_smiley_already_exist'] = 'Smiley already exist!';	
+$LANG['e_smiley_already_exist'] = 'This smiley already exists!';	
 
 //Thèmes
 $LANG['upload_theme'] = 'Upload theme';
@@ -500,7 +500,7 @@ $LANG['male'] = 'Male';
 $LANG['female'] = 'Female';
 $LANG['verif_code'] = 'Visual verification code';
 $LANG['verif_code_explain'] = 'Avoid false register';
-$LANG['delay_activ_max'] = 'Delay for unactiv members after which they are deleted';
+$LANG['delay_activ_max'] = 'Delay for unactive members. after this delay, they will be deleted';
 $LANG['delay_activ_max_explain'] = 'Leave empty to ignore this option (ignored if validation by administrator!)';
 $LANG['activ_mbr'] = 'Activation mode of the member account';
 $LANG['no_activ_mbr'] = 'Automatic';
@@ -530,7 +530,7 @@ $LANG['explain_terms'] = 'Write register terms, members have to accept it before
 $LANG['groups_management'] = 'Group managements';
 $LANG['groups_add'] = 'Add a group';
 $LANG['auth_flood'] = 'Allowed to flood';
-$LANG['pm_group_limit'] = 'Private messages limite';
+$LANG['pm_group_limit'] = 'Private messages limit';
 $LANG['pm_group_limit_explain'] = 'Set -1 for no limit';
 $LANG['data_group_limit'] = 'Data upload limit';
 $LANG['data_group_limit_explain'] = 'Set -1 for no limit';
@@ -558,64 +558,64 @@ $LANG['select_type_bbcode'] = 'BBCode';
 $LANG['select_type_html'] = 'HTML';
 
 //Sauvegarde/restauration base de données
-$LANG['database_management'] = 'Gestion de la base de données';
-$LANG['db_explain_actions'] = 'Ce panneau vous permet de gérer votre base de données. Vous pouvez y voir la liste des tables utilisées par PHPBoost, leurs propriétés. Aussi divers outils vous permettront de faire quelques opérations basiques sur certaines tables. Vous pouvez aussi effectuer une sauvegarde de votre base de données, ou de seulement quelques tables que vous sélectionnerez ici.
+$LANG['database_management'] = 'Database management';
+$LANG['db_explain_actions'] = 'This panel allow you to manage your database. You can see the list of tables used by PHPBoost, their properties. And some tools who allow you to do some basic operations in some tables. You can save your database too, or just save some tables that you want,which you\'ll select here.
 <br /><br />
-<div class="question">L\'optimisation de la base de données permet de réorganiser la structure de la table afin de faciliter les opérations au serveur SQL. Cette opération est effectuée automatiquement sur chaque table une fois par jour. Vous pouvez optimiser les tables manuellement via ce panneau d\'administration.
+<div class="question">The database optimisatoin allow you to remake the table\'s structur to simply SQL server\'s operations. This operation is made automaticly in each table once per day. You can optimize tables manually by this administration panel.
 <br />
-La réparation n\'est normalement pas à envisager mais en cas de problème elle peut s\'avérer utile. Le support vous dira de l\'effectuer quand cela sera nécessaire.
+You shall normaly not make a reparation, but if you have a problem it can be useful. The support will say to you to do it when it will be necessary
 <br />
-<strong>Attention : </strong>C\'est une opération lourde, elle consomme beaucoup de ressources, il est donc conseillé d\'éviter de réparer les tables si ce n\'est pas utile !</div>';
-$LANG['db_restore'] = 'Restaurer la base de données depuis un fichier de sauvegarde';
-$LANG['db_restore_from_server'] = 'Vous pouvez utiliser les fichiers que vous n\'aviez pas supprimé lors de restaurations antérieures.';
-$LANG['db_view_file_list'] = 'Voir la liste des fichiers disponibles (<em>cache/backup</em>)';
-$LANG['import_file_explain'] = 'Vous pouvez restaurer votre base de données par un fichier que vous possédez sur votre ordinateur. Si votre fichier dépasse la taille maximale autorisée par votre serveur, c\'est-à-dire %s, vous devez utiliser l\'autre méthode en envoyant par FTP votre fichier dans le répertoire <em>cache/backup</em>.';
-$LANG['db_restore'] = 'Restaurer';
-$LANG['db_table_list'] = 'Liste des tables';
-$LANG['db_table_name'] = 'Nom de la table';
-$LANG['db_table_rows'] = 'Enregistrements';
-$LANG['db_table_engine'] = 'Type';
-$LANG['db_table_collation'] = 'Interclassement';
-$LANG['db_table_data'] = 'Taille';
-$LANG['db_table_free'] = 'Perte';
-$LANG['db_selected_tables'] = 'Tables sélectionnées';
-$LANG['db_select_all'] = 'toutes';
-$LANG['db_for_selected_tables'] = 'Actions à réaliser sur la sélection de tables';
-$LANG['db_optimize'] = 'Optimiser';
-$LANG['db_repair'] = 'Réparer';
-$LANG['db_backup'] = 'Sauvegarder';
-$LANG['db_succes_repair_tables'] = 'La sélection de tables (<em>%s</em>) a été réparée avec succès';
-$LANG['db_succes_optimize_tables'] = 'La sélection de tables (<em>%s</em>) a été optimisée avec succès';
-$LANG['db_backup_database'] = 'Sauvegarder la base de données';
-$LANG['db_selected_tables'] = 'Tables sélectionnées';
-$LANG['db_backup_explain'] = 'Vous pouvez encore modifier la liste des tables que vous souhaitez sélectionner dans le formulaire.
+<strong>Be careful : </strong>It is a heavy operation, and it need much resources. So itis advised to not repair tables  when it is useless !</div>';
+$LANG['db_restore'] = 'Restore database from a save\'s file.';
+$LANG['db_restore_from_server'] = 'You can use files you didn\'t use in your last restorations.';
+$LANG['db_view_file_list'] = 'See list of disponible files (<em>cache/backup</em>)';
+$LANG['import_file_explain'] = 'You can restore your database by a file in your computer. If your file exceed the maximum size allowed by your server(it is %s), you must do the alternative method, send your file in the folder <em>cache/backup</em> by FTP.';
+$LANG['db_restore'] = 'Restore';
+$LANG['db_table_list'] = 'Tables\'s list';
+$LANG['db_table_name'] = 'Name of the table';
+$LANG['db_table_rows'] = 'Registrations';
+$LANG['db_table_engine'] = 'Kind';
+$LANG['db_table_collation'] = 'interclassification';
+$LANG['db_table_data'] = 'Size';
+$LANG['db_table_free'] = 'Losses';
+$LANG['db_selected_tables'] = 'Selectionned tables';
+$LANG['db_select_all'] = 'all';
+$LANG['db_for_selected_tables'] = 'Actions to do in this tables\' selection';
+$LANG['db_optimize'] = 'optimize';
+$LANG['db_repair'] = 'Répair';
+$LANG['db_backup'] = 'Save';
+$LANG['db_succes_repair_tables'] = 'The table\'s selection (<em>%s</em>) was succesfully repaired';
+$LANG['db_succes_optimize_tables'] = 'The table\'s selection (<em>%s</em>) was succesfully optimized';
+$LANG['db_backup_database'] = 'Save the database';
+$LANG['db_selected_tables'] = 'Selectionned tables';
+$LANG['db_backup_explain'] = 'You can also edit tables\' you wish select in this formulary.
 <br />
-Ensuite vous devez choisir ce que vous souhaitez sauvegarder.';
-$LANG['db_backup_all'] = 'Données et structure';
-$LANG['db_backup_struct'] = 'Structure seulement';
-$LANG['db_backup_data'] = 'Données seulement';
-$LANG['db_backup_success'] = 'Votre base de données a été correctement sauvegardée. Vous pouvez la télécharger en suivant le lien suivant : <a href="admin_database.php?read_file=%s">%s</a>';
-$LANG['db_execute_query'] = 'Exécuter une requête dans la base de données';
-$LANG['db_tools'] = 'Outils de gestion de la base de données';
-$LANG['db_query_explain'] = 'Vous pouvez dans ce panneau d\'administration exécuter des requêtes dans la base de données. Cette interface ne devrait servir que lorsque le support vous demande d\'exécuter une requête dans la base de données qui vous sera communiquée.<br />
-<strong>Attention:</strong> si cette requête n\'a pas été proposée par le support vous êtes responsable de son exécution et des pertes de données qu\'elle pourrait provoquer. Il est donc fortement déconseillé d\'utiliser ce module si vous ne maîtrisez pas complètement la structure des tables de PHPBoost.';
-$LANG['db_submit_query'] = 'Exécuter';
-$LANG['db_query_result'] = 'Résultat de la requête suivante';
-$LANG['db_executed_query'] = 'Requête SQL';
-$LANG['db_file_list'] = 'Liste des fichiers';
-$LANG['db_confirm_restore'] = 'Etes-vous sûr de vouloir restaurer votre base de données à partir de la sauvegarde sélectionnée?';
-$LANG['db_restore_file'] = 'Cliquez sur le fichier que vous voulez restaurer.';
-$LANG['db_restore_success'] = 'La restauration de la base de données a été effectuée avec succès';
-$LANG['db_restore_failure'] = 'Une erreur est survenue pendant la restauration de la base de données';
-$LANG['db_upload_failure'] = 'Une erreur est survenue lors du transfert du fichier à partir duquel vous souhaitez importer votre base de données';
+Next, you have to choose what you want to save.';
+$LANG['db_backup_all'] = 'Datas and structur';
+$LANG['db_backup_struct'] = 'Only structur';
+$LANG['db_backup_data'] = 'Only datas';
+$LANG['db_backup_success'] = 'Your database was successfully saved. You can download it in this link : <a href="admin_database.php?read_file=%s">%s</a>';
+$LANG['db_execute_query'] = 'Execut a query in the database';
+$LANG['db_tools'] = 'Database managements tools';
+$LANG['db_query_explain'] = 'In this administration panel, you can execut queries in the databases.This interface should be used only when the support ask you to execut a query in the database who\'ll be said.<br />
+<strong>Be careful:</strong> If this query was not suggered by the support, you\'re responsible of its execution and datas losts its can be made.So it\'s advised to not use this module if you don\'t control completely the PHPBoost tables\' structur.';
+$LANG['db_submit_query'] = 'Execut';
+$LANG['db_query_result'] = 'Result of this query';
+$LANG['db_executed_query'] = 'SQL query';
+$LANG['db_file_list'] = 'Files\'s list';
+$LANG['db_confirm_restore'] = 'Are you sure to want to restore your database by the selected save?';
+$LANG['db_restore_file'] = 'Click in the file you want to restore.';
+$LANG['db_restore_success'] = 'The database\'s restauration was successfully made';
+$LANG['db_restore_failure'] = 'An error appeared during database\'s restaurationUne erreur';
+$LANG['db_upload_failure'] = 'An error appeared during file transfert from it you wish import your database';
 $LANG['db_file_already_exists'] = 'Un fichier du répertoire cache/backup porte le même nom que celui que vous souhaitez importer. Merci de renommer un des deux fichiers pour pouvoir l\'importer.';
-$LANG['db_unlink_success'] = 'Le fichier a été supprimé avec succès !';
-$LANG['db_unlink_failure'] = 'Le fichier n\'a pas pu être supprimé';
+$LANG['db_unlink_success'] = 'the file was successfuly deleted!';
+$LANG['db_unlink_failure'] = 'The file could\'nt be deleted';
 $LANG['db_confirm_delete_file'] = 'Do you really want to delete this file?';
-$LANG['db_file_does_not_exist'] = 'Le fichier que vous souhaitez supprimer n\'existe pas ou n\'est pas un fichier SQL';
-$LANG['db_empty_dir'] = 'Le dossier est vide';
-$LANG['db_file_name'] = 'Nom du fichier';
-$LANG['db_file_weight'] = 'Taille du fichier';
+$LANG['db_file_does_not_exist'] = 'The file you wish to delete doesn\'t exist or it is not a SQL file';
+$LANG['db_empty_dir'] = 'The folder is empty';
+$LANG['db_file_name'] = 'Name of the file';
+$LANG['db_file_weight'] = 'Size of the file';
 
 //Stats
 $LANG['stats'] = 'Stats';

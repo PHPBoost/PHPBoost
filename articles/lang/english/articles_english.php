@@ -1,28 +1,28 @@
 <?php
 /*##################################################
- *                              articles_english.php
- *                            -------------------
- *   begin                : November 21, 2006
- *   copyright          : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *  
- ###################################################
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
+*                              articles_english.php
+*                            -------------------
+*   begin                : November 21, 2006
+*   copyright          : (C) 2005 Viarre Régis
+*   email                : crowkait@phpboost.com
+*
+*  
+###################################################
+*
+*   This program is free software; you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation; either version 2 of the License, or
+*   (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*
 ###################################################*/
 
 
@@ -65,13 +65,13 @@ $LANG['recount'] = 'Recount';
 $LANG['e_unexist_articles'] = 'This article doesn\'t exist';
 
 //Title
-$LANG['title_articles'] = 'Articles'; 
- 
+$LANG['title_articles'] = 'Articles';
+
 //Articles
 $LANG['articles'] = 'Articles';
 $LANG['alert_delete_article'] = 'Delete this Article ?';
-$LANG['propose_article'] = 'Propose article';
-$LANG['none_article'] = 'No article in this categorie';
+$LANG['propose_article'] = 'Suggest article';
+$LANG['none_article'] = 'No article in this category';
 $LANG['xml_articles_desc'] = 'Last articles';
 $LANG['no_note'] = 'No note';
 $LANG['actual_note'] = 'Actual note';
@@ -81,8 +81,8 @@ $LANG['sub_categories'] = 'Sub categories';
 
 //Add article.
 $MAIL['new_article_website'] = 'New article on your website';
-$MAIL['new_article'] = 'A new article was added on your website ' . HOST . ', 
-it will have to be approved before being visible on the site by everyone. 
+$MAIL['new_article'] = 'A new article was added on your website ' . HOST . ',
+it will have to be approved before being visible on the site by everyone.
 
 Article\'s title: %s
 Contents: %s...[next]
