@@ -27,7 +27,7 @@ div.results {
     vertical-align:middle;
 }
 
-div.results span.title {
+div.results p.title {
     background:#526F8E;
     color:#FFFFFF;
     font-family:'Verdana', 'Bitstream Vera Sans', 'Times', 'serif';
@@ -46,17 +46,9 @@ div.results span.title {
 /*     width:3%; */
 }
 
-div.results span.infosResults {
+div.results p.infosResults {
     width:90%;
-    margin:10px;
-    font-family:'Verdana', 'Bitstream Vera Sans', 'Times', 'serif';
-    font-size:0.75em;
-    font-weight:bold;
-}
-
-div.results span.infosResults {
-    width:90%;
-    margin:10px;
+    padding-left:10px;
     font-family:'Verdana', 'Bitstream Vera Sans', 'Times', 'serif';
     font-size:0.75em;
     font-weight:bold;

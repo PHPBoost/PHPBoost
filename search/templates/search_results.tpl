@@ -35,7 +35,7 @@
 		        show_div(RESULTS + module);
 		        if ( !inArray(module, calculatedResults) )
 		        {
-		            document.getElementById(INFOS_RESULTS + module).innerHTML = '<div style="vertical-align:middle"><img src="../templates/phpboost/images/loading.gif" /> Calcul des résultats en cours...</div>';
+		            document.getElementById(INFOS_RESULTS + module).innerHTML = '<div style="height:50px; padding-left:10px; padding-bottom:20px;"><img src="../templates/phpboost/images/loading.gif" style="position:relative; top:10px;"/> Calcul des résultats en cours...</div>';
 		            XMLHttpRequest_search_module(module);
 		        }
 		    }
@@ -119,8 +119,8 @@
 		    </div>
 		    <div class="module_contents">
 		        <div id="ResultsAll" class="results">
-		            <span id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</span><br />
-		            <span id="infosResultsAll" class="infosResults">{NB_RESULTS} {NB_RESULTS_FOUND}</span>
+		            <p id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</span><br />
+		            <p id="infosResultsAll" class="infosResults">{NB_RESULTS} {NB_RESULTS_FOUND}</span>
 		            <div id="ResultsListAll" class="ResultsList">
 		                <ul class="search_results">
 		                    # START allResults #
@@ -132,10 +132,10 @@
 		        </div>
 		        # START results #
 		            <div id="Results{results.MODULE_NAME}" class="results" style="display:none">
-		                <span id="ResultsTitle{results.MODULE_NAME}" class="title">{results.MODULE_NAME}</span><br />
-		                <span id="infosResults{results.MODULE_NAME}" class="infosResults"></span>
-		                <div id="ResultsList{results.MODULE_NAME}"></div>
-		                <div id="PaginationResults{results.MODULE_NAME}"></div>
+		                <p id="ResultsTitle{results.MODULE_NAME}" class="title">{results.MODULE_NAME}</span><br />
+		                <p id="infosResults{results.MODULE_NAME}" class="infosResults"></span>
+		                <div id="ResultsList{results.MODULE_NAME}" class="ResultsList"></div>
+		                <div id="PaginationResults{results.MODULE_NAME}" class="PaginationResults"></div>
 		            </div>
 		        # END results #
 		    </div>
