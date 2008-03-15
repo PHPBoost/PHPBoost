@@ -40,36 +40,72 @@ $move = isset($_GET['move']) ? securit($_GET['move']) : '';
 
 if( !empty($idmodule) ) //Module non installé => insertion dans la bdd
 {
-	if( preg_match('`([a-zA-Z_-]+)([0-9]*)`', $idmodule, $array_get) )
+	if( preg_match('`([a-zA-Z0-9._-]+) ([0-9]*)`', $idmodule, $array_get) )
 	{	
 		$module_name = $array_get[1];
 		$idmodule = $array_get[2];
 		$secure = isset($_GET['secure']) ? numeric($_GET['secure']) : -1;
+		$activ = isset($_GET['activ']) ? numeric($_GET['activ']) : 0; //Désactivé par défaut.
 		
-		//Récupération des infos de config.
-		$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
-		//Installation du mini module s'il existe
-		if( !empty($info_module['mini_module']) )
+		if( strpos($module_name, '.php') === false ) //Menu associé à un module.
 		{
-			$i = 1;
-			$array_menus = parse_ini_array($info_module['mini_module']);
-			foreach($array_menus as $path => $location)
+			//Récupération des infos de config.
+			$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
+			//Installation du mini module s'il existe
+			if( !empty($info_module['mini_module']) )
 			{
-				if( $idmodule == $i )
+				$i = 1;
+				$array_menus = parse_ini_array($info_module['mini_module']);
+				foreach($array_menus as $path => $location)
 				{
-					$module_mini_path = '../' . addslashes($module_name) . '/' . addslashes($path);
-					if( file_exists($module_mini_path) )
-					{	
-						$location = !empty($move) ? $move : addslashes($location);
-						$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-						$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . $module_name . "', 'include_once(\'" . $module_mini_path . "\');', '" . addslashes($location) . "', '" . $secure . "', 1, 0, 0)", __LINE__, __FILE__);
-						
-						$Cache->Generate_file('modules_mini');
-						redirect(HOST . SCRIPT);
+					if( $idmodule == $i )
+					{
+						$menu_path = '../' . addslashes($module_name) . '/' . addslashes($path);
+						if( file_exists($menu_path) )
+						{	
+							if( !empty($move) )
+							{
+								$location = $move;
+								$activ = 1; //Activation.
+							}
+							else
+								$location = addslashes($location);
+				
+							$check_menu = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules_mini WHERE name = '" .  addslashes($module_name) . "' AND contents = 'include_once(\'" . $menu_path . "\');'", __LINE__, __FILE__);
+							if( empty($check_menu) )
+							{
+								$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
+								$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . addslashes($module_name) . "', 'include_once(\'" . $menu_path . "\');', '" . addslashes($location) . "', '" . $secure . "', '" . $activ . "', 0, 0)", __LINE__, __FILE__);
+								
+								$Cache->Generate_file('modules_mini');
+							}
+							redirect(HOST . SCRIPT);
+						}
 					}
+					$i++;
 				}
-				$i++;
 			}
+		}
+		else //Menu perso dans le dossier /menus.
+		{
+			$menu_path = '../menus/' . addslashes($module_name);
+			if( !empty($move) )
+			{
+				$location = $move;
+				$activ = 1; //Activation.
+			}
+			else
+				$location = 'left';
+
+			$check_menu = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules_mini WHERE name = '" .  str_replace('.php', '', addslashes($module_name)) . "' AND contents = 'include_once(\'" . $menu_path . "\');'", __LINE__, __FILE__);
+			if( empty($check_menu) )
+			{
+				$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
+				$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . str_replace('.php', '', addslashes($module_name)) . "', 'include_once(\'" . $menu_path . "\');', '" . $location . "', '" . $secure . "', '" . $activ . "', 2, 0)", __LINE__, __FILE__);
+			
+				$Cache->Generate_file('modules_mini');
+			}
+			redirect(HOST . SCRIPT);
 		}
 	}
 }
@@ -185,6 +221,7 @@ else
 	
 	$i = 0;
 	$uncheck_modules = $SECURE_MODULE; //On récupère tous les modules installés.
+	$installed_menus_perso = array(); //Menu perso dans le dossier /menus
 	$installed_menus = array();
 	$uninstalled_menus = array();
 	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
@@ -193,6 +230,9 @@ else
 	ORDER BY class", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
+		if( $row['added'] == 2 ) //Menu perso dans le dossier /menus
+			$installed_menus_perso[] = $row['name'];
+		
 		$config = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
 		if( is_array($config) )
 		{	
@@ -216,6 +256,7 @@ else
 					}	
 				}				
 			}
+				
 			$row['name'] = !empty($config['name']) ? $config['name'] : '';		
 		}
 		//Rangs d'autorisation.
@@ -287,7 +328,7 @@ else
 		{
 			if( file_exists('../' . $name . '/' . $path) ) //Fichier présent.
 			{
-				$idmodule = $name . $j++;
+				$idmodule = $name . '+' . $j++;
 				$Template->Assign_block_vars('mod_main', array(
 					'IDMENU' => $idmodule,
 					'NAME' => ucfirst($modules_config[$name]['name']),
@@ -303,35 +344,33 @@ else
 	}
 	
 	//On recupère les menus dans le dossier /menus
-	$z = 0;
+	$j = 1;
 	$rep = '../menus/';
-	if(  is_dir($rep) ) //Si le dossier existe
+	if( is_dir($rep) ) //Si le dossier existe
 	{
-		$dh = @opendir( $rep);
-		while( !is_bool($fichier = readdir($dh)) )
+		$file_array = array();
+		$dh = @opendir($rep);
+		while( !is_bool($file = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( !preg_match('`\.`', $fichier) )
-				$fichier_array[] = $fichier; //On crée un array, avec les different dossiers.
+			if( preg_match('`[a-z0-9_-]\.php`i', $file) && $file != 'index.php' && !in_array(str_replace('.php', '', $file), $installed_menus_perso) )
+				$file_array[] = $file; //On crée un array, avec les different dossiers.
 		}	
 		closedir($dh); //On ferme le dossier
-	
-		if( is_array($fichier_array) )
-		{			
-			$result = $Sql->Query_while("SELECT theme 
-			FROM ".PREFIX."themes", __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
-				//On recherche les clées correspondante à celles trouvée dans la bdd.
-				$key = array_search($row['theme'], $fichier_array);
-				if( $key !== false)
-					unset($fichier_array[$key]); //On supprime ces clées du tableau.
-			}
-			$Sql->Close($result);
-			
-			foreach($fichier_array as $theme_array => $value_array) //On effectue la recherche dans le tableau.
-			{
-			}
+
+		foreach($file_array as $name)
+		{
+			$idmodule = $name . '+' . $j++;
+			$Template->Assign_block_vars('mod_main', array(
+				'IDMENU' => $idmodule,
+				'NAME' => ucfirst(str_replace('.php', '', $name)),
+				'EDIT' => '',
+				'DEL' => '',
+				'CONTENTS' => '',
+				'RANK' => $ranks,
+				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $idmodule . "&amp;pos=" . $location . "&amp;activ=' + this.options[this.selectedIndex].value",
+				'U_ONCHANGE_SECURE' => "'admin_menus.php?id=" . $idmodule . "&amp;secure=' + this.options[this.selectedIndex].value"
+			));
 		}
 	}
 	

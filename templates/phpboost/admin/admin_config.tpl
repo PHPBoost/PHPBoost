@@ -8,7 +8,6 @@
 			
 			return true;
 		}
-
 		-->
 		</script>
 

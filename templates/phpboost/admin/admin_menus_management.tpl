@@ -353,6 +353,18 @@
 						# ENDIF #
 					</tr>
 				</table>
+				
+				<fieldset class="fieldset_submit" style="padding-top:20px" id="submit_menus">
+					<legend>{L_UPDATE}</legend>
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					&nbsp;&nbsp; 
+					<input type="reset" value="{L_RESET}" class="reset" />
+				</fieldset>
+				<script type="text/javascript">
+				<!--
+				document.getElementById('submit_menus').style.display = 'none';
+				-->
+				</script>
 			</form>
 			
 			<table class="module_table">

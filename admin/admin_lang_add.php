@@ -145,68 +145,66 @@ else
 	$rep = '../lang/';
 	if( is_dir($rep) ) //Si le dossier existe
 	{
-		$dh = @opendir( $rep);
-		while( !is_bool($fichier = readdir($dh)) )
+		$array_file = array();
+		$dh = @opendir($rep);
+		while( !is_bool($file = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( !preg_match('`\.`', $fichier) )
-				$fichier_array[] = $fichier; //On crée un array, avec les different dossiers.
+			if( !preg_match('`\.`', $file) )
+				$array_file[] = $file; //On crée un array, avec les different dossiers.
 		}	
 		closedir($dh); //On ferme le dossier
 	
-		if( is_array($fichier_array) )
-		{			
-			$result = $Sql->Query_while("SELECT lang 
-			FROM ".PREFIX."lang", __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
-				//On recherche les clées correspondante à celles trouvée dans la bdd.
-				$key = array_search($row['lang'], $fichier_array);
-				if( $key !== false)
-					unset($fichier_array[$key]); //On supprime ces clées du tableau.
-			}
-			$Sql->Close($result);
+		$result = $Sql->Query_while("SELECT lang 
+		FROM ".PREFIX."lang", __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
+		{
+			//On recherche les clées correspondante à celles trouvée dans la bdd.
+			$key = array_search($row['lang'], $array_file);
+			if( $key !== false)
+				unset($array_file[$key]); //On supprime ces clées du tableau.
+		}
+		$Sql->Close($result);
+		
+		foreach($array_file as $lang_array => $value_array) //On effectue la recherche dans le tableau.
+		{
+			$info_lang = load_ini_file('../lang/', $value_array);
+			$Template->Assign_block_vars('list', array(
+				'IDLANG' =>  $value_array,		
+				'LANG' =>  $info_lang['name'],	
+				'IDENTIFIER' =>  $info_lang['identifier'],
+				'AUTHOR' => (!empty($info_lang['author_mail']) ? '<a href="mailto:' . $info_lang['author_mail'] . '">' . $info_lang['author'] . '</a>' : $info_lang['author']),
+				'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="" /></a>' : ''),
+				'COMPAT' => $info_lang['compatibility']
+			));
 			
-			foreach($fichier_array as $lang_array => $value_array) //On effectue la recherche dans le tableau.
+			//Rang d'autorisation.
+			for($i = -1 ; $i <= 2 ; $i++)
 			{
-				$info_lang = load_ini_file('../lang/', $value_array);
-				$Template->Assign_block_vars('list', array(
-					'IDLANG' =>  $value_array,		
-					'LANG' =>  $info_lang['name'],	
-					'IDENTIFIER' =>  $info_lang['identifier'],
-					'AUTHOR' => (!empty($info_lang['author_mail']) ? '<a href="mailto:' . $info_lang['author_mail'] . '">' . $info_lang['author'] . '</a>' : $info_lang['author']),
-					'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="" /></a>' : ''),
-					'COMPAT' => $info_lang['compatibility']
-				));
-				
-				//Rang d'autorisation.
-				for($i = -1 ; $i <= 2 ; $i++)
-				{
-					switch($i) 
-					{	
-						case -1:
-							$rank = $LANG['guest'];
-						break;					
-						case 0:
-							$rank = $LANG['member'];
-						break;					
-						case 1: 
-							$rank = $LANG['modo'];
-						break;			
-						case 2:
-							$rank = $LANG['admin'];
-						break;						
-						default: -1;
-					}
-					
-					$selected = ($i == -1) ? 'selected="selected"' : '';
-					$Template->Assign_block_vars('list.select', array(	
-						'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
-					));
+				switch($i) 
+				{	
+					case -1:
+						$rank = $LANG['guest'];
+					break;					
+					case 0:
+						$rank = $LANG['member'];
+					break;					
+					case 1: 
+						$rank = $LANG['modo'];
+					break;			
+					case 2:
+						$rank = $LANG['admin'];
+					break;						
+					default: -1;
 				}
-				$z++;
+				
+				$selected = ($i == -1) ? 'selected="selected"' : '';
+				$Template->Assign_block_vars('list.select', array(	
+					'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
+				));
 			}
-		}				
+			$z++;
+		}
 	}	
 
 	if( $z != 0 )

@@ -142,17 +142,11 @@ class Cache
 				if( !file_exists($file_path) && filesize($file_path) == '0' )
 					$Errorh->Error_handler('Cache -> La génération du fichier de cache <strong>' . $file . '</strong> a échoué!', E_USER_ERROR, __LINE__, __FILE__);
 			}	
-			else
-			{
-				//Enregistrement dans le log d'erreur.
+			else //Enregistrement dans le log d'erreur.
 				$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
-			}
 		}	
-		else
-		{
-			//Enregistrement dans le log d'erreur.
+		else //Enregistrement dans le log d'erreur.
 			$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
-		}
     }
 	
 	//Génération du fichier htaccess
@@ -286,7 +280,7 @@ class Cache
 				$code .= 'if( isset($MODULES_MINI[\'' . $location . '\']) && $MODULES_MINI[\'' . $location . '\'] ){' . "\n";
 				foreach($modules_mini[$location] as $location_key => $info)
 				{
-					if( $info['added'] == '0' )
+					if( $info['added'] == '0' || $info['added'] == '2' )
 						$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . $info['contents'] . '}' . "\n";
 					else
 					{
@@ -409,6 +403,7 @@ class Cache
 		$array_debug[] = 'includes/ [' . (is_writable('../includes/') ? 1 : 0) . ']';
 		$array_debug[] = 'cache/ [' . (is_writable('../cache/') ? 1 : 0) . ']';
 		$array_debug[] = 'upload/ [' . (is_writable('../upload/') ? 1 : 0) . ']';
+		$array_debug[] = 'menus/ [' . (is_writable('../menus/') ? 1 : 0) . ']';
 		$array_debug[] = '/ [' . (is_writable('../') ? 1 : 0) . ']';
 		
 		$debug = '$array_debug = ' . var_export($array_debug, true) . ';' . "\n";
