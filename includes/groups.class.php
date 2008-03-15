@@ -110,8 +110,33 @@ class Group
 		return $array_auth_all;
 	}
 	
+    //Génération d'une liste à sélection multiple des rangs et groupes
+    function Generate_select($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '')
+    {
+        generate_select_groups($auth_id, $array_auth, $auth_level, $array_ranks_default, $disabled);
+        generate_select_members($auth_id, $array_auth, $auth_level);
+    }
+    
+    //Génération du formulaire pour les autorisations membre par membre.
+    function generate_select_members($auth_id, $array_auth, $auth_level)
+    {
+        global $sql;
+
+        $reqUsers = "SELECT user_id, login FROM ".PREFIX."member";
+        $request = $Sql->query_while($request, __LINE__, __FILE__);
+        
+        $select_members = '<select id="members_auth' . $auth_id . '" name="members_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="' . (empty($disabled) ? 'if(disabled == 0)' : '') . 'document.getElementById(\'' . $auth_id . 'r3\').selected = true;">';
+        while( $row = $Sql->Sql_fetch_assoc($request) )
+        {
+            $select_members .= '<option  ' . $disabled . 'value="m' . $row['user_id'] . '" id="m' . $row['user_id'] . '" ' . $selected . '>' . $row['login'] . '</option>';
+        }
+        $select_members .= '</select>';
+
+        return $select_members;
+    }
+    
 	//Génération d'une liste à sélection multiple des rangs et groupes
-	function Generate_select_groups($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '')
+	function generate_select_groups($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '')
 	{
 		global $array_groups, $array_ranks, $LANG;
 		
