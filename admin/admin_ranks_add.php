@@ -115,15 +115,16 @@ else //Sinon on rempli le formulaire
 	$rep = '../templates/' . $CONFIG['theme']  . '/images/ranks';
 	$j = 0;
 	$array_files = array();
-	if( is_dir($rep)) //Si le dossier existe
+	if( is_dir($rep) ) //Si le dossier existe
 	{
-		$dh = @opendir( $rep);
-		while( !is_bool($fichier = readdir($dh)) )
+		$array_file = array();
+		$dh = @opendir($rep);
+		while( !is_bool($file = readdir($dh)) )
 		{	
-			if( $j > 1 && $fichier != 'index.php' && $fichier != 'Thumbs.db' )
+			if( $j > 1 && $file != 'index.php' && $file != 'Thumbs.db' )
 			{	
 				$Template->Assign_block_vars('select', array(
-					'IMG_RANK' => '<option value="' . $fichier . '">' . $fichier . '</option>'
+					'IMG_RANK' => '<option value="' . $file . '">' . $file . '</option>'
 				));
 			}
 			$j++;

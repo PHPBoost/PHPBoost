@@ -69,7 +69,7 @@ function progress_bar(percent_progress, info_progress)
 	if( this.percent_begin <= bar_progress )
 	{
 		if( document.getElementById('progress_bar' + progressbar_id) )
-			document.getElementById('progress_bar' + progressbar_id).innerHTML += '<img src="/templates/images/progress.png" alt="" />';
+			document.getElementById('progress_bar' + progressbar_id).innerHTML += '<img src="templates/images/progress.png" alt="" />';
 		if( document.getElementById('progress_percent' + progressbar_id) )
 			document.getElementById('progress_percent' + progressbar_id).innerHTML = Math.round((this.percent_begin * 100) / 55);
 		if( document.getElementById('progress_info' + progressbar_id) )

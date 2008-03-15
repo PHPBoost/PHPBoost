@@ -150,78 +150,76 @@ else
 	//On recupère les dossier des thèmes contenu dans le dossier templates.
 	$z = 0;
 	$rep = '../templates/';
-	if(  is_dir($rep) ) //Si le dossier existe
+	if( is_dir($rep) ) //Si le dossier existe
 	{
-		$dh = @opendir( $rep);
-		while( !is_bool($fichier = readdir($dh)) )
+		$array_file = array();
+		$dh = @opendir($rep);
+		while( !is_bool($file = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( !preg_match('`\.`', $fichier) )
-				$fichier_array[] = $fichier; //On crée un array, avec les different dossiers.
+			if( !preg_match('`\.`', $file) && $file != 'index.php' )
+				$array_file[] = $file; //On crée un array, avec les different dossiers.
 		}	
 		closedir($dh); //On ferme le dossier
 	
-		if( is_array($fichier_array) )
-		{			
-			$result = $Sql->Query_while("SELECT theme 
-			FROM ".PREFIX."themes", __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
-				//On recherche les clées correspondante à celles trouvée dans la bdd.
-				$key = array_search($row['theme'], $fichier_array);
-				if( $key !== false)
-					unset($fichier_array[$key]); //On supprime ces clées du tableau.
-			}
-			$Sql->Close($result);
+		$result = $Sql->Query_while("SELECT theme 
+		FROM ".PREFIX."themes", __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
+		{
+			//On recherche les clées correspondante à celles trouvée dans la bdd.
+			$key = array_search($row['theme'], $array_file);
+			if( $key !== false)
+				unset($array_file[$key]); //On supprime ces clées du tableau.
+		}
+		$Sql->Close($result);
+		
+		foreach($array_file as $theme_array => $value_array) //On effectue la recherche dans le tableau.
+		{
+			$info_theme = load_ini_file('../templates/' . $value_array . '/config/', $CONFIG['lang']);
+		
+			$Template->Assign_block_vars('list', array(
+				'IDTHEME' =>  $value_array,		
+				'THEME' =>  $info_theme['name'],			
+				'ICON' => $value_array,
+				'VERSION' => $info_theme['version'],
+				'AUTHOR' => (!empty($info_theme['author_mail']) ? '<a href="mailto:' . $info_theme['author_mail'] . '">' . $info_theme['author'] . '</a>' : $info_theme['author']),
+				'AUTHOR_WEBSITE' => (!empty($info_theme['author_link']) ? '<a href="' . $info_theme['author_link'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="" /></a>' : ''),
+				'DESC' => $info_theme['info'],
+				'COMPAT' => $info_theme['compatibility'],
+				'HTML_VERSION' => $info_theme['html_version'],
+				'CSS_VERSION' => $info_theme['css_version'],
+				'MAIN_COLOR' => $info_theme['main_color'],
+				'VARIABLE_WIDTH' => ($info_theme['variable_width'] ? $LANG['yes'] : $LANG['no']),
+				'WIDTH' => $info_theme['width']
+			));
 			
-			foreach($fichier_array as $theme_array => $value_array) //On effectue la recherche dans le tableau.
+			//Rang d'autorisation.
+			for($i = -1 ; $i <= 2 ; $i++)
 			{
-				$info_theme = load_ini_file('../templates/' . $value_array . '/config/', $CONFIG['lang']);
-			
-				$Template->Assign_block_vars('list', array(
-					'IDTHEME' =>  $value_array,		
-					'THEME' =>  $info_theme['name'],			
-					'ICON' => $value_array,
-					'VERSION' => $info_theme['version'],
-					'AUTHOR' => (!empty($info_theme['author_mail']) ? '<a href="mailto:' . $info_theme['author_mail'] . '">' . $info_theme['author'] . '</a>' : $info_theme['author']),
-					'AUTHOR_WEBSITE' => (!empty($info_theme['author_link']) ? '<a href="' . $info_theme['author_link'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="" /></a>' : ''),
-					'DESC' => $info_theme['info'],
-					'COMPAT' => $info_theme['compatibility'],
-					'HTML_VERSION' => $info_theme['html_version'],
-					'CSS_VERSION' => $info_theme['css_version'],
-					'MAIN_COLOR' => $info_theme['main_color'],
-					'VARIABLE_WIDTH' => ($info_theme['variable_width'] ? $LANG['yes'] : $LANG['no']),
-					'WIDTH' => $info_theme['width']
-				));
-				
-				//Rang d'autorisation.
-				for($i = -1 ; $i <= 2 ; $i++)
-				{
-					switch($i) 
-					{	
-						case -1:
-							$rank = $LANG['guest'];
-						break;					
-						case 0:
-							$rank = $LANG['member'];
-						break;					
-						case 1: 
-							$rank = $LANG['modo'];
-						break;			
-						case 2:
-							$rank = $LANG['admin'];
-						break;						
-						default: -1;
-					}
-					
-					$selected = ($i == -1) ? 'selected="selected"' : '';
-					$Template->Assign_block_vars('list.select', array(	
-						'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
-					));
+				switch($i) 
+				{	
+					case -1:
+						$rank = $LANG['guest'];
+					break;					
+					case 0:
+						$rank = $LANG['member'];
+					break;					
+					case 1: 
+						$rank = $LANG['modo'];
+					break;			
+					case 2:
+						$rank = $LANG['admin'];
+					break;						
+					default: -1;
 				}
-				$z++;
+				
+				$selected = ($i == -1) ? 'selected="selected"' : '';
+				$Template->Assign_block_vars('list.select', array(	
+					'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
+				));
 			}
-		}				
+			$z++;
+		}
 	}	
 
 	if( $z != 0 )
