@@ -1030,6 +1030,7 @@ INSERT INTO `phpboost_modules` (`id`, `name`, `version`, `auth`, `activ`) VALUES
 -- Structure de la table `phpboost_modules_mini`
 --
 
+DROP TABLE IF EXISTS `phpboost_modules_mini`;
 CREATE TABLE `phpboost_modules_mini` (
   `id` int(11) NOT NULL auto_increment,
   `class` int(11) NOT NULL default '0',
