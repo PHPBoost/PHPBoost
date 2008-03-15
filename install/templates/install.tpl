@@ -258,11 +258,9 @@
 								<legend>
 									{L_RESULT}
 								</legend>
-								<div style="margin:auto;width:500px;" id="progress_bar_display">
-									<div id="progress_info" style="text-align:center;">
-									</div>
-									<div style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;" id="progress_bar">
-									</div>
+								<div style="margin:auto;width:500px;">
+									<div id="progress_info" style="text-align:center;"></div>
+									<div style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;" id="progress_bar"></div>
 									&nbsp;<span id="progress_percent">0</span>%
 								</div>
 							</fieldset>
@@ -380,7 +378,7 @@
 								<legend>
 									{L_RESULT}
 								</legend>
-								<div style="margin:auto;width:500px;" id="progress_bar_display">
+								<div style="margin:auto;width:500px;">
 									<div id="db_result">
 										{db.ERROR}
 									</div>
