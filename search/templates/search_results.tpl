@@ -90,7 +90,7 @@
 							if( xhr_object.responseText != 'NO RESULTS IN CACHE' )
                             {
                                 eval(xhr_object.responseText);
-                                //document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
+                                document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
                                 document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
                                 document.getElementById(PAGINATION_RESULTS + module).innerHTML = resultsAJAX['pagination'];
                                 
@@ -100,6 +100,7 @@
                             }
                             else    // Sinon, on les recalcule, et on les récupère.
                             {
+                                alert('NO RESULTS IN CACHE');
                                 XMLHttpRequest_regenerate_search();
                                 XMLHttpRequest_search_module(module);
                             }
