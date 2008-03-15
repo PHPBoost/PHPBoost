@@ -46,7 +46,7 @@ div.results p.title {
 /*     width:3%; */
 }
 
-div.results p.infosResults {
+div.results div.infosResults {
     width:90%;
     padding-left:10px;
     font-family:'Verdana', 'Bitstream Vera Sans', 'Times', 'serif';
