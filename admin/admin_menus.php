@@ -202,7 +202,7 @@ else
 				$array_menus = parse_ini_array($config['mini_module']);
 				foreach($array_menus as $module_path => $location)
 				{
-					if( strpos($row['contents'], $module_path) !== false ) //Module trouvé.
+					if( strpos($row['contents'], $row['name'] . '/' . $module_path) !== false ) //Module trouvé.
 					{	
 						$installed_menus[$row['name']][$module_path] = $location;
 						if( isset($uninstalled_menus[$row['name']][$module_path]) )
@@ -298,6 +298,39 @@ else
 					'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $idmodule . "&amp;pos=" . $location . "&amp;activ=' + this.options[this.selectedIndex].value",
 					'U_ONCHANGE_SECURE' => "'admin_menus.php?id=" . $idmodule . "&amp;secure=' + this.options[this.selectedIndex].value"
 				));
+			}
+		}
+	}
+	
+	//On recupère les menus dans le dossier /menus
+	$z = 0;
+	$rep = '../menus/';
+	if(  is_dir($rep) ) //Si le dossier existe
+	{
+		$dh = @opendir( $rep);
+		while( !is_bool($fichier = readdir($dh)) )
+		{	
+			//Si c'est un repertoire, on affiche.
+			if( !preg_match('`\.`', $fichier) )
+				$fichier_array[] = $fichier; //On crée un array, avec les different dossiers.
+		}	
+		closedir($dh); //On ferme le dossier
+	
+		if( is_array($fichier_array) )
+		{			
+			$result = $Sql->Query_while("SELECT theme 
+			FROM ".PREFIX."themes", __LINE__, __FILE__);
+			while( $row = $Sql->Sql_fetch_assoc($result) )
+			{
+				//On recherche les clées correspondante à celles trouvée dans la bdd.
+				$key = array_search($row['theme'], $fichier_array);
+				if( $key !== false)
+					unset($fichier_array[$key]); //On supprime ces clées du tableau.
+			}
+			$Sql->Close($result);
+			
+			foreach($fichier_array as $theme_array => $value_array) //On effectue la recherche dans le tableau.
+			{
 			}
 		}
 	}

@@ -38,7 +38,6 @@
 		}
 		-->
 		</script>
-		
 
 		<div id="admin_quick_menu">
 			<ul>

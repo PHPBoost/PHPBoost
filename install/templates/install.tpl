@@ -184,6 +184,7 @@
 						display_result = false;
 						function refresh()
 						{
+							load_progress_bar(20, '');
 							if( !display_result )
 								document.getElementById('result_box').style.display = 'block';
 							
@@ -269,7 +270,7 @@
 								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
 								<script type="text/javascript">
 								<!--
-									document.write("<a title=\"{L_REFRESH}\" href=\"javascript:load_progress_bar(20, '');refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" class=\"valign_middle\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
+									document.write("<a title=\"{L_REFRESH}\" href=\"javascript:refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" class=\"valign_middle\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
 								-->
 								</script>
 								<noscript>
@@ -289,6 +290,7 @@
 						display_result = false;
 						function send_infos()
 						{
+							load_progress_bar(20, '');
 							data = "dbms=" + document.getElementById("dbms").value + "&host=" + document.getElementById("host").value + "&login=" + document.getElementById("login").value + "&password=" + document.getElementById("password").value + "&database=" + document.getElementById("database").value;
 
 							if( !display_result )
@@ -396,7 +398,7 @@
 								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
 								<script type="text/javascript">
 								<!--
-									document.write("<a href=\"javascript:load_progress_bar(20, '');send_infos();\" title=\"{L_TEST_DB_CONFIG}\" /><img src=\"templates/images/refresh.png\" class=\"valign_middle\" title=\"{L_TEST_DB_CONFIG}\" /></a>&nbsp;");
+									document.write("<a href=\"javascript:send_infos();\" title=\"{L_TEST_DB_CONFIG}\" /><img src=\"templates/images/refresh.png\" class=\"valign_middle\" title=\"{L_TEST_DB_CONFIG}\" /></a>&nbsp;");
 								-->
 								</script>
 								<input title="{L_NEXT_STEP}" class="img_submit" src="templates/images/right.png" type="image" />

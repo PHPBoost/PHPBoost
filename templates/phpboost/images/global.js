@@ -185,18 +185,18 @@ function inArray(aValue, anArray)
 var timeout_progress_bar = null;
 var max_percent = 0;
 var info_progress_tmp = '';
-var speed_progress = 20; //Vitesse de la progression.
-var idbar = ''; //Identifiant de la barre de progression.
+var progressbar_speed = 20; //Vitesse de la progression.
+var progressbar_id = 'test'; //Identifiant de la barre de progression.
 var restart_progress = false;
 var theme = '';
 
 //Configuration de la barre de progression.
-function load_progress_bar(speed_progress, theme, idbar)
+function load_progress_bar(progressbar_speed_tmp, theme_tmp, progressbar_id_tmp)
 {
-	speed_progress = speed_progress;
+	progressbar_speed = progressbar_speed_tmp;
 	restart_progress = true;
-	theme = theme;
-	idbar = idbar;
+	theme = theme_tmp;
+	progressbar_id = progressbar_id_tmp;
 }
 
 //Barre de progression.
@@ -220,30 +220,30 @@ function progress_bar(percent_progress, info_progress)
 		clearTimeout(timeout_progress_bar);
 		this.percent_begin = 0;
 		max_percent = 0;
-		if( document.getElementById('progress_bar' + idbar) )
-			document.getElementById('progress_bar' + idbar).innerHTML = '';
+		if( document.getElementById('progress_bar' + progressbar_id) )
+			document.getElementById('progress_bar' + progressbar_id).innerHTML = '';
 		restart_progress = false;
 	}
 
 	if( this.percent_begin <= bar_progress )
 	{
-		if( document.getElementById('progress_bar' + idbar) )
-			document.getElementById('progress_bar' + idbar).innerHTML += '<img src="../templates/' + theme + '/images/progress.png" alt="" />';
-		if( document.getElementById('progress_percent' + idbar) )
-			document.getElementById('progress_percent' + idbar).innerHTML = Math.round((this.percent_begin * 100) / 55);
-		if( document.getElementById('progress_info' + idbar) )
+		if( document.getElementById('progress_bar' + progressbar_id) )
+			document.getElementById('progress_bar' + progressbar_id).innerHTML += '<img src="../templates/' + theme + '/images/progress.png" alt="" />';
+		if( document.getElementById('progress_percent' + progressbar_id) )
+			document.getElementById('progress_percent' + progressbar_id).innerHTML = Math.round((this.percent_begin * 100) / 55);
+		if( document.getElementById('progress_info' + progressbar_id) )
 		{	
 			if( percent_progress > max_percent )
 			{	
 				max_percent = percent_progress;
 				info_progress_tmp = info_progress;
 			}
-			document.getElementById('progress_info' + idbar).innerHTML = info_progress_tmp;
+			document.getElementById('progress_info' + progressbar_id).innerHTML = info_progress_tmp;
 		}
 		//Message de fin
 		if( this.percent_begin == 55 && result_id != "" && result_msg != "" )
 			document.getElementById(result_id).innerHTML = result_msg;
-		timeout_progress_bar = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")');
+		timeout_progress_bar = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")', progressbar_speed);
 	}
 	else
 		this.percent_begin = this.percent_begin - 1;
