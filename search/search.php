@@ -37,7 +37,7 @@ $Template->Set_filenames(array(
 ));
 
 //--------------------------------------------------------------------- Params
-define ( 'NB_RESULTS_PER_PAGE', 10);
+define ( 'NB_RESULTS_PER_PAGE', 2);
 
 // A protéger impérativement;
 $pageNum = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
@@ -139,7 +139,7 @@ if( $search != '' )
     );
     
     $Template->Assign_vars(array(
-        'PAGINATION' => ($nbResults > NB_RESULTS_PER_PAGE  ?  $showPagin : '')
+        'PAGINATION' => $showPagin
     ));
     
     $Template->Assign_vars(Array(

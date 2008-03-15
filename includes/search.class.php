@@ -183,9 +183,9 @@ class Search
         {   // Ajout des résultats
             array_push($results, $result);
         }
-        // Récupération du nombre de résultats correspondant é la recherche
-        $reqNbResults  = "SELECT COUNT(*) ".PREFIX."search_results ".$modulesConditions;
-        $nbResults = $Sql->Sql_num_rows( $request, $reqNbResults );
+        // Récupération du nombre de résultats correspondant à la recherche
+        $reqNbResults  = "SELECT COUNT(*) FROM ".PREFIX."search_results WHERE id_search IN ( ".$modulesConditions." )";
+        $nbResults = $Sql->Query($reqNbResults, __LINE__, __FILE__  );
         
         //On libére la mémoire
         $Sql->Close($request);
