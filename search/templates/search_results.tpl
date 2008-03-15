@@ -35,8 +35,7 @@
 		        show_div(RESULTS + module);
 		        if ( !inArray(module, calculatedResults) )
 		        {
-                    load_progress_bar(20, module);
-		            //document.getElementById(INFOS_RESULTS + module).innerHTML = '<div style="height:50px; padding-left:10px; padding-bottom:20px;"><img src="../templates/phpboost/images/loading.gif" style="position:relative; top:10px;"/></div>';
+                    load_progress_bar(20, '{THEME}', module);
 		            XMLHttpRequest_search_module(module);
 		        }
 		    }
@@ -93,7 +92,7 @@
                             if ( xhr_object.responseText != 'NO RESULTS IN CACHE' )
                             {
                                 eval(xhr_object.responseText);
-                                document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
+                                //document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
                                 document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
                                 document.getElementById(PAGINATION_RESULTS + module).innerHTML = resultsAJAX['pagination'];
                                 
@@ -151,7 +150,6 @@
                                 <div id="progress_info{results.MODULE_NAME}" style="text-align:center;"></div>
                                 <div style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;" id="progress_bar"></div> 
                                 &nbsp;<span id="progress_percent">0</span>%
-                                <br />Calcul des résultats en cours...
                             </div>
                         </div>
 		                <div id="ResultsList{results.MODULE_NAME}" class="ResultsList"></div>

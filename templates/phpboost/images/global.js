@@ -215,7 +215,7 @@ function progress_bar(percent_progress, info_progress)
 	}	
 	
 	// Déclaration et initialisation d'une variable statique
-	if( restart_progress ) 
+	if( restart_progress )
 	{	
 		clearTimeout(timeout_progress_bar);
 		this.percent_begin = 0;
