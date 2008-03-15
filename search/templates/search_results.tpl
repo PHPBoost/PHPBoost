@@ -35,7 +35,8 @@
 		        show_div(RESULTS + module);
 		        if ( !inArray(module, calculatedResults) )
 		        {
-		            document.getElementById(INFOS_RESULTS + module).innerHTML = '<div style="height:50px; padding-left:10px; padding-bottom:20px;"><img src="../templates/phpboost/images/loading.gif" style="position:relative; top:10px;"/> Calcul des résultats en cours...</div>';
+                    load_progress_bar(20, module);
+		            //document.getElementById(INFOS_RESULTS + module).innerHTML = '<div style="height:50px; padding-left:10px; padding-bottom:20px;"><img src="../templates/phpboost/images/loading.gif" style="position:relative; top:10px;"/></div>';
 		            XMLHttpRequest_search_module(module);
 		        }
 		    }
@@ -77,26 +78,38 @@
 		        var xhr_object = xmlhttprequest_init('../search/searchModuleXMLHTTPRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
 		        xhr_object.onreadystatechange = function()
 		        {
-		            if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '')
-		            {
-		                // Si les résultats sont toujours en cache, on les récupère.
-		                if ( xhr_object.responseText != 'NO RESULTS IN CACHE' )
-		                {
-		                    eval(xhr_object.responseText);
-		                    document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
-		                    document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
-		                    document.getElementById(PAGINATION_RESULTS + module).innerHTML = resultsAJAX['pagination'];
-		                    
-		                    // Met à jour la liste des résultats affiché, pour ne pas les rechercher
-		                    // dans la base de donnée si ils sont déjà dans le html.
-		                    calculatedResults.push(module);
-		                }
-		                else    // Sinon, on les recalcule, et on les récupère.
-		                {
-		                    XMLHttpRequest_regenerate_search();
-		                    XMLHttpRequest_search_module(module);
-		                }
-		            }
+                    if( xhr_object.readyState == 1 ) 
+                        progress_bar(25, "{L_QUERY_LOADING}");
+                    else if( xhr_object.readyState == 2 )
+                        progress_bar(50, "{L_QUERY_SENT}");
+                    else if( xhr_object.readyState == 3 )
+                        progress_bar(75, "{L_QUERY_PROCESSING}");
+                    else if( xhr_object.readyState == 4 )
+                    {
+                        if( xhr_object.status == 200 )
+                        {
+                            progress_bar(100, "{L_QUERY_SUCCESS}");
+                            // Si les résultats sont toujours en cache, on les récupère.
+                            if ( xhr_object.responseText != 'NO RESULTS IN CACHE' )
+                            {
+                                eval(xhr_object.responseText);
+                                document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
+                                document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
+                                document.getElementById(PAGINATION_RESULTS + module).innerHTML = resultsAJAX['pagination'];
+                                
+                                // Met à jour la liste des résultats affiché, pour ne pas les rechercher
+                                // dans la base de donnée si ils sont déjà dans le html.
+                                calculatedResults.push(module);
+                            }
+                            else    // Sinon, on les recalcule, et on les récupère.
+                            {
+                                XMLHttpRequest_regenerate_search();
+                                XMLHttpRequest_search_module(module);
+                            }
+                        }
+                        else
+                            progress_bar(99, "{L_QUERY_FAILURE}");
+                    }
 		        }
 		        xmlhttprequest_sender(xhr_object, null);
 		    }
@@ -119,8 +132,8 @@
 		    </div>
 		    <div class="module_contents">
 		        <div id="ResultsAll" class="results">
-		            <p id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</span><br />
-		            <p id="infosResultsAll" class="infosResults">{NB_RESULTS} {NB_RESULTS_FOUND}</span>
+		            <p id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</p><br />
+		            <div id="infosResultsAll" class="infosResults">{NB_RESULTS} {NB_RESULTS_FOUND}</div>
 		            <div id="ResultsListAll" class="ResultsList">
 		                <ul class="search_results">
 		                    # START allResults #
@@ -132,8 +145,15 @@
 		        </div>
 		        # START results #
 		            <div id="Results{results.MODULE_NAME}" class="results" style="display:none">
-		                <p id="ResultsTitle{results.MODULE_NAME}" class="title">{results.MODULE_NAME}</span><br />
-		                <p id="infosResults{results.MODULE_NAME}" class="infosResults"></span>
+		                <p id="ResultsTitle{results.MODULE_NAME}" class="title">{results.MODULE_NAME}</p><br />
+		                <div id="infosResults{results.MODULE_NAME}" class="infosResults">
+                            <div style="margin:auto;width:500px;"> 
+                                <div id="progress_info{results.MODULE_NAME}" style="text-align:center;"></div>
+                                <div style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;" id="progress_bar"></div> 
+                                &nbsp;<span id="progress_percent">0</span>%
+                                <br />Calcul des résultats en cours...
+                            </div>
+                        </div>
 		                <div id="ResultsList{results.MODULE_NAME}" class="ResultsList"></div>
 		                <div id="PaginationResults{results.MODULE_NAME}" class="PaginationResults"></div>
 		            </div>
