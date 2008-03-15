@@ -1035,7 +1035,6 @@ CREATE TABLE IF NOT EXISTS `phpboost_modules_mini` (
   `id` int(11) NOT NULL auto_increment,
   `class` int(11) NOT NULL default '0',
   `name` varchar(150) NOT NULL default '',
-  `code` text NOT NULL,
   `contents` text NOT NULL,
   `location` varchar(20) NOT NULL default '0',
   `secure` tinyint(1) NOT NULL default '0',
@@ -1049,15 +1048,15 @@ CREATE TABLE IF NOT EXISTS `phpboost_modules_mini` (
 -- Contenu de la table `phpboost_modules_mini`
 --
 
-INSERT INTO `phpboost_modules_mini` (`id`, `class`, `name`, `code`, `contents`, `location`, `secure`, `activ`, `added`, `use_tpl`) VALUES
-(1, 1, 'connexion', 'include_once(''../connect/connect_mini.php'');', '', 'left', -1, 1, 0, 1),
-(2, 4, 'gallery', 'include_once(''../gallery/gallery_mini.php'');', '', 'right', -1, 1, 0, 1),
-(3, 2, 'links', 'include_once(''../links/links_mini.php'');', '', 'left', -1, 1, 0, 1),
-(4, 3, 'newsletter', 'include_once(''../newsletter/newsletter_mini.php'');', '', 'left', -1, 1, 0, 1),
-(5, 1, 'online', 'include_once(''../online/online_mini.php'');', '', 'right', -1, 1, 0, 1),
-(6, 2, 'poll', 'include_once(''../poll/poll_mini.php'');', '', 'right', -1, 1, 0, 1),
-(7, 3, 'shoutbox', 'include_once(''../shoutbox/shoutbox_mini.php'');', '', 'right', -1, 1, 0, 1),
-(8, 4, 'stats', 'include_once(''../stats/stats_mini.php'');', '', 'left', -1, 1, 0, 1),
+INSERT INTO `phpboost_modules_mini` (`id`, `class`, `name`, `contents`, `location`, `secure`, `activ`, `added`, `use_tpl`) VALUES
+(1, 1, 'connexion', 'include_once(''../connect/connect_mini.php'');', 'left', -1, 1, 0, 1),
+(2, 4, 'gallery', 'include_once(''../gallery/gallery_mini.php'');', 'right', -1, 1, 0, 1),
+(3, 2, 'links', 'include_once(''../links/links_mini.php'');', 'left', -1, 1, 0, 1),
+(4, 3, 'newsletter', 'include_once(''../newsletter/newsletter_mini.php'');', 'left', -1, 1, 0, 1),
+(5, 1, 'online', 'include_once(''../online/online_mini.php'');', 'right', -1, 1, 0, 1),
+(6, 2, 'poll', 'include_once(''../poll/poll_mini.php'');', 'right', -1, 1, 0, 1),
+(7, 3, 'shoutbox', 'include_once(''../shoutbox/shoutbox_mini.php'');', 'right', -1, 1, 0, 1),
+(8, 4, 'stats', 'include_once(''../stats/stats_mini.php'');', 'left', -1, 1, 0, 1),
 (9, 1, 'test', 'echo ''<a href="http://www.phpboost.com" title="Accueil PHPBoost" class="button">Accueil</a><a href="http://www.phpboost.com/forum/index.php" title="Forum PHPBoost" class="button">Forum</a><a href="http://www.phpboost.com/wiki/wiki.php" title="Documentation PHPBoost" class="button">Documentation</a><a href="http://www.phpboost.com/download/download-2-52+phpboost-2-0.php" title="Télécharger PHPBoost" class="button">Télécharger</a><a href="http://themes.phpboost.com" title="Thèmes PHPBoost" class="button">Thèmes</a><a href="http://www.phpboost.com/phpboost/modules.php" title="Modules PHPBoost" class="button">Modules</a><a href="http://demo.phpboost.com" title="Démonstration PHPBoost" class="button">Démo</a>'';', 'menu haut', 'subheader', -1, 1, 1, 0),
 (11, 1, 'Supporter PHPBoost', '$template->set_filenames(array(''modules_mini_horizontal'' => ''../templates/'' . $CONFIG[''theme''] . ''/modules_mini_horizontal.tpl''));\r\n$template->assign_vars(array(''MODULE_MINI_NAME'' => ''test'', ''MODULE_MINI_CONTENTS'' => ''Blabla blablab blablabl<br />\r\n<br />\r\n<span class="warning">gfdgdf gffdgfd</span><br />\r\ngfd gfdgfdgdf''));\r\n$template->pparse(''modules_mini_horizontal'');', 'Afin de vous fournir un support optimal nous allons prendre un hébergement de meilleure qualité. Nous en appelons à votre générosité pour soutenir ce projet.', 'topcentral', 0, 1, 1, 1),
 (13, 5, 'search', 'include_once(''../search/search_mini.php'');', '', 'right', 1, -1, 1, 1);
