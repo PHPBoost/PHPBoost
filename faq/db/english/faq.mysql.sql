@@ -11,7 +11,7 @@ CREATE TABLE `phpboost_faq` (
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `phpboost_faq_cats`;
-CREATE TABLE `phpboost_faq_cats` (
+CREATE TABLE IF NOT EXISTS `phpboost_faq_cats` (
   `id` int(11) NOT NULL auto_increment,
   `id_parent` int(11) NOT NULL,
   `c_order` int(11) unsigned NOT NULL,
@@ -21,6 +21,7 @@ CREATE TABLE `phpboost_faq_cats` (
   `display_mode` tinyint(2) NOT NULL default '0',
   `description` text NOT NULL,
   `image` varchar(255) NOT NULL,
+  `num_questions` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM;
 
