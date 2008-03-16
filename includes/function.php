@@ -298,57 +298,6 @@ function check_nbr_links($contents, $max_nbr)
 	
 	return true;
 }
-	
-//Coloration syntaxique suivant le langage, tracé des lignes si demandé.
-function highlight_code($contents, $language, $line_number) 
-{
-	if( $language != '' )
-	{
-		include_once('../includes/geshi/geshi.php');
-		$Geshi =& new GeSHi($contents, $language);
-		
-		if( $line_number ) //Affichage des numéros de lignes.
-			$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
-
-		$contents = $Geshi->parse_code();
-	}
-	else
-	{
-		$highlight = highlight_string($contents, true);
-		$font_replace = str_replace(array('<font ', '</font>'), array('<span ', '</span>'), $highlight);
-		$contents = preg_replace('`color="(.*?)"`', 'style="color: \\1"', $font_replace);
-	}
-	
-	return $contents ;
-} 
-
-//Fonction appliquée aux balises [code] temps réel.
-function callback_highlight_code($matches)
-{
-	global $LANG;
-
-	$line_number = !empty($matches[2]) ? true : false;
-	$display_info_code = !empty($matches[3]) ? false : true;
-
-	$contents = str_replace('<br />', '', $matches[4]);
-	$contents = htmlentities($contents);
-	$contents = highlight_code($contents, $matches[1], $line_number);
-	if( $display_info_code )
-		$contents = '<span class="text_code">' . $LANG['code'] . (!empty($matches[1]) ? ' ' . strtoupper($matches[1]) : '') . ' :</span><div class="code">'. $contents .'</div>';
-	else
-		$contents = '<div class="code" style="margin-top:3px;">'. $contents .'</div>';
-		
-	return $contents;
-}
-
-//Fonction appliquée aux balises [math] temps réel, formules matématiques.
-function math_code($matches)
-{
-	$matches[1] = str_replace('<br />', '', $matches[1]);
-	$matches = mathfilter(html_entity_decode($matches[1]), 12);
-
-	return $matches;
-}
 
 //Charge le parseur.
 function parse($content, $forbidden_tags = array(), $html_protect = true)
@@ -370,20 +319,15 @@ function unparse($content)
 	return $parse->Get_content(DO_NOT_ADD_SLASHES);
 }
 
-//Parse temps réel => détection des balisses [code]  et remplacement, coloration si contient du code php.
-function second_parse($contents)
+//Parse temps réel
+function second_parse($content)
 {
-	global $LANG;
+	include_once('../includes/content.class.php');
+	$parse = new Content($content);	
 	
-	//Balise code.
-	if( strpos($contents, '[[CODE') !== false )
-		$contents = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(,0)?)?\]\](.+)\[\[/CODE\]\]`sU', 'callback_highlight_code', $contents);
+	$parse->Second_parse();
 	
-	//Balise latex.
-	if( strpos($contents, '[math]') !== false )
-		$contents = preg_replace_callback('`\[math\](.+)\[/math\]`isU', 'math_code', $contents);
-
-	return $contents;
+	return $parse->Get_content(DO_NOT_ADD_SLASHES);
 }
 	
 //Transmet le session_id et le user_id à traver l'url pour les connexions sans cookies. Permet le support de l'url rewritting!

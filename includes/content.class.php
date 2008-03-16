@@ -287,8 +287,8 @@ class Content
 		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
 		if( !empty($this->array_tags['code']) )
 		{
+			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
 			$this->reimplant_tag('code');
-			
 		}
 		
 		//On remet le code HTML mis de côté
@@ -482,6 +482,22 @@ class Content
 		}
 		
 		$this->unparse_html(REIMPLANT);
+	}
+	
+	//Parse temps réel => détection des balisses [code]  et remplacement, coloration si contient du code php.
+	function Second_parse()
+	{
+		global $LANG;
+		
+		//Balise code
+		if( strpos($this->content, '[[CODE') !== false )
+			$this->content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(,0)?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, 'callback_highlight_code'), $this->content);
+		
+		//Balise latex.
+		if( strpos($this->content, '[math]') !== false )
+			$this->content = preg_replace_callback('`\[math\](.+)\[/math\]`isU', 'math_code', $this->content);
+
+		return $this->content;
 	}
 	
 ####### Private #######
@@ -944,6 +960,55 @@ class Content
 			}
 			return true;
 		}
+	}
+	
+	//Coloration syntaxique suivant le langage, tracé des lignes si demandé.
+	function highlight_code($contents, $language, $line_number) 
+	{
+		if( $language != '' )
+		{
+			include_once('../includes/geshi/geshi.php');
+			$Geshi =& new GeSHi($contents, $language);
+			
+			if( $line_number ) //Affichage des numéros de lignes.
+				$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+
+			$contents = $Geshi->parse_code();
+		}
+		else
+		{
+			$highlight = highlight_string($contents, true);
+			$font_replace = str_replace(array('<font ', '</font>'), array('<span ', '</span>'), $highlight);
+			$contents = preg_replace('`color="(.*?)"`', 'style="color: \\1"', $font_replace);
+		}
+		
+		return $contents ;
+	} 
+
+	//Fonction appliquée aux balises [code] temps réel.
+	function callback_highlight_code($matches)
+	{
+		global $LANG;
+
+		$line_number = !empty($matches[2]);
+		$display_info_code = !empty($matches[3]);
+
+		$contents = $this->highlight_code($matches[4], $matches[1], $line_number);
+		if( $display_info_code )
+			$contents = '<span class="text_code">' . $LANG['code'] . (!empty($matches[1]) ? ' ' . strtoupper($matches[1]) : '') . ' :</span><div class="code">'. $contents .'</div>';
+		else
+			$contents = '<div class="code" style="margin-top:3px;">'. $contents .'</div>';
+			
+		return $contents;
+	}
+
+	//Fonction appliquée aux balises [math] temps réel, formules matématiques.
+	function math_code($matches)
+	{
+		$matches[1] = str_replace('<br />', '', $matches[1]);
+		$matches = mathfilter(html_entity_decode($matches[1]), 12);
+
+		return $matches;
 	}
 }
 
