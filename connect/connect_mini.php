@@ -66,6 +66,7 @@ else
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_PASSWORD' => $LANG['password'],
 		'L_AUTOCONNECT' => $LANG['autoconnect'],
+		'L_FORGOT_PASS' => $LANG['forget_pass'],
 		'U_REGISTER' => $CONFIG_MEMBER['activ_register'] ? '<a href="../member/register.php">' . $LANG['register'] . '</a>' : ''
 	));
 	
