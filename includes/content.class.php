@@ -40,6 +40,7 @@ class Content
 	function Content($text, $user_editor = false)
 	{
 		global $Member;
+		
 		//Editeur imposé (on vérifie qu'il est bien géré par la classe)
 		if( $user_editor !== false && in_array($user_editor, $this->editors) )
 			$editor = $user_editor;
@@ -76,6 +77,7 @@ class Content
 	function Parse_content($forbidden_tags = array(), $html_protect = true)
 	{
 		global $LANG;
+		
 		//On prélève tout le code HTML afin de ne pas l'altérer
 		$this->pick_up_tag('html');
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
@@ -85,9 +87,7 @@ class Content
 		$this->content = ' ' . $this->content . ' ';
 		
 		if( $this->user_editor == EDITOR_TINYMCE ) //Préparse pour tinymce.
-		{
 			$this->preparse_tinymce($this->content);
-		}
 
 		//Protection : suppression du code html
 		if( $html_protect )
@@ -120,8 +120,7 @@ class Content
 			'&#8364;', '&#8218;', '&#402;', '&#8222;', '&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;',
 			'&#352;', '&#8249;', '&#338;', '&#381;', '&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;',
 			'&#8211;', '&#8212;', '&#732;', '&#8482;', '&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
-		);
-		
+		);		
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 		
 		//Preg_replace.
@@ -230,9 +229,7 @@ class Content
 				$forbidden_tags[] = 'url6';
 			}
 			if( in_array('mail', $forbidden_tags) )
-			{
 				$forbidden_tags[] = 'mail2';
-			}
 			
 			$parse_hr = true;
 			
@@ -267,15 +264,11 @@ class Content
 		
 		//Tableaux
 		if( strpos($this->content, '[table') !== false )
-		{
 			$this->parse_table();
-		}
 		
 		//Listes
 		if( strpos($this->content, '[list') !== false )
-		{
 			$this->parse_list();
-		}
 		
 		##### //Fonction de parsage des balises imbriquées générique à faire #####
 		//Parsage des balises imbriquées.	
