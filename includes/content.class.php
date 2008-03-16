@@ -36,7 +36,7 @@ define('EDITOR_TINYMCE', 2);
 class Content
 {
 	######## Public #######
-	//On vérifie que le répertoire cache existe et est inscriptible
+	//Constructeur
 	function Content($text, $user_editor = false)
 	{
 		global $Member;
@@ -81,7 +81,7 @@ class Content
 		//On prélève tout le code HTML afin de ne pas l'altérer
 		$this->pick_up_tag('html');
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
-		$this->pick_up_tag('code', '=[a-z0-9-]+(?:,(?:0|1)(?:,0)?)?');
+		$this->pick_up_tag('code', '=[a-z0-9-]+(?:,(?:0|1)(?:,1)?)?');
 		
 		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé
 		$this->content = ' ' . $this->content . ' ';
@@ -216,6 +216,8 @@ class Content
 			'mail2' => "<a href=\"mailto:$1\">$2</a>"
 		);
 
+		$parse_line = true;
+		
 		//Suppression des remplacements des balises interdites.
 		if( !empty($forbidden_tags) )
 		{
@@ -231,8 +233,6 @@ class Content
 			if( in_array('mail', $forbidden_tags) )
 				$forbidden_tags[] = 'mail2';
 			
-			$parse_hr = true;
-			
 			$other_tags = array('table', 'code', 'math', 'quote', 'hide', 'indent', 'list'); 
 			foreach($forbidden_tags as $key => $tag)
 			{	
@@ -241,9 +241,9 @@ class Content
 					$array_preg[$tag] = '`\[' . $tag . '.*\](.+)\[/' . $tag . '\]`isU';
 					$array_preg_replace[$tag] = "$1";
 				}
-				elseif( $tag == 'hr' )
+				elseif( $tag == 'line' )
 				{
-					$parse_hr = false;
+					$parse_line = false;
 				}
 				else
 				{	
@@ -257,7 +257,8 @@ class Content
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
 		//Line tag
-		$this->content = str_replace('[line]', '<hr class="bb_hr" />', $this->content);
+		if( $parse_line )
+			$this->content = str_replace('[line]', '<hr class="bb_hr" />', $this->content);
 		
 		//Interprétation des sauts de ligne
 		$this->content = nl2br($this->content);
@@ -484,11 +485,11 @@ class Content
 		
 		//Balise code
 		if( strpos($this->content, '[[CODE') !== false )
-			$this->content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(,0)?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, 'callback_highlight_code'), $this->content);
+			$this->content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(,1)?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, 'callback_highlight_code'), $this->content);
 		
 		//Balise latex.
 		if( strpos($this->content, '[math]') !== false )
-			$this->content = preg_replace_callback('`\[math\](.+)\[/math\]`isU', 'math_code', $this->content);
+			$this->content = preg_replace_callback('`\[math\](.+)\[/math\]`isU', array(&$this, 'math_code'), $this->content);
 
 		return $this->content;
 	}
@@ -972,7 +973,7 @@ class Content
 		{
 			$highlight = highlight_string($contents, true);
 			$font_replace = str_replace(array('<font ', '</font>'), array('<span ', '</span>'), $highlight);
-			$contents = preg_replace('`color="(.*?)"`', 'style="color: \\1"', $font_replace);
+			$contents = preg_replace('`color="(.*?)"`', 'style="color: $1"', $font_replace);
 		}
 		
 		return $contents ;
@@ -982,15 +983,16 @@ class Content
 	function callback_highlight_code($matches)
 	{
 		global $LANG;
-
+		
 		$line_number = !empty($matches[2]);
-		$display_info_code = !empty($matches[3]);
+		$display_info_code = empty($matches[3]);
 
 		$contents = $this->highlight_code($matches[4], $matches[1], $line_number);
-		if( $display_info_code )
-			$contents = '<span class="text_code">' . $LANG['code'] . (!empty($matches[1]) ? ' ' . strtoupper($matches[1]) : '') . ' :</span><div class="code">'. $contents .'</div>';
+
+		if( $display_info_code && !empty($matches[1]) )
+			$contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
 		else
-			$contents = '<div class="code" style="margin-top:3px;">'. $contents .'</div>';
+			$contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code" style="margin-top:3px;">'. $contents .'</div>';
 			
 		return $contents;
 	}
