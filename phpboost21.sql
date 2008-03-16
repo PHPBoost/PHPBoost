@@ -198,7 +198,6 @@ INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES
 (16, 'shoutbox', 'a:4:{s:16:"shoutbox_max_msg";i:100;s:13:"shoutbox_auth";i:-1;s:23:"shoutbox_forbidden_tags";s:359:"a:22:{i:0;s:5:"title";i:1;s:6:"stitle";i:2;s:5:"style";i:3;s:3:"url";i:4;s:3:"img";i:5;s:5:"quote";i:6;s:4:"hide";i:7;s:4:"list";i:8;s:5:"color";i:9;s:4:"size";i:10;s:5:"align";i:11;s:5:"float";i:12;s:3:"sup";i:13;s:3:"sub";i:14;s:6:"indent";i:15;s:5:"table";i:16;s:3:"swf";i:17;s:5:"movie";i:18;s:5:"sound";i:19;s:4:"code";i:20;s:4:"math";i:21;s:6:"anchor";}";s:17:"shoutbox_max_link";i:2;}'),
 (17, 'web', 'a:4:{s:11:"nbr_web_max";i:10;s:11:"nbr_cat_max";i:10;s:10:"nbr_column";i:2;s:8:"note_max";i:10;}'),
 (18, 'wiki', 'a:6:{s:9:"wiki_name";s:4:"Wiki";s:13:"last_articles";i:10;s:12:"display_cats";i:0;s:10:"index_text";s:0:"";s:10:"count_hits";i:1;s:4:"auth";s:71:"a:4:{s:3:"r-1";i:1041;s:2:"r0";i:1495;s:2:"r1";i:4095;s:2:"r2";i:4095;}";}'),
-(21, 'faq', 'a:5:{s:8:"faq_name";s:13:"Nom de la FAQ";s:8:"num_cols";i:3;s:13:"display_block";b:1;s:11:"global_auth";a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:3;s:2:"r2";i:3;}s:4:"root";a:4:{s:12:"display_mode";i:1;s:13:"num_questions";i:3;s:4:"auth";b:0;s:11:"description";s:77:"test dsfsdfds<br />\r\ndescription<br />\r\n<span class=\\"success\\">xcvcxv</span>";}}'),
 (20, 'contact', 'a:1:{s:17:"contact_verifcode";i:1;}');
 
 -- --------------------------------------------------------
@@ -1021,8 +1020,7 @@ INSERT INTO `phpboost_modules` (`id`, `name`, `version`, `auth`, `activ`) VALUES
 (15, 'stats', '2.0', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1),
 (16, 'web', '1.4', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1),
 (17, 'wiki', '2.0', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1),
-(20, 'connect', '1.0', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1),
-(21, 'faq', '1.0', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1);
+(20, 'connect', '1.0', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1);
 
 -- --------------------------------------------------------
 

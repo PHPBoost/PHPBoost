@@ -35,11 +35,11 @@ $id_edit = $id_edit > 0 ? $id_edit : $id_edit_post;
 $title = !empty($_POST['title']) ? securit($_POST['title']) : '';
 $contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 $count_hits = !empty($_POST['count_hits']) ? 1 : 0;
-$activ_com = !empty($_POST['activ_com']) ? 1 : 0;
+$enable_com = !empty($_POST['activ_com']) ? 1 : 0;
 $own_auth = !empty($_POST['own_auth']);
 $is_cat = !empty($_POST['is_cat']) ? 1 : 0;
 $id_cat = !empty($_POST['id_cat']) ? numeric($_POST['id_cat']) : 0;
-$preview = !empty($_POST['preview']) ? true : false;
+$preview = !empty($_POST['preview']);
 $del_article = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 
 //Variable d'erreur
@@ -66,7 +66,7 @@ if( $id_edit > 0 )
 }
 else
 	$Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
-
+	
 require_once('../includes/header.php');
 
 //On crée ou on édite une page
@@ -115,7 +115,7 @@ if( !empty($contents) )
 			if( $page_infos['is_cat'] == 0 )
 			{		
 				//On met à jour la table
-				$Sql->Query_inject("UPDATE ".PREFIX."pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $activ_com . "', auth = '" . $page_auth . "', id_cat = '" . $id_cat . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "', id_cat = '" . $id_cat . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 				//On redirige vers la page mise à jour
 				redirect(HOST . DIR . '/pages/' . transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
@@ -128,7 +128,7 @@ if( !empty($contents) )
 					$Sql->Query_inject("UPDATE ".PREFIX."pages_cats SET id_parent = '" . $id_cat . "' WHERE id = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
 				}
 				//On met à jour la table
-				$Sql->Query_inject("UPDATE ".PREFIX."pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $activ_com . "', auth = '" . $page_auth . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 				//Régénération du cache
 				$Cache->Generate_module_file('pages');
 				//On redirige vers la page mise à jour
@@ -147,7 +147,7 @@ if( !empty($contents) )
 			//Si l'article n'existe pas déjà, on enregistre
 			if( $is_already_page == 0 )
 			{
-				$Sql->Query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . $Member->Get_attribute('user_id') . "', '" . $count_hits . "', '" . $activ_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "')", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . $Member->Get_attribute('user_id') . "', '" . $count_hits . "', '" . $enable_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "')", __LINE__, __FILE__);
 				//Si c'est une catégorie
 				if( $is_cat > 0 )
 				{
@@ -226,7 +226,7 @@ if( $id_edit > 0 )
 	$Template->Assign_vars(array(
 		'CONTENTS' => !empty($error) ? stripslashes($contents) : pages_unparse($page_infos['contents']),
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($page_infos['count_hits'] == 1 ? 'checked="checked"' : ''),
-		'ACTIV_COM_CHECKED' => !empty($error) ? ($activ_com == 1 ? 'checked="checked"' : '') : ($page_infos['activ_com'] == 1 ? 'checked="checked"' : ''),
+		'ACTIV_COM_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') : ($page_infos['activ_com'] == 1 ? 'checked="checked"' : ''),
 		'OWN_AUTH_CHECKED' => !empty($page_infos['auth']) ? 'checked="checked"' : '',
 		'CAT_0' => $id_cat_display == 0 ? 'pages_selected_cat' : '',
 		'ID_CAT' => $id_cat_display,
@@ -266,7 +266,7 @@ else
 	
 	$Template->Assign_vars(array(
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : ''),
-		'ACTIV_COM_CHECKED' => !empty($error) ? ($activ_com == 1 ? 'checked="checked"' : '') :($_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : ''),
+		'ACTIV_COM_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') :($_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : ''),
 		'OWN_AUTH_CHECKED' => '',
 		'CAT_0' => 'pages_selected_cat',
 		'ID_CAT' => '0',
@@ -275,7 +275,11 @@ else
 }
 
 $array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
-$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : (isset($_PAGES_CONFIG['auth'])) ? $_PAGES_CONFIG['auth'] : array();
+
+if( !empty($page_infos['auth']) )
+	$array_auth = unserialize($page_infos['auth']);
+else
+	$array_auth = !empty($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
 
 $Template->Assign_vars(array(
 	'ID_EDIT' => $id_edit,

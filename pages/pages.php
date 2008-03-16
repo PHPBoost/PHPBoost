@@ -47,10 +47,13 @@ if( !empty($encoded_title) ) //Si on connait son titre
 	}
 	else
 		$redirect_title = '';
+		
 	define('TITLE', $page_infos['title']);
 	
-	//définition du fil d'Ariane de la page
-	$Speed_bar->Add_link($page_infos['title'], transid('pages.php?title=' . $encoded_title, $encoded_title));
+	//Définition du fil d'Ariane de la page
+	if( $page_infos['is_cat'] == 0 )
+		$Speed_bar->Add_link($page_infos['title'], transid('pages.php?title=' . $encoded_title, $encoded_title));
+	
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
@@ -61,8 +64,8 @@ if( !empty($encoded_title) ) //Si on connait son titre
 	}	
 	if( $Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
 		$Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
+	//On renverse ce fil pour le mettre dans le bon ordre d'arborescence
 	$Speed_bar->Reverse_links();
-	//on renverse ce fil pour le mettre dans le bon ordre d'arborescence
 }
 elseif( $id_com > 0 )
 {
@@ -93,7 +96,7 @@ else
 	if( $auth_index )
 		$Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
 	elseif( !$auth_index && empty($error) )
-		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth'));
 }
 require_once('../includes/header.php');
 
@@ -106,9 +109,10 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
+
 	//Vérification de l'autorisation de voir la page
 	if( ($special_auth && !$Member->Check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
-		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth'));
 	
 	//Génération des liens de la page
 	$links = array();
