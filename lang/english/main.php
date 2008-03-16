@@ -275,12 +275,17 @@ $LANG['category'] = 'Category';
 $LANG['categories'] = 'Categories';
 $LANG['refresh'] = 'Refresh';
 
-
 //Dates.
 $LANG['on'] = 'On';
 $LANG['at'] = 'at';
 $LANG['and'] = 'and';
 $LANG['by'] = 'By';
+
+//Authorized forms management.
+$LANG['explain_select_multiple'] = 'Hold ctrl and click in the list to make multiple choose';
+$LANG['advanced_authorization'] = 'Advanced authorization';
+$LANG['select_all'] = 'Select all';
+$LANG['select_none'] = 'Unselect all';
 
 //Calendar
 $LANG['january'] = 'January';
@@ -521,6 +526,13 @@ It may be an error, if you want you could contact the administrator of the web s
 
 
 %s';
+
+//Loading bar.
+$LANG['query_loading'] = 'Sending of the query to server';
+$LANG['query_sent'] = 'Query loaded successful, waiting for the answer of your server';
+$LANG['query_processing'] = 'Proccessing the query';
+$LANG['query_success'] = 'Processing succed';
+$LANG['query_failure'] = 'Processing failed';
 
 //Footer
 $LANG['powered_by'] = 'Boosted by';
