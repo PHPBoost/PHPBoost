@@ -160,7 +160,7 @@ elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
 		{
 			$auth_read = isset($_POST['groups_auth1']) ? $_POST['groups_auth1'] : '';
 			$auth_write = isset($_POST['groups_auth2']) ? $_POST['groups_auth2'] : '';
-			$array_auth_all = $Group->Return_array_auth($auth_read, $auth_write);
+			$array_auth_all = $Group->Return_array_auth(AUTH_READ, AUTH_WRITE);
 			$new_auth = addslashes(serialize($array_auth_all));
 		}
 		else

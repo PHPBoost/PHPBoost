@@ -68,63 +68,81 @@ class Group
 			$admin_auth_default = func_get_arg($nbr_arg - 1);		
 			if( !is_bool($admin_auth_default) )
 				$admin_auth_default = true;
+			else
+				$nbr_arg--; //On diminue de 1 le nombre d'argument, car le denier est le flag.
 		}
-		
 		//On balaye les tableaux passés en argument.
 		for($i = 0; $i < $nbr_arg; $i++)
 		{
-			$bit_value = 1 << $i; //On décale à chaque fois d'un bit, pour chaque tableau.
-			$sum_auth += $bit_value;
-			$array_auth = func_get_arg($i);
-			if( is_array($array_auth) )
-			{			
-				//Ajout des autorisations supérieure si une autorisations inférieure est autorisée. Ex: Membres autorisés implique, modérateurs et administrateurs autorisés.
-				$array_level = array(0 => 'r-1', 1 => 'r0', 2 => 'r1', 3 => 'r2');
-				$min_auth = 3;
-				foreach($array_level as $level => $key)
-				{
-					if( in_array($key, $array_auth) )
-						$min_auth = $level;
-					else
+			$bit_value = func_get_arg($i); //Récupération du bit.
+			
+			##### Niveau et Groupes #####
+			$array_auth_groups = !empty($_POST['groups_auth' . $bit_value]) ? $_POST['groups_auth' . $bit_value] : '';
+			if( !empty($array_auth_groups) ) //Récupération du formulaire.
+			{
+				$sum_auth += $bit_value;
+				if( is_array($array_auth_groups) )
+				{			
+					//Ajout des autorisations supérieure si une autorisations inférieure est autorisée. Ex: Membres autorisés implique, modérateurs et administrateurs autorisés.
+					$array_level = array(0 => 'r-1', 1 => 'r0', 2 => 'r1', 3 => 'r2');
+					$min_auth = 3;
+					foreach($array_level as $level => $key)
 					{
-						if( $min_auth < $level )
-							$array_auth[] = $key;
+						if( in_array($key, $array_auth_groups) )
+							$min_auth = $level;
+						else
+						{
+							if( $min_auth < $level )
+								$array_auth_groups[] = $key;
+						}
+					}
+					
+					//Ajout des autorisations au tableau final.
+					foreach($array_auth_groups as $key => $value)
+					{
+						if( isset($array_auth_all[$value]) )
+							$array_auth_all[$value] += $bit_value;
+						else
+							$array_auth_all[$value] = $bit_value;
 					}
 				}
-				
-				//Ajout des autorisations au tableau final.
-				foreach($array_auth as $key => $value)
-				{
-					if( isset($array_auth_all[$value]) )
-						$array_auth_all[$value] += $bit_value;
-					else
-						$array_auth_all[$value] = $bit_value;
+			}
+			
+			##### Membres (autorisations avancées) ######
+			$array_auth_members = !empty($_POST['members_auth' . $bit_value]) ? $_POST['members_auth' . $bit_value] : '';
+			if( !empty($array_auth_members) ) //Récupération du formulaire.
+			{
+				if( is_array($array_auth_members) )
+				{			
+					//Ajout des autorisations au tableau final.
+					foreach($array_auth_members as $key => $value)
+					{
+						if( isset($array_auth_all['m' . $value]) )
+							$array_auth_all['m' . $value] += $bit_value;
+						else
+							$array_auth_all['m' . $value] = $bit_value;
+					}
 				}
-				ksort($array_auth_all); //Tri des clées du tableau par ordre alphabétique, question de lisibilité.
 			}
 		}
-				
+		ksort($array_auth_all); //Tri des clées du tableau par ordre alphabétique, question de lisibilité.
+		
 		//Admin tous les droits dans n'importe quel cas.
 		if( $admin_auth_default )
 			$array_auth_all['r2'] = $sum_auth;
-	
+
 		return $array_auth_all;
 	}
 	
 	//Génération d'une liste à sélection multiple des rangs, groupes et membres
-    function Generate_select_auth($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '', $disabled_advanced_auth = false)
+    function Generate_select_auth($auth_bit, $array_auth = array(), $array_ranks_default = array(), $disabled = '', $disabled_advanced_auth = false)
     {
         global $LANG, $CONFIG;
 		
-		return $this->generate_select_groups($auth_id, $array_auth, $auth_level, $array_ranks_default, $disabled) . ($disabled_advanced_auth ? '<div class="spacer"></div>' : $this->generate_select_members($auth_id, $array_auth, $auth_level) . 
-		'<div id="advanced_auth' . $auth_id . '" style="display:none;float:left;margin-left:5px;"><strong>' . $LANG['add_member'] . '</strong><br /><input type="text" size="15" class="text" value="" id="login' . $auth_id . '" name="login' . $auth_id . '" />
-			<input onclick="XMLHttpRequest_search_members(\'' . $auth_id . '\', \'' . $CONFIG['theme'] . '\', \'add_member_auth\', \'' . addslashes($LANG['require_pseudo']) . '\');" type="button" name="valid" value="' . $LANG['search'] . '" class="submit" />
-			<span id="search_img' . $auth_id . '"></span>
-			<div id="xmlhttprequest_result_search' . $auth_id . '" style="display:none;height:68px;" class="xmlhttprequest_result_search"></div>
-		</div>
-		<div class="spacer"></div>
-		<a class="small_link" href="javascript:display_div_auto(\'advanced_auth' . $auth_id . '\', \'\');display_div_auto(\'advanced_auth2' . $auth_id . '\', \'\');switch_img(\'advanced_auth_plus' . $auth_id . '\', \'../templates/' . $CONFIG['theme'] . '/images/upload/minus.png\', \'../templates/' . $CONFIG['theme'] . '/images/upload/plus.png\');"><img id="advanced_auth_plus' . $auth_id . '" src="../templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" class="valign_middle" /> ' . $LANG['advanced_authorization'] . '</a><br />') . 
-		'<a class="small_link" href="javascript:check_select_multiple(\'' . $auth_id . '\', true);">' . $LANG['select_all'] . '</a>/<a class="small_link" href="javascript:check_select_multiple(\'' . $auth_id . '\', false);">' . $LANG['select_none'] . '</a>
+		return $this->generate_select_groups($auth_bit, $array_auth, $array_ranks_default, $disabled) . ($disabled_advanced_auth ? '<div class="spacer"></div>' : $this->generate_select_members($auth_bit, $array_auth) . 
+		'<div class="spacer"></div>
+		<a class="small_link" href="javascript:display_div_auto(\'advanced_auth' . $auth_bit . '\', \'\');display_div_auto(\'advanced_auth2' . $auth_bit . '\', \'\');switch_img(\'advanced_auth_plus' . $auth_bit . '\', \'../templates/' . $CONFIG['theme'] . '/images/upload/minus.png\', \'../templates/' . $CONFIG['theme'] . '/images/upload/plus.png\');"><img id="advanced_auth_plus' . $auth_bit . '" src="../templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" class="valign_middle" /> ' . $LANG['advanced_authorization'] . '</a><br />') . 
+		'<a class="small_link" href="javascript:check_select_multiple(\'' . $auth_bit . '\', true);">' . $LANG['select_all'] . '</a>/<a class="small_link" href="javascript:check_select_multiple(\'' . $auth_bit . '\', false);">' . $LANG['select_none'] . '</a>
 		<br />
 		<span class="text_small">(' . $LANG['explain_select_multiple'] . ')</span>';
     }
@@ -195,22 +213,22 @@ class Group
 	
 	##  Private methods ##
 	//Génération d'une liste à sélection multiple des rangs et membres
-    function generate_select_groups($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '')
+    function generate_select_groups($auth_bit, $array_auth, $array_ranks_default, $disabled)
     {
         global $array_groups, $array_ranks, $LANG;
-       
+
         $array_ranks = is_array($array_ranks) ? $array_ranks : array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
         $j = 0;
         //Liste des rangs
-		$select_groups = '<div style="float:left"><select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="' . (empty($disabled) ? 'if(disabled == 0)' : '') . 'document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
+		$select_groups = '<div style="float:left"><select id="groups_auth' . $auth_bit . '" name="groups_auth' . $auth_bit . '[]" size="8" multiple="multiple" onclick="' . (empty($disabled) ? 'if(disabled == 0)' : '') . 'document.getElementById(\'' . $auth_bit . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
         foreach($array_ranks as $idgroup => $group_name)
         {
             $selected = '';   
-            if( array_key_exists('r' . $idgroup, $array_auth) && ((int)$array_auth['r' . $idgroup] & (int)$auth_level) !== 0 && empty($disabled) )
+            if( array_key_exists('r' . $idgroup, $array_auth) && ((int)$array_auth['r' . $idgroup] & (int)$auth_bit) !== 0 && empty($disabled) )
                 $selected = ' selected="selected"';
                
             $selected = (isset($array_ranks_default[$idgroup]) && $array_ranks_default[$idgroup] === true && empty($disabled)) ? 'selected="selected"' : $selected;
-            $select_groups .= '<option ' . $disabled . 'value="r' . $idgroup . '" id="' . $auth_id . 'r' . $j . '"' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_id . 'r\', ' . $j . ')">' . $group_name . '</option>';
+            $select_groups .= '<option ' . $disabled . 'value="r' . $idgroup . '" id="' . $auth_bit . 'r' . $j . '"' . $selected . ' onclick="check_select_multiple_ranks(\'' . $auth_bit . 'r\', ' . $j . ')">' . $group_name . '</option>';
             $j++;
         }
         $select_groups .= '</optgroup>';
@@ -221,10 +239,10 @@ class Group
         foreach($array_groups as $idgroup => $group_name)
         {
             $selected = '';       
-            if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_level) !== 0 && empty($disabled) )
+            if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled) )
                 $selected = ' selected="selected"';
 
-            $select_groups .= '<option ' . $disabled . 'value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '"' . $selected . '>' . $group_name . '</option>';
+            $select_groups .= '<option ' . $disabled . 'value="' . $idgroup . '" id="' . $auth_bit . 'g' . $j . '"' . $selected . '>' . $group_name . '</option>';
             $j++;
         }
         $select_groups .= '</optgroup></select></div>';
@@ -233,26 +251,44 @@ class Group
     }
 
     //Génération du formulaire pour les autorisations membre par membre.
-    function generate_select_members($auth_id, $array_auth, $auth_level)
+    function generate_select_members($auth_bit, $array_auth)
 	{
-		global $Sql, $LANG;
+		global $Sql, $LANG, $CONFIG;
 
-		$select_members = ' <div id="advanced_auth2' . $auth_id . '" style="margin-left:5px;display:none;float:left"><select id="members_auth' . $auth_id . '"  name="members_auth' . $auth_id . '[]" size="8" multiple="multiple">
-		<optgroup label="' . $LANG['member_s'] . '">';
-		if( count($array_auth) > 0 )
+		//Recherche des membres autorisé.
+		$array_auth_members = array();
+		foreach($array_auth as $type => $auth)
+		{
+			if( substr($type, 0, 1) == 'm' )
+			{	
+				if( array_key_exists($type, $array_auth) && ((int)$array_auth[$type] & (int)$auth_bit) !== 0 )
+					$array_auth_members[$type] = $auth;
+			}
+		}
+		$advanced_auth = count($array_auth_members) > 0;
+
+		//Listing des membres autorisés.
+		$select_members = ' <div id="advanced_auth2' . $auth_bit . '" style="margin-left:5px;' . ($advanced_auth ? 'display:block;' : 'display:none;') . 'float:left"><select id="members_auth' . $auth_bit . '"  name="members_auth' . $auth_bit . '[]" size="8" multiple="multiple">
+		<optgroup label="' . $LANG['member_s'] . '" id="advanced_auth3' . $auth_bit . '">';
+		if( $advanced_auth )
 		{
 			$result = $Sql->Query_while("SELECT user_id, login 
 			FROM ".PREFIX."member
-			WHERE user_id IN(" . implode($array_auth, ', ') . ")", __LINE__, __FILE__);
+			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")", __LINE__, __FILE__);
 			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
-				$selected = '';
-				$select_members .= '<option value="' . $row['user_id'] . '" id="' . $auth_id . 'm' . $row['user_id'] . '"' . $selected . '>' . $row['login'] . '</option>';
+				$select_members .= '<option value="' . $row['user_id'] . '" id="' . $auth_bit . 'm' . $row['user_id'] . '" selected="selected">' . $row['login'] . '</option>';
 			}
 			$Sql->Close($result);
 		}
 		$select_members .= '</optgroup></select></div>';
 
+		//Formulaire de recherche de membre.
+		$select_members .= '<div id="advanced_auth' . $auth_bit . '" style="' . ($advanced_auth ? 'display:block;' : 'display:none;') . 'float:left;margin-left:5px;"><strong>' . $LANG['add_member'] . '</strong><br /><input type="text" size="15" class="text" value="" id="login' . $auth_bit . '" name="login' . $auth_bit . '" />
+			<span id="search_img' . $auth_bit . '"></span> <input onclick="XMLHttpRequest_search_members(\'' . $auth_bit . '\', \'' . $CONFIG['theme'] . '\', \'add_member_auth\', \'' . addslashes($LANG['require_pseudo']) . '\');" type="button" name="valid" value="' . $LANG['search'] . '" class="submit" />
+			<div id="xmlhttprequest_result_search' . $auth_bit . '" style="display:none;height:68px;" class="xmlhttprequest_result_search"></div>
+		</div>';
+		
 		return $select_members;
 	}
 	

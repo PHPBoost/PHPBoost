@@ -34,17 +34,13 @@ require_once('../includes/admin_header.php');
 include_once('pages_begin.php');
 include_once('pages_functions.php');
 
-
 if( !empty($_POST['update']) )  //Mise à jour
 {
 	$count_hits = !empty($_POST['count_hits']) ? 1 : 0;
 	$activ_com = !empty($_POST['activ_com']) ? 1 : 0;
-	$auth_create = isset($_POST['groups_auth1']) ? $_POST['groups_auth1'] : '';
-	$auth_edit = isset($_POST['groups_auth2']) ? $_POST['groups_auth2'] : '';
-	$auth_com = isset($_POST['groups_auth3']) ? $_POST['groups_auth3'] : '';
 	
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth($auth_create, $auth_edit, $auth_com);
+	$array_auth_all = $Group->Return_array_auth(READ_PAGE, EDIT_PAGE, READ_COM);
 	
 	$_PAGES_CONFIG['auth'] = addslashes(serialize($array_auth_all));
 	$_PAGES_CONFIG['count_hits'] = $count_hits;
@@ -68,9 +64,9 @@ $Template->Assign_vars(array(
 	'HITS_CHECKED' => $_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : '',
 	'NBR_GROUP' => count($array_groups),
 	'COM_CHECKED' => $_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : '',
-	'SELECT_READ_PAGE' => $Group->Generate_select_auth(1, $array_auth, READ_PAGE),
-	'SELECT_EDIT_PAGE' => $Group->Generate_select_auth(2, $array_auth, EDIT_PAGE),
-	'SELECT_READ_COM' => $Group->Generate_select_auth(3, $array_auth, READ_COM),
+	'SELECT_READ_PAGE' => $Group->Generate_select_auth(READ_PAGE, $array_auth),
+	'SELECT_EDIT_PAGE' => $Group->Generate_select_auth(EDIT_PAGE, $array_auth),
+	'SELECT_READ_COM' => $Group->Generate_select_auth(READ_COM, $array_auth),
 	'L_READ_COM' => $LANG['pages_auth_read_com'],
 	'L_EDIT_PAGE' => $LANG['pages_auth_edit'],
 	'L_READ_PAGE' => $LANG['pages_auth_read'],

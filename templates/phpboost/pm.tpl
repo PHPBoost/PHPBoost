@@ -393,8 +393,7 @@
 									<dt><label for="login">* {L_RECIPIENT}</label></dt>
 									<dd><label>
 										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}" class="text" />
-										<input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" type="button" class="submit">
-										<span id="search_img"></span>
+										<span id="search_img"></span> <input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" type="button" class="submit">
 										<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
 										# START post_convers.user_id_dest.search #
 											{search.RESULT}

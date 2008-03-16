@@ -29,6 +29,7 @@ var timeout_progress_bar = null;
 var max_percent = 0;
 var info_progress_tmp = '';
 var speed_progress = 20; //Vitesse de la progression.
+var progressbar_size = 55; //Taille de la barre de progression.
 var idbar = ''; //Identifiant de la barre de progression.
 var restart_progress = false;
 
@@ -38,12 +39,14 @@ function load_progress_bar(progressbar_speed_tmp, progressbar_id_tmp)
 	progressbar_speed = progressbar_speed_tmp;
 	restart_progress = true;
 	progressbar_id = progressbar_id_tmp;
+	if( arguments.length == 3 ) //Argument optionnel.
+		progressbar_size = arguments[2];
 }
 
 //Barre de progression.
 function progress_bar(percent_progress, info_progress)
 {
-	bar_progress = (percent_progress * 55) / 100;
+	bar_progress = (percent_progress * progressbar_size) / 100;
 	if( arguments.length == 4 )
 	{
 		result_id = arguments[2];
@@ -71,7 +74,7 @@ function progress_bar(percent_progress, info_progress)
 		if( document.getElementById('progress_bar' + progressbar_id) )
 			document.getElementById('progress_bar' + progressbar_id).innerHTML += '<img src="templates/images/progress.png" alt="" />';
 		if( document.getElementById('progress_percent' + progressbar_id) )
-			document.getElementById('progress_percent' + progressbar_id).innerHTML = Math.round((this.percent_begin * 100) / 55);
+			document.getElementById('progress_percent' + progressbar_id).innerHTML = Math.round((this.percent_begin * 100) / progressbar_size);
 		if( document.getElementById('progress_info' + progressbar_id) )
 		{	
 			if( percent_progress > max_percent )
@@ -82,7 +85,7 @@ function progress_bar(percent_progress, info_progress)
 			document.getElementById('progress_info' + progressbar_id).innerHTML = info_progress_tmp;
 		}
 		//Message de fin
-		if( this.percent_begin == 55 && result_id != "" && result_msg != "" )
+		if( this.percent_begin == progressbar_size && result_id != "" && result_msg != "" )
 			document.getElementById(result_id).innerHTML = result_msg;
 		timeout_progress_bar = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")', progressbar_speed);
 	}

@@ -36,16 +36,16 @@ $top = ( !empty($_GET['top'])) ? securit($_GET['top']) : '' ;
 $bottom = ( !empty($_GET['bot'])) ? securit($_GET['bot']) : '' ;
 
 $Cache->Load_file('forum');
+//Configuration générale du forum
+define('FLOOD_FORUM', 0x01);
+define('EDIT_MARK_FORUM', 0x02);
+define('TRACK_TOPIC_FORUM', 0x04);
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {
-	$auth_flood = isset($_POST['groups_auth1']) ? $_POST['groups_auth1'] : ''; 
-	$auth_edit_mark = isset($_POST['groups_auth2']) ? $_POST['groups_auth2'] : ''; 
-	$auth_topic_track = isset($_POST['groups_auth3']) ? $_POST['groups_auth3'] : '';
-	
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth($auth_flood, $auth_edit_mark, $auth_topic_track, ADMIN_NOAUTH_DEFAULT);
+	$array_auth_all = $Group->Return_array_auth(FLOOD_FORUM, EDIT_MARK_FORUM, TRACK_TOPIC_FORUM, ADMIN_NOAUTH_DEFAULT);
 		
 	$CONFIG_FORUM['auth'] = serialize($array_auth_all);
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'", __LINE__, __FILE__);
@@ -66,9 +66,9 @@ else
 	
 	$Template->Assign_vars(array(
 		'NBR_GROUP' => count($array_groups),
-		'FLOOD_AUTH' => $Group->Generate_select_auth(1, $array_auth, 0x01),
-		'EDIT_MARK_AUTH' => $Group->Generate_select_auth(2, $array_auth, 0x02),
-		'TRACK_TOPIC_AUTH' => $Group->Generate_select_auth(3, $array_auth, 0x04),
+		'FLOOD_AUTH' => $Group->Generate_select_auth(FLOOD_FORUM, $array_auth),
+		'EDIT_MARK_AUTH' => $Group->Generate_select_auth(EDIT_MARK_FORUM, $array_auth),
+		'TRACK_TOPIC_AUTH' => $Group->Generate_select_auth(TRACK_TOPIC_FORUM, $array_auth),
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
 		'L_ADD_CAT' => $LANG['cat_add'],

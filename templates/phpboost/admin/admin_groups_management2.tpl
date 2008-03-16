@@ -28,14 +28,14 @@
 		}
 		function XMLHttpRequest_search()
 		{
-			var login = document.getElementById("login_mbr").value;
+			var login = document.getElementById("login").value;
 			if( login != "" )
 			{
 				if( document.getElementById('loading_groups') )
 					document.getElementById('loading_groups').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 							
 				data = 'login=' + login;
-				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?group_member=1');
+				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?insert_member=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -74,11 +74,6 @@
 				Pdiv = document.layers[divID];
 				if( Pdiv.className == divID ) Pdiv.className = divID + '2';
 			}
-		}
-
-		function insert_XMLHttpRequest(login)
-		{
-			document.getElementById("login_mbr").value = login;
 		}
 
 		-->
@@ -156,12 +151,13 @@
 				<fieldset>
 					<legend>{L_ADD_MBR_GROUP}</legend>
 					<dl>
-						<dt><label for="login_mbr">* {L_PSEUDO}</label></dt>
+						<dt><label for="login">* {L_PSEUDO}</label></dt>
 						<dd><label>
-							<input type="text" size="20 maxlenght="25" id="login_mbr" value="{LOGIN}" name="login_mbr" class="text" /> <span id="loading_groups"></span>
+							<input type="text" size="20 maxlenght="25" id="login" value="{LOGIN}" name="login_mbr" class="text" /> 
+							<span id="loading_groups"></span>
 							<script type="text/javascript">
 							<!--								
-								document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search(this.form);" type="button" class="submit">');
+								document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search();" type="button" class="submit">');
 							-->
 							</script>
 							<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>

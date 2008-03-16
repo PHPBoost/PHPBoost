@@ -36,21 +36,8 @@ include_once('../wiki/wiki_auth.php');
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {
-	$auth_create_article = isset($_POST['groups_auth1']) ? $_POST['groups_auth1'] : '';
-	$auth_create_cat = isset($_POST['groups_auth2']) ? $_POST['groups_auth2'] : ''; 
-	$auth_restore_archive = isset($_POST['groups_auth3']) ? $_POST['groups_auth3'] : '';
-	$auth_delete_archive = isset($_POST['groups_auth4']) ? $_POST['groups_auth4'] : '';
-	$auth_edit = isset($_POST['groups_auth5']) ? $_POST['groups_auth5'] : '';
-	$auth_delete = isset($_POST['groups_auth6']) ? $_POST['groups_auth6'] : '';
-	$auth_rename = isset($_POST['groups_auth7']) ? $_POST['groups_auth7'] : '';
-	$auth_redirect = isset($_POST['groups_auth8']) ? $_POST['groups_auth8'] : '';
-	$auth_move = isset($_POST['groups_auth9']) ? $_POST['groups_auth9'] : '';
-	$auth_status = isset($_POST['groups_auth10']) ? $_POST['groups_auth10'] : '';
-	$auth_com = isset($_POST['groups_auth11']) ? $_POST['groups_auth11'] : '';
-	$auth_restriction = isset($_POST['groups_auth12']) ? $_POST['groups_auth12'] : '';
-	
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth($auth_create_article, $auth_create_cat, $auth_restore_archive, $auth_delete_archive, $auth_edit, $auth_delete, $auth_rename, $auth_redirect, $auth_move, $auth_status, $auth_com, $auth_restriction);
+	$array_auth_all = $Group->Return_array_auth(WIKI_CREATE_ARTICLE, WIKI_CREATE_CAT, WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM, WIKI_RESTRICTION);
 		
 	$_WIKI_CONFIG['auth'] = addslashes(serialize($array_auth_all));
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
@@ -73,18 +60,18 @@ else
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('wiki'),
 		'NBR_GROUP' => count($array_groups),
-		'SELECT_CREATE_ARTICLE' => $Group->Generate_select_auth(1, $array_auth, WIKI_CREATE_ARTICLE),
-		'SELECT_CREATE_CAT' => $Group->Generate_select_auth(2, $array_auth, WIKI_CREATE_CAT),
-		'SELECT_RESTORE_ARCHIVE' => $Group->Generate_select_auth(3, $array_auth, WIKI_RESTORE_ARCHIVE),
-		'SELECT_DELETE_ARCHIVE' => $Group->Generate_select_auth(4, $array_auth, WIKI_DELETE_ARCHIVE),
-		'SELECT_EDIT' => $Group->Generate_select_auth(5, $array_auth, WIKI_EDIT),
-		'SELECT_DELETE' => $Group->Generate_select_auth(6, $array_auth, WIKI_DELETE),
-		'SELECT_RENAME' => $Group->Generate_select_auth(7, $array_auth, WIKI_RENAME),
-		'SELECT_REDIRECT' => $Group->Generate_select_auth(8, $array_auth, WIKI_REDIRECT),
-		'SELECT_MOVE' => $Group->Generate_select_auth(9, $array_auth, WIKI_MOVE),
-		'SELECT_STATUS' => $Group->Generate_select_auth(10, $array_auth, WIKI_STATUS),
-		'SELECT_COM' => $Group->Generate_select_auth(11, $array_auth, WIKI_COM),
-		'SELECT_RESTRICTION' => $Group->Generate_select_auth(12, $array_auth, WIKI_RESTRICTION),
+		'SELECT_CREATE_ARTICLE' => $Group->Generate_select_auth(WIKI_CREATE_ARTICLE, $array_auth),
+		'SELECT_CREATE_CAT' => $Group->Generate_select_auth(WIKI_CREATE_CAT, $array_auth),
+		'SELECT_RESTORE_ARCHIVE' => $Group->Generate_select_auth(WIKI_RESTORE_ARCHIVE, $array_auth),
+		'SELECT_DELETE_ARCHIVE' => $Group->Generate_select_auth(WIKI_DELETE_ARCHIVE, $array_auth),
+		'SELECT_EDIT' => $Group->Generate_select_auth(WIKI_EDIT, $array_auth),
+		'SELECT_DELETE' => $Group->Generate_select_auth(WIKI_DELETE, $array_auth),
+		'SELECT_RENAME' => $Group->Generate_select_auth(WIKI_RENAME, $array_auth),
+		'SELECT_REDIRECT' => $Group->Generate_select_auth(WIKI_REDIRECT, $array_auth),
+		'SELECT_MOVE' => $Group->Generate_select_auth(WIKI_MOVE, $array_auth),
+		'SELECT_STATUS' => $Group->Generate_select_auth(WIKI_STATUS, $array_auth),
+		'SELECT_COM' => $Group->Generate_select_auth(WIKI_COM, $array_auth),
+		'SELECT_RESTRICTION' => $Group->Generate_select_auth(WIKI_RESTRICTION, $array_auth),
 		'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
 		'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
 		'L_CONFIG_WIKI' => $LANG['wiki_config'],

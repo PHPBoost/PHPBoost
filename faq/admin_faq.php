@@ -40,7 +40,7 @@ if( !empty($_POST['submit']) )
 	$FAQ_CONFIG['display_block'] = !empty($_POST['display_mode']) && $_POST['display_mode'] == 'inline' ? false : true;
 	$auth_read = isset($_POST['groups_auth1']) ? $_POST['groups_auth1'] : '';
 	$auth_write = isset($_POST['groups_auth2']) ? $_POST['groups_auth2'] : '';
-	$FAQ_CONFIG['global_auth'] = $Group->Return_array_auth($auth_read, $auth_write);
+	$FAQ_CONFIG['global_auth'] = $Group->Return_array_auth(AUTH_READ, AUTH_WRITE);
 	$FAQ_CONFIG['root'] = $FAQ_CATS[0];
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
@@ -121,8 +121,8 @@ else
 		'L_AUTH_READ' => $FAQ_LANG['read_auth'],
 		'L_AUTH_WRITE' => $FAQ_LANG['write_auth'],
 		'L_SUBMIT' => $LANG['submit'],
-		'AUTH_READ' => $Group->Generate_select_auth(1, $FAQ_CONFIG['global_auth'], AUTH_READ),
-		'AUTH_WRITE' => $Group->Generate_select_auth(2, $FAQ_CONFIG['global_auth'], AUTH_WRITE),
+		'AUTH_READ' => $Group->Generate_select_auth(AUTH_READ, $FAQ_CONFIG['global_auth']),
+		'AUTH_WRITE' => $Group->Generate_select_auth(AUTH_WRITE, $FAQ_CONFIG['global_auth']),
 		'FAQ_NAME' => $FAQ_CONFIG['faq_name'],
 		'NUM_COLS' => $FAQ_CONFIG['num_cols'],
 		'SELECTED_BLOCK' => $FAQ_CONFIG['display_block'] ? ' selected="selected"' : '',

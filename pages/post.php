@@ -74,13 +74,8 @@ if( !empty($contents) )
 {
 	if( $own_auth )
 	{
-		//Autorisations de la page -> reconstitution du tableau
-		$auth_create = isset($_POST['groups_auth1']) ? $_POST['groups_auth1'] : '';
-		$auth_edit = isset($_POST['groups_auth2']) ? $_POST['groups_auth2'] : '';
-		$auth_com = isset($_POST['groups_auth3']) ? $_POST['groups_auth3'] : '';
-		
 		//Génération du tableau des droits.
-		$array_auth_all = $Group->Return_array_auth($auth_create, $auth_edit, $auth_com);
+		$array_auth_all = $Group->Return_array_auth(READ_PAGE, EDIT_PAGE, READ_COM);
 		$page_auth = addslashes(serialize($array_auth_all));
 	}
 	else
@@ -284,9 +279,9 @@ else
 $Template->Assign_vars(array(
 	'ID_EDIT' => $id_edit,
 	'NBR_GROUP' => count($array_groups),
-	'SELECT_READ_PAGE' => $Group->Generate_select_auth(1, $array_auth, READ_PAGE),
-	'SELECT_EDIT_PAGE' => $Group->Generate_select_auth(2, $array_auth, EDIT_PAGE),
-	'SELECT_READ_COM' => $Group->Generate_select_auth(3, $array_auth, READ_COM),
+	'SELECT_READ_PAGE' => $Group->Generate_select_auth(READ_PAGE, $array_auth),
+	'SELECT_EDIT_PAGE' => $Group->Generate_select_auth(EDIT_PAGE, $array_auth),
+	'SELECT_READ_COM' => $Group->Generate_select_auth(READ_COM, $array_auth),
 	'OWN_AUTH_DISABLED' => !empty($page_infos['auth']) ? 'false' : 'true',
 	'DISPLAY' => empty($page_infos['auth']) ? 'display:none;' : '',
 	'PAGES_PATH' => $Template->Module_data_path('pages'),

@@ -35,6 +35,11 @@ $id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 $move = !empty($_GET['move']) ? trim($_GET['move']) : 0;
 
+//Configuration sur la catégorie.
+define('READ_CAT_FORUM', 0x01);
+define('WRITE_CAT_FORUM', 0x02);
+define('EDIT_CAT_FORUM', 0x04);
+
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) && !empty($id) )
 {
@@ -45,12 +50,9 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$subname = !empty($_POST['desc']) ? securit($_POST['desc']) : '';
 	$status = isset($_POST['status']) ? numeric($_POST['status']) : 1;
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;  
-	$auth_read = isset($_POST['groups_authr']) ? $_POST['groups_authr'] : ''; 
-	$auth_write = isset($_POST['groups_authw']) ? $_POST['groups_authw'] : ''; 
-	$auth_edit = isset($_POST['groups_authx']) ? $_POST['groups_authx'] : ''; 
 
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth($auth_read, $auth_write, $auth_edit);
+	$array_auth_all = $Group->Return_array_auth(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 		
 	if( !empty($name) )
 	{
@@ -231,7 +233,7 @@ elseif( !empty($id) )
 
 	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = !empty($forum_info['auth']) ? unserialize($forum_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
-		
+
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
@@ -244,9 +246,9 @@ elseif( !empty($id) )
 		'UNCHECKED_APROB' => ($forum_info['aprob'] == 0) ? 'checked="checked"' : '',
 		'CHECKED_STATUS' => ($forum_info['status'] == 1) ? 'checked="checked"' : '',
 		'UNCHECKED_STATUS' => ($forum_info['status'] == 0) ? 'checked="checked"' : '',
-		'AUTH_READ' => $Group->Generate_select_auth('r', $array_auth, 0x01),
-		'AUTH_WRITE' => $is_root ? $Group->Generate_select_auth('w', $array_auth, 0x02) : $Group->Generate_select_auth('w', $array_auth, 0x02, array(), GROUP_DISABLE_SELECT),
-		'AUTH_EDIT' => $is_root ? $Group->Generate_select_auth('x', $array_auth, 0x04) : $Group->Generate_select_auth('x', $array_auth, 0x04, array(), GROUP_DISABLE_SELECT),
+		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_FORUM, $array_auth),
+		'AUTH_WRITE' => $is_root ? $Group->Generate_select_auth(WRITE_CAT_FORUM, $array_auth) : $Group->Generate_select_auth(WRITE_CAT_FORUM, $array_auth, array(), GROUP_DISABLE_SELECT),
+		'AUTH_EDIT' => $is_root ? $Group->Generate_select_auth(EDIT_CAT_FORUM, $array_auth) : $Group->Generate_select_auth(EDIT_CAT_FORUM, $array_auth, array(), GROUP_DISABLE_SELECT),
 		'DISABLED' => $is_root ? '0' : '1',
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],

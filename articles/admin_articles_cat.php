@@ -35,6 +35,10 @@ $del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 $move = !empty($_GET['move']) ? trim($_GET['move']) : 0;
 $root = !empty($_GET['root']) ? numeric($_GET['root']) : 0;
 
+define('READ_CAT_ARTICLES', 0x01);
+define('WRITE_CAT_ARTICLES', 0x02);
+define('EDIT_CAT_ARTICLES', 0x04);
+
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) && !empty($id) )
 {
@@ -46,10 +50,9 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$icon = !empty($_POST['icon']) ? securit($_POST['icon']) : '';
 	$icon_path = !empty($_POST['icon_path']) ? securit($_POST['icon_path']) : '';
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 1;  
-	$auth_read = isset($_POST['groups_authr']) ? $_POST['groups_authr'] : ''; 
 
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth($auth_read);
+	$array_auth_all = $Group->Return_array_auth(READ_CAT_ARTICLES);
 	
 	if( !empty($name) )
 	{
@@ -772,7 +775,7 @@ elseif( !empty($id) ) //Edition des catégories.
 		'IMG_PATH' => $img_direct_path ? $articles_info['icon'] : '',
 		'IMG_ICON' => !empty($articles_info['icon']) ? '<img src="' . $articles_info['icon'] . '" alt="" class="valign_middle" />' : '',		
 		'IMG_LIST' => $image_list,
-		'AUTH_READ' => $Group->Generate_select_auth('r', $array_auth, 0x01),
+		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_ARTICLES, $array_auth),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
 		'L_ARTICLES_ADD' => $LANG['articles_add'],
@@ -823,7 +826,7 @@ elseif( !empty($root) ) //Edition de la racine.
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('articles'),
 		'NBR_GROUP' => count($array_groups),
-		'AUTH_READ' => $Group->Generate_select_auth('r', $array_auth, 0x01),
+		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_ARTICLES, $array_auth),
 		'L_ROOT' => $LANG['root'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
 		'L_ARTICLES_ADD' => $LANG['articles_add'],

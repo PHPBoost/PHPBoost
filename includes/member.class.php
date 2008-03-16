@@ -115,9 +115,14 @@ class Member
 				if( in_array($idgroup, $this->user_groups) )
 					$array_user_auth_groups[$idgroup] = $auth_group;
 			}
-			else //Rang
+			elseif( substr($idgroup, 0, 1) == 'r' ) //Rang
 			{
 				if( $Member->Get_attribute('level') >= (int)str_replace('r', '', $idgroup) )
+					$array_user_auth_groups[$idgroup] = $auth_group;
+			}
+			else //Membre
+			{
+				if( $Member->Get_attribute('user_id') == (int)str_replace('m', '', $idgroup) )
 					$array_user_auth_groups[$idgroup] = $auth_group;
 			}
 		}
