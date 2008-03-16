@@ -352,6 +352,11 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 					document.getElementById("xmlhttprequest_result_search" + searchid).innerHTML = xhr_object.responseText;
 				show_div("xmlhttprequest_result_search" + searchid);
 			}
+			else if( xhr_object.readyState == 4 ) 
+			{
+				if( document.getElementById('search_img' + searchid) )
+					document.getElementById('search_img' + searchid).innerHTML = '';
+			}
 		}
 		xmlhttprequest_sender(xhr_object, data);
 	}	

@@ -2,7 +2,7 @@
 		<!--
 		function check_form(){
 			if(document.getElementById('login2').value == "") {
-				alert("{L_REQUIRE_PSEUDO}");
+				alert("{L_REQUIRE_LOGIN}");
 				return false;
 		    }
 			if(document.getElementById('mail2').value == "") {
@@ -21,7 +21,7 @@
 		}
 		function check_form_search(){
 			if(document.getElementById('search').value == "") {
-				alert("{L_REQUIRE_PSEUDO}");
+				alert("{L_REQUIRE_LOGIN}");
 				return false;
 		    }
 
@@ -36,35 +36,6 @@
 		}
 		function Confirm() {
 			return confirm("{L_CONFIRM_DEL_MEMBER}");
-		}
-		function XMLHttpRequest_search()
-		{
-			var login = document.getElementById('login_mbr').value;
-			if( login != "" )
-			{
-				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?admin_member=1');
-				data = 'login=' + login;
-				xhr_object.onreadystatechange = function() 
-				{
-					if( xhr_object.readyState == 4 ) 
-					{
-						document.getElementById('xmlhttprequest_result_search').innerHTML = xhr_object.responseText;
-						hide_div('xmlhttprequest_result_search');
-					}
-				}
-				xmlhttprequest_sender(xhr_object, data);
-			}	
-			else
-				alert("{L_REQUIRE_LOGIN}");
-		}
-		function hide_div(divID)
-		{
-			if( document.getElementById(divID) )
-				document.getElementById(divID).style.display = 'block';
-		}
-		function insert_XMLHttpRequest(login)
-		{
-			document.getElementById('login_mbr').value = login;
 		}
 		-->
 		</script>
@@ -104,16 +75,20 @@
 					<dl>
 						<dt><label for="login_mbr">* {L_PSEUDO}</label><br /><span>{L_JOKER}</span></dt>
 						<dd><label>
-							<input type="text" size="20" maxlength="25" id="login_mbr" value="{LOGIN}" name="login_mbr" class="text" />
-							<script type="text/javascript">
-							<!--								
-								document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search(this.form);" type="button" class="submit">');
-							-->
-							</script>
-							<noscript>
-								<input type="submit" name="search_user" value="{L_SEARCH}" class="submit" />
-							</noscript>
-							<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
+							<span style="float:left;">
+								{L_SEARCH_MEMBER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
+							<span id="search_img"></span>
+							</span>
+							<span style="float:left;margin-left:5px;">
+								<input type="submit" id="search_member" name="search_member" value="{L_SEARCH}" class="submit" />
+								<script type="text/javascript">
+								<!--								
+									document.getElementById('search_member').style.display = 'none';
+									document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members(\'\', \'{THEME}\', \'admin_member\', \'{L_REQUIRE_LOGIN}\');" type="button" class="submit">');
+								-->
+								</script>									
+								<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
+							</span>
 							# START search #
 								{search.RESULT}
 							# END search #

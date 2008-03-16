@@ -291,38 +291,6 @@
 
 
 		# IF C_MEMBER_LIST #
-		<script type="text/javascript">
-		<!--
-		function XMLHttpRequest_search()
-		{
-			var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?member=1');
-			var login = document.getElementById("login_mbr").value;
-			var data = null;
-			
-			if( login != "" )
-			{
-				data = 'login=' + login;	
-				xhr_object.onreadystatechange = function() 
-				{
-					if( xhr_object.readyState == 4 ) 
-					{
-						document.getElementById("xmlhttprequest_result_search").innerHTML = xhr_object.responseText;
-						hide_div("xmlhttprequest_result_search");
-					}
-				}
-				xmlhttprequest_sender(xhr_object, data);
-			}	
-			else
-				alert("{L_REQUIRE_LOGIN}");
-		}
-
-		function hide_div(divID)
-		{
-			if( document.getElementById(divID) )
-				document.getElementById(divID).style.display = 'block';
-		}
-		-->
-		</script>
 		<table class="module_table" style="width:98%;">	
 			<tr>
 				<td style="vertical-align:top;" class="row2">
@@ -339,30 +307,23 @@
 						</noscript>
 					</form>				
 				</td>
-
 				<td style="vertical-align:top;" class="row2">
-					<table>
-						<tr>
-							<td style="vertical-align: top">
-								<form action="member.php{SID}" method="post">
-									{L_SEARCH_MEMBER}: <input type="text" size="20" maxlenght="25" id="login_mbr" value="{all.LOGIN}" name="login_mbr" class="text" />
-								
-									<script type="text/javascript">
-									<!--								
-										document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search(this.form);" type="button" class="submit">');
-									-->
-									</script>
-									
-									<noscript>
-										<input type="submit" name="search_member" value="{L_SEARCH}" class="submit" />
-									</noscript>
-								</form>	
-							</td>
-							<td>
-								<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
-							</td>
-						</tr>
-					</table>			
+					<form action="member.php{SID}" method="post">
+						<span style="float:left;">
+							{L_SEARCH_MEMBER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
+							<span id="search_img"></span>
+						</span>
+						<span style="float:left;margin-left:5px;">
+							<input type="submit" id="search_member" name="search_member" value="{L_SEARCH}" class="submit" />
+							<script type="text/javascript">
+							<!--								
+								document.getElementById('search_member').style.display = 'none';
+								document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members(\'\', \'{THEME}\', \'member\', \'{L_REQUIRE_LOGIN}\');" type="button" class="submit">');
+							-->
+							</script>									
+							<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
+						</span>
+					</form>	
 				</td>
 			</tr>
 		</table>	

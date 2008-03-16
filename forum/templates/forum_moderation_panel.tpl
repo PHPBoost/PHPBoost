@@ -260,14 +260,23 @@
 						var login = document.getElementById('login').value;
 						if( login != '' )
 						{
+							if( document.getElementById('search_img') )
+								document.getElementById('search_img').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 							data = 'login=' + login;
 							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?{U_XMLHTTPREQUEST}=1');
 							xhr_object.onreadystatechange = function() 
 							{
-								if( xhr_object.readyState == 4 ) 
+								if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
 								{
 									document.getElementById('xmlhttprequest_result_search').innerHTML = xhr_object.responseText;
 									hide_div('xmlhttprequest_result_search');
+									if( document.getElementById('search_img') )
+										document.getElementById('search_img').innerHTML = '';
+								}
+								else if( xhr_object.readyState == 4 ) 
+								{
+									if( document.getElementById('search_img') )
+										document.getElementById('search_img').innerHTML = '';
 								}
 							}
 							xmlhttprequest_sender(xhr_object, data);
@@ -287,20 +296,21 @@
 				<form action="moderation_forum{U_ACTION}" method="post">
 				<table class="module_table">
 					<tr>
-						<td style="vertical-align: top;text-align: center;" class="row2">
-							{L_SEARCH_MEMBER}: <input type="text" size="20" maxlenght="25" id="login" value="" name="login" class="text" />			
-							<script type="text/javascript">
-							<!--								
-								document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search(this.form);" type="button" class="submit">');
-							-->
-							</script>
-							
-							<noscript>
-								<input type="submit" name="search_member" value="{L_SEARCH}" class="submit" />
-							</noscript>
-						</td>
 						<td class="row2">
-							<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
+							<span style="float:left;">
+								{L_SEARCH_MEMBER}: <input type="text" size="20" maxlength="25" id="login" name="login" class="text" />
+								<span id="search_img"></span>
+							</span>
+							<span style="float:left;margin-left:5px;">
+								<input type="submit" id="search_member" name="search_member" value="{L_SEARCH}" class="submit" />
+								<script type="text/javascript">
+								<!--								
+									document.getElementById('search_member').style.display = 'none';
+									document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search();" type="button" class="submit">');
+								-->
+								</script>									
+								<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
+							</span>
 						</td>
 					</tr>
 				</table>

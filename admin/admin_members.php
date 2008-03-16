@@ -891,7 +891,7 @@ else
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE_PASS' => $LANG['require_pass'],
 		'L_REQUIRE_RANK' => $LANG['require_rank'],
-		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
+		'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_CONFIRM_DEL_MEMBER' => $LANG['confirm_del_member'],
 		'L_CONTENTS' => $LANG['contents'],
