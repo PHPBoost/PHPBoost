@@ -33,7 +33,6 @@ require_once('../includes/admin_header.php');
 if( !empty($_POST['valid'])  )
 {
 	$config_files = array();
-	$auth_read = isset($_POST['groups_autha']) ? $_POST['groups_autha'] : '';
 	$config_files['size_limit'] = isset($_POST['size_limit']) ? max(numeric($_POST['size_limit'], 'float') * 1024, 1) : 500;
 	$config_files['bandwidth_protect'] = isset($_POST['bandwidth_protect']) ? numeric($_POST['bandwidth_protect']) : 1;
 	$auth_extensions = isset($_POST['auth_extensions']) ? $_POST['auth_extensions'] : '';
@@ -50,7 +49,7 @@ if( !empty($_POST['valid'])  )
 	$config_files['auth_extensions'] = $auth_extensions;
 
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth($auth_read);
+	$array_auth_all = $Group->Return_array_auth(AUTH_FILES);
 	$config_files['auth_files'] = serialize($array_auth_all);
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_files)) . "' WHERE name = 'files'", __LINE__, __FILE__);
@@ -107,7 +106,7 @@ else
 	$Template->Assign_vars(array(
 		'NBR_GROUP' => count($array_groups),
 		'NBR_EXTENSIONS' => $i,
-		'AUTH_FILES' => $Group->Generate_select_auth('a', $array_auth, AUTH_FILES, array(2 => true)),
+		'AUTH_FILES' => $Group->Generate_select_auth(AUTH_FILES, $array_auth, array(2 => true)),
 		'SIZE_LIMIT' => isset($CONFIG_FILES['size_limit']) ? number_round($CONFIG_FILES['size_limit']/1024, 2) : '0.5',
 		'BANDWIDTH_PROTECT_ENABLED' => $CONFIG_FILES['bandwidth_protect'] == 1 ? 'checked="checked"' : '',
 		'BANDWIDTH_PROTECT_DISABLED' => $CONFIG_FILES['bandwidth_protect'] == 0 ? 'checked="checked"' : '',

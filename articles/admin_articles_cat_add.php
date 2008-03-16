@@ -32,6 +32,9 @@ define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
 $idcat = !empty($_GET['idcat']) ? numeric($_GET['idcat']) : 0;
+define('READ_CAT_ARTICLES', 0x01);
+define('WRITE_CAT_ARTICLES', 0x02);
+define('EDIT_CAT_ARTICLES', 0x04);
 
 //Si c'est confirmé on execute
 if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
@@ -43,10 +46,9 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 	$contents = !empty($_POST['desc']) ? securit($_POST['desc']) : '';
 	$icon = !empty($_POST['icon']) ? securit($_POST['icon']) : ''; 
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;    
-	$auth_read = isset($_POST['groups_authr']) ? $_POST['groups_authr'] : ''; 
 		
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth($auth_read);
+	$array_auth_all = $Group->Return_array_auth(READ_CAT_ARTICLES);
 			
 	if( !empty($name) )
 	{	
@@ -140,7 +142,7 @@ else
 		'MODULE_DATA_PATH' => $Template->Module_data_path('articles'),
 		'NBR_GROUP' => count($array_groups),
 		'CATEGORIES' => $galleries,
-		'AUTH_READ' => $Group->Generate_select_auth('r', array(), -1, array(-1 => true, 0 => true, 1 => true, 2 => true)),
+		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_ARTICLES, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'IMG_LIST' => $image_list,
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],

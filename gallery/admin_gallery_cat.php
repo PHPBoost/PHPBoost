@@ -27,6 +27,10 @@ $del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 $move = !empty($_GET['move']) ? trim($_GET['move']) : 0;
 $root = !empty($_GET['root']) ? numeric($_GET['root']) : 0;
 
+define('READ_CAT_GALLERY', 0x01);
+define('WRITE_CAT_GALLERY', 0x02);
+define('EDIT_CAT_GALLERY', 0x04);
+
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) && !empty($id) )
 {
@@ -37,12 +41,9 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$contents = !empty($_POST['desc']) ? securit($_POST['desc']) : '';
 	$status = isset($_POST['status']) ? numeric($_POST['status']) : 1;  
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 1;  
-	$auth_read = isset($_POST['groups_authr']) ? $_POST['groups_authr'] : ''; 
-	$auth_write = isset($_POST['groups_authw']) ? $_POST['groups_authw'] : ''; 
-	$auth_edit = isset($_POST['groups_authx']) ? $_POST['groups_authx'] : ''; 
 
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth($auth_read, $auth_write, $auth_edit);
+	$array_auth_all = $Group->Return_array_auth(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
 
 	if( !empty($name) )
 	{
@@ -187,12 +188,8 @@ elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la ra
 {
 	$Cache->Load_file('gallery');
 	
-	$auth_read = isset($_POST['groups_authr']) ? $_POST['groups_authr'] : ''; 
-	$auth_write = isset($_POST['groups_authw']) ? $_POST['groups_authw'] : ''; 
-	$auth_edit = isset($_POST['groups_authx']) ? $_POST['groups_authx'] : ''; 
-	
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth($auth_read, $auth_write, $auth_edit);
+	$array_auth_all = $Group->Return_array_auth(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
 	
 	$CONFIG_GALLERY['auth_root'] = serialize($array_auth_all);
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_GALLERY)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
@@ -728,9 +725,9 @@ elseif( !empty($id) ) //Edition des catégories.
 		'UNCHECKED_APROB' => ($gallery_info['aprob'] == 0) ? 'checked="checked"' : '',
 		'CHECKED_STATUS' => ($gallery_info['status'] == 1) ? 'checked="checked"' : '',
 		'UNCHECKED_STATUS' => ($gallery_info['status'] == 0) ? 'checked="checked"' : '',
-		'AUTH_READ' => $Group->Generate_select_auth('r', $array_auth, 0x01),
-		'AUTH_WRITE' => $Group->Generate_select_auth('w', $array_auth, 0x02),
-		'AUTH_EDIT' => $Group->Generate_select_auth('x', $array_auth, 0x04),
+		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_GALLERY, $array_auth),
+		'AUTH_WRITE' => $Group->Generate_select_auth(WRITE_CAT_GALLERY, $array_auth),
+		'AUTH_EDIT' => $Group->Generate_select_auth(EDIT_CAT_GALLERY, $array_auth),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 
@@ -785,9 +782,9 @@ elseif( !empty($root) ) //Edition de la racine.
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
 		'NBR_GROUP' => count($array_groups),
-		'AUTH_READ' => $Group->Generate_select_auth('r', $array_auth, 0x01),
-		'AUTH_WRITE' => $Group->Generate_select_auth('w', $array_auth, 0x02),
-		'AUTH_EDIT' => $Group->Generate_select_auth('x', $array_auth, 0x04),
+		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_GALLERY, $array_auth),
+		'AUTH_WRITE' => $Group->Generate_select_auth(WRITE_CAT_GALLERY, $array_auth),
+		'AUTH_EDIT' => $Group->Generate_select_auth(EDIT_CAT_GALLERY, $array_auth),
 		'L_ROOT' => $LANG['root'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 

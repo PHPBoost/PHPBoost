@@ -34,6 +34,11 @@ require_once('../includes/admin_header.php');
 $idcat = !empty($_GET['idcat']) ? numeric($_GET['idcat']) : 0;
 $class = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 
+//Configuration sur la catégorie.
+define('READ_CAT_FORUM', 0x01);
+define('WRITE_CAT_FORUM', 0x02);
+define('EDIT_CAT_FORUM', 0x04);
+
 //Si c'est confirmé on execute
 if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 {
@@ -44,12 +49,9 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 	$subname = !empty($_POST['desc']) ? securit($_POST['desc']) : '';
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;   
 	$status = isset($_POST['status']) ? numeric($_POST['status']) : 0;   
-	$auth_read = isset($_POST['groups_authr']) ? $_POST['groups_authr'] : ''; 
-	$auth_write = isset($_POST['groups_authw']) ? $_POST['groups_authw'] : ''; 
-	$auth_edit = isset($_POST['groups_authx']) ? $_POST['groups_authx'] : ''; 
 
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth($auth_read, $auth_write, $auth_edit);
+	$array_auth_all = $Group->Return_array_auth(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 
 	if( !empty($name) )
 	{	
@@ -125,9 +127,9 @@ else
 		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 		'NBR_GROUP' => count($array_groups),
 		'CATEGORIES' => $forums,
-		'AUTH_READ' => $Group->Generate_select_auth('r', array(), -1, array(-1 => true, 0 => true, 1 => true, 2 => true)),
-		'AUTH_WRITE' => $Group->Generate_select_auth('w', array(), -1, array(0 => true, 1 => true, 2 => true)),
-		'AUTH_EDIT' => $Group->Generate_select_auth('x', array(), -1, array(1 => true, 2 => true)),
+		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_FORUM, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
+		'AUTH_WRITE' => $Group->Generate_select_auth(WRITE_CAT_FORUM, array(), array(0 => true, 1 => true, 2 => true)),
+		'AUTH_EDIT' => $Group->Generate_select_auth(EDIT_CAT_FORUM, array(), array(1 => true, 2 => true)),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],

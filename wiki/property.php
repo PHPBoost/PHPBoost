@@ -150,15 +150,15 @@ elseif( $id_auth > 0 ) //gestion du niveau d'autorisation
 	//On assigne les variables pour le POST en précisant l'idurl.	
 	$Template->Assign_vars(array(
 		'NBR_GROUP' => count($array_groups),
-		'SELECT_RESTORE_ARCHIVE' => $Group->Generate_select_auth(3, $array_auth, WIKI_RESTORE_ARCHIVE),
-		'SELECT_DELETE_ARCHIVE' => $Group->Generate_select_auth(4, $array_auth, WIKI_DELETE_ARCHIVE),
-		'SELECT_EDIT' => $Group->Generate_select_auth(5, $array_auth, WIKI_EDIT),
-		'SELECT_DELETE' => $Group->Generate_select_auth(6, $array_auth, WIKI_DELETE),
-		'SELECT_RENAME' => $Group->Generate_select_auth(7, $array_auth, WIKI_RENAME),
-		'SELECT_REDIRECT' => $Group->Generate_select_auth(8, $array_auth, WIKI_REDIRECT),
-		'SELECT_MOVE' => $Group->Generate_select_auth(9, $array_auth, WIKI_MOVE),
-		'SELECT_STATUS' => $Group->Generate_select_auth(10, $array_auth, WIKI_STATUS),
-		'SELECT_COM' => $Group->Generate_select_auth(11, $array_auth, WIKI_COM),
+		'SELECT_RESTORE_ARCHIVE' => $Group->Generate_select_auth(WIKI_RESTORE_ARCHIVE, $array_auth),
+		'SELECT_DELETE_ARCHIVE' => $Group->Generate_select_auth(WIKI_DELETE_ARCHIVE, $array_auth),
+		'SELECT_EDIT' => $Group->Generate_select_auth(WIKI_EDIT, $array_auth),
+		'SELECT_DELETE' => $Group->Generate_select_auth(WIKI_DELETE, $array_auth),
+		'SELECT_RENAME' => $Group->Generate_select_auth(WIKI_RENAME, $array_auth),
+		'SELECT_REDIRECT' => $Group->Generate_select_auth(WIKI_REDIRECT, $array_auth),
+		'SELECT_MOVE' => $Group->Generate_select_auth(WIKI_MOVE, $array_auth),
+		'SELECT_STATUS' => $Group->Generate_select_auth(WIKI_STATUS, $array_auth),
+		'SELECT_COM' => $Group->Generate_select_auth(WIKI_COM, $array_auth),
 		'L_DEFAULT' => $LANG['wiki_restore_default_auth'],
 		'L_EXPLAIN_DEFAULT' => $LANG['wiki_explain_restore_default_auth']
 	));

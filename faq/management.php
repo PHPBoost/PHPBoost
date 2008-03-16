@@ -203,8 +203,8 @@ else
 
 	//Category properties
 	$Template->Assign_block_vars('category', array(
-		'READ_AUTH' => 	$Group->Generate_select_auth(1, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth'], AUTH_READ),
-		'WRITE_AUTH' => $Group->Generate_select_auth(2, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth'], AUTH_WRITE),
+		'READ_AUTH' => 	$Group->Generate_select_auth(AUTH_READ, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth']),
+		'WRITE_AUTH' => $Group->Generate_select_auth(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth']),
 		'NBR_GROUP' => count($array_groups),
 		'U_CREATE_BEFORE' => transid('management.php?new=1&amp;idcat=' . $id_faq . '&amp;after=0'),
 		'ID_FAQ' => $id_faq
@@ -215,7 +215,9 @@ else
 		$Template->Assign_block_vars('category.not_root_name', array(
 			'CAT_TITLE' => $FAQ_CATS[$id_faq]['name'],
 		));
-		$Template->Assign_block_vars('category.not_root_auth', array('WRITE_AUTH' => $Group->Generate_select_auth(2, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth'], AUTH_WRITE)));
+		$Template->Assign_block_vars('category.not_root_auth', array(
+			'WRITE_AUTH' => $Group->Generate_select_auth(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth'])
+		));
 	}
 	
 	//Questions management

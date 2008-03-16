@@ -68,19 +68,8 @@ if( $id_auth > 0 )
 		$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET auth = '' WHERE id= '" . $id_auth . "'", __LINE__, __FILE__);
 	else
 	{
-		$auth_restore_archive = isset($_POST['groups_auth3']) ? $_POST['groups_auth3'] : '';
-		$auth_delete_archive = isset($_POST['groups_auth4']) ? $_POST['groups_auth4'] : '';
-		$auth_edit = isset($_POST['groups_auth5']) ? $_POST['groups_auth5'] : '';
-		$auth_delete = isset($_POST['groups_auth6']) ? $_POST['groups_auth6'] : '';
-		$auth_rename = isset($_POST['groups_auth7']) ? $_POST['groups_auth7'] : '';
-		$auth_redirect = isset($_POST['groups_auth8']) ? $_POST['groups_auth8'] : '';
-		$auth_move = isset($_POST['groups_auth9']) ? $_POST['groups_auth9'] : '';
-		$auth_status = isset($_POST['groups_auth10']) ? $_POST['groups_auth10'] : '';
-		$auth_com = isset($_POST['groups_auth11']) ? $_POST['groups_auth11'] : '';
-		
 		//Génération du tableau des droits.
-		$array_auth_all = $Group->Return_array_auth($auth_restore_archive, $auth_delete_archive, $auth_edit, $auth_delete, $auth_rename, $auth_redirect, $auth_move, $auth_status, $auth_com);
-				
+		$array_auth_all = $Group->Return_array_auth(WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM);
 		$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id= '" . $id_auth . "'", __LINE__, __FILE__);
 	}
 

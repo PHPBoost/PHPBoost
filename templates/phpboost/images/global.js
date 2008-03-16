@@ -227,6 +227,7 @@ var timeout_progress_bar = null;
 var max_percent = 0;
 var info_progress_tmp = '';
 var progressbar_speed = 20; //Vitesse de la progression.
+var progressbar_size = 55; //Taille de la barre de progression.
 var progressbar_id = 'test'; //Identifiant de la barre de progression.
 var restart_progress = false;
 var theme = '';
@@ -238,23 +239,24 @@ function load_progress_bar(progressbar_speed_tmp, theme_tmp, progressbar_id_tmp)
 	restart_progress = true;
 	theme = theme_tmp;
 	progressbar_id = progressbar_id_tmp;
+	if( arguments.length == 4 ) //Argument optionnel.
+		progressbar_size = arguments[3];
 }
 
 //Barre de progression.
 function progress_bar(percent_progress, info_progress)
 {
-	bar_progress = (percent_progress * 55) / 100;
+	bar_progress = (percent_progress * progressbar_size) / 100;
 	if( arguments.length == 4 )
 	{
-		result_id = arguments[2];
-		result_msg = arguments[3];
+		result_id = arguments[3];
+		result_msg = arguments[4];
 	}
 	else
 	{
 		result_id = "";
 		result_msg = "";
 	}	
-	
 	// Déclaration et initialisation d'une variable statique
 	if( restart_progress )
 	{	
@@ -271,7 +273,7 @@ function progress_bar(percent_progress, info_progress)
 		if( document.getElementById('progress_bar' + progressbar_id) )
 			document.getElementById('progress_bar' + progressbar_id).innerHTML += '<img src="../templates/' + theme + '/images/progress.png" alt="" />';
 		if( document.getElementById('progress_percent' + progressbar_id) )
-			document.getElementById('progress_percent' + progressbar_id).innerHTML = Math.round((this.percent_begin * 100) / 55);
+			document.getElementById('progress_percent' + progressbar_id).innerHTML = Math.round((this.percent_begin * 100) / progressbar_size);
 		if( document.getElementById('progress_info' + progressbar_id) )
 		{	
 			if( percent_progress > max_percent )
@@ -282,7 +284,7 @@ function progress_bar(percent_progress, info_progress)
 			document.getElementById('progress_info' + progressbar_id).innerHTML = info_progress_tmp;
 		}
 		//Message de fin
-		if( this.percent_begin == 55 && result_id != "" && result_msg != "" )
+		if( this.percent_begin == progressbar_size && result_id != "" && result_msg != "" )
 			document.getElementById(result_id).innerHTML = result_msg;
 		timeout_progress_bar = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")', progressbar_speed);
 	}
@@ -370,6 +372,6 @@ function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_
 		}
 	}
 
-	if( selectid )
-		selectid.innerHTML += '<option value="' + user_id + '" selected="selected">' + login + '</option>';
+	if( document.getElementById('advanced_auth3' + searchid) )
+		document.getElementById('advanced_auth3' + searchid).innerHTML += '<option value="' + user_id + '" selected="selected">' + login + '</option>';
 }
