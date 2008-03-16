@@ -6,6 +6,11 @@
 		    const INFOS_RESULTS = 'infosResults';
 		    const RESULTS_LIST = 'ResultsList';
 		    const PAGINATION_RESULTS = 'PaginationResults';
+            const NB_RESULTS_PER_PAGE = {NB_RESULTS_PER_PAGE};
+            
+            var nbResults = new Array();
+            nbResults['All'] = {NB_RESULTS};
+            
 		    var modulesResults = new Array('All');
 		    # START results #
 		        modulesResults.push('{results.MODULE_NAME}');
@@ -55,9 +60,52 @@
 		            }
 		        }
 		        
-		        return data1;
+		        return dataString;
 		    }
 		    
+            function ChangeModulePage(module, page)
+            // Crée la pagination à partir du nom du module, du nombre de résultats
+            // du nombre de résultats par page ...
+            {
+                const nbBefore = 1; // Ne compte pas la page courante
+                const nbAfter = 2;  // Compte ici la page courante
+                
+                var pagin = '';
+                
+                var nbPages = Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE);
+                var before = Math.max(0, page - nbBefore);
+                var after = Math.min(nbPages, page + nbAfter);
+                
+                // Before
+                for ( var i = before; i < page; i++ )
+                {
+                    pagin += '<span style="font-size: 11px;">';
+                    pagin += '<a href="javascript:ChangeModulePage(\'' + module + '\', ' + i + ')">' + (i + 1) + '</a>';
+                    pagin += '</span>&nbsp;';
+                }
+                
+                pagin += '<span style="font-size: 11px; text-decoration: underline;" class="text_strong">';
+                pagin += '<a href="javascript:ChangeModulePage(\'' + module + '\', ' + page + ')">' + (page + 1) + '</a>';
+                pagin += '</span>&nbsp;';
+                
+                // After
+                for ( var i = page + 1; i < after; i++ )
+                {
+                    pagin += '<span style="font-size: 11px;">';
+                    pagin += '<a href="javascript:ChangeModulePage(\'' + module + '\', ' + i + ')">' + (i + 1) + '</a>';
+                    pagin += '</span>&nbsp;';
+                }
+                
+                // On cache tous les autre résultats du module
+                for ( var i = 0; i < nbPages; i++ )
+                    hide_div('results' + module + '_' + i);
+                // On montre la page demandée
+                show_div('results' + module + '_' + page);
+                
+                // Mise à jour de la pagination
+                document.getElementById(PAGINATION_RESULTS + module).innerHTML = pagin;
+            }
+            
 		    function XMLHttpRequest_regenerate_search()
 		    // Affiche les résultats de la recherche pour le module particulier <module>
 		    {
@@ -92,8 +140,7 @@
                                 eval(xhr_object.responseText);
                                 document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
                                 document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
-                                document.getElementById(PAGINATION_RESULTS + module).innerHTML = resultsAJAX['pagination'];
-                                show_div('results' + module + '_0');
+                                ChangeModulePage(module, 0);
                                 
                                 // Met à jour la liste des résultats affiché, pour ne pas les rechercher
                                 // dans la base de donnée si ils sont déjà dans le html.
@@ -159,7 +206,8 @@
 		</div>
 		<script type="text/javascript">
 		<!--
-		   if( browserAJAXFriendly() )
-		        show_div('resultsChoices');
+            ChangeModulePage('All', 0);
+		    if( browserAJAXFriendly() )
+                show_div('resultsChoices');
 		-->
 		</script>

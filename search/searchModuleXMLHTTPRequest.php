@@ -59,6 +59,7 @@ if( $idSearch >= 0 )
         $showPagin = '';
         // Création de la pagination si le nombre de commentaires est trop important.
         $return = ' var resultsAJAX = new Array();
+                    nbResults[\''.ucfirst($module->name).'\'] = '.$nbResults.';
                     resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.addslashes($nbResults > 1 ? $LANG['nb_results_found']:$LANG['one_result_found']).'\';
                     resultsAJAX[\'results\'] = \''.addslashes($htmlResults).'\';
                     resultsAJAX[\'pagination\'] = \''.addslashes($showPagin).'\';';

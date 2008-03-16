@@ -73,13 +73,6 @@ $modulesArgs = array();
 
 if( $search != '' )
 {
-    $Template->Assign_vars(Array(
-        'TITLE_ALL_RESULTS' => $LANG['title_all_results'],
-        'RESULTS' => $LANG['results'],
-        'RESULTS_CHOICE' => $LANG['results_choice'],
-        'PRINT' => $LANG['print']
-    ));
-    
     $results = array();
     
     // Listes des modules de recherches
@@ -137,12 +130,19 @@ if( $search != '' )
     Get_HTML_Results($results, $allhtmlResult, $Modules, 'All');
     $allhtmlResult .= '<script type="text/javascript">
         <!--
+            nbResults[\'All\'] = '.$nbResults.';
+            
             if( browserAJAXFriendly() )
                 show_div(\'resultsAll_0\');
         -->
         </script>';
     
     $Template->Assign_vars(Array(
+        'NB_RESULTS_PER_PAGE' => NB_RESULTS_PER_PAGE,
+        'TITLE_ALL_RESULTS' => $LANG['title_all_results'],
+        'RESULTS' => $LANG['results'],
+        'RESULTS_CHOICE' => $LANG['results_choice'],
+        'PRINT' => $LANG['print'],
         'NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : $LANG['one_result_found'],
         'SEARCH_RESULTS' => $LANG['search_results'],
         'NB_RESULTS' => $nbResults,

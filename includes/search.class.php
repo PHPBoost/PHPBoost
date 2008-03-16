@@ -33,6 +33,130 @@ define('CACHE_TIMES_USED', 5);
 class Search
 {
     //----------------------------------------------------------------- PUBLIC
+    //---------------------------------------------------------- Constructeurs
+    
+    function Search($search = '', $modules = array())
+    /**
+     *  Constructeur de la classe Search
+     *  Nb requêtes : 6 + k / 10
+     *  avec k nombre de module n'ayant pas de cache de recherche
+     */
+    {
+        global $Sql, $Member;
+        
+        $this->errors = 0;
+        $this->search = $search;
+        $this->modules = $modules;
+        $this->id_search = array();
+        $this->cache = array();
+        
+        $this->id_user = $Member->Get_attribute('user_id');
+        $this->modulesConditions = $this->getModulesConditions($this->modules);
+        
+        // Si on demande une recherche directe par id, on ne calcule pas de résultats
+        if( $search != '' )
+        {
+            // Suppression des vieux résultats du cache
+            
+            // Liste des résultats à supprimer
+            $reqOldIndex = "SELECT `id_search` FROM ".PREFIX."search_index
+                            WHERE  `last_search_use` <= '".(time() - (CACHE_TIME * 60))."'
+                                OR `times_used` >= '".CACHE_TIMES_USED."'";
+            
+            $nbIdsToDelete = 0;
+            $idsToDelete = '';
+            $request = $Sql->Query_while($reqOldIndex, __LINE__, __FILE__);
+            while($row = $Sql->Sql_fetch_assoc($request))
+            {
+                if ( $nbIdsToDelete > 0 )
+                    $idsToDelete .= ',';
+                $idsToDelete .= "'".$row['id_search']."'";
+                $nbIdsToDelete++;
+            }
+            $Sql->Close($request);
+            
+            // Si il y a des résultats à supprimer, on les supprime
+            if ( $nbIdsToDelete > 0 )
+            {
+                $reqDeleteIdx = "DELETE FROM ".PREFIX."search_index WHERE `id_search` IN (".$idsToDelete.")";
+                $reqDeleteRst = "DELETE FROM ".PREFIX."search_results WHERE `id_search` IN (".$idsToDelete.")";
+                
+                $Sql->Query_inject($reqDeleteIdx, __LINE__, __FILE__);
+                $Sql->Query_inject($reqDeleteRst, __LINE__, __FILE__);
+            }
+            
+            // Vérifications des résultats dans le cache.
+            $reqCache  = "SELECT `id_search`, `module` FROM ".PREFIX."search_index WHERE ";
+            $reqCache .= "`search`='".$search."' AND `id_user`='".$this->id_user."'";
+            if( $this->modulesConditions != '' )
+                $reqCache .= " AND ".$this->modulesConditions;
+            
+            $request = $Sql->Query_while($reqCache, __LINE__, __FILE__);
+            while($row = $Sql->Sql_fetch_assoc($request))
+            {   // Récupération du cache
+                array_push($this->cache, $row['module']);
+                $this->id_search[$row['module']] = $row['id_search'];
+            }
+            $Sql->Close($request);
+            
+            // Mise à jours des résultats du cache
+            if( count($this->id_search) > 0 )
+            {
+                $reqUpdate  = "UPDATE ".PREFIX."search_index SET times_used=times_used+1, `last_search_use`='".time()."' WHERE ";
+                $reqUpdate .= "`id_search` IN (".implode(',', $this->id_search).");";
+                $Sql->Query_inject($reqUpdate, __LINE__, __FILE__);
+            }
+        
+            $nbReqInsert = 0;
+            $reqInsert = '';
+            // Pour chaque module n'étant pas dans le cache
+            foreach($modules as $moduleName => $options)
+            {
+                if( !$this->IsInCache($moduleName) )
+                {
+                    $reqInsert .= "('".$this->id_user."','".$moduleName."','".$search."','".$options."','".time()."', '0'),";
+                    // Exécution de 10 requêtes d'insertions
+                    if( $nbReqInsert == 10 )
+                    {
+                        $reqInsert = "INSERT INTO ".PREFIX."search_index (`id_user`, `module`, `search`, `options`, `last_search_use`, `times_used`) VALUES ".$reqInsert."";
+                        $Sql->Query_insert($reqInsert, __LINE__, __FILE__);
+                        $reqInsert = '';
+                        $nbReqInsert = 0;
+                    }
+                    else { $nbReqInsert++; }
+                }
+            }
+            
+            // Exécution des derniéres requêtes d'insertions
+            if( $nbReqInsert > 0 )
+                $Sql->Query_inject("INSERT INTO ".PREFIX."search_index (`id_user`, `module`, `search`, `options`, `last_search_use`, `times_used`) VALUES ".substr($reqInsert, 0, strlen($reqInsert) - 1)."", __LINE__, __FILE__);
+            
+            // Récupération des résultats et de leurs id dans le cache.
+            
+            // Pourquoi faire çà plutôt que de récupérer id_search pour chaque
+            // insertion dans l'index du cache.
+            // parce que cela donne au total pour le contructeur une complexité
+            // en requête de :
+            // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k / 10 (nb non dans le cache) + 1 (recup id) = 4 + k/10
+            // au lieu de :
+            // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k (nb non dans le cache) = 3 + k
+            // cela permet donc de grouper les insertions dans l'index du cache.
+            
+            // Vérifications des résultats dans le cache.
+            $reqCache  = "SELECT id_search, module FROM ".PREFIX."search_index WHERE ";
+            $reqCache .= "search='".$search."' AND id_user='".$this->id_user."'";
+            if( $this->modulesConditions != '' )
+                $reqCache .= " AND ".$this->modulesConditions;
+            
+            $request = $Sql->Query_while( $reqCache, __LINE__, __FILE__ );
+            while($row = $Sql->Sql_fetch_assoc($request))
+            {   // Ajout des résultats s'ils font partie de la liste des modules à traiter
+                $this->id_search[$row['module']] = $row['id_search'];
+            }
+            $Sql->Close($request);
+        }
+    }
+    
     //----------------------------------------------------- Méthodes publiques
     function IsSearchIdInCache($idSearch)
     /**
@@ -211,129 +335,6 @@ class Search
      */
     {
         return in_array($moduleName, $this->cache);
-    }
-    
-    //---------------------------------------------------------- Constructeurs
-    
-    function Search($search = '', $modules = array())
-    /**
-     *  Constructeur de la classe Search
-     *  Nb requêtes : 6 + k / 10
-     *  avec k nombre de module n'ayant pas de cache de recherche
-     */
-    {
-        global $Sql, $Member;
-        
-        $this->errors = 0;
-        $this->search = $search;
-        $this->modules = $modules;
-        $this->id_search = array();
-        $this->cache = array();
-        
-        $this->id_user = $Member->Get_attribute('user_id');
-        $this->modulesConditions = $this->getModulesConditions($this->modules);
-        
-        // Si on demande une recherche directe par id, on ne calcule pas de résultats
-        if( $search != '' )
-        {
-            // Suppression des vieux résultats du cache
-            
-            // Liste des résultats à supprimer
-            $reqOldIndex = "SELECT `id_search` FROM ".PREFIX."search_index
-                            WHERE  `last_search_use` <= '".(time() - (CACHE_TIME * 60))."'
-                                OR `times_used` >= '".CACHE_TIMES_USED."'";
-            
-            $nbIdsToDelete = 0;
-            $idsToDelete = '';
-            $request = $Sql->Query_while($reqOldIndex, __LINE__, __FILE__);
-            while($row = $Sql->Sql_fetch_assoc($request))
-            {
-                if ( $nbIdsToDelete > 0 )
-                    $idsToDelete .= ',';
-                $idsToDelete .= "'".$row['id_search']."'";
-                $nbIdsToDelete++;
-            }
-            $Sql->Close($request);
-            
-            // Si il y a des résultats à supprimer, on les supprime
-            if ( $nbIdsToDelete > 0 )
-            {
-                $reqDeleteIdx = "DELETE FROM ".PREFIX."search_index WHERE `id_search` IN (".$idsToDelete.")";
-                $reqDeleteRst = "DELETE FROM ".PREFIX."search_results WHERE `id_search` IN (".$idsToDelete.")";
-                
-                $Sql->Query_inject($reqDeleteIdx, __LINE__, __FILE__);
-                $Sql->Query_inject($reqDeleteRst, __LINE__, __FILE__);
-            }
-            
-            // Vérifications des résultats dans le cache.
-            $reqCache  = "SELECT `id_search`, `module` FROM ".PREFIX."search_index WHERE ";
-            $reqCache .= "`search`='".$search."' AND `id_user`='".$this->id_user."'";
-            if( $this->modulesConditions != '' )
-                $reqCache .= " AND ".$this->modulesConditions;
-            
-            $request = $Sql->Query_while($reqCache, __LINE__, __FILE__);
-            while($row = $Sql->Sql_fetch_assoc($request))
-            {   // Récupération du cache
-                array_push($this->cache, $row['module']);
-                $this->id_search[$row['module']] = $row['id_search'];
-            }
-            $Sql->Close($request);
-            
-            // Mise à jours des résultats du cache
-            if( count($this->id_search) > 0 )
-            {
-                $reqUpdate  = "UPDATE ".PREFIX."search_index SET times_used=times_used+1, `last_search_use`='".time()."' WHERE ";
-                $reqUpdate .= "`id_search` IN (".implode(',', $this->id_search).");";
-                $Sql->Query_inject($reqUpdate, __LINE__, __FILE__);
-            }
-        
-            $nbReqInsert = 0;
-            $reqInsert = '';
-            // Pour chaque module n'étant pas dans le cache
-            foreach($modules as $moduleName => $options)
-            {
-                if( !$this->IsInCache($moduleName) )
-                {
-                    $reqInsert .= "('".$this->id_user."','".$moduleName."','".$search."','".$options."','".time()."', '0'),";
-                    // Exécution de 10 requêtes d'insertions
-                    if( $nbReqInsert == 10 )
-                    {
-                        $reqInsert = "INSERT INTO ".PREFIX."search_index (`id_user`, `module`, `search`, `options`, `last_search_use`, `times_used`) VALUES ".$reqInsert."";
-                        $Sql->Query_insert($reqInsert, __LINE__, __FILE__);
-                        $reqInsert = '';
-                        $nbReqInsert = 0;
-                    }
-                    else { $nbReqInsert++; }
-                }
-            }
-            // Exécution des derniéres requêtes d'insertions
-            if( $nbReqInsert > 1 )
-				$Sql->Query_inject("INSERT INTO ".PREFIX."search_index (`id_user`, `module`, `search`, `options`, `last_search_use`, `times_used`) VALUES ".substr($reqInsert, 0, strlen($reqInsert) - 1)."", __LINE__, __FILE__);
-            
-            // Récupération des résultats et de leurs id dans le cache.
-            
-            // Pourquoi faire çà plutôt que de récupérer id_search pour chaque
-            // insertion dans l'index du cache.
-            // parce que cela donne au total pour le contructeur une complexité
-            // en requête de :
-            // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k / 10 (nb non dans le cache) + 1 (recup id) = 4 + k/10
-            // au lieu de :
-            // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k (nb non dans le cache) = 3 + k
-            // cela permet donc de grouper les insertions dans l'index du cache.
-            
-            // Vérifications des résultats dans le cache.
-            $reqCache  = "SELECT id_search, module FROM ".PREFIX."search_index WHERE ";
-            $reqCache .= "search='".$search."' AND id_user='".$this->id_user."'";
-            if( $this->modulesConditions != '' )
-                $reqCache .= " AND ".$this->modulesConditions;
-            
-            $request = $Sql->Query_while( $reqCache, __LINE__, __FILE__ );
-            while($row = $Sql->Sql_fetch_assoc($request))
-            {   // Ajout des résultats s'ils font partie de la liste des modules à traiter
-                $this->id_search[$row['module']] = $row['id_search'];
-            }
-            $Sql->Close($request);
-        }
     }
     
     //------------------------------------------------------------------ PRIVE
