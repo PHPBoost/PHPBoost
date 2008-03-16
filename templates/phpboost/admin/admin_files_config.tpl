@@ -73,9 +73,7 @@
 								{AUTH_EXTENSIONS}
 							</select>	
 							<br />
-							<a href="javascript:check_select_multiple('ext', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('ext', false);">{L_SELECT_NONE}</a>							
+							<a class="small_link" href="javascript:check_select_multiple('ext', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('ext', false);">{L_SELECT_NONE}</a>							
 						</label></dd>
 					<dl>
 					<dl> 

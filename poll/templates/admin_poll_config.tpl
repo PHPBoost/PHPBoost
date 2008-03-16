@@ -63,9 +63,7 @@
 								{MINI_POLL_LIST}				
 							</select>
 							<br />
-							<a href="javascript:check_select_multiple('poll_mini', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('poll_mini', false);">{L_SELECT_NONE}</a>
+							<a class="small_link" href="javascript:check_select_multiple('poll_mini', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('poll_mini', false);">{L_SELECT_NONE}</a>
 						</label></dd>
 					</dl>
 					<dl>

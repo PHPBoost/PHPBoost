@@ -31,6 +31,7 @@ define('PM_GROUP_LIMIT', 'pm_group_limit'); //Aucune limite de messages privés.
 define('DATA_GROUP_LIMIT', 'data_group_limit');
 define('ADMIN_NOAUTH_DEFAULT', false); //Aucune limite de données uploadables.
 define('GROUP_DISABLE_SELECT', 'disabled="disabled" ');
+define('DISABLED_ADVANCED_AUTH', true);
 
 class Group
 {
@@ -111,10 +112,21 @@ class Group
 	}
 	
 	//Génération d'une liste à sélection multiple des rangs, groupes et membres
-    function Generate_select_auth($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '')
+    function Generate_select_auth($auth_id = 1, $array_auth = array(), $auth_level = -1, $array_ranks_default = array(), $disabled = '', $disabled_advanced_auth = false)
     {
-        $this->generate_select_groups($auth_id, $array_auth, $auth_level, $array_ranks_default, $disabled);
-        $this->generate_select_members($auth_id, $array_auth, $auth_level);
+        global $LANG, $CONFIG;
+		
+		return $this->generate_select_groups($auth_id, $array_auth, $auth_level, $array_ranks_default, $disabled) . ($disabled_advanced_auth ? '<div class="spacer"></div>' : $this->generate_select_members($auth_id, $array_auth, $auth_level) . 
+		'<div id="advanced_auth' . $auth_id . '" style="display:none;float:left;margin-left:5px;"><strong>' . $LANG['add_member'] . '</strong><br /><input type="text" size="15" class="text" value="" id="login' . $auth_id . '" name="login' . $auth_id . '" />
+			<input onclick="XMLHttpRequest_search_members(\'' . $auth_id . '\', \'' . $CONFIG['theme'] . '\', \'add_member_auth\', \'' . addslashes($LANG['require_pseudo']) . '\');" type="button" name="valid" value="' . $LANG['search'] . '" class="submit" />
+			<span id="search_img' . $auth_id . '"></span>
+			<div id="xmlhttprequest_result_search' . $auth_id . '" style="display:none;height:68px;" class="xmlhttprequest_result_search"></div>
+		</div>
+		<div class="spacer"></div>
+		<a class="small_link" href="javascript:display_div_auto(\'advanced_auth' . $auth_id . '\', \'\');display_div_auto(\'advanced_auth2' . $auth_id . '\', \'\');switch_img(\'advanced_auth_plus' . $auth_id . '\', \'../templates/' . $CONFIG['theme'] . '/images/upload/minus.png\', \'../templates/' . $CONFIG['theme'] . '/images/upload/plus.png\');"><img id="advanced_auth_plus' . $auth_id . '" src="../templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" class="valign_middle" /> ' . $LANG['advanced_authorization'] . '</a><br />') . 
+		'<a class="small_link" href="javascript:check_select_multiple(\'' . $auth_id . '\', true);">' . $LANG['select_all'] . '</a>/<a class="small_link" href="javascript:check_select_multiple(\'' . $auth_id . '\', false);">' . $LANG['select_none'] . '</a>
+		<br />
+		<span class="text_small">(' . $LANG['explain_select_multiple'] . ')</span>';
     }
 
 	//Ajout du membre au groupe, retourne true si le membre est bien ajouté, false si le membre appartient déjà au groupe.
@@ -190,8 +202,7 @@ class Group
         $array_ranks = is_array($array_ranks) ? $array_ranks : array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
         $j = 0;
         //Liste des rangs
-		$select_groups = '<span class="text_small">(' . $LANG['explain_select_multiple'] . ')</span>
-		<br /><select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="' . (empty($disabled) ? 'if(disabled == 0)' : '') . 'document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
+		$select_groups = '<div style="float:left"><select id="groups_auth' . $auth_id . '" name="groups_auth' . $auth_id . '[]" size="8" multiple="multiple" onclick="' . (empty($disabled) ? 'if(disabled == 0)' : '') . 'document.getElementById(\'' . $auth_id . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
         foreach($array_ranks as $idgroup => $group_name)
         {
             $selected = '';   
@@ -216,11 +227,7 @@ class Group
             $select_groups .= '<option ' . $disabled . 'value="' . $idgroup . '" id="' . $auth_id . 'g' . $j . '"' . $selected . '>' . $group_name . '</option>';
             $j++;
         }
-        $select_groups .= '</optgroup></select>
-		<br />
-		<a class="small_link" href="javascript:check_select_multiple(\'' . $auth_id . '\', true);">' . $LANG['select_all'] . '</a>
-		&nbsp;/&nbsp;
-		<a class="small_link" href="javascript:check_select_multiple(\'' . $auth_id . '\', false);">' . $LANG['select_none'] . '</a>';
+        $select_groups .= '</optgroup></select></div>';
 		
         return $select_groups;
     }
@@ -230,7 +237,8 @@ class Group
 	{
 		global $Sql, $LANG;
 
-		$select_members = '<select id="members_auth' . $auth_id . '" name="members_auth' . $auth_id . '[]" size="8" multiple="multiple">';
+		$select_members = ' <div id="advanced_auth2' . $auth_id . '" style="margin-left:5px;display:none;float:left"><select id="members_auth' . $auth_id . '"  name="members_auth' . $auth_id . '[]" size="8" multiple="multiple">
+		<optgroup label="' . $LANG['member_s'] . '">';
 		if( count($array_auth) > 0 )
 		{
 			$result = $Sql->Query_while("SELECT user_id, login 
@@ -243,7 +251,7 @@ class Group
 			}
 			$Sql->Close($result);
 		}
-		$select_members .= '</select>';
+		$select_members .= '</optgroup></select></div>';
 
 		return $select_members;
 	}

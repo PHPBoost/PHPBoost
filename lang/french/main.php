@@ -283,9 +283,11 @@ $LANG['by'] = 'Par';
 
 //Gestion formulaires autorisation
 $LANG['explain_select_multiple'] = 'Maintenez ctrl puis cliquez dans la liste pour faire plusieurs choix';
-$LANG['advanced_authorization'] = 'Autorisation avancée';
+$LANG['advanced_authorization'] = 'Autorisations avancées';
 $LANG['select_all'] = 'Tout sélectionner';
 $LANG['select_none'] = 'Tout désélectionner';
+$LANG['add_member'] = 'Ajouter un membre';
+$LANG['alert_member_already_auth'] = 'Le membre est déjà dans la liste';
 
 //Calendar
 $LANG['january'] = 'Janvier';

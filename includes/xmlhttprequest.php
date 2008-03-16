@@ -1,7 +1,6 @@
 <?php
 
 include_once('../includes/begin.php');
-define('TITLE', 'Ajax');
 include_once('../includes/header_no_display.php');
 
 if( !empty($_GET['preview']) ) //Prévisualisation des messages.
@@ -12,26 +11,36 @@ if( !empty($_GET['preview']) ) //Prévisualisation des messages.
 
 	echo !empty($contents) ? $contents : '';	
 }
-elseif( !empty($_GET['pm']) ) //Recherche d'un membre pour envoyer le mp.
+elseif( !empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['add_member_auth']) || !empty($_GET['admin_member']) || !empty($_GET['warning_member']) || !empty($_GET['punish_member']) ) //Recherche d'un membre
 {
 	$login = !empty($_POST['login']) ? securit(utf8_decode($_POST['login'])) : '';
+	$divid = !empty($_POST['divid']) ? securit(utf8_decode($_POST['divid'])) : '';
+	$login = str_replace('*', '%', $login);
 	if( !empty($login) )
 	{
 		$i = 0;
-		$result = $Sql->Query_while("SELECT login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
+		$result = $Sql->Query_while("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			echo '<a href="#" onclick="insert_XMLHttpRequest(\'' . $row['login'] .'\')">' . $row['login'] . '</a><br />';
+			if( !empty($_GET['member']) )
+				echo '<p><a href="member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a></p>';
+			elseif( !empty($_GET['insert_member']) )	
+				echo '<p><a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['login']) .'\'">' . addslashes($row['login']) . '</a></p>';
+			elseif( !empty($_GET['add_member_auth']) )	
+				echo '<p><a href="#" onclick="XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['login']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . addslashes($row['login']) . '</a></p>';
+			elseif( !empty($_GET['admin_member']) )	
+				echo '<p><a href="../admin/admin_members.php?id=' . $row['user_id'] . '#search">' . addslashes($row['login']) . '</a></p>';
+			if( !empty($_GET['warning_member']) )
+				echo '<p><a href="admin_members_punishment.php?action=users&amp;id=' . $row['user_id'] . '">' . addslashes($row['login']) . '</a></p>';
+			elseif( !empty($_GET['punish_member']) )
+				echo '<p><a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . addslashes($row['login']) . '</a></p>';
 			$i++;
-		}
-		
+		}		
 		if( $i == 0 ) //Aucun membre trouvé.
 			echo $LANG['no_result'];
 	}
 	else
-	{
 		echo $LANG['no_result'];
-	}
 	
 	$Sql->Sql_close(); //Fermeture de mysql*/
 }
@@ -142,39 +151,6 @@ elseif( !empty($_GET['stats_keyword']) ) //Recherche d'un membre pour envoyer le
 		</table>';
 	}
 	$Sql->Close($result);
-	
-	$Sql->Sql_close(); //Fermeture de mysql*/
-}
-elseif( !empty($_GET['member']) || !empty($_GET['group_member']) || !empty($_GET['admin_member']) || !empty($_GET['warning_member']) || !empty($_GET['punish_member']) ) //Recherche d'un membre
-{
-	$login = !empty($_POST['login']) ? securit(utf8_decode($_POST['login'])) : '';
-	$login = str_replace('*', '%', $login);
-	if( !empty($login) )
-	{
-		$i = 0;
-		$result = $Sql->Query_while("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
-		{
-			if( !empty($_GET['member']) )
-				echo '<a href="member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a><br />';
-			elseif( !empty($_GET['group_member']) )	
-				echo '<a href="javascript:insert_XMLHttpRequest(\'' . $row['login'] .'\')">' . $row['login'] . '</a><br />';
-			elseif( !empty($_GET['admin_member']) )	
-				echo '<a href="../admin/admin_members.php?id=' . $row['user_id'] . '#search">' . $row['login'] . '</a><br />';
-			if( !empty($_GET['warning_member']) )
-				echo '<a href="admin_members_punishment.php?action=users&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />';
-			elseif( !empty($_GET['punish_member']) )
-				echo '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />';
-			$i++;
-		}
-		
-		if( $i == 0 ) //Aucun membre trouvé.
-			echo $LANG['no_result'];
-	}
-	else
-	{
-		echo $LANG['no_result'];
-	}
 	
 	$Sql->Sql_close(); //Fermeture de mysql*/
 }

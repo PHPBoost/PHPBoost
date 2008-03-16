@@ -227,8 +227,7 @@
 							# END backup.table_list #
 							</select>
 							<br /><br />
-							<a href="javascript:check_select_multiple(false);">{SELECT_NONE}</a> /
-							<a href="javascript:check_select_multiple(true);">{SELECT_ALL}</a>
+							<a class="small_link" href="javascript:check_select_multiple(true);">{SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple(false);">{SELECT_NONE}</a>
 						</td>
 						<td class="row1" style="text-align:center;">
 							{L_EXPLAIN_BACKUP}

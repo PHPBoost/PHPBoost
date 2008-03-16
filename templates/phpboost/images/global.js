@@ -98,12 +98,20 @@ function hide_menu(level)
 		menu_timeout[level] = setTimeout('temporise_menu(\'\', ' + level + ')', menu_delay);
 }
 
+//Répétition d'un caractère.
 function str_repeat(charrepeat, nbr)
 {
 	var string = '';
 	for(var i = 0; i < nbr; i++)
 		string += charrepeat;
 	return string;
+}
+
+//Recherche d'une chaîne dans une autre.
+function strpos(haystack, needle)
+{
+    var i = haystack.indexOf(needle, 1); // returns -1
+    return i >= 0 ? i : false;
 }
 
 //Affichage/Masquage de la balise hide.
@@ -137,6 +145,39 @@ function show_div(divID)
 {
 	if( document.getElementById(divID) )
 		document.getElementById(divID).style.display = 'block';
+}
+
+//Masque un bloc.
+function hide_inline(divID)
+{
+	if( document.getElementById(divID) )
+		document.getElementById(divID).style.visibility = 'hidden';
+}
+
+//Affiche un bloc
+function show_inline(divID)
+{
+	if( document.getElementById(divID) )
+		document.getElementById(divID).style.visibility = 'visible';
+}
+
+//Change l'adresse d'une image
+function change_img_path(id, path)
+{
+	if( document.getElementById(id) )
+		document.getElementById(id).src = path;
+}
+
+//Switch entre deux images.
+function switch_img(id, path, path2)
+{
+	if( document.getElementById(id) )
+	{	
+		if( strpos(document.getElementById(id).src, path.replace(/\.\./g, '')) != false )	
+			document.getElementById(id).src = path2;
+		else
+			document.getElementById(id).src = path;
+	}
 }
 
 //Afffiche/masque automatiquement un bloc.
@@ -287,4 +328,48 @@ function browserAJAXFriendly()
         return true;
     else
         return false;
+}
+
+//Fonction de recherche des membres.
+function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty_login)
+{
+	var login = document.getElementById('login' + searchid).value;
+	if( login != '' )
+	{
+		if( document.getElementById('search_img' + searchid) )
+			document.getElementById('search_img' + searchid).innerHTML = '<img src="../templates/' + theme +'/images/loading_mini.gif" alt="" class="valign_middle" />';
+		var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?' + insert_mode + '=1');
+		data = 'login=' + login + '&divid=' + searchid;
+		xhr_object.onreadystatechange = function() 
+		{
+			if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
+			{
+				if( document.getElementById('search_img' + searchid) )
+					document.getElementById('search_img' + searchid).innerHTML = '';
+				if( document.getElementById("xmlhttprequest_result_search" + searchid) )
+					document.getElementById("xmlhttprequest_result_search" + searchid).innerHTML = xhr_object.responseText;
+				show_div("xmlhttprequest_result_search" + searchid);
+			}
+		}
+		xmlhttprequest_sender(xhr_object, data);
+	}	
+	else
+		alert(alert_empty_login);
+}
+
+//Fonction d'ajout de membre dans les autorisations.
+function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_auth)
+{
+	var selectid = document.getElementById('members_auth' + searchid);
+	for(var i = 0; i < selectid.length; i++) 
+	{
+		if( selectid[i].value == user_id )
+		{
+			alert(alert_already_auth);
+			return;
+		}
+	}
+
+	if( selectid )
+		selectid.innerHTML += '<option value="' + user_id + '" selected="selected">' + login + '</option>';
 }

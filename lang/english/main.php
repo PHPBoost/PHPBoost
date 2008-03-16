@@ -283,9 +283,11 @@ $LANG['by'] = 'By';
 
 //Authorized forms management.
 $LANG['explain_select_multiple'] = 'Hold ctrl and click in the list to make multiple choose';
-$LANG['advanced_authorization'] = 'Advanced authorization';
+$LANG['advanced_authorization'] = 'Advanced authorizations';
 $LANG['select_all'] = 'Select all';
 $LANG['select_none'] = 'Unselect all';
+$LANG['add_member'] = 'Add member';
+$LANG['alert_member_already_auth'] = 'Member is aleady in the list';
 
 //Calendar
 $LANG['january'] = 'January';

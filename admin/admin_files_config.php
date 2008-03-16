@@ -124,6 +124,8 @@ else
 		'L_AUTH_EXTENSIONS' => $LANG['auth_extensions'],
 		'L_EXTEND_EXTENSIONS' => $LANG['extend_extensions'],
 		'L_EXTEND_EXTENSIONS_EXPLAIN' => $LANG['extend_extensions_explain'],
+		'L_SELECT_ALL' => $LANG['select_all'],
+		'L_SELECT_NONE' => $LANG['select_none'],
 		'L_ACTIV' => $LANG['activ'],
 		'L_UNACTIV' => $LANG['unactiv'],
 		'L_UPDATE' => $LANG['update'],

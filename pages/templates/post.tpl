@@ -133,39 +133,15 @@
 				<span id="own_auth_display" style="{DISPLAY}">
 					<dl>
 						<dt><label>{L_READ_PAGE}</label></dt>
-						<dd>
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
-							{SELECT_READ_PAGE}
-							<br />
-							<a href="javascript:check_select_multiple('1', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('1', false);">{L_SELECT_NONE}</a>
-						</dd>					
+						<dd><label>{SELECT_READ_PAGE}</label></dd>					
 					</dl>
 					<dl>
 						<dt><label>{L_EDIT_PAGE}</label></dt>
-						<dd>
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
-							{SELECT_EDIT_PAGE}
-							<br />
-							<a href="javascript:check_select_multiple('2', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('2', false);">{L_SELECT_NONE}</a>
-						</dd>					
+						<dd><label>{SELECT_EDIT_PAGE}</label></dd>					
 					</dl>
 					<dl>
 						<dt><label>{L_READ_COM}</label></dt>
-						<dd>
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
-							{SELECT_READ_COM}
-							<br />
-							<a href="javascript:check_select_multiple('3', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('3', false);">{L_SELECT_NONE}</a>
-						</dd>					
+						<dd><label>{SELECT_READ_COM}</label></dd>					
 					</dl>
 				</span>
 			</fieldset>

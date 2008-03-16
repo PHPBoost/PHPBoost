@@ -107,39 +107,15 @@
 					</dl>
 					<dl>
 						<dt><label>{L_AUTH_READ}</label></dt>
-						<dd><label>
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
-							{AUTH_READ}
-							<br />
-							<a href="javascript:check_select_multiple('r', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('r', false);">{L_SELECT_NONE}</a>
-						</label></dd>
+						<dd><label>{AUTH_READ}</label></dd>
 					</dl>
 					<dl>
 						<dt><label>{L_AUTH_WRITE}</label></dt>
-						<dd><label>
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
-							{AUTH_WRITE}
-							<br />
-							<a href="javascript:check_select_multiple('w', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('w', false);">{L_SELECT_NONE}</a>
-						</label></dd>
+						<dd><label>{AUTH_WRITE}</label></dd>
 					</dl>
 					<dl>
 						<dt><label>{L_AUTH_EDIT}</label></dt>
-						<dd><label>
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
-							{AUTH_EDIT}
-							<br />
-							<a href="javascript:check_select_multiple('x', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('x', false);">{L_SELECT_NONE}</a>
-						</label></dd>
+						<dd><label>{AUTH_EDIT}</label></dd>
 					</dl>
 				</fieldset>
 				

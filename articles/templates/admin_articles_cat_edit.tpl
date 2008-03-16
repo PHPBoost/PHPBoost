@@ -119,20 +119,12 @@
 							</select></label>
 							<span id="icon_img">{IMG_ICON}</span>
 							<br />
-							<label><span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" value="{IMG_PATH}" onblur="if( this.value != '' )change_icon(this.value)" /></label>
+							<label><span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" value="{IMG_PATH}" onblur="if( this.value != '');change_icon(this.value)" /></label>
 						</label></dd>
 					</dl>
 					<dl>
 						<dt><label>{L_AUTH_READ}</label></dt>
-						<dd><label>
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
-							{AUTH_READ}
-							<br />
-							<a href="javascript:check_select_multiple('r', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('r', false);">{L_SELECT_NONE}</a>
-						</label></dd>
+						<dd><label>{AUTH_READ}</label></dd>
 					</dl>
 				</fieldset>			
 				<fieldset class="fieldset_submit">

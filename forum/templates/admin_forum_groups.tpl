@@ -70,39 +70,15 @@
 					<p>{EXPLAIN_FORUM_GROUPS}</p>
 					<dl>
 						<dt><label>{L_FLOOD}</label></dt>
-						<dd><label>
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
-							{FLOOD_AUTH}
-							<br />
-							<a href="javascript:check_select_multiple('1', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('1', false);">{L_SELECT_NONE}</a>
-						</label></dd>
+						<dd><label>{FLOOD_AUTH}</label></dd>
 					</dl>
 					<dl>
 						<dt><label>{L_EDIT_MARK}</label></dt>
-						<dd><label>
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
-							{EDIT_MARK_AUTH}
-							<br />
-							<a href="javascript:check_select_multiple('2', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('2', false);">{L_SELECT_NONE}</a>
-						</label></dd>
+						<dd><label>{EDIT_MARK_AUTH}</label></dd>
 					</dl>
 					<dl>
 						<dt><label>{L_TRACK_TOPIC}</label></dt>
-						<dd><label>
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
-							{TRACK_TOPIC_AUTH}
-							<br />
-							<a href="javascript:check_select_multiple('3', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('3', false);">{L_SELECT_NONE}</a>
-						</label></dd>
+						<dd><label>{TRACK_TOPIC_AUTH}</label></dd>
 					</dl>
 				</fieldset>
 								
