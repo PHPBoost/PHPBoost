@@ -142,7 +142,7 @@ class Search
         }
     }
     
-    function GetResults(&$results, &$moduleNames, $offset = 0, $nbLines = NB_LINES)
+    function GetResults(&$results, &$moduleNames, $nbLines = 0, $offset = 0 )
     /**
      *  Renvoie le nombre de résultats de la recherche
      *  et mets les résultats dans le tableau &results
@@ -175,7 +175,9 @@ class Search
                         WHERE (idx.id_search = rst.id_search) ";
         if( $modulesConditions != '' )
             $reqResults .= " AND rst.id_search  IN (".$modulesConditions.")";
-        $reqResults .= " ORDER BY relevance DESC ".$Sql->Sql_limit($offset, $nbLines);
+        $reqResults .= " ORDER BY relevance DESC ";
+        if ( $nbLines > 0 )
+            $reqResults .= $Sql->Sql_limit($offset, $nbLines);
         
         // Exécution de la requête
         $request = $Sql->Query_while($reqResults, __LINE__, __FILE__);

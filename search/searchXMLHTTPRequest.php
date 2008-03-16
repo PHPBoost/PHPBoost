@@ -30,9 +30,6 @@ require_once('../includes/begin.php');
 load_module_lang('search');
 
 //--------------------------------------------------------------------- Params
-
-define( 'NB_RESULTS_PER_PAGE', 10);
-
 $idSearch = !empty($_GET['idSearch']) ? numeric($_GET['idSearch']) : -1;
 $pageNum = !empty($_GET['pageNum']) ? numeric($_GET['pageNum']) : 1;
 

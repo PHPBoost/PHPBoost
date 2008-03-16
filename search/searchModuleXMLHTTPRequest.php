@@ -30,9 +30,6 @@ require_once('../includes/begin.php');
 load_module_lang('search');
 
 //--------------------------------------------------------------------- Params
-
-define( 'NB_RESULTS_PER_PAGE', 10);
-
 $idSearch = !empty($_GET['idSearch']) ? numeric($_GET['idSearch']) : -1;
 $pageNum = !empty($_GET['pageNum']) ? numeric($_GET['pageNum']) : 1;
 
@@ -51,46 +48,21 @@ if( $idSearch >= 0 )
     $Search = new Search();
     if( $Search->IsSearchIdInCache($idSearch) )
     {
-        $nbResults = $Search->GetResultsById($results, $idSearch, ($pageNum - 1) *  NB_RESULTS_PER_PAGE, NB_LINES);
+        $nbResults = $Search->GetResultsById($results, $idSearch);
         if( $nbResults > 0 )
         {
             $module = $Modules->GetModule($results[0]['module']);
-            $htmlResults = '<ul class="search_results">';
-            foreach( $results as $result )
-            {
-                if( $module->HasFunctionnality('ParseSearchResult') )
-                {
-                    $htmlResult = $module->Functionnality('ParseSearchResult', array($result));
-                }
-                else
-                {
-                    $htmlResult  = '<div class="result">';
-                    $htmlResult .= '<span><i>'.$result['relevance'].'</i></span> - ';
-                    $htmlResult .= '<span><b>'.ucfirst($result['module']).'</b></span> - ';
-                    $htmlResult .= '<a href="'.$result['link'].'">'.$result['title'].'</a>';
-                    $htmlResult .= '</div>';
-                }
-                $htmlResults .= '<li>'.$htmlResult.'</li>';
-            }
-            $htmlResults .= '</ul>';
+            $htmlResults = '';
+            Get_HTML_Results($results, $htmlResults, $Modules, $module->name);
         }
-        // CrÃ©ation de la pagination si le nombre de commentaires est trop important.
-        include_once('../includes/pagination.class.php');
-        $Pagination = new Pagination();
-        $showPagin = $Pagination->Display_pagination(
-            transid('search.php?module='.$module->name.'&amp;p=%d'),
-            $nbResults,
-            'p',
-            NB_RESULTS_PER_PAGE,
-            3
-        );
-        $showPagin = $nbResults > NB_RESULTS_PER_PAGE  ?  $showPagin : '';
         
+        $showPagin = '';
+        // Création de la pagination si le nombre de commentaires est trop important.
         $return = ' var resultsAJAX = new Array();
                     resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.
                     addslashes($nbResults > 1 ? $LANG['nb_results_found']:$LANG['one_result_found']).'\';
-                    resultsAJAX[\'results\'] = \''.$htmlResults.'\';
-                    resultsAJAX[\'pagination\'] = \''.$showPagin.'\';';
+                    resultsAJAX[\'results\'] = \''.addslashes($htmlResults).'\';
+                    resultsAJAX[\'pagination\'] = \''.addslashes($showPagin).'\';';
         echo $return;
     }
     else echo 'NO RESULTS IN CACHE';

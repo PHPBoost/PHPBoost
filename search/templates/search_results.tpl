@@ -75,7 +75,7 @@
 				var xhr_object = xmlhttprequest_init('../search/searchModuleXMLHTTPRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
 		        xhr_object.onreadystatechange = function()
 		        {
-                    if( xhr_object.readyState == 1 ) 
+                    if( xhr_object.readyState == 1 )
                         progress_bar(25, "{L_QUERY_LOADING}");
                     else if( xhr_object.readyState == 2 )
                         progress_bar(50, "{L_QUERY_SENT}");
@@ -87,7 +87,7 @@
                         {
                             progress_bar(100, "{L_QUERY_SUCCESS}");
                             // Si les résultats sont toujours en cache, on les récupère.
-							if( xhr_object.responseText != 'NO RESULTS IN CACHE' )
+                            if( xhr_object.responseText != 'NO RESULTS IN CACHE' )
                             {
                                 eval(xhr_object.responseText);
                                 document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
@@ -98,7 +98,7 @@
                                 // dans la base de donnée si ils sont déjà dans le html.
                                 calculatedResults.push(module);
                             }
-                            else    // Sinon, on les recalcule, et on les récupère.
+                            else // Sinon, on les recalcule, et on les récupère.
                             {
                                 alert('NO RESULTS IN CACHE');
                                 XMLHttpRequest_regenerate_search();
@@ -133,11 +133,7 @@
 		            <span id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</span><br />
 		            <div id="infosResultsAll" class="infosResults">{NB_RESULTS} {NB_RESULTS_FOUND}</div>
 		            <div id="ResultsListAll" class="ResultsList">
-		                <ul class="search_results">
-		                    # START allResults #
-		                        <li>{allResults.RESULT}</li>
-		                    # END allResults #
-		                </ul>
+                        {ALL_RESULTS}
 		            </div>
 		            <div id="PaginationResultsAll" class="PaginationResults">{PAGINATION}</div>
 		        </div>
