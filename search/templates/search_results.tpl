@@ -38,7 +38,7 @@
 		        show_div(RESULTS + module);
 				if( !inArray(module, calculatedResults) )
 				{
-					load_progress_bar(20, '{THEME}', module);
+					load_progress_bar(1, '{THEME}', module, 10);
 		            XMLHttpRequest_search_module(module);
 				}
 			}
