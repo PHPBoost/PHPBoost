@@ -93,6 +93,7 @@
                                 document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
                                 document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
                                 document.getElementById(PAGINATION_RESULTS + module).innerHTML = resultsAJAX['pagination'];
+                                show_div('results' + module + '_0');
                                 
                                 // Met à jour la liste des résultats affiché, pour ne pas les rechercher
                                 // dans la base de donnée si ils sont déjà dans le html.

@@ -27,6 +27,8 @@
 
 if( defined('PHP_BOOST') !== true ) exit;
 
+define ( 'NB_RESULTS_PER_PAGE', 2);
+
 require_once ( '../includes/modules.class.php' );
 require_once ( '../includes/search.class.php' );
 
@@ -85,6 +87,9 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
 }
 
 function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
+/**
+ *  Renvoie yune chaîne contenant les résultats
+ */
 {
     $i = 0;
     $j = 0;
@@ -100,7 +105,7 @@ function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
         }
         if ( $i == 0 )
         {
-            $htmlResults .= '<div id="results'.$resultsName.'_'.$j.'" style="display:none"><ul class="search_results">';
+            $htmlResults .= '<div id="results'.ucfirst($resultsName).'_'.$j.'" style="display:none"><ul class="search_results">';
             $j++;
         }
         
@@ -119,12 +124,7 @@ function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
         $i++;
     }
     
-    $htmlResults .= '</ul></div><script type="text/javascript">
-        <!--
-           if( browserAJAXFriendly() )
-                show_div(\'results'.$resultsName.'_0\');
-        -->
-        </script>';
+    $htmlResults .= '</ul></div>';
 }
 
 ?>
