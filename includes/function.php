@@ -299,7 +299,7 @@ function parse($content, $forbidden_tags = array(), $html_protect = true)
 function unparse($content, $editor_unparse = true)
 {
 	include_once('../includes/content.class.php');
-	$parse = new Content($content);	
+	$parse = new Content($content, $editor_unparse);	
 	
 	$parse->Unparse_content();
 	

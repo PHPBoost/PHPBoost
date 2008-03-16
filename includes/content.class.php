@@ -27,6 +27,8 @@
 
 //Constantes utilisées
 define('DO_NOT_ADD_SLASHES', false);
+define('PICK_UP', true);
+define('REIMPLANT', false);
 define('EDITOR_BBCODE', 1);
 define('EDITOR_TINYMCE', 2);
 
@@ -296,8 +298,8 @@ class Content
 	//On unparse le contenu xHTML => BBCode
 	function Unparse_content()
 	{
-		$this->content = stripslashes($this->content);
-		
+		$this->unparse_html(PICK_UP);
+
 		//Smiley.
 		@include('../cache/smileys.php');
 		if(!empty($_array_smiley_code) )
@@ -474,7 +476,8 @@ class Content
 			if( strpos($this->content, '<li') !== false )
 				$this->unparse_list();
 		}
-		//$this->content = addslashes($this->content);
+		
+		$this->unparse_html(REIMPLANT);
 	}
 	
 ####### Private #######
@@ -816,7 +819,7 @@ class Content
 	function pick_up_tag($tag, $arguments = '')
 	{
 		$split_code = $this->preg_split_safe_recurse($this->content, $tag, $arguments);
-
+		
 		$num_codes = count($split_code);
 		if( $num_codes > 1 )
 		{
@@ -845,7 +848,7 @@ class Content
 			
 		$num_code = count($this->array_tags[$tag]);
 
-		if( !empty($num_code) )
+		if( $num_code > 0 )
 		{
 			for( $i = 0; $i < $num_code; $i++ )
 				$this->content = str_replace('[' . strtoupper($tag) . '_TAG_' . $i . ']', $this->array_tags[$tag][$i], $this->content);
@@ -857,30 +860,77 @@ class Content
 	//Fonction de retour pour les tableaux
 	function unparse_table()
 	{
-		//Preg_replace.
-		$array_preg = array( 
-			'`<table class="bb_table"([^>]*)>(.*)</table>`sU',
-			'`<tr class="bb_table_row">(.*)</tr>`sU',
-			'`<th class="bb_table_head"([^>]*)>(.*)</th>`sU',
-			'`<td class="bb_table_col"([^>]*)>(.*)</td>`sU'
-		);
-		$array_preg_replace = array( 
-			'[table$1]$2[/table]',
-			'[row]$1[/row]',
-			'[head$1]$2[/head]',
-			'[col$1]$2[/col]'
-		);	
-		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
+		//On boucle pour parcourir toutes les imbrications
+		while( strpos($this->content, '<table') !== false )
+			$this->content = preg_replace('`<table class="bb_table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
+		while( strpos($this->content, '<tr') !== false )
+			$this->content = preg_replace('`<tr class="bb_table_row">(.*)</tr>`sU', '[row]$1[/row]', $this->content);
+		while( strpos($this->content, '<th') !== false )
+			$this->content = preg_replace('`<th class="bb_table_head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
+		while( strpos($this->content, '<td') !== false )
+			$this->content = preg_replace('`<td class="bb_table_col"([^>]*)>(.*)</td>`sU', '[col$1]$2[/col]', $this->content);
 	}
 
 	//Fonction de retour pour les listes
 	function unparse_list()
 	{
-		while( preg_match('`<(?:u|o)l( style="[^"]+")? class="bb_(?:u|o)l">(.+)</(?:u|o)l>`sU', $this->content) )
-		{
+		//On boucle tant qu'il y a de l'imbrication
+		while( strpos($this->content, '<ul') !== false )
 			$this->content = preg_replace('`<ul( style="[^"]+")? class="bb_ul">(.+)</ul>`sU', '[list$1]$2[/list]', $this->content);
+		while( strpos($this->content, '<ol') !== false )
 			$this->content = preg_replace('`<ol( style="[^"]+")? class="bb_ol">(.+)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
+		while( strpos($this->content, '<li') !== false )
 			$this->content = preg_replace('`<li class="bb_li">(.+)</li>`isU', '[*]$1', $this->content);
+	}
+	
+	//Fonction de retour pour le html (prélèvement ou réinsertion)
+	function unparse_html($action)
+	{
+		//Prélèvement du HTML
+		if( $action == PICK_UP )
+		{
+			$mask = '`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`is';
+			$content_split = preg_split($mask, $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+			$content_length = count($content_split);
+			$id_tag = 0;
+			
+			if( $content_length > 1 )
+			{
+				$this->content = '';
+				for($i = 0; $i < $content_length; $i++)
+				{
+					//contenu
+					if( $i % 2 == 0 )
+					{
+						$this->content .= $content_split[$i];
+						//Ajout du tag de remplacement
+						if( $i < $content_length - 1 )
+							$this->content .= '[HTML_UNPARSE_TAG_' . $id_tag++ . ']';
+					}
+					else
+					{
+						$this->array_tags['html_unparse'][] = $content_split[$i];
+					}
+				}
+			}
+			return true;
+		}
+		//Réinsertion du HTML
+		else
+		{
+			if( !array_key_exists('html_unparse', $this->array_tags) )
+				return false;
+				
+			$content_length = count($this->array_tags['html_unparse']);
+
+			if( $content_length > 0 )
+			{
+				for( $i = 0; $i < $content_length; $i++ )
+					$this->content = str_replace('[HTML_UNPARSE_TAG_' . $i . ']', '[html]' . $this->array_tags['html_unparse'][$i] . '[/html]', $this->content);
+				$this->array_tags['html_unparse'] = array();
+			}
+			return true;
 		}
 	}
 }

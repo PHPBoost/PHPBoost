@@ -30,107 +30,93 @@
 #                                                           English                                                                             #
 ####################################################
 
+$FAQ_LANG = array();
+
 //Généralités
-$LANG['pages'] = 'Pages';
+$FAQ_LANG['faq'] = 'FAQ';
+$FAQ_LANG['faq_no_question_here'] = 'Aucune question présente dans cette catégorie';
+$FAQ_LANG['faq_page_title'] = 'FAQ - %s';
+$FAQ_LANG['cat_name'] = 'Nom de la catégorie';
+$FAQ_LANG['num_questions_singular'] = '%d question';
+$FAQ_LANG['num_questions_plural'] = '%d questions';
+$FAQ_LANG['url_of_question'] = 'URL de la question';
 
-$LANG['page_hits'] = 'This page has been seen %d times';
+//Gestion
+$FAQ_LANG['cat_properties'] = 'Propriétés de la catégorie';
+$FAQ_LANG['cat_description'] = 'Description';
+$FAQ_LANG['go_back_to_cat'] = 'Retour à la catégorie';
+$FAQ_LANG['display_mode'] = 'Mode d\'affichage';
+$FAQ_LANG['display_block'] = 'Par blocs';
+$FAQ_LANG['display_inline'] = 'En lignes';
+$FAQ_LANG['display_auto'] = 'Automatique';
+$FAQ_LANG['display_explain'] = 'En automatique l\'affichage suivra la configuration générale, en ligne les réponses seront masquées et un clic sur la question affichera la réponse correspondante tandis que en blocs les questions seront suivies de leurs réponses.';
+$FAQ_LANG['global_auth'] = 'Autorisations spéciales';
+$FAQ_LANG['global_auth_explain'] = 'Permet d\'appliquer des autorisations particulières à la catégorie. Attention les autorisations de lecture se transmettent dans les sous catégories, c\'est-à-dire que si vous ne pouvez pas voir une catégorie vous ne pouvez pas voir ses filles.';
+$FAQ_LANG['read_auth'] = 'Autorisations de lecture';
+$FAQ_LANG['write_auth'] = 'Autorisations d\'écriture';
+$FAQ_LANG['questions_list'] = 'Liste des questions';
+$FAQ_LANG['ranks'] = 'Rangs';
+$FAQ_LANG['insert_question'] = 'Insérer une question';
+$FAQ_LANG['insert_question_begening'] = 'Insérer une question au début';
+$FAQ_LANG['update'] = 'Modifier';
+$FAQ_LANG['delete'] = 'Supprimer';
+$FAQ_LANG['up'] = 'Monter';
+$FAQ_LANG['down'] = 'Descendre';
+$FAQ_LANG['confirm_delete'] = 'Etes-vous sûr de vouloir supprimer cette question ?';
+$FAQ_LANG['category_management'] = 'Gestion d\'une catégorie';
+$FAQ_LANG['category_manage'] = 'Gérer la catégorie';
+$FAQ_LANG['question_edition'] = 'Modification d\'une question';
+$FAQ_LANG['question_creation'] = 'Création d\'une question';
+$FAQ_LANG['question'] = 'Question';
+$FAQ_LANG['entitled'] = 'Intitulé';
+$FAQ_LANG['answer'] = 'Réponse';
 
-//Administration
-$LANG['pages_count_hits'] = 'Count hits';
-$LANG['pages_count_hits_explain'] = 'Can be changed for each page.';
-$LANG['pages_auth_read'] = 'Read page';
-$LANG['pages_auth_edit'] = 'Edit page';
-$LANG['pages_auth_read_com'] = 'Read and write commentaries';
-$LANG['pages_auth'] = 'Permissions';
-$LANG['select_all'] = 'Select all';
-$LANG['select_none'] = 'Deselect all';
-$LANG['ranks'] = 'Ranks';
-$LANG['groups'] = 'Groups';
+//Management
+$FAQ_LANG['faq_management'] = 'Gestion de la FAQ';
+$FAQ_LANG['faq_configuration'] = 'Configuration de la FAQ';
+$FAQ_LANG['faq_questions_list'] = 'Liste des questions';
+$FAQ_LANG['cats_management'] = 'Gestion des catégories';
+$FAQ_LANG['add_cat'] = 'Ajouter une catégorie';
+$FAQ_LANG['show_all_answers'] = 'Afficher toutes les réponses';
+$FAQ_LANG['hide_all_answers'] = 'Cacher toutes les réponses';
+$FAQ_LANG['move'] = 'Déplacer';
+$FAQ_LANG['moving_a_question'] = 'Déplacement d\'une question';
+$FAQ_LANG['target_category'] = 'Catégorie cible';
 
-//Création / édition d'une page
-$LANG['pages_edition'] = 'Editing a page';
-$LANG['pages_creation'] = 'Creating a page';
-$LANG['pages_edit_page'] = 'Edition of the page <em>%s</em>';
-$LANG['page_title'] = 'Page title';
-$LANG['page_contents'] = 'Page contents';
-$LANG['pages_edit'] = 'Edit this page';
-$LANG['pages_delete'] = 'Delete this page';
-$LANG['pages_create'] = 'Create a page';
-$LANG['pages_activ_com'] = 'Activate commentaries';
-$LANG['pages_own_auth'] = 'Apply individual permissions to this page';
-$LANG['pages_is_cat'] = 'This page is a category';
-$LANG['pages_parent_cat'] = 'Parent category';
-$LANG['pages_page_path'] = 'Path';
-$LANG['pages_properties'] = 'Properties';
-$LANG['pages_no_selected_cat'] = 'No selected category';
-$LANG['explain_select_multiple'] = 'Press Ctrl then click into the list to select several options';
-$LANG['pages_previewing'] = 'Preview';
-$LANG['pages_contents_part'] = 'Page contents';
-$LANG['pages_delete_success'] = 'The page has been deleted successful.';
-$LANG['pages_delete_failure'] = 'The page hasn\'t been deleted. An error occured.';
-$LANG['pages_confirm_delete'] = 'Are you sure you want to delete this page ?';
+//Avertissement
+$FAQ_LANG['required_fields'] = 'Les champs marqués * sont obligatoires !';
+$FAQ_LANG['require_entitled'] = 'Veuillez entrer l\'intitulé de la question';
+$FAQ_LANG['require_answer'] = 'Veuillez entrer la réponse';
+$FAQ_LANG['require_cat_name'] = 'Veuillez entrer le nom de la catégorie';
 
-//Divers
-$LANG['pages_links_list'] = 'Tools';
-$LANG['pages_com'] = 'Commentaries';
-$LANG['pages_explorer'] = 'Explorer';
-$LANG['pages_root'] = 'Root';
-$LANG['pages_cats_tree'] = 'Categories tree';
-$LANG['pages_display_coms'] = 'Commentaries (%d)';
-$LANG['pages_post_com'] = 'Post a comment';
-$LANG['pages_page_com'] = 'Commentaries of the page %s';
+//Administration / categories
+$FAQ_LANG['category'] = 'Catégorie';
+$FAQ_LANG['category_name'] = 'Nom de la catégorie';
+$FAQ_LANG['category_location'] = 'Emplacement de la catégorie';
+$FAQ_LANG['category_image'] = 'Image de la catégorie';
+$FAQ_LANG['removing_category'] = 'Suppression d\'une catégorie';
+$FAQ_LANG['explain_removing_category'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (questions et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de son catégorie. <strong>Attention, cette action est irréversible !</strong>';
+$FAQ_LANG['delete_category_and_its_content'] = 'Supprimer la catégorie et tout son contenu';
+$FAQ_LANG['move_category_content'] = 'Déplacer son contenu dans :';
+$FAQ_LANG['faq_name'] = 'Nom de la FAQ';
+$FAQ_LANG['faq_name_explain'] = 'Le nom de la FAQ apparaîtra dans le titre et dans l\'arborescence de chaque page';
+$FAQ_LANG['nbr_cols'] = 'Nombre de catégories par ligne';
+$FAQ_LANG['nbr_cols_explain'] = 'Ce nombre est le nombre de colonnes dans lesquelles seront présentées les sous catégories d\'une catégorie';
+$FAQ_LANG['display_mode_admin_explain'] = 'Vous pouvez choisir la façon dont les questions seront affichées. Le mode en ligne permet d\'afficher les questions et un clic sur la question affiche la réponse, alors que le mode en blocs affiche l\'enchaînement des questions et des réponses. Il sera possible de choisir pour chaque catégorie le mode d\'affichage, il ne s\'agit ici que de la configuration par défaut.';
+$FAQ_LANG['general_auth'] = 'Autorisations générales';
+$FAQ_LANG['general_auth_explain'] = 'Vous configurez ici les autorisations générales de lecture et d\'écriture sur la FAQ. Vous pourrez ensuite pour chaque catégorie lui appliquer des autorisations particulières.';
 
-//Accueil
-$LANG['pages_explain'] = 'You are in the controll panel of pages module. Here you can manage your whole pages.
-<div class="question">You can use both BBCode and HTML syntax to create your page but PHP scripts are forbidden for security reasons.
-<br />
-To create links between different pages of this module you have to use the <em>link</em> tag which doesn\'t appear in the BBCode toolbar, but the syntax is for instance : [link=title-of-the-page]Link up to page[/link].</div>';
-$LANG['pages_redirections'] = 'Redirections';
-$LANG['pages_num_pages'] = '%d existing page(s)';
-$LANG['pages_num_coms'] = '%d commentaries on the whole pages, which corresponds to %1.1f commentary by page';
-$LANG['pages_stats'] = 'Statistics';
-$LANG['pages_tools'] = 'Tools';
+//Errors
+$FAQ_LANG['successful_operation'] = 'L\'opération que vous avez demandée a été effectuée avec succès';
+$LANG['required_fields_empty'] = 'Des champs requis n\'ont pas été renseignés, merci de renouveler l\'opération correctement';
+$LANG['unexisting_category'] = 'La catégorie que vous avez sélectionnée n\'existe pas';
+$LANG['new_cat_does_not_exist'] = 'La catégorie cible n\'existe pas';
+$LANG['infinite_loop'] = 'Vous voulez déplacer la catégorie dans une de ses catégories filles ou dans elle-même, ce qui n\'a pas de sens. Merci de choisir une autre catégorie';
 
-//Redirections et renommer
-$LANG['pages_rename'] = 'Rename';
-$LANG['pages_redirection_management'] = 'Redirections management';
-$LANG['pages_rename_page'] = 'Rename the page <em>%s</em>';
-$LANG['pages_new_title'] = 'New title of this page';
-$LANG['pages_create_redirection'] = 'Create a redirection from the previous title to the actual ?';
-$LANG['pages_explain_rename'] = 'You are just going to rename the page. You have to know that every link pointing up to that page will be broken. It\'s the reason why you have possibility to create a redirection from the previous title to the new, which won\'t break those links.';
-$LANG['pages_confirm_delete_redirection'] = addslashes('Are you sure you want to delete this redirection ?');
-$LANG['pages_delete_redirection'] = 'Delete this redirection';
-$LANG['pages_redirected_from'] = 'Redirected from <em>%s</em>';
-$LANG['pages_redirection_title'] = 'Redirection title';
-$LANG['pages_redirection_target'] = 'Redirection target';
-$LANG['pages_redirection_actions'] = 'Actions';
-$LANG['pages_manage_redirection'] = 'Consult every redirection pointing to this page';
-$LANG['pages_no_redirection'] = 'No existing redirection';
-$LANG['pages_create_redirection'] = 'Create a redirection up to this article';
-$LANG['pages_creation_redirection'] = 'Creating a redirection';
-$LANG['pages_creation_redirection_title'] = 'Creating a redirection up to %s';
-$LANG['pages_redirection_title'] = 'Redirection name';
-$LANG['pages_remove_this_cat'] = 'Deleting the category : <em>%s</em>';
-$LANG['pages_remove_all_contents'] = 'Delete its whole contents';
-$LANG['pages_move_all_contents'] = 'Move its whole contents into the folowing folder :';
-$LANG['pages_future_cat'] = 'Category in which you want to move those elements';
-$LANG['pages_change_cat'] = 'Change category';
-$LANG['pages_delete_cat'] = 'Deleting a category';
-$LANG['pages_confirm_remove_cat'] = 'Are you sure you want to delete this category ?';
- 
-//Erreurs
-$LANG['pages_not_found'] = 'The page you are asking doesn\'t exist';
-$LANG['pages_error_auth_read'] = 'You haven\'t go necessary permissions to read this page';
-$LANG['pages_error_auth_com'] = 'You haven\'t necessary permissions to read comments related to this page';
-$LANG['pages_error_unactiv_com'] = 'Comments related to this page have been disabled.';
-$LANG['page_alert_title'] = 'You have to enter a title';
-$LANG['page_alert_contents'] = 'You have to enter a contents for your page';
-$LANG['pages_already_exists'] = 'The title you have chosen already exists. You must choose another, because titles must be uniques.';
-$LANG['pages_cat_contains_cat'] = 'The category you have selected to put this category is contained by herself or one of its sons, which is not possible. Please select another category.';
-$LANG['pages_notice_previewing'] = 'You are previewing the contents you have entered. No edition has been done into the database, you must submit your page if you want to take into consideration your edition.';
+//Others
+$LANG['ranks'] = 'Rangs';
+$FAQ_LANG['recount_success'] = 'Le nombre de questions pour chaque catégorie a été recompté avec succès.';
+$FAQ_LANG['recount_questions_number'] = 'Recompter le nombre de questions pour chaque catégorie';
 
-//Admin
-$LANG['pages_config'] = 'Configuration';
-$LANG['pages_management'] = 'Pages management';
 
 ?>
