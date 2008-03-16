@@ -287,25 +287,23 @@ function get_install_page()
 }
 
 //Charge le parseur.
-function parse($contents, $forbidden_tags = array(), $html_protect = true, $magic_quotes_activ = true)
+function parse($content, $forbidden_tags = array(), $html_protect = true)
 {
-	global $LANG, $Member;
-	
-	include_once('../includes/parse.class.php');
-	$Parse = new Parse($Member->Get_attribute('user_editor'));
-
-	return $Parse->parse_content($contents, $forbidden_tags, $html_protect, $magic_quotes_activ);
+	include_once('../includes/content.class.php');
+	$parse = new Content($content);
+	$parse->Parse_content($forbidden_tags, $html_protect);
+	return $parse->Get_content();
 }
 
 //Charge l'unparseur.
-function unparse($contents, $editor_unparse = true)
+function unparse($content, $editor_unparse = true)
 {
-	global $LANG, $Member;
+	include_once('../includes/content.class.php');
+	$parse = new Content($content);	
 	
-	include_once('../includes/parse.class.php');
-	$parse = new Parse($Member->Get_attribute('user_editor'));	
+	$parse->Unparse_content();
 	
-	return $parse->unparse_content($contents, $editor_unparse);
+	return $parse->Get_content(DO_NOT_ADD_SLASHES);
 }
 
 //Vérifie que le message ne contient pas plus de x liens

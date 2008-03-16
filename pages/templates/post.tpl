@@ -69,7 +69,7 @@
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
-			<div class="module_top">{L_PREVIEWING}: {previewing.TITLE}</div>
+			<div class="module_top">{L_PREVIEWING} {previewing.TITLE}</div>
 			<div class="module_contents">{previewing.PREVIEWING}</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>

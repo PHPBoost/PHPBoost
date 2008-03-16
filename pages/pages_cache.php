@@ -40,21 +40,31 @@ function generate_module_file_pages()
 	ORDER BY p.title", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$config .= '$_PAGES_CATS[\'' . $row['id'] . '\'] = array(\'id_parent\' => ' . ( !empty($row['id_parent']) ? $row['id_parent'] : '0') . ', \'name\' => ' . var_export($row['title'], true) . ', \'auth\' => ' . var_export(unserialize(stripslashes($row['auth'])), true) . ');' . "\n";
+		$config .= '$_PAGES_CATS[\'' . $row['id'] . '\'] = ' . var_export(array(
+			'id_parent' => !empty($row['id_parent']) ? $row['id_parent'] : '0',
+			'name' => $row['title'],
+			'auth' => unserialize(stripslashes($row['auth']))
+			), true) . ';' . "\n";
 	}
 
 	//Configuration du module de pages
-	$code = 'global $_PAGES_CONFIG;' . "\n" . '$_PAGES_CONFIG = array();' . "\n";
+	$code = 'global $_PAGES_CONFIG;' . "\n";
 	$CONFIG_PAGES = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'pages'", __LINE__, __FILE__));
-	$CONFIG_PAGES = is_array($CONFIG_PAGES) ? $CONFIG_PAGES : array();
-	foreach($CONFIG_PAGES as $key => $value)
-	{
-		if( $key != 'auth' )
-			$code .= '$_PAGES_CONFIG[\'' . $key . '\'] = \'' . var_export($value, true) . '\';' . "\n";
-	}
-
-	$code .=  '$_PAGES_CONFIG[\'auth\'] = ' . var_export(unserialize(stripslashes($CONFIG_PAGES['auth'])), true)  . ';' . "\n";
-	$code .= "\n";
+	
+	if( is_array($CONFIG_PAGES) )
+		$CONFIG_PAGES['auth'] = unserialize(stripslashes($CONFIG_PAGES['auth']));
+	else
+		$CONFIG_PAGES = array(
+		'count_hits' => 1,
+		'activ_com' => 1,
+		'auth' => array (
+			'r-1' => 5,
+			'r0' => 5,
+			'r1' => 7,
+			'r2' => 7,
+		));
+	
+	$code .=  '$_PAGES_CONFIG = ' . var_export($CONFIG_PAGES, true) . ';' . "\n";
 	
 	return $config . "\n\r" . $code;
 }
