@@ -281,6 +281,12 @@ $LANG['at'] = 'à';
 $LANG['and'] = 'et';
 $LANG['by'] = 'Par';
 
+//Gestion formulaires autorisation
+$LANG['explain_select_multiple'] = 'Maintenez ctrl puis cliquez dans la liste pour faire plusieurs choix';
+$LANG['advanced_authorization'] = 'Autorisation avancée';
+$LANG['select_all'] = 'Tout sélectionner';
+$LANG['select_none'] = 'Tout désélectionner';
+
 //Calendar
 $LANG['january'] = 'Janvier';
 $LANG['february'] = 'Février';
@@ -519,6 +525,13 @@ S\'il s\'agit d\'une erreur veuillez contacter l\'administrateur du site.
 
 
 %s';
+
+//Barre de chargement.
+$LANG['query_loading'] = 'Chargement de la requête au serveur';
+$LANG['query_sent'] = 'Requête envoyée au serveur, attente d\'une réponse';
+$LANG['query_processing'] = 'Traitement de la requête en cours';
+$LANG['query_success'] = 'Traitement terminé';
+$LANG['query_failure'] = 'Traitement échoué';
 
 //Footer
 $LANG['powered_by'] = 'Boosté par';
