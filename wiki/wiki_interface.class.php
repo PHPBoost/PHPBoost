@@ -69,16 +69,16 @@ class WikiInterface extends ModuleInterface
      */
     {
         return "SELECT ".
-                    $args['id_search']." AS id_search,
-                    `id` AS `id_content`,
-                    `title` AS `title`,
-                    MATCH(`title`) AGAINST('".$args['search']."') AS `relevance`,
-                    CONCAT('../wiki/wiki.php?title=',encoded_title) AS link
-                FROM ".
-                    PREFIX."wiki_articles
-                WHERE
-                    MATCH(`title`) AGAINST('".$args['search']."')
-                ";
+            $args['id_search']." AS id_search,
+            `id` AS `id_content`,
+            `title` AS `title`,
+            MATCH(`title`) AGAINST('".$args['search']."') AS `relevance`,
+            CONCAT('../wiki/wiki.php?title=',encoded_title) AS link
+        FROM ".
+            PREFIX."wiki_articles
+        WHERE
+            MATCH(`title`) AGAINST('".$args['search']."')
+        ";
     }
 }
 
