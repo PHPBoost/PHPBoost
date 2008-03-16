@@ -10,17 +10,25 @@
 		    // Montre les champs de recherche avancée
 		    {
 		        HideAdvancedSearchForms();
-		        show_div('FormsChoice');
-		        show_div(FORM + document.getElementById('FormsChoice').value);
+                
+                document.getElementById('ModulesChoicesLabel').style.visibility = 'visible';
+                document.getElementById('ModulesChoicesSelect').style.visibility = 'visible';
+                document.getElementById('FormsChoice').style.visibility = 'visible';
+                
 		        hide_div('AdvancedSearch');
 		        show_div('SimpleSearch');
+                
+                show_div(FORM + document.getElementById('FormsChoice').value);
 		    }
 		    
 		    function HideAdvancedSearchForms()
 		    // Cache les champs de recherche avancée
 		    {
 		        HideForms();
-		        hide_div('FormsChoice');
+                
+                document.getElementById('ModulesChoicesLabel').style.visibility = 'hidden';
+                document.getElementById('ModulesChoicesSelect').style.visibility = 'hidden';
+                document.getElementById('FormsChoice').style.visibility = 'hidden';
 		        hide_div('SimpleSearch');
 		        show_div('AdvancedSearch');
 		    }
@@ -67,28 +75,36 @@
 		    <div class="module_contents">
 		        <div class="spacer">&nbsp;</div>
 		        <form id="SearchForm" action="../search/search.php#results" onsubmit="return check_search_form_post();" method="post">
-		            <fieldset>
-		                <legend>{TITLE_SEARCH}</legend>
-		                <dl>
-		                    <dt><label for="search">{SEARCH_MIN_LENGTH}</label></dt>
-		                    <dd><label><input type="text" size="35" id="TxTsearched" name="search" value="{TEXT_SEARCHED}"  class="text" /></label></dd>
-		                </dl>
-		                <dl id="SimpleOrAdvancedForms">
-		                    <dt>
-		                        <label id="AdvancedSearch" style="display:none"><a href="javascript:ShowAdvancedSearchForms();">{ADVANCED_SEARCH}</a></label>
-		                        <label id="SimpleSearch" style="display:none"><a href="javascript:HideAdvancedSearchForms();">{SIMPLE_SEARCH}</a></label>
-		                    </dt>
-		                    <dd>
-		                        <select id="FormsChoice" name="FormsSelection" onChange="ChangeForm();" style="display:none">
-		                            # START forms #
-		                                <option value="{forms.MODULE_NAME}">{forms.MODULE_NAME}
-		                                </option>
-		                            # END forms #
-		                        </select>
-		                    </dd>
-		                </dl>
-		            </fieldset>
-		            # START forms #
+                    <table class="SearchForm">
+                        <caption><span>{TITLE_SEARCH}</span></caption>
+                        <tr>
+                            <td><label for="TxTsearched">{SEARCH_MIN_LENGTH}</label></td>
+                            <td><label><input type="text" size="35" id="TxTsearched" name="search" value="{TEXT_SEARCHED}"  class="text" /></label></td>
+                            <td rowspan="2" style="text-align:center;">
+                                <label id="ModulesChoicesLabel" style="visibility:hidden;">Modules sélectionnés</label><br />
+                                <select id="ModulesChoicesSelect" name="ModulesChoices" size="5" multiple="multiple" onclick="if(disabled == 0)document.getElementById('1r3').selected = true;" style="visibility:hidden;">
+                                    <option value="r-1" id="r1r0" selected="selected" onclick="check_select_multiple_ranks('1r', 0)">Visiteur</option>
+                                    <option value="r0" id="r1r1" selected="selected" onclick="check_select_multiple_ranks('1r', 1)">Membre</option>
+                                    <option value="r1" id="r1r2" selected="selected" onclick="check_select_multiple_ranks('1r', 2)">Modérateur</option>
+                                    <option value="r2" id="r1r3" selected="selected" onclick="check_select_multiple_ranks('1r', 3)">Administrateur</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label id="AdvancedSearch" style="display:none"><a href="javascript:ShowAdvancedSearchForms();">{ADVANCED_SEARCH}</a></label>
+                                <label id="SimpleSearch" style="display:none"><a href="javascript:HideAdvancedSearchForms();">{SIMPLE_SEARCH}</a></label>
+                            </td>
+                            <td>
+                                <select id="FormsChoice" name="FormsSelection" onchange="ChangeForm();" style="visibility:hidden;">
+                                    # START forms #
+                                        <option value="{forms.MODULE_NAME}">{forms.MODULE_NAME}</option>
+                                    # END forms #
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    # START forms #
 		                <div id="Form{forms.MODULE_NAME}" class="module_position" style="display:none">
 		                    <fieldset>
 		                        <legend>{forms.MODULE_NAME}</legend>
