@@ -69,9 +69,7 @@
 								# END forbidden_tags #						
 							</select>
 							<br />
-							<a href="javascript:check_select_multiple('tag', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('tag', false);">{L_SELECT_NONE}</a>
+							<a class="small_link" href="javascript:check_select_multiple('tag', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('tag', false);">{L_SELECT_NONE}</a>
 						</label></dd>
 					</dl>
 					<dl>

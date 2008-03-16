@@ -25,30 +25,6 @@
 		function Confirm_pm() {
 			return confirm("{L_DELETE_MESSAGE}");
 		}
-		function XMLHttpRequest_search()
-		{
-			var login = document.getElementById("login").value;
-			if( login != "" )
-			{
-				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?pm=1');
-				data = 'login=' + login;
-				xhr_object.onreadystatechange = function() 
-				{
-					if( xhr_object.readyState == 4 ) 
-					{
-						document.getElementById("xmlhttprequest_result_search").innerHTML = xhr_object.responseText;
-						show_div("xmlhttprequest_result_search");
-					}
-				}
-				xmlhttprequest_sender(xhr_object, data);
-			}	
-			else
-				alert("{L_REQUIRE_RECIPIENT}");
-		}
-		function insert_XMLHttpRequest(login)
-		{
-			document.getElementById("login").value = login;
-		}
 		-->
 		</script>
 
@@ -416,8 +392,9 @@
 								<dl>
 									<dt><label for="login">* {L_RECIPIENT}</label></dt>
 									<dd><label>
-										<input type="text" size="20 maxlenght="25" id="login" name="login" value="{post_convers.LOGIN}" class="text" />
-										<input value="{L_SEARCH}" onclick="XMLHttpRequest_search(this.form);" type="button" class="submit">
+										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}" class="text" />
+										<input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" type="button" class="submit">
+										<span id="search_img"></span>
 										<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
 										# START post_convers.user_id_dest.search #
 											{search.RESULT}

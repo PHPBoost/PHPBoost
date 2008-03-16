@@ -44,11 +44,6 @@ $LANG['install_progress'] = 'Progression of installation';
 $LANG['generated_by'] = 'Powered by %s';
 $LANG['previous_step'] = 'Previous step';
 $LANG['next_step'] = 'Next step';
-$LANG['query_loading'] = 'Sending of the query to server';
-$LANG['query_sent'] = 'Query loaded successful, waiting for the answer of your server';
-$LANG['query_processing'] = 'Proccessing the query';
-$LANG['query_success'] = 'Processing succed';
-$LANG['query_failure'] = 'Processing failed';
 
 //Introduction
 $LANG['intro_explain'] = 'Thank you to have trusted PHPBoost to build your website.<br /><br />

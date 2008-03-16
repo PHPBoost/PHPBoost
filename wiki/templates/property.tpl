@@ -45,111 +45,39 @@
 				</p>
 				<dl>
 					<dt><label>{L_RESTORE_ARCHIVE}</label></dt>
-					<dd>
-						<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-						<br />
-						{SELECT_RESTORE_ARCHIVE}
-						<br />
-						<a href="javascript:check_select_multiple('3', true);">{L_SELECT_ALL}</a>
-						&nbsp;/&nbsp;
-						<a href="javascript:check_select_multiple('3', false);">{L_SELECT_NONE}</a>
-					</dd>					
+					<dd><label>{SELECT_RESTORE_ARCHIVE}</label></dd>					
 				</dl>
 				<dl>
 					<dt><label>{L_DELETE_ARCHIVE}</label></dt>
-					<dd>
-						<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-						<br />
-						{SELECT_DELETE_ARCHIVE}
-						<br />
-						<a href="javascript:check_select_multiple('4', true);">{L_SELECT_ALL}</a>
-						&nbsp;/&nbsp;
-						<a href="javascript:check_select_multiple('4', false);">{L_SELECT_NONE}</a>
-					</dd>					
+					<dd><label>{SELECT_DELETE_ARCHIVE}</label></dd>					
 				</dl>
 				<dl>
 					<dt><label>{L_EDIT}</label></dt>
-					<dd>
-						<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-						<br />
-						{SELECT_EDIT}
-						<br />
-						<a href="javascript:check_select_multiple('5', true);">{L_SELECT_ALL}</a>
-						&nbsp;/&nbsp;
-						<a href="javascript:check_select_multiple('5', false);">{L_SELECT_NONE}</a>
-					</dd>					
+					<dd><label>{SELECT_EDIT}</label></dd>					
 				</dl>
 				<dl>
 					<dt><label>{L_DELETE}</label></dt>
-					<dd>
-						<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-						<br />
-						{SELECT_DELETE}
-						<br />
-						<a href="javascript:check_select_multiple('6', true);">{L_SELECT_ALL}</a>
-						&nbsp;/&nbsp;
-						<a href="javascript:check_select_multiple('6', false);">{L_SELECT_NONE}</a>
-					</dd>					
+					<dd><label>{SELECT_DELETE}</label></dd>					
 				</dl>
 				<dl>
 					<dt><label>{L_RENAME}</label></dt>
-					<dd>
-						<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-						<br />
-						{SELECT_RENAME}
-						<br />
-						<a href="javascript:check_select_multiple('7', true);">{L_SELECT_ALL}</a>
-						&nbsp;/&nbsp;
-						<a href="javascript:check_select_multiple('7', false);">{L_SELECT_NONE}</a>
-					</dd>					
+					<dd><label>{SELECT_RENAME}</label></dd>					
 				</dl>
 				<dl>
 					<dt><label>{L_REDIRECT}</label></dt>
-					<dd>
-						<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-						<br />
-						{SELECT_REDIRECT}
-						<br />
-						<a href="javascript:check_select_multiple('8', true);">{L_SELECT_ALL}</a>
-						&nbsp;/&nbsp;
-						<a href="javascript:check_select_multiple('8', false);">{L_SELECT_NONE}</a>
-					</dd>					
+					<dd><label>{SELECT_REDIRECT}</label></dd>					
 				</dl>
 				<dl>
 					<dt><label>{L_MOVE}</label></dt>
-					<dd>
-						<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-						<br />
-						{SELECT_MOVE}
-						<br />
-						<a href="javascript:check_select_multiple('9', true);">{L_SELECT_ALL}</a>
-						&nbsp;/&nbsp;
-						<a href="javascript:check_select_multiple('9', false);">{L_SELECT_NONE}</a>
-					</dd>					
+					<dd><label>{SELECT_MOVE}</label></dd>					
 				</dl>
 				<dl>
 					<dt><label>{L_STATUS}</label></dt>
-					<dd>
-						<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-						<br />
-						{SELECT_STATUS}
-						<br />
-						<a href="javascript:check_select_multiple('10', true);">{L_SELECT_ALL}</a>
-						&nbsp;/&nbsp;
-						<a href="javascript:check_select_multiple('10', false);">{L_SELECT_NONE}</a>
-					</dd>					
+					<dd><label>{SELECT_STATUS}</label></dd>					
 				</dl>
 				<dl>
 					<dt><label>{L_COM}</label></dt>
-					<dd>
-						<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-						<br />
-						{SELECT_COM}
-						<br />
-						<a href="javascript:check_select_multiple('11', true);">{L_SELECT_ALL}</a>
-						&nbsp;/&nbsp;
-						<a href="javascript:check_select_multiple('11', false);">{L_SELECT_NONE}</a>
-					</dd>					
+					<dd><label>{SELECT_COM}</label></dd>					
 				</dl>
 			</fieldset>
 			

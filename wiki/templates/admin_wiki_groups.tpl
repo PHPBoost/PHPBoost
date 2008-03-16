@@ -66,13 +66,7 @@
 							{L_CREATE_ARTICLE}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							{SELECT_CREATE_ARTICLE}
-							<br />
-							<a href="javascript:check_select_multiple('1', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('1', false);">{L_SELECT_NONE}</a>
 						</td>
 					</tr>
 					<tr>
@@ -80,13 +74,7 @@
 							{L_CREATE_CAT}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							{SELECT_CREATE_CAT}
-							<br />
-							<a href="javascript:check_select_multiple('2', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('2', false);">{L_SELECT_NONE}</a>
 						</td>
 					</tr>
 					<tr>
@@ -94,13 +82,7 @@
 							{L_RESTORE_ARCHIVE}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							{SELECT_RESTORE_ARCHIVE}
-							<br />
-							<a href="javascript:check_select_multiple('3', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('3', false);">{L_SELECT_NONE}</a>
 						</td>
 					</tr>
 					<tr>
@@ -108,13 +90,7 @@
 							{L_DELETE_ARCHIVE}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							{SELECT_DELETE_ARCHIVE}
-							<br />
-							<a href="javascript:check_select_multiple('4', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('4', false);">{L_SELECT_NONE}</a>
 						</td>
 					</tr>
 					<tr>
@@ -122,13 +98,7 @@
 							{L_EDIT}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							{SELECT_EDIT}
-							<br />
-							<a href="javascript:check_select_multiple('5', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('5', false);">{L_SELECT_NONE}</a>
 						</td>
 					</tr>
 					<tr>
@@ -136,13 +106,7 @@
 							{L_DELETE}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							{SELECT_DELETE}
-							<br />
-							<a href="javascript:check_select_multiple('6', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('6', false);">{L_SELECT_NONE}</a>
 						</td>
 					</tr>
 					<tr>
@@ -150,13 +114,7 @@
 							{L_RENAME}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							{SELECT_RENAME}
-							<br />
-							<a href="javascript:check_select_multiple('7', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('7', false);">{L_SELECT_NONE}</a>
 						</td>
 					</tr>
 					<tr>
@@ -164,13 +122,7 @@
 							{L_REDIRECT}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							{SELECT_REDIRECT}
-							<br />
-							<a href="javascript:check_select_multiple('8', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('8', false);">{L_SELECT_NONE}</a>
 						</td>
 					</tr>
 					<tr>
@@ -178,13 +130,7 @@
 							{L_MOVE}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							{SELECT_MOVE}
-							<br />
-							<a href="javascript:check_select_multiple('9', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('9', false);">{L_SELECT_NONE}</a>
 						</td>
 					</tr>
 					<tr>
@@ -192,13 +138,7 @@
 							{L_STATUS}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							{SELECT_STATUS}
-							<br />
-							<a href="javascript:check_select_multiple('10', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('10', false);">{L_SELECT_NONE}</a>
 						</td>
 					</tr>
 					<tr>
@@ -206,13 +146,7 @@
 							{L_COM}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							{SELECT_COM}
-							<br />
-							<a href="javascript:check_select_multiple('11', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('11', false);">{L_SELECT_NONE}</a>
 						</td>
 					</tr>
 					<tr>
@@ -220,13 +154,7 @@
 							{L_RESTRICTION}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							{SELECT_RESTRICTION}
-							<br />
-							<a href="javascript:check_select_multiple('12', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('12', false);">{L_SELECT_NONE}</a>
 						</td>
 					</tr>
 				</table>
