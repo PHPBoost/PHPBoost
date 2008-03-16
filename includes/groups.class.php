@@ -246,7 +246,7 @@ class Group
 			WHERE user_id IN(" . implode($array_auth, ', ') . ")", __LINE__, __FILE__);
 			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
-				$select = '';
+				$selected = '';
 				$select_members .= '<option value="' . $row['user_id'] . '" id="' . $auth_id . 'm' . $row['user_id'] . '"' . $selected . '>' . $row['login'] . '</option>';
 			}
 			$Sql->Close($result);
