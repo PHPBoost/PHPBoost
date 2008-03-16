@@ -36,9 +36,11 @@
 				<p>	
 					<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
 				</p>
-				<p>
+				<p style="margin:0;margin-top:5px;">
 					{U_REGISTER}
-				</p>&nbsp;
+					<br />
+					<a class="small_link" href="../member/forget.php">{L_FORGOT_PASS}</a>
+				</p>
 			</div>		
 			<div class="module_mini_bottom">
 			</div>
