@@ -3,6 +3,43 @@ div.search_mini input {
     margin:2px;
 }
 
+table.SearchForm {
+    background-color: #bfd9ef;
+    border: 1px solid #2c5169;
+    margin-top:-18px;
+    margin-bottom:15px;
+    padding:20px;
+    min-height:50px;
+    vertical-align:top;
+    width:100%;
+}
+
+table.SearchForm caption span {
+    float:left;
+    background:#526F8E;
+    color:#FFFFFF;
+    font-family:'Verdana', 'Bitstream Vera Sans', 'Times', 'serif';
+    font-size:0.75em;
+    font-weight:bold;
+    border:1px solid #2C5169;
+    position:relative;
+    top:-0.9em;
+    left:10px;
+    margin-top:-0.4em;
+    padding:2px 8px;
+    line-height:1.2em;
+    vertical-align:middle;
+    text-transform:uppercase;
+}
+
+table.SearchForm label {
+    font-weight:bold;
+}
+
+select#FormsChoice {
+    width:300px;
+}
+
 div.resultsChoices {
     position:relative;
     top:-18px;
@@ -54,9 +91,6 @@ div.results div.infosResults {
     font-weight:bold;
 }
 
-select#FormsChoice {
-    width:265px;
-}
 ul.search_results {
     margin-left:30px;
     padding:10px;
