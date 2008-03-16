@@ -174,9 +174,9 @@ class Sessions
 		if( !empty($this->data['session_id']) && $this->data['user_id'] > 0 )
 		{
 			//On modifie le session_flag pour forcer mysql à modifier l'entrée, pour prendre en compte la mise à jour par mysql_affected_rows().
-			$ressource = $Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . time() . "', session_script = '" . addslashes($session_script) . "', session_script_get = '" . addslashes($session_script_get) . "', session_script_title = '" . addslashes($session_script_title) . "', session_flag = 1 - session_flag WHERE session_id = '" . $this->data['session_id'] . "' AND user_id = '" . $this->data['user_id'] . "'", __LINE__, __FILE__);
+			$resource = $Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . time() . "', session_script = '" . addslashes($session_script) . "', session_script_get = '" . addslashes($session_script_get) . "', session_script_title = '" . addslashes($session_script_title) . "', session_flag = 1 - session_flag WHERE session_id = '" . $this->data['session_id'] . "' AND user_id = '" . $this->data['user_id'] . "'", __LINE__, __FILE__);
 			
-			if( $Sql->Sql_affected_rows($ressource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE session_id = '" . $this->data['session_id'] . "' AND user_id = '" . $this->data['user_id'] . "'") == 0 ) //Aucune session lancée.
+			if( $Sql->Sql_affected_rows($resource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE session_id = '" . $this->data['session_id'] . "' AND user_id = '" . $this->data['user_id'] . "'") == 0 ) //Aucune session lancée.
 			{
 				if( $this->get_session_autoconnect($session_script, $session_script_get, $session_script_title) === false )
 				{					
@@ -193,9 +193,9 @@ class Sessions
 		else //Visiteur
 		{
 			//On modifie le session_flag pour forcer mysql à modifier l'entrée, pour prendre en compte la mise à jour par mysql_affected_rows().
-			$ressource = $Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . (time() + 1) . "', session_script = '" . addslashes($session_script) . "', session_script_get = '" . addslashes($session_script_get) . "', session_script_title = '" . addslashes($session_script_title) . "', session_flag = 1 - session_flag WHERE user_id = -1 AND session_ip = '" . USER_IP . "'", __LINE__, __FILE__);
+			$resource = $Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . (time() + 1) . "', session_script = '" . addslashes($session_script) . "', session_script_get = '" . addslashes($session_script_get) . "', session_script_title = '" . addslashes($session_script_title) . "', session_flag = 1 - session_flag WHERE user_id = -1 AND session_ip = '" . USER_IP . "'", __LINE__, __FILE__);
 			
-			if( $Sql->Sql_affected_rows($ressource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE user_id = -1 AND session_ip = '" . USER_IP . "'") == 0 ) //Aucune session lancée.
+			if( $Sql->Sql_affected_rows($resource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE user_id = -1 AND session_ip = '" . USER_IP . "'") == 0 ) //Aucune session lancée.
 			{
 				if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
 					setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
