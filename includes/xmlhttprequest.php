@@ -27,7 +27,7 @@ elseif( !empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GE
 			elseif( !empty($_GET['insert_member']) )	
 				echo '<a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['login']) .'\'">' . addslashes($row['login']) . '</a><br />';
 			elseif( !empty($_GET['add_member_auth']) )	
-				echo '<a href="#" onclick="XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['login']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . addslashes($row['login']) . '</a><br />';
+				echo '<a href="javascript:XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['login']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . addslashes($row['login']) . '</a><br />';
 			elseif( !empty($_GET['admin_member']) )	
 				echo '<a href="../admin/admin_members.php?id=' . $row['user_id'] . '#search">' . addslashes($row['login']) . '</a><br />';
 			if( !empty($_GET['warning_member']) )
