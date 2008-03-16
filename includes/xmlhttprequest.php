@@ -23,17 +23,17 @@ elseif( !empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GE
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			if( !empty($_GET['member']) )
-				echo '<p><a href="member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a></p>';
+				echo '<a href="member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a><br />';
 			elseif( !empty($_GET['insert_member']) )	
-				echo '<p><a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['login']) .'\'">' . addslashes($row['login']) . '</a></p>';
+				echo '<a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['login']) .'\'">' . addslashes($row['login']) . '</a><br />';
 			elseif( !empty($_GET['add_member_auth']) )	
-				echo '<p><a href="#" onclick="XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['login']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . addslashes($row['login']) . '</a></p>';
+				echo '<a href="#" onclick="XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['login']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . addslashes($row['login']) . '</a><br />';
 			elseif( !empty($_GET['admin_member']) )	
-				echo '<p><a href="../admin/admin_members.php?id=' . $row['user_id'] . '#search">' . addslashes($row['login']) . '</a></p>';
+				echo '<a href="../admin/admin_members.php?id=' . $row['user_id'] . '#search">' . addslashes($row['login']) . '</a><br />';
 			if( !empty($_GET['warning_member']) )
-				echo '<p><a href="admin_members_punishment.php?action=users&amp;id=' . $row['user_id'] . '">' . addslashes($row['login']) . '</a></p>';
+				echo '<a href="admin_members_punishment.php?action=users&amp;id=' . $row['user_id'] . '">' . addslashes($row['login']) . '</a><br />';
 			elseif( !empty($_GET['punish_member']) )
-				echo '<p><a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . addslashes($row['login']) . '</a></p>';
+				echo '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . addslashes($row['login']) . '</a><br />';
 			$i++;
 		}		
 		if( $i == 0 ) //Aucun membre trouvé.
