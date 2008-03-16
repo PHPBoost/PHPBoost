@@ -125,28 +125,7 @@ if( $search != '' )
     
     $idsSearch = array();
     // Génération des résultats et passage aux templates
-    $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, $idsSearch, ($p), ($p + NB_RESULTS_PER_PAGE));
-    
-    // Création de la pagination si le nombre de commentaires est trop important.
-    include_once('../includes/pagination.class.php');
-    $Pagination = new Pagination();
-    $showPagin = $Pagination->Display_pagination(
-        transid('search.php?module=All&amp;p=%d'),
-        $nbResults,
-        'p',
-        NB_RESULTS_PER_PAGE,
-        3
-    );
-    
-    $Template->Assign_vars(array(
-        'PAGINATION' => $showPagin
-    ));
-    
-    $Template->Assign_vars(Array(
-        'NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : $LANG['one_result_found'],
-        'SEARCH_RESULTS' => $LANG['search_results'],
-        'NB_RESULTS' => $nbResults
-    ));
+    $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, $idsSearch);
     
     foreach( $searchModules as $module)
     {
@@ -156,35 +135,15 @@ if( $search != '' )
         ));
     }
     
-    $resultsByModules = array();
-    foreach( $results as $result )
-    {
-        $module = $Modules->GetModule($result['module']);
-        
-        // Récupération des noms des modules disposant de résultats
-        if( !in_array($module->name, array_keys($resultsByModules)) )
-        {
-            $resultsByModules[$module->name] = array();
-        }
-        
-        if( $module->HasFunctionnality('ParseSearchResult') )
-        {
-            $htmlResult = $module->Functionnality('ParseSearchResult', array($result));
-        }
-        else
-        {
-            $htmlResult  = '<div class="result">';
-            $htmlResult .= '<span><i>'.$result['relevance'].'</i></span> - ';
-            $htmlResult .= '<span><b>'.ucfirst($result['module']).'</b></span> - ';
-            $htmlResult .= '<a href="'.$result['link'].'">'.$result['title'].'</a>';
-            $htmlResult .= '</div>';
-        }
-        array_push($resultsByModules[$module->name], $htmlResult);
-        
-        $Template->Assign_block_vars('allResults', array(
-            'RESULT' => $htmlResult
-        ));
-    }
+    $allhtmlResult = '';
+    Get_HTML_Results($results, $allhtmlResult, $Modules, 'All');
+    
+    $Template->Assign_vars(Array(
+        'NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : $LANG['one_result_found'],
+        'SEARCH_RESULTS' => $LANG['search_results'],
+        'NB_RESULTS' => $nbResults,
+        'ALL_RESULTS' => $allhtmlResult
+    ));
     
     // parsage des formulaires de recherches
     $Template->Pparse('search_forms');

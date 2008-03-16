@@ -47,7 +47,7 @@ function GetSearchForms(&$modules, &$args)
     return $searchForms;
 }
 
-function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results, &$idsSearch, $offset = 0, $nbResultsPerPage = 10)
+function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results, &$idsSearch)
 /**
  *  Exécute la recherche si les résultats ne sont pas dans le cache et
  *  renvoie les résultats.
@@ -81,7 +81,50 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
     
     $Search->InsertResults($requests);
     $idsSearch = $Search->id_search;
-    return $Search->GetResults($results, $modulesNames, $offset, $nbResultsPerPage);
+    return $Search->GetResults($results, $modulesNames);
+}
+
+function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
+{
+    $i = 0;
+    $j = 0;
+    $htmlResults = '';
+    foreach( $results as $result )
+    {
+        $module = $Modules->GetModule($result['module']);
+        
+        if ( $i == NB_RESULTS_PER_PAGE )
+        {
+            $htmlResults .= '</ul></div>';
+            $i = 0;
+        }
+        if ( $i == 0 )
+        {
+            $htmlResults .= '<div id="results'.$resultsName.'_'.$j.'" style="display:none"><ul class="search_results">';
+            $j++;
+        }
+        
+        $htmlResults .= '<li>';
+        if ( !$module->HasFunctionnality('ParseSearchResult') )
+        {
+            $htmlResults .= '<div class="result">';
+            $htmlResults .= '<span><i>'.$result['relevance'].'</i></span> - ';
+            $htmlResults .= '<span><b>'.ucfirst($result['module']).'</b></span> - ';
+            $htmlResults .= '<a href="'.$result['link'].'">'.$result['title'].'</a>';
+            $htmlResults .= '</div>';
+        }
+        else $htmlResults .= $module->Functionnality('ParseSearchResult', array($result));
+        
+        $htmlResults .= '</li>';
+        $i++;
+    }
+    
+    $htmlResults .= '</ul></div><script type="text/javascript">
+        <!--
+           if( browserAJAXFriendly() )
+                show_div(\'results'.$resultsName.'_0\');
+        -->
+        </script>';
 }
 
 ?>
