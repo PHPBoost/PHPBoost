@@ -37,8 +37,6 @@ $Template->Set_filenames(array(
 ));
 
 //--------------------------------------------------------------------- Params
-define ( 'NB_RESULTS_PER_PAGE', 2);
-
 // A protéger impérativement;
 $pageNum = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
 $modName = !empty($_GET['module']) ? securit($_GET['module']) : 'All';
@@ -137,6 +135,12 @@ if( $search != '' )
     
     $allhtmlResult = '';
     Get_HTML_Results($results, $allhtmlResult, $Modules, 'All');
+    $allhtmlResult .= '<script type="text/javascript">
+        <!--
+            if( browserAJAXFriendly() )
+                show_div(\'resultsAll_0\');
+        -->
+        </script>';
     
     $Template->Assign_vars(Array(
         'NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : $LANG['one_result_found'],
