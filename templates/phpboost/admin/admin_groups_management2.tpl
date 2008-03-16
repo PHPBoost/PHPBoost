@@ -153,7 +153,7 @@
 					<dl>
 						<dt><label for="login">* {L_PSEUDO}</label></dt>
 						<dd><label>
-							<input type="text" size="20 maxlenght="25" id="login" value="{LOGIN}" name="login_mbr" class="text" /> 
+							<input type="text" size="20" maxlength="25" id="login" value="{LOGIN}" name="login_mbr" class="text" /> 
 							<span id="loading_groups"></span>
 							<script type="text/javascript">
 							<!--								

@@ -123,7 +123,7 @@
 					<dl>
 						<dt><label for="avatar_url">{L_URL_DEFAUT_AVATAR}</label><br /><span>{L_URL_DEFAUT_AVATAR_EXPLAIN}</span></dt></dt>
 						<dd><label>
-							<input type="text" maxlenght="50" size="25" id="avatar_url" name="avatar_url" value="{AVATAR_URL}" class="text" />
+							<input type="text" maxlength="50" size="25" id="avatar_url" name="avatar_url" value="{AVATAR_URL}" class="text" />
 							<img src="../templates/{THEME}/images/{AVATAR_URL}" alt="" style="vertical-align:top" />
 						</label></dd>
 					</dl>
