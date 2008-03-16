@@ -76,6 +76,10 @@
                 var before = Math.max(0, page - nbBefore);
                 var after = Math.min(nbPages, page + nbAfter);
                 
+                pagin += '<span style="font-size: 11px;">';
+                pagin += '<a href="javascript:ChangeModulePage(\'' + module + '\', 0 )">&laquo;</a>';
+                pagin += '</span>&nbsp;';
+                
                 // Before
                 for ( var i = before; i < page; i++ )
                 {
@@ -95,6 +99,10 @@
                     pagin += '<a href="javascript:ChangeModulePage(\'' + module + '\', ' + i + ')">' + (i + 1) + '</a>';
                     pagin += '</span>&nbsp;';
                 }
+                
+                pagin += '<span style="font-size: 11px;">';
+                pagin += '<a href="javascript:ChangeModulePage(\'' + module + '\', ' + (nbPages - 1) + ')">&raquo;</a>';
+                pagin += '</span>&nbsp;';
                 
                 // On cache tous les autre résultats du module
                 for ( var i = 0; i < nbPages; i++ )
