@@ -28,7 +28,7 @@
 				# END status #
 				
 				# START menu #
-					<div class="row3" style="width:60%">
+					<div class="row3" style="width:50%">
 						<div style="text-align:center;"><strong>{L_TABLE_OF_CONTENTS}</strong></div>
 						{menu.MENU}
 					</div>
