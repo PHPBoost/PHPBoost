@@ -69,6 +69,8 @@ if( !empty($_POST['valid']) && !empty($id) )
 			$admin_forum = new Admin_forum();
 			$admin_forum->move_cat($id, $to);
 		}
+		else
+			$Cache->Generate_module_file('forum'); //Régénération du cache.
 	}
 	else
 		redirect(HOST . DIR . '/forum/admin_forum.php?id=' . $id . '&error=incomplete');
