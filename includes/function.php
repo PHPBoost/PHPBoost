@@ -286,26 +286,6 @@ function get_install_page()
 	return 'http://' . $server_name . preg_replace('`(.*)/[a-z]+/(install/install\.php)(.*)`i', '$1/$2', $install_path);
 }
 
-//Charge le parseur.
-function parse($content, $forbidden_tags = array(), $html_protect = true)
-{
-	include_once('../includes/content.class.php');
-	$parse = new Content($content);
-	$parse->Parse_content($forbidden_tags, $html_protect);
-	return $parse->Get_content();
-}
-
-//Charge l'unparseur.
-function unparse($content, $editor_unparse = true)
-{
-	include_once('../includes/content.class.php');
-	$parse = new Content($content, $editor_unparse);	
-	
-	$parse->Unparse_content();
-	
-	return $parse->Get_content(DO_NOT_ADD_SLASHES);
-}
-
 //Vérifie que le message ne contient pas plus de x liens
 function check_nbr_links($contents, $max_nbr)
 {
@@ -351,8 +331,7 @@ function callback_highlight_code($matches)
 	$display_info_code = !empty($matches[3]) ? false : true;
 
 	$contents = str_replace('<br />', '', $matches[4]);
-	$contents = unparse($contents, false);
-	$contents = html_entity_decode($contents);
+	$contents = htmlentities($contents);
 	$contents = highlight_code($contents, $matches[1], $line_number);
 	if( $display_info_code )
 		$contents = '<span class="text_code">' . $LANG['code'] . (!empty($matches[1]) ? ' ' . strtoupper($matches[1]) : '') . ' :</span><div class="code">'. $contents .'</div>';
@@ -371,14 +350,34 @@ function math_code($matches)
 	return $matches;
 }
 
+//Charge le parseur.
+function parse($content, $forbidden_tags = array(), $html_protect = true)
+{
+	include_once('../includes/content.class.php');
+	$parse = new Content($content);
+	$parse->Parse_content($forbidden_tags, $html_protect);
+	return $parse->Get_content();
+}
+
+//Charge l'unparseur.
+function unparse($content)
+{
+	include_once('../includes/content.class.php');
+	$parse = new Content($content);	
+	
+	$parse->Unparse_content();
+	
+	return $parse->Get_content(DO_NOT_ADD_SLASHES);
+}
+
 //Parse temps réel => détection des balisses [code]  et remplacement, coloration si contient du code php.
 function second_parse($contents)
 {
 	global $LANG;
 	
 	//Balise code.
-	if( strpos($contents, '[code') !== false )
-		$contents = preg_replace_callback('`\[code(?:=([a-z0-9-]+))?(?:,(0|1)(,0)?)?\](.+)\[/code\]`isU', 'callback_highlight_code', $contents);
+	if( strpos($contents, '[[CODE') !== false )
+		$contents = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(,0)?)?\]\](.+)\[\[/CODE\]\]`sU', 'callback_highlight_code', $contents);
 	
 	//Balise latex.
 	if( strpos($contents, '[math]') !== false )

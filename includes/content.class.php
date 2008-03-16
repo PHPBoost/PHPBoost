@@ -285,7 +285,11 @@ class Content
 		$this->parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->content);
 		
 		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
-		$this->reimplant_tag('code');
+		if( !empty($this->array_tags['code']) )
+		{
+			$this->reimplant_tag('code');
+			
+		}
 		
 		//On remet le code HTML mis de côté
 		if( !empty($this->array_tags['html']) )
@@ -394,7 +398,7 @@ class Content
 			$this->content = htmlentities($this->content);
 		}
 		else
-		{	
+		{
 			//Remplacement des balises imbriquées.	
 			$this->parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->content);
 			$this->parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
@@ -815,26 +819,32 @@ class Content
 		}
 	}
 	
-	//Fonction qui retire les portions de code pour ne pas y toucher
+	//Fonction qui retire les portions de code pour ne pas y toucher (elle les stocke dans un array)
 	function pick_up_tag($tag, $arguments = '')
 	{
+		//On éclate le contenu selon les tags (avec imbrication bien qu'on ne les gèrera pas => ça permettra de faire [code][code]du code[/code][/code])
 		$split_code = $this->preg_split_safe_recurse($this->content, $tag, $arguments);
 		
 		$num_codes = count($split_code);
+		//Si on a des apparitions de la balise
 		if( $num_codes > 1 )
 		{
 			$this->content = '';
 			$id_code = 0;
+			//On balaye le tableau trouvé
 			for( $i = 0; $i < $num_codes; $i++ )
 			{
-				//contenu
+				//Contenu inter tags
 				if( $i % 3 == 0 )
 				{
 					$this->content .= $split_code[$i];
+					//Si on n'est pas après la dernière balise fermante, on met une balise de signalement de la position du tag
 					if( $i < $num_codes - 1 )
 						$this->content .= '[' . strtoupper($tag) . '_TAG_' . $id_code++ . ']';
 				}
+				//Contenu des balises
 				elseif( $i % 3 == 2 )
+					//Enregistrement dans le tableau du contenu des tags à isoler
 					$this->array_tags[$tag][] = '[' . $tag . $split_code[$i - 1] . ']' . $split_code[$i] . '[/' . $tag . ']';
 			}
 		}
@@ -843,17 +853,19 @@ class Content
 	//Fonction qui réimplante les portions de code
 	function reimplant_tag($tag)
 	{
+		//Si cette balise a  été isolée
 		if( !array_key_exists($tag, $this->array_tags) )
 			return false;
-			
+		
 		$num_code = count($this->array_tags[$tag]);
-
-		if( $num_code > 0 )
-		{
-			for( $i = 0; $i < $num_code; $i++ )
-				$this->content = str_replace('[' . strtoupper($tag) . '_TAG_' . $i . ']', $this->array_tags[$tag][$i], $this->content);
-			$this->array_tags[$tag] = array();
-		}
+		
+		//On réinjecte tous les contenus des balises
+		for( $i = 0; $i < $num_code; $i++ )
+			$this->content = str_replace('[' . strtoupper($tag) . '_TAG_' . $i . ']', $this->array_tags[$tag][$i], $this->content);
+		
+		//On efface tout ce qu'on a prélevé du array
+		$this->array_tags[$tag] = array();
+		
 		return true;
 	}
 	
