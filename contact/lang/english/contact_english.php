@@ -34,11 +34,11 @@
 $LANG['title_contact'] = 'Contact';
  
 //Contact
-$LANG['contact_mail'] = 'Send a mail to administrator';
-$LANG['valid_mail'] = 'Valid if you want an answer !';
-$LANG['success_mail'] = 'Thank you, your mail has been send succefully';
-$LANG['error_mail'] = 'Sorry, your mail can\'t be send';
-$LANG['alert_contact_mail'] = 'Your mail can\'t contain any return characters!';
+$LANG['contact_mail'] = 'Send an e-mail to administrator';
+$LANG['valid_mail'] = 'Must be valid if you want an answer !';
+$LANG['success_mail'] = 'Thank you, your e-mail has been sent succesfully';
+$LANG['error_mail'] = 'Sorry, your mail could\'t be sent';
+$LANG['alert_contact_mail'] = 'Your e-mail is\'nt valid!';
 
 //Admin
 $LANG['contact_config'] = 'Configuration';
