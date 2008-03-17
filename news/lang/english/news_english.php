@@ -51,7 +51,7 @@ $LANG['nbr_arch_p'] = 'Number of archives';
 $LANG['nbr_arch_p_explain'] = 'Default 15';
 $LANG['module_management'] = 'Modules management';
 $LANG['activ_pagination'] = 'Activate pagination';
-$LANG['activ_pagination_explain'] = 'If not show a link to archives';
+$LANG['activ_pagination_explain'] = 'Else, show a link to archives';
 $LANG['activ_edito'] = 'Activate Edito';
 $LANG['activ_edito_explain'] = 'Visible message in top of the reception';
 $LANG['activ_news_block'] = 'Activate news in block';
@@ -78,7 +78,7 @@ $LANG['alert_delete_news'] = 'Delete this News ?';
 //News
 $LANG['news'] = 'News';
 $LANG['propose_news'] = 'Suggest news';
-$LANG['xml_news_desc'] = 'Track the last actualitées on';
+$LANG['xml_news_desc'] = 'Track the last actualities on';
 $LANG['add_succes_news'] = 'News sent successfully, please wait approval';
 $LANG['add_news'] = 'Add a News';
 $LANG['last_news'] = 'Last news';
@@ -94,7 +94,7 @@ it will have to be approved before being visible on the site by everyone.
 
 News\'s title: %s
 Contents: %s...[next]
-Posted byr: %s
+Posted by: %s
 
 Click in the administration panel of the news, and approve it.
 ' . HOST . DIR . '/admin/admin_news_gestion.php';
