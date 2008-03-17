@@ -177,7 +177,7 @@ class Search
         else return false;
     }
     
-    function GetResultsById( &$results, $idSearch = 0, $offset = 0, $nbLines = NB_LINES )
+    function GetResultsById( &$results, $idSearch = 0, $offset = 0, $nbLines = 0 )
     /**
      *  Renvoie les résultats de la recherche d'id <idSearch>
      *  Nb requêtes : 5 + k / 10
@@ -191,7 +191,9 @@ class Search
         $reqResults = "SELECT module, id_content, title, relevance, link
                         FROM ".PREFIX."search_index idx, ".PREFIX."search_results rst
                         WHERE idx.id_search = ".$idSearch." AND rst.id_search = ".$idSearch."
-                        ORDER BY relevance DESC ".$Sql->Sql_limit($offset, $nbLines);
+                        ORDER BY relevance DESC ";
+        if ( $nbLines > 0 )
+            $reqResults .= $Sql->Sql_limit($offset, $nbLines);
         
         // Exécution de la requête
         $request = $Sql->Query_while( $reqResults, __LINE__, __FILE__ );
@@ -245,13 +247,13 @@ class Search
             {
                 if( $nbReqInsert > 0 )
                     $reqInsert .= ',';
-                $reqInsert .= " ('".$row['id_search']."','".$row['id_content']."','".$row['title']."',";
+                $reqInsert .= " ('".$row['id_search']."','".$row['id_content']."','".addslashes($row['title'])."',";
                 $reqInsert .= "'".$row['relevance']."','".$row['link']."')";
                 
                 // Exécution de 10 requêtes d'insertions
                 if( $nbReqInsert == 10 )
                 {
-                    $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__);
+                    $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
                     $reqInsert = '';
                     $nbReqInsert = 0;
                 }
