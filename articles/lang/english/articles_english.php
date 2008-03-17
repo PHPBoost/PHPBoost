@@ -32,7 +32,7 @@
 
 //Admin
 $LANG['written_by'] = 'Written by';
-$LANG['explain_page'] = 'Type [page] in the article when you want a new page, it will be automatically creates after posting';
+$LANG['explain_page'] = 'Type [page] at the end of the article when you want a new page, it will be automatically creates after posting';
 $LANG['articles_management'] = 'Articles management';
 $LANG['articles_add'] = 'Add an article';
 $LANG['articles_config'] = 'Articles configuration';
@@ -45,20 +45,20 @@ $LANG['articles_date'] = 'Article date <span class="text_small">(dd/mm/yy)</span
 $LANG['icon_cat'] = 'Category icon';
 $LANG['icon_cat_explain'] = 'Put it in /articles folder';
 $LANG['parent_category'] = 'Parent category';
-$LANG['explain_article'] = 'The article that you wish delete contain <strong>1</strong> article, do you want to preserve it by transferring in another category, or delete this article?';
-$LANG['explain_articles'] = 'The article that you wish delete contain <strong>%d</strong> articles, do you want to preserve them by transferring in another category, or delete all articles?';
-$LANG['explain_subcat'] = 'The article that you wish delete contain <strong>1</strong> sub-category, do you want to preserve it by transferring in another category, or delete it and his content?';
-$LANG['explain_subcats'] = 'The article that you wish delete contain <strong>%d</strong> sub-categories, do you want to preserve them by transferring in another category, or delete all this subcats and their content?';
+$LANG['explain_article'] = 'The category you wish delete contains <strong>1</strong> article, do you want to preserve it by transferring it in another category, or delete this article?';
+$LANG['explain_articles'] = 'The category you wish delete contains <strong>%d</strong> articles, do you want to preserve them by transferring them in another category, or delete these articles?';
+$LANG['explain_subcat'] = 'The categotr you wish delete contains <strong>1</strong> subcategory, do you want to preserve it by transferring it in another category, or delete it and his contents?';
+$LANG['explain_subcats'] = 'The category you wish delete contains <strong>%d</strong> subcategories, do you want to preserve them by transferring them in another category, or delete them and their contents?';
 $LANG['keep_articles'] = 'Keep article(s)';
-$LANG['keep_subcat'] = 'Keep sub-categories';
+$LANG['keep_subcat'] = 'Keep subcategory(ies)';
 $LANG['move_articles_to'] = 'Move article(s) to';
-$LANG['move_subcat_to'] = 'Move sub-categories to';
+$LANG['move_subcat_to'] = 'Move subcategories to';
 $LANG['cat_target'] = 'Category target';
-$LANG['del_all'] = 'Complete supression';
-$LANG['del_articles_contents'] = 'Delete category "<strong>%s</strong>", <strong>sub-categories</strong> and <strong>all</strong> his content';
+$LANG['del_all'] = 'Complete suppression';
+$LANG['del_articles_contents'] = 'Delete category "<strong>%s</strong>", <strong>subcategories</strong> and <strong>all</strong> his contents';
 $LANG['article_icon'] = 'Article icon';
 $LANG['article_icon_explain'] = 'Put it in /articles folder';
-$LANG['explain_articles_count'] = 'Recount number of articles per category';
+$LANG['explain_articles_count'] = 'Recount the number of articles per category';
 $LANG['recount'] = 'Recount';
 
 //Error
@@ -69,25 +69,25 @@ $LANG['title_articles'] = 'Articles';
 
 //Articles
 $LANG['articles'] = 'Articles';
-$LANG['alert_delete_article'] = 'Delete this Article ?';
-$LANG['propose_article'] = 'Suggest article';
+$LANG['alert_delete_article'] = 'Delete this article ?';
+$LANG['propose_article'] = 'Suggest an article';
 $LANG['none_article'] = 'No article in this category';
 $LANG['xml_articles_desc'] = 'Last articles';
 $LANG['no_note'] = 'No note';
 $LANG['actual_note'] = 'Actual note';
 $LANG['vote'] = 'Vote';
 $LANG['nbr_articles_info'] = '%d article(s) in this category';
-$LANG['sub_categories'] = 'Sub categories';
+$LANG['sub_categories'] = 'Subcategories';
 
 //Add article.
 $MAIL['new_article_website'] = 'New article on your website';
 $MAIL['new_article'] = 'A new article was added on your website ' . HOST . ',
 it will have to be approved before being visible on the site by everyone.
 
-Article\'s title: %s
+Title of the article: %s
 Contents: %s...[next]
 Posted by: %s
 
-Click in the administration panel of the articles, and approve it.
+Go into the articles management panel of the administration, and approve it.
 ' . HOST . DIR . '/admin/admin_articles_gestion.php';
 ?>
