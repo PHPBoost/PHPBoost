@@ -251,7 +251,7 @@ class Search
                 // Exécution de 10 requêtes d'insertions
                 if( $nbReqInsert == 10 )
                 {
-                    $Sql->Query_insert("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__);
+                    $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ( ".$reqInsert." )", __LINE__, __FILE__);
                     $reqInsert = '';
                     $nbReqInsert = 0;
                 }
