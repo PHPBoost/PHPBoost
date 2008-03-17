@@ -3,7 +3,7 @@
 *                               search.inc.php
 *                            -------------------
 *   begin                : february 5, 2008
-*   copyright            : (C) 2008 Rouchon Loïc
+*   copyright            : (C) 2008 Rouchon Loï¿½
 *   email                : horn@phpboost.com
 *
 *
@@ -27,7 +27,7 @@
 
 if( defined('PHP_BOOST') !== true ) exit;
 
-define ( 'NB_RESULTS_PER_PAGE', 2);
+define ( 'NB_RESULTS_PER_PAGE', 10);
 
 require_once ( '../includes/modules.class.php' );
 require_once ( '../includes/search.class.php' );
@@ -51,19 +51,19 @@ function GetSearchForms(&$modules, &$args)
 
 function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results, &$idsSearch)
 /**
- *  Exécute la recherche si les résultats ne sont pas dans le cache et
- *  renvoie les résultats.
+ *  Exï¿½ute la recherche si les rï¿½ultats ne sont pas dans le cache et
+ *  renvoie les rï¿½ultats.
  */
 {
     $requests = array();
     $modulesNames = array();
     $modulesOptions = array();
     
-    // Génération des noms des modules utilisés et de la chaine options
+    // Gï¿½ï¿½ation des noms des modules utilisï¿½ et de la chaine options
     foreach($searchModules as $module)
     {
         array_push($modulesNames, $module->name);
-        // enlève la chaine search de la chaine options et la tronque à 255 caractères
+        // enlï¿½e la chaine search de la chaine options et la tronque ï¿½255 caractï¿½es
         $options = $modulesArgs[$module->name];
         unset($options['search']);
         $modulesOptions[$module->name] = substr(implode('|', $options), 0, 255);
@@ -75,7 +75,7 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
     {
         if( !$Search->IsInCache($module->name) )
         {
-            // On rajoute l'identifiant de recherche comme paramètre pour faciliter la requête
+            // On rajoute l'identifiant de recherche comme paramï¿½re pour faciliter la requï¿½e
             $modulesArgs[$module->name]['id_search'] = $Search->id_search[$module->name];
             $requests[$module->name] = $module->Functionnality('GetSearchRequest', $modulesArgs[$module->name]);
         }
@@ -88,7 +88,7 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
 
 function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
 /**
- *  Renvoie yune chaîne contenant les résultats
+ *  Renvoie yune chaï¿½e contenant les rï¿½ultats
  */
 {
     $i = 0;

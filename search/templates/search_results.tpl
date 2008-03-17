@@ -67,8 +67,8 @@
             // Crée la pagination à partir du nom du module, du nombre de résultats
             // du nombre de résultats par page ...
             {
-                const nbBefore = 1; // Ne compte pas la page courante
-                const nbAfter = 2;  // Compte ici la page courante
+                const nbBefore = 2; // Ne compte pas la page courante
+                const nbAfter = 3;  // Compte ici la page courante
                 
                 var pagin = '';
                 
