@@ -164,7 +164,7 @@ else
 		'L_DOWNLOAD_MANAGEMENT' => $LANG['download_management'],
 		'L_DOWNLOAD_CAT' => $LANG['cat_management'],
 		'L_DOWNLOAD_CONFIG' => $LANG['download_config'],
-		'L_LISTE' => $LANG['liste'],
+		'L_LISTE' => $LANG['list'],
 		'L_ADD_CAT' => $LANG['cat_add'],
 		'L_NAME' => $LANG['name'],
 		'L_DESC' => $LANG['description'],

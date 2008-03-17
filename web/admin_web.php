@@ -245,7 +245,7 @@ else
 		'L_WEB_CAT' => $LANG['cat_management'],
 		'L_WEB_CONFIG' => $LANG['web_config'],
 		'L_DEL_ENTRY' => $LANG['delete_link'],
-		'L_LISTE' => $LANG['liste'],
+		'L_LISTE' => $LANG['list'],
 		'L_NAME' => $LANG['name'],
 		'L_CATEGORY' => $LANG['category'],
 		'L_URL' => $LANG['url'],
