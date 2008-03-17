@@ -132,107 +132,107 @@ $LANG['wiki_status_list'] = array(
 );
 
 //Déplacement de l'article
-$LANG['wiki_moving_article'] = 'Déplacement d\'un article';
-$LANG['wiki_moving_this_article'] = 'Déplacement de l\'article: %s';
-$LANG['wiki_change_cat'] = 'Changer de catégorie';
-$LANG['wiki_cat_contains_cat'] = 'Vous souhaitez placer cette catégorie dans une de ses catégories filles ou dans elle-même, ce qui est impossible!';
+$LANG['wiki_moving_article'] = 'Moving of an article';
+$LANG['wiki_moving_this_article'] = 'Moving of the deplacement: %s';
+$LANG['wiki_change_cat'] = 'Change category';
+$LANG['wiki_cat_contains_cat'] = 'You can try to move this category in its sub-category or in itself, that\'s impossible!';
 
 //Renommer l'article
-$LANG['wiki_renaming_article'] = 'Renommer un article';
-$LANG['wiki_renaming_this_article'] = 'Renommer l\'article: %s';
-$LANG['wiki_new_article_title'] = 'Nouveau titre de l\'article';
-$LANG['wiki_explain_renaming'] = 'Vous êtes sur le point de renommer un article. Attention, vous devez savoir que tous les liens menant à cet article seront rompus. Cependant vous pouvez demander à laisser une redirection vers le nouvel article, ce qui permettra de ne pas briser les liens.';
-$LANG['wiki_create_redirection_after_renaming'] = 'Créer une redirection automatique depuis l\'ancien article vers le nouveau';
-$LANG['wiki_title_already_exists'] = 'Le titre que vous avez choisi existe déjà. Veuillez en choisir un autre';
+$LANG['wiki_renaming_article'] = 'Rename an article';
+$LANG['wiki_renaming_this_article'] = 'Rename the article: %s';
+$LANG['wiki_new_article_title'] = 'New title of the article';
+$LANG['wiki_explain_renaming'] = 'You will rename this article. Be careful, all links to this article will be break.But you can ask to put a redirection for this article, so the links will not be break.';
+$LANG['wiki_create_redirection_after_renaming'] = 'Create an automatical redirection from the old article to the new one';
+$LANG['wiki_title_already_exists'] = 'the title you want to choose already exists. Please choose another one';
 
 //Redirection
-$LANG['wiki_redirecting_from'] = 'Redirigé depuis %s';
-$LANG['wiki_remove_redirection'] = 'Supprimer la redirection';
+$LANG['wiki_redirecting_from'] = 'Redirect from %s';
+$LANG['wiki_remove_redirection'] = 'Delete the redirection';
 $LANG['wiki_redirections'] = 'Redirections';
-$LANG['wiki_redirections_management'] = 'Gestion des redirections';
-$LANG['wiki_edit_redirection'] = 'Edition d\'une redirection';
-$LANG['wiki_redirections_to_this_article'] = 'Redirections menant à l\'article: <em>%s</em>';
-$LANG['wiki_redirection_name'] = 'Titre de la redirection';
-$LANG['wiki_redirection_delete'] = 'Supprimer la redirection';
-$LANG['wiki_alert_delete_redirection'] = 'Etes-vous sur de vouloir supprimer cette redirection?';
-$LANG['wiki_no_redirection'] = 'Il n\'y a aucune redirection vers cette page';
-$LANG['wiki_create_redirection'] = 'Créer une redirection vers cet article';
-$LANG['wiki_create_redirection_to_this'] = 'Créer une redirection vers l\'article <em>%s</em>';
+$LANG['wiki_redirections_management'] = 'Redirections management';
+$LANG['wiki_edit_redirection'] = 'Edit an redirection';
+$LANG['wiki_redirections_to_this_article'] = 'Redirections to the article: <em>%s</em>';
+$LANG['wiki_redirection_name'] = 'Titrle of the redirection';
+$LANG['wiki_redirection_delete'] = 'Delete the redirection';
+$LANG['wiki_alert_delete_redirection'] = 'Are you sure you want to delete this redirection?';
+$LANG['wiki_no_redirection'] = 'They have no redirection to this page';
+$LANG['wiki_create_redirection'] = 'Crate a redirection to this page';
+$LANG['wiki_create_redirection_to_this'] = 'Create a redirection to the article: <em>%s</em>';
 
 //Recherche
-$LANG['wiki_search'] = 'Rechercher';
-$LANG['wiki_search_key_words'] = 'Mots clés (4 caractères minimum)';
-$LANG['wiki_search_result'] = 'Résultats de la recherche';
-$LANG['wiki_search_relevance'] = 'Pertinence du résultat';
-$LANG['wiki_empty_search'] = 'Aucun article n\'a été trouvé.';
+$LANG['wiki_search'] = 'Research';
+$LANG['wiki_search_key_words'] = 'Keywords (4 characters minimum)';
+$LANG['wiki_search_result'] = 'Rsearch Results';
+$LANG['wiki_search_relevance'] = 'Research relevance';
+$LANG['wiki_empty_search'] = 'No article was found.';
 
 //Discussion
-$LANG['wiki_article_com'] = 'Discussion sur l\'article';
+$LANG['wiki_article_com'] = 'Discussion for this article';
 $LANG['wiki_article_com_article'] = 'Discussion';
 
 //Suppression
-$LANG['wiki_confirm_delete_archive'] = 'Etes-vous sûr de vouloir supprimer cette version de l\'article?';
-$LANG['wiki_remove_cat'] = 'Suppression d\'une catégorie';
-$LANG['wiki_remove_this_cat'] = 'Suppression de la catégorie: <em>%s</em>';
-$LANG['wiki_explain_remove_cat'] = 'Vous souhaitez supprimer cette catégorie. Vous pouvez supprimer tout son contenu ou transférer son contenu ailleurs. L\'article associé à cette catégorie sera quant à lui obligatoirement supprimé.';
-$LANG['wiki_remove_all_contents'] = 'Supprimer tout son contenu (action irréversible)';
-$LANG['wiki_move_all_contents'] = 'Déplacer tout son contenu dans le dossier suivant:';
-$LANG['wiki_future_cat'] = 'Catégorie dans laquelle vous souhaitez déplacer ses éléments';
-$LANG['wiki_alert_removing_cat'] = 'Etes-vous sûr de vouloir supprimer cette catégorie (définitif)';
-$LANG['wiki_confirm_remove_article'] = 'Etes-vous sur de vouloir supprimer cet article?';
-$LANG['wiki_not_a_cat'] = 'Vous n\'avez pas sélectionné de catégorie valide!';
+$LANG['wiki_confirm_delete_archive'] = 'Are you sure you want to delete this version of the article?';
+$LANG['wiki_remove_cat'] = 'Delete an category';
+$LANG['wiki_remove_this_cat'] = 'Delete the category: <em>%s</em>';
+$LANG['wiki_explain_remove_cat'] = 'You want to delete this category. You can delete all its content, or move its content somewhere else.The article will be delete anyway.';
+$LANG['wiki_remove_all_contents'] = 'Delete all its content (irreversible actions)';
+$LANG['wiki_move_all_contents'] = 'Move all its content in this folder:';
+$LANG['wiki_future_cat'] = 'Category which you want to move these element:';
+$LANG['wiki_alert_removing_cat'] = 'Are you sure you want to delete this category? (definitive)';
+$LANG['wiki_confirm_remove_article'] = 'Are you sure you want to delete this article?';
+$LANG['wiki_not_a_cat'] = 'You have not selected a valid category!';
 
 //RSS
-$LANG['wiki_rss'] = 'Flux RSS';
-$LANG['wiki_rss_cat'] = 'Derniers articles de la catégorie %s';
-$LANG['wiki_rss_last_articles'] = '%s: derniers articles';
+$LANG['wiki_rss'] = 'RSS Flow';
+$LANG['wiki_rss_cat'] = 'Last articles of the category: %s';
+$LANG['wiki_rss_last_articles'] = '%s: last articles';
 
 //Favoris
-$LANG['wiki_favorites'] = 'Favoris';
-$LANG['wiki_unwatch_this_topic'] = 'Ne plus suivre ce sujet';
-$LANG['wiki_unwatch'] = 'Ne plus suivre';
-$LANG['wiki_watch'] = 'Suivre ce sujet';
-$LANG['wiki_followed_articles'] = 'Favoris';
-$LANG['wiki_already_favorite'] = 'Le sujet que vous désirez mettre en favoris est déjà en favoris';
-$LANG['wiki_article_is_not_a_favorite'] = 'L\'article que vous souhaitez supprimer de vos favoris ne figure pas parmi vos favoris';
-$LANG['wiki_no_favorite'] = 'Aucun article en favoris';
-$LANG['wiki_confirm_unwatch_this_topic'] = 'Etes-vous certain de vouloir supprimer cet article de vos favoris?';
+$LANG['wiki_favorites'] = 'Favorites';
+$LANG['wiki_unwatch_this_topic'] = 'Don\'t track this topic anymore';
+$LANG['wiki_unwatch'] = 'Don\'t track anymore';
+$LANG['wiki_watch'] = 'Track this topic';
+$LANG['wiki_followed_articles'] = 'Favorites';
+$LANG['wiki_already_favorite'] = 'The topic you want to put in your favorites is already in your favorites';
+$LANG['wiki_article_is_not_a_favorite'] = 'The topic you want to delete of your favorites is not in your favorites';
+$LANG['wiki_no_favorite'] = 'No topic in favorites';
+$LANG['wiki_confirm_unwatch_this_topic'] = 'Are you sure you want to delete this article from your favorites?';
 
 //Administration
-$LANG['wiki_groups_config'] = 'Configuration des groupes';
-$LANG['explain_wiki_groups'] = 'Vous pouvez paramétrer ici tout ce qui concerne les autorisations. Vous pouvez attribuer des autorisations à un niveau mais aussi des autorisations spéciales à un groupe';
-$LANG['wiki_auth_create_article'] = 'Créer un article';
-$LANG['wiki_auth_create_cat'] = 'Créer une catégorie';
-$LANG['wiki_auth_restore_archive'] = 'Restaurer une archive';
-$LANG['wiki_auth_delete_archive'] = 'Supprimer une archive';
-$LANG['wiki_auth_edit'] = 'Editer un article';
-$LANG['wiki_auth_delete'] = 'Supprimer un article';
-$LANG['wiki_auth_rename'] = 'Renommer un article';
-$LANG['wiki_auth_redirect'] = 'Gérer les redirections vers un article';
-$LANG['wiki_auth_move'] = 'Déplacer un article';
-$LANG['wiki_auth_status'] = 'Modifier le statut d\'un article';
-$LANG['wiki_auth_com'] = 'Commenter un article';
-$LANG['wiki_auth_restriction'] = 'Modifier le niveau de restrictions d\'un article';
-$LANG['wiki_auth_restriction_explain'] = 'Il est conseillé de le laisser aux modérateurs uniquement';
-$LANG['wiki_config'] = 'Configuration du wiki';
-$LANG['wiki_groups_config'] = 'Gestion des autorisations dans le wiki';
-$LANG['wiki_management'] = 'Gestion du wiki';
-$LANG['wiki_config_whole'] = 'Configuration générale';
-$LANG['wiki_index'] = 'Accueil du wiki';
-$LANG['wiki_count_hits'] = 'Compter le nombre de fois que sont vus les articles';
-$LANG['wiki_name'] = 'Nom du wiki';
-$LANG['wiki_display_cats'] = 'Afficher la liste des catégories principales sur l\'accueil';
-$LANG['wiki_no_display'] = 'Ne pas afficher';
-$LANG['wiki_display'] = 'Afficher';
-$LANG['wiki_last_articles'] = 'Nombre des derniers articles à afficher sur l\'accueil';
-$LANG['wiki_last_articles_explain'] = '0 pour désactiver';
-$LANG['wiki_desc'] = 'Texte de l\'accueil';
+$LANG['wiki_groups_config'] = 'Groups management';
+$LANG['explain_wiki_groups'] = 'You can configure here all it concerns authorizations. You can attribute authorizations to a level and specials persmissions to a group';
+$LANG['wiki_auth_create_article'] = 'Create an article';
+$LANG['wiki_auth_create_cat'] = 'Create a category';
+$LANG['wiki_auth_restore_archive'] = 'Restore an archive';
+$LANG['wiki_auth_delete_archive'] = 'Delete an archive';
+$LANG['wiki_auth_edit'] = 'Edit an article';
+$LANG['wiki_auth_delete'] = 'Delete an article';
+$LANG['wiki_auth_rename'] = 'Rename an article';
+$LANG['wiki_auth_redirect'] = 'Manage redirection to an article';
+$LANG['wiki_auth_move'] = 'Move an article';
+$LANG['wiki_auth_status'] = 'Edit an article\'s statut';
+$LANG['wiki_auth_com'] = 'Comment an article';
+$LANG['wiki_auth_restriction'] = 'Edit restrictions level of an article';
+$LANG['wiki_auth_restriction_explain'] = 'It is advised to keep it for moderators only';
+$LANG['wiki_config'] = 'Wiki\'s configuration';
+$LANG['wiki_groups_config'] = 'Permission\' management in the wiki';
+$LANG['wiki_management'] = 'Wiki\'s management';
+$LANG['wiki_config_whole'] = 'General configuration';
+$LANG['wiki_index'] = 'Wiki\'s home';
+$LANG['wiki_count_hits'] = 'Count the number of time that articles has been seen';
+$LANG['wiki_name'] = 'Wiki\'s Name';
+$LANG['wiki_display_cats'] = 'Show principal categories\'list in home';
+$LANG['wiki_no_display'] = 'Don\'t show';
+$LANG['wiki_display'] = 'Show';
+$LANG['wiki_last_articles'] = 'Last articles\'number to show in home';
+$LANG['wiki_last_articles_explain'] = '0 to desactivate';
+$LANG['wiki_desc'] = 'Home\'s text';
 
 //explorateur du wiki
-$LANG['wiki_explorer'] = 'Explorateur du wiki';
-$LANG['wiki_root'] = 'Racine du wiki';
-$LANG['wiki_root_contents'] = 'contenu de la racine';
-$LANG['wiki_cats_tree'] = 'Arborescence du wiki';
-$LANG['wiki_explorer_short'] = 'Explorateur';
+$LANG['wiki_explorer'] = 'Wiki\'s explorer';
+$LANG['wiki_root'] = 'Wiki\'s root';
+$LANG['wiki_root_contents'] = 'Root\'s content';
+$LANG['wiki_cats_tree'] = 'Wiki\'s category tree';
+$LANG['wiki_explorer_short'] = 'Explorer';
 
 ?>
