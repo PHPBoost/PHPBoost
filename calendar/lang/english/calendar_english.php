@@ -33,7 +33,7 @@
 //Title
 $LANG['title_calendar'] = 'Calendar';
 $LANG['calendar_config'] = 'Calendar configuration';
-$LANG['rank_post'] = 'Rank to post events';
+$LANG['rank_post'] = 'The rank to post events';
 
 //Calendrier
 $LANG['calendar'] = 'Calendar';
