@@ -124,7 +124,8 @@ function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
         $i++;
     }
     
-    $htmlResults .= '</ul></div>';
+    if ( count($results) > 0 )
+        $htmlResults .= '</ul></div>';
 }
 
 ?>
