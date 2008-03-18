@@ -127,15 +127,15 @@ $LANG['wiki_status_list'] = array(
 	array('Quality article', '<span class="notice">This article is very good.</span>'),
 	array('Unachieved article', '<span class="question">This article lacks sources. <br />Your knowlegde is welcome to complete it.</span>'),
 	array('Article in transformation', '<span class="notice">This article is not complete, you can use your knowledge to complete it.</span>'),
-	array('Article à refaire', '<span class="warning">Cet article est à refaire, son contenu n\'est pas très fiable.</span>'),
-	array('Article remis en cause', '<span class="error">Cet article a été discuté et son contenu ne paraît pas correct. Vous pouvez éventuellement consulter les discussions à ce propos et peut-être y apporter vos connaissances.</span>')
+	array('Article to remake', '<span class="warning">This article must me write again. Its content is not reliable.</span>'),
+	array('Article discussion', '<span class="error">This article was a subject of discussion and its content seems to be not correct.You can eventually read discussions and maybe use your knowledge to complete it.</span>')
 );
 
 //Déplacement de l'article
 $LANG['wiki_moving_article'] = 'Moving of an article';
 $LANG['wiki_moving_this_article'] = 'Moving of the deplacement: %s';
 $LANG['wiki_change_cat'] = 'Change category';
-$LANG['wiki_cat_contains_cat'] = 'You can try to move this category in its sub-category or in itself, that\'s impossible!';
+$LANG['wiki_cat_contains_cat'] = 'You try to move this category in its sub-category or in itself, that\'s impossible!';
 
 //Renommer l'article
 $LANG['wiki_renaming_article'] = 'Rename an article';
@@ -152,11 +152,11 @@ $LANG['wiki_redirections'] = 'Redirections';
 $LANG['wiki_redirections_management'] = 'Redirections management';
 $LANG['wiki_edit_redirection'] = 'Edit an redirection';
 $LANG['wiki_redirections_to_this_article'] = 'Redirections to the article: <em>%s</em>';
-$LANG['wiki_redirection_name'] = 'Titrle of the redirection';
+$LANG['wiki_redirection_name'] = 'Title of the redirection';
 $LANG['wiki_redirection_delete'] = 'Delete the redirection';
 $LANG['wiki_alert_delete_redirection'] = 'Are you sure you want to delete this redirection?';
 $LANG['wiki_no_redirection'] = 'They have no redirection to this page';
-$LANG['wiki_create_redirection'] = 'Crate a redirection to this page';
+$LANG['wiki_create_redirection'] = 'Create a redirection to this page';
 $LANG['wiki_create_redirection_to_this'] = 'Create a redirection to the article: <em>%s</em>';
 
 //Recherche
