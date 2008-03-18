@@ -106,54 +106,58 @@ class Search
                 $reqUpdate .= "`id_search` IN (".implode(',', $this->id_search).");";
                 $Sql->Query_inject($reqUpdate, __LINE__, __FILE__);
             }
-        
-            $nbReqInsert = 0;
-            $reqInsert = '';
-            // Pour chaque module n'étant pas dans le cache
-            foreach($modules as $moduleName => $options)
+            
+            // Si tous les modules ne sont pas en cache
+            if ( count($modules) < count($this->cache) )
             {
-                if( !$this->IsInCache($moduleName) )
+                $nbReqInsert = 0;
+                $reqInsert = '';
+                // Pour chaque module n'étant pas dans le cache
+                foreach($modules as $moduleName => $options)
                 {
-                    $reqInsert .= "('".$this->id_user."','".$moduleName."','".$search."','".$options."','".time()."', '0'),";
-                    // Exécution de 10 requêtes d'insertions
-                    if( $nbReqInsert == 10 )
+                    if( !$this->IsInCache($moduleName) )
                     {
-                        $reqInsert = "INSERT INTO ".PREFIX."search_index (`id_user`, `module`, `search`, `options`, `last_search_use`, `times_used`) VALUES ".$reqInsert."";
-                        $Sql->Query_insert($reqInsert, __LINE__, __FILE__);
-                        $reqInsert = '';
-                        $nbReqInsert = 0;
+                        $reqInsert .= "('".$this->id_user."','".$moduleName."','".$search."','".$options."','".time()."', '0'),";
+                        // Exécution de 10 requêtes d'insertions
+                        if( $nbReqInsert == 10 )
+                        {
+                            $reqInsert = "INSERT INTO ".PREFIX."search_index (`id_user`, `module`, `search`, `options`, `last_search_use`, `times_used`) VALUES ".$reqInsert."";
+                            $Sql->Query_insert($reqInsert, __LINE__, __FILE__);
+                            $reqInsert = '';
+                            $nbReqInsert = 0;
+                        }
+                        else { $nbReqInsert++; }
                     }
-                    else { $nbReqInsert++; }
                 }
+                
+                // Exécution des derniéres requêtes d'insertions
+                if( $nbReqInsert > 0 )
+                    $Sql->Query_inject("INSERT INTO ".PREFIX."search_index (`id_user`, `module`, `search`, `options`, `last_search_use`, `times_used`) VALUES ".substr($reqInsert, 0, strlen($reqInsert) - 1)."", __LINE__, __FILE__);
+                
+                // Récupération des résultats et de leurs id dans le cache.
+                
+                // Pourquoi faire çà plutôt que de récupérer id_search pour chaque
+                // insertion dans l'index du cache.
+                // parce que cela donne au total pour le contructeur une complexité
+                // en requête de :
+                // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k / 10 (nb non dans le cache) + 1 (recup id) = 4 + k/10
+                // au lieu de :
+                // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k (nb non dans le cache) = 3 + k
+                // cela permet donc de grouper les insertions dans l'index du cache.
+                
+                // Vérifications des résultats dans le cache.
+                $reqCache  = "SELECT id_search, module FROM ".PREFIX."search_index WHERE ";
+                $reqCache .= "search='".$search."' AND id_user='".$this->id_user."'";
+                if( $this->modulesConditions != '' )
+                    $reqCache .= " AND ".$this->modulesConditions;
+                
+                $request = $Sql->Query_while( $reqCache, __LINE__, __FILE__ );
+                while($row = $Sql->Sql_fetch_assoc($request))
+                {   // Ajout des résultats s'ils font partie de la liste des modules à traiter
+                    $this->id_search[$row['module']] = $row['id_search'];
+                }
+                $Sql->Close($request);
             }
-            
-            // Exécution des derniéres requêtes d'insertions
-            if( $nbReqInsert > 0 )
-                $Sql->Query_inject("INSERT INTO ".PREFIX."search_index (`id_user`, `module`, `search`, `options`, `last_search_use`, `times_used`) VALUES ".substr($reqInsert, 0, strlen($reqInsert) - 1)."", __LINE__, __FILE__);
-            
-            // Récupération des résultats et de leurs id dans le cache.
-            
-            // Pourquoi faire çà plutôt que de récupérer id_search pour chaque
-            // insertion dans l'index du cache.
-            // parce que cela donne au total pour le contructeur une complexité
-            // en requête de :
-            // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k / 10 (nb non dans le cache) + 1 (recup id) = 4 + k/10
-            // au lieu de :
-            // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k (nb non dans le cache) = 3 + k
-            // cela permet donc de grouper les insertions dans l'index du cache.
-            
-            // Vérifications des résultats dans le cache.
-            $reqCache  = "SELECT id_search, module FROM ".PREFIX."search_index WHERE ";
-            $reqCache .= "search='".$search."' AND id_user='".$this->id_user."'";
-            if( $this->modulesConditions != '' )
-                $reqCache .= " AND ".$this->modulesConditions;
-            
-            $request = $Sql->Query_while( $reqCache, __LINE__, __FILE__ );
-            while($row = $Sql->Sql_fetch_assoc($request))
-            {   // Ajout des résultats s'ils font partie de la liste des modules à traiter
-                $this->id_search[$row['module']] = $row['id_search'];
-            }
-            $Sql->Close($request);
         }
     }
     
