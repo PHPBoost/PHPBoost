@@ -483,7 +483,7 @@ $LANG['cats_management_confirm_delete'] = 'Etes-vous sur de vouloir supprimer ce
 ##########Panneau de modération##########
 $LANG['moderation_panel'] = 'Panneau de modération';
 $LANG['user_contact_pm'] = 'Contacter par message privé';
-$LANG['user_alternative_pm'] = 'Message privé envoyé au membre <span class="text_small">(Laisser vide pour aucun message privé)</span>. <br />Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expediteur.';
+$LANG['user_alternative_pm'] = 'Message privé envoyé au membre <span class="text_small">(Laisser vide pour aucun message privé)</span>. <br />Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expéditeur.';
 
 //Gestion des sanctions
 $LANG['punishment'] = 'Sanctions';
