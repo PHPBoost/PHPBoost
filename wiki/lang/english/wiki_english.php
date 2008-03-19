@@ -37,7 +37,7 @@ $LANG['wiki_history'] = 'History';
 $LANG['wiki_contribution_tools'] = 'Contribuate';
 $LANG['wiki_other_tools'] = 'Tools';
 $LANG['wiki_author'] = 'Author';
-$LANG['wiki_empty_index'] = 'The wiki is empty. If you have an administrator account you can create page and edit the wiki index into the administration panel.';
+$LANG['wiki_empty_index'] = 'The wiki is empty. If you have an administrator account you can create pages and edit the wiki index into the administration panel.';
 $LANG['wiki_previewing'] = 'Previewing';
 $LANG['wiki_table_of_contents'] = 'Table of contents';
 
@@ -55,7 +55,7 @@ $LANG['wiki_add_cat'] = 'Add a category';
 $LANG['wiki_article_cat'] = 'Category of this article';
 $LANG['wiki_create_cat'] = 'Create a category';
 $LANG['wiki_update_index'] = 'Edit wiki index';
-$LANG['wiki_warning_updated_article'] = '<span class="warning"><strong>Warning :</strong> This article has been updated, you are now consulting an old release of this article !</span>';
+$LANG['wiki_warning_updated_article'] = '<span class="warning"><strong>Warning :</strong> This article has been updated, you are now consulting an old release of this article!</span>';
 $LANG['wiki_article_cat'] = 'Category of the article';
 $LANG['wiki_current_cat'] = 'Current category';
 $LANG['wiki_contribuate'] = 'Contribuate to the wiki';
@@ -81,19 +81,19 @@ $LANG['wiki_paragraph_name'] = 'Please enter a paragraph name';
 $LANG['wiki_paragraph_name_example'] = 'Paragraph title';
 
 //Restrictions d'accès
-$LANG['wiki_member_restriction'] = 'This article is protected, only members car edit it.';
+$LANG['wiki_member_restriction'] = 'This article is protected, only members can edit it.';
 $LANG['wiki_modo_restriction'] = 'This article is protected, only moderators can edit it.';
 $LANG['wiki_admin_restriction'] = 'This article is protected, only administrators can edit it.';
 $LANG['wiki_edition_restriction'] = 'Edition permissions';
 $LANG['wiki_no_restriction'] = 'No restriction';
 $LANG['wiki_auth_management'] = 'Permissions management';
-$LANG['wiki_auth_management_article'] = 'Permission management of the article <em>%s</em>';
-$LANG['explain_select_multiple'] = 'Press Ctrl then click into the list to choose several options.';
+$LANG['wiki_auth_management_article'] = 'Permissions management of the article <em>%s</em>';
+$LANG['explain_select_multiple'] = 'Press Ctrl then click into the list to choose some options.';
 $LANG['select_all'] = 'Select all';
 $LANG['select_none'] = 'Unselect all';
 $LANG['ranks'] = 'Ranks';
 $LANG['groups'] = 'Groups';
-$LANG['wiki_explain_restore_default_auth'] = 'Don\'t take into consideration any particular restriction to this article ; permissions of this article will be global permissions.';
+$LANG['wiki_explain_restore_default_auth'] = 'Don\'t take into account any particular restriction to this article; permissions of this article will be global permissions.';
 $LANG['wiki_restore_default_auth'] = 'Default permissions';
 
 //Catégories
@@ -118,7 +118,7 @@ $LANG['wiki_status_management_article'] = 'Status management of the article <em>
 $LANG['wiki_defined_status'] = 'Defined status';
 $LANG['wiki_undefined_status'] = 'Personalized status';
 $LANG['wiki_no_status'] = 'No status';
-$LANG['wiki_status_explain'] = 'You can here select the status of this article. Several different status permit you to order your articles and show a particular point of each article.
+$LANG['wiki_status_explain'] = 'Here you can select the status of this article. Several different status permit you to order your articles and show a particular point of each article.
 <br />
 You can assign as well defined status to you articles than personalized one. To use a defined status let the personalized field empty.';
 $LANG['wiki_current_status'] = 'Current status';
@@ -128,12 +128,12 @@ $LANG['wiki_status_list'] = array(
 	array('Unachieved article', '<span class="question">This article lacks sources. <br />Your knowlegde is welcome to complete it.</span>'),
 	array('Article in transformation', '<span class="notice">This article is not complete, you can use your knowledge to complete it.</span>'),
 	array('Article to remake', '<span class="warning">This article must me write again. Its content is not reliable.</span>'),
-	array('Article discussion', '<span class="error">This article was a subject of discussion and its content seems to be not correct.You can eventually read discussions and maybe use your knowledge to complete it.</span>')
+	array('Article discussion', '<span class="error">This article was a subject of discussion and its content seems to be not correct. You can eventually read discussions and maybe use your knowledge to complete it.</span>')
 );
 
 //Déplacement de l'article
 $LANG['wiki_moving_article'] = 'Moving of an article';
-$LANG['wiki_moving_this_article'] = 'Moving of the deplacement: %s';
+$LANG['wiki_moving_this_article'] = 'Moving of the article: %s';
 $LANG['wiki_change_cat'] = 'Change category';
 $LANG['wiki_cat_contains_cat'] = 'You try to move this category in its sub-category or in itself, that\'s impossible!';
 
@@ -141,9 +141,9 @@ $LANG['wiki_cat_contains_cat'] = 'You try to move this category in its sub-categ
 $LANG['wiki_renaming_article'] = 'Rename an article';
 $LANG['wiki_renaming_this_article'] = 'Rename the article: %s';
 $LANG['wiki_new_article_title'] = 'New title of the article';
-$LANG['wiki_explain_renaming'] = 'You will rename this article. Be careful, all links to this article will be break.But you can ask to put a redirection for this article, so the links will not be break.';
-$LANG['wiki_create_redirection_after_renaming'] = 'Create an automatical redirection from the old article to the new one';
-$LANG['wiki_title_already_exists'] = 'the title you want to choose already exists. Please choose another one';
+$LANG['wiki_explain_renaming'] = 'You will rename this article. Be careful, all links to this article will be broken. But you can ask to put a redirection for this article, so the links will not be break.';
+$LANG['wiki_create_redirection_after_renaming'] = 'Create an automatic redirection from the old article to the new one';
+$LANG['wiki_title_already_exists'] = 'The title you want to choose already exists. Please choose another one';
 
 //Redirection
 $LANG['wiki_redirecting_from'] = 'Redirect from %s';
@@ -172,7 +172,7 @@ $LANG['wiki_article_com_article'] = 'Discussion';
 
 //Suppression
 $LANG['wiki_confirm_delete_archive'] = 'Are you sure you want to delete this version of the article?';
-$LANG['wiki_remove_cat'] = 'Delete an category';
+$LANG['wiki_remove_cat'] = 'Delete a category';
 $LANG['wiki_remove_this_cat'] = 'Delete the category: <em>%s</em>';
 $LANG['wiki_explain_remove_cat'] = 'You want to delete this category. You can delete all its content, or move its content somewhere else.The article will be delete anyway.';
 $LANG['wiki_remove_all_contents'] = 'Delete all its content (irreversible actions)';
@@ -214,25 +214,25 @@ $LANG['wiki_auth_status'] = 'Edit an article\'s statut';
 $LANG['wiki_auth_com'] = 'Comment an article';
 $LANG['wiki_auth_restriction'] = 'Edit restrictions level of an article';
 $LANG['wiki_auth_restriction_explain'] = 'It is advised to keep it for moderators only';
-$LANG['wiki_config'] = 'Wiki\'s configuration';
-$LANG['wiki_groups_config'] = 'Permission\' management in the wiki';
-$LANG['wiki_management'] = 'Wiki\'s management';
+$LANG['wiki_config'] = 'Wiki configuration';
+$LANG['wiki_groups_config'] = 'Permissions management in the wiki';
+$LANG['wiki_management'] = 'Wiki management';
 $LANG['wiki_config_whole'] = 'General configuration';
-$LANG['wiki_index'] = 'Wiki\'s home';
+$LANG['wiki_index'] = 'Wiki home';
 $LANG['wiki_count_hits'] = 'Count the number of time that articles has been seen';
-$LANG['wiki_name'] = 'Wiki\'s Name';
+$LANG['wiki_name'] = 'Wiki name';
 $LANG['wiki_display_cats'] = 'Show principal categories\'list in home';
 $LANG['wiki_no_display'] = 'Don\'t show';
 $LANG['wiki_display'] = 'Show';
 $LANG['wiki_last_articles'] = 'Last articles\'number to show in home';
-$LANG['wiki_last_articles_explain'] = '0 to desactivate';
-$LANG['wiki_desc'] = 'Home\'s text';
+$LANG['wiki_last_articles_explain'] = '0 to deactivate';
+$LANG['wiki_desc'] = 'Home text';
 
 //explorateur du wiki
-$LANG['wiki_explorer'] = 'Wiki\'s explorer';
-$LANG['wiki_root'] = 'Wiki\'s root';
-$LANG['wiki_root_contents'] = 'Root\'s content';
-$LANG['wiki_cats_tree'] = 'Wiki\'s category tree';
+$LANG['wiki_explorer'] = 'Wiki explorer';
+$LANG['wiki_root'] = 'Wiki root';
+$LANG['wiki_root_contents'] = 'Root content';
+$LANG['wiki_cats_tree'] = 'Wiki category tree';
 $LANG['wiki_explorer_short'] = 'Explorer';
 
 ?>
