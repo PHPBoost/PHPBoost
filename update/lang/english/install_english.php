@@ -66,7 +66,7 @@ $LANG['alert_agree_license'] = 'You have to agree to end-user license by ticking
 //Configuration du serveur
 $LANG['config_server_explain'] = 'Checking server configuration<br />
 Before to start installations steps, the configuration of your server is going to be checked to establish its compatibility with PHPBoost. Please check that compulsory conditions are good.<br />
-If you have problems, ask for some help in <a href="http://www.en.phpboost.com/forum/index.php">PHPBoost forum</a>.';
+If you have problems, ask for some help in <a href="http://en.phpboost.com/forum/index.php">PHPBoost forum</a>.';
 $LANG['php_version'] = 'PHP version';
 $LANG['check_php_version'] = 'PHP upper than 4.1.0';
 $LANG['check_php_version_explain'] = '<span style="font-weight:bold;color:red;">Compulsory :</span> To make PHPBoost correctly working, your server must have a PHP version more recent than PHP 4.1.0. Enough that you will have problems with some modules, please contact your hoster or move to a more recent server.';
@@ -163,7 +163,7 @@ $LANG['admin_error'] = 'Error';
 $LANG['admin_mail_object'] = 'PHPBoost : message to be keeped';
 $LANG['admin_mail_unlock_code'] = 'Dear %s,
 
-First of all, thank you to have powered your website with PHPBoost software, we wish you will be satisfied. For any problem ask your question on PHPBoost official forum : http://www.en.phpboost.com/forum/index.php
+First of all, thank you to have powered your website with PHPBoost software, we wish you will be satisfied. For any problem ask your question on PHPBoost official forum : http://en.phpboost.com/forum/index.php
 
 Here your login and password (don\'t loose them ,you will need them to configure your website) : 
 
@@ -201,8 +201,8 @@ $LANG['end_installation'] = '<fieldset>
 							<p>On administration panel index you will find news of official website, look at them and don\'t forget to update your software when a new release of PHPBoost kernel or modules is available, it\'s important for security corrections and new functionalities.</p>
 							<p class="warning">
 								For security reasons we advice you to delete installation folder and all its contents, hackers could manage to run installation script and destroy your data !</p>
-							<p>Don\'t forget the <a href="http://www.en.phpboost.com/wiki/index.php">documentation</a> which will help you for using PHPBoost.</p>
-							<p>If you have any problem please go to support of PHPBoost: <a href="http://www.en.phpboost.com/forum/index.php">forum PHPBoost</a>.</p>
+							<p>Don\'t forget the <a href="http://en.phpboost.com/wiki/index.php">documentation</a> which will help you for using PHPBoost.</p>
+							<p>If you have any problem please go to support of PHPBoost: <a href="http://en.phpboost.com/forum/index.php">forum PHPBoost</a>.</p>
 						</fieldset>
 						<fieldset>
 							<legend>Thanks</legend>
