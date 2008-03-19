@@ -38,21 +38,21 @@ $LANG['error_gd'] = 'GD Library unloaded';
 
 //Stats
 $LANG['stats'] = 'Statistics';
-$LANG['more_stats'] = 'More stats';
+$LANG['more_stats'] = 'More statistics';
 $LANG['site'] = 'Website';
-$LANG['referer_s'] = 'Referent website';
+$LANG['referer_s'] = 'Referent websites';
 $LANG['page_s'] = 'Displayed pages';
 $LANG['browser_s'] = 'Browsers';
 $LANG['keyword_s'] = 'Keywords';
 $LANG['os'] = 'Operating systems';
 $LANG['fai'] = 'Internet Access Providers';
-$LANG['all_fai'] = 'See all Internet access providers';
-$LANG['10_fai'] = 'See the 10 principal Internet access providers';
+$LANG['all_fai'] = 'See all Internet Access Providers';
+$LANG['10_fai'] = 'See the 10 principal Internet Access Providers';
 $LANG['other'] = 'Others';
 $LANG['number'] = 'Number';
-$LANG['start'] = 'Creation of the website';
-$LANG['stat_lang'] = 'Countries of visitors';
-$LANG['all_langs'] = 'See all countries of visitors';
+$LANG['start'] = 'Website creation';
+$LANG['stat_lang'] = 'Visitors countries';
+$LANG['all_langs'] = 'See all visitors countries';
 $LANG['10_langs'] = 'See the 10 principal countries of visitors';
 $LANG['visits_year'] = 'See statistics of the year';
 $LANG['unknown'] = 'Unknown';
@@ -85,23 +85,23 @@ $LANG['saturday'] = 'Sat';
 $LANG['sunday'] = 'Sun';
 
 //Sites référents.
-$LANG['total_visit'] = 'Total visit';
-$LANG['average_visit'] = 'Average visit';
+$LANG['total_visit'] = 'Total visits';
+$LANG['average_visit'] = 'Average visits';
 $LANG['trend'] = 'Trend';
 $LANG['last_update'] = 'Last visit';
                
 //Navigateurs.
 $stats_array_browsers = array(
-       'internetexplorer' => array('Internet explorer', 'internetexplorer.png'),
-       'opera' => array('Opéra', 'opera.png'),
+       'internetexplorer' => array('Internet Explorer', 'internetexplorer.png'),
+       'opera' => array('Opera', 'opera.png'),
        'firefox' => array('Firefox', 'firefox.png'),
        'safari' => array('Safari', 'safari.png'),
        'konqueror' => array('Konqueror', 'konqueror.png'),
        'netscape' => array('Netscape', 'netscape.png'),
-       'mozilla firebird' => array('Mozilla firebird', 'mozilla.png'),
+       'mozilla firebird' => array('Mozilla Firebird', 'mozilla.png'),
        'mozilla' => array('Mozilla', 'mozilla.png'),
        'aol' => array('Aol', ''),
-       'lynx' => array('lynx', ''),
+       'lynx' => array('Lynx', ''),
        'seamonkey' => array('SeaMonkey', 'seamonkey.png'),
        'camino' => array('Camino', ''),
        'links' => array('Links', ''),
