@@ -50,7 +50,7 @@ $LANG['terms'] = 'Terms';
 $LANG['pages'] = 'Pages';
 $LANG['files'] = 'Files';
 $LANG['themes'] = 'Themes';
-$LANG['languages'] = 'Langs';
+$LANG['languages'] = 'Languages';
 $LANG['smile'] = 'Smilies';
 $LANG['comments'] = 'Comments';
 $LANG['group'] = 'Groups';
@@ -68,7 +68,7 @@ $LANG['add'] = 'Add';
 $LANG['alert_same_pass'] = 'The passwords are not the same!';
 $LANG['alert_max_dim'] = 'The file exceeds the specified maximum width and height !';
 $LANG['alert_error_avatar'] = 'Error while uploadind avatar!';
-$LANG['alert_error_img'] = 'Erreur while uploadind pics!';
+$LANG['alert_error_img'] = 'Error while uploadind pics!';
 $LANG['alert_invalid_file'] = 'The file isn\'t valid (jpg, gif, png!)';
 $LANG['alert_max_weight'] = 'Too heavy image';
 $LANG['alert_s_already_use'] = 'Smiley code already used!';
@@ -77,7 +77,7 @@ $LANG['alert_fct_unlink'] = 'Impossible to delete picture. You must remove manua
 $LANG['alert_no_login'] = 'The input nickname doesn\'t exist!';
 
 //Requis
-$LANG['require'] = 'The marked Fields * are obligatory!';
+$LANG['require'] = 'The marked fields * are obligatory!';
 $LANG['require_title'] = 'Please enter a title !';
 $LANG['require_text'] = 'Please enter a text!';
 $LANG['require_pseudo'] = 'Please enter nickname!';
