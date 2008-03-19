@@ -32,7 +32,7 @@
  
 //Admin
 $LANG['confirm_del_poll'] = 'Delete this poll ?';
-$LANG['poll_add'] = 'Add poll';
+$LANG['poll_add'] = 'Add a poll';
 $LANG['poll_management'] = 'Poll management';
 $LANG['poll_config'] = 'Poll configuration';
 $LANG['poll_config_mini'] = 'Mini-poll configuration';
@@ -45,9 +45,9 @@ $LANG['multiple'] = 'Multiple';
 $LANG['number_vote'] = 'Number of vote';
 $LANG['add_answer'] = 'Add an answer';
 $LANG['config_pool'] = 'Pool management';
-$LANG['pool_mini'] = 'Mini-pool';
+$LANG['pool_mini'] = 'Mini-poll';
 $LANG['pool_mini_explain'] = 'Random display if more than one poll is selected';
-$LANG['poll_cookie_lenght'] = 'Cookie lenght time';
+$LANG['poll_cookie_lenght'] = 'Cookie life length';
 $LANG['rank_vote'] = 'Rank to vote';
 $LANG['poll_date'] = 'Poll date';
 $LANG['poll_date_explain'] = '(dd/mm/yy) Leave empty to set today date';
@@ -60,7 +60,7 @@ $LANG['require_answer_type'] = 'Please enter the type of response of the poll!';
 
 //Error
 $LANG['e_unexist_poll'] = 'This poll doesn\'t exist';
-$LANG['e_no_poll'] = 'No polls available';
+$LANG['e_no_poll'] = 'No poll available';
 $LANG['e_already_vote'] = 'You have already voted';
 $LANG['e_unauth_poll'] = 'You aren\'t authorized to vote !';
 
@@ -70,11 +70,11 @@ $LANG['e_unauth_poll'] = 'You aren\'t authorized to vote !';
 //Poll
 $LANG['poll'] = 'Poll';
 $LANG['mini_poll'] = 'Mini Poll';
-$LANG['poll_main'] = 'This is the polls mod of the website, so tell your opinion.';
+$LANG['poll_main'] = 'This is the website "polls" module, so tell your opinion.';
 $LANG['poll_back'] = 'Return to the poll(s)';
-$LANG['redirect_none'] = 'No polls available';
+$LANG['redirect_none'] = 'No poll available';
 $LANG['confirm_vote'] = 'Your vote was taken into account';
-$LANG['no_vote'] = 'Your null vote has been considered';
+$LANG['no_vote'] = 'Your blank vote has been considered';
 $LANG['poll_vote'] = 'Vote';
 $LANG['poll_vote_s'] = 'Votes';
 $LANG['poll_result'] = 'Results';
