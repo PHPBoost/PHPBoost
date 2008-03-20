@@ -54,7 +54,7 @@
 		        {
 					if( elements[i].name )
 		            {
-		                dataString += elements[i].name + "=" + escape(elements[i].value);
+		                dataString += elements[i].name + "=" + escape_xmlhttprequest(elements[i].value);
 						if( (i + 1) < form.length )
 		                    dataString += "&";
 		            }
@@ -163,7 +163,7 @@
 		</div>
 		<script type="text/javascript">
 		<!--
-            ChangePagination(0, Math.ceil(nbResults['All'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + 'All', 'resultsAll', 2, 2);
+            ChangePagination(0, Math.ceil(nbResults['All'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + 'All', 'resultsAll');
 		    if( browserAJAXFriendly() )
                 show_div('resultsChoices');
 		-->
