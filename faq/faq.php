@@ -32,6 +32,13 @@ $id_faq = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 //For users who have disabled javascript
 $id_question = !empty($_GET['question']) ? numeric($_GET['question']) : 0;
 
+//if the category doesn't exist or is not visible
+if( !array_key_exists($id_faq, $FAQ_CATS) || (array_key_exists($id_faq, $FAQ_CATS) && $id_faq > 0 && $FAQ_CATS[$id_faq]['visible'] == 0) )
+{
+	$Errorh->Error_handler('e_unexist_cat', E_USER_REDIRECT);
+	exit;
+}
+
 if( $id_faq > 0 )
 	$TITLE = array_key_exists($id_faq, $FAQ_CATS) ? $FAQ_CATS[$id_faq]['name'] : $FAQ_LANG['faq'];
 else
