@@ -2,8 +2,8 @@
  *                                global.js
  *                            -------------------
  *   begin                : Februar 06 2007
- *   copyright          : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   copyright            : (C) 2007 Régis Viarre, Loïc Rouchon
+ *   email                : crowkait@phpboost.com, horn@phpboost.com
  *
  *
 ###################################################
@@ -409,6 +409,58 @@ function check_select_multiple_ranks(id, start)
 	for(i = start; i <= 2; i++)
 	{	
 		if( document.getElementById(id + i) )
-			document.getElementById(id + i).selected = true;			
+			document.getElementById(id + i).selected = true;
 	}
+}
+
+// Crée un lien de pagination javascript
+function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
+{
+    pagin = '<span class="pagination';
+    if ( isCurrentPage )
+        pagin += ' pagination_current_page text_strong';
+    pagin += '">';
+    pagin += '<a href="javascript:' + fctName + '(' + fctArgs + i + ')">' + textPagin + '</a>';
+    pagin += '</span>&nbsp;';
+    
+    return pagin;
+}
+
+// Crée la pagination à partir du nom du bloc de page, du bloc de pagination, du nombre de résultats
+// du nombre de résultats par page ...
+function ChangePagination(blocPagin, blocName, nbPagesBefore, nbPagesAfter, nbPages, page)
+{
+    var pagin = '';
+    
+    var before = Math.max(0, page - nbPagesBefore);
+    var after = Math.min(nbPages, page + nbPagesAfter + 1);
+    
+    var fctName = 'ChangePagination';
+    var fctArgs = '\'' + blocPagin + '\', \'' + blocName + '\', ' + nbPagesBefore + ', ' + nbPagesAfter + ', ' + nbPages + ', ';
+    
+    // Début
+    pagin += writePagin(fctName, fctArgs, false, '&laquo;', 0);
+    
+    // Before
+    for ( var i = before; i < page; i++ )
+        pagin += writePagin(fctName, fctArgs, false, i + 1, i );
+    
+    // Page courante
+    pagin += writePagin(fctName, fctArgs, true, page + 1, page );
+    
+    // After
+    for ( var i = page + 1; i < after; i++ )
+        pagin += writePagin(fctName, fctArgs, false, i + 1, i );
+    
+    // Fin
+    pagin += writePagin(fctName, fctArgs, false, '&raquo;', nbPages - 1 );
+    
+    // On cache tous les autre résultats du module
+    for ( var i = 0; i < nbPages; i++ )
+        hide_div(blocName + '_' + i);
+    // On montre la page demandée
+    show_div(blocName + '_' + page);
+    
+    // Mise à jour de la pagination
+    document.getElementById(blocPagin).innerHTML = pagin;
 }

@@ -62,59 +62,8 @@
 		        
 		        return dataString;
 		    }
-		    
-            function ChangeModulePage(module, page)
-            // Crée la pagination à partir du nom du module, du nombre de résultats
-            // du nombre de résultats par page ...
-            {
-                const nbBefore = 2; // Ne compte pas la page courante
-                const nbAfter = 3;  // Compte ici la page courante
-                
-                var pagin = '';
-                
-                var nbPages = Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE);
-                var before = Math.max(0, page - nbBefore);
-                var after = Math.min(nbPages, page + nbAfter);
-                
-                pagin += '<span style="font-size: 11px;">';
-                pagin += '<a href="javascript:ChangeModulePage(\'' + module + '\', 0 )">&laquo;</a>';
-                pagin += '</span>&nbsp;';
-                
-                // Before
-                for ( var i = before; i < page; i++ )
-                {
-                    pagin += '<span style="font-size: 11px;">';
-                    pagin += '<a href="javascript:ChangeModulePage(\'' + module + '\', ' + i + ')">' + (i + 1) + '</a>';
-                    pagin += '</span>&nbsp;';
-                }
-                
-                pagin += '<span style="font-size: 11px; text-decoration: underline;" class="text_strong">';
-                pagin += '<a href="javascript:ChangeModulePage(\'' + module + '\', ' + page + ')">' + (page + 1) + '</a>';
-                pagin += '</span>&nbsp;';
-                
-                // After
-                for ( var i = page + 1; i < after; i++ )
-                {
-                    pagin += '<span style="font-size: 11px;">';
-                    pagin += '<a href="javascript:ChangeModulePage(\'' + module + '\', ' + i + ')">' + (i + 1) + '</a>';
-                    pagin += '</span>&nbsp;';
-                }
-                
-                pagin += '<span style="font-size: 11px;">';
-                pagin += '<a href="javascript:ChangeModulePage(\'' + module + '\', ' + (nbPages - 1) + ')">&raquo;</a>';
-                pagin += '</span>&nbsp;';
-                
-                // On cache tous les autre résultats du module
-                for ( var i = 0; i < nbPages; i++ )
-                    hide_div('results' + module + '_' + i);
-                // On montre la page demandée
-                show_div('results' + module + '_' + page);
-                
-                // Mise à jour de la pagination
-                document.getElementById(PAGINATION_RESULTS + module).innerHTML = pagin;
-            }
             
-		    function XMLHttpRequest_regenerate_search()
+            function XMLHttpRequest_regenerate_search()
 		    // Affiche les résultats de la recherche pour le module particulier <module>
 		    {
 		        var xhr = xmlhttprequest_init('../search/searchXMLHTTPRequest.php');
@@ -148,7 +97,7 @@
                                 eval(xhr_object.responseText);
                                 document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
                                 document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
-                                ChangeModulePage(module, 0);
+                                ChangePagination(PAGINATION_RESULTS + module, 'results' + module, 2, 2, Math.ceil(resultsAJAX['nbResults'] / NB_RESULTS_PER_PAGE), 0);
                                 
                                 // Met à jour la liste des résultats affiché, pour ne pas les rechercher
                                 // dans la base de donnée si ils sont déjà dans le html.
@@ -214,7 +163,7 @@
 		</div>
 		<script type="text/javascript">
 		<!--
-            ChangeModulePage('All', 0);
+            ChangePagination(PAGINATION_RESULTS + 'All', 'resultsAll', 2, 2, Math.ceil(nbResults['All'] / NB_RESULTS_PER_PAGE), 0);
 		    if( browserAJAXFriendly() )
                 show_div('resultsChoices');
 		-->
