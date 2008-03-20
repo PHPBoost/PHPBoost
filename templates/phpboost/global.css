@@ -48,7 +48,7 @@
 	border:1px solid #2C5169;
 }
 
-/* Lien du site 
+/* Lien du site
 --------------------------------------*/
 a{ 
 	color:#012871; 
@@ -138,6 +138,17 @@ a.membre{
 	background:#68809B;
 	cursor:default;
 }
+
+/* Liens pagination
+--------------------------------------*/
+.pagination {
+    font-size: 11px;
+}
+
+.pagination_current_page {
+    text-decoration: underline;
+}
+
 /* Séparateur */
 .dynamic_menu ul li.separator { 
 	background:#104069;  
