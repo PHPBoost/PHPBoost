@@ -108,7 +108,7 @@ class Search
             }
             
             // Si tous les modules ne sont pas en cache
-            if ( count($modules) < count($this->cache) )
+            if ( count($modules) > count($this->cache) )
             {
                 $nbReqInsert = 0;
                 $reqInsert = '';
@@ -368,8 +368,8 @@ class Search
      *  aux seuls modules avec les bonnes options de recherches concernés.
      */
     {
-        $nbModules = count($modules);        
-        $modulesConditions = '';        
+        $nbModules = count($modules);
+        $modulesConditions = '';
         if( $nbModules > 0 )
         {
             $modulesConditions .= " ( ";
