@@ -74,7 +74,7 @@
 		    <div class="module_top">{L_TITLE}</div>
 		    <div class="module_contents">
 		        <div class="spacer">&nbsp;</div>
-		        <form id="SearchForm" action="../search/search.php#results" onsubmit="return check_search_form_post();" method="post">
+		        <form id="SearchForm" action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
                     <table class="SearchForm">
                         <caption><span>{L_TITLE_SEARCH}</span></caption>
                         <tr>
