@@ -33,10 +33,10 @@
 //Généralités
 $LANG['pages'] = 'Pages';
 
-$LANG['page_hits'] = 'Cette page a été vue %d fois';
+$LANG['page_hits'] = 'Cette page a été consultée %d fois';
 
 //Administration
-$LANG['pages_count_hits'] = 'Compter le nombre de hits';
+$LANG['pages_count_hits'] = 'Compter le nombre de fois que la page est consultée';
 $LANG['pages_count_hits_explain'] = 'Peut-être choisi au cas par cas pour chaque page';
 $LANG['pages_auth_read'] = 'Lecture des pages';
 $LANG['pages_auth_edit'] = 'Modification de page';
