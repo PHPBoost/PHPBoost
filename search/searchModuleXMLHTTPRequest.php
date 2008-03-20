@@ -54,18 +54,22 @@ if( $idSearch >= 0 )
             $module = $Modules->GetModule($results[0]['module']);
             $htmlResults = '';
             Get_HTML_Results($results, $htmlResults, $Modules, $module->name);
-        }
         
-        $showPagin = '';
-        // Création de la pagination si le nombre de commentaires est trop important.
-        $return = ' var resultsAJAX = new Array();
-                    nbResults[\''.ucfirst($module->name).'\'] = '.$nbResults.';
-                    resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.addslashes($nbResults > 1 ? $LANG['nb_results_found']:$LANG['one_result_found']).'\';
-                    resultsAJAX[\'results\'] = \''.addslashes($htmlResults).'\';
-                    resultsAJAX[\'pagination\'] = \''.addslashes($showPagin).'\';';
-        echo $return;
+        echo   'var resultsAJAX = new Array();
+                nbResults[\''.ucfirst($module->name).'\'] = '.$nbResults.';
+                resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.addslashes($nbResults > 1 ? $LANG['nb_results_found']:$LANG['one_result_found']).'\';
+                resultsAJAX[\'results\'] = \''.addslashes($htmlResults).'\';';
+        }
+        else
+        {
+            $moduleName = $Sql->Query("SELECT module FROM ".PREFIX."search_index WHERE id_search = ".$idSearch, __LINE__, __FILE__);
+            echo   'var resultsAJAX = new Array();
+                    nbResults[\''.ucfirst($moduleName).'\'] = 0;
+                    resultsAJAX[\'nbResults\'] = \''.addslashes($LANG['no_results_found']).'\';
+                    resultsAJAX[\'results\'] = \'\';';
+        }
     }
-    else echo 'NO RESULTS IN CACHE';
+    else echo 'SEARCH_ERROR';
 }
 
 //--------------------------------------------------------------------- Footer

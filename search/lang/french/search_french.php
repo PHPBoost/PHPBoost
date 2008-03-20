@@ -44,6 +44,7 @@ $LANG['simple_search'] = 'Recherche simple';
 $LANG['print'] = 'Afficher';
 $LANG['nb_results_found'] = 'résultats ont été trouvés';
 $LANG['one_result_found'] = 'résultat a été trouvé';
+$LANG['no_results_found'] = 'aucun résultat n\'a été trouvé';
 
 //Actions
 

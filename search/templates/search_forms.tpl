@@ -61,7 +61,7 @@
 		        }
 		        else
 		        {
-		            alert('{WARNING_LENGTH_STRING_SEARCH}');
+		            alert('{L_WARNING_LENGTH_STRING_SEARCH}');
 		            return false;
 		        }
 		    }
@@ -71,14 +71,14 @@
 		<div class="module_position">
 		    <div class="module_top_l"></div>
 		    <div class="module_top_r"></div>
-		    <div class="module_top">{TITLE}</div>
+		    <div class="module_top">{L_TITLE}</div>
 		    <div class="module_contents">
 		        <div class="spacer">&nbsp;</div>
 		        <form id="SearchForm" action="../search/search.php#results" onsubmit="return check_search_form_post();" method="post">
                     <table class="SearchForm">
-                        <caption><span>{TITLE_SEARCH}</span></caption>
+                        <caption><span>{L_TITLE_SEARCH}</span></caption>
                         <tr>
-                            <td><label for="TxTsearched">{SEARCH_MIN_LENGTH}</label></td>
+                            <td><label for="TxTsearched">{L_SEARCH_MIN_LENGTH}</label></td>
                             <td><label><input type="text" size="35" id="TxTsearched" name="search" value="{TEXT_SEARCHED}"  class="text" /></label></td>
                             <td rowspan="2" style="text-align:center;">
                                 <label id="ModulesChoicesLabel" style="visibility:hidden;">Modules sélectionnés</label><br />
@@ -92,8 +92,8 @@
                         </tr>
                         <tr>
                             <td>
-                                <label id="AdvancedSearch" style="display:none"><a href="javascript:ShowAdvancedSearchForms();">{ADVANCED_SEARCH}</a></label>
-                                <label id="SimpleSearch" style="display:none"><a href="javascript:HideAdvancedSearchForms();">{SIMPLE_SEARCH}</a></label>
+                                <label id="AdvancedSearch" style="display:none"><a href="javascript:ShowAdvancedSearchForms();">{L_ADVANCED_SEARCH}</a></label>
+                                <label id="SimpleSearch" style="display:none"><a href="javascript:HideAdvancedSearchForms();">{L_SIMPLE_SEARCH}</a></label>
                             </td>
                             <td>
                                 <select id="FormsChoice" name="FormsSelection" onchange="ChangeForm();" style="visibility:hidden;">
@@ -113,8 +113,8 @@
 		                </div>
 		            # END forms #
 		            <fieldset class="fieldset_submit">
-		                <legend>{title_search}</legend>
-		                <input type="submit" name="search_submit" id="search_submit" value="{SEARCH}" class="submit" />
+		                <legend>{L_SEARCH}</legend>
+		                <input type="submit" name="search_submit" id="search_submit" value="{L_SEARCH}" class="submit" />
 		            </fieldset>
 		        </form>
 		    </div>
