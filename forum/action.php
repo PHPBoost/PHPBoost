@@ -37,7 +37,7 @@ $del = !empty($_GET['del']) ? true : false;
 $track = !empty($_GET['t']) ? numeric($_GET['t']) : '';	
 $untrack = !empty($_GET['ut']) ? numeric($_GET['ut']) : '';	
 $alert = !empty($_GET['a']) ? numeric($_GET['a']) : '';	
-$read = !empty($_GET['read']) ? true : false;;
+$read = !empty($_GET['read']) ? true : false;
 $msg_d = !empty($_GET['msg_d']) ? true : false;
 $lock_get = !empty($_GET['lock']) ? securit($_GET['lock']) : '';
 //Variable $_POST

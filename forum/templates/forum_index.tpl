@@ -7,8 +7,13 @@
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
 				<div class="module_top">
-					<a href="rss.php" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> 
-					&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum_link_cat">{forums_list.cats.NAME}</a>
+					<span style="float:left">
+						<a href="rss.php?cat={forums_list.cats.IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> 
+						&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum_link_cat">{forums_list.cats.NAME}</a>
+					</span>
+					<span style="float:right">
+						<a href="unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" /></a>
+					</span>
 				</div>
 				<div class="module_contents forum_contents">
 					<table class="module_table" style="width:100%">

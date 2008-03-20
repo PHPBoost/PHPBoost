@@ -81,7 +81,7 @@
 									<li><a href="../admin/admin_members.php" style="background-image:url(../templates/{THEME}/images/admin/members_mini.png);">{L_MANAGEMENT}</a></li>
 									<li><a href="../admin/admin_members.php?add=1" style="background-image:url(../templates/{THEME}/images/admin/members_mini.png);">{L_ADD}</a></li>
 									<li><a href="../admin/admin_members_config.php" style="background-image:url(../templates/{THEME}/images/admin/members_mini.png);">{L_CONFIGURATION}</a></li>
-									<li><a href="../admin/admin_members_punishement.php" style="background-image:url(../templates/{THEME}/images/admin/members_mini.png);">{L_PUNISHEMENT}</a></li>
+									<li><a href="../admin/admin_members_punishment.php" style="background-image:url(../templates/{THEME}/images/admin/members_mini.png);">{L_PUNISHEMENT}</a></li>
 								</ul>
 							</li>								
 							<li class="extend" onmouseover="show_menu(42, 1);" onmouseout="hide_menu(1);">

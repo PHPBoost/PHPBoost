@@ -1,33 +1,3 @@
-		<script type="text/javascript">
-		<!--
-			function check_select_multiple(id, status)
-			{
-				var i;		
-				for(i = -1; i <= 2; i++)
-				{
-					if( document.getElementById(id + 'r' + i) )
-						document.getElementById(id + 'r' + i).selected = status;
-				}				
-				document.getElementById(id + 'r3').selected = true;
-				
-				for(i = 0; i < {NBR_GROUP}; i++)
-				{	
-					if( document.getElementById(id + 'g' + i) )
-						document.getElementById(id + 'g' + i).selected = status;		
-				}	
-			}	
-			function check_select_multiple_ranks(id, start)
-			{
-				var i;				
-				for(i = start; i <= 2; i++)
-				{	
-					if( document.getElementById(id + i) )
-						document.getElementById(id + i).selected = true;			
-				}
-			}
-		-->
-		</script>
-		
 		<div id="admin_quick_menu">
 			<ul>
 				<li class="title_menu">{L_GALLERY_MANAGEMENT}</li>

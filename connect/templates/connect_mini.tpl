@@ -1,4 +1,4 @@
-		# IF C_DISCONNECTED #		
+		# IF C_MEMBER_NOTCONNECTED #		
 		<script type="text/javascript">
 		<!--
 		function check_conect(){
@@ -39,7 +39,7 @@
 				<p style="margin:0;margin-top:5px;">
 					{U_REGISTER}
 					<br />
-					<a class="small_link" href="../member/forget.php">{L_FORGOT_PASS}</a>
+					<a class="small_link" href="../member/forget.php"><img src="../templates/{THEME}/images/forget_mini.png" alt="" class="valign_middle" /> {L_FORGOT_PASS}</a>
 				</p>
 			</div>		
 			<div class="module_mini_bottom">
@@ -49,7 +49,7 @@
 		# ENDIF #		
 		
 		
-		# IF C_CONNECTED #		
+		# IF C_MEMBER_CONNECTED #		
 		<div class="module_mini_container">
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_PROFIL}</h5>
@@ -60,7 +60,7 @@
 					<li>{U_MEMBER_MP}</li>
 					{U_ADMIN}
 					{U_MODO}
-					<li><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> <a href="../member/member.php?disconnect=true" class="small_link">{L_DISCONNECT}</a></li>
+					<li><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> <a href="{U_DISCONNECT}" class="small_link">{L_DISCONNECT}</a></li>
 				</ul>
 			</div>
 			<div class="module_mini_bottom">

@@ -8,20 +8,9 @@
 			}
 			return true;
 		}
-		function check_select_multiple_ranks(id, start)
+		function check_select_multiple_ext(id, status)
 		{
-			var i;
-			for(i = start; i <= 3; i++)
-			{
-				if( document.getElementById(id + i) )
-					document.getElementById(id + i).selected = true;
-			}
-		}
-		function check_select_multiple(id, status)
-		{
-			var i;
-			
-			for(i = 0; i < {NBR_EXTENSIONS}; i++)
+			for(var i = 0; i < {NBR_EXTENSIONS}; i++)
 			{	
 				if( document.getElementById(id + i) )
 					document.getElementById(id + i).selected = status;			
@@ -53,7 +42,7 @@
 					<dl> 
 						<dt><label>* {L_AUTH_FILES}</label></dt>
 						<dd><label>{AUTH_FILES}</label></dd>
-					<dl>
+					</dl>
 					<dl> 
 						<dt><label for="size_limit">* {L_SIZE_LIMIT}</label></dt>
 						<dd><label><input type="text" size="3" id="size_limit" name="size_limit" value="{SIZE_LIMIT}" class="text" /> {L_MB}</label></dd>
@@ -73,7 +62,7 @@
 								{AUTH_EXTENSIONS}
 							</select>	
 							<br />
-							<a class="small_link" href="javascript:check_select_multiple('ext', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('ext', false);">{L_SELECT_NONE}</a>							
+							<a class="small_link" href="javascript:check_select_multiple_ext('ext', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple_ext('ext', false);">{L_SELECT_NONE}</a>							
 						</label></dd>
 					<dl>
 					<dl> 

@@ -38,13 +38,12 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 	$user_pm = ($Member->Get_attribute('user_pm') >= 1) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/new_pm.gif"  class="valign_middle" alt="" /> <a href="../member/pm' . transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php') . '" class="small_link">' . $Member->Get_attribute('user_pm') . ' ' . $l_message . '</a>' : '<img src="../templates/' . $CONFIG['theme'] . '/images/pm_mini.png" alt="" class="valign_middle" /> <a href="../member/pm' . transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php') . '" class="small_link">' . $LANG['connect_private_message'] . '</a>';
 	
 	$Template->Assign_vars(array(
-		'C_CONNECTED' => true,
-		'C_DISCONNECTED' => false,
 		'THEME' => $CONFIG['theme'],
 		'U_MEMBER_ID' => transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', '-' . $Member->Get_attribute('user_id') . '.php?view=1'),
 		'U_MEMBER_MP' => $user_pm,
 		'U_ADMIN' => $Member->Check_level(ADMIN_LEVEL) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/ranks_mini.png" alt="" style="vertical-align:middle" /> <a href="../admin/admin_index.php" class="small_link">' . $LANG['admin_panel'] . '</a></li>' : '',
 		'U_MODO' => $Member->Check_level(MODO_LEVEL) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/modo_mini.png" alt="" style="vertical-align:middle" /> <a href="../member/moderation_panel.php" class="small_link">' . $LANG['modo_panel'] . '</a></li>' : '',
+		'U_DISCONNECT' => (QUERY_STRING != '') ? '?disconnect=true&amp;' . str_replace('&', '&amp;', QUERY_STRING) : '?disconnect=true',
 		'L_PROFIL' => $LANG['profil'],
 		'L_PRIVATE_PROFIL' => $LANG['connect_private_profil'],
 		'L_DISCONNECT' => $LANG['disconnect']
@@ -59,15 +58,13 @@ else
 	));
 	
 	$Template->Assign_vars(array(
-		'C_CONNECTED' => false,
-		'C_DISCONNECTED' => true,
-		'U_CONNECT' => (QUERY_STRING != '') ? '?' . QUERY_STRING : '',
+		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) : '',
 		'L_CONNECT' => $LANG['connect'],
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_PASSWORD' => $LANG['password'],
 		'L_AUTOCONNECT' => $LANG['autoconnect'],
 		'L_FORGOT_PASS' => $LANG['forget_pass'],
-		'U_REGISTER' => $CONFIG_MEMBER['activ_register'] ? '<a href="../member/register.php">' . $LANG['register'] . '</a>' : ''
+		'U_REGISTER' => $CONFIG_MEMBER['activ_register'] ? '<a class="small_link" href="../member/register.php"><img src="../templates/' . $CONFIG['theme'] . '/images/register_mini.png" alt="" class="valign_middle" /> ' . $LANG['register'] . '</a>' : ''
 	));
 	
 	$Template->Pparse('connect_mini'); 

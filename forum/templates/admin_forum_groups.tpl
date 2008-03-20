@@ -35,35 +35,6 @@
 		</div>
 
 		<div id="admin_contents">
-			
-
-			<script type="text/javascript">
-			<!--
-				function check_select_multiple(id, status)
-				{
-					var i;		
-					for(i = -1; i <= 3; i++)
-					{
-						if( document.getElementById(id + 'r' + i) )
-							document.getElementById(id + 'r' + i).selected = status;
-					}
-					for(i = 0; i < {NBR_GROUP}; i++)
-					{	
-						if( document.getElementById(id + 'g' + i) )
-							document.getElementById(id + 'g' + i).selected = status;		
-					}	
-				}	
-				function check_select_multiple_ranks(id, start)
-				{
-					var i;				
-					for(i = start; i <= 3; i++)
-					{	
-						if( document.getElementById(id + i) )
-							document.getElementById(id + i).selected = true;			
-					}
-				}		
-			-->
-			</script>
 			<form action="admin_forum_groups.php" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_FORUM_GROUPS}</legend>

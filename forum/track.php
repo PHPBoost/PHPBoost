@@ -195,7 +195,6 @@ elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s
 		'L_DELETE' => $LANG['delete'],	
 		'L_MAIL' => $LANG['mail'],	
 		'L_PM' => $LANG['pm'],
-		'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read_favorite'],
 		'L_EXPLAIN_TRACK' => $LANG['explain_track'],
 		'L_TOPIC' => $l_topic,
 		'L_MESSAGE' => $LANG['replies'],

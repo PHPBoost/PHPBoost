@@ -9,31 +9,6 @@
 			    }		
 				return true;
 			}
-			function check_select_multiple_ranks(id, start)
-			{
-				var i;
-				for(i = start; i <= 3; i++)
-				{
-					if( document.getElementById(id + i) )
-						document.getElementById(id + i).selected = true;
-				}
-			}
-			function check_select_multiple(id, status)
-			{
-				var i;		
-				for(i = -1; i <= 2; i++)
-				{
-					if( document.getElementById(id + 'r' + i) )
-						document.getElementById(id + 'r' + i).selected = status;
-				}				
-				document.getElementById(id + 'r3').selected = true;
-				
-				for(i = 0; i < {NBR_GROUP}; i++)
-				{	
-					if( document.getElementById(id + 'g' + i) )
-						document.getElementById(id + 'g' + i).selected = status;		
-				}	
-			}	
 			function change_icon(img_path)
 			{
 				document.getElementById('icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign_middle" />';

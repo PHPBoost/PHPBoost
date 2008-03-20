@@ -47,8 +47,6 @@
 		//Affiche le bloc.
 		function forum_display_block(divID)
 		{
-			var i;
-			
 			if( timeout_forum )
 				clearTimeout(timeout_forum);
 			
@@ -72,9 +70,7 @@
 		function forum_hide_block(forumid, stop)
 		{
 			if( stop && timeout_forum )
-			{	
 				clearTimeout(timeout_forum);
-			}
 			else if( displayed_forum )
 			{
 				clearTimeout(timeout_forum);
@@ -89,7 +85,17 @@
 			<div class="forum_title_r"></div>
 			<div class="forum_title">
 				<div style="padding:10px;">
-					<span style="float:left;"><h2>{FORUM_NAME}</h2></span>
+					<span style="float:left;">
+						<h2>{FORUM_NAME}</h2>
+						# IF C_FORUM_CONNEXION #
+							# IF C_MEMBER_NOTCONNECTED #
+							<a class="small_link" href="../member/error.php"><img src="../templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <a class="small_link" href="../member/register.php"><img src="../templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
+							# ENDIF #
+							# IF C_MEMBER_CONNECTED #
+								<a class="small_link" href="?disconnect=true"><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a>
+							# ENDIF #						
+						# ENDIF #						
+					</span>
 					<span style="float:right;text-align:right">
 						<form action="search.php{SID}" method="post">
 							<label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." class="text" style="background:#FFFFFF url(../templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></label>

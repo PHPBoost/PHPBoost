@@ -373,7 +373,7 @@ $LANG['explain_archive_upload'] = 'L\'archive uploadée doit être au format zip o
 
 //Gestion des fichiers
 $LANG['auth_files'] = 'Autorisation requise pour l\'activation de l\'interface de fichiers';
-$LANG['size_limit'] = 'Taille maximuale des uploads autorisés aux membres';
+$LANG['size_limit'] = 'Taille maximale des uploads autorisés aux membres';
 $LANG['bandwidth_protect'] = 'Protection de la bande passante';
 $LANG['bandwidth_protect_explain'] = 'Interdiction d\'accès aux fichiers du répertoire upload depuis un autre serveur';
 $LANG['auth_extensions'] = 'Extensions autorisées';

@@ -368,7 +368,7 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_auth)
 {
 	var selectid = document.getElementById('members_auth' + searchid);
-	for(var i = 0; i < selectid.length; i++) 
+	for(var i = 0; i < selectid.length; i++) //Vérifie que le membre n'est pas déjà dans la liste.
 	{
 		if( selectid[i].value == user_id )
 		{
@@ -376,7 +376,39 @@ function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_
 			return;
 		}
 	}
+	if( document.getElementById('advanced_auth3' + searchid) ) //Ajout du membre.
+		document.getElementById('advanced_auth3' + searchid).innerHTML += '<option value="' + user_id + '" id="' + searchid + 'm' + (selectid.length - 1) + '" selected="selected">' + login + '</option>';
+}
 
-	if( document.getElementById('advanced_auth3' + searchid) )
-		document.getElementById('advanced_auth3' + searchid).innerHTML += '<option value="' + user_id + '" selected="selected">' + login + '</option>';
+//Sélection des formulaires.
+function check_select_multiple(id, status)
+{
+	var i;	
+
+	//Sélection des groupes.
+	var selectidgroups = document.getElementById('groups_auth' + id);
+	for(i = 0; i < selectidgroups.length; i++)
+	{	
+		if( selectidgroups[i] )
+			selectidgroups[i].selected = status;
+	}
+	
+	//Sélection des membres.
+	var selectidmember = document.getElementById('members_auth' + id);
+	for(i = 0; i < selectidmember.length; i++)
+	{	
+		if( selectidmember[i] )
+			selectidmember[i].selected = status;
+	}	
+}
+
+//Sélection auto des rangs supérieur à celui cliqué.
+function check_select_multiple_ranks(id, start)
+{
+	var i;				
+	for(i = start; i <= 2; i++)
+	{	
+		if( document.getElementById(id + i) )
+			document.getElementById(id + i).selected = true;			
+	}
 }

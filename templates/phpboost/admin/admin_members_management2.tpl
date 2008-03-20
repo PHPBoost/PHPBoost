@@ -114,9 +114,7 @@
 			<!--
 			function check_select_multiple(id, status)
 			{
-				var i;
-				
-				for(i = 0; i < {members_management.NBR_GROUP}; i++)
+				for(var i = 0; i < {members_management.NBR_GROUP}; i++)
 				{	
 					if( document.getElementById(id + i) )
 						document.getElementById(id + i).selected = status;			
@@ -208,9 +206,7 @@
 								# END members_management.select_group #						
 							</select>
 							<br />
-							<a href="javascript:check_select_multiple('g', true);">{L_SELECT_ALL}</a>
-							&nbsp;/&nbsp;
-							<a href="javascript:check_select_multiple('g', false);">{L_SELECT_NONE}</a>
+							<a class="small_link" href="javascript:check_select_multiple('g', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('g', false);">{L_SELECT_NONE}</a>
 						</label></dd>
 					</dl>	
 					<dl>

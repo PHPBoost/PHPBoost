@@ -200,9 +200,7 @@
 					<!--
 						function check_select_multiple(status)
 						{
-							var i;
-
-							for(i = 0; i < {NBR_TABLES}; i++)
+							for(var i = 0; i < {NBR_TABLES}; i++)
 							{
 								if( document.getElementById(i) )
 									document.getElementById(i).selected = status;
