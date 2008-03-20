@@ -35,7 +35,9 @@ $autoconnexion = !empty($_POST['auto']) ? true : false;
 if( !empty($_GET['disconnect']) )
 {
 	$Session->Session_end();
-	redirect(get_start_page());
+
+	//Redirection avec les variables de session dans l'url.
+	redirect(HOST . SCRIPT . '?' . str_replace('disconnect=true', '', QUERY_STRING));
 }
 elseif( !empty($_POST['connect']) && !empty($login) && !empty($password) ) //Création de la session.
 {

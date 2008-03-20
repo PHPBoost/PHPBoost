@@ -60,6 +60,7 @@ $LANG['time_new_msg_explain'] = 'A régler suivant le nombre de messages par jour
 $LANG['topic_track_max'] = 'Nombre maximum possible de sujets en favoris';
 $LANG['topic_track_max_explain'] = 'Par défaut 40';
 $LANG['edit_mark'] = 'Marqueurs d\'édition des messages';
+$LANG['forum_display_connexion'] = 'Afficher le formulaire de connexion';
 $LANG['no_left_column'] = 'Masquer les blocs de gauche du site sur le forum';
 $LANG['no_right_column'] = 'Masquer les blocs de droite du site sur le forum';
 $LANG['activ_display_msg'] = 'Activer le message devant le topic';
@@ -97,8 +98,6 @@ $LANG['alert_move_topic'] = 'Déplacer ce Sujet ?';
 $LANG['alert_warning'] = 'Avertir ce membre?';
 $LANG['alert_history'] = 'Supprimer l\'historique?';
 $LANG['confirm_mark_as_read'] = 'Marquer tous les sujets comme lus?';
-$LANG['confirm_mark_as_read_forum'] = 'Marquer les sujets de ce forum comme lus?';
-$LANG['confirm_mark_as_read_favorite'] = 'Marquer les sujets favoris comme lus?';
 
 //Titres
 $LANG['title_forum'] = 'Forum';

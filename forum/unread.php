@@ -64,6 +64,10 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 	}
 	
+	//Catégorie pour laquelle il faut afficher les messages non lus.
+	$idcat_unread = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
+	$clause_cat = !empty($idcat_unread) ? "c.id BETWEEN '" . $CAT_FORUM[$idcat_unread]['id_left'] . "' AND '" . $CAT_FORUM[$idcat_unread]['id_right'] . "' AND " : '';
+	
 	$result = $Sql->Query_while("SELECT c.id as cid, m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 	FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
@@ -72,7 +76,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $Member->Get_attribute('user_id') . "'
 	LEFT JOIN ".PREFIX."member m1 ON m1.user_id = t.user_id
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = t.last_user_id
-	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "
+	WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "
 	ORDER BY t.last_timestamp DESC 
 	" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
@@ -165,8 +169,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 		'L_MESSAGE' => $LANG['replies'],
 		'L_ANSWERS' => $LANG['answers'],
 		'L_VIEW' => $LANG['views'],
-		'L_LAST_MESSAGE' => $LANG['last_message'],
-		'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read_forum']
+		'L_LAST_MESSAGE' => $LANG['last_message']
 	));	
 
 	//Listes les utilisateurs en lignes.	

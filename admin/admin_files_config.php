@@ -71,7 +71,7 @@ else
 	
 	$Cache->Load_file('files');
 	
-	$CONFIG_FILES['auth_extensions'] = isset($CONFIG_FILES['auth_extensions']) ? $CONFIG_FILES['auth_extensions'] : array();
+	$CONFIG_FILES['auth_extensions'] = is_array($CONFIG_FILES['auth_extensions']) ? $CONFIG_FILES['auth_extensions'] : array();
 	$array_ext_sup = $CONFIG_FILES['auth_extensions'];
 	$array_extensions_type = array(
 		$LANG['files_image'] => array('jpg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico'),

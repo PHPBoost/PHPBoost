@@ -55,13 +55,14 @@ $LANG['nbr_topic_p'] = 'Number of topic per page';
 $LANG['nbr_topic_p_explain'] = 'Default 20';
 $LANG['nbr_msg_p'] = 'Number of messages per page';
 $LANG['nbr_msg_p_explain'] = 'Default 15';
-$LANG['time_new_msg'] = 'Length for which the messages read by the members are stored';
+$LANG['time_new_msg'] = 'Duration for which the messages read by the members are stored';
 $LANG['time_new_msg_explain'] = 'To adjust according to the number of messages per day, by default 30 days';
-$LANG['topic_track_max'] = 'Favorite topics max number';
+$LANG['topic_track_max'] = 'Favorites topics max number';
 $LANG['topic_track_max_explain'] = 'Default 40';
 $LANG['edit_mark'] = 'Messages edition markers';
-$LANG['no_left_column'] = 'Hide left column on the forum';
-$LANG['no_right_column'] = 'Hide right column on the forum';
+$LANG['forum_display_connexion'] = 'Display connexion formular';
+$LANG['no_left_column'] = 'Hide left column menu on the forum';
+$LANG['no_right_column'] = 'Hide right column menu on the forum';
 $LANG['activ_display_msg'] = 'Active message in front of topic';
 $LANG['display_msg'] = 'Message before the topic title';
 $LANG['explain_display_msg'] = 'Message explanation for members';
@@ -97,8 +98,6 @@ $LANG['alert_move_topic'] = 'Move this Topic ?';
 $LANG['alert_warning'] = 'Warning this member?';
 $LANG['alert_history'] = 'Delete history?';
 $LANG['confirm_mark_as_read'] = 'Mark all topics as read?';
-$LANG['confirm_mark_as_read_forum'] = 'Mark topics of this forum as read';
-$LANG['confirm_mark_as_read_favorite'] = 'Mark tracked topics as read';
 
 //Titres
 $LANG['title_forum'] = 'Forum';

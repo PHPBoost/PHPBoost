@@ -152,7 +152,6 @@ $Template->Assign_vars(array(
 	'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php') . '">' . (($CONFIG_FORUM['activ_display_msg'] && $topic['display_msg']) ? $CONFIG_FORUM['display_msg'] . ' ' : '') . ucfirst($topic['title']) . '</a>',
 	'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 	'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
-	'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read_forum'],
 	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'L_QUOTE' => $LANG['quote'],
 	'L_RESPOND' => $LANG['respond'],

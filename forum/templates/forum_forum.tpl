@@ -69,7 +69,11 @@
 				<span style="float:left;">
 					<a href="rss.php?cat={IDCAT}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT} {U_POST_NEW_SUBJECT}
 				</span>
-				<span style="float:right;">{PAGINATION}</span>&nbsp;
+				<span style="float:right;">
+				# IF IDCAT #
+				<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /></a> 
+				# ENDIF #
+				{PAGINATION}</span>&nbsp;
 			</div>
 			<div class="module_contents forum_contents">
 				<table class="module_table" style="width:100%">

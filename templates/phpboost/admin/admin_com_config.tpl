@@ -56,7 +56,7 @@
 								# END select_auth #
 							</select>
 						</label></dd>
-					<dl>
+					</dl>
 					<dl> 
 						<dt><label for="com_popup">* {L_VIEW_COM}</label></dt>
 						<dd>

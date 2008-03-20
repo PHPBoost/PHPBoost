@@ -46,6 +46,7 @@ if( !empty($_POST['valid']) )
 	$CONFIG_FORUM['view_time'] = !empty($_POST['view_time']) ? (numeric($_POST['view_time']) * 3600 * 24) : (30 * 3600 * 24);
 	$CONFIG_FORUM['topic_track'] = !empty($_POST['topic_track']) ? numeric($_POST['topic_track']) : '40';
 	$CONFIG_FORUM['edit_mark'] = !empty($_POST['edit_mark']) ? numeric($_POST['edit_mark']) : 0;
+	$CONFIG_FORUM['display_connexion'] = !empty($_POST['display_connexion']) ? numeric($_POST['display_connexion']) : 0;
 	$CONFIG_FORUM['no_left_column'] = !empty($_POST['no_left_column']) ? numeric($_POST['no_left_column']) : 0;
 	$CONFIG_FORUM['no_right_column'] = !empty($_POST['no_right_column']) ? numeric($_POST['no_right_column']) : 0;
 	$CONFIG_FORUM['activ_display_msg']  = !empty($_POST['activ_display_msg']) ? numeric($_POST['activ_display_msg']) : 0;
@@ -107,6 +108,7 @@ else
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$CONFIG_FORUM['edit_mark'] = isset($CONFIG_FORUM['edit_mark']) ? $CONFIG_FORUM['edit_mark'] : 0;
+	$CONFIG_FORUM['display_connexion'] = isset($CONFIG_FORUM['display_connexion']) ? $CONFIG_FORUM['display_connexion'] : 0;
 	$CONFIG_FORUM['no_left_column'] = isset($CONFIG_FORUM['no_left_column']) ? $CONFIG_FORUM['no_left_column'] : 0;
 	$CONFIG_FORUM['no_right_column'] = isset($CONFIG_FORUM['no_right_column']) ? $CONFIG_FORUM['no_right_column'] : 0;
 	$CONFIG_FORUM['activ_display_msg'] = isset($CONFIG_FORUM['activ_display_msg']) ? $CONFIG_FORUM['activ_display_msg'] : 0;
@@ -122,6 +124,8 @@ else
 		'TOPIC_TRACK_MAX' => !empty($CONFIG_FORUM['topic_track']) ? $CONFIG_FORUM['topic_track'] : '40',	
 		'EDIT_MARK_ENABLED' => ($CONFIG_FORUM['edit_mark'] == 1) ? 'checked="checked"' : '',
 		'EDIT_MARK_DISABLED' => ($CONFIG_FORUM['edit_mark'] == 0) ? 'checked="checked"' : '',
+		'DISPLAY_CONNEXION_ENABLED' => ($CONFIG_FORUM['display_connexion'] == 1) ? 'checked="checked"' : '',
+		'DISPLAY_CONNEXION_DISABLED' => ($CONFIG_FORUM['display_connexion'] == 0) ? 'checked="checked"' : '',
 		'NO_LEFT_COLUMN_ENABLED' => ($CONFIG_FORUM['no_left_column'] == 1) ? 'checked="checked"' : '',
 		'NO_LEFT_COLUMN_DISABLED' => ($CONFIG_FORUM['no_left_column'] == 0) ? 'checked="checked"' : '',
 		'NO_RIGHT_COLUMN_ENABLED' => ($CONFIG_FORUM['no_right_column'] == 1) ? 'checked="checked"' : '',
@@ -153,6 +157,7 @@ else
 		'L_TOPIC_TRACK_MAX' => $LANG['topic_track_max'],
 		'L_TOPIC_TRACK_MAX_EXPLAIN' => $LANG['topic_track_max_explain'],
 		'L_EDIT_MARK' => $LANG['edit_mark'],
+		'L_DISPLAY_CONNEXION' => $LANG['forum_display_connexion'],
 		'L_NO_LEFT_COLUMN' => $LANG['no_left_column'],
 		'L_NO_RIGHT_COLUMN' => $LANG['no_right_column'],
 		'L_ACTIV_DISPLAY_MSG' => $LANG['activ_display_msg'],

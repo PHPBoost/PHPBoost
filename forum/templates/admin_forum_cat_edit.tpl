@@ -13,7 +13,7 @@
 			var disabled = {DISABLED};				
 			function check_select_multiple_ranks(id, start)
 			{
-				if( !disabled || id == 'rr' )			
+				if( !disabled || id == '1r' )			
 				{
 					id_select = id.replace(/(.*)r/g, '$1');
 					check_select_multiple(id_select, false);
@@ -25,72 +25,72 @@
 					}
 				}
 			}
-			function check_select_multiple(id, status)
-			{
-				var i;		
-				for(i = -1; i <= 2; i++)
-				{
-					if( document.getElementById(id + 'r' + i) )
-						document.getElementById(id + 'r' + i).selected = status;
-				}				
-				document.getElementById(id + 'r3').selected = true;
-				
-				for(i = 0; i < {NBR_GROUP}; i++)
-				{	
-					if( document.getElementById(id + 'g' + i) )
-						document.getElementById(id + 'g' + i).selected = status;		
-				}	
-			}	
 			function change_parent_cat(value)
 			{			
 				if( value > 0 )
 				{
 					disabled = 0;
+
 					var i;
-					var array_id = new Array('wr', 'xr', 'wg', 'xg');
-					for(j = 0; j <= 3; j++)
+					for(id = 2; id <= 4; id++)
 					{
-						for(i = -1; i <= 2; i++)
+						if( id == 3 )
+							id++;
+							
+						//Sélection des groupes.
+						var selectidgroups = document.getElementById('groups_auth' + id);
+						for(i = 0; i < selectidgroups.length; i++)
 						{	
-							if( document.getElementById(array_id[j] + i) )
-								document.getElementById(array_id[j] + i).disabled = '';
+							if( selectidgroups[i] )
+								selectidgroups[i].disabled = '';
 						}
-						for(i = 0; i < {NBR_GROUP}; i++)
+						
+						//Sélection des membres.
+						var selectidmember = document.getElementById('members_auth' + id);
+						for(i = 0; i < selectidmember.length; i++)
 						{	
-							if( document.getElementById(array_id[j] + i) )
-								document.getElementById(array_id[j] + i).disabled = '';	
+							if( selectidmember[i] )
+								selectidmember[i].disabled = '';
 						}
 					}
-					document.getElementById('wr1').selected = true;
-					document.getElementById('wr2').selected = true;
-					document.getElementById('wr3').selected = true;
-					document.getElementById('xr2').selected = true;
-					document.getElementById('xr3').selected = true;
+					document.getElementById('2r1').selected = true;
+					document.getElementById('2r2').selected = true;
+					document.getElementById('2r3').selected = true;
+					document.getElementById('4r2').selected = true;
+					document.getElementById('4r3').selected = true;
 				}
 				else
 				{
-					document.getElementById('wr3').selected = false;
-					document.getElementById('xr3').selected = false;
+					document.getElementById('2r3').selected = false;
+					document.getElementById('4r3').selected = false;
 					disabled = 1;
 					var i;
-					var array_id = new Array('wr', 'xr', 'wg', 'xg');
-					for(j = 0; j <= 3; j++)
+					
+					for(id = 2; id <= 4; id++)
 					{
-						for(i = -1; i <= 2; i++)
+						if( id == 3 )
+							id++;
+							
+						//Sélection des groupes.
+						var selectidgroups = document.getElementById('groups_auth' + id);
+						for(i = 0; i < selectidgroups.length; i++)
 						{	
-							if( document.getElementById(array_id[j] + i) )
-							{
-								document.getElementById(array_id[j] + i).disabled = 'disabled';	
-								document.getElementById(array_id[j] + i).selected = '';
-							}		
+							if( selectidgroups[i] )
+							{	
+								selectidgroups[i].disabled = 'disabled';
+								selectidgroups[i].selected = false;
+							}
 						}
-						for(i = 0; i < {NBR_GROUP}; i++)
+						
+						//Sélection des membres.
+						var selectidmember = document.getElementById('members_auth' + id);
+						for(i = 0; i < selectidmember.length; i++)
 						{	
-							if( document.getElementById(array_id[j] + i) )
+							if( selectidmember[i] )
 							{
-								document.getElementById(array_id[j] + i).disabled = 'disabled';	
-								document.getElementById(array_id[j] + i).selected = '';
-							}			
+								selectidmember[i].disabled = 'disabled';
+								selectidmember[i].selected = false;
+							}
 						}
 					}
 				}

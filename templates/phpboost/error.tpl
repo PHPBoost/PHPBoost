@@ -30,19 +30,14 @@
 					<br />	
 					# ENDIF #
 					
-					<label>{L_PSEUDO}
-					<input size="15" type="text" class="text" id="login_error" name="login" maxlength="25" /></label>
-					<br />
-					<label>{L_PASSWORD}
-					<input size="15" type="password" name="password" id="password_error" class="text" maxlength="30" /></label>
-					<br />
-					<label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked" />
-					<br /><br />
-					<input type="submit" name="connect" value="{L_CONNECT}" class="submit" /></label>
+					<p style="margin:2px;"><label>{L_PSEUDO} <input size="15" type="text" class="text" id="login_error" name="login" maxlength="25" /></label></p>
+					<p style="margin:2px;"><label>{L_PASSWORD}	<input size="15" type="password" name="password" id="password_error" class="text" maxlength="30" /></label></p>
+					<p style="margin:2px;"><label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked" /></label></p>
+					<p style="margin:5px;"><input type="submit" name="connect" value="{L_CONNECT}" class="submit" /></p>
 					
-					<br /><br />
+					<br />
 					{U_REGISTER}
-					<a href="../member/forget.php">{L_FORGOT_PASS}</a>	
+					<a href="../member/forget.php"><img src="../templates/{THEME}/images/forget_mini.png" alt="" class="valign_middle" />  {L_FORGOT_PASS}</a>	
 				</div>
 				<div class="module_bottom_l"></div>		
 				<div class="module_bottom_r"></div>

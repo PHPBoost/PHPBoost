@@ -20,39 +20,9 @@
 		</div>
 		
 		<div id="admin_contents">
-		
-			# START main #	
-				<script type="text/javascript">
-				<!--
-					function check_select_multiple(id, status)
-					{
-						var i;		
-						for(i = -1; i <= 2; i++)
-						{
-							if( document.getElementById(id + 'r' + i) )
-								document.getElementById(id + 'r' + i).selected = status;
-						}				
-						document.getElementById(id + 'r3').selected = true;
-						
-						for(i = 0; i < {main.NBR_GROUP}; i++)
-						{	
-							if( document.getElementById(id + 'g' + i) )
-								document.getElementById(id + 'g' + i).selected = status;		
-						}	
-					}
-					function check_select_multiple_ranks(id, start)
-					{
-						var i;				
-						for(i = start; i <= 2; i++)
-						{	
-							if( document.getElementById(id + i) )
-								document.getElementById(id + i).selected = true;			
-						}
-					}
-				-->
-				</script>
+			# IF C_MODULES_LIST #	
 				<form action="admin_modules.php?uninstall=1" method="post">
-					<table class="module_table">
+					<table class="module_table" style="width:99%">
 						<tr> 
 							<th colspan="5">
 								{L_MODULES_INSTALLED}
@@ -71,71 +41,61 @@
 						</tr>
 						# ENDIF #
 					
-						# START main.modules_installed #
+						# IF C_MODULES_INSTALLED #
 						<tr>
-							<td class="row2" style="width:150px;text-align:center;">
+							<td class="row2" style="width:100px;text-align:center;">
 								{L_NAME}
 							</td>
 							<td class="row2" style="text-align:center;">
 								{L_DESC}
 							</td>
-							<td class="row2" style="width:100px;text-align:center;">
+							<td class="row2" style="width:50px;text-align:center;">
 								{L_ACTIV}
 							</td>
-							<td class="row2" style="width:270px;text-align:center;">
+							<td class="row2" style="width:200px;text-align:center;">
 								{L_AUTH_ACCESS}
 							</td>
 							<td class="row2" style="width:80px;text-align:center;">
 								{L_UNINSTALL}
 							</td>
 						</tr>
-						# END main.modules_installed #
-						# START main.no_module_installed #
+						# ENDIF #
+						# IF C_NO_MODULE_INSTALLED #
 						<tr>
 							<td class="row2" colspan="4" style="text-align:center;">
 								<strong>{L_NO_MODULES_INSTALLED}</strong>
 							</td>
 						</tr>
-						# END main.no_module_installed #
-						
+						# ENDIF #
 
-						# START main.installed #
+						# START installed #
 						<tr> 	
-							<td class="row2">					
-								<span id="m{main.installed.ID}"></span>
-								<img class="valign_middle" src="../{main.installed.ICON}/{main.installed.ICON}.png" alt="" /> <strong>{main.installed.NAME}</strong> <em>({main.installed.VERSION})</em>
+							<td class="row2" style="text-align:center;">					
+								<span id="m{installed.ID}"></span>
+								<img class="valign_middle" src="../{installed.ICON}/{installed.ICON}.png" alt="" /><br />
+								<strong>{installed.NAME}</strong> <em>({installed.VERSION})</em>
 							</td>
 							<td class="row2">	
-								<strong>{L_AUTHOR}:</strong> {main.installed.AUTHOR} {main.installed.AUTHOR_WEBSITE}<br />
-								<strong>{L_DESC}:</strong> {main.installed.DESC}<br />
-								<strong>{L_COMPAT}:</strong> PHPBoost {main.installed.COMPAT}<br />
-								<strong>{L_ADMIN}:</strong> {main.installed.ADMIN}<br />
-								<strong>{L_USE_SQL}:</strong> {main.installed.USE_SQL} <em>{main.installed.SQL_TABLE}</em><br />
-								<strong>{L_USE_CACHE}:</strong> {main.installed.USE_CACHE}<br />
-								<strong>{L_ALTERNATIVE_CSS}:</strong> {main.installed.ALTERNATIVE_CSS}<br />
+								<strong>{L_AUTHOR}:</strong> {installed.AUTHOR} {installed.AUTHOR_WEBSITE}<br />
+								<strong>{L_DESC}:</strong> {installed.DESC}<br />
+								<strong>{L_COMPAT}:</strong> PHPBoost {installed.COMPAT}<br />
+								<strong>{L_ADMIN}:</strong> {installed.ADMIN}<br />
+								<strong>{L_USE_SQL}:</strong> {installed.USE_SQL} <em>{installed.SQL_TABLE}</em><br />
+								<strong>{L_USE_CACHE}:</strong> {installed.USE_CACHE}<br />
+								<strong>{L_ALTERNATIVE_CSS}:</strong> {installed.ALTERNATIVE_CSS}<br />
 							</td>
 							<td class="row2">								
-								<input type="radio" name="activ{main.installed.ID}" value="1" {main.installed.ACTIV_ENABLED} /> {L_YES}
-								<input type="radio" name="activ{main.installed.ID}" value="0" {main.installed.ACTIV_DISABLED} /> {L_NO}
+								<input type="radio" name="activ{installed.ID}" value="1" {installed.ACTIV_ENABLED} /> {L_YES}
+								<input type="radio" name="activ{installed.ID}" value="0" {installed.ACTIV_DISABLED} /> {L_NO}
 							</td>
-							<td class="row2" style="text-align:center;">								
-								<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-								<br />
-								<select id="groups_auth" name="groups_auth{main.installed.ID}[]" size="8" multiple="multiple" onclick="document.getElementById('{main.installed.ID}r3').selected = true;">
-									# START main.installed.select_group #	
-										{main.installed.select_group.GROUP}
-									# END main.installed.select_group #						
-								</select>
-								<br />
-								<a href="javascript:check_select_multiple('{main.installed.ID}', true);">{L_SELECT_ALL}</a>
-								&nbsp;/&nbsp;
-								<a href="javascript:check_select_multiple('{main.installed.ID}', false);">{L_SELECT_NONE}</a>
+							<td class="row2">							
+								{installed.AUTH_MODULES}			
 							</td>
 							<td class="row2">	
-								<input type="submit" name="{main.installed.ID}" value="{L_UNINSTALL}" class="submit" />
+								<input type="submit" name="{installed.ID}" value="{L_UNINSTALL}" class="submit" />
 							</td>
 						</tr>					
-						# END main.installed #
+						# END installed #
 					</table>
 					
 					<br /><br />
@@ -147,10 +107,10 @@
 						<input type="reset" value="{L_RESET}" class="reset" />
 					</fieldset>
 				</form>
-			# END main #
+			# ENDIF #
 			
 			
-			# START del #				
+			# IF C_MODULES_DEL #				
 				<form action="admin_modules.php?uninstall=1" method="post" class="fieldset_content">
 					<fieldset>
 						<legend>{L_DEL_MODULE}</legend>
@@ -166,10 +126,10 @@
 					</fieldset>		
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
-						<input type="hidden" name="idmodule" value="{del.IDMODULE}" />
+						<input type="hidden" name="idmodule" value="{IDMODULE}" />
 						<input type="submit" name="valid_del" value="{L_SUBMIT}" class="submit" />
 					</fieldset>
 				</form>
-			# END del #
+			# ENDIF #
 		</div>
 		

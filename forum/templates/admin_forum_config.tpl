@@ -102,6 +102,14 @@
 						</dd>
 					</dl>
 					<dl>
+						<dt><label for="display_connexion">{L_DISPLAY_CONNEXION}</label></dt>
+						<dd>
+							<label><input type="radio" {DISPLAY_CONNEXION_ENABLED} name="display_connexion" id="display_connexion" value="1" /> {L_YES}</label>
+							&nbsp;&nbsp; 
+							<label><input type="radio" {DISPLAY_CONNEXION_DISABLED} name="display_connexion" value="0" /> {L_NO}</label>
+						</dd>
+					</dl>
+					<dl>
 						<dt><label for="no_left_column">{L_NO_LEFT_COLUMN}</label></dt>
 						<dd>
 							<label><input type="radio" {NO_LEFT_COLUMN_ENABLED} name="no_left_column" id="no_left_column" value="1" /> {L_YES}</label>

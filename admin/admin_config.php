@@ -189,27 +189,18 @@ elseif( !empty($_POST['advanced']) )
 	
 	if( !empty($CONFIG['server_name']) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit'])  ) //Nom de serveur obligatoire
 	{
-		if( !empty($_POST['rewrite_engine']) && !strpos($_SERVER['SERVER_NAME'], 'free.fr') ) //Activation.
-		{
-			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-			###### Régénération du cache $CONFIG #######
-			$Cache->Generate_file('config');
-			
-			//Régénération du htaccess.
-			$Cache->Generate_htaccess(); 
-		}
-		else
-		{
+		list($host, $dir) = array($CONFIG['server_name'], $CONFIG['server_path']); //Réassignation pour la redirection.
+		if( empty($_POST['rewrite_engine']) || strpos($_SERVER['SERVER_NAME'], 'free.fr') ) //Désctivation de l'url rewriting.
 			$CONFIG['rewrite'] = 0;
-			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-			###### Régénération du cache $CONFIG #######
-			$Cache->Generate_file('config');
 			
-			//Régénération du htaccess.
-			$Cache->Generate_htaccess();
-		}
-	
-		redirect(HOST . DIR . '/admin/admin_config.php?adv=1');
+		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+		###### Régénération du cache $CONFIG #######
+		$Cache->Generate_file('config');
+		
+		//Régénération du htaccess.
+		$Cache->Generate_htaccess();
+			
+		redirect($host . $dir . '/admin/admin_config.php?adv=1');
 	}
 	else
 		redirect(HOST . DIR . '/admin/admin_config.php?adv=1&error=incomplete#errorh');

@@ -105,7 +105,8 @@ if( defined('ALTERNATIVE_CSS') )
 
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
 $THEME = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
-	
+
+$member_connected = $Member->Check_level(MEMBER_LEVEL);
 $Template->Assign_vars(array(
 	'SERVER_NAME' => $CONFIG['site_name'],
 	'SITE_NAME' => $CONFIG['site_name'],
@@ -114,7 +115,8 @@ $Template->Assign_vars(array(
 	'SITE_KEYWORD' => $CONFIG['site_keyword'],
 	'THEME' => $CONFIG['theme'],
 	'ALTERNATIVE_CSS' => $alternative_css,
-	'C_SESSION_MEMBER_CONNECTED' => $Member->Check_level(MEMBER_LEVEL) ? true : false,
+	'C_MEMBER_CONNECTED' => $member_connected ? true : false,
+	'C_MEMBER_NOTCONNECTED' => $member_connected ? false : true,
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],	
 	'L_VISIT' => $LANG['guest_s'],
 	'L_TODAY' => $LANG['today'],

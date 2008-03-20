@@ -39,18 +39,10 @@ if( isset($_POST['valid']) )
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$activ = isset($_POST['activ' . $row['id']]) ? numeric($_POST['activ' . $row['id']]) : '0';
-		$array_auth = array();
-		if( is_array($_POST['groups_auth' . $row['id']]) )
-		{			
-			foreach($_POST['groups_auth' . $row['id']] as $key => $value)
-				$array_auth[$value] = 1;
-		}
-		//Admin tous les droits.
-		$array_auth['r2'] = 1;
+		$array_auth_all = $Group->Return_array_auth_simple(ACCESS_MODULE, $row['id']);
 		
-		$Sql->Query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', auth = '" . securit(serialize($array_auth), HTML_NO_PROTECT) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', auth = '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
-	
 	//Génération du cache des modules
 	$Cache->Generate_file('modules');
 	
@@ -116,10 +108,7 @@ elseif( $uninstall ) //Désinstallation du module
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if( $CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']) )
-			{
-				//Régénération du htaccess.
-				$Cache->Generate_htaccess(); 			
-			}
+				$Cache->Generate_htaccess(); //Régénération du htaccess.	 	
 			
 			//Suppression des fichiers du module
 			if( $drop_files )
@@ -146,13 +135,11 @@ elseif( $uninstall ) //Désinstallation du module
 			'admin_modules_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_modules_management.tpl'
 		));
 		
-		$Template->Assign_block_vars('del', array(			
-			'IDMODULE' => $idmodule
-		));
-		
 		$Template->Assign_vars(array(
+			'C_MODULES_DEL' => true,
 			'THEME' => $CONFIG['theme'],
 			'LANG' => $CONFIG['lang'],
+			'IDMODULE' => $idmodule,
 			'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
 			'L_ADD_MODULES' => $LANG['add_modules'],
 			'L_UPDATE_MODULES' => $LANG['update_modules'],
@@ -173,12 +160,9 @@ else
 	$Template->Set_filenames(array(
 		'admin_modules_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_modules_management.tpl'
 	));
-
-	$Template->Assign_block_vars('main', array(
-		'NBR_GROUP' => $Sql->Count_table('group', __LINE__, __FILE__)
-	));
 	
 	$Template->Assign_vars(array(
+		'C_MODULES_LIST' => true,
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
@@ -229,8 +213,11 @@ else
 		//Récupération des infos de config.
 		$info_module = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
 		
+		//Récupération des tableaux des autorisations et des groupes.
+		$array_auth = !empty($row['auth']) ? unserialize($row['auth']) : array();
+		
 		$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
-		$Template->Assign_block_vars('main.installed', array(
+		$Template->Assign_block_vars('installed', array(
 			'ID' => $row['id'],
 			'NAME' => ucfirst($info_module['name']),
 			'ICON' => $row['name'],
@@ -246,64 +233,20 @@ else
 			'ALTERNATIVE_CSS' => ($info_module['css'] ? $LANG['yes'] : $LANG['no']),	
 			'STARTEABLE_PAGE' => ($info_module['starteable_page'] ? $LANG['yes'] : $LANG['no']),
 			'ACTIV_ENABLED' => ($row['activ'] == 1 ? 'checked="checked"' : ''),
-			'ACTIV_DISABLED' => ($row['activ'] == 0 ? 'checked="checked"' : '')
+			'ACTIV_DISABLED' => ($row['activ'] == 0 ? 'checked="checked"' : ''),
+			'AUTH_MODULES' => $Group->Generate_select_auth(ACCESS_MODULE, $array_auth, array(2 => true), $row['id']),
 		));
-		
-		//Récupération des tableaux des autorisations et des groupes.
-		$array_auth = !empty($row['auth']) ? unserialize($row['auth']) : array();
-
-		$j = 0;
-		//Liste des rangs
-		$Template->Assign_block_vars('main.installed.select_group', array(
-			'GROUP' => '<optgroup label="' . $LANG['ranks'] . '">'
-		));
-		
-		foreach($array_ranks as $idgroup => $group_name)
-		{
-			$selected = '';	
-			if( array_key_exists('r' . $idgroup, $array_auth) )
-				$selected = 'selected="selected"';
-				
-			$selected = ($j == 3) ? 'selected="selected"' : $selected;
-			
-			$Template->Assign_block_vars('main.installed.select_group', array(
-				'GROUP' => '<option value="r' . $idgroup . '" id="' . $row['id'] . 'r' . $j . '" ' . $selected . '" onclick="check_select_multiple_ranks(\'' .  $row['id'] . 'r\', ' . $j . ')">' . $group_name . '</option>'
-			));
-			$j++;
-		}
-		$Template->Assign_block_vars('main.installed.select_group', array(
-			'GROUP' => '</optgroup>'
-		));
-		
-		//Liste des groupes.
-		$j = 0;
-		$Template->Assign_block_vars('main.installed.select_group', array(
-			'GROUP' => '<optgroup label="' . $LANG['groups'] . '">'
-		));
-		foreach($array_groups as $idgroup => $group_name)
-		{
-			$selected = '';		
-			if( array_key_exists($idgroup, $array_auth) )
-				$selected = 'selected="selected"';
-
-			$Template->Assign_block_vars('main.installed.select_group', array(
-				'GROUP' => '<option value="' . $idgroup . '" id="' . $row['id'] . 'g' . $j . '" ' . $selected . '>' . $group_name . '</option>'
-			));
-			$j++;
-		}
-		$Template->Assign_block_vars('main.installed.select_group', array(
-			'GROUP' => '</optgroup>'
-		));
-		
 		$i++;
 	}
 	$Sql->Close($result);
 
 	if( $i == 0 )
-		$Template->Assign_block_vars('main.no_module_installed', array(
+		$Template->Assign_vars(array(
+			'C_NO_MODULE_INSTALLED' => true
 		));
 	else
-		$Template->Assign_block_vars('main.modules_installed', array(
+		$Template->Assign_vars(array(
+			'C_MODULES_INSTALLED' => true
 		));
 	
 	$Template->Pparse('admin_modules_management'); 
