@@ -59,7 +59,8 @@ $Template->Assign_vars(Array(
     'L_WARNING_LENGTH_STRING_SEARCH' => $LANG['warning_length_string_searched'],
     'L_FORMS' => $LANG['forms'],
     'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-    'L_SIMPLE_SEARCH' => $LANG['simple_search']
+    'L_SIMPLE_SEARCH' => $LANG['simple_search'],
+    'U_FORM_VALID' => transid('../search/search.php#results')
 ));
 
 //------------------------------------------------------------- Other includes

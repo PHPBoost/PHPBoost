@@ -97,7 +97,7 @@
                                 eval(xhr_object.responseText);
                                 document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
                                 document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
-                                ChangePagination(0, Math.ceil(nbResults['All'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, 'results' + module, 2, 2);
+                                ChangePagination(0, Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, 'results' + module, 2, 2);
                                 
                                 // Met à jour la liste des résultats affiché, pour ne pas les rechercher
                                 // dans la base de donnée si ils sont déjà dans le html.
