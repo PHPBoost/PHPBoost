@@ -295,7 +295,7 @@ elseif( !empty($idcat) )
 if( isset($_GET['i']) && !empty($idnews) )
 {
 	include_once('../includes/com.class.php'); 
-	$Comments = new Comments('news', $idnews, transid('news.php?cat=0&amp;id=' . $idnews . '&amp;i=%s', 'news-0-' . $idnews . '.php?i=%s'));
+	$Comments = new Comments('news', $idnews, transid('news.php?id=' . $idnews . '&amp;i=%s', 'news-0-' . $idnews . '.php?i=%s'));
 	include_once('../includes/com.php');
 }	
 $Template->Pparse('news');
