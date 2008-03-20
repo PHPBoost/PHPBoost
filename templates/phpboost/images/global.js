@@ -420,7 +420,7 @@ function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
     if ( isCurrentPage )
         pagin += ' pagination_current_page text_strong';
     pagin += '">';
-    pagin += '<a href="javascript:' + fctName + '(' + fctArgs + i + ')">' + textPagin + '</a>';
+    pagin += '<a href="javascript:' + fctName + '(' + i + fctArgs + ')">' + textPagin + '</a>';
     pagin += '</span>&nbsp;';
     
     return pagin;
@@ -428,15 +428,21 @@ function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
 
 // Crée la pagination à partir du nom du bloc de page, du bloc de pagination, du nombre de résultats
 // du nombre de résultats par page ...
-function ChangePagination(blocPagin, blocName, nbPagesBefore, nbPagesAfter, nbPages, page)
+function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbPagesAfter )
 {
     var pagin = '';
+    
+    if( arguments.length < 5 )
+    {
+        nbPagesBefore = 3;
+        nbPagesAfter = 3;
+    }
     
     var before = Math.max(0, page - nbPagesBefore);
     var after = Math.min(nbPages, page + nbPagesAfter + 1);
     
     var fctName = 'ChangePagination';
-    var fctArgs = '\'' + blocPagin + '\', \'' + blocName + '\', ' + nbPagesBefore + ', ' + nbPagesAfter + ', ' + nbPages + ', ';
+    var fctArgs = ', '  + nbPages + ', \'' + blocPagin + '\', \'' + blocName + '\', ' + nbPagesBefore + ', ' + nbPagesAfter;
     
     // Début
     pagin += writePagin(fctName, fctArgs, false, '&laquo;', 0);
