@@ -244,19 +244,15 @@ function load_progress_bar(progressbar_speed_tmp, theme_tmp, progressbar_id_tmp)
 }
 
 //Barre de progression.
-function progress_bar(percent_progress, info_progress)
+function progress_bar(percent_progress, info_progress, result_msg, result_id)
 {
 	bar_progress = (percent_progress * progressbar_size) / 100;
-	if( arguments.length == 4 )
-	{
-		result_id = arguments[3];
-		result_msg = arguments[4];
-	}
-	else
+	if( arguments.length < 4 )
 	{
 		result_id = "";
 		result_msg = "";
-	}	
+	}
+    
 	// Déclaration et initialisation d'une variable statique
 	if( restart_progress )
 	{	
@@ -286,6 +282,7 @@ function progress_bar(percent_progress, info_progress)
 		//Message de fin
 		if( this.percent_begin == progressbar_size && result_id != "" && result_msg != "" )
 			document.getElementById(result_id).innerHTML = result_msg;
+            
 		timeout_progress_bar = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")', progressbar_speed);
 	}
 	else
