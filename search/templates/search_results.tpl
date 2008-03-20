@@ -38,7 +38,7 @@
 		        show_div(RESULTS + module);
 				if( !inArray(module, calculatedResults) )
 				{
-					load_progress_bar(1, '{THEME}', module, 10);
+					load_progress_bar(1, '{THEME}', module, 55);
 		            XMLHttpRequest_search_module(module);
 				}
 			}
@@ -92,7 +92,7 @@
                         {
                             progress_bar(100, "{L_QUERY_SUCCESS}");
                             // Si les résultats sont toujours en cache, on les récupère.
-                            if( xhr_object.responseText != 'NO RESULTS IN CACHE' )
+                            if( xhr_object.responseText != 'SEARCH_ERROR' )
                             {
                                 eval(xhr_object.responseText);
                                 document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
@@ -105,7 +105,7 @@
                             }
                             else // Sinon, on les recalcule, et on les récupère.
                             {
-                                alert('NO RESULTS IN CACHE');
+                                alert('SEARCH_ERROR');
                                 XMLHttpRequest_regenerate_search();
                                 XMLHttpRequest_search_module(module);
                             }
@@ -122,21 +122,21 @@
 		<div id="results" class="module_position">
 		    <div class="module_top_l"></div>
 		    <div class="module_top_r"></div>
-		    <div class="module_top">{SEARCH_RESULTS}
+		    <div class="module_top">{L_SEARCH_RESULTS}
 		        <div id="resultsChoices" class="resultsChoices" style="display:none">
-		            <span>{PRINT}</span>
+		            <span>{L_PRINT}</span>
 		            <select id="ResultsChoice" name="ResultsSelection" onChange="ChangeResults();">
-		                <option value="All">{TITLE_ALL_RESULTS}</option>
+		                <option value="All">{L_TITLE_ALL_RESULTS}</option>
 		                # START results #
-		                    <option value="{results.MODULE_NAME}">---> {results.MODULE_NAME}</option>
+		                    <option value="{results.MODULE_NAME}">---> {results.L_MODULE_NAME}</option>
 		                # END results #
 		            </select>
 		        </div>
 		    </div>
 		    <div class="module_contents">
 		        <div id="ResultsAll" class="results">
-		            <span id="ResultsTitleAll" class="title">{TITLE_ALL_RESULTS}</span><br />
-		            <div id="infosResultsAll" class="infosResults">{NB_RESULTS} {NB_RESULTS_FOUND}</div>
+		            <span id="ResultsTitleAll" class="title">{L_TITLE_ALL_RESULTS}</span><br />
+		            <div id="infosResultsAll" class="infosResults">{NB_RESULTS} {L_NB_RESULTS_FOUND}</div>
 		            <div id="ResultsListAll" class="ResultsList">
                         {ALL_RESULTS}
 		            </div>
@@ -144,7 +144,7 @@
 		        </div>
 		        # START results #
 		            <div id="Results{results.MODULE_NAME}" class="results" style="display:none">
-		                <span id="ResultsTitle{results.MODULE_NAME}" class="title">{results.MODULE_NAME}</span><br />
+		                <span id="ResultsTitle{results.MODULE_NAME}" class="title">{results.L_MODULE_NAME}</span><br />
 		                <div id="infosResults{results.MODULE_NAME}" class="infosResults">
                             <div style="margin:auto;width:500px;"> 
                                 <div id="progress_info{results.MODULE_NAME}" style="text-align:center;"></div>
@@ -159,7 +159,7 @@
 		    </div>
 		    <div class="module_bottom_l"></div>
 		    <div class="module_bottom_r"></div>
-		    <div class="module_bottom" style="text-align:center;">{HITS}</div>
+		    <div class="module_bottom" style="text-align:center;">{L_HITS}</div>
 		</div>
 		<script type="text/javascript">
 		<!--

@@ -3,7 +3,7 @@
 *                               search.inc.php
 *                            -------------------
 *   begin                : february 5, 2008
-*   copyright            : (C) 2008 Rouchon Loï¿½
+*   copyright            : (C) 2008 Rouchon Loïc
 *   email                : horn@phpboost.com
 *
 *
@@ -51,19 +51,19 @@ function GetSearchForms(&$modules, &$args)
 
 function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results, &$idsSearch)
 /**
- *  Exï¿½ute la recherche si les rï¿½ultats ne sont pas dans le cache et
- *  renvoie les rï¿½ultats.
+ *  Exécute la recherche si les résultats ne sont pas dans le cache et
+ *  renvoie les résultats.
  */
 {
     $requests = array();
     $modulesNames = array();
     $modulesOptions = array();
     
-    // Gï¿½ï¿½ation des noms des modules utilisï¿½ et de la chaine options
+    // Generation des noms des modules utilisés et de la chaine options
     foreach($searchModules as $module)
     {
         array_push($modulesNames, $module->name);
-        // enlï¿½e la chaine search de la chaine options et la tronque ï¿½255 caractï¿½es
+        // enleve la chaine search de la chaine options et la tronque a 255 caracteres
         $options = $modulesArgs[$module->name];
         unset($options['search']);
         $modulesOptions[$module->name] = substr(implode('|', $options), 0, 255);
@@ -75,7 +75,7 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
     {
         if( !$Search->IsInCache($module->name) )
         {
-            // On rajoute l'identifiant de recherche comme paramï¿½re pour faciliter la requï¿½e
+            // On rajoute l'identifiant de recherche comme parametre pour faciliter la requete
             $modulesArgs[$module->name]['id_search'] = $Search->id_search[$module->name];
             $requests[$module->name] = $module->Functionnality('GetSearchRequest', $modulesArgs[$module->name]);
         }
@@ -88,7 +88,7 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
 
 function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
 /**
- *  Renvoie yune chaï¿½e contenant les rï¿½ultats
+ *  Renvoie une chanee contenant les resultats
  */
 {
     $i = 0;
@@ -115,7 +115,7 @@ function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
             $htmlResults .= '<div class="result">';
             $htmlResults .= '<span><i>'.$result['relevance'].'</i></span> - ';
             $htmlResults .= '<span><b>'.ucfirst($result['module']).'</b></span> - ';
-            $htmlResults .= '<a href="'.$result['link'].'">'.$result['title'].'</a>';
+            $htmlResults .= '<a href="'.transid($result['link']).'">'.$result['title'].'</a>';
             $htmlResults .= '</div>';
         }
         else $htmlResults .= $module->Functionnality('ParseSearchResult', array($result));

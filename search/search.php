@@ -52,14 +52,14 @@ else
 require_once('../includes/header.php');
 
 $Template->Assign_vars(Array(
-    'TITLE_SEARCH' => TITLE,
-    'SEARCH' => $LANG['title_search'],
+    'L_TITLE_SEARCH' => TITLE,
+    'L_SEARCH' => $LANG['title_search'],
     'TEXT_SEARCHED' => $search,
-    'SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
-    'WARNING_LENGTH_STRING_SEARCH' => $LANG['warning_length_string_searched'],
-    'FORMS' => $LANG['forms'],
-    'ADVANCED_SEARCH' => $LANG['advanced_search'],
-    'SIMPLE_SEARCH' => $LANG['simple_search']
+    'L_SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
+    'L_WARNING_LENGTH_STRING_SEARCH' => $LANG['warning_length_string_searched'],
+    'L_FORMS' => $LANG['forms'],
+    'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
+    'L_SIMPLE_SEARCH' => $LANG['simple_search']
 ));
 
 //------------------------------------------------------------- Other includes
@@ -110,7 +110,8 @@ if( $search != '' )
     {
         $Template->Assign_block_vars('forms', array(
             'MODULE_NAME' => ucfirst($moduleName),
-            'SEARCH_FORM' => $form
+            'L_MODULE_NAME' => ucfirst($moduleName),
+            'L_SEARCH_FORM' => $form
         ));
     }
     
@@ -120,8 +121,10 @@ if( $search != '' )
     
     foreach( $searchModules as $module)
     {
+        $moduleInfos = $module->GetInfo();
         $Template->Assign_block_vars('results', array(
             'MODULE_NAME' => ucfirst($module->name),
+            'L_MODULE_NAME' => ucfirst($moduleInfos['name']),
             'ID_SEARCH' => $idsSearch[$module->name],
         ));
     }
@@ -139,12 +142,12 @@ if( $search != '' )
     
     $Template->Assign_vars(Array(
         'NB_RESULTS_PER_PAGE' => NB_RESULTS_PER_PAGE,
-        'TITLE_ALL_RESULTS' => $LANG['title_all_results'],
-        'RESULTS' => $LANG['results'],
-        'RESULTS_CHOICE' => $LANG['results_choice'],
-        'PRINT' => $LANG['print'],
-        'NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : $LANG['one_result_found'],
-        'SEARCH_RESULTS' => $LANG['search_results'],
+        'L_TITLE_ALL_RESULTS' => $LANG['title_all_results'],
+        'L_RESULTS' => $LANG['results'],
+        'L_RESULTS_CHOICE' => $LANG['results_choice'],
+        'L_PRINT' => $LANG['print'],
+        'L_NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : ($nbResults == 0 ? $LANG['no_results_found'] : $LANG['one_result_found']),
+        'L_SEARCH_RESULTS' => $LANG['search_results'],
         'NB_RESULTS' => $nbResults,
         'ALL_RESULTS' => $allhtmlResult
     ));
