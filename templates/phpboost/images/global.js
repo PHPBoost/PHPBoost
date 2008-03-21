@@ -428,41 +428,43 @@ function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
 function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbPagesAfter )
 {
     var pagin = '';
-    
-    if( arguments.length < 5 )
+    if ( nbPages > 1 )
     {
-        nbPagesBefore = 3;
-        nbPagesAfter = 3;
+        if( arguments.length < 5 )
+        {
+            nbPagesBefore = 3;
+            nbPagesAfter = 3;
+        }
+        
+        var before = Math.max(0, page - nbPagesBefore);
+        var after = Math.min(nbPages, page + nbPagesAfter + 1);
+        
+        var fctName = 'ChangePagination';
+        var fctArgs = ', '  + nbPages + ', \'' + blocPagin + '\', \'' + blocName + '\', ' + nbPagesBefore + ', ' + nbPagesAfter;
+        
+        // Début
+        pagin += writePagin(fctName, fctArgs, false, '&laquo;', 0);
+        
+        // Before
+        for ( var i = before; i < page; i++ )
+            pagin += writePagin(fctName, fctArgs, false, i + 1, i );
+        
+        // Page courante
+        pagin += writePagin(fctName, fctArgs, true, page + 1, page );
+        
+        // After
+        for ( var i = page + 1; i < after; i++ )
+            pagin += writePagin(fctName, fctArgs, false, i + 1, i );
+        
+        // Fin
+        pagin += writePagin(fctName, fctArgs, false, '&raquo;', nbPages - 1 );
+        
+        // On cache tous les autre résultats du module
+        for ( var i = 0; i < nbPages; i++ )
+            hide_div(blocName + '_' + i);
+        // On montre la page demandée
+        show_div(blocName + '_' + page);
     }
-    
-    var before = Math.max(0, page - nbPagesBefore);
-    var after = Math.min(nbPages, page + nbPagesAfter + 1);
-    
-    var fctName = 'ChangePagination';
-    var fctArgs = ', '  + nbPages + ', \'' + blocPagin + '\', \'' + blocName + '\', ' + nbPagesBefore + ', ' + nbPagesAfter;
-    
-    // Début
-    pagin += writePagin(fctName, fctArgs, false, '&laquo;', 0);
-    
-    // Before
-    for ( var i = before; i < page; i++ )
-        pagin += writePagin(fctName, fctArgs, false, i + 1, i );
-    
-    // Page courante
-    pagin += writePagin(fctName, fctArgs, true, page + 1, page );
-    
-    // After
-    for ( var i = page + 1; i < after; i++ )
-        pagin += writePagin(fctName, fctArgs, false, i + 1, i );
-    
-    // Fin
-    pagin += writePagin(fctName, fctArgs, false, '&raquo;', nbPages - 1 );
-    
-    // On cache tous les autre résultats du module
-    for ( var i = 0; i < nbPages; i++ )
-        hide_div(blocName + '_' + i);
-    // On montre la page demandée
-    show_div(blocName + '_' + page);
     
     // Mise à jour de la pagination
     document.getElementById(blocPagin).innerHTML = pagin;
