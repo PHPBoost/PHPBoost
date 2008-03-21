@@ -63,23 +63,7 @@
 		        return dataString;
 		    }
             
-            function XMLHttpRequest_regenerate_search()
-		    // Affiche les résultats de la recherche pour le module particulier <module>
-		    {
-		        var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php');
-		        xhr_object.onreadystatechange = function()
-		        {
-					if( xhr_object.readyState == 4 && xhr_object.status == 200 )
-					{
-                        alert(xhr_object.responseText);
-						// Régénération de la liste des id_search : idSearch[]
-						eval(xhr_object.responseText);
-					}
-		        }
-		        xmlhttprequest_sender(xhr_object, GetFormData());
-		    }
-		    
-		    function XMLHttpRequest_search_module(module)
+            function XMLHttpRequest_search_module(module)
 		    // Affiche les résultats de la recherche pour le module particulier <module>
 		    {
                 var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php');
