@@ -593,7 +593,7 @@
 								</dl>
 								<dl>
 									<dt><label for="password_repeat">* {L_PASSWORD_REPEAT}</label></dt>
-									<dd><label><input type="password" size="25" maxlength="20" id="password_repeat" name="password_repeat" value="{PASSWORD_VALUE}" class="text" /></label></dd>								
+									<dd><label><input type="password" size="25" id="password_repeat" name="password_repeat" value="{PASSWORD_VALUE}" class="text" /></label></dd>								
 								</dl>
 								<dl>
 									<dt><label for="mail">* {L_MAIL}</label><br /><span>{L_MAIL_EXPLAIN}</span></dt>
