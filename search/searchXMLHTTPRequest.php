@@ -55,9 +55,7 @@ if ( !$searchInCache )
     
     // Ajout du paramétre search à tous les modules
     foreach( $searchModules as $module)
-    {
-        $modulesArgs[$module->name] = array('search' => $search);
-    }
+		$modulesArgs[$module->name] = array('search' => $search);
     
     // Ajout de la liste des paramètres de recherches spécifiques à chaque module
     foreach( $formsModule as $formModule)
@@ -90,6 +88,12 @@ if ( !$searchInCache )
     }
     
     $Search->InsertResults($requests);
+	
+	echo 'var idSearch = new Array();';
+	
+	// Propagation des nouveaux id_search
+	foreach ( $Search->id_search as $moduleName => $id_search )
+		echo 'idSearch[\''.$moduleName.'\'] = '.$id_search;
 }
 //--------------------------------------------------------------------- Footer
 

@@ -48,6 +48,9 @@ if( $idSearch >= 0 )
     $Search = new Search();
     if( $Search->IsSearchIdInCache($idSearch) )
     {
+		echo   'var xmlhttprequestSearchError = false;
+				var resultsAJAX = new Array();';
+		
         $nbResults = $Search->GetResultsById($results, $idSearch);
         if( $nbResults > 0 )
         {
@@ -55,21 +58,19 @@ if( $idSearch >= 0 )
             $htmlResults = '';
             Get_HTML_Results($results, $htmlResults, $Modules, $module->name);
         
-        echo   'var resultsAJAX = new Array();
-                nbResults[\''.ucfirst($module->name).'\'] = '.$nbResults.';
+        echo   'nbResults[\''.ucfirst($module->name).'\'] = '.$nbResults.';
                 resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.addslashes($nbResults > 1 ? $LANG['nb_results_found']:$LANG['one_result_found']).'\';
                 resultsAJAX[\'results\'] = \''.addslashes($htmlResults).'\';';
         }
         else
         {
             $moduleName = $Sql->Query("SELECT module FROM ".PREFIX."search_index WHERE id_search = ".$idSearch, __LINE__, __FILE__);
-            echo   'var resultsAJAX = new Array();
-                    nbResults[\''.ucfirst($moduleName).'\'] = 0;
+            echo   'nbResults[\''.ucfirst($moduleName).'\'] = 0;
                     resultsAJAX[\'nbResults\'] = \''.addslashes($LANG['no_results_found']).'\';
                     resultsAJAX[\'results\'] = \'\';';
         }
     }
-    else echo 'SEARCH_ERROR';
+    else echo 'var xmlhttprequestSearchError = true;';
 }
 
 //--------------------------------------------------------------------- Footer

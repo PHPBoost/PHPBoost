@@ -69,6 +69,11 @@
 		        var xhr = xmlhttprequest_init('../search/searchXMLHTTPRequest.php');
 		        xhr.onreadystatechange = function()
 		        {
+					if( xhr.status == 200 )
+					{
+						// Régénération de la liste de id_search
+						eval(xhr.responseText);
+					}
 		        }
 				//xmlhttprequest_sender(xhr, document.getElementById('SearchForm'));
 		        xmlhttprequest_sender(xhr, GetFormData());
@@ -92,9 +97,9 @@
                         {
                             progress_bar(100, "{L_QUERY_SUCCESS}");
                             // Si les résultats sont toujours en cache, on les récupère.
-                            if( xhr_object.responseText != 'SEARCH_ERROR' )
+							eval(xhr_object.responseText);
+                            if( !xmlhttprequestSearchError )
                             {
-                                eval(xhr_object.responseText);
                                 document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
                                 document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
                                 ChangePagination(0, Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, 'results' + module, 2, 2);
