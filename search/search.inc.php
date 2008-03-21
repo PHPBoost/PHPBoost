@@ -49,27 +49,12 @@ function GetSearchForms(&$modules, &$args)
     return $searchForms;
 }
 
-function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results, &$idsSearch)
+function ExecuteSearch($Search, &$searchModules, &$modulesArgs, &$results)
 /**
- *  Exécute la recherche si les résultats ne sont pas dans le cache et
- *  renvoie les résultats.
+ *  Exécute la recherche
  */
 {
     $requests = array();
-    $modulesNames = array();
-    $modulesOptions = array();
-    
-    // Generation des noms des modules utilisés et de la chaine options
-    foreach($searchModules as $module)
-    {
-        array_push($modulesNames, $module->name);
-        // enleve la chaine search de la chaine options et la tronque a 255 caracteres
-        $options = $modulesArgs[$module->name];
-        unset($options['search']);
-        $modulesOptions[$module->name] = substr(implode('|', $options), 0, 255);
-    }
-    
-    $Search = new Search($searchTxt, $modulesOptions);
     
     foreach($searchModules as $module)
     {
@@ -82,8 +67,33 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
     }
     
     $Search->InsertResults($requests);
+}
+
+function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results, &$idsSearch, $justInsert = false)
+/**
+ *  Exécute la recherche si les résultats ne sont pas dans le cache et
+ *  renvoie les résultats.
+ */
+{
+    $modulesNames = array();
+    $modulesOptions = array();
+    
+    // Generation des noms des modules utilisés et de la chaine options
+    foreach($searchModules as $module)
+    {
+        array_push($modulesNames, $module->name);
+        // enleve la chaine search de la chaine options et la tronque a 255 caracteres
+        $modulesOptions[$module->name] = md5(implode('|', $modulesArgs[$module->name]));
+    }
+    
+    $Search = new Search($searchTxt, $modulesOptions);
+    ExecuteSearch($Search, $searchModules, $modulesArgs, $results);
     $idsSearch = $Search->id_search;
-    return $Search->GetResults($results, $modulesNames);
+    
+    if ( !$justInsert )
+        return $Search->GetResults($results, $modulesNames);
+    else
+        return -1;
 }
 
 function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)

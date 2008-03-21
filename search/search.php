@@ -81,9 +81,7 @@ if( $search != '' )
     
     // Ajout du paramétre search à tous les modules
     foreach( $searchModules as $module)
-    {
         $modulesArgs[$module->name] = array('search' => $search);
-    }
     
     // Chargement des modules avec formulaires
     $formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
@@ -112,7 +110,7 @@ if( $search != '' )
         $Template->Assign_block_vars('forms', array(
             'MODULE_NAME' => ucfirst($moduleName),
             'L_MODULE_NAME' => ucfirst($moduleName),
-            'L_SEARCH_FORM' => $form
+            'SEARCH_FORM' => $form
         ));
     }
     

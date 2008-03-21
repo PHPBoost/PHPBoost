@@ -45,10 +45,10 @@ class WikiInterface extends ModuleInterface
     {
         $form  = '
         <dl>
-            <dt><label for="where">Ou?</label></dt>
+            <dt><label for="WikiWhere">Ou?</label></dt>
             <dd>
-                <label><input name="where" value="title" type="radio" checked="checked" />Titre</label>
-                <label><input name="where" value="contents" type="radio"  />Contenu</label>
+                <label><input name="WikiWhere" value="title" type="radio" checked="checked" />Titre</label>
+                <label><input name="WikiWhere" value="contents" type="radio"  />Contenu</label>
             </dd>
         </dl>';
         
@@ -60,7 +60,7 @@ class WikiInterface extends ModuleInterface
      *  Renvoie la liste des arguments de la méthode <GetSearchRequest>
      */
     {
-        return Array('where');
+        return Array('WikiWhere');
     }
     
     function GetSearchRequest($args)
