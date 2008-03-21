@@ -107,7 +107,7 @@
                     # START forms #
 		                <div id="Form{forms.MODULE_NAME}" class="module_position" style="display:none">
 		                    <fieldset>
-		                        <legend>{forms.MODULE_NAME}</legend>
+		                        <legend>{forms.L_MODULE_NAME}</legend>
 		                        {forms.SEARCH_FORM}
 		                    </fieldset>
 		                </div>

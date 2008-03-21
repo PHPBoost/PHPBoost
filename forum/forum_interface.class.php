@@ -66,9 +66,9 @@ class ForumInterface extends ModuleInterface
     {
         $form  = '
         <dl>
-            <dt><label for="time">Date</label></dt>
+            <dt><label for="ForumTime">Date</label></dt>
             <dd><label> 
-                <select id="time" name="time">
+                <select id="time" name="ForumTime">
                     <option value="30000" selected="selected">Tout</option>
                     <option value="1">1 jour</option>
                     <option value="7">7 Jours</option>
@@ -80,9 +80,9 @@ class ForumInterface extends ModuleInterface
             </label></dd>
         </dl>
         <dl>
-            <dt><label for="idcat">Catégorie</label></dt>
+            <dt><label for="ForumIdcat">Catégorie</label></dt>
             <dd><label>
-                <select name="idcat" id="idcat">
+                <select name="ForumIdcat" id="idcat">
                     <option value="-1" selected="selected">Tout</option>
                     <option value="4">---- Support PHPBoost</option>
                     <option value="2">---------- Annonces</option>
@@ -90,19 +90,19 @@ class ForumInterface extends ModuleInterface
             </label></dd>
         </dl>
         <dl>
-            <dt><label for="where">Options</label></dt>
+            <dt><label for="ForumWhere">Options</label></dt>
             <dd>
-                <label><input type="radio" name="where" id="where" value="contents" checked="checked" /> Contenu</label>
+                <label><input type="radio" name="ForumWhere" id="where" value="contents" checked="checked" /> Contenu</label>
                 <br />
-                <label><input type="radio" name="where" value="title"  /> Titre</label>
+                <label><input type="radio" name="ForumWhere" value="title"  /> Titre</label>
                 <br />
-                <label><input type="radio" name="where" value="all"  /> Titre/Contenu</label>
+                <label><input type="radio" name="ForumWhere" value="all"  /> Titre/Contenu</label>
             </dd>
         </dl>
         <dl>
-            <dt><label for="colorate_result">Colorer les résultats</label></dt>
+            <dt><label for="ForumColorate_result">Colorer les résultats</label></dt>
             <dd>
-                <label><input type="checkbox" name="colorate_result" id="colorate_result" value="1" checked="checked" /></label>
+                <label><input type="checkbox" name="ForumColorate_result" id="colorate_result" value="1" checked="checked" /></label>
             </dd>
         </dl>';
         
@@ -114,7 +114,7 @@ class ForumInterface extends ModuleInterface
      *  Renvoie la liste des arguments de la méthode <GetSearchRequest>
      */
     {
-        return Array('time', 'idcat', 'where', 'colorate_result');
+        return Array('ForumTime', 'ForumIdcat', 'ForumWhere', 'ForumColorate_result');
     }
     
     function GetSearchRequest($args)

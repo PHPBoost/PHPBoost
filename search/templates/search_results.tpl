@@ -66,60 +66,69 @@
             function XMLHttpRequest_regenerate_search()
 		    // Affiche les résultats de la recherche pour le module particulier <module>
 		    {
-		        var xhr = xmlhttprequest_init('../search/searchXMLHTTPRequest.php');
-		        xhr.onreadystatechange = function()
-		        {
-					if( xhr.status == 200 )
-					{
-						// Régénération de la liste de id_search
-						eval(xhr.responseText);
-					}
-		        }
-				//xmlhttprequest_sender(xhr, document.getElementById('SearchForm'));
-		        xmlhttprequest_sender(xhr, GetFormData());
-		    }
-		    
-		    function XMLHttpRequest_search_module(module)
-		    // Affiche les résultats de la recherche pour le module particulier <module>
-		    {
-				var xhr_object = xmlhttprequest_init('../search/searchModuleXMLHTTPRequest.php?idSearch=' + idSearch[module] + '&pageNum={PAGE_NUM}');
+		        var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php');
 		        xhr_object.onreadystatechange = function()
 		        {
-                    if( xhr_object.readyState == 1 )
-                        progress_bar(25, "{L_QUERY_LOADING}");
-                    else if( xhr_object.readyState == 2 )
-                        progress_bar(50, "{L_QUERY_SENT}");
-                    else if( xhr_object.readyState == 3 )
-                        progress_bar(75, "{L_QUERY_PROCESSING}");
-                    else if( xhr_object.readyState == 4 )
-                    {
-                        if( xhr_object.status == 200 )
-                        {
-                            progress_bar(100, "{L_QUERY_SUCCESS}");
-                            // Si les résultats sont toujours en cache, on les récupère.
-							eval(xhr_object.responseText);
-                            if( !xmlhttprequestSearchError )
-                            {
-                                document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
-                                document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
-                                ChangePagination(0, Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, 'results' + module, 2, 2);
-                                
-                                // Met à jour la liste des résultats affiché, pour ne pas les rechercher
-                                // dans la base de donnée si ils sont déjà dans le html.
-                                calculatedResults.push(module);
-                            }
-                            else // Sinon, on les recalcule, et on les récupère.
-                            {
-                                alert('SEARCH_ERROR');
-                                XMLHttpRequest_regenerate_search();
-                                XMLHttpRequest_search_module(module);
-                            }
-                        }
-                        else
-                            progress_bar(99, "{L_QUERY_FAILURE}");
-                    }
+					if( xhr_object.readyState == 4 && xhr_object.status == 200 )
+					{
+//                         document.getElementById(INFOS_RESULTS + 'Forum').innerHTML = xhr_object.responseText;
+						// Régénération de la liste des id_search : idSearch[]
+						eval(xhr_object.responseText);
+					}
 		        }
-		        xmlhttprequest_sender(xhr_object, null);
+		        xmlhttprequest_sender(xhr_object, GetFormData());
+		    }
+		    
+		    function XMLHttpRequest_search_module(module, maxTry)
+		    // Affiche les résultats de la recherche pour le module particulier <module>
+		    {
+                if ( arguments.length < 2 )
+                    maxTry = 0;
+                else
+                    maxTry++;
+                
+                if ( maxTry < 3 )   // 3 essais
+                {
+                    var xhr_object = xmlhttprequest_init('../search/searchModuleXMLHTTPRequest.php?idSearch=' + idSearch[module]);
+                    xhr_object.onreadystatechange = function()
+                    {
+                        if( xhr_object.readyState == 1 )
+                            progress_bar(25, "{L_QUERY_LOADING}");
+                        else if( xhr_object.readyState == 2 )
+                            progress_bar(50, "{L_QUERY_SENT}");
+                        else if( xhr_object.readyState == 3 )
+                            progress_bar(75, "{L_QUERY_PROCESSING}");
+                        else if( xhr_object.readyState == 4 )
+                        {
+                            if( xhr_object.status == 200 )
+                            {
+                                progress_bar(100, "{L_QUERY_SUCCESS}");
+                                // Si les résultats sont toujours en cache, on les récupère.
+                                eval(xhr_object.responseText);
+                                if( !xmlhttprequestSearchError )
+                                {
+                                    document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
+                                    document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
+                                    ChangePagination(0, Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, 'results' + module, 2, 2);
+                                    
+                                    // Met à jour la liste des résultats affiché, pour ne pas les rechercher
+                                    // dans la base de donnée si ils sont déjà dans le html.
+                                    calculatedResults.push(module);
+                                }
+                                else // Sinon, on les recalcule, et on les récupère.
+                                {
+                                    XMLHttpRequest_regenerate_search();
+                                    XMLHttpRequest_search_module(module, maxTry);
+                                }
+                            }
+                            else
+                                progress_bar(99, "{L_QUERY_FAILURE}");
+                        }
+                    }
+                    xmlhttprequest_sender(xhr_object, null);
+                }
+                else
+                    progress_bar(99, "{L_QUERY_FAILURE}");
 		    }
 		-->
 		</script>
