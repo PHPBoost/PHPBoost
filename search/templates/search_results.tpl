@@ -121,7 +121,12 @@
 		    <div class="module_contents">
 		        <div id="ResultsAll" class="results">
 		            <span id="ResultsTitleAll" class="title">{L_TITLE_ALL_RESULTS}</span><br />
-		            <div id="infosResultsAll" class="infosResults">{NB_RESULTS} {L_NB_RESULTS_FOUND}</div>
+		            <div id="infosResultsAll" class="infosResults">
+                        # IF NB_RESULTS #
+                            {NB_RESULTS}
+                        # ENDIF #
+                        {L_NB_RESULTS_FOUND}
+                    </div>
 		            <div id="ResultsListAll" class="ResultsList">
                         {ALL_RESULTS}
 		            </div>
