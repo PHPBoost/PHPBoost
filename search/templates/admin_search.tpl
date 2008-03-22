@@ -50,16 +50,31 @@
                 <fieldset>
                     <legend>{L_SEARCH_CONFIG}</legend>
                     <dl>
-                        <dt><label for="cache_time">* {L_CACHE_TIME}</label></dt>
-                        <dd><label><input type="text" maxlength="255" size="40" id="cache_time" name="cache_time" value="{CACHE_TIME}" class="text" /></label></dd>
+                        <dt><label for="cache_time">* {L_CACHE_TIME}</label><br /><span>{L_CACHE_TIME_EXPLAIN}</span></dt>
+                        <dd><label><input type="text" maxlength="4" size="4" id="cache_time" name="cache_time" value="{CACHE_TIME}" class="text" /></label></dd>
                     </dl>
                     <dl>
                         <dt><label for="nb_results_p">* {L_NB_RESULTS_P}</label></dt>
-                        <dd><label><input type="text" maxlength="3" size="3" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}" class="text" /></label></dd>
+                        <dd><label><input type="text" maxlength="2" size="4" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}" class="text" /></label></dd>
                     </dl>
                     <dl>
                         <dt><label for="max_use">* {L_MAX_USE}</label><br /><span>{L_MAX_USE_EXPLAIN}</span></dt>
-                        <dd><label><input type="text" size="3" maxlength="3" id="max_use" name="max_use" value="{MAX_USE}" class="text" /></label></dd>
+                        <dd><label><input type="text" maxlength="3" size="4" id="max_use" name="max_use" value="{MAX_USE}" class="text" /></label></dd>
+                    </dl>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>{L_AUTHORISED_MODULES}</legend>
+                    <dl>
+                        <dt><label for="cache_time">* {L_AUTHORISED_MODULES}</label><br /><span>{L_AUTHORISED_MODULES_EXPLAIN}</span></dt>
+                        <dd><label>
+                            <select id="authorised_modules" name="authorised_modules" size="5" multiple="multiple">
+                                <option value="r-1" id="r1r0" selected="selected" onclick="check_select_multiple_ranks('1r', 0)">Visiteur</option>
+                                <option value="r0" id="r1r1" selected="selected" onclick="check_select_multiple_ranks('1r', 1)">Membre</option>
+                                <option value="r1" id="r1r2" selected="selected" onclick="check_select_multiple_ranks('1r', 2)">Modérateur</option>
+                                <option value="r2" id="r1r3" selected="selected" onclick="check_select_multiple_ranks('1r', 3)">Administrateur</option>
+                            </select>
+                        </label></dd>
                     </dl>
                 </fieldset>
                 
@@ -70,7 +85,6 @@
                     <input type="reset" value="{L_RESET}" class="reset" />
                 </fieldset>
             </form>
-
             <form action="admin_search.php?clear=1" name="form" method="post" class="fieldset_content">
                 <fieldset>
                     <legend>{L_CLEAR_OUT_CACHE}</legend>

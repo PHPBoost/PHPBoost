@@ -44,13 +44,17 @@ $Cache->Load_file('search');
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {
-    $SEARCH_CONFIG['forum_name'] = !empty($_POST['forum_name']) ? stripslashes(securit($_POST['forum_name'])) : $CONFIG['site_name'] . ' forum';
-    $SEARCH_CONFIG['pagination_topic'] = !empty($_POST['pagination_topic']) ? numeric($_POST['pagination_topic']) : '20';
-    $SEARCH_CONFIG['pagination_msg'] = !empty($_POST['pagination_msg']) ? numeric($_POST['pagination_msg']) : '15';
-    $SEARCH_CONFIG['view_time'] = !empty($_POST['view_time']) ? (numeric($_POST['view_time']) * 3600 * 24) : (30 * 3600 * 24);
-    $SEARCH_CONFIG['topic_track'] = !empty($_POST['topic_track']) ? numeric($_POST['topic_track']) : '40';
-    $SEARCH_CONFIG['edit_mark'] = !empty($_POST['edit_mark']) ? numeric($_POST['edit_mark']) : 0;
-    $SEARCH_CONFIG['explain_display_msg'] = !empty($_POST['explain_display_msg']) ? stripslashes(securit($_POST['explain_display_msg'])) : '';
+    $SEARCH_CONFIG['cache_time'] = !empty($_POST['cache_time']) ? numeric($_POST['cache_time']) : (15 * 60);
+    $SEARCH_CONFIG['nb_results_per_page'] = !empty($_POST['nb_results_per_page']) ? numeric($_POST['nb_results_per_page']) : 15;
+    $SEARCH_CONFIG['max_use'] = !empty($_POST['max_use']) ? numeric($_POST['max_use']) : 100;
+    
+    global $Sql;
+    
+    $cfg = addslashes(serialize($SEARCH_CONFIG));
+    $request = "UPDATE ".PREFIX."configs SET value = '".$cfg."' WHERE name = 'search'";
+    $Sql->Query_inject($request, __LINE__, __FILE__);
+    if ( $Sql->Sql_affected_rows($request, __LINE__, __FILE__) == 0 )
+        $Sql->Query_inject("INSERT INTO ".PREFIX."configs (`name`, `value`) VALUES ('search', '".$cfg."')", __LINE__, __FILE__);
     
     $Cache->Generate_module_file('search');
     redirect(HOST.SCRIPT);
@@ -67,31 +71,36 @@ else
         'admin_search' => '../templates/' . $CONFIG['theme'] . '/search/admin_search.tpl'
     ));
 
-    $Cache->Load_file('forum');
+    $Cache->Load_file('search');
+    
+    global $SEARCH_CONFIG;
     
     //Gestion erreur.
     $get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
     if( $get_error == 'incomplete' )
         $Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
     
-    $CONFIG_FORUM['edit_mark'] = isset($CONFIG_FORUM['edit_mark']) ? $CONFIG_FORUM['edit_mark'] : 0;
-    $CONFIG_FORUM['display_connexion'] = isset($CONFIG_FORUM['display_connexion']) ? $CONFIG_FORUM['display_connexion'] : 0;
-    $CONFIG_FORUM['no_left_column'] = isset($CONFIG_FORUM['no_left_column']) ? $CONFIG_FORUM['no_left_column'] : 0;
-    $CONFIG_FORUM['no_right_column'] = isset($CONFIG_FORUM['no_right_column']) ? $CONFIG_FORUM['no_right_column'] : 0;
-    $CONFIG_FORUM['activ_display_msg'] = isset($CONFIG_FORUM['activ_display_msg']) ? $CONFIG_FORUM['activ_display_msg'] : 0;
-    $CONFIG_FORUM['icon_display_msg'] = isset($CONFIG_FORUM['icon_display_msg']) ? $CONFIG_FORUM['icon_display_msg'] : 1;
+    $SEARCH_CONFIG['cache_time'] = round(!empty($SEARCH_CONFIG['cache_time']) ? numeric($SEARCH_CONFIG['cache_time']) : (15 * 60) / 60);
+    $SEARCH_CONFIG['nb_results_per_page'] = !empty($SEARCH_CONFIG['nb_results_per_page']) ? numeric($SEARCH_CONFIG['nb_results_per_page']) : 15;
+    $SEARCH_CONFIG['max_use'] = !empty($SEARCH_CONFIG['max_use']) ? numeric($SEARCH_CONFIG['max_use']) : 100;
 
     $Template->Assign_vars(array(
         'THEME' => $CONFIG['theme'],
         'L_SEARCH_MANAGEMENT' => $LANG['search_management'],
         'L_SEARCH_CONFIG' => $LANG['search_config'],
-        'L_CACHE_TIME' => $LANG['search_config'],
-        'L_NB_RESULTS_P' => $LANG['cache_time'],
+        'L_CACHE_TIME' => $LANG['cache_time'],
+        'L_CACHE_TIME_EXPLAIN' => $LANG['cache_time_explain'],
+        'L_NB_RESULTS_P' => $LANG['nb_results_per_page'],
         'L_MAX_USE' => $LANG['max_use'],
         'L_MAX_USE_EXPLAIN' => $LANG['max_use_explain'],
         'L_CLEAR_OUT_CACHE' => $LANG['clear_out_cache'],
+        'L_AUTHORISED_MODULES' => $LANG['authorised_modules'],
+        'L_AUTHORISED_MODULES_EXPLAIN' => $LANG['authorised_modules_explain'],
         'L_UPDATE' => $LANG['update'],
-        'L_RESET' => $LANG['reset']
+        'L_RESET' => $LANG['reset'],
+        'CACHE_TIME' => $SEARCH_CONFIG['cache_time'],
+        'NB_RESULTS_P' => $SEARCH_CONFIG['nb_results_per_page'],
+        'MAX_USE' => $SEARCH_CONFIG['max_use']
     ));
 
     $Template->Pparse('admin_search');
