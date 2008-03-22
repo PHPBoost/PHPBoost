@@ -22,12 +22,10 @@
                     alert("{L_REQUIRE_TOPIC_TRACK_MAX}");
                     return false;
                 }
-            
                 return true;
             }
         -->
         </script>
-
         <div id="admin_quick_menu">
             <ul>
                 <li class="title_menu">{L_SEARCH_MANAGEMENT}</li>
@@ -40,7 +38,6 @@
         </div>
 
         <div id="admin_contents">
-        
             # IF C_ERROR_HANDLER #
                 <span id="errorh"></span>
                 <div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
@@ -49,7 +46,6 @@
                 </div>
                 <br />
             # ENDIF #
-            
             <form action="admin_search.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
                 <fieldset>
                     <legend>{L_SEARCH_CONFIG}</legend>

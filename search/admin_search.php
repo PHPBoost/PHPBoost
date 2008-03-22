@@ -89,7 +89,9 @@ else
         'L_NB_RESULTS_P' => $LANG['cache_time'],
         'L_MAX_USE' => $LANG['max_use'],
         'L_MAX_USE_EXPLAIN' => $LANG['max_use_explain'],
-        'L_CLEAR_OUT_CACHE' => $LANG['clear_out_cache']
+        'L_CLEAR_OUT_CACHE' => $LANG['clear_out_cache'],
+        'L_UPDATE' => $LANG['update'],
+        'L_RESET' => $LANG['reset']
     ));
 
     $Template->Pparse('admin_search');
