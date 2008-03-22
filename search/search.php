@@ -31,9 +31,9 @@ load_module_lang('search');
 define('ALTERNATIVE_CSS', 'search');
 
 $Template->Set_filenames(array(
-	'search_mini_form' => '../templates/'.$CONFIG['theme'].'/search/search_mini_form.tpl',
-	'search_forms' => '../templates/'.$CONFIG['theme'].'/search/search_forms.tpl',
-	'search_results' => '../templates/'.$CONFIG['theme'].'/search/search_results.tpl'
+    'search_mini_form' => '../templates/'.$CONFIG['theme'].'/search/search_mini_form.tpl',
+    'search_forms' => '../templates/'.$CONFIG['theme'].'/search/search_forms.tpl',
+    'search_results' => '../templates/'.$CONFIG['theme'].'/search/search_results.tpl'
 ));
 
 //--------------------------------------------------------------------- Params
@@ -41,6 +41,7 @@ $Template->Set_filenames(array(
 $pageNum = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
 $modName = !empty($_GET['module']) ? securit($_GET['module']) : 'All';
 $search = !empty($_POST['search']) ? securit($_POST['search']) : '';
+$selectedModules = !empty($_POST['authorised_modules']) ? $_POST['authorised_modules'] : array();
 $p = 0;
 
 require_once('../search/search_cache.php');
@@ -86,9 +87,17 @@ $formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
 
 foreach( $SEARCH_CONFIG['authorised_modules'] as $module => $moduleName )
 {
+    $module = $Modules->GetModule($moduleName);
+    $infos = $module->GetInfo();
+    if ( ($selectedModules === array()) || in_array($moduleName, $selectedModules) )
+        $selected = ' selected="selected"';
+    else
+        $selected = '';
+    
     $Template->Assign_block_vars('searched_modules', array(
-        'MODULE' => $module,
-        'L_MODULE_NAME' => ucfirst($moduleName)
+        'MODULE' => $module->name,
+        'L_MODULE_NAME' => ucfirst($infos['name']),
+        'SELECTED' => $selected
     ));
 }
 
@@ -121,14 +130,27 @@ if( $search != '' )
     $searchForms = GetSearchForms($formsModule, $modulesArgs);
     foreach ( $searchForms as $moduleName => $form )
     {
+        $module = $Modules->GetModule($moduleName);
+        $infos = $module->GetInfo();
         $Template->Assign_block_vars('forms', array(
             'MODULE_NAME' => ucfirst($moduleName),
-            'L_MODULE_NAME' => ucfirst($moduleName),
+            'L_MODULE_NAME' => ucfirst($infos['name']),
             'SEARCH_FORM' => $form
         ));
     }
     
     $idsSearch = array();
+    
+    if ( $selectedModules !== array() )
+    {
+        $nbModules = count($searchModules);
+        for ( $i = 0; $i < $nbModules; $i++ )
+        {
+            if ( !in_array($module->name, $selectedModules) )
+                unset($searchModules[i]);
+        }
+    }
+    
     // Génération des résultats et passage aux templates
     $nbResults = GetSearchResults($search, $searchModules, $modulesArgs, $results, $idsSearch);
     
@@ -176,8 +198,11 @@ else
     $searchForms = GetSearchForms($formsModule, $modulesArgs);
     foreach( $searchForms as $moduleName => $form )
     {
+        $module = $Modules->GetModule($moduleName);
+        $infos = $module->GetInfo();
         $Template->Assign_block_vars('forms', array(
             'MODULE_NAME' => $moduleName,
+            'L_MODULE_NAME' => ucfirst($infos['name']),
             'SEARCH_FORM' => $form
         ));
     }
