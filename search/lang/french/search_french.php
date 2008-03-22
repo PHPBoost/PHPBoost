@@ -44,34 +44,13 @@ $LANG['simple_search'] = 'Recherche simple';
 $LANG['print'] = 'Afficher';
 $LANG['nb_results_found'] = 'résultats ont été trouvés';
 $LANG['one_result_found'] = 'résultat a été trouvé';
-$LANG['no_results_found'] = 'aucun résultat n\'a été trouvé';
-
-//Actions
-
-//Poster
-
-//Restrictions d'accès
-
-//Catégories
-
-//Archives
-
-//Statut de l'article
-
-//Déplacement de l'article
-
-//Renommer l'article
-
-//Redirection
-
-//Recherche
-
-//Discussion
-
-//Suppression
-
-//RSS
-
-//Favoris
+$LANG['no_results_found'] = 'Aucun résultat n\'a été trouvé';
 
 //Administration
+$LANG['search_management'] = 'Gestion de la recherche';
+$LANG['search_config'] = 'Configuration';
+$LANG['cache_time'] = 'Durée de vie du cache';
+$LANG['nb_results_per_page'] = 'Nombre de résultats à afficher par page';
+$LANG['max_use'] = 'Nombre d\'utilisation maximum des résultats du cache';
+$LANG['max_use_explain'] = 'Ce nombre représente le nombre de fois que les résultats de la recherche peuvent être utilisés avant de les recalculer';
+$LANG['clear_out_cache'] = 'Vider le contenu du cache';
