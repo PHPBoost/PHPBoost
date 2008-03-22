@@ -89,10 +89,9 @@ function generate_module_file_gallery()
 		'\'width\' => ' . var_export($width, true) . ',' . "\n" .
 		'\'height\' => ' . var_export($height, true) . ',' . "\n" .
 		'\'idcat\' => ' . var_export($row['idcat'], true) . ',' . "\n" .
-		'\'auth\' => ' . var_export($row['auth'], true) . '),' . "\n";
+		'\'auth\' => ' . var_export(unserialize($row['auth']), true) . '),' . "\n";
 	}
-	$Sql->Close($result);
-	
+	$Sql->Close($result);	
 	$_array_random_pics .= ');';
 	
 	return $gallery_config . "\n" . $cat_gallery . "\n" . $_array_random_pics;
