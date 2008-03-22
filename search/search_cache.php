@@ -83,15 +83,11 @@ function Load_search_cache()
     $Cache->Load_file('search');
     global $SEARCH_CONFIG;
     
-    //Gestion erreur.
-    $get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
-    if( $get_error == 'incomplete' )
-        $Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
-    
     $SEARCH_CONFIG['cache_time'] = round(!empty($SEARCH_CONFIG['cache_time']) ? numeric($SEARCH_CONFIG['cache_time']) : (15 * 60) / 60);
     $SEARCH_CONFIG['nb_results_per_page'] = !empty($SEARCH_CONFIG['nb_results_per_page']) ? numeric($SEARCH_CONFIG['nb_results_per_page']) : 15;
     $SEARCH_CONFIG['max_use'] = !empty($SEARCH_CONFIG['max_use']) ? numeric($SEARCH_CONFIG['max_use']) : 100;
-    $SEARCH_CONFIG['authorised_modules'] = !empty($SEARCH_CONFIG['authorised_modules']) ? $SEARCH_CONFIG['authorised_modules'] : array();
+	if ( empty($SEARCH_CONFIG['authorised_modules']) || !is_array($SEARCH_CONFIG['authorised_modules']) )
+		$SEARCH_CONFIG['authorised_modules'] = new array();
     
     return $SEARCH_CONFIG;
 }
