@@ -66,13 +66,12 @@
                 <fieldset>
                     <legend>{L_AUTHORISED_MODULES}</legend>
                     <dl>
-                        <dt><label for="cache_time">* {L_AUTHORISED_MODULES}</label><br /><span>{L_AUTHORISED_MODULES_EXPLAIN}</span></dt>
+                        <dt><label for="authorised_modules[]">* {L_AUTHORISED_MODULES}</label><br /><span>{L_AUTHORISED_MODULES_EXPLAIN}</span></dt>
                         <dd><label>
-                            <select id="authorised_modules" name="authorised_modules" size="5" multiple="multiple">
-                                <option value="r-1" id="r1r0" selected="selected" onclick="check_select_multiple_ranks('1r', 0)">Visiteur</option>
-                                <option value="r0" id="r1r1" selected="selected" onclick="check_select_multiple_ranks('1r', 1)">Membre</option>
-                                <option value="r1" id="r1r2" selected="selected" onclick="check_select_multiple_ranks('1r', 2)">Modérateur</option>
-                                <option value="r2" id="r1r3" selected="selected" onclick="check_select_multiple_ranks('1r', 3)">Administrateur</option>
+                            <select id="authorised_modules[]" name="authorised_modules[]" size="5" multiple="multiple" class="list_modules">
+                                # START authorised_modules #
+                                <option value="{authorised_modules.MODULE}" id="{authorised_modules.MODULE}"{authorised_modules.SELECTED}>{authorised_modules.L_MODULE_NAME}</option>
+                                # END authorised_modules #
                             </select>
                         </label></dd>
                     </dl>
