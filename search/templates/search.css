@@ -40,6 +40,10 @@ select#FormsChoice {
     width:300px;
 }
 
+select.list_modules {
+    width:100px;
+}
+
 div.resultsChoices {
     position:relative;
     top:-18px;

@@ -45,8 +45,9 @@ $Cache->Load_file('search');
 if( !empty($_POST['valid']) )
 {
     $SEARCH_CONFIG['cache_time'] = !empty($_POST['cache_time']) ? numeric($_POST['cache_time']) : (15 * 60);
-    $SEARCH_CONFIG['nb_results_per_page'] = !empty($_POST['nb_results_per_page']) ? numeric($_POST['nb_results_per_page']) : 15;
+    $SEARCH_CONFIG['nb_results_per_page'] = !empty($_POST['nb_results_p']) ? numeric($_POST['nb_results_p']) : 15;
     $SEARCH_CONFIG['max_use'] = !empty($_POST['max_use']) ? numeric($_POST['max_use']) : 100;
+    $SEARCH_CONFIG['authorised_modules'] = !empty($_POST['authorised_modules']) ? $_POST['authorised_modules'] : array();
     
     global $Sql;
     
@@ -71,19 +72,29 @@ else
         'admin_search' => '../templates/' . $CONFIG['theme'] . '/search/admin_search.tpl'
     ));
 
-    $Cache->Load_file('search');
+    require_once('../search/search_cache.php');
+    $SEARCH_CONFIG = Load_search_cache();
     
-    global $SEARCH_CONFIG;
+    require_once('../includes/modules.class.php');
     
-    //Gestion erreur.
-    $get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
-    if( $get_error == 'incomplete' )
-        $Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+    $Modules = new Modules();
+    $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
     
-    $SEARCH_CONFIG['cache_time'] = round(!empty($SEARCH_CONFIG['cache_time']) ? numeric($SEARCH_CONFIG['cache_time']) : (15 * 60) / 60);
-    $SEARCH_CONFIG['nb_results_per_page'] = !empty($SEARCH_CONFIG['nb_results_per_page']) ? numeric($SEARCH_CONFIG['nb_results_per_page']) : 15;
-    $SEARCH_CONFIG['max_use'] = !empty($SEARCH_CONFIG['max_use']) ? numeric($SEARCH_CONFIG['max_use']) : 100;
-
+    foreach( $searchModules as $module )
+    {
+        if ( in_array($module->name, $SEARCH_CONFIG['authorised_modules']) )
+            $selected = ' selected="selected"';
+        else
+            $selected = '';
+        
+        $moduleInfos = $module->GetInfo();
+        $Template->Assign_block_vars('authorised_modules', array(
+            'MODULE' => $module->name,
+            'SELECTED' => $selected,
+            'L_MODULE_NAME' => ucfirst($moduleInfos['name'])
+        ));
+    }
+    
     $Template->Assign_vars(array(
         'THEME' => $CONFIG['theme'],
         'L_SEARCH_MANAGEMENT' => $LANG['search_management'],

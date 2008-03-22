@@ -27,8 +27,6 @@
 
 if( defined('PHP_BOOST') !== true ) exit;
 
-define ( 'NB_RESULTS_PER_PAGE', 10);
-
 require_once ( '../includes/modules.class.php' );
 require_once ( '../includes/search.class.php' );
 

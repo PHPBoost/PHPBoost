@@ -43,6 +43,11 @@ $modName = !empty($_GET['module']) ? securit($_GET['module']) : 'All';
 $search = !empty($_POST['search']) ? securit($_POST['search']) : '';
 $p = 0;
 
+require_once('../search/search_cache.php');
+$SEARCH_CONFIG = Load_search_cache();
+
+define ( 'NB_RESULTS_PER_PAGE', $SEARCH_CONFIG['nb_results_per_page']);
+
 //--------------------------------------------------------------------- Header
 
 if( !empty($search) )
@@ -72,19 +77,28 @@ require_once('../search/search.inc.php');
 $Modules = new Modules();
 $modulesArgs = array();
 
+
+// Listes des modules de recherches
+$searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
+
+// Chargement des modules avec formulaires
+$formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
+
+foreach( $SEARCH_CONFIG['authorised_modules'] as $module => $moduleName )
+{
+    $Template->Assign_block_vars('searched_modules', array(
+        'MODULE' => $module,
+        'L_MODULE_NAME' => ucfirst($moduleName)
+    ));
+}
+
 if( $search != '' )
 {
     $results = array();
     
-    // Listes des modules de recherches
-    $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
-    
     // Ajout du paramétre search à tous les modules
     foreach( $searchModules as $module)
         $modulesArgs[$module->name] = array('search' => $search);
-    
-    // Chargement des modules avec formulaires
-    $formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
     
     // Ajout de la liste des paramètres de recherches spécifiques à chaque module
     foreach( $formsModule as $formModule)
@@ -158,13 +172,6 @@ if( $search != '' )
 }
 else
 {
-    // Listes des modules de recherches
-    $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
-    // Chargement des modules avec formulaires
-    $formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
-    
-    $modulesArgs = array();
-    
     // Génération des formulaires et passage aux templates
     $searchForms = GetSearchForms($formsModule, $modulesArgs);
     foreach( $searchForms as $moduleName => $form )
