@@ -6,20 +6,25 @@
                 modulesForms.push("{forms.MODULE_NAME}");
             # END forms #
             
-            function GenerateListModules()
+            function GenerateListModules(changeF)
             // Met à jour la liste déroulante du choix du formulaire
             {
-                var listModules = '';
+                if ( arguments.length < 1 )
+                    changeF = false;
                 
-                document.getElementById('FormsSelection').innerHTML = listModules;
+                var listModules = '';
                 var selModOptions = document.getElementById('searched_modules[]').options;
+                
                 for ( var i = 0; i < selModOptions.length; i++ )
                 {
                     if ( selModOptions[i].selected )
                         listModules += '<option value="' + selModOptions[i].value + '">' + selModOptions[i].text + '</option>';
                 }
-                alert(listModules);
+                
                 document.getElementById('FormsSelection').innerHTML = listModules;
+                
+                if ( changeF )
+                    ChangeForm();
             }
             
             function ShowAdvancedSearchForms()
@@ -29,12 +34,12 @@
                 
                 document.getElementById('searched_modules').style.visibility = 'visible';
                 document.getElementById('searched_modules[]').style.visibility = 'visible';
-                document.getElementById('FormsChoice').style.visibility = 'visible';
+                document.getElementById('FormsSelection').style.visibility = 'visible';
                 
                 hide_div('AdvancedSearch');
                 show_div('SimpleSearch');
                 
-                show_div(FORM + document.getElementById('FormsChoice').value);
+                show_div(FORM + document.getElementById('FormsSelection').value);
             }
             
             function HideAdvancedSearchForms()
@@ -44,7 +49,7 @@
                 
                 document.getElementById('searched_modules').style.visibility = 'hidden';
                 document.getElementById('searched_modules[]').style.visibility = 'hidden';
-                document.getElementById('FormsChoice').style.visibility = 'hidden';
+                document.getElementById('FormsSelection').style.visibility = 'hidden';
                 hide_div('SimpleSearch');
                 show_div('AdvancedSearch');
             }
@@ -62,7 +67,7 @@
             // Change le cadre des résultats
             {
                 HideForms();
-                show_div(FORM + document.getElementById('FormsChoice').value);
+                show_div(FORM + document.getElementById('FormsSelection').value);
             }
             
             function check_search_form_post()
@@ -100,7 +105,7 @@
                                 <label id="searched_modules" style="visibility:hidden;">Modules sélectionnés</label><br />
                                 <select id="searched_modules[]" name="searched_modules[]" size="5" multiple="multiple" class="list_modules" style="visibility:hidden">
                                 # START searched_modules #
-                                    <option value="{searched_modules.MODULE}" id="{searched_modules.MODULE}" selected="selected" onclick="GenerateListModules()">{searched_modules.L_MODULE_NAME}</option>
+                                    <option value="{searched_modules.MODULE}" id="{searched_modules.MODULE}"{searched_modules.SELECTED} onclick="GenerateListModules(true)">{searched_modules.L_MODULE_NAME}</option>
                                 # END searched_modules #
                             </select>
                             </td>
@@ -111,7 +116,7 @@
                                 <label id="SimpleSearch" style="display:none"><a href="javascript:HideAdvancedSearchForms();">{L_SIMPLE_SEARCH}</a></label>
                             </td>
                             <td>
-                                <select id="FormsChoice" name="FormsSelection" onchange="ChangeForm();" style="visibility:hidden;"></select>
+                                <select id="FormsSelection" name="FormsSelection" onchange="ChangeForm();" style="visibility:hidden;"></select>
                             </td>
                         </tr>
                     </table>
@@ -138,6 +143,6 @@
         <!--
             // On cache les éléments ne devant pas s'afficher au début
             show_div('AdvancedSearch');
-//             GenerateListModules();
+            GenerateListModules();
         -->
         </script>

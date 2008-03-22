@@ -80,7 +80,6 @@
                         if( xhr_object.status == 200 )
                         {
                             progress_bar(100, "{L_QUERY_SUCCESS}");
-//                             document.getElementById('DEBUG').innerHTML = xhr_object.responseText;
                             // Si les résultats sont toujours en cache, on les récupère.
                             eval(xhr_object.responseText);
                             if( !syncErr )
