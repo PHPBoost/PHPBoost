@@ -46,34 +46,13 @@ $LANG['nb_results_found'] = 'results were found';
 $LANG['one_result_found'] = 'result was found';
 $LANG['no_results_found'] = 'no results were found';
 
-//Actions
-
-//Poster
-
-//Restrictions d'accès
-
-//Catégories
-
-//Archives
-
-//Statut de l'article
-
-//Déplacement de l'article
-
-//Renommer l'article
-
-//Redirection
-
-//Recherche
-
-//Discussion
-
-//Suppression
-
-//RSS
-
-//Favoris
-
 //Administration
+$LANG['search_management'] = 'Search management';
+$LANG['search_config'] = 'Configuration';
+$LANG['cache_time'] = 'Cache\'s life';
+$LANG['nb_results_per_page'] = 'Results number to print per page';
+$LANG['max_use'] = 'Maximum number of utilisation of the cache';
+$LANG['max_use_explain'] = 'This number represent the time the cahce\'s results will be used before calculating them again';
+$LANG['clear_out_cache'] = 'Clear out the cache content';
 
 ?>
