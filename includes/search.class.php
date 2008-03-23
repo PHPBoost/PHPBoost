@@ -26,7 +26,6 @@
  *
 ###################################################*/
 
-define('NB_LINES', 10);
 if ( @include_once('../search/search_cache.php') )
 {
     $SEARCH_CONFIG = Load_search_cache();
@@ -36,7 +35,7 @@ if ( @include_once('../search/search_cache.php') )
 else
 {
     define('CACHE_TIME', 30);
-    define('CACHE_TIMES_USED', 5);
+    define('CACHE_TIMES_USED', 200);
 }
 
 class Search
@@ -190,7 +189,7 @@ class Search
         else return false;
     }
     
-    function GetResultsById( &$results, $idSearch = 0, $offset = 0, $nbLines = 0 )
+    function GetResultsById( &$results, $idSearch = 0, $nbLines = 0, $offset = 0 )
     /**
      *  Renvoie les résultats de la recherche d'id <idSearch>
      *  Nb requêtes : 5 + k / 10
