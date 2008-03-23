@@ -50,6 +50,8 @@ function generate_module_file_search()
     {
         include_once('../includes/modules.class.php');
         
+        $SEARCH_CONFIG = array();
+        
         $SEARCH_CONFIG['cache_time'] = 15 * 60;
         $SEARCH_CONFIG['nb_results_per_page'] = 15;
         $SEARCH_CONFIG['max_use'] = 100;
@@ -71,25 +73,6 @@ function generate_module_file_search()
     
     return 'global $SEARCH_CONFIG;
             $SEARCH_CONFIG = ' . var_export($config, true) . ';';
-}
-
-function Load_search_cache()
-/**
- *  Charge le fichier cache de la recherche
- */
-{
-    global $Cache;
-    
-    $Cache->Load_file('search');
-    global $SEARCH_CONFIG;
-    
-    $SEARCH_CONFIG['cache_time'] = round(!empty($SEARCH_CONFIG['cache_time']) ? numeric($SEARCH_CONFIG['cache_time']) : (15 * 60) / 60);
-    $SEARCH_CONFIG['nb_results_per_page'] = !empty($SEARCH_CONFIG['nb_results_per_page']) ? numeric($SEARCH_CONFIG['nb_results_per_page']) : 15;
-    $SEARCH_CONFIG['max_use'] = !empty($SEARCH_CONFIG['max_use']) ? numeric($SEARCH_CONFIG['max_use']) : 100;
-	if ( empty($SEARCH_CONFIG['authorised_modules']) || !is_array($SEARCH_CONFIG['authorised_modules']) )
-		$SEARCH_CONFIG['authorised_modules'] = new array();
-    
-    return $SEARCH_CONFIG;
 }
 
 ?>
