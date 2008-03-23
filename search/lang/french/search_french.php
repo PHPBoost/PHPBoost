@@ -49,8 +49,9 @@ $LANG['no_results_found'] = 'Aucun résultat n\'a été trouvé';
 //Administration
 $LANG['search_management'] = 'Gestion de la recherche';
 $LANG['search_config'] = 'Configuration';
+$LANG['search_cache'] = 'Cache des résultats des recherches';
 $LANG['cache_time'] = 'Durée de vie du cache';
-$LANG['cache_time_explain'] = 'Durée exprimée en minutes';
+$LANG['cache_time_explain'] = 'Durée exprimée en minutes, au dela, les résultats seront recalculés';
 $LANG['nb_results_per_page'] = 'Nombre de résultats à afficher par page';
 $LANG['max_use'] = 'Nombre d\'utilisation maximum des résultats du cache';
 $LANG['max_use_explain'] = 'Ce nombre représente le nombre de fois que les résultats de la recherche peuvent être utilisés avant de les recalculer';

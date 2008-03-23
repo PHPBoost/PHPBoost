@@ -470,3 +470,19 @@ function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbP
     // Mise à jour de la pagination
     document.getElementById(blocPagin).innerHTML = pagin;
 }
+
+// Teste si une chaine est numerique
+function isNumeric(number)
+{
+    var numbers = "0123456789.";
+    for ( var i = 0; i < number.length && numbers.indexOf(number[i]) != -1; i++ );
+    return i == number.length ;
+}
+
+// Teste si une chaine est un entier
+function isInteger(int)
+{
+    var numbers = "0123456789";
+    for ( var i = 0; i < int.length && numbers.indexOf(int[i]) != -1; i++ );
+    return i == int.length ;
+}

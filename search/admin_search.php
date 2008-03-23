@@ -123,6 +123,7 @@ else
         'L_AUTHORISED_MODULES_EXPLAIN' => $LANG['authorised_modules_explain'],
         'L_UPDATE' => $LANG['update'],
         'L_RESET' => $LANG['reset'],
+        'L_SEARCH_CACHE' => $LANG['search_cache'],
         'CACHE_TIME' => $CONFIG['search_cache_time'],
         'MAX_USE' => $CONFIG['search_max_use'],
         'NB_RESULTS_P' => $SEARCH_CONFIG['nb_results_per_page']
