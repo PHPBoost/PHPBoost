@@ -2,24 +2,16 @@
         <!--
             function check_form_conf()
             {
-                if(document.getElementById('forum_name').value == "") {
-                    alert("{L_REQUIRE_NAME}");
+                if(!isInteger(document.getElementById('nb_results_p').value)) {
+                    alert("{L_REQUIRE_INTEGER}");
                     return false;
                 }
-                if(document.getElementById('pagination_topic').value == "") {
-                    alert("{L_REQUIRE_TOPIC_P}");
+                if(!isInteger(document.getElementById('cache_time').value)) {
+                    alert("{L_REQUIRE_INTEGER}");
                     return false;
                 }
-                if(document.getElementById('pagination_msg').value == "") {
-                    alert("{L_REQUIRE_NBR_MSG_P}");
-                    return false;
-                }
-                if(document.getElementById('view_time').value == "") {
-                    alert("{L_REQUIRE_TIME_NEW_MSG}");
-                    return false;
-                }
-                if(document.getElementById('topic_track').value == "") {
-                    alert("{L_REQUIRE_TOPIC_TRACK_MAX}");
+                if(!isInteger(document.getElementById('max_use').value)) {
+                    alert("{L_REQUIRE_INTEGER}");
                     return false;
                 }
                 return true;
@@ -50,21 +42,9 @@
                 <fieldset>
                     <legend>{L_SEARCH_CONFIG}</legend>
                     <dl>
-                        <dt><label for="cache_time">* {L_CACHE_TIME}</label><br /><span>{L_CACHE_TIME_EXPLAIN}</span></dt>
-                        <dd><label><input type="text" maxlength="4" size="4" id="cache_time" name="cache_time" value="{CACHE_TIME}" class="text" /></label></dd>
-                    </dl>
-                    <dl>
                         <dt><label for="nb_results_p">* {L_NB_RESULTS_P}</label></dt>
                         <dd><label><input type="text" maxlength="2" size="4" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}" class="text" /></label></dd>
                     </dl>
-                    <dl>
-                        <dt><label for="max_use">* {L_MAX_USE}</label><br /><span>{L_MAX_USE_EXPLAIN}</span></dt>
-                        <dd><label><input type="text" maxlength="3" size="4" id="max_use" name="max_use" value="{MAX_USE}" class="text" /></label></dd>
-                    </dl>
-                </fieldset>
-                
-                <fieldset>
-                    <legend>{L_AUTHORISED_MODULES}</legend>
                     <dl>
                         <dt><label for="authorised_modules[]">* {L_AUTHORISED_MODULES}</label><br /><span>{L_AUTHORISED_MODULES_EXPLAIN}</span></dt>
                         <dd><label>
@@ -74,6 +54,18 @@
                                 # END authorised_modules #
                             </select>
                         </label></dd>
+                    </dl>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>{L_SEARCH_CACHE}</legend>
+                    <dl>
+                        <dt><label for="cache_time">* {L_CACHE_TIME}</label><br /><span>{L_CACHE_TIME_EXPLAIN}</span></dt>
+                        <dd><label><input type="text" maxlength="4" size="4" id="cache_time" name="cache_time" value="{CACHE_TIME}" class="text" /></label></dd>
+                    </dl>
+                    <dl>
+                        <dt><label for="max_use">* {L_MAX_USE}</label><br /><span>{L_MAX_USE_EXPLAIN}</span></dt>
+                        <dd><label><input type="text" maxlength="3" size="4" id="max_use" name="max_use" value="{MAX_USE}" class="text" /></label></dd>
                     </dl>
                 </fieldset>
                 

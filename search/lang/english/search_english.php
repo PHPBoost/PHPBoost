@@ -49,8 +49,9 @@ $LANG['no_results_found'] = 'no results were found';
 //Administration
 $LANG['search_management'] = 'Search management';
 $LANG['search_config'] = 'Configuration';
+$LANG['search_cache'] = 'Search results cache';
 $LANG['cache_time'] = 'Cache\'s life';
-$LANG['cache_time_explain'] = 'in minutes';
+$LANG['cache_time_explain'] = 'in minutes, after, results will be calculated again';
 $LANG['nb_results_per_page'] = 'Results number to print per page';
 $LANG['max_use'] = 'Maximum number of utilisation of the cache';
 $LANG['max_use_explain'] = 'This number represent the time the cahce\'s results will be used before calculating them again';
