@@ -136,15 +136,15 @@ function bb_hide(div2)
 //Masque un bloc.
 function hide_div(divID)
 {
-	if( document.getElementById(divID) )
-		document.getElementById(divID).style.display = 'none';
+    if( document.getElementById(divID) )
+        document.getElementById(divID).style.display = 'none';
 }
 
 //Affiche un bloc
 function show_div(divID)
 {
-	if( document.getElementById(divID) )
-		document.getElementById(divID).style.display = 'block';
+    if( document.getElementById(divID) )
+        document.getElementById(divID).style.display = 'block';
 }
 
 //Masque un bloc.
@@ -458,13 +458,14 @@ function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbP
         
         // Fin
         pagin += writePagin(fctName, fctArgs, false, '&raquo;', nbPages - 1 );
-        
-        // On cache tous les autre résultats du module
-        for ( var i = 0; i < nbPages; i++ )
-            hide_div(blocName + '_' + i);
-        // On montre la page demandée
-        show_div(blocName + '_' + page);
     }
+    
+    // On cache tous les autre résultats du module
+    for ( var i = 0; i < nbPages; i++ )
+        hide_div(blocName + '_' + i);
+        
+    // On montre la page demandée
+    show_div(blocName + '_' + page);
     
     // Mise à jour de la pagination
     document.getElementById(blocPagin).innerHTML = pagin;

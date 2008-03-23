@@ -26,17 +26,10 @@
  *
 ###################################################*/
 
-if ( @include_once('../search/search_cache.php') )
-{
-    $SEARCH_CONFIG = Load_search_cache();
-    define('CACHE_TIME', $SEARCH_CONFIG['cache_time']);
-    define('CACHE_TIMES_USED', $SEARCH_CONFIG['max_use']);
-}
-else
-{
-    define('CACHE_TIME', 30);
-    define('CACHE_TIMES_USED', 200);
-}
+global $CONFIG;
+
+define('CACHE_TIME', $CONFIG['search_cache_time']);
+define('CACHE_TIMES_USED', $CONFIG['search_max_use']);
 
 class Search
 {

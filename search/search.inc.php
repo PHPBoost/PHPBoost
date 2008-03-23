@@ -30,6 +30,12 @@ if( defined('PHP_BOOST') !== true ) exit;
 require_once ( '../includes/modules.class.php' );
 require_once ( '../includes/search.class.php' );
 
+
+$Cache->Load_file('search');
+global $SEARCH_CONFIG;
+
+define ( 'NB_RESULTS_PER_PAGE', $SEARCH_CONFIG['nb_results_per_page']);
+
 function GetSearchForms(&$modules, &$args)
 /**
  *  Affiche les formulaires de recherches pour tous les modules.

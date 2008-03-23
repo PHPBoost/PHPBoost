@@ -39,25 +39,39 @@ require_once('../includes/admin_header.php');
 $id_post = !empty($_POST['idc']) ? numeric($_POST['idc']) : '';
 $clearOutCache = !empty($_GET['clear']) ? true : false;
 
-$Cache->Load_file('search');
-
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {
-    $SEARCH_CONFIG['cache_time'] = !empty($_POST['cache_time']) ? numeric($_POST['cache_time']) : (15 * 60);
-    $SEARCH_CONFIG['nb_results_per_page'] = !empty($_POST['nb_results_p']) ? numeric($_POST['nb_results_p']) : 15;
-    $SEARCH_CONFIG['max_use'] = !empty($_POST['max_use']) ? numeric($_POST['max_use']) : 100;
-    $SEARCH_CONFIG['authorised_modules'] = !empty($_POST['authorised_modules']) ? $_POST['authorised_modules'] : array();
-    
+    global $CONFIG;
     global $Sql;
     
-    $cfg = addslashes(serialize($SEARCH_CONFIG));
-    $request = "UPDATE ".PREFIX."configs SET value = '".$cfg."' WHERE name = 'search'";
-    $Sql->Query_inject($request, __LINE__, __FILE__);
-    if ( $Sql->Sql_affected_rows($request, __LINE__, __FILE__) == 0 )
-        $Sql->Query_inject("INSERT INTO ".PREFIX."configs (`name`, `value`) VALUES ('search', '".$cfg."')", __LINE__, __FILE__);
+    // Configuration de la classe search.class.php
+    $CONFIG['search_cache_time'] = !empty($_POST['cache_time']) ? numeric($_POST['cache_time']) : (15 * 60);
+    $CONFIG['search_max_use'] = !empty($_POST['max_use']) ? numeric($_POST['max_use']) : 100;
     
+    // Configuration du module 'Search'
+    $SEARCH_CONFIG = array();
+    $SEARCH_CONFIG['nb_results_per_page'] = !empty($_POST['nb_results_p']) ? numeric($_POST['nb_results_p']) : 15;
+    $SEARCH_CONFIG['authorised_modules'] = !empty($_POST['authorised_modules']) ? $_POST['authorised_modules'] : array();
+    
+    // Enregistrement des modifications de la config
+    $config_string = addslashes(serialize($CONFIG));
+    $request = "UPDATE ".PREFIX."configs SET value = '".$config_string."' WHERE name = 'config'";
+    $Sql->Query_inject($request, __LINE__, __FILE__);
+//     if ( $Sql->Sql_affected_rows($request, __LINE__, __FILE__) != 1 )
+//         $Sql->Query_inject("INSERT INTO ".PREFIX."configs (`name`, `value`) VALUES ('search', '".$config_string."')", __LINE__, __FILE__);
+    
+    // Enregistrement des modifications de la config du module 'Search'
+    $search_cfg = addslashes(serialize($SEARCH_CONFIG));
+    $request = "UPDATE ".PREFIX."configs SET value = '".$search_cfg."' WHERE name = 'search'";
+    $Sql->Query_inject($request, __LINE__, __FILE__);
+//     if ( $Sql->Sql_affected_rows($request, __LINE__, __FILE__) != 1 )
+//         $Sql->Query_inject("INSERT INTO ".PREFIX."configs (`name`, `value`) VALUES ('search', '".$cfg."')", __LINE__, __FILE__);
+    
+    // Génération des nouveaux fichiers de cache
+    $Cache->Generate_file('config');
     $Cache->Generate_module_file('search');
+    
     redirect(HOST.SCRIPT);
 }
 elseif( $clearOutCache ) // On vide le contenu du cache de la recherche
@@ -71,9 +85,9 @@ else
     $Template->Set_filenames(array(
         'admin_search' => '../templates/' . $CONFIG['theme'] . '/search/admin_search.tpl'
     ));
-
-    require_once('../search/search_cache.php');
-    $SEARCH_CONFIG = Load_search_cache();
+    
+    $Cache->Load_file('search');
+    global $SEARCH_CONFIG;
     
     require_once('../includes/modules.class.php');
     
@@ -109,9 +123,9 @@ else
         'L_AUTHORISED_MODULES_EXPLAIN' => $LANG['authorised_modules_explain'],
         'L_UPDATE' => $LANG['update'],
         'L_RESET' => $LANG['reset'],
-        'CACHE_TIME' => $SEARCH_CONFIG['cache_time'],
-        'NB_RESULTS_P' => $SEARCH_CONFIG['nb_results_per_page'],
-        'MAX_USE' => $SEARCH_CONFIG['max_use']
+        'CACHE_TIME' => $CONFIG['search_cache_time'],
+        'MAX_USE' => $CONFIG['search_max_use'],
+        'NB_RESULTS_P' => $SEARCH_CONFIG['nb_results_per_page']
     ));
 
     $Template->Pparse('admin_search');

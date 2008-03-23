@@ -375,8 +375,10 @@ elseif( $step == 5 )
 		$CONFIG['sign'] = '';
 		$CONFIG['anti_flood'] = '1';
 		$CONFIG['delay_flood'] = '7';
-		$CONFIG['unlock_admin'] = '';
-		$CONFIG['pm_max'] = '5';
+        $CONFIG['unlock_admin'] = '';
+        $CONFIG['pm_max'] = '5';
+        $CONFIG['search_cache_time'] = '20';
+        $CONFIG['search_max_use'] = '200';
 		
 		$config_string = serialize($CONFIG);
 		require_once('../includes/errors.class.php');
