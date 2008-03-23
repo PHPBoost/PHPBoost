@@ -44,11 +44,6 @@ $search = !empty($_POST['search']) ? securit($_POST['search']) : '';
 $selectedModules = !empty($_POST['authorised_modules']) ? $_POST['authorised_modules'] : array();
 $p = 0;
 
-require_once('../search/search_cache.php');
-$SEARCH_CONFIG = Load_search_cache();
-
-define ( 'NB_RESULTS_PER_PAGE', $SEARCH_CONFIG['nb_results_per_page']);
-
 //--------------------------------------------------------------------- Header
 
 if( !empty($search) )

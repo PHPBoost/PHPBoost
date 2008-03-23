@@ -43,36 +43,10 @@ function generate_module_file_search()
     $request = "SELECT value FROM ".PREFIX."configs WHERE name = 'search'";
     
     //Configuration
-    $config = unserialize($Sql->Query($request, __LINE__, __FILE__));
-    
-    // Si la configuration n'existe pas, on en crée une par défaut
-    if ( $Sql->Sql_affected_rows($request, __LINE__, __FILE__) == 0 )
-    {
-        include_once('../includes/modules.class.php');
-        
-        $SEARCH_CONFIG = array();
-        
-        $SEARCH_CONFIG['cache_time'] = 15 * 60;
-        $SEARCH_CONFIG['nb_results_per_page'] = 15;
-        $SEARCH_CONFIG['max_use'] = 100;
-        
-        $Modules = new Modules();
-        $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
-        $SEARCH_CONFIG['authorised_modules'] = array();
-        
-        foreach ( $searchModules as $module )
-        {
-            $moduleInfos = $module->GetInfo();
-            $SEARCH_CONFIG['authorised_modules'][$module->name] = $moduleInfos['name'];
-        }
-        
-        $config = addslashes(serialize($SEARCH_CONFIG));
-        
-        $Sql->Query_inject("INSERT INTO ".PREFIX."configs (`name`, `value`) VALUES ('search', '".$config."')", __LINE__, __FILE__);
-    }
+    $search_config = unserialize($Sql->Query($request, __LINE__, __FILE__));
     
     return 'global $SEARCH_CONFIG;
-            $SEARCH_CONFIG = ' . var_export($config, true) . ';';
+            $SEARCH_CONFIG = '.var_export($search_config, true).';';
 }
 
 ?>

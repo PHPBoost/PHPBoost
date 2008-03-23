@@ -67,7 +67,9 @@
             // Change le cadre des résultats
             {
                 HideForms();
-                show_div(FORM + document.getElementById('FormsSelection').value);
+                var module = document.getElementById('FormsSelection').value;
+                    module = module[0].toUpperCase() + module.substr(1);
+                show_div(FORM + module);
             }
             
             function check_search_form_post()
