@@ -1,1 +1,1 @@
-INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('search','a:4:{s:10:"cache_time";i:30;s:19:"nb_results_per_page";i:15;s:7:"max_use";i:200;s:18:"authorised_modules";a:0:{}}');
+INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('search','a:2:{s:19:"nb_results_per_page";i:15;s:18:"authorised_modules";a:0:{}}');
