@@ -32,9 +32,8 @@
             {
                 HideAdvancedSearchForms();
                 
-                document.getElementById('searched_modules').style.visibility = 'visible';
-                document.getElementById('searched_modules[]').style.visibility = 'visible';
-                document.getElementById('FormsSelection').style.visibility = 'visible';
+                document.getElementById('searched_modules_DL').style.display = 'block';
+                document.getElementById('FormsSelection_DL').style.display = 'block';
                 
                 hide_div('AdvancedSearch');
                 show_div('SimpleSearch');
@@ -47,9 +46,8 @@
             {
                 HideForms();
                 
-                document.getElementById('searched_modules').style.visibility = 'hidden';
-                document.getElementById('searched_modules[]').style.visibility = 'hidden';
-                document.getElementById('FormsSelection').style.visibility = 'hidden';
+                document.getElementById('searched_modules_DL').style.display = 'none';
+                document.getElementById('FormsSelection_DL').style.display = 'none';
                 hide_div('SimpleSearch');
                 show_div('AdvancedSearch');
             }
@@ -68,7 +66,6 @@
             {
                 HideForms();
                 var module = document.getElementById('FormsSelection').value;
-                    module = module[0].toUpperCase() + module.substr(1);
                 show_div(FORM + module);
             }
             
@@ -98,34 +95,44 @@
             <div class="module_contents">
                 <div class="spacer">&nbsp;</div>
                 <form id="SearchForm" action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
-                    <table class="SearchForm">
-                        <caption><span>{L_TITLE_SEARCH}</span></caption>
-                        <tr>
-                            <td><label for="TxTsearched">{L_SEARCH_KEYWORDS}<br /><span>{L_SEARCH_MIN_LENGTH}</span></label></td>
-                            <td><label><input type="text" size="35" id="TxTsearched" name="search" value="{TEXT_SEARCHED}"  class="text" /></label></td>
-                            <td rowspan="2" style="text-align:center;">
-                                <label id="searched_modules" style="visibility:hidden;">
-                                    {L_SEARCH_IN_MODULES}<br /><span>{L_SEARCH_IN_MODULES_EXPLAIN}</span>
-                                </label><br />
-                                <select id="searched_modules[]" name="searched_modules[]" size="5" multiple="multiple" class="list_modules_to_search_in" style="visibility:hidden">
+                    <fieldset class="SearchForm">
+                        <legend>{L_TITLE_SEARCH}</legend>
+                        <dl>
+                            <dt><label for="TxTsearched">{L_SEARCH_KEYWORDS}<br /><span>{L_SEARCH_MIN_LENGTH}</span></label></dt>
+                            <dd><label><input type="text" size="35" id="TxTsearched" name="search" value="{TEXT_SEARCHED}" class="text" /></label></dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <label id="AdvancedSearch" style="display:none">
+                                    <a href="javascript:ShowAdvancedSearchForms();">{L_ADVANCED_SEARCH}</a>
+                                </label>
+                                <label id="SimpleSearch" style="display:none">
+                                    <a href="javascript:HideAdvancedSearchForms();">{L_SIMPLE_SEARCH}</a>
+                                </label>
+                            </dt>
+                            <dd></dd>
+                        </dl>
+                        <dl id="searched_modules_DL" style="display:none">
+                            <dt>
+                                <label>{L_SEARCH_IN_MODULES}<br /><span>{L_SEARCH_IN_MODULES_EXPLAIN}</span></label>
+                            </dt>
+                            <dd>
+                                <select id="searched_modules[]" name="searched_modules[]" size="5" multiple="multiple" class="list_modules">
                                 # START searched_modules #
                                     <option value="{searched_modules.MODULE}" id="{searched_modules.MODULE}"{searched_modules.SELECTED} onclick="GenerateListModules(true)">{searched_modules.L_MODULE_NAME}</option>
                                 # END searched_modules #
-                            </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label id="AdvancedSearch" style="display:none"><a href="javascript:ShowAdvancedSearchForms();">{L_ADVANCED_SEARCH}</a></label>
-                                <label id="SimpleSearch" style="display:none"><a href="javascript:HideAdvancedSearchForms();">{L_SIMPLE_SEARCH}</a></label>
-                            </td>
-                            <td>
-                                <select id="FormsSelection" name="FormsSelection" onchange="ChangeForm();" class="list_modules" style="visibility:hidden;"></select>
-                            </td>
-                        </tr>
-                    </table>
+                                </select>
+                            </dd>
+                        </dl>
+                        <dl id="FormsSelection_DL" style="display:none">
+                            <dt><label>{L_SEARCH_SPECIALIZED_FORM}<br /><span>{L_SEARCH_SPECIALIZED_FORM_EXPLAIN}</span></label></dt>
+                            <dd>
+                                <select id="FormsSelection" name="FormsSelection" onchange="ChangeForm();" class="list_modules"></select>
+                            </dd>
+                        </dl>
+                    </fieldset>
                     # START forms #
-                        <div id="Form{forms.MODULE_NAME}" class="module_position" style="display:none">
+                        <div id="Form{forms.MODULE_NAME}" style="display:none">
                             <fieldset>
                                 <legend>{forms.L_MODULE_NAME}</legend>
                                 {forms.SEARCH_FORM}

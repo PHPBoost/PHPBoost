@@ -60,6 +60,8 @@ $Template->Assign_vars(Array(
     'L_SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
     'L_SEARCH_IN_MODULES' => $LANG['search_in_modules'],
     'L_SEARCH_IN_MODULES_EXPLAIN' => $LANG['search_in_modules_explain'],
+    'L_SEARCH_SPECIALIZED_FORM' => $LANG['search_specialized_form'],
+    'L_SEARCH_SPECIALIZED_FORM_EXPLAIN' => $LANG['search_specialized_form_explain'],
     'L_WARNING_LENGTH_STRING_SEARCH' => $LANG['warning_length_string_searched'],
     'L_FORMS' => $LANG['forms'],
     'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
@@ -131,7 +133,7 @@ if( $search != '' )
         $module = $Modules->GetModule($moduleName);
         $infos = $module->GetInfo();
         $Template->Assign_block_vars('forms', array(
-            'MODULE_NAME' => ucfirst($moduleName),
+            'MODULE_NAME' => $moduleName,
             'L_MODULE_NAME' => ucfirst($infos['name']),
             'SEARCH_FORM' => $form
         ));
@@ -157,7 +159,7 @@ if( $search != '' )
     {
         $moduleInfos = $module->GetInfo();
         $Template->Assign_block_vars('results', array(
-            'MODULE_NAME' => ucfirst($module->name),
+            'MODULE_NAME' => $module->name,
             'L_MODULE_NAME' => ucfirst($moduleInfos['name']),
             'ID_SEARCH' => $idsSearch[$module->name],
         ));
