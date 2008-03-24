@@ -34,7 +34,10 @@
 $LANG['title_search'] = 'Search';
 $LANG['search_results'] = 'Search results';
 $LANG['warning_length_string_searched'] = 'The size of the string you\'re searching for must be at least 4 characters long!';
-$LANG['search_min_length'] = 'Keywords (at least 4 characters)';
+$LANG['search_keywords'] = 'Keywords';
+$LANG['search_min_length'] = 'at least 4 characters';
+$LANG['search_in_modules'] = 'Search in modules';
+$LANG['search_in_modules_explain'] = 'Hold ctrl then click in the list to do a multiple choice';
 $LANG['title_all_results'] = 'All results';
 $LANG['forms'] = 'Forms';
 $LANG['results'] = 'Results';
