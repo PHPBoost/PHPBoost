@@ -119,7 +119,7 @@ function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
         }
         if ( $i == 0 )
         {
-            $htmlResults .= '<div id="results'.ucfirst($resultsName).'_'.$j.'" style="display:none"><ul class="search_results">';
+            $htmlResults .= '<div id="results'.$resultsName.'_'.$j.'" style="display:none"><ul class="search_results">';
             $j++;
         }
         

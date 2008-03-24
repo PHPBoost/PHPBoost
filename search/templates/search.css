@@ -32,15 +32,11 @@ table.SearchForm caption span {
     text-transform:uppercase;
 }
 
-label#searched_modules {
-    max-width:100px;
-}
-
-table.SearchForm label {
+fieldset.SearchForm label {
     font-weight:bold;
 }
 
-table.SearchForm span {
+fieldset.SearchForm span {
     font-size: 10px;
     color: #476a7f;
     font-weight:normal;
@@ -52,10 +48,6 @@ select#FormsChoice {
 
 select.list_modules {
     width:300px;
-}
-
-select.list_modules_to_search_in {
-    width:100px;
 }
 
 div.resultsChoices {
