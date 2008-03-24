@@ -41,7 +41,7 @@ $Template->Set_filenames(array(
 $pageNum = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
 $modName = !empty($_GET['module']) ? securit($_GET['module']) : 'All';
 $search = !empty($_POST['search']) ? securit($_POST['search']) : '';
-$selectedModules = !empty($_POST['authorised_modules']) ? $_POST['authorised_modules'] : array();
+$selectedModules = !empty($_POST['searched_modules']) ? $_POST['searched_modules'] : array();
 $p = 0;
 
 //--------------------------------------------------------------------- Header
@@ -56,7 +56,10 @@ $Template->Assign_vars(Array(
     'L_TITLE_SEARCH' => TITLE,
     'L_SEARCH' => $LANG['title_search'],
     'TEXT_SEARCHED' => $search,
+    'L_SEARCH_KEYWORDS' => $LANG['search_keywords'],
     'L_SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
+    'L_SEARCH_IN_MODULES' => $LANG['search_in_modules'],
+    'L_SEARCH_IN_MODULES_EXPLAIN' => $LANG['search_in_modules_explain'],
     'L_WARNING_LENGTH_STRING_SEARCH' => $LANG['warning_length_string_searched'],
     'L_FORMS' => $LANG['forms'],
     'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
@@ -141,8 +144,9 @@ if( $search != '' )
         $nbModules = count($searchModules);
         for ( $i = 0; $i < $nbModules; $i++ )
         {
+            $module = $searchModules[$i];
             if ( !in_array($module->name, $selectedModules) )
-                unset($searchModules[i]);
+                unset($searchModules[$i]);
         }
     }
     

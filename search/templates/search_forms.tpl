@@ -94,18 +94,20 @@
         <div class="module_position">
             <div class="module_top_l"></div>
             <div class="module_top_r"></div>
-            <div class="module_top">{L_TITLE}</div>
+            <div class="module_top">{L_TITLE_SEARCH}</div>
             <div class="module_contents">
                 <div class="spacer">&nbsp;</div>
                 <form id="SearchForm" action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
                     <table class="SearchForm">
                         <caption><span>{L_TITLE_SEARCH}</span></caption>
                         <tr>
-                            <td><label for="TxTsearched">{L_SEARCH_MIN_LENGTH}</label></td>
+                            <td><label for="TxTsearched">{L_SEARCH_KEYWORDS}<br /><span>{L_SEARCH_MIN_LENGTH}</span></label></td>
                             <td><label><input type="text" size="35" id="TxTsearched" name="search" value="{TEXT_SEARCHED}"  class="text" /></label></td>
                             <td rowspan="2" style="text-align:center;">
-                                <label id="searched_modules" style="visibility:hidden;">Modules sélectionnés</label><br />
-                                <select id="searched_modules[]" name="searched_modules[]" size="5" multiple="multiple" class="list_modules" style="visibility:hidden">
+                                <label id="searched_modules" style="visibility:hidden;">
+                                    {L_SEARCH_IN_MODULES}<br /><span>{L_SEARCH_IN_MODULES_EXPLAIN}</span>
+                                </label><br />
+                                <select id="searched_modules[]" name="searched_modules[]" size="5" multiple="multiple" class="list_modules_to_search_in" style="visibility:hidden">
                                 # START searched_modules #
                                     <option value="{searched_modules.MODULE}" id="{searched_modules.MODULE}"{searched_modules.SELECTED} onclick="GenerateListModules(true)">{searched_modules.L_MODULE_NAME}</option>
                                 # END searched_modules #
@@ -118,7 +120,7 @@
                                 <label id="SimpleSearch" style="display:none"><a href="javascript:HideAdvancedSearchForms();">{L_SIMPLE_SEARCH}</a></label>
                             </td>
                             <td>
-                                <select id="FormsSelection" name="FormsSelection" onchange="ChangeForm();" style="visibility:hidden;"></select>
+                                <select id="FormsSelection" name="FormsSelection" onchange="ChangeForm();" class="list_modules" style="visibility:hidden;"></select>
                             </td>
                         </tr>
                     </table>

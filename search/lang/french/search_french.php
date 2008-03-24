@@ -34,7 +34,10 @@
 $LANG['title_search'] = 'Recherche';
 $LANG['search_results'] = 'Résultats de la recherche';
 $LANG['warning_length_string_searched'] = 'La chaine recherchée doit faire au moins 4 caratères!';
-$LANG['search_min_length'] = 'Mots clés (4 caractères minimum)';
+$LANG['search_keywords'] = 'Mots clés';
+$LANG['search_min_length'] = '4 caractères minimum';
+$LANG['search_in_modules'] = 'Rechercher dans les modules';
+$LANG['search_in_modules_explain'] = 'Maintenez ctrl puis cliquez dans la liste pour faire plusieurs choix';
 $LANG['title_all_results'] = 'Tous les résultats';
 $LANG['forms'] = 'Formulaires';
 $LANG['results'] = 'Résultats';

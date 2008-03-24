@@ -24,7 +24,7 @@
  *
 ###################################################*/
 
-var menu_delay = 800; //Durée après laquelle le menu est cachée lors du départ de la souris.
+var menu_delay = 800; //Durée après laquelle le menu est caché lors du départ de la souris.
 var menu_delay_onmouseover = 180; //Durée après laquelle la menu est affiché lors du passage de la souris dessus.
 var menu_previous = new Array('', '', '');
 var menu_timeout = new Array(null, null, null);
