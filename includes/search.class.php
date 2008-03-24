@@ -163,25 +163,6 @@ class Search
     }
     
     //----------------------------------------------------- Méthodes publiques
-    function IsSearchIdInCache($idSearch)
-    /**
-     *  Renvoie <true> si la recherche est en cache et <false> sinon.
-     *  Nb requêtes : 2
-     */
-    {
-        global $Sql;
-        $id = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."search_index WHERE id_search = ".$idSearch, __LINE__, __FILE__);
-        if( $id == 1 )
-        {
-            // la recherche est déjà, en cache, on la met à jour.
-            $reqUpdate  = "UPDATE ".PREFIX."search_index SET times_used=times_used+1, `last_search_use`='".time()."' WHERE ";
-            $reqUpdate .= "`id_search` = ".$idSearch;
-            $Sql->Query_inject($reqUpdate, __LINE__, __FILE__);
-            return true;
-        }
-        else return false;
-    }
-    
     function GetResultsById( &$results, $idSearch = 0, $nbLines = 0, $offset = 0 )
     /**
      *  Renvoie les résultats de la recherche d'id <idSearch>
@@ -216,67 +197,10 @@ class Search
         return $nbResults;
     }
     
-    function InsertResults(&$requests)
-    /**
-     *  Enregistre les résultats de la recherche dans la base des résultats
-     *  si ils n'y sont pas déjà
-     *  Nb requêtes : 1
-     */
-    {
-        global $Sql;
-		
-		$nbReqSEARCH = 0;
-        $reqSEARCH = "";
-        
-        // Vérification de la présence des résultats dans le cache
-        foreach($requests as $moduleName => $request)
-        {
-            if( !$this->IsInCache($moduleName) )
-            {   // Si les résultats ne sont pas dans le cache.
-                // Ajout des résultats dans le cache
-                if( $nbReqSEARCH > 0 )
-                    $reqSEARCH .= " UNION ";
-                
-                $reqSEARCH .= "(".trim( $request, ' ;' ).")";
-                $nbReqSEARCH++;
-            }
-        }
-        
-        // Dans le cas ou il y a des recherches à faire
-        if( $nbReqSEARCH > 0 )
-        {
-            $nbReqInsert = 0;
-            $reqInsert = '';
-            $request = $Sql->Query_while( $reqSEARCH, __LINE__, __FILE__ );
-            while( $row = $Sql->Sql_fetch_assoc($request) )
-            {
-                if( $nbReqInsert > 0 )
-                    $reqInsert .= ',';
-                $reqInsert .= " ('".$row['id_search']."','".$row['id_content']."','".addslashes($row['title'])."',";
-                $reqInsert .= "'".$row['relevance']."','".$row['link']."')";
-                
-                // Exécution de 10 requêtes d'insertions
-                if( $nbReqInsert == 10 )
-                {
-                    $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
-                    $reqInsert = '';
-                    $nbReqInsert = 0;
-                }
-                else { $nbReqInsert++; }
-            }
-            
-            // Exécution des derniéres requêtes d'insertions
-            if( $nbReqInsert > 0 )
-            {
-                $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
-            }
-        }
-    }
-    
     function GetResults(&$results, &$moduleNames, $nbLines = 0, $offset = 0 )
     /**
      *  Renvoie le nombre de résultats de la recherche
-     *  et mets les résultats dans le tableau &results
+     *  et mets les résultats dans le tableau $results
      *  Nb requêtes : 1, 2 si le SGBD ne supporte pas 'sql->Sql_num_rows'
      */
     {
@@ -330,13 +254,80 @@ class Search
         return $nbResults;
     }
     
-    function ModulesInCache()
+    function InsertResults(&$requests)
     /**
-     *  Renvoie la liste des modules présent dans le cache
-     *  Nb requêtes : 0
+     *  Enregistre les résultats de la recherche dans la base des résultats
+     *  si ils n'y sont pas déjà
+     *  Nb requêtes : 1
      */
     {
-        return array_keys($this->id_search);
+        global $Sql;
+        
+        $nbReqSEARCH = 0;
+        $reqSEARCH = "";
+        
+        // Vérification de la présence des résultats dans le cache
+        foreach($requests as $moduleName => $request)
+        {
+            if( !$this->IsInCache($moduleName) )
+            {   // Si les résultats ne sont pas dans le cache.
+                // Ajout des résultats dans le cache
+                if( $nbReqSEARCH > 0 )
+                    $reqSEARCH .= " UNION ";
+                
+                $reqSEARCH .= "(".trim( $request, ' ;' ).")";
+                $nbReqSEARCH++;
+            }
+        }
+        
+        // Dans le cas ou il y a des recherches à faire
+        if( $nbReqSEARCH > 0 )
+        {
+            $nbReqInsert = 0;
+            $reqInsert = '';
+            $request = $Sql->Query_while( $reqSEARCH, __LINE__, __FILE__ );
+            while( $row = $Sql->Sql_fetch_assoc($request) )
+            {
+                if( $nbReqInsert > 0 )
+                    $reqInsert .= ',';
+                $reqInsert .= " ('".$row['id_search']."','".$row['id_content']."','".addslashes($row['title'])."',";
+                $reqInsert .= "'".$row['relevance']."','".$row['link']."')";
+                
+                // Exécution de 10 requêtes d'insertions
+                if( $nbReqInsert == 10 )
+                {
+                    $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
+                    $reqInsert = '';
+                    $nbReqInsert = 0;
+                }
+                else { $nbReqInsert++; }
+            }
+            
+            // Exécution des derniéres requêtes d'insertions
+            if( $nbReqInsert > 0 )
+            {
+                $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
+            }
+        }
+    }
+    
+    function IsSearchIdInCache($idSearch)
+    /**
+     *  Renvoie <true> si la recherche est en cache et <false> sinon.
+     *  Nb requêtes : 2
+     */
+    {
+        global $Sql;
+        $id = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."search_index WHERE id_search = '".$idSearch."' AND `id_user` = '".$this->id_user."';", __LINE__, __FILE__);
+        if( $id == 1 )
+        {
+            // la recherche est déjà, en cache, on la met à jour.
+            $reqUpdate  = "UPDATE ".PREFIX."search_index SET times_used=times_used+1, `last_search_use`='".time()."' WHERE ";
+            $reqUpdate .= "`id_search` = '".$idSearch."' AND `id_user` = '".$this->id_user."';";
+            $Sql->Query_inject($reqUpdate, __LINE__, __FILE__);
+            return true;
+        }
+        else return false;
     }
     
     function IsInCache($moduleName)
@@ -346,6 +337,15 @@ class Search
      */
     {
         return in_array($moduleName, $this->cache);
+    }
+    
+    function ModulesInCache()
+    /**
+     *  Renvoie la liste des modules présent dans le cache
+     *  Nb requêtes : 0
+     */
+    {
+        return array_keys($this->id_search);
     }
     
     //------------------------------------------------------------------ PRIVE
