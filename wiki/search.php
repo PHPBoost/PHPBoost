@@ -93,7 +93,7 @@ if( $search_string != '' ) //recherche
 	else
 		$Errorh->Error_handler($LANG['wiki_empty_search'], E_NOTICE);
 	
-	$i = 1; //On émule le "limit" 10 résultats par page
+	$i = 1; //On ï¿½mule le "limit" 10 rï¿½sultats par page
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( $i > ($page - 1) * 10 && $i <= $page * 10 ) //On affiche
