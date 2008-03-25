@@ -45,6 +45,7 @@ class WikiInterface extends ModuleInterface
     {
         require_once('../includes/begin.php');
         load_module_lang('wiki');
+        global $LANG;
         
         if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,content,all')) )
             $args['WikiWhere'] = 'title';
@@ -78,37 +79,38 @@ class WikiInterface extends ModuleInterface
         if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,content,all')) )
             $args['WikiWhere'] = 'title';
         
-        if ( $args['WikiWhere'] == 'contents' )
+        if ( $args['WikiWhere'] == 'all' )
             return "SELECT ".
-                $args['id_search']." AS id_search,
-                a.title, a.encoded_title, MATCH(c.content) AGAINST('" . $search_string . "') AS relevance
+                $args['id_search']." AS `id_search`,
+                a.id AS `id_content`,
+                a.title AS `title`,
+                ( 2 * MATCH(a.title) AGAINST('".$args['search']."') + MATCH(c.content) AGAINST('".$args['search']."') ) AS `relevance`,
+                CONCAT('../wiki/wiki.php?title=',a.encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles a
                 LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
-                WHERE MATCH(c.content) AGAINST('" . $search_string . "') 
+                WHERE ( MATCH(a.title) AGAINST('".$args['search']."') OR MATCH(c.content) AGAINST('".$args['search']."') )
+                ORDER BY relevance DESC";
+        if ( $args['WikiWhere'] == 'contents' )
+            return "SELECT ".
+                $args['id_search']." AS `id_search`,
+                a.id AS `id_content`,
+                a.title AS `title`,
+                MATCH(c.content) AGAINST('".$args['search']."') AS `relevance`,
+                CONCAT('../wiki/wiki.php?title=',a.encoded_title) AS `link`
+                FROM ".PREFIX."wiki_articles a
+                LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
+                WHERE MATCH(c.content) AGAINST('".$args['search']."')
                 ORDER BY relevance DESC";
         else
             return "SELECT ".
-                $args['id_search']." AS id_search, title, encoded_title, MATCH(title) AGAINST('" . $search_string . "') AS relevance
+                $args['id_search']." AS `id_search`,
+                `id` AS `id_content`,
+                `title` AS `title`,
+                MATCH(title) AGAINST('".$args['search']."') AS `relevance`,
+                CONCAT('../wiki/wiki.php?title=',encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles
-                WHERE MATCH(title) AGAINST('" . $search_string . "') 
+                WHERE MATCH(title) AGAINST('".$args['search']."')
                 ORDER BY relevance DESC";
-        
-        return "SELECT ".
-            $args['id_search']." AS id_search,
-            `id` AS `id_content`,
-            `title` AS `title`, ".
-            ($args['WikiWhere'] == 'title'? "MATCH(`title`) AGAINST('".$args['search']."')" : "").
-            ($args['WikiWhere'] == 'contents'? "MATCH(`contents`) AGAINST('".$args['search']."')" : "").
-            ($args['WikiWhere'] == 'all'? "MATCH(`title`,`contents`) AGAINST('".$args['search']."')" : "").
-            ." AS `relevance`,
-            CONCAT('../wiki/wiki.php?title=',encoded_title) AS link
-        FROM ".
-            PREFIX."wiki_articles
-        WHERE ".
-            ($args['WikiWhere'] == 'title'? "MATCH(`title`) AGAINST('".$args['search']."')" : "").
-            ($args['WikiWhere'] == 'contents'? "MATCH(`contents`) AGAINST('".$args['search']."')" : "").
-            ($args['WikiWhere'] == 'all'? "MATCH(`title`,`contents`) AGAINST('".$args['search']."')" : "").
-            .";";
     }
 }
 
