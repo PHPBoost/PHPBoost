@@ -254,7 +254,7 @@ class Search
         return $nbResults;
     }
     
-    function InsertResults(&$requests)
+    function InsertResults(&$requestAndResults)
     /**
      *  Enregistre les résultats de la recherche dans la base des résultats
      *  si ils n'y sont pas déjà
@@ -265,26 +265,51 @@ class Search
         
         $nbReqSEARCH = 0;
         $reqSEARCH = "";
+        $results = array();
         
         // Vérification de la présence des résultats dans le cache
-        foreach($requests as $moduleName => $request)
+        foreach($requestAndResults as $moduleName => $request)
         {
-            if( !$this->IsInCache($moduleName) )
-            {   // Si les résultats ne sont pas dans le cache.
-                // Ajout des résultats dans le cache
-                if( $nbReqSEARCH > 0 )
-                    $reqSEARCH .= " UNION ";
-                
-                $reqSEARCH .= "(".trim( $request, ' ;' ).")";
-                $nbReqSEARCH++;
+            if ( !is_array($request) )
+            {
+                if( !$this->IsInCache($moduleName) )
+                {   // Si les résultats ne sont pas dans le cache.
+                    // Ajout des résultats dans le cache
+                    if( $nbReqSEARCH > 0 )
+                        $reqSEARCH .= " UNION ";
+                    
+                    $reqSEARCH .= "(".trim( $request, ' ;' ).")";
+                    $nbReqSEARCH++;
+                }
             }
+            else $results += $requestAndResults[$moduleName];
         }
         
-        // Dans le cas ou il y a des recherches à faire
-        if( $nbReqSEARCH > 0 )
+        // Dans le cas ou il y a des résultats à enregistrer
+        if ( ($nbReqSEARCH > 0) || (count($firstResults) > 0) )
         {
             $nbReqInsert = 0;
             $reqInsert = '';
+            
+            $nbResults = count($results);
+            for ( $i = 0; $i < $nbResults; $i++ )
+            {
+                $row = $results[$i];
+                if( $nbReqInsert > 0 )
+                    $reqInsert .= ',';
+                $reqInsert .= " ('".$row['id_search']."','".$row['id_content']."','".addslashes($row['title'])."',";
+                $reqInsert .= "'".$row['relevance']."','".$row['link']."')";
+                
+                // Exécution de 10 requêtes d'insertions
+                if( $nbReqInsert == 10 )
+                {
+                    $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
+                    $reqInsert = '';
+                    $nbReqInsert = 0;
+                }
+                else $nbReqInsert++;
+            }
+            
             $request = $Sql->Query_while( $reqSEARCH, __LINE__, __FILE__ );
             while( $row = $Sql->Sql_fetch_assoc($request) )
             {
@@ -300,14 +325,12 @@ class Search
                     $reqInsert = '';
                     $nbReqInsert = 0;
                 }
-                else { $nbReqInsert++; }
+                else $nbReqInsert++;
             }
             
             // Exécution des derniéres requêtes d'insertions
             if( $nbReqInsert > 0 )
-            {
                 $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
-            }
         }
     }
     
