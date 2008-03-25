@@ -4,7 +4,7 @@
  *                              search.class.php
  *                            -------------------
  *   begin                : February 1, 2008
- *   copyright            : (C) 2008 Rouchon Loïc
+ *   copyright            : (C) 2008 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -258,7 +258,7 @@ class Search
     /**
      *  Enregistre les résultats de la recherche dans la base des résultats
      *  si ils n'y sont pas déjà
-     *  Nb requêtes : 1
+     *  Nb requêtes : 1 + k / 10
      */
     {
         global $Sql;
