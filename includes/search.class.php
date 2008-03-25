@@ -285,13 +285,13 @@ class Search
             else $results += $requestAndResults[$moduleName];
         }
         
+        $nbResults = count($results);
         // Dans le cas ou il y a des résultats à enregistrer
-        if ( ($nbReqSEARCH > 0) || (count($firstResults) > 0) )
+        if ( ($nbReqSEARCH > 0) || ($nbResults > 0) )
         {
             $nbReqInsert = 0;
             $reqInsert = '';
             
-            $nbResults = count($results);
             for ( $i = 0; $i < $nbResults; $i++ )
             {
                 $row = $results[$i];

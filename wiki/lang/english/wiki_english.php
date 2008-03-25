@@ -165,6 +165,10 @@ $LANG['wiki_search_key_words'] = 'Keywords (4 characters minimum)';
 $LANG['wiki_search_result'] = 'Rsearch Results';
 $LANG['wiki_search_relevance'] = 'Research relevance';
 $LANG['wiki_empty_search'] = 'No article was found.';
+$LANG['wiki_search_where'] = 'Where?';
+$LANG['wiki_search_where_title'] = 'Title';
+$LANG['wiki_search_where_contents'] = 'Content';
+$LANG['wiki_search_where_all'] = 'Title &amp; content';
 
 //Discussion
 $LANG['wiki_article_com'] = 'Discussion for this article';
