@@ -27,6 +27,7 @@
 
 require_once('../includes/begin.php'); 
 require_once('../forum/forum_begin.php');
+require_once('../forum/forum_tools.php');
 
 $page = !empty($_GET['pt']) ? numeric($_GET['pt']) : 1;
 $id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';

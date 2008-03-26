@@ -31,15 +31,11 @@ load_module_lang('forum'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
+require_once('../forum/forum_begin.php');
+
 $class = ( !empty($_GET['id'])) ? numeric($_GET['id']) : 0;
 $top = ( !empty($_GET['top'])) ? securit($_GET['top']) : '' ;
 $bottom = ( !empty($_GET['bot'])) ? securit($_GET['bot']) : '' ;
-
-$Cache->Load_file('forum');
-//Configuration générale du forum
-define('FLOOD_FORUM', 0x01);
-define('EDIT_MARK_FORUM', 0x02);
-define('TRACK_TOPIC_FORUM', 0x04);
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )

@@ -31,14 +31,11 @@ load_module_lang('forum'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
+require_once('../forum/forum_begin.php');
+
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 $move = !empty($_GET['move']) ? trim($_GET['move']) : 0;
-
-//Configuration sur la catégorie.
-define('READ_CAT_FORUM', 0x01);
-define('WRITE_CAT_FORUM', 0x02);
-define('EDIT_CAT_FORUM', 0x04);
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) && !empty($id) )

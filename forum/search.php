@@ -28,6 +28,8 @@
 
 require_once('../includes/begin.php'); 
 require_once('../forum/forum_begin.php');
+require_once('../forum/forum_tools.php');
+
 $Speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 $Speed_bar->Add_link($LANG['title_search'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['title_search']);
