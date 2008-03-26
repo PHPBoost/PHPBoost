@@ -28,18 +28,6 @@
 if( defined('PHP_BOOST') !== true)	
 	exit;
 
-$AUTH_READ_FORUM = array();
-if( is_array($CAT_FORUM) )
-{
-	foreach($CAT_FORUM as $idcat => $key)
-	{
-		if( $Member->Check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
-			$AUTH_READ_FORUM[$idcat] = true;
-		else
-			$AUTH_READ_FORUM[$idcat] = false;
-	}
-}
-
 ############### Header du forum ################
 $Template->Set_filenames(array(
 	'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',

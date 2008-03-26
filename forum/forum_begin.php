@@ -62,6 +62,19 @@ define('H_READONLY_USER', 'readonly_user'); //Modification lecture seule d'un me
 
 $Cache->Load_file('forum');
 
+//Vérification des autorisations sur toutes les catégories.
+$AUTH_READ_FORUM = array();
+if( is_array($CAT_FORUM) )
+{
+	foreach($CAT_FORUM as $idcat => $key)
+	{
+		if( $Member->Check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+			$AUTH_READ_FORUM[$idcat] = true;
+		else
+			$AUTH_READ_FORUM[$idcat] = false;
+	}
+}
+
 //Supprime les menus suivant configuration du site.
 if( $CONFIG_FORUM['no_left_column'] == 1 ) 
 	define('NO_LEFT_COLUMN', true);
