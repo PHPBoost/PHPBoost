@@ -54,7 +54,7 @@ class WikiInterface extends ModuleInterface
         <dl>
             <dt><label for="WikiWhere">'.$LANG['wiki_search_where'].'</label></dt>
             <dd>
-                <select id="WikiWhere" name="WikiWhere" class="list_modules">
+                <select id="WikiWhere" name="WikiWhere" class="search_field">
                     <option value="title"'.($args['WikiWhere'] == 'title'? ' selected="selected"': '').'>'.$LANG['wiki_search_where_title'].'</option>
                     <option value="contents"'.($args['WikiWhere'] == 'contents'? ' selected="selected"': '').'>'.$LANG['wiki_search_where_contents'].'</option>
                     <option value="all"'.($args['WikiWhere'] == 'all'? ' selected="selected"': '').'>'.$LANG['wiki_search_where_all'].'</option>

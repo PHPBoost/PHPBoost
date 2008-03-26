@@ -46,6 +46,10 @@ select#FormsChoice {
     width:300px;
 }
 
+select.search_field {
+    width:300px;
+}
+
 select.list_modules {
     width:300px;
 }
