@@ -27,6 +27,8 @@
 
 require_once('../includes/begin.php'); 
 require_once('../forum/forum_begin.php');
+require_once('../forum/forum_tools.php');
+
 $id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 //Récupération de la barre d'arborescence.
 $Speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);

@@ -62,18 +62,6 @@ define('H_READONLY_USER', 'readonly_user'); //Modification lecture seule d'un me
 
 $Cache->Load_file('forum');
 
-$AUTH_READ_FORUM = array();
-if( is_array($CAT_FORUM) )
-{
-	foreach($CAT_FORUM as $idcat => $key)
-	{
-		if( $Member->Check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
-			$AUTH_READ_FORUM[$idcat] = true;
-		else
-			$AUTH_READ_FORUM[$idcat] = false;
-	}
-}
-
 //Supprime les menus suivant configuration du site.
 if( $CONFIG_FORUM['no_left_column'] == 1 ) 
 	define('NO_LEFT_COLUMN', true);
@@ -84,72 +72,6 @@ if( $CONFIG_FORUM['no_right_column'] == 1 )
 define('ALTERNATIVE_CSS', 'forum');
 
 //Fonction du forum.
-require('../forum/forum_functions.php');
-
-
-############### Header du forum ################
-$Template->Set_filenames(array(
-	'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-	'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
-));
-
-$is_guest = ($Member->Get_attribute('user_id') !== -1) ? false : true;
-$nbr_msg_not_read = 0;
-if( !$is_guest )
-{
-	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-	$max_time_msg = forum_limit_time_msg();
-	
-	//Vérification des autorisations.
-	$unauth_cats = '';
-	if( is_array($AUTH_READ_FORUM) )
-	{
-		foreach($AUTH_READ_FORUM as $idcat => $auth)
-		{
-			if( !$auth )
-				$unauth_cats .= $idcat . ',';
-		}
-		$unauth_cats = !empty($unauth_cats) ? " AND c.id NOT IN (" . trim($unauth_cats, ',') . ")" : '';
-	}
-
-	//Si on est sur un topic, on le supprime dans la requête => si ce topic n'était pas lu il ne sera plus dans la liste car désormais lu.
-	$clause_topic = '';
-	if( strpos(SCRIPT, '/forum/topic.php') !== false )
-	{
-		$id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
-		$clause_topic = " AND t.id != '" . $id_get . "'";
-	}
-	
-	//Requête pour compter le nombre de messages non lus.
-	$nbr_msg_not_read = $Sql->Query("SELECT COUNT(*)
-	FROM ".PREFIX."forum_topics t
-	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
-	LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id AND v.user_id = '" . $Member->Get_attribute('user_id') . "'
-	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . $unauth_cats, __LINE__, __FILE__);
-}
-
-//Formulaire de connexion sur le forum.
-if( $CONFIG_FORUM['display_connexion'] )
-{
-	$Template->Assign_vars(array(	
-		'C_FORUM_CONNEXION' => true,
-		'L_CONNECT' => $LANG['connect'],
-		'L_DISCONNECT' => $LANG['disconnect'],
-		'L_AUTOCONNECT' => $LANG['autoconnect'],
-		'L_REGISTER' => $LANG['register']
-	));
-}
-
-$Template->Assign_vars(array(	
-	'C_DISPLAY_UNREAD_DETAILS' => ($Member->Get_attribute('user_id') !== -1) ? true : false,
-	'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' .SID . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
-	'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php' . SID . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a>',
-	'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' .SID . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . ($Member->Get_attribute('user_id') !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
-	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
-	'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
-	'L_AUTH_ERROR' => $LANG['e_auth'],
-	'L_SEARCH' => $LANG['search'],
-	'L_ADVANCED_SEARCH' => $LANG['advanced_search']
-));
+require_once('../forum/forum_functions.php');
 
 ?>

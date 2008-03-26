@@ -27,6 +27,7 @@
 
 require_once('../includes/begin.php'); 
 require_once('../forum/forum_begin.php');
+require_once('../forum/forum_tools.php');
 
 $alert = !empty($_GET['id']) ? numeric($_GET['id']) : '';	
 $alert_post = !empty($_POST['id']) ? numeric($_POST['id']) : '';	
