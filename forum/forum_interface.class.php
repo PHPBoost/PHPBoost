@@ -64,45 +64,82 @@ class ForumInterface extends ModuleInterface
      *  Renvoie le formulaire de recherche du forum
      */
     {
+        global $Member, $SECURE_MODULE, $Errorh, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG, $Sql;
+        require_once('../includes/begin.php');
+        require_once('../forum/forum_functions.php');
+        require_once('../forum/forum_defines.php');
+        load_module_lang('forum'); //Chargement de la langue du module.
+        $Cache->Load_file('forum');
+        
+        $search = $args['search'];
+        $idcat = !empty($args['ForumIdcat']) ? numeric($args['ForumIdcat']) : -1;
+        $time = !empty($args['ForumTime']) ? numeric($args['ForumTime']) : 0;
+        $where = !empty($args['ForumWhere']) ? securit($args['ForumWhere']) : 'title';
+        $colorate_result = !empty($args['ForumColorate_result']) ? true : false;
+        
         $form  = '
         <dl>
-            <dt><label for="ForumTime">Date</label></dt>
-            <dd><label> 
-                <select id="time" name="ForumTime">
-                    <option value="30000" selected="selected">Tout</option>
-                    <option value="1">1 jour</option>
-                    <option value="7">7 Jours</option>
-                    <option value="15">15 Jours</option>
-                    <option value="30">1 Mois</option>
-                    <option value="180">6 Mois</option>
-                    <option value="360">1 An</option>
-                </select>
-            </label></dd>
-        </dl>
-        <dl>
-            <dt><label for="ForumIdcat">Catégorie</label></dt>
+            <dt><label for="ForumTime">'.$LANG['date'].'</label></dt>
             <dd><label>
-                <select name="ForumIdcat" id="idcat">
-                    <option value="-1" selected="selected">Tout</option>
-                    <option value="4">---- Support PHPBoost</option>
-                    <option value="2">---------- Annonces</option>
+                <select id="time" name="ForumTime">
+                    <option value="30000"'.($time == 30000 ? ' selected="selected"' : '' ).'>Tout</option>
+                    <option value="1'.($time == 1 ? ' selected="selected"' : '' ).'">1 '.$LANG['day'].'</option>
+                    <option value="7"'.($time == 7 ? ' selected="selected"' : '' ).'>7 '.$LANG['day_s'].'</option>
+                    <option value="15"'.($time == 15 ? ' selected="selected"' : '' ).'>15 '.$LANG['day_s'].'</option>
+                    <option value="30"'.($time == 30 ? ' selected="selected"' : '' ).'>1 '.$LANG['month'].'</option>
+                    <option value="180"'.($time == 180 ? ' selected="selected"' : '' ).'>6 '.$LANG['month'].'</option>
+                    <option value="360"'.($time == 360 ? ' selected="selected"' : '' ).'>1 '.$LANG['year'].'</option>
                 </select>
             </label></dd>
         </dl>
         <dl>
-            <dt><label for="ForumWhere">Options</label></dt>
+            <dt><label for="ForumIdcat">'.$LANG['category'].'</label></dt>
+            <dd><label>
+                <select name="ForumIdcat" id="idcat">';
+        
+        forum_list_cat();
+        $auth_cats = '';
+        if( is_array($CAT_FORUM) )
+        {
+            foreach($CAT_FORUM as $id => $key)
+            {
+                if( !$Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
+                    $auth_cats .= $id . ',';
+            }
+        }
+        $auth_cats_select = !empty($auth_cats) ? " AND id NOT IN (" . trim($auth_cats, ',') . ")" : '';
+        
+        $selected = ($idcat == '-1') ? ' selected="selected"' : '';
+        $form .= '<option value="-1"' . $selected . '>' . $LANG['all'] . '</option>';
+        $result = $Sql->Query_while("SELECT id, name, level
+        FROM ".PREFIX."forum_cats 
+        WHERE aprob = 1 " . $auth_cats_select . "
+        ORDER BY id_left", __LINE__, __FILE__);
+        while( $row = $Sql->Sql_fetch_assoc($result) )
+        {
+            $margin = ($row['level'] > 0) ? str_repeat('----------', $row['level']) : '----';
+            $selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
+            $form .= '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
+        }
+        $Sql->Close($result);
+        $form .= '
+                </select>
+            </label></dd>
+        </dl>
+        <dl>
+            <dt><label for="ForumWhere">'.$LANG['options'].'</label></dt>
             <dd>
-                <label><input type="radio" name="ForumWhere" id="where" value="contents" checked="checked" /> Contenu</label>
+                <label><input type="radio" name="ForumWhere" value="title"'.($where == 'title' ? ' checked="checked"' : '' ).' /> '.$LANG['title'].'</label>
                 <br />
-                <label><input type="radio" name="ForumWhere" value="title"  /> Titre</label>
+                <label><input type="radio" name="ForumWhere" id="where" value="contents"'.($where == 'contents' ? ' checked="checked"' : '' ).' /> '.$LANG['contents'].'</label>
                 <br />
-                <label><input type="radio" name="ForumWhere" value="all"  /> Titre/Contenu</label>
+                <label><input type="radio" name="ForumWhere" value="all"'.($where == 'all' ? ' checked="checked"' : '' ).' /> '.$LANG['title'].' / '.$LANG['contents'].'</label>
             </dd>
         </dl>
         <dl>
-            <dt><label for="ForumColorate_result">Colorer les résultats</label></dt>
+            <dt><label for="ForumColorate_result">'.$LANG['colorate_result'].'</label></dt>
             <dd>
-                <label><input type="checkbox" name="ForumColorate_result" id="colorate_result" value="1" checked="checked" /></label>
+                <label><input type="checkbox" name="ForumColorate_result" id="colorate_result" value="1"'.($colorate_result ? 'checked="checked"' : '').' /></label>
             </dd>
         </dl>';
         

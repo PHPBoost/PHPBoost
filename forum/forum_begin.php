@@ -34,31 +34,7 @@ if( !$Member->Check_auth($SECURE_MODULE['forum'], ACCESS_MODULE) )
 
 load_module_lang('forum'); //Chargement de la langue du module.
 
-//Configuration générale du forum
-define('FLOOD_FORUM', 0x01);
-define('EDIT_MARK_FORUM', 0x02);
-define('TRACK_TOPIC_FORUM', 0x04);
-
-//Configuration sur la catégorie.
-define('READ_CAT_FORUM', 0x01);
-define('WRITE_CAT_FORUM', 0x02);
-define('EDIT_CAT_FORUM', 0x04);
-
-//Historique.
-define('H_DELETE_MSG', 'delete_msg'); //Suppression d'un message.
-define('H_DELETE_TOPIC', 'delete_topic'); //Suppression d'un sujet.
-define('H_LOCK_TOPIC', 'lock_topic'); //Verrouillage d'un sujet.
-define('H_UNLOCK_TOPIC', 'unlock_topic'); //Déverrouillage d'un sujet.
-define('H_MOVE_TOPIC', 'move_topic'); //Déplacement d'un sujet.
-define('H_CUT_TOPIC', 'cut_topic'); //Scindement d'un sujet.
-define('H_SET_WARNING_USER', 'set_warning_user'); //Modification pourcentage avertissement.		
-define('H_BAN_USER', 'ban_user'); //Modification pourcentage avertissement.		
-define('H_EDIT_MSG', 'edit_msg'); //Edition message d'un membre.
-define('H_EDIT_TOPIC', 'edit_topic'); //Edition sujet d'un membre.
-define('H_SOLVE_ALERT', 'solve_alert'); //Résolution d'une alerte.
-define('H_WAIT_ALERT', 'wait_alert'); //Mise en attente d'une alerte.
-define('H_DEL_ALERT', 'del_alert'); //Suppression d'une alerte.
-define('H_READONLY_USER', 'readonly_user'); //Modification lecture seule d'un membre.
+require_once('../forum/forum_defines.php');
 
 $Cache->Load_file('forum');
 

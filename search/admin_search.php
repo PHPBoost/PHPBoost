@@ -46,8 +46,8 @@ if( !empty($_POST['valid']) )
     global $Sql;
     
     // Configuration de la classe search.class.php
-    $CONFIG['search_cache_time'] = !empty($_POST['cache_time']) ? numeric($_POST['cache_time']) : (15 * 60);
-    $CONFIG['search_max_use'] = !empty($_POST['max_use']) ? numeric($_POST['max_use']) : 100;
+    $CONFIG['search_cache_time'] = !empty($_POST['cache_time']) ? numeric($_POST['cache_time']) : 15;
+    $CONFIG['search_max_use'] = !empty($_POST['max_use']) ? numeric($_POST['max_use']) : 200;
     
     // Configuration du module 'Search'
     $SEARCH_CONFIG = array();
@@ -58,15 +58,11 @@ if( !empty($_POST['valid']) )
     $config_string = addslashes(serialize($CONFIG));
     $request = "UPDATE ".PREFIX."configs SET value = '".$config_string."' WHERE name = 'config'";
     $Sql->Query_inject($request, __LINE__, __FILE__);
-//     if ( $Sql->Sql_affected_rows($request, __LINE__, __FILE__) != 1 )
-//         $Sql->Query_inject("INSERT INTO ".PREFIX."configs (`name`, `value`) VALUES ('search', '".$config_string."')", __LINE__, __FILE__);
     
     // Enregistrement des modifications de la config du module 'Search'
     $search_cfg = addslashes(serialize($SEARCH_CONFIG));
     $request = "UPDATE ".PREFIX."configs SET value = '".$search_cfg."' WHERE name = 'search'";
     $Sql->Query_inject($request, __LINE__, __FILE__);
-//     if ( $Sql->Sql_affected_rows($request, __LINE__, __FILE__) != 1 )
-//         $Sql->Query_inject("INSERT INTO ".PREFIX."configs (`name`, `value`) VALUES ('search', '".$cfg."')", __LINE__, __FILE__);
     
     // Génération des nouveaux fichiers de cache
     $Cache->Generate_file('config');
