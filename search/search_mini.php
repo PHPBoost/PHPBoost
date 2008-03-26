@@ -43,9 +43,10 @@ $search = !empty($_POST['search']) ? securit($_POST['search']) : '';
 $Template->Assign_vars(Array(
     'TITLE_SEARCH' => TITLE,
     'SEARCH' => $LANG['title_search'],
-    'TEXT_SEARCHED' => $search,
+    'TEXT_SEARCHED' => !empty($search) ? $search : $LANG['search'] . '...',
     'WARNING_LENGTH_STRING_SEARCH' => $LANG['warning_length_string_searched'],
-    'U_FORM_VALID' => transid('../search/search.php#results')
+	'L_SEARCH' => $LANG['search'],
+	'U_FORM_VALID' => transid('../search/search.php#results')
 ));
 
 //------------------------------------------------------------- Other includes
