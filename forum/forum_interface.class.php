@@ -159,17 +159,81 @@ class ForumInterface extends ModuleInterface
      *  Renvoie la requête de recherche dans le forum
      */
     {
-        return "SELECT ".
-			$args['id_search']." AS id_search,
-			`id` AS `id_content`,
-			`title` AS `title`,
-			MATCH(`title`) AGAINST('".$args['search']."') AS `relevance`,
-			CONCAT('../wiki/wiki.php?title=',encoded_title) AS link
-		FROM ".
-			PREFIX."wiki_articles
-		WHERE
-			MATCH(`title`) AGAINST('".$args['search']."')
-		";
+        global $CONFIG;
+        
+        $search = $args['search'];
+        $idcat = !empty($args['ForumIdcat']) ? numeric($args['ForumIdcat']) : -1;
+        $time = !empty($args['ForumTime']) ? numeric($args['ForumTime']) : 0;
+        $where = !empty($args['ForumWhere']) ? securit($args['ForumWhere']) : 'title';
+        $colorate_result = !empty($args['ForumColorate_result']) ? true : false;
+        
+//         return "SELECT ".
+//             $args['id_search']." AS `id_search`,
+//             `id` AS `id_content`,
+//             `title` AS `title`,
+//             MATCH(`title`) AGAINST('".$args['search']."') AS `relevance`,
+//             CONCAT('../wiki/wiki.php?title=',encoded_title) AS link
+//         FROM ".
+//             PREFIX."wiki_articles
+//         WHERE
+//             MATCH(`title`) AGAINST('".$args['search']."')";
+        
+        $auth_cats = !empty($auth_cats) ? " AND c1.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
+        
+        
+        if ( $args['ForumWhere'] == 'all' )         // All
+            return "SELECT ".
+                $args['id_search']." AS `id_search`,
+                msg.id AS `id_content`,
+                t.title AS `title`,
+                ( 4 * MATCH(t.title) AGAINST('".$search."') + MATCH(msg.contents) AGAINST('".$search."') ) / 5 AS `relevance`,
+                CONCAT(CONCAT(CONCAT('../forum/topic.php?id=',t.id),'#'),msg.id)  AS `link`
+            FROM ".PREFIX."forum_msg msg
+            LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '".(time() - $CONFIG['site_session_invit'])."' AND s.user_id != -1
+            LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
+            JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
+            JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
+            JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
+            WHERE ( MATCH(t.title) AGAINST('".$search."') OR MATCH(msg.contents) AGAINST('".$search."') ) AND msg.timestamp > '".(time() - $time)."'
+            ".(!empty($idcat) ? " AND t.idcat = '".$idcat."'" : '').$auth_cats."
+            GROUP BY msg.id
+            ORDER BY relevance DESC";
+        
+        if ( $args['ForumWhere'] == 'contents' )    // Contents
+            return "SELECT ".
+                $args['id_search']." AS `id_search`,
+                msg.id AS `id_content`,
+                t.title AS `title`,
+                MATCH(msg.contents) AGAINST('".$search."') AS `relevance`,
+                CONCAT(CONCAT(CONCAT('../forum/topic.php?id=',t.id),'#'),msg.id) AS `link`
+            FROM ".PREFIX."forum_msg msg
+            LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '".(time() - $CONFIG['site_session_invit'])."' AND s.user_id != -1
+            LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
+            JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
+            JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
+            JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
+            WHERE MATCH(msg.contents) AGAINST('".$search."') AND msg.timestamp > '".(time() - $time)."'
+            ".(!empty($idcat) ? " AND t.idcat = '".$idcat."'" : '').$auth_cats."
+            GROUP BY t.id
+            ORDER BY relevance DESC";
+        
+        else                                         // Title only
+            return "SELECT ".
+                $args['id_search']." AS `id_search`,
+                msg.id AS `id_content`,
+                t.title AS `title`,
+                MATCH(t.title) AGAINST('".$search."') AS `relevance`,
+                CONCAT(CONCAT(CONCAT('../forum/topic.php?id=',t.id),'#'),msg.id) AS `link`
+            FROM ".PREFIX."forum_msg msg
+            LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '".(time() - $CONFIG['site_session_invit'])."' AND s.user_id != -1
+            LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
+            JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
+            JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
+            JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
+            WHERE MATCH(t.title) AGAINST('".$search."') AND msg.timestamp > '".(time() - $time)."'
+            ".(!empty($idcat) ? " AND t.idcat = '".$idcat."'" : '').$auth_cats."
+            GROUP BY t.id
+            ORDER BY relevance DESC";
     }
 }
  

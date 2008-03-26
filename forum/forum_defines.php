@@ -3,8 +3,8 @@
  *                             forum_begin.php
  *                            -------------------
  *   begin                : March 26, 2008
- *   copyright            : (C) 2007 Loïc Rouchon
- *   email                : horn@phpboost.com
+ *   copyright            : (C) 2008 Régis Viarre, Loïc Rouchon
+ *   email                : crowkait@phpboost.com, horn@phpboost.com
  *
  *
 ###################################################
