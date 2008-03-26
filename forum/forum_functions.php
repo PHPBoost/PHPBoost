@@ -98,5 +98,20 @@ function forum_generate_rss()
 	$Rss->Generate_file('javascript', 'rss_forum');
 	$Rss->Generate_file('php', 'rss2_forum');
 }
-	
+
+//Coloration de l'item recherché en dehors des balises html.
+function token_colorate($matches)
+{
+    static $open_tag = 0;
+    static $close_tag = 0;
+    
+    $open_tag += substr_count($matches[1], '<');
+    $close_tag += substr_count($matches[1], '>');
+    
+    if( $open_tag == $close_tag )
+        return $matches[1] . '<span style="background:yellow;">' . $matches[2] . '</span>' . $matches[3];
+    else
+        return $matches[0];
+}
+
 ?>
