@@ -47,7 +47,7 @@ class WikiInterface extends ModuleInterface
         load_module_lang('wiki');
         global $LANG;
         
-        if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,content,all')) )
+        if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
             $args['WikiWhere'] = 'title';
         
         return '
@@ -76,7 +76,7 @@ class WikiInterface extends ModuleInterface
      *  Renvoie la requête de recherche dans le wiki
      */
     {
-        if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,content,all')) )
+        if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
             $args['WikiWhere'] = 'title';
         
         if ( $args['WikiWhere'] == 'all' )
@@ -84,7 +84,7 @@ class WikiInterface extends ModuleInterface
                 $args['id_search']." AS `id_search`,
                 a.id AS `id_content`,
                 a.title AS `title`,
-                ( 2 * MATCH(a.title) AGAINST('".$args['search']."') + MATCH(c.content) AGAINST('".$args['search']."') ) AS `relevance`,
+                ( 4 * MATCH(a.title) AGAINST('".$args['search']."') + MATCH(c.content) AGAINST('".$args['search']."') ) / 5 AS `relevance`,
                 CONCAT('../wiki/wiki.php?title=',a.encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles a
                 LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
