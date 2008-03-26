@@ -81,7 +81,7 @@ class ForumInterface extends ModuleInterface
         <dl>
             <dt><label for="ForumTime">'.$LANG['date'].'</label></dt>
             <dd><label>
-                <select id="time" name="ForumTime">
+                <select id="time" name="ForumTime" class="search_field">
                     <option value="30000"'.($time == 30000 ? ' selected="selected"' : '' ).'>Tout</option>
                     <option value="1'.($time == 1 ? ' selected="selected"' : '' ).'">1 '.$LANG['day'].'</option>
                     <option value="7"'.($time == 7 ? ' selected="selected"' : '' ).'>7 '.$LANG['day_s'].'</option>
@@ -95,7 +95,7 @@ class ForumInterface extends ModuleInterface
         <dl>
             <dt><label for="ForumIdcat">'.$LANG['category'].'</label></dt>
             <dd><label>
-                <select name="ForumIdcat" id="idcat">';
+                <select name="ForumIdcat" id="idcat" class="search_field">';
         
         forum_list_cat();
         $auth_cats = '';
