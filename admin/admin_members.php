@@ -378,7 +378,6 @@ elseif( !empty($id) )
 	));
 	
 	$Template->Assign_block_vars('members_management', array(
-		'NBR_GROUP' => $Sql->Count_table('group', __LINE__, __FILE__)
 	));
 	
 	$mbr = $Sql->Query_array('member', '*', "WHERE user_id = '" . $id . "'", __LINE__, __FILE__);

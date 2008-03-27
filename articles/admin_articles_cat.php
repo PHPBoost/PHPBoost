@@ -759,13 +759,11 @@ elseif( !empty($id) ) //Edition des catégories.
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
-	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = !empty($articles_info['auth']) ? unserialize($articles_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
 		
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('articles'),
-		'NBR_GROUP' => count($array_groups),
 		'ID' => $id,
 		'CATEGORIES' => $articles,
 		'NAME' => $articles_info['name'],
@@ -820,12 +818,10 @@ elseif( !empty($root) ) //Edition de la racine.
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
-	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = !empty($CONFIG_ARTICLES['auth_root']) ? $CONFIG_ARTICLES['auth_root'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('articles'),
-		'NBR_GROUP' => count($array_groups),
 		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_ARTICLES, $array_auth),
 		'L_ROOT' => $LANG['root'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
@@ -860,12 +856,9 @@ else
 	if( $get_error == 'unexist_cat' )
 		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 		
-	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
-		
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('articles'),
-		'NBR_GROUP' => count($array_groups),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],

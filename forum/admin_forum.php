@@ -230,13 +230,11 @@ elseif( !empty($id) )
 	
 	$is_root = ($forum_info['level'] > 0);
 
-	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = !empty($forum_info['auth']) ? unserialize($forum_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
 
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
-		'NBR_GROUP' => count($array_groups),
 		'ID' => $id,
 		'CATEGORIES' => $forums,
 		'NAME' => $forum_info['name'],
@@ -287,12 +285,9 @@ else
 	'admin_forum_cat' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_cat.tpl'
 	));
 		
-	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
-		
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
-		'NBR_GROUP' => count($array_groups),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],

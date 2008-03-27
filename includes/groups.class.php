@@ -40,19 +40,9 @@ class Group
 	//Constructeur: Retourne les autorisations globales données par l'ensemble des groupes dont le membre fait partie.
 	function Group(&$groups_info)
 	{
-		$this->groups_info = $groups_info;
-	}
-	
-	//Crée le tableau des autorisations des groupes.
-	function Create_groups_array()
-	{
-		global $Member;
-		
-		$array_groups = array();
-		foreach($this->groups_info as $idgroup => $array_group_info)
-			$array_groups[$idgroup] = $array_group_info['name'];
-			
-		return $array_groups;
+		$this->groups_name = array();
+		foreach($groups_info as $idgroup => $array_group_info)
+			$this->groups_name[$idgroup] = $array_group_info['name'];
 	}
 	
 	//Retourne le tableau avec les droits issus des tableaux passés en argument. Tableau destiné à être serialisé.
@@ -164,7 +154,7 @@ class Group
 		}
 	}
  
-	//Suppression le membre d'un groupe.
+	//Suppression d'un membre du groupe.
 	function Del_member($user_id, $idgroup)
 	{
 		global $Sql;
@@ -239,7 +229,7 @@ class Group
 	//Génération d'une liste à sélection multiple des rangs et membres
     function generate_select_groups($auth_bit, $array_auth, $array_ranks_default, $idselect, $disabled)
     {
-        global $array_groups, $array_ranks, $LANG;
+        global $array_ranks, $LANG;
 
         $array_ranks = is_array($array_ranks) ? $array_ranks : array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
         $j = 0;
@@ -260,7 +250,7 @@ class Group
         //Liste des groupes.
         $j = 0;
         $select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
-        foreach($array_groups as $idgroup => $group_name)
+        foreach($this->groups_name as $idgroup => $group_name)
         {
             $selected = '';       
             if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled) )

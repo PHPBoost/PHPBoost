@@ -53,13 +53,11 @@ else
 		'admin_wiki_groups' => '../templates/' . $CONFIG['theme'] . '/wiki/admin_wiki_groups.tpl'
 	));
 	
-	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = isset($_WIKI_CONFIG['auth']) ? $_WIKI_CONFIG['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('wiki'),
-		'NBR_GROUP' => count($array_groups),
 		'SELECT_CREATE_ARTICLE' => $Group->Generate_select_auth(WIKI_CREATE_ARTICLE, $array_auth),
 		'SELECT_CREATE_CAT' => $Group->Generate_select_auth(WIKI_CREATE_CAT, $array_auth),
 		'SELECT_RESTORE_ARCHIVE' => $Group->Generate_select_auth(WIKI_RESTORE_ARCHIVE, $array_auth),

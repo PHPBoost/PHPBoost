@@ -705,7 +705,6 @@ elseif( !empty($id) ) //Edition des catégories.
 	}
 	$Sql->Close($result);
 	
-	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = !empty($gallery_info['auth']) ? unserialize($gallery_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
 	
 	//Gestion erreur.
@@ -716,7 +715,6 @@ elseif( !empty($id) ) //Edition des catégories.
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
-		'NBR_GROUP' => count($array_groups),
 		'ID' => $id,
 		'CATEGORIES' => $galeries,
 		'NAME' => $gallery_info['name'],
@@ -776,12 +774,10 @@ elseif( !empty($root) ) //Edition de la racine.
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
-	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = !empty($CONFIG_GALLERY['auth_root']) ? $CONFIG_GALLERY['auth_root'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
-		'NBR_GROUP' => count($array_groups),
 		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_GALLERY, $array_auth),
 		'AUTH_WRITE' => $Group->Generate_select_auth(WRITE_CAT_GALLERY, $array_auth),
 		'AUTH_EDIT' => $Group->Generate_select_auth(EDIT_CAT_GALLERY, $array_auth),
