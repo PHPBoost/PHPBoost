@@ -36,6 +36,7 @@ parent::method().
 	* You also must have an integer attribute named id_parent which represents the identifier of the parent category (it will be 0 if its parent category is the root of the tree).
 	* To maintain order, you must have a field containing the rank of the category which be an integer named c_order.
 	* A field visible boolean (tynint 1 sur mysql)
+	*A field name containing the category name
 - In this class the user are supposed to be an administrator, no checking of his auth is done.
 - To be correctly displayed, you must supply to functions a variable extracted from a file cache. Use the Cache class to build your file cache. Your variable must be an array in which keys are categories identifiers, an values are still arrays which are as this :
 	* key id_parent containing the id_parent field of the database
@@ -62,6 +63,8 @@ You can also have other fields such as auth level, description, visible, that cl
 
 define('DEBUG_MODE', true);
 define('AJAX_MODE', false);
+define('MOVE_CATEGORY_UP', 'up');
+define('MOVE_CATEGORY_DOWN', 'down');
 define('ERROR_UNKNOWN_MOTION', 0x01);
 define('ERROR_CAT_IS_AT_TOP', 0x02);
 define('ERROR_CAT_IS_AT_BOTTOM', 0x04);
@@ -69,7 +72,7 @@ define('CATEGORY_DOES_NOT_EXIST', 0x08);
 define('NEW_PARENT_CATEGORY_DOES_NOT_EXIST', 0x10);
 define('DISPLAYING_CONFIGURATION_NOT_SET', 0x20);
 define('INCORRECT_DISPLAYING_CONFIGURATION', 0x40);
-define('NEW_CATEGORY_IS_IN_ITS_CHILDREN', 0x80);
+define('NEW_CATEGORY_IS_IN_ITS_CHILDRENS', 0x80);
 
 class Categories_management
 {
@@ -78,7 +81,8 @@ class Categories_management
 	{
 		$this->table = $table;
 		$this->cache_file_name = $cache_file_name;
-		$this->cache_var = $cache_var;
+		// this is a pointer to the cache variable. We always refer to it, even if it's updated we will have always the good values.
+		$this->cache_var =& $cache_var;
 	}
 	
 	//Method which updates cache file
@@ -92,6 +96,10 @@ class Categories_management
 	{
 		global $Sql, $Cache;
 		$this->clean_error();
+		
+		//We cast this variable to integer
+		if( !is_int($visible) )
+			$visible = (int)$visible;
 		
 		$max_order = $Sql->Query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $id_parent . "'", __LINE__, __FILE__);
 		$max_order = numeric($max_order);
@@ -120,7 +128,7 @@ class Categories_management
 	{
 		global $Sql, $Cache;
 		$this->clean_error();
-		if( in_array($way, array('up', 'down')) )
+		if( in_array($way, array(MOVE_CATEGORY_UP, MOVE_CATEGORY_DOWN)) )
 		
 		{
 			$cat_info = $Sql->Query_array($this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -132,7 +140,7 @@ class Categories_management
 				return false;
 			}
 				
-			if( $way == 'down' )
+			if( $way == MOVE_CATEGORY_DOWN )
 			{
 				//Query which allows us to check if we don't want to move down the downest category
 				$max_order = $Sql->Query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $cat_info['id_parent'] . "'", __LINE__, __FILE__);
@@ -222,7 +230,7 @@ class Categories_management
 			}
 			else
 			{
-				$this->add_error(NEW_CATEGORY_IS_IN_ITS_CHILDREN);
+				$this->add_error(NEW_CATEGORY_IS_IN_ITS_CHILDRENS);
 				return false;
 			}
 		}
