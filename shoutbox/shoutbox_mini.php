@@ -116,16 +116,16 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	{
 		$row['user_id'] = (int)$row['user_id'];		
 		if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
-			$del = '<script type="text/javascript"><!-- 
+			$del_message = '<script type="text/javascript"><!-- 
 			document.write(\'<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a>\'); 
 			--></script><noscript><a href="../shoutbox/shoutbox' . transid('.php?del=true&amp;id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a></noscript>';
 		else
-			$del = '';
+			$del_message = '';
 	
 		if( $row['user_id'] !== -1 ) 
-			$row['login'] = $del . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
+			$row['login'] = $del_message . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
 		else
-			$row['login'] = $del . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
+			$row['login'] = $del_message . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
 		
 		$Template->Assign_block_vars('shout', array(
 			'IDMSG' => $row['id'],
