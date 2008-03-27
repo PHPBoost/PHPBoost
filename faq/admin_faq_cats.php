@@ -56,12 +56,12 @@ $Template->Assign_vars(array(
 
 if( $id_up > 0 )
 {
-	$faq_categories->Move_category($id_up, 'up');
+	$faq_categories->Move_category($id_up, MOVE_CATEGORY_UP);
 	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $id_down > 0 )
 {
-	$faq_categories->Move_category($id_down, 'down');
+	$faq_categories->Move_category($id_down, MOVE_CATEGORY_DOWN);
 	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $cat_to_del > 0 )

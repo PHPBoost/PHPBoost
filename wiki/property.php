@@ -40,7 +40,7 @@ $rename = !empty($_GET['rename']) ? numeric($_GET['rename']) : 0;
 $redirect = !empty($_GET['redirect']) ? numeric($_GET['redirect']) : 0;
 $create_redirection = !empty($_GET['create_redirection']) ? numeric($_GET['create_redirection']) : 0;
 $idcom = !empty($_GET['com']) ? numeric($_GET['com']) : 0;
-$del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+$del_article = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 
 if( $id_auth > 0 ) //Autorisations de l'article
 {
@@ -107,9 +107,9 @@ elseif( isset($_GET['i']) && $idcom > 0 )
 	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_COM))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( $del > 0 ) //Suppression d'un article ou d'une catégorie
+elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 {
-	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = '" . $del . "'", __LINE__, __FILE__);	
+	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = '" . $del_article . "'", __LINE__, __FILE__);	
 	define('TITLE', $LANG['wiki_remove_cat']);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
@@ -310,7 +310,7 @@ elseif( isset($_GET['i']) && $idcom > 0 ) //Affichage des commentaires
 	$Comments = new Comments('wiki_articles', $idcom, transid('property.php?com=' . $idcom . '&amp;i=%s', ''), 'wiki');
 	include_once('../includes/com.php');
 }
-elseif( $del > 0 ) //Suppression d'un article ou d'une catégorie
+elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 {	
 	if( empty($article_infos['title']) )//Si l'article n'existe pas
 		redirect(HOST . DIR . '/wiki/' . transid('wiki.php'));
@@ -341,7 +341,7 @@ elseif( $del > 0 ) //Suppression d'un article ou d'une catégorie
 			'L_TITLE' => sprintf($LANG['wiki_remove_this_cat'], $article_infos['title']),
 			'L_REMOVE_ALL_CONTENTS' => $LANG['wiki_remove_all_contents'],
 			'L_MOVE_ALL_CONTENTS' => $LANG['wiki_move_all_contents'],
-			'ID_ARTICLE' => $del,
+			'ID_ARTICLE' => $del_article,
 			'CATS' => $cat_list,
 			'CURRENT_CAT' => $current_cat,
 			'SELECTED_CAT' => $article_infos['id_cat'],

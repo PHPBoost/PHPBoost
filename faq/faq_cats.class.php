@@ -111,7 +111,7 @@ class FaqCats extends Categories_management
 				{
 					if( $this->Check_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST) )
 						return 'e_new_cat_does_not_exist';
-					if( $this->Check_error(NEW_CATEGORY_IS_IN_ITS_CHILDREN) )
+					if( $this->Check_error(NEW_CATEGORY_IS_IN_ITS_CHILDRENS) )
 						return 'e_infinite_loop';
 				}
 				else

@@ -101,8 +101,8 @@ switch($speed_bar_key)
 			$Speed_bar->Add_link($LANG['wiki_create_redirection'], transid('property.php?create_redirection=' . $create_redirection));
 		elseif( isset($_GET['i']) && $idcom > 0 )
 			$Speed_bar->Add_link($LANG['wiki_article_com'], transid('property.php?com=' . $idcom . '&amp;i=0'));
-		elseif( $del > 0 )
-			$Speed_bar->Add_link($LANG['wiki_remove_cat'], transid('property.php?del=' . $del));
+		elseif( $del_article > 0 )
+			$Speed_bar->Add_link($LANG['wiki_remove_cat'], transid('property.php?del=' . $del_article));
 			
 		if( $article_infos['is_cat'] == 0 )
 			$Speed_bar->Add_link($article_infos['title'], transid('wiki.php?title=' . url_encode_rewrite($article_infos['title']), url_encode_rewrite($article_infos['title'])));

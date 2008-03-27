@@ -41,9 +41,9 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 	$result = false;
 	
 	if( $id_up > 0 )
-		$result = $faq_categories->Move_category($id_up, 'up');
+		$result = $faq_categories->Move_category($id_up, MOVE_CATEGORY_UP);
 	elseif( $id_down > 0 )
-		$result = $faq_categories->Move_category($id_down, 'down');
+		$result = $faq_categories->Move_category($id_down, MOVE_CATEGORY_DOWN);
 	
 	//Operation was successfully
 	if( $result )
@@ -59,8 +59,6 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 		$faq_categories->Set_displaying_configuration($cat_config);
 		
 		$Cache->Load_file('faq', RELOAD_CACHE);
-		
-		$faq_categories->Update_cache_var($FAQ_CATS);
 	
 		echo $faq_categories->Build_administration_list(AJAX_MODE);
 	}
