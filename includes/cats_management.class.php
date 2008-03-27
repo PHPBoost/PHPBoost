@@ -71,10 +71,10 @@ define('DISPLAYING_CONFIGURATION_NOT_SET', 0x20);
 define('INCORRECT_DISPLAYING_CONFIGURATION', 0x40);
 define('NEW_CATEGORY_IS_IN_ITS_CHILDREN', 0x80);
 
-class CategoriesManagement
+class Categories_management
 {
 	## Public methods ##
-	function CategoriesManagement($table, $cache_file_name, &$cache_var)
+	function Categories_management($table, $cache_file_name, &$cache_var)
 	{
 		$this->table = $table;
 		$this->cache_file_name = $cache_file_name;
@@ -303,13 +303,13 @@ class CategoriesManagement
 					return false;
 				
 				if( !array_key_exists('administration_file_name', $this->display_config) )
-					die('<strong>CategoriesManagement error : </strong> you must specify the key <em>administration_file_name</em>');
+					die('<strong>Categories_management error : </strong> you must specify the key <em>administration_file_name</em>');
 				if( !array_key_exists('url' ,$this->display_config) )
-					die('<strong>CategoriesManagement error : </strong> you must specify the key <em>url</em>');
+					die('<strong>Categories_management error : </strong> you must specify the key <em>url</em>');
 				if( !array_key_exists('unrewrited', $this->display_config['url']) )
-					die('<strong>CategoriesManagement error : </strong> you must specify the key <em>unrewrited</em> in the <em>url</em> part');
+					die('<strong>Categories_management error : </strong> you must specify the key <em>unrewrited</em> in the <em>url</em> part');
 				if( !array_key_exists('xmlhttprequest_file', $this->display_config) )
-					die('<strong>CategoriesManagement error : </strong> you must specify the key <em>xhtmlhttprequest_file</em>');
+					die('<strong>Categories_management error : </strong> you must specify the key <em>xhtmlhttprequest_file</em>');
 				return false;
 			}
 		}

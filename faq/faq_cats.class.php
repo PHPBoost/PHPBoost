@@ -31,7 +31,7 @@ include_once('../includes/cats_management.class.php');
 define('ADD_THIS_CATEGORY_IN_LIST', true);
 define('NOT_CACHE_GENERATION', true);
 
-class FaqCats extends CategoriesManagement
+class FaqCats extends Categories_management
 {
 	## Public methods ##
 	
@@ -39,7 +39,7 @@ class FaqCats extends CategoriesManagement
 	function FaqCats()
 	{
 		global $FAQ_CATS;
-		parent::CategoriesManagement('faq_cats', 'faq', $FAQ_CATS);
+		parent::Categories_management('faq_cats', 'faq', $FAQ_CATS);
 	}
 	
 	//Method which removes all subcategories and their content
