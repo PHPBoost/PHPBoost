@@ -8,5 +8,3 @@ CREATE TABLE `phpboost_guestbook` (
 	PRIMARY KEY	(`id`),
 	KEY `timestamp` (`timestamp`)
 ) ENGINE=MyISAM;
-
-INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('guestbook', 'a:3:{s:14:"guestbook_auth";i:-1;s:24:"guestbook_forbidden_tags";s:52:"a:3:{i:0;s:3:"swf";i:1;s:5:"movie";i:2;s:5:"sound";}";s:18:"guestbook_max_link";i:2;}');

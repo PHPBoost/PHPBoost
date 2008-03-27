@@ -26,5 +26,3 @@ CREATE TABLE `phpboost_pages_cats` (
   `id_parent` int(11) NOT NULL default '0',
   KEY `id` (`id`)
 ) ENGINE=MyISAM;
-
-INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('pages', 'a:3:{s:10:"count_hits";i:1;s:9:"activ_com";i:1;s:4:"auth";s:59:"a:4:{s:3:"r-1";i:5;s:2:"r0";i:7;s:2:"r1";i:7;s:2:"r2";i:7;}";}');

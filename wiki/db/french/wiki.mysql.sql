@@ -47,5 +47,3 @@ CREATE TABLE `phpboost_wiki_favorites` (
 	`id_article` int(11) NOT NULL default '0',
 	PRIMARY KEY	(`id`)
 ) ENGINE=MyISAM;
-
-INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('faq', 'a:4:{s:8:"faq_name";s:0:"";s:8:"num_cols";i:3;s:13:"display_block";b:1;s:11:"global_auth";a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:3;s:2:"r2";i:3;}}');

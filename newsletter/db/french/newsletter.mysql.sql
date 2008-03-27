@@ -15,5 +15,3 @@ CREATE TABLE `phpboost_newsletter_arch` (
 	`nbr` mediumint(9) NOT NULL default '0',
 	PRIMARY KEY	(`id`)
 ) ENGINE=MyISAM;
-
-INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('newsletter', 'a:2:{s:11:"sender_mail";s:0:"";s:15:"newsletter_name";s:0:"";}');

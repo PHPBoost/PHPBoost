@@ -366,6 +366,7 @@ $LANG['table'] = 'Table';
 $LANG['tables'] = 'Tables';
 $LANG['new_version'] = 'Nouvelle version';
 $LANG['installed_version'] = 'Version installée';
+$LANG['e_config_conflict'] = 'Conflit avec la configuration du module, installation impossible!';
 
 //Gestion de l'upload
 $LANG['explain_upload_img'] = 'L\'image uploadée doit être au format jpg, gif, png ou bmp';

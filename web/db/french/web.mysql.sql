@@ -29,5 +29,3 @@ CREATE TABLE `phpboost_web_cat` (
 	PRIMARY KEY	(`id`),
 	KEY `class` (`class`)
 ) ENGINE=MyISAM;
-
-INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('web', 'a:4:{s:11:"nbr_web_max";i:10;s:11:"nbr_cat_max";i:10;s:10:"nbr_column";i:2;s:8:"note_max";i:10;}');

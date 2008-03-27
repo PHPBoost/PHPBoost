@@ -1,1 +1,0 @@
-INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('search','a:2:{s:19:"nb_results_per_page";i:15;s:18:"authorised_modules";a:0:{}}');

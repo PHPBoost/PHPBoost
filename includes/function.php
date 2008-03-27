@@ -216,6 +216,23 @@ function parse_ini_array($links_format)
 	return $admin_links;
 }
 
+//Récupération du champs de configuration du config.ini du module.
+function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
+{
+	$dir = find_require_dir($dir_path, $require_dir, false);
+	$handle = @fopen($dir_path . $dir . '/' . $ini_name, 'r');
+	if( $handle ) 
+	{
+		while( !feof($handle) ) 
+		{	
+			$config = fgets($handle, 8192);
+			if( strpos($config, 'config="') !== false )
+				return $config;
+		}
+		fclose($handle);
+	}
+}
+
 //Cherche un dossier s'il n'est pas trouvé, on parcourt le dossier passé en argument à la recherche du premier dossier.
 function find_require_dir($dir_path, $require_dir, $fatal_error = true)
 {

@@ -31,7 +31,7 @@ require_once('../includes/admin_header.php');
 $uninstall = !empty($_GET['uninstall']) ? true : false;
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '0';
 $error = !empty($_GET['error']) ? trim($_GET['error']) : ''; 
- 
+			
 if( isset($_POST['valid']) )		
 {
 	$result = $Sql->Query_while("SELECT id, name, auth, activ 
@@ -74,7 +74,8 @@ elseif( $uninstall ) //Désinstallation du module
 				$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . securit($info_module['com']) . "'", __LINE__, __FILE__);
 			
 			//Suppression de la configuration.
-			if( !empty($info_module['config']) )
+			$config = get_ini_config('../news/lang/', $CONFIG['lang']); //Récupération des infos de config.
+			if( !empty($config) )
 				$Sql->Query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . securit($module_name) . "'", __LINE__, __FILE__);
 			
 			//Suppression du module mini.
@@ -182,9 +183,6 @@ else
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_AUTH_ACCESS' => $LANG['auth_access'],
-		'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
-		'L_SELECT_ALL' => $LANG['select_all'],
-		'L_SELECT_NONE' => $LANG['select_none'],
 		'L_UPDATE' => $LANG['update'],
 		'L_MODULES_AVAILABLE' => $LANG['modules_available'],
 		'L_NO_MODULES_INSTALLED' => $LANG['no_modules_installed'],
