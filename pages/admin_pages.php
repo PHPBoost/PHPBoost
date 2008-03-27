@@ -57,12 +57,10 @@ $Template->Set_filenames(array(
 	'pages_config' => '../templates/' . $CONFIG['theme'] . '/pages/admin_pages.tpl'
 ));
 
-$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 $array_auth = isset($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
 
 $Template->Assign_vars(array(
 	'HITS_CHECKED' => $_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : '',
-	'NBR_GROUP' => count($array_groups),
 	'COM_CHECKED' => $_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : '',
 	'SELECT_READ_PAGE' => $Group->Generate_select_auth(READ_PAGE, $array_auth),
 	'SELECT_EDIT_PAGE' => $Group->Generate_select_auth(EDIT_PAGE, $array_auth),

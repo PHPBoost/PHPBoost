@@ -139,7 +139,6 @@ if( $random )//Recherche d'une page aléatoire
 }
 elseif( $id_auth > 0 ) //gestion du niveau d'autorisation
 {
-	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : $_WIKI_CONFIG['auth']; //Récupération des tableaux des autorisations et des groupes.
 	
 	$Template->Assign_block_vars('auth', array(
@@ -149,7 +148,6 @@ elseif( $id_auth > 0 ) //gestion du niveau d'autorisation
 	
 	//On assigne les variables pour le POST en précisant l'idurl.	
 	$Template->Assign_vars(array(
-		'NBR_GROUP' => count($array_groups),
 		'SELECT_RESTORE_ARCHIVE' => $Group->Generate_select_auth(WIKI_RESTORE_ARCHIVE, $array_auth),
 		'SELECT_DELETE_ARCHIVE' => $Group->Generate_select_auth(WIKI_DELETE_ARCHIVE, $array_auth),
 		'SELECT_EDIT' => $Group->Generate_select_auth(WIKI_EDIT, $array_auth),

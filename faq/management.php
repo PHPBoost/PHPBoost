@@ -147,9 +147,6 @@ elseif( $id_move > 0 )
 }
 else
 {
-	//Création du tableau des groupes.
-	$array_groups = $Group->Create_groups_array();
-	
 	$Template->Assign_vars(array(
 		'L_CAT_PROPERTIES' => $FAQ_LANG['cat_properties'],
 		'L_DESCRIPTION' => $FAQ_LANG['cat_description'],
@@ -205,7 +202,6 @@ else
 	$Template->Assign_block_vars('category', array(
 		'READ_AUTH' => 	$Group->Generate_select_auth(AUTH_READ, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth']),
 		'WRITE_AUTH' => $Group->Generate_select_auth(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth']),
-		'NBR_GROUP' => count($array_groups),
 		'U_CREATE_BEFORE' => transid('management.php?new=1&amp;idcat=' . $id_faq . '&amp;after=0'),
 		'ID_FAQ' => $id_faq
 	));

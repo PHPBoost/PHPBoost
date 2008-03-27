@@ -135,12 +135,9 @@ else
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 		
-	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
-	
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('articles'),
-		'NBR_GROUP' => count($array_groups),
 		'CATEGORIES' => $galleries,
 		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_ARTICLES, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'IMG_LIST' => $image_list,

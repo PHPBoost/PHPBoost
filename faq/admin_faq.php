@@ -99,9 +99,6 @@ else
 		'admin_faq' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq.tpl'
 	));
 
-	//Créating the groups table
-	$array_groups = $Group->Create_groups_array();
-
 	$Template->Assign_vars(array(
 		'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
 		'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],

@@ -57,11 +57,9 @@ else
 		'admin_forum_groups' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_groups.tpl'
 	));
 	
-	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
 	$array_auth = isset($CONFIG_FORUM['auth']) ? $CONFIG_FORUM['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	
 	$Template->Assign_vars(array(
-		'NBR_GROUP' => count($array_groups),
 		'FLOOD_AUTH' => $Group->Generate_select_auth(FLOOD_FORUM, $array_auth),
 		'EDIT_MARK_AUTH' => $Group->Generate_select_auth(EDIT_MARK_FORUM, $array_auth),
 		'TRACK_TOPIC_AUTH' => $Group->Generate_select_auth(TRACK_TOPIC_FORUM, $array_auth),

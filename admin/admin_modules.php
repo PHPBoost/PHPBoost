@@ -200,8 +200,6 @@ else
 	elseif( !empty($get_error) && isset($LANG[$get_error]) )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
 		
-	$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
-
 	//Modules installé
 	$i = 0;	
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);

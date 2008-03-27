@@ -269,8 +269,6 @@ else
 	));
 }
 
-$array_groups = $Group->Create_groups_array(); //Création du tableau des groupes.
-
 if( !empty($page_infos['auth']) )
 	$array_auth = unserialize($page_infos['auth']);
 else
@@ -278,7 +276,6 @@ else
 
 $Template->Assign_vars(array(
 	'ID_EDIT' => $id_edit,
-	'NBR_GROUP' => count($array_groups),
 	'SELECT_READ_PAGE' => $Group->Generate_select_auth(READ_PAGE, $array_auth),
 	'SELECT_EDIT_PAGE' => $Group->Generate_select_auth(EDIT_PAGE, $array_auth),
 	'SELECT_READ_COM' => $Group->Generate_select_auth(READ_COM, $array_auth),
