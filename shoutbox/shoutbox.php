@@ -74,8 +74,8 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 	if( $Member->Get_attribute('user_readonly') > time() ) 
 		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
-	$del = !empty($_GET['del']) ? true : false;
-	$edit = !empty($_GET['edit']) ? true : false;
+	$del_message = !empty($_GET['del']) ? true : false;
+	$edit_message = !empty($_GET['edit']) ? true : false;
 	$update = !empty($_GET['update']) ? true : false;
 	
 	$row = $Sql->Query_array('shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
@@ -83,13 +83,13 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 	
 	if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 	{
-		if( $del )
+		if( $del_message )
 		{
 			$Sql->Query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
 			redirect(HOST . SCRIPT . SID2);
 		}
-		elseif( $edit )
+		elseif( $edit_message )
 		{
 			$Template->Set_filenames(array(
 				'shoutbox' => '../templates/' . $CONFIG['theme'] . '/shoutbox/shoutbox.tpl'
@@ -243,8 +243,8 @@ else //Affichage.
 	while ($row = $Sql->Sql_fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
-		$edit = '';
-		$del = '';
+		$edit_message = '';
+		$del_message = '';
 		
 		$is_guest = ($row['user_id'] === -1);
 		$is_modo = $Member->Check_level(MODO_LEVEL);
@@ -259,8 +259,8 @@ else //Affichage.
 		//Edition/suppression.
 		if( $is_modo || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 		{
-			$edit = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-			$del = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?del=1&id=' . $row['id']) . '" onClick="javascript:return Confirm_shout();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+			$edit_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+			$del_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?del=1&id=' . $row['id']) . '" onClick="javascript:return Confirm_shout();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 		}
 		
 		//Pseudo.
@@ -364,8 +364,8 @@ else //Affichage.
 			'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 			'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
 			'PUNISHMENT' => $readonly,			
-			'DEL' => $del,
-			'EDIT' => $edit,
+			'DEL' => $del_message,
+			'EDIT' => $edit_message,
 			'U_MEMBER_PM' => !$is_guest ? '<a href="../member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>' : '',
 			'U_ANCHOR' => 'shoutbox.php' . SID . '#m' . $row['id']
 		));
