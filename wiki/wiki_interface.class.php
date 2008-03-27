@@ -88,8 +88,7 @@ class WikiInterface extends ModuleInterface
                 CONCAT('../wiki/wiki.php?title=',a.encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles a
                 LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
-                WHERE ( MATCH(a.title) AGAINST('".$args['search']."') OR MATCH(c.content) AGAINST('".$args['search']."') )
-                ORDER BY relevance DESC";
+                WHERE ( MATCH(a.title) AGAINST('".$args['search']."') OR MATCH(c.content) AGAINST('".$args['search']."') )";
         if ( $args['WikiWhere'] == 'contents' )
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
@@ -99,8 +98,7 @@ class WikiInterface extends ModuleInterface
                 CONCAT('../wiki/wiki.php?title=',a.encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles a
                 LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
-                WHERE MATCH(c.content) AGAINST('".$args['search']."')
-                ORDER BY relevance DESC";
+                WHERE MATCH(c.content) AGAINST('".$args['search']."')";
         else
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
@@ -109,8 +107,7 @@ class WikiInterface extends ModuleInterface
                 MATCH(title) AGAINST('".$args['search']."') AS `relevance`,
                 CONCAT('../wiki/wiki.php?title=',encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles
-                WHERE MATCH(title) AGAINST('".$args['search']."')
-                ORDER BY relevance DESC";
+                WHERE MATCH(title) AGAINST('".$args['search']."')";
     }
 }
 
