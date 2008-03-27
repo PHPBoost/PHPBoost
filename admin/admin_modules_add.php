@@ -66,10 +66,24 @@ if( $install ) //Installation du module
 			@closedir($dh);
 		}
 			
+		//Insertion de la configuration du module.
+		$config = get_ini_config('../' . $module_name . '/lang/', $CONFIG['lang']); //Récupération des infos de config.
+		if( !empty($config) )
+		{	
+			$config = trim(str_replace('config=', '', $config), '"');
+			
+			$check_config = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."configs WHERE name = '" . $module_name . "'", __LINE__, __FILE__);
+			if( empty($check_config) )
+				$Sql->Query_inject("INSERT INTO ".PREFIX."configs (name, value) VALUES ('" . $module_name . "', '" . addslashes($config) . "');", __LINE__, __FILE__);
+			else
+				redirect(HOST . DIR . '/admin/admin_modules_add.php?error=e_config_conflict#errorh');
+		}
+		
 		//Parsage du fichier sql.
 		if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql') )
 			$Sql->Sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
 		
+		//Parsage du fichier php.
 		if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.php') )
 			@include_once('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.php');
 		
@@ -205,7 +219,7 @@ else
 
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
-	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled');
+	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_config_conflict');
 	if( in_array($get_error, $array_error) )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
 	if( $get_error == 'incomplete' )

@@ -33,6 +33,3 @@ CREATE TABLE `phpboost_download` (
 	PRIMARY KEY	(`id`),
 	KEY `idcat` (`idcat`)
 ) ENGINE=MyISAM;
-
-INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('download', 'a:4:{s:12:"nbr_file_max";i:10;s:11:"nbr_cat_max";i:10;s:10:"nbr_column";i:2;s:8:"note_max";i:10;}');
-

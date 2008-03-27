@@ -9,5 +9,3 @@ CREATE TABLE `phpboost_calendar` (
 	`lock_com` tinyint(1) NOT NULL default '0',
 	PRIMARY KEY	(`id`)
 ) ENGINE=MyISAM;
-
-INSERT INTO `phpboost_configs` (`name`, `value`) VALUES ('calendar', 'a:1:{s:13:"calendar_auth";i:2;}');
