@@ -120,7 +120,7 @@ elseif( !empty($entitled) && !empty($answer) )
 		if( $auth_write )//If authorized user
 		{			
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET question = '" . $entitled . "', answer = '" . $answer . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
-			redirect(HOST . DIR . transid('/faq/management.php?faq=' . $faq_infos['idcat'] . '#q' . $faq_infos['q_order'], '', '&'));
+			redirect(HOST . DIR . '/faq/' . transid('faq.php?id=' . $faq_infos['idcat'] . '&amp;question=' . $id_question, 'faq-' . $faq_infos['idcat'] . '+' . url_encode_rewrite($FAQ_CATS[$faq_infos['idcat']]['name']) . '.php?question=' . $id_question, '&') . '#q' . $id_question);
 		}
 		else
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
@@ -135,6 +135,8 @@ elseif( !empty($entitled) && !empty($answer) )
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET q_order = q_order + 1 WHERE idcat = '" . $new_id_cat . "' AND q_order > '" . $id_after . "'", __LINE__, __FILE__);
 			$Sql->Query_inject("INSERT INTO ".PREFIX."faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $new_id_cat . "', '" . ($id_after + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . $Member->Get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
 			
+			$new_question_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."faq");
+			
 			//Updating number of subcategories
 			if( $new_id_cat != 0 )
 			{
@@ -144,7 +146,7 @@ elseif( !empty($entitled) && !empty($answer) )
 			}
 			
 			$Cache->Generate_module_file('faq');
-			redirect(HOST . DIR . transid('/faq/management.php?faq=' . $new_id_cat . '#q' . ($id_after + 1), '', '&'));
+			redirect(HOST . DIR . '/faq/' . transid('faq.php?id=' . $new_id_cat . '&amp;question=' . new_question_id, 'faq-' . $new_id_cat . '+' . url_encode_rewrite($FAQ_CATS[$new_id_cat]['name']) . '.php?question=' . $new_question_id, '&') . '#q' . $new_question_id);
 		}
 		else
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);

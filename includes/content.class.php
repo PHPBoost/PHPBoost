@@ -78,10 +78,10 @@ class Content
 	{
 		global $LANG;
 		
-		//On prélève tout le code HTML afin de ne pas l'altérer
-		$this->pick_up_tag('html');
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		$this->pick_up_tag('code', '=[a-z0-9-]+(?:,(?:0|1)(?:,1)?)?');
+		//On prélève tout le code HTML afin de ne pas l'altérer
+		$this->pick_up_tag('html');
 		
 		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé
 		$this->content = ' ' . $this->content . ' ';
@@ -278,18 +278,18 @@ class Content
 		$this->parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
 		$this->parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->content);
 		
-		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
-		if( !empty($this->array_tags['code']) )
-		{
-			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
-			$this->reimplant_tag('code');
-		}
-		
 		//On remet le code HTML mis de côté
 		if( !empty($this->array_tags['html']) )
 		{
 			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
 			$this->reimplant_tag('html');
+		}
+		
+		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
+		if( !empty($this->array_tags['code']) )
+		{
+			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
+			$this->reimplant_tag('code');
 		}
 	}
 
@@ -621,7 +621,7 @@ class Content
 		for($i = 0; $i < $nbr_occur; $i++)
 		{
 			//C'est le contenu d'un tag, il contient un sous tag donc on éclate
-			if( ($i % 3) === 2 && preg_match('`\['.$tag.'(?:'.$attributes.')?\].+\[/'.$tag.'\]`s', $content[$i]) ) 
+			if( ($i % 3) === 2 && preg_match('`\[' . $tag . '(?:' . $attributes . ')?\].+\[/' . $tag . '\]`s', $content[$i]) ) 
 				$this->split_imbricated_tag($content[$i], $tag, $attributes);
 		}
 	}
