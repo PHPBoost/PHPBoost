@@ -127,6 +127,7 @@ else
 	));
 	 
 	$Template->Assign_vars(array(
+		'C_LANG_MAIN' => true,
 		'THEME' => $CONFIG['theme'],		
 		'L_LANG_ADD' => $LANG['lang_add'],	
 		'L_LANG_MANAGEMENT' => $LANG['lang_management'],
@@ -140,11 +141,9 @@ else
 		'L_ACTIV' => $LANG['activ'],
 		'L_DESC' => $LANG['description'],
 		'L_YES' => $LANG['yes'],
+		'L_NO' => $LANG['no'],
 		'L_GUEST' => $LANG['guest'],
 		'L_UNINSTALL' => $LANG['uninstall']		
-	));
-	
-	$Template->Assign_block_vars('main', array(		
 	));
 		
 	//Gestion erreur.
@@ -181,75 +180,44 @@ else
 		}
 		$Sql->Close($result);
 		
+		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 		foreach($lang_bdd as $key => $lang) //On effectue la recherche dans le tableau.
 		{
 			//On selectionne le lang suivant les valeurs du tableau. 
 			$info_lang = load_ini_file('../lang/', $lang['name']);
 			
-			$Template->Assign_block_vars('main.list', array(
+			$options = '';
+			for($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
+			{
+				$selected = ($i == $lang['secure']) ? 'selected="selected"' : '';
+				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
+			}
+			
+			$default_lang = ($lang['name'] == $CONFIG['lang']);
+			$Template->Assign_block_vars('list', array(
+				'C_LANG_DEFAULT' => $default_lang ? true : false,
+				'C_LANG_NOT_DEFAULT' => !$default_lang ? true : false,
 				'IDLANG' =>  $lang['id'],		
 				'LANG' =>  $info_lang['name'],
 				'IDENTIFIER' =>  $info_lang['identifier'],
 				'AUTHOR' => (!empty($info_lang['author_mail']) ? '<a href="mailto:' . $info_lang['author_mail'] . '">' . $info_lang['author'] . '</a>' : $info_lang['author']),
 				'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="" /></a>' : ''),
-				'COMPAT' => $info_lang['compatibility']
+				'COMPAT' => $info_lang['compatibility'],
+				'OPTIONS' => $options,
+				'LANG_ACTIV' => ($lang['activ'] == 1) ? 'checked="checked"' : '',
+				'LANG_UNACTIV' => ($lang['activ'] == 0) ? 'checked="checked"' : ''
 			));
-						
-			if( $lang['name'] != $CONFIG['lang'] )
-			{
-				$value = 
-				'<td class="row2" style="text-align:center;">	
-						<input type="radio" name="' . $lang['id'] . 'activ" value="1" ' . (($lang['activ'] == 1) ? 'checked="checked"' : '') . ' onchange="document.location = \'admin_lang.php?activ=1&amp;id=' . $lang['id'] . '\'" /> ' . $LANG['yes'] . '
-						<input type="radio" name="' . $lang['id'] . 'activ" value="0" ' . (($lang['activ'] == 0) ? 'checked="checked"' : '') . ' onchange="document.location = \'admin_lang.php?activ=0&amp;id=' . $lang['id'] . '\'" /> ' . $LANG['no'] . '
-					</td>
-					<td class="row2" style="text-align:center;">	
-						<select name="' . $lang['id'] . 'secure" onchange="document.location = \'admin_lang.php?secure=\' + this.options[this.selectedIndex].value + \'&amp;id=' . $lang['id'] . '\'">'; 
-								
-				//Rang d'autorisation.
-				for($i = -1 ; $i <= 2 ; $i++)
-				{
-					switch($i) 
-					{	
-						case -1:
-							$rank = $LANG['guest'];
-						break;					
-						case 0:
-							$rank = $LANG['member'];
-						break;					
-						case 1: 
-							$rank = $LANG['modo'];
-						break;			
-						case 2:
-							$rank = $LANG['admin'];
-						break;						
-						default: -1;
-					}
-					$selected = ($i == $lang['secure']) ? 'selected="selected"' : '';
-					$value .= '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>';
-				}	
-				$value .= '								
-					</select>
-				</td>
-				<td class="row2" style="text-align:center;">
-					<input type="submit" name="' . $lang['id'] . '" value="' . $LANG['uninstall'] . '" class="submit" />
-				</td>';
-					
-				$Template->Assign_block_vars('main.list.not_default', array(
-					'VALUE' => $value
-				));
-			}
-			else
-				$Template->Assign_block_vars('main.list.default', array(
-				));
 			$z++;
 		}
 	}	
 	
 	if( $z != 0 )
-		$Template->Assign_block_vars('main.lang', array(		
+		$Template->Assign_vars(array(		
+			'C_LANG_PRESENT' => true
 		));
 	else
-		$Template->Assign_block_vars('main.no_lang', array(		
+		$Template->Assign_vars(array(		
+			'C_NO_LANG_PRESENT' => true
 		));
 		
 	$Template->Pparse('admin_lang_management'); 

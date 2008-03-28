@@ -144,8 +144,9 @@ if( !defined('NO_LEFT_COLUMN') )
 if( !defined('NO_RIGHT_COLUMN') )
 	define('NO_RIGHT_COLUMN', false);
 	
-$left_column = ($THEME['left_column'] && !NO_LEFT_COLUMN);
-$right_column = ($THEME['right_column'] && !NO_RIGHT_COLUMN);	
+$Cache->load_file('themes'); //Récupération de la configuration des thèmes.	
+$left_column = ($THEME_CONFIG[$CONFIG['theme']]['left_column'] && !NO_LEFT_COLUMN);
+$right_column = ($THEME_CONFIG[$CONFIG['theme']]['right_column'] && !NO_RIGHT_COLUMN);	
 
 //Début de la colonne de gauche.
 if( $left_column )

@@ -48,14 +48,14 @@
 						</th>
 					</tr>
 					
-					# START no_theme #
+					# IF C_NO_THEME_PRESENT #
 					<tr> 
 						<td class="row1" style="text-align:center;">
 							{L_NO_THEME_ON_SERV}
 						</td>
 					</tr>
-					# END no_theme #
-					# START theme #
+					# ENDIF #
+					# IF C_THEME_PRESENT #
 					<tr>
 						<td class="row2" style="width:120px;text-align:center;">
 							{L_THEME}
@@ -76,7 +76,7 @@
 							{L_INSTALL}
 						</td>
 					</tr>
-					# END theme #
+					# ENDIF #
 					
 					# START list #
 					<tr> 	
@@ -86,7 +86,7 @@
 						<td class="row2">					
 							<img src="../templates/{list.ICON}/images/theme.jpg" alt="" />
 						</td>
-						<td class="row2" style="vertical-align:top">	
+						<td class="row2" style="vertical-align:top">
 							<strong>{L_AUTHOR}:</strong> {list.AUTHOR} {list.AUTHOR_WEBSITE}<br />
 							<strong>{L_DESC}:</strong> {list.DESC}<br />
 							<strong>{L_COMPAT}:</strong> PHPBoost {list.COMPAT}<br />
@@ -102,9 +102,7 @@
 						</td>
 						<td class="row2" style="text-align:center;">	
 							<select name="{list.IDTHEME}secure">								
-								# START list.select #	
-								{list.select.RANK}
-								# END list.select #									
+								{list.OPTIONS}
 							</select>
 						</td>
 						<td class="row2" style="text-align:center;">

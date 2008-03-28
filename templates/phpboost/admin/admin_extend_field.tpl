@@ -15,7 +15,7 @@
 	</div>
 	
 	<div id="admin_contents">	
-		# START field_management #
+		# IF C_FIELD_MANAGEMENT #
 		<form action="admin_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 			<table class="module_table">
 				<tr> 
@@ -38,29 +38,29 @@
 					</td>
 				</tr>
 				
-				# START field_management.field #
+				# START field #
 				<tr style="text-align:center;"> 
 					<td class="row2">
-						<span id="e{field_management.field.ID}"></span>
-						{field_management.field.NAME}
+						<span id="e{field.ID}"></span>
+						{field.NAME}
 					</td>				
 					<td class="row2">
-						{field_management.field.TOP}
-						{field_management.field.BOTTOM}
+						{field.TOP}
+						{field.BOTTOM}
 					</td>
 					<td class="row2"> 
-						<a href="admin_extend_field.php?id={field_management.field.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						<a href="admin_extend_field.php?id={field.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="admin_extend_field.php?del=1&amp;id={field_management.field.ID}" onClick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="admin_extend_field.php?del=1&amp;id={field.ID}" onClick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
-				# END field_management.field #
+				# END field #
 			</table>
 		</form>
-		# END field_management #
+		# ENDIF #
 
-		# START field_edit #
+		# IF C_FIELD_EDIT #
 		<script type="text/javascript">
 		<!--
 		function check_form_field(){
@@ -103,51 +103,51 @@
 		</div>
 		# ENDIF #
 				
-		<form action="admin_extend_field.php?id={field_edit.ID}" method="post" onsubmit="return check_form_field();" class="fieldset_content">
+		<form action="admin_extend_field.php?id={ID}" method="post" onsubmit="return check_form_field();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_EXTEND_FIELD_EDIT}</legend>
 				<dl> 
 					<dt><label for="name">* {L_NAME}</label></dt>
-					<dd><label><input type="text" size="40" maxlength="100" id="name" name="name" value="{field_edit.NAME}" class="text" /></select></label></dd>
+					<dd><label><input type="text" size="40" maxlength="100" id="name" name="name" value="{NAME}" class="text" /></select></label></dd>
 				<dl>
 				<dl> 
 					<dt><label for="contents">{L_DESC}</label></dt>
-					<dd><label><textarea type="text" class="post" rows="4" cols="30" name="contents">{field_edit.CONTENTS}</textarea> </label></dd>
+					<dd><label><textarea type="text" class="post" rows="4" cols="30" name="contents">{CONTENTS}</textarea> </label></dd>
 				</dl>
 				<dl> 
 					<dt><label for="field">* {L_TYPE}</label></dt>
 					<dd><label>
 						<select name="field" onchange="change_status(this.options[selectedIndex].value)">
-						# START field_edit.field #
-						{field_edit.field.FIELD}
-						# END field_edit.field #
+						# START field #
+						{field.FIELD}
+						# END field #
 					</select>
 					</label></dd>
 				</dl>
 				<dl> 
 					<dt><label for="possible_values">{L_POSSIBLE_VALUES}</label><br /><span>{L_POSSIBLE_VALUES_EXPLAIN}</span></dt>
-					<dd><label><textarea type="text" class="post" rows="2" cols="30" name="possible_values" id="possible_values" style="width:50%">{field_edit.POSSIBLE_VALUES}</textarea></label></dd>
+					<dd><label><textarea type="text" class="post" rows="2" cols="30" name="possible_values" id="possible_values" style="width:50%">{POSSIBLE_VALUES}</textarea></label></dd>
 				</dl>
 				<dl> 
 					<dt><label for="default_values">{L_DEFAULT_VALUE}</label><br /><span>{L_DEFAULT_VALUE_EXPLAIN}</span></dt>
 					<dd>
-						<label><textarea type="text" class="post" rows="2" cols="30" name="default_values" id="default_values" style="width:50%">{field_edit.DEFAULT_VALUES}</textarea></label>
+						<label><textarea type="text" class="post" rows="2" cols="30" name="default_values" id="default_values" style="width:50%">{DEFAULT_VALUES}</textarea></label>
 					</dd>
 				</dl>
 				<dl> 
 					<dt><label for="regex_type1">{L_REGEX}</label><br /><span>{L_REGEX_EXPLAIN}</span></dt>
 					<dd>
-						<label><input type="radio" name="regex_type" id="regex_type1" value="0" {field_edit.REGEX1_CHECKED}{field_edit.DISABLED} /> {L_PREDEF_REGEXP}</label>
+						<label><input type="radio" name="regex_type" id="regex_type1" value="0" {REGEX1_CHECKED}{DISABLED} /> {L_PREDEF_REGEXP}</label>
 						<label>
-							<select name="regex1" id="regex1" onclick="document.getElementById('regex_type1').checked = true;"{field_edit.DISABLED}>
-								# START field_edit.regex #
-								{field_edit.regex.REGEX}
-								# END field_edit.regex #
+							<select name="regex1" id="regex1" onclick="document.getElementById('regex_type1').checked = true;"{DISABLED}>
+								# START regex #
+								{regex.REGEX}
+								# END regex #
 							</select>
 						</label>
 						<br /> 
-						<label><input type="radio" name="regex_type" id="regex_type2" {field_edit.REGEX2_CHECKED}{field_edit.DISABLED} value="1" /> {L_PERSO_REGEXP}</label>
-						<label><input type="text" size="40" id="regex2" name="regex2" value="{field_edit.REGEX}" class="text" onclick="document.getElementById('regex_type2').checked = true;"{field_edit.DISABLED} /></label>							
+						<label><input type="radio" name="regex_type" id="regex_type2" {REGEX2_CHECKED}{DISABLED} value="1" /> {L_PERSO_REGEXP}</label>
+						<label><input type="text" size="40" id="regex2" name="regex2" value="{REGEX}" class="text" onclick="document.getElementById('regex_type2').checked = true;"{DISABLED} /></label>							
 					</dd>
 				</dl>
 			</fieldset>
@@ -158,6 +158,6 @@
 				<input type="reset" value="{L_RESET}" class="reset" />					
 			</fieldset>
 		</form>
-		# END field_edit #
+		# ENDIF #
 	</div>
 	
