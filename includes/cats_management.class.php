@@ -61,10 +61,15 @@ You can also have other fields such as auth level, description, visible, that cl
 		'rewrited' => '../news-%d+%s.php'),
 ); */
 
+//Class constants
 define('DEBUG_MODE', true);
 define('AJAX_MODE', false);
 define('MOVE_CATEGORY_UP', 'up');
 define('MOVE_CATEGORY_DOWN', 'down');
+define('CAT_VISIBLE', '1');
+define('CAT_UNVISIBLE', '0');
+
+//Error reports
 define('ERROR_UNKNOWN_MOTION', 0x01);
 define('ERROR_CAT_IS_AT_TOP', 0x02);
 define('ERROR_CAT_IS_AT_BOTTOM', 0x04);
@@ -73,6 +78,7 @@ define('NEW_PARENT_CATEGORY_DOES_NOT_EXIST', 0x10);
 define('DISPLAYING_CONFIGURATION_NOT_SET', 0x20);
 define('INCORRECT_DISPLAYING_CONFIGURATION', 0x40);
 define('NEW_CATEGORY_IS_IN_ITS_CHILDRENS', 0x80);
+define('NEW_STATUS_UNKNOWN', 0x100);
 
 class Categories_management
 {
@@ -83,12 +89,6 @@ class Categories_management
 		$this->cache_file_name = $cache_file_name;
 		// this is a pointer to the cache variable. We always refer to it, even if it's updated we will have always the good values.
 		$this->cache_var =& $cache_var;
-	}
-	
-	//Method which updates cache file
-	function Update_cache_var($cache_var)
-	{
-	$this->cache_var = $cache_var;
 	}
 	
 	//Method which adds a category
@@ -276,6 +276,14 @@ class Categories_management
 	function Change_category_visibility($category_id, $visibility)
 	{
 		global $Sql;
+		
+		//Default value
+		if( !in_array($visibility, array(CAT_VISIBLE, CAT_UNVISIBLE)) )
+		{
+			$this->add_error(NEW_STATUS_UNKNOWN);
+			return false;
+		}
+			
 		if( array_key_exists($category_id, $this->cache_var) )
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET visible = '" . $visibility . "' WHERE id = '" . $category_id . "'", __LINE__, __FILE__);
