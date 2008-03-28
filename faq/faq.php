@@ -33,7 +33,7 @@ $id_faq = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $id_question = !empty($_GET['question']) ? numeric($_GET['question']) : 0;
 
 //if the category doesn't exist or is not visible
-if( !array_key_exists($id_faq, $FAQ_CATS) || (array_key_exists($id_faq, $FAQ_CATS) && $id_faq > 0 && $FAQ_CATS[$id_faq]['visible'] == 0) )
+if( !array_key_exists($id_faq, $FAQ_CATS) || (array_key_exists($id_faq, $FAQ_CATS) && $id_faq > 0 && !$FAQ_CATS[$id_faq]['visible']) )
 {
 	$Errorh->Error_handler('e_unexist_cat', E_USER_REDIRECT);
 	exit;
@@ -94,7 +94,7 @@ if( $num_subcats > 0 )
 	foreach( $FAQ_CATS as $id => $value )
 	{
 		//List of children categories
-		if( $id != 0 && $value['visible'] == 1 && $value['id_parent'] == $id_faq && (empty($value['auth']) || $Member->Check_auth($value['auth'], AUTH_READ)) )
+		if( $id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || $Member->Check_auth($value['auth'], AUTH_READ)) )
 		{
 			if ( $i % $FAQ_CONFIG['num_cols'] == 1 )
 				$Template->Assign_block_vars('row', array());

@@ -121,6 +121,7 @@ elseif( !empty($entitled) && !empty($answer) )
 		{			
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET question = '" . $entitled . "', answer = '" . $answer . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
 			redirect(HOST . DIR . '/faq/' . transid('faq.php?id=' . $faq_infos['idcat'] . '&amp;question=' . $id_question, 'faq-' . $faq_infos['idcat'] . '+' . url_encode_rewrite($FAQ_CATS[$faq_infos['idcat']]['name']) . '.php?question=' . $id_question, '&') . '#q' . $id_question);
+			
 		}
 		else
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
