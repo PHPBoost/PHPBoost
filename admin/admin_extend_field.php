@@ -134,7 +134,8 @@ elseif( !empty($id) )
 		$predef_regex = true;
 	}
 		
-	$Template->Assign_block_vars('field_edit', array(
+	$Template->Assign_vars(array(
+		'C_FIELD_EDIT' => true,
 		'ID' => $extend_field['id'],
 		'NAME' => $extend_field['name'],
 		'CONTENTS' => $extend_field['contents'],
@@ -164,7 +165,7 @@ elseif( !empty($id) )
 	foreach($array_field as $key => $value)
 	{
 		$selected = ($key == $extend_field['field']) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('field_edit.field', array(
+		$Template->Assign_block_vars('field', array(
 			'FIELD' => '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>'
 		));
 	}
@@ -178,13 +179,13 @@ elseif( !empty($id) )
 	);
 	
 	$selected = (!$predef_regex) ? 'selected="selected"' : ''; 
-	$Template->Assign_block_vars('field_edit.regex', array(
+	$Template->Assign_block_vars('regex', array(
 		'REGEX' => '<option value="0" ' . $selected . '>--</option>'
 	));
 	foreach($array_regex as $key => $value)
 	{
 		$selected = ($key == $extend_field['regex']) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('field_edit.regex', array(
+		$Template->Assign_block_vars('regex', array(
 			'REGEX' => '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>'
 		));
 	}
@@ -230,10 +231,8 @@ else
 		'admin_extend_field' => '../templates/' . $CONFIG['theme'] . '/admin/admin_extend_field.tpl'
 	));
 	
-	$Template->Assign_block_vars('field_management', array(
-	));
-	
 	$Template->Assign_vars(array(
+		'C_FIELD_MANAGEMENT' => true,
 		'L_EXTEND_FIELD_MANAGEMENT' => $LANG['extend_field_management'],
 		'L_EXTEND_FIELD_ADD' => $LANG['extend_field_add'],
 		'L_EXTEND_FIELD' => $LANG['extend_field'],
@@ -259,7 +258,7 @@ else
 		$bottom_link = $max_cat != $row['class'] ? '<a href="admin_extend_field.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
 		<img src="../templates/' . $CONFIG['theme'] . '/images/admin/down.png" alt="" title="" /></a>' : '';
 
-		$Template->Assign_block_vars('field_management.field', array(
+		$Template->Assign_block_vars('field', array(
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'TOP' => $top_link,

@@ -48,14 +48,14 @@
 						</th>
 					</tr>
 					
-					# START no_lang #
+					# IF C_NO_LANG_PRESENT #
 					<tr> 
 						<td class="row1" style="text-align:center;">
 							{L_NO_LANG_ON_SERV}
 						</td>
 					</tr>
-					# END no_lang #
-					# START lang #
+					# ENDIF #
+					# IF C_LANG_PRESENT #
 					<tr>
 						<td class="row2" style="width:120px;text-align:center;">
 							{L_LANG}
@@ -73,7 +73,7 @@
 							{L_INSTALL}
 						</td>
 					</tr>
-					# END lang #
+					# ENDIF #
 					
 					# START list #
 					<tr> 	
@@ -90,9 +90,7 @@
 						</td>
 						<td class="row2" style="text-align:center;">	
 							<select name="{list.IDLANG}secure">								
-								# START list.select #	
-								{list.select.RANK}
-								# END list.select #									
+								{list.OPTIONS}
 							</select>
 						</td>
 						<td class="row2" style="text-align:center;">

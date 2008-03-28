@@ -166,8 +166,16 @@ else
 		}
 		$Sql->Close($result);
 		
+		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 		foreach($array_file as $lang_array => $value_array) //On effectue la recherche dans le tableau.
 		{
+			$options = '';
+			for($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
+			{
+				$selected = ($i == -1) ? 'selected="selected"' : '';
+				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
+			}
+			
 			$info_lang = load_ini_file('../lang/', $value_array);
 			$Template->Assign_block_vars('list', array(
 				'IDLANG' =>  $value_array,		
@@ -175,43 +183,20 @@ else
 				'IDENTIFIER' =>  $info_lang['identifier'],
 				'AUTHOR' => (!empty($info_lang['author_mail']) ? '<a href="mailto:' . $info_lang['author_mail'] . '">' . $info_lang['author'] . '</a>' : $info_lang['author']),
 				'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="" /></a>' : ''),
-				'COMPAT' => $info_lang['compatibility']
+				'COMPAT' => $info_lang['compatibility'],
+				'OPTIONS' => $options
 			));
-			
-			//Rang d'autorisation.
-			for($i = -1 ; $i <= 2 ; $i++)
-			{
-				switch($i) 
-				{	
-					case -1:
-						$rank = $LANG['guest'];
-					break;					
-					case 0:
-						$rank = $LANG['member'];
-					break;					
-					case 1: 
-						$rank = $LANG['modo'];
-					break;			
-					case 2:
-						$rank = $LANG['admin'];
-					break;						
-					default: -1;
-				}
-				
-				$selected = ($i == -1) ? 'selected="selected"' : '';
-				$Template->Assign_block_vars('list.select', array(	
-					'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
-				));
-			}
 			$z++;
 		}
 	}	
 
 	if( $z != 0 )
-		$Template->Assign_block_vars('lang', array(		
+		$Template->Assign_vars(array(		
+			'C_LANG_PRESENT' => true
 		));
 	else
-		$Template->Assign_block_vars('no_lang', array(		
+		$Template->Assign_vars(array(		
+			'C_NO_LANG_PRESENT' => true
 		));
 	
 	$Template->Pparse('admin_lang_add'); 

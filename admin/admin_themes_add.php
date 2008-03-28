@@ -49,7 +49,13 @@ if( $install )
 	$check_theme = $Sql->Query("SELECT theme FROM ".PREFIX."themes WHERE theme = '" . securit($theme) . "'", __LINE__, __FILE__);	
 	if( empty($check_theme) && !empty($theme) )
 	{
-		$Sql->Query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES('" . securit($theme) . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
+		//On récupère la configuration du thème.
+		$info_theme = load_ini_file('../templates/' . $theme . '/config/', $CONFIG['lang']);
+		
+		$Sql->Query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure, left_column, right_column) VALUES('" . securit($theme) . "', '" . $activ . "', '" .  $secure . "', '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
+		
+		//Régénération du cache.
+		$Cache->Generate_file('themes');
 		
 		redirect(HOST . SCRIPT); 
 	}
@@ -173,10 +179,18 @@ else
 		}
 		$Sql->Close($result);
 		
+		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 		foreach($array_file as $theme_array => $value_array) //On effectue la recherche dans le tableau.
 		{
 			$info_theme = load_ini_file('../templates/' . $value_array . '/config/', $CONFIG['lang']);
 		
+			$options = '';
+			for($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
+			{
+				$selected = ($i == -1) ? 'selected="selected"' : '';
+				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
+			}
+			
 			$Template->Assign_block_vars('list', array(
 				'IDTHEME' =>  $value_array,		
 				'THEME' =>  $info_theme['name'],			
@@ -190,43 +204,20 @@ else
 				'CSS_VERSION' => $info_theme['css_version'],
 				'MAIN_COLOR' => $info_theme['main_color'],
 				'VARIABLE_WIDTH' => ($info_theme['variable_width'] ? $LANG['yes'] : $LANG['no']),
-				'WIDTH' => $info_theme['width']
+				'WIDTH' => $info_theme['width'],
+				'OPTIONS' => $options
 			));
-			
-			//Rang d'autorisation.
-			for($i = -1 ; $i <= 2 ; $i++)
-			{
-				switch($i) 
-				{	
-					case -1:
-						$rank = $LANG['guest'];
-					break;					
-					case 0:
-						$rank = $LANG['member'];
-					break;					
-					case 1: 
-						$rank = $LANG['modo'];
-					break;			
-					case 2:
-						$rank = $LANG['admin'];
-					break;						
-					default: -1;
-				}
-				
-				$selected = ($i == -1) ? 'selected="selected"' : '';
-				$Template->Assign_block_vars('list.select', array(	
-					'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
-				));
-			}
 			$z++;
 		}
 	}	
 
 	if( $z != 0 )
-		$Template->Assign_block_vars('theme', array(		
+		$Template->Assign_vars(array(		
+			'C_THEME_PRESENT' => true
 		));
 	else
-		$Template->Assign_block_vars('no_theme', array(		
+		$Template->Assign_vars(array(		
+			'C_NO_THEME_PRESENT' => true
 		));
 	
 	$Template->Pparse('admin_themes_add'); 

@@ -29,6 +29,7 @@ define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 	
 $uninstall = isset($_GET['uninstall']) ? true : false;	
+$edit = isset($_GET['edit']) ? true : false;	
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '0';
 $error = !empty($_GET['error']) ? trim($_GET['error']) : ''; 
 
@@ -41,7 +42,7 @@ if( isset($_GET['activ']) && !empty($id) ) //Aprobation du thème.
 	$Sql->Query_inject("UPDATE ".PREFIX."themes SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
-if( isset($_GET['secure']) && !empty($id) ) //Niveau d'autorisation du thème.
+elseif( isset($_GET['secure']) && !empty($id) ) //Niveau d'autorisation du thème.
 {
 	$Sql->Query_inject("UPDATE ".PREFIX."themes SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
 	redirect(HOST . SCRIPT . '#t' . $id);	
@@ -59,6 +60,50 @@ elseif( isset($_POST['valid']) ) //Modification de tout les thèmes.
 			$Sql->Query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	redirect(HOST . SCRIPT);	
+}
+elseif( $edit && !empty($id) ) //Edition
+{
+	if( isset($_POST['valid_edit']) ) //Modication de la configuration du thème.
+	{
+		$left_column = !empty($_POST['left_column']) ? 1 : 0; 
+		$right_column = !empty($_POST['right_column']) ? 1 : 0; 
+		
+		$Sql->Query_inject("UPDATE ".PREFIX."themes SET left_column = '" . $left_column . "', right_column = '" . $right_column . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		
+		//Régénération du cache.
+		$Cache->Generate_file('themes');
+		
+		redirect(HOST . SCRIPT . '#t' . $id);	
+	}
+	else
+	{
+		$Template->Set_filenames(array(
+			'admin_themes_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_themes_management.tpl'
+		));
+		
+		//Récupération des configuration dans la base de données.
+		$config_theme = $Sql->Query_array("themes", "theme", "left_column", "right_column", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		
+		//On récupère la configuration du thème.
+		$info_theme = load_ini_file('../templates/' . $config_theme['theme'] . '/config/', $CONFIG['lang']);
+			
+		$Template->Assign_vars(array(
+			'C_EDIT_THEME' => true,
+			'IDTHEME' => $id,
+			'THEME_NAME' => $info_theme['name'],
+			'LEFT_COLUMN_ENABLED' => $config_theme['left_column'] ? 'checked="ckecked"' : '',
+			'RIGHT_COLUMN_ENABLED' => $config_theme['right_column'] ? 'checked="ckecked"' : '',
+			'L_THEME_ADD' => $LANG['theme_add'],	
+			'L_THEME_MANAGEMENT' => $LANG['theme_management'],
+			'L_THEME' => $LANG['theme'],
+			'L_LEFT_COLUMN' => $LANG['activ_left_column'],
+			'L_RIGHT_COLUMN' => $LANG['activ_right_column'],
+			'L_RESET' => $LANG['reset'],
+			'L_UPDATE' => $LANG['update']
+		));
+
+		$Template->Pparse('admin_themes_management'); 
+	}
 }
 elseif( $uninstall ) //Désinstallation.
 {
@@ -101,11 +146,9 @@ elseif( $uninstall ) //Désinstallation.
 			'admin_themes_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_themes_management.tpl'
 		));
 		
-		$Template->Assign_block_vars('del', array(			
-			'IDTHEME' => $idtheme
-		));
-		
 		$Template->Assign_vars(array(
+			'C_DEL_THEME' => true,
+			'IDTHEME' => $idtheme,
 			'THEME' => $CONFIG['theme'],
 			'L_THEME_ADD' => $LANG['theme_add'],	
 			'L_THEME_MANAGEMENT' => $LANG['theme_management'],
@@ -127,7 +170,9 @@ else
 	));
 	 
 	$Template->Assign_vars(array(
+		'C_THEME_MAIN' => true,
 		'THEME' => $CONFIG['theme'],	
+		'LANG' => $CONFIG['lang'],	
 		'L_THEME_ADD' => $LANG['theme_add'],	
 		'L_THEME_MANAGEMENT' => $LANG['theme_management'],
 		'L_THEME_ON_SERV' => $LANG['theme_on_serv'],
@@ -146,13 +191,12 @@ else
 		'L_VARIABLE_WIDTH' => $LANG['exensible'],
 		'L_WIDTH' => $LANG['width'],
 		'L_YES' => $LANG['yes'],
+		'L_NO' => $LANG['no'],
 		'L_GUEST' => $LANG['guest'],
+		'L_EDIT' => $LANG['edit'],
 		'L_UNINSTALL' => $LANG['uninstall']		
 	));
 	
-	$Template->Assign_block_vars('main', array(		
-	));
-		
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
@@ -186,12 +230,23 @@ else
 				$themes_bdd[] = array('id' => $row['id'], 'name' => $row['theme'], 'activ' => $row['activ'], 'secure' => $row['secure']); 		}
 		$Sql->Close($result);
 		
+		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 		foreach($themes_bdd as $key => $theme) //On effectue la recherche dans le tableau.
 		{
 			//On selectionne le theme suivant les valeurs du tableau. 
 			$info_theme = load_ini_file('../templates/' . $theme['name'] . '/config/', $CONFIG['lang']);
 			
-			$Template->Assign_block_vars('main.list', array(
+			$options = '';
+			for($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
+			{
+				$selected = ($i == $theme['secure']) ? 'selected="selected"' : '';
+				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
+			}	
+			
+			$default_theme = ($theme['name'] == $CONFIG['theme']);
+			$Template->Assign_block_vars('list', array(
+				'C_THEME_DEFAULT' => $default_theme ? true : false,
+				'C_THEME_NOT_DEFAULT' => !$default_theme ? true : false,
 				'IDTHEME' =>  $theme['id'],		
 				'THEME' =>  $info_theme['name'],				
 				'ICON' => $theme['name'],
@@ -204,64 +259,22 @@ else
 				'CSS_VERSION' => $info_theme['css_version'],
 				'MAIN_COLOR' => $info_theme['main_color'],
 				'VARIABLE_WIDTH' => ($info_theme['variable_width'] ? $LANG['yes'] : $LANG['no']),
-				'WIDTH' => $info_theme['width']
+				'WIDTH' => $info_theme['width'],
+				'OPTIONS' => $options,
+				'THEME_ACTIV' => ($theme['activ'] == 1) ? 'checked="checked"' : '',
+				'THEME_UNACTIV' => ($theme['activ'] == 0) ? 'checked="checked"' : ''
 			));
-						
-			if( $theme['name'] != $CONFIG['theme'] )
-			{
-				$value = 
-				'<td class="row2" style="text-align:center;">	
-						<input type="radio" name="' . $theme['id'] . 'activ" value="1" ' . (($theme['activ'] == 1) ? 'checked="checked"' : '') . ' onchange="document.location = \'admin_themes.php?activ=1&amp;id=' . $theme['id'] . '\'" /> ' . $LANG['yes'] . '
-						<input type="radio" name="' . $theme['id'] . 'activ" value="0" ' . (($theme['activ'] == 0) ? 'checked="checked"' : '') . ' onchange="document.location = \'admin_themes.php?activ=0&amp;id=' . $theme['id'] . '\'" /> ' . $LANG['no'] . '
-					</td>
-					<td class="row2" style="text-align:center;">	
-						<select name="' . $theme['id'] . 'secure" onchange="document.location = \'admin_themes.php?secure=\' + this.options[this.selectedIndex].value + \'&amp;id=' . $theme['id'] . '\'">'; 
-								
-				//Rang d'autorisation.
-				for($i = -1 ; $i <= 2 ; $i++)
-				{
-					switch($i) 
-					{	
-						case -1:
-							$rank = $LANG['guest'];
-						break;					
-						case 0:
-							$rank = $LANG['member'];
-						break;					
-						case 1: 
-							$rank = $LANG['modo'];
-						break;			
-						case 2:
-							$rank = $LANG['admin'];
-						break;						
-						default: -1;
-					}
-					$selected = ($i == $theme['secure']) ? 'selected="selected"' : '';
-					$value .= '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>';
-				}	
-				$value .= '								
-					</select>
-				</td>
-				<td class="row2" style="text-align:center;">
-					<input type="submit" name="' . $theme['id'] . '" value="' . $LANG['uninstall'] . '" class="submit" />
-				</td>';
-					
-				$Template->Assign_block_vars('main.list.not_default', array(
-					'VALUE' => $value
-				));
-			}
-			else
-				$Template->Assign_block_vars('main.list.default', array(
-				));
 			$z++;
 		}
 	}	
 	
 	if( $z != 0 )
-		$Template->Assign_block_vars('main.theme', array(		
+		$Template->Assign_vars(array(		
+			'C_THEME_PRESENT' => true
 		));
 	else
-		$Template->Assign_block_vars('main.no_theme', array(		
+		$Template->Assign_vars(array(		
+			'C_NO_THEME_PRESENT' => true
 		));
 		
 	$Template->Pparse('admin_themes_management'); 

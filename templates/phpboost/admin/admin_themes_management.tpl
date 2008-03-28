@@ -16,17 +16,17 @@
 			
 		<div id="admin_contents">
 		
-			# START main #
+			# IF C_THEME_MAIN #
 			<form action="admin_themes.php?uninstall=1" method="post">
 				<table class="module_table">
 					<tr> 
-						<th colspan="6">
+						<th colspan="7">
 							{L_THEME_MANAGEMENT}
 						</th>
 					</tr>
 					# IF C_ERROR_HANDLER #
 					<tr> 
-						<td class="row2" colspan="6" style="text-align:center;">
+						<td class="row2" colspan="7" style="text-align:center;">
 							<span id="errorh"></span>
 							<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
 								<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
@@ -37,62 +37,77 @@
 					</tr>
 					# ENDIF #				
 					<tr>
-						<td class="row2" colspan="6">
+						<td class="row2" colspan="7">
 							<strong>{L_EXPLAIN_DEFAULT_THEME}</strong>
 						</td>
 					</tr>
-					# START main.no_theme #
+					# IF C_NO_THEME_PRESENT #
 					<tr> 
 						<td class="row1" style="text-align:center;">
 							{L_NO_THEME_ON_SERV}
 						</td>
 					</tr>
-					# END main.no_theme #
-					# START main.theme #
+					# ENDIF #
+					# IF C_THEME_PRESENT #
 					<tr>
-						<td class="row2" style="width:120px;text-align:center;">
+						<th style="width:120px;text-align:center;">
 							{L_THEME}
-						</td>
-						<td class="row2" style="width:160px;text-align:center;">
+						</th>
+						<th style="width:160px;text-align:center;">
 							{L_PREVIEW}
-						</td>
-						<td class="row2" style="text-align:center;">
+						</th>
+						<th style="text-align:center;">
 							{L_DESC}
-						</td>
-						<td class="row2" style="width:100px;text-align:center;">
+						</th>
+						<th style="width:80px;text-align:center;">
 							{L_ACTIV}
-						</td>
-						<td class="row2" style="width:100px;text-align:center;">
+						</th>
+						<th style="width:100px;text-align:center;">
 							{L_RANK}
-						</td>
-						<td class="row2" style="width:100px;text-align:center;">
+						</th>
+						<th style="width:80px;text-align:center;">
+							{L_EDIT}
+						</th>
+						<th style="width:100px;text-align:center;">
 							{L_UNINSTALL}
-						</td>
+						</th>
 					</tr>
-					# END main.theme #
+					# ENDIF #
 					
-					# START main.list #
+					# START list #
 					<tr> 	
 						<td class="row2" style="text-align:center;">					
-							<span id="t{main.list.IDTHEME}"><strong>{main.list.THEME}</strong> <em>({main.list.VERSION})</em>				
+							<span id="t{list.IDTHEME}"><strong>{list.THEME}</strong> <em>({list.VERSION})</em>				
 						</td>
 						<td class="row2">					
-							<img src="../templates/{main.list.ICON}/images/theme.jpg" alt="" />
+							<img src="../templates/{list.ICON}/images/theme.jpg" alt="" />
 						</td>
 						<td class="row2" style="vertical-align:top">	
-							<strong>{L_AUTHOR}:</strong> {main.list.AUTHOR} {main.list.AUTHOR_WEBSITE}<br />
-							<strong>{L_DESC}:</strong> {main.list.DESC}<br />
-							<strong>{L_COMPAT}:</strong> PHPBoost {main.list.COMPAT}<br />
-							<strong>{L_XHTML}:</strong> {main.list.HTML_VERSION}<br />
-							<strong>{L_CSS}:</strong> {main.list.CSS_VERSION}<br />
-							<strong>{L_MAIN_COLOR}:</strong> {main.list.MAIN_COLOR}<br />
-							<strong>{L_VARIABLE_WIDTH}:</strong> {main.list.VARIABLE_WIDTH}<br />
-							<strong>{L_WIDTH}:</strong> {main.list.WIDTH}				
+							<strong>{L_AUTHOR}:</strong> {list.AUTHOR} {list.AUTHOR_WEBSITE}<br />
+							<strong>{L_DESC}:</strong> {list.DESC}<br />
+							<strong>{L_COMPAT}:</strong> PHPBoost {list.COMPAT}<br />
+							<strong>{L_XHTML}:</strong> {list.HTML_VERSION}<br />
+							<strong>{L_CSS}:</strong> {list.CSS_VERSION}<br />
+							<strong>{L_MAIN_COLOR}:</strong> {list.MAIN_COLOR}<br />
+							<strong>{L_VARIABLE_WIDTH}:</strong> {list.VARIABLE_WIDTH}<br />
+							<strong>{L_WIDTH}:</strong> {list.WIDTH}				
 						</td>
-						# START main.list.not_default #
-						{main.list.not_default.VALUE}
-						# END main.list.not_default #
-						# START main.list.default #
+						# IF list.C_THEME_NOT_DEFAULT #
+						<td class="row2" style="text-align:center;">	
+							<input type="radio" name="{list.IDTHEME}activ" value="1" {list.THEME_ACTIV} onchange="document.location = \'admin_themes.php?activ=1&amp;id={list.IDTHEME}\'" /> {L_YES}
+							<input type="radio" name="{list.IDTHEME}activ" value="0" {list.THEME_UNACTIV} onchange="document.location = \'admin_themes.php?activ=0&amp;id={list.IDTHEME}\'" /> {L_NO}
+						</td>
+						<td class="row2" style="text-align:center;">	
+							<select name="{list.IDTHEME}secure" onchange="document.location = \'admin_themes.php?secure=\' + this.options[this.selectedIndex].value + \'&amp;id={list.IDTHEME}\'">'; 
+								{list.OPTIONS}
+							</select>
+						</td>
+						<td class="row2" style="text-align:center;">
+							<input type="submit" name="{list.IDTHEME}" value="{L_UNINSTALL}" class="submit" />
+						</td>
+						# ENDIF #
+						
+						# IF list.C_THEME_DEFAULT #
 						<td class="row2" style="text-align:center;">	
 							{L_YES}
 						</td>
@@ -100,13 +115,16 @@
 							{L_GUEST}
 						</td>
 						<td class="row2" style="text-align:center;">
+							<a href="admin_themes.php?edit=1&amp;id={list.IDTHEME}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt /></a>
+						</td>
+						<td class="row2" style="text-align:center;">
 							-
 						</td>
-						# END main.list.default #
+						# ENDIF #
 					</tr>
-					# END main.list #	
+					# END list #	
 					<tr> 
-						<th colspan="6">
+						<th colspan="7">
 							<noscript>
 								<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
 							</noscript>
@@ -115,10 +133,10 @@
 					</tr>	
 				</table>
 			</form>
-			# END main #
+			# ENDIF #
 		
 		
-			# START del #
+			# IF C_DEL_THEME #
 			<form action="admin_themes.php?uninstall=1" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_DEL_THEME}</legend>
@@ -131,36 +149,33 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_DELETE}</legend>
 					<input type="submit" name="valid_del" value="{L_DELETE}" class="submit" />	
-					<input type="hidden" name="idtheme" value="{del.IDTHEME}" />					
+					<input type="hidden" name="idtheme" value="{IDTHEME}" />					
 				</fieldset>	
 			</form>
-			# END del #
+			# ENDIF #
 			
 			
-			# START edit #			
-			<form action="admin_themes.php?edit=1" method="post" class="fieldset_content">	
+			# IF C_EDIT_THEME #			
+			<form action="admin_themes.php?edit=1&amp;id={IDTHEME}" method="post" class="fieldset_content">	
 				<fieldset> 
-				<legend>{L_THEMES_MANAGEMENT}</legend>
+				<legend>{L_THEME_MANAGEMENT}</legend>
+					<p>{L_THEME} <strong>{THEME_NAME}</strong></p>
 					<dl>
-						<dt><label for="left_column">{L_LEFT_COLUMN}</label><br /><span>{L_LEFT_COLUMN_EXPLAIN}</span></dt>
-						<dd>
-							<label><input type="checkbox" {LEFT_COLUMN_ENABLED} name="left_column" id="left_column" value="1" /></label>
-						</dd>
+						<dt><label for="left_column">{L_LEFT_COLUMN}</label></dt>
+						<dd><label><input type="checkbox" {LEFT_COLUMN_ENABLED} name="left_column" id="left_column" value="1" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="right_column">{L_RIGHT_COLUMN}</label><br /><span>{L_RIGHT_COLUMN_EXPLAIN}</span></dt>
-						<dd>
-							<label><input type="checkbox" {RIGHT_COLUMN_ENABLED} name="right_column" id="right_column" value="1" /></label>
-						</dd>
+						<dt><label for="right_column">{L_RIGHT_COLUMN}</label></dt>
+						<dd><label><input type="checkbox" {RIGHT_COLUMN_ENABLED} name="right_column" id="right_column" value="1" /></label></dd>
 					</dl>
 				</fieldset>
 				<fieldset class="fieldset_submit" style="margin-bottom:0px">
 					<legend>{L_UPDATE}</legend>
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					<input type="submit" name="valid_edit" value="{L_UPDATE}" class="submit" />
 					&nbsp;&nbsp; 
 					<input type="reset" value="{L_RESET}" class="reset" />
 				</fieldset>
 			</form>			
-			# END edit #
+			# ENDIF #
 			
 		</div>

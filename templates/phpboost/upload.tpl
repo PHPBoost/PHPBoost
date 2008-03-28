@@ -324,11 +324,11 @@
 		
 		<tr>	
 			<td class="row2" style="padding:10px 2px;">
-				# START empty_folder #
+				# IF C_EMPTY_FOLDER #
 					<p style="text-align:center;" id="empty_folder">					
-						{empty_folder.EMPTY_FOLDER}					
+						{EMPTY_FOLDER}					
 					</p>
-				# END empty_folder #
+				# ENDIF #
 				
 				# START folder #		
 				<div style="width:210px;height:90px;float:left;margin-top:5px;">

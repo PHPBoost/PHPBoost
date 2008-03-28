@@ -15,7 +15,7 @@
 		</div>
 			
 		<div id="admin_contents">		
-			# START main #
+			# IF C_LANG_MAIN #
 			<form action="admin_lang.php?uninstall=1" method="post">
 				<table class="module_table">
 					<tr> 
@@ -40,14 +40,14 @@
 							<strong>{L_EXPLAIN_DEFAULT_LANG}</strong>
 						</td>
 					</tr>
-					# START main.no_lang #
+					# IF C_NO_LANG_PRESENT #
 					<tr> 
 						<td class="row1" style="text-align:center;">
 							{L_NO_LANG_ON_SERV}
 						</td>
 					</tr>
-					# END main.no_lang #
-					# START main.lang #
+					# ENDIF #
+					# IF C_LANG_PRESENT #
 					<tr>
 						<td class="row2" style="width:120px;text-align:center;">
 							{L_LANG}
@@ -65,22 +65,34 @@
 							{L_UNINSTALL}
 						</td>
 					</tr>
-					# END main.lang #
+					# ENDIF #
 					
 					
-					# START main.list #
+					# START list #
 					<tr> 	
 						<td class="row2" style="text-align:center;">					
-							<img src="../images/stats/countries/{main.list.IDENTIFIER}.png" alt="" class="valign_middle" /> <span id="t{main.list.IDLANG}"><strong>{main.list.LANG}</strong>		
+							<img src="../images/stats/countries/{list.IDENTIFIER}.png" alt="" class="valign_middle" /> <span id="t{list.IDLANG}"><strong>{list.LANG}</strong>		
 						</td>
 						<td class="row2" style="vertical-align:top">	
-							<strong>{L_AUTHOR}:</strong> {main.list.AUTHOR} {main.list.AUTHOR_WEBSITE}<br />
-							<strong>{L_COMPAT}:</strong> PHPBoost {main.list.COMPAT}<br />
+							<strong>{L_AUTHOR}:</strong> {list.AUTHOR} {list.AUTHOR_WEBSITE}<br />
+							<strong>{L_COMPAT}:</strong> PHPBoost {list.COMPAT}<br />
 						</td>
-						# START main.list.not_default #
-						{main.list.not_default.VALUE}
-						# END main.list.not_default #
-						# START main.list.default #
+						# IF list.C_LANG_NOT_DEFAULT #
+						<td class="row2" style="text-align:center;">	
+							<input type="radio" name="{list.IDLANG}activ" value="1" {list.LANG_ACTIV} onchange="document.location = \'admin_lang.php?activ=1&amp;id={list.IDLANG}\'" /> {L_YES}
+							<input type="radio" name="{list.IDLANG}activ" value="0" {list.LANG_UNACTIV} onchange="document.location = \'admin_lang.php?activ=0&amp;id={list.IDLANG}\'" /> {L_NO}
+						</td>
+						<td class="row2" style="text-align:center;">	
+							<select name="{list.IDLANG}secure" onchange="document.location = \'admin_lang.php?secure=\' + this.options[this.selectedIndex].value + \'&amp;id={list.IDLANG}\'">'; 
+								{list.OPTIONS}
+							</select>
+						</td>
+						<td class="row2" style="text-align:center;">
+							<input type="submit" name="{list.IDLANG}" value="{L_UNINSTALL}" class="submit" />
+						</td>
+						# ENDIF #
+						
+						# IF list.C_LANG_DEFAULT #
 						<td class="row2" style="text-align:center;">	
 							{L_YES}
 						</td>
@@ -90,9 +102,9 @@
 						<td class="row2" style="text-align:center;">
 							-
 						</td>
-						# END main.list.default #
+						# ENDIF #
 					</tr>
-					# END main.list #	
+					# END list #	
 					<tr> 
 						<th colspan="5">
 							<noscript>
@@ -103,9 +115,9 @@
 					</tr>	
 				</table>
 			</form>
-			# END main #
+			# ENDIF #
 			
-			# START del #
+			# IF C_DEL_LANG #
 			<form action="admin_lang.php?uninstall=1" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_DEL_LANG}</legend>
@@ -118,9 +130,9 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_DELETE}</legend>
 					<input type="submit" name="valid_del" value="{L_DELETE}" class="submit" />	
-					<input type="hidden" name="idlang" value="{del.IDLANG}" />					
+					<input type="hidden" name="idlang" value="{IDLANG}" />					
 				</fieldset>	
 			</form>
-			# END del #
+			# ENDIF #
 		</div>
 		

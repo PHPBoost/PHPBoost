@@ -349,8 +349,9 @@ else
 
 
 	if( $total_directories == 0 && $total_files == 0 && (!empty($folder) || !empty($show_member)) )
-		$Template->Assign_block_vars('empty_folder', array(
-			'EMPTY_FOLDER' => $LANG['empty_folder']
+		$Template->Assign_vars('empty_folder', array(
+			'C_EMPTY_FOLDER' => true,
+			'L_EMPTY_FOLDER' => $LANG['empty_folder']
 		));
 		
 	$Template->Pparse('admin_files_management');

@@ -327,6 +327,25 @@ class Cache
 		return $config;
 	}
 	
+	//Configuration des thèmes.
+	function generate_file_themes()
+	{
+		global $Sql;
+		
+		$code = 'global $THEME_CONFIG;' . "\n";
+		$result = $Sql->Query_while("SELECT theme, left_column, right_column
+		FROM ".PREFIX."themes	
+		WHERE activ = 1", __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
+		{
+			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'left_column\'] = ' . var_export((bool)$row['left_column'], true) . ';' . "\n";
+			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'right_column\'] = ' . var_export((bool)$row['right_column'], true) . ';' . "\n\n";
+		}			
+		$Sql->Close($result);
+
+		return $code;
+	}
+	
 	//Day
 	function generate_file_day()
 	{
@@ -530,7 +549,7 @@ class Cache
 	
 	## Private Attributes ##
 	//Tableau qui contient tous les fichiers supportés dans cette classe
-    var $files = array('config', 'modules', 'modules_mini', 'day', 'groups', 'debug', 'member', 'files', 'com', 'ranks', 'smileys', 'stats');
+    var $files = array('config', 'modules', 'modules_mini', 'themes', 'day', 'groups', 'debug', 'member', 'files', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>
