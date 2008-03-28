@@ -1573,10 +1573,8 @@ CREATE TABLE IF NOT EXISTS `phpboost_themes` (
 -- Contenu de la table `phpboost_themes`
 --
 
-INSERT INTO `phpboost_themes` (`id`, `theme`, `activ`, `secure`) VALUES
-(1, 'main', 1, -1),
-(2, 'phpboost', 1, -1),
-(3, 'wild', 1, -1);
+INSERT INTO `phpboost_themes` (`id`, `theme`, `activ`, `secure`, `left_column`, `right_column`) VALUES
+(2, 'phpboost', 1, -1, 1, 1),
 
 -- --------------------------------------------------------
 
