@@ -85,6 +85,8 @@ class Cache
 		
 		//Génération de tout les fichiers de cache des modules.
 		$this->generate_all_module_files();
+		
+		$this->Generate_htaccess();
     }
 	
     //Fonction d'enregistrement du fichier.
@@ -173,7 +175,7 @@ class Cache
 			"\n" . 'RewriteRule ^(.*)member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$ ' . DIR . '/member/pm.php?pm=$2&id=$3&p=$4&quote=$5 [L,QSA]';	
 			
 			//Page d'erreur.
-			$htaccess_rules .= "\n\n" . '# Error page #' . "\n" . 'ErrorDocument 404 ' . get_start_page();						
+			$htaccess_rules .= "\n\n" . '# Error page #' . "\n" . 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';						
 
 			//Protection de la bande passante, interdiction d'accès aux fichiers du répertoire upload depuis un autre serveur.
 			global $CONFIG_FILES;
@@ -192,7 +194,7 @@ class Cache
 		}
 		else
 		{
-			$htaccess_rules = 'ErrorDocument 404 ' . get_start_page();
+			$htaccess_rules = 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';	
 
 			//Ecriture du fichier .htaccess
 			$file_path = '../.htaccess';
