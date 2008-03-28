@@ -1564,6 +1564,8 @@ CREATE TABLE IF NOT EXISTS `phpboost_themes` (
   `theme` varchar(50) NOT NULL default '',
   `activ` tinyint(1) NOT NULL default '0',
   `secure` tinyint(1) NOT NULL default '0',
+  `left_column` tinyint(1) NOT NULL default '0',
+  `right_column` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
