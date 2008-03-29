@@ -159,7 +159,8 @@ class ForumInterface extends ModuleInterface
      *  Renvoie la requête de recherche dans le forum
      */
     {
-        global $CONFIG;
+        global $CONFIG, $CAT_FORUM, $Member, $Cache;
+        $Cache->Load_file('forum');
         
         $search = $args['search'];
         $idcat = !empty($args['ForumIdcat']) ? numeric($args['ForumIdcat']) : -1;
@@ -177,9 +178,18 @@ class ForumInterface extends ModuleInterface
 //             PREFIX."wiki_articles
 //         WHERE
 //             MATCH(`title`) AGAINST('".$args['search']."')";
-        
+        $auth_cats = '';
+        if( is_array($CAT_FORUM) )
+        {   
+            foreach($CAT_FORUM as $id => $key)
+            {
+                if( !$Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
+                    $auth_cats .= $id . ',';
+            }
+        }
         $auth_cats = !empty($auth_cats) ? " AND c1.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
-        
+
+        echo '<pre>'.$auth_cats.'</pre>';
         
         if ( $args['ForumWhere'] == 'all' )         // All
             return "SELECT ".
@@ -189,11 +199,9 @@ class ForumInterface extends ModuleInterface
                 ( 4 * MATCH(t.title) AGAINST('".$search."') + MATCH(msg.contents) AGAINST('".$search."') ) / 5 AS `relevance`,
                 CONCAT(CONCAT(CONCAT('../forum/topic.php?id=',t.id),'#'),msg.id)  AS `link`
             FROM ".PREFIX."forum_msg msg
-            LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '".(time() - $CONFIG['site_session_invit'])."' AND s.user_id != -1
-            LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
-            JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
+            JOIN ".PREFIX."forum_cats c ON c.level != 0
             WHERE ( MATCH(t.title) AGAINST('".$search."') OR MATCH(msg.contents) AGAINST('".$search."') ) AND msg.timestamp > '".(time() - $time)."'
             ".(!empty($idcat) ? " AND t.idcat = '".$idcat."'" : '').$auth_cats."
             GROUP BY msg.id
@@ -207,8 +215,6 @@ class ForumInterface extends ModuleInterface
                 MATCH(msg.contents) AGAINST('".$search."') AS `relevance`,
                 CONCAT(CONCAT(CONCAT('../forum/topic.php?id=',t.id),'#'),msg.id) AS `link`
             FROM ".PREFIX."forum_msg msg
-            LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '".(time() - $CONFIG['site_session_invit'])."' AND s.user_id != -1
-            LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
