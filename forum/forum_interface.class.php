@@ -97,31 +97,21 @@ class ForumInterface extends ModuleInterface
             <dd><label>
                 <select name="ForumIdcat" id="idcat" class="search_field">';
         
-        forum_list_cat();
-        $auth_cats = '';
+        $selected = ($idcat == '-1') ? ' selected="selected"' : '';
+        $form .= '<option value="-1"' . $selected . '>' . $LANG['all'] . '</option>';
         if( is_array($CAT_FORUM) )
         {
             foreach($CAT_FORUM as $id => $key)
             {
-                if( !$Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
-                    $auth_cats .= $id . ',';
+                if( $Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
+                {
+                    $margin = ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----';
+                    $selected = ($id == $idcat) ? ' selected="selected"' : '';
+                    $form .= '<option value="'.$id.'"'.$selected.'>'.$margin.' '.$key['name'].'</option>';
+                }
             }
         }
-        $auth_cats_select = !empty($auth_cats) ? " AND id NOT IN (" . trim($auth_cats, ',') . ")" : '';
         
-        $selected = ($idcat == '-1') ? ' selected="selected"' : '';
-        $form .= '<option value="-1"' . $selected . '>' . $LANG['all'] . '</option>';
-        $result = $Sql->Query_while("SELECT id, name, level
-        FROM ".PREFIX."forum_cats 
-        WHERE aprob = 1 " . $auth_cats_select . "
-        ORDER BY id_left", __LINE__, __FILE__);
-        while( $row = $Sql->Sql_fetch_assoc($result) )
-        {
-            $margin = ($row['level'] > 0) ? str_repeat('----------', $row['level']) : '----';
-            $selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
-            $form .= '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
-        }
-        $Sql->Close($result);
         $form .= '
                 </select>
             </label></dd>
@@ -178,18 +168,18 @@ class ForumInterface extends ModuleInterface
 //             PREFIX."wiki_articles
 //         WHERE
 //             MATCH(`title`) AGAINST('".$args['search']."')";
+        
         $auth_cats = '';
         if( is_array($CAT_FORUM) )
-        {   
+        {
             foreach($CAT_FORUM as $id => $key)
             {
+                echo $Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM).',';
                 if( !$Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
-                    $auth_cats .= $id . ',';
+                    $auth_cats .= $id.',';
             }
         }
         $auth_cats = !empty($auth_cats) ? " AND c1.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
-
-        echo '<pre>'.$auth_cats.'</pre>';
         
         if ( $args['ForumWhere'] == 'all' )         // All
             return "SELECT ".
@@ -242,5 +232,5 @@ class ForumInterface extends ModuleInterface
             ORDER BY relevance DESC";
     }
 }
- 
+
 ?>

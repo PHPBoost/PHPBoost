@@ -95,7 +95,7 @@ if( is_array($CAT_FORUM) )
 }
 $auth_cats_select = !empty($auth_cats) ? " AND id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 
-$selected = ($idcat == '-1') ? ' selected="selected"' : '';	
+$selected = ($idcat == '-1') ? ' selected="selected"' : '';
 $Template->Assign_block_vars('cat', array(
 	'CAT' => '<option value="-1"' . $selected . '>' . $LANG['all'] . '</option>'
 ));	
@@ -106,7 +106,7 @@ ORDER BY id_left", __LINE__, __FILE__);
 while( $row = $Sql->Sql_fetch_assoc($result) )
 {	
 	$margin = ($row['level'] > 0) ? str_repeat('----------', $row['level']) : '----';
-	$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';	
+	$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
 	$Template->Assign_block_vars('cat', array(
 		'CAT' => '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>'
 	));	
