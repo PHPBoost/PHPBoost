@@ -61,25 +61,25 @@
 					<tr>
 						<td colspan="{COLSPAN}" style="border:1px solid black;background:#CCFF99">
 							# START mod_subheader #
-							<div style="margin:15px;width:auto" class="module_position">					
-								<div class="module_top_l"></div>		
+							<div style="margin:15px;width:auto" class="module_position">
+								<div class="module_top_l"></div>
 								<div class="module_top_r"></div>
 								<div class="module_top">
-									<strong><span id="m{mod_subheader.IDMENU}"></span><h5 class="sub_title">{mod_subheader.NAME} {mod_subheader.EDIT}{mod_subheader.DEL}</h5></strong>
+									<strong><span id="m{mod_subheader.IDMENU}"></span></strong><h5 class="sub_title">{mod_subheader.NAME} {mod_subheader.EDIT}{mod_subheader.DEL}</h5>
 								</div>
 									
 								<div class="module_contents">
 									<p>
-										<select name="{mod_subheader.IDMENU}activ" onchange="document.location = {mod_subheader.U_ONCHANGE_ACTIV}">								
+										<select name="{mod_subheader.IDMENU}activ" onchange="document.location = {mod_subheader.U_ONCHANGE_ACTIV}">
 											<option value="1" {mod_subheader.ACTIV_ENABLED}>{L_ACTIV}</option>
-											<option value="0" {mod_subheader.ACTIV_DISABLED}>{L_UNACTIV}</option>					
+											<option value="0" {mod_subheader.ACTIV_DISABLED}>{L_UNACTIV}</option>
 										</select>
 									</p>
-									<p>							
-										<select name="{mod_subheader.IDMENU}secure" onchange="document.location = {mod_subheader.U_ONCHANGE_SECURE}">								
+									<p>
+										<select name="{mod_subheader.IDMENU}secure" onchange="document.location = {mod_subheader.U_ONCHANGE_SECURE}">
 											{mod_subheader.RANK}
-										</select>							
-									</p>						
+										</select>
+									</p>
 									<div style="width:100px;height:30px;">
 										<div style="float:left">
 											{mod_subheader.UP}
@@ -99,13 +99,13 @@
 										</div>
 										<a href="javascript:menu_display_block('menu{mod_subheader.IDMENU}');" onmouseover="menu_hide_block('menu{mod_subheader.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_subheader.IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
 									</div>
-									<p>{mod_subheader.CONTENTS}</p>&nbsp;
+									<div>{mod_subheader.CONTENTS}</div>&nbsp;
 								</div>
-								<div class="module_bottom_l"></div>		
+								<div class="module_bottom_l">coucou</div>
 								<div class="module_bottom_r"></div>
 								<div class="module_bottom"></div>
 							</div>
-							# END mod_subheader #	
+							# END mod_subheader #
 						</td>
 					</tr>
 					<tr>				
@@ -201,7 +201,7 @@
 										</div>
 										<p>{mod_topcentral.CONTENTS}</p>&nbsp;
 									</div>
-									<div class="module_bottom_l"></div>		
+									<div class="module_bottom_l"></div>
 									<div class="module_bottom_r"></div>
 									<div class="module_bottom"></div>
 								</div>
