@@ -99,7 +99,8 @@
 										</div>
 										<a href="javascript:menu_display_block('menu{mod_subheader.IDMENU}');" onmouseover="menu_hide_block('menu{mod_subheader.IDMENU}', 1);" onmouseout="menu_hide_block('menu{mod_subheader.IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/move.png" alt="" /></a>
 									</div>
-									<div>{mod_subheader.CONTENTS}</div><br /><br />
+									<p>{mod_subheader.CONTENTS}</p>
+									<br /><br />
 								</div>
 								<div class="module_bottom_l"></div>
 								<div class="module_bottom_r"></div>
