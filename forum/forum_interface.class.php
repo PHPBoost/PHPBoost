@@ -174,7 +174,6 @@ class ForumInterface extends ModuleInterface
         {
             foreach($CAT_FORUM as $id => $key)
             {
-                echo $Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM).',';
                 if( !$Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
                     $auth_cats .= $id.',';
             }
@@ -192,8 +191,8 @@ class ForumInterface extends ModuleInterface
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
             JOIN ".PREFIX."forum_cats c ON c.level != 0
-            WHERE ( MATCH(t.title) AGAINST('".$search."') OR MATCH(msg.contents) AGAINST('".$search."') ) AND msg.timestamp > '".(time() - $time)."'
-            ".(!empty($idcat) ? " AND t.idcat = '".$idcat."'" : '').$auth_cats."
+            WHERE ( MATCH(t.title) AGAINST('".$search."') OR MATCH(msg.contents) AGAINST('".$search."') )
+            ".($idcat != -1 ? " AND t.idcat = '".$idcat."'" : '')." ".$auth_cats."
             GROUP BY msg.id
             ORDER BY relevance DESC";
         
@@ -208,8 +207,8 @@ class ForumInterface extends ModuleInterface
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
-            WHERE MATCH(msg.contents) AGAINST('".$search."') AND msg.timestamp > '".(time() - $time)."'
-            ".(!empty($idcat) ? " AND t.idcat = '".$idcat."'" : '').$auth_cats."
+            WHERE MATCH(msg.contents) AGAINST('".$search."')
+            ".($idcat != -1 ? " AND t.idcat = '".$idcat."'" : '')." ".$auth_cats."
             GROUP BY t.id
             ORDER BY relevance DESC";
         
@@ -226,8 +225,8 @@ class ForumInterface extends ModuleInterface
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
-            WHERE MATCH(t.title) AGAINST('".$search."') AND msg.timestamp > '".(time() - $time)."'
-            ".(!empty($idcat) ? " AND t.idcat = '".$idcat."'" : '').$auth_cats."
+            WHERE MATCH(t.title) AGAINST('".$search."')
+            ".($idcat != -1 ? " AND t.idcat = '".$idcat."'" : '')." ".$auth_cats."
             GROUP BY t.id
             ORDER BY relevance DESC";
     }
