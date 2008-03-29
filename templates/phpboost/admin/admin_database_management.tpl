@@ -73,7 +73,7 @@
 					</tr>
 					<tr style="text-align:center;">			
 						<td class="row3" style="width:140px;">
-							{L_SELECTED_TABLES} <br />(<input type="checkbox" onClick="check_all(this.checked, 'id');" class="valign_middle" /> {L_ALL})
+							{L_SELECTED_TABLES} <br />(<input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign_middle" /> {L_ALL})
 						</td>
 						<td class="row3">
 							{L_TABLE_NAME}
@@ -121,7 +121,7 @@
 					# END index.table_list #
 					<tr style="text-align:center;"> 
 						<td class="row3">
-							( <input type="checkbox" onClick="check_all(this.checked, 'id');" class="valign_middle" /> {L_ALL})
+							( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign_middle" /> {L_ALL})
 						</td>
 						<td class="row3">
 							<strong>{NBR_TABLES}</strong>

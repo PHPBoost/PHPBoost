@@ -1,9 +1,6 @@
 		<div id="sub_header">
-			<div id="sub_header_left">				
-			</div>
-			<div id="sub_header_right">
-			</div>		
-			
+			<div id="sub_header_left"></div>
+			<div id="sub_header_right"></div>
 			<div class="dynamic_menu" style="padding-top:9px;">
 				<ul>
 					<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
@@ -165,8 +162,10 @@
 				</ul>
 			</div>
 			<div style="float:right;margin-top:4px;">
-				<a href="../admin/admin_extend.php" style="text-decoration:none;color:#FFFFFF;"><img src="../templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> {L_EXTEND_MENU}</a></a>
-			</div>	
+				<a href="../admin/admin_extend.php" style="text-decoration:none;color:#FFFFFF;">
+                    <img src="../templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> {L_EXTEND_MENU}
+                </a>
+			</div>
 		</div>
 			
 		<div id="admin_main">

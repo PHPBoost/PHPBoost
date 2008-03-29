@@ -6,7 +6,7 @@
 			</tr>
 			<tr style="text-align:center;">
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?site=1#stats"><img src="../templates/{THEME}/images/stats/site.png" alt="" /></a></a>
+					<a href="admin_stats.php?site=1#stats"><img src="../templates/{THEME}/images/stats/site.png" alt="" /></a>
 					<br /><a href="admin_stats.php?site=1#stats">{L_SITE}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
@@ -317,7 +317,7 @@
 				   xhr_object = new XMLHttpRequest();
 				else if(window.ActiveXObject) // Internet Explorer
 				   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
-				else // XMLHttpRequest non supporté par le navigateur
+				else // XMLHttpRequest non supportï¿½ par le navigateur
 					return;
 				
 				document.getElementById('load' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
@@ -601,7 +601,7 @@
 			</tr>
 			<tr>
 				<td class="row3" style="text-align:center;">
-					N°
+					Nï¿½
 				</td>
 				<td class="row3" style="text-align:center;">
 					{L_PSEUDO}

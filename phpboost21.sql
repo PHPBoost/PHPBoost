@@ -1574,7 +1574,7 @@ CREATE TABLE IF NOT EXISTS `phpboost_themes` (
 --
 
 INSERT INTO `phpboost_themes` (`id`, `theme`, `activ`, `secure`, `left_column`, `right_column`) VALUES
-(2, 'phpboost', 1, -1, 1, 1),
+(2, 'phpboost', 1, -1, 1, 1);
 
 -- --------------------------------------------------------
 
