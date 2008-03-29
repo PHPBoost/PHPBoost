@@ -122,17 +122,16 @@ if( !empty($valid_search) && !empty($search) )
 	
 	if( strlen($search) >= 4 )
 	{
-		$auth_cats = !empty($auth_cats) ? " AND c1.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
+		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 		
 		$req_msg = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(msg.contents) AGAINST('" . $search . "') AS relevance, 0 AS relevance2
 		FROM ".PREFIX."forum_msg msg
 		LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 		LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
 		JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-		JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
-		JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
+		JOIN ".PREFIX."forum_cats c ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
 		WHERE MATCH(msg.contents) AGAINST('" . $search . "') AND msg.timestamp > '" . (time() - $time) . "'
-		" . (!empty($idcat) ? " AND t.idcat = '" . $idcat . "'" : '') . $auth_cats . "
+		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY msg.id
 		ORDER BY relevance DESC
 		" . $Sql->Sql_limit(0, 24);
@@ -142,10 +141,9 @@ if( !empty($valid_search) && !empty($search) )
 		LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 		LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
 		JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-		JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
-		JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
+		JOIN ".PREFIX."forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
 		WHERE MATCH(t.title) AGAINST('" . $search . "') AND msg.timestamp > '" . (time() - $time) . "'
-		" . (!empty($idcat) ? " AND t.idcat = '" . $idcat . "'" : '') . $auth_cats . "
+		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY t.id
 		ORDER BY relevance DESC
 		" . $Sql->Sql_limit(0, 24);
@@ -155,10 +153,9 @@ if( !empty($valid_search) && !empty($search) )
 		LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 		LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
 		JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-		JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
-		JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
+		JOIN ".PREFIX."forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
 		WHERE (MATCH(t.title) AGAINST('" . $search . "') OR MATCH(msg.contents) AGAINST('" . $search . "')) AND msg.timestamp > '" . (time() - $time) . "'
-		" . (!empty($idcat) ? " AND t.idcat = '" . $idcat . "'" : '') . $auth_cats . "
+		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY t.id
 		ORDER BY relevance DESC
 		" . $Sql->Sql_limit(0, 24);
