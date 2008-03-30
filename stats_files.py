@@ -5,8 +5,8 @@ import os, sys
 
 def recurse(current_path, parent_path='', recursive=False):
     """
-    Execute la commande spécifiée avant ou après avoir parcourus les
-    sous répertoires suivant l'option de parcours 'order'
+    Count the number of folders, files and lines in the current folder
+    Could be recursive
     """
     nbFolders = 0
     nbFiles = 0
@@ -41,8 +41,7 @@ def recurse(current_path, parent_path='', recursive=False):
 
 def init(path='', args=[]):
     """
-    Initialise la récursion en préparant la commande ainsi que l'ordre
-    d'exécution du parcours.
+    Initialize the recurse script with arguments and print the results
     """
     args = args[1:]
     go_recursive = False
