@@ -191,14 +191,14 @@ else
 		'xmlhttprequest_file' => 'xmlhttprequest_cats.php',
 		'administration_file_name' => 'admin_faq_cats.php',
 		'url' => array(
-			'unrewrited' => '../faq/faq.php?id=%d',
-			'rewrited' => '../faq/faq-%d+%s.php'),
+			'unrewrited' => 'faq.php?id=%d',
+			'rewrited' => 'faq-%d+%s.php'),
 		);
 		
 	$faq_categories->Set_displaying_configuration($cat_config);
 	
 	$Template->Assign_block_vars('categories_management', array(
-		'CATEGORIES' => $faq_categories->Build_administration_list()
+		'CATEGORIES' => $faq_categories->Build_categories_administration_interface()
 	));
 	
 	$Template->Assign_vars(array(

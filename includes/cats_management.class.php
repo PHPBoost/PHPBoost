@@ -335,7 +335,7 @@ class Categories_management
 
 	//Method which builds the list of categories and links to makes operations to administrate them (delete, move, add...), it's return string is ready to be displayed
 	//This method doesn't allow you tu use templates, it's not so important because you are in the administration panel
-	function Build_administration_list($ajax_mode = true)
+	function Build_categories_administration_interface($ajax_mode = true)
 	{
 		global $CONFIG, $LANG;
 		$this->clean_error();
@@ -517,6 +517,10 @@ class Categories_management
 				
 				//We call the function for its daughter categories
 				$this->create_cat_administration($string, $id, $level + 1, $ajax_mode);
+				
+				//Loop interruption : if we have finished the current category we can stop looping, other keys aren't interesting in this function
+				if( $i + 1 < $num_cats && $this->cache_var[$id_categories[$i + 1]]['id_parent'] != $id_cat )
+					break;
 			}
 		}
 	}
@@ -525,6 +529,8 @@ class Categories_management
 	function create_select_row(&$string, $id_cat, $level, $selected_id, $current_id_cat, $num_auth, $general_auth)
 	{
 		global $Member;
+		//Boolean variable which is true when we can stop the loop
+		$end_of_category = false;
 		foreach( $this->cache_var as $id => $value )
 		{
 			if( $id != 0 && $id != $current_id_cat && $value['id_parent'] == $id_cat )
@@ -534,20 +540,31 @@ class Categories_management
 					$string .= '<option value="' . $id . '"' . ($id == $selected_id ? ' selected="selected"' : '') . '>' . str_repeat('--', $level) . ' ' . $value['name'] . '</option>';
 					$this->create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $num_auth, $general_auth);
 				}
+				if( !$end_of_category )
+					$end_of_category = true;
 			}
+			elseif( $end_of_category )
+				break;
 		}
 	}
 	
 	//Recursive method which builds the list of all chlidren of one category
 	function build_children_id_list($category_id, &$list)
 	{
+		//Boolean variable which is true when we can stop the loop : optimization
+		$end_of_category = false;
 		foreach( $this->cache_var as $id => $value )
 		{
 			if( $id != 0 && $value['id_parent'] == $category_id )
 			{
 				$list[] = $id;
 				$this->build_children_id_list($id, $list);
+				
+				if( !$end_of_category )
+					$end_of_category = true;
 			}
+			elseif( $end_of_category )
+				break;
 		}
 	}
 	

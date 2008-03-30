@@ -52,15 +52,15 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 			'xmlhttprequest_file' => 'xmlhttprequest_cats.php',
 			'administration_file_name' => 'admin_faq_cats.php',
 			'url' => array(
-				'unrewrited' => '../faq/faq.php?id=%d',
-				'rewrited' => '../faq/faq-%d+%s.php'),
-			);
+				'unrewrited' => 'faq.php?id=%d',
+				'rewrited' => 'faq-%d+%s.php')
+		);
 		
 		$faq_categories->Set_displaying_configuration($cat_config);
 		
 		$Cache->Load_file('faq', RELOAD_CACHE);
 	
-		echo $faq_categories->Build_administration_list(AJAX_MODE);
+		echo $faq_categories->Build_categories_administration_interface(AJAX_MODE);
 	}
 }
 include_once('../includes/footer_no_display.php');
