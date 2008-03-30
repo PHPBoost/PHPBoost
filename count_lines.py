@@ -9,7 +9,10 @@ def recurse(current_path, parent_path='', recursive=False):
     sous répertoires suivant l'option de parcours 'order'
     """
     nbLines = 0
-    current_path = (parent_path + "/" + current_path).replace('//', '/')
+    if sys.platform == 'win32':
+        current_path = (parent_path + '\\' + current_path).replace('\\\\', '\\')
+    else:
+        current_path = (parent_path + '/' + current_path).replace('//', '/')
     os.chdir(current_path)
     
     list_items = os.listdir(current_path)
