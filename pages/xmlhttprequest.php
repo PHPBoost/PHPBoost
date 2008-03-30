@@ -13,10 +13,14 @@ $display_select_link = !empty($_GET['display_select_link']) ? 1 : 0;
 $open_cat = !empty($_POST['open_cat']) ? numeric($_POST['open_cat']) : 0;
 $root = !empty($_GET['root']) ? 1 : 0;
 
+//Chargement d'un fichier template pour connaître l'emplacement du template
+include_once('../includes/template.class.php');
+$Template = new Templates();
+$Template->Set_filenames(array('pages' => '../templates/' . $CONFIG['theme'] . '/pages/pages.tpl'));
 
 //Listage des répertoires dont le répertoire parent est connu
 if( $id_cat != 0 )
-{
+{	
 	echo '<ul style="margin:0;padding:0;list-style-type:none;padding-left:30px;">';
 	//On sélectionne les répetoires dont l'id parent est connu
 	$result = $Sql->Query_while("SELECT c.id, p.title, p.encoded_title, p.auth
