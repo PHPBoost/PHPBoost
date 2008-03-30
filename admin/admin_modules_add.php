@@ -68,8 +68,6 @@ if( $install ) //Installation du module
 			
 		//Insertion de la configuration du module.
 		$config = get_ini_config('../' . $module_name . '/lang/', $CONFIG['lang']); //Récupération des infos de config.
-//         echo '<pre>>'.'../' . $module_name . '/lang/', $CONFIG['lang'].'>'.$config.'<</pre>';
-//         exit (0);
 		if( !empty($config) )
 		{	
 			$config = trim(str_replace('config=', '', $config), '"');
