@@ -127,7 +127,7 @@ function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
         if ( !$module->HasFunctionnality('ParseSearchResult') )
         {
             $htmlResults .= '<div class="result">';
-            $htmlResults .= '<span><i>'.$result['relevance'].'</i></span> - ';
+//             $htmlResults .= '<span><i>'.$result['relevance'].'</i></span> - ';
             $htmlResults .= '<span><b>'.ucfirst($result['module']).'</b></span> - ';
             $htmlResults .= '<a href="'.transid($result['link']).'">'.$result['title'].'</a>';
             $htmlResults .= '</div>';
