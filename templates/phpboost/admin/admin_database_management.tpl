@@ -263,8 +263,7 @@
 						</tr>
 						<tr>
 							<td class="row1" style="text-align:center;">
-								<span id="query">&nbsp;</span>
-								<textarea class="post" style="width:40%; height: 150px;" name="query">{QUERY}</textarea>
+								<textarea class="post" style="width:99%; height: 150px;" name="query">{QUERY}</textarea>
 							</td>
 						</tr>
 					</table>
