@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                               admin_modules_management.php
+ *                               admin_modules_add.php
  *                            -------------------
  *   begin                : January 31, 2007
- *   copyright          : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   copyright            : (C) 2007 Régis Viarre, Loïc Rouchon
+ *   email                : crowkait@phpboost.com, horn@phpboost.com
  *
  *
 ###################################################
@@ -68,6 +68,8 @@ if( $install ) //Installation du module
 			
 		//Insertion de la configuration du module.
 		$config = get_ini_config('../' . $module_name . '/lang/', $CONFIG['lang']); //Récupération des infos de config.
+//         echo '<pre>>'.'../' . $module_name . '/lang/', $CONFIG['lang'].'>'.$config.'<</pre>';
+//         exit (0);
 		if( !empty($config) )
 		{	
 			$config = trim(str_replace('config=', '', $config), '"');
