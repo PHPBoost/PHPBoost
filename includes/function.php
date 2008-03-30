@@ -423,6 +423,8 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	if( $timezone != 0 )
 		$timestamp += $timezone * 3600;
 	
+	$timestamp += date('I') * 3600;  //On ajoute l'heure d'été.
+	
 	return date($format, $timestamp);
 }
 		

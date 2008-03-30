@@ -54,6 +54,7 @@ a:hover .news_title {
 	height:1%;
 	border-left:1px solid #335B87;
 	border-right:1px solid #335B87;
+	text-align:justify;
 }
 /* Barre inférieure des news */
 .news_bottom_l{

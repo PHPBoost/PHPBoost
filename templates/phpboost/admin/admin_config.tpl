@@ -41,12 +41,6 @@
 				
 			<script type="text/javascript">
 			<!--	
-			function change_img_theme(id, value)
-			{
-				if(document.images )
-					document.images[id].src = "../templates/" + value + "/images/theme.jpg";
-			}
-			
 			var array_identifier = new Array();
 			{JS_LANG_IDENTIFIER}
 			function change_img_lang(id, lang)
@@ -85,7 +79,7 @@
 					<dl>
 						<dt><label for="default_theme">* {L_DEFAULT_THEME}</label></dt>
 						<dd><label>
-							<select name="theme" id="default_theme" onChange="change_img_theme('img_theme', this.options[selectedIndex].value)">						
+							<select name="theme" id="default_theme" onchange="change_img_path('img_theme', '../templates/' + this.options[selectedIndex].value + '/images/theme.jpg');">
 							# START select #				
 								{select.THEME}				
 							# END select #				

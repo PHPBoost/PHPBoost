@@ -114,6 +114,7 @@ $Template->Assign_vars(array(
 	'SITE_DESCRIPTION' => $CONFIG['site_desc'],
 	'SITE_KEYWORD' => $CONFIG['site_keyword'],
 	'THEME' => $CONFIG['theme'],
+	'LANG' => $CONFIG['lang'],
 	'ALTERNATIVE_CSS' => $alternative_css,
 	'C_MEMBER_CONNECTED' => $member_connected ? true : false,
 	'C_MEMBER_NOTCONNECTED' => $member_connected ? false : true,

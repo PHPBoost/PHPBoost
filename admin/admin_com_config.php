@@ -60,15 +60,46 @@ else
 	
 	$Cache->Load_file('com');
 	
+	$CONFIG['com_popup'] = isset($CONFIG['com_popup']) ? $CONFIG['com_popup'] : 0; //Affichage des commentaires
+	
+	//Rang d'autorisation.
+	$CONFIG_COM['com_auth'] = isset($CONFIG_COM['com_auth']) ? $CONFIG_COM['com_auth'] : '-1';	
+	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
+	$options = '';
+	for($i = -1 ; $i <= 2 ; $i++)
+	{
+		$selected = ($CONFIG_COM['com_auth'] == $i) ? 'selected="selected"' : '' ;
+		$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
+	}
+	
 	//Balises interdites => valeur 1.
-	$array_tags = array('b' => 0, 'i' => 0, 'u' => 0, 's' => 0,	'title' => 0, 'stitle' => 0, 'style' => 0, 'url' => 0, 
+	$array_unauth_tags = array('b' => 0, 'i' => 0, 'u' => 0, 's' => 0,	'title' => 0, 'stitle' => 0, 'style' => 0, 'url' => 0, 
 	'img' => 0, 'quote' => 0, 'hide' => 0, 'list' => 0, 'color' => 0, 'bgcolor' => 0, 'font' => 0, 'size' => 0, 'align' => 0, 'float' => 0, 'sup' => 0, 
 	'sub' => 0, 'indent' => 0, 'pre' => 0, 'table' => 0, 'swf' => 0, 'movie' => 0, 'sound' => 0, 'code' => 0, 'math' => 0, 'anchor' => 0, 'acronym' => 0);
+	$j = 0;
+	$forbidden_tags = '';
+	foreach($array_unauth_tags as $name => $is_selected)
+	{
+		if( isset($CONFIG_COM['forbidden_tags']) )
+		{	
+			if( in_array($name, $CONFIG_COM['forbidden_tags']) )
+				$selected = 'selected="selected"';
+		}
+		else
+			$selected = ($is_selected) ? 'selected="selected"' : '';
+			
+		$forbidden_tags .= '<option id="tag' . $j . '" value="' . $name . '" ' . $selected . '>[' . $name . ']</option>';
+		$j++;
+	}	
 	
 	$Template->Assign_vars(array(
-		'NBR_TAGS' => count($array_tags),
+		'NBR_TAGS' => $j,
+		'OPTIONS_RANK' =>  $options,
 		'COM_MAX' => !empty($CONFIG_COM['com_max']) ? $CONFIG_COM['com_max'] : '10',
 		'MAX_LINK' => isset($CONFIG_COM['max_link']) ? $CONFIG_COM['max_link'] : '-1',
+		'COM_ENABLED' => ($CONFIG['com_popup'] == 0) ? 'checked="checked"' : '',
+		'COM_DISABLED' => ($CONFIG['com_popup'] == 1) ? 'checked="checked"' : '',
+		'FORBIDDEN_TAGS' => $forbidden_tags,
 		'L_REQUIRE' => $LANG['require'],	
 		'L_COM' => $LANG['com'],
 		'L_COM_MANAGEMENT' => $LANG['com_management'],
@@ -87,66 +118,6 @@ else
 		'L_MAX_LINK' => $LANG['max_link'],
 		'L_MAX_LINK_EXPLAIN' => $LANG['max_link_explain']
 	));
-		
-	$CONFIG_COM['com_auth'] = isset($CONFIG_COM['com_auth']) ? $CONFIG_COM['com_auth'] : '-1';	
-	//Rang d'autorisation.
-	for($i = -1; $i <= 2; $i++)
-	{
-		switch($i) 
-		{	
-			case -1:
-				$rank = $LANG['guest'];
-			break;				
-			case 0:
-				$rank = $LANG['member'];
-			break;				
-			case 1: 
-				$rank = $LANG['modo'];
-			break;		
-			case 2:
-				$rank = $LANG['admin'];
-			break;					
-			default: -1;
-		} 
-
-		$selected = ($CONFIG_COM['com_auth'] == $i) ? 'selected="selected"' : '' ;
-		$Template->Assign_block_vars('select_auth', array(
-			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
-		));
-	}
-	
-	#####################Affichage des commentaires##################
-	$CONFIG['com_popup'] = isset($CONFIG['com_popup']) ? $CONFIG['com_popup'] : 0;
-	if( $CONFIG['com_popup'] == 0 )
-	{
-		$Template->Assign_vars(array(
-			'COM_ENABLED' => 'checked="checked"'
-		));
-	}
-	elseif( $CONFIG['com_popup'] == 1 )				
-	{
-		$Template->Assign_vars(array(
-			'COM_DISABLED' => 'checked="checked"'
-		));
-	} 
-
-	//Balises interdites
-	$i = 0;
-	foreach($array_tags as $name => $is_selected)
-	{
-		if( isset($CONFIG_COM['forbidden_tags']) )
-		{	
-			if( in_array($name, $CONFIG_COM['forbidden_tags']) )
-				$selected = 'selected="selected"';
-		}
-		else
-			$selected = ($is_selected) ? 'selected="selected"' : '';
-			
-		$Template->Assign_block_vars('forbidden_tags', array(
-			'TAGS' => '<option id="tag' . $i . '" value="' . $name . '" ' . $selected . '>[' . $name . ']</option>'
-		));
-		$i++;
-	}	
 	
 	$Template->Pparse('admin_com_config'); // traitement du modele	
 }
