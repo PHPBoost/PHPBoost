@@ -249,7 +249,7 @@
 
 			# START query #
 
-				<form action="admin_database.php?query=1#query" method="post">
+				<form action="admin_database.php?query=1#executed_query" method="post">
 					<table class="module_table">
 						<tr>
 							<th style="text-align:center;">
@@ -284,8 +284,8 @@
 						</th>
 					</tr>
 					<tr>
-						<td class="row2">				
-							<fieldset style="background-color:white;">
+						<td class="row2">
+							<fieldset style="background-color:white;" name="executed_query">
 								<legend><strong>{L_EXECUTED_QUERY}:</strong></legend>
 								<div style="color:black;font-size:10px;">{query.select_result.QUERY}</div>
 								<br />

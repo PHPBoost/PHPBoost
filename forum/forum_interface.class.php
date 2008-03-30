@@ -180,10 +180,9 @@ class ForumInterface extends ModuleInterface
                 CONCAT(CONCAT(CONCAT('../forum/topic.php?id=',t.id),'#'),msg.id)  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-            JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
-            JOIN ".PREFIX."forum_cats c ON c.level != 0
+            JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
             WHERE ( MATCH(t.title) AGAINST('".$search."') OR MATCH(msg.contents) AGAINST('".$search."') )
-            ".($idcat != -1 ? " AND t.idcat = '".$idcat."'" : '')." ".$auth_cats."
+            ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." ".$auth_cats."
             GROUP BY msg.id
             ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
         
@@ -196,10 +195,9 @@ class ForumInterface extends ModuleInterface
                 CONCAT(CONCAT(CONCAT('../forum/topic.php?id=',t.id),'#'),msg.id) AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-            JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
-            JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
+            JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
             WHERE MATCH(msg.contents) AGAINST('".$search."')
-            ".($idcat != -1 ? " AND t.idcat = '".$idcat."'" : '')." ".$auth_cats."
+            ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." ".$auth_cats."
             GROUP BY t.id
             ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
         
@@ -211,13 +209,10 @@ class ForumInterface extends ModuleInterface
                 MATCH(t.title) AGAINST('".$search."') AS `relevance`,
                 CONCAT(CONCAT(CONCAT('../forum/topic.php?id=',t.id),'#'),msg.id) AS `link`
             FROM ".PREFIX."forum_msg msg
-            LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '".(time() - $CONFIG['site_session_invit'])."' AND s.user_id != -1
-            LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-            JOIN ".PREFIX."forum_cats c1 ON c1.id = t.idcat
-            JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1
+            JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
             WHERE MATCH(t.title) AGAINST('".$search."')
-            ".($idcat != -1 ? " AND t.idcat = '".$idcat."'" : '')." ".$auth_cats."
+            ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." ".$auth_cats."
             GROUP BY t.id
             ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
     }
