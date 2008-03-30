@@ -1,6 +1,6 @@
         <script type="text/javascript">
         <!--
-            const FORM = 'Form';
+            const FORM = 'form_';
             var modulesForms = new Array();
             # START forms #
                 modulesForms.push("{forms.MODULE_NAME}");
@@ -21,7 +21,7 @@
                         listModules += '<option value="' + selModOptions[i].value + '">' + selModOptions[i].text + '</option>';
                 }
                 
-                document.getElementById('FormsSelection').innerHTML = listModules;
+                document.getElementById('forms_selection').innerHTML = listModules;
                 
                 if ( changeF )
                     ChangeForm();
@@ -33,12 +33,12 @@
                 HideAdvancedSearchForms();
                 
                 document.getElementById('searched_modules_DL').style.display = 'block';
-                document.getElementById('FormsSelection_DL').style.display = 'block';
+                document.getElementById('forms_selection_DL').style.display = 'block';
                 
-                hide_div('AdvancedSearch');
-                show_div('SimpleSearch');
+                hide_div('advanced_search');
+                show_div('simple_search');
                 
-                show_div(FORM + document.getElementById('FormsSelection').value);
+                show_div(FORM + document.getElementById('forms_selection').value);
             }
             
             function HideAdvancedSearchForms()
@@ -47,9 +47,9 @@
                 HideForms();
                 
                 document.getElementById('searched_modules_DL').style.display = 'none';
-                document.getElementById('FormsSelection_DL').style.display = 'none';
-                hide_div('SimpleSearch');
-                show_div('AdvancedSearch');
+                document.getElementById('forms_selection_DL').style.display = 'none';
+                hide_div('simple_search');
+                show_div('advanced_search');
             }
             
             function HideForms()
@@ -65,7 +65,7 @@
             // Change le cadre des résultats
             {
                 HideForms();
-                var module = document.getElementById('FormsSelection').value;
+                var module = document.getElementById('forms_selection').value;
                 show_div(FORM + module);
             }
             
@@ -94,7 +94,7 @@
             <div class="module_top">{L_TITLE_SEARCH}</div>
             <div class="module_contents">
                 <div class="spacer">&nbsp;</div>
-                <form id="SearchForm" action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
+                <form id="search_form" action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
                     <fieldset class="SearchForm">
                         <legend>{L_TITLE_SEARCH}</legend>
                         <dl>
@@ -103,10 +103,10 @@
                         </dl>
                         <dl>
                             <dt>
-                                <label id="AdvancedSearch" style="display:none">
+                                <label id="advanced_search" style="display:none">
                                     <a href="javascript:ShowAdvancedSearchForms();">{L_ADVANCED_SEARCH}</a>
                                 </label>
-                                <label id="SimpleSearch" style="display:none">
+                                <label id="simple_search" style="display:none">
                                     <a href="javascript:HideAdvancedSearchForms();">{L_SIMPLE_SEARCH}</a>
                                 </label>
                             </dt>
@@ -124,15 +124,15 @@
                                 </select>
                             </dd>
                         </dl>
-                        <dl id="FormsSelection_DL" style="display:none">
+                        <dl id="forms_selection_DL" style="display:none">
                             <dt><label>{L_SEARCH_SPECIALIZED_FORM}<br /><span>{L_SEARCH_SPECIALIZED_FORM_EXPLAIN}</span></label></dt>
                             <dd>
-                                <select id="FormsSelection" name="FormsSelection" onchange="ChangeForm();" class="list_modules"></select>
+                                <select id="forms_selection" name="FormsSelection" onchange="ChangeForm();" class="list_modules"></select>
                             </dd>
                         </dl>
                     </fieldset>
                     # START forms #
-                        <div id="Form{forms.MODULE_NAME}" style="display:none">
+                        <div id="form_{forms.MODULE_NAME}" style="display:none">
                             <fieldset>
                                 <legend>{forms.L_MODULE_NAME}</legend>
                                 {forms.SEARCH_FORM}
@@ -153,7 +153,7 @@
         <script type="text/javascript">
         <!--
             // On cache les éléments ne devant pas s'afficher au début
-            show_div('AdvancedSearch');
+            show_div('advanced_search');
             GenerateListModules();
         -->
         </script>

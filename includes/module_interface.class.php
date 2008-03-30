@@ -30,41 +30,53 @@ define('MODULE_NOT_AVAILABLE', 1);
 define('ACCES_DENIED', 2);
 define('MODULE_NOT_YET_IMPLEMENTED', 4);
 define('FUNCTIONNALITY_NOT_IMPLEMENTED', 8);
+define('MODULE_ATTRIBUTE_DOES_NOT_EXIST', 16);
 
 class ModuleInterface
 {
     //-------------------------------------------------------------- CONSTRUCTOR
-    function ModuleInterface($moduleName = '', $error = 0)
+    function ModuleInterface($moduleId = '', $error = 0)
     /**
      *  Module constructor
      */
     {
         global $CONFIG;
-        $this->name = $moduleName;
+        $this->id = $moduleId;
+        $this->name = $this->id;
         $this->attributes =array();
         $this->infos = array();
         $this->functionnalities = array();
         if( $error == 0 )
         {
             // Get the config.ini informations
-            $this->infos = load_ini_file('../' . $this->name . '/lang/', $CONFIG['lang']);
+            $this->infos = load_ini_file('../'.$this->id.'/lang/', $CONFIG['lang']);
+            if ( isset($this->infos['name']) )
+                $this->name = $this->infos['name'];
             
             // Get modules methods
-            $methods = get_class_methods(ucfirst($moduleName).'Interface'); // PHP4 returns it in lower case
+            $methods = get_class_methods(ucfirst($moduleId).'Interface'); // PHP4 returns it in lower case
             // generics module Methods from ModuleInterface
             $moduleMethods = get_class_methods('ModuleInterface'); // PHP4 returns it in lower case
             
             // Delete all generics private methods
             foreach($methods as $key => $function)
             {
-                if( !(in_array($function, $moduleMethods) || $function == $moduleName.'interface') )
+                if( !(in_array($function, $moduleMethods) || $function == $moduleId.'interface') )
                     array_push($this->functionnalities, strtolower($methods[$key]));
             }
         }
         $this->errors = $error;
     }
     
-	//----------------------------------------------------------- PUBLIC METHODS
+    //----------------------------------------------------------- PUBLIC METHODS
+    function GetId()
+    /**
+     *  Return the name of the module
+     */
+    {
+        return $this->id;
+    }
+    
     function GetName()
     /**
      *  Return the name of the module
@@ -72,8 +84,8 @@ class ModuleInterface
     {
         return $this->name;
     }
-
-    function GetInfo()
+    
+    function GetInfos()
     /**
      *  Return all informations that you could find in the .ini file of the module,
      *  his functionnalities and his name
@@ -88,22 +100,52 @@ class ModuleInterface
     function GetAttribute($attribute)
     /**
      *  Return the value of the attribute identified by the string <$attribute>
+     *  if existing. Else set the <MODULE_ATTRIBUTE_DOES_NOT_EXIST> flag and
+     *  return <-1>
      */
     {
-        return $this->attributes[$attribute];
+        $this->clearError(MODULE_ATTRIBUTE_DOES_NOT_EXIST);
+        if ( isset($this->attributes[$attribute]) )
+            return $this->attributes[$attribute];
+
+        // else
+        $this->setError(MODULE_ATTRIBUTE_DOES_NOT_EXIST);
+        return -1;
     }
     
     function SetAttribute($attribute, $value)
     /**
-     *  Set the value of the attribute identified by the string <$attribute>
+     *  Set the value of the attribute identified by the string <$attribute>.
      */
     {
         $this->attributes[$attribute] = $value;
     }
     
+    function UnsetAttribute($attribute)
+    /**
+     *  Delete the attribute and free the memory of it.
+     */
+    {
+        unset($this->attributes[$attribute]);
+    }
+    
+    function GotError($error = 0)
+    /**
+     *  If called with no arguments, return <true> if an error has occured
+     *  otherwise, <false>.
+     *  If the method got an argument, return <true> if the specified <$error>
+     *  has occured otherwise, <false>.
+     */
+    {
+        if ( $error == 0 )
+            return $this->errors != 0;
+        else
+            return ($this->errors & $error) != 0;
+    }
+    
     function GetErrors()
     /**
-     *  Renvoie un integer contenant des bits d'erreurs.
+     *  Return the errors flags
      */
     {
         return $this->errors;
@@ -115,7 +157,7 @@ class ModuleInterface
      *  If she's not available, the FUNCTIONNALITY_NOT_IMPLEMENTED flag is set.
      */
     {
-        $this->clearFunctionnalityError();
+        $this->clearError(FUNCTIONNALITY_NOT_IMPLEMENTED);
         if( $this->HasFunctionnality($functionnality) )
             return $this->$functionnality($args);
         else
@@ -148,16 +190,17 @@ class ModuleInterface
 		$this->errors |= $error;
 	}
 	
-	function clearFunctionnalityError()
+	function clearError($error)
 	/**
 	*  Clean the functionnality flag
 	*/
 	{
-		$this->errors &= (~FUNCTIONNALITY_NOT_IMPLEMENTED);
+		$this->errors &= (~$error);
 	}
 	
 	//----------------------------------------------------- PROTECTED ATTRIBUTES
-	var $name;
+    var $id;
+    var $name;
 	var $infos;
 	var $functionnalities;
 	var $errors;

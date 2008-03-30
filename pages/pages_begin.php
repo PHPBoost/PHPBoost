@@ -32,9 +32,7 @@ if( !$Member->Check_auth($SECURE_MODULE['pages'], ACCESS_MODULE) )
 
 load_module_lang('pages');
 
-define('READ_PAGE', 0x01);
-define('EDIT_PAGE', 0x02);
-define('READ_COM', 0x04);
+require_once('../pages/pages_defines.php');
 
 $Cache->Load_file('pages');
 

@@ -309,23 +309,26 @@ class Search
                 }
                 else $nbReqInsert++;
             }
-            
-            $request = $Sql->Query_while( $reqSEARCH, __LINE__, __FILE__ );
-            while( $row = $Sql->Sql_fetch_assoc($request) )
+
+            if ( !empty($reqSEARCH) )
             {
-                if( $nbReqInsert > 0 )
-                    $reqInsert .= ',';
-                $reqInsert .= " ('".$row['id_search']."','".$row['id_content']."','".addslashes($row['title'])."',";
-                $reqInsert .= "'".$row['relevance']."','".$row['link']."')";
-                
-                // Exécution de 10 requêtes d'insertions
-                if( $nbReqInsert == 10 )
+                $request = $Sql->Query_while( $reqSEARCH, __LINE__, __FILE__ );
+                while( $row = $Sql->Sql_fetch_assoc($request) )
                 {
-                    $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
-                    $reqInsert = '';
-                    $nbReqInsert = 0;
+                    if( $nbReqInsert > 0 )
+                        $reqInsert .= ',';
+                    $reqInsert .= " ('".$row['id_search']."','".$row['id_content']."','".addslashes($row['title'])."',";
+                    $reqInsert .= "'".$row['relevance']."','".$row['link']."')";
+                    
+                    // Exécution de 10 requêtes d'insertions
+                    if( $nbReqInsert == 10 )
+                    {
+                        $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
+                        $reqInsert = '';
+                        $nbReqInsert = 0;
+                    }
+                    else $nbReqInsert++;
                 }
-                else $nbReqInsert++;
             }
             
             // Exécution des derniéres requêtes d'insertions
