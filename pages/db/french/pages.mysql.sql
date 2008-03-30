@@ -16,7 +16,10 @@ CREATE TABLE `phpboost_pages` (
   `lock_com` tinyint(1) NOT NULL default '0',
   `redirect` int(11) NOT NULL default '0',
   PRIMARY KEY  (`encoded_title`),
-  KEY `id` (`id`)
+  KEY `id` (`id`),
+  FULLTEXT KEY `title` (`title`),
+  FULLTEXT KEY `contents` (`contents`),
+  FULLTEXT KEY `all` (`title`,`contents`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `phpboost_pages_cats`;
