@@ -1,17 +1,17 @@
         <br />
 		<script type="text/javascript">
 		<!--
-		    const RESULTS = 'Results';
-		    const RESULTS_TITLE = 'ResultsTitle';
-		    const INFOS_RESULTS = 'infosResults';
-		    const RESULTS_LIST = 'ResultsList';
-		    const PAGINATION_RESULTS = 'PaginationResults';
+		    const RESULTS = 'results_';
+		    const RESULTS_TITLE = 'results_title_';
+		    const INFOS_RESULTS = 'infos_results_';
+		    const RESULTS_LIST = 'results_list_';
+		    const PAGINATION_RESULTS = 'pagination_results_';
             const NB_RESULTS_PER_PAGE = {NB_RESULTS_PER_PAGE};
             
             var nbResults = new Array();
-            nbResults['All'] = {NB_RESULTS};
+            nbResults['all'] = {NB_RESULTS};
             
-		    var modulesResults = new Array('All');
+		    var modulesResults = new Array('all');
 		    # START results #
 		        modulesResults.push('{results.MODULE_NAME}');
 		    # END results #
@@ -21,7 +21,7 @@
 		        idSearch['{results.MODULE_NAME}'] = '{results.ID_SEARCH}';
 		    # END results #
 		    
-		    var calculatedResults = new Array('All');
+		    var calculatedResults = new Array('all');
 		    
 		    function HideResults()
 		    // Cache tous les résultats
@@ -33,12 +33,12 @@
 		    function ChangeResults()
 		    // Change le cadre des résultats
 		    {
-		        var module = document.getElementById('ResultsChoice').value;
+		        var module = document.getElementById('results_choice').value;
 		        HideResults();
 		        show_div(RESULTS + module);
 				if( !inArray(module, calculatedResults) )
 				{
-					load_progress_bar(1, '{THEME}', module, 55);
+					load_progress_bar(1, '{THEME}', '_' + module, 55);
 		            XMLHttpRequest_search_module(module);
 				}
 			}
@@ -47,7 +47,7 @@
 		    // Reconstitution d'une chaine "POSTABLE" à partir des formulaires
 		    {
 		        var dataString = "";
-		        var form = document.getElementById('SearchForm');
+		        var form = document.getElementById('search_form');
 		        var elements = form.elements;
 		        
 		        for( var i = 0; i < form.length; i++ )
@@ -86,7 +86,7 @@
                             {
                                 document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
                                 document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
-                                ChangePagination(0, Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, 'results' + module, 2, 2);
+                                ChangePagination(0, Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, RESULTS + module, 2, 2);
                                 
                                 // Met à jour la liste des résultats affiché, pour ne pas les rechercher
                                 // dans la base de donnée si ils sont déjà dans le html.
@@ -107,10 +107,10 @@
 		    <div class="module_top_l"></div>
 		    <div class="module_top_r"></div>
 		    <div class="module_top">{L_SEARCH_RESULTS}
-		        <div id="resultsChoices" class="resultsChoices" style="display:none">
+		        <div id="results_choices" class="resultsChoices" style="display:none">
 		            <span>{L_PRINT}</span>
-		            <select id="ResultsChoice" name="ResultsSelection" onChange="ChangeResults();">
-		                <option value="All">{L_TITLE_ALL_RESULTS}</option>
+		            <select id="results_choice" name="ResultsSelection" onChange="ChangeResults();">
+		                <option value="all">{L_TITLE_ALL_RESULTS}</option>
 		                # START results #
 		                    <option value="{results.MODULE_NAME}"> |---> {results.L_MODULE_NAME}</option>
 		                # END results #
@@ -118,32 +118,32 @@
 		        </div>
 		    </div>
 		    <div class="module_contents">
-		        <div id="ResultsAll" class="results">
-		            <span id="ResultsTitleAll" class="title">{L_TITLE_ALL_RESULTS}</span><br />
-		            <div id="infosResultsAll" class="infosResults">
+		        <div id="results_all" class="results">
+		            <span id="results_title_all" class="title">{L_TITLE_ALL_RESULTS}</span><br />
+		            <div id="infos_results_all" class="infosResults">
                         # IF NB_RESULTS #
                             {NB_RESULTS}
                         # ENDIF #
                         {L_NB_RESULTS_FOUND}
                     </div>
-		            <div id="ResultsListAll" class="ResultsList">
+		            <div id="results_list_all" class="ResultsList">
                         {ALL_RESULTS}
 		            </div>
-		            <div id="PaginationResultsAll" class="PaginationResults">{PAGINATION}</div>
+		            <div id="pagination_results_all" class="PaginationResults">{PAGINATION}</div>
 		        </div>
                 <div id="DEBUG"></div>
 		        # START results #
-		            <div id="Results{results.MODULE_NAME}" class="results" style="display:none">
-		                <span id="ResultsTitle{results.MODULE_NAME}" class="title">{results.L_MODULE_NAME}</span><br />
-		                <div id="infosResults{results.MODULE_NAME}" class="infosResults">
+		            <div id="results_{results.MODULE_NAME}" class="results" style="display:none">
+		                <span id="results_title_{results.MODULE_NAME}" class="title">{results.L_MODULE_NAME}</span><br />
+		                <div id="infos_results_{results.MODULE_NAME}" class="infosResults">
                             <div style="margin:auto;width:500px;"> 
-                                <div id="progress_info{results.MODULE_NAME}" style="text-align:center;"></div>
-                                <div id="progress_bar{results.MODULE_NAME}" style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;"></div> 
-                                &nbsp;<span id="progress_percent{results.MODULE_NAME}">0</span>%
+                                <div id="progress_info_{results.MODULE_NAME}" style="text-align:center;"></div>
+                                <div id="progress_bar_{results.MODULE_NAME}" style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;"></div> 
+                                &nbsp;<span id="progress_percent_{results.MODULE_NAME}">0</span>%
                             </div>
                         </div>
-		                <div id="ResultsList{results.MODULE_NAME}" class="ResultsList"></div>
-		                <div id="PaginationResults{results.MODULE_NAME}" class="PaginationResults"></div>
+		                <div id="results_list_{results.MODULE_NAME}" class="ResultsList"></div>
+		                <div id="pagination_results_{results.MODULE_NAME}" class="PaginationResults"></div>
 		            </div>
 		        # END results #
 		    </div>
@@ -153,8 +153,8 @@
 		</div>
 		<script type="text/javascript">
 		<!--
-            ChangePagination(0, Math.ceil(nbResults['All'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + 'All', 'resultsAll');
+            ChangePagination(0, Math.ceil(nbResults['all'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + 'all', 'results_all');
 		    if( browserAJAXFriendly() )
-                show_div('resultsChoices');
+                show_div('results_choices');
 		-->
 		</script>

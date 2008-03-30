@@ -169,9 +169,9 @@ class ForumInterface extends ModuleInterface
                     $auth_cats .= $id.',';
             }
         }
-        $auth_cats = !empty($auth_cats) ? " AND c1.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
+        $auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
         
-        if ( $args['ForumWhere'] == 'all' )         // All
+        if ( $where == 'all' )         // All
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
                 msg.id AS `id_content`,
@@ -186,7 +186,7 @@ class ForumInterface extends ModuleInterface
             GROUP BY msg.id
             ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
         
-        if ( $args['ForumWhere'] == 'contents' )    // Contents
+        if ( $where == 'contents' )    // Contents
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
                 msg.id AS `id_content`,

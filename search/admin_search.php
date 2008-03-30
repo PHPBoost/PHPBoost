@@ -92,16 +92,15 @@ else
     
     foreach( $searchModules as $module )
     {
-        if ( in_array($module->name, $SEARCH_CONFIG['authorised_modules']) )
+        if ( in_array($module->GetId(), $SEARCH_CONFIG['authorised_modules']) )
             $selected = ' selected="selected"';
         else
             $selected = '';
-        
-        $moduleInfos = $module->GetInfo();
+
         $Template->Assign_block_vars('authorised_modules', array(
-            'MODULE' => $module->name,
+            'MODULE' => $module->GetId(),
             'SELECTED' => $selected,
-            'L_MODULE_NAME' => ucfirst($moduleInfos['name'])
+            'L_MODULE_NAME' => ucfirst($module->GetName())
         ));
     }
     

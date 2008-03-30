@@ -61,7 +61,7 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
         
         // Ajout du paramétre search à tous les modules
         foreach( $searchModules as $module)
-            $modulesArgs[$module->name] = array('search' => $searchTxt);
+            $modulesArgs[$module->GetId()] = array('search' => $searchTxt);
         
         // Ajout de la liste des paramètres de recherches spécifiques à chaque module
         foreach( $formsModule as $formModule)
@@ -75,7 +75,7 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
                 foreach( $formModuleArgs as $arg)
                 {
                     if ( isset($_POST[$arg]) )
-                        $modulesArgs[$formModule->name][$arg] = $_POST[$arg];
+                        $modulesArgs[$formModule->GetId()][$arg] = $_POST[$arg];
                 }
             }
         }
@@ -89,7 +89,7 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
         foreach ( $idsSearch as $moduleName => $id_search )
         {
             $Search->id_search[$moduleName] = $id_search;
-            echo 'idSearch[\''.ucfirst($moduleName).'\'] = '.$id_search.';';
+            echo 'idSearch[\''.$moduleName.'\'] = '.$id_search.';';
         }
     }
     else $Search->id_search[$MODULE_NAME] = $idSearch;
@@ -99,9 +99,9 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
     $nbResults = $Search->GetResultsById($results, $Search->id_search[$MODULE_NAME]);
     if( $nbResults > 0 )
     {
-        $module = $Modules->GetModule($results[0]['module']);
+        $module = $Modules->GetModule($MODULE_NAME);
         $htmlResults = '';
-        Get_HTML_Results($results, $htmlResults, $Modules, $module->name);
+        Get_HTML_Results($results, $htmlResults, $Modules, $MODULE_NAME);
     
         echo   'nbResults[\''.$MODULE_NAME.'\'] = '.$nbResults.';
                 resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.addslashes($nbResults > 1 ? $LANG['nb_results_found']:$LANG['one_result_found']).'\';
@@ -109,7 +109,7 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
     }
     else
     {
-        echo   'nbResults[\''.ucfirst($MODULE_NAME).'\'] = 0;
+        echo   'nbResults[\''.$MODULE_NAME.'\'] = 0;
                 resultsAJAX[\'nbResults\'] = \''.addslashes($LANG['no_results_found']).'\';
                 resultsAJAX[\'results\'] = \'\';';
     }

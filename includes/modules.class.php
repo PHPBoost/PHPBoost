@@ -64,7 +64,7 @@ class Modules
         return $results;
     }
 
-    function GetAvailablesModules($functionnality='GetInfo', $modulesList = array())
+    function GetAvailablesModules($functionnality='GetId', $modulesList = array())
     /**
      *  Renvoie la liste des modules disposant de la fonctionnalité demandée.
      *  Si $modulesList est spécifié, alors on ne recherche que le sous ensemble de celui-ci 
@@ -74,10 +74,10 @@ class Modules
         if( $modulesList === array() )
         {
             global $SECURE_MODULE;
-            foreach(array_keys($SECURE_MODULE) as $moduleName)
+            foreach(array_keys($SECURE_MODULE) as $moduleId)
             {
-                $module = $this->GetModule($moduleName);
-                if( $module->GetErrors() == 0 && $module->HasFunctionnality($functionnality) )
+                $module = $this->GetModule($moduleId);
+                if( !$module->GotError() && $module->HasFunctionnality($functionnality) )
                     array_push($modules, $module);
             }
         }
@@ -85,41 +85,38 @@ class Modules
         {
             foreach($modulesList as $module)
             {
-                if( $module->GetErrors() == 0 && $module->HasFunctionnality($functionnality) )
+                if( !$module->GotError() && $module->HasFunctionnality($functionnality) )
                     array_push($modules, $module);
             }
         }
         return $modules;
     }
 
-    function GetModule($moduleName = '')
+    function GetModule($moduleId = '')
     /**
      *  Instancie et renvoie le module demandé.
      */
     {
-		if( !isset($this->loadedModules[$moduleName]) )
+        if( !isset($this->loadedModules[$moduleId]) )
         {
-            if( in_array($moduleName, $this->availablesModules) )
+            if( in_array($moduleId, $this->availablesModules) )
             {
-				global $Member, $SECURE_MODULE;
-                if( $Member->check_auth($SECURE_MODULE[$moduleName], ACCESS_MODULE) )
+                global $Member, $SECURE_MODULE;
+                if( $Member->check_auth($SECURE_MODULE[$moduleId], ACCESS_MODULE) )
                 {
-                    if( @include_once('../'.$moduleName.'/'.$moduleName.'_interface.class.php') )
+                    if( @include_once('../'.$moduleId.'/'.$moduleId.'_interface.class.php') )
                     {
-                        $moduleConstructor = ucfirst($moduleName.'Interface');
+                        $moduleConstructor = ucfirst($moduleId.'Interface');
                         $Module = new $moduleConstructor();
                     }
-                    else
-						$Module = new ModuleInterface($moduleName, MODULE_NOT_YET_IMPLEMENTED);
+                    else $Module = new ModuleInterface($moduleId, MODULE_NOT_YET_IMPLEMENTED);
                 }
-                else
-					$Module = new ModuleInterface($moduleName, ACCES_DENIED);
+                else $Module = new ModuleInterface($moduleId, ACCES_DENIED);
             }
-            else
-				$Module = new ModuleInterface($moduleName, MODULE_NOT_AVAILABLE); 
-            $this->loadedModules[$moduleName] = $Module;
+            else $Module = new ModuleInterface($moduleId, MODULE_NOT_AVAILABLE);
+            $this->loadedModules[$moduleId] = $Module;
         }
-        return $this->loadedModules[$moduleName];
+        return $this->loadedModules[$moduleId];
     }
 
     //---------------------------------------------------------- Constructeurs

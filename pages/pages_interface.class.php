@@ -27,31 +27,75 @@
  
 // Inclusion du fichier contenant la classe ModuleInterface
 require_once('../includes/module_interface.class.php');
- 
+define('PAGES_MAX_SEARCH_RESULTS', 100);
+
 // Classe WikiInterface qui hérite de la classe ModuleInterface
 class PagesInterface extends ModuleInterface
 {
     ## Public Methods ##
     function PagesInterface() //Constructeur de la classe WikiInterface
     {
-        parent::ModuleInterface('Pages');
+        parent::ModuleInterface('pages');
     }
     
     // Recherche
-    
     function GetSearchRequest($args)
     /**
      *  Renvoie la requête de recherche dans le wiki
      */
     {
-		return "SELECT ".
-			$args['id_search']." AS `id_search`,
-			id AS `id_content`,
-			title AS `title`,
-			( 4 * MATCH(title) AGAINST('".$args['search']."') + MATCH(contents) AGAINST('".$args['search']."') ) / 5 AS `relevance`,
-			CONCAT('../pages/pages.php?title=',encoded_title) AS `link`
-			FROM ".PREFIX."pages
-			WHERE ( MATCH(title) AGAINST('".$args['search']."') OR MATCH(contents) AGAINST('".$args['search']."') )";
+        $search = $args['search'];
+        
+        global $_PAGES_CATS, $CONFIG_PAGES, $Member, $Cache, $Sql;
+        require_once('../pages/pages_defines.php');
+        $Cache->Load_file('pages');
+        
+        $auth_cats = '';
+        if( is_array($_PAGES_CATS) )
+        {
+            if( isset($_PAGES_CATS['auth']) && !$Member->Check_auth($_PAGES_CATS['auth'], READ_PAGE) )
+                $auth_cats .= '0,';
+            foreach($_PAGES_CATS as $id => $key)
+            {
+                if( !$Member->Check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )
+                    $auth_cats .= $id.',';
+            }
+        }
+        $auth_cats = !empty($auth_cats) ? " AND p.idcat NOT IN (" . trim($auth_cats, ',') . ")" : '';
+        
+        $results = array();
+        $request = "SELECT ".
+            $args['id_search']." AS `id_search`,
+            p.id AS `id_content`,
+            p.title AS `title`,
+            ( 4 * MATCH(p.title) AGAINST('".$args['search']."') + MATCH(p.contents) AGAINST('".$args['search']."') ) / 5 AS `relevance`,
+            CONCAT('../pages/pages.php?title=',p.encoded_title) AS `link`,
+            p.auth AS `auth`
+            FROM ".PREFIX."pages p
+            WHERE ( MATCH(title) AGAINST('".$args['search']."') OR MATCH(contents) AGAINST('".$args['search']."') )".$auth_cats
+            .$Sql->Sql_limit(0, PAGES_MAX_SEARCH_RESULTS);
+
+        $result = $Sql->Query_while($request, __LINE__, __FILE__);
+        while( $row = $Sql->sql_fetch_assoc($result) )
+        {
+            if ( !empty($row['auth']) )
+            {
+                $auth = unserialize($row['auth']);
+                if ( !$Member->Check_auth($auth, READ_PAGE) )
+                {
+                    unset($row['auth']);
+                    array_push($results, $row);
+                }
+            }
+            else
+            {
+                unset($row['auth']);
+                array_push($results, $row);
+            }
+        }
+        $Sql->Close($result);
+        
+        return $results;
     }
 }
 

@@ -85,18 +85,17 @@ $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
 // Chargement des modules avec formulaires
 $formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
 
-foreach( $SEARCH_CONFIG['authorised_modules'] as $module => $moduleName )
+foreach( $SEARCH_CONFIG['authorised_modules'] as $moduleId )
 {
-    $module = $Modules->GetModule($moduleName);
-    $infos = $module->GetInfo();
-    if ( ($selectedModules === array()) || in_array($moduleName, $selectedModules) )
+    $module = $Modules->GetModule($moduleId);
+    if ( ($selectedModules === array()) || in_array($moduleId, $selectedModules) )
         $selected = ' selected="selected"';
     else
         $selected = '';
     
     $Template->Assign_block_vars('searched_modules', array(
-        'MODULE' => $module->name,
-        'L_MODULE_NAME' => ucfirst($infos['name']),
+        'MODULE' => $moduleId,
+        'L_MODULE_NAME' => ucfirst($module->GetName()),
         'SELECTED' => $selected
     ));
 }
@@ -107,7 +106,7 @@ if( $search != '' )
     
     // Ajout du paramétre search à tous les modules
     foreach( $searchModules as $module)
-        $modulesArgs[$module->name] = array('search' => $search);
+        $modulesArgs[$module->GetId()] = array('search' => $search);
     
     // Ajout de la liste des paramètres de recherches spécifiques à chaque module
     foreach( $formsModule as $formModule)
@@ -121,20 +120,19 @@ if( $search != '' )
             foreach( $formModuleArgs as $arg)
             {
                 if ( isset($_POST[$arg]) )
-                    $modulesArgs[$formModule->name][$arg] = $_POST[$arg];
+                    $modulesArgs[$formModule->GetId()][$arg] = $_POST[$arg];
             }
         }
     }
     
     // Génération des formulaires précomplétés et passage aux templates
     $searchForms = GetSearchForms($formsModule, $modulesArgs);
-    foreach ( $searchForms as $moduleName => $form )
+    foreach ( $searchForms as $moduleId => $form )
     {
-        $module = $Modules->GetModule($moduleName);
-        $infos = $module->GetInfo();
+        $module = $Modules->GetModule($moduleId);
         $Template->Assign_block_vars('forms', array(
-            'MODULE_NAME' => $moduleName,
-            'L_MODULE_NAME' => ucfirst($infos['name']),
+            'MODULE_NAME' => $moduleId,
+            'L_MODULE_NAME' => ucfirst($module->GetName()),
             'SEARCH_FORM' => $form
         ));
     }
@@ -147,7 +145,7 @@ if( $search != '' )
         for ( $i = 0; $i < $nbModules; $i++ )
         {
             $module = $searchModules[$i];
-            if ( !in_array($module->name, $selectedModules) )
+            if ( !in_array($module->GetId(), $selectedModules) )
                 unset($searchModules[$i]);
         }
     }
@@ -157,11 +155,10 @@ if( $search != '' )
     
     foreach( $searchModules as $module)
     {
-        $moduleInfos = $module->GetInfo();
         $Template->Assign_block_vars('results', array(
-            'MODULE_NAME' => $module->name,
-            'L_MODULE_NAME' => ucfirst($moduleInfos['name']),
-            'ID_SEARCH' => $idsSearch[$module->name],
+            'MODULE_NAME' => $module->GetId(),
+            'L_MODULE_NAME' => ucfirst($module->GetName()),
+            'ID_SEARCH' => $idsSearch[$module->GetId()],
         ));
     }
     
@@ -169,7 +166,7 @@ if( $search != '' )
     Get_HTML_Results($results, $allhtmlResult, $Modules, 'All');
     $allhtmlResult .= '<script type="text/javascript">
         <!--
-            nbResults[\'All\'] = '.$nbResults.';
+            nbResults[\'all\'] = '.$nbResults.';
             
             if( browserAJAXFriendly() )
                 show_div(\'resultsAll_0\');
@@ -197,13 +194,12 @@ else
 {
     // Génération des formulaires et passage aux templates
     $searchForms = GetSearchForms($formsModule, $modulesArgs);
-    foreach( $searchForms as $moduleName => $form )
+    foreach( $searchForms as $moduleId => $form )
     {
-        $module = $Modules->GetModule($moduleName);
-        $infos = $module->GetInfo();
+        $module = $Modules->GetModule($moduleId);
         $Template->Assign_block_vars('forms', array(
-            'MODULE_NAME' => $moduleName,
-            'L_MODULE_NAME' => ucfirst($infos['name']),
+            'MODULE_NAME' => $moduleId,
+            'L_MODULE_NAME' => ucfirst($module->GetName()),
             'SEARCH_FORM' => $form
         ));
     }

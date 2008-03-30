@@ -44,10 +44,10 @@ function GetSearchForms(&$modules, &$args)
     $searchForms = array();
     foreach( $modules as $module )
     {
-        if( isset($args[$module->name]) )
-            $searchForms[$module->name] = $module->Functionnality('GetSearchForm', $args[$module->name]);
+        if( isset($args[$module->GetId()]) )
+            $searchForms[$module->GetId()] = $module->Functionnality('GetSearchForm', $args[$module->GetId()]);
         else
-            $searchForms[$module->name] = $module->Functionnality('GetSearchForm', array('search' => ''));
+            $searchForms[$module->GetId()] = $module->Functionnality('GetSearchForm', array('search' => ''));
     }
     
     return $searchForms;
@@ -62,11 +62,11 @@ function ExecuteSearch($Search, &$searchModules, &$modulesArgs, &$results)
     
     foreach($searchModules as $module)
     {
-        if( !$Search->IsInCache($module->name) )
+        if( !$Search->IsInCache($module->GetId()) )
         {
             // On rajoute l'identifiant de recherche comme parametre pour faciliter la requete
-            $modulesArgs[$module->name]['id_search'] = $Search->id_search[$module->name];
-            $requests[$module->name] = $module->Functionnality('GetSearchRequest', $modulesArgs[$module->name]);
+            $modulesArgs[$module->GetId()]['id_search'] = $Search->id_search[$module->GetId()];
+            $requests[$module->GetId()] = $module->Functionnality('GetSearchRequest', $modulesArgs[$module->GetId()]);
         }
     }
     
@@ -79,15 +79,15 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
  *  renvoie les résultats.
  */
 {
-    $modulesNames = array();
+    $modulesIds = array();
     $modulesOptions = array();
     
     // Generation des noms des modules utilisés et de la chaine options
     foreach($searchModules as $module)
     {
-        array_push($modulesNames, $module->name);
+        array_push($modulesIds, $module->GetId());
         // enleve la chaine search de la chaine options et la tronque a 255 caracteres
-        $modulesOptions[$module->name] = md5(implode('|', $modulesArgs[$module->name]));
+        $modulesOptions[$module->GetId()] = md5(implode('|', $modulesArgs[$module->GetId()]));
     }
     
     $Search = new Search($searchTxt, $modulesOptions);
@@ -95,7 +95,7 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
     $idsSearch = $Search->id_search;
     
     if ( !$justInsert )
-        return $Search->GetResults($results, $modulesNames);
+        return $Search->GetResults($results, $modulesIds);
     else
         return -1;
 }
