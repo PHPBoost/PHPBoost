@@ -436,7 +436,7 @@ a.msg_link_pseudo:hover {
 	margin-right:0px;
 	font-size:12px;
 }
-.module_table{ /* Tableau global, utilisé dans les différents modules */
+.module_table, .block_container{ /* Tableau global, utilisé dans les différents modules */
 	width:98%;
 	margin:auto;
 	border-spacing:0px;

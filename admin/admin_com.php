@@ -100,9 +100,6 @@ if( is_dir($root) ) //Si le dossier existe
 	}
 }
 
-//Création du tableau des rangs.
-$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-
 //Gestion des rangs.	
 $Cache->Load_file('ranks');
 
