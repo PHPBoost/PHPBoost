@@ -61,7 +61,7 @@ class PagesInterface extends ModuleInterface
                     $auth_cats .= $id.',';
             }
         }
-        $auth_cats = !empty($auth_cats) ? " AND p.idcat NOT IN (" . trim($auth_cats, ',') . ")" : '';
+        $auth_cats = !empty($auth_cats) ? " AND p.id_cat NOT IN (" . trim($auth_cats, ',') . ")" : '';
         
         $results = array();
         $request = "SELECT ".
