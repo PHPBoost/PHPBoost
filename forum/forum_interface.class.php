@@ -24,10 +24,12 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
 ###################################################*/
- 
+
 // Inclusion du fichier contenant la classe ModuleInterface
 require_once('../includes/module_interface.class.php');
- 
+
+define('FORUM_MAX_SEARCH_RESULTS', 100);
+
 // Classe ForumInterface qui hérite de la classe ModuleInterface
 class ForumInterface extends ModuleInterface
 {
@@ -149,7 +151,7 @@ class ForumInterface extends ModuleInterface
      *  Renvoie la requête de recherche dans le forum
      */
     {
-        global $CONFIG, $CAT_FORUM, $Member, $Cache;
+        global $CONFIG, $CAT_FORUM, $Member, $Cache, $Sql;
         $Cache->Load_file('forum');
         
         $search = $args['search'];
@@ -157,17 +159,6 @@ class ForumInterface extends ModuleInterface
         $time = !empty($args['ForumTime']) ? numeric($args['ForumTime']) : 0;
         $where = !empty($args['ForumWhere']) ? securit($args['ForumWhere']) : 'title';
         $colorate_result = !empty($args['ForumColorate_result']) ? true : false;
-        
-//         return "SELECT ".
-//             $args['id_search']." AS `id_search`,
-//             `id` AS `id_content`,
-//             `title` AS `title`,
-//             MATCH(`title`) AGAINST('".$args['search']."') AS `relevance`,
-//             CONCAT('../wiki/wiki.php?title=',encoded_title) AS link
-//         FROM ".
-//             PREFIX."wiki_articles
-//         WHERE
-//             MATCH(`title`) AGAINST('".$args['search']."')";
         
         $auth_cats = '';
         if( is_array($CAT_FORUM) )
@@ -194,7 +185,7 @@ class ForumInterface extends ModuleInterface
             WHERE ( MATCH(t.title) AGAINST('".$search."') OR MATCH(msg.contents) AGAINST('".$search."') )
             ".($idcat != -1 ? " AND t.idcat = '".$idcat."'" : '')." ".$auth_cats."
             GROUP BY msg.id
-            ORDER BY relevance DESC";
+            ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
         
         if ( $args['ForumWhere'] == 'contents' )    // Contents
             return "SELECT ".
@@ -210,7 +201,7 @@ class ForumInterface extends ModuleInterface
             WHERE MATCH(msg.contents) AGAINST('".$search."')
             ".($idcat != -1 ? " AND t.idcat = '".$idcat."'" : '')." ".$auth_cats."
             GROUP BY t.id
-            ORDER BY relevance DESC";
+            ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
         
         else                                         // Title only
             return "SELECT ".
@@ -228,7 +219,7 @@ class ForumInterface extends ModuleInterface
             WHERE MATCH(t.title) AGAINST('".$search."')
             ".($idcat != -1 ? " AND t.idcat = '".$idcat."'" : '')." ".$auth_cats."
             GROUP BY t.id
-            ORDER BY relevance DESC";
+            ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
     }
 }
 
