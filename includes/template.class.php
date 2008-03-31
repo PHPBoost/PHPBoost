@@ -3,7 +3,7 @@
  *                               template.class.php
  *                            -------------------
  *   begin                : Februar 12, 2006
- *   copyright          : (C) 2006 Viarre Régis
+ *   copyright            : (C) 2006 Viarre Régis
  *   email                : mickaelhemri@gmail.com
  *
  *   
@@ -99,7 +99,7 @@ class Templates
 			$this->save($file_cache_path); //Enregistrement du fichier de cache.
 		}	
 			
-		include($file_cache_path);		
+		include($file_cache_path);
 	}
 	
 	
