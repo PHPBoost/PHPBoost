@@ -13,18 +13,29 @@
                     changeF = false;
                 
                 var listModules = '';
+                var nbForms = 0;
                 var selModOptions = document.getElementById('searched_modules[]').options;
                 
                 for ( var i = 0; i < selModOptions.length; i++ )
                 {
-                    if ( selModOptions[i].selected )
+                    if ( selModOptions[i].selected && inArray(selModOptions[i].value, modulesForms) )
+                    {
                         listModules += '<option value="' + selModOptions[i].value + '">' + selModOptions[i].text + '</option>';
+                        nbForms++;
+                    }
                 }
                 
                 document.getElementById('forms_selection').innerHTML = listModules;
+
                 
                 if ( changeF )
+                {
+                    if ( nbForms > 0 )
+                        show_div('forms_selection_DL');
+                    else
+                        hide_div('forms_selection_DL');
                     ChangeForm();
+                }
             }
             
             function ShowAdvancedSearchForms()
