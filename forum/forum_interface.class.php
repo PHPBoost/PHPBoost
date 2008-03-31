@@ -177,7 +177,7 @@ class ForumInterface extends ModuleInterface
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
                 MAX(( 2 * MATCH(t.title) AGAINST('".$search."') + MATCH(msg.contents) AGAINST('".$search."') ) / 3) AS `relevance`,
-                '../forum/topic.php?id='||t.id||'#m'||msg.id  AS `link`
+                ".$Sql->Sql_concat('../forum/topic.php?id=', t.id, '#m', msg.id)."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
@@ -192,7 +192,7 @@ class ForumInterface extends ModuleInterface
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
                 MAX(MATCH(msg.contents) AGAINST('".$search."')) AS `relevance`,
-                '../forum/topic.php?id='||t.id||'#m'||msg.id  AS `link`
+                ".$Sql->Sql_concat('../forum/topic.php?id=', t.id, '#m', msg.id)." AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
@@ -207,7 +207,7 @@ class ForumInterface extends ModuleInterface
                 msg.id AS `id_content`,
                 t.title AS `title`,
                 MATCH(t.title) AGAINST('".$search."') AS `relevance`,
-                '../forum/topic.php?id='||t.id||'#m'||msg.id  AS `link`
+                ".$Sql->Sql_concat('../forum/topic.php?id=', t.id, '#m', msg.id)." AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
