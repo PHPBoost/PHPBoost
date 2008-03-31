@@ -128,9 +128,9 @@
                                 <label>{L_SEARCH_IN_MODULES}<br /><span>{L_SEARCH_IN_MODULES_EXPLAIN}</span></label>
                             </dt>
                             <dd>
-                                <select id="searched_modules[]" name="searched_modules[]" size="5" multiple="multiple" class="list_modules">
+                                <select id="searched_modules[]" name="searched_modules[]" size="5" multiple="multiple" class="list_modules" onchange="GenerateListModules(true)">
                                 # START searched_modules #
-                                    <option value="{searched_modules.MODULE}" id="{searched_modules.MODULE}"{searched_modules.SELECTED} onclick="GenerateListModules(true)">{searched_modules.L_MODULE_NAME}</option>
+                                    <option value="{searched_modules.MODULE}" id="{searched_modules.MODULE}"{searched_modules.SELECTED}>{searched_modules.L_MODULE_NAME}</option>
                                 # END searched_modules #
                                 </select>
                             </dd>
