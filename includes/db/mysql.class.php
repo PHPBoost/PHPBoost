@@ -147,7 +147,7 @@ class Sql
     function Sql_concat()
     {
         $numArgs = func_num_args();
-        $concatString = func_get_arg(1);
+        $concatString = func_get_arg(0);
         for ( $i = 1; $i < $numArgs; $i++ )
             $concatString = 'CONCAT('.$concatString.','.func_get_arg($i).')';
         
