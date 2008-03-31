@@ -42,6 +42,18 @@ require_once('../includes/module_interface.class.php');
 
 class Modules
 {
+    //---------------------------------------------------------- Constructeurs
+    function Modules()
+    /**
+     *  Constructeur de la classe Modules
+     */
+    {
+        global $SECURE_MODULE;
+        
+        $this->loadedModules = array();
+        $this->availablesModules = array_keys($SECURE_MODULE);
+    }
+    
     //----------------------------------------------------------------- PUBLIC
     //----------------------------------------------------- Méthodes publiques
     function Functionnality($functionnality, $modules)
@@ -77,16 +89,32 @@ class Modules
             foreach(array_keys($SECURE_MODULE) as $moduleId)
             {
                 $module = $this->GetModule($moduleId);
-                if( !$module->GotError() && $module->HasFunctionnality($functionnality) )
-                    array_push($modules, $module);
+                if ( !is_array($functionnality) )
+                {
+                    if( !$module->GotError() && $module->HasFunctionnality($functionnality) )
+                        array_push($modules, $module);
+                }
+                else
+                {
+                    if( !$module->GotError() && $module->HasFunctionnalities($functionnality) )
+                        array_push($modules, $module);
+                }
             }
         }
         else
         {
             foreach($modulesList as $module)
             {
-                if( !$module->GotError() && $module->HasFunctionnality($functionnality) )
-                    array_push($modules, $module);
+                if ( !is_array($functionnality) )
+                {
+                    if( !$module->GotError() && $module->HasFunctionnality($functionnality) )
+                        array_push($modules, $module);
+                }
+                else
+                {
+                    if( !$module->GotError() && $module->HasFunctionnalities($functionnality) )
+                        array_push($modules, $module);
+                }
             }
         }
         return $modules;
@@ -117,18 +145,6 @@ class Modules
             $this->loadedModules[$moduleId] = $Module;
         }
         return $this->loadedModules[$moduleId];
-    }
-
-    //---------------------------------------------------------- Constructeurs
-    function Modules()
-    /**
-     *  Constructeur de la classe Modules
-     */
-    {
-        global $SECURE_MODULE;
-        
-        $this->loadedModules = array();
-        $this->availablesModules = array_keys($SECURE_MODULE);
     }
 
     //------------------------------------------------------------------ PRIVE

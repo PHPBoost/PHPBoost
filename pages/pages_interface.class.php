@@ -3,7 +3,7 @@
  *                              wiki_interface.class.php
  *                            -------------------
  *   begin                : Februar 24, 2008
- *   copyright            : (C) 2007 ROUCHON Loïc
+ *   copyright            : (C) 2007 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
  *  
@@ -68,7 +68,7 @@ class PagesInterface extends ModuleInterface
             $args['id_search']." AS `id_search`,
             p.id AS `id_content`,
             p.title AS `title`,
-            ( 4 * MATCH(p.title) AGAINST('".$args['search']."') + MATCH(p.contents) AGAINST('".$args['search']."') ) / 5 AS `relevance`,
+            ( 2 * MATCH(p.title) AGAINST('".$args['search']."') + MATCH(p.contents) AGAINST('".$args['search']."') ) / 3 AS `relevance`,
             CONCAT('../pages/pages.php?title=',p.encoded_title) AS `link`,
             p.auth AS `auth`
             FROM ".PREFIX."pages p

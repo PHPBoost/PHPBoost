@@ -36,23 +36,6 @@ global $SEARCH_CONFIG;
 
 define ( 'NB_RESULTS_PER_PAGE', $SEARCH_CONFIG['nb_results_per_page']);
 
-function GetSearchForms(&$modules, &$args)
-/**
- *  Affiche les formulaires de recherches pour tous les modules.
- */
-{
-    $searchForms = array();
-    foreach( $modules as $module )
-    {
-        if( isset($args[$module->GetId()]) )
-            $searchForms[$module->GetId()] = $module->Functionnality('GetSearchForm', $args[$module->GetId()]);
-        else
-            $searchForms[$module->GetId()] = $module->Functionnality('GetSearchForm', array('search' => ''));
-    }
-    
-    return $searchForms;
-}
-
 function ExecuteSearch($Search, &$searchModules, &$modulesArgs, &$results)
 /**
  *  Exécute la recherche
