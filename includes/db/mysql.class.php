@@ -3,8 +3,8 @@
  *                                mysql.class.php
  *                            -------------------
  *   begin                : March 13, 2006
- *   copyright          : (C) 2005 Viarre Régis
- *   email                : mickaelhemri@gmail.com
+ *   copyright          : (C) 2005 Régis Viarre, Loïc Rouchon
+ *   email                : crowkait@phpboost.com, horn@phpboost.com
  *
  *
 ###################################################
@@ -136,6 +136,24 @@ class Sql
 		return ' LIMIT ' . $start . ', ' .  $end;
 	}
 		
+    //Concatène des chaines
+    //  CONTRAT DE COHERENCE :
+    //  - les champ mysql doivent êtres passés sous forme de chaine PHP
+    //  - les chaines PHP doivent êtres passés sous forme de chaine PHP
+    //      dont le contenu est une chaine PHP délimité par de simple quotes
+    //  EXEMPLE :
+    //      - champ MySQL : $champMySQL = "id" ou $champMySQL = 'id'
+    //      - chaine PHP  : $strPHP = "'ma chaine'" ou $strPHP='\'ma chaine\''
+    function Sql_concat()
+    {
+        $numArgs = func_num_args();
+        $concatString = func_get_arg(1);
+        for ( $i = 1; $i < $numArgs; $i++ )
+            $concatString = 'CONCAT('.$concatString.','.func_get_arg($i).')';
+        
+        return ' '.$concatString.' ';
+    }
+    
 	//Balayage du retour de la requête sous forme de tableau indexé par le nom des champs.
 	function Sql_fetch_assoc($result)
 	{	
