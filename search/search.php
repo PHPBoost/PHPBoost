@@ -39,7 +39,7 @@ $Template->Set_filenames(array(
 //--------------------------------------------------------------------- Params
 // A protéger impérativement;
 $pageNum = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
-$modName = !empty($_GET['module']) ? securit($_GET['module']) : 'All';
+$modName = !empty($_GET['module']) ? securit($_GET['module']) : 'all';
 $search = !empty($_POST['search']) ? securit($_POST['search']) : '';
 $selectedModules = !empty($_POST['searched_modules']) ? $_POST['searched_modules'] : array();
 $p = 0;
@@ -163,13 +163,13 @@ if( $search != '' )
     }
     
     $allhtmlResult = '';
-    Get_HTML_Results($results, $allhtmlResult, $Modules, 'All');
+    Get_HTML_Results($results, $allhtmlResult, $Modules, 'all');
     $allhtmlResult .= '<script type="text/javascript">
         <!--
             nbResults[\'all\'] = '.$nbResults.';
             
             if( browserAJAXFriendly() )
-                show_div(\'resultsAll_0\');
+                show_div(\'results_all_0\');
         -->
         </script>';
     
