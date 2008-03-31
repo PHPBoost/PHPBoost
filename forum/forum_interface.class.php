@@ -174,25 +174,25 @@ class ForumInterface extends ModuleInterface
         if ( $where == 'all' )         // All
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
-                msg.id AS `id_content`,
+                MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
-                ( 4 * MATCH(t.title) AGAINST('".$search."') + MATCH(msg.contents) AGAINST('".$search."') ) / 5 AS `relevance`,
-                CONCAT(CONCAT(CONCAT('../forum/topic.php?id=',t.id),'#'),msg.id)  AS `link`
+                MAX(( 2 * MATCH(t.title) AGAINST('".$search."') + MATCH(msg.contents) AGAINST('".$search."') ) / 3) AS `relevance`,
+                '../forum/topic.php?id='||t.id||'#m'||msg.id  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
             WHERE ( MATCH(t.title) AGAINST('".$search."') OR MATCH(msg.contents) AGAINST('".$search."') )
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." ".$auth_cats."
-            GROUP BY msg.id
+            GROUP BY t.id
             ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
         
         if ( $where == 'contents' )    // Contents
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
-                msg.id AS `id_content`,
+                MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
-                MATCH(msg.contents) AGAINST('".$search."') AS `relevance`,
-                CONCAT(CONCAT(CONCAT('../forum/topic.php?id=',t.id),'#'),msg.id) AS `link`
+                MAX(MATCH(msg.contents) AGAINST('".$search."')) AS `relevance`,
+                '../forum/topic.php?id='||t.id||'#m'||msg.id  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
@@ -207,7 +207,7 @@ class ForumInterface extends ModuleInterface
                 msg.id AS `id_content`,
                 t.title AS `title`,
                 MATCH(t.title) AGAINST('".$search."') AS `relevance`,
-                CONCAT(CONCAT(CONCAT('../forum/topic.php?id=',t.id),'#'),msg.id) AS `link`
+                '../forum/topic.php?id='||t.id||'#m'||msg.id  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
