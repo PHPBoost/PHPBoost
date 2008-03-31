@@ -172,7 +172,18 @@ class ModuleInterface
         return in_array(strtolower($functionnality), $this->functionnalities);
     }
     
-	//------------------------------------------------------------------ PRIVATE
+    function HasFunctionnalities($functionnalities)
+    /**
+     *  Test the availability of all the functionnalities
+     */
+    {
+        $nbFunctionnalities = count($functionnalities);
+        for ( $i = 0; $i < $nbFunctionnalities; $i++ )
+            $functionnalities[$i] = strtolower($functionnalities[$i]);
+        return $functionnalities === array_intersect($functionnalities, $this->functionnalities);
+    }
+    
+    //------------------------------------------------------------------ PRIVATE
 	/**
 	 *  For compatibility reasons with PHP4, the private, protected and public
 	 *  keywords are not used.
