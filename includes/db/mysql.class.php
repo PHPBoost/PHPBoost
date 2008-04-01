@@ -146,12 +146,12 @@ class Sql
     //      - chaine PHP  : $strPHP = "'ma chaine'" ou $strPHP='\'ma chaine\''
     function Sql_concat()
     {
-        $numArgs = func_num_args();
+        $nbr_args = func_num_args();
         $concatString = func_get_arg(0);
-        for ( $i = 1; $i < $numArgs; $i++ )
-            $concatString = 'CONCAT('.$concatString.','.func_get_arg($i).')';
+        for($i = 1; $i < $nbr_args; $i++)
+            $concatString = 'CONCAT(' . $concatString . ',' . func_get_arg($i) . ')';
         
-        return ' '.$concatString.' ';
+        return ' ' . $concatString . ' ';
     }
     
 	//Balayage du retour de la requête sous forme de tableau indexé par le nom des champs.
