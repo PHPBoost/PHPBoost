@@ -3,7 +3,7 @@
 *                             parse.class.php
 *                            -------------------
 *   begin                : November 29, 2007
-*   copyright          : (C) 2007 Régis Viarre, Benoit Sautel, Rouchon Loïc
+*   copyright          : (C) 2007 Régis Viarre, Benoit Sautel, Loïc Rouchon
 *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com, horn@phpboost.com
 *
 *   
