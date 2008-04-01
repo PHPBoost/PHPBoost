@@ -51,51 +51,71 @@
 		</table>
 		
 		<br /><br />
-
-		# START visit #
+		
+		# IF C_STATS_SITE #
+		<table class="module_table">
+			<tr>
+				<th colspan="3">
+					{L_SITE}
+				</th>
+			</tr>
+			<tr>
+				<td class="row1">
+					{L_START}: <strong>{START}</strong>
+				</td>		
+			</tr>
+			<tr>
+				<td class="row1">
+					{L_VERSION} PHPBoost: <strong>{VERSION}</strong>
+				</td>		
+			</tr>	
+		</table>
+		# ENDIF #
+		
+		# IF C_STATS_VISIT #
 		<form action="admin_stats.php#stats" method="get">
 			<table class="module_table">
 				<tr>
 					<th>
-						{L_VISITORS} {visit.MONTH} {visit.U_YEAR}
+						{L_VISITORS} {MONTH} {U_YEAR}
 					</th>
 				</tr>
 				<tr>
 					<td class="row2" style="text-align:center;">
 						<div style="width:50%;text-align:center;margin:auto">
-							<p class="text_strong">{L_TOTAL}: {visit.VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {visit.VISIT_DAY}</p>
-							<a href="admin_stats{visit.U_PREVIOUS_LINK}#stats">&laquo;</a>&nbsp;&nbsp;&nbsp;&nbsp;
-							# START visit.days #
+							<p class="text_strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
+							<a href="admin_stats{U_PREVIOUS_LINK}#stats">&laquo;</a>&nbsp;&nbsp;&nbsp;&nbsp;
+							# START days #
 							<select name="d">
-								{visit.days.DAY}
+								{days.DAY}
 							</select>
-							# END visit.days #
-							# START visit.months #
+							# END days #
+							# START months #
 							<select name="m">
-								{visit.months.MONTH}
+								{months.MONTH}
 							</select>
-							# END visit.months #
-							# START visit.years #
+							# END months #
+							# START years #
 							<select name="y">
-								{visit.years.YEAR}
+								{years.YEAR}
 							</select>
-							 # END visit.years #
-							<input type="hidden" name="{visit.TYPE}" value="1" />
+							 # END years #
+							<input type="hidden" name="{TYPE}" value="1" />
 							<input type="submit" name="date" value="{L_SUBMIT}" class="submit" />
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							<a href="admin_stats{visit.U_NEXT_LINK}#stats">&raquo;</a>				
+							<a href="admin_stats{U_NEXT_LINK}#stats">&raquo;</a>				
 						</div>
 						<br />
-						# START visit.no_gd #
+						# START no_gd #
 						<br />
 						<table class="module_table" style="width:400px;margin:auto;">
 							<tr>
 								<td style="background-color: #000000;width:1px;"></td>
 								<td style="height:200px;width:10px;vertical-align:top;text-align:center;font-size:9px;">
-									{visit.MAX_NBR}
+									{MAX_NBR}
 								</td>
 									
-								# START visit.no_gd.values #								
+								# START no_gd.values #								
 								<td style="height:200px;width:10px;vertical-align:bottom;">
 									<table class="module_table" style="width:14px;margin:auto;">
 										# START head #
@@ -105,46 +125,46 @@
 										</tr>
 										# END head #
 										<tr>
-											<td style="margin-left:2px;width:10px;height:{visit.no_gd.values.HEIGHT}px;background-image: url(../templates/{THEME}/images/stats.png);background-repeat:repeat-y;padding:0px">
+											<td style="margin-left:2px;width:10px;height:{no_gd.values.HEIGHT}px;background-image: url(../templates/{THEME}/images/stats.png);background-repeat:repeat-y;padding:0px">
 											</td>
 										</tr>
 									</table>
 								</td>	
-								# END visit.no_gd.values #
+								# END no_gd.values #
 								
-								# START visit.no_gd.end_td #							
-									{visit.no_gd.end_td.END_TD}							
-								# END visit.no_gd.end_td #
+								# START no_gd.end_td #							
+									{no_gd.end_td.END_TD}							
+								# END no_gd.end_td #
 							</tr>
 							<tr>
 								<td style="background-color: #000000;width:1px"></td>
 								<td style="width:10px;font-size:9px;">
 									0
 								</td>								
-								# START visit.no_gd.legend #								
+								# START no_gd.legend #								
 								<td style="text-align:center;width:13px;font-size:9px;">
-									{visit.no_gd.legend.LEGEND}
+									{no_gd.legend.LEGEND}
 								</td>								
-								# END visit.no_gd.legend #								
+								# END no_gd.legend #								
 							</tr>
 							<tr>
-								<td style="height:1px;background-color: #000000;" colspan="{visit.COLSPAN}"></td>
+								<td style="height:1px;background-color: #000000;" colspan="{COLSPAN}"></td>
 							</tr>
 						</table>
 						<br />
-						# END visit.no_gd #
+						# END no_gd #
 						
 						{GRAPH_RESULT}
 					</td>
 				</tr>
 				<tr>
-					<td class="row2" style="text-align:center;" colspan="{visit.COLSPAN}">
-						{L_TOTAL}: {visit.SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {visit.MOY_NBR}
+					<td class="row2" style="text-align:center;" colspan="{COLSPAN}">
+						{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}
 					</td>
 				</tr>
 				<tr>
 					<td class="row2" style="text-align:center;">
-						{visit.U_VISITS_MORE}
+						{U_VISITS_MORE}
 					</td>
 				</tr>
 			</table>
@@ -159,21 +179,21 @@
 					{L_VISITS_DAY}
 				</th>
 			</tr>			
-			# START visit.value #
+			# START value #
 			<tr>
 				<td class="row3" style="font-size:10px;width:50%">
-					{visit.value.U_DETAILS}
+					{value.U_DETAILS}
 				</td>
 				<td class="row3" style="font-size:10px;width:50%">
-					{visit.value.NBR}
+					{value.NBR}
 				</td>
 			</tr>		
-			# END visit.value #
+			# END value #
 		</table>
-		# END visit #
+		# ENDIF #
 
 
-		# START browsers #
+		# IF C_STATS_BROWSERS #
 		<table class="module_table">
 			<tr>
 				<th colspan="3">
@@ -183,30 +203,30 @@
 			<tr>
 				<td class="row1" style="width:50%;padding-top:30px;vertical-align:top">
 					<table class="module_table">
-						# START browsers.browsers_list #			
+						# START list #			
 						<tr style="height:35px;">
 							<td style="text-align:center;" class="row2">	
-								{browsers.browsers_list.IMG}
+								{list.IMG}
 							</td>
 							<td style="text-align:center;" class="row2">			
-								<div style="margin:auto;width:10px;height:10px;margin:auto;background:{browsers.browsers_list.COLOR};border:1px solid black;"></div>
+								<div style="margin:auto;width:10px;height:10px;margin:auto;background:{list.COLOR};border:1px solid black;"></div>
 							</td>
 							<td style="text-align:center;" class="row2">
-								 {browsers.browsers_list.L_NAME} <span class="text_small">({browsers.browsers_list.PERCENT}%)</span>
+								 {list.L_NAME} <span class="text_small">({list.PERCENT}%)</span>
 							</td>				
 						</tr>
-						# END browsers.browsers_list #
+						# END list #
 					</table>
 				</td>
 				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-					{browsers.GRAPH_RESULT}
+					{GRAPH_RESULT}
 				</td>
 			</tr>
 		</table>
-		# END browsers #
+		# ENDIF #
 
 
-		# START os #
+		# IF C_STATS_OS #
 		<table class="module_table">
 			<tr>
 				<th colspan="3">
@@ -216,30 +236,30 @@
 			<tr style="height:35px;">
 				<td class="row1" style="width:50%;padding-top:30px;vertical-align:top">
 					<table class="module_table">
-						# START os.os_list #			
+						# START list #			
 						<tr style="height:35px;">
 							<td style="text-align:center;" class="row2">		
-								{os.os_list.IMG}
+								{list.IMG}
 							</td>
 							<td style="text-align:center;" class="row2">			
-								<div style="margin:auto;width:10px;height:10px;background:{os.os_list.COLOR};border:1px solid black;"></div>
+								<div style="margin:auto;width:10px;height:10px;background:{list.COLOR};border:1px solid black;"></div>
 							</td>
 							<td style="text-align:center;" class="row2">
-								{os.os_list.L_NAME} <span class="text_small">({os.os_list.PERCENT}%)</span>
+								{list.L_NAME} <span class="text_small">({list.PERCENT}%)</span>
 							</td>				
 						</tr>
-						# END os.os_list #
+						# END list #
 					</table>
 				</td>
 				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-					{os.GRAPH_RESULT}
+					{GRAPH_RESULT}
 				</td>
 			</tr>
 		</table>
-		# END os #
+		# ENDIF #
 
 		
-		# START lang #
+		# IF C_STATS_LANG #
 		<table class="module_table">
 			<tr>
 				<th colspan="3">
@@ -249,23 +269,23 @@
 			<tr style="height:35px;">
 				<td class="row1" style="width:50%;padding-top:30px;vertical-align:top">
 					<table class="module_table">
-						# START lang.lang_list #			
+						# START list #			
 						<tr>
 							<td style="text-align:center;" class="row2">			
-								{lang.lang_list.IMG}
+								{list.IMG}
 							</td>
 							<td style="text-align:center;" class="row2">			
-								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{lang.lang_list.COLOR};border:1px solid black;"></div>
+								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{list.COLOR};border:1px solid black;"></div>
 							</td>
 							<td style="text-align:center;" class="row2">
-								{lang.lang_list.L_NAME} <span class="text_small">({lang.lang_list.PERCENT}%)</span>
+								{list.L_NAME} <span class="text_small">({list.PERCENT}%)</span>
 							</td>				
 						</tr>
-						# END lang.lang_list #
+						# END list #
 					</table>
 				</td>
 				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-					{lang.GRAPH_RESULT}
+					{GRAPH_RESULT}
 				</td>
 			</tr>
 			<tr>
@@ -274,30 +294,10 @@
 				</td>
 			</tr>
 		</table>
-		# END lang #
-
+		# ENDIF #
 		
-		# START site #
-		<table class="module_table">
-			<tr>
-				<th colspan="3">
-					{L_SITE}
-				</th>
-			</tr>
-			<tr>
-				<td class="row1">
-					{L_START}: <strong>{site.START}</strong>
-				</td>		
-			</tr>
-			<tr>
-				<td class="row1">
-					{L_VERSION} PHPBoost: <strong>{site.VERSION}</strong>
-				</td>		
-			</tr>	
-		</table>
-		# END site #
 
-		# START referer #
+		# IF C_STATS_REFERER #
 		<script type="text/javascript">
 		<!--
 		function XMLHttpRequest_referer(divid)
@@ -359,41 +359,42 @@
 					{L_TREND}
 				</th>
 			</tr>
-			# START referer.referer_list #	
+			# START referer_list #	
 			<tr>
 				<td class="row2" style="padding:0px;margin:0px;" colspan="5">			
 					<table style="width:100%;border:none;border-collapse:collapse;">
 						<tr>
 							<td style="text-align:center;">		
-								{referer.referer_list.IMG_MORE} <span class="text_small">({referer.referer_list.NBR_LINKS})</span> <a href="{referer.referer_list.URL}">{referer.referer_list.URL}</a>	<span id="load{referer.referer_list.ID}"></span>	 			
+								{referer_list.IMG_MORE} <span class="text_small">({referer_list.NBR_LINKS})</span> <a href="{referer_list.URL}">{referer_list.URL}</a>	<span id="load{referer_list.ID}"></span>	 			
 							</td>
 							<td style="width:112px;text-align:center;">
-								{referer.referer_list.TOTAL_VISIT}
+								{referer_list.TOTAL_VISIT}
 							</td>
 							<td style="width:112px;text-align:center;">
-								{referer.referer_list.AVERAGE_VISIT}
+								{referer_list.AVERAGE_VISIT}
 							</td>
 							<td style="width:102px;text-align:center;">
-								{referer.referer_list.LAST_UPDATE}
+								{referer_list.LAST_UPDATE}
 							</td>
 							<td style="width:105px;">
-								{referer.referer_list.TREND}
+								{referer_list.TREND}
 							</td>
 						</tr>
 					</table>
-					<div id="url{referer.referer_list.ID}" style="display:none;width:100%;"></div>					
+					<div id="url{referer_list.ID}" style="display:none;width:100%;"></div>					
 				</td>	
 			</tr>
-			# END referer.referer_list #
+			# END referer_list #
 			<tr>
 				<td class="row3" colspan="5" style="text-align:center;">
 					{PAGINATION}&nbsp;
 				</td>
 			</tr>
 		</table>
-		# END referer #
+		# ENDIF #
 		
-		# START keyword #
+		
+		# IF C_STATS_KEYWORD #
 		<script type="text/javascript">
 		<!--
 		function XMLHttpRequest_referer(divid)
@@ -443,41 +444,42 @@
 					{L_TREND}
 				</th>
 			</tr>
-			# START keyword.keyword_list #	
+			# START keyword_list #	
 			<tr>
 				<td class="row2" style="padding:0px;margin:0px;" colspan="5">			
 					<table style="width:100%;border:none;border-collapse:collapse;">
 						<tr>
 							<td style="text-align:center;">		
-								{keyword.keyword_list.IMG_MORE} <span class="text_small">({keyword.keyword_list.NBR_LINKS})</span> {keyword.keyword_list.KEYWORD}	<span id="load{keyword.keyword_list.ID}"></span>	 			
+								{keyword_list.IMG_MORE} <span class="text_small">({keyword_list.NBR_LINKS})</span> {keyword_list.KEYWORD}	<span id="load{keyword_list.ID}"></span>	 			
 							</td>
 							<td style="width:112px;text-align:center;">
-								{keyword.keyword_list.TOTAL_VISIT}
+								{keyword_list.TOTAL_VISIT}
 							</td>
 							<td style="width:112px;text-align:center;">
-								{keyword.keyword_list.AVERAGE_VISIT}
+								{keyword_list.AVERAGE_VISIT}
 							</td>
 							<td style="width:102px;text-align:center;">
-								{keyword.keyword_list.LAST_UPDATE}
+								{keyword_list.LAST_UPDATE}
 							</td>
 							<td style="width:105px;">
-								{keyword.keyword_list.TREND}
+								{keyword_list.TREND}
 							</td>
 						</tr>
 					</table>
-					<div id="url{keyword.keyword_list.ID}" style="display:none;width:100%;"></div>					
+					<div id="url{keyword_list.ID}" style="display:none;width:100%;"></div>					
 				</td>	
 			</tr>
-			# END keyword.keyword_list #
+			# END keyword_list #
 			<tr>
 				<td class="row3" colspan="5" style="text-align:center;">
 					{PAGINATION}&nbsp;
 				</td>
 			</tr>
 		</table>
-		# END keyword #
+		# ENDIF #
 		
-		# START members #
+		
+		# IF C_STATS_MEMBERS #
 		<table class="module_table">
 			<tr>
 				<th colspan="2">	
@@ -489,7 +491,7 @@
 					{L_MEMBERS}
 				</td>
 				<td class="row2">
-					{members.MEMBERS}
+					{MEMBERS}
 				</td>
 			 </tr>
 			<tr>
@@ -497,13 +499,11 @@
 					{L_LAST_MEMBER}
 				</td>
 				<td class="row2">
-					<a href="../member/member{members.U_LAST_USER_ID}">{members.LAST_USER}</a>
+					<a href="../member/member{U_LAST_USER_ID}">{LAST_USER}</a>
 				</td>
 			</tr>
 		</table>
-
 		<br /><br />
-
 		<table class="module_table">
 			<tr>
 				<th colspan="2">	
@@ -525,19 +525,19 @@
 							</td>				
 						</tr>
 						
-						# START members.templates #	
+						# START templates #	
 						<tr>
 							<td style="text-align:center;" class="row2">			
-								{members.templates.THEME} <span class="text_small">({members.templates.PERCENT}%)</span>
+								{templates.THEME} <span class="text_small">({templates.PERCENT}%)</span>
 							</td>							
 							<td style="text-align:center;" class="row2">			
-								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{members.templates.COLOR};border:1px solid black;"></div>
+								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{templates.COLOR};border:1px solid black;"></div>
 							</td>
 							<td style="text-align:center;" class="row2">
-								{members.templates.NBR_THEME}
+								{templates.NBR_THEME}
 							</td>				
 						</tr>
-						# END members.templates #		
+						# END templates #		
 					</table>
 				</td>
 				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
@@ -545,9 +545,7 @@
 				</td>
 			</tr>
 		</table>
-
 		<br /><br />
-		
 		<table class="module_table">
 			<tr>
 				<th colspan="2">	
@@ -569,30 +567,28 @@
 							</td>				
 						</tr>
 						
-						# START members.sex #	
+						# START sex #	
 						<tr>
 							<td style="text-align:center;" class="row2">			
-								{members.sex.SEX} <span class="text_small">({members.sex.PERCENT}%)</span>
+								{sex.SEX} <span class="text_small">({sex.PERCENT}%)</span>
 							</td>							
 							<td style="text-align:center;" class="row2">			
-								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{members.sex.COLOR};border:1px solid black;"></div>
+								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{sex.COLOR};border:1px solid black;"></div>
 							</td>
 							<td style="text-align:center;" class="row2">
-								{members.sex.NBR_MBR}
+								{sex.NBR_MBR}
 							</td>				
 						</tr>
-						# END members.sex #	
+						# END sex #	
 						
 					</table>
 				</td>
 				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-					{members.GRAPH_RESULT_SEX}
+					{GRAPH_RESULT_SEX}
 				</td>
 			</tr>
 		</table>
-
 		<br /><br />
-		
 		<table class="module_table">
 			<tr>
 				<th colspan="3">	
@@ -601,7 +597,7 @@
 			</tr>
 			<tr>
 				<td class="row3" style="text-align:center;">
-					N�
+					N°
 				</td>
 				<td class="row3" style="text-align:center;">
 					{L_PSEUDO}
@@ -610,26 +606,25 @@
 					{L_MSG}
 				</td>
 			</tr>
-			
-			# START members.top_poster #			
+			# START top_poster #			
 			<tr>
 				<td class="row1" style="text-align:center;">
-					{members.top_poster.ID}
+					{top_poster.ID}
 				</td>
 				<td class="row1" style="text-align:center;">
-					<a href="../member/member{members.top_poster.U_MEMBER_ID}">{members.top_poster.LOGIN}</a>
+					<a href="../member/member{top_poster.U_MEMBER_ID}">{top_poster.LOGIN}</a>
 				</td>
 				<td class="row1" style="text-align:center;">
-					{members.top_poster.USER_POST}
+					{top_poster.USER_POST}
 				</td>
 			</tr>			
-			# END members.top_poster #
+			# END top_poster #
 			
 		</table>
-		# END members #
+		# ENDIF #
 
 		
-		# START robots #
+		# IF C_STATS_ROBOTS #
 		<form action="admin_stats.php?bot=1#stats" name="form" method="post" style="margin:auto;" onsubmit="return check_form();">
 			<table class="module_table">
 				<tr> 
@@ -685,5 +680,5 @@
 				<input type="submit" name="erase" value="{L_ERASE_RAPPORT}" class="reset" /> 
 			</fieldset>
 		</form>
-		# END robots #
+		# ENDIF #
 		

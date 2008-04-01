@@ -84,8 +84,54 @@ else
 		'admin_smileys_add' => '../templates/' . $CONFIG['theme'] . '/admin/admin_smileys_add.tpl'
 	));
 	
+	//Gestion erreur.
+	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_smiley_already_exist');
+	if( in_array($get_error, $array_error) )
+		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
+	if( $get_error == 'incomplete' )
+		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		
+	//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
+	$smiley_options = '';
+	$rep = '../images/smileys';
+	$y = 0;
+	if( is_dir($rep) ) //Si le dossier existe
+	{
+		$file_array = array();
+		$dh = @opendir($rep);
+		while( !is_bool($file = readdir($dh)) )
+		{	
+			if( $file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db' )
+				$file_array[] = $file; //On crée un array, avec les different fichiers.
+		}	
+		closedir($dh); //On ferme le dossier
+
+		$result = $Sql->Query_while("SELECT url_smiley
+		FROM ".PREFIX."smileys", __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
+		{
+			//On recherche les clées correspondante à celles trouvée dans la bdd.
+			$key = array_search($row['url_smiley'], $file_array);
+			if( $key !== false)
+				unset($file_array[$key]); //On supprime ces clées du tableau.
+		}
+		$Sql->Close($result);
+		
+		foreach($file_array as $smiley)
+		{
+			if( $y == 0)
+			{
+				$smiley_options .= '<option value="" selected="selected">--</option>';
+				$y++;
+			}
+			else
+				$smiley_options .= '<option value="' . $smiley . '">' . $smiley . '</option>';
+		}
+	}	
+	
 	$Template->Assign_vars(array(
-		'THEME' => $CONFIG['theme'],
+		'SMILEY_OPTIONS' => $smiley_options,
 		'L_REQUIRE_CODE' => $LANG['require_code'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
 		'L_ADD_SMILEY' => $LANG['add_smiley'],
@@ -100,58 +146,7 @@ else
 		'L_ADD' => $LANG['add'],
 		'L_RESET' => $LANG['reset'],
 	));
-
-	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
-	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_smiley_already_exist');
-	if( in_array($get_error, $array_error) )
-		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
-	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
-	//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
-	$rep = '../images/smileys';
-	$y = 0;
-	if( is_dir($rep) ) //Si le dossier existe
-	{
-		$dh = @opendir($rep);
-		while( !is_bool($file = readdir($dh)) )
-		{	
-			if( $file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db' )
-				$fichier_array[] = $file; //On crée un array, avec les different fichiers.
-		}	
-		closedir($dh); //On ferme le dossier
-
-		if( is_array($fichier_array) )
-		{			
-			$result = $Sql->Query_while("SELECT url_smiley
-			FROM ".PREFIX."smileys", __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
-				//On recherche les clées correspondante à celles trouvée dans la bdd.
-				$key = array_search($row['url_smiley'], $fichier_array);
-				if( $key !== false)
-					unset($fichier_array[$key]); //On supprime ces clées du tableau.
-			}
-			$Sql->Close($result);
-			
-			foreach($fichier_array as $smiley)
-			{
-				if( $y == 0)
-				{
-					$option = '<option value="" selected="selected">--</option>';
-					$y++;
-				}
-				else
-					$option = '<option value="' . $smiley . '">' . $smiley . '</option>';
-				
-				$Template->Assign_block_vars('select', array(
-					'URL_SMILEY' => $option
-				));
-			}
-		}
-	}	
-	
 	$Template->Pparse('admin_smileys_add'); 
 }
 

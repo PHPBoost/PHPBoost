@@ -98,10 +98,8 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=punish');
 		}	
 		
-		$Template->Assign_block_vars('user_list', array(
-		));
-		
 		$Template->Assign_vars(array(
+			'C_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_punish_until'],
 			'L_ACTION_USER' => $LANG['punishment_management'],
@@ -118,7 +116,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		ORDER BY user_readonly DESC", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			$Template->Assign_block_vars('user_list.list', array(
+			$Template->Assign_block_vars('list', array(
 				'LOGIN' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
 				'U_PROFILE' => '../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
@@ -131,8 +129,9 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		
 		if( $i === 0 )
 		{
-			$Template->Assign_block_vars('user_list.empty', array(
-				'NO_USER' => $LANG['no_punish'],
+			$Template->Assign_vars(array(
+				'C_NO_USER' => true,
+				'L_NO_USER' => $LANG['no_ban'],
 			));
 		}
 	}
@@ -151,7 +150,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		if( $diff > 0 )
 		{
 			//Retourne la sanction la plus proche correspondant au temp de bannissement. 
-			for($i = 11; $i >= 0; $i--)
+			for($i = 12; $i > 0; $i--)
 			{					
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
 				if( ($diff - $array_time[$i]) > $avg ) 
@@ -169,16 +168,8 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		}	
 		
 		$Template->Assign_vars(array(
+			'C_USER_INFO' => true,
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
-			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
-			'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
-			'L_PM' => $LANG['user_contact_pm'],
-			'L_LOGIN' => $LANG['pseudo'],
-			'L_PM' => $LANG['user_contact_pm'],
-			'L_CHANGE_INFO' => $LANG['submit']
-		));	
-		
-		$Template->Assign_block_vars('user_info', array(			
 			'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
 			'INFO' => $array_sanction[$key_sanction],
 			'SELECT' => $select,
@@ -203,7 +194,13 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 			'document.getElementById(\'action_info\').innerHTML = replace_value;',
 			'REGEX' => '/[0-9]+ [a-zA-Z]+/',
 			'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
-			'U_ACTION_INFO' => '.php?action=punish&amp;id=' . $id_get
+			'U_ACTION_INFO' => '.php?action=punish&amp;id=' . $id_get,
+			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
+			'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
+			'L_PM' => $LANG['user_contact_pm'],
+			'L_LOGIN' => $LANG['pseudo'],
+			'L_PM' => $LANG['user_contact_pm'],
+			'L_CHANGE_INFO' => $LANG['submit']
 		));		
 
 		$_field = 'action_contents';
@@ -272,6 +269,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		}		
 		
 		$Template->Assign_vars(array(
+			'C_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_warning_level'],
 			'L_PM' => $LANG['user_contact_pm'],
@@ -281,9 +279,6 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 		));
 		
-		$Template->Assign_block_vars('user_list', array(
-		));
-		
 		$i = 0;
 		$result = $Sql->Query_while("SELECT user_id, login, user_warning
 		FROM ".PREFIX."member
@@ -291,7 +286,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		ORDER BY user_warning", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			$Template->Assign_block_vars('user_list.list', array(
+			$Template->Assign_block_vars('list', array(
 				'LOGIN' => $row['login'],
 				'INFO' => $row['user_warning'] . '%',
 				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="" /></a>',
@@ -304,8 +299,9 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		
 		if( $i === 0 )
 		{
-			$Template->Assign_block_vars('user_list.empty', array(
-				'NO_USER' => $LANG['no_user_warning'],
+			$Template->Assign_vars(array(
+				'C_NO_USER' => true,
+				'L_NO_USER' => $LANG['no_ban'],
 			));
 		}
 	}
@@ -313,17 +309,6 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 	{
 		$member = $Sql->Query_array('member', 'login', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 
-		
-		$Template->Assign_vars(array(
-			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
-			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
-			'L_INFO_EXPLAIN' => $LANG['user_warning_explain'],
-			'L_PM' => $LANG['user_contact_pm'],
-			'L_INFO' => $LANG['user_warning_level'],
-			'L_PM' => $LANG['user_contact_pm'],
-			'L_CHANGE_INFO' => $LANG['change_user_warning']
-		));			
-			
 		//On crée le formulaire select
 		$select = '';
 		$j = 0;
@@ -335,7 +320,9 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 		}
 		
-		$Template->Assign_block_vars('user_info', array(			
+		$Template->Assign_vars(array(
+			'C_USER_INFO' => true,
+			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
 			'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
 			'SELECT' => $select,
@@ -343,6 +330,12 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			'REGEX' => '/ [0-9]+%/',
 			'U_ACTION_INFO' => '.php?action=warning&amp;id=' . $id_get,
 			'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
+			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
+			'L_INFO_EXPLAIN' => $LANG['user_warning_explain'],
+			'L_PM' => $LANG['user_contact_pm'],
+			'L_INFO' => $LANG['user_warning_level'],
+			'L_PM' => $LANG['user_contact_pm'],
+			'L_CHANGE_INFO' => $LANG['change_user_warning']
 		));	
 
 		$_field = 'action_contents';
@@ -392,10 +385,8 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=ban');
 		}	
 		
-		$Template->Assign_block_vars('user_list', array(
-		));
-		
 		$Template->Assign_vars(array(
+			'C_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_ban_until'],
 			'L_ACTION_USER' => $LANG['ban_management'],
@@ -412,7 +403,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		ORDER BY user_ban", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			$Template->Assign_block_vars('user_list.list', array(
+			$Template->Assign_block_vars('list', array(
 				'LOGIN' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 				'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
 				'U_PROFILE' => '../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
@@ -425,8 +416,9 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		
 		if( $i === 0 )
 		{
-			$Template->Assign_block_vars('user_list.empty', array(
-				'NO_USER' => $LANG['no_ban'],
+			$Template->Assign_vars(array(
+				'C_NO_USER' => true,
+				'L_NO_USER' => $LANG['no_ban'],
 			));
 		}
 	}
@@ -434,19 +426,6 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 	{
 		$mbr = $Sql->Query_array('member', 'login', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 				
-		$Template->Assign_vars(array(
-			'L_PM' => $LANG['user_contact_pm'],
-			'L_LOGIN' => $LANG['pseudo'],
-			'L_BAN' => $LANG['ban_user'],
-			'L_DELAY_BAN' => $LANG['user_ban_delay'],
-		));	
-			
-		$Template->Assign_block_vars('user_ban', array(			
-			'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $mbr['login'] . '</a>',
-			'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
-			'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get
-		));	
-		
 		//Temps de bannissement.
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
 		$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], $LANG['illimited']); 
@@ -456,7 +435,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		if( $diff > 0 )
 		{
 			//Retourne la sanction la plus proche correspondant au temp de bannissement. 
-			for($i = 11; $i >= 0; $i--)
+			for($i = 12; $i > 0; $i--)
 			{					
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
 				if( ($diff - $array_time[$i]) > $avg )  
@@ -468,19 +447,29 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		}	
 		if( $mbr['user_warning'] == 100 )
 			$key_sanction = 12;
-			
+		
+		$ban_options = '';		
 		//Affichge des sanctions
 		foreach( $array_time as $key => $time)
 		{
 			$selected = ($key_sanction == $key) ? 'selected="selected"' : '' ;
-			$Template->Assign_block_vars('user_ban.select_ban', array(
-				'TIME' => '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>'
-			));
-		}	
-
+			$ban_options .= '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>';
+		}
+		
+		$Template->Assign_vars(array(
+			'C_USER_BAN' => true,
+			'BAN_OPTIONS' => $ban_options,
+			'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $mbr['login'] . '</a>',
+			'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
+			'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get,
+			'L_PM' => $LANG['user_contact_pm'],
+			'L_LOGIN' => $LANG['pseudo'],
+			'L_BAN' => $LANG['ban_user'],
+			'L_DELAY_BAN' => $LANG['user_ban_delay'],
+		));	
+			
 		$_field = 'action_contents';
 		include_once('../includes/bbcode.php');
-				
 	}
 }
 

@@ -12,8 +12,6 @@
 		-->
 		</script>
 
-		# START register #
-
 		<div id="admin_quick_menu">
 			<ul>
 				<li class="title_menu">{L_TERMS}</li>
@@ -47,7 +45,5 @@
 					<input type="reset" value="{L_RESET}" class="reset" />		
 				</fieldset>	
 			</form>
-
-			# END register #
 		</div>
 		

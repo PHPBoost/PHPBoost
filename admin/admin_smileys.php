@@ -65,7 +65,7 @@ elseif( !empty($id) && $edit ) //Edition.
 {
 	$Template->Set_filenames(array(
 		'admin_smileys_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_smileys_management2.tpl'
-	 ));
+	));
 
 	$row = $Sql->Query_array('smileys', 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
 	$url_smiley = $row['url_smiley'];
@@ -75,12 +75,25 @@ elseif( !empty($id) && $edit ) //Edition.
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
+	$smiley_options = '';
+	$result = $Sql->Query_while("SELECT url_smiley 
+	FROM ".PREFIX."smileys", __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
+	{
+		if( $row['url_smiley'] == $url_smiley )
+			$selected = 'selected="selected"';
+		else
+			$selected = '';
+		$smiley_options .= '<option value="' . $row['url_smiley'] . '" ' . $selected . '>' . $row['url_smiley'] . '</option>';
+	}
+	$Sql->Close($result);
+	
 	$Template->Assign_vars(array(
 		'IDSMILEY' => $row['idsmiley'],
 		'URL_SMILEY' => $url_smiley,
 		'CODE_SMILEY' => $row['code_smiley'],
 		'IMG_SMILEY' => !empty($row['url_smiley']) ? '<img src="../images/smileys/' . $row['url_smiley'] . '" alt="" />' : '',
-		'THEME' => $CONFIG['theme'],
+		'SMILEY_OPTIONS' => $smiley_options,
 		'L_REQUIRE_CODE' => $LANG['require_code'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
 		'L_SMILEY_MANAGEMENT' => $LANG['smiley_management'],
@@ -92,21 +105,6 @@ elseif( !empty($id) && $edit ) //Edition.
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
 	));	
-	
-	$result = $Sql->Query_while("SELECT url_smiley 
-	FROM ".PREFIX."smileys", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
-	{
-		if( $row['url_smiley'] == $url_smiley )
-			$selected = 'selected="selected"';
-		else
-			$selected = '';
-		
-		$Template->Assign_block_vars('select', array(
-			'URL_SMILEY' => '<option value="' . $row['url_smiley'] . '" ' . $selected . '>' . $row['url_smiley'] . '</option>'
-		));
-	}
-	$Sql->Close($result);
 	
 	$Template->Pparse('admin_smileys_management2');
 }		

@@ -59,32 +59,26 @@
 								{L_DELETE}
 							</th>
 						</tr>
+						# START rank #
 						<tr>
-							# START rank #
-								<tr>
-									<td class="row2" style="text-align:center;"> 
-										<input type="text" maxlength="30" size="20" name="{rank.ID}name" id="vname" value="{rank.RANK}" class="text" />
-									</td>
-									<td class="row2" style="text-align:center;">
-										{rank.MSG}
-									</td>
-									<td class="row2" style="text-align:center;"> 						
-										
-										
-										<select name="{rank.ID}icon" onChange="img_change('icon{rank.ID}', this.options[selectedIndex].value)">
-											# START rank.select #
-												{rank.select.IMG_RANK}
-											# END rank.select #
-										</select>
-										<br />
-										<img src="../templates/{THEME}/images/ranks/{rank.IMG_RANK}" name="icon{rank.ID}" alt="" />
-									</td>
-									<td class="row2" style="text-align:center;">
-										{rank.DELETE}
-									</td>
-								</tr>
-							# END rank #
-						</tr>	
+							<td class="row2" style="text-align:center;"> 
+								<input type="text" maxlength="30" size="20" name="{rank.ID}name" id="vname" value="{rank.RANK}" class="text" />
+							</td>
+							<td class="row2" style="text-align:center;">
+								{rank.MSG}
+							</td>
+							<td class="row2" style="text-align:center;"> 						
+								<select name="{rank.ID}icon" onChange="img_change('icon{rank.ID}', this.options[selectedIndex].value)">
+									{rank.RANK_OPTIONS}
+								</select>
+								<br />
+								<img src="../templates/{THEME}/images/ranks/{rank.IMG_RANK}" name="icon{rank.ID}" alt="" />
+							</td>
+							<td class="row2" style="text-align:center;">
+								{rank.DELETE}
+							</td>
+						</tr>
+						# END rank #
 					</table>					
 				</fieldset>
 				<fieldset class="fieldset_submit">

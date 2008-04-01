@@ -87,9 +87,28 @@ else //Sinon on rempli le formulaire
 		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
-		
+	
+	//On recupère les images des groupes
+	$rank_options = '<option value="">--</option>';
+	
+	$rep = '../templates/' . $CONFIG['theme']  . '/images/ranks';
+	$j = 0;
+	$array_files = array();
+	if( is_dir($rep) ) //Si le dossier existe
+	{
+		$array_file = array();
+		$dh = @opendir($rep);
+		while( !is_bool($file = readdir($dh)) )
+		{	
+			if( $j > 1 && $file != 'index.php' && $file != 'Thumbs.db' )
+				$rank_options .= '<option value="' . $file . '">' . $file . '</option>';
+			$j++;
+		}	
+		closedir($dh); //On ferme le dossier
+	}	
+	
 	$Template->Assign_vars(array(
-		'THEME' => $CONFIG['theme'],
+		'RANK_OPTIONS' => $rank_options,
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
 		'L_CONFIRM_DEL_RANK' => $LANG['confirm_del_rank'],
@@ -107,31 +126,6 @@ else //Sinon on rempli le formulaire
 		'L_ADD' => $LANG['add']
 	));
 
-	//On recupère les images des groupes
-	$Template->Assign_block_vars('select', array(
-		'IMG_RANK' => '<option value="">--</option>'
-	));
-	
-	$rep = '../templates/' . $CONFIG['theme']  . '/images/ranks';
-	$j = 0;
-	$array_files = array();
-	if( is_dir($rep) ) //Si le dossier existe
-	{
-		$array_file = array();
-		$dh = @opendir($rep);
-		while( !is_bool($file = readdir($dh)) )
-		{	
-			if( $j > 1 && $file != 'index.php' && $file != 'Thumbs.db' )
-			{	
-				$Template->Assign_block_vars('select', array(
-					'IMG_RANK' => '<option value="' . $file . '">' . $file . '</option>'
-				));
-			}
-			$j++;
-		}	
-		closedir($dh); //On ferme le dossier
-	}	
-	
 	$Template->Pparse('admin_ranks_add');
 }
 

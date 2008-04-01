@@ -53,7 +53,7 @@
 							{L_MODULES_AVAILABLE}
 						</th>
 					</tr>
-					# START modules_available #
+					# IF C_MODULES_AVAILABLE #
 					<tr>
 						<td class="row2" style="width:160px;text-align:center;">
 							{L_NAME}
@@ -68,14 +68,14 @@
 							{L_INSTALL}
 						</td>
 					</tr>
-					# END modules_available #
-					# START no_module #
+					# ENDIF #
+					# IF C_NO_MODULE #
 					<tr>
 						<td class="row2" colspan="4" style="text-align:center;">
 							<strong>{L_NO_MODULES_AVAILABLE}</strong>
 						</td>
 					</tr>
-					# END no_module #
+					# ENDIF #
 					
 					
 					# START available #

@@ -74,9 +74,7 @@
 						<dt><label for="code_smiley">* {L_SMILEY_AVAILABLE}</label></dt>
 						<dd><label>
 							<select name="url_smiley" id="url_smiley" onChange="img_smiley(this.options[selectedIndex].value)">
-								# START select #						
-									{select.URL_SMILEY}						
-								# END select #
+								{SMILEY_OPTIONS}						
 							</select>
 							<span id="img_smiley"></span>
 						</label></dd>

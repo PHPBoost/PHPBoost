@@ -113,24 +113,21 @@ else //Sinon on rempli le formulaire
 		else
 			$del = $LANG['special_rank'];
 
+		$rank_options = '<option value="">--</option>';
+		foreach($array_files as $icon)
+		{			
+			$selected = ($icon == $row['icon']) ? ' selected="selected"' : '';
+			$rank_options .= '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>';
+		}
+		
 		$Template->Assign_block_vars('rank', array(
 			'ID' => $row['id'],
 			'RANK' => $row['name'],
 			'MSG' => ($row['special'] == 0) ? '<input type="text" maxlength="6" size="6" name="' . $row['id'] . 'msg" id="vmsg" value="' . $row['msg'] . '" class="text" />' : $LANG['special_rank'],
+			'RANK_OPTIONS' => $rank_options,
 			'IMG_RANK' => $row['icon'],
 			'DELETE' => $del
 		));
-		
-		$Template->Assign_block_vars('rank.select', array(
-			'IMG_RANK' => '<option value="">--</option>'
-		));
-		foreach($array_files as $icon)
-		{			
-			$selected = ($icon == $row['icon']) ? ' selected="selected"' : '';
-			$Template->Assign_block_vars('rank.select', array(
-				'IMG_RANK' => '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>'
-			));
-		}
 	}
 	$Sql->Close($result);
 	

@@ -62,9 +62,7 @@
 						<dt><label for="activ_mbr">{L_ACTIV_MBR}</label></dt>
 						<dd><label>
 							<select name="activ_mbr" id="activ_mbr">							
-							# START select_activ_mbr #				
-								{select_activ_mbr.MODE}				
-							# END select_activ_mbr #				
+								{ACTIV_MODE_OPTION}				
 							</select>
 						</label></dd>
 					</dl>

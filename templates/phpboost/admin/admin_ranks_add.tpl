@@ -81,9 +81,7 @@
 						<dt><label for="icon">{L_IMG_ASSOC}</label></dt>
 						<dd><label>
 							<select name="icon" id="icon" onChange="img_change('icon', this.options[selectedIndex].value)">
-							# START select #
-								{select.IMG_RANK}
-							# END select #
+								{RANK_OPTIONS}
 							</select>
 							<br />
 							<img src="../templates/{THEME}/images/ranks/rank_0.gif" name="icon" alt="" />

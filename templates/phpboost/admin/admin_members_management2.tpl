@@ -13,7 +13,6 @@
 				alert("{L_REQUIRE_RANK}");
 				return false;
 		    }
-			
 			return true;
 		}
 		-->
@@ -55,7 +54,7 @@
 
 		<div id="admin_contents">
 	
-			# START members_add #
+			# IF C_MEMBERS_ADD #
 			
 			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
@@ -66,7 +65,6 @@
 				</div>
 			</div>
 			# ENDIF #
-			
 			<form action="admin_members.php?add=1" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_MEMBERS_ADD}</legend>
@@ -105,16 +103,15 @@
 				</fieldset>	
 			</form>
 			
-			# END members_add #
+			# ENDIF #
 			
 			
-			# START members_management #
-			
+			# IF C_MEMBERS_MANAGEMENT #
 			<script type="text/javascript">
 			<!--
 			function check_select_multiple(id, status)
 			{
-				for(var i = 0; i < {members_management.NBR_GROUP}; i++)
+				for(var i = 0; i < {NBR_GROUP}; i++)
 				{	
 					if( document.getElementById(id + i) )
 						document.getElementById(id + i).selected = status;			
@@ -191,9 +188,7 @@
 						<dt><label for="level">{L_RANK}</label></dt>
 						<dd><label>
 							<select id="level" name="level">					
-								# START members_management.select_rank #	
-									{members_management.select_rank.RANK}
-								# END members_management.select_rank #						
+								{RANKS_OPTIONS}				
 							</select>
 						</label></dd>
 					</dl>	
@@ -201,9 +196,7 @@
 						<dt><label for="user_group">{L_GROUP}</label></dt>
 						<dd><label>
 							<select id="user_group" name="user_groups[]" size="6" multiple="multiple">
-								# START members_management.select_group #	
-									{members_management.select_group.GROUP}
-								# END members_management.select_group #						
+								{GROUPS_OPTIONS}
 							</select>
 							<br />
 							<a class="small_link" href="javascript:check_select_multiple('g', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('g', false);">{L_SELECT_NONE}</a>
@@ -212,10 +205,7 @@
 					<dl>
 						<dt><label for="user_lang">{L_LANG_CHOOSE}</label></dt>
 						<dd><label>
-							<select name="user_lang" id="user_lang" onchange="change_img_lang('img_lang', this.options[this.selectedIndex].value)">						
-								# START members_management.select_lang #						
-								{members_management.select_lang.LANG}						
-								# END members_management.select_lang #						
+								{LANG_OPTIONS}						
 							</select> <img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
 						</label></dd>
 					</dl>	
@@ -227,9 +217,7 @@
 						<dt><label for="user_theme">{L_THEME_CHOOSE}</label></dt>
 						<dd><label>
 							<select name="user_theme" id="user_theme" onChange="change_img_theme('img_theme', this.options[selectedIndex].value)">						
-								# START members_management.select_theme #						
-								{members_management.select_theme.THEME}						
-								# END members_management.select_theme #						
+								{THEME_OPTIONS}						
 							</select>
 							<img id="img_theme" src="../templates/{USER_THEME}/images/theme.jpg" alt="" style="vertical-align:top" />			
 						</label></dd>
@@ -239,9 +227,7 @@
 						<dd>
 							<label>
 								<select name="user_editor" id="user_editor">
-									# START members_management.select_editor #
-									{members_management.select_editor.SELECT_EDITORS}
-									# END members_management.select_editor #
+									{EDITOR_OPTIONS}
 								</select>
 							</label>
 						</dd>
@@ -251,9 +237,7 @@
 						<dd>
 							<label>
 								<select name="user_timezone" id="user_timezone">	
-									# START members_management.select_timezone #
-									{members_management.select_timezone.SELECT_TIMEZONE}
-									# END members_management.select_timezone #						
+									{TIMEZONE_OPTIONS}
 								</select>
 							</label>
 						</dd>			
@@ -274,9 +258,7 @@
 						<dt><label for="user_ban">{L_BAN}</label></dt>
 						<dd><label>
 							<select name="user_ban" id="user_ban">					
-								# START members_management.select_ban #	
-								{members_management.select_ban.TIME}
-								# END members_management.select_ban #						
+								{BAN_OPTIONS}
 							</select>
 						</label></dd>
 					</dl>
@@ -284,9 +266,7 @@
 						<dt><label for="user_readonly">{L_READONLY}</label></dt>
 						<dd><label>
 							<select name="user_readonly" id="user_readonly">					
-								# START members_management.select_readonly #	
-								{members_management.select_readonly.TIME}
-								# END members_management.select_readonly #						
+								{READONLY_OPTIONS}
 							</select>
 						</label></dd>
 					</dl>
@@ -294,9 +274,7 @@
 						<dt><label for="user_warning">{L_WARNING}</label></dt>
 						<dd><label>
 							<select name="user_warning" id="user_warning">					
-								# START members_management.select_warning #	
-								{members_management.select_warning.LEVEL}
-								# END members_management.select_warning #						
+								{WARNING_OPTIONS}
 							</select>
 						</label></dd>
 					</dl>
@@ -324,9 +302,7 @@
 						<dt><label for="user_sex">{L_SEX}</label></dt>
 						<dd><label>
 							<select name="user_sex" id="user_sex" onChange="img_change_sex(this.options[selectedIndex].value)">
-								# START members_management.select_sex #						
-								{members_management.select_sex.SEX}						
-								# END members_management.select_sex #
+								{SEX_OPTIONS}						
 							</select>
 							<span id="img_sex">{IMG_SEX}</span>
 						</label></dd>
@@ -398,18 +374,18 @@
 					</dl>
 				</fieldset>
 				
-				# START members_management.miscellaneous #
+				# IF C_MISCELLANEOUS #
 				<fieldset>
 					<legend>{L_MISCELLANEOUS}</legend>	
 						
-					# START members_management.miscellaneous.list #
+					# START list #
 					<dl>
-						<dt><label for="{members_management.miscellaneous.list.ID}">{members_management.miscellaneous.list.NAME}</label><br /><span>{members_management.miscellaneous.list.DESC}</span></dt>
-						<dd>{members_management.miscellaneous.list.FIELD}</dd>
+						<dt><label for="{list.ID}">{list.NAME}</label><br /><span>{list.DESC}</span></dt>
+						<dd>{list.FIELD}</dd>
 					</dl>
-					# END members_management.miscellaneous.list #	
+					# END list #	
 				</fieldset>
-				# END members_management.miscellaneous #					
+				# ENDIF #					
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
@@ -419,7 +395,6 @@
 					<input type="reset" value="{L_RESET}" class="reset" />
 				</fieldset>
 			</form>
-
-			# END members_management #
+			# ENDIF #
 		</div>
 		

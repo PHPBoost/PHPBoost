@@ -280,10 +280,12 @@ else
 	}
 	
 	if( $i == 0 )
-		$Template->Assign_block_vars('no_module', array(
+		$Template->Assign_vars( array(
+			'C_NO_MODULE' => true,
 		));
 	else
-		$Template->Assign_block_vars('modules_available', array(
+		$Template->Assign_vars( array(
+			'C_MODULES_AVAILABLE' => true,
 		));
 	
 	$Template->Pparse('admin_modules_add'); 
