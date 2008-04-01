@@ -59,7 +59,12 @@ if( $members )
 	$nbr_member = $Sql->Count_table('member', __LINE__, __FILE__);
 	
 	$Template->Assign_vars(array(
-		'MODULE_DATA_PATH' => $Template->Module_data_path('stats'),
+		'C_STATS_MEMBERS' => true,
+		'LAST_USER' => $last_user['login'],
+		'U_LAST_USER_ID' => transid('.php?id=' . $last_user['user_id'], '-' . $last_user['user_id'] . '.php'),
+		'MEMBERS' => $nbr_member,
+		'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="../includes/display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
+		'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="../includes/display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
 		'L_LAST_MEMBER' => $LANG['last_member'],
 		'L_TEMPLATES' => $LANG['theme_s'],
 		'L_PSEUDO' => $LANG['pseudo'],
@@ -68,14 +73,6 @@ if( $members )
 		'L_COLORS' => $LANG['colors'],
 		'L_MEMBERS' => $LANG['member_s'],
 		'L_SEX' => $LANG['sex']
-	));
-	
-	$Template->Assign_block_vars('members', array(
-		'LAST_USER' => $last_user['login'],
-		'U_LAST_USER_ID' => transid('.php?id=' . $last_user['user_id'], '-' . $last_user['user_id'] . '.php'),
-		'MEMBERS' => $nbr_member,
-		'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="../includes/display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
-		'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="../includes/display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />'
 	));
 	
 	$stats_array = array();
@@ -98,7 +95,7 @@ if( $members )
 	foreach($Stats->data_stats as $name => $angle_value)
 	{
 		$array_color = $Stats->array_allocated_color[$Stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
-		$Template->Assign_block_vars('members.templates', array(
+		$Template->Assign_block_vars('templates', array(
 			'NBR_THEME' => number_round(($angle_value*$Stats->nbr_entry)/360, 0),
 			'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
 			'THEME' => ($name == 'Other') ? $LANG['other'] : $name,
@@ -134,7 +131,7 @@ if( $members )
 	foreach($Stats->data_stats as $name => $angle_value)
 	{
 		$array_color = $Stats->array_allocated_color[$Stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
-		$Template->Assign_block_vars('members.sex', array(
+		$Template->Assign_block_vars('sex', array(
 			'NBR_MBR' => number_round(($angle_value*$Stats->nbr_entry)/360, 0),
 			'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
 			'SEX' => ($name == 'Other') ? $LANG['other'] : $name,
@@ -149,7 +146,7 @@ if( $members )
 	" . $Sql->Sql_limit(0, 10), __LINE__, __FILE__);
 	while($row = $Sql->Sql_fetch_assoc($result))
 	{
-		$Template->Assign_block_vars('members.top_poster', array(
+		$Template->Assign_block_vars('top_poster', array(
 			'ID' => $i,
 			'U_MEMBER_ID' => transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 			'LOGIN' => $row['login'],
@@ -168,7 +165,6 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 	$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 	
 	$Template->Assign_vars(array(
-		'MODULE_DATA_PATH' => $Template->Module_data_path('stats'),
 		'L_TODAY' => $LANG['today'],
 		'L_TOTAL' => $LANG['total'],
 		'L_AVERAGE' => $LANG['average'],
@@ -201,7 +197,8 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 		$info = $Sql->Query_array('stats', 'MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $visit_year . "' GROUP BY stats_year", __LINE__, __FILE__);
 
-		$Template->Assign_block_vars('visit', array(
+		$Template->Assign_vars(array(
+			'C_STATS_VISIT' => true,
 			'TYPE' => 'visit',
 			'VISIT_TOTAL' => $compteur_total,
 			'VISIT_DAY' => $compteur_day,
@@ -222,7 +219,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->Assign_block_vars('visit.years', array(
+		$Template->Assign_block_vars('years', array(
 			'YEAR' => $years 
 		));
 		
@@ -240,7 +237,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			while($row = $Sql->Sql_fetch_assoc($result))
 			{	
 				//On affiche les stats numériquement dans un tableau en dessous
-				$Template->Assign_block_vars('visit.value', array(
+				$Template->Assign_block_vars('value', array(
 					'U_DETAILS' => '<a href="stats' . transid('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 					'NBR' => $row['total']
 				));
@@ -259,7 +256,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 			}			
 				
-			$Template->Assign_block_vars('visit.no_gd', array(
+			$Template->Assign_block_vars('no_gd', array(
 			));
 			
 			$i = 1; 
@@ -277,7 +274,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 					$diff = $row['stats_month'] - $i;
 					for($j = 0; $j < $diff; $j++)
 					{
-						$Template->Assign_block_vars('visit.no_gd.values', array(
+						$Template->Assign_block_vars('no_gd.values', array(
 							'HEIGHT' => 0
 						));
 					}
@@ -291,15 +288,15 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 				//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 				$height = $row['total'] / $max_month * 200;
 				
-				$Template->Assign_block_vars('visit.no_gd.values', array(
+				$Template->Assign_block_vars('no_gd.values', array(
 					'HEIGHT' => ceil($height)
 				));
 
-				$Template->Assign_block_vars('visit.no_gd.values.head', array(
+				$Template->Assign_block_vars('no_gd.values.head', array(
 				));
 					
 				//On affiche les stats numériquement dans un tableau en dessous
-				$Template->Assign_block_vars('visit.value', array(
+				$Template->Assign_block_vars('value', array(
 					'U_DETAILS' => '<a href="stats' . transid('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 					'NBR' => $row['total']
 				));
@@ -313,7 +310,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			$date_day = isset($date_day) ? $date_day : 1;
 			for	($i = $last_month; $i < 12; $i++)
 			{
-				$Template->Assign_block_vars('visit.no_gd.end_td', array(
+				$Template->Assign_block_vars('no_gd.end_td', array(
 					'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 				));
 			}
@@ -321,7 +318,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			$i = 1;
 			foreach($array_l_months as $value)
 			{
-				$Template->Assign_block_vars('visit.no_gd.legend', array(
+				$Template->Assign_block_vars('no_gd.legend', array(
 					'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . transid('.php?m=' . $i . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
 				));
 				$i++;
@@ -343,7 +340,8 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 		$info = $Sql->Query_array('stats', 'MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr', "WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' GROUP BY stats_month", __LINE__, __FILE__);
 			
-		$Template->Assign_block_vars('visit', array(
+		$Template->Assign_vars(array(
+			'C_STATS_VISIT' => true,
 			'TYPE' => 'visit',
 			'VISIT_TOTAL' => $compteur_total,
 			'VISIT_DAY' => $compteur_day,
@@ -364,7 +362,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			$selected = ($i == $month) ? ' selected="selected"' : '';
 			$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
 		}
-		$Template->Assign_block_vars('visit.months', array(
+		$Template->Assign_block_vars('months', array(
 			'MONTH' => $months 
 		));
 		
@@ -376,7 +374,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->Assign_block_vars('visit.years', array(
+		$Template->Assign_block_vars('years', array(
 			'YEAR' => $years 
 		));
 		
@@ -395,7 +393,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 				$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
 				
 				//On affiche les stats numériquement dans un tableau en dessous
-				$Template->Assign_block_vars('visit.value', array(
+				$Template->Assign_block_vars('value', array(
 					'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
 					'NBR' => $row['nbr']
 				));
@@ -407,7 +405,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			//Mois selectionné.
 			if( !empty($month) && !empty($year) )
 			{				
-				$Template->Assign_block_vars('visit.no_gd', array(
+				$Template->Assign_block_vars('no_gd', array(
 				));
 				
 				//On rajoute un 0 devant tous les mois plus petits que 10
@@ -426,7 +424,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 					{
 						for($z = 1; $z < $row['day']; $z++)
 						{
-							$Template->Assign_block_vars('visit.no_gd.values', array(
+							$Template->Assign_block_vars('no_gd.values', array(
 								'HEIGHT' => 0
 							));
 						}
@@ -440,7 +438,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 						$diff = $row['day'] - $i;
 						for($j = 0; $j < $diff; $j++)
 						{
-							$Template->Assign_block_vars('visit.no_gd.values', array(
+							$Template->Assign_block_vars('no_gd.values', array(
 								'HEIGHT' => 0
 							));
 						}
@@ -450,17 +448,17 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 					//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 					$height = ($row['nbr'] / $info['max_nbr']) * 200;
 					
-					$Template->Assign_block_vars('visit.no_gd.values', array(
+					$Template->Assign_block_vars('no_gd.values', array(
 						'HEIGHT' => ceil($height)
 					));
 					
-					$Template->Assign_block_vars('visit.no_gd.values.head', array(
+					$Template->Assign_block_vars('no_gd.values.head', array(
 					));
 						
 					$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
 						
 					//On affiche les stats numériquement dans un tableau en dessous
-					$Template->Assign_block_vars('visit.value', array(
+					$Template->Assign_block_vars('value', array(
 						'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
 						'NBR' => $row['nbr']
 					));
@@ -473,7 +471,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 				$date_day = isset($date_day) ? $date_day : 1;
 				for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
 				{
-					$Template->Assign_block_vars('visit.no_gd.days', array(
+					$Template->Assign_block_vars('no_gd.days', array(
 						'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 					));
 				}
@@ -481,7 +479,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 				//On liste les jours en dessous du graphique
 				for($i = 1; $i <= $array_month[$month - 1]; $i++)
 				{
-					$Template->Assign_block_vars('visit.no_gd.legend', array(
+					$Template->Assign_block_vars('no_gd.legend', array(
 						'LEGEND' => $i
 					));
 				}			
@@ -524,7 +522,6 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 	$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
 
 	$Template->Assign_vars(array(
-		'MODULE_DATA_PATH' => $Template->Module_data_path('stats'),
 		'L_TODAY' => $LANG['today'],
 		'L_TOTAL' => $LANG['total'],
 		'L_AVERAGE' => $LANG['average'],
@@ -548,7 +545,8 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 		$info = $Sql->Query_array('stats', 'MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $pages_year . "' AND pages_detail <> '' GROUP BY stats_year", __LINE__, __FILE__);
 	
-		$Template->Assign_block_vars('visit', array(
+		$Template->Assign_vars(array(
+			'C_STATS_VISIT' => true,
 			'TYPE' => 'pages',
 			'VISIT_TOTAL' => $compteur_total,
 			'VISIT_DAY' => $compteur_day,
@@ -569,7 +567,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->Assign_block_vars('visit.years', array(
+		$Template->Assign_block_vars('years', array(
 			'YEAR' => $years 
 		));
 		
@@ -587,7 +585,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			while($row = $Sql->Sql_fetch_assoc($result))
 			{	
 				//On affiche les stats numériquement dans un tableau en dessous
-				$Template->Assign_block_vars('visit.value', array(
+				$Template->Assign_block_vars('value', array(
 					'U_DETAILS' => '<a href="stats' . transid('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 					'NBR' => $row['total']
 				));
@@ -606,7 +604,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 			}
 						
-			$Template->Assign_block_vars('visit.no_gd', array(
+			$Template->Assign_block_vars('no_gd', array(
 			));
 			
 			$i = 1; 
@@ -624,7 +622,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 					$diff = $row['stats_month'] - $i;
 					for($j = 0; $j < $diff; $j++)
 					{
-						$Template->Assign_block_vars('visit.no_gd.values', array(
+						$Template->Assign_block_vars('no_gd.values', array(
 							'HEIGHT' => 0
 						));
 					}
@@ -638,15 +636,15 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 				$height = $row['total'] / $info['max_month'] * 200;
 				
-				$Template->Assign_block_vars('visit.no_gd.months', array(
+				$Template->Assign_block_vars('no_gd.months', array(
 					'HEIGHT' => ceil($height)
 				));
 
-				$Template->Assign_block_vars('visit.no_gd.values.head', array(
+				$Template->Assign_block_vars('no_gd.values.head', array(
 				));
 				
 				//On affiche les stats numériquement dans un tableau en dessous
-				$Template->Assign_block_vars('visit.value', array(
+				$Template->Assign_block_vars('value', array(
 					'U_DETAILS' => '<a href="stats' . transid('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 					'NBR' => $row['total']
 				));
@@ -660,7 +658,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$date_day = isset($date_day) ? $date_day : 1;
 			for	($i = $last_month; $i < 12; $i++)
 			{
-				$Template->Assign_block_vars('visit.no_gd.end_td', array(
+				$Template->Assign_block_vars('no_gd.end_td', array(
 					'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 				));
 			}
@@ -668,7 +666,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$i = 1;
 			foreach($array_l_months as $value)
 			{
-				$Template->Assign_block_vars('visit.no_gd.legend', array(
+				$Template->Assign_block_vars('no_gd.legend', array(
 					'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . transid('.php?m=' . $i . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
 				));
 				$i++;
@@ -690,7 +688,8 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 		$previous_month = ($month > 1) ? ($day == 1 ? $month - 1 : $month) : 12;
 		$previous_year = ($month > 1) ? $year : $year - 1;	
 
-		$Template->Assign_block_vars('visit', array(
+		$Template->Assign_vars(array(
+			'C_STATS_VISIT' => true,
 			'TYPE' => 'pages',
 			'VISIT_TOTAL' => $compteur_total,
 			'VISIT_DAY' => $compteur_day,
@@ -710,7 +709,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$selected = ($i == $day) ? ' selected="selected"' : '';
 			$days .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->Assign_block_vars('visit.days', array(
+		$Template->Assign_block_vars('days', array(
 			'DAY' => $days 
 		));
 		
@@ -720,7 +719,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$selected = ($i == $month) ? ' selected="selected"' : '';
 			$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
 		}
-		$Template->Assign_block_vars('visit.months', array(
+		$Template->Assign_block_vars('months', array(
 			'MONTH' => $months 
 		));
 		
@@ -732,7 +731,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->Assign_block_vars('visit.years', array(
+		$Template->Assign_block_vars('years', array(
 			'YEAR' => $years 
 		));
 		
@@ -749,7 +748,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
 			
 			//On affiche les stats numériquement dans un tableau en dessous
-			$Template->Assign_block_vars('visit.value', array(
+			$Template->Assign_block_vars('value', array(
 				'U_DETAILS' => '<a href="stats' . transid('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
 				'NBR' => $row['pages']
 			));
@@ -768,7 +767,8 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 		$previous_month = ($month > 1) ? $month - 1 : 12;
 		$previous_year = ($month > 1) ? $year : $year - 1;		
 		
-		$Template->Assign_block_vars('visit', array(
+		$Template->Assign_vars(array(
+			'C_STATS_VISIT' => true,
 			'TYPE' => 'pages',
 			'VISIT_TOTAL' => $compteur_total,
 			'VISIT_DAY' => $compteur_day,
@@ -789,7 +789,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$selected = ($i == $month) ? ' selected="selected"' : '';
 			$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
 		}
-		$Template->Assign_block_vars('visit.months', array(
+		$Template->Assign_block_vars('months', array(
 			'MONTH' => $months 
 		));
 		
@@ -801,7 +801,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->Assign_block_vars('visit.years', array(
+		$Template->Assign_block_vars('years', array(
 			'YEAR' => $years 
 		));
 		
@@ -820,7 +820,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
 				
 				//On affiche les stats numériquement dans un tableau en dessous
-				$Template->Assign_block_vars('visit.value', array(
+				$Template->Assign_block_vars('value', array(
 					'U_DETAILS' => '<a href="stats' . transid('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
 					'NBR' => $row['pages']
 				));
@@ -832,7 +832,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			//Mois selectionné.
 			if( !empty($month) && !empty($year) )
 			{				
-				$Template->Assign_block_vars('visit.no_gd', array(
+				$Template->Assign_block_vars('no_gd', array(
 				));
 				
 				//On rajoute un 0 devant tous les mois plus petits que 10
@@ -851,7 +851,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 					{
 						for($z = 1; $z < $row['day']; $z++)
 						{
-							$Template->Assign_block_vars('visit.no_gd.days', array(
+							$Template->Assign_block_vars('no_gd.days', array(
 								'HEIGHT' => 0
 							));
 						}
@@ -865,7 +865,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 						$diff = $row['day'] - $i;
 						for($j = 0; $j < $diff; $j++)
 						{
-							$Template->Assign_block_vars('visit.no_gd.days', array(
+							$Template->Assign_block_vars('no_gd.days', array(
 								'HEIGHT' => 0
 							));
 						}
@@ -875,17 +875,17 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 					//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 					$height = ($row['pages'] / $info['max_nbr']) * 200;
 					
-					$Template->Assign_block_vars('visit.no_gd.values', array(
+					$Template->Assign_block_vars('no_gd.values', array(
 						'HEIGHT' => ceil($height)
 					));
 					
-					$Template->Assign_block_vars('visit.no_gd.values.head', array(
+					$Template->Assign_block_vars('no_gd.values.head', array(
 					));
 						
 					$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
 						
 					//On affiche les stats numériquement dans un tableau en dessous
-					$Template->Assign_block_vars('visit.value', array(
+					$Template->Assign_block_vars('value', array(
 						'U_DETAILS' => $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'],
 						'NBR' => $row['pages']
 					));
@@ -898,7 +898,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				$date_day = isset($date_day) ? $date_day : 1;
 				for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
 				{
-					$Template->Assign_block_vars('visit.no_gd.days', array(
+					$Template->Assign_block_vars('no_gd.days', array(
 						'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 					));
 				}
@@ -906,7 +906,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				//On liste les jours en dessous du graphique
 				for($i = 1; $i <= $array_month[$month - 1]; $i++)
 				{
-					$Template->Assign_block_vars('visit.no_gd.legend', array(
+					$Template->Assign_block_vars('no_gd.legend', array(
 						'LEGEND' => $i
 					));
 				}			
@@ -916,9 +916,6 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 }
 elseif( $referer )
 {
-	$Template->Assign_block_vars('referer', array(
-	));
-	
 	include_once('../includes/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
@@ -951,7 +948,7 @@ elseif( $referer )
 			$trend = 0;
 		}
 			
-		$Template->Assign_block_vars('referer.referer_list', array(
+		$Template->Assign_block_vars('referer_list', array(
 			'ID' => $row['id'],
 			'URL' => $row['url'],
 			'IMG_MORE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
@@ -965,6 +962,7 @@ elseif( $referer )
 	$Sql->Close($result);
 	
 	$Template->Assign_vars(array(
+		'C_STATS_REFERER' => true,
 		'PAGINATION' => $Pagination->Display_pagination('stats' . transid('.php?referer=1&amp;p=%d', '-referer.php?p=%d'), $nbr_referer, 'p', 15, 3),
 		'L_URL' => $LANG['url'],
 		'L_TOTAL_VISIT' => $LANG['total_visit'],
@@ -975,9 +973,6 @@ elseif( $referer )
 }
 elseif( $keyword )
 {
-	$Template->Assign_block_vars('keyword', array(
-	));
-	
 	include_once('../includes/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
@@ -1010,7 +1005,7 @@ elseif( $keyword )
 			$trend = 0;
 		}
 			
-		$Template->Assign_block_vars('keyword.keyword_list', array(
+		$Template->Assign_block_vars('keyword_list', array(
 			'ID' => $row['id'],
 			'KEYWORD' => $row['relative_url'],
 			'IMG_MORE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
@@ -1024,6 +1019,7 @@ elseif( $keyword )
 	$Sql->Close($result);
 		
 	$Template->Assign_vars(array(
+		'C_STATS_KEYWORD' => true,
 		'PAGINATION' => $Pagination->Display_pagination('stats' . transid('.php?keyword=1&amp;p=%d', '-keyword.php?p=%d'), $nbr_keyword, 'p', 15, 3),
 		'L_SEARCH_ENGINE' => $LANG['keyword_s'],
 		'L_TOTAL_VISIT' => $LANG['total_visit'],
@@ -1113,7 +1109,7 @@ elseif( $browser || $os || $user_lang ) //Graphiques camenbert.
 	//Affichage.
 	foreach($array_order as $value_name => $angle_value)
 	{				
-		$Template->Assign_block_vars($stats_menu . '.' . $stats_menu . '_list', array(
+		$Template->Assign_block_vars('list', array(
 			'COLOR' => 'RGB(' . trim(implode(', ', $array_stats_tmp[$value_name][1]), ', ') . ')',
 			'IMG' => $array_stats_tmp[$value_name][2],
 			'L_NAME' => $array_stats_tmp[$value_name][0],
@@ -1124,14 +1120,11 @@ elseif( $browser || $os || $user_lang ) //Graphiques camenbert.
 else
 {
 	$Template->Assign_vars(array(
-		'MODULE_DATA_PATH' => $Template->Module_data_path('stats'),
+		'C_STATS_SITE' => true,
+		'START' => gmdate_format('date_format_short', $CONFIG['start']),
+		'VERSION' => $CONFIG['version'],
 		'L_START' => $LANG['start'],
 		'L_VERSION' => $LANG['version']
-	));
-	
-	$Template->Assign_block_vars('site', array(
-		'START' => gmdate_format('date_format_short', $CONFIG['start']),
-		'VERSION' => $CONFIG['version']
 	));
 }
 

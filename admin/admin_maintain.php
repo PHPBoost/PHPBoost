@@ -67,11 +67,41 @@ else //Sinon on rempli le formulaire
 		'admin_maintain' => '../templates/' . $CONFIG['theme'] . '/admin/admin_maintain.tpl'
 	));
 	
+	//Durée de la maintenance.
+	$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 14400, 21600, 28800, 57600); 
+	$array_delay = array($LANG['unspecified'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '10 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '4 ' . $LANG['hours'], '6 ' . $LANG['hours'], '8 ' . $LANG['hours'], '16 ' . $LANG['hours']); 
+	
+	$CONFIG['maintain'] = isset($CONFIG['maintain']) ? $CONFIG['maintain'] : -1;
+	if( $CONFIG['maintain'] != -1 )
+	{
+		$key_delay = 0;
+		$current_time = time();
+		for($i = 11; $i >= 0; $i--)
+		{					
+			$delay = ($CONFIG['maintain'] - $current_time) - $array_time[$i];		
+			if( $delay >= $array_time[$i] ) 
+			{	
+				$key_delay = $i;
+				break;
+			}
+		}
+	}
+	else
+		$key_delay = -1;
+
+	$delay_maintain_option = '';
+	foreach($array_time as $key => $time)
+	{
+		$selected = (($key_delay + 1) == $key) ? 'selected="selected"' : '' ;
+		$delay_maintain_option .= '<option value="' . $time . '" ' . $selected . '>' . $array_delay[$key] . '</option>';
+	}
+	
 	$CONFIG['maintain_delay'] = isset($CONFIG['maintain_delay']) ? $CONFIG['maintain_delay'] : 1;
 	$CONFIG['maintain_display_admin'] = isset($CONFIG['maintain_display_admin']) ? $CONFIG['maintain_display_admin'] : 1;
 
 	$check_until = ($CONFIG['maintain'] > (time() + 86400));
 	$Template->Assign_vars(array(
+		'DELAY_MAINTAIN_OPTION' => $delay_maintain_option,
 		'MAINTAIN_CONTENTS' => !empty($CONFIG['maintain_text']) ? unparse($CONFIG['maintain_text']) : '',
 		'DISPLAY_DELAY_ENABLED' => ($CONFIG['maintain_delay'] == 1) ? 'checked="checked"' : '',
 		'DISPLAY_DELAY_DISABLED' => ($CONFIG['maintain_delay'] == 0) ? 'checked="checked"' : '',
@@ -95,36 +125,6 @@ else //Sinon on rempli le formulaire
 		'L_RESET' => $LANG['reset']		
 	));
 		
-	//Durée de la maintenance.
-	$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 14400, 21600, 28800, 57600); 
-	$array_delay = array($LANG['unspecified'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '10 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '4 ' . $LANG['hours'], '6 ' . $LANG['hours'], '8 ' . $LANG['hours'], '16 ' . $LANG['hours']); 
-	
-	$CONFIG['maintain'] = isset($CONFIG['maintain']) ? $CONFIG['maintain'] : -1;
-	if( $CONFIG['maintain'] != -1 )
-	{
-		$key_delay = 0;
-		$current_time = time();
-		for($i = 11; $i >= 0; $i--)
-		{					
-			$delay = ($CONFIG['maintain'] - $current_time) - $array_time[$i];		
-			if( $delay >= $array_time[$i] ) 
-			{	
-				$key_delay = $i;
-				break;
-			}
-		}
-	}
-	else
-		$key_delay = -1;
-
-	foreach($array_time as $key => $time)
-	{
-		$selected = (($key_delay + 1) == $key) ? 'selected="selected"' : '' ;
-		$Template->Assign_block_vars('select_maintain', array(
-			'DELAY' => '<option value="' . $time . '" ' . $selected . '>' . $array_delay[$key] . '</option>'
-		));
-	}
-	
 	include_once('../includes/bbcode.php');
 	
 	$Template->Pparse('admin_maintain');

@@ -45,7 +45,7 @@
 				</tr>
 			</table>
 			
-			# START user_list #
+			# IF C_USER_LIST #
 			<script type="text/javascript">
 			<!--
 				function XMLHttpRequest_search()
@@ -107,56 +107,56 @@
 					<th style="width:25%;">{L_ACTION_USER}</th>
 					<th style="width:25%;">{L_PM}</th>
 				</tr>
-				# START user_list.list #
+				# START list #
 				<tr>
 					<td class="row1" style="text-align:center;width:25%;">
-						<a href="../member/{user_list.list.U_PROFILE}">{user_list.list.LOGIN}</a>
+						<a href="../member/{list.U_PROFILE}">{list.LOGIN}</a>
 					</td>
 					<td class="row1" style="text-align:center;width:25%;">
-						{user_list.list.INFO}
+						{list.INFO}
 					</td>
 					<td class="row1" style="text-align:center;width:25%;">
-						{user_list.list.U_ACTION_USER}
+						{list.U_ACTION_USER}
 					</td>
 					<td class="row1" style="text-align:center;width:25%;">
-						<a href="../member/pm{user_list.list.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+						<a href="../member/pm{list.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 					</td>
 				</tr>
-				# END user_list.list #
+				# END list #
 				
-				# START user_list.empty #
+				# IF C_NO_USER #
 				<tr>
 					<td class="row1" style="text-align:center;" colspan="4">
-						{user_list.empty.NO_USER}
+						{L_NO_USER}
 					</td>
 				</tr>		
-				# END user_list.empty #
+				# ENDIF #
 			</table>
 			</form>
-			# END user_list #
+			# ENDIF #
 
 
-			# START user_info #
+			# IF C_USER_INFO #
 			<script type="text/javascript">
 			<!--
 			function change_textarea_level(replace_value, regex)
 			{
 				var contents = document.getElementById('action_contents').innerHTML;
-				{user_info.REPLACE_VALUE}		
+				{REPLACE_VALUE}		
 				
 				document.getElementById('action_contents').innerHTML = contents;	
 			}
 			-->
 			</script>
 			
-			<form action="admin_members_punishment{user_info.U_ACTION_INFO}" method="post">		
+			<form action="admin_members_punishment{U_ACTION_INFO}" method="post">		
 			<table class="module_table">
 				<tr>
 					<td class="row1" style="width:30%;">
 						{L_LOGIN}
 					</td>
 					<td class="row2">
-						{user_info.LOGIN}
+						{LOGIN}
 					</td>
 				</tr>
 				<tr>
@@ -164,7 +164,7 @@
 						{L_PM}
 					</td>
 					<td class="row2">
-						<a href="../member/pm{user_info.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
+						<a href="../member/pm{U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
 					</td>
 				</tr>
 				<tr>
@@ -181,30 +181,28 @@
 						{L_INFO_EXPLAIN}
 					</td>
 					<td class="row2">
-						<span id="action_info">{user_info.INFO}</span>
+						<span id="action_info">{INFO}</span>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<select name="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {user_info.REGEX})">
-							{user_info.SELECT}
+						<select name="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
+							{SELECT}
 						</select>
 						<input type="submit" name="valid_user" value="{L_CHANGE_INFO}" class="submit" />					
 					</td>
 				</tr>
 			</table>
 			</form>
+			# ENDIF #
 			
-			# END user_info #
 			
-			
-			# START user_ban #
-			
-			<form action="admin_members_punishment{user_ban.U_ACTION_INFO}" method="post">		
+			# IF C_USER_BAN #
+			<form action="admin_members_punishment{U_ACTION_INFO}" method="post">		
 			<table class="module_table">
 				<tr>
 					<td class="row1" style="width:30%;">
 						{L_LOGIN}
 					</td>
 					<td class="row2">
-						{user_ban.LOGIN}
+						{LOGIN}
 					</td>
 				</tr>
 				<tr>
@@ -212,7 +210,7 @@
 						{L_PM}
 					</td>
 					<td class="row2">
-						<a href="../member/pm{user_ban.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+						<a href="../member/pm{U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 					</td>
 				</tr>
 				<tr>
@@ -220,10 +218,8 @@
 						{L_DELAY_BAN}
 					</td>
 					<td class="row2">
-					<select name="user_ban">					
-							# START user_ban.select_ban #	
-								{user_ban.select_ban.TIME}
-							# END user_ban.select_ban #						
+						<select name="user_ban">					
+							{BAN_OPTIONS}				
 						</select>
 					</td>
 				</tr>
@@ -234,7 +230,6 @@
 				</tr>
 			</table>
 			</form>
-			
-			# END user_ban #
+			# ENDIF #
 		</div>
 		

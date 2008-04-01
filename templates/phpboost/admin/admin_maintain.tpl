@@ -26,9 +26,7 @@
 								<input type="radio" name="maintain_check" id="maintain_check1" value="1"{MAINTAIN_CHECK_DELAY}>
 								{L_DURING}
 								<select name="maintain" id="maintain">				
-								# START select_maintain #				
-									{select_maintain.DELAY}				
-								# END select_maintain #				
+									{DELAY_MAINTAIN_OPTION}				
 								</select>
 							</label>
 							<br />							

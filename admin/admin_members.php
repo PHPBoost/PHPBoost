@@ -325,9 +325,6 @@ elseif( $add )
 		'admin_members_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_members_management2.tpl'
 	));
 
-	$Template->Assign_block_vars('members_add', array(
-	));
-	
 	//Gestion des erreurs.
 	switch($get_error)
 	{
@@ -353,6 +350,7 @@ elseif( $add )
 		$Errorh->Error_handler($errstr, E_USER_NOTICE);  
 		
 	$Template->Assign_vars(array(
+		'C_MEMBERS_ADD' => true,
 		'L_MEMBERS_MANAGEMENT' => $LANG['members_management'],
 		'L_MEMBERS_ADD' => $LANG['members_add'],
 		'L_MEMBERS_CONFIG' => $LANG['members_config'],
@@ -375,9 +373,6 @@ elseif( !empty($id) )
 {		
 	$Template->Set_filenames(array(
 		'admin_members_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_members_management2.tpl'
-	));
-	
-	$Template->Assign_block_vars('members_management', array(
 	));
 	
 	$mbr = $Sql->Query_array('member', '*', "WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
@@ -439,14 +434,183 @@ elseif( !empty($id) )
 	if( !empty($mbr['user_sex']) )
 		$user_sex = ($mbr['user_sex'] == 1) ? '../templates/' . $CONFIG['theme'] . '/images/man.png' : '../templates/' . $CONFIG['theme'] . '/images/woman.png';
 	
+	//Rang d'autorisation.
+	$array_ranks = array(0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
+	$ranks_options = '';
+	for( $i = 0 ; $i <= 2 ; $i++ )
+	{
+		$selected = ($mbr['level'] == $i) ? 'selected="selected"' : '' ;
+		$ranks_options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
+	}
+	
+	//Groupes.	
+	$i = 0;
+	$groups_options = '';
+	$result = $Sql->Query_while("SELECT id, name
+	FROM ".PREFIX."group", __LINE__, __FILE__);
+	while( $row = $Sql->Sql_fetch_assoc($result) )
+	{		
+		$selected = '';		
+		$search_group = array_search($row['id'], explode('|', $mbr['user_groups']));		
+		if( is_numeric($search_group) )
+			$selected = 'selected="selected"';	
+			
+		$groups_options .= '<option value="' . $row['id'] . '" id="g' . $i . '" ' . $selected . '>' . $row['name'] . '</option>';
+		$i++;
+	}
+	$Sql->Close($result);
+
+	//Temps de bannissement.
+	$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
+	$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], $LANG['life']); 
+	$diff = ($mbr['user_ban'] - time());	
+	$key_sanction = 0;
+	if( $diff > 0 )
+	{
+		//Retourne la sanction la plus proche correspondant au temp de bannissement. 
+		for($i = 12; $i > 0; $i--)
+		{					
+			$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
+			if( ($diff - $array_time[$i]) > $avg )  
+			{	
+				$key_sanction = $i + 1;
+				break;
+			}
+		}
+	}	
+	//Affichge des sanctions
+	$ban_options = '';
+	foreach( $array_time as $key => $time)
+	{
+		$selected = ( $key_sanction == $key ) ? 'selected="selected"' : '' ;		
+		$ban_options .= '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>';
+	}
+
+	//Durée de la sanction.
+	$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000); 	
+	$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], $LANG['life']); 
+	$diff = ($mbr['user_readonly'] - time());	
+	$key_sanction = 0;
+	if( $diff > 0 )
+	{
+		//Retourne la sanction la plus proche correspondant au temp de bannissement. 
+		for($i = 12; $i > 0; $i--)
+		{					
+			$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
+			if( ($diff - $array_time[$i]) > $avg ) 
+			{	
+				$key_sanction = $i + 1;
+				break;
+			}
+		}
+	}	
+	//Affichge des sanctions
+	$readonly_options = '';
+	foreach($array_time as $key => $time)
+	{
+		$selected = ($key_sanction == $key) ? ' selected="selected"' : '' ;
+		$readonly_options .= '<option value="' . $time . '"' . $selected . '>' . $array_sanction[$key] . '</option>';
+	}
+		
+	//On crée le formulaire select
+	$warning_options = '';
+	$j = 0;
+	for($j = 0; $j <=10; $j++)
+	{
+		$selected = ((10 * $j) == $mbr['user_warning']) ? ' selected="selected"' : '';
+		$warning_options .= '<option value="' . 10 * $j . '"' . $selected . '>' . 10 * $j . '%</option>';
+	}
+	
+	//Gestion LANG par défaut.
+	$lang_options = '';
+	$array_identifier = '';
+	$lang_identifier = '../images/stats/other.png';
+	$result = $Sql->Query_while("SELECT lang 
+	FROM ".PREFIX."lang", __LINE__, __FILE__);
+	while( $row2 = $Sql->Sql_fetch_assoc($result) )
+	{	
+		$lang_info = load_ini_file('../lang/', $row2['lang']);
+		if( $lang_info )
+		{
+			$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $row2['lang'];
+			$array_identifier .= 'array_identifier[\'' . $row2['lang'] . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
+			$selected = '';
+			if( $row2['lang'] == $mbr['user_lang'] )
+			{
+				$selected = 'selected="selected"';
+				$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
+			}			
+			$lang_options .= '<option value="' . $row2['lang'] . '" ' . $selected . '>' . $lang_name . '</option>';
+		}
+	}
+	$Sql->Close($result);
+	
+	//Gestion thème par défaut.
+	$theme_options = '';
+	$result = $Sql->Query_while("SELECT theme 
+	FROM ".PREFIX."themes", __LINE__, __FILE__);
+	while( $row2 = $Sql->Sql_fetch_assoc($result) )
+	{	
+		$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', $CONFIG['lang']);
+		if( $theme_info )
+		{
+			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];
+			$selected = ($row2['theme'] == $mbr['user_theme']) ? 'selected="selected"' : '';
+			$theme_options .= '<option value="' . $row2['theme'] . '" ' . $selected . '>' . $theme_name . '</option>';
+		}
+	}
+	$Sql->Close($result);
+	
+	//Editeur texte par défaut.
+	$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
+	$editor_options = '';
+	foreach($editors as $code => $name)
+	{
+		$selected = ($code == $mbr['user_editor']) ? 'selected="selected"' : '';
+		$editor_options .= '<option value="' . $code . '" ' . $selected . '>' . $name . '</option>';
+	}
+	
+	//Gestion fuseau horaire par défaut.
+	$timezone_options = '';
+	for($i = -12; $i <= 14; $i++)
+	{
+		$selected = ($i == $mbr['user_timezone']) ? 'selected="selected"' : '';
+		$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
+		$timezone_options .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
+	}
+		
+	//Sex par défaut
+	$i = 0;
+	$array_sex = array('--', $LANG['male'], $LANG['female'], );
+	$sex_options = '';
+	foreach($array_sex as $value_sex)
+	{		
+		$selected = ($i == $mbr['user_sex']) ? 'selected="selected"' : '';
+		$sex_options .= '<option value="' . $i . '" ' . $selected . '>' . $value_sex . '</option>';
+		$i++;
+	}
+	
 	//On assigne les variables pour le POST en précisant l'user_id.
 	$Template->Assign_vars(array(
+		'C_MEMBERS_MANAGEMENT' => true,
+		'JS_LANG_IDENTIFIER' => $array_identifier,
+		'IMG_LANG_IDENTIFIER' => $lang_identifier,
 		'IDMBR' => $mbr['user_id'],
 		'NAME' => $mbr['login'],
 		'MAIL' => $mbr['user_mail'],
 		'USER_THEME' => $mbr['user_theme'],
 		'SELECT_UNAPROB' => ($mbr['user_aprob'] == 0) ? 'selected="selected"' : '',
 		'SELECT_APROB' => ($mbr['user_aprob'] == 1) ? 'selected="selected"' : '',
+		'RANKS_OPTIONS' => $ranks_options,
+		'GROUPS_OPTIONS' => $groups_options,
+		'LANG_OPTIONS' => $lang_options,
+		'THEME_OPTIONS' => $theme_options,
+		'EDITOR_OPTIONS' => $editor_options,
+		'TIMEZONE_OPTIONS' => $timezone_options,
+		'BAN_OPTIONS' => $ban_options,
+		'READONLY_OPTIONS' => $readonly_options,
+		'WARNING_OPTIONS' => $warning_options,
+		'SEX_OPTIONS' => $sex_options,
 		'MSN' => $mbr['user_msn'],
 		'YAHOO' => $mbr['user_yahoo'],
 		'LOCAL' => $mbr['user_local'],
@@ -535,214 +699,15 @@ elseif( !empty($id) )
 		'L_RESET' => $LANG['reset']
 	));
 
-	//Rang d'autorisation.
-	for( $i = 0 ; $i <= 2 ; $i++ )
-	{
-		switch ($i) 
-		{	
-			case 0:
-				$rank = $LANG['member'];
-			break;
-			
-			case 1: 
-				$rank = $LANG['modo'];
-			break;
-	
-			case 2:
-				$rank = $LANG['admin'];
-			break;	
-			
-			default: 0;
-		} 
-			
-		$selected = ($mbr['level'] == $i) ? 'selected="selected"' : '' ;
-		$Template->Assign_block_vars('members_management.select_rank', array(
-			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
-		));
-	}
-	
-	//Groupes.	
-	$i = 0;
-	$result = $Sql->Query_while("SELECT id, name
-	FROM ".PREFIX."group", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
-	{		
-		$selected = '';		
-		$search_group = array_search($row['id'], explode('|', $mbr['user_groups']));		
-		if( is_numeric($search_group) )
-			$selected = 'selected="selected"';	
-			
-		$Template->Assign_block_vars('members_management.select_group', array(
-			'GROUP' => '<option value="' . $row['id'] . '" id="g' . $i . '" ' . $selected . '>' . $row['name'] . '</option>'
-		));
-		$i++;
-	}
-	$Sql->Close($result);
-
-	//Temps de bannissement.
-	$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
-	$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], $LANG['life']); 
-	
-	$diff = ($mbr['user_ban'] - time());	
-	$key_sanction = 0;
-	if( $diff > 0 )
-	{
-		//Retourne la sanction la plus proche correspondant au temp de bannissement. 
-		for($i = 11; $i >= 0; $i--)
-		{					
-			$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
-			if( ($diff - $array_time[$i]) > $avg )  
-			{	
-				$key_sanction = $i + 1;
-				break;
-			}
-		}
-	}	
-	//Affichge des sanctions
-	foreach( $array_time as $key => $time)
-	{
-		$selected = ( $key_sanction == $key ) ? 'selected="selected"' : '' ;		
-		$Template->Assign_block_vars('members_management.select_ban', array(
-			'TIME' => '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>'
-		));
-	}
-
-	//On crée le formulaire select
-	$select = '';
-	//Durée de la sanction.
-	$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000); 	
-	$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], $LANG['life']); 
-
-	$diff = ($mbr['user_readonly'] - time());	
-	$key_sanction = 0;
-	if( $diff > 0 )
-	{
-		//Retourne la sanction la plus proche correspondant au temp de bannissement. 
-		for($i = 11; $i >= 0; $i--)
-		{					
-			$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
-			if( ($diff - $array_time[$i]) > $avg ) 
-			{	
-				$key_sanction = $i + 1;
-				break;
-			}
-		}
-	}	
-
-	//Affichge des sanctions
-	foreach( $array_time as $key => $time)
-	{
-		$selected = ($key_sanction == $key) ? ' selected="selected"' : '' ;
-		$Template->Assign_block_vars('members_management.select_readonly', array(
-			'TIME' => '<option value="' . $time . '"' . $selected . '>' . $array_sanction[$key] . '</option>'
-		));
-	}
-		
-	//On crée le formulaire select
-	$select = '';
-	$j = 0;
-	for($j = 0; $j <=10; $j++)
-	{
-		$selected = ((10 * $j) == $mbr['user_warning']) ? ' selected="selected"' : '';
-		$Template->Assign_block_vars('members_management.select_warning', array(
-			'LEVEL' => '<option value="' . 10 * $j . '"' . $selected . '>' . 10 * $j . '%</option>'
-		));
-	}
-	
-	//Gestion LANG par défaut.
-	$array_identifier = '';
-	$lang_identifier = '../images/stats/other.png';
-	$result = $Sql->Query_while("SELECT lang 
-	FROM ".PREFIX."lang", __LINE__, __FILE__);
-	while( $row2 = $Sql->Sql_fetch_assoc($result) )
-	{	
-		$lang_info = load_ini_file('../lang/', $row2['lang']);
-		if( $lang_info )
-		{
-			$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $row2['lang'];
-			$array_identifier .= 'array_identifier[\'' . $row2['lang'] . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
-			$selected = '';
-			if( $row2['lang'] == $mbr['user_lang'] )
-			{
-				$selected = 'selected="selected"';
-				$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
-			}			
-			$Template->Assign_block_vars('members_management.select_lang', array(
-				'LANG' => '<option value="' . $row2['lang'] . '" ' . $selected . '>' . $lang_name . '</option>'
-			));
-		}
-	}
-	$Sql->Close($result);
-	
-	$Template->Assign_vars(array(
-		'JS_LANG_IDENTIFIER' => $array_identifier,
-		'IMG_LANG_IDENTIFIER' => $lang_identifier
-	));
-	
-	//Gestion thème par défaut.
-	$result = $Sql->Query_while("SELECT theme 
-	FROM ".PREFIX."themes", __LINE__, __FILE__);
-	while( $row2 = $Sql->Sql_fetch_assoc($result) )
-	{	
-		$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', $CONFIG['lang']);
-		if( $theme_info )
-		{
-			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];
-			$selected = ($row2['theme'] == $mbr['user_theme']) ? 'selected="selected"' : '';
-			$Template->Assign_block_vars('members_management.select_theme', array(
-				'THEME' => '<option value="' . $row2['theme'] . '" ' . $selected . '>' . $theme_name . '</option>'
-			));
-		}
-	}
-	$Sql->Close($result);
-	
-	//Editeur texte par défaut.
-	$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
-	$select_editors = '';
-	foreach($editors as $code => $name)
-	{
-		$selected = ($code == $mbr['user_editor']) ? 'selected="selected"' : '';
-		$select_editors .= '<option value="' . $code . '" ' . $selected . '>' . $name . '</option>';
-	}
-	$Template->Assign_block_vars('members_management.select_editor', array(
-		'SELECT_EDITORS' => $select_editors
-	));
-	
-	//Gestion fuseau horaire par défaut.
-	$select_timezone = '';
-	for($i = -12; $i <= 14; $i++)
-	{
-		$selected = ($i == $mbr['user_timezone']) ? 'selected="selected"' : '';
-		$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
-		$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
-	}
-	$Template->Assign_block_vars('members_management.select_timezone', array(
-		'SELECT_TIMEZONE' => $select_timezone
-	));
-		
-	//Sex par défaut
-	$i = 0;
-	$array_sex = array('--', $LANG['male'], $LANG['female'], );
-	foreach($array_sex as $value_sex)
-	{		
-		$selected = ($i == $mbr['user_sex']) ? 'selected="selected"' : '';
-
-		$Template->Assign_block_vars('members_management.select_sex', array(
-			'SEX' => '<option value="' . $i . '" ' . $selected . '>' . $value_sex . '</option>'
-		));
-		
-		$i++;
-	}
-
 	//Champs supplémentaires.
 	$extend_field_exist = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 	if( $extend_field_exist > 0 )
 	{
 		$Template->Assign_vars(array(			
+			'C_MISCELLANEOUS' => true,
 			'L_MISCELLANEOUS' => $LANG['miscellaneous']
 		));
-		$Template->Assign_block_vars('members_management.miscellaneous', array(			
-		));
+
 		$result = $Sql->Query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values, ex.*
 		FROM ".PREFIX."member_extend_cat exc
 		LEFT JOIN ".PREFIX."member_extend ex ON ex.user_id = '" . $id . "'
@@ -807,7 +772,7 @@ elseif( !empty($id) )
 				break;
 			}				
 			
-			$Template->Assign_block_vars('members_management.miscellaneous.list', array(
+			$Template->Assign_block_vars('list', array(
 				'NAME' => $row['require'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 				'ID' => $row['field_name'],
 				'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',

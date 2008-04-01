@@ -58,7 +58,17 @@ else
 		'admin_members_config' => '../templates/' . $CONFIG['theme'] . '/admin/admin_members_config.tpl'
 	));
 	
+	#####################Activation du mail par le membre pour s'inscrire##################
+	$array = array(0 => $LANG['no_activ_mbr'], 1 => $LANG['mail'], 2 => $LANG['admin']);
+	$activ_mode_option = '';
+	foreach($array as $key => $value )
+	{
+		$selected = ( $CONFIG_MEMBER['activ_mbr'] == $key ) ? 'selected="selected"' : '' ;		
+		$activ_mode_option .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+	}
+	
 	$Template->Assign_vars(array(
+		'ACTIV_MODE_OPTION' => $activ_mode_option,
 		'ACTIV_REGISTER_ENABLED' => $CONFIG_MEMBER['activ_register'] == 1 ? 'selected="selected"' : '',
 		'ACTIV_REGISTER_DISABLED' => $CONFIG_MEMBER['activ_register'] == 0 ? 'selected="selected"' : '',
 		'VERIF_CODE_ENABLED' => ($CONFIG_MEMBER['verif_code'] == 1 && @extension_loaded('gd')) ? 'checked="checked"' : '',
@@ -113,18 +123,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	#####################Activation du mail par le membre pour s'inscrire##################
-	$array = array(0 => $LANG['no_activ_mbr'], 1 => $LANG['mail'], 2 => $LANG['admin']);
-	foreach($array as $key => $value )
-	{
-		$selected = ( $CONFIG_MEMBER['activ_mbr'] == $key ) ? 'selected="selected"' : '' ;		
-		$Template->Assign_block_vars('select_activ_mbr', array(
-			'MODE' => '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>'
-		));
-	}
-	
 	include_once('../includes/bbcode.php');
-
 	
 	$Template->Pparse('admin_members_config'); 
 }

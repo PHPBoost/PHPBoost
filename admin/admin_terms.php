@@ -66,9 +66,6 @@ else
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 	));
 	
-	$Template->Assign_block_vars('register', array(
-	));
-			
 	$msg_register = $Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__); //Message à l'inscription.
 	
 	$Template->Assign_vars(array(
