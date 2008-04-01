@@ -15,56 +15,49 @@
 		</div>
 		
 		<div id="admin_contents">
-			# START index #
+			# IF C_DATABASE_INDEX #
 
-			<table class="module_table">
-				<tr>
-					<th colspan="2" style="text-align:center;">
-						{L_DATABASE_MANAGEMENT}
-					</th>
-				</tr>
-				<tr>
-					<td colspan="2" class="row1">
-						{L_EXPLAIN}
-					</td>
-				</tr>
-				<tr>
-					<th colspan="2" style="text-align:center;">
-						{L_DB_RESTORE}
-					</th>
-				</tr>
-				<tr>
-					<td class="row1" style="text-align:center;">
+			<form method="post" action="admin_database.php?action=restore" enctype="multipart/form-data" name="upload_file">
+			<div class="block_container">
+				<div class="block_top" style="text-align:center;">
+					{L_DATABASE_MANAGEMENT}
+				</div>
+				<div class="block_contents1">
+					{L_EXPLAIN}
+				</div>
+				<div class="block_top" style="text-align:center;">
+					{L_DB_RESTORE}
+				</div>
+				<div class="block_contents1">
+					<div style="float:left;width:50%">
 						{L_RESTORE_FROM_SERVER}
 						<br /><br />
 						<a href="admin_database.php?action=restore">{L_FILE_LIST}</a>
-					</td>
-					<td class="row1" style="text-align:center;">
+					</div>
+					<div style="float:left;width:50%">
 						{L_RESTORE_FROM_UPLOADED_FILE}
 						<br /><br />
-						<form method="post" action="admin_database.php?action=restore" enctype="multipart/form-data" name="upload_file">
-							<input type="file" class="submit" name="file_sql" />
-							<input type="hidden" name="max_file_size" value="10485760" />
-							<br /><br />
-							<input type="submit" class="submit" value="{L_RESTORE_NOW}" />
-						</form>
-					</td>			
-				</tr>
+						<input type="file" class="submit" name="file_sql" />
+						<input type="hidden" name="max_file_size" value="10485760" />
+						<br /><br />
+						<input type="submit" class="submit" value="{L_RESTORE_NOW}" />
+					</div>
+					<div class="spacer"></div>
+				</div>
 				# IF C_ERROR_HANDLER #
-				<tr>
-					<td class="row1" colspan="2" style="text-align:center;">
-						<span id="errorh"></span>
-						<div class="{ERRORH_CLASS}">
-							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-						</div>
-					</td>
-				</tr>
+				<div class="block_contents1">
+					<span id="errorh"></span>
+					<div class="{ERRORH_CLASS}">
+						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					</div>
+				</div>
 				# ENDIF #
-			</table>
+			</div>
+			</form>
 
 			<br />
 				
-			<form action="{index.TARGET}" method="post" name="table_list">
+			<form action="{TARGET}" method="post">
 				<table class="module_table">
 					<tr>
 						<th colspan="7" style="text-align:center;">
@@ -94,31 +87,31 @@
 							{L_TABLE_FREE}
 						</td>
 					</tr>
-					# START index.table_list #
+					# START table_list #
 					<tr>			
 						<td class="row1" style="text-align:center;">
-							<input type="checkbox" id="id{index.table_list.I}" name="table_{index.table_list.TABLE_NAME}" />
+							<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
 						</td>
 						<td class="row1">
-							<strong>{index.table_list.TABLE_NAME}</strong>
+							<strong>{table_list.TABLE_NAME}</strong>
 						</td>			
 						<td class="row1" style="text-align:right;">
-							{index.table_list.TABLE_ROWS}
+							{table_list.TABLE_ROWS}
 						</td>
 						<td class="row1" style="text-align:center;">
-							{index.table_list.TABLE_ENGINE}
+							{table_list.TABLE_ENGINE}
 						</td>
 						<td class="row1" style="text-align:center;">
-							{index.table_list.TABLE_COLLATION}
+							{table_list.TABLE_COLLATION}
 						</td>
 						<td class="row1" style="text-align:right;">
-							{index.table_list.TABLE_DATA}
+							{table_list.TABLE_DATA}
 						</td>
 						<td class="row1" style="text-align:right;">
-							{index.table_list.TABLE_FREE}
+							{table_list.TABLE_FREE}
 						</td>
 					</tr>
-					# END index.table_list #
+					# END table_list #
 					<tr style="text-align:center;"> 
 						<td class="row3">
 							( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign_middle" /> {L_ALL})
@@ -144,56 +137,41 @@
 					</tr>
 				</table>
 							
-				<table class="module_table">
-					<tr>
-						<th colspan="7" style="text-align:center;">
-							{ACTION_FOR_SELECTION}
-						</th>
-					</tr>
-					<tr> 
-						<td colspan="7" class="row1" style="text-align:center;">
+				<div class="block_container">
+					<div class="block_top text_center">
+						{ACTION_FOR_SELECTION}
+					</div>
+					<div class="block_contents1 text_center">
 						<table style="margin:auto;">
 							<tr>
-								<td>
-									<img src="../templates/{THEME}/images/admin/database.png" alt="optimize" />
-								</td>
-								<td>
-									<img src="../templates/{THEME}/images/admin/configuration.png" alt="repair" />
-								</td>
-								<td>
-									<img src="../templates/{THEME}/images/admin/updater.png" alt="optimize" class="valign_middle" />
-								</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="submit" name="optimize" value="{L_OPTIMIZE}" class="submit" />
-									</td>
-									<td>
-										<input type="submit" name="repair" value="{L_REPAIR}" class="submit" />
-									</td>
-									<td>
-										<input type="submit" name="backup" value="{L_BACKUP}" class="submit" />
-									</td>
-								</tr>
-							</table>		
-						</td>
-					</tr>
-				</table>
-				<script>
-					<!--
-					function check_all(status, id)
-					{
-						var i;
-						for(i = 0; i < {NBR_TABLES}; i++)
-							document.getElementById(id + i).checked = status;
-					}	
-					-->
+								<td><img src="../templates/{THEME}/images/admin/database.png" alt="optimize" /></td>
+								<td><img src="../templates/{THEME}/images/admin/configuration.png" alt="repair" /></td>
+								<td><img src="../templates/{THEME}/images/admin/updater.png" alt="optimize" class="valign_middle" /></td>
+							</tr>
+							<tr>
+								<td><input type="submit" name="optimize" value="{L_OPTIMIZE}" class="submit" /></td>
+								<td><input type="submit" name="repair" value="{L_REPAIR}" class="submit" /></td>
+								<td><input type="submit" name="backup" value="{L_BACKUP}" class="submit" /></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				
+				<script type="text/javascript">
+				<!--
+				function check_all(status, id)
+				{
+					var i;
+					for(i = 0; i < {NBR_TABLES}; i++)
+						document.getElementById(id + i).checked = status;
+				}	
+				-->
 				</script>
 			</form>
 
-			# END index #
+			# ENDIF #
 
-			# START backup #
+			# IF C_DATABASE_BACKUP #
 
 			<form action="admin_database.php?action=backup" method="post" name="table_list">
 				<script type="text/javascript">
@@ -220,9 +198,9 @@
 							{L_SELECTION}
 							<br /><br />
 							<select name="table_list[]" size="8" multiple="multiple">
-							# START backup.table_list #
-								<option value="{backup.table_list.NAME}" name="table_{backup.table_list.NAME}" id="{backup.table_list.I}" {backup.table_list.SELECTED}>{backup.table_list.NAME}</option>
-							# END backup.table_list #
+							# START table_list #
+								<option value="{table_list.NAME}" name="table_{table_list.NAME}" id="{table_list.I}" {table_list.SELECTED}>{table_list.NAME}</option>
+							# END table_list #
 							</select>
 							<br /><br />
 							<a class="small_link" href="javascript:check_select_multiple(true);">{SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple(false);">{SELECT_NONE}</a>
@@ -238,82 +216,98 @@
 							<input type="submit" value="{L_BACKUP}" class="submit" />
 						</td>
 					</tr>
-					<tr>
-						<td>
-						</td>
-					</tr>
 				</table>
 			</form>
+			# ENDIF #
 
-			# END backup #
-
-			# START query #
-
-				<form action="admin_database.php?query=1#executed_query" method="post">
-					<table class="module_table">
-						<tr>
-							<th style="text-align:center;">
-								{L_QUERY}
-							</th>
-						</tr>
-						<tr>
-							<td class="row1">
-								{L_EXPLAIN_QUERY}
-							</td>
-						</tr>
-						<tr>
-							<td class="row1" style="text-align:center;">
-								<textarea class="post" style="width:99%; height: 150px;" name="query">{QUERY}</textarea>
-							</td>
-						</tr>
-					</table>
-				
-					<br /><br />
+			
+			# IF C_DATABASE_QUERY #
+				<script type="text/javascript">
+				<!--
+				function check_form(){
+					var query = document.getElementById('query').value;
+					var query_lowercase = query.toLowerCase();
+					var check_query = false;
+					var keyword = new Array('delete', 'drop', 'truncate');
 					
-					<fieldset class="fieldset_submit">
+					if( query == "" ) {
+						alert("{L_REQUIRE}");
+						return false;
+				    }
+					
+					//Vérification de la requête => alerte si elle contient un des mots clés DELETE, DROP ou TRUNCATE.
+					for(i = 0; i < keyword.length; i++)
+					{
+						if( typeof(strpos(query_lowercase, keyword[i])) != 'boolean' )
+						{
+							check_query = true;
+							break;
+						}
+					}
+					if( check_query )
+					{
+						return confirm("{L_CONFIRM_QUERY}\n" + query);
+					}
+					return true;
+				}
+				-->	
+				</script>
+				
+				<form action="admin_database.php?query=1#executed_query" method="post" onsubmit="return check_form();">
+				<div class="block_container">
+					<div class="block_top">
+						{L_QUERY}
+					</div>
+					<div class="block_contents2">
+						<span id="errorh"></span>
+						<div class="warning">
+							<img src="../templates/{THEME}/images/warning.png" alt="" style="float:left;padding-right:6px;" /> {L_EXPLAIN_QUERY}
+						</div>
+					</div>
+					<div class="block_top">
+						* {L_EXECUTED_QUERY}
+					</div>
+					<div class="block_contents2">
+						<textarea class="post" rows="12" id="query" name="query">{QUERY}</textarea>
+					</div>
+					<fieldset class="fieldset_submit" style="margin:0">
 						<legend>{L_EXECUTE}</legend>
 						<input type="submit" class="submit" value="{L_EXECUTE}" />		
-					</fieldset>	
+					</fieldset>
+				</div>
 				</form>
 				
-				# START query.select_result #
-				<table class="module_table">
-					<tr>
-						<th>
-							{L_RESULT}
-						</th>
-					</tr>
-					<tr>
-						<td class="row2">
-							<fieldset style="background-color:white;" name="executed_query">
-								<legend><strong>{L_EXECUTED_QUERY}:</strong></legend>
-								<div style="color:black;font-size:10px;">{query.select_result.QUERY}</div>
-								<br />
-							</fieldset>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<table style="width:auto;">
-								# START query.select_result.line #
+				# IF C_QUERY_RESULT #
+				<div class="block_container" style="width:98%;margin-top:0" id="executed_query">
+					<div class="block_top">
+						{L_RESULT}
+					</div>
+					<div class="block_contents2">
+						<fieldset style="background-color:white;margin:0px">
+							<legend><strong>{L_EXECUTED_QUERY}:</strong></legend>
+							<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
+						</fieldset>
+						
+						<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
+							<table class="module_table">
+								# START line #
 								<tr>
-									# START query.select_result.line.field #
-									<td class="{query.select_result.line.field.CLASS}" style="{query.select_result.line.field.STYLE}">
-										{query.select_result.line.field.FIELD}
+									# START line.field #
+									<td class="{line.field.CLASS}" style="{line.field.STYLE}">
+										{line.field.FIELD}
 									</td>
-									# END query.select_result.line.field #
+									# END line.field #
 								</tr>
-								# END query.select_result.line #
+								# END line #
 							</table>
-						</td>
-					</tr>
-				</table>
-				<br /><br />
-				# END query.select_result #
-				
-			# END query #
+						</div>
+					</div>
+				</div>
+				# ENDIF #
+			# ENDIF #
 
-			# START list_files #
+			
+			# IF C_DATABASE_FILES #
 				<script type="text/javascript">
 				<!--
 				function Confirm_del() {
@@ -337,7 +331,6 @@
 						</td>
 					</tr>
 					# ENDIF #
-					
 					<tr>
 						<td class="row1" colspan="4" style="text-align:center;">
 							{L_INFO}
@@ -357,24 +350,24 @@
 							{L_DELETE}
 						</td>
 					</tr>
-					# START list_files.file #
+					# START file #
 					<tr>
 						<td class="row1" style="padding-left:20px;">
-							<a href="admin_database.php?action=restore&amp;file={list_files.file.FILE_NAME}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');"><img src="../templates/{THEME}/images/admin/database_mini.png" alt="" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={list_files.file.FILE_NAME}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');">{list_files.file.FILE_NAME}</a>
+							<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');"><img src="../templates/{THEME}/images/admin/database_mini.png" alt="" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');">{file.FILE_NAME}</a>
 						</td>
 						<td class="row1" style="text-align:center;width:120px;">
-							{list_files.file.WEIGHT}
+							{file.WEIGHT}
 						</td>
 						<td class="row1" style="text-align:center;width:120px;">
-							{list_files.file.FILE_DATE}
+							{file.FILE_DATE}
 						</td>
 						<td class="row1" style="text-align:center;width:120px;">
-							<a href="admin_database.php?action=restore&amp;del={list_files.file.FILE_NAME}" onclick="javascript:return Confirm_del()"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="del" /></a>
+							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}" onclick="javascript:return Confirm_del()"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="del" /></a>
 						</td>
 					</tr>
-					# END list_files.file #
+					# END file #
 				</table>
 
-			# END list_files #
+			# ENDIF #
 		</div>
 		

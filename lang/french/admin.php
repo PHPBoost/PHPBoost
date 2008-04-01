@@ -600,6 +600,7 @@ $LANG['db_query_explain'] = 'Vous pouvez dans ce panneau d\'administration exécu
 $LANG['db_submit_query'] = 'Exécuter';
 $LANG['db_query_result'] = 'Résultat de la requête suivante';
 $LANG['db_executed_query'] = 'Requête SQL';
+$LANG['db_confirm_query'] = 'Voulez-vous vraiment exécuter la requête suivante : ';
 $LANG['db_file_list'] = 'Liste des fichiers';
 $LANG['db_confirm_restore'] = 'Etes-vous sûr de vouloir restaurer votre base de données à partir de la sauvegarde sélectionnée?';
 $LANG['db_restore_file'] = 'Cliquez sur le fichier que vous voulez restaurer.';

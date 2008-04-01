@@ -21,6 +21,9 @@ p{
 	font-size:1em;
 }
 /* Classes textes */
+.text_center{
+	text-align:center;
+}
 .text_small{
 	font-size:10px;
 	font-weight:normal;

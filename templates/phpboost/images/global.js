@@ -110,7 +110,7 @@ function str_repeat(charrepeat, nbr)
 //Recherche d'une chaîne dans une autre.
 function strpos(haystack, needle)
 {
-    var i = haystack.indexOf(needle, 1); // returns -1
+    var i = haystack.indexOf(needle, 0); // returns -1
     return i >= 0 ? i : false;
 }
 

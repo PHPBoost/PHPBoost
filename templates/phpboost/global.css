@@ -6,15 +6,25 @@
 /* Classes générales
 --------------------------------------*/
 /* Case générale des tableaux du site*/
-.row1{
+.block_contents1, .row1{
 	background:#D1E4F4;
 	border:1px solid #487B9C;
 	padding:6px;
 }
-.row2{
+.block_contents1{
+	padding:20px 6px;
+	margin-top:-1px;
+	margin-bottom:-1px;
+}
+.block_contents2, .row2{
 	background:#B8D3EA;
 	border:1px solid #487B9C;
 	padding:6px;
+}
+.block_contents2{
+	padding:20px 6px;
+	margin-top:-1px;
+	margin-bottom:-1px;
 }
 .row3{
 	background:#9EC2DB;

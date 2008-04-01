@@ -345,11 +345,11 @@
 					</dl>
 					<dl>
 						<dt><label for="user_sign">{L_MEMBER_SIGN}</label><br /><span>{L_MEMBER_SIGN_EXPLAIN}</span></dt>
-						<dd><label><textarea type="text" class="post" rows="4" cols="27" name="user_sign" id="user_sign">{SIGN}</textarea> </label></dd>
+						<dd><label><textarea type="text" class="post" rows="4" cols="27" name="user_sign" id="user_sign">{SIGN}</textarea></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="user_desc">{L_MEMBER_BIOGRAPHY}</label></dt>
-						<dd><label><textarea type="text" class="post" rows="4" cols="27" name="user_desc" id="user_desc">{BIOGRAPHY}</textarea> </label></dd>
+						<dd><label><textarea type="text" class="post" rows="4" cols="27" name="user_desc" id="user_desc">{BIOGRAPHY}</textarea></label></dd>
 					</dl>
 				</fieldset>	
 					
