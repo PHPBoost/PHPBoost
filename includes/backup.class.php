@@ -151,23 +151,6 @@ class Backup
 			$Sql->Query_inject("REPAIR TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
 	}
 	
-	//Coloration syntaxique du SQL
-	function Sql_highlight_string($query)
-	{
-		$query = ' ' . strtolower($query) . ' ';
-		$query = preg_replace('`(' . implode('|', array_map('preg_quote', array('*', '=', ',', '!=', '>', '<', '.'))) . ')+`', '<span style="color:#FF00FF;">$1</span>', $query);
-		$query = preg_replace('`\`(.*)\``U', '<span style="color:#008000;">$1</span>', $query);	
-		$key_words = array('select', 'update', 'delete', 'insert into', 'truncate', 'alter', 'table', 'status', 'set', 'drop', 'from', 'values', 'count', 'distinct', 'having', 'left', 'right', 'join', 'natural', 'outer', 'inner', 'between', 'where', 'group by', 'order by', 'limit', 'or', 'and', 'not', 'in', 'as', 'on', 'all', 'any', 'like', 'concat', 'substring', 'collate', 'collation', 'primary', 'key', 'default', 'null', 'exists', 'status', 'show');
-		$query = preg_replace_callback('`\b(' . implode('|', $key_words) . ')+\b`', create_function('$matches','return strtoupper($matches[1]);'), $query);
-		$query = preg_replace('`(?<![\r\n\t\f])(' . implode('|', array('SELECT', 'UPDATE', 'INSERT INTO', 'FROM', 'LEFT JOIN', 'RIGHT JOIN', '[^ ]JOIN', 'NATURAL', 'WHERE', 'ORDER BY', 'GROUP BY', 'LIMIT', 'HAVING', 'OUTER', 'CROSS', 'UNION')) . ')+`', "\r\n" . '$1$2', $query);
-		$query = preg_replace('`\b(' . implode('|', array_map('strtoupper', $key_words)) . ')+\b`', ' <span style="color:#990099;">$1</span> ', $query);
-		$query = preg_replace('`\'(.+)\'`U', '<span style="color:#008000;">\'$1\'</span>', $query);
-		$query = preg_replace('`(?<![\'#])\b([0-9]+)\b(?!\')`', '<span style="color:#008080;">$1</span>', $query);
-		$query = preg_replace('`(\r\n){2,}`', "\r\n", $query);
-
-		return nl2br($query);
-	}
-	
 	## Private Methods ##
 	
 	

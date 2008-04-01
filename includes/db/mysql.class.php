@@ -285,6 +285,54 @@ class Sql
 		return $this->req;
 	}
 	
+	//Coloration syntaxique du SQL
+	function Highlight_query($query)
+	{
+		$query = ' ' . strtolower($query) . ' ';
+		
+		//Suppression des espaces en trop.
+		$query = preg_replace('`(\s){2,}(\s){2,}`', '$1', $query);
+		
+		//Ajout d'un retour à la ligne devant les mots clés principaux.
+		$query = preg_replace('`\b(' . implode('|', array('select', 'update', 'insert into', 'from', 'left join', 'right join', 'cross join', 'natural join', 'inner join', 'left outer join', 'right outer join', 'full outer join', 'full join', 'drop', 'truncate', 'where', 'order by', 'group by', 'limit', 'having', 'union')) . ')+`', "\r\n" . '$1', $query);
+		
+		//Coloration des opérateurs.
+		$query = preg_replace('`(' . implode('|', array_map('preg_quote', array('*', '=', ',', '!=', '<>', '>', '<', '.', '(', ')'))) . ')+`U', '<span style="color:#FF00FF;">$1</span>', $query);
+		
+		//Coloration des mots clés.
+		$key_words = array('select', 'update', 'delete', 'insert into', 'truncate', 'alter', 'table', 'status', 'set', 'drop', 'from', 'values', 'count', 'distinct', 'having', 'left', 'right', 'join', 'natural', 'outer', 'inner', 'between', 'where', 'group by', 'order by', 'limit', 'union', 'or', 'and', 'not', 'in', 'as', 'on', 'all', 'any', 'like', 'concat', 'substring', 'collate', 'collation', 'primary', 'key', 'default', 'null', 'exists', 'status', 'show');
+		$query = preg_replace_callback('`\b(' . implode('|', $key_words) . ')+\b`', create_function('$matches','return \'<span style="color:#990099;">\' . strtoupper($matches[1]) . \'</span>\';'), $query);
+		
+		//Coloration finale.
+		$query = preg_replace('`\'(.+)\'`U', '<span style="color:#008000;">\'$1\'</span>', $query); //Coloration du texte échappé.
+		$query = preg_replace('`(?<![\'#])\b([0-9]+)\b(?!\')`', '<span style="color:#008080;">$1</span>', $query); //Coloration des chiffres.
+		
+		//Suppression des espaces en trop.
+		$query = preg_replace('`(\s){2,}(\s){2,}`', '$1', $query);
+		
+		return nl2br(trim($query));
+	}
+	
+	//Indente une requête SQL.
+	function Indent_query($query)
+	{
+		$query = ' ' . strtolower($query) . ' ';
+		
+		//Suppression des espaces en trop.
+		$query = preg_replace('`(\s){2,}(\s){2,}`', '$1', $query);
+
+		//Ajout d'un retour à la ligne devant les mots clés principaux.
+		$query = preg_replace('`\b(' . implode('|', array('select', 'update', 'insert into', 'from', 'left join', 'right join', 'cross join', 'natural join', 'inner join', 'left outer join', 'right outer join', 'full outer join', 'full join', 'drop', 'truncate', 'where', 'order by', 'group by', 'limit', 'having', 'union')) . ')+`', "\r\n" . '$1', $query);
+		
+		//Case des mots clés.
+		$key_words = array('select', 'update', 'delete', 'insert into', 'truncate', 'alter', 'table', 'status', 'set', 'drop', 'from', 'values', 'count', 'distinct', 'having', 'left', 'right', 'join', 'natural', 'outer', 'inner', 'between', 'where', 'group by', 'order by', 'limit', 'union', 'or', 'and', 'not', 'in', 'as', 'on', 'all', 'any', 'like', 'concat', 'substring', 'collate', 'collation', 'primary', 'key', 'default', 'null', 'exists', 'status', 'show');
+		$query = preg_replace_callback('`\b(' . implode('|', $key_words) . ')+\b`', create_function('$matches','return strtoupper($matches[1]);'), $query);
+		
+		//Suppression des espaces en trop.
+		$query = preg_replace('`(\s){2,}(\s){2,}`', '$1', $query);
+		
+		return trim($query);
+	}
 	
 	## Private Methods ##
 	//Gestion des erreurs.

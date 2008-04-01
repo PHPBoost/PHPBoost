@@ -96,8 +96,7 @@
 		</div>
 		
 		<div id="admin_contents">		
-			# IF C_EDIT_GROUP #
-					
+			# IF C_EDIT_GROUP #					
 			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_GROUPS_MANAGEMENT}</legend>
@@ -121,11 +120,14 @@
 					</dl>
 					<dl>
 						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
-						<dd><label>
-							<select name="img" id="img_group" onChange="img_change(this.options[selectedIndex].value)">
-								{IMG_GROUPS}
-							</select>				
-							<img src="../images/group/{IMG}" name="img_group" alt="" class="valign_middle" /></label></dd>
+						<dd>
+							<label>
+								<select name="img" id="img_group" onChange="img_change(this.options[selectedIndex].value)">
+									{IMG_GROUPS}
+								</select>				
+								<img src="../images/group/{IMG}" name="img_group" alt="" class="valign_middle" />
+							</label>
+						</dd>
 					</dl>
 				</fieldset>						
 				<fieldset class="fieldset_submit">
@@ -195,7 +197,6 @@
 				# END member #
 			</table>
 					
-			
 			<p style="text-align: center;">{PAGINATION}</p>
 			# ENDIF #
 			

@@ -154,7 +154,7 @@ else
 		SELECT u.user_id, m.login
 		FROM ".PREFIX."upload u
 		LEFT JOIN ".PREFIX."member m ON m.user_id = u.user_id
-		WHERE u.user_id = '2'")
+		WHERE u.user_id = '" . $folder_member . "'")
 	: 	("SELECT uc.user_id, m.login
 		FROM ".PREFIX."upload_cat uc
 		LEFT JOIN ".PREFIX."member m ON m.user_id = uc.user_id

@@ -67,14 +67,17 @@ if( !empty($_GET['query']) )
 {
 	$query = !empty($_POST['query']) ? trim(stripslashes($_POST['query'])) : '';
 
-	$Template->Assign_block_vars('query', array());
+	$Template->Assign_vars(array(
+		'C_DATABASE_QUERY' => true
+	));
 
 	if( !empty($query) ) //On exécute une requête
 	{
-		$lower_query = strtolower($query);		
-		$Template->Assign_block_vars('query.select_result', array(
-			'QUERY' => $Backup->Sql_highlight_string($query)
+		$Template->Assign_vars(array(
+			'C_QUERY_RESULT' => true
 		));
+	
+		$lower_query = strtolower($query);		
 			
 		if( strtolower(substr($query, 0, 6)) == 'select' ) //il s'agit d'une requête de sélection
 		{
@@ -83,20 +86,20 @@ if( !empty($_GET['query']) )
 			$i = 1;
 			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
-				$Template->Assign_block_vars('query.select_result.line', array());
+				$Template->Assign_block_vars('line', array());
 				//Premier passage: on liste le nom des champs sélectionnés
 				if( $i == 1 )
 				{
 					foreach( $row as $field_name => $field_value )
-						$Template->Assign_block_vars('query.select_result.line.field', array(
+						$Template->Assign_block_vars('line.field', array(
 							'FIELD' => '<strong>' . $field_name . '</strong>',
 							'CLASS' => 'row3'
 						));
-					$Template->Assign_block_vars('query.select_result.line', array());
+					$Template->Assign_block_vars('line', array());
 				}
 				//On parse les valeurs de sortie
 				foreach( $row as $field_name => $field_value )
-				$Template->Assign_block_vars('query.select_result.line.field', array(
+				$Template->Assign_block_vars('line.field', array(
 					'FIELD' => securit($field_value),
 					'CLASS' => 'row1',
 					'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
@@ -113,10 +116,13 @@ if( !empty($_GET['query']) )
 	}	
 	
 	$Template->Assign_vars(array(
+		'QUERY' => $Sql->Indent_query($query),
+		'QUERY_HIGHLIGHT' => $Sql->Highlight_query($query),
+		'L_REQUIRE' => $LANG['require'],
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
+		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],
 		'L_EXECUTE' => $LANG['db_submit_query'],
 		'L_RESULT' => $LANG['db_query_result'],
-		'QUERY' => $query,
 		'L_EXECUTED_QUERY' => $LANG['db_executed_query']
 	));
 }
@@ -191,8 +197,8 @@ elseif( $action == 'restore' )
 			redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=failure', '', '&'));
 	}
 	
-	$Template->Assign_block_vars('list_files', array());
 	$Template->Assign_vars(array(
+		'C_DATABASE_FILES' => true,
 		'L_LIST_FILES' => $LANG['db_file_list'],
 		'L_CONFIRM_RESTORE' => $LANG['db_confirm_restore'],
 		'L_CONFIRM_DEL' => $LANG['db_confirm_delete_file'],
@@ -236,11 +242,11 @@ elseif( $action == 'restore' )
 	{
 	   if( $dh = opendir($dir) )
 		{
-			while(($file = readdir($dh)) !== false)
+			while( ($file = readdir($dh)) !== false )
 			{
 				if( preg_match('`.\.sql$`', $file) )					
 				{
-					$Template->Assign_block_vars('list_files.file', array(
+					$Template->Assign_block_vars('file', array(
 						'FILE_NAME' => $file,
 						'WEIGHT' => number_round(filesize($dir . '/' . $file)/1048576, 1) . ' Mo',
 						'FILE_DATE' => gmdate_format('date_format_short', filemtime($dir . '/' . $file))
@@ -331,17 +337,15 @@ else
 
 	if( $tables_backup ) //Liste des tables pour les sauvegarder
 	{	
-		$Template->Assign_block_vars('backup', array(
-			'TARGET' => transid('admin_database.php')
-		));
-		
 		$Template->Assign_vars(array(
-			'L_BACKUP_DATABASE' => $LANG['db_backup_database'],
-			'L_SELECTION' => $LANG['db_selected_tables'],
-			'L_EXPLAIN_BACKUP' => $LANG['db_backup_explain'],
+			'C_DATABASE_BACKUP' => true,
 			'NBR_TABLES' => count($Backup->tables),
+			'TARGET' => transid('admin_database.php'),
 			'SELECT_ALL' => $LANG['select_all'],
 			'SELECT_NONE' => $LANG['select_none'],
+			'L_BACKUP_DATABASE' => $LANG['db_backup_database'],
+			'L_EXPLAIN_BACKUP' => $LANG['db_backup_explain'],
+			'L_SELECTION' => $LANG['db_selected_tables'],
 			'L_BACKUP_ALL' => $LANG['db_backup_all'],
 			'L_BACKUP_STRUCT' => $LANG['db_backup_struct'],
 			'L_BACKUP_DATA' => $LANG['db_backup_data'],
@@ -355,7 +359,7 @@ else
 			if( !empty($_POST['table_' . $properties['name']]) && $_POST['table_' . $properties['name']] == 'on' )
 				$selected_tables[] = $properties['name'];
 			
-			$Template->Assign_block_vars('backup.table_list', array(
+			$Template->Assign_block_vars('table_list', array(
 				'NAME' => $properties['name'],
 				'SELECTED' => in_array($properties['name'], $selected_tables) ? 'selected="selected"' : '',
 				'I' => $i
@@ -365,10 +369,6 @@ else
 	}
 	else
 	{
-		$Template->Assign_block_vars('index', array(
-			'TARGET' => transid('admin_database.php')
-		));
-		
 		//Réparation ou optimisation des tables
 		if( $repair || $optimize )
 		{
@@ -407,7 +407,7 @@ else
 			$free = ($free > 1024) ? number_round($free/1024, 1) . ' MB' : $free . ' kB';
 			$data = ($data > 1024) ? number_round($data/1024, 1) . ' MB' : $data . ' kB';
 			
-			$Template->Assign_block_vars('index.table_list', array(
+			$Template->Assign_block_vars('table_list', array(
 				'TABLE_NAME' => $table_info['name'],
 				'TABLE_ENGINE' => $table_info['engine'],
 				'TABLE_ROWS' => $table_info['rows'],
@@ -429,6 +429,8 @@ else
 		$nbr_data = ($nbr_data > 1024) ? number_round($nbr_data/1024, 1) . ' Mo' : $nbr_data . ' Ko';
 		
 		$Template->Assign_vars(array(
+			'C_DATABASE_INDEX' => true,
+			'TARGET' => transid('admin_database.php'),
 			'NBR_TABLES' => count($Backup->tables),
 			'NBR_ROWS' => $nbr_rows,
 			'NBR_DATA' => $nbr_data,

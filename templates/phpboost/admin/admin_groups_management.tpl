@@ -1,6 +1,5 @@
 		<script type="text/javascript">
 		<!--
-
 		function Confirm() {
 		return confirm("{L_CONFIRM_DEL_GROUP}");
 		}

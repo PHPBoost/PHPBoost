@@ -89,8 +89,8 @@
 					<div class="msg_pseudo_mbr">
 					{com_list.USER_ONLINE} {com_list.USER_PSEUDO}
 					</div>
-					<div style="float:left;">&nbsp;&nbsp;<a href="{com_list.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{com_list.ID}" /></a> {com_list.DATE}</div>
-					<div style="float:right;"><a href="{com_list.U_QUOTE}" title=""><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" class="valign_middle" /></a>{com_list.EDIT}{com_list.DEL}&nbsp;&nbsp;</div>
+					<span style="float:left;">&nbsp;&nbsp;<a href="{com_list.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{com_list.ID}" /></a> {com_list.DATE}</span>
+					<span style="float:right;"><a href="{com_list.U_QUOTE}" title=""><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" class="valign_middle" /></a>{com_list.EDIT}{com_list.DEL}&nbsp;&nbsp;</span>
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">

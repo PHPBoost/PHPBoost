@@ -162,12 +162,11 @@ elseif( !empty($id) )
 		5 => $LANG['check_uniq'],
 		6 => $LANG['check_mult']
 	);
+	$option_field = '';
 	foreach($array_field as $key => $value)
 	{
 		$selected = ($key == $extend_field['field']) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('field', array(
-			'FIELD' => '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>'
-		));
+		$option_field .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
 	}
 	
 	$array_regex = array(
@@ -179,19 +178,17 @@ elseif( !empty($id) )
 	);
 	
 	$selected = (!$predef_regex) ? 'selected="selected"' : ''; 
-	$Template->Assign_block_vars('regex', array(
-		'REGEX' => '<option value="0" ' . $selected . '>--</option>'
-	));
+	$option_regex = '<option value="0" ' . $selected . '>--</option>';
 	foreach($array_regex as $key => $value)
 	{
 		$selected = ($key == $extend_field['regex']) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('regex', array(
-			'REGEX' => '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>'
-		));
+		$option_regex .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
 	}
 	
 	$Template->Assign_vars(array(
 		'REGEX' => (!$predef_regex) ? $extend_field : '',
+		'OPTION_REGEX' => $option_regex,
+		'OPTION_FIELD' => $option_field,
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_DEFAULT_FIELD_VALUE' => $LANG['default_field_possible_values'],
 		'L_EXTEND_FIELD_MANAGEMENT' => $LANG['extend_field_management'],

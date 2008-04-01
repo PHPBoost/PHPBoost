@@ -118,10 +118,8 @@
 					<dt><label for="field">* {L_TYPE}</label></dt>
 					<dd><label>
 						<select name="field" onchange="change_status(this.options[selectedIndex].value)">
-						# START field #
-						{field.FIELD}
-						# END field #
-					</select>
+							{OPTION_FIELD}
+						</select>
 					</label></dd>
 				</dl>
 				<dl> 
@@ -140,9 +138,7 @@
 						<label><input type="radio" name="regex_type" id="regex_type1" value="0" {REGEX1_CHECKED}{DISABLED} /> {L_PREDEF_REGEXP}</label>
 						<label>
 							<select name="regex1" id="regex1" onclick="document.getElementById('regex_type1').checked = true;"{DISABLED}>
-								# START regex #
-								{regex.REGEX}
-								# END regex #
+								{OPTION_REGEX}
 							</select>
 						</label>
 						<br /> 

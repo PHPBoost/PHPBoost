@@ -600,6 +600,7 @@ $LANG['db_query_explain'] = 'In this administration panel, you can execut querie
 $LANG['db_submit_query'] = 'Execut';
 $LANG['db_query_result'] = 'Result of this query';
 $LANG['db_executed_query'] = 'SQL query';
+$LANG['db_confirm_query'] = 'Did you really want to execute this query : ';
 $LANG['db_file_list'] = 'Files\'s list';
 $LANG['db_confirm_restore'] = 'Are you sure to want to restore your database by the selected save?';
 $LANG['db_restore_file'] = 'Click in the file you want to restore.';
