@@ -22,7 +22,7 @@
 				&nbsp;&nbsp;{edito.CONTENTS} 
 
 				<div style="width:350px;height:98px;margin:auto;background:url(../templates/phpboost/news/images/phpboost_download.jpg) no-repeat;">
-					<div style="position:relative;width:230px;left:90px;top:35px;text-indent:5px;">
+					<div style="position:relative;width:230px;left:90px;top:35px;text-indent:5px;text-align:left;">
 						<a href="http://www.phpboost.com/download/download-2-52+phpboost-2-0.php" style="color:#F3F6FA;font-size:16px;" title="Télécharger PHPBoost">Téléchargement gratuit et immédiat</a>
 						
 						<p class="text_small" style="color:#F3F6FA">Version 2.0, Multilingue, 3.5Mo</p>
