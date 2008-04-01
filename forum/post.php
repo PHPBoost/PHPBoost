@@ -378,7 +378,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			
 			include_once('../includes/bbcode.php');
 			
-			
 			$Template->Pparse('forum_post');
 		}
 	}
@@ -743,7 +742,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				}	
 				
 				include_once('../includes/bbcode.php');
-				
 				
 				$Template->Pparse('forum_post');
 			}
