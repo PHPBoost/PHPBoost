@@ -374,7 +374,10 @@ class Categories_management
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != \'\' )
 						document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
 					else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' ) //Error
+					{
+						document.getElementById(\'l\' + id).innerHTML = "";
 						alert("' . $LANG['cats_managment_could_not_be_moved'] . '");
+					}
 				}
 				xmlhttprequest_sender(xhr_object, null);
 			}
@@ -396,14 +399,14 @@ class Categories_management
 	}
 	
 	//Method which builds a select form to choose a category
-	function Build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_global_auth = array())
+	function Build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_auth = array())
 	{
 		global $LANG, $Member;
 		
 		$general_auth = false;
 		
 		if( $num_auth != 0 )
-			$general_auth = $Member->Check_auth($array_global_auth, $num_auth);
+			$general_auth = $Member->Check_auth($array_auth, $num_auth);
 		
 		$string = '<select id="' . $form_id . '" name="' . $form_name . '">';
 		$string .= '<option value="0"' . ($selected_id == 0 ? ' selected="selected"' : '') . '>' . $LANG['root'] . '</option>';
@@ -427,14 +430,14 @@ class Categories_management
 	{
 		global $CONFIG, $LANG;
 		
-		$id_categories = @array_keys($this->cache_var);
-		$num_cats = count($id_categories);
+		$id_categories = array_keys($this->cache_var);
+		$num_cats =	count($id_categories);
 		
 		// Browsing categories
 		for( $i = 0; $i < $num_cats; $i++ )
 		{
 			$id = $id_categories[$i];
-			$values = $this->cache_var[$id];
+			$values =& $this->cache_var[$id];
 			//If this category is in the category $id_cat
 			if( $id != 0 && $values['id_parent'] == $id_cat )
 			{
@@ -531,8 +534,15 @@ class Categories_management
 		global $Member;
 		//Boolean variable which is true when we can stop the loop
 		$end_of_category = false;
-		foreach( $this->cache_var as $id => $value )
+		
+		$id_categories = array_keys($this->cache_var);
+		$num_cats = count($id_categories);
+		
+		// Browsing categories
+		for( $i = 0; $i < $num_cats; $i++ )
 		{
+			$id = $id_categories[$i];
+			$value =& $this->cache_var[$id];
 			if( $id != 0 && $id != $current_id_cat && $value['id_parent'] == $id_cat )
 			{
 				if( $num_auth == 0 || $general_auth || $Member->Check_auth($value['auth'], $num_auth) )
