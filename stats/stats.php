@@ -1036,28 +1036,34 @@ elseif( $browser || $os || $user_lang ) //Graphiques camenbert.
 	if( !empty($browser) )
 	{
 		$Template->Assign_vars(array(
+			'C_STATS_BROWSERS' => true,
+			'GRAPH_RESULT' => !file_exists('../cache/browsers.png') ? '<img src="../includes/display_stats.php?browsers=1" alt="" />' : '<img src="../cache/browsers.png" alt="" />',
 			'L_BROWSERS' => $LANG['browser_s']
 		));		
-		$array_stats_info = $stats_array_browsers;
 		$stats_menu = 'browsers';
+		$array_stats_info = $stats_array_browsers;
 		$path = '../images/stats/browsers/';
 	}
 	elseif( !empty($os) )
 	{
 		$Template->Assign_vars(array(
+			'C_STATS_OS' => true,
+			'GRAPH_RESULT' => !file_exists('../cache/os.png') ? '<img src="../includes/display_stats.php?os=1" alt="" />' : '<img src="../cache/os.png" alt="" />',
 			'L_OS' => $LANG['os']
 		));		
+		$stats_menu = 'os';
 		$array_stats_info = $stats_array_os;
-		$stats_menu = 'os';	
-		$path = '../images/stats/os/';	
+		$path = '../images/stats/os/';
 	}
 	elseif( !empty($user_lang) )
 	{	
 		$Template->Assign_vars(array(
+			'C_STATS_LANG' => true,
+			'GRAPH_RESULT' => !file_exists('../cache/lang.png') ? '<img src="../includes/display_stats.php?lang=1" alt="" />' : '<img src="../cache/lang.png" alt="" />',
 			'L_LANG' => $LANG['stat_lang']
 		));	
-		$array_stats_info = $stats_array_lang;
 		$stats_menu = 'lang';
+		$array_stats_info = $stats_array_lang;
 		$path = '../images/stats/countries/';
 	}
 	
@@ -1070,10 +1076,6 @@ elseif( $browser || $os || $user_lang ) //Graphiques camenbert.
 	$Stats = new Stats();
 		
 	$Stats->Load_statsdata($stats_array, 'ellipse', 5);
-	
-	$Template->Assign_block_vars($stats_menu, array(
-		'GRAPH_RESULT' => !file_exists('../cache/' . $stats_menu . '.png') ? '<img src="../includes/display_stats.php?' . $stats_menu . '=1" alt="" />' : '<img src="../cache/' . $stats_menu . '.png" alt="" />'
-	));
 	
 	//Tri décroissant.
 	arsort($Stats->data_stats);
