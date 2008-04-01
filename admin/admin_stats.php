@@ -1047,6 +1047,7 @@ elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques cam
 			'GRAPH_RESULT' => '<img src="../includes/display_stats.php?browsers=1" alt="" />',
 			'L_BROWSERS' => $LANG['browser_s']
 		));		
+		$stats_menu = 'browsers';
 		$array_stats_info = $stats_array_browsers;
 		$path = '../images/stats/browsers/';
 	}
@@ -1057,6 +1058,7 @@ elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques cam
 			'GRAPH_RESULT' => '<img src="../includes/display_stats.php?os=1" alt="" />',
 			'L_OS' => $LANG['os']
 		));		
+		$stats_menu = 'os';
 		$array_stats_info = $stats_array_os;
 		$path = '../images/stats/os/';
 	}
@@ -1067,6 +1069,7 @@ elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques cam
 			'GRAPH_RESULT' => '<img src="../includes/display_stats.php?lang=1" alt="" />',
 			'L_LANG' => $LANG['stat_lang']
 		));	
+		$stats_menu = 'lang';
 		$array_stats_info = $stats_array_lang;
 		$path = '../images/stats/countries/';
 	}
