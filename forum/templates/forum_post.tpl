@@ -15,14 +15,14 @@
 		}
 		function hide_poll(divID)
 		{
-			if( document.getElementById(divID) ) 
+			if( document.getElementById(divID) )
 			{
 				document.getElementById(divID).style.display = 'block';
 				if( document.getElementById('hidepoll_link') )
 					document.getElementById('hidepoll_link').style.display = 'none';
 			}
 		}
-		function add_poll_field(nbr_field) 
+		function add_poll_field(nbr_field)
 		{
 			if ( typeof this.max_field_p == 'undefined' )
 				this.max_field_p = nbr_field;
@@ -32,7 +32,7 @@
 			if( this.max_field_p < 20 )
 			{
 				if( this.max_field_p == 19 )
-				{	
+				{
 					if( document.getElementById('add_poll_field_link') )
 						document.getElementById('add_poll_field_link').innerHTML = '';
 				}
@@ -41,15 +41,15 @@
 		}
 		function XMLHttpRequest_change_statut()
 		{
-			var idtopic = {IDTOPIC};			
+			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_change_img') )
 				document.getElementById('forum_change_img').src = '../templates/{THEME}/images/loading.gif';
 			
 			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?msg_d=' + idtopic);
-			xhr_object.onreadystatechange = function() 
+			xhr_object.onreadystatechange = function()
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
-				{	
+				{
 					if( document.getElementById('forum_change_img') )
 						document.getElementById('forum_change_img').src = xhr_object.responseText == '1' ? '{MODULE_DATA_PATH}/images/msg_display2.png' : '{MODULE_DATA_PATH}/images/msg_display.png';
 					if( document.getElementById('forum_change_msg') )
@@ -184,7 +184,7 @@
 									<dt><label>{L_ANSWERS}</label></dt>
 									<dd>								
 										# START answers_poll #
-										<label><input type="text" size="25" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" class="text" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em</label><br />						
+										<label><input type="text" size="25" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" class="text" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em></label><br />
 										# END answers_poll #											
 										<span id="add_poll_field{NBR_POLL_FIELD}"></span>	
 										
