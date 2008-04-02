@@ -25,7 +25,9 @@
  *
  * The PHPboost template engine is actually based on sections of code from phpBB3 templates
 ###################################################*/
- 
+
+define('TEMPLATE_STRING_MODE', true);
+
 class Templates
 {
 	## Public Attribute ##
@@ -82,11 +84,11 @@ class Templates
 	}
 	
 	//Affichage du traitement du tpl.
-	function Pparse($parse_name, $stringMode=false)
+	function Pparse($parse_name, $stringMode = false)
 	{
         $this->stringMode = $stringMode;
 		$file_cache_path = '../cache/tpl/' . trim(str_replace(array('/', '.', '..', 'tpl', 'templates'), array('_', '', '', '', 'tpl'), $this->files[$parse_name]), '_');
-        if ( $stringMode )
+        if( $stringMode )
             $file_cache_path .= '_str';
         $file_cache_path .= '.php';
 
@@ -102,10 +104,10 @@ class Templates
 			$this->clean(); //On nettoie avant d'envoyer le flux.
 			$this->save($file_cache_path, $stringMode); //Enregistrement du fichier de cache.
 		}	
-			
-		include($file_cache_path);
         
-        if ( $this->stringMode )
+		include($file_cache_path);
+		
+        if( $this->stringMode )
             return $tplString;
 	}
 	
@@ -172,21 +174,15 @@ class Templates
  		if( isset($this->files[$parse_name]) )
 			$this->Pparse($parse_name);
 	}
-
-    // Transforme une ligne du tpl en chaine PHP
-    function get_line($mask)
-    {
-        return '$tplString .= \''.addslashes($mask[1]).'\';'."\n";
-    }
     
     //Parse du tpl.
     function parse($parse_name)
     {
-        if ( $this->stringMode )
+        if( $this->stringMode )
         {
-            $this->template = preg_replace_callback('`(.+)\n`',array('Templates', 'get_line'), $this->template."\n");
+            $this->template = preg_replace_callback('`(.+)\n`', array('Templates', 'get_line'), $this->template . "\n");
             //Remplacement des variables simples.
-            $this->template = preg_replace('`{([\w]+)}`i', '\'.(isset($this->_var[\'$1\']) ? $this->_var[\'$1\'] : \'\').\'', $this->template);
+            $this->template = preg_replace('`{([\w]+)}`i', '\' . (isset($this->_var[\'$1\']) ? $this->_var[\'$1\'] : \'\') . \'', $this->template);
         }
         
         //Remplacement des variables simples.
@@ -203,6 +199,12 @@ class Templates
         
         //Remplacement des includes.
         $this->template = preg_replace('`# INCLUDE ([\w]+) #`', '<?php $this->tpl_include(\'$1\'); ?>', $this->template);
+    }
+	
+    // Transforme une ligne du tpl en chaine PHP
+    function get_line($mask)
+    {
+        return '$tplString .= \'' . addslashes($mask[1]) . '\';' . "\n";
     }
 	
 	//Remplacement des variables de type bloc.
@@ -290,14 +292,14 @@ class Templates
 	}
 	
 	//Enregistrement du fichier de cache, avec pose préalable d'un verrou.
-	function save($file_cache_path, $stringMode=false)
+	function save($file_cache_path, $stringMode = false)
 	{
 		if( $file = @fopen($file_cache_path, 'wb') )
 		{
 			@flock($file, LOCK_EX);
             
-            if ( $stringMode )  // Parsage de tpl sans echo (stringMode)
-                $this->template = '<?php '."\n".'$tplString = \'\';'."\n".$this->template."\n".'return $tplString;'."\n".'?>';
+            if( $stringMode )  // Parsage de tpl sans echo (stringMode)
+                $this->template = '<?php ' . "\n" . '$tplString = \'\';' . "\n" . $this->template . "\n" . 'return $tplString;' . "\n" . '?>';
             
             @fwrite($file, $this->template);
 			@flock($file, LOCK_UN);
@@ -312,7 +314,7 @@ class Templates
 	var $template = ''; //Chaîne contenant le tpl en cours de parsage.
 	var $files = array(); //Tableau contenant le chemin vers le tpl (vérifié).
 	var $module_data_path; //Chemin vers les données du module.
-    var $stringMode; // Type de parsage à effectuer
+    var $stringMode; // Type de parsage à effectuer, inclusion du tpl parsé ou retourne une chaine.
 }
 
 ?>
