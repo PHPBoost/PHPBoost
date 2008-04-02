@@ -172,7 +172,12 @@ class Templates
 	function tpl_include($parse_name)
 	{
  		if( isset($this->files[$parse_name]) )
-			$this->Pparse($parse_name);
+        {
+            if ( $this->stringMode )
+                return $this->Pparse($parse_name, $this->stringMode);
+            else
+                $this->Pparse($parse_name, $this->stringMode);
+        }
 	}
     
     //Parse du tpl.
@@ -180,25 +185,39 @@ class Templates
     {
         if( $this->stringMode )
         {
-            $this->template = preg_replace_callback('`(.+)\n`', array('Templates', 'get_line'), $this->template . "\n");
+            $this->template = preg_replace_callback('`(.+)\n`', array($this, 'get_line'), $this->template . "\n");
             //Remplacement des variables simples.
             $this->template = preg_replace('`{([\w]+)}`i', '\' . (isset($this->_var[\'$1\']) ? $this->_var[\'$1\'] : \'\') . \'', $this->template);
+            $this->template = preg_replace_callback('`{([\w\.]+)}`i', array($this, 'parse_blocks_vars'), $this->template);
+            
+            //Parse des blocs imbriqués ou non.
+            $this->template = preg_replace_callback('`# START ([\w\.]+) #`', array($this, 'parse_blocks'), $this->template);
+            $this->template = preg_replace('`# END [\w\.]+ #`', '\';'."\n".'}'."\n".'$tplString .= \'', $this->template);
+            
+            //Remplacement des blocs conditionnels.
+            $this->template = preg_replace_callback('`# IF ([\w\.]+) #`', array($this, 'parse_conditionnal_blocks'), $this->template);
+            $this->template = preg_replace('`# ENDIF #`', '\';'."\n".'}'."\n".'$tplString .= \'', $this->template);
+            
+            //Remplacement des includes.
+            $this->template = preg_replace('`# INCLUDE ([\w]+) #`', '\';'."\n".'$tplString .= $this->tpl_include(\'$1\');'."\n".'$tplString .= \'', $this->template);
         }
-        
-        //Remplacement des variables simples.
-        $this->template = preg_replace('`{([\w]+)}`i', '<?php echo isset($this->_var[\'$1\']) ? $this->_var[\'$1\'] : \'\'; ?>', $this->template);
-        $this->template = preg_replace_callback('`{([\w\.]+)}`i', array('Templates', 'parse_blocks_vars'), $this->template);
-        
-        //Parse des blocs imbriqués ou non.
-        $this->template = preg_replace_callback('`# START ([\w\.]+) #`', array('Templates', 'parse_blocks'), $this->template);
-        $this->template = preg_replace('`# END [\w\.]+ #`', '<?php } ?>', $this->template);
-        
-        //Remplacement des blocs conditionnels.
-        $this->template = preg_replace_callback('`# IF ([\w\.]+) #`', array('Templates', 'parse_conditionnal_blocks'), $this->template);
-        $this->template = preg_replace('`# ENDIF #`', '<?php } ?>', $this->template);
-        
-        //Remplacement des includes.
-        $this->template = preg_replace('`# INCLUDE ([\w]+) #`', '<?php $this->tpl_include(\'$1\'); ?>', $this->template);
+        else
+        {
+            //Remplacement des variables simples.
+            $this->template = preg_replace('`{([\w]+)}`i', '<?php echo isset($this->_var[\'$1\']) ? $this->_var[\'$1\'] : \'\'; ?>', $this->template);
+            $this->template = preg_replace_callback('`{([\w\.]+)}`i', array($this, 'parse_blocks_vars'), $this->template);
+            
+            //Parse des blocs imbriqués ou non.
+            $this->template = preg_replace_callback('`# START ([\w\.]+) #`', array($this, 'parse_blocks'), $this->template);
+            $this->template = preg_replace('`# END [\w\.]+ #`', '<?php } ?>', $this->template);
+            
+            //Remplacement des blocs conditionnels.
+            $this->template = preg_replace_callback('`# IF ([\w\.]+) #`', array($this, 'parse_conditionnal_blocks'), $this->template);
+            $this->template = preg_replace('`# ENDIF #`', '<?php } ?>', $this->template);
+            
+            //Remplacement des includes.
+            $this->template = preg_replace('`# INCLUDE ([\w]+) #`', '<?php $this->tpl_include(\'$1\'); ?>', $this->template);
+        }
     }
 	
     // Transforme une ligne du tpl en chaine PHP
@@ -215,8 +234,11 @@ class Templates
 			$array_block = explode('.', $blocks[1]);
 			$varname = array_pop($array_block);
 			$last_block = array_pop($array_block);
-			
-			return '<?php echo isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) ? $_tmpb_' . $last_block . '[\'' . $varname . '\'] : \'\'; ?>'; 
+
+            if( $this->stringMode )
+                return '\';'."\n".'isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) ? $_tmpb_' . $last_block . '[\'' . $varname . '\'] : \'\';'."\n".'$tplString .= \'';
+            else
+			    return '<?php echo isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) ? $_tmpb_' . $last_block . '[\'' . $varname . '\'] : \'\'; ?>';
 		}		
 		return '';
 	}
@@ -227,16 +249,24 @@ class Templates
 		if( isset($blocks[1]) )
 		{	
 			if( strpos($blocks[1], '.') !== false ) //Contient un bloc imbriqué.
-			{	
+			{
 				$array_block = explode('.', $blocks[1]);
 				$current_block = array_pop($array_block);
 				$previous_block = array_pop($array_block);
-				
-				return '<?php if( !isset($_tmpb_' . $previous_block . '[\'' . $current_block . '\']) || !is_array($_tmpb_' . $previous_block . '[\'' . $current_block . '\']) ) $_tmpb_' . $previous_block . '[\'' . $current_block . '\'] = array();' . "\n" . 'foreach($_tmpb_' . $previous_block . '[\'' . $current_block . '\'] as $' . $current_block . '_key => $' . $current_block . '_value) {' . "\n" . '$_tmpb_' . $current_block . ' = &$_tmpb_' . $previous_block . '[\'' . $current_block . '\'][$' . $current_block . '_key]; ?>';
+                
+                if( $this->stringMode )
+                    return '\';'."\n".'if( !isset($_tmpb_' . $previous_block . '[\'' . $current_block . '\']) || !is_array($_tmpb_' . $previous_block . '[\'' . $current_block . '\']) ) $_tmpb_' . $previous_block . '[\'' . $current_block . '\'] = array();' . "\n" . 'foreach($_tmpb_' . $previous_block . '[\'' . $current_block . '\'] as $' . $current_block . '_key => $' . $current_block . '_value) {' . "\n" . '$_tmpb_' . $current_block . ' = &$_tmpb_' . $previous_block . '[\'' . $current_block . '\'][$' . $current_block . '_key];'."\n".'$tplString .= \'';
+                else
+                    return '<?php if( !isset($_tmpb_' . $previous_block . '[\'' . $current_block . '\']) || !is_array($_tmpb_' . $previous_block . '[\'' . $current_block . '\']) ) $_tmpb_' . $previous_block . '[\'' . $current_block . '\'] = array();' . "\n" . 'foreach($_tmpb_' . $previous_block . '[\'' . $current_block . '\'] as $' . $current_block . '_key => $' . $current_block . '_value) {' . "\n" . '$_tmpb_' . $current_block . ' = &$_tmpb_' . $previous_block . '[\'' . $current_block . '\'][$' . $current_block . '_key]; ?>';
 			}
 			else
-				return '<?php if( !isset($this->_block[\'' . $blocks[1] . '\']) || !is_array($this->_block[\'' . $blocks[1] . '\']) ) $this->_block[\'' . $blocks[1] . '\'] = array();' . "\n" . 'foreach($this->_block[\'' . $blocks[1] . '\'] as $' . $blocks[1] . '_key => $' . $blocks[1] . '_value) {' . "\n" . '$_tmpb_' . $blocks[1] . ' = &$this->_block[\'' . $blocks[1] . '\'][$' . $blocks[1] . '_key]; ?>'; 
-		}		
+            {
+                if ( $this->stringMode )
+                    return '\';'."\n".'if( !isset($this->_block[\'' . $blocks[1] . '\']) || !is_array($this->_block[\'' . $blocks[1] . '\']) ) $this->_block[\'' . $blocks[1] . '\'] = array();' . "\n" . 'foreach($this->_block[\'' . $blocks[1] . '\'] as $' . $blocks[1] . '_key => $' . $blocks[1] . '_value) {' . "\n" . '$_tmpb_' . $blocks[1] . ' = &$this->_block[\'' . $blocks[1] . '\'][$' . $blocks[1] . '_key];'."\n".'$tplString .= \'';
+                else
+				    return '<?php if( !isset($this->_block[\'' . $blocks[1] . '\']) || !is_array($this->_block[\'' . $blocks[1] . '\']) ) $this->_block[\'' . $blocks[1] . '\'] = array();' . "\n" . 'foreach($this->_block[\'' . $blocks[1] . '\'] as $' . $blocks[1] . '_key => $' . $blocks[1] . '_value) {' . "\n" . '$_tmpb_' . $blocks[1] . ' = &$this->_block[\'' . $blocks[1] . '\'][$' . $blocks[1] . '_key]; ?>';
+            }
+		}
 		return '';
 	}
 	
@@ -250,33 +280,22 @@ class Templates
 				$array_block = explode('.', $blocks[1]);
 				$varname = array_pop($array_block);
 				$last_block = array_pop($array_block);
-				
-				return '<?php if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && $_tmpb_' . $last_block . '[\'' . $varname . '\'] ) { ?>';
+
+                if( $this->stringMode )
+                    return '\';'."\n".'if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && $_tmpb_' . $last_block . '[\'' . $varname . '\'] ) {'."\n".'$tplString .= \'';
+                else
+				    return '<?php if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && $_tmpb_' . $last_block . '[\'' . $varname . '\'] ) { ?>';
 			}
 			else
-				return '<?php if( isset($this->_var[\'' . $blocks[1] . '\']) && $this->_var[\'' . $blocks[1] . '\'] ) { ?>'; 
-		}
+            {
+                if ( $this->stringMode )
+                    return '\';'."\n".'if( isset($this->_var[\'' . $blocks[1] . '\']) && $this->_var[\'' . $blocks[1] . '\'] ) {'."\n".'$tplString .= \'';
+                else
+                    return '<?php if( isset($this->_var[\'' . $blocks[1] . '\']) && $this->_var[\'' . $blocks[1] . '\'] ) { ?>';
+		    }
+        }
 		return '';
 	}
-
-    //Remplacement des blocs conditionnels.
-    function parse_conditionnal_blocks_string($blocks)
-    {
-        if( isset($blocks[1]) )
-        {
-            if( strpos($blocks[1], '.') !== false ) //Contient un bloc imbriqué.
-            {
-                $array_block = explode('.', $blocks[1]);
-                $varname = array_pop($array_block);
-                $last_block = array_pop($array_block);
-                
-                return '\''."\n".'if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && $_tmpb_' . $last_block . '[\'' . $varname . '\'] ) {'."\n".'\'';
-            }
-            else
-                return '<?php if( isset($this->_var[\'' . $blocks[1] . '\']) && $this->_var[\'' . $blocks[1] . '\'] ) { ?>'; 
-        }
-        return '';
-    }
 	
 	//Nettoyage des commentaires, et blocs et variables non utilisés.
 	function clean()
@@ -285,10 +304,17 @@ class Templates
 		array('`# START [\w\.]+ #(.*)# END [\w\.]+ #`s', '`# START [\w\.]+ #`', '`# END [\w\.]+ #`', '`{[\w\.]+}`'), 
 		array('', '', '', ''), 
 		$this->template);
-		
-		//Evite à l'interpréteur PHP du travail inutile.
-		$this->template = preg_replace('`\?><\?php`', '', $this->template);
-		$this->template = preg_replace('`\?> <\?php`', 'echo \' \';', $this->template);
+
+        //Evite à l'interpréteur PHP du travail inutile.
+        if ( $this->stringMode )
+        {
+            $this->template = str_replace('$tplString .= \'\';', '', $this->template);
+        }
+        else
+        {
+            $this->template = preg_replace('`\?><\?php`', '', $this->template);
+            $this->template = preg_replace('`\?> <\?php`', 'echo \' \';', $this->template);
+        }
 	}
 	
 	//Enregistrement du fichier de cache, avec pose préalable d'un verrou.
