@@ -223,7 +223,7 @@ class Templates
     // Transforme une ligne du tpl en chaine PHP
     function get_line($mask)
     {
-        return '$tplString .= \'' . str_replace('\'', '\\\'', str_replace('\\', '\\\\', trim($mask[1]))) . "\n" . '\';' . "\n";
+        return '$tplString .= \'' . str_replace(array('\\', '\''), array('\\\\', '\\\''), trim($mask[1])) . '\'."\\n";' . "\n";
     }
 	
 	//Remplacement des variables de type bloc.
