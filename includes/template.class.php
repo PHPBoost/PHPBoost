@@ -196,6 +196,7 @@ class Templates
             
             //Remplacement des blocs conditionnels.
             $this->template = preg_replace_callback('`# IF ([\w\.]+) #`', array($this, 'parse_conditionnal_blocks'), $this->template);
+            $this->template = preg_replace('`# ELSE #`', '\';'."\n".'} else {'."\n".'$tplString .= \'', $this->template);
             $this->template = preg_replace('`# ENDIF #`', '\';'."\n".'}'."\n".'$tplString .= \'', $this->template);
             
             //Remplacement des includes.
@@ -213,6 +214,7 @@ class Templates
             
             //Remplacement des blocs conditionnels.
             $this->template = preg_replace_callback('`# IF ([\w\.]+) #`', array($this, 'parse_conditionnal_blocks'), $this->template);
+            $this->template = preg_replace('`# ELSE #`', '<?php } else { ?>', $this->template);
             $this->template = preg_replace('`# ENDIF #`', '<?php } ?>', $this->template);
             
             //Remplacement des includes.
