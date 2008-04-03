@@ -125,16 +125,16 @@ class Sql
     { 
         $this->result = pg_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table) or $this->sql_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Requête count invalide', $errline, $errfile);
         $this->result = pg_fetch_assoc($this->result);
-        $this->close($this->result); //Déchargement mémoire.        
+        $this->close($this->result); //Déchargement mémoire.
         $this->req++;
         
         return $this->result['total'];
     }
 
     //Limite des résultats de la requete sql.
-    function Sql_limit($start, $end = 0)
+    function Sql_limit($offset, $number = 'ALL')
     {
-        return ' LIMIT ' . $start . ', ' .  $end;
+        return ' LIMIT ' . $number . ', ' .  $offset;
     }
         
     //Concatène des chaines
@@ -182,7 +182,8 @@ class Sql
     //Retourne l'id de la dernière insertion
     function Sql_insert_id($query)
     {
-        return pg_last_oid();// A vérifier sur http://fr.php.net/manual/fr/function.pg-last-oid.php
+//         return pg_last_oid();// A vérifier sur http://fr.php.net/manual/fr/function.pg-last-oid.php
+        return $this->Query($query, __LINE__, __FILE__);
     }
     
     //Retourne le nombre d'année entre la date et aujourd'hui.
@@ -233,9 +234,9 @@ class Sql
         while( $row = pg_fetch_row($result) )
         {   
             $array_tables[] = array(
-                'name' => $row[0], 
-                'engine' => $row[1], 
-                'rows' => $row[4], 
+                'name' => $row[0],
+                'engine' => $row[1],
+                'rows' => $row[4],
                 'data_length' => $row[6],
                 'index_lenght' => $row[8],
                 'data_free' => $row[9],
@@ -249,11 +250,11 @@ class Sql
     function Sql_parse($file_path, $tableprefix = '')
     {
         $handle_sql = @fopen($file_path, 'r');
-        if( $handle_sql ) 
+        if( $handle_sql )
         {
             $req = '';
-            while( !feof($handle_sql) ) 
-            {       
+            while( !feof($handle_sql) )
+            {
                 $sql_line = trim(fgets($handle_sql));
                 //Suppression des lignes vides, et des commentaires.
                 if( !empty($sql_line) && substr($sql_line, 0, 2) !== '--' )
@@ -267,18 +268,18 @@ class Sql
                             $req .= ' ' . $sql_line;
                             
                         if( !empty($tableprefix) )
-                            $this->query_inject(str_replace('phpboost_', $tableprefix, $req), __LINE__, __FILE__);                      
+                            $this->query_inject(str_replace('phpboost_', $tableprefix, $req), __LINE__, __FILE__);
                         else
-                            $this->query_inject($req, __LINE__, __FILE__);                      
+                            $this->query_inject($req, __LINE__, __FILE__);
                         $req = '';
                     }   
                     else //Concaténation de la requête qui peut être multi ligne.
-                        $req .= ' ' . $sql_line;                    
-                }       
+                        $req .= ' ' . $sql_line;
+                }
             }
             @fclose($handle);
         }
-    }   
+    }
     
     //Affichage du nombre de requête sql.
     function Display_sql_request()
@@ -344,7 +345,6 @@ class Sql
         //Enregistrement dans le log d'erreur.
         $Errorh->Error_handler($errstr . '<br /><br />' . $query . '<br /><br />' . pg_last_error(), E_USER_ERROR, $errline, $errfile);
     }
-    
     
     ## Private attributes ##
     var $link; //Lien avec la base de donnée.
