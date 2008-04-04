@@ -76,7 +76,7 @@ class Sql
 
         if( func_get_arg(1) !== '*' )
         {
-            $nbr_arg_field_end = ($nbr_arg - 4);            
+            $nbr_arg_field_end = ($nbr_arg - 4);
             for($i = 1; $i <= $nbr_arg_field_end; $i++)
             {
                 if( $i > 1)

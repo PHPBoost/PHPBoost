@@ -3,7 +3,7 @@
  *                                install.php
  *                            -------------------
  *   begin                : August 23, 2007
- *   copyright          : (C) 2007 	SAUTEL Benoit
+ *   copyright            : (C) 2007    SAUTEL Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -236,8 +236,8 @@ elseif( $step == 4 )
 		{
 			require_once('../includes/errors.class.php');
 			$Errorh = new Errors;
-			$Sql = new Sql(false);			
-			//Connexion
+			$Sql = new Sql(false);
+            //Connexion
 			$result = $Sql->Sql_connect($host, $login, $password);
 			//Sélection de la base de données
 			$Sql->Sql_select_db($database, $result);
@@ -245,23 +245,46 @@ elseif( $step == 4 )
 			//Création du fichier de configuration.
 			$file_path = '../includes/auth/config.php';
 			$file = @fopen($file_path, 'w+'); //On ouvre le fichier, si il n'existe pas on le crée.
-@fputs($file, '<?php
+            if ( $dbms != 'SQLite' )
+            {
+                @fputs($file, '<?php
 if( !defined(\'DBSECURE\') )
 {
-	$sql_host = "' . $host . '"; //Adresse serveur mysql.
-	$sql_login = "' . $login . '"; //Login
-	$sql_pass = "' . $password . '"; //Mot de passe
-	$sql_base = "' . $database . '"; //Nom de la base de données.
-	$table_prefix = "' . $tableprefix . '"; //Préfixe des tables
-	$dbtype = "' . $dbms .'"; //Système de gestion de base de données
-	define(\'DBSECURE\', true);
-	define(\'PHPBOOST_INSTALLED\', true);
-}	
+    $sql_host = "' . $host . '"; //Adresse serveur mysql.
+    $sql_login = "' . $login . '"; //Login
+    $sql_pass = "' . $password . '"; //Mot de passe
+    $sql_base = "' . $database . '"; //Nom de la base de données.
+    $table_prefix = "' . $tableprefix . '"; //Préfixe des tables
+    $dbtype = "' . $dbms .'"; //Système de gestion de base de données
+    define(\'DBSECURE\', true);
+    define(\'PHPBOOST_INSTALLED\', true);
+}   
 else
 {
-	exit;
+    exit;
 }
 ?>');
+            }
+            else // SQLite
+            {
+                @fputs($file, '<?php
+if( !defined(\'DBSECURE\') )
+{
+    $sql_host = "../includes/db/' . $host . '.sqlite"; //Adresse serveur mysql.
+    $sql_login = "' . $login . '"; //Login
+    $sql_pass = "' . $password . '"; //Mot de passe
+    $sql_base = "../includes/db/' . $database . '.sqlite"; //Nom de la base de données (url du fichier SQLite).
+    $table_prefix = "' . $tableprefix . '"; //Préfixe des tables
+    $dbtype = "' . $dbms .'"; //Système de gestion de base de données
+    define(\'DBSECURE\', true);
+    define(\'PHPBOOST_INSTALLED\', true);
+}
+else
+{
+    exit;
+}
+?>');
+            }
 			@fclose($file);
 			//On crée la structure de la base de données et on y insère la configuration de base
 			$Sql->Sql_parse('db/' . $dbms . '.sql', $tableprefix);
@@ -269,7 +292,7 @@ else
 			redirect(HOST . FILE . add_lang('?step=5', true));
 		}
 	}
-	
+	sqlite_factory('../includes/db/test.sqlite');
 	$Template->Assign_block_vars('db', array(
 		'DISPLAY_RESULT' => !empty($error) ? 'block' : 'none',
 		'ERROR' => !empty($error) ? $error : '',
@@ -279,16 +302,16 @@ else
 	));
 	$dbms = array('MySQL', 'SQLite', 'PostgreSQL');
 	$default_dbms = 'MySQL';
-	$supported_dbms = array('MySQL');
+	$supported_dbms = array('MySQL','SQLite');
 	
 	foreach( $dbms as $name )
-	{	
+	{
 		$Template->Assign_block_vars('db.dbms', array(
 			'L_DBMS' => $name,
 			'DBMS' => strtolower($name),
 			'SELECTED' => $name == $default_dbms ? 'selected="selected"' : '',
 			'DISABLED' => in_array($name, $supported_dbms) ? '' : 'disabled="disabled"'
-		));		
+		));
 	}
 	
 	$Template->Assign_vars(array(
