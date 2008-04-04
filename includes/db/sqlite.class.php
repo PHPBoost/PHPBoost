@@ -39,9 +39,6 @@ class Sql
         {
             $this->link = @$this->Sql_connect($sql_host) or $this->sql_error('', 'Connexion base de donnée impossible!', __LINE__, __FILE__);
 
-            
-            echo $this->link;
-            exit (0);
             $connected = true;
         }
         return;
@@ -62,7 +59,7 @@ class Sql
     //Connexion
     function Sql_select_db($sql_base, $link)
     {
-        return sqlite_open($filename); // inexistant en sqlite faire une déconnection, puis une reconnection
+        return sqlite_open('../includes/db/'.$sql_base.'.sqlite'); // inexistant en sqlite faire une déconnection, puis une reconnection
     }
 
     //Requête simple
