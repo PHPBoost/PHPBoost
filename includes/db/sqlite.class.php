@@ -33,12 +33,15 @@ class Sql
     ## Public Methods ##
     function Sql($connect = true) //Constructeur
     {
-        global $filename;
+        global $sql_host;
         static $connected = false;
         if( $connect == true && !$connected )
         {
-            $this->link = @$this->Sql_connect($sql_host, $sql_login, $sql_pass) or $this->sql_error('', 'Connexion base de donnée impossible!', __LINE__, __FILE__);
-//             @$this->sql_select_db($sql_base, $this->link) or $this->sql_error('', 'Selection de la base de donnée impossible!', __LINE__, __FILE__);
+            $this->link = @$this->Sql_connect($sql_host) or $this->sql_error('', 'Connexion base de donnée impossible!', __LINE__, __FILE__);
+
+            
+            echo $this->link;
+            exit (0);
             $connected = true;
         }
         return;
@@ -47,7 +50,13 @@ class Sql
     //Connexion
     function Sql_connect($filename='')
     {
-        return sqlite_open($filename);
+        $this->link = @sqlite_open('../includes/db/'.$filename.'.sqlite');
+        if ( $this->link === false ) // création de la base de données
+        {
+            @sqlite_factory('../includes/db/'.$filename.'.sqlite');
+            $this->link = @sqlite_open('../includes/db/'.$filename.'.sqlite');
+        }
+        return $this->link;
     }
     
     //Connexion
@@ -59,9 +68,9 @@ class Sql
     //Requête simple
     function Query($query, $errline, $errfile) 
     {
-        $this->result = sqlite_query($query) or $this->sql_error($query, 'Requête simple invalide', $errline, $errfile);
-        $this->result = pg_fetch_row($this->result);
-        $this->close($this->result); //Déchargement mémoire.
+        $this->last_ressource = sqlite_query($query) or $this->sql_error($query, 'Requête simple invalide', $errline, $errfile);
+        $this->result = sqlite_fetch_array($this->last_ressource);
+        $this->close($this->last_ressource); //Déchargement mémoire.
         $this->req++;
 
         return $this->result[0];
@@ -93,9 +102,9 @@ class Sql
         
         $error_line = func_get_arg($nbr_arg - 2);
         $error_file = func_get_arg($nbr_arg - 1);
-        $this->result = pg_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req) or $this->sql_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Requête multiple invalide', $error_line, $error_file);
-        $this->result = pg_fetch_assoc($this->result);
-        $this->close($this->result); //Déchargement mémoire.
+        $this->last_ressource = sqlite_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req) or $this->sql_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Requête multiple invalide', $error_line, $error_file, SQLITE_ASSOC);
+        $this->result = sqlite_fetch_array($this->last_ressource, SQLITE_ASSOC);
+        $this->close($this->last_ressource); //Déchargement mémoire.
         $this->req++;
         
         return $this->result;
@@ -104,16 +113,16 @@ class Sql
     //Requete d'injection (insert, update, et requêtes complexes..)
     function Query_inject($query, $errline, $errfile) 
     {
-        $resource = pg_query($query) or $this->sql_error($query, 'Requête inject invalide', $errline, $errfile);
+        $this->last_ressource = sqlite_query($query) or $this->sql_error($query, 'Requête inject invalide', $errline, $errfile);
         $this->req++;
         
-        return $resource;
+        return $this->last_ressource;
     }
 
     //Requête de boucle.
     function Query_while($query, $errline, $errfile) 
     {
-        $this->result = pg_query($query) or $this->sql_error($query, 'Requête while invalide', $errline, $errfile);
+        $this->result = sqlite_query($query) or $this->sql_error($query, 'Requête while invalide', $errline, $errfile);
         $this->req++;
 
         return $this->result;
@@ -122,9 +131,9 @@ class Sql
     //Nombre d'entrées dans la table.
     function Count_table($table, $errline, $errfile)
     { 
-        $this->result = pg_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table) or $this->sql_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Requête count invalide', $errline, $errfile);
-        $this->result = pg_fetch_assoc($this->result);
-        $this->close($this->result); //Déchargement mémoire.
+        $this->last_ressource = sqlite_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, SQLITE_ASSOC) or $this->sql_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Requête count invalide', $errline, $errfile);
+        $this->result = sqlite_fetch_array($this->last_ressource, SQLITE_ASSOC);
+        $this->close($this->last_ressource); //Déchargement mémoire.
         $this->req++;
         
         return $this->result['total'];
@@ -156,26 +165,26 @@ class Sql
     
     //Balayage du retour de la requête sous forme de tableau indexé par le nom des champs.
     function Sql_fetch_assoc($result)
-    {   
-        return pg_fetch_assoc($result);
+    {
+        return sqlite_fetch_array($result, SQLITE_ASSOC);
     }
     
     //Balayage du retour de la requête sous forme de tableau indexé numériquement.
     function Sql_fetch_row($result)
-    {   
-        return pg_fetch_row($result);
+    {
+        return sqlite_fetch_array($result, SQLITE_NUM);
     }
     
     //Lignes affectées lors de requêtes de mise à jour ou d'insertion.
     function Sql_affected_rows($ressource, $query)
     {
-        return pg_affected_rows();
+        return sqlite_changes($this->last_ressource);
     }
     
     //Nombres de lignes retournées.
     function Sql_num_rows($ressource, $query)
     {
-        return pg_num_rows($ressource);
+        return sqlite_num_rows($ressource);
     }
     
     //Retourne l'id de la dernière insertion
@@ -193,15 +202,16 @@ class Sql
     //Déchargement mémoire.
     function Close($result)
     {
-        if( is_resource($result) )
-            return pg_free_result($result);
+//         if( is_resource($result) )
+//             return sqlite_close($result);
+        return true;
     }
 
     //Fermeture de la connexion postgresql ouverte.
     function Sql_close()
     {
         if( $this->link ) // si la connexion est établie
-            return pg_close($this->link); // on ferme la connexion ouverte.
+            return sqlite_close($this->link); // on ferme la connexion ouverte.
     }
     
     //Liste les champs d'une table.
@@ -229,8 +239,8 @@ class Sql
         $array_tables = array();
         
         $result = $this->query_while("SHOW TABLE STATUS FROM `" . $sql_base . "` LIKE '" . PREFIX . "%'", __LINE__, __FILE__);
-        while( $row = pg_fetch_row($result) )
-        {   
+        while( $row = sqlite_fetch_array($result, SQLITE_NUM) )
+        {
             $array_tables[] = array(
                 'name' => $row[0],
                 'engine' => $row[1],
@@ -256,7 +266,7 @@ class Sql
                 $sql_line = trim(fgets($handle_sql));
                 //Suppression des lignes vides, et des commentaires.
                 if( !empty($sql_line) && substr($sql_line, 0, 2) !== '--' )
-                {       
+                {
                     //On vérifie si la ligne est une commande SQL.
                     if( substr($sql_line, -1) == ';' )
                     {
