@@ -33,7 +33,7 @@ class Sql
     ## Public Methods ##
     function Sql($connect = true) //Constructeur
     {
-        global $sql_host, $sql_login, $sql_pass, $sql_base;
+        global $filename;
         static $connected = false;
         if( $connect == true && !$connected )
         {
@@ -45,22 +45,21 @@ class Sql
     }
     
     //Connexion
-    function Sql_connect($sql_host, $sql_login, $sql_pass)
+    function Sql_connect($filename='')
     {
-        global $sql_base;
-        return pg_connect('host='.$sql_host.' dbname='.$sql_base.' user='.$sql_login.' password='.$sql_pass);
+        return sqlite_open($filename);
     }
     
     //Connexion
     function Sql_select_db($sql_base, $link)
     {
-        return mysql_select_db($sql_base, $link); // inexistant en pgsql faire une déconnection, puis une reconnection
+        return sqlite_open($filename); // inexistant en sqlite faire une déconnection, puis une reconnection
     }
 
     //Requête simple
     function Query($query, $errline, $errfile) 
     {
-        $this->result = pg_query($query) or $this->sql_error($query, 'Requête simple invalide', $errline, $errfile);
+        $this->result = sqlite_query($query) or $this->sql_error($query, 'Requête simple invalide', $errline, $errfile);
         $this->result = pg_fetch_row($this->result);
         $this->close($this->result); //Déchargement mémoire.
         $this->req++;
@@ -76,7 +75,7 @@ class Sql
 
         if( func_get_arg(1) !== '*' )
         {
-            $nbr_arg_field_end = ($nbr_arg - 4);            
+            $nbr_arg_field_end = ($nbr_arg - 4);
             for($i = 1; $i <= $nbr_arg_field_end; $i++)
             {
                 if( $i > 1)
@@ -97,7 +96,7 @@ class Sql
         $this->result = pg_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req) or $this->sql_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Requête multiple invalide', $error_line, $error_file);
         $this->result = pg_fetch_assoc($this->result);
         $this->close($this->result); //Déchargement mémoire.
-        $this->req++;       
+        $this->req++;
         
         return $this->result;
     }
@@ -182,8 +181,7 @@ class Sql
     //Retourne l'id de la dernière insertion
     function Sql_insert_id($query)
     {
-//         return pg_last_oid();// A vérifier sur http://fr.php.net/manual/fr/function.pg-last-oid.php
-        return $this->Query($query, __LINE__, __FILE__);
+        return sqlite_last_insert_rowid($this->last_ressource);
     }
     
     //Retourne le nombre d'année entre la date et aujourd'hui.
@@ -350,5 +348,6 @@ class Sql
     var $link; //Lien avec la base de donnée.
     var $result = array(); //Resultat de la requête.
     var $req = 0; //Nombre de requêtes.
+    var $last_ressource; // dernière ressource
 }
 ?>
