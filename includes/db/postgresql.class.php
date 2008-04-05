@@ -134,7 +134,7 @@ class Sql
     //Limite des résultats de la requete sql.
     function Sql_limit($offset, $number = 'ALL')
     {
-        return ' LIMIT ' . $number . ', ' .  $offset;
+        return ' LIMIT ' . $number . ' ' .  $offset;
     }
         
     //Concatène des chaines
