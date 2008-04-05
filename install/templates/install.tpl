@@ -460,11 +460,11 @@
 								<p>{L_CHECK_EXTENSIONS}</p>
 								<dl>
 									<dt><label for="site_url">* {L_SITE_URL}</label><br /><span>{L_SITE_URL_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="150" size="25" id="site_url" name="site_url" value="{site_config.SITE_URL}" class="text" /></label></dd>								
+									<dd><label><input type="text" maxlength="150" size="25" id="site_url" name="site_url" value="{site_config.SITE_URL}" class="text" /></label></dd>	
 								</dl>
 								<dl>
 									<dt><label for="site_path">* {L_SITE_PATH}</label><br /><span>{L_SITE_PATH_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="255" size="25" id="site_path" name="site_path" value="{site_config.SITE_PATH}" class="text" /></label></dd>								
+									<dd><label><input type="text" maxlength="255" size="25" id="site_path" name="site_path" value="{site_config.SITE_PATH}" class="text" /></label></dd>
 								</dl>
 								<dl>
 									<dt><label for="lang">* {L_DEFAULT_LANGUAGE}</label></dt>
@@ -474,7 +474,7 @@
 											<option value="{site_config.lang.LANG}" {site_config.lang.SELECTED}>{site_config.lang.LANG_NAME}</option>
 											# END site_config.lang #
 										</select> <img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
-									</label></dd>								
+									</label></dd>
 								</dl>
 								<dl>
 									<dt><label for="theme">* {L_DEFAULT_THEME}</label></dt>
