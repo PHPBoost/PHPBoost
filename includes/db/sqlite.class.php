@@ -47,11 +47,12 @@ class Sql
     //Connexion
     function Sql_connect($filename='')
     {
-        $this->link = @sqlite_open('../includes/db/'.$filename.'.sqlite');
+        $file = '../includes/db/'.$filename.'.sqlite';
+        $this->link = @sqlite_open($file);
         if ( $this->link === false ) // création de la base de données
         {
-            @sqlite_factory('../includes/db/'.$filename.'.sqlite');
-            $this->link = @sqlite_open('../includes/db/'.$filename.'.sqlite');
+            @sqlite_factory($file);
+            $this->link = @sqlite_open($file);
         }
         return $this->link;
     }
@@ -110,9 +111,12 @@ class Sql
     //Requete d'injection (insert, update, et requêtes complexes..)
     function Query_inject($query, $errline, $errfile) 
     {
+        echo $query.'<hr />';
+        exit(0);
         $this->last_ressource = sqlite_query($query) or $this->sql_error($query, 'Requête inject invalide', $errline, $errfile);
         $this->req++;
         
+        exit ( 0 );
         return $this->last_ressource;
     }
 
