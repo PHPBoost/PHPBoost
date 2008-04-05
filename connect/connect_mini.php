@@ -43,7 +43,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 		'U_MEMBER_MP' => $user_pm,
 		'U_ADMIN' => $Member->Check_level(ADMIN_LEVEL) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/ranks_mini.png" alt="" style="vertical-align:middle" /> <a href="../admin/admin_index.php" class="small_link">' . $LANG['admin_panel'] . '</a></li>' : '',
 		'U_MODO' => $Member->Check_level(MODO_LEVEL) ? '<li><img src="../templates/' . $CONFIG['theme'] . '/images/admin/modo_mini.png" alt="" style="vertical-align:middle" /> <a href="../member/moderation_panel.php" class="small_link">' . $LANG['modo_panel'] . '</a></li>' : '',
-		'U_DISCONNECT' => (QUERY_STRING != '') ? '?disconnect=true&amp;' . str_replace('&', '&amp;', QUERY_STRING) : '?disconnect=true',
+		'U_DISCONNECT' => HOST . DIR . '/member/member.php?disconnect=true',
 		'L_PROFIL' => $LANG['profil'],
 		'L_PRIVATE_PROFIL' => $LANG['connect_private_profil'],
 		'L_DISCONNECT' => $LANG['disconnect']

@@ -37,7 +37,7 @@ if( !empty($_GET['disconnect']) )
 	$Session->Session_end();
 
 	//Redirection avec les variables de session dans l'url.
-	redirect(HOST . SCRIPT . '?' . str_replace('disconnect=true', '', QUERY_STRING));
+	redirect(get_start_page());
 }
 elseif( !empty($_POST['connect']) && !empty($login) && !empty($password) ) //Création de la session.
 {
