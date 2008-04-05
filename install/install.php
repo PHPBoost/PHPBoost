@@ -113,7 +113,7 @@ elseif( $step == 2 )
 		'L_PLEASE_AGREE' => $LANG['please_agree_license'],
 		'L_NEXT_STEP' => $LANG['next_step'],
 		'L_PREVIOUS_STEP' => $LANG['previous_step'],
-		'L_LICENSE_TERMS' => file_get_contents('license.txt')
+		'L_LICENSE_TERMS' => file_get_contents_emulate('license.txt')
 	));
 }
 //Configuration du serveur
