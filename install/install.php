@@ -216,12 +216,11 @@ elseif( $step == 4 )
 			require_once('../includes/errors.class.php');
 			$Errorh = new Errors;
 			$Sql = new Sql(false);
-			
+
 			//Connexion
-			$result = @$Sql->Sql_connect($host, $login, $password);
-			if( !$result )
+			if( !@$Sql->Sql_connect($host, $login, $password) )
 				return '<div class="error">' . $LANG['db_error_connexion'] . '</div>';
-				
+            
 			//Sélection de la base de données
 			if( !@$Sql->Sql_select_db($database, $result) )
 				return '<div class="warning">' . $LANG['db_error_selection'] . '</div>';
@@ -287,6 +286,8 @@ else
             }
 			@fclose($file);
 			//On crée la structure de la base de données et on y insère la configuration de base
+            echo 'argh';
+            exit ( 0 );
 			$Sql->Sql_parse('db/' . $dbms . '.sql', $tableprefix);
 			$Sql->Close();
 			redirect(HOST . FILE . add_lang('?step=5', true));

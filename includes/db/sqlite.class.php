@@ -27,6 +27,7 @@
 
 define('LOW_PRIORITY', 'LOW_PRIORITY');
 define('DB_NO_CONNECT', false);
+define('SQLITE_DB_FOLDER','../cache/db/');
 
 class Sql
 {
@@ -47,20 +48,32 @@ class Sql
     //Connexion
     function Sql_connect($filename='')
     {
-        $file = '../includes/db/'.$filename.'.sqlite';
-        $this->link = @sqlite_open($file);
-        if ( $this->link === false ) // création de la base de données
+        $file = SQLITE_DB_FOLDER.$filename.'.sqlite';
+        echo '<br />';
+        echo 'file : '.$file.'<br />';
+        
+        $fic = fopen($file.'.etst', 'w+');
+        fputs($fic, 'coucou');
+        fclose($file);
+
+//         $this->link = sqlite_open('../cache/db/test.sqlite');//$file);
+        echo sqlite_open('../cache/db/test.sqlite');//$file);
+        echo 'link: '.$this->link.'<br />';
+        if ( !$this->link ) // création de la base de données
         {
-            @sqlite_factory($file);
-            $this->link = @sqlite_open($file);
+            echo 'doing factory : '.$file.'<br />';
+            sqlite_factory($file);
+            $this->link = sqlite_open($file);
         }
+        echo 'link: '.$this->link.'<br />';
         return $this->link;
     }
     
     //Connexion
     function Sql_select_db($sql_base, $link)
     {
-        return sqlite_open('../includes/db/'.$sql_base.'.sqlite'); // inexistant en sqlite faire une déconnection, puis une reconnection
+//         $this->Sql_close();
+        return $this->Sql_connect($sql_base); // inexistant en sqlite faire une déconnection, puis une reconnection
     }
 
     //Requête simple
@@ -111,12 +124,10 @@ class Sql
     //Requete d'injection (insert, update, et requêtes complexes..)
     function Query_inject($query, $errline, $errfile) 
     {
-        echo $query.'<hr />';
-        exit(0);
+        echo 'coucou'.$query.'<hr />';
         $this->last_ressource = sqlite_query($query) or $this->sql_error($query, 'Requête inject invalide', $errline, $errfile);
         $this->req++;
         
-        exit ( 0 );
         return $this->last_ressource;
     }
 

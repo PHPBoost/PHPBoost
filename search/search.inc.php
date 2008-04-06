@@ -114,6 +114,9 @@ function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
             $j = $numPage * NB_RESULTS_PER_PAGE;
             for ( $i = 0 ; $i < NB_RESULTS_PER_PAGE; $i++ )
             {
+                if ( ($j) >= $nbResults )
+                    break;
+                
                 $module = $Modules->GetModule($results[$j]['module']);
                 $Template->Assign_block_vars('page.results', array(
                     'L_MODULE_NAME' => ucfirst($module->GetName()),
@@ -121,8 +124,7 @@ function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
                     'U_LINK' => transid($results[$j]['link'])
                 ));
                 
-                if ( (++$j) >= $nbResults )
-                    break;
+                $j++;
             }
         }
         $htmlResults = $Template->Pparse('search_generic_results', TEMPLATE_STRING_MODE);
