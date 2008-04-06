@@ -286,8 +286,7 @@ else
             }
 			@fclose($file);
 			//On crée la structure de la base de données et on y insère la configuration de base
-            echo 'argh';
-            exit ( 0 );
+            
 			$Sql->Sql_parse('db/' . $dbms . '.sql', $tableprefix);
 			$Sql->Close();
 			redirect(HOST . FILE . add_lang('?step=5', true));
