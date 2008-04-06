@@ -29,7 +29,7 @@ header('Content-type: text/html; charset=iso-8859-1');
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date du passé
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // toujours modifié
 header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
-header('Pragma: no-cache'); 
+header('Pragma: no-cache');
 	
 //Inclusion des fichiers
 require_once('../includes/bench.class.php');
@@ -50,11 +50,11 @@ require_once('../includes/speed_bar.class.php');
 //Instanciation des objets indispensables au noyau.
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
 $Template = new Templates; //!\\Initialisation des templates//!\\
-$Sql = new Sql; //!\\Initialisation  de la class sql//!\\
+$Sql = new Sql($sql_host, $sql_login, $sql_pass, $sql_base); //!\\Initialisation  de la class sql//!\\
+unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
+
 $Cache = new Cache; //!\\Initialisation  de la class de gestion du cache//!\\
 $Speed_bar = new Speed_bar; //!\\Initialisation  de la class de la speed bar//!\\
-
-unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
 
 //Chargement ddes fichiers cache, indispensables au noyau.
 $CONFIG = array();

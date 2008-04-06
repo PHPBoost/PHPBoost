@@ -42,9 +42,6 @@
 			# ENDIF #
 			
 			# START categories_management #
-				<div style="text-align:center; margin:0 20px;" class="row1">
-					<a href="admin_faq_cats.php?recount=1">{L_RECOUNT_QUESTIONS}</a>
-				</div>
 				<table class="module_table" style="width:99%;">
 					<tr>			
 						<th colspan="3">
@@ -59,6 +56,14 @@
 						</td>
 					</tr>
 				</table>
+				
+				<div style="text-align:center; margin:30px 20px;" class="row1">
+					<a href="admin_faq_cats.php?recount=1">
+						<img src="../templates/{THEME}/images/admin/refresh.png" alt="{L_RECOUNT_QUESTIONS}" />
+					</a>
+					<br />
+					<a href="admin_faq_cats.php?recount=1">{L_RECOUNT_QUESTIONS}</a>
+				</div>
 			# END categories_management #
 			
 			# START removing_interface #

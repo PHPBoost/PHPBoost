@@ -23,31 +23,7 @@
 		-->
 		</script>
 
-		<div id="admin_quick_menu">
-			<ul>
-				<li class="title_menu">{L_DOWNLOAD_MANAGEMENT}</li>
-				<li>
-					<a href="admin_download.php"><img src="download.png" alt="" /></a>
-					<br />
-					<a href="admin_download.php" class="quick_link">{L_DOWNLOAD_MANAGEMENT}</a>
-				</li>
-				<li>
-					<a href="admin_download_add.php"><img src="download.png" alt="" /></a>
-					<br />
-					<a href="admin_download_add.php" class="quick_link">{L_DOWNLOAD_ADD}</a>
-				</li>
-				<li>
-					<a href="admin_download_cat.php"><img src="download.png" alt="" /></a>
-					<br />
-					<a href="admin_download_cat.php" class="quick_link">{L_DOWNLOAD_CAT}</a>
-				</li>
-				<li>
-					<a href="admin_download_config.php"><img src="download.png" alt="" /></a>
-					<br />
-					<a href="admin_download_config.php" class="quick_link">{L_DOWNLOAD_CONFIG}</a>
-				</li>
-			</ul>
-		</div>
+		# INCLUDE admin_download_menu #
 		
 		<div id="admin_contents">							
 			<form action="admin_download_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">

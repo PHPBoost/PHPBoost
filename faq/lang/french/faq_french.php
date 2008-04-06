@@ -108,13 +108,12 @@ $FAQ_LANG['general_auth_explain'] = 'Vous configurez ici les autorisations génér
 
 //Errors
 $FAQ_LANG['successful_operation'] = 'L\'opération que vous avez demandée a été effectuée avec succès';
-$LANG['required_fields_empty'] = 'Des champs requis n\'ont pas été renseignés, merci de renouveler l\'opération correctement';
-$LANG['unexisting_category'] = 'La catégorie que vous avez sélectionnée n\'existe pas';
-$LANG['new_cat_does_not_exist'] = 'La catégorie cible n\'existe pas';
-$LANG['infinite_loop'] = 'Vous voulez déplacer la catégorie dans une de ses catégories filles ou dans elle-même, ce qui n\'a pas de sens. Merci de choisir une autre catégorie';
+$FAQ_LANG['required_fields_empty'] = 'Des champs requis n\'ont pas été renseignés, merci de renouveler l\'opération correctement';
+$FAQ_LANG['unexisting_category'] = 'La catégorie que vous avez sélectionnée n\'existe pas';
+$FAQ_LANG['new_cat_does_not_exist'] = 'La catégorie cible n\'existe pas';
+$FAQ_LANG['infinite_loop'] = 'Vous voulez déplacer la catégorie dans une de ses catégories filles ou dans elle-même, ce qui n\'a pas de sens. Merci de choisir une autre catégorie';
 
 //Others
-$LANG['ranks'] = 'Rangs';
 $FAQ_LANG['recount_success'] = 'Le nombre de questions pour chaque catégorie a été recompté avec succès.';
 $FAQ_LANG['recount_questions_number'] = 'Recompter le nombre de questions pour chaque catégorie';
 

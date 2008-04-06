@@ -63,11 +63,17 @@ You can also have other fields such as auth level, description, visible, that cl
 
 //Class constants
 define('DEBUG_MODE', true);
+define('PRODUCTION_MODE', false);
+define('NORMAL_MODE', true);
 define('AJAX_MODE', false);
+define('RECURSIVE_EXPLORATION', true);
+define('NOT_RECURSIVE_EXPLORATION', false);
 define('MOVE_CATEGORY_UP', 'up');
 define('MOVE_CATEGORY_DOWN', 'down');
 define('CAT_VISIBLE', '1');
 define('CAT_UNVISIBLE', '0');
+define('ADD_THIS_CATEGORY_IN_LIST', true);
+define('DO_NOT_ADD_THIS_CATEGORY_IN_LIST', false);
 
 //Error reports
 define('ERROR_UNKNOWN_MOTION', 0x01);
@@ -104,7 +110,7 @@ class Categories_management
 		$max_order = $Sql->Query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $id_parent . "'", __LINE__, __FILE__);
 		$max_order = numeric($max_order);
 		
-		if( array_key_exists($id_parent, $this->cache_var) )
+		if( $id_parent == 0 || array_key_exists($id_parent, $this->cache_var) )
 		{
 			//Whe add it at the end of the parent category
 			if( $order <= 0 || $order > $max_order )
@@ -197,11 +203,11 @@ class Categories_management
 		$this->clean_error();
 		
 		//Checking that both current category and new category exist and importing necessary information
-		if( array_key_exists($id, $this->cache_var) && array_key_exists($new_id_cat, $this->cache_var) )
+		if( ($id == 0 || array_key_exists($id, $this->cache_var)) && ($new_id_cat == 0 || array_key_exists($new_id_cat, $this->cache_var)) )
 		{
 			//Checking that the new parent category is not the this category or one of its children
 			$subcats_list = array($id);
-			$this->build_children_id_list($id, $subcats_list);
+			$this->Build_children_id_list($id, $subcats_list);
 			if( !in_array($new_id_cat, $subcats_list) )
 			{
 				$max_new_cat_order = $Sql->Query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'", __LINE__, __FILE__);	
@@ -236,9 +242,9 @@ class Categories_management
 		}
 		else
 		{
-			if( !array_key_exists($new_id_cat, $this->cache_var) )
+			if( $new_id_cat != 0 && !array_key_exists($new_id_cat, $this->cache_var) )
 				$this->add_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST);
-			if( !array_key_exists($id, $this->cache_var) )
+			if( $id != 0 && !array_key_exists($id, $this->cache_var) )
 				$this->add_error(CATEGORY_DOES_NOT_EXIST);
 				
 			return false;
@@ -252,7 +258,7 @@ class Categories_management
 		$this->clean_error();
 		
 		//Checking that category exists
-		if( !array_key_exists($id, $this->cache_var) )
+		if( $id != 0 && !array_key_exists($id, $this->cache_var) )
 		{
 			$this->add_error(CATEGORY_DOES_NOT_EXIST);
 			return false;
@@ -284,7 +290,7 @@ class Categories_management
 			return false;
 		}
 			
-		if( array_key_exists($category_id, $this->cache_var) )
+		if( $category_id != 0 || array_key_exists($category_id, $this->cache_var) )
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET visible = '" . $visibility . "' WHERE id = '" . $category_id . "'", __LINE__, __FILE__);
 			return true;
@@ -306,7 +312,7 @@ class Categories_management
 	}
 
 	//Method which checks if display configuration is good
-	function Check_displaying_configuration($debug = false)
+	function Check_displaying_configuration($debug = PRODUCTION_MODE)
 	{
 		if( !empty($this->display_config) )
 		{
@@ -335,7 +341,7 @@ class Categories_management
 
 	//Method which builds the list of categories and links to makes operations to administrate them (delete, move, add...), it's return string is ready to be displayed
 	//This method doesn't allow you tu use templates, it's not so important because you are in the administration panel
-	function Build_categories_administration_interface($ajax_mode = true)
+	function Build_categories_administration_interface($ajax_mode = NORMAL_MODE)
 	{
 		global $CONFIG, $LANG;
 		$this->clean_error();
@@ -347,7 +353,7 @@ class Categories_management
 		}
 		
 		//If there is no category
-		if( count($this->cache_var) <= 1 )
+		if( count($this->cache_var) == 0 )
 			return '<div class="notice">' . $LANG['cats_managment_no_category_existing'] . '</div>';
 		
 		//Let's display
@@ -390,7 +396,7 @@ class Categories_management
 		}
 		
 		//Categories list
-		$this->create_cat_administration($string, 0, 0, $ajax_mode);
+		$this->create_row_interface($string, 0, 0, $ajax_mode);
 		
 		if( $ajax_mode )
 			$string .= '</div>';
@@ -416,7 +422,56 @@ class Categories_management
 		$string .= '</select>';
 		return $string;
 	}
-
+	
+	//Recursive method which builds the list of all chlidren of one category
+	function Build_children_id_list($category_id, &$list, $recursive_exploration = RECURSIVE_EXPLORATION, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST)
+	{
+		//Boolean variable which is true when we can stop the loop : optimization
+		$end_of_category = false;
+		
+		if( $add_this )
+			$list[] = $category_id;
+		
+		$id_categories = array_keys($this->cache_var);
+		$num_cats =	count($id_categories);
+		
+		// Browsing categories
+		for( $i = 0; $i < $num_cats; $i++ )
+		{
+			$id = $id_categories[$i];
+			$values =& $this->cache_var[$id];
+			if( $id != 0 && $value['id_parent'] == $category_id )
+			{
+				$list[] = $id;
+				if( $recursive_exploration )
+					$this->Build_children_id_list($id, $list, RECURSIVE_EXPLORATION);
+				
+				if( !$end_of_category )
+					$end_of_category = true;
+			}
+			elseif( $end_of_category )
+				break;
+		}
+	}
+	
+	//Method which builds the list of all parents of one category
+	function Build_parent_id_list($category_id, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST)
+	{
+		$list = array();
+		if( $add_this )
+			$list[] = $category_id;
+		
+		if( $category_id > 0 )
+		{
+			while( (int)$this->cache_var[$category_id]['id_parent'] != 0 )
+				$list[] = $category_id = (int)$this->cache_var[$category_id]['id_parent'];
+			
+			return $list;
+		}
+		else
+			return array();
+	}
+	
 	//Method for users who want to know what was the error
 	function Check_error($error)
 	{
@@ -426,7 +481,7 @@ class Categories_management
 
 	## Private methods ##
 	//Recursive method allowing to display the administration panel of a category and its daughters
-	function create_cat_administration(&$string, $id_cat, $level, $ajax_mode = true)
+	function create_row_interface(&$string, $id_cat, $level, $ajax_mode)
 	{
 		global $CONFIG, $LANG;
 		
@@ -519,7 +574,7 @@ class Categories_management
 				</span>';
 				
 				//We call the function for its daughter categories
-				$this->create_cat_administration($string, $id, $level + 1, $ajax_mode);
+				$this->create_row_interface($string, $id, $level + 1, $ajax_mode);
 				
 				//Loop interruption : if we have finished the current category we can stop looping, other keys aren't interesting in this function
 				if( $i + 1 < $num_cats && $this->cache_var[$id_categories[$i + 1]]['id_parent'] != $id_cat )
@@ -550,26 +605,6 @@ class Categories_management
 					$string .= '<option value="' . $id . '"' . ($id == $selected_id ? ' selected="selected"' : '') . '>' . str_repeat('--', $level) . ' ' . $value['name'] . '</option>';
 					$this->create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $num_auth, $general_auth);
 				}
-				if( !$end_of_category )
-					$end_of_category = true;
-			}
-			elseif( $end_of_category )
-				break;
-		}
-	}
-	
-	//Recursive method which builds the list of all chlidren of one category
-	function build_children_id_list($category_id, &$list)
-	{
-		//Boolean variable which is true when we can stop the loop : optimization
-		$end_of_category = false;
-		foreach( $this->cache_var as $id => $value )
-		{
-			if( $id != 0 && $value['id_parent'] == $category_id )
-			{
-				$list[] = $id;
-				$this->build_children_id_list($id, $list);
-				
 				if( !$end_of_category )
 					$end_of_category = true;
 			}
