@@ -1,128 +1,88 @@
 		{JAVA}
 
 		# IF C_DOWNLOAD_CAT #
-		<div class="module_position">					
+		<div class="module_position">			
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<div style="float:left">
-					{L_CATEGORIE} {EDIT}
-				</div>
-				<div style="float:right">
-					{PAGINATION}
-				</div>
+				{TITLE}
+				# IF C_ADMIN #
+				<a href="{U_ADMIN_CAT}">
+					<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+				</a>
+				# END IF #
 			</div>
 			<div class="module_contents">
-				&nbsp;
-				# START cat_list #
-				<div style="float:left;text-align:center;width:{cat_list.WIDTH}%;padding-bottom:20px;">
-					{cat_list.U_IMG_CAT}
-					<a href="../download/download{cat_list.U_DOWNLOAD_CAT}">{cat_list.CAT}</a> <span class="text_small">({cat_list.TOTAL})</span><br />
-					<span class="text_small">{cat_list.CONTENTS}</span>
-				</div>	
-				# END cat_list #
+			
+				# START description #
+					{description.DESCRIPTION}
+					<hr style="margin-top:25px;" />
+				# END description #
 				
-				<div class="text_small" style="text-align:center;clear:both">
-					{TOTAL_FILE} {L_HOW_DOWNLOAD}
-				</div>
-				&nbsp;
+				# IF C_SUB_CATS #
+					# START row #
+						# START row.list_cats #
+							<div style="float:left;width:{row.list_cats.WIDTH}%;text-align:center;margin:20px 0px;">
+								# IF C_CAT_IMG #
+									<a href="{row.list_cats.U_CAT}" title="{row.list_cats.IMG_NAME}"><img src="{row.list_cats.SRC}" alt="{row.list_cats.IMG_NAME}" /></a>
+									<br />
+								# ENDIF #
+								<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
+								
+								# IF C_ADMIN #
+								<a href="{row.list_cats.U_ADMIN_CAT}">
+									<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+								</a>
+								# ENDIF #
+								<div class="text_small">
+									{row.list_cats.NUM_FILES}
+								</div>
+							</div>
+						# END row.list_cats #
+						<div class="spacer">&nbsp;</div>
+					# END row #
+					<hr style="margin-bottom:25px;" />
+				# ENDIF #
+				
+				# IF C_FILES #
+					<div class="text_strong" style="text-align:center;">
+						{L_FILES_IN_THIS_CATEGORY}
+					</div>
+					# START file #
+						<div class="block_position" style="margin-bottom:20px;">
+							<div class="row1 block_contents">
+								# IF file.C_IMG #
+									<div class="float_right">
+										<img src="{file.IMG}" alt="" />
+									</div>
+								# ENDIF #
+								<strong><a href="{file.U_DOWNLOAD_LINK}">{file.NAME}</a></strong>
+								# IF file.C_DESCRIPTION #
+									<p>
+									{file.DESCRIPTION}
+									</p>
+								# ENDIF #
+								<div class="text_small">
+									{file.DATE} &bull; {file.COUNT_DL} &bull; {file.COMS} &bull; {file.NOTE}
+								</div>								
+							</div>
+						</div>						
+					# END file #
+					<div style="align:center;">{PAGINATION}</div>
+				# ENDIF #
+				
+				# IF C_NO_FILE #
+					<div class="notice">
+						{L_NO_FILE_THIS_CATEGORY}
+					</div>
+				# ENDIF #
+				<div class="spacer">&nbsp;</div>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-				<div style="float:right">
-					{PAGINATION}
-				</div>
-			</div>
+			<div class="module_bottom"></div>
 		</div>
 		# ENDIF #
-		
-
-
-		# IF C_DOWNLOAD_LINK #
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<div style="float:left">
-					{CAT_NAME}
-				</div>
-				<div style="float:right">
-					{PAGINATION}
-				</div>
-			</div>
-			<div class="module_contents">
-				<table class="module_table">
-					<tr>
-						<th style="text-align:center;">
-							<a href="download{U_DOWNLOAD_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-							{L_FILE}
-							<a href="download{U_DOWNLOAD_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-						</th>
-						<th style="text-align:center;">
-							<a href="download{U_DOWNLOAD_SIZE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-							{L_SIZE}
-							<a href="download{U_DOWNLOAD_SIZE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-						</th>
-						<th style="text-align:center;">
-							<a href="download{U_DOWNLOAD_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-							{L_DATE}					
-							<a href="download{U_DOWNLOAD_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-						</th>
-						<th style="text-align:center;">
-							<a href="download{U_DOWNLOAD_VIEW_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-							{L_DOWNLOAD}					
-							<a href="download{U_DOWNLOAD_VIEW_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-						</th>
-						<th style="text-align:center;">
-							<a href="download{U_DOWNLOAD_NOTE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-							{L_NOTE}					
-							<a href="download{U_DOWNLOAD_NOTE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-						</th>
-						<th style="text-align:center;">
-							<a href="download{U_DOWNLOAD_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-							{L_COM}
-							<a href="download{U_DOWNLOAD_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-						</th>
-					</tr>
-					# START download #
-					<tr>	
-						<td class="row2">
-							&raquo; <a href="download{download.U_DOWNLOAD_LINK}">{download.NAME}</a>
-						</td>
-						<td class="row2" style="text-align: center;">
-							{download.SIZE}
-						</td>
-						<td class="row2" style="text-align: center;">
-							{download.DATE}
-						</td>
-						<td class="row2" style="text-align: center;">
-							{download.COMPT} 
-						</td>
-						<td class="row2" style="text-align: center;">
-							{download.NOTE}
-						</td>
-						<td class="row2" style="text-align: center;">
-							{download.COM} 
-						</td>
-					</tr>
-					# END download #
-				</table>
-				<p style="text-align:center;padding:6px;">{NO_CAT}</p>
-			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-				<div style="float:left">
-					<strong>{CAT_NAME}</strong>
-				</div>
-				<div style="float:right">
-					{PAGINATION}
-				</div>
-			</div>
-		</div>
-		# ENDIF #
-
 
 		# IF C_DISPLAY_DOWNLOAD #
 		

@@ -276,6 +276,7 @@ $LANG['update_msg'] = 'Update the message';
 $LANG['category'] = 'Category';
 $LANG['categories'] = 'Categories';
 $LANG['refresh'] = 'Refresh';
+$LANG['ranks'] = 'Ranks';
 
 //Dates.
 $LANG['on'] = 'On';

@@ -37,7 +37,7 @@ if( defined('PHP_BOOST') !== true)
 	$result = $Sql->Query_while("SELECT a.id, a.idcat, a.title, a.contents, a.timestamp 
 	FROM ".PREFIX."download a
 	LEFT JOIN ".PREFIX."download_cat aa ON aa.id = a.idcat
-	WHERE a.visible = 1 AND aa.aprob = 1 AND aa.secure = -1
+	WHERE a.visible = 1
 	ORDER BY a.timestamp DESC
 	" . $Sql->Sql_limit(0, $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
 	while ($row = $Sql->Sql_fetch_assoc($result))
@@ -70,7 +70,7 @@ else //Récupération directe du contenu.
 	$result = $Sql->Query_while("SELECT a.id, a.idcat, a.title, a.timestamp 
 	FROM ".PREFIX."download a
 	LEFT JOIN ".PREFIX."download_cat aa ON aa.id = a.idcat
-	WHERE a.visible = 1 AND aa.aprob = 1 AND aa.secure = -1
+	WHERE a.visible = 1 AND aa.visible
 	ORDER BY a.timestamp DESC
 	" . $Sql->Sql_limit(0, $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
 	while ($row = mysql_fetch_array($result))

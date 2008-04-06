@@ -26,9 +26,12 @@
 ###################################################*/
 
 require_once('../includes/admin_begin.php');
-load_module_lang('download'); //Chargement de la langue du module.
+load_module_lang('download', 'DOWNLOAD_LANG'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
+
+include_once('download_cats.class.php');
+$download_categories = new Download_cats();
 
 if( !empty($_POST['valid']) )
 {
@@ -45,7 +48,7 @@ if( !empty($_POST['valid']) )
 	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;
 	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
 		
-	if( !empty($title) && !empty($contents) && !empty($url) && !empty($idcat) )
+	if( !empty($title) && !empty($contents) && !empty($url) )
 	{	
 		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 		$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
@@ -143,8 +146,6 @@ elseif( !empty($_POST['previs']) )
 		$start = '';
 		$end = '';
 	}	
-	
-	$cat = $Sql->Query("SELECT name FROM ".PREFIX."download_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 
 	$Template->Assign_block_vars('articles', array(
 		'TITLE' => stripslashes($title),
@@ -157,12 +158,13 @@ elseif( !empty($_POST['previs']) )
 		'CONTENTS' => second_parse(stripslashes(parse($contents))),
 		'URL' => stripslashes($url),
 		'IDCAT' => $idcat,
-		'CAT' => $cat,
+		'CAT' => $DOWNLOAD_CATS[$idcat],
 		'COMPT' => $compt,
 		'DATE' => gmdate_format('date_format_short')
 	));
 
 	$Template->Assign_vars(array(
+		'CATEGORIES_TREE' => $download_categories->Build_select_form($idcat, 'idcat', 'idcat'),
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'TITLE' => stripslashes($title),
@@ -217,24 +219,6 @@ elseif( !empty($_POST['previs']) )
 		'L_RESET' => $LANG['reset']
 	));	
 	
-	//Catégories.	
-	$i = 0;
-	$result = $Sql->Query_while("SELECT id, name 
-	FROM ".PREFIX."download_cat
-	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
-	{
-		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
-		$Template->Assign_block_vars('select', array(
-			'CAT' => '<option value="' . $row['id'] . '"' . $selected . '>' . $row['name'] . '</option>'
-		));
-		$i++;
-	}
-	$Sql->Close($result);
-	
-	if( $i == 0 ) //Aucune catégorie => alerte.	 
-		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
-	
 	include_once('../includes/bbcode.php');
 	
 	$Template->Pparse('admin_download_add'); 
@@ -246,6 +230,7 @@ else
 	));
 	
 	$Template->Assign_vars(array(
+		'CATEGORIES_TREE' => $download_categories->Build_select_form(0, 'idcat', 'idcat'),
 		'TITLE' => '',
 		'COMPT' => '0',
 		'SIZE' => '0',
@@ -255,10 +240,10 @@ else
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
 		'L_REQUIRE_CAT' => $LANG['require_cat'],
-		'L_DOWNLOAD_ADD' => $LANG['download_add'],
-		'L_DOWNLOAD_MANAGEMENT' => $LANG['download_management'],
+		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
+		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 		'L_DOWNLOAD_CAT' => $LANG['cat_management'],
-		'L_DOWNLOAD_CONFIG' => $LANG['download_config'],
+		'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_CATEGORY' => $LANG['category'],
 		'L_TITLE' => $LANG['title'],
@@ -266,7 +251,7 @@ else
 		'L_RELEASE_DATE' => $LANG['release_date'],
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
-		'L_DOWNLOAD_DATE' => $LANG['download_date'],
+		'L_DOWNLOAD_DATE' => $DOWNLOAD_LANG['download_date'],
 		'L_URL' => $LANG['url'],
 		'L_SIZE' => $LANG['size'],
 		'L_DOWNLOAD' => $LANG['download'],
@@ -279,28 +264,14 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	//Catégories.	
-	$i = 0;
-	$result = $Sql->Query_while("SELECT id, name 
-	FROM ".PREFIX."download_cat
-	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
-	{
-		$Template->Assign_block_vars('select', array(
-			'CAT' => '<option value="' . $row['id'] . '">' . $row['name'] . '</option>'
-		));
-		$i++;
-	}
-	$Sql->Close($result);
-	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
-		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 		
 	include_once('../includes/bbcode.php');
+
+	include_once('admin_download_menu.php');
 	
 	$Template->Pparse('admin_download_add'); 	
 }

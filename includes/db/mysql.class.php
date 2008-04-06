@@ -27,39 +27,58 @@
 
 define('LOW_PRIORITY', 'LOW_PRIORITY');
 define('DB_NO_CONNECT', false);
+define('AUTO_ERRORS_MANAGEMENT', false);
+define('MANUAL_ERRORS_MANAGEMENT', false);
+
+//Errors
+define('CONNECTION_FAILED', 1);
+define('UNEXISTING_DATABASE', 2);
+define('CONNECTED_TO_DATABASE', 3);
 
 class Sql
 {
 	## Public Methods ##
-	function Sql($connect = true) //Constructeur
+	//Constructeurc de la classe Sql. Il prend en paramètre les paramètres de connexion à la base de données. Par défaut la classe Sql gère de façon autonome les erreurs de connexion, mais on peut demander à les gérer manuellement
+	function Sql($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = AUTO_ERRORS_MANAGEMENT)
 	{
-		global $sql_host, $sql_login, $sql_pass, $sql_base;
-		static $connected = false;
-		if( $connect == true && !$connected )
+		return $this->Sql_connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management);
+	}
+	
+	//Connexion
+	function Sql_connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = AUTO_ERRORS_MANAGEMENT)
+	{
+		//Identification sur le serveur
+		if( $this->link = @mysql_connect($sql_host, $sql_login, $sql_pass) )
 		{
-			$this->link = @$this->Sql_connect($sql_host, $sql_login, $sql_pass) or $this->sql_error('', 'Connexion base de donnée impossible!', __LINE__, __FILE__);
-			@$this->sql_select_db($sql_base, $this->link) or $this->sql_error('', 'Selection de la base de donnée impossible!', __LINE__, __FILE__);
-			$connected = true;			
+			//Sélection de la base de données
+			if( @mysql_select_db($sql_base, $this->link) )
+			{
+				$this->connected = true;
+				return CONNECTED_TO_DATABASE;
+			}
+			else
+			{
+				//Traitement des erreurs
+				if( $errors_management )
+					$this->sql_error('', 'Selection de la base de donnée impossible!', __LINE__, __FILE__);
+				else
+					return UNEXISTING_DATA_BASE;
+			}
 		}
-		return;
-	}
-	
-	//Connexion
-	function Sql_connect($sql_host, $sql_login, $sql_pass)
-	{
-		return mysql_connect($sql_host, $sql_login, $sql_pass);
-	}
-	
-	//Connexion
-	function Sql_select_db($sql_base, $link)
-	{
-		return mysql_select_db($sql_base, $link);
+		//La connexion a échoué
+		else
+		{
+			if( $errors_management )
+				$this->sql_error('', 'Connexion base de donnée impossible!', __LINE__, __FILE__);
+			else
+				return CONNECTION_FAILED;
+		}
 	}
 
 	//Requête simple
 	function Query($query, $errline, $errfile) 
 	{		
-		$this->result = mysql_query($query) or $this->sql_error($query, 'Requête simple invalide', $errline, $errfile);		
+		$this->result = mysql_query($query, $this->link) or $this->sql_error($query, 'Requête simple invalide', $errline, $errfile);		
 		$this->result = mysql_fetch_row($this->result);
 		$this->close($this->result); //Déchargement mémoire.	
 		$this->req++;			
@@ -93,7 +112,7 @@ class Sql
 		
 		$error_line = func_get_arg($nbr_arg - 2);
 		$error_file = func_get_arg($nbr_arg - 1);
-		$this->result = mysql_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req) or $this->sql_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Requête multiple invalide', $error_line, $error_file);
+		$this->result = mysql_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req, $this->link) or $this->sql_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Requête multiple invalide', $error_line, $error_file);
 		$this->result = mysql_fetch_assoc($this->result);
 		$this->close($this->result); //Déchargement mémoire.
 		$this->req++;		
@@ -104,7 +123,7 @@ class Sql
 	//Requete d'injection (insert, update, et requêtes complexes..)
 	function Query_inject($query, $errline, $errfile) 
 	{
-		$resource = mysql_query($query) or $this->sql_error($query, 'Requête inject invalide', $errline, $errfile);
+		$resource = mysql_query($query, $this->link) or $this->sql_error($query, 'Requête inject invalide', $errline, $errfile);
 		$this->req++;
 		
 		return $resource;
@@ -113,7 +132,7 @@ class Sql
 	//Requête de boucle.
 	function Query_while($query, $errline, $errfile) 
 	{
-		$this->result = mysql_query($query) or $this->sql_error($query, 'Requête while invalide', $errline, $errfile);
+		$this->result = mysql_query($query, $this->link) or $this->sql_error($query, 'Requête while invalide', $errline, $errfile);
 		$this->req++;
 
 		return $this->result;
@@ -122,7 +141,7 @@ class Sql
 	//Nombre d'entrées dans la table.
 	function Count_table($table, $errline, $errfile)
 	{ 
-		$this->result = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table) or $this->sql_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Requête count invalide', $errline, $errfile);
+		$this->result = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, $this->link) or $this->sql_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Requête count invalide', $errline, $errfile);
 		$this->result = mysql_fetch_assoc($this->result);
 		$this->close($this->result); //Déchargement mémoire.		
 		$this->req++;
@@ -200,8 +219,11 @@ class Sql
 	//Fermeture de la connexion mysql ouverte.
 	function Sql_close()
 	{
-		if( $this->link ) // si la connexion est établie
+		if( $this->connected ) // si la connexion est établie
+		{
+			$this->connected = false;
 			return mysql_close($this->link); // on ferme la connexion ouverte.
+		}
 	}
 	
 	//Liste les champs d'une table.
@@ -349,5 +371,6 @@ class Sql
 	var $link; //Lien avec la base de donnée.
 	var $result = array(); //Resultat de la requête.
 	var $req = 0; //Nombre de requêtes.
+	var $connected = false;
 }		
 ?>

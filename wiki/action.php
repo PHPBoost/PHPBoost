@@ -279,7 +279,7 @@ elseif( $del_archive > 0 )
 	if( $is_activ == 0 ) //C'est une archive -> on peut supprimer
 		$Sql->Query_inject("DELETE FROM ".PREFIX."wiki_contents WHERE id_contents = '" . $del_archive . "'", __LINE__, __FILE__);
 	if( !empty($article_infos['encoded_title']) ) //on redirige vees l'article
-		redirect(HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
+		redirect(HOST . DIR . '/wiki/' . transid('history.php?id=' . $contents_infos['id_article'], '', '&'));
 }
 elseif( $del_article > 0 ) //Suppression d'un article
 {

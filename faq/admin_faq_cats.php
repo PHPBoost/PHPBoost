@@ -137,7 +137,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add'],
 		'L_REQUIRE_TITLE' => $LANG['require_title']
 	));
-	
+		
 	if( $id_edit > 0 && array_key_exists($id_edit, $FAQ_CATS) )	
 		$Template->Assign_block_vars('edition_interface', array(
 			'NAME' => $FAQ_CATS[$id_edit]['name'],
@@ -167,16 +167,16 @@ else
 		switch($error)
 		{
 			case 'e_required_fields_empty' :
-				$Errorh->Error_handler($LANG['required_fields_empty'], E_USER_WARNING);
+				$Errorh->Error_handler($FAQ_LANG['required_fields_empty'], E_USER_WARNING);
 				break;
 			case 'e_unexisting_category' :
-				$Errorh->Error_handler($LANG['unexisting_category'], E_USER_WARNING);
+				$Errorh->Error_handler($FAQ_LANG['unexisting_category'], E_USER_WARNING);
 				break;
 			case 'e_new_cat_does_not_exist' :
-				$Errorh->Error_handler($LANG['new_cat_does_not_exist'], E_USER_WARNING);
+				$Errorh->Error_handler($FAQ_LANG['new_cat_does_not_exist'], E_USER_WARNING);
 				break;
 				case 'e_infinite_loop' :
-				$Errorh->Error_handler($LANG['infinite_loop'], E_USER_WARNING);
+				$Errorh->Error_handler($FAQ_LANG['infinite_loop'], E_USER_WARNING);
 				break;
 			case 'e_success' :
 				$Errorh->Error_handler($FAQ_LANG['successful_operation'], E_USER_SUCCESS);
@@ -202,7 +202,8 @@ else
 	));
 	
 	$Template->Assign_vars(array(
-		'L_RECOUNT_QUESTIONS' => $FAQ_LANG['recount_questions_number']
+		'L_RECOUNT_QUESTIONS' => $FAQ_LANG['recount_questions_number'],
+		'THEME' => $CONFIG['theme']
 	));
 }
 

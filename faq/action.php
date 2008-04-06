@@ -63,7 +63,7 @@ if( $faq_del_id > 0 )
 			{
 				include_once('faq_cats.class.php');
 				$faq_cats = new FaqCats();
-				$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->Compute_parent_cats_id($faq_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->Build_parent_id_list($faq_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 			}
 			
 			$Cache->Generate_module_file('faq');
@@ -143,7 +143,7 @@ elseif( !empty($entitled) && !empty($answer) )
 			{
 				include_once('faq_cats.class.php');
 				$faq_cats = new FaqCats();
-				$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_cats->Compute_parent_cats_id($new_id_cat, ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
+				$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_cats->Build_parent_id_list($new_id_cat, ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 			}
 			
 			$Cache->Generate_module_file('faq');
@@ -220,7 +220,7 @@ elseif( $id_question > 0 && $move_question && $target >= 0 )
 				{
 					include_once('faq_cats.class.php');
 					$faq_cats = new FaqCats();
-					$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->Compute_parent_cats_id($question_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->Build_parent_id_list($question_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 				}
 				
 				//Updating number of subcategories of its new parents
@@ -228,7 +228,7 @@ elseif( $id_question > 0 && $move_question && $target >= 0 )
 				{
 					include_once('faq_cats.class.php');
 					$faq_cats = new FaqCats();
-					$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_cats->Compute_parent_cats_id($target, ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
+					$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_cats->Build_parent_id_list($target, ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 				}
 				
 				if( $question_infos['idcat'] != 0 || $target != 0 )

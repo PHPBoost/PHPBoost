@@ -32,7 +32,7 @@ if( defined('PHP_BOOST') !== true)
 if( !$Member->Check_auth($SECURE_MODULE['download'], ACCESS_MODULE) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-load_module_lang('download'); //Chargement de la langue du module.
+load_module_lang('download', 'DOWNLOAD_LANG'); //Chargement de la langue du module.
 $Cache->Load_file('download');
 
 define('READ_CAT_DOWNLOAD', 0x01);
@@ -49,16 +49,16 @@ $download['title'] = '';
 if( !empty($idurl) && !empty($idcat) )
 { 
 	$download = $Sql->Query_array('download', '*', "WHERE visible = 1 AND id = '" . $idurl . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
-	define('TITLE', $LANG['title_download'] . ' - ' . addslashes($download['title']));
+	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . addslashes($download['title']));
 }
 elseif( !empty($idcat) )
-	define('TITLE', $LANG['title_download'] . ' - ' . addslashes($CAT_DOWNLOAD[$idcat]['name']));
+	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . addslashes($CAT_DOWNLOAD[$idcat]['name']));
 else
-	define('TITLE', $LANG['title_download']);
+	define('TITLE', $DOWNLOAD_LANG['title_download']);
 
 $l_com_note = !empty($idurl) ? (!empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '') ) : '';
 
-$Speed_bar->Add_link($LANG['title_download'], transid('download.php')); 
+$Speed_bar->Add_link($DOWNLOAD_LANG['title_download'], transid('download.php')); 
 $Speed_bar->Add_link($CAT_DOWNLOAD[$idcat]['name'], (empty($idurl) ? '' : transid('download.php?cat=' . $idcat, 'download-' . $idcat . '+' . url_encode_rewrite($CAT_DOWNLOAD[$idcat]['name']) . '.php')));
 $Speed_bar->Add_link($download['title'], ((!empty($get_note) || !empty($_GET['i'])) ? transid('download.php?cat=' . $idcat . '&amp;id=' . $idurl, 'download-' . $idcat . '-' . $idurl . '+' . url_encode_rewrite($download['title']) . '.php') : ''));
 $Speed_bar->Add_link($l_com_note, '');

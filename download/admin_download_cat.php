@@ -26,250 +26,220 @@
 ###################################################*/
 
 require_once('../includes/admin_begin.php');
-load_module_lang('download'); //Chargement de la langue du module.
+load_module_lang('download', 'DOWNLOAD_LANG'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
-$top = !empty($_GET['top']) ? numeric($_GET['top']) : '' ;
-$bottom = !empty($_GET['bot']) ? numeric($_GET['bot']) : '' ;
-$del = isset($_GET['del']) ?  true : false;
+include_once('download_cats.class.php');
+$download_categories = new Download_cats();
 
-//Si c'est confirmé on met à jour!
-if( !empty($_POST['valid']) )
+$id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
+$id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
+$cat_to_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+$cat_to_del_post = !empty($_POST['cat_to_del']) ? numeric($_POST['cat_to_del']) : 0;
+$id_edit = !empty($_GET['edit']) ? numeric($_GET['edit']) : 0;
+$new_cat = !empty($_GET['new']) ? true : false;
+$error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+
+if( $id_up > 0 )
 {
-	$result = $Sql->Query_while("SELECT id
-	FROM ".PREFIX."download_cat
-	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	$download_categories->Move_category($id_up, MOVE_CATEGORY_UP);
+	redirect(transid('admin_download_cat.php'));
+}
+elseif( $id_down > 0 )
+{
+	$download_categories->Move_category($id_down, MOVE_CATEGORY_DOWN);
+	redirect(transid('admin_download_cat.php'));
+}
+elseif( $cat_to_del > 0 )
+{
+	$Template->Set_filenames(array(
+		'admin_download_cat_remove' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_cat_remove.tpl'
+	));
+	
+	$Template->Assign_vars(array(
+		'CATEGORY_TREE' => $download_categories->Build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
+		'IDCAT' => $cat_to_del,
+		'L_REMOVING_CATEGORY' => $LANG['removing_category'],
+		'L_EXPLAIN_REMOVING' => $LANG['explain_removing_category'],
+		'L_DELETE_CATEGORY_AND_CONTENT' => $LANG['delete_category_and_its_content'],
+		'L_MOVE_CONTENT' => $LANG['move_category_content'],
+		'L_SUBMIT' => $LANG['delete']
+	));
+	
+	include_once('admin_download_menu.php');
+		
+	$Template->Pparse('admin_download_cat_remove');
+}
+elseif( !empty($_POST['submit']) )
+{
+	$error_string = 'e_success';
+	//Deleting a category
+	if( !empty( $cat_to_del_post) )
 	{
-		$cat = !empty($_POST[$row['id'] . 'cat']) ? securit($_POST[$row['id'] . 'cat']) : '';  
-		$contents = !empty($_POST[$row['id'] . 'contents']) ? securit($_POST[$row['id'] . 'contents']) : '';
-		$icon = !empty($_POST[$row['id'] . 'icon']) ? securit($_POST[$row['id'] . 'icon']) : ''; 
-		$icon_path = !empty($_POST[$row['id'] . 'icon_path']) ? securit($_POST[$row['id'] . 'icon_path']) : ''; 
-		$aprob = isset($_POST[$row['id'] . 'aprob']) ? numeric($_POST[$row['id'] . 'aprob']) : '0';
-		$secure = isset($_POST[$row['id'] . 'secure']) ? numeric($_POST[$row['id'] . 'secure']) : '-1';
+		$delete_content = !empty($_POST['action']) && $_POST['action'] == 'move' ? false : true;
+		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
 		
-		if( !empty($icon_path) )
-			$icon = $icon_path;
-			
-		if( !empty($cat) )
-			$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET name = '" . $cat . "', contents = '" . $contents . "', icon = '" . $icon . "', aprob = '" . $aprob . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-	}
-	$Sql->Close($result);
-	
-	//Régénération du cache des catégories.
-	$Cache->Generate_module_file('download');
-	
-	redirect(HOST . SCRIPT);
-}
-elseif( empty($top) && empty($bottom) && $del && !empty($id) ) //Suppression du lien.
-{
-	$Sql->Query_inject("DELETE FROM ".PREFIX."download_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);	
-	$Sql->Query_inject("UPDATE ".PREFIX."download SET idcat = '' WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
-	
-	//Régénération du cache des catégories.
-	$Cache->Generate_module_file('download');
-	
-	redirect(HOST . SCRIPT);
-}
-elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
-{
-	if( !empty($top) )
-	{	
-		$idmoins = ($top - 1);
-		
-		$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET class = 0 WHERE class = '" . $top . "'", __LINE__, __FILE__);
-		$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET class = '" . $top . "' WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
-		$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET class = '" . $idmoins . "' WHERE class = 0", __LINE__, __FILE__);
-		
-		//Régénération du cache des catégories.
-		$Cache->Generate_module_file('download');
-		
-		redirect(HOST . SCRIPT . '#d' . $id);
-	}
-	elseif( !empty($bottom) )
-	{
-		$idplus = ($bottom + 1);
-		
-		$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET class = 0 WHERE class = '" . $bottom . "'", __LINE__, __FILE__);
-		$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET class = '" . $bottom . "' WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
-		$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET class = '" . $idplus . "' WHERE class = 0", __LINE__, __FILE__);
-		
-		//Régénération du cache des catégories.
-		$Cache->Generate_module_file('download');
-		
-		redirect(HOST . SCRIPT . '#d' . $id);
-	}
-}
-//On ajoute la nouvelle catégorie
-elseif( !empty($_POST['add']) ) //Ajout du lien.
-{
-	$cat = !empty($_POST['cat']) ? securit($_POST['cat']) : '';  
-	$contents = !empty($_POST['contents']) ? securit($_POST['contents']) : '';
-	$icon = !empty($_POST['icon']) ? securit($_POST['icon']) : ''; 
-	$icon_path = !empty($_POST['icon_path']) ? securit($_POST['icon_path']) : ''; 
-	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : '0';
-	$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : '-1';
-		
-	if( !empty($icon_path) )
-		$icon = $icon_path;
-		
-	if( !empty($cat) )
-	{	
-		$order = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."download_cat", __LINE__, __FILE__);
-		$order++;
-		
-		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
-		$Sql->Query_inject("INSERT INTO ".PREFIX."download_cat (class,name,contents,icon,aprob,secure) VALUES('" . $order . "', '" . $cat . "', '" . $contents . "', '" . $icon . "', '". $aprob . "', '" . $secure . "')", __LINE__, __FILE__);	
-	
-		//Régénération du cache des catégories.
-		$Cache->Generate_module_file('download');
-	
-		redirect(HOST . SCRIPT); 
+		if( $delete_content )
+		{
+			$download_categories->Delete_category_recursively($cat_to_del_post);
+		}
+		else
+		{
+			$download_categories->Delete_category_and_move_content($cat_to_del_post, $id_parent);
+		}
 	}
 	else
-		redirect(HOST . DIR . '/download/admin_download_cat.php?error=incomplete#errorh');
+	{
+		$id_cat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
+		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
+		$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
+		$description = !empty($_POST['description']) ? parse($_POST['description']) : '';
+		$icon = !empty($_POST['image']) ? securit($_POST['image']) : ''; 
+		$icon_path = !empty($_POST['image_alt']) ? securit($_POST['image_alt']) : ''; 
+		$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : '0';
+		$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : '-1';
+
+		if( !empty($icon_path) )
+			$icon = $icon_path;
+
+		if( empty($name) )
+			redirect(transid(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+
+			if( $id_cat > 0 )
+			$error_string = $download_categories->Update_category($id_cat, $id_parent, $name, $description, $icon);
+		else
+			$error_string = $download_categories->Add_category($id_parent, $name, $description, $icon);
+	}
+
+	$Cache->Generate_module_file('download');
+	
+	redirect(transid(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
-//Sinon on rempli le formulaire
-else	
-{		
+//Updating the number of subquestions of each category
+elseif( !empty($_GET['recount']) )
+{
+	$download_categories->Recount_sub_files();
+	redirect(transid(HOST . SCRIPT . '?error=e_recount_success', '', '&'));
+}
+elseif( $new_cat XOR $id_edit > 0 )
+{
 	$Template->Set_filenames(array(
-		'admin_download_cat' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_cat.tpl'
+		'admin_download_cat_edition' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_cat_edition.tpl'
 	));
 	
 	//Images disponibles
 	$rep = './';
 	if( is_dir($rep) ) //Si le dossier existe
 	{
-		$img_array = array();
+		$img_str = '<option value="">--</option>';
 		$dh = @opendir( $rep);
-		while( ! is_bool($lang = @readdir($dh)) )
-		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $lang) )
-				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
-		}	
+		while( ! is_bool($image_name = @readdir($dh)) )
+		{       
+			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $image_name) )
+			{
+				if( $id_edit > 0 && $DOWNLOAD_CATS[$id_edit]['icon'] == $image_name )
+					$img_str .= '<option selected="selected" value="' . $image_name . '">' . $image_name . '</option>'; //On crée un tableau, avec les different fichiers
+				else
+					$img_str .= '<option value="' . $image_name . '">' . $image_name . '</option>'; //On crée un tableau, avec les different fichiers
+				
+			}
+		}       
 		@closedir($dh); //On ferme le dossier
 	}
 	
-	$image_list = '<option value="">--</option>';
-	foreach($img_array as $key => $img_path)
-		$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
-		
 	$Template->Assign_vars(array(
-		'THEME' => $CONFIG['theme'],
-		'IMG_LIST' => $image_list,
-		'L_DEL_ENTRY' => $LANG['del_entry'],
-		'L_DOWNLOAD_ADD' => $LANG['download_add'],
-		'L_DOWNLOAD_MANAGEMENT' => $LANG['download_management'],
-		'L_DOWNLOAD_CAT' => $LANG['cat_management'],
-		'L_DOWNLOAD_CONFIG' => $LANG['download_config'],
-		'L_LISTE' => $LANG['list'],
-		'L_ADD_CAT' => $LANG['cat_add'],
-		'L_NAME' => $LANG['name'],
-		'L_DESC' => $LANG['description'],
-		'L_ICON' => $LANG['icon_cat'],
-		'L_OR_DIRECT_PATH' => $LANG['or_direct_path'],
-		'L_STATUS' => $LANG['status'],
-		'L_POSITION' => $LANG['position'],
-		'L_DELETE' => $LANG['delete'],
-		'L_ACTIVATION' => $LANG['activation'],
-		'L_ACTIV' => $LANG['activ'],
-		'L_UNACTIV' => $LANG['unactiv'],
-		'L_ADD' => $LANG['add'],
-		'L_UPDATE' => $LANG['update'],
+		'L_CATEGORY' => $LANG['category'],
+		'L_REQUIRED_FIELDS' => $DOWNLOAD_LANG['required_fields'],
+		'L_NAME' => $DOWNLOAD_LANG['category_name'],
+		'L_LOCATION' => $DOWNLOAD_LANG['category_location'],
+		'L_DESCRIPTION' => $DOWNLOAD_LANG['cat_description'],
+		'L_IMAGE' => $DOWNLOAD_LANG['icon_cat'],
+		'L_EXPLAIN_IMAGE' => $DOWNLOAD_LANG['explain_icon_cat'],
+		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
-		'L_RANK' => $LANG['rank'],
-		'L_GUEST' => $LANG['guest'],
-		'L_MEMBER' => $LANG['member'],
-		'L_MODO' => $LANG['modo'],
-		'L_ADMIN' => $LANG['admin'],
+		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add'],
+		'L_REQUIRE_TITLE' => $LANG['require_title'],
+		'IMG_LIST' => $img_str,
+	));
+		
+	if( $id_edit > 0 && array_key_exists($id_edit, $DOWNLOAD_CATS) )	
+		$Template->Assign_vars(array(
+			'NAME' => $DOWNLOAD_CATS[$id_edit]['name'],
+			'DESCRIPTION' => unparse($DOWNLOAD_CATS[$id_edit]['description']),
+			'IMAGE' => $DOWNLOAD_CATS[$id_edit]['icon'],
+			'CATEGORIES_TREE' => $download_categories->Build_select_form($DOWNLOAD_CATS[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
+			'IDCAT' => $id_edit,
+			'IMG_ICON' => !empty($DOWNLOAD_CATS[$id_edit]['icon']) ? '<img src="' . $DOWNLOAD_CATS[$id_edit]['icon'] . '" alt="" class="valign_middle" />' : ''
+		));
+	else
+	{
+		$id_edit = '0';
+		$Template->Assign_vars(array(
+			'NAME' => '',
+			'DESCRIPTION' => '',
+			'IMAGE' => '',
+			'CATEGORIES_TREE' => $download_categories->Build_select_form($id_edit, 'id_parent', 'id_parent'),
+			'IDCAT' => $id_edit
+		));
+	}
+	
+	include_once('../includes/bbcode.php');
+	
+	include_once('admin_download_menu.php');
+	
+	$Template->Pparse('admin_download_cat_edition');
+}
+else
+{
+	$Template->Set_filenames(array(
+		'admin_download_cat' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_cat.tpl'
 	));
 	
-	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
-	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
-		
-	$min_cat = $Sql->Query("SELECT MIN(class) FROM ".PREFIX."download_cat", __LINE__, __FILE__);
-	$max_cat = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."download_cat", __LINE__, __FILE__);	
-		
-	$result = $Sql->Query_while("SELECT id, name, class, contents, icon, aprob, secure
-	FROM ".PREFIX."download_cat
-	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	include_once('admin_download_menu.php');
+
+	if( !empty($error) )
 	{
-		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
-		$row['name'] = html_entity_decode($row['name']);
-		$name = strlen($row['name']) > 45 ? substr($row['name'], 0, 45) . '...' : $row['name'];
-
-		//Activation des catégories.
-		$enabled = $row['aprob'] == '1' ? 'checked="checked"' : '';	
-		$disabled = $row['aprob'] == '0' ? 'checked="checked"' : '';				
-		
-		//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
-		$top_link = $min_cat != $row['class'] ? '<a href="admin_download_cat.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
-		<img src="../templates/' . $CONFIG['theme'] . '/images/admin/up.png" alt="" title="" /></a>' : '';
-		$bottom_link = $max_cat != $row['class'] ? '<a href="admin_download_cat.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
-		<img src="../templates/' . $CONFIG['theme'] . '/images/admin/down.png" alt="" title="" /></a>' : '';
-		
-		$img_direct_path = (strpos($row['icon'], '/') !== false);
-		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-		foreach($img_array as $key => $img_path)
-		{	
-			$selected = ($img_path == $row['icon']) ? ' selected="selected"' : '';
-			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
-		}
-		
-		$Template->Assign_block_vars('cat', array(
-			'IDCAT' => $row['id'],
-			'CAT' => $name,
-			'CONTENTS' => $row['contents'],
-			'IMG_PATH' => $img_direct_path ? $row['icon'] : '',
-			'IMG_ICON' => !empty($row['icon']) ? '<img src="' . $row['icon'] . '" alt="" class="valign_middle" />' : '',		
-			'IMG_LIST' => $image_list,
-			'TOP' => $top_link,
-			'BOTTOM' => $bottom_link,			
-			'ACTIV_ENABLED' => $enabled,
-			'ACTIV_DISABLED' => $disabled
-		));	
-		
-		//Rang d'autorisation.
-		for($i= -1; $i <= 2; $i++)
+		switch($error)
 		{
-			switch ($i) 
-			{	
-				case -1:
-					$rank = $LANG['guest'];
+			case 'e_required_fields_empty' :
+				$Errorh->Error_handler($DOWNLOAD_LANG['required_fields_empty'], E_USER_WARNING);
 				break;
-				
-				case 0:
-					$rank = $LANG['member'];
+			case 'e_unexisting_category' :
+				$Errorh->Error_handler($DOWNLOAD_LANG['unexisting_category'], E_USER_WARNING);
 				break;
-				
-				case 1: 
-					$rank = $LANG['modo'];
+			case 'e_new_cat_does_not_exist' :
+				$Errorh->Error_handler($DOWNLOAD_LANG['new_cat_does_not_exist'], E_USER_WARNING);
 				break;
-		
-				case 2:
-					$rank = $LANG['admin'];
-				break;	
-				
-				default: -1;
-			} 
-
-			$selected = ( $row['secure'] == $i ) ? 'selected="selected"' : '' ;
-
-			$Template->Assign_block_vars('cat.select_auth', array(
-				'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
-			));
+				case 'e_infinite_loop' :
+				$Errorh->Error_handler($DOWNLOAD_LANG['infinite_loop'], E_USER_WARNING);
+				break;
+			case 'e_success' :
+				$Errorh->Error_handler($DOWNLOAD_LANG['successful_operation'], E_USER_SUCCESS);
+				break;
+				case 'e_recount_success' :
+				$Errorh->Error_handler($DOWNLOAD_LANG['recount_success'], E_USER_SUCCESS);
+				break;
 		}
 	}
-	$Sql->Close($result);
+	
+	$cat_config = array(
+		'xmlhttprequest_file' => 'xmlhttprequest_cats.php',
+		'administration_file_name' => 'admin_download_cat.php',
+		'url' => array(
+			'unrewrited' => 'download.php?id=%d',
+			'rewrited' => 'category-%d.php'),
+		);
 		
-	$Template->Pparse('admin_download_cat'); // traitement du modele	
+	$download_categories->Set_displaying_configuration($cat_config);
+	
+	$Template->Assign_vars(array(
+		'CATEGORIES' => $download_categories->Build_categories_administration_interface()
+	));
+
+	$Template->Pparse('admin_download_cat');
 }
 
-require_once('../includes/admin_footer.php');
+include_once('../includes/admin_footer.php');
 
 ?>

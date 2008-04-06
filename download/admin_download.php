@@ -26,9 +26,12 @@
 ###################################################*/
 
 require_once('../includes/admin_begin.php');
-load_module_lang('download'); //Chargement de la langue du module.
+load_module_lang('download', 'DOWNLOAD_LANG'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
+
+include_once('download_cats.class.php');
+$download_categories = new Download_cats();
 
 //On recupère les variables.
 $id = isset($_GET['id']) ? numeric($_GET['id']) : '' ;
@@ -54,14 +57,15 @@ if( !empty($id) && !$del )
 		'SIZE' => $row['size'],
 		'UNIT_SIZE' => $LANG['unit_megabytes'],
 		'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+		'CATEGORIES_TREE' => $download_categories->Build_select_form($idcat, 'idcat', 'idcat'),
 		'L_REQUIRE_DESC' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
 		'L_REQUIRE_CAT' => $LANG['require_cat'],
-		'L_EDIT_FILE' => $LANG['edit_file'],
+		'L_EDIT_FILE' => $DOWNLOAD_LANG['edit_file'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
-		'L_DOWNLOAD_DATE' => $LANG['download_date'],
+		'L_DOWNLOAD_DATE' => $DOWNLOAD_LANG['download_date'],
 		'L_RELEASE_DATE' => $LANG['release_date'],
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
@@ -73,10 +77,10 @@ if( !empty($id) && !$del )
 		'L_TITLE' => $LANG['title'],
 		'L_CATEGORY' => $LANG['category'],
 		'L_REQUIRE' => $LANG['require'],
-		'L_DOWNLOAD_ADD' => $LANG['download_add'],
-		'L_DOWNLOAD_MANAGEMENT' => $LANG['download_management'],
+		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
+		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 		'L_DOWNLOAD_CAT' => $LANG['cat_management'],
-		'L_DOWNLOAD_CONFIG' => $LANG['download_config'],
+		'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
 		'L_PREVIEW' => $LANG['preview']
@@ -104,30 +108,17 @@ if( !empty($id) && !$del )
 		'END' => ((!empty($row['end'])) ? gmdate_format('date_format_short', $row['end']) : ''),
 		'HOUR' => gmdate_format('H', $row['timestamp']),
 		'MIN' => gmdate_format('i', $row['timestamp']),
-		'DATE' => gmdate_format('date_format_short', $row['timestamp'])	
+		'DATE' => gmdate_format('date_format_short', $row['timestamp'])
 	));
-	
-	//Catégories.		
-	$i = 0;
-	$result = $Sql->Query_while("SELECT id, name FROM ".PREFIX."download_cat", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
-	{
-		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('download.select', array(
-			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
-		));
-		$i++;
-	}	
-	$Sql->Close($result);
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
-		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 		
 	include_once('../includes/bbcode.php');
+	
+	include_once('admin_download_menu.php');
 
 	$Template->Pparse('admin_download_management'); 
 }	
@@ -151,7 +142,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;	
 	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
 	
-	$cat = $Sql->Query("SELECT name FROM ".PREFIX."download_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $idcat > 0 ? $DOWNLOAD_CATS[$idcat]['name'] : $LANG['root'];
 		
 	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
@@ -224,6 +215,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'SIZE' => $size,
 		'UNIT_SIZE' => $LANG['unit_megabytes'],
 		'COMPT' => $compt,
+		'CATEGORIES_TREE' => $download_categories->Build_select_form($idcat, 'idcat', 'idcat'),
 		'L_REQUIRE_DESC' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
@@ -257,24 +249,10 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_RESET' => $LANG['reset'],
 		'L_PREVIEW' => $LANG['preview']
 	));
-	
-	//Catégories.
-	$i = 0;	
-	$result = $Sql->Query_while("SELECT id, name FROM ".PREFIX."download_cat", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
-	{
-		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('download.select', array(
-			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
-		));
-		$i++;
-	}
-	$Sql->Close($result);
-	
-	if( $i == 0 ) //Aucune catégorie => alerte.	 
-		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 		
 	include_once('../includes/bbcode.php');
+	
+	include_once('admin_download_menu.php');
 
 	$Template->Pparse('admin_download_management'); 
 }	
@@ -382,10 +360,10 @@ else
 		'LANG' => $CONFIG['lang'],
 		'PAGINATION' => $Pagination->Display_pagination('admin_download.php?p=%d', $nbr_dl, 'p', 25, 3),
 		'L_DEL_ENTRY' => $LANG['del_entry'],
-		'L_DOWNLOAD_ADD' => $LANG['download_add'],
-		'L_DOWNLOAD_MANAGEMENT' => $LANG['download_management'],
+		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
+		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 		'L_DOWNLOAD_CAT' => $LANG['cat_management'],
-		'L_DOWNLOAD_CONFIG' => $LANG['download_config'],
+		'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
 		'L_CATEGORY' => $LANG['category'],
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_SIZE' => $LANG['size'],
@@ -399,9 +377,8 @@ else
 	$Template->Assign_block_vars('list', array(
 	));
 	
-	$result = $Sql->Query_while("SELECT d.id, d.idcat, d.title, d.timestamp, d.visible, d.start, d.end, d.size, dc.name, m.login 
+	$result = $Sql->Query_while("SELECT d.id, d.idcat, d.title, d.timestamp, d.visible, d.start, d.end, d.size, m.login 
 	FROM ".PREFIX."download d 
-	LEFT JOIN ".PREFIX."download_cat dc ON dc.id = d.idcat
 	LEFT JOIN ".PREFIX."member m ON d.user_id = m.user_id
 	ORDER BY d.timestamp DESC 
 	" . $Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
@@ -430,7 +407,7 @@ else
 			'TITLE' => $title,
 			'IDCAT' => $row['idcat'],
 			'ID' => $row['id'],
-			'CAT' => $row['name'],
+			'CAT' => $row['idcat'] > 0 ? $DOWNLOAD_CATS[$row['idcat']]['name'] : $LANG['root'],
 			'PSEUDO' => !empty($row['login']) ? $row['login'] : $LANG['guest'],		
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'SIZE' => ($row['size'] >= 1) ? number_round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : number_round($row['size']*1024, 1) . ' ' . $LANG['unit_kilobytes'],
@@ -442,6 +419,8 @@ else
 	$Sql->Close($result);
 	
 	include_once('../includes/bbcode.php');
+	
+	include_once('admin_download_menu.php');
 	
 	$Template->Pparse('admin_download_management'); 
 }
