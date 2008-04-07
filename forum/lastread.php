@@ -157,6 +157,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 		'L_AUTHOR' => $LANG['author'],
 		'L_TOPIC' =>  ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'],
 		'L_MESSAGE' => $LANG['replies'],
+		'L_ANSWERS' => $LANG['answers'],
 		'L_VIEW' => $LANG['views'],
 		'L_LAST_MESSAGE' => $LANG['last_message'],
 	));	
