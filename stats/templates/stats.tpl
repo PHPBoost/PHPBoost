@@ -72,6 +72,147 @@
 		# ENDIF #
 		
 		
+		# IF C_STATS_MEMBERS #
+		<table class="module_table">
+			<tr>
+				<th colspan="2">	
+					{L_MEMBERS}
+				</th>
+			</tr>
+			<tr>
+				<td class="row1" style="text-align:center;width:25%;">
+					{L_MEMBERS}
+				</td>
+				<td class="row2">
+					{MEMBERS}
+				</td>
+			 </tr>
+			<tr>
+				<td class="row1" style="text-align:center;width:50%;">
+					{L_LAST_MEMBER}
+				</td>
+				<td class="row2">
+					<a href="../member/member{U_LAST_USER_ID}">{LAST_USER}</a>
+				</td>
+			</tr>
+		</table>
+		<br /><br />
+		<table class="module_table">
+			<tr>
+				<th colspan="2">	
+					{L_TEMPLATES}
+				</th>
+			</tr>
+			<tr>
+				<td style="width:50%;padding-top:30px;vertical-align:top" class="row1">
+					<table class="module_table">						
+						<tr>
+							<td style="text-align:center;" class="row1">			
+								{L_TEMPLATES} 
+							</td>
+							<td style="width:10px;" class="row1">			
+								{L_COLORS}
+							</td>
+							<td style="text-align:center;" class="row1">
+								{L_MEMBERS}
+							</td>				
+						</tr>						
+						# START templates #	
+						<tr>
+							<td style="text-align:center;" class="row2">			
+								{templates.THEME} <span class="text_small">({templates.PERCENT}%)</span>
+							</td>							
+							<td style="text-align:center;" class="row2">			
+								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{templates.COLOR};border:1px solid black;"></div>
+							</td>
+							<td style="text-align:center;" class="row2">
+								{templates.NBR_THEME}
+							</td>				
+						</tr>
+						# END templates #		
+					</table>
+				</td>
+				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
+					{GRAPH_RESULT_THEME}
+				</td>
+			</tr>
+		</table>
+		<br /><br />
+		<table class="module_table">
+			<tr>
+				<th colspan="2">	
+					{L_SEX}
+				</th>
+			</tr>
+			<tr>
+				<td style="width:50%;padding-top:30px;vertical-align:top" class="row1">
+					<table class="module_table">						
+						<tr>
+							<td style="text-align:center;" class="row1">			
+								{L_SEX} 
+							</td>
+							<td style="width:10px;" class="row1">			
+								{L_COLORS}
+							</td>
+							<td style="text-align:center;" class="row1">
+								{L_MEMBERS}
+							</td>				
+						</tr>						
+						# START sex #	
+						<tr>
+							<td style="text-align:center;" class="row2">			
+								{sex.SEX} <span class="text_small">({sex.PERCENT}%)</span>
+							</td>							
+							<td style="text-align:center;" class="row2">			
+								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{sex.COLOR};border:1px solid black;"></div>
+							</td>
+							<td style="text-align:center;" class="row2">
+								{sex.NBR_MBR}
+							</td>				
+						</tr>
+						# END sex #		
+					</table>
+				</td>
+				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
+					{GRAPH_RESULT_SEX}
+				</td>
+			</tr>
+		</table>
+		<br /><br />
+		<table class="module_table">
+			<tr>
+				<th colspan="3">	
+					{L_TOP_TEN_POSTERS}
+				</th>
+			</tr>
+			<tr>
+				<td class="row3" style="text-align:center;">
+					N°
+				</td>
+				<td class="row3" style="text-align:center;">
+					{L_PSEUDO}
+				</td>
+				<td class="row3" style="text-align:center;">
+					{L_MSG}
+				</td>
+			</tr>			
+			# START top_poster #			
+			<tr>
+				<td class="row2" style="text-align:center;">
+					{top_poster.ID}
+				</td>
+				<td class="row2" style="text-align:center;">
+					<a href="../member/member{top_poster.U_MEMBER_ID}">{top_poster.LOGIN}</a>
+				</td>
+				<td class="row2" style="text-align:center;">
+					{top_poster.USER_POST}
+				</td>
+			</tr>			
+			# END top_poster #
+		</table>
+		# ENDIF #
+		
+		
 		# IF C_STATS_VISIT #
 		<form action="stats.php#stats" method="get">
 			<table class="module_table">
@@ -85,28 +226,28 @@
 						<div style="width:50%;text-align:center;margin:auto">
 							<p class="text_strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
 							<a href="stats{U_PREVIOUS_LINK}#stats">&laquo;</a>&nbsp;&nbsp;&nbsp;&nbsp;
-							# START days #
+							# IF C_STATS_DAY #
 							<select name="d">
-								{days.DAY}
+								{STATS_DAY}
 							</select>
-							# END days #
-							# START months #
+							# ENDIF #
+							# IF C_STATS_MONTH #
 							<select name="m">
-								{months.MONTH}
+								{STATS_MONTH}
 							</select>
-							# END months #
-							# START years #
+							# ENDIF #
+							# IF C_STATS_YEAR #
 							<select name="y">
-								{years.YEAR}
+								{STATS_YEAR}
 							</select>
-							 # END years #
+							# ENDIF #
 							<input type="hidden" name="{TYPE}" value="1" />
 							<input type="submit" name="date" value="{L_SUBMIT}" class="submit" />
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<a href="stats{U_NEXT_LINK}#stats">&raquo;</a>				
 						</div>
 						<br />
-						# START no_gd #
+						# IF C_STATS_NO_GD #
 						<br />
 						<table class="module_table" style="width:400px;margin:auto;">
 							<tr>
@@ -115,44 +256,44 @@
 									{MAX_NBR}
 								</td>
 									
-								# START no_gd.values #								
+								# START values #								
 								<td style="height:200px;width:10px;vertical-align:bottom;">
 									<table class="module_table" style="width:14px;margin:auto;">
-										# START no_gd.values.head #
+										# START values.head #
 										<tr>
 											<td style="margin-left:2px;width:10px;height:4px;background-image: url(../templates/{THEME}/images/stats2.png); background-repeat:no-repeat;">
 											</td>
 										</tr>
-										# END no_gd.values.head #
+										# END values.head #
 										<tr>
-											<td style="margin-left:2px;width:10px;height:{no_gd.values.HEIGHT}px;background-image: url(../templates/{THEME}/images/stats.png);background-repeat:repeat-y;padding:0px">
+											<td style="margin-left:2px;width:10px;height:{values.HEIGHT}px;background-image: url(../templates/{THEME}/images/stats.png);background-repeat:repeat-y;padding:0px">
 											</td>
 										</tr>
 									</table>
 								</td>	
-								# END no_gd.values #
+								# END values #
 								
-								# START no_gd.end_td #							
-									{no_gd.end_td.END_TD}							
-								# END no_gd.end_td #
+								# START end_td #							
+									{end_td.END_TD}							
+								# END end_td #
 							</tr>
 							<tr>
 								<td style="background-color: #000000;width:1px"></td>
 								<td style="width:10px;font-size:9px;">
 									0
 								</td>								
-								# START no_gd.legend #								
+								# START legend #								
 								<td style="text-align:center;width:13px;font-size:9px;">
-									{no_gd.legend.LEGEND}
+									{legend.LEGEND}
 								</td>								
-								# END no_gd.legend #								
+								# END legend #								
 							</tr>
 							<tr>
 								<td style="height:1px;background-color: #000000;" colspan="{COLSPAN}"></td>
 							</tr>
 						</table>
 						<br />
-						# END no_gd #
+						# ENDIF #
 						
 						{GRAPH_RESULT}
 					</td>
@@ -468,143 +609,3 @@
 		</table>
 		# ENDIF #
 		
-		
-		# IF C_STATS_MEMBERS #
-		<table class="module_table">
-			<tr>
-				<th colspan="2">	
-					{L_MEMBERS}
-				</th>
-			</tr>
-			<tr>
-				<td class="row1" style="text-align:center;width:25%;">
-					{L_MEMBERS}
-				</td>
-				<td class="row2">
-					{MEMBERS}
-				</td>
-			 </tr>
-			<tr>
-				<td class="row1" style="text-align:center;width:50%;">
-					{L_LAST_MEMBER}
-				</td>
-				<td class="row2">
-					<a href="../member/member{U_LAST_USER_ID}">{LAST_USER}</a>
-				</td>
-			</tr>
-		</table>
-		<br /><br />
-		<table class="module_table">
-			<tr>
-				<th colspan="2">	
-					{L_TEMPLATES}
-				</th>
-			</tr>
-			<tr>
-				<td style="width:50%;padding-top:30px;vertical-align:top" class="row1">
-					<table class="module_table">						
-						<tr>
-							<td style="text-align:center;" class="row1">			
-								{L_TEMPLATES} 
-							</td>
-							<td style="width:10px;" class="row1">			
-								{L_COLORS}
-							</td>
-							<td style="text-align:center;" class="row1">
-								{L_MEMBERS}
-							</td>				
-						</tr>						
-						# START templates #	
-						<tr>
-							<td style="text-align:center;" class="row2">			
-								{templates.THEME} <span class="text_small">({templates.PERCENT}%)</span>
-							</td>							
-							<td style="text-align:center;" class="row2">			
-								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{templates.COLOR};border:1px solid black;"></div>
-							</td>
-							<td style="text-align:center;" class="row2">
-								{templates.NBR_THEME}
-							</td>				
-						</tr>
-						# END templates #		
-					</table>
-				</td>
-				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-					{GRAPH_RESULT_THEME}
-				</td>
-			</tr>
-		</table>
-		<br /><br />
-		<table class="module_table">
-			<tr>
-				<th colspan="2">	
-					{L_SEX}
-				</th>
-			</tr>
-			<tr>
-				<td style="width:50%;padding-top:30px;vertical-align:top" class="row1">
-					<table class="module_table">						
-						<tr>
-							<td style="text-align:center;" class="row1">			
-								{L_SEX} 
-							</td>
-							<td style="width:10px;" class="row1">			
-								{L_COLORS}
-							</td>
-							<td style="text-align:center;" class="row1">
-								{L_MEMBERS}
-							</td>				
-						</tr>						
-						# START sex #	
-						<tr>
-							<td style="text-align:center;" class="row2">			
-								{sex.SEX} <span class="text_small">({sex.PERCENT}%)</span>
-							</td>							
-							<td style="text-align:center;" class="row2">			
-								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{sex.COLOR};border:1px solid black;"></div>
-							</td>
-							<td style="text-align:center;" class="row2">
-								{sex.NBR_MBR}
-							</td>				
-						</tr>
-						# END sex #		
-					</table>
-				</td>
-				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-					{GRAPH_RESULT_SEX}
-				</td>
-			</tr>
-		</table>
-		<br /><br />
-		<table class="module_table">
-			<tr>
-				<th colspan="3">	
-					{L_TOP_TEN_POSTERS}
-				</th>
-			</tr>
-			<tr>
-				<td class="row3" style="text-align:center;">
-					N°
-				</td>
-				<td class="row3" style="text-align:center;">
-					{L_PSEUDO}
-				</td>
-				<td class="row3" style="text-align:center;">
-					{L_MSG}
-				</td>
-			</tr>			
-			# START top_poster #			
-			<tr>
-				<td class="row2" style="text-align:center;">
-					{top_poster.ID}
-				</td>
-				<td class="row2" style="text-align:center;">
-					<a href="../member/member{top_poster.U_MEMBER_ID}">{top_poster.LOGIN}</a>
-				</td>
-				<td class="row2" style="text-align:center;">
-					{top_poster.USER_POST}
-				</td>
-			</tr>			
-			# END top_poster #
-		</table>
-		# ENDIF #

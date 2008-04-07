@@ -219,8 +219,9 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->Assign_block_vars('years', array(
-			'YEAR' => $years 
+		$Template->Assign_vars(array(
+			'C_STATS_YEAR' => true,
+			'STATS_YEAR' => $years
 		));
 		
 		if( @extension_loaded('gd') )
@@ -256,7 +257,8 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 			}			
 				
-			$Template->Assign_block_vars('no_gd', array(
+			$Template->Assign_vars(array(
+				'C_STATS_NO_GD' => true
 			));
 			
 			$i = 1; 
@@ -274,7 +276,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 					$diff = $row['stats_month'] - $i;
 					for($j = 0; $j < $diff; $j++)
 					{
-						$Template->Assign_block_vars('no_gd.values', array(
+						$Template->Assign_block_vars('values', array(
 							'HEIGHT' => 0
 						));
 					}
@@ -288,11 +290,11 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 				//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 				$height = $row['total'] / $max_month * 200;
 				
-				$Template->Assign_block_vars('no_gd.values', array(
+				$Template->Assign_block_vars('values', array(
 					'HEIGHT' => ceil($height)
 				));
 
-				$Template->Assign_block_vars('no_gd.values.head', array(
+				$Template->Assign_block_vars('values.head', array(
 				));
 					
 				//On affiche les stats numériquement dans un tableau en dessous
@@ -310,7 +312,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			$date_day = isset($date_day) ? $date_day : 1;
 			for	($i = $last_month; $i < 12; $i++)
 			{
-				$Template->Assign_block_vars('no_gd.end_td', array(
+				$Template->Assign_block_vars('end_td', array(
 					'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 				));
 			}
@@ -318,7 +320,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			$i = 1;
 			foreach($array_l_months as $value)
 			{
-				$Template->Assign_block_vars('no_gd.legend', array(
+				$Template->Assign_block_vars('legend', array(
 					'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . transid('.php?m=' . $i . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
 				));
 				$i++;
@@ -362,9 +364,6 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			$selected = ($i == $month) ? ' selected="selected"' : '';
 			$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
 		}
-		$Template->Assign_block_vars('months', array(
-			'MONTH' => $months 
-		));
 		
 		//Année maximale
 		$info_year = $Sql->Query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
@@ -374,8 +373,11 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->Assign_block_vars('years', array(
-			'YEAR' => $years 
+		$Template->Assign_vars(array(
+			'C_STATS_YEAR' => true,
+			'C_STATS_MONTH' => true,
+			'STATS_YEAR' => $years,
+			'STATS_MONTH' => $months
 		));
 		
 		if( @extension_loaded('gd') )
@@ -405,7 +407,8 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			//Mois selectionné.
 			if( !empty($month) && !empty($year) )
 			{				
-				$Template->Assign_block_vars('no_gd', array(
+				$Template->Assign_vars(array(
+					'C_STATS_NO_GD' => true
 				));
 				
 				//On rajoute un 0 devant tous les mois plus petits que 10
@@ -424,7 +427,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 					{
 						for($z = 1; $z < $row['day']; $z++)
 						{
-							$Template->Assign_block_vars('no_gd.values', array(
+							$Template->Assign_block_vars('values', array(
 								'HEIGHT' => 0
 							));
 						}
@@ -438,7 +441,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 						$diff = $row['day'] - $i;
 						for($j = 0; $j < $diff; $j++)
 						{
-							$Template->Assign_block_vars('no_gd.values', array(
+							$Template->Assign_block_vars('values', array(
 								'HEIGHT' => 0
 							));
 						}
@@ -448,11 +451,11 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 					//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 					$height = ($row['nbr'] / $info['max_nbr']) * 200;
 					
-					$Template->Assign_block_vars('no_gd.values', array(
+					$Template->Assign_block_vars('values', array(
 						'HEIGHT' => ceil($height)
 					));
 					
-					$Template->Assign_block_vars('no_gd.values.head', array(
+					$Template->Assign_block_vars('values.head', array(
 					));
 						
 					$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
@@ -471,7 +474,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 				$date_day = isset($date_day) ? $date_day : 1;
 				for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
 				{
-					$Template->Assign_block_vars('no_gd.days', array(
+					$Template->Assign_block_vars('end_td', array(
 						'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 					));
 				}
@@ -479,7 +482,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 				//On liste les jours en dessous du graphique
 				for($i = 1; $i <= $array_month[$month - 1]; $i++)
 				{
-					$Template->Assign_block_vars('no_gd.legend', array(
+					$Template->Assign_block_vars('legend', array(
 						'LEGEND' => $i
 					));
 				}			
@@ -567,8 +570,9 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->Assign_block_vars('years', array(
-			'YEAR' => $years 
+		$Template->Assign_vars(array(
+			'C_STATS_YEAR' => true,
+			'STATS_YEAR' => $years 
 		));
 		
 		if( @extension_loaded('gd') )
@@ -604,7 +608,8 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 			}
 						
-			$Template->Assign_block_vars('no_gd', array(
+			$Template->Assign_vars(array(
+				'C_STATS_NO_GD' => true
 			));
 			
 			$i = 1; 
@@ -622,7 +627,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 					$diff = $row['stats_month'] - $i;
 					for($j = 0; $j < $diff; $j++)
 					{
-						$Template->Assign_block_vars('no_gd.values', array(
+						$Template->Assign_block_vars('values', array(
 							'HEIGHT' => 0
 						));
 					}
@@ -636,11 +641,11 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 				$height = $row['total'] / $info['max_month'] * 200;
 				
-				$Template->Assign_block_vars('no_gd.months', array(
+				$Template->Assign_block_vars('months', array(
 					'HEIGHT' => ceil($height)
 				));
 
-				$Template->Assign_block_vars('no_gd.values.head', array(
+				$Template->Assign_block_vars('values.head', array(
 				));
 				
 				//On affiche les stats numériquement dans un tableau en dessous
@@ -658,7 +663,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$date_day = isset($date_day) ? $date_day : 1;
 			for	($i = $last_month; $i < 12; $i++)
 			{
-				$Template->Assign_block_vars('no_gd.end_td', array(
+				$Template->Assign_block_vars('end_td', array(
 					'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 				));
 			}
@@ -666,7 +671,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$i = 1;
 			foreach($array_l_months as $value)
 			{
-				$Template->Assign_block_vars('no_gd.legend', array(
+				$Template->Assign_block_vars('legend', array(
 					'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . transid('.php?m=' . $i . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
 				));
 				$i++;
@@ -709,19 +714,13 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$selected = ($i == $day) ? ' selected="selected"' : '';
 			$days .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->Assign_block_vars('days', array(
-			'DAY' => $days 
-		));
-		
+	
 		$months = '';
 		for($i = 1; $i <= 12; $i++)
 		{
 			$selected = ($i == $month) ? ' selected="selected"' : '';
 			$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
 		}
-		$Template->Assign_block_vars('months', array(
-			'MONTH' => $months 
-		));
 		
 		//Année maximale
 		$info_year = $Sql->Query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
@@ -731,11 +730,14 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->Assign_block_vars('years', array(
-			'YEAR' => $years 
-		));
-		
+
 		$Template->Assign_vars(array(
+			'C_STATS_DAY' => true,
+			'C_STATS_MONTH' => true,
+			'C_STATS_YEAR' => true,
+			'STATS_DAY' => $days,
+			'STATS_MONTH' => $months,
+			'STATS_YEAR' => $years, 
 			'GRAPH_RESULT' => '<img src="../includes/display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="" />'
 		));
 		
@@ -789,9 +791,6 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$selected = ($i == $month) ? ' selected="selected"' : '';
 			$months .= '<option value="' . $i . '"' . $selected . '>' . $array_l_months[$i - 1] . '</option>';
 		}
-		$Template->Assign_block_vars('months', array(
-			'MONTH' => $months 
-		));
 		
 		//Année maximale
 		$info_year = $Sql->Query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
@@ -801,8 +800,11 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$selected = ($i == $year) ? ' selected="selected"' : '';
 			$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 		}
-		$Template->Assign_block_vars('years', array(
-			'YEAR' => $years 
+		$Template->Assign_vars(array(
+			'C_STATS_YEAR' => true,
+			'C_STATS_MONTH' => true,
+			'STATS_YEAR' => $years,
+			'STATS_MONTH' => $months
 		));
 		
 		if( @extension_loaded('gd') )
@@ -832,7 +834,8 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			//Mois selectionné.
 			if( !empty($month) && !empty($year) )
 			{				
-				$Template->Assign_block_vars('no_gd', array(
+				$Template->Assign_vars(array(
+					'C_STATS_NO_GD' => true
 				));
 				
 				//On rajoute un 0 devant tous les mois plus petits que 10
@@ -851,7 +854,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 					{
 						for($z = 1; $z < $row['day']; $z++)
 						{
-							$Template->Assign_block_vars('no_gd.days', array(
+							$Template->Assign_block_vars('days', array(
 								'HEIGHT' => 0
 							));
 						}
@@ -865,7 +868,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 						$diff = $row['day'] - $i;
 						for($j = 0; $j < $diff; $j++)
 						{
-							$Template->Assign_block_vars('no_gd.days', array(
+							$Template->Assign_block_vars('days', array(
 								'HEIGHT' => 0
 							));
 						}
@@ -875,11 +878,11 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 					//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 					$height = ($row['pages'] / $info['max_nbr']) * 200;
 					
-					$Template->Assign_block_vars('no_gd.values', array(
+					$Template->Assign_block_vars('values', array(
 						'HEIGHT' => ceil($height)
 					));
 					
-					$Template->Assign_block_vars('no_gd.values.head', array(
+					$Template->Assign_block_vars('values.head', array(
 					));
 						
 					$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
@@ -898,7 +901,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				$date_day = isset($date_day) ? $date_day : 1;
 				for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
 				{
-					$Template->Assign_block_vars('no_gd.days', array(
+					$Template->Assign_block_vars('end_td', array(
 						'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 					));
 				}
@@ -906,7 +909,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				//On liste les jours en dessous du graphique
 				for($i = 1; $i <= $array_month[$month - 1]; $i++)
 				{
-					$Template->Assign_block_vars('no_gd.legend', array(
+					$Template->Assign_block_vars('legend', array(
 						'LEGEND' => $i
 					));
 				}			
