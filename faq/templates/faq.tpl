@@ -73,7 +73,7 @@
 				
 				# START questions #
 					# START questions.faq #
-						<div style="margin-bottom:10px;" id="q{questions.faq.ID_QUESTION}">
+						<div style="margin-top:15px;" id="q{questions.faq.ID_QUESTION}">
 							<div class="row1">
 								<span style="float:left;">
 									<a href="javascript:show_answer({questions.faq.ID_QUESTION});"><img src="{MODULE_DATA_PATH}/images/line.png" alt="arrow" id="faq_i{questions.faq.ID_QUESTION}" class="image_left" style="vertical-align:middle;" /></a>
@@ -162,7 +162,7 @@
 						{L_NO_QUESTION_THIS_CATEGORY}
 					</div>
 				# END no_question #
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>

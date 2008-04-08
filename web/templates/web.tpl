@@ -22,10 +22,9 @@
 				</div>	
 				# END cat_list #
 				
-				<div class="text_small" style="text-align:center;clear:both">
+				<div class="text_small" style="padding-top:10px;text-align:center;clear:both">
 					{TOTAL_FILE} {L_HOW_LINK}
 				</div>
-				<div class="spacer">&nbsp;</div>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>

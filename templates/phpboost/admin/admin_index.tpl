@@ -1,44 +1,28 @@
-			<table class="module_table">
-				<tr> 
-					<th colspan="2">
-						{L_INDEX_ADMIN}
-					</th>
-				</tr>
-				<tr> 
-					<td class="row1" style="text-align:center;">
-						<br />			
-						{L_TEXT_INDEX}			
-						<br /><br />						
-						
-						<div class="phpboost_news">
-							<script type="text/javascript" src="http://www.phpboost.com/cache/rss_news.html"></script>
-						</div>
-						<br />
-					</td>
-				</tr>
-			</table>
-
-			<table class="module_table">
-				<tr> 
-					<th>
-						{L_UPDATE_AVAILABLE}
-					</th>
-				</tr>
-				<tr>	
-					<td class="row1{WARNING_CORE}" style="text-align:center">
-						{UPDATE_AVAILABLE} {L_CORE_UPDATE}
-					</td>
-				</tr>
-				<tr> 
-					<td class="row1{WARNING_MODULES}" style="text-align:center">
-						{UPDATE_MODULES_AVAILABLE} {L_MODULES_UPDATE}<br />
-						# START modules_available #
-						<a href="http://www.phpboost.com/phpboost/modules.php?name={modules_available.ID}">{modules_available.NAME} <em>({modules_available.VERSION})</em></a><br />
-						# END modules_available #
-					</td>
-				</tr>	
-			</table>
+			<div class="block_container">
+				<div class="block_top">{L_INDEX_ADMIN}</div>
+				<div class="block_contents1 text_center">
+					{L_TEXT_INDEX}			
+					<br /><br />						
+					
+					<div class="phpboost_news">
+						<script type="text/javascript" src="http://www.phpboost.com/cache/rss_news.html"></script>
+					</div>
+				</div>
+			</div>
 			
+			<div class="block_container">
+				<div class="block_top">{L_UPDATE_AVAILABLE}</div>
+				<div class="row1 text_center">
+					{UPDATE_AVAILABLE} {L_CORE_UPDATE}
+				</div>
+				<div class="row1 text_center">
+					{UPDATE_MODULES_AVAILABLE} {L_MODULES_UPDATE}<br />
+					# START modules_available #
+					<a href="http://www.phpboost.com/phpboost/modules.php?name={modules_available.ID}">{modules_available.NAME} <em>({modules_available.VERSION})</em></a><br />
+					# END modules_available #
+				</div>
+			</div>
+
 			<table class="module_table">
 				<tr> 
 					<th colspan="4">
@@ -58,8 +42,7 @@
 					<td  class="row1" style="text-align: center;">
 						{L_LAST_UPDATE}
 					</td>
-				</tr>
-				
+				</tr>				
 				# START user #
 				<tr> 
 					<td class="row1" style="text-align: center;">
@@ -73,9 +56,7 @@
 					</td>
 					<td class="row1" style="text-align: center;">
 						{L_ON} {user.TIME}
-					</td>
-					
+					</td>					
 				</tr>
 				# END user #
-
 			</table>

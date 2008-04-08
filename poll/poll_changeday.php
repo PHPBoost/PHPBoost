@@ -27,8 +27,7 @@
 
 if( defined('PHP_BOOST') !== true) exit;
 
-//Suppression des ips trop anciennes de la table sondageip.
-$Sql->Query_inject("DELETE FROM ".PREFIX."poll_ip WHERE timestamp < '" . (time() - (3600 * 24)) . "'", __LINE__, __FILE__);
+$Sql->Query_inject("DELETE FROM ".PREFIX."poll_ip WHERE timestamp < '" . (time() - (3600 * 24)) . "' AND user_id = -1 ''", __LINE__, __FILE__);
 
 //Publication des news en attente pour la date donnée.
 $result = $Sql->Query_while("SELECT id, start, end

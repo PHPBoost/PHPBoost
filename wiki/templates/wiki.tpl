@@ -61,7 +61,7 @@
 					# END cat.no_sub_article #
 					
 				# END cat #
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>

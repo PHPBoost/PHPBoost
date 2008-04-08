@@ -187,7 +187,7 @@
 			</tr>
 			<tr>
 				<td class="row3" style="text-align:center;">
-					N°
+					N&deg;
 				</td>
 				<td class="row3" style="text-align:center;">
 					{L_PSEUDO}
