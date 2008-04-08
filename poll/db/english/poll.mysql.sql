@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS `phpboost_poll_ip`;
 CREATE TABLE `phpboost_poll_ip` (
 	`id` int(11) NOT NULL auto_increment,
 	`ip` varchar(50) NOT NULL default '',
+	`user_id` int(11) NOT NULL default '0',
 	`idpoll` int(11) NOT NULL default '0',
 	`timestamp` int(11) NOT NULL default '0',
 	PRIMARY KEY	(`id`)
