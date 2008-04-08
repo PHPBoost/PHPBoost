@@ -76,7 +76,7 @@
 						{L_NO_FILE_THIS_CATEGORY}
 					</div>
 				# ENDIF #
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
@@ -187,6 +187,7 @@
 				<p style="text-align: center;">					
 					<a href="../download/count.php?id={IDURL}"><img src="{MODULE_DATA_PATH}/images/{LANG}/bouton_dl.gif" alt="" /></a>
 				</p>
+				&nbsp;
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>

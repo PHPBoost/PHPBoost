@@ -83,7 +83,7 @@
 				<br />
 				# ENDIF #
 				
-				<p style="text-align:center" class="text_small">
+				<p style="text-align:center;padding-top:10px;" class="text_small">
 					{L_NO_ARTICLES} {L_TOTAL_ARTICLE}
 				</p>
 				&nbsp;

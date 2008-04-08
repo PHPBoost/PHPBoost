@@ -108,6 +108,7 @@ $THEME = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG[
 
 $member_connected = $Member->Check_level(MEMBER_LEVEL);
 $Template->Assign_vars(array(
+	'SID' => SID,
 	'SERVER_NAME' => $CONFIG['site_name'],
 	'SITE_NAME' => $CONFIG['site_name'],
 	'TITLE' => stripslashes(TITLE),

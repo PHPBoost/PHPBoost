@@ -402,8 +402,8 @@ a.msg_link_pseudo:hover {
 }
 .module_contents{ /* Contenu des modules */
 	background:#FFFFFF;
-	padding:10px;
-	padding-bottom:0px;
+	padding:20px 15px;
+	padding-bottom:15px;
 	border-left:1px solid #295F8D;	
 	border-right:1px solid #295F8D;	
 	border-bottom:1px solid #FFFFFF;	

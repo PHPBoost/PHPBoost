@@ -54,6 +54,7 @@ $Template->Set_filenames(array(
 ));
 
 $Template->Assign_vars(array(
+	'SID' => SID,
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
 	'L_ADMINISTRATION' => $LANG['administration'],

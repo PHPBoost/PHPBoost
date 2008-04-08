@@ -12,15 +12,15 @@
 			</div>
 			<div class="module_contents">
 				# IF PAGINATION_ARTICLES #
-					<p style="text-align:center">{PAGINATION_ARTICLES}</p>
+				<p style="text-align:center">{PAGINATION_ARTICLES}</p>
 				# ENDIF #
 				
 				{CONTENTS}
 				
 				# IF PAGINATION_ARTICLES #
-					<p style="text-align:center">{PAGINATION_ARTICLES}</p>
+				<p style="text-align:center">{PAGINATION_ARTICLES}</p>
 				# ENDIF #
-				<div class="spacer">&nbsp;</div>
+				<div class="spacer"></div>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>

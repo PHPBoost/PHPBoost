@@ -6,31 +6,35 @@
 /* Classes générales
 --------------------------------------*/
 /* Case générale des tableaux du site*/
-.block_contents1, .row1{
+.row1, .block_contents1{
 	background:#D1E4F4;
 	border:1px solid #487B9C;
 	padding:6px;
+	margin-bottom:-1px;
 }
 .block_contents1{
 	padding:20px 6px;
-	margin-top:-1px;
-	margin-bottom:-1px;
 }
-.block_contents2, .row2{
+.row2, .block_contents2{
 	background:#B8D3EA;
 	border:1px solid #487B9C;
 	padding:6px;
+	margin-bottom:-1px;
 }
 .block_contents2{
 	padding:20px 6px;
-	margin-top:-1px;
 	margin-bottom:-1px;
 }
-.row3{
+.row3, .block_contents3{
 	background:#9EC2DB;
 	border:1px solid #487B9C;
 	padding:6px;
+	margin-bottom:-1px;
 }
+.block_contents3{
+	padding:20px 6px;
+}
+
 /* Case résultat recherche membre AJAX */
 .xmlhttprequest_result_search{
 	overflow:auto;
