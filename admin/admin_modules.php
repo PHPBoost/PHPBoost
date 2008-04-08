@@ -200,6 +200,8 @@ else
 		
 	//Modules installé
 	$i = 0;	
+	$array_modules = array();
+	$array_info_module = array();
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	$result = $Sql->Query_while("SELECT id, name, auth, activ 
 	FROM ".PREFIX."modules
@@ -207,7 +209,16 @@ else
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		//Récupération des infos de config.
-		$info_module = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
+		$array_info_module[$row['name']] = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);		
+		$array_modules[$array_info_module[$row['name']]['name']] = array('id' => $row['id'], 'name' => $row['name'], 'auth' => $row['auth'], 'activ' => $row['activ']);
+	}
+	$Sql->Close($result);
+	
+	ksort($array_modules);
+	foreach($array_modules as $name => $array_config)
+	{
+		$row = $array_modules[$name];
+		$info_module = $array_info_module[$array_config['name']];
 		
 		//Récupération des tableaux des autorisations et des groupes.
 		$array_auth = !empty($row['auth']) ? unserialize($row['auth']) : array();
@@ -234,7 +245,6 @@ else
 		));
 		$i++;
 	}
-	$Sql->Close($result);
 
 	if( $i == 0 )
 		$Template->Assign_vars(array(

@@ -37,7 +37,8 @@ $Template->Assign_vars(array(
 	'C_ERRORH' => true,
 	'ERRORH_IMG' => 'important',
 	'ERRORH_CLASS' => 'error_warning',
-	'L_ERRORH' => $LANG['e_unexist_page'],
+	'L_ERROR' => $LANG['title_error'] . ' 404',
+	'L_ERRORH' => '<strong>' . $LANG['title_error'] . ' 404</strong>' . '<br /><br />' . $LANG['e_unexist_page'],
 	'U_BACK' => !empty($_SERVER['HTTP_REFERER']) ? '<a href="' . transid($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : '<a href="javascript:history.back(1)">' . $LANG['back'] . '</a>',
 ));
 

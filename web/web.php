@@ -64,14 +64,6 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 		'DEL' => $del
 	));
 		
-	//Notation
-	if( $Member->Get_attribute('user_id') !== -1 ) //Utilisateur connecté
-		$link_note = '<a class="com" style="font-size:10px;" href="web' . transid('.php?note=' . $web['id'] . '&amp;id=' . $idweb . '&amp;cat=' . $idcat, '-' . $idcat . '-' . $idweb . '-0-0-' . $web['id'] . '.php?note=' . $web['id']) . '#note" title="' . $LANG['note'] . '">' . $LANG['note'] . '</a>';
-	else
-		$link_note = $LANG['note'];
-	
-	$note = ($web['nbrnote'] > 0 ) ? $web['note'] : '<em>' . $LANG['no_note'] . '</em>';
-
 	//Commentaires
 	$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $idweb . "web") . "', 'web');\">";
 	$link_current = '<a class="com" href="' . HOST . DIR . '/web/web' . transid('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;i=0', '-' . $idcat . '-' . $idweb . '.php?i=0') . '#web">';	
@@ -94,86 +86,20 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'COM' => $link . $l_com,
-		'NOTE' => $note,
 		'U_WEB_CAT' => transid('.php?cat=' . $idcat, '-' . $idcat . '.php'),
-		'L_NOTE' => $link_note,
 		'L_DESC' => $LANG['description'],
 		'L_CAT' => $LANG['category'],
 		'L_DATE' => $LANG['date'],
 		'L_TIMES' => $LANG['n_time'],
 		'L_VIEWS' => $LANG['views']
 	));
-
-	//Affichage et gestion de la notation
-	if( !empty($get_note) && !empty($CAT_WEB[$idcat]['name']) )
+	
+	//Affichage notation.
+	if( isset($_GET['n']) )
 	{
-		$Template->Assign_vars(array(
-			'L_ACTUAL_NOTE' => $LANG['actual_note'],
-			'L_VOTE' => $LANG['vote'],
-			'L_NOTE' => $LANG['note']
-		));
-				
-		if( $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
-		{
-			if( !empty($_POST['valid_note']) )
-			{
-				$note = numeric($_POST['note']);
-				
-				//Echelle de notation.
-				$check_note = ( ($note >= 0) && ($note <= $CONFIG_WEB['note_max']) ) ? true : false;				
-				$users_note = $Sql->Query("SELECT users_note FROM ".PREFIX."web WHERE idcat = '" . $idcat . "' AND id = '" . $get_note . "'", __LINE__, __FILE__);
-				
-				$array_users_note = explode('/', $users_note);
-				if( !in_array($Member->Get_attribute('user_id'), $array_users_note) && $Member->Get_attribute('user_id') != '' && ($check_note === true) )
-				{
-					$row_note = $Sql->Query_array('web', 'users_note', 'nbrnote', 'note', "WHERE id = '" . $get_note . "'", __LINE__, __FILE__);
-					$note = ( ($row_note['note'] * $row_note['nbrnote']) + $note ) / ($row_note['nbrnote'] + 1);
-					
-					$row_note['nbrnote']++;
-					
-					$users_note = !empty($row_note['users_note']) ? $row_note['users_note'] . '/' . $Member->Get_attribute('user_id') : $Member->Get_attribute('user_id'); //On ajoute l'id de l'utilisateur.
-					
-					$Sql->Query_inject("UPDATE ".PREFIX."web SET note = '" . $note . "', nbrnote = '" . $row_note['nbrnote'] . "', 
-					users_note = '" . $users_note . "' WHERE id = '" . $get_note . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
-					
-					//Success.
-					redirect(HOST . DIR . '/web/web' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
-				}
-				else
-					redirect(HOST . DIR . '/web/web' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
-			}
-			elseif( $Member->Get_attribute('user_id') != '' )
-			{
-				$row = $Sql->Query_array('web', 'users_note', 'nbrnote', 'note', "WHERE idcat = '" . $idcat . "' AND id = '" . $get_note . "'", __LINE__, __FILE__);
-				
-				$array_users_note = explode('/', $row['users_note']);
-				$select = '';
-				if( in_array($Member->Get_attribute('user_id'), $array_users_note) ) //Déjà voté
-					$select .= '<option value="-1">' . $LANG['already_vote'] . '</option>';
-				else 
-				{
-					//Génération de l'échelle de notation.
-					for( $i = -1; $i <= $CONFIG_WEB['note_max']; $i++)
-					{
-						if( $i == -1 )
-							$select = '<option value="-1">' . $LANG['note'] . '</option>';
-						else
-							$select .= '<option value="' . $i . '">' . $i . '</option>';
-					}
-				}
-				
-				$Template->Assign_vars(array(
-					'C_DISPLAY_WEB_NOTE' => true,
-					'NOTE' => ($row['nbrnote'] > 0) ? $row['note'] : '<em>' . $LANG['no_note'] . '</em>',
-					'SELECT' => $select,
-					'U_WEB_ACTION_NOTE' => transid('.php?note=' . $get_note . '&amp;id=' . $get_note . '&amp;cat=' . $idcat, '-' . $idcat . '-' . $get_note . '.php?note=' . $get_note)
-				));
-			}	
-			else
-				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-		}
-		else 
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		include_once('../includes/note.class.php'); 
+		$Note = new Note('web', $idweb, transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;i=%s', 'web-' . $idcat . '-' . $idweb . '.php?i=%s'));
+		include_once('../includes/note.php');
 	}
 	
 	//Affichage commentaires.

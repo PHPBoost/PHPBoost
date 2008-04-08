@@ -45,7 +45,7 @@ if( !empty($get_info_update) )
 	if( isset($array_infos[0]) )
 	{
 		$check_version = substr(strstr($array_infos[0], ':'), 1);
-		if( $check_version != $CONFIG['version'] )
+		if( version_compare($check_version, $CONFIG['version'], '<=') != -1 )
 		{
 			$check_core_update = true;
 			$l_core_update = sprintf($LANG['core_update_available'], $check_version);
