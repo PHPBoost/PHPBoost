@@ -259,6 +259,8 @@ else
 			'EDIT' => ($is_admin && !empty($idartcat)) ? '<a href="admin_articles_cat.php?id=' . $idartcat . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));
 
+		include_once('../includes/note.class.php');
+		$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
 		$result = $Sql->Query_while("SELECT id, title, icon, timestamp, views, note, nbrnote, nbr_com
 		FROM ".PREFIX."articles
 		WHERE visible = 1 AND idcat = '" . $idartcat .	"' 
@@ -280,7 +282,7 @@ else
 				'CAT' => $CAT_ARTICLES[$idartcat]['name'],
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'COMPT' => $row['views'],
-				'NOTE' => ($row['nbrnote'] > 0) ? $row['note'] . '/' . $CONFIG_ARTICLES['note_max'] : '<em>' . $LANG['no_note'] . '</em>',
+				'NOTE' => ($row['nbrnote'] > 0) ? $Note->Display_note($row['note'], $CONFIG_ARTICLES['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
 				'COM' => $link . $row['nbr_com'] . '</a>',
 				'U_ARTICLES_LINK' => transid('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php')
 			));
