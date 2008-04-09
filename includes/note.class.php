@@ -28,6 +28,7 @@
 define('NOTE_DISPLAY_NOTE', 0x01);
 define('NOTE_NODISPLAY_NBRNOTES', 0x02);
 define('NOTE_DISPLAY_BLOCK', 0x04);
+define('NOTE_NO_CONSTRUCT', 0x08);
 
 class Note
 {
@@ -35,10 +36,13 @@ class Note
 	//Constructeur.
 	function Note($script, $idprov, $vars, $notation_scale, $module_folder = '', $options = 0) 
 	{
-		$this->module_folder = !empty($module_folder) ? securit($module_folder) : securit($script);
-		$this->options = (int)$options;
-		list($this->script, $this->idprov, $this->vars, $this->notation_scale, $this->path) = array(securit($script), numeric($idprov), $vars, $notation_scale, '../' . $this->module_folder . '/');
-		$this->sql_table = $this->get_table_module();
+		if( ($options & NOTE_NO_CONSTRUCT) === 0 )
+		{
+			$this->module_folder = !empty($module_folder) ? securit($module_folder) : securit($script);
+			$this->options = (int)$options;
+			list($this->script, $this->idprov, $this->vars, $this->notation_scale, $this->path) = array(securit($script), numeric($idprov), $vars, $notation_scale, '../' . $this->module_folder . '/');
+			$this->sql_table = $this->get_table_module();
+		}
 	}
 	
 	//Ajoute une note.
@@ -66,6 +70,33 @@ class Note
 		}
 		else
 			return -2;
+	}
+	
+	//Affiche la notation.
+	function Display_note($note, $notation_scale)
+	{
+		global $CONFIG;
+		
+		$display_note = '';
+		for($i = 1; $i <= $notation_scale; $i++)
+		{
+			$star_img = 'stars.png';
+			if( $note < $i )
+			{							
+				$decimal = $i - $note;
+				if( $decimal >= 1 )
+					$star_img = 'stars0.png';
+				elseif( $decimal >= 0.75 )
+					$star_img = 'stars1.png';
+				elseif( $decimal >= 0.50 )
+					$star_img = 'stars2.png';
+				else
+					$star_img = 'stars3.png';
+			}			
+			$display_note .= '<img src="../templates/'. $CONFIG['theme'] . '/images/' . $star_img . '" alt="" class="valign_middle" />';
+		}
+		
+		return $display_note;
 	}
 	
 	//Vérifie que le système de commentaires est bien chargé.
