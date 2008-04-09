@@ -12,10 +12,10 @@
 			
 			<div class="block_container">
 				<div class="block_top">{L_UPDATE_AVAILABLE}</div>
-				<div class="row1 text_center">
+				<div class="{WARNING_CORE} row1" style="width:auto;text-align:center">
 					{UPDATE_AVAILABLE} {L_CORE_UPDATE}
 				</div>
-				<div class="row1 text_center">
+				<div class="{WARNING_MODULES} row1" style="width:auto;text-align:center">
 					{UPDATE_MODULES_AVAILABLE} {L_MODULES_UPDATE}<br />
 					# START modules_available #
 					<a href="http://www.phpboost.com/phpboost/modules.php?name={modules_available.ID}">{modules_available.NAME} <em>({modules_available.VERSION})</em></a><br />

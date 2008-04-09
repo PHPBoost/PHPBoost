@@ -101,15 +101,23 @@ $Template->Assign_vars(array(
 //Listing des modules disponibles:
 $modules_config = array();
 foreach($SECURE_MODULE as $name => $auth)
+{	
+	$array_info = load_ini_file('../' . $name . '/lang/', $CONFIG['lang']);
+	$array_info['module_name'] = $name;
+	$modules_config[$array_info['name']] = $array_info;
+}
+
+ksort($modules_config);
+foreach($modules_config as $module_name => $auth)
 {
-	$modules_config[$name] = load_ini_file('../' . $name . '/lang/', $CONFIG['lang']);
-	if( is_array($modules_config[$name]) )
+	$name = $modules_config[$module_name]['module_name'];
+	if( is_array($modules_config[$module_name]) )
 	{	
-		if( $modules_config[$name]['admin'] == 1 )
+		if( $modules_config[$module_name]['admin'] == 1 )
 		{
-			if( !empty($modules_config[$name]['admin_links']) )
+			if( !empty($modules_config[$module_name]['admin_links']) )
 			{	
-				$admin_links = parse_ini_array($modules_config[$name]['admin_links']);
+				$admin_links = parse_ini_array($modules_config[$module_name]['admin_links']);
 				$links = '';
 				foreach($admin_links as $key => $value)
 				{
@@ -130,7 +138,7 @@ foreach($SECURE_MODULE as $name => $auth)
 					'ID' => $name,
 					'LINKS' => $links,
 					'DM_A_STYLE' => ' style="background-image:url(../' . $name . '/' . $name . '_mini.png);"',
-					'NAME' => $modules_config[$name]['name'],
+					'NAME' => $modules_config[$module_name]['name'],
 					'U_ADMIN_MODULE' => '../' . $name . '/admin_' . $name . '.php'
 				));
 			}
@@ -140,12 +148,12 @@ foreach($SECURE_MODULE as $name => $auth)
 					'C_DEFAULT_LINK' => true,
 					'C_ADVANCED_LINK' => false,
 					'DM_A_STYLE' => ' style="background-image:url(../' . $name . '/' . $name . '_mini.png);"',
-					'NAME' => $modules_config[$name]['name'],
+					'NAME' => $modules_config[$module_name]['name'],
 					'U_ADMIN_MODULE' => '../' . $name . '/admin_' . $name . '.php'
 				));
 			}
 		}
-	}	
+	}
 }
 
 $Template->Pparse('admin_sub_header'); 
