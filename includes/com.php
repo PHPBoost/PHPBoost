@@ -3,7 +3,7 @@
  *                               com.php
  *                            -------------------
  *   begin                : August 02, 2005
- *   copyright          : (C) 2005 CrowkaiT
+ *   copyright          : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  Comments, v 1.0.0  

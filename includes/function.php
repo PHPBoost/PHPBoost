@@ -425,6 +425,9 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	
 	$timestamp += date('I') * 3600;  //On ajoute l'heure d'été.
 	
+	if( $timestamp <= 0 )
+		return '';
+		
 	return date($format, $timestamp);
 }
 		
@@ -462,6 +465,8 @@ function strtotimestamp($str, $date_format)
 	$timezone = $Member->Get_attribute('user_timezone') - $serveur_hour;
 	if( $timezone != 0 )
 		$timestamp -= $timezone * 3600;	
+		
+	$timestamp -= date('I') * 3600;  //On ajoute l'heure d'été.
 		
 	return ($timestamp > 0) ? $timestamp : time();
 }

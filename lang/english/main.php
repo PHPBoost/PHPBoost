@@ -41,6 +41,7 @@ $LANG['unit_megabytes'] = 'Mb';
 $LANG['unit_kilobytes'] = 'Kb';
 $LANG['unit_bytes'] = 'Bytes';
 $LANG['unit_pixels'] = 'Px';
+$LANG['unit_hour'] = 'H';
 $LANG['unit_seconds'] = 'Seconds';
 $LANG['unit_seconds_short'] = 's';
 

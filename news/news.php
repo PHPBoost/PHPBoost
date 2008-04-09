@@ -102,7 +102,7 @@ if( empty($idnews) && empty($idcat) )
 		FROM ".PREFIX."news n
 		LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 		LEFT JOIN ".PREFIX."member m ON m.user_id = n.user_id		
-		WHERE n.visible = 1
+		WHERE '" . time() . "' >= n.start AND ('" . time() . "' <= n.end OR n.end = 0) AND n.visible = 1
 		ORDER BY n.timestamp DESC 
 		" . $Sql->Sql_limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
 		while($row = $Sql->Sql_fetch_assoc($result) )

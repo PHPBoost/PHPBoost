@@ -37,50 +37,45 @@ if( !empty($_POST['valid']) )
 	$title = !empty($_POST['title']) ? securit($_POST['title']) : '';
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 	$extend_contents = !empty($_POST['extend_contents']) ? parse($_POST['extend_contents']) : '';
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
 	$img = !empty($_POST['img']) ? securit($_POST['img']) : '';
 	$alt = !empty($_POST['alt']) ? securit($_POST['alt']) : '';
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
-	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;
+	
+	//Gestion de la parution
 	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
+	$start_hour = !empty($_POST['start_hour']) ? trim($_POST['start_hour']) : 0;
+	$start_min = !empty($_POST['start_min']) ? trim($_POST['start_min']) : 0;	
+	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
+	$end_hour = !empty($_POST['end_hour']) ? trim($_POST['end_hour']) : 0;
+	$end_min = !empty($_POST['end_min']) ? trim($_POST['end_min']) : 0;
+	
+	//Date de la news
+	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
+	$current_hour = !empty($_POST['current_hour']) ? trim($_POST['current_hour']) : 0;
+	$current_min = !empty($_POST['current_min']) ? trim($_POST['current_min']) : 0;
 	
 	if( !empty($idcat) && !empty($title) && !empty($contents) )
 	{	
-		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
-		$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
+		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']) + ($start_hour * 3600) + ($start_min * 60);
+		$end_timestamp = strtotimestamp($end, $LANG['date_format_short']) + ($end_hour * 3600) + ($end_min * 60);
 		
 		$visible = 1;		
 		if( $get_visible == 2 )
 		{		
-			if( $start_timestamp > time() )
-				$visible = 2;
-			elseif( $start_timestamp == 0 )
-				$visible = 1;
-			else //Date inférieur à celle courante => inutile.
+			if( $start_timestamp < time() || $start_timestamp < 0 ) //Date inférieur à celle courante => inutile.
 				$start_timestamp = 0;
 
-			if( $end_timestamp > time() && $end_timestamp > $start_timestamp && $start_timestamp != 0 )
-				$visible = 2;
-			elseif( $start_timestamp != 0 ) //Date inférieur à celle courante => inutile.
+			if( $end_timestamp < time() || ($end_timestamp < $start_timestamp && $start_timestamp != 0) ) //Date inférieur à celle courante => inutile.
 				$end_timestamp = 0;
 		}
 		elseif( $get_visible == 1 )
-		{	
-			$start_timestamp = 0;
-			$end_timestamp = 0;
-		}
+			list($start_timestamp, $end_timestamp) = array(0, 0);
 		else
-		{	
-			$visible = 0;
-			$start_timestamp = 0;
-			$end_timestamp = 0;
-		}
+			list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 
 		$timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 		if( $timestamp > 0 )
-			$timestamp += ($hour * 3600) + ($min * 60);
+			$timestamp += ($current_hour * 3600) + ($current_min * 60);
 		else //Ajout des heures et minutes
 			$timestamp = time();
 		
@@ -115,41 +110,33 @@ elseif( !empty($_POST['previs']) )
 	$idcat = !empty($_POST['idcat']) ? trim($_POST['idcat']) : '';
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 	$extend_contents = !empty($_POST['extend_contents']) ? trim($_POST['extend_contents']) : '';
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
 	$img = !empty($_POST['img']) ? trim($_POST['img']) : '';
 	$alt = !empty($_POST['alt']) ? trim($_POST['alt']) : '';
+
+	//Gestion de la parution
+	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
 	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
+	$start_hour = !empty($_POST['start_hour']) ? trim($_POST['start_hour']) : 0;
+	$start_min = !empty($_POST['start_min']) ? trim($_POST['start_min']) : 0;	
 	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
-	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;
-	$get_visible = isset($_POST['visible']) ? numeric($_POST['visible']) : 0;
-		
+	$end_hour = !empty($_POST['end_hour']) ? trim($_POST['end_hour']) : 0;
+	$end_min = !empty($_POST['end_min']) ? trim($_POST['end_min']) : 0;
+	
+	//Date de la news
+	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
+	$current_hour = !empty($_POST['current_hour']) ? trim($_POST['current_hour']) : 0;
+	$current_min = !empty($_POST['current_min']) ? trim($_POST['current_min']) : 0;
+	
 	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 	$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 
-	$visible = $get_visible;
-	list($start, $end) = array('', '');	
-	if( $visible == 2 )
-	{		
-		$visible = 1;
-		if( $start_timestamp > time() )
-			$visible = 2;
-		else
-			$start = '';
-	
-		if( $end_timestamp > time() && $end_timestamp > $start_timestamp )
-			$visible = 2;
-		else
-			$end = '';
-	}
-		
 	$Template->Assign_block_vars('news', array(
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(parse($contents))),
 		'EXTEND_CONTENTS' => second_parse(stripslashes(parse($extend_contents))) . '<br /><br />',
 		'PSEUDO' => $Member->Get_attribute('login'),
-		'IMG' => (!empty($img) ? '<img src="' . stripslashes($img) . '" alt="' . stripslashes($alt) . '" title="' . stripslashes($alt) . '" class="img_right" style="margin: 6px; border: 1px solid #000000;" />' : ''),
+		'IMG' => (!empty($img) ? '<img src="' . stripslashes($img) . '" alt="' . stripslashes($alt) . '" title="' . stripslashes($alt) . '" class="img_right" style="margin:6px;border:1px solid #000000;" />' : ''),
 		'DATE' => gmdate_format('date_format_short')
 	));
 
@@ -174,14 +161,18 @@ elseif( !empty($_POST['previs']) )
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => stripslashes($contents),
 		'EXTEND_CONTENTS' => stripslashes($extend_contents),
-		'CURRENT_DATE' => $current_date,
 		'IMG_PREVIEW' => !empty($img) ? '<img src="' . $img . '" alt="" />' : $LANG['no_img'],
 		'IMG' => $img,
 		'ALT' => stripslashes($alt),
-		'START' => ((!empty($start) && $visible == 2) ? $start : ''),
-		'END' => ((!empty($end) && $visible == 2) ? $end : ''),
-		'HOUR' => $hour,
-		'MIN' => $min,
+		'START' => $start,
+		'START_HOUR' => !empty($start_hour) ? $start_hour : '',
+		'START_MIN' => !empty($start_min) ? $start_min : '',
+		'END' => $end,
+		'END_HOUR' => !empty($end_hour) ? $end_hour : '',
+		'END_MIN' => !empty($end_min) ? $end_min : '',
+		'CURRENT_DATE' => $current_date,
+		'CURRENT_HOUR' => !empty($current_hour) ? $current_hour : '',
+		'CURRENT_MIN' => !empty($current_min) ? $current_min : '',
 		'DAY_RELEASE_S' => !empty($start_timestamp) ? gmdate_format('d', $start_timestamp) : '',
 		'MONTH_RELEASE_S' => !empty($start_timestamp) ? gmdate_format('m', $start_timestamp) : '',
 		'YEAR_RELEASE_S' => !empty($start_timestamp) ? gmdate_format('Y', $start_timestamp) : '',
@@ -191,9 +182,9 @@ elseif( !empty($_POST['previs']) )
 		'DAY_DATE' => !empty($current_date_timestamp) ? gmdate_format('d', $current_date_timestamp) : '',
 		'MONTH_DATE' => !empty($current_date_timestamp) ? gmdate_format('m', $current_date_timestamp) : '',
 		'YEAR_DATE' => !empty($current_date_timestamp) ? gmdate_format('Y', $current_date_timestamp) : '',
-		'VISIBLE_WAITING' => (($visible == 2) ? 'checked="checked"' : ''),
-		'VISIBLE_ENABLED' => (($visible == 1) ? 'checked="checked"' : ''),
-		'VISIBLE_UNAPROB' => (($visible == 0) ? 'checked="checked"' : ''),
+		'VISIBLE_WAITING' => (($get_visible == 2) ? 'checked="checked"' : ''),
+		'VISIBLE_ENABLED' => (($get_visible == 1) ? 'checked="checked"' : ''),
+		'VISIBLE_UNAPROB' => (($get_visible == 0) ? 'checked="checked"' : ''),
 		'L_NEWS_MANAGEMENT' => $LANG['news_management'],
 		'L_ADD_NEWS' => $LANG['add_news'],
 		'L_CONFIG_NEWS' => $LANG['configuration_news'],
@@ -213,6 +204,7 @@ elseif( !empty($_POST['previs']) )
 		'L_TITLE' => $LANG['title'],
 		'L_NEWS_DATE' => $LANG['news_date'],
 		'L_AT' => $LANG['at'],
+		'L_UNIT_HOUR' => $LANG['unit_hour'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_TEXT' => $LANG['contents'],
@@ -273,6 +265,7 @@ else
 		'L_RELEASE_DATE' => $LANG['release_date'],
 		'L_NEWS_DATE' => $LANG['news_date'],
 		'L_AT' => $LANG['at'],
+		'L_UNIT_HOUR' => $LANG['unit_hour'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_UNTIL' => $LANG['until'],
