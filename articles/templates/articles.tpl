@@ -29,7 +29,7 @@
 					# INCLUDE handle_note #
 				</span>
 				<span style="float:right" class="text_small">
-					{L_WRITTEN}: <a href="../member/member{U_MEMBER_ID}">{PSEUDO}</a>, {L_ON}: {DATE}
+					{L_WRITTEN}: <a class="small_link" href="../member/member{U_MEMBER_ID}">{PSEUDO}</a>, {L_ON}: {DATE}
 				</span>
 				<div class="spacer"></div>
 			</div>
