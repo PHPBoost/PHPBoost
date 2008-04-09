@@ -50,7 +50,7 @@ if( !empty($_POST['valid']) )
 	$config_gallery['d_height'] = isset($_POST['d_height']) ? numeric($_POST['d_height']) : '5';
 	$config_gallery['nbr_column'] = isset($_POST['nbr_column']) ? numeric($_POST['nbr_column']) : '4';
 	$config_gallery['nbr_pics_max'] = isset($_POST['nbr_pics_max']) ? numeric($_POST['nbr_pics_max']) : '16';
-	$config_gallery['note_max'] = isset($_POST['note_max']) ? numeric($_POST['note_max']) : '5';
+	$config_gallery['note_max'] = isset($_POST['note_max']) ? max(1, numeric($_POST['note_max'])) : '5';
 	$config_gallery['activ_title'] = isset($_POST['activ_title']) ? numeric($_POST['activ_title']) : '0';
 	$config_gallery['activ_com'] = isset($_POST['activ_com']) ? numeric($_POST['activ_com']) : '0';
 	$config_gallery['activ_note'] = isset($_POST['activ_note']) ? numeric($_POST['activ_note']) : '0';
@@ -66,6 +66,9 @@ if( !empty($_POST['valid']) )
 	$config_gallery['auth_root'] = !empty($CONFIG_GALLERY['auth_root']) ? stripslashes(serialize($CONFIG_GALLERY['auth_root'])) : serialize(array());
 
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_gallery)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
+	
+	if( $CONFIG_GALLERY['note_max'] != $config_gallery['note_max'] )
+		$Sql->Query_inject("UPDATE ".PREFIX."gallery SET note = note * " . ($config_gallery['note_max']/$CONFIG_GALLERY['note_max']), __LINE__, __FILE__);
 	
 	###### Régénération du cache de la gallery #######
 	$Cache->Generate_module_file('gallery');
