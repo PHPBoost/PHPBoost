@@ -1,6 +1,6 @@
 		<link href="{MODULE_DATA_PATH}/news.css" rel="stylesheet" type="text/css" media="screen, handheld">
 
-		<script type="text/javascript" src="../templates/{THEME}/images/calendar.js"></script>
+		<script type="text/javascript" src="../includes/js/calendar.js"></script>
 		<script type="text/javascript">
 		<!--
 		function check_form(){

@@ -23,7 +23,7 @@
 		</script>
 		# ENDIF #
 		
-		<script type="text/javascript" src="../templates/{THEME}/images/bbcode.js"></script>
+		<script type="text/javascript" src="../includes/js/bbcode.js"></script>
 		<script type="text/javascript">
 		<!--
 		function XMLHttpRequest_preview()

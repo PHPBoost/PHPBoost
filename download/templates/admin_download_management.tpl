@@ -79,7 +79,7 @@
 		# END list #
 
 		# START download #
-		<script type="text/javascript" src="../templates/{THEME}/images/calendar.js"></script>
+		<script type="text/javascript" src="../includes/js/calendar.js"></script>
 		<script type="text/javascript">
 		<!--
 		function check_form(){

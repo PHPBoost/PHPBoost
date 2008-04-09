@@ -15,7 +15,7 @@
 		-->
 		</script> 
 		# IF C_JS_NOTE #
-		<script type="text/javascript" src="../templates/{THEME}/images/note.js"></script>
+		<script type="text/javascript" src="../includes/js/note.js"></script>
 		# ENDIF #
 		
 		<form action="" method="post" class="text_small">
