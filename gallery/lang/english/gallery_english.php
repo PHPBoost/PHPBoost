@@ -187,8 +187,4 @@ $LANG['alert_weight_gallery'] = 'Too much heavy file!';
 $LANG['alert_type_gallery'] = 'Picture isn\'t valid: jpg, png, or gif only!';
 $LANG['alert_upload_gallery'] = 'You exceeded the number of files you can upload on the server';
 
-//Poll
-$LANG['poll_vote'] = 'Vote';
-$LANG['poll_vote_s'] = 'Votes';
-$LANG['already_vote'] = 'You have already voted';
 ?>

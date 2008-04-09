@@ -32,7 +32,6 @@ require_once('../includes/header.php');
 
 $g_idpics = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $g_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
-$g_note =  !empty($_GET['note']) ? numeric($_GET['note']) : 0;
 $g_add = !empty($_GET['add']) ? true : false;
 $g_page = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
 $g_views = !empty($_GET['views']) ? true : false;
@@ -336,7 +335,6 @@ else
 		'PAGINATION' => $Pagination->Display_pagination('gallery' . transid('.php?p=%d&amp;cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;' . $g_sort, '-' . $g_idcat . '-' . $g_idpics . '-%d.php?&' . $g_sort), $total_cat, 'p', $CONFIG_GALLERY['nbr_pics_max'], 3),	
 		'COLUMN_WIDTH_CATS' => $column_width_cats,
 		'COLUMN_WIDTH_PICS' => $column_width_pics,
-		'NOTE_MAX' => $CONFIG_GALLERY['note_max'],
 		'CAT_ID' => $g_idcat,
 		'GALLERY' => !empty($g_idcat) ? $CAT_GALLERY[$g_idcat]['name'] : $LANG['gallery'],
 		'HEIGHT_MAX' => $CONFIG_GALLERY['height'],
@@ -358,8 +356,6 @@ else
 		'L_ORDER_BY' => $LANG['orderby'] . (isset($LANG[$g_type]) ? ' ' . strtolower($LANG[$g_type]) : ''),
 		'L_DIRECTION' => $LANG['direction'],
 		'L_DISPLAY' => $LANG['display'],		
-		'L_VOTES' => $LANG['votes'],
-		'L_VOTE' => $LANG['vote'],
 		'U_INDEX' => transid('.php'),
 		'U_GALLERY_CAT_LINKS' => $cat_links,
 		'U_BEST_VIEWS' => '<a class="small_link" href="gallery' . transid('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1') . '" style="background-image:url(' . $module_data_path . '/images/views.png);">' . $LANG['best_views'] . '</a>',
@@ -574,33 +570,10 @@ else
 				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $Member->Check_level(MEMBER_LEVEL) );
 				if( $activ_note )
 				{
-					$info_pics['note'] = round($info_pics['note'] / 0.25) * 0.25;
-					$img_note = '<script type="text/javascript">
-					<!--
-					array_note[' . $info_pics['id'] . '] = \'' . $info_pics['note'] . '\';
-					-->
-					</script>
-					<div style="width:' . ($CONFIG_GALLERY['note_max']*16) . 'px;" onmouseout="out_div(' . $info_pics['id'] . ', array_note[' . $info_pics['id'] . '])" onmouseover="over_div()">';
-					for($i = 1; $i <= $CONFIG_GALLERY['note_max']; $i++)
-					{
-						$star_img = 'stars.png';
-						if( $info_pics['note'] < $i )
-						{							
-							$decimal = $i - $info_pics['note'];
-							if( $decimal >= 1 )
-								$star_img = 'stars0.png';
-							elseif( $decimal >= 0.75 )
-								$star_img = 'stars1.png';
-							elseif( $decimal >= 0.50 )
-								$star_img = 'stars2.png';
-							else
-								$star_img = 'stars3.png';
-						}	
-						
-						$img_note .= '<a href="javascript:send_note(' . $info_pics['id'] . ', ' . $info_pics['idcat'] . ', ' . $i . ')" onmouseover="select_stars(' . $info_pics['id'] . ', ' . $i . ');"><img src="../templates/'. $CONFIG['theme'] . '/images/' . $star_img . '" alt="" id="' . $info_pics['id'] . '_stars' . $i . '" /></a>';
-					}
-					$img_note .= '</div>'; 
-					$img_note .= ($CONFIG_GALLERY['display_nbrnote']) ? '<span id="' . $info_pics['id'] . '_note" class="text_small">(' . $info_pics['nbrnote'] . ' ' . (($info_pics['nbrnote'] > 1) ? $LANG['votes'] : $LANG['vote']) . ')</span>' : '';
+					//Affichage notation.
+					include_once('../includes/note.class.php'); 
+					$Note = new Note('gallery', $info_pics['id'], transid('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
+					include_once('../includes/note.php');
 				}			
 				
 				if( $thumbnails_before < $nbr_pics_display_before )	
@@ -620,7 +593,6 @@ else
 					'VIEWS' => ($info_pics['views'] + 1),
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 					'SIZE' => number_round($info_pics['weight']/1024, 1),
-					'NOTE' => $activ_note ? '<br />' . $img_note : '',
 					'COM' => $link . $com,
 					'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),	
 					'CAT' => $cat_list,	
@@ -687,6 +659,7 @@ else
 				'L_EDIT' => $LANG['edit']
 			));
 			
+			include_once('../includes/note.class.php'); 
 			$is_connected = $Member->Check_level(MEMBER_LEVEL);
 			$j = 0;
 			$result = $Sql->Query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
@@ -730,35 +703,11 @@ else
 				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $is_connected );
 				if( $activ_note )
 				{
-					$row['note'] = round($row['note'] / 0.25) * 0.25;
-					$img_note = '<script type="text/javascript">
-					<!--
-					array_note[' . $row['id'] . '] = \'' . $row['note'] . '\';
-					-->
-					</script>
-					<div onmouseout="out_div(' . $row['id'] . ', array_note[' . $row['id'] . '])" onmouseover="over_div()">';
-					for($i = 1; $i <= $CONFIG_GALLERY['note_max']; $i++)
-					{
-						$star_img = 'stars.png';
-						if( $row['note'] < $i )
-						{							
-							$decimal = $i - $row['note'];
-							if( $decimal >= 1 )
-								$star_img = 'stars0.png';
-							elseif( $decimal >= 0.75 )
-								$star_img = 'stars1.png';
-							elseif( $decimal >= 0.50 )
-								$star_img = 'stars2.png';
-							else
-								$star_img = 'stars3.png';
-						}	
-						
-						$img_note .= '<a href="javascript:send_note(' . $row['id'] . ', ' . $row['idcat'] . ', ' . $i . ')" onmouseover="select_stars(' . $row['id'] . ', ' . $i . ');"><img src="../templates/'. $CONFIG['theme'] . '/images/' . $star_img . '" alt="" id="' . $row['id'] . '_stars' . $i . '" class="valign_middle" /></a>';
-					}
-					$img_note .= '</div>'; 
-					$img_note .= ($CONFIG_GALLERY['display_nbrnote']) ? '<span id="' . $row['id'] . '_note" class="text_small">(' . $row['nbrnote'] . ' ' . (($row['nbrnote'] > 1) ? $LANG['votes'] : $LANG['vote']) . ')</span>' : '';
+					//Affichage notation.					
+					$Note = new Note('gallery', $row['id'], transid('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_NODISPLAY_NBRNOTES | NOTE_DISPLAY_BLOCK);
+					include('../includes/note.php');
 				}
-
+				
 				$Template->Assign_block_vars('pics_list', array(
 					'ID' => $row['id'],
 					'APROB' => $row['aprob'],
@@ -768,7 +717,7 @@ else
 					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
 					'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br />' . $row['views'] . ' ' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) : '',
 					'COM' => ($CONFIG_GALLERY['activ_com'] == 1) ? '<br />' . $link . $com  : '',
-					'NOTE' => $activ_note ? ' ' . $img_note : '',
+					'NOTE' => $activ_note ? $Template->Pparse('handle_note', TEMPLATE_STRING_MODE) : '',
 					'CAT' => $cat_list,
 					'RENAME' => addslashes($row['name']),
 					'RENAME_CUT' => addslashes($row['name']),		

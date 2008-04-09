@@ -63,14 +63,6 @@ if( !empty($idart) && isset($_GET['cat']) )
 		));
 	}
 	
-	//Notation
-	if( $Member->Get_attribute('user_id') !== -1 ) //Utilisateur connecté
-		$link_note = '<a class="com" style="font-size:10px;" href="articles' . transid('.php?note=' . $idart . '&amp;id=' . $idart . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php?note=' . $idart) . '#note" title="' . $LANG['note'] . '">' . $LANG['note'] . '</a>';
-	else
-		$link_note = $LANG['note'];
-
-	$note = ($articles['nbrnote'] > 0 ) ? $articles['note'] : '<em>' . $LANG['no_note'] . '</em>';
-	
 	//Commentaires
 	$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $idart . "articles") . "', 'articles');\">";
 	$link_current = '<a class="com" href="' . HOST . DIR . '/articles/articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;i=0', '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php?i=0') . '#articles">';	
@@ -102,81 +94,15 @@ if( !empty($idart) && isset($_GET['cat']) )
 		'DATE' => gmdate_format('date_format_short', $articles['timestamp']),
 		'PAGINATION_ARTICLES' => $Pagination->Display_pagination('articles' . transid('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . url_encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3),
 		'COM' => $link . $com,
-		'NOTE' => $note,
 		'U_MEMBER_ID' => transid('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
-		'L_NOTE' => $link_note,
 		'L_WRITTEN' =>  $LANG['written_by'],
 		'L_ON' => $LANG['on']	
 	));
 
-	//Affichage et gestion de la notation
-	if( !empty($get_note) && !empty($CAT_ARTICLES[$idartcat]['name']) )
-	{
-		$Template->Assign_vars(array(
-			'L_ACTUAL_NOTE' => $LANG['actual_note'],
-			'L_VOTE' => $LANG['vote'],
-			'L_NOTE' => $LANG['note']
-		));
-				
-		if( $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
-		{
-			if( !empty($_POST['valid_note']) )
-			{
-				$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;
-				
-				//Echelle de notation.
-				$check_note = (($note >= 0) && ($note <= $CONFIG_ARTICLES['note_max'])) ? true : false;				
-				$users_note = $Sql->Query("SELECT users_note FROM ".PREFIX."articles WHERE idcat = " . $idartcat . " AND id = " . $get_note, __LINE__, __FILE__);
-				
-				$array_users_note = explode('/', $users_note);
-				if( !in_array($Member->Get_attribute('user_id'), $array_users_note) && $Member->Get_attribute('user_id') != '' && $check_note === true )
-				{
-					$row_note = $Sql->Query_array('articles', 'users_note', 'nbrnote', 'note', "WHERE id = " . $get_note, __LINE__, __FILE__);
-					$note = ( ($row_note['note'] * $row_note['nbrnote']) + $note ) / ($row_note['nbrnote'] + 1);
-					
-					$row_note['nbrnote']++;
-					
-					$users_note = !empty($row_note['users_note']) ? $row_note['users_note'] . '/' . $Member->Get_attribute('user_id') : $Member->Get_attribute('user_id'); //On ajoute l'id de l'utilisateur.
-					
-					$Sql->Query_inject("UPDATE ".PREFIX."articles SET note = " . $note . ", nbrnote = " . $row_note['nbrnote'] . ", 
-					users_note = '" . $users_note . "' WHERE id = " . $get_note . " AND idcat = " . $idartcat, __LINE__, __FILE__);
-					
-					//Success.
-					redirect(HOST . DIR . '/articles/articles' . transid('.php?cat=' . $idartcat . '&id=' . $get_note, '-' . $idartcat . '-' . $get_note . '.php', '&'));
-				}
-				else
-					redirect(HOST . DIR . '/articles/articles' . transid('.php?cat=' . $idartcat . '&id=' . $get_note, '-' . $idartcat . '-' . $get_note . '.php', '&'));
-			}
-			else
-			{
-				$row = $Sql->Query_array('articles', 'users_note', 'nbrnote', 'note', "WHERE idcat = " . $idartcat . " AND id = " . $get_note, __LINE__, __FILE__);
-				
-				$array_users_note = explode('/', $row['users_note']);
-				$select = '';
-				if( in_array($Member->Get_attribute('user_id'), $array_users_note) ) //Déjà voté
-					$select .= '<option value="-1">' . $LANG['already_vote'] . '</option>';
-				else 
-				{
-					//Génération de l'échelle de notation.
-					for( $i = -1; $i <= $CONFIG_ARTICLES['note_max']; $i++)
-					{
-						if( $i == -1 )
-							$select = '<option value="-1">' . $LANG['note'] . '</option>';
-						else
-							$select .= '<option value="' . $i . '">' . $i . '</option>';
-					}
-				}
-				$Template->Assign_vars(array(
-					'C_DISPLAY_ARTICLE_NOTE' => true,
-					'NOTE' => ($row['nbrnote'] > 0) ? $row['note'] : '<em>' . $LANG['no_note'] . '</em>',
-					'SELECT' => $select,
-					'U_ARTICLE_ACTION_NOTE' => transid('.php?note=' . $get_note . '&amp;id=' . $get_note . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $get_note . '.php?note=' . $get_note)
-				));
-			}
-		}
-		else 
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-	}	
+	//Affichage notation.
+	include_once('../includes/note.class.php'); 
+	$Note = new Note('articles', $idart, transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
+	include_once('../includes/note.php');	
 	
 	//Affichage commentaires.
 	if( isset($_GET['i']) )

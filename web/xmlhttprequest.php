@@ -2,8 +2,8 @@
 /*##################################################
  *                               xmlhttprequest.php
  *                            -------------------
- *   begin                : December 20, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   begin                : April 09, 2008
+ *   copyright          : (C) 2008 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -27,8 +27,8 @@
 ###################################################*/
 
 require_once('../includes/begin.php');
+include_once('../web/web_begin.php');
 require_once('../includes/header_no_display.php');
-include_once('../download/download_begin.php');
 
 //Notation.
 if( !empty($_GET['note']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
@@ -38,10 +38,11 @@ if( !empty($_GET['note']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur 
 
 	//Initialisation  de la class de gestion des fichiers.
 	include_once('../includes/note.class.php');
-	$Note = new Note('download', $id, '', $CONFIG_DOWNLOAD['note_max'], '', NOTE_DISPLAY_NOTE);
+	$Note = new Note('web', $id, '', $CONFIG_WEB['note_max'], '', NOTE_DISPLAY_NOTE);
 	
 	if( !empty($note) && !empty($id) )
 		echo $Note->Add_note($note); //Ajout de la note.
 }
+
 
 ?>

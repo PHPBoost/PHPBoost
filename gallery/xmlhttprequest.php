@@ -30,27 +30,18 @@ require_once('../includes/begin.php');
 include_once('../gallery/gallery_begin.php');
 require_once('../includes/header_no_display.php');
 
-//Notation des images.
-if( !empty($_GET['note_pics']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
+//Notation.
+if( !empty($_GET['note']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
 {	
-	//Initialisation  de la class de gestion des fichiers.
-	include_once('../gallery/gallery.class.php');
-	$Gallery = new Gallery;
-	
-	$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
+	$id = !empty($_POST['id']) ? numeric($_POST['id']) : 0;
 	$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	if( empty($idcat) )
-		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+
+	//Initialisation  de la class de gestion des fichiers.
+	include_once('../includes/note.class.php');
+	$Note = new Note('gallery', $id, '', $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
 	
-	if( !isset($CAT_GALLERY[$idcat]) )
-		echo 0;
-	
-	//Autorisation en lecture, notation activée, et note comprise dans l'intervalle autorisé.
-	if( !empty($id_file) && $note >= 0 && $note <= $CONFIG_GALLERY['note_max'] && $Member->Check_auth($CAT_GALLERY[$idcat]['auth'], READ_CAT_GALLERY) && $CONFIG_GALLERY['activ_note'] == 1 )
-		echo $Gallery->Note_pics($id_file, $note, $Member->Get_attribute('user_id'));
-	else 
-		echo 0;
+	if( !empty($note) && !empty($id) )
+		echo $Note->Add_note($note); //Ajout de la note.
 }
 	
 if( $Member->Check_level(MODO_LEVEL) ) //Modo

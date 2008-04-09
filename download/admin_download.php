@@ -50,7 +50,7 @@ if( !empty($id) && !$del )
 
 	$Template->Assign_vars(array(
 		'TITLE' => $row['title'],
-		'COMPT' => !empty($row['compt']) ? $row['compt'] : 0,
+		'COUNT' => !empty($row['count']) ? $row['count'] : 0,
 		'USER_ID' => $row['user_id'],
 		'CONTENTS' => unparse($row['contents']),
 		'URL' => $row['url'],
@@ -129,7 +129,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	 ));
 	 
 	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
-	$compt = isset($_POST['compt']) ? numeric($_POST['compt']) : 0;
+	$count = isset($_POST['count']) ? numeric($_POST['count']) : 0;
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : 0;
 	$url = !empty($_POST['url']) ? trim($_POST['url']) : '';
@@ -202,7 +202,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'IDURL' => $id_post,
 		'IDCAT' => $idcat,
 		'CAT' => $cat,
-		'COMPT' => $compt,
+		'COUNT' => $count,
 		'MODULE_DATA_PATH' => $Template->Module_data_path('download')
 	));
 	
@@ -214,7 +214,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'URL' => stripslashes($url),
 		'SIZE' => $size,
 		'UNIT_SIZE' => $LANG['unit_megabytes'],
-		'COMPT' => $compt,
+		'COUNT' => $count,
 		'CATEGORIES_TREE' => $download_categories->Build_select_form($idcat, 'idcat', 'idcat'),
 		'L_REQUIRE_DESC' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -259,7 +259,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
 	$title = !empty($_POST['title']) ? securit($_POST['title']) : '';	
-	$compt = isset($_POST['compt']) ? numeric($_POST['compt']) : '0';
+	$count = isset($_POST['count']) ? numeric($_POST['count']) : '0';
 	$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
 	$url = !empty($_POST['url']) ? securit($_POST['url']) : '';
 	$size = isset($_POST['size']) ? numeric($_POST['size'], 'float') : 0;
@@ -314,7 +314,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		else
 			$timestamp = ' , timestamp = \'' . time() . '\'';
 			
-		$Sql->Query_inject("UPDATE ".PREFIX."download SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', size = '" . $size . "', idcat = '" . $idcat . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . ", compt = '" . $compt . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->Query_inject("UPDATE ".PREFIX."download SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', size = '" . $size . "', idcat = '" . $idcat . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . ", count = '" . $count . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		include_once('../includes/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('download/rss.php');

@@ -46,7 +46,7 @@
 				<input type="hidden" name="idprov" value="{IDPROV}" />
 				<input type="hidden" name="idcom" value="{IDCOM}" />
 				<input type="hidden" name="script" value="{SCRIPT}" />
-				<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+				<input type="submit" name="valid_com" value="{L_SUBMIT}" class="submit" />
 				&nbsp;&nbsp; 						
 				<script type="text/javascript">
 				<!--				
@@ -197,7 +197,7 @@
 				<input type="hidden" name="idprov" value="{IDPROV}" />
 				<input type="hidden" name="idcom" value="{IDCOM}" />
 				<input type="hidden" name="script" value="{SCRIPT}" />
-				<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+				<input type="submit" name="valid_com" value="{L_SUBMIT}" class="submit" />
 				&nbsp;&nbsp; 						
 				<script type="text/javascript">
 				<!--				

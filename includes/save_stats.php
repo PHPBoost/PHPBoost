@@ -70,6 +70,8 @@ if( !empty($referer) )
 //Inclusion une fois par jour et par visiteur.
 if( $_include_once ) //Variable provenant de sessions.class.php
 {
+	$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+	
 	//Suppression des images de statistiques en cache.
 	$array_stats_img = array('browsers.png', 'os.png', 'lang.png');
 	foreach($array_stats_img as $key => $value)
