@@ -144,7 +144,7 @@
 			}
 			-->
 			</script>
-			<script type="text/javascript" src="../templates/{THEME}/images/calendar.js"></script>
+			<script type="text/javascript" src="../includes/js/calendar.js"></script>
 			
 			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">

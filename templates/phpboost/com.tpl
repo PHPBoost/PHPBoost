@@ -146,7 +146,7 @@
 		<link rel="stylesheet" href="../templates/{THEME}/generic.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="../templates/{THEME}/content.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="../templates/{THEME}/bbcode.css" type="text/css" media="screen, print, handheld" />
-		<script type="text/javascript" src="../templates/{THEME}/images/global.js"></script>
+		<script type="text/javascript" src="../includes/js/global.js"></script>
 	</head>
 
 	<body>		

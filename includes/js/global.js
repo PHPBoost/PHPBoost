@@ -228,7 +228,7 @@ var max_percent = 0;
 var info_progress_tmp = '';
 var progressbar_speed = 20; //Vitesse de la progression.
 var progressbar_size = 55; //Taille de la barre de progression.
-var progressbar_id = 'test'; //Identifiant de la barre de progression.
+var progressbar_id = 'progress_info'; //Identifiant de la barre de progression.
 var restart_progress = false;
 var theme = '';
 
