@@ -40,10 +40,13 @@ if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
 	$config_articles['nbr_articles_max'] = !empty($_POST['nbr_articles_max']) ? numeric($_POST['nbr_articles_max']) : 10;
 	$config_articles['nbr_cat_max'] = !empty($_POST['nbr_cat_max']) ? numeric($_POST['nbr_cat_max']) : 10;
 	$config_articles['nbr_column'] = !empty($_POST['nbr_column']) ? numeric($_POST['nbr_column']) : 2;
-	$config_articles['note_max'] = !empty($_POST['note_max']) ? numeric($_POST['note_max']) : 10;
+	$config_articles['note_max'] = !empty($_POST['note_max']) ? max(1, numeric($_POST['note_max'])) : 5;
 	$config_articles['auth_root'] = isset($CONFIG_ARTICLES['auth_root']) ? serialize($CONFIG_ARTICLES['auth_root']) : serialize(array());
 		
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
+	
+	if( $CONFIG_ARTICLES['note_max'] != $config_articles['note_max'] )
+		$Sql->Query_inject("UPDATE ".PREFIX."articles SET note = note * " . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']), __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('articles');

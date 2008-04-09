@@ -31,15 +31,20 @@ load_module_lang('web'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
+$Cache->Load_file('web');
+
 if( !empty($_POST['valid']) )
 {
 	$config_web = array();
 	$config_web['nbr_web_max'] = !empty($_POST['nbr_web_max']) ? numeric($_POST['nbr_web_max']) : 10;
 	$config_web['nbr_cat_max'] = !empty($_POST['nbr_cat_max']) ? numeric($_POST['nbr_cat_max']) : 10;
 	$config_web['nbr_column'] = !empty($_POST['nbr_column']) ? numeric($_POST['nbr_column']) : 2;
-	$config_web['note_max'] = !empty($_POST['note_max']) ? numeric($_POST['note_max']) : 10;
+	$config_web['note_max'] = !empty($_POST['note_max']) ? max(1, numeric($_POST['note_max'])) : 5;
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_web)) . "' WHERE name = 'web'", __LINE__, __FILE__);
+	
+	if( $CONFIG_WEB['note_max'] != $config_web['note_max'] )
+		$Sql->Query_inject("UPDATE ".PREFIX."web SET note = note * " . ($config_web['note_max']/$CONFIG_WEB['note_max']), __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('web');
@@ -52,8 +57,6 @@ else
 	$Template->Set_filenames(array(
 		'admin_web_config' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_config.tpl'
 	));
-	
-	$Cache->Load_file('web');
 	
 	$Template->Assign_vars(array(
 		'NBR_WEB_MAX' => !empty($CONFIG_WEB['nbr_web_max']) ? $CONFIG_WEB['nbr_web_max'] : '10',

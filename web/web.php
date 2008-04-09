@@ -176,6 +176,8 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 		'PAGINATION' => $Pagination->Display_pagination('web' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $CONFIG_WEB['nbr_web_max'], 3)
 	));
 
+	include_once('../includes/note.class.php');
+	$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
 	$result = $Sql->Query_while("SELECT id, title, timestamp, compt, note, nbrnote, nbr_com
 	FROM ".PREFIX."web
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
@@ -196,7 +198,7 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 			'CAT' => $CAT_WEB[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'COMPT' => $row['compt'],
-			'NOTE' => ($row['nbrnote'] > 0) ? $row['note'] . '/' . $CONFIG_WEB['note_max'] : '<em>' . $LANG['no_note'] . '</em>',
+			'NOTE' => ($row['nbrnote'] > 0) ? $Note->Display_note($row['note'], $CONFIG_WEB['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
 			'COM' => $link . $row['nbr_com'] . '</a>',
 			'U_WEB_LINK' => transid('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));
