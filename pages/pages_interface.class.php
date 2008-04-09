@@ -6,7 +6,7 @@
  *   copyright            : (C) 2007 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
- *  
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -41,7 +41,7 @@ class PagesInterface extends ModuleInterface
     // Recherche
     function GetSearchRequest($args)
     /**
-     *  Renvoie la requête de recherche dans le wiki
+     *  Renvoie la requête de recherche
      */
     {
         $search = $args['search'];

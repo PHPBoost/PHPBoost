@@ -6,7 +6,7 @@
  *   copyright            : (C) 2007 Régis Viarre, Loïc Rouchon
  *   email                : crowkait@phpboost.com, horn@phpboost.com
  *
- *  
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
