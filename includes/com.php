@@ -1,16 +1,29 @@
 <?php
-/***************************************************************************
- *                               com.php
+/*##################################################
+ *                             com.php
  *                            -------------------
  *   begin                : August 02, 2005
  *   copyright          : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  Comments, v 1.0.0  
  *
- ***************************************************************************
- 
-***************************************************************************/
+###################################################
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ * 
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+###################################################*/
 
 $delcom = !empty($_GET['delcom']) ? true : false;
 $editcom = !empty($_GET['editcom']) ? true : false;
@@ -48,9 +61,6 @@ $path_redirect = $Comments->Get_attribute('path') . sprintf(str_replace('&amp;',
 //Commentaires chargés?
 if( $Comments->Com_loaded() )
 {
-	if( $Comments->Get_attribute('sql_table') == '' ) //Erreur avec le module non prévu pour gérer les commentaires.
-		$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT);
-		
 	$Template->Set_filenames(array(
 		'handle_com' => '../templates/' . $CONFIG['theme'] . '/com.tpl'
 	));
@@ -59,7 +69,7 @@ if( $Comments->Com_loaded() )
 	$Cache->Load_file('com');
 
 	###########################Insertion##############################
-	if( !empty($_POST['valid']) && !$updatecom )
+	if( !empty($_POST['valid_com']) && !$updatecom )
 	{
 		//Membre en lecture seule?
 		if( $Member->Get_attribute('user_readonly') > time() ) 
@@ -81,14 +91,14 @@ if( $Comments->Com_loaded() )
 				if( !empty($check_time) && !$Member->Check_max_value(AUTH_FLOOD) )
 				{				
 					if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcul la fin du delai.	
-						redirect($path_redirect . '&error=flood#errorh');
+						redirect($path_redirect . '&errorh=flood#errorh');
 				}
 				
 				$contents = parse($contents, $CONFIG_COM['forbidden_tags']);
 				if( !check_nbr_links($login, 0) ) //Nombre de liens max dans le pseudo.
-					redirect($path_redirect . '&error=l_pseudo#errorh');
+					redirect($path_redirect . '&errorh=l_pseudo#errorh');
 				if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
-					redirect($path_redirect . '&error=l_flood#errorh');
+					redirect($path_redirect . '&errorh=l_flood#errorh');
 				
 				//Récupération de l'adresse de la page.
 				$last_idcom = $Comments->Add_com($contents, $login);
@@ -97,10 +107,10 @@ if( $Comments->Com_loaded() )
 				redirect($path_redirect . '#m' . $last_idcom);
 			}
 			else //utilisateur non autorisé!
-				redirect($path_redirect . '&error=auth#errorh');
+				redirect($path_redirect . '&errorh=auth#errorh');
 		}
 		else
-			redirect($path_redirect . '&error=incomplete#errorh');
+			redirect($path_redirect . '&errorh=incomplete#errorh');
 	}
 	elseif( $updatecom || $delcom || $editcom ) //Modération des commentaires.
 	{
@@ -177,7 +187,7 @@ if( $Comments->Com_loaded() )
 				{
 					$contents = parse($contents, $CONFIG_COM['forbidden_tags']);
 					if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
-						redirect($path_redirect . '&error=l_flood#errorh');
+						redirect($path_redirect . '&errorh=l_flood#errorh');
 
 					$Comments->Update_com($contents, $login);
 					
@@ -185,10 +195,10 @@ if( $Comments->Com_loaded() )
 					redirect($path_redirect . '#m' . $Comments->Get_attribute('idcom'));
 				}
 				else //Champs incomplet!
-					redirect($path_redirect . '&error=incomplete#errorh');
+					redirect($path_redirect . '&errorh=incomplete#errorh');
 			}
 			else
-				redirect($path_redirect . '&error=incomplete#errorh');
+				redirect($path_redirect . '&errorh=incomplete#errorh');
 		}
 		else
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
@@ -232,7 +242,7 @@ if( $Comments->Com_loaded() )
 		}
 		
 		//Gestion des erreurs.
-		$get_error = !empty($_GET['error']) ? trim($_GET['error']) :'';
+		$get_error = !empty($_GET['errorh']) ? trim($_GET['errorh']) :'';
 		$errno = E_USER_NOTICE;
 		switch($get_error)
 		{
@@ -253,7 +263,7 @@ if( $Comments->Com_loaded() )
 				$errstr = $LANG['e_incomplete'];
 				break;
 			default: 
-			$errstr = '';
+				$errstr = '';
 		}
 		if( !empty($errstr) )
 			$Errorh->Error_handler($errstr, E_USER_NOTICE);

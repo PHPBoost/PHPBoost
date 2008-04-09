@@ -139,45 +139,19 @@
 					<strong>{L_VIEWS}:</strong> {COMPT} {L_TIMES}
 					<div class="spacer">&nbsp;</div>
 				</p>
-				<p style="text-align: center;">					
+				<p class="text_center">					
 					<a href="{URL}" title="{NAME}" onclick="document.location = 'count.php?id={IDWEB}';"><img src="{MODULE_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" /></a>
-					<br />
-					{URL}
 				</p>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom text_small">
-				<strong>{L_NOTE}:</strong> {NOTE}&nbsp;
+				# INCLUDE handle_note #
 			</div>
 		</div>
 			
 		<br /><br />
 		# INCLUDE handle_com #
 		# ENDIF #
-
-
-		# IF C_DISPLAY_WEB_NOTE #
-		<form action="../web/web{U_WEB_ACTION_NOTE}" method="post" class="fieldset_content">
-			<span id="note"></span>
-			<fieldset>
-				<legend>{L_NOTE}</legend>
-				<dl>
-					<dt><label for="note_select">{L_NOTE}</label></dt>
-					<dd>
-						<span class="text_small">{L_ACTUAL_NOTE}: {NOTE}</span>	
-						<label>
-							<select id="note_select" name="note">
-								{SELECT}
-							</select>
-						</label>
-					</dd>					
-				</dl>
-			</fieldset>
-			<fieldset class="fieldset_submit">
-				<legend>{L_VOTE}</legend>
-				<input type="submit" name="valid_note" value="{L_VOTE}" class="submit" />
-			</fieldset>
-		</form>
-		# ENDIF #
+		
 		

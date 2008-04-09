@@ -163,9 +163,6 @@ $LANG['gallery'] = 'Galerie';
 $LANG['gallery_index'] = 'Accueil Galerie';
 $LANG['upload_img'] = 'Uploader l\'image';
 $LANG['how_photo'] = 'Photo(s) dans la base de donnée!';
-$LANG['actual_note'] = 'Note actuelle';
-$LANG['give_note'] = 'Attribuez une note';
-$LANG['no_note'] = 'Aucune note';
 $LANG['img_success'] = 'L\'image a bien été uploadée !';
 $LANG['img_format'] = 'Formats d\'image autorisés';
 $LANG['img_delete'] = 'Supprimer cette image';
@@ -187,8 +184,4 @@ $LANG['alert_weight_gallery'] = 'Trop gros fichier';
 $LANG['alert_type_gallery'] = 'Le fichier n\'est pas valide jpg, png, et gif seulement!';
 $LANG['alert_upload_gallery'] = 'Vous avez dépassé le nombre de fichiers que vous pouvez uploader sur le serveur';
 
-//Sondage
-$LANG['poll_vote'] = 'Vote';
-$LANG['poll_vote_s'] = 'Votes';
-$LANG['already_vote'] = 'Vous avez déjà voté';
 ?>

@@ -332,6 +332,8 @@ class Sessions
 	//Détecte les principaux robots par plage ip, retourne leurs noms, et enregistre le nombre et l'heure de passages dans un fichier texte.
 	function check_robot($user_ip)
 	{
+		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+		
 		if( preg_match('`(w3c|http:\/\/|bot|spider|Gigabot|gigablast.com)+`i', $_SERVER['HTTP_USER_AGENT']) )
 			return 'unknow_bot';
 			

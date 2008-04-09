@@ -30,7 +30,7 @@ CREATE TABLE `phpboost_articles` (
 	`views` mediumint(9) NOT NULL default '0',
 	`users_note` text NOT NULL,
 	`nbrnote` mediumint(9) NOT NULL default '0',
-	`note` smallint(6) NOT NULL default '0',
+	`note` float NOT NULL default '0',
 	`nbr_com` int(11) unsigned NOT NULL default '0',
 	`lock_com` tinyint(1) NOT NULL default '0',
 	PRIMARY KEY  (`id`),

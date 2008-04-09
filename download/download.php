@@ -66,39 +66,6 @@ if( $file_id > 0 ) //Contenu
 	$rewrited_title = ($CONFIG['rewrite'] == 1) ? url_encode_rewrite($download['title']) : '';
 	$rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? url_encode_rewrite($CAT_DOWNLOAD[$idcat]['name']) : '';
 	
-	//Notation
-	$link_note = $LANG['note'];
-	if( $Member->Get_attribute('user_id') !== -1 ) //Utilisateur connecté
-		$link_note = '<script type="text/javascript"><!-- 
-		document.write("' . $LANG['note'] . '"); 
-		--></script> <noscript><a class="small_link" href="download' . transid('.php?note=' . $download['id'] . '&amp;id=' . $idurl . '&amp;cat=' . $idcat, '-' . $idcat . '-' . $idurl . '-0-0-' . $download['id'] . '+' . $rewrited_title . '.php?note=' . $download['id']) . '#note" title="' . $LANG['note'] . '">' . $LANG['note'] . '</a></noscript>';
-		
-	$download['nbrnote'] = round($download['nbrnote'] / 0.25) * 0.25;
-	$img_note = '<script type="text/javascript">
-	<!--
-	array_note[' . $download['id'] . '] = \'' . $download['nbrnote'] . '\';
-	-->
-	</script>
-	<div style="width:' . ($CONFIG_DOWNLOAD['note_max']*16 + 100) . 'px;" class="text_small" onmouseout="out_div(' . $download['id'] . ', array_note[' . $download['id'] . '])" onmouseover="over_div()">' . $link_note . ' : ';
-	for($i = 1; $i <= $CONFIG_DOWNLOAD['note_max']; $i++)
-	{
-		$star_img = 'stars.png';
-		if( $download['nbrnote'] < $i )
-		{							
-			$decimal = $i - $download['nbrnote'];
-			if( $decimal >= 1 )
-				$star_img = 'stars0.png';
-			elseif( $decimal >= 0.75 )
-				$star_img = 'stars1.png';
-			elseif( $decimal >= 0.50 )
-				$star_img = 'stars2.png';
-			else
-				$star_img = 'stars3.png';
-		}			
-		$img_note .= '<a href="javascript:send_note(' . $download['id'] . ', ' . $idcat . ', ' . $i . ')" onmouseover="select_stars(' . $download['id'] . ', ' . $i . ');"><img src="../templates/'. $CONFIG['theme'] . '/images/' . $star_img . '" alt="" class="valign_middle" id="' . $download['id'] . '_stars' . $i . '" /></a>';
-	}
-	$img_note .= ' <span id="download_note">(' . $download['nbrnote'] . ' ' . (($download['nbrnote'] > 1) ? $LANG['votes'] : $LANG['vote']) . ')</span></div>';
-
 	//Commentaires
 	$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $idurl . "download") . "', 'download');\">";
 	$link_current = '<a class="com" href="' . HOST . DIR . '/download/download' . transid('.php?cat=' . $idcat . '&amp;id=' . $idurl . '&amp;i=0', '-' . $idcat . '-' . $idurl . '.php?i=0') . '#download">';	
@@ -118,11 +85,9 @@ if( $file_id > 0 ) //Contenu
 		'CAT' => $CAT_DOWNLOAD[$idcat]['name'],
 		'DATE' => gmdate_format('date_format_short', $download['timestamp']),
 		'SIZE' => ($download['size'] >= 1) ? $download['size'] . ' ' . $LANG['unit_megabytes'] : ($download['size']*1024) . ' ' . $LANG['unit_kilobytes'],
-		'COMPT' => $download['compt'],
+		'COUNT' => $download['count'],
 		'THEME' => $CONFIG['theme'],
 		'COM' => $link . $l_com,
-		'NOTE_MAX' => $CONFIG_DOWNLOAD['note_max'],
-		'NOTE' => $img_note,
 		'LANG' => $CONFIG['lang'],
 		'U_DOWNLOAD_CAT' => transid('.php?cat=' . $idcat, '-' . $idcat . '+' . $rewrited_cat_title . '.php'),
 		'L_DESC' => $LANG['description'],
@@ -133,76 +98,11 @@ if( $file_id > 0 ) //Contenu
 		'L_DOWNLOAD' => $LANG['download'],
 		'L_ALREADY_VOTED' => $LANG['already_vote']
 	));
-
-	//Affichage et gestion de la notation
-	if( !empty($get_note) && !empty($CAT_DOWNLOAD[$idcat]['name']) )
-	{
-		$Template->Assign_vars(array(
-			'L_ACTUAL_NOTE' => $LANG['actual_note'],
-			'L_VOTE' => $LANG['vote_action'],
-			'L_NOTE' => $LANG['note']
-		));
-				
-		if( $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
-		{
-			if( !empty($_POST['valid_note']) )
-			{
-				$note = numeric($_POST['note']);
-				
-				//Echelle de notation.
-				$check_note = ( ($note >= 0) && ($note <= $CONFIG_DOWNLOAD['note_max']) ) ? true : false;				
-				$users_note = $Sql->Query("SELECT users_note FROM ".PREFIX."download WHERE idcat = '" . $idcat . "' AND id = '" . $get_note . "'", __LINE__, __FILE__);
-				
-				$array_users_note = explode('/', $users_note);
-				if( !in_array($Member->Get_attribute('user_id'), $array_users_note) && $Member->Get_attribute('user_id') != '' && ($check_note === true) )
-				{
-					$row_note = $Sql->Query_array('download', 'users_note', 'nbrnote', 'note', "WHERE id = '" . $get_note . "'", __LINE__, __FILE__);
-					$note = ( ($row_note['note'] * $row_note['nbrnote']) + $note ) / ($row_note['nbrnote'] + 1);
-					
-					$row_note['nbrnote']++;
-					
-					$users_note = !empty($row_note['users_note']) ? $row_note['users_note'] . '/' . $Member->Get_attribute('user_id') : $Member->Get_attribute('user_id'); //On ajoute l'id de l'utilisateur.
-					
-					$Sql->Query_inject("UPDATE ".PREFIX."download SET note = '" . $note . "', nbrnote = '" . $row_note['nbrnote'] . "', 
-					users_note = '" . $users_note . "' WHERE id = '" . $get_note . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
-					
-					//Success.
-					redirect(HOST . DIR . '/download/download' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
-				}
-				else
-					redirect(HOST . DIR . '/download/download' . transid('.php?cat=' . $idcat . '&id=' . $get_note, '-' . $idcat . '-' . $get_note . '.php', '&'));
-			}
-			else
-			{
-				$row = $Sql->Query_array('download', 'users_note', 'nbrnote', 'note', "WHERE idcat = '" . $idcat . "' AND id = '" . $get_note . "'", __LINE__, __FILE__);
-				
-				$array_users_note = explode('/', $row['users_note']);
-				$select = '';
-				if( in_array($Member->Get_attribute('user_id'), $array_users_note) ) //Déjà voté
-					$select .= '<option value="-1">' . $LANG['already_vote'] . '</option>';
-				else 
-				{
-					//Génération de l'échelle de notation.
-					for( $i = -1; $i <= $CONFIG_DOWNLOAD['note_max']; $i++)
-					{
-						if( $i == -1 )
-							$select = '<option value="-1">' . $LANG['note'] . '</option>';
-						else
-							$select .= '<option value="' . $i . '">' . $i . '</option>';
-					}
-				}
-				
-				$Template->Assign_vars(array(
-					'C_DISPLAY_DOWNLOAD_NOTE' => true,
-					'NOTE' => ($row['nbrnote'] > 0) ? $row['note'] : '<em>' . $LANG['no_note'] . '</em>',
-					'SELECT' => $select,
-					'U_DOWNLOAD_ACTION_NOTE' => transid('.php?note=' . $get_note . '&amp;id=' . $get_note . '&amp;cat=' . $idcat, '-' . $idcat . '-' . $get_note . '.php?note=' . $get_note)
-				));
-			}
-		}
-		else 
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-	}	
+	
+	//Affichage notation.
+	include_once('../includes/note.class.php'); 
+	$Note = new Note('download', $idurl, transid('download.php?cat=' . $idcat . '&amp;id=' . $idurl, 'category-' . $idcat . '-' . $idurl . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_DISPLAY_NOTE);
+	include_once('../includes/note.php');
 	
 	//Affichage commentaires.
 	if( isset($_GET['i']) )
@@ -313,7 +213,7 @@ else
 			$sort = 'timestamp';
 			break;		
 			case 'view' : 
-			$sort = 'compt';
+			$sort = 'count';
 			break;		
 			case 'note' :
 			$sort = 'note/' . $CONFIG_DOWNLOAD['note_max'];

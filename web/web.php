@@ -95,12 +95,9 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 	));
 	
 	//Affichage notation.
-	if( isset($_GET['n']) )
-	{
-		include_once('../includes/note.class.php'); 
-		$Note = new Note('web', $idweb, transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;i=%s', 'web-' . $idcat . '-' . $idweb . '.php?i=%s'));
-		include_once('../includes/note.php');
-	}
+	include_once('../includes/note.class.php'); 
+	$Note = new Note('web', $idweb, transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php'), $CONFIG_WEB['note_max'], '', NOTE_DISPLAY_NOTE);
+	include_once('../includes/note.php');
 	
 	//Affichage commentaires.
 	if( isset($_GET['i']) )

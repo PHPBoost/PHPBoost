@@ -129,7 +129,7 @@
 									<a href="../download/download.php?cat={download.preview.IDCAT}">{download.preview.CAT}</a><br />
 									
 									<strong>{L_DATE}:</strong> {download.preview.DATE}<br />									
-									<strong>{L_DOWNLOAD}:</strong> {download.preview.COMPT}	
+									<strong>{L_DOWNLOAD}:</strong> {download.preview.COUNT}	
 								</p>
 								<p style="text-align: center;">					
 									<a href="../download/count.php?id={download.preview.IDURL}"><img src="{download.preview.MODULE_DATA_PATH}/images/{LANG}/bouton_dl.gif" alt="" /></a>
@@ -179,8 +179,8 @@
 					<dd><label><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE}" class="text" /> {UNIT_SIZE}</label></dd>
 				</dl>
 				<dl>
-					<dt><label for="compt">{L_DOWNLOAD}</label></dt>
-					<dd><label><input type="text" size="10" maxlength="10" name="compt" id="compt" value="{COMPT}" class="text" /></label></dd>
+					<dt><label for="count">{L_DOWNLOAD}</label></dt>
+					<dd><label><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}" class="text" /></label></dd>
 				</dl>
 				<br />
 				<label for="contents">{L_CONTENTS}</label>

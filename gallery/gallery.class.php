@@ -415,24 +415,6 @@ class Gallery
 		$Sql->Query_inject("UPDATE ".PREFIX."gallery SET idcat = '" . $id_move . "' WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
 	}
 	
-	//Note une image.
-	function Note_pics($id_pics, $note, $user_id)
-	{
-		global $Sql;
-		
-		$info_pics = $Sql->Query_array('gallery', 'id', 'users_note', 'nbrnote', 'note', "WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
-		if( !in_array($user_id, explode('/', $info_pics['users_note'])) && !empty($info_pics['id']) )
-		{			
-			$note = (($info_pics['note'] * $info_pics['nbrnote']) + $note)/($info_pics['nbrnote'] + 1);			
-			$users_note = !empty($info_pics['users_note']) ? $info_pics['users_note'] . '/' . $user_id : $user_id; //On ajoute l'id de l'utilisateur.
-			
-			$Sql->Query_inject("UPDATE ".PREFIX."gallery SET note = '" . $note . "', nbrnote = nbrnote + 1, users_note = '" . $users_note . "' WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
-			return 'get_note = ' . $note . ';get_nbrnote = ' . ($info_pics['nbrnote']+1) . ';';
-		}
-		else	
-			return -1;
-	}
-	
 	//Vérifie si le membre peut uploader une image
 	function Auth_upload_pics($user_id, $level)
 	{

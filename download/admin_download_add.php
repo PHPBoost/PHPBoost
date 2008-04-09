@@ -40,7 +40,7 @@ if( !empty($_POST['valid']) )
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 	$url = !empty($_POST['url']) ? securit($_POST['url']) : '';
 	$size = isset($_POST['size']) ? numeric($_POST['size'], 'float') : '';
-	$compt = isset($_POST['compt']) ? numeric($_POST['compt']) : '0';
+	$count = isset($_POST['count']) ? numeric($_POST['count']) : '0';
 	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
 	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
 	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
@@ -86,7 +86,7 @@ if( !empty($_POST['valid']) )
 		else //Ajout des heures et minutes
 			$timestamp = time();
 		
-		$Sql->Query_inject("INSERT INTO ".PREFIX."download (idcat,title,contents,url,size,compt,timestamp,visible,start,end,user_id,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . parse($contents) . "', '" . $url . "', '" . $size . "', '" . $compt . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '', 0, 0, 0)", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."download (idcat,title,contents,url,size,count,timestamp,visible,start,end,user_id,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . parse($contents) . "', '" . $url . "', '" . $size . "', '" . $count . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '', 0, 0, 0)", __LINE__, __FILE__);
 		
 		include_once('../includes/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('download/rss.php');
@@ -110,7 +110,7 @@ elseif( !empty($_POST['previs']) )
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 	$url = !empty($_POST['url']) ? trim($_POST['url']) : '';
 	$size = isset($_POST['size']) ? numeric($_POST['size'], 'float') : 0;
-	$compt = isset($_POST['compt']) ? numeric($_POST['compt']) : 0;
+	$count = isset($_POST['count']) ? numeric($_POST['count']) : 0;
 	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
 	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
 	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
@@ -159,7 +159,7 @@ elseif( !empty($_POST['previs']) )
 		'URL' => stripslashes($url),
 		'IDCAT' => $idcat,
 		'CAT' => $DOWNLOAD_CATS[$idcat],
-		'COMPT' => $compt,
+		'COUNT' => $count,
 		'DATE' => gmdate_format('date_format_short')
 	));
 
@@ -173,7 +173,7 @@ elseif( !empty($_POST['previs']) )
 		'SIZE' => $size,
 		'UNIT_SIZE' => ($size >= 1) ? $LANG['unit_megabytes'] : $LANG['unit_kilobytes'],
 		'IDCAT' => $idcat,
-		'COMPT' => $compt,
+		'COUNT' => $count,
 		'CURRENT_DATE' => $current_date,
 		'START' => ((!empty($start) && $visible == 2) ? $start : ''),
 		'END' => ((!empty($end) && $visible == 2) ? $end : ''),
@@ -232,7 +232,7 @@ else
 	$Template->Assign_vars(array(
 		'CATEGORIES_TREE' => $download_categories->Build_select_form(0, 'idcat', 'idcat'),
 		'TITLE' => '',
-		'COMPT' => '0',
+		'COUNT' => '0',
 		'SIZE' => '0',
 		'UNIT_SIZE' => $LANG['unit_megabytes'],
 		'VISIBLE_ENABLED' => 'checked="checked"',

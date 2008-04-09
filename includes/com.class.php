@@ -31,15 +31,8 @@ class Comments
 	//Constructeur.
 	function Comments($script, $idprov, $vars, $module_folder = '') 
 	{
-		$path = !empty($path) ? $path : '%d';
 		$this->module_folder = !empty($module_folder) ? securit($module_folder) : securit($script);
 		list($this->script, $this->idprov, $this->vars, $this->path) = array(securit($script), numeric($idprov), $vars, '../' . $this->module_folder . '/');
-	}
-	
-	//Récupération des attributs de l'objet.
-	function Get_arg()
-	{
-		return array($this->script, $this->idprov, $this->vars);
 	}
 	
 	//Ajoute un commentaire et retourne l'identifiant inséré.
@@ -93,6 +86,11 @@ class Comments
 	//Vérifie que le système de commentaires est bien chargé.
 	function Com_loaded()
 	{
+		global $Errorh;
+		
+		if( empty($this->sql_table) ) //Erreur avec le module non prévu pour gérer les commentaires.
+			$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT);
+			
 		return (!empty($this->script) && !empty($this->idprov) && !empty($this->vars));
 	}
 	
