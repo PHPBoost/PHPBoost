@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-define('NO_PREVIOUS_NEXT_LINKS', false);
-define('LINK_START_PAGE', false);
+define('NO_PREVIOUS_NEXT_LINKS', false); //Lien précédent/suivant.
+define('LINK_START_PAGE', false); //Lien sur la première page.
 
 class Pagination
 {
@@ -38,7 +38,6 @@ class Pagination
 		{
 			//Initialisations.
 			$links = ''; //Chaîne à retourner.
-			$nbr_max_link = $nbr_max_link;
 
 			$this->page = $this->get_var_page($var_page);
 			$nbr_page = ceil($total_msg / $nbr_msg_page); //Calcul du nombre page.
@@ -123,7 +122,6 @@ class Pagination
 	var $page; //Valeur courante de la page.
 	var $nbr_start_links = 3; //Nombre de liens affichés en début de chaîne.
 	var $nbr_end_links = 3; //Nombre de liens affichés en fin de chaîne.	
-	//$nbr_max_link => Nombre de lien max avant et après la page courante. 
 }
 
 ?>
