@@ -280,6 +280,8 @@ $LANG['category'] = 'Category';
 $LANG['categories'] = 'Categories';
 $LANG['refresh'] = 'Refresh';
 $LANG['ranks'] = 'Ranks';
+$LANG['previous_page'] = 'Previous page';
+$LANG['next_page'] = 'Next page';
 
 //Dates.
 $LANG['on'] = 'On';

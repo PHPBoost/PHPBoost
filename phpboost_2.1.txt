@@ -35,6 +35,7 @@
 [*] Nouveau système de chargement des langues/thèmes, avec déclenchement d'erreur en cas d'échec.
 [*] Réorganisation du chargement de la tête de page.
 [*] Amélioration de la gestion des groupes (ajout/edition/suppression). 
++ Amélioration de la pagination. 
 [*] Nouveau système pour la barre d'arborescence (fil d'ariane).
 [*] Nom des fichiers uploadés conservé (gestionnaire d'upload).
 [*] Ajout d'un fichier de débuggage automatique pour le support.
@@ -106,8 +107,8 @@
 [b]Articles[/b]
 - [color=red]Nouveauté:[/color] Nouveau système pour la gestion des catégories infinies (moins lourd et plus sûr).
 - [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des articles.
-- [color=red]Nouveauté:[/color] Création d'une liste déroulante des pages consultables.
-- Ajout de la balise nouvelle page.
+[*] [color=red]Nouveauté:[/color] Création d'une liste déroulante des pages consultables.
+[*] Ajout de la balise nouvelle page.
 [*] Nouveau système de notation.
 
 [b]Téléchargement[/b]

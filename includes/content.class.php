@@ -62,9 +62,9 @@ class Content
 	function Get_content($addslashes = true)
 	{
 		if( $addslashes )
-			return addslashes($this->content);
+			return addslashes(trim($this->content));
 		else
-			return $this->content;
+			return trim($this->content);
 	}
 	
 	//Fonction de chargement de texte

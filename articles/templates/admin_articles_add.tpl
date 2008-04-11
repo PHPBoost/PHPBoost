@@ -20,6 +20,12 @@
 		{
 			document.getElementById('icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign_middle" />';
 		}
+		function bbcode_page()
+		{
+			var page = prompt("{L_PAGE_PROMPT}");
+			if( page != null && page != '' )
+				insertbbcode('[page]' + page, '[/page]', '{FIELD}');
+		}
 		-->
 		</script>
 
@@ -55,7 +61,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			# START articles #
+			# IF C_ARTICLES_PREVIEW #
 			<table class="module_table">
 				<tr> 
 					<th colspan="2">
@@ -70,14 +76,14 @@
 							<div class="module_top_r"></div>
 							<div class="module_top">
 								<div style="float:left">
-									{articles.TITLE}
+									{TITLE_PRW}
 								</div>
 								<div style="float:right">
 									{L_COM} (0)
 								</div>
 							</div>
 							<div class="module_contents">
-								{articles.CONTENTS}
+								{CONTENTS_PRW}
 							</div>
 							<div class="module_bottom_l"></div>		
 							<div class="module_bottom_r"></div>
@@ -86,7 +92,7 @@
 									&nbsp;
 								</div>
 								<div style="float:right" class="text_small">
-									{L_WRITTEN_BY}: {articles.PSEUDO}, {L_ON}: {articles.DATE}
+									{L_WRITTEN_BY}: {PSEUDO_PRW}, {L_ON}: {DATE_PRW}
 								</div>
 							</div>
 						</div>
@@ -96,7 +102,7 @@
 			</table>	
 
 			<br /><br /><br />
-			# END articles #
+			# ENDIF #
 				
 			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
@@ -140,9 +146,14 @@
 					<label>
 						# INCLUDE handle_bbcode #
 						<textarea type="text" rows="30" cols="90" id="contents" name="contents">{CONTENTS}</textarea> 
-						<p style="text-align:center;">{L_EXPLAIN_PAGE}</p>
+						<p class="text_center" style="margin-top:8px;">
+							<a href="javascript:bbcode_page();"><img src="../articles/articles.png" alt="{L_EXPLAIN_PAGE}" title="{L_EXPLAIN_PAGE}" /></a>
+						</p>
+						<p class="text_center" style="margin-top:-15px;">
+							<a href="javascript:bbcode_page();">{L_EXPLAIN_PAGE}</a>
+						</p>
 					</label>
-					<br />
+					<br /><br />
 					<dl class="overflow_visible">
 						<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
 						<dd>

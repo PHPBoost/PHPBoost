@@ -123,6 +123,12 @@
 			{
 				document.getElementById('icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign_middle" />';
 			}
+			function bbcode_page()
+			{
+				var page = prompt("{L_PAGE_PROMPT}");
+				if( page != null && page != '' )
+					insertbbcode('[page]' + page, '[/page]', '{FIELD}');
+			}
 			-->
 			</script>
 						
@@ -210,7 +216,12 @@
 					<label>
 						# INCLUDE handle_bbcode #
 						<textarea type="text" rows="30" cols="90" id="contents" name="contents">{articles.CONTENTS}</textarea> 
-						<p style="text-align:center;">{L_EXPLAIN_PAGE}</p>
+						<p class="text_center" style="margin-top:8px;">
+							<a href="javascript:bbcode_page();"><img src="../articles/articles.png" alt="{L_EXPLAIN_PAGE}" title="{L_EXPLAIN_PAGE}" /></a>
+						</p>
+						<p class="text_center" style="margin-top:-15px;">
+							<a href="javascript:bbcode_page();">{L_EXPLAIN_PAGE}</a>
+						</p>
 					</label>
 					<br />
 					<dl class="overflow_visible">
