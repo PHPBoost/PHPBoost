@@ -74,14 +74,36 @@ if( !empty($idart) && isset($_GET['cat']) )
 	$com_false = $LANG['post_com'] . '</a>';
 	$com = (!empty($articles['nbr_com'])) ? $com_true : $com_false;
 
-	//pagination des articles.
-	$array_contents = explode('[page]', $articles['contents']);
-	$nbr_page = count($array_contents);
-	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
-	
 	//On crée une pagination si il y plus d'une page.
 	include_once('../includes/pagination.class.php'); 
 	$Pagination = new Pagination();
+
+	//Si l'article ne commence pas par une page on l'ajoute.
+	if( substr(trim($articles['contents']), 0, 6) != '[page]' )
+		$articles['contents'] = ' [page]&nbsp;[/page]' . $articles['contents'];
+	else
+		$articles['contents'] = ' ' . $articles['contents'];
+		
+	//Pagination des articles.
+	$array_contents = preg_split('`\[page\][^[]+\[/page\](.*)`Us', $articles['contents'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+
+	//Récupération de la liste des pages.
+	preg_match_all('`\[page\]([^[]+)\[/page\]`U', $articles['contents'], $array_page);
+	$page_list = '<option value="1">' . $LANG['select_page'] . '</option>';
+	$page_list .= '<option value="1"></option>';
+	$i = 1;
+	foreach($array_page[1] as $page_name)
+	{
+		if( $page_name != '&nbsp;' )
+		{
+			$selected = ($i == $page) ? 'selected="selected"' : '';
+			$page_list .= '<option value="' . $i++ . '"' . $selected . '>' . $page_name . '</option>';
+		}
+	}
+	
+	//Nombre de page.
+	$nbr_page = count($array_page[1]);
+	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
 	
 	$Template->Assign_vars(array(
 		'C_DISPLAY_ARTICLE' => true,
@@ -89,12 +111,19 @@ if( !empty($idart) && isset($_GET['cat']) )
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],
 		'PSEUDO' => $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__),		
-		'CONTENTS' => second_parse($array_contents[$page - 1]),
+		'CONTENTS' => isset($array_contents[$page]) ? second_parse($array_contents[$page]) : '',
 		'CAT' => $CAT_ARTICLES[$idartcat]['name'],
 		'DATE' => gmdate_format('date_format_short', $articles['timestamp']),
-		'PAGINATION_ARTICLES' => $Pagination->Display_pagination('articles' . transid('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . url_encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3),
+		'PAGES_LIST' => $page_list,
+		'PAGINATION_ARTICLES' => $Pagination->Display_pagination('articles' . transid('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . url_encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3, 11, NO_PREVIOUS_NEXT_LINKS),
+		'PAGE_NAME' => ($array_page[1][($page-1)] != '&nbsp;') ? $array_page[1][($page-1)] : '',
+		'PAGE_PREVIOUS_ARTICLES' => ($page > 1 && $page <= $nbr_page && $nbr_page > 1) ? '<a href="' . transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page - 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page - 1) . '.php') . '">&laquo; ' . $LANG['previous_page'] . '</a><br />' . $array_page[1][($page-2)] : '',
+		'PAGE_NEXT_ARTICLES' => ($page > 0 && $page < $nbr_page && $nbr_page > 1) ? '<a href="' . transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page + 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page + 1) . '.php') . '">' . $LANG['next_page'] . ' &raquo;</a><br />' . $array_page[1][$page] : '',
 		'COM' => $link . $com,
 		'U_MEMBER_ID' => transid('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
+		'U_ONCHANGE_ARTICLE' => "'" . transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=\' + this.options[this.selectedIndex].value', 'articles-' . $idartcat . '-' . $idart . '-\'+ this.options[this.selectedIndex].value + \'.php') . "'",
+		'L_SUMMARY' => $LANG['summary'],
+		'L_SUBMIT' => $LANG['submit'],
 		'L_WRITTEN' =>  $LANG['written_by'],
 		'L_ON' => $LANG['on']	
 	));

@@ -82,6 +82,7 @@ elseif( !empty($id) )
 		'L_ARTICLES_CAT_ADD' => $LANG['articles_cats_add'],
 		'L_EDIT_ARTICLE' => $LANG['edit_article'],
 		'L_REQUIRE' => $LANG['require'],
+		'L_PAGE_PROMPT' => $LANG['page_prompt'],
 		'L_CATEGORY' => $LANG['category'],
 		'L_TITLE' => $LANG['title'],
 		'L_ARTICLE_ICON' => $LANG['article_icon'],
@@ -309,6 +310,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_ON' => $LANG['on'],
 		'L_EDIT_ARTICLE' => $LANG['edit_article'],
 		'L_REQUIRE' => $LANG['require'],
+		'L_PAGE_PROMPT' => $LANG['page_prompt'],
 		'L_CATEGORY' => $LANG['category'],
 		'L_TITLE' => $LANG['title'],
 		'L_ARTICLE_ICON' => $LANG['article_icon'],
@@ -405,7 +407,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 			$cat_clause = " idcat = '" . $idcat . "', ";
 		}	
 		
-		$Sql->Query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . $contents . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->Query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		include_once('../includes/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('articles/rss.php');

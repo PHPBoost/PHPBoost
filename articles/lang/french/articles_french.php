@@ -32,7 +32,10 @@
 
 //Admin
 $LANG['written_by'] = 'Ecrit par';
-$LANG['explain_page'] = 'Tapez [page] à la suite de l\'article quand vous désirez une nouvelle page, elle sera automatiquement crée à l\'affichage.';
+$LANG['explain_page'] = 'Insérer une nouvelle page';
+$LANG['page_prompt'] = 'Titre de la nouvelle page';
+$LANG['summary'] = 'Sommaire';
+$LANG['select_page'] = 'Sélectionnez une page';
 $LANG['articles_management'] = 'Gestion des articles';
 $LANG['articles_add'] = 'Ajouter un article';
 $LANG['articles_config'] = 'Configuration des articles';
