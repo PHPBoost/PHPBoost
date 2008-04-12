@@ -49,7 +49,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 		redirect(HOST . SCRIPT);
 	}
 
-	$login = !empty($_POST['name']) ? clean_user($_POST['name']) : '';
+	$login = !empty($_POST['name']) ?  securit(substr($_POST['name'], 0, 25)) : '';
 	$user_mail = strtolower($_POST['mail']);
 	if( preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $user_mail) )
 	{	
@@ -266,14 +266,14 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 	else
 		redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
 }
-elseif( $add && !empty($_POST['add']) ) //Ajout  du membre.
+elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 {
-	$login = !empty($_POST['login2']) ? clean_user($_POST['login2']) : '';
-	$password = !empty($_POST['password2']) ? trim($_POST['password2']) : ''; 
-	$password_bis = !empty($_POST['password2_bis']) ? trim($_POST['password2_bis']) : ''; 
+	$login = !empty($_POST['login2']) ? securit(substr($_POST['login2'], 0, 25)) : '';
+	$password = !empty($_POST['password2']) ? trim($_POST['password2']) : '';
+	$password_bis = !empty($_POST['password2_bis']) ? trim($_POST['password2_bis']) : '';
 	$password_md5 = !empty($password) ? md5($password) : '';
-	$level = isset($_POST['level2']) ? numeric($_POST['level2']) : '-1';   
-	$mail = !empty($_POST['mail2']) ? securit($_POST['mail2']) : '';	
+	$level = isset($_POST['level2']) ? numeric($_POST['level2']) : '-1';
+	$mail = !empty($_POST['mail2']) ? securit($_POST['mail2']) : '';
 	
 	if( preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$!", strtolower($mail)) )
 	{	

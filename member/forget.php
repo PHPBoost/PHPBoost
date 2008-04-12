@@ -44,7 +44,7 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 		if( !empty($_POST['forget']))
 		{
 			$user_mail = !empty($_POST['mail']) ? securit($_POST['mail']) : '';
-			$login = !empty($_POST['name']) ? clean_user($_POST['name']) : '';
+			$login = !empty($_POST['name']) ?  securit($_POST['name']) : '';
 
 			if( !empty($user_mail) && preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,6}$!", $user_mail) )
 			{	

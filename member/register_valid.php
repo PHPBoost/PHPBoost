@@ -38,7 +38,7 @@ $user_mail = !empty($_POST['mail']) ? strtolower($_POST['mail']) : '';
 if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $user_mail) )
 {	
 	//Info de connexion
-	$login = clean_user($_POST['log']) ;			
+	$login = !empty($_POST['log']) ? securit(substr($_POST['log'], 0, 25)) : '';
 	$password = !empty($_POST['pass']) ? trim($_POST['pass']) : '';
 	$password_md5 = !empty($password) ? md5($password) : '';
 	$password_bis = !empty($_POST['pass_bis']) ? trim($_POST['pass_bis']) : '';
