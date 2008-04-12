@@ -443,7 +443,7 @@ else
 			$visible .= ' ' . strtolower($LANG['until']) . ' ' . gmdate_format('date_format', $row['end']);
 		elseif( $row['end'] > 0 )
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format', $row['end']);
-		echo time() . ' ' . $row['start'].'-'.$row['end'].'<br />';
+
 		$Template->Assign_block_vars('list.news', array(
 			'TITLE' => $title,
 			'PSEUDO' => !empty($row['login']) ? $row['login'] : $LANG['guest'],		
