@@ -33,7 +33,7 @@ $Cache->Load_file('faq');
 if( !$Member->Check_auth($SECURE_MODULE['faq'], ACCESS_MODULE) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-load_module_lang('faq', 'FAQ_LANG'); //Chargement de la langue du module.
+load_module_lang('faq'); //Chargement de la langue du module.
 
 define('AUTH_READ', 0x01);
 define('AUTH_WRITE', 0x02);

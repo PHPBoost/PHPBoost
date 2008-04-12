@@ -160,13 +160,13 @@ else
 	{
 		$array_file = array();
 		$dh = @opendir($rep);
-		while( !is_bool($file = readdir($dh)) )
+		while( !is_bool($file = @readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
 			if( !preg_match('`\.`', $file) && $file != 'index.php' )
 				$array_file[] = $file; //On crée un array, avec les different dossiers.
 		}	
-		closedir($dh); //On ferme le dossier
+		@closedir($dh); //On ferme le dossier
 	
 		$result = $Sql->Query_while("SELECT theme 
 		FROM ".PREFIX."themes", __LINE__, __FILE__);

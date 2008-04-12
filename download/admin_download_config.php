@@ -27,30 +27,33 @@
 ###################################################*/
 
 require_once('../includes/admin_begin.php');
-load_module_lang('download', 'DOWNLOAD_LANG'); //Chargement de la langue du module.
+load_module_lang('download'); //Chargement de la langue du module.
 $Cache->load_file('download');
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
-##########################admin_news_config.tpl###########################
+include_once('download_auth.php');
+
 if( !empty($_POST['valid']) )
 {
 	$CONFIG_DOWNLOAD['nbr_file_max'] = !empty($_POST['nbr_file_max']) ? numeric($_POST['nbr_file_max']) : 10;
 	$CONFIG_DOWNLOAD['nbr_cat_max'] = !empty($_POST['nbr_cat_max']) ? numeric($_POST['nbr_cat_max']) : 10;
-	$CONFIG_DOWNLOAD['nbr_column'] = !empty($_POST['nbr_column']) ? numeric($_POST['nbr_column']) : 2;
+	$CONFIG_DOWNLOAD['nbr_column'] = !empty($_POST['nbr_column']) ? numeric($_POST['nbr_column']) : 4;
 	$CONFIG_DOWNLOAD['note_max'] = !empty($_POST['note_max']) ? max(1, numeric($_POST['note_max'])) : 5;
+	$CONFIG_DOWNLOAD['root_contents'] = !empty($_POST['root_contents']) ? parse($_POST['root_contents']) : '';
+	$CONFIG_DOWNLOAD['global_auth'] = addslashes(serialize($Group->Return_array_auth(READ_CAT_DOWNLOAD, WRITE_CAT_DOWNLOAD)));
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_DOWNLOAD)) . "' WHERE name = 'download'", __LINE__, __FILE__);
 	
 	if( $CONFIG_DOWNLOAD['note_max'] != $config_download['note_max'] )
-		$Sql->Query_inject("UPDATE ".PREFIX."download SET note = note * " . ($config_download['note_max']/$CONFIG_DOWNLOAD['note_max']), __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."download SET note = note * " . ($config_download['note_max'] / $CONFIG_DOWNLOAD['note_max']), __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('download');
 	
 	redirect(HOST . SCRIPT);	
 }
-//Sinon on rempli le formulaire
+//Sinon on remplit le formulaire
 else	
 {		
 	$Template->Set_filenames(array(
@@ -64,6 +67,8 @@ else
 		'NBR_CAT_MAX' => !empty($CONFIG_DOWNLOAD['nbr_cat_max']) ? $CONFIG_DOWNLOAD['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_DOWNLOAD['nbr_column']) ? $CONFIG_DOWNLOAD['nbr_column'] : '2',
 		'NOTE_MAX' => !empty($CONFIG_DOWNLOAD['note_max']) ? $CONFIG_DOWNLOAD['note_max'] : '10',
+		'READ_AUTH' => $Group->Generate_select_auth(READ_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
+		'WRITE_AUTH' => $Group->Generate_select_auth(WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
 		'L_REQUIRE' => $LANG['require'],		
 		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
@@ -75,8 +80,15 @@ else
 		'L_NOTE_MAX' => $LANG['note_max'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_UPDATE' => $LANG['update'],
-		'L_RESET' => $LANG['reset']
+		'L_RESET' => $LANG['reset'],
+		'L_GLOBAL_AUTH' => $DOWNLOAD_LANG['global_auth'],
+		'L_GLOBAL_AUTH_EXPLAIN' => $DOWNLOAD_LANG['global_auth_explain'],
+		'L_READ_AUTH' => $DOWNLOAD_LANG['auth_read'],
+		'L_WRITE_AUTH' => $DOWNLOAD_LANG['auth_write'],
+		'L_ROOT_DESCRIPTION' => $DOWNLOAD_LANG['root_description']
 	));
+	
+	include('../includes/bbcode.php');
 	
 	include_once('admin_download_menu.php');
 	

@@ -183,13 +183,15 @@
 					<dd><label><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}" class="text" /></label></dd>
 				</dl>
 				<br />
-				<label for="contents">{L_CONTENTS}</label>
-				<label>
-					# INCLUDE handle_bbcode #
-					<textarea type="text" rows="20" cols="90" id="contents" name="contents">{download.CONTENTS}</textarea> 
-					<br />
-				</label>
+				<label for="contents">* {L_CONTENTS}</label>
+				{BBCODE_CONTENTS}
+				<textarea type="text" rows="20" cols="90" id="contents" name="contents">{CONTENTS}</textarea>
+				
 				<br />
+				<label for="short_contents">{L_SHORT_CONTENTS}</label>
+				{BBCODE_CONTENTS_SHORT}
+				<textarea type="text" rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_CONTENTS}</textarea>
+				<br /><br />
 				<dl class="overflow_visible">
 					<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
 					<dd>

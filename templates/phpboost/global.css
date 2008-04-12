@@ -78,12 +78,17 @@ a:hover{
 }
 /* Liens petite taille */
 a.small_link{ 
-	color:#012871;
 	font-size:10px;
 }
 a.small_link:hover{ 
-	color:#001b35;
 	font-size:10px;
+}
+/* Liens grande taille */
+a.big_link{ 
+	font-size:15px;
+}
+a.big_link:hover{ 
+	font-size:15px;
 }
 /* Liens des commentaires. */
 a.com{

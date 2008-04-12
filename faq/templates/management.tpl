@@ -103,26 +103,27 @@
 							</dd>					
 						</dl>
 						<div id="hide_global_auth" style="display:{DISPLAY_GLOBAL};">
-						<dl>
-							<dt>
-								<label>
-									{L_READ_AUTH}
-								</label>
-							</dt>
-							<dd>
-								{category.READ_AUTH}
-							</dd>					
-						</dl>
-						<dl>
-							<dt>
-								<label>
-									{L_WRITE_AUTH}
-								</label>
-							</dt>
-							<dd>
-								{category.WRITE_AUTH}
-							</dd>					
-						</dl>
+							<dl>
+								<dt>
+									<label>
+										{L_READ_AUTH}
+									</label>
+								</dt>
+								<dd>
+									{category.READ_AUTH}
+								</dd>					
+							</dl>
+							<dl>
+								<dt>
+									<label>
+										{L_WRITE_AUTH}
+									</label>
+								</dt>
+								<dd>
+									{category.WRITE_AUTH}
+								</dd>					
+							</dl>
+						</div>
 						# END category.not_root_auth #
 					</fieldset>
 					<fieldset class="fieldset_submit">

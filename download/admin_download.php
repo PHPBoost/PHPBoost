@@ -26,7 +26,7 @@
 ###################################################*/
 
 require_once('../includes/admin_begin.php');
-load_module_lang('download', 'DOWNLOAD_LANG'); //Chargement de la langue du module.
+load_module_lang('download'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
@@ -47,6 +47,8 @@ if( !empty($id) && !$del )
 	$row = $Sql->Query_array('download', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$idcat = $row['idcat'];
+	
+	include('../includes/bbcode.php');
 
 	$Template->Assign_vars(array(
 		'TITLE' => $row['title'],
@@ -58,6 +60,7 @@ if( !empty($id) && !$del )
 		'UNIT_SIZE' => $LANG['unit_megabytes'],
 		'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 		'CATEGORIES_TREE' => $download_categories->Build_select_form($idcat, 'idcat', 'idcat'),
+		'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE),
 		'L_REQUIRE_DESC' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
@@ -83,7 +86,8 @@ if( !empty($id) && !$del )
 		'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
-		'L_PREVIEW' => $LANG['preview']
+		'L_PREVIEW' => $LANG['preview'],
+		'L_SHORT_CONTENTS' => $DOWNLOAD_LANG['short_contents']
 	));
 	
 	$Template->Assign_block_vars('download', array(
@@ -116,7 +120,18 @@ if( !empty($id) && !$del )
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
-	include_once('../includes/bbcode.php');
+	//On assigne deux fois le BBCode
+	$Template->Unassign_block_vars('tinymce_mode');
+    $Template->Unassign_block_vars('bbcode_mode');
+    $Template->Unassign_block_vars('smiley');
+	$Template->Unassign_block_vars('more');
+	
+	$_field = 'short_contents';
+	include('../includes/bbcode.php');
+	
+	$Template->Assign_vars(array(
+		'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE)
+	));
 	
 	include_once('admin_download_menu.php');
 
@@ -206,6 +221,8 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'MODULE_DATA_PATH' => $Template->Module_data_path('download')
 	));
 	
+	include('../includes/bbcode.php');
+	
 	$Template->Assign_vars(array(
 		'LANG' => $CONFIG['lang'],
 		'ID' => $id,
@@ -216,24 +233,25 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'UNIT_SIZE' => $LANG['unit_megabytes'],
 		'COUNT' => $count,
 		'CATEGORIES_TREE' => $download_categories->Build_select_form($idcat, 'idcat', 'idcat'),
+		'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE),
 		'L_REQUIRE_DESC' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
 		'L_REQUIRE_CAT' => $LANG['require_cat'],
-		'L_EDIT_FILE' => $LANG['edit_file'],
+		'L_EDIT_FILE' => $DOWNLOAD_LANG['edit_file'],
 		'L_DESC' => $LANG['description'],
 		'L_DATE' => $LANG['date'],
 		'L_COM' => $LANG['com'],
 		'L_VIEWS' => $LANG['views'],
 		'L_NOTE' => $LANG['note'],
 		'L_CATEGORY' => $LANG['categorie'],
-		'L_DOWNLOAD_ADD' => $LANG['download_add'],
-		'L_DOWNLOAD_MANAGEMENT' => $LANG['download_management'],
+		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
+		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 		'L_DOWNLOAD_CAT' => $LANG['cat_management'],
-		'L_DOWNLOAD_CONFIG' => $LANG['download_config'],
+		'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
-		'L_DOWNLOAD_DATE' => $LANG['download_date'],
+		'L_DOWNLOAD_DATE' => $DOWNLOAD_LANG['download_date'],
 		'L_RELEASE_DATE' => $LANG['release_date'],
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
@@ -247,10 +265,22 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_REQUIRE' => $LANG['require'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
-		'L_PREVIEW' => $LANG['preview']
+		'L_PREVIEW' => $LANG['preview'],
+		'L_SHORT_CONTENTS' => $DOWNLOAD_LANG['short_contents']
 	));
 		
-	include_once('../includes/bbcode.php');
+	//On assigne deux fois le BBCode
+	$Template->Unassign_block_vars('tinymce_mode');
+    $Template->Unassign_block_vars('bbcode_mode');
+    $Template->Unassign_block_vars('smiley');
+	$Template->Unassign_block_vars('more');
+	
+	$_field = 'short_contents';
+	include('../includes/bbcode.php');
+	
+	$Template->Assign_vars(array(
+		'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE)
+	));
 	
 	include_once('admin_download_menu.php');
 
@@ -371,7 +401,8 @@ else
 		'L_APROB' => $LANG['aprob'],
 		'L_UPDATE' => $LANG['update'],
 		'L_DELETE' => $LANG['delete'],
-		'L_DATE' => $LANG['date']
+		'L_DATE' => $LANG['date'],
+		'L_SHORT_CONTENTS' => $DOWNLOAD_LANG['short_contents']
 	));
 
 	$Template->Assign_block_vars('list', array(
