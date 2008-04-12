@@ -163,7 +163,6 @@ $LANG['on'] = 'On';
 $LANG['at'] = '\a\t';
 $LANG['registered'] = 'Registered';
 $LANG['website'] = 'Website';
-$LANG['list'] = 'List';
 $LANG['search'] = 'Search';
 $LANG['mail'] = 'Mail';
 $LANG['password'] = 'Password';

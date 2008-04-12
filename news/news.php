@@ -30,7 +30,6 @@ require_once('../news/news_begin.php');
 require_once('../includes/header.php');
 
 require_once('../includes/unusual_functions.php');
-echo get_server_url_page('install/install.php');
     
 $idnews = !empty($_GET['id']) ? numeric($_GET['id']) : 0;	
 $idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
