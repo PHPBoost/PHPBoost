@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true) exit;
+if( defined('PHPBOOST') !== true) exit;
 
 // Délestage du cache des recherches
 $Sql->Query_inject("TRUNCATE ".PREFIX."search_results", __LINE__, __FILE__);

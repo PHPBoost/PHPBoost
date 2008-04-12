@@ -53,7 +53,7 @@ define('DBTYPE', $dbtype); ///Type de base de données utilisée.
 define('SCRIPT', $_SERVER['PHP_SELF']); //Adresse relative à la racine du script.
 define('QUERY_STRING', addslashes($_SERVER['QUERY_STRING'])); //Récupère la chaine de variables $_GET.
 define('MAGIC_QUOTES', get_magic_quotes_gpc()); //Récupère la valeur du magic quotes.
-define('PHP_BOOST', 1); //Permet de s'assurer des inclusions.
+define('PHPBOOST', true); //Permet de s'assurer des inclusions.
 define('PREFIX', $table_prefix); //Prefix des tables SQL.
 define('ERROR_REPORTING', E_ALL | E_NOTICE);
 define('E_USER_REDIRECT', -1); //Erreur avec redirection

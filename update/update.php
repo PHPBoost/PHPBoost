@@ -77,7 +77,7 @@ if( $step >= 2 )
 else
 {
 	define('MAGIC_QUOTES', get_magic_quotes_gpc()); //Récupère la valeur du magic quotes
-	define('PHP_BOOST', true);
+	define('PHPBOOST', true);
 	define('ERROR_REPORTING', E_ALL | E_NOTICE);
 	@error_reporting(ERROR_REPORTING);
 }

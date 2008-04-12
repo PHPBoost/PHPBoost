@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true)	
+if( defined('PHPBOOST') !== true)	
 	exit;
 	
 if( !$Member->Check_auth($SECURE_MODULE['gallery'], ACCESS_MODULE) )

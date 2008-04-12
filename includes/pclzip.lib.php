@@ -1,5 +1,5 @@
 <?php
-if( defined('PHP_BOOST') !== true)	exit;
+if( defined('PHPBOOST') !== true)	exit;
 
 // --------------------------------------------------------------------------------
 // PhpConcept Library - Zip Module 2.5

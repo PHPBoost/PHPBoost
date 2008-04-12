@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true) exit;
+if( defined('PHPBOOST') !== true) exit;
 
 //Suppression des marqueurs de vue du forum trop anciens.
 $Cache->Load_file('forum'); //Requête des configuration générales (forum), $CONFIG_FORUM variable globale.

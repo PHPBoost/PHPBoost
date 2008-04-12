@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true ) exit;
+if( defined('PHPBOOST') !== true ) exit;
 
 //Module de connexion.
 $login = !empty($_POST['login']) ? securit($_POST['login']) : '';
