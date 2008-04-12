@@ -99,14 +99,17 @@ if( !empty($_POST['valid']) )
 	else
 		redirect(HOST . DIR . '/download/admin_download_add.php?error=incomplete#errorh');
 }
-elseif( !empty($_POST['previs']) )
+elseif( !empty($_POST['preview']) )
 {
 	$Template->Set_filenames(array(
 		'admin_download_add' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_add.tpl'
 	));
-
+	
+	include_once('admin_download_menu.php');
+	
 	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
+	$short_contents = !empty($_POST['short_contents']) ? trim($_POST['short_contents']) : '';
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 	$url = !empty($_POST['url']) ? trim($_POST['url']) : '';
 	$size = isset($_POST['size']) ? numeric($_POST['size'], 'float') : 0;
@@ -156,9 +159,9 @@ elseif( !empty($_POST['previs']) )
 	$Template->Assign_block_vars('download', array(
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(parse($contents))),
+		'SHORT_CONTENTS' => second_parse(stripslashes(parse($short_contents))),
 		'URL' => stripslashes($url),
 		'IDCAT' => $idcat,
-		'CAT' => $DOWNLOAD_CATS[$idcat],
 		'COUNT' => $count,
 		'DATE' => gmdate_format('date_format_short')
 	));
@@ -171,6 +174,7 @@ elseif( !empty($_POST['previs']) )
 		'LANG' => $CONFIG['lang'],
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => stripslashes($contents),
+		'SHORT_CONTENTS' => stripslashes($short_contents),
 		'URL' => stripslashes($url),
 		'SIZE' => $size,
 		'UNIT_SIZE' => ($size >= 1) ? $LANG['unit_megabytes'] : $LANG['unit_kilobytes'],
@@ -198,28 +202,28 @@ elseif( !empty($_POST['previs']) )
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
 		'L_REQUIRE_CAT' => $LANG['require_cat'],
-		'L_DOWNLOAD_ADD' => $LANG['download_add'],
-		'L_DOWNLOAD_MANAGEMENT' => $LANG['download_management'],
+		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
+		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 		'L_DOWNLOAD_CAT' => $LANG['cat_management'],
-		'L_DOWNLOAD_CONFIG' => $LANG['download_config'],
+		'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
 		'L_REQUIRE' => $LANG['require'],
-		'L_CATEGORY' => $LANG['category'],
 		'L_TITLE' => $LANG['title'],
 		'L_DESC' => $LANG['description'],
 		'L_UNTIL' => $LANG['until'],
 		'L_RELEASE_DATE' => $LANG['release_date'],
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
-		'L_DOWNLOAD_DATE' => $LANG['download_date'],
-		'L_URL' => $LANG['url'],
-		'L_SIZE' => $LANG['size'],
-		'L_DOWNLOAD' => $LANG['download'],	
+		'L_DOWNLOAD_DATE' => $DOWNLOAD_LANG['download_date'],
+		'L_URL' => $DOWNLOAD_LANG['url'],
+		'L_SIZE' => $DOWNLOAD_LANG['size'],
+		'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],	
 		'L_DATE' => $LANG['date'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_PREVIEW' => $LANG['preview'],
-		'L_RESET' => $LANG['reset']
+		'L_RESET' => $LANG['reset'],
+		'L_SHORT_CONTENTS' => $DOWNLOAD_LANG['short_contents']
 	));	
 	
 	//On assigne deux fois le BBCode

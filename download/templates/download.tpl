@@ -55,6 +55,14 @@
 								# ENDIF #
 								<p style="margin-bottom:10px">
 									<a href="{file.U_DOWNLOAD_LINK}" class="big_link">{file.NAME}</a>
+									# IF C_ADMIN #
+										<a href="{file.U_ADMIN_EDIT_FILE}">
+											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+										</a>
+										<a href="{file.U_ADMIN_DELETE_FILE}">
+											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="">
+										</a>
+									# ENDIF #
 								</p>
 								# IF file.C_DESCRIPTION #
 									<p>

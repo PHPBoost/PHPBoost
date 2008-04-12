@@ -55,6 +55,7 @@ if( !empty($id) && !$del )
 		'COUNT' => !empty($row['count']) ? $row['count'] : 0,
 		'USER_ID' => $row['user_id'],
 		'CONTENTS' => unparse($row['contents']),
+		'SHORT_CONTENTS' => unparse($row['short_contents']),
 		'URL' => $row['url'],
 		'SIZE' => $row['size'],
 		'UNIT_SIZE' => $LANG['unit_megabytes'],
@@ -137,7 +138,7 @@ if( !empty($id) && !$del )
 
 	$Template->Pparse('admin_download_management'); 
 }	
-elseif( !empty($_POST['previs']) && !empty($id_post) )
+elseif( !empty($_POST['preview']) && !empty($id_post) )
 {
 	$Template->Set_filenames(array(
 		'admin_download_management' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_management.tpl'
@@ -146,6 +147,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
 	$count = isset($_POST['count']) ? numeric($_POST['count']) : 0;
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
+	$short_contents = !empty($_POST['short_contents']) ? trim($_POST['short_contents']) : '';
 	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : 0;
 	$url = !empty($_POST['url']) ? trim($_POST['url']) : '';
 	$size = !empty($_POST['size']) ? numeric($_POST['size'], 'float') : 0;
@@ -186,6 +188,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'IDURL' => $id_post,
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => stripslashes($contents),
+		'SHORT_CONTENTS' => stripslashes($short_contents),
 		'USER_ID' => $user_id,
 		'CURRENT_DATE' => $current_date,
 		'START' => ((!empty($start) && $visible == 2) ? $start : ''),
@@ -212,11 +215,11 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'USER_ID' => $user_id,
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(parse($contents))),
+		'SHORT_CONTENTS' => second_parse(stripslashes(parse($short_contents))),
 		'PSEUDO' => $pseudo,
 		'DATE' => gmdate_format('date_format_short'),
 		'IDURL' => $id_post,
 		'IDCAT' => $idcat,
-		'CAT' => $cat,
 		'COUNT' => $count,
 		'MODULE_DATA_PATH' => $Template->Module_data_path('download')
 	));
@@ -228,6 +231,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'ID' => $id,
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => stripslashes($contents),
+		'SHORT_CONTENTS' => stripslashes($short_contents),
 		'URL' => stripslashes($url),
 		'SIZE' => $size,
 		'UNIT_SIZE' => $LANG['unit_megabytes'],
@@ -261,7 +265,6 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_SIZE' => $LANG['size'],
 		'L_URL' => $LANG['url'],
 		'L_TITLE' => $LANG['title'],
-		'L_CATEGORY' => $LANG['category'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
@@ -291,6 +294,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 	$title = !empty($_POST['title']) ? securit($_POST['title']) : '';	
 	$count = isset($_POST['count']) ? numeric($_POST['count']) : '0';
 	$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
+	$short_contents = !empty($_POST['short_contents']) ? parse($_POST['short_contents']) : '';
 	$url = !empty($_POST['url']) ? securit($_POST['url']) : '';
 	$size = isset($_POST['size']) ? numeric($_POST['size'], 'float') : 0;
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : '';
@@ -344,7 +348,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		else
 			$timestamp = ' , timestamp = \'' . time() . '\'';
 			
-		$Sql->Query_inject("UPDATE ".PREFIX."download SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', size = '" . $size . "', idcat = '" . $idcat . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . ", count = '" . $count . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->Query_inject("UPDATE ".PREFIX."download SET title = '" . $title . "', contents = '" . $contents . "', short_contents = '" . $short_contents . "', url = '" . $url . "', size = '" . $size . "', idcat = '" . $idcat . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . ", count = '" . $count . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		include_once('../includes/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('download/rss.php');
@@ -441,7 +445,7 @@ else
 			'CAT' => $row['idcat'] > 0 ? $DOWNLOAD_CATS[$row['idcat']]['name'] : $LANG['root'],
 			'PSEUDO' => !empty($row['login']) ? $row['login'] : $LANG['guest'],		
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-			'SIZE' => ($row['size'] >= 1) ? number_round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : number_round($row['size']*1024, 1) . ' ' . $LANG['unit_kilobytes'],
+			'SIZE' => ($row['size'] >= 1) ? number_round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : number_round($row['size'] * 1024, 1) . ' ' . $LANG['unit_kilobytes'],
 			'APROBATION' => $aprob,
 			'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : '')			
 		));	

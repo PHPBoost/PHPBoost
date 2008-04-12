@@ -64,6 +64,8 @@ $DOWNLOAD_LANG['num_com'] = '%d commentaire';
 $DOWNLOAD_LANG['num_coms'] = '%d commentaires';
 $DOWNLOAD_LANG['this_note'] = 'Note :';
 $DOWNLOAD_LANG['short_contents'] = 'Courte description';
+$DOWNLOAD_LANG['url'] = 'Adresse du fichier';
+$DOWNLOAD_LANG['confirm_delete_file'] = 'Etes-vous certain de vouloir supprimer ce fichier ?';
 
 //Catégories
 $DOWNLOAD_LANG['add_category'] = 'Ajouter une catégorie';

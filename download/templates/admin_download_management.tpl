@@ -123,13 +123,12 @@
 							</div>
 							<div class="module_contents">
 								<p>					
-									<strong>{L_DESC}:</strong> {download.preview.CONTENTS}
+									<strong>{L_CONTENTS}</strong><br />{download.preview.CONTENTS}
 									<br /><br />
-									<strong>{L_CATEGORY}:</strong> 
-									<a href="../download/download.php?cat={download.preview.IDCAT}">{download.preview.CAT}</a><br />
-									
-									<strong>{L_DATE}:</strong> {download.preview.DATE}<br />									
-									<strong>{L_DOWNLOAD}:</strong> {download.preview.COUNT}	
+									<strong>{L_SHORT_CONTENTS}</strong><br />{download.preview.SHORT_CONTENTS}
+									<br /><br />									
+									<strong>{L_DATE}</strong> {download.preview.DATE}<br />									
+									<strong>{L_DOWNLOAD}</strong> {download.preview.COUNT}	
 								</p>
 								<p style="text-align: center;">					
 									<a href="../download/count.php?id={download.preview.IDURL}"><img src="{download.preview.MODULE_DATA_PATH}/images/{LANG}/bouton_dl.gif" alt="" /></a>
@@ -188,7 +187,7 @@
 				<textarea type="text" rows="20" cols="90" id="contents" name="contents">{CONTENTS}</textarea>
 				
 				<br />
-				<label for="short_contents">{L_SHORT_CONTENTS}</label>
+				<label for="short_contents">* {L_SHORT_CONTENTS}</label>
 				{BBCODE_CONTENTS_SHORT}
 				<textarea type="text" rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_CONTENTS}</textarea>
 				<br /><br />
@@ -238,7 +237,7 @@
 				<input type="hidden" name="user_id" value="{download.USER_ID}" />
 				<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
 				&nbsp;&nbsp; 
-				<input type="submit" name="previs" value="{L_PREVIEW}" class="submit" />
+				<input type="submit" name="preview" value="{L_PREVIEW}" class="submit" />
 				&nbsp;&nbsp; 
 				<input type="reset" value="{L_RESET}" class="reset" />				
 			</fieldset>	
