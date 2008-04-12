@@ -63,13 +63,12 @@
 							</div>
 							<div class="module_contents">
 								<p>					
-									<strong>{L_DESC}:</strong> {download.CONTENTS}									
-									<br /><br />									
-									<strong>{L_CATEGORY}:</strong> 
-									<a href="../download/php?cat={IDCAT}">{download.CAT}</a><br />
-									
-									<strong>{L_DATE}:</strong> {download.DATE}<br />									
-									<strong>{L_DOWNLOAD}:</strong> {download.COUNT}
+									<strong>{L_CONTENTS}</strong><br /> {download.CONTENTS}									
+									<br /><br />
+									<strong>{L_SHORT_CONTENTS}</strong> <br />{download.SHORT_CONTENTS}									
+									<br /><br />
+									<strong>{L_DATE}</strong> {download.DATE}<br />									
+									<strong>{L_DOWNLOAD}</strong> {download.COUNT}
 								</p>
 								<p style="text-align: center;">					
 									<a href="../download/count.php?id={download.IDURL}"><img src="../download/templates/images/{LANG}/bouton_dl.gif" alt="" /></a>
@@ -120,7 +119,7 @@
 					<textarea type="text" rows="20" cols="90" id="contents" name="contents">{CONTENTS}</textarea>
 					
 					<br />
-					<label for="short_contents">{L_SHORT_CONTENTS}</label>
+					<label for="short_contents">* {L_SHORT_CONTENTS}</label>
 					{BBCODE_CONTENTS_SHORT}
 					<textarea type="text" rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_CONTENTS}</textarea>
 					<br /><br />
@@ -169,7 +168,7 @@
 					<legend>{L_SUBMIT}</legend>
 					<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
 					&nbsp;&nbsp; 
-					<input type="submit" name="previs" value="{L_PREVIEW}" class="submit" />
+					<input type="submit" name="preview" value="{L_PREVIEW}" class="submit" />
 					&nbsp;&nbsp; 
 					<input type="reset" value="{L_RESET}" class="reset" />				
 				</fieldset>

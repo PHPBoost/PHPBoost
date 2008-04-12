@@ -150,6 +150,7 @@ else
 			'L_NOTE' => $LANG['note'],
 			'L_COM' => $LANG['com'],
 			'L_NOTE' => $DOWNLOAD_LANG['this_note'],
+			'L_CONFIRM_DELETE_FILE' => $DOWNLOAD_LANG['confirm_delete_file'],
 			'U_DOWNLOAD_ALPHA_TOP' => transid('.php?sort=alpha&amp;mode=desc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=alpha&amp;mode=desc'),
 			'U_DOWNLOAD_ALPHA_BOTTOM' => transid('.php?sort=alpha&amp;mode=asc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?alpha&amp;mode=asc'),
 			'U_DOWNLOAD_SIZE_TOP' => transid('.php?sort=size&amp;mode=desc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=size&amp;mode=desc'),
@@ -227,7 +228,9 @@ else
 				'COMS' => (int)$row['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_coms'], $row['com']) : sprintf($DOWNLOAD_LANG['num_com'], $row['nbr_com']),
 				'C_IMG' => !empty($row['image']),
 				'IMG' => $row['image'],
-				'U_DOWNLOAD_LINK' => transid('download/admin_download.php?cat=' . $category_id . '&amp;id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
+				'U_DOWNLOAD_LINK' => transid('download/admin_download.php?cat=' . $category_id . '&amp;id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+				'U_ADMIN_EDIT_FILE' => transid('admin_download.php?id=' . $category_id),
+				'U_ADMIN_DELETE_FILE' => transid('admin_download.php?delete=1&id=' . $category_id)
 			));
 		}
 		$Sql->Close($result);
