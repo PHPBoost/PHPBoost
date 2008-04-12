@@ -32,17 +32,14 @@ require_once('./includes/function.php');
 $CONFIG = array();
 @include_once('./cache/config.php');
 if( !defined('PHPBOOST_INSTALLED') )
-	redirect(get_install_page());
+{
+    require_once('../includes/unusual_functions.php');
+    redirect(get_server_url_page('install/install.php'));
+}
 elseif( $CONFIG === array() )
 {
-	$server_name = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
-	$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-	if( !$server_path )
-		$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
-	$install_path = trim(dirname($server_path)) . '/member/member.php';
-	
-	//Suppression du dossier courant, et trim du chemin.
-	redirect('http://' . $server_name . preg_replace('`(.*)/[a-z]+/(member/member\.php)(.*)`i', '$1/$2', $install_path));
+    require_once('../includes/unusual_functions.php');
+    redirect(get_server_url_page('member/member.php'));
 }
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);

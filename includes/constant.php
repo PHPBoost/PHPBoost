@@ -3,7 +3,7 @@
  *                                constant.php
  *                            -------------------
  *   begin                : June 13, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *   Constantes utiles
@@ -30,12 +30,18 @@ require_once('../includes/auth/config.php'); //Fichier de configuration.
 
 //PHPBoost installé? Si non redirection manuelle, car chemin non connu.
 if( !defined('PHPBOOST_INSTALLED') )
-	redirect(get_install_page());
+{
+    require_once('../includes/unusual_functions.php');
+    redirect(get_server_url_page('install/install.php'));
+}
 
 set_magic_quotes_runtime(0); //Désactivation du magic_quotes_runtime (échappe les guillemets des sources externes).
 //Si register_globals activé, suppression des variables qui trainent.
 if( @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on' )
-	securit_register_globals();
+{
+    require_once('../includes/unusual_functions.php');
+    securit_register_globals();
+}
 
 //Définition des constantes utiles.
 
@@ -57,17 +63,17 @@ define('HTML_UNPROTECT', false); //Non protection de l'html.
 define('AUTH_FILES', 0x01); //Configuration générale des fichiers
 
 //Récupération de l'ip, essaye de récupérer la véritable ip avec un proxy.
-if( $_SERVER ) 	
+if( $_SERVER )  
 {
-	if( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ) $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-	elseif( isset($_SERVER['HTTP_CLIENT_IP']) ) $ip = $_SERVER['HTTP_CLIENT_IP'];
-	else $ip = $_SERVER['REMOTE_ADDR'];
+    if( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ) $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    elseif( isset($_SERVER['HTTP_CLIENT_IP']) ) $ip = $_SERVER['HTTP_CLIENT_IP'];
+    else $ip = $_SERVER['REMOTE_ADDR'];
 }
 else 
 {
-	if( getenv('HTTP_X_FORWARDED_FOR') ) $ip = getenv('HTTP_X_FORWARDED_FOR');
-	elseif( getenv('HTTP_CLIENT_IP') )	$ip = getenv('HTTP_CLIENT_IP');
-	else $ip = getenv('REMOTE_ADDR');
+    if( getenv('HTTP_X_FORWARDED_FOR') ) $ip = getenv('HTTP_X_FORWARDED_FOR');
+    elseif( getenv('HTTP_CLIENT_IP') )  $ip = getenv('HTTP_CLIENT_IP');
+    else $ip = getenv('REMOTE_ADDR');
 }
 //On sécurise l'ip => never trust user input!
 define('USER_IP', securit($ip));

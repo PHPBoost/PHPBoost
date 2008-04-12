@@ -101,8 +101,17 @@ require_once('../lang/' . $CONFIG['lang'] . '/errors.php'); //Inclusion des lang
 
 //Chargement du cache du jour actuel.
 $Cache->Load_file('day');
-if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day) ) //On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
-	require_once('../includes/changeday.php');
+//On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
+if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day) ) 
+{
+    //Inscription du nouveau jour dans le fichier en cache.
+    $Cache->Generate_file('day');
+    
+    //Vérification pour empêcher une double mise à jour.
+    $check_update = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."stats WHERE stats_year = '" . gmdate_format('Y', time(), TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m', time(), TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format('d', time(), TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__);
+    
+    require_once('../includes/changeday.php');
+}
 
 include_once('../includes/connect.php'); //Inclusion du gestionnaire de connexion.
 	
