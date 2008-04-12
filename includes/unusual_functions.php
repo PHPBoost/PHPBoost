@@ -87,12 +87,10 @@ function get_server_url_page($path)
     if( !$server_path )
         $server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
         
-$server_name = 'http://monsite.free.fr';
-$server_path =  '/phpboost/';
-    $real_path = trim(dirname($server_path)) . '/'. $path;
-    
-    //Suppression du dossier courant, et trim du chemin de l'installateur.
-    return 'http://' . $server_name . preg_replace('`(.*)/[a-z]+/('.preg_quote($path).')(.*)`i', '$1/$2', $real_path);
+	$server_path = rtrim($server_path, '/');
+    $real_path = substr($server_path, 0, strrpos($server_path, '/')) . '/'. $path;
+	
+	return 'http://' . $server_name . $real_path;
 }
 
 ?>

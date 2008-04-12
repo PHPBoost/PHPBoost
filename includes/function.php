@@ -371,15 +371,13 @@ function strtotimestamp($str, $date_format)
     //Vérification du format de la date.
     if( checkdate($month, $day, $year) )
         $timestamp = @mktime(0, 0, 1, $month, $day, $year);
-    else
+	else
         $timestamp = time();
-        
-    $serveur_hour = number_round(date('Z')/3600, 0); //Décallage du serveur par rapport au méridien de greenwitch.
+	
+    $serveur_hour = number_round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
     $timezone = $Member->Get_attribute('user_timezone') - $serveur_hour;
     if( $timezone != 0 )
         $timestamp -= $timezone * 3600; 
-        
-    $timestamp -= date('I') * 3600;  //On ajoute l'heure d'été.
         
     return ($timestamp > 0) ? $timestamp : time();
 }
@@ -494,10 +492,6 @@ function pages_displayed($no_update = false)
 
 //Arrondi nbr au nbr de décimal voulu
 function number_round($number, $dec)
-{
-    return trim(number_format($number, $dec, '.', ''));
-}
-function arrondi($number, $dec) //Alias.
 {
     return trim(number_format($number, $dec, '.', ''));
 }
