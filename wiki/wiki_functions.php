@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true)	exit;
+if( defined('PHPBOOST') !== true)	exit;
 
 //Interprétation du BBCode en ajoutant la balise [link]
 function wiki_parse($var)
