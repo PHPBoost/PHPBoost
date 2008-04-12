@@ -424,12 +424,13 @@ class Categories_management
 	}
 	
 	//Recursive method which builds the list of all chlidren of one category
-	function Build_children_id_list($category_id, &$list, $recursive_exploration = RECURSIVE_EXPLORATION, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST)
+	function Build_children_id_list($category_id, &$list, $recursive_exploration = RECURSIVE_EXPLORATION, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth = 0)
 	{
+		global $Member;
 		//Boolean variable which is true when we can stop the loop : optimization
 		$end_of_category = false;
 		
-		if( $add_this )
+		if( $add_this && ($category_id == 0 || (($num_auth > 0 && $Member->Check_auth($this->cache_var[$category_id], $num_auth) || $num_auth == 0))) )
 			$list[] = $category_id;
 		
 		$id_categories = array_keys($this->cache_var);
@@ -439,12 +440,12 @@ class Categories_management
 		for( $i = 0; $i < $num_cats; $i++ )
 		{
 			$id = $id_categories[$i];
-			$values =& $this->cache_var[$id];
+			$value =& $this->cache_var[$id];
 			if( $id != 0 && $value['id_parent'] == $category_id )
 			{
 				$list[] = $id;
-				if( $recursive_exploration )
-					$this->Build_children_id_list($id, $list, RECURSIVE_EXPLORATION);
+				if( $recursive_exploration && (($num_auth > 0 && $Member->Check_auth($this->cache_var[$id]['auth'], $num_auth) || $num_auth == 0)) )
+					$this->Build_children_id_list($id, $list, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth);
 				
 				if( !$end_of_category )
 					$end_of_category = true;

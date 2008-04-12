@@ -36,9 +36,9 @@ function generate_module_file_download()
 		
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_DOWNLOAD = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'download'", __LINE__, __FILE__));
-	$CONFIG_DOWNLOAD = is_array($CONFIG_DOWNLOAD) ? $CONFIG_DOWNLOAD : array();
-	foreach($CONFIG_DOWNLOAD as $key => $value)
-		$code .= '$CONFIG_DOWNLOAD[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
+	$CONFIG_DOWNLOAD['global_auth'] = unserialize(stripslashes($CONFIG_DOWNLOAD['global_auth']));
+	
+	$code .= '$CONFIG_DOWNLOAD = ' . var_export($CONFIG_DOWNLOAD, true) . ';';
 	
 	$code .= "\n";
 	

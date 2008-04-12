@@ -14,10 +14,10 @@
 			</div>
 			<div class="module_contents">
 			
-				# START description #
-					{description.DESCRIPTION}
+				# IF C_DESCRIPTION #
+					{DESCRIPTION}
 					<hr style="margin-top:25px;" />
-				# END description #
+				# ENDIF #
 				
 				# IF C_SUB_CATS #
 					# START row #
@@ -45,26 +45,32 @@
 				# ENDIF #
 				
 				# IF C_FILES #
-					<div class="text_strong" style="text-align:center;">
-						{L_FILES_IN_THIS_CATEGORY}
-					</div>
 					# START file #
 						<div class="block_position" style="margin-bottom:20px;">
 							<div class="row1 block_contents">
 								# IF file.C_IMG #
 									<div class="float_right">
-										<img src="{file.IMG}" alt="" />
+										<img src="{file.IMG}" alt="{file.IMG_NAME}" />
 									</div>
 								# ENDIF #
-								<strong><a href="{file.U_DOWNLOAD_LINK}">{file.NAME}</a></strong>
+								<p style="margin-bottom:10px">
+									<a href="{file.U_DOWNLOAD_LINK}" class="big_link">{file.NAME}</a>
+								</p>
 								# IF file.C_DESCRIPTION #
 									<p>
 									{file.DESCRIPTION}
 									</p>
 								# ENDIF #
 								<div class="text_small">
-									{file.DATE} &bull; {file.COUNT_DL} &bull; {file.COMS} &bull; {file.NOTE}
-								</div>								
+									{file.DATE}
+									<br />
+									{file.COUNT_DL}
+									<br />
+									{file.COMS}
+									<br />
+									{L_NOTE} {file.NOTE}
+								</div>
+								<div class="spacer"></div>								
 							</div>
 						</div>						
 					# END file #
@@ -83,7 +89,6 @@
 			<div class="module_bottom"></div>
 		</div>
 		# ENDIF #
-
 		
 		# IF C_DISPLAY_DOWNLOAD #			
 		<div class="module_position">					
@@ -99,10 +104,7 @@
 			</div>
 			<div class="module_contents">
 				<p>					
-					<strong>{L_DESC}:</strong> {CONTENTS}						
-					<br /><br />						
-					<strong>{L_CAT}:</strong> 
-					<a href="../download/download{U_DOWNLOAD_CAT}" title="{CAT}">{CAT}</a><br />						
+					<strong>{L_DESC}:</strong> {CONTENTS}<br />					
 					<strong>{L_DATE}:</strong> {DATE}<br />						
 					<strong>{L_SIZE}:</strong> {SIZE}<br />						
 					<strong>{L_DOWNLOAD}:</strong> {COUNT} {L_TIMES}
@@ -121,29 +123,4 @@
 		</div>		
 		<br /><br />
 		# INCLUDE handle_com #
-		# ENDIF #
-
-
-		# IF C_DISPLAY_DOWNLOAD_NOTE #
-		<form action="../download/download{U_DOWNLOAD_ACTION_NOTE}" method="post" class="fieldset_content">
-			<span id="note"></span>
-			<fieldset>
-				<legend>{L_NOTE}</legend>
-				<dl>
-					<dt><label for="note_select">{L_NOTE}</label></dt>
-					<dd>
-						<span class="text_small">{L_ACTUAL_NOTE}: {NOTE}</span>	
-						<label>
-							<select id="note_select" name="note">
-								{SELECT}
-							</select>
-						</label>
-					</dd>					
-				</dl>
-			</fieldset>
-			<fieldset class="fieldset_submit">
-				<legend>{L_VOTE}</legend>
-				<input type="submit" name="valid_note" value="{L_VOTE}" class="submit" />
-			</fieldset>
-		</form>
 		# ENDIF #

@@ -26,10 +26,11 @@
 ###################################################*/
 
 require_once('../includes/admin_begin.php');
-load_module_lang('download', 'DOWNLOAD_LANG'); //Chargement de la langue du module.
+load_module_lang('download'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
+include_once('download_auth.php');
 include_once('download_cats.class.php');
 $download_categories = new Download_cats();
 
@@ -96,20 +97,31 @@ elseif( !empty($_POST['submit']) )
 		$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
 		$description = !empty($_POST['description']) ? parse($_POST['description']) : '';
 		$icon = !empty($_POST['image']) ? securit($_POST['image']) : ''; 
-		$icon_path = !empty($_POST['image_alt']) ? securit($_POST['image_alt']) : ''; 
+		$icon_path = !empty($_POST['alt_image']) ? securit($_POST['alt_image']) : ''; 
 		$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : '0';
 		$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : '-1';
 
 		if( !empty($icon_path) )
 			$icon = $icon_path;
+		
+		//Autorisations
+		if( !empty($_POST['special_auth']) )
+		{
+			$array_auth_all = $Group->Return_array_auth(READ_CAT_DOWNLOAD, WRITE_CAT_DOWNLOAD);
+			$new_auth = addslashes(serialize($array_auth_all));
+		}
+		else
+		{
+			$new_auth = '';
+		}
 
 		if( empty($name) )
 			redirect(transid(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 
 			if( $id_cat > 0 )
-			$error_string = $download_categories->Update_category($id_cat, $id_parent, $name, $description, $icon);
+			$error_string = $download_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $new_auth);
 		else
-			$error_string = $download_categories->Add_category($id_parent, $name, $description, $icon);
+			$error_string = $download_categories->Add_category($id_parent, $name, $description, $icon, $new_auth);
 	}
 
 	$Cache->Generate_module_file('download');
@@ -134,14 +146,18 @@ elseif( $new_cat XOR $id_edit > 0 )
 	{
 		$img_str = '<option value="">--</option>';
 		$dh = @opendir( $rep);
+		$in_dir_icon = false;
 		while( ! is_bool($image_name = @readdir($dh)) )
 		{       
 			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $image_name) )
 			{
 				if( $id_edit > 0 && $DOWNLOAD_CATS[$id_edit]['icon'] == $image_name )
-					$img_str .= '<option selected="selected" value="' . $image_name . '">' . $image_name . '</option>'; //On crée un tableau, avec les different fichiers
+				{
+					$img_str .= '<option selected="selected" value="' . $image_name . '">' . $image_name . '</option>'; //On ajoute l'image sélectionnée
+					$in_dir_icon = true;
+				}
 				else
-					$img_str .= '<option value="' . $image_name . '">' . $image_name . '</option>'; //On crée un tableau, avec les different fichiers
+					$img_str .= '<option value="' . $image_name . '">' . $image_name . '</option>'; //On ajoute l'image non sélectionnée
 				
 			}
 		}       
@@ -160,6 +176,10 @@ elseif( $new_cat XOR $id_edit > 0 )
 		'L_RESET' => $LANG['reset'],
 		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
+		'L_READ_AUTH' => $DOWNLOAD_LANG['auth_read'],
+		'L_WRITE_AUTH' => $DOWNLOAD_LANG['auth_write'],
+		'L_SPECIAL_AUTH' => $DOWNLOAD_LANG['special_auth'],
+		'L_SPECIAL_AUTH_EXPLAIN' => $DOWNLOAD_LANG['special_auth_explain'],
 		'IMG_LIST' => $img_str,
 	));
 		
@@ -170,7 +190,13 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'IMAGE' => $DOWNLOAD_CATS[$id_edit]['icon'],
 			'CATEGORIES_TREE' => $download_categories->Build_select_form($DOWNLOAD_CATS[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit,
-			'IMG_ICON' => !empty($DOWNLOAD_CATS[$id_edit]['icon']) ? '<img src="' . $DOWNLOAD_CATS[$id_edit]['icon'] . '" alt="" class="valign_middle" />' : ''
+			'IMG_ICON' => !empty($DOWNLOAD_CATS[$id_edit]['icon']) ? '<img src="' . $DOWNLOAD_CATS[$id_edit]['icon'] . '" alt="" class="valign_middle" />' : '',
+			'IMG_PATH' => !$in_dir_icon ? $DOWNLOAD_CATS[$id_edit]['icon'] : '',
+			'JS_SPECIAL_AUTH' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'true' : 'false',
+			'DISPLAY_SPECIAL_AUTH' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'block' : 'none',
+			'SPECIAL_CHECKED' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'checked="checked"' : '',
+			'READ_AUTH' => $Group->Generate_select_auth(READ_CAT_DOWNLOAD, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth']),
+			'WRITE_AUTH' => $Group->Generate_select_auth(WRITE_CAT_DOWNLOAD, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth'])
 		));
 	else
 	{
@@ -180,7 +206,10 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'DESCRIPTION' => '',
 			'IMAGE' => '',
 			'CATEGORIES_TREE' => $download_categories->Build_select_form($id_edit, 'id_parent', 'id_parent'),
-			'IDCAT' => $id_edit
+			'IDCAT' => $id_edit,
+			'JS_SPECIAL_AUTH' => 'false',
+			'DISPLAY_SPECIAL_AUTH' => 'hidden',
+			'SPECIAL_CHECKED' => ''
 		));
 	}
 	

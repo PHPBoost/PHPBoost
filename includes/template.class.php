@@ -327,7 +327,7 @@ class Templates
 			@flock($file, LOCK_EX);
             
             if( $stringMode )  // Parsage de tpl sans echo (stringMode)
-                $this->template = '<?php ' . "\n" . '$tplString = \'\';' . "\n" . $this->template . "\n" . 'return $tplString;' . "\n" . '?>';
+                $this->template = '<?php ' . "\n" . '$tplString = \'\';' . "\n" . $this->template . "\n" . '?>';
             
             @fwrite($file, $this->template);
 			@flock($file, LOCK_UN);

@@ -103,24 +103,27 @@
 					</dl>
 					<dl>
 						<dt><label for="url">* {L_URL}</label></dt>
-						<dd><label><input type="text" size="65" id="url" name="url" id="url" value="{URL}" class="text" /></label></dd>
+						<dd><input type="text" size="65" id="url" name="url" id="url" value="{URL}" class="text" /></dd>
 					</dl>
 					<dl>
 						<dt><label for="size">{L_SIZE}</label></dt>
-						<dd><label><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE}" class="text" /> {UNIT_SIZE}</label></dd>
+						<dd><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE}" class="text" /> {UNIT_SIZE}</dd>
 					</dl>
 					<dl>
 						<dt><label for="count">{L_DOWNLOAD}</label></dt>
-						<dd><label><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}" class="text" /></label></dd>
+						<dd><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}" class="text" /></dd>
 					</dl>
 					<br />
+					
 					<label for="contents">* {L_CONTENTS}</label>
-					<label>
-						# INCLUDE handle_bbcode #
-						<textarea type="text" rows="20" cols="90" id="contents" name="contents">{CONTENTS}</textarea> 
-						<br />
-					</label>
+					{BBCODE_CONTENTS}
+					<textarea type="text" rows="20" cols="90" id="contents" name="contents">{CONTENTS}</textarea>
+					
 					<br />
+					<label for="short_contents">{L_SHORT_CONTENTS}</label>
+					{BBCODE_CONTENTS_SHORT}
+					<textarea type="text" rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_CONTENTS}</textarea>
+					<br /><br />
 					<dl class="overflow_visible">
 						<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
 						<dd>

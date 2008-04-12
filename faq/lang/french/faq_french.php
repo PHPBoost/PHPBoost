@@ -30,6 +30,7 @@
 #                                                          French                                                                        #
 ####################################################
 
+global $FAQ_LANG;
 $FAQ_LANG = array();
 
 //Généralités

@@ -83,9 +83,9 @@ $LANG['require'] = 'Les champs marqués * sont obligatoires!';
 
 //Alertes formulaires
 $LANG['require_title'] = 'Veuillez entrer un titre !';
-$LANG['require_text'] = 'Veuillez entrer un texte!';
-$LANG['require_pseudo'] = 'Veuillez entrer un pseudo!';
-$LANG['require_mail'] = 'Veuillez entrer un mail!';
+$LANG['require_text'] = 'Veuillez entrer un texte !';
+$LANG['require_pseudo'] = 'Veuillez entrer un pseudo !';
+$LANG['require_mail'] = 'Veuillez entrer un mail !';
 $LANG['require_subcat'] = 'Veuillez sélectionner une sous-catégorie !';
 $LANG['require_url'] = 'Veuillez entrer une url valide !';
 $LANG['require_password'] = 'Veuillez entrer un mot de passe !';

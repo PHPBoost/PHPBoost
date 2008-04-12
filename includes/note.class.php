@@ -73,11 +73,16 @@ class Note
 	}
 	
 	//Affiche la notation.
-	function Display_note($note, $notation_scale)
+	function Display_note($note, $notation_scale, $num_stars_display = 0)
 	{
 		global $CONFIG;
 		
 		$display_note = '';
+		if( $num_stars_display > 0 )
+		{
+			$note *= $num_stars_display / $notation_scale;
+			$notation_scale = $num_stars_display;
+		}
 		for($i = 1; $i <= $notation_scale; $i++)
 		{
 			$star_img = 'stars.png';
