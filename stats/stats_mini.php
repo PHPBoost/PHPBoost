@@ -26,7 +26,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true) exit;
+if( defined('PHPBOOST') !== true) exit;
 
 //Chargement de la langue du module.
 load_module_lang('stats');

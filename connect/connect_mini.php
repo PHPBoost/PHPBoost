@@ -26,7 +26,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true) exit;
+if( defined('PHPBOOST') !== true) exit;
 
 if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 {

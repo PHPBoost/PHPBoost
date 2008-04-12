@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true )
+if( defined('PHPBOOST') !== true )
 	exit;
 	
 include_once('../lang/' . $CONFIG['lang'] . '/stats.php');

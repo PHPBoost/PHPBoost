@@ -27,7 +27,7 @@
 
 $get_show = !empty($_GET['show']) ? true : false;
 
-if( !$get_show && defined('PHP_BOOST') === true )
+if( !$get_show && defined('PHPBOOST') === true )
 {
 	$Template->Set_filenames(array(
 		'handle_bbcode' => '../templates/' . $CONFIG['theme'] . '/bbcode.tpl'

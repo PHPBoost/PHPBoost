@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true)  exit;
+if( defined('PHPBOOST') !== true)  exit;
 
 define('READ_PAGE', 0x01);
 define('EDIT_PAGE', 0x02);

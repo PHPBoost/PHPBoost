@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true ) exit;
+if( defined('PHPBOOST') !== true ) exit;
 
 $user_id = (is_object($Session) && $Member->Get_attribute('user_id') != '') ? $Member->Get_attribute('user_id') : 1;
 $Sql->Query_inject("UPDATE ".PREFIX."news SET user_id = '" . $user_id . "' WHERE id = 1", __LINE__, __FILE__);

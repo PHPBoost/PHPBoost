@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true) exit;
+if( defined('PHPBOOST') !== true) exit;
 	
 //Configuration de la galerie
 function generate_module_file_gallery()

@@ -25,7 +25,7 @@
  *
  ###################################################*/
  
-if( defined('PHP_BOOST') !== true) exit;
+if( defined('PHPBOOST') !== true) exit;
 
 //Gestion de la maintenance du site.
 if( $CONFIG['maintain'] > time() && !$Member->Check_level(ADMIN_LEVEL) )

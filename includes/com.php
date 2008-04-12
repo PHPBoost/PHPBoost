@@ -30,7 +30,7 @@ $editcom = !empty($_GET['editcom']) ? true : false;
 $updatecom = !empty($_GET['updatecom']) ? true : false;
 
 //Com en popup
-$DEFINED_PHPBOOST = !defined('PHP_BOOST');
+$DEFINED_PHPBOOST = !defined('PHPBOOST');
 if( $DEFINED_PHPBOOST )
 {
 	include_once('../includes/begin.php');	

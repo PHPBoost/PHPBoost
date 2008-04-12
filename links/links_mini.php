@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true)	exit;
+if( defined('PHPBOOST') !== true)	exit;
 
 $Template->Set_filenames(array(
 	'links' => '../templates/' . $CONFIG['theme'] . '/links/links_mini.tpl'

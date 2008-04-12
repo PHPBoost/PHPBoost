@@ -30,7 +30,7 @@
 require_once('../includes/begin.php');
 
 //----------------------------------------------------------------------- Main
-if( defined('PHP_BOOST') !== true ) exit;
+if( defined('PHPBOOST') !== true ) exit;
 
 
 function generate_module_file_search()

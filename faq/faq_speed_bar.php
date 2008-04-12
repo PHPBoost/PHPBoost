@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true)	exit;
+if( defined('PHPBOOST') !== true)	exit;
 
 $auth_read = $Member->Check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
 $auth_write = $Member->Check_auth($FAQ_CONFIG['global_auth'], AUTH_WRITE);

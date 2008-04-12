@@ -13,7 +13,7 @@
 ***************************************************************************/
 
 //Affichage du contenu au format rss 2.0.
-if( defined('PHP_BOOST') !== true)  
+if( defined('PHPBOOST') !== true)  
 {		
 	//On genère l'entête xml.
 	header("Content-Type: text/xml");

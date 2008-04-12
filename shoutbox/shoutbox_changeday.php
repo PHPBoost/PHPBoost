@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true) exit;
+if( defined('PHPBOOST') !== true) exit;
 
 $Cache->Load_file('shoutbox'); //$CONFIG_SHOUTBOX en global.
 

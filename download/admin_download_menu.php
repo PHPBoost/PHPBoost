@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( !defined('PHP_BOOST') ) exit;
+if( !defined('PHPBOOST') ) exit;
 
 $Template->Set_filenames(array(
 	'admin_download_menu' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_menu.tpl'

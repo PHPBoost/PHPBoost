@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true ) exit;
+if( defined('PHPBOOST') !== true ) exit;
 
 //Mini Shoutbox non activée si sur la page archive shoutbox.
 if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )

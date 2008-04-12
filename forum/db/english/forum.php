@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true ) exit;
+if( defined('PHPBOOST') !== true ) exit;
 
 $user_id = (is_object($Session) && $Member->Get_attribute('user_id') != '') ? $Member->Get_attribute('user_id') : 1;
 $Sql->Query_inject("UPDATE ".PREFIX."forum_topics SET user_id = '" . $user_id . "', last_user_id = '" . $user_id . "' WHERE id = '" . $user_id . "'", __LINE__, __FILE__);

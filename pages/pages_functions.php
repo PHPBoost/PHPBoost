@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHP_BOOST') !== true)	exit;
+if( defined('PHPBOOST') !== true)	exit;
 
 //Catégories (affichage si on connait la catégorie et qu'on veut reformer l'arborescence)
 function display_cat_explorer($id, &$cats, $display_select_link = 1)
