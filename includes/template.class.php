@@ -278,16 +278,16 @@ class Templates
 				$last_block = array_pop($array_block);
 
                 if( $this->stringMode )
-                    return '\';'."\n".'if ( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && $_tmpb_' . $last_block . '[\'' . $varname . '\'] ) {'."\n".'$tplString .= \'';
+                    return '\';'."\n".'if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && $_tmpb_' . $last_block . '[\'' . $varname . '\'] ) {'."\n".'$tplString .= \'';
                 else
-				    return '<?php if ( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && $_tmpb_' . $last_block . '[\'' . $varname . '\'] ) { ?>';
+				    return '<?php if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && $_tmpb_' . $last_block . '[\'' . $varname . '\'] ) { ?>';
 			}
 			else
             {
                 if ( $this->stringMode )
-                    return '\';'."\n".'if ( isset($this->_var[\'' . $blocks[1] . '\']) && $this->_var[\'' . $blocks[1] . '\'] ) {'."\n".'$tplString .= \'';
+                    return '\';'."\n".'if( isset($this->_var[\'' . $blocks[1] . '\']) && $this->_var[\'' . $blocks[1] . '\'] ) {'."\n".'$tplString .= \'';
                 else
-                    return '<?php if ( isset($this->_var[\'' . $blocks[1] . '\']) && $this->_var[\'' . $blocks[1] . '\'] ) { ?>';
+                    return '<?php if( isset($this->_var[\'' . $blocks[1] . '\']) && $this->_var[\'' . $blocks[1] . '\'] ) { ?>';
 		    }
         }
 		return '';
@@ -311,7 +311,7 @@ class Templates
         else
         {
             $this->template = preg_replace('`\?><\?php`', '', $this->template);
-            $this->template = preg_replace('`\?> <\?php`', 'echo \' \';', $this->template);
+            $this->template = preg_replace('` \?>([\s]+)<\?php `', ' ', $this->template);
         }
 	}
 	

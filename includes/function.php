@@ -34,6 +34,48 @@ define('NO_EDITOR_UNPARSE', false);
 define('TIMEZONE_SITE', 1);
 define('TIMEZONE_SYSTEM', 2);
 
+//Récupère les superglobales
+function request_var($var_type, $var_name, $default_value, $force_type = NULL)
+{
+	switch($var_type)
+	{
+		case GET:
+			$var = isset($_GET[$var_name]) ? $_GET[$var_name] : $default_value;
+			break;
+		case POST:
+			$var = isset($_POST[$var_name]) ? $_POST[$var_name] : $default_value;
+			break;
+		case COOKIE:
+			$var = isset($_COOKIE[$var_name]) ? $_COOKIE[$var_name] : $default_value;
+			break;
+		default:
+			return;
+	}
+	
+	$force_type = !isset($force_type) ? gettype($default_value) : $force_type;
+	switch($force_type)
+	{
+		case TINTEGER:
+			return (int)$var;
+		case TSTRING:
+			return (string)$var;
+		case TBOOL:
+			return (bool)$var;
+		case TARRAY:
+			return (array)$var;
+	    case TDOUBLE:
+			return (double)$var;
+		case TUNSIGNED_INT:
+			$var = (int)$var;
+			return $var > 0 ? $var : max(0, $default_value);
+		case TUNSIGNED_DOUBLE:
+			$var = (double)$var;
+			return $var > 0.0 ? $var : max(0.0, $default_value);
+	}
+	
+	return;
+}            
+            
 //Passe à la moulinette les entrées (chaînes) utilisateurs.
 function securit($var, $html_protect = true)
 {

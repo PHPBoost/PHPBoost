@@ -37,6 +37,7 @@
 [*] Amélioration de la gestion des groupes (ajout/edition/suppression). 
 + Amélioration de la pagination. 
 [*] Nouveau système pour la barre d'arborescence (fil d'ariane).
+[*] Possibilité d'insérer plusieurs css pour les modules.
 [*] Nom des fichiers uploadés conservé (gestionnaire d'upload).
 [*] Ajout d'un fichier de débuggage automatique pour le support.
 [*] Possibilité de désactiver les informations de temps de génération de page.

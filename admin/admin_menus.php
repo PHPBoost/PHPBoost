@@ -204,8 +204,7 @@ else
 		'admin_menus_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_menus_management.tpl'
 	));
 	
-	//On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
-	$info_theme = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
+	$Cache->load_file('themes'); //Récupération de la configuration des thèmes.	
 	
 	//Récupération du class le plus grand pour chaque positionnement possible.
 	$array_max = array();
@@ -268,9 +267,11 @@ else
 		}
 		
 		$block_position = $row['location'];		
-		if( ($row['location'] == 'left' || !$info_theme['right_column']) && $info_theme['left_column'] )
+		if( $row['location'] == 'left' || $row['location'] == 'right' && (!$THEME_CONFIG[$CONFIG['theme']]['right_column'] && !$THEME_CONFIG[$CONFIG['theme']]['left_column']) ) 
+			$block_position = 'main';
+		elseif( ($row['location'] == 'left' || (!$THEME_CONFIG[$CONFIG['theme']]['right_column'] && $row['location'] == 'right')) && $THEME_CONFIG[$CONFIG['theme']]['left_column'] )
 			$block_position = 'left'; //Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
-		elseif( ($row['location'] == 'right' || !$info_theme['left_column']) && $info_theme['right_column'] )
+		elseif( ($row['location'] == 'right' || (!$THEME_CONFIG[$CONFIG['theme']]['left_column'] && $row['location'] == 'left')) && $THEME_CONFIG[$CONFIG['theme']]['right_column'] )
 			$block_position = 'right';
 				
 		if( $row['activ'] == 1 && !empty($block_position) )
@@ -311,15 +312,14 @@ else
 	//On vérifie pour les modules qui n'ont pas de menu associé, qu'ils n'en ont toujours pas.
 	foreach($uncheck_modules as $name => $auth)
 	{
-		$config = load_ini_file('../' . $name . '/lang/', $CONFIG['lang']);
-		if( !empty($config['mini_module']) )
+		$modules_config[$name] = load_ini_file('../' . $name . '/lang/', $CONFIG['lang']);
+		if( !empty($modules_config[$name]['mini_module']) )
 		{	
 			$array_menus = parse_ini_array($config['mini_module']);
 			foreach($array_menus as $module_path => $location)
 				$uninstalled_menus[$name][$module_path] = $location; //On ajoute le menu.
 		}
 	}	
-
 	//On liste les menus non installés.
 	foreach($uninstalled_menus as $name => $array_menu)
 	{
@@ -375,13 +375,13 @@ else
 	}
 	
 	$colspan = 1;
-	$colspan += (int)$info_theme['right_column'];
-	$colspan += (int)$info_theme['left_column'];
+	$colspan += (int)$THEME_CONFIG[$CONFIG['theme']]['right_column'];
+	$colspan += (int)$THEME_CONFIG[$CONFIG['theme']]['left_column'];
 	
 	$Template->Assign_vars(array(
 		'COLSPAN' => $colspan,
-		'LEFT_COLUMN' => $info_theme['left_column'],
-		'RIGHT_COLUMN' => $info_theme['right_column'],
+		'LEFT_COLUMN' => $THEME_CONFIG[$CONFIG['theme']]['left_column'],
+		'RIGHT_COLUMN' => $THEME_CONFIG[$CONFIG['theme']]['right_column'],
 		'L_INDEX' => $LANG['index'],
 		'L_CONFIRM_DEL_MENU' => $LANG['confirm_del_menu'],
 		'L_ACTIV' => $LANG['activ'],
