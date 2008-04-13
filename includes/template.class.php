@@ -185,7 +185,8 @@ class Templates
     {
         if( $this->stringMode )
         {
-            $this->template = preg_replace_callback('`(.+)\n`', array($this, 'get_line'), $this->template . "\n");
+            //$this->template = preg_replace_callback('`(.+)\n`', array($this, 'get_line'), $this->template . "\n");
+			$this->template .= '<?php $tplString = \'' . $this->tempate . '\' ?>';
             //Remplacement des variables simples.
             $this->template = preg_replace('`{([\w]+)}`i', '\' . (isset($this->_var[\'$1\']) ? $this->_var[\'$1\'] : \'\') . \'', $this->template);
             $this->template = preg_replace_callback('`{([\w\.]+)}`i', array($this, 'parse_blocks_vars'), $this->template);
@@ -326,8 +327,8 @@ class Templates
 		{
 			@flock($file, LOCK_EX);
             
-            if( $stringMode )  // Parsage de tpl sans echo (stringMode)
-                $this->template = '<?php ' . "\n" . '$tplString = \'\';' . "\n" . $this->template . "\n" . '?>';
+            //if( $stringMode )  // Parsage de tpl sans echo (stringMode)
+            //    $this->template = '<?php ' . "\n" . '$tplString = \'\';' . "\n" . $this->template . "\n" . '?>';
             
             @fwrite($file, $this->template);
 			@flock($file, LOCK_UN);
