@@ -221,13 +221,7 @@ class Templates
             $this->template = preg_replace('`# INCLUDE ([\w]+) #`', '<?php $this->tpl_include(\'$1\'); ?>', $this->template);
         }
     }
-	
-    // Transforme une ligne du tpl en chaine PHP
-    function get_line($mask)
-    {
-        return '$tplString .= \'' . str_replace(array('\\', '\''), array('\\\\', '\\\''), trim($mask[1])) . '\'."\\n";' . "\n";
-    }
-	
+		
 	//Remplacement des variables de type bloc.
 	function parse_blocks_vars($blocks)
 	{
