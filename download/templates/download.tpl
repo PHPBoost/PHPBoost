@@ -111,22 +111,77 @@
 				</div>
 			</div>
 			<div class="module_contents">
-				<p>					
-					<strong>{L_DESC}:</strong> {CONTENTS}<br />					
-					<strong>{L_DATE}:</strong> {DATE}<br />						
-					<strong>{L_SIZE}:</strong> {SIZE}<br />						
-					<strong>{L_DOWNLOAD}:</strong> {COUNT} {L_TIMES}
-					<div class="spacer">&nbsp;</div>
-				</p>
-				<p style="text-align: center;">					
-					<a href="../download/count.php?id={IDURL}"><img src="{MODULE_DATA_PATH}/images/{LANG}/bouton_dl.gif" alt="" /></a>
-				</p>
-				&nbsp;
+				<table>
+					<tr>
+						<td style="float:left;text-align:center;padding-right:20px;">
+							# IF C_IMG #
+								<a href="{U_DOWNLOAD_FILE}"><img src="{U_IMG}" alt="{IMAGE_ALT}" /></a>
+								<br /><br />
+							# ENDIF #
+							<a href="{U_DOWNLOAD_FILE}">
+								<img src="{MODULE_DATA_PATH}/images/download_file.png" alt="" />
+							</a>
+							<p style="margin-top:-15px;"><a href="{U_DOWNLOAD_FILE}">{L_DOWNLOAD_FILE}</a></p>
+						</td>
+						<td>
+							<p class="text_justify" style="margin-top:-20px">
+								{CONTENTS}
+							</p>
+						</td>
+					</tr>
+				</table>
+				<br />
+				<table style="width:400px;margin-right:0;" class="module_table text_small">
+					<tr>
+						<th colspan="2">
+							{L_FILE_INFOS}
+						</th>
+					</tr>
+					<tr>
+						<td class="row1" style="padding:3px">
+							{L_SIZE}
+						</td>
+						<td class="row2" style="padding:3px">
+							{SIZE}
+						</td>
+					</tr>
+					<tr>
+						<td class="row1" style="padding:3px">
+							{L_INSERTION_DATE}
+						</td>
+						<td class="row2" style="padding:3px">
+							{INSERTION_DATE}
+						</td>
+					</tr>
+					<tr>
+						<td class="row1" style="padding:3px">
+							{L_LAST_UPDATE_DATE}
+						</td>
+						<td class="row2" style="padding:3px">
+							{LAST_UPDATE_DATE}
+						</td>
+					</tr>
+					<tr>
+						<td class="row1" style="padding:3px">
+							{L_DOWNLOADED}
+						</td>
+						<td class="row2" style="padding:3px">
+							{HITS}
+						</td>
+					</tr>
+					<tr>
+						<td class="row1" style="padding:3px">
+							{L_NOTE} <em>({NUM_NOTES})</em>
+						</td>
+						<td class="row2" style="padding:1px">
+							# INCLUDE handle_note #
+						</td>
+					</tr>
+				</table>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				# INCLUDE handle_note #
 			</div>
 		</div>		
 		<br /><br />

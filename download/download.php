@@ -44,29 +44,35 @@ if( $file_id > 0 ) //Contenu
 	
 	$Template->Assign_vars(array(
 		'C_DISPLAY_DOWNLOAD' => true,
+		'C_IMG' => !empty($download_info['image']),
 		'MODULE_DATA_PATH' => $Template->Module_data_path('download'),
-		'IDURL' => $download_info['id'],
 		'NAME' => $download_info['title'],
-		'CONTENTS' => $download_info['contents'],
-		'URL' => $download_info['url'],
-		'DATE' => gmdate_format('date_format_short', $download_info['timestamp']),
+		'CONTENTS' => second_parse($download_info['contents']),
+		'INSERTION_DATE' => gmdate_format('date_format_short', $download_info['timestamp']),
+		'LAST_UPDATE_DATE' => gmdate_format('date_format_short', $download_info['last_update_timestamp']),
 		'SIZE' => ($download_info['size'] >= 1) ? $download_info['size'] . ' ' . $LANG['unit_megabytes'] : ($download_info['size'] * 1024) . ' ' . $LANG['unit_kilobytes'],
 		'COUNT' => $download_info['count'],
 		'THEME' => $CONFIG['theme'],
 		'COM' => $link . $l_com,
+		'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$download_info['count']),
+		'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], (int)$download_info['nbrnote']),
+		'U_IMG' => $download_info['image'],
+		'IMAGE_ALT' => str_replace('"', '\"', $download_info['image']),
 		'LANG' => $CONFIG['lang'],
-		'L_DESC' => $LANG['description'],
-		'L_CAT' => $LANG['category'],
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
-		'L_TIMES' => $LANG['n_time'],
 		'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
-		'L_ALREADY_VOTED' => $LANG['already_vote']
+		'L_DOWNLOAD_FILE' => $DOWNLOAD_LANG['download_file'],
+		'L_FILE_INFOS' => $DOWNLOAD_LANG['file_infos'],
+		'L_INSERTION_DATE' => $DOWNLOAD_LANG['insertion_date'],
+		'L_LAST_UPDATE_DATE' => $DOWNLOAD_LANG['last_update_date'],
+		'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
+		'U_DOWNLOAD_FILE' => transid('count.php?id=' . $file_id)
 	));
 	
 	//Affichage notation.
 	include_once('../includes/note.class.php'); 
-	$Note = new Note('download', $file_id, transid('download.php?cat=' . $category_id . '&amp;id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_DISPLAY_NOTE);
+	$Note = new Note('download', $file_id, transid('download.php?cat=' . $category_id . '&amp;id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
 	include_once('../includes/note.php');
 	
 	//Affichage commentaires.
@@ -228,9 +234,9 @@ else
 				'COMS' => (int)$row['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_coms'], $row['com']) : sprintf($DOWNLOAD_LANG['num_com'], $row['nbr_com']),
 				'C_IMG' => !empty($row['image']),
 				'IMG' => $row['image'],
-				'U_DOWNLOAD_LINK' => transid('download/admin_download.php?cat=' . $category_id . '&amp;id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
-				'U_ADMIN_EDIT_FILE' => transid('admin_download.php?id=' . $category_id),
-				'U_ADMIN_DELETE_FILE' => transid('admin_download.php?delete=1&id=' . $category_id)
+				'U_DOWNLOAD_LINK' => transid('download/admin_download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+				'U_ADMIN_EDIT_FILE' => transid('admin_download.php?id=' . $row['id']),
+				'U_ADMIN_DELETE_FILE' => transid('admin_download.php?delete=1&id=' . $row['id'])
 			));
 		}
 		$Sql->Close($result);
