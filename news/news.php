@@ -31,7 +31,7 @@ require_once('../includes/header.php');
     
 $idnews = request_var(GET, 'id', 0);	
 $idcat = request_var(GET, 'cat', 0);
-$show_archive = request_var(GET, 'arch', TBOOL);
+$show_archive = request_var(GET, 'arch', false);
 
 $is_admin = $Member->Check_level(ADMIN_LEVEL);
 if( empty($idnews) && empty($idcat) ) 
