@@ -28,12 +28,10 @@
 require_once('../includes/begin.php');
 require_once('../news/news_begin.php');
 require_once('../includes/header.php');
-
-require_once('../includes/unusual_functions.php');
     
-$idnews = !empty($_GET['id']) ? numeric($_GET['id']) : 0;	
-$idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
-$show_archive = !empty($_GET['arch']) ? true : false;
+$idnews = request_var(GET, 'id', 0);	
+$idcat = request_var(GET, 'cat', 0);
+$show_archive = request_var(GET, 'arch', TBOOL);
 
 $is_admin = $Member->Check_level(ADMIN_LEVEL);
 if( empty($idnews) && empty($idcat) ) 

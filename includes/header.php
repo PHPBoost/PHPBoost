@@ -96,11 +96,16 @@ $Template->Set_filenames(array(
 $alternative_css = '';
 if( defined('ALTERNATIVE_CSS') )
 {	
-	if( file_exists('../templates/' . $CONFIG['theme'] . '/' . ALTERNATIVE_CSS . '/' . ALTERNATIVE_CSS . '.css') )
-		$alternative_css = '../templates/' . $CONFIG['theme'] . '/' . ALTERNATIVE_CSS . '/' . ALTERNATIVE_CSS . '.css';
-	else
-		$alternative_css = '../' . ALTERNATIVE_CSS . '/templates/' . ALTERNATIVE_CSS . '.css';
-	$alternative_css =	'<link rel="stylesheet" href="' . $alternative_css . '" type="text/css" media="screen, handheld" />';
+	$array_alternative_css = explode(',', str_replace(' ', '', ALTERNATIVE_CSS));
+	$module = $array_alternative_css[0];
+	foreach($array_alternative_css as $alternative)
+	{
+		if( file_exists('../templates/' . $CONFIG['theme'] . '/' . $module . '/' . $alternative . '.css') )
+			$alternative = '../templates/' . $CONFIG['theme'] . '/' . $module . '/' . $alternative . '.css';
+		else
+			$alternative = '../' . $module . '/templates/' . $alternative . '.css';
+		$alternative_css .= '<link rel="stylesheet" href="' . $alternative . '" type="text/css" media="screen, handheld" />' . "\n";
+	}
 }
 
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
@@ -161,7 +166,7 @@ $Template->Pparse('header');
 
 //Gestion des blocs de subheader.
 $MODULES_MINI['subheader'] = true;
-include('../includes/modules_mini.php');	
+include('../includes/modules_mini.php');
 $MODULES_MINI['subheader'] = false;
 
 $Template->Pparse('subheader');
@@ -173,7 +178,7 @@ if( $left_column ) //Gestion des blocs de gauche.
 	));
 	
 	$MODULES_MINI['left'] = true;
-	include('../includes/modules_mini.php');	
+	include('../includes/modules_mini.php');
 	$MODULES_MINI['left'] = false;
 	
 	if( !$right_column ) //Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).

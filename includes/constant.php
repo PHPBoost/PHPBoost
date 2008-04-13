@@ -44,7 +44,6 @@ if( @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals
 }
 
 //Définition des constantes utiles.
-
 define('GUEST_LEVEL', -1); //Niveau Visiteur.
 define('MEMBER_LEVEL', 0); //Niveau Membre.
 define('MODO_LEVEL', 1); //Niveau Modo.
@@ -62,6 +61,20 @@ define('HTML_UNPROTECT', false); //Non protection de l'html.
 
 define('AUTH_FILES', 0x01); //Configuration générale des fichiers
 
+//Types des variables en request.
+define('GET', 1); 
+define('POST', 2); 
+define('COOKIE', 3); 
+define('TBOOL', 'boolean'); 
+define('TINTEGER', 'integer'); 
+define('TDOUBLE', 'double'); 
+define('TFLOAT', 'double'); 
+define('TSTRING', 'string'); 
+define('TARRAY', 'array'); 
+define('TUNSIGNED_INT', 'uint'); 
+define('TUNSIGNED_DOUBLE', 'udouble'); 
+define('TUNSIGNED_FLOAT', 'udouble'); 
+       
 //Récupération de l'ip, essaye de récupérer la véritable ip avec un proxy.
 if( $_SERVER )  
 {
