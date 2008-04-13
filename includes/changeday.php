@@ -30,9 +30,10 @@ if( defined('PHPBOOST') !== true ) exit;
 if( empty($check_update) )
 {
     #######Taches de maintenance#######
-    
+    $yesterday_timestamp = time() - 86400;
+	
     //Pose d'un verrou supplémentaire
-    $Sql->Query_inject("INSERT INTO ".PREFIX."stats (stats_year, stats_month, stats_day, nbr, pages, pages_detail) VALUES ('" . gmdate_format('Y', time(), TIMEZONE_SYSTEM) . "', '" . gmdate_format('m', time(), TIMEZONE_SYSTEM) . "', '" . gmdate_format('d', time(), TIMEZONE_SYSTEM) . "', '', '', '')", __LINE__, __FILE__);
+    $Sql->Query_inject("INSERT INTO ".PREFIX."stats (stats_year, stats_month, stats_day, nbr, pages, pages_detail) VALUES ('" . gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('m', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '', '', '')", __LINE__, __FILE__);
     
     #######Statistiques#######
     $Sql->Query_inject("UPDATE ".PREFIX."stats_referer SET yesterday_visit = today_visit", __LINE__, __FILE__);
@@ -45,7 +46,7 @@ if( empty($check_update) )
     //Vidage de la table des visites de la journée.
     $total_visit = $Sql->Query("SELECT total FROM ".PREFIX."compteur WHERE id = 1", __LINE__, __FILE__);
     $Sql->Query_inject("DELETE FROM ".PREFIX."compteur WHERE id <> 1", __LINE__, __FILE__);
-    $Sql->Query_inject("UPDATE ".PREFIX."compteur SET time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', total = 1 WHERE id = 1", __LINE__, __FILE__); //Remet le compteur à 1.  
+    $Sql->Query_inject("UPDATE ".PREFIX."compteur SET time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', total = 1 WHERE id = 1", __LINE__, __FILE__); 	//Remet le compteur à 1.  
     $Sql->Query_inject("INSERT INTO ".PREFIX."compteur (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', '0')", __LINE__, __FILE__); //Insère l'utilisateur qui a déclanché les requêtes de changement de jour.
 
     //Mise à jour des stats.
