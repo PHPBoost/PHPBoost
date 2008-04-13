@@ -74,6 +74,7 @@
 [*] Amélioration des taches crons.
 [*] Correction du bug d'affichage des dossiers dans le gestionnaire de fichiers.
 [*] Correction des bugs dù à l'option register_globals.
+[+] Amélioration de la classe Template.
 
 [b]Forum[/b]
 [*] [color=red]Nouveauté:[/color] Réorganisation complète du code.
