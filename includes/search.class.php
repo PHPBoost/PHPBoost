@@ -292,42 +292,25 @@ class Search
             $nbReqInsert = 0;
             $reqInsert = '';
             
-            for ( $i = 0; $i < $nbResults; $i++ )
+            for ( $nbReqInsert = 0; $nbReqInsert < $nbResults; $nbReqInsert++ )
             {
-                $row = $results[$i];
+                $row = $results[$nbReqInsert];
                 if( $nbReqInsert > 0 )
                     $reqInsert .= ',';
                 $reqInsert .= " ('".$row['id_search']."','".$row['id_content']."','".addslashes($row['title'])."',";
                 $reqInsert .= "'".$row['relevance']."','".$row['link']."')";
-                
-                // Exécution de 10 requêtes d'insertions
-                if( $nbReqInsert == 10 )
-                {
-                    $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
-                    $reqInsert = '';
-                    $nbReqInsert = 0;
-                }
-                else $nbReqInsert++;
             }
 
             if ( !empty($reqSEARCH) )
             {
-                $request = $Sql->Query_while( $reqSEARCH, __LINE__, __FILE__ );
+                $request = $Sql->Query_while($reqSEARCH, __LINE__, __FILE__ );
                 while( $row = $Sql->Sql_fetch_assoc($request) )
                 {
                     if( $nbReqInsert > 0 )
                         $reqInsert .= ',';
                     $reqInsert .= " ('".$row['id_search']."','".$row['id_content']."','".addslashes($row['title'])."',";
                     $reqInsert .= "'".$row['relevance']."','".$row['link']."')";
-                    
-                    // Exécution de 10 requêtes d'insertions
-                    if( $nbReqInsert == 10 )
-                    {
-                        $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
-                        $reqInsert = '';
-                        $nbReqInsert = 0;
-                    }
-                    else $nbReqInsert++;
+                    $nbReqInsert++;
                 }
             }
             

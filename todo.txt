@@ -21,6 +21,7 @@
 liste des modules installés) (begin.php) + ajout d'une constante MODULE_NAME
 [-] Classe de BBCode et désactivation des balises non autorisées
 [-] Ajout d'une fonction de création de liens vers les commentaires
+[-] Editeur de .htaccess
 
 ------------------------------------ MODULES -----------------------------------
 
