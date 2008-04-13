@@ -4,7 +4,6 @@
 
 ------------------------------------- NOYAU ------------------------------------
 
-
 ------------------------------------ MODULES -----------------------------------
 
 ################################################################################
@@ -18,6 +17,10 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Créer un cache pour les css associés aux menus
+[-] Déplacer la fonction d'accès aux modules (comparaison par rapport à la
+liste des modules installés) (begin.php) + ajout d'une constante MODULE_NAME
+[-] Classe de BBCode et désactivation des balises non autorisées
+[-] Ajout d'une fonction de création de liens vers les commentaires
 
 ------------------------------------ MODULES -----------------------------------
 
