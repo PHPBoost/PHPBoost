@@ -31,6 +31,9 @@ p{
 .text_strong{
 	font-weight:bold;	
 }
+.text_justify{
+	text-align:justify;
+}
 .img_right{
 	float:right;
 	margin:6px;

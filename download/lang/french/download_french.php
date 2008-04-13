@@ -66,6 +66,13 @@ $DOWNLOAD_LANG['this_note'] = 'Note :';
 $DOWNLOAD_LANG['short_contents'] = 'Courte description';
 $DOWNLOAD_LANG['url'] = 'Adresse du fichier';
 $DOWNLOAD_LANG['confirm_delete_file'] = 'Etes-vous certain de vouloir supprimer ce fichier ?';
+$DOWNLOAD_LANG['download_file'] = 'Télécharger le fichier';
+$DOWNLOAD_LANG['file_infos'] = 'Informations sur le fichier';
+$DOWNLOAD_LANG['insertion_date'] = 'Date d\'ajout';
+$DOWNLOAD_LANG['last_update_date'] = 'Date de sortie ou de dernière mise à jour';
+$DOWNLOAD_LANG['downloaded'] = 'Téléchargé';
+$DOWNLOAD_LANG['n_times'] = '%d fois';
+$DOWNLOAD_LANG['num_notes'] = '%d votant(s)';
 
 //Catégories
 $DOWNLOAD_LANG['add_category'] = 'Ajouter une catégorie';
