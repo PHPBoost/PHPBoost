@@ -3,7 +3,7 @@
  *                              wiki_french.php
  *                            -------------------
  *   begin                : December 02, 2006
- *   copyright          : (C) 2005 Benoît Sautel
+ *   copyright            : (C) 2005 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *  

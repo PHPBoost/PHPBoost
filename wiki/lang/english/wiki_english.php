@@ -3,7 +3,7 @@
  *                              wiki_english.php
  *                            -------------------
  *   begin                : October 14, 2007
- *   copyright          : (C) 2007 Benoît Sautel
+ *   copyright            : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -101,6 +101,7 @@ $LANG['wiki_last_articles_list'] = 'Last updated articles :';
 $LANG['wiki_cats_list'] = 'List of main categories';
 $LANG['wiki_articles_of_this_cat'] = 'Articles of this category';
 $LANG['wiki_subcats'] = 'Categories contained by this category :';
+$LANG['wiki_subarticles'] = 'Articles contained by this category :';
 
 //Archives
 $LANG['wiki_version_list'] = 'Releases';
