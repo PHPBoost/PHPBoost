@@ -34,7 +34,7 @@
 $LANG['wiki'] = 'Wiki';
 $LANG['wiki_article_hits'] = 'This page has been seen %d times';
 $LANG['wiki_history'] = 'History';
-$LANG['wiki_contribution_tools'] = 'Contribuate';
+$LANG['wiki_contribution_tools'] = 'Contribute';
 $LANG['wiki_other_tools'] = 'Tools';
 $LANG['wiki_author'] = 'Author';
 $LANG['wiki_empty_index'] = 'The wiki is empty. If you have an administrator account you can create pages and edit the wiki index into the administration panel.';
@@ -67,7 +67,7 @@ $LANG['wiki_no_cat'] = 'No existing category';
 $LANG['wiki_no_sub_cat'] = 'No existing subcategory';
 $LANG['wiki_no_article'] = 'No existing article';
 $LANG['wiki_no_sub_article'] = 'No existing subarticle';
-$LANG['wiki_no_selected_cat'] = 'No selected cat';
+$LANG['wiki_no_selected_cat'] = 'No category selected';
 $LANG['wiki_do_not_select_any_cat'] = 'Root';
 $LANG['wiki_please_enter_a_link_name'] = 'Please enter a link name';
 $LANG['wiki_insert_a_link'] = 'Insert a link into the article';
