@@ -6,50 +6,16 @@
                 modulesForms.push("{forms.MODULE_NAME}");
             # END forms #
             
-            function GenerateListModules(changeF)
-            // Met à jour la liste déroulante du choix du formulaire
-            {
-                if ( arguments.length < 1 )
-                    changeF = false;
-                
-                var listModules = '';
-                var nbForms = 0;
-                var selModOptions = document.getElementById('searched_modules[]').options;
-                
-                for ( var i = 0; i < selModOptions.length; i++ )
-                {
-                    if ( selModOptions[i].selected && inArray(selModOptions[i].value, modulesForms) )
-                    {
-                        listModules += '<option value="' + selModOptions[i].value + '">' + selModOptions[i].text + '</option>';
-                        nbForms++;
-                    }
-                }
-                
-                document.getElementById('forms_selection').innerHTML = listModules;
-
-                
-                if ( changeF )
-                {
-                    if ( nbForms > 0 )
-                        show_div('forms_selection_DL');
-                    else
-                        hide_div('forms_selection_DL');
-                    ChangeForm();
-                }
-            }
-            
             function ShowAdvancedSearchForms()
             // Montre les champs de recherche avancée
             {
                 HideAdvancedSearchForms();
                 
-                document.getElementById('searched_modules_DL').style.display = 'block';
+                document.getElementById('searched_modules_DL').style.display = 'none';
                 document.getElementById('forms_selection_DL').style.display = 'block';
                 
                 hide_div('advanced_search');
                 show_div('simple_search');
-                
-                show_div(FORM + document.getElementById('forms_selection').value);
             }
             
             function HideAdvancedSearchForms()
@@ -57,7 +23,7 @@
             {
                 HideForms();
                 
-                document.getElementById('searched_modules_DL').style.display = 'none';
+                document.getElementById('searched_modules_DL').style.display = 'block';
                 document.getElementById('forms_selection_DL').style.display = 'none';
                 hide_div('simple_search');
                 show_div('advanced_search');
@@ -72,11 +38,10 @@
                 }
             }
             
-            function ChangeForm()
+            function ChangeForm(module)
             // Change le cadre des résultats
             {
                 HideForms();
-                var module = document.getElementById('forms_selection').value;
                 show_div(FORM + module);
             }
             
@@ -110,8 +75,28 @@
                         <legend>{L_TITLE_SEARCH}</legend>
                         <dl>
                             <dt><label for="TxTsearched">{L_SEARCH_KEYWORDS}<br /><span>{L_SEARCH_MIN_LENGTH}</span></label></dt>
-                            <dd><label><input type="text" size="35" id="TxTsearched" name="search" value="{TEXT_SEARCHED}" class="text" /></label></dd>
+                            <dd><label><input type="text" size="35" id="TxTsearched" name="search" value="{TEXT_SEARCHED}" class="search_field" /></label></dd>
                         </dl>
+                        <dl id="searched_modules_DL" style="display:none">
+                            <dt>
+                                <label>{L_SEARCH_IN_MODULES}<br /><span>{L_SEARCH_IN_MODULES_EXPLAIN}</span></label>
+                            </dt>
+                            <dd>
+                                <select id="searched_modules[]" name="searched_modules[]" size="5" multiple="multiple" class="list_modules">
+                                # START searched_modules #
+                                    <option value="{searched_modules.MODULE}" id="{searched_modules.MODULE}"{searched_modules.SELECTED}>{searched_modules.L_MODULE_NAME}</option>
+                                # END searched_modules #
+                                </select>
+                            </dd>
+                        </dl>
+                        <div id="forms_selection_DL" style="text-align:center; display:none;">
+                        <label>{L_SEARCH_SPECIALIZED_FORM}</label>
+                        <p id="forms_selection">
+                            # START forms #
+                                <a href="javascript:ChangeForm('{forms.MODULE_NAME}');" class="small_link">{forms.L_MODULE_NAME}</a> |
+                            # END forms #
+                        </p>
+                        </div>
                         <dl>
                             <dt>
                                 <label id="advanced_search" style="display:none">
@@ -123,29 +108,11 @@
                             </dt>
                             <dd></dd>
                         </dl>
-                        <dl id="searched_modules_DL" style="display:none">
-                            <dt>
-                                <label>{L_SEARCH_IN_MODULES}<br /><span>{L_SEARCH_IN_MODULES_EXPLAIN}</span></label>
-                            </dt>
-                            <dd>
-                                <select id="searched_modules[]" name="searched_modules[]" size="5" multiple="multiple" class="list_modules" onchange="GenerateListModules(true)">
-                                # START searched_modules #
-                                    <option value="{searched_modules.MODULE}" id="{searched_modules.MODULE}"{searched_modules.SELECTED}>{searched_modules.L_MODULE_NAME}</option>
-                                # END searched_modules #
-                                </select>
-                            </dd>
-                        </dl>
-                        <dl id="forms_selection_DL" style="display:none">
-                            <dt><label>{L_SEARCH_SPECIALIZED_FORM}<br /><span>{L_SEARCH_SPECIALIZED_FORM_EXPLAIN}</span></label></dt>
-                            <dd>
-                                <select id="forms_selection" name="FormsSelection" onchange="ChangeForm();" class="list_modules"></select>
-                            </dd>
-                        </dl>
                     </fieldset>
                     # START forms #
                         <div id="form_{forms.MODULE_NAME}" style="display:none">
                             <fieldset>
-                                <legend>{forms.L_MODULE_NAME}</legend>
+                                <legend>{L_ADVANCED_SEARCH} - {forms.L_MODULE_NAME}</legend>
                                 {forms.SEARCH_FORM}
                             </fieldset>
                         </div>
@@ -164,7 +131,6 @@
         <script type="text/javascript">
         <!--
             // On cache les éléments ne devant pas s'afficher au début
-            show_div('advanced_search');
-            GenerateListModules();
+            HideAdvancedSearchForms();
         -->
         </script>
