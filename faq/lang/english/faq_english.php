@@ -35,7 +35,7 @@ $FAQ_LANG = array();
 
 //Généralités
 $FAQ_LANG['faq'] = 'FAQ';
-$FAQ_LANG['faq_no_question_here'] = 'No questions are in this category';
+$FAQ_LANG['faq_no_question_here'] = 'There is no question in this category';
 $FAQ_LANG['faq_page_title'] = 'FAQ - %s';
 $FAQ_LANG['cat_name'] = 'Name of the category';
 $FAQ_LANG['num_questions_singular'] = '%d question';
@@ -50,9 +50,9 @@ $FAQ_LANG['display_mode'] = 'Display mode';
 $FAQ_LANG['display_block'] = 'In blocks';
 $FAQ_LANG['display_inline'] = 'In lines';
 $FAQ_LANG['display_auto'] = 'Automatic';
-$FAQ_LANG['display_explain'] = 'In "Automatic" mode, the display will follow general configuration, in  "In lines" mode answers will be hided and a click in the question will show its answer. In "In blocks" mode, answers will be after the questions.';
+$FAQ_LANG['display_explain'] = 'In "Automatic" mode, the display will follow general configuration, in "In lines" mode answers will be hided and a click in the question will show its answer. In "In blocks" mode, answers will be placed after the questions.';
 $FAQ_LANG['global_auth'] = 'Special authorizations';
-$FAQ_LANG['global_auth_explain'] = 'Allow to apply particular permissions to the category. Be careful, reading permissions are applied into subcategories: if you can\'t see a category, you can\'t see its subcategories.';
+$FAQ_LANG['global_auth_explain'] = 'Allow to apply particular permissions to the category. Be careful, reading permissions are applied into subcategories : if you can\'t see a category, you can\'t see its subcategories.';
 $FAQ_LANG['read_auth'] = 'Reading permissions';
 $FAQ_LANG['write_auth'] = 'Writing permissions';
 $FAQ_LANG['questions_list'] = 'Questions list';
