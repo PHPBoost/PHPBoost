@@ -32,7 +32,7 @@
 
 $LANG['xml_lang'] = 'en';
 $LANG['administration'] = 'Administration';
-$LANG['no_administration'] = 'No administration is associated with this module!';
+$LANG['no_administration'] = 'No administration associated with this module !';
 
 //Default module
 $LANG['index'] = 'Index';
@@ -73,46 +73,46 @@ $LANG['alert_invalid_file'] = 'The file isn\'t valid (jpg, gif, png!)';
 $LANG['alert_max_weight'] = 'Too heavy image';
 $LANG['alert_s_already_use'] = 'Smiley code already used!';
 $LANG['alert_no_cat'] = 'No name/category selected';
-$LANG['alert_fct_unlink'] = 'Impossible to delete picture. You must remove manually on the ftp!';
-$LANG['alert_no_login'] = 'The input nickname doesn\'t exist!';
+$LANG['alert_fct_unlink'] = 'Impossible to delete picture. You must remove it manually on the ftp !';
+$LANG['alert_no_login'] = 'The input nickname doesn\'t exist !';
 
 //Requis
-$LANG['require'] = 'The marked fields * are obligatory!';
+$LANG['require'] = 'The marked fields * are obligatory !';
 $LANG['require_title'] = 'Please enter a title !';
-$LANG['require_text'] = 'Please enter a text!';
-$LANG['require_pseudo'] = 'Please enter nickname!';
-$LANG['require_password'] = 'Please enter a password!';
-$LANG['require_mail'] = 'Please enter a valid mail adress!';
-$LANG['require_cat'] = 'Please enter a category!';
+$LANG['require_text'] = 'Please enter a text !';
+$LANG['require_pseudo'] = 'Please enter nickname !';
+$LANG['require_password'] = 'Please enter a password !';
+$LANG['require_mail'] = 'Please enter a valid e-mail address !';
+$LANG['require_cat'] = 'Please enter a category !';
 $LANG['require_cat_create'] = 'No category found, please create one';
-$LANG['require_url'] = 'Please enter a valid URL!';
-$LANG['require_serv'] = 'Please enter a name for the server!';
-$LANG['require_name'] = 'Please enter a name!';
-$LANG['require_cookie_name'] = 'Please enter a cookie name!';
-$LANG['require_session_time'] = 'Please enter a duration for the session!';
-$LANG['require_session_invit'] = 'Please enter a duration for the session invited!';
-$LANG['require_pass'] = 'Please enter a password!';
-$LANG['require_rank'] = 'Please enter a rank!';
-$LANG['require_code'] = 'Please enter a code for the smiley!';
-$LANG['require_max_width'] = 'Please enter a maximum width for the avatar!';
-$LANG['require_height'] = 'Please enter a maximum height for the avatar!';
-$LANG['require_weight'] = 'Please enter a maximum weight for the avatar!';
-$LANG['require_rank_name'] = 'Please enter a name for the rank!';
-$LANG['require_nbr_msg_rank'] = 'Please enter a number of message for rank!';
-$LANG['require_subcat'] = 'Please enter a subcategory!';
+$LANG['require_url'] = 'Please enter a valid URL !';
+$LANG['require_serv'] = 'Please enter a name for the server !';
+$LANG['require_name'] = 'Please enter a name !';
+$LANG['require_cookie_name'] = 'Please enter a cookie name !';
+$LANG['require_session_time'] = 'Please enter a duration for the session! ';
+$LANG['require_session_invit'] = 'Please enter a duration for the guest session !';
+$LANG['require_pass'] = 'Please enter a password !';
+$LANG['require_rank'] = 'Please enter a rank !';
+$LANG['require_code'] = 'Please enter a code for the smiley !';
+$LANG['require_max_width'] = 'Please enter a maximum width for the avatar !';
+$LANG['require_height'] = 'Please enter a maximum height for the avatar !';
+$LANG['require_weight'] = 'Please enter a maximum weight for the avatar !';
+$LANG['require_rank_name'] = 'Please enter a name for the rank !';
+$LANG['require_nbr_msg_rank'] = 'Please enter a number of message for rank !';
+$LANG['require_subcat'] = 'Please enter a subcategory !';
 $LANG['require_file_name'] = 'Please enter a file name';
 
 //Confirmations.
 $LANG['redirect'] = 'Redirect in progress...';
-$LANG['del_entry'] = 'Do you want to delete this entry?';
-$LANG['confirm_del_member'] = 'Do you want to delete this member? (final !)';
-$LANG['confirm_theme'] = 'Do you want to delete this theme?';
-$LANG['confirm_del_smiley'] = 'Do you want to delete this smiley?';
+$LANG['del_entry'] = 'Do you want to delete this entry ?';
+$LANG['confirm_del_member'] = 'Do you want to delete this member ? (final !)';
+$LANG['confirm_theme'] = 'Do you want to delete this theme ?';
+$LANG['confirm_del_smiley'] = 'Do you want to delete this smiley ?';
 $LANG['confirm_del_cat'] = 'Do you want to delete this category ?';
-$LANG['confirm_del_article'] = 'Do you want to delete thisarticle?';
+$LANG['confirm_del_article'] = 'Do you want to delete this article ?';
 $LANG['confirm_del_rank'] = 'Do you want to delete this rank ?';
 $LANG['confirm_del_group'] = 'Do you want to delete this group ?';
-$LANG['confirm_del_member_group'] = 'DDo you want to delete this member of group ?';
+$LANG['confirm_del_member_group'] = 'Do you want to delete this member of group ?';
 
 //bbcode
 $LANG['bb_bold'] = 'Text in bold: [b]text[/b]';
@@ -212,7 +212,7 @@ $LANG['or_direct_path'] = 'Or direct path';
 $LANG['unknow_bot'] = 'Unknow bot';
 
 //Connexion
-$LANG['unlock_admin_panel'] = 'Unlock Administration panel';
+$LANG['unlock_admin_panel'] = 'Unlock administration panel';
 $LANG['flood_block'] = 'Rest %d test(s) after that you will have to wait 5 minutes to obtain 2 new tests (10min for 5)!';
 $LANG['flood_max'] = 'You exhausted all your tests of connection, your account is locked during 5 minutes';
 
@@ -261,10 +261,10 @@ $LANG['extend_field_edit'] = 'Edit field';
 $LANG['admin_index'] = 'Welcome on <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost %s</a>, thank you to have chosen this CMS for your site.<br /><br />You can manage all the website with this administration panel.<br />
 This one is divided into subcategories in which you will find the tools necessary for maintenance and configuration of the website.<br /><br />If you find any bugs or if you have some suggestions, please contact the support on the <a href="http://www.phpboost.com/forum/index.php" title="Official PHPBoost Forum">official forum</a>.<br />You can also consult the <a href="http://www.phpboost.com/wiki/wiki.php">official documentation</a>.<br /><br /><br />Follow the updates on <a href="http://www.phpboost.com">http://www.phpboost.com</a>';
 $LANG['update_available'] = 'Update available';
-$LANG['core_update_available'] = 'New core version available, please update PHPBoost! <a href="http://www.phpboost.com">More informations</a>';
-$LANG['no_core_update_available'] = 'No new core version available, you are up to date!';
-$LANG['module_update_available'] = 'Modules update available!';
-$LANG['no_module_update_available'] = 'No new modules available, you are up to date!';
+$LANG['core_update_available'] = 'New core version available, please update PHPBoost ! <a href="http://www.phpboost.com">More informations</a>';
+$LANG['no_core_update_available'] = 'No new core version available, you are up to date !';
+$LANG['module_update_available'] = 'Modules update available !';
+$LANG['no_module_update_available'] = 'No new modules available, you are up to date !';
 $LANG['unknow_update'] = 'Impossible to check update';
 $LANG['user_online'] = 'Registered user(s)';
 $LANG['last_update'] = 'Last update';
@@ -313,7 +313,7 @@ $LANG['anti_flood_explain'] = 'Block too closer messages, except if the visitors
 $LANG['int_flood_explain'] = '7 seconds by default</span>';
 $LANG['email_management'] = 'Emails management';
 $LANG['email_admin'] = 'Adminitrators\'s mails';
-$LANG['admin_admin_status'] = 'Send mail to the Administrator ';
+$LANG['admin_admin_status'] = 'Send mail to the Administrator';
 $LANG['admin_sign'] = 'Signature of the mail';
 $LANG['email_admin_explain'] = 'Tape ; between each mail';
 $LANG['admin_admin_status_explain'] = 'When alert from website are triggered';
