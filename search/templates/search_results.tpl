@@ -107,31 +107,34 @@
 		    <div class="module_top_l"></div>
 		    <div class="module_top_r"></div>
 		    <div class="module_top">{L_SEARCH_RESULTS}
-		        <div id="results_choices" class="resultsChoices" style="display:none">
-		            <span>{L_PRINT}</span>
-		            <select id="results_choice" name="ResultsSelection" onChange="ChangeResults();">
-		                <option value="all">{L_TITLE_ALL_RESULTS}</option>
-		                # START results #
-		                    <option value="{results.MODULE_NAME}"> --> {results.L_MODULE_NAME}</option>
-		                # END results #
-		            </select>
-		        </div>
+                # IF C_SIMPLE_SEARCH #
+                    <div id="results_choices" class="resultsChoices" style="display:none">
+                        <span>{L_PRINT}</span>
+                        <select id="results_choice" name="ResultsSelection" onChange="ChangeResults();">
+                            <option value="all">{L_TITLE_ALL_RESULTS}</option>
+                            # START results #
+                                <option value="{results.MODULE_NAME}"> --> {results.L_MODULE_NAME}</option>
+                            # END results #
+                        </select>
+                    </div>
+                # ENDIF #
 		    </div>
 		    <div class="module_contents">
-		        <div id="results_all" class="results">
-		            <span id="results_title_all" class="title">{L_TITLE_ALL_RESULTS}</span><br />
-		            <div id="infos_results_all" class="infosResults">
-                        # IF NB_RESULTS #
-                            {NB_RESULTS}
-                        # ENDIF #
-                        {L_NB_RESULTS_FOUND}
+                # IF C_SIMPLE_SEARCH #
+                    <div id="results_all" class="results">
+                        <span id="results_title_all" class="title">{L_TITLE_ALL_RESULTS}</span><br />
+                        <div id="infos_results_all" class="infosResults">
+                            # IF NB_RESULTS #
+                                {NB_RESULTS}
+                            # ENDIF #
+                            {L_NB_RESULTS_FOUND}
+                        </div>
+                        <div id="results_list_all" class="ResultsList">
+                            {ALL_RESULTS}
+                        </div>
+                        <div id="pagination_results_all" class="PaginationResults">{PAGINATION}</div>
                     </div>
-		            <div id="results_list_all" class="ResultsList">
-                        {ALL_RESULTS}
-		            </div>
-		            <div id="pagination_results_all" class="PaginationResults">{PAGINATION}</div>
-		        </div>
-                <div id="DEBUG"></div>
+                # ENDIF #
 		        # START results #
 		            <div id="results_{results.MODULE_NAME}" class="results" style="display:none">
 		                <span id="results_title_{results.MODULE_NAME}" class="title">{results.L_MODULE_NAME}</span><br />

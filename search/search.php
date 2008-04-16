@@ -42,6 +42,7 @@ $pageNum = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
 $modName = !empty($_GET['module']) ? securit($_GET['module']) : 'all';
 $search = !empty($_POST['search']) ? securit($_POST['search']) : '';
 $selectedModules = !empty($_POST['searched_modules']) ? $_POST['searched_modules'] : array();
+$searchIn = !empty($_POST['search_in']) ? $_POST['search_in'] : 'all';
 
 //--------------------------------------------------------------------- Header
 
@@ -65,7 +66,9 @@ $Template->Assign_vars(Array(
     'L_FORMS' => $LANG['forms'],
     'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
     'L_SIMPLE_SEARCH' => $LANG['simple_search'],
-    'U_FORM_VALID' => transid('../search/search.php#results')
+    'U_FORM_VALID' => transid('../search/search.php#results'),
+    'C_SIMPLE_SEARCH' => $searchIn == 'all' ? true : false,
+    'SEARCH_MODE_MODULE' => $searchIn
 ));
 
 //------------------------------------------------------------- Other includes
@@ -92,10 +95,13 @@ foreach( $searchModule as $module)
         $formModuleArgs = $module->Functionnality('GetSearchArgs');
         // Ajout des paramètres optionnels sans les sécuriser.
         // Ils sont sécurisés à l'intérieur de chaque module.
-        foreach( $formModuleArgs as $arg)
+        if ( $searchIn )
         {
-            if ( isset($_POST[$arg]) )
-                $modulesArgs[$module->GetId()][$arg] = $_POST[$arg];
+            foreach( $formModuleArgs as $arg)
+            {
+                if ( isset($_POST[$arg]) )
+                    $modulesArgs[$module->GetId()][$arg] = $_POST[$arg];
+            }
         }
         
         $Template->Assign_block_vars('forms', array(
@@ -133,6 +139,12 @@ if( $search != '' )
     $results = array();
     $idsSearch = array();
     
+    if ( $searchIn != 'all' ) // If we are searching in only onde module
+    {
+        $usedModules = array($searchIn => $usedModules[$searchIn]);
+        $modulesArgs = array($searchIn => $modulesArgs[$searchIn]);
+    }
+    
     // Génération des résultats et passage aux templates
     $nbResults = GetSearchResults($search, $usedModules, $modulesArgs, $results, $idsSearch);
     
@@ -141,7 +153,7 @@ if( $search != '' )
         $Template->Assign_block_vars('results', array(
             'MODULE_NAME' => $module->GetId(),
             'L_MODULE_NAME' => ucfirst($module->GetName()),
-            'ID_SEARCH' => $idsSearch[$module->GetId()],
+            'ID_SEARCH' => $idsSearch[$module->GetId()]
         ));
     }
     
@@ -165,7 +177,8 @@ if( $search != '' )
         'L_NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : ($nbResults == 0 ? $LANG['no_results_found'] : $LANG['one_result_found']),
         'L_SEARCH_RESULTS' => $LANG['search_results'],
         'NB_RESULTS' => $nbResults,
-        'ALL_RESULTS' => $allhtmlResult
+        'ALL_RESULTS' => $allhtmlResult,
+        'C_SIMPLE_SEARCH' => $searchIn == 'all' ? true : false
     ));
     
     // parsage des résultats de la recherche
