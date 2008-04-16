@@ -158,15 +158,12 @@ if( $search != '' )
     }
     
     $allhtmlResult = '';
-    Get_HTML_Results($results, $allhtmlResult, $Modules, 'all');
-    $allhtmlResult .= '<script type="text/javascript">
-        <!--
-            nbResults[\'all\'] = '.$nbResults.';
-            
-            if( browserAJAXFriendly() )
-                show_div(\'results_all_0\');
-        -->
-        </script>';
+    Get_HTML_Results($results, $allhtmlResult, $Modules, $searchIn);
+//     $allhtmlResult .= '<script type="text/javascript">
+//         <!--
+//             nbResults[\''.$searchIn.'\'] = '.$nbResults.';
+//         -->
+//         </script>';
     
     $Template->Assign_vars(Array(
         'NB_RESULTS_PER_PAGE' => NB_RESULTS_PER_PAGE,
