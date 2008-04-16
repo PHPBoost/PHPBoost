@@ -85,7 +85,7 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
 
 function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
 /**
- *  Renvoie une chanee contenant les resultats
+ *  Renvoie une chaine contenant les resultats
  */
 {
     $module = $Modules->GetModule(strtolower($resultsName));

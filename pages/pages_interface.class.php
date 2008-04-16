@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              wiki_interface.class.php
+ *                         pages_interface.class.php
  *                            -------------------
  *   begin                : Februar 24, 2008
  *   copyright            : (C) 2007 Loïc Rouchon

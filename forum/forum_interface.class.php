@@ -66,7 +66,7 @@ class ForumInterface extends ModuleInterface
      *  Renvoie le formulaire de recherche du forum
      */
     {
-        global $Member, $SECURE_MODULE, $Errorh, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG, $Sql;
+        global $Member, $SECURE_MODULE, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG, $Sql, $Template;
         require_once('../includes/begin.php');
         require_once('../forum/forum_functions.php');
         require_once('../forum/forum_defines.php');
@@ -78,64 +78,54 @@ class ForumInterface extends ModuleInterface
         $time = !empty($args['ForumTime']) ? numeric($args['ForumTime']) : 0;
         $where = !empty($args['ForumWhere']) ? securit($args['ForumWhere']) : 'title';
         $colorate_result = !empty($args['ForumColorate_result']) ? true : false;
-        
-        $form  = '
-        <dl>
-            <dt><label for="ForumTime">'.$LANG['date'].'</label></dt>
-            <dd><label>
-                <select id="ForumTime" name="ForumTime" class="search_field">
-                    <option value="30000"'.($time == 30000 ? ' selected="selected"' : '' ).'>Tout</option>
-                    <option value="1'.($time == 1 ? ' selected="selected"' : '' ).'">1 '.$LANG['day'].'</option>
-                    <option value="7"'.($time == 7 ? ' selected="selected"' : '' ).'>7 '.$LANG['day_s'].'</option>
-                    <option value="15"'.($time == 15 ? ' selected="selected"' : '' ).'>15 '.$LANG['day_s'].'</option>
-                    <option value="30"'.($time == 30 ? ' selected="selected"' : '' ).'>1 '.$LANG['month'].'</option>
-                    <option value="180"'.($time == 180 ? ' selected="selected"' : '' ).'>6 '.$LANG['month'].'</option>
-                    <option value="360"'.($time == 360 ? ' selected="selected"' : '' ).'>1 '.$LANG['year'].'</option>
-                </select>
-            </label></dd>
-        </dl>
-        <dl>
-            <dt><label for="ForumIdcat">'.$LANG['category'].'</label></dt>
-            <dd><label>
-                <select name="ForumIdcat" id="ForumIdcat" class="search_field">';
-        
-        $selected = ($idcat == '-1') ? ' selected="selected"' : '';
-        $form .= '<option value="-1"' . $selected . '>' . $LANG['all'] . '</option>';
+
+        $Template->Set_filenames(array(
+            'forum_search_form' => '../templates/'.$CONFIG['theme'].'/forum/forum_search_form.tpl'
+        ));
+
+        $Template->Assign_vars(Array(
+            'L_DATE' => $LANG['date'],
+            'L_DAY' => $LANG['day'],
+            'L_DAYS' => $LANG['day_s'],
+            'L_MONTH' => $LANG['month'],
+            'L_MONTHS' => $LANG['month'],
+            'L_YEAR' => $LANG['year'],
+            'IS_SELECTED_30000' => $time == 30000 ? ' selected="selected"' : '',
+            'IS_SELECTED_1' => $time == 1 ? ' selected="selected"' : '',
+            'IS_SELECTED_7' => $time == 7 ? ' selected="selected"' : '',
+            'IS_SELECTED_15' => $time == 15 ? ' selected="selected"' : '',
+            'IS_SELECTED_30' => $time == 30 ? ' selected="selected"' : '',
+            'IS_SELECTED_180' => $time == 180 ? ' selected="selected"' : '',
+            'IS_SELECTED_360' => $time == 360 ? ' selected="selected"' : '',
+            'L_OPTIONS' => $LANG['options'],
+            'L_TITLE' => $LANG['title'],
+            'L_CONTENTS' => $LANG['contents'],
+            'IS_TITLE_CHECKED' => $where == 'title' ? ' checked="checked"' : '' ,
+            'IS_CONTENTS_CHECKED' => $where == 'contents' ? ' checked="checked"' : '' ,
+            'IS_ALL_CHECKED' => $where == 'all' ? ' checked="checked"' : '' ,
+            'L_COLORATE_RESULTS' => $LANG['colorate_result'],
+            'IS_COLORATION_CHECKED' => $colorate_result ? 'checked="checked"' : '',
+            'L_CATEGORY' => $LANG['category'],
+            'L_ALL_CATS' => $LANG['all'],
+            'IS_ALL_CATS_SELECTED' => ($idcat == '-1') ? ' selected="selected"' : '',
+        ));
         if( is_array($CAT_FORUM) )
         {
             foreach($CAT_FORUM as $id => $key)
             {
                 if( $Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
                 {
-                    $margin = ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----';
-                    $selected = ($id == $idcat) ? ' selected="selected"' : '';
-                    $form .= '<option value="'.$id.'"'.$selected.'>'.$margin.' '.$key['name'].'</option>';
+                    $Template->Assign_block_vars('cats', array(
+                        'MARGIN' => ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----',
+                        'ID' => $id,
+                        'L_NAME' => $key['name'],
+                        'IS_SELECTED' => ($id == $idcat) ? ' selected="selected"' : ''
+                    ));
                 }
             }
         }
         
-        $form .= '
-                </select>
-            </label></dd>
-        </dl>
-        <dl>
-            <dt><label for="ForumWhere">'.$LANG['options'].'</label></dt>
-            <dd>
-                <label><input type="radio" id="ForumWhere" name="ForumWhere" value="title"'.($where == 'title' ? ' checked="checked"' : '' ).' /> '.$LANG['title'].'</label>
-                <br />
-                <label><input type="radio" name="ForumWhere" id="where" value="contents"'.($where == 'contents' ? ' checked="checked"' : '' ).' /> '.$LANG['contents'].'</label>
-                <br />
-                <label><input type="radio" name="ForumWhere" value="all"'.($where == 'all' ? ' checked="checked"' : '' ).' /> '.$LANG['title'].' / '.$LANG['contents'].'</label>
-            </dd>
-        </dl>
-        <dl>
-            <dt><label for="ForumColorate_result">'.$LANG['colorate_result'].'</label></dt>
-            <dd>
-                <label><input type="checkbox" name="ForumColorate_result" id="ForumColorate_result" value="1"'.($colorate_result ? 'checked="checked"' : '').' /></label>
-            </dd>
-        </dl>';
-        
-        return $form;
+        return $Template->Pparse('forum_search_form', TEMPLATE_STRING_MODE);
     }
     
     function GetSearchArgs()
@@ -215,6 +205,55 @@ class ForumInterface extends ModuleInterface
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." ".$auth_cats."
             GROUP BY t.id
             ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
+    }
+
+    function ParseSearchResults(&$results)
+    /**
+     *  Return the string to print the results
+     */
+    {
+        global $CONFIG, $LANG, $Sql, $Template;
+        require_once('../includes/begin.php');
+        load_module_lang('forum'); //Chargement de la langue du module.
+        
+        $Template->Set_filenames(array(
+            'forum_generic_results' => '../templates/'.$CONFIG['theme'].'/forum/forum_generic_results.tpl'
+        ));
+
+        $Template->Assign_vars(Array(
+            'L_ON' => $LANG['on'],
+            'L_TOPIC' => $LANG['topic'];
+        ));
+
+        $ids = array();
+        foreach ( $results as $result )
+        {
+            array_push($ids, $result['id_content']);
+        }
+
+        $request = "
+        SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, m.login, s.user_id AS connect, msg.contents
+        FROM ".PREFIX."forum_msg msg
+        LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+        LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
+        JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
+        WHERE msg.id IN (".implode(',', $ids).")
+        GROUP BY topic.id";
+        $requestResults = $Sql->Query_while($request, __LINE__, __FILE__);
+        while( $row = $Sql->Sql_fetch_assoc($requestResults) )
+        {
+            $Template->Assign_block_vars('results', array(
+                'USER_ONLINE' => $row['user_online'],
+                'USER_PSEUDO' => $row['user_pseudo'],
+                'U_TITLE' => $row['title'],
+                'DATE' => $row['date'],
+                'CONTENTS' => $row['contents']
+            ));
+        }
+        $Sql->Close($result);
+        
+        return $Template->Pparse('forum_generic_results', TEMPLATE_STRING_MODE);
+
     }
 }
 
