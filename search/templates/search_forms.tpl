@@ -1,6 +1,8 @@
         <script type="text/javascript">
         <!--
             const FORM = 'form_';
+            const SPECIALIZED_FORM_LINK = 'specialize_form_link';
+            var LastSpecializedFormUsed = '{SEARCH_MODE_MODULE}';
             var modulesForms = new Array();
             # START forms #
                 modulesForms.push("{forms.MODULE_NAME}");
@@ -16,6 +18,16 @@
                 
                 hide_div('advanced_search');
                 show_div('simple_search');
+                
+                if ( modulesForms.length > 0 )
+                {
+                    if ( LastSpecializedFormUsed != 'all' )
+                        ChangeForm(LastSpecializedFormUsed);
+                    else
+                        ChangeForm(modulesForms[0]);
+//                     show_div(FORM + modulesForms[0]);
+//                     document.getElementById('search_in').value = modulesForms[0];
+                }
             }
             
             function HideAdvancedSearchForms()
@@ -25,6 +37,8 @@
                 
                 document.getElementById('searched_modules_DL').style.display = 'block';
                 document.getElementById('forms_selection_DL').style.display = 'none';
+                document.getElementById('search_in').value = 'all';
+                
                 hide_div('simple_search');
                 show_div('advanced_search');
             }
@@ -43,6 +57,13 @@
             {
                 HideForms();
                 show_div(FORM + module);
+                
+                if ( LastSpecializedFormUsed != 'all' )
+                    document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).style.fontSize = '10px';
+
+                LastSpecializedFormUsed = module;
+                document.getElementById('search_in').value = module;
+                document.getElementById(SPECIALIZED_FORM_LINK + module).style.fontSize = '12px';
             }
             
             function check_search_form_post()
@@ -82,7 +103,7 @@
                                 <label>{L_SEARCH_IN_MODULES}<br /><span>{L_SEARCH_IN_MODULES_EXPLAIN}</span></label>
                             </dt>
                             <dd>
-                                <select id="searched_modules[]" name="searched_modules[]" size="5" multiple="multiple" class="list_modules">
+                                <select id="searched_modules" name="searched_modules[]" size="5" multiple="multiple" class="list_modules">
                                 # START searched_modules #
                                     <option value="{searched_modules.MODULE}" id="{searched_modules.MODULE}"{searched_modules.SELECTED}>{searched_modules.L_MODULE_NAME}</option>
                                 # END searched_modules #
@@ -93,7 +114,7 @@
                         <label>{L_SEARCH_SPECIALIZED_FORM}</label>
                         <p id="forms_selection">
                             # START forms #
-                                <a href="javascript:ChangeForm('{forms.MODULE_NAME}');" class="small_link">{forms.L_MODULE_NAME}</a> |
+                                <a id="specialize_form_link{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" class="small_link">{forms.L_MODULE_NAME}</a> |
                             # END forms #
                         </p>
                         </div>
@@ -119,7 +140,8 @@
                     # END forms #
                     <fieldset class="fieldset_submit">
                         <legend>{L_SEARCH}</legend>
-                        <input type="submit" name="search_submit" id="search_submit" value="{L_SEARCH}" class="submit" />
+                        <input type="hidden" id="search_in" name="search_in" value="all" />
+                        <input type="submit" id="search_submit" name="search_submit" value="{L_SEARCH}" class="submit" />
                     </fieldset>
                 </form>
             </div>
@@ -131,6 +153,9 @@
         <script type="text/javascript">
         <!--
             // On cache les éléments ne devant pas s'afficher au début
-            HideAdvancedSearchForms();
+            if ( LastSpecializedFormUsed == 'all' )
+                HideAdvancedSearchForms();
+            else
+                ShowAdvancedSearchForms();
         -->
         </script>

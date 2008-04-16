@@ -83,7 +83,7 @@ class ForumInterface extends ModuleInterface
         <dl>
             <dt><label for="ForumTime">'.$LANG['date'].'</label></dt>
             <dd><label>
-                <select id="time" name="ForumTime" class="search_field">
+                <select id="ForumTime" name="ForumTime" class="search_field">
                     <option value="30000"'.($time == 30000 ? ' selected="selected"' : '' ).'>Tout</option>
                     <option value="1'.($time == 1 ? ' selected="selected"' : '' ).'">1 '.$LANG['day'].'</option>
                     <option value="7"'.($time == 7 ? ' selected="selected"' : '' ).'>7 '.$LANG['day_s'].'</option>
@@ -97,7 +97,7 @@ class ForumInterface extends ModuleInterface
         <dl>
             <dt><label for="ForumIdcat">'.$LANG['category'].'</label></dt>
             <dd><label>
-                <select name="ForumIdcat" id="idcat" class="search_field">';
+                <select name="ForumIdcat" id="ForumIdcat" class="search_field">';
         
         $selected = ($idcat == '-1') ? ' selected="selected"' : '';
         $form .= '<option value="-1"' . $selected . '>' . $LANG['all'] . '</option>';
@@ -121,7 +121,7 @@ class ForumInterface extends ModuleInterface
         <dl>
             <dt><label for="ForumWhere">'.$LANG['options'].'</label></dt>
             <dd>
-                <label><input type="radio" name="ForumWhere" value="title"'.($where == 'title' ? ' checked="checked"' : '' ).' /> '.$LANG['title'].'</label>
+                <label><input type="radio" id="ForumWhere" name="ForumWhere" value="title"'.($where == 'title' ? ' checked="checked"' : '' ).' /> '.$LANG['title'].'</label>
                 <br />
                 <label><input type="radio" name="ForumWhere" id="where" value="contents"'.($where == 'contents' ? ' checked="checked"' : '' ).' /> '.$LANG['contents'].'</label>
                 <br />
@@ -131,7 +131,7 @@ class ForumInterface extends ModuleInterface
         <dl>
             <dt><label for="ForumColorate_result">'.$LANG['colorate_result'].'</label></dt>
             <dd>
-                <label><input type="checkbox" name="ForumColorate_result" id="colorate_result" value="1"'.($colorate_result ? 'checked="checked"' : '').' /></label>
+                <label><input type="checkbox" name="ForumColorate_result" id="ForumColorate_result" value="1"'.($colorate_result ? 'checked="checked"' : '').' /></label>
             </dd>
         </dl>';
         

@@ -48,7 +48,7 @@ $Template->Assign_vars(Array(
 	'L_SEARCH' => $LANG['search'],
     'U_FORM_VALID' => transid('../search/search.php#results'),
     'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-    'U_ADVANCED_SEARCH' => transid('../search/search.php#results'),
+    'U_ADVANCED_SEARCH' => transid('../search/search.php'),
 ));
 
 //------------------------------------------------------------- Other includes
