@@ -80,8 +80,8 @@
 					# ENDIF #
 					
 					# IF C_FORUM_SEARCH #
-					<div class="module_position" style="width:100%;">					
-						<div class="module_top_l"></div>		
+					<div class="module_position" style="width:100%;">
+						<div class="module_top_l"></div>
 						<div class="module_top_r"></div>
 						<div class="module_top">&nbsp;</div>
 					</div>
