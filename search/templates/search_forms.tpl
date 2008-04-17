@@ -59,11 +59,15 @@
                 show_div(FORM + module);
                 
                 if ( LastSpecializedFormUsed != 'all' )
+                {
                     document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).style.fontSize = '10px';
+                    document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).className = 'small_link';
+                }
 
                 LastSpecializedFormUsed = module;
                 document.getElementById('search_in').value = module;
                 document.getElementById(SPECIALIZED_FORM_LINK + module).style.fontSize = '12px';
+                document.getElementById(SPECIALIZED_FORM_LINK + module).className = 'small_link SpecializedFormLink';
             }
             
             function check_search_form_post()
@@ -125,19 +129,16 @@
                         <label>{L_SEARCH_SPECIALIZED_FORM}</label>
                         <p id="forms_selection">
                             # START forms #
-                                <a id="specialize_form_link{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" class="small_link">{forms.L_MODULE_NAME}</a> |
+                                <a id="specialize_form_link{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" class="small_link">{forms.L_MODULE_NAME}</a>
                             # END forms #
                         </p>
                         </div>
-                    </fieldset>
                     # START forms #
-                        <div id="form_{forms.MODULE_NAME}" style="display:none">
-                            <fieldset>
-                                <legend>{L_ADVANCED_SEARCH} - {forms.L_MODULE_NAME}</legend>
-                                {forms.SEARCH_FORM}
-                            </fieldset>
+                        <div id="form_{forms.MODULE_NAME}" class="SpecializedForm" style="display:none">
+                            {forms.SEARCH_FORM}
                         </div>
                     # END forms #
+                    </fieldset>
                     <fieldset class="fieldset_submit">
                         <legend>{L_SEARCH}</legend>
                         <input type="hidden" id="search_in" name="search_in" value="all" />
