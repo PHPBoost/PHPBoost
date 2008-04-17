@@ -34,5 +34,6 @@
 $LANG['link_configuration'] = 'Configuration des liens';
 $LANG['link_add'] = 'Ajouter un lien';
 $LANG['add_sep'] = 'Ajouter un séparateur';
+$LANG['menu'] = 'Menu';
 
 ?>
