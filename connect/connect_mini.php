@@ -34,15 +34,14 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 		'connect_mini' => '../templates/' . $CONFIG['theme'] . '/connect/connect_mini.tpl'
 	));
 
-	$l_message = ($Member->Get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'];
-	$user_pm = ($Member->Get_attribute('user_pm') >= 1) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/new_pm.gif"  class="valign_middle" alt="" /> <a href="../member/pm' . transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php') . '" class="small_link">' . $Member->Get_attribute('user_pm') . ' ' . $l_message . '</a>' : '<img src="../templates/' . $CONFIG['theme'] . '/images/pm_mini.png" alt="" class="valign_middle" /> <a href="../member/pm' . transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php') . '" class="small_link">' . $LANG['connect_private_message'] . '</a>';
-	
 	$Template->Assign_vars(array(
 		'C_ADMIN_AUTH' => $Member->Check_level(ADMIN_LEVEL),
 		'C_MODO_AUTH' => $Member->Check_level(MODO_LEVEL),
+		'IMG_PM' => $Member->Get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
+		'U_MEMBER_PM' => transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php'),
 		'U_MEMBER_ID' => transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', '-' . $Member->Get_attribute('user_id') . '.php?view=1'),
-		'U_MEMBER_MP' => $user_pm,
 		'U_DISCONNECT' => HOST . DIR . '/member/member.php?disconnect=true',
+		'L_NBR_PM' => ($Member->Get_attribute('user_pm') > 0 ? ($Member->Get_attribute('user_pm') . ' ' . (($Member->Get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['connect_private_message']),
 		'L_PROFIL' => $LANG['profil'],
 		'L_ADMIN_PANEL' => $LANG['admin_panel'],
 		'L_MODO_PANEL' => $LANG['modo_panel'],

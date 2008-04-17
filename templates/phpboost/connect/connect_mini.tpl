@@ -29,7 +29,7 @@
 		# IF C_MEMBER_CONNECTED #		
 		<p style="text-align:right;color:#FFFFFF;">
 			<img src="../templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="../member/member{U_MEMBER_ID}" class="small_link">{L_PRIVATE_PROFIL}</a>&nbsp;				
-			{U_MEMBER_MP}&nbsp;
+			<img src="../templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_MEMBER_PM}" class="small_link">{L_NBR_PM}</a>&nbsp;
 			
 			# IF C_ADMIN_AUTH # 
 			<img src="../templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="../admin/admin_index.php" class="small_link">{L_ADMIN_PANEL}</a>&nbsp; 

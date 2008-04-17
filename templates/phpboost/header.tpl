@@ -70,9 +70,21 @@
 		{MODULES_MINI_SUB_HEADER_CONTENT}
 	</div>
 	<div id="links_vertical">
-		<p><img onclick="new Effect.ScrollTo('scroll_top_page',{duration:0.8}); return false;" style="cursor:pointer;" src="../templates/{THEME}/images/top.png" alt="" /></p>
-		<p><a href="../news/news.php"><img src="../templates/{THEME}/images/admin/admin_mini.png" alt="" /></a></p>
-		<p style="margin:0"><img onclick="new Effect.ScrollTo('scroll_bottom_page',{duration:0.8}); return false;" style="cursor:pointer;" src="../templates/{THEME}/images/bottom.png" alt="" /></p>
+		<p style="margin:0px;"><img onclick="new Effect.ScrollTo('scroll_top_page',{duration:1.2}); return false;" style="cursor:pointer;" src="../templates/{THEME}/images/top.png" alt="" /></p>
+		<hr />
+		<p style="margin:0;margin-top:5px;"><a href="../news/news.php"><img src="../templates/{THEME}/images/admin/admin_mini.png" alt="" /></a></p>
+	# IF C_MEMBER_CONNECTED #		
+		<p style="margin:0"><a href="../member/member{U_MEMBER_ID}" class="small_link" title="{L_PRIVATE_PROFIL}"><img src="../templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /></a>	</p>		
+		<p style="margin:0"><a href="{U_MEMBER_PM}" class="small_link" title="{L_NBR_PM}"><img src="../templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /></a></p>			
+		# IF C_ADMIN_AUTH # 
+		<p style="margin:0"><a href="../admin/admin_index.php" class="small_link" title="{L_ADMIN_PANEL}"><img src="../templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /></a></p>
+		# ENDIF #
+		# IF C_MODO_AUTH # 
+		<p><a href="../member/moderation_panel.php" class="small_link" title="{L_MODO_PANEL}"><img src="../templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /></a></p>
+		# ENDIF #
+	# END ENDIF #
+		<hr />
+		<p style="margin:0;margin-top:5px;"><img onclick="new Effect.ScrollTo('scroll_bottom_page',{duration:1.2}); return false;" style="cursor:pointer;" src="../templates/{THEME}/images/bottom.png" alt="" /></p>
 	</div>
 	
 	
