@@ -102,7 +102,7 @@ if( $install ) //Installation du module
 				if( file_exists($module_mini_path) )
 				{	
 					$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  addslashes($location) . "'", __LINE__, __FILE__) + 1;
-					$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . securit($module_name) . "', 'include_once(\'" . $module_mini_path . "\');', '" . addslashes($location) . "', -1, 1, 0, 0)", __LINE__, __FILE__);
+					$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . securit($module_name) . "', '" . addslashes($path) . "', '" . addslashes($location) . "', -1, 1, 0, 0)", __LINE__, __FILE__);
 				}
 			}
 		}

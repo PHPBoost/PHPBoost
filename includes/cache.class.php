@@ -274,40 +274,55 @@ class Cache
 		$Sql->Close($result);
 
 		$code = '';
-		$array_seek = array('subheader', 'left', 'right', 'topcentral', 'bottomcentral');
+		$array_seek = array('header', 'subheader', 'left', 'right', 'topcentral', 'bottomcentral', 'topfooter', 'footer');
 		foreach($array_seek as $location)
 		{
+			$code .= '$MODULES_MINI[\'' . $location . '\'] = \'\';' . "\n";
 			if( isset($modules_mini[$location]) )
 			{
-				$code .= 'if( isset($MODULES_MINI[\'' . $location . '\']) && $MODULES_MINI[\'' . $location . '\'] ){' . "\n";
 				foreach($modules_mini[$location] as $location_key => $info)
 				{
 					if( $info['added'] == '0' || $info['added'] == '2' )
-						$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . $info['contents'] . '}' . "\n";
+					{	
+						$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . "\n"
+						. "\t" . 'include_once(\'../' . $info['name'] . '/' . $info['contents'] . "');\n"
+						. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $info['contents']) . '\', TEMPLATE_STRING_MODE);' 
+						. "\n" . '}' . "\n";
+					}
 					else
 					{
 						if( $info['use_tpl'] == '0' )
-							$code .= 'echo ' . var_export($info['contents'], true) . ';' . "\n";
+							$code .= '$MODULES_MINI[\'' . $location . '\'] .= ' . var_export($info['contents'], true) . ';' . "\n";
 						else
 						{
+							$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . "\n";
 							switch($location)
 							{
 								case 'left':
 								case 'right':
-								$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . 
-								"\$Template->Set_filenames(array('modules_mini' => '../templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\$Template->Pparse('modules_mini');" . '}' . "\n";
+									$code .= "\$Template->Set_filenames(array('modules_mini' => '../templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\n" 
+									. "\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\n"
+									. '$MODULES_MINI[\'' . $location . '\'] .= \$Template->Pparse(\'modules_mini\', TEMPLATE_STRING_MODE);';
 								break;
+								case 'header':
 								case 'subheader':
 								case 'topcentral':
 								case 'bottomcentral':
-								$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . 
-								"\$Template->Set_filenames(array('modules_mini_horizontal' => '../templates/' . \$CONFIG['theme'] . '/modules_mini_horizontal.tpl'));\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\$Template->Pparse('modules_mini_horizontal');" . '}' . "\n";
-								break;					
-							}						
+								case 'topfooter':
+								case 'footer':
+									$code .= "\$Template->Set_filenames(array('modules_mini_horizontal' => '../templates/' . \$CONFIG['theme'] . '/modules_mini_horizontal.tpl'));"
+										. "\t\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\n"
+										. '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'modules_mini_horizontal\', TEMPLATE_STRING_MODE);';
+									
+								break;		
+							}	
+							$code .=  "\n" 
+								. '}' 
+								. "\n";
 						}
 					}
 				}
-				$code .= '}' . "\n";
+				$code .= "\n";
 			}
 		}
 		

@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{L_XML_LANGUAGE}" >
 	<head>
 		<title>{SITE_NAME} :: {TITLE}</title>
@@ -20,11 +20,72 @@
 	</head>
 	<body>
 
-	<div id="global">
+<div id="global">
 	<div id="header">
-		<img src="../templates/{THEME}/images/header_boost.jpg" alt="PHPBoost" />
 		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
-	</div>	
+		{MODULES_MINI_HEADER_CONTENT}
+		<div class="dynamic_menu" style="left:190px;top:96px;">
+			<ul>
+				<li>
+					<h5 class="links"><a href="../news/news.php" title="Accueil PHPBoost"><img src="../templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> Accueil</a></h5>
+				</li>
+				<li onmouseover="show_menu('l1', 0);" onmouseout="hide_menu(0);">
+					<h5 class="links"><a href="../download/download-2-52+phpboost-2-0.php" title="Télécharger PHPBoost"><img src="../download/download_mini.png" class="valign_middle" alt="" /> PHPBoost</a></h5>
+					<ul id="smenul1">
+						<li><a href="../download/download-2-52+phpboost-2-0.php" style="background-image:url(../download/download_mini.png);">PHPBoost 2</a></li>
+						<li><a href="http://demo.phpboost.com" title="Démonstration PHPBoost" style="background-image:url(../templates/phpboost/images/admin/com_mini.png);">Démonstration</a></li>
+						<li><a href="http://themes.phpboost.com" style="background-image:url(../templates/phpboost/images/admin/themes_mini.png);">Thèmes</a></li>
+						<li><a href="../phpboost/modules.php" style="background-image:url(../templates/phpboost/images/admin/modules_mini.png);">Modules</a></li>
+					</ul>
+				</li>
+				<li onmouseover="show_menu('l2', 0);" onmouseout="hide_menu(0);">
+					<h5 class="links"><a href="../wiki/wiki.php" title="Documentation PHPBoost"><img src="../wiki/wiki_mini.png" class="valign_middle" alt="" /> Documentation</a></h5>
+					<ul id="smenul2"><li><a href="../wiki/presentation-de-phpboost" style="background-image:url(../images/doc/presentation_mini.png);">Présentation</a></li>
+						<li><a href="../wiki/installation" style="background-image:url(../images/doc/installation_mini.png);">Installation</a></li>
+						<li><a href="../wiki/utilisation" style="background-image:url(../images/doc/utilisation_mini.png);">Utilisation</a></li>
+						<li><a href="../wiki/modules" style="background-image:url(../images/doc/modules_mini.png);">Modules</a></li>
+						<li><a href="../wiki/personnalisation-de-phpboost" style="background-image:url(../images/doc/personnalisation_mini.png);">Personnalisation</a></li><li><a href="../wiki/developpement" style="background-image:url(../images/doc/developpement_mini.png);">Développement</a></li>
+						<li><a href="../pages/videos-de-demonstration" style="background-image:url(../images/doc/videos_mini.png);">Vidéos</a></li>
+						<li><a href="../faq/faq.php" style="background-image:url(../faq/faq_mini.png);">FAQ</a></li>
+					</ul>
+				</li>
+				<li>
+					<h5 class="links"><a href="../forum/index.php" title="Forum PHPBoost"><img src="../articles/articles_mini.png" class="valign_middle" alt="" /> Dossiers</a></h5>
+				</li>
+				<li onmouseover="show_menu('l4', 0);" onmouseout="hide_menu(0);">
+					<h5 class="links"><a href="../forum/index.php" title="Forum PHPBoost"><img src="../forum/forum_mini.png" class="valign_middle" alt="" /> Communauté</a></h5>
+					<ul id="smenul4">
+						<li><a href="../forum/index.php" style="background-image:url(../forum/forum_mini.png);">Forum</a></li>						
+						<li><a href="../shoutbox/shoutbox.php" style="background-image:url(../shoutbox/shoutbox_mini.png);">Discussion</a></li>						
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div id="sub_header">
+		{MODULES_MINI_SUB_HEADER_CONTENT}
+	</div>
+	<div id="links_vertical">
+		<script type="text/javascript">
+		<!--		
+		function scroll_top()
+		{
+			window.scrollTop = '0px';
+			return false;
+		}
+		function scroll_bottom()
+		{
+			window.scrollTop = '0px';
+			return false;
+		}
+		-->
+		</script>
+		<p><img onClick="javascript:scroll_top()" style="cursor:pointer;" src="../templates/{THEME}/images/top.png" alt="" /></p>
+		<p><a href="../news/news.php"><img src="../templates/{THEME}/images/admin/admin_mini.png" alt="" /></a></p>
+		<p style="margin:0"><img onClick="javascript:scroll_bottom()" style="cursor:pointer;" src="../templates/{THEME}/images/bottom.png" alt="" /></p>
+	</div>
+	
 	
 	# IF C_COMPTEUR #
 	<div id="compteur">					
@@ -89,8 +150,26 @@
 	</script>
 	# ENDIF #
 	
-		
-	<div id="sub_header">						
-		<div id="sub_header_left">&nbsp;</div>
-		<div id="sub_header_right">&nbsp;</div>
 	
+	# IF C_START_LEFT #
+	<div id="left_menu">
+		{MODULES_MINI_LEFT_CONTENT}
+	</div>
+	# ENDIF #
+	
+	# IF C_START_RIGHT #
+	<div id="right_menu">
+		{MODULES_MINI_RIGHT_CONTENT}
+	</div>
+	# ENDIF #
+	
+	<div id="main">
+		<div id="links">
+			&nbsp;&nbsp;<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
+			# START link_speed_bar #
+			&raquo; <a class="small_link" href="{link_speed_bar.URL}" title="{link_speed_bar.TITLE}">{link_speed_bar.TITLE}</a>
+			# END link_speed_bar #			
+		</div>	
+		<div id="top_contents">
+			{MODULES_MINI_TOPCENTRAL_CONTENT}
+		</div>

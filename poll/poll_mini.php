@@ -63,8 +63,6 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 				'PERCENT' => $width
 			));			
 		}
-		
-		$Template->Pparse('poll_mini'); 
 	}
 	else
 	{
@@ -110,8 +108,6 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 				$z++;	
 			}
 		}
-		
-		$Template->Pparse('poll_mini');
 	}
 }
 

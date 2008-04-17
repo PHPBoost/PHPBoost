@@ -89,7 +89,6 @@ if( $CONFIG['maintain'] > time() )
 	
 $Template->Set_filenames(array(
 	'header' => '../templates/' . $CONFIG['theme'] . '/header.tpl',
-	'subheader' => '../templates/' . $CONFIG['theme'] . '/subheader.tpl',
 	'topcentral' => '../templates/' . $CONFIG['theme'] . '/topcentral.tpl'
 ));
 
@@ -131,6 +130,20 @@ $Template->Assign_vars(array(
 	'L_REQUIRE_PASSWORD' => $LANG['require_password']
 ));
 
+//Inclusion des modules
+if( @!include_once('../cache/modules_mini.php') )
+{
+	$Cache->Generate_file('modules_mini');
+	
+	//On inclue une nouvelle fois
+	if( @!include_once('../cache/modules_mini.php') )
+		$Errorh->Error_handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
+}
+$Template->Assign_vars(array(
+	'MODULES_MINI_HEADER_CONTENT' =>$MODULES_MINI['header'],
+	'MODULES_MINI_SUB_HEADER_CONTENT' => $MODULES_MINI['subheader']
+));
+
 //Si le compteur de visites est activé, on affiche le tout.
 if( $CONFIG['compteur'] == 1 )
 {
@@ -156,70 +169,40 @@ $left_column = ($THEME_CONFIG[$CONFIG['theme']]['left_column'] && !NO_LEFT_COLUM
 $right_column = ($THEME_CONFIG[$CONFIG['theme']]['right_column'] && !NO_RIGHT_COLUMN);	
 
 //Début de la colonne de gauche.
-if( $left_column )
-{	
-	$Template->Assign_vars(array(	
-		'C_START_LEFT' => true
-	));
-}
-$Template->Pparse('header');
-
-//Gestion des blocs de subheader.
-$MODULES_MINI['subheader'] = true;
-include('../includes/modules_mini.php');
-$MODULES_MINI['subheader'] = false;
-
-$Template->Pparse('subheader');
-
 if( $left_column ) //Gestion des blocs de gauche.
 {
-	$Template->Set_filenames(array(
-		'end_left' => '../templates/' . $CONFIG['theme'] . '/end_left.tpl',
+	$Template->Assign_vars(array(	
+		'C_START_LEFT' => true,
+		'MODULES_MINI_LEFT_CONTENT' => $MODULES_MINI['left']
 	));
-	
-	$MODULES_MINI['left'] = true;
-	include('../includes/modules_mini.php');
-	$MODULES_MINI['left'] = false;
-	
 	if( !$right_column ) //Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
 	{
-		$MODULES_MINI['right'] = true;
-		include('../includes/modules_mini.php');
-		$MODULES_MINI['right'] = false;
+		$Template->Assign_vars(array(
+			'MODULES_MINI_RIGHT_CONTENT' => $MODULES_MINI['left']
+		));
 	}
-
-	$Template->Pparse('end_left');
 }	
 if( $right_column )  //Gestion des blocs de droite.
 {
-	$Template->Set_filenames(array(
-		'start_right' => '../templates/' . $CONFIG['theme'] . '/start_right.tpl'
+	$Template->Assign_vars(array(
+		'C_START_RIGHT' => true,
+		'MODULES_MINI_RIGHT_CONTENT' => $MODULES_MINI['left']
 	));
-
-	$Template->Pparse('start_right');	
-	$MODULES_MINI['right'] = true;
-	include('../includes/modules_mini.php');
-	$MODULES_MINI['right'] = false;
-	
 	if( !$left_column ) //Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
 	{
-		$MODULES_MINI['left'] = true;
-		include('../includes/modules_mini.php');
-		$MODULES_MINI['left'] = false;
+		$Template->Assign_vars(array(
+			'MODULES_MINI_LEFT_CONTENT' => $MODULES_MINI['left']
+		));
 	}
-	
-	$Template->Assign_vars(array(	
-		'C_END_RIGHT' => true
-	));
 }
 
 //Gestion du fil d'ariane, et des titres des pages dynamiques.
 $Speed_bar->Display_speed_bar();
 
-$MODULES_MINI['topcentral'] = true;
-include('../includes/modules_mini.php');
-$MODULES_MINI['topcentral'] = false;
+$Template->Assign_vars(array(
+	'MODULES_MINI_TOPCENTRAL_CONTENT' => $MODULES_MINI['topcentral']
+));
 
-$Template->Pparse('topcentral');
+$Template->Pparse('header');
 
 ?>

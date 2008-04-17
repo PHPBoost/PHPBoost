@@ -545,7 +545,7 @@ $LANG['query_failure'] = 'Traitement échoué';
 
 //Footer
 $LANG['powered_by'] = 'Boosté par';
-$LANG['phpboost_right'] = '&copy; 2005-2008';
+$LANG['phpboost_right'] = '';
 $LANG['sql_req'] = 'Requêtes';
 $LANG['achieved'] = 'Exécuté en';
 ?>

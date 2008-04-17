@@ -61,10 +61,6 @@ class Speed_bar
 		if( empty($this->array_links) )
 			$this->Add_link(stripslashes(TITLE), HOST . SCRIPT . SID);
 		
-		$Template->Set_filenames(array(
-			'speed_bar' => '../templates/' . $CONFIG['theme'] . '/speed_bar.tpl'
-		));
-			
 		$Template->Assign_vars(array(
 			'START_PAGE' => get_start_page(),
 			'L_INDEX' => $LANG['index']	
@@ -77,8 +73,6 @@ class Speed_bar
 				'TITLE' => $array[0]
 			));	
 		}
-
-		$Template->Pparse('speed_bar');
 	}
 	
 	//Suppression des liens existants

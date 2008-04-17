@@ -48,6 +48,4 @@ $Template->Assign_vars(array(
 	'U_LINK_LAST_MEMBER' => '<a href="' . HOST . DIR . '/member/member' . transid('.php?id=' . $last_member_id, '-' . $last_member_id  . '.php') . '">' . $last_member_login . '</a>'
 ));
 
-$Template->Pparse('stats_mini');
-
 ?>

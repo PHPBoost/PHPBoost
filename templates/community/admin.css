@@ -1,0 +1,155 @@
+/* --------------------------------------
+		admin.css
+Contient les classes supplémentaires pour l'administration.
+--------------------------------------*
+
+/* Administration */
+div#admin_main{
+	background:#91BAD8 url(images/left_menu.jpg) no-repeat;
+	padding:0px 6px;
+}
+div#admin_contents{
+	height:450px;
+	margin-left:170px;	
+	border-left:1px solid #1C618C;	
+}
+html>body div#admin_contents{
+	height:auto;
+	min-height:450px;
+}
+div#admin_quick_menu{
+	width:155px;
+	float:left;
+	text-align:center;
+	padding-top:5px;
+}
+div#admin_quick_menu ul{
+	list-style-type:none;
+	width:169px;
+	margin-top:12px;
+}
+div#admin_quick_menu li{
+	display:block;
+	width:160px;
+	padding:15px 0px;
+}
+div#admin_quick_menu li.title_menu{
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	text-transform:uppercase;
+	font-weight:bold;
+	font-size:0.75em;
+	background:#526F8E;
+	border:1px solid #18415B;
+	color:#FFFFFF;	
+	padding:3px 0px;
+}
+div#admin_quick_menu li a.quick_link{
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	text-transform:uppercase;
+	font-weight:bold;
+	font-size:0.75em;
+	color:#FFFFFF;	
+	background:#768EA8;
+	border:1px solid #18415B;
+	padding:3px 2px;
+	text-decoration:none;
+	line-height:2.2em;
+}
+
+#dynamic_menu li ul {
+	margin-top:1px;
+}
+
+/* Liste des news du site officiel sur l'index */
+.phpboost_news{
+	width:450px;
+	margin:auto;
+	padding:5px;
+	text-align:left;
+	background-color:#FFFFFF;
+	border:1px solid #487B9C;	
+}
+.phpboost_news ul{
+	margin:0;
+	padding:0;
+	text-align:center;
+	list-style-type:none;
+	margin:auto;
+}
+			
+/* Tableaux de l'administration */
+.module_table, .block_container{
+	width:95%;	
+	padding:3px;
+	margin-top:15px;	
+}
+.error_handler_position{
+	margin-top:15px;
+}
+
+/* Fond des catégories dans l'administration */
+.management_cat_admin{
+	width:100%;
+	height:20px;
+	margin-bottom:2px;
+	padding:4px 0px;
+}
+
+/* Coloration des moteur de recherche */
+.robot{
+	color:#FF6600; 
+	font-size:12px;
+	font-weight:bold;
+}
+.success{
+	text-align:center;
+	width:20%;
+	background:#81c3a6;
+	display:block;
+	margin:auto;
+	margin-top:4px;
+	color:green;
+	font-weight:bold;
+	padding:1px;
+}
+.failure {	
+	text-align:center;
+	width:20%;
+	background:#ee8d8d;
+	display:block;
+	margin:auto;
+	margin-top:4px;
+	color:red;
+	font-weight:bold;
+	padding:1px;
+}
+.unspecified {	
+	text-align:center;
+	width:20%;
+	background:#5189bb;
+	display:block;
+	margin:auto;
+	margin-top:4px;	
+	color:#133554;
+	font-weight:bold;
+	padding:1px;
+}
+
+/* phpinfo */
+h1, h2 {
+	font-family: sans-serif;
+}
+h1 {
+	font-size: 150%;
+}
+h2 {
+	font-size: 125%;
+}
+pre {
+	margin: 0px; font-family: monospace;
+}
+.center {
+	text-align:center;
+}
+.em{color: #666666; background-color: #cccccc;}
+

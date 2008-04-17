@@ -44,11 +44,14 @@
 						<dt><label for="location">* {L_LOCATION}</label></dt>
 						<dd><label>
 							<select name="location" id="location">								
+								<option value="header">{L_HEADER}</option>
 								<option value="subheader">{L_SUB_HEADER}</option>
 								<option value="left" selected="selected">{L_LEFT_MENU}</option>	
 								<option value="topcentral">{L_TOP_CENTRAL_MENU}</option>	
 								<option value="bottomcentral">{L_BOTTOM_CENTRAL_MENU}</option>	
 								<option value="right">{L_RIGHT_MENU}</option>	
+								<option value="top_footer">{L_TOP_FOOTER}</option>	
+								<option value="footer">{L_FOOTER}</option>	
 							</select>
 						</label></dd>
 					</dl>
