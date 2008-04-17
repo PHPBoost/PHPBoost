@@ -186,7 +186,7 @@ function getCookie(name)
 function set_bbcode_preference(divID)
 {
 	if( getCookie('hide_bbcode') == 1 )
-		show_bbcode_div(divID, 1);
+		document.getElementById(divID).style.display = 'block';
 }
 
 //Masquage du div.
@@ -195,12 +195,12 @@ function show_bbcode_div(divID, hide)
 	var div = document.getElementById(divID);
 	if( div.style.display == 'none' )
 	{	
-		div.style.display = 'block';
+		Effect.Appear(divID);
 		sendCookie('hide_bbcode', 1); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
 	}
-	else if( hide )
+	else
 	{	
-		div.style.display = 'none';
+		Effect.Fade(divID);
 		sendCookie('hide_bbcode', 0); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
 	}
 }
