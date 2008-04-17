@@ -546,7 +546,7 @@ $LANG['query_failure'] = 'Processing failed';
 
 //Footer
 $LANG['powered_by'] = 'Boosted by';
-$LANG['phpboost_right'] = '&copy; 2005-2008';
+$LANG['phpboost_right'] = '';
 $LANG['sql_req'] = ' Requests';
 $LANG['achieved'] = 'Achieved in';
 ?>

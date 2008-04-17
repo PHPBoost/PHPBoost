@@ -26,15 +26,6 @@
 ###################################################*/
 
 if( defined('PHPBOOST') !== true) exit;
-	
-
-$Template->Set_filenames(array(
-	'bottomcentral' => '../templates/' . $CONFIG['theme'] . '/bottomcentral.tpl'
-));
-$Template->Pparse('bottomcentral');
-
-$MODULES_MINI['bottomcentral'] = true;
-include('../includes/modules_mini.php');
 
 $Sql->Sql_close(); //Fermeture de mysql
 
@@ -46,6 +37,9 @@ $Template->Assign_vars(array(
 	'HOST' => HOST,
 	'DIR' => DIR,
 	'THEME' => $CONFIG['theme'],
+	'MODULES_MINI_BOTTOMCENTRAL_CONTENT' => $MODULES_MINI['bottomcentral'],
+	'MODULES_MINI_TOP_FOOTER_CONTENT' => $MODULES_MINI['topfooter'],
+	'MODULES_MINI_FOOTER_CONTENT' => $MODULES_MINI['footer'],
 	'C_DISPLAY_AUTHOR_THEME' => ($CONFIG['theme_author'] ? true : false),
 	'L_POWERED_BY' => $LANG['powered_by'],
 	'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
@@ -66,7 +60,6 @@ if( $CONFIG['bench'] )
 		'C_DISPLAY_BENCH' => true,
 		'BENCH' => $Bench->Display_bench('site'), //Fin du benchmark
 		'REQ' => $Sql->Display_sql_request(),
-		'L_UNIT_SECOND' => HOST,
 		'L_REQ' => $LANG['sql_req'],
 		'L_ACHIEVED' => $LANG['achieved'],
 		'L_UNIT_SECOND' => $LANG['unit_seconds_short']

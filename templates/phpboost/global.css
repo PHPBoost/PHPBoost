@@ -118,6 +118,15 @@ a.membre{
 	font-weight:bold;
 }
 
+/* Liens pagination
+--------------------------------------*/
+.pagination {
+    font-size: 11px;
+}
+
+.pagination_current_page {
+    text-decoration: underline;
+}
 
 /*Menu dynamique des liens
 --------------------------------------*/
@@ -156,16 +165,6 @@ a.membre{
 	color:#edfff0;
 	background:#68809B;
 	cursor:default;
-}
-
-/* Liens pagination
---------------------------------------*/
-.pagination {
-    font-size: 11px;
-}
-
-.pagination_current_page {
-    text-decoration: underline;
 }
 
 /* Séparateur */

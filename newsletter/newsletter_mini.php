@@ -45,6 +45,4 @@ $Template->Assign_vars(array(
 	'L_ARCHIVES' => $LANG['archives']	
 ));
 
-$Template->Pparse('newsletter_mini'); 
-
 ?>

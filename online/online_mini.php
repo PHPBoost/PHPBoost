@@ -34,7 +34,7 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 	$Cache->Load_file('online');
 	
 	$Template->Set_filenames(array(
-		'online' => '../templates/' . $CONFIG['theme'] . '/online/online_mini.tpl'
+		'online_mini' => '../templates/' . $CONFIG['theme'] . '/online/online_mini.tpl'
 	));
 
 	//On compte les visiteurs en ligne dans la bdd, en prenant en compte le temps max de connexion.
@@ -108,8 +108,6 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 		'L_ONLINE' => $LANG['online'],
 		'L_TOTAL' => $LANG['total']
 	));
-
-	$Template->Pparse('online'); 
 }	
 
 ?>

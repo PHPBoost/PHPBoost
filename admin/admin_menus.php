@@ -71,11 +71,11 @@ if( !empty($idmodule) ) //Module non installé => insertion dans la bdd
 							else
 								$location = addslashes($location);
 				
-							$check_menu = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules_mini WHERE name = '" .  addslashes($module_name) . "' AND contents = 'include_once(\'" . $menu_path . "\');'", __LINE__, __FILE__);
+							$check_menu = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules_mini WHERE name = '" .  addslashes($module_name) . "' AND contents = '" . addslashes($path) . "'", __LINE__, __FILE__);
 							if( empty($check_menu) )
 							{
 								$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-								$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . addslashes($module_name) . "', 'include_once(\'" . $menu_path . "\');', '" . addslashes($location) . "', '" . $secure . "', '" . $activ . "', 0, 0)", __LINE__, __FILE__);
+								$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . addslashes($module_name) . "', '" . addslashes($path) . "', '" . addslashes($location) . "', '" . $secure . "', '" . $activ . "', 0, 0)", __LINE__, __FILE__);
 								
 								$Cache->Generate_file('modules_mini');
 							}
@@ -97,11 +97,11 @@ if( !empty($idmodule) ) //Module non installé => insertion dans la bdd
 			else
 				$location = 'left';
 
-			$check_menu = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules_mini WHERE name = '" .  str_replace('.php', '', addslashes($module_name)) . "' AND contents = 'include_once(\'" . $menu_path . "\');'", __LINE__, __FILE__);
+			$check_menu = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules_mini WHERE name = '" .  str_replace('.php', '', addslashes($module_name)) . "' AND contents = ''" . addslashes($module_name) . "'", __LINE__, __FILE__);
 			if( empty($check_menu) )
 			{
 				$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-				$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . str_replace('.php', '', addslashes($module_name)) . "', 'include_once(\'" . $menu_path . "\');', '" . $location . "', '" . $secure . "', '" . $activ . "', 2, 0)", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . str_replace('.php', '', addslashes($module_name)) . "', '" . addslashes($module_name) . "', '" . $location . "', '" . $secure . "', '" . $activ . "', 2, 0)", __LINE__, __FILE__);
 			
 				$Cache->Generate_file('modules_mini');
 			}
@@ -205,7 +205,7 @@ else
 	));
 	
 	$Cache->load_file('themes'); //Récupération de la configuration des thèmes.	
-	
+
 	//Récupération du class le plus grand pour chaque positionnement possible.
 	$array_max = array();
 	$result = $Sql->Query_while("SELECT MAX(class) AS max, location
@@ -241,7 +241,7 @@ else
 				$array_menus = parse_ini_array($config['mini_module']);
 				foreach($array_menus as $module_path => $location)
 				{
-					if( strpos($row['contents'], $row['name'] . '/' . $module_path) !== false ) //Module trouvé.
+					if( strpos($row['contents'], $module_path) !== false ) //Module trouvé.
 					{	
 						$installed_menus[$row['name']][$module_path] = $location;
 						if( isset($uninstalled_menus[$row['name']][$module_path]) )
@@ -265,9 +265,9 @@ else
 			$selected = ($row['secure'] == $rank) ? 'selected="selected"' : '';
 			$ranks .= '<option value="' . $rank . '" ' . $selected . '>' . $name . '</option>';
 		}
-		
+
 		$block_position = $row['location'];		
-		if( $row['location'] == 'left' || $row['location'] == 'right' && (!$THEME_CONFIG[$CONFIG['theme']]['right_column'] && !$THEME_CONFIG[$CONFIG['theme']]['left_column']) ) 
+		if( ($row['location'] == 'left' || $row['location'] == 'right') && (!$THEME_CONFIG[$CONFIG['theme']]['right_column'] && !$THEME_CONFIG[$CONFIG['theme']]['left_column']) ) 
 			$block_position = 'main';
 		elseif( ($row['location'] == 'left' || (!$THEME_CONFIG[$CONFIG['theme']]['right_column'] && $row['location'] == 'right')) && $THEME_CONFIG[$CONFIG['theme']]['left_column'] )
 			$block_position = 'left'; //Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
@@ -394,11 +394,14 @@ else
 		'L_ADMIN' => $LANG['admin'],
 		'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
 		'L_ADD_MENUS' => $LANG['menus_add'],
+		'L_HEADER' => $LANG['menu_header'],
 		'L_SUB_HEADER' => $LANG['menu_subheader'],
 		'L_LEFT_MENU' => $LANG['menu_left'],
 		'L_RIGHT_MENU' => $LANG['menu_right'],
 		'L_TOP_CENTRAL_MENU' => $LANG['menu_top_central'],
 		'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
+		'L_TOP_FOOTER' => $LANG['menu_top_footer'],
+		'L_FOOTER' => $LANG['menu_footer'],
 		'L_MENUS_AVAILABLE' => ($i > 0) ? $LANG['available_menus'] : $LANG['no_available_menus'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']

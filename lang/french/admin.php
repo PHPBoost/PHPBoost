@@ -400,6 +400,7 @@ $LANG['menu_left'] = 'Menu gauche';
 $LANG['menu_right'] = 'Menu droit';
 $LANG['menu_top_central'] = 'Menu central haut';
 $LANG['menu_bottom_central'] = 'Menu central bas';
+$LANG['menu_top_footer'] = 'Sur pied de page';
 $LANG['menu_footer'] = 'Pied de page';
 $LANG['location'] = 'Emplacement';
 $LANG['use_tpl'] = 'Utiliser la structure des templates';

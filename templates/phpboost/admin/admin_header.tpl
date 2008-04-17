@@ -12,6 +12,5 @@
 		<script type="text/javascript" src="../includes/js/global.js"></script>	
 	</head>
 	<body>
-		<div id="header">	
-			<img src="../templates/{THEME}/images/header_boost.jpg" alt="PHPBoost" />
-		</div>
+		<div id="global">
+		<div id="header"></div>

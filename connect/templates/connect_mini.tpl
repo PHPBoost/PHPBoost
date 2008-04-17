@@ -37,7 +37,9 @@
 					<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
 				</p>
 				<p style="margin:0;margin-top:5px;">
-					{U_REGISTER}
+					# IF C_MEMBER_REGISTER # 
+					<a class="small_link" href="../member/register.php"><img src="../templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a> 
+					# ENDIF #
 					<br />
 					<a class="small_link" href="../member/forget.php"><img src="../templates/{THEME}/images/forget_mini.png" alt="" class="valign_middle" /> {L_FORGOT_PASS}</a>
 				</p>
@@ -58,8 +60,14 @@
 				<ul style="margin:0;padding:0;padding-left:4px;list-style-type:none;line-height:18px">
 					<li><img src="../templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="../member/member{U_MEMBER_ID}" class="small_link">{L_PRIVATE_PROFIL}</a></li>
 					<li>{U_MEMBER_MP}</li>
-					{U_ADMIN}
-					{U_MODO}
+					
+					# IF C_ADMIN_AUTH # 
+					<li><img src="../templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="../admin/admin_index.php" class="small_link">{L_ADMIN_PANEL}</a></li> 
+					# ENDIF #
+					# IF C_MODO_AUTH # 
+					<li><img src="../templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /> <a href="../member/moderation_panel.php" class="small_link">{L_MODO_PANEL}</a></li> 
+					# ENDIF #
+					
 					<li><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> <a href="{U_DISCONNECT}" class="small_link">{L_DISCONNECT}</a></li>
 				</ul>
 			</div>

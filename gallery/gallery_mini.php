@@ -162,6 +162,4 @@ $Template->Assign_vars(array(
 	'L_GALLERY' => $LANG['gallery']
 ));
 
-$Template->Pparse('gallery_mini');	
-
 ?>

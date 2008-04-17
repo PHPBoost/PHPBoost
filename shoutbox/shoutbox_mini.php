@@ -134,8 +134,6 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 		));							
 	}
 	$Sql->Close($result);
-	
-	$Template->Pparse('shoutbox_mini'); 
 }
 
 ?>

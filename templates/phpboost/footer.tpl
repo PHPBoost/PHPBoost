@@ -1,7 +1,13 @@
+		<div id="bottom_contents">
+			{MODULES_MINI_BOTTOMCENTRAL_CONTENT}
 		</div>
 	</div>
+	<div id="top_footer">
+		{MODULES_MINI_TOP_FOOTER_CONTENT}
+		<div class="spacer"></div>
 	</div>
 	<div id="footer">
+		{MODULES_MINI_FOOTER_CONTENT}
 		<span>
 			<!-- This mention must figured on the website ! -->
 			<!-- Cette mention dois figurer sur le site ! -->
@@ -20,6 +26,7 @@
 		</span>
 		# ENDIF #
 	</div>
+</div>
 	<!--<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
 	<script type="text/javascript">_uacct = "UA-727662-1";urchinTracker();</script>-->
 	</body>
