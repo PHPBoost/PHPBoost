@@ -45,22 +45,25 @@ class WikiInterface extends ModuleInterface
     {
         require_once('../includes/begin.php');
         load_module_lang('wiki');
-        global $LANG;
+        global $CONFIG, $LANG, $Template;
         
         if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
             $args['WikiWhere'] = 'title';
+
+        $Template->Set_filenames(array(
+            'wiki_search_form' => '../templates/'.$CONFIG['theme'].'/wiki/wiki_search_form.tpl'
+        ));
+
+        $Template->Assign_vars(Array(
+            'L_WHERE' => $LANG['wiki_search_where'],
+            'IS_TITLE_SELECTED' => $args['WikiWhere'] == 'title'? ' selected="selected"': '',
+            'IS_CONTENTS_SELECTED' => $args['WikiWhere'] == 'contents'? ' selected="selected"': '',
+            'IS_ALL_SELECTED' => $args['WikiWhere'] == 'all'? ' selected="selected"': '',
+            'L_TITLE' => $LANG['wiki_search_where_title'],
+            'L_CONTENTS' => $LANG['wiki_search_where_contents']
+        ));
         
-        return '
-        <dl>
-            <dt><label for="WikiWhere">'.$LANG['wiki_search_where'].'</label></dt>
-            <dd>
-                <select id="WikiWhere" name="WikiWhere" class="search_field">
-                    <option value="title"'.($args['WikiWhere'] == 'title'? ' selected="selected"': '').'>'.$LANG['wiki_search_where_title'].'</option>
-                    <option value="contents"'.($args['WikiWhere'] == 'contents'? ' selected="selected"': '').'>'.$LANG['wiki_search_where_contents'].'</option>
-                    <option value="all"'.($args['WikiWhere'] == 'all'? ' selected="selected"': '').'>'.$LANG['wiki_search_where_all'].'</option>
-                </select>
-            </dd>
-        </dl>';
+        return $Template->Pparse('wiki_search_form', TEMPLATE_STRING_MODE);
     }
     
     function GetSearchArgs()
@@ -78,6 +81,8 @@ class WikiInterface extends ModuleInterface
     {
         if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
             $args['WikiWhere'] = 'title';
+
+        echo $args['WikiWhere'].'<hr />';
         
         if ( $args['WikiWhere'] == 'all' )
             return "SELECT ".
