@@ -139,6 +139,7 @@
                         </div>
                     # END forms #
                     </fieldset>
+                    <br />
                     <fieldset class="fieldset_submit">
                         <legend>{L_SEARCH}</legend>
                         <input type="hidden" id="search_in" name="search_in" value="all" />
