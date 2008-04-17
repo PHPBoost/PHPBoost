@@ -59,7 +59,7 @@
 			<div class="module_mini_contents" style="text-align:left;">
 				<ul style="margin:0;padding:0;padding-left:4px;list-style-type:none;line-height:18px">
 					<li><img src="../templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="../member/member{U_MEMBER_ID}" class="small_link">{L_PRIVATE_PROFIL}</a></li>
-					<li>{U_MEMBER_MP}</li>
+					<li><img src="../templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_MEMBER_PM}" class="small_link">{L_NBR_PM}</a>&nbsp;</li>
 					
 					# IF C_ADMIN_AUTH # 
 					<li><img src="../templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="../admin/admin_index.php" class="small_link">{L_ADMIN_PANEL}</a></li> 

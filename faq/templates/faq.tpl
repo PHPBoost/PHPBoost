@@ -2,20 +2,17 @@
 		<!--
 			theme = "{THEME}";
 			module_data_path = "{MODULE_DATA_PATH}";
-			var effect_1 = null;
 			function show_answer(id_question)
 			{
-				if( document.getElementById("a" + id_question).style.display == "block" )
+				if( document.getElementById("a" + id_question).style.display == "none" )
 				{
-					effect_1 = Effect.SlideUp("a" + id_question, {duration:0.4});
-					document.getElementById("a" + id_question).style.display = "none";
-					document.getElementById("faq_i" + id_question).src = "{MODULE_DATA_PATH}/images/line.png";
+					Effect.Appear("a" + id_question);
+					document.getElementById("faq_i" + id_question).src = "{MODULE_DATA_PATH}/images/opened_line.png";
 				}
 				else
 				{
-					effect_1 = Effect.SlideDown("a" + id_question, {duration:0.4});
-					document.getElementById("a" + id_question).style.display = "block";
-					document.getElementById("faq_i" + id_question).src = "{MODULE_DATA_PATH}/images/opened_line.png";
+					Effect.Fade("a" + id_question);
+					document.getElementById("faq_i" + id_question).src = "{MODULE_DATA_PATH}/images/line.png";
 				}
 			}
 		-->
@@ -105,7 +102,7 @@
 								<div style="clear:both"></div>
 							</div>
 							<br />
-							<div id="a{questions.faq.ID_QUESTION}" class="blockquote" style="display:block;overflow:visible;">
+							<div id="a{questions.faq.ID_QUESTION}" class="blockquote">
 								<div>{questions.faq.ANSWER}</div>
 							</div>
 							# IF questions.faq.C_HIDE_ANSWER #
