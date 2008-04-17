@@ -38,7 +38,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 		'C_ADMIN_AUTH' => $Member->Check_level(ADMIN_LEVEL),
 		'C_MODO_AUTH' => $Member->Check_level(MODO_LEVEL),
 		'IMG_PM' => $Member->Get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
-		'U_MEMBER_PM' => transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php'),
+		'U_MEMBER_PM' => 'member/member' . transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php'),
 		'U_MEMBER_ID' => transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', '-' . $Member->Get_attribute('user_id') . '.php?view=1'),
 		'U_DISCONNECT' => HOST . DIR . '/member/member.php?disconnect=true',
 		'L_NBR_PM' => ($Member->Get_attribute('user_pm') > 0 ? ($Member->Get_attribute('user_pm') . ' ' . (($Member->Get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['connect_private_message']),
