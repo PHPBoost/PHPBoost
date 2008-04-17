@@ -35,7 +35,8 @@ $Template->Set_filenames(array(
 $Cache->Load_file('links');
 
 $Template->Assign_vars(array(
-	'MODULE_DATA_PATH' => $Template->Module_data_path('links')
+	'MODULE_DATA_PATH' => $Template->Module_data_path('links'),
+	'L_MENU' => $LANG['menu']
 ));
 	
 $i = 0;	

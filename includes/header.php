@@ -178,7 +178,7 @@ if( $left_column ) //Gestion des blocs de gauche.
 	if( !$right_column ) //Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
 	{
 		$Template->Assign_vars(array(
-			'MODULES_MINI_RIGHT_CONTENT' => $MODULES_MINI['left']
+			'MODULES_MINI_RIGHT_CONTENT' => $MODULES_MINI['right']
 		));
 	}
 }	
@@ -186,7 +186,7 @@ if( $right_column )  //Gestion des blocs de droite.
 {
 	$Template->Assign_vars(array(
 		'C_START_RIGHT' => true,
-		'MODULES_MINI_RIGHT_CONTENT' => $MODULES_MINI['left']
+		'MODULES_MINI_RIGHT_CONTENT' => $MODULES_MINI['right']
 	));
 	if( !$left_column ) //Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
 	{
