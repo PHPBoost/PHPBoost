@@ -141,10 +141,10 @@ function hide_div(divID)
 }
 
 //Affiche un bloc
-function show_div(divID)
+function show_div(divID, option)
 {
-    if( document.getElementById(divID) )
-        document.getElementById(divID).style.display = 'block';
+   if( document.getElementById(divID) )
+			document.getElementById(divID).style.display = 'block';
 }
 
 //Masque un bloc.

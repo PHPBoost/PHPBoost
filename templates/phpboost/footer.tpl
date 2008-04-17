@@ -29,5 +29,6 @@
 </div>
 	<!--<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
 	<script type="text/javascript">_uacct = "UA-727662-1";urchinTracker();</script>-->
+		<span id="scroll_bottom_page"></span>
 	</body>
 </html>

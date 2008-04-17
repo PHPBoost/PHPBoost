@@ -16,10 +16,13 @@
 		{ALTERNATIVE_CSS}
 		<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
 		<link rel="alternate" type="application/rss+xml" href="../news/rss.php" title="RSS {SITE_NAME}" />
+		<script type="text/javascript" src="../includes/js/scriptaculous/prototype.js"></script>
+		<script type="text/javascript" src="../includes/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="../includes/js/global.js"></script>
 	</head>
 	<body>
 
+<span id="scroll_top_page"></span>
 <div id="global">
 	<div id="header">
 		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
@@ -67,23 +70,9 @@
 		{MODULES_MINI_SUB_HEADER_CONTENT}
 	</div>
 	<div id="links_vertical">
-		<script type="text/javascript">
-		<!--		
-		function scroll_top()
-		{
-			window.scrollTop = '0px';
-			return false;
-		}
-		function scroll_bottom()
-		{
-			window.scrollTop = '0px';
-			return false;
-		}
-		-->
-		</script>
-		<p><img onClick="javascript:scroll_top()" style="cursor:pointer;" src="../templates/{THEME}/images/top.png" alt="" /></p>
+		<p><img onclick="new Effect.ScrollTo('scroll_top_page',{duration:0.8}); return false;" style="cursor:pointer;" src="../templates/{THEME}/images/top.png" alt="" /></p>
 		<p><a href="../news/news.php"><img src="../templates/{THEME}/images/admin/admin_mini.png" alt="" /></a></p>
-		<p style="margin:0"><img onClick="javascript:scroll_bottom()" style="cursor:pointer;" src="../templates/{THEME}/images/bottom.png" alt="" /></p>
+		<p style="margin:0"><img onclick="new Effect.ScrollTo('scroll_bottom_page',{duration:0.8}); return false;" style="cursor:pointer;" src="../templates/{THEME}/images/bottom.png" alt="" /></p>
 	</div>
 	
 	
