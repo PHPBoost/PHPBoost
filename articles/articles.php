@@ -311,7 +311,7 @@ else
 				'CAT' => $CAT_ARTICLES[$idartcat]['name'],
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'COMPT' => $row['views'],
-				'NOTE' => ($row['nbrnote'] > 0) ? $Note->Display_note($row['note'], $CONFIG_ARTICLES['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
+				'NOTE' => ($row['nbrnote'] > 0) ? $Note->Display_note($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
 				'COM' => $link . $row['nbr_com'] . '</a>',
 				'U_ARTICLES_LINK' => transid('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php')
 			));
