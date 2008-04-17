@@ -110,14 +110,6 @@
                                 </select>
                             </dd>
                         </dl>
-                        <div id="forms_selection_DL" style="text-align:center; display:none;">
-                        <label>{L_SEARCH_SPECIALIZED_FORM}</label>
-                        <p id="forms_selection">
-                            # START forms #
-                                <a id="specialize_form_link{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" class="small_link">{forms.L_MODULE_NAME}</a> |
-                            # END forms #
-                        </p>
-                        </div>
                         <dl>
                             <dt>
                                 <label id="advanced_search" style="display:none">
@@ -129,6 +121,14 @@
                             </dt>
                             <dd></dd>
                         </dl>
+                        <div id="forms_selection_DL" style="text-align:center; display:none;">
+                        <label>{L_SEARCH_SPECIALIZED_FORM}</label>
+                        <p id="forms_selection">
+                            # START forms #
+                                <a id="specialize_form_link{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" class="small_link">{forms.L_MODULE_NAME}</a> |
+                            # END forms #
+                        </p>
+                        </div>
                     </fieldset>
                     # START forms #
                         <div id="form_{forms.MODULE_NAME}" style="display:none">
