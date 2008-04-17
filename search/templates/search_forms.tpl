@@ -126,7 +126,7 @@
                             <dd></dd>
                         </dl>
                         <div id="forms_selection_DL" style="text-align:center; display:none;">
-                        <label>{L_SEARCH_SPECIALIZED_FORM}</label>
+                        <p class="text_center" style="font-weight:bold;">{L_SEARCH_SPECIALIZED_FORM}</p>
                         <p id="forms_selection">
                             # START forms #
                                 <a id="specialize_form_link{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" class="small_link">{forms.L_MODULE_NAME}</a>
