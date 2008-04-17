@@ -81,8 +81,6 @@ class WikiInterface extends ModuleInterface
     {
         if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
             $args['WikiWhere'] = 'title';
-
-        echo $args['WikiWhere'].'<hr />';
         
         if ( $args['WikiWhere'] == 'all' )
             return "SELECT ".
