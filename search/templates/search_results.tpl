@@ -132,7 +132,6 @@
                     <div id="pagination_results_all" class="PaginationResults">{PAGINATION}</div>
                 </div>
                 # IF C_SIMPLE_SEARCH #
-                # ELSE #
                     # START results #
                         <div id="results_{results.MODULE_NAME}" class="results" style="display:none">
                             <span id="results_title_{results.MODULE_NAME}" class="title">{results.L_MODULE_NAME}</span><br />

@@ -43,6 +43,7 @@ $modName = !empty($_GET['module']) ? securit($_GET['module']) : 'all';
 $search = !empty($_POST['search']) ? securit($_POST['search']) : '';
 $selectedModules = !empty($_POST['searched_modules']) ? $_POST['searched_modules'] : array();
 $searchIn = !empty($_POST['search_in']) ? $_POST['search_in'] : 'all';
+$simpleMode = $searchIn == 'all' ? true : false;
 
 //--------------------------------------------------------------------- Header
 
@@ -116,7 +117,7 @@ foreach( $searchModule as $module)
 foreach( $SEARCH_CONFIG['authorised_modules'] as $moduleId )
 {
     $module = $Modules->GetModule($moduleId);
-    if ( ($selectedModules === array()) || in_array($moduleId, $selectedModules) )
+    if ( ($selectedModules === array()) || in_array($moduleId, $selectedModules) || ($searchIn === $moduleId) )
     {
         $selected = ' selected="selected"';
         $usedModules[$moduleId] = $module; // Ajout du module à traiter
@@ -158,12 +159,8 @@ if( $search != '' )
     }
     
     $allhtmlResult = '';
-    Get_HTML_Results($results, $allhtmlResult, $Modules, $searchIn);
-//     $allhtmlResult .= '<script type="text/javascript">
-//         <!--
-//             nbResults[\''.$searchIn.'\'] = '.$nbResults.';
-//         -->
-//         </script>';
+    if ( $nbResults > 0 )
+        Get_HTML_Results($results, $allhtmlResult, $Modules, $searchIn);
     
     $Template->Assign_vars(Array(
         'NB_RESULTS_PER_PAGE' => NB_RESULTS_PER_PAGE,
