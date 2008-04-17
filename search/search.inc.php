@@ -83,7 +83,7 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
         return -1;
 }
 
-function Get_HTML_Results($results, &$htmlResults, $Modules, $resultsName)
+function Get_HTML_Results(&$results, &$htmlResults, &$Modules, &$resultsName)
 /**
  *  Renvoie une chaine contenant les resultats
  */
