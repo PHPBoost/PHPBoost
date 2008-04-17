@@ -13,13 +13,16 @@ h3.title{
 h5.sub_title{ /* Titre des menu */
 	font-size:12px;
 	font-weight:bold;
+	text-decoration:underline;
 }
 h6.sub_title2{ /* Sous titre dans les menu */
+	background:url(images/links_title.jpg) no-repeat;
+	color:#FFFFFF;
 	font-size:12px;
 	font-weight:bold;
-	padding:3px;
-	background:#758CA5;
-	border:1px dotted #C4CED6;
+	padding:5px;
+	margin:2px 0px;
+	width:154px;
 }
 
 .block_top, th{ /* Entête de conteneur et des tableaux */
@@ -147,7 +150,7 @@ fieldset{
 	margin:20px 0;
 	padding:6px;
 	border:1px solid #2C5169;
-	background-color:#BFD9EF;
+	background-color:#E0E6ED;
 	position:relative;
 }
 fieldset.fieldset_submit{

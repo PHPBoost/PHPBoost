@@ -34,6 +34,9 @@ $Template->Set_filenames(array(
 //Inclusion du cache des liens pour éviter une requête inutile.
 $Cache->Load_file('links');
 
+//Chargement de la langue du module.
+load_module_lang('links');
+	
 $Template->Assign_vars(array(
 	'MODULE_DATA_PATH' => $Template->Module_data_path('links'),
 	'L_MENU' => $LANG['menu']

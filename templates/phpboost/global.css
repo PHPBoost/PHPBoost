@@ -7,7 +7,7 @@
 --------------------------------------*/
 /* Case générale des tableaux du site*/
 .row1, .block_contents1{
-	background:#D1E4F4;
+	background:#E0E6ED;
 	border:1px solid #487B9C;
 	padding:6px;
 	margin-bottom:-1px;
@@ -16,7 +16,7 @@
 	padding:20px 6px;
 }
 .row2, .block_contents2{
-	background:#B8D3EA;
+	background:#F2F8F8;
 	border:1px solid #487B9C;
 	padding:6px;
 	margin-bottom:-1px;
@@ -26,7 +26,7 @@
 	margin-bottom:-1px;
 }
 .row3, .block_contents3{
-	background:#9EC2DB;
+	background:#A6BACF;
 	border:1px solid #487B9C;
 	padding:6px;
 	margin-bottom:-1px;
