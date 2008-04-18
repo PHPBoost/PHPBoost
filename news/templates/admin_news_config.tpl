@@ -63,14 +63,6 @@
 						</dd>
 					</dl>
 					<dl>
-						<dt><label for="activ_edito">{L_ACTIV_EDITO}</label></dt>
-						<dd>
-							<label><input type="radio" {EDITO_ENABLED} name="activ_edito" id="activ_edito" value="1" />	{L_YES}</label>
-							&nbsp;&nbsp; 
-							<label><input type="radio" {EDITO_DISABLED} name="activ_edito" value="0" /> {L_NO}</label>
-						</dd>
-					</dl>
-					<dl>
 						<dt><label for="type">{L_ACTIV_NEWS_BLOCK}</label></dt>
 						<dd>
 							<label><input type="radio" {BLOCK_ENABLED} name="type" id="type" value="1" />	{L_YES}</label>
@@ -114,6 +106,14 @@
 				
 				<fieldset>
 					<legend>{L_EDITO_WHERE}</legend>
+					<dl>
+						<dt><label for="activ_edito">{L_ACTIV_EDITO}</label></dt>
+						<dd>
+							<label><input type="radio" {EDITO_ENABLED} name="activ_edito" id="activ_edito" value="1" />	{L_YES}</label>
+							&nbsp;&nbsp; 
+							<label><input type="radio" {EDITO_DISABLED} name="activ_edito" value="0" /> {L_NO}</label>
+						</dd>
+					</dl>
 					<dl>
 						<dt><label for="edito_title">{L_TITLE}</label></dt>
 						<dd><label><input type="text" maxlength="100" size="60" name="edito_title" id="edito_title" value="{TITLE}" class="text" /></label></dd>

@@ -27,7 +27,7 @@
 	<div id="header">
 		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
 		{MODULES_MINI_HEADER_CONTENT}
-		<div class="dynamic_menu" style="left:190px;top:96px;">
+		<div class="dynamic_menu" style="left:190px;top:114px;">
 			<ul>
 				<li>
 					<h5 class="links"><a href="../news/news.php" title="Accueil PHPBoost"><img src="../templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> Accueil</a></h5>
@@ -60,6 +60,7 @@
 					<ul id="smenul4">
 						<li><a href="../forum/index.php" style="background-image:url(../forum/forum_mini.png);">Forum</a></li>						
 						<li><a href="../shoutbox/shoutbox.php" style="background-image:url(../shoutbox/shoutbox_mini.png);">Discussion</a></li>						
+						<li><a href="../newsletter/newsletter.php" style="background-image:url(../newsletter/newsletter_mini.png);">Newsletter</a></li>						
 					</ul>
 				</li>
 			</ul>
@@ -154,6 +155,11 @@
 	
 	# IF C_START_LEFT #
 	<div id="left_menu">
+		<p class="text_center">
+			<a href="../download/download-2-52+phpboost-2-0.php"><img src="../templates/{THEME}/images/theme/download_phpboost.png" alt="" /></a>
+		</p>
+		
+		<hr style="width:90%;margin:auto" />
 		{MODULES_MINI_LEFT_CONTENT}
 	</div>
 	# ENDIF #
@@ -166,11 +172,37 @@
 	
 	<div id="main">
 		<div id="links">
+			<div style="float:left;">
 			&nbsp;&nbsp;<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
 			# START link_speed_bar #
 			&raquo; <a class="small_link" href="{link_speed_bar.URL}" title="{link_speed_bar.TITLE}">{link_speed_bar.TITLE}</a>
-			# END link_speed_bar #			
+			# END link_speed_bar #
+			</div>
+			<div style="float:right;margin-top:-2px">
+				<form action="" method="post">
+					<div style="width:240px;height:20px;color:#FFFFFF;background:url(../templates/{THEME}/newsletter/images/newsletter_form.png) no-repeat">
+						<span class="text_strong" style="text-indent:10px;font-size:11px;margin:0;margin-top:3px;float:left">Newsletter</span> 
+						<span style="float:right;">
+							<input type="text" name="mail_newsletter" maxlength="50" size="16" class="text" value="{USER_MAIL}" style="height:14px;border:none;border-left:1px solid #A9A9A9" />
+							<input type="image" style="margin-left:-4px;padding:0;border:none" value="1" src="../templates/{THEME}/newsletter/images/newsletter_submit.png" />
+							<input type="hidden" name="subscribe" value="subscribe" />
+						</span> 
+					</div>
+				</form>
+			</div>
+			<div class="spacer"></div>
 		</div>	
 		<div id="top_contents">
+			<div style="width:728px;margin:auto;">
+				<script type="text/javascript">
+				<!--
+				google_ad_client = "pub-9943645616388527";
+				google_ad_slot = "9723631539";
+				google_ad_width = 728;
+				google_ad_height = 90;
+				//-->
+				</script>
+				<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+			</div>
 			{MODULES_MINI_TOPCENTRAL_CONTENT}
 		</div>
