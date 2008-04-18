@@ -29,9 +29,9 @@ require_once('../includes/begin.php');
 require_once('../newsletter/newsletter_begin.php');
 require_once('../includes/header.php');
 
-$mail_newsletter = (!empty($_POST['mail_newsletter'])) ? securit($_POST['mail_newsletter']) : '';
-$subscribe = (!empty($_POST['subscribe'])) ? trim($_POST['subscribe']) : 'subscribe';
-$id = (!empty($_GET['id'])) ? numeric($_GET['id']) : '';
+$mail_newsletter = !empty($_POST['mail_newsletter']) ? securit($_POST['mail_newsletter']) : '';
+$subscribe = !empty($_POST['subscribe']) ? trim($_POST['subscribe']) : 'subscribe';
+$id = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 	
 $Template->Set_filenames(array(
 	'newsletter' => '../templates/' . $CONFIG['theme'] . '/newsletter/newsletter.tpl'
