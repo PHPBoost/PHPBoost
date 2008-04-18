@@ -37,9 +37,7 @@ $Template->Set_filenames(array(
 $Template->Assign_vars(array(	
 	'SUBSCRIBE' => $LANG['subscribe'],
 	'UNSUBSCRIBE' => $LANG['unsubscribe'],
-	'ARCHIVES_LINK' => '../newsletter/newsletter' . transid('.php', '',''),
 	'USER_MAIL' => ($Member->Get_attribute('user_mail') != '') ? $Member->Get_attribute('user_mail') : '',
-	'ACTION' => '../newsletter/newsletter' . transid('.php', '',''),
 	'L_NEWSLETTER' => $LANG['newsletter'],
 	'L_SUBMIT' => $LANG['submit'],
 	'L_ARCHIVES' => $LANG['archives']	

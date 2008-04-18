@@ -179,7 +179,7 @@
 			# END link_speed_bar #
 			</div>
 			<div style="float:right;margin-top:-2px">
-				<form action="" method="post">
+				<form action="../newsletter/newsletter.php{SID}" method="post">
 					<div style="width:240px;height:20px;color:#FFFFFF;background:url(../templates/{THEME}/newsletter/images/newsletter_form.png) no-repeat">
 						<span class="text_strong" style="text-indent:10px;font-size:11px;margin:0;margin-top:3px;float:left">Newsletter</span> 
 						<span style="float:right;">
