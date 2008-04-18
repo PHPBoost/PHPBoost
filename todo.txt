@@ -3,6 +3,10 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
+[-] Nouvelles options d'installation (Communautaire, Vitrine, etc)
+[-] Editeur de .htaccess
+[-] Interface de rapport du système pour le support
+[-] Intégration des sitemaps dans les interfaces modules
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -16,16 +20,27 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
+[-] Panneau de modération
+[-] Système de mise à jour du noyau et des modules
+[-] Support des autorisations avancées pour les menus
 [-] Créer un cache pour les css associés aux menus
 [-] Déplacer la fonction d'accès aux modules (comparaison par rapport à la
 liste des modules installés) (begin.php) + ajout d'une constante MODULE_NAME
 [-] Classe de BBCode et désactivation des balises non autorisées
 [-] Ajout d'une fonction de création de liens vers les commentaires
-[-] Editeur de .htaccess
+[-] Ajout d'un nouveau mode d'affichage pour la balise hide.
+[-] Changer fonction d'insertion des membres pour ie (groupes)
+[-] Ajouter le groupe dans la liste des membres (admin)
+[-] Correction du bug des stats (graphiques)
 
 ------------------------------------ MODULES -----------------------------------
+[-] Module liens du site
 
-################################################################################
+Forum: 
+[-] Opérations de masse (suppressions, déplacements, etc)
+[-] Réparation des bugs sur l'arbre intervallaire gérant les catégories
+
+#################################################################################
 
 
 
@@ -35,6 +50,7 @@ liste des modules installés) (begin.php) + ajout d'une constante MODULE_NAME
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
+[-] Support de Atom dans la classe Rss.
 
 ------------------------------------ MODULES -----------------------------------
 Search :
