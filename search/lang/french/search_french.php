@@ -50,6 +50,7 @@ $LANG['print'] = 'Afficher';
 $LANG['nb_results_found'] = 'résultats ont été trouvés';
 $LANG['one_result_found'] = 'résultat a été trouvé';
 $LANG['no_results_found'] = 'Aucun résultat n\'a été trouvé';
+$LANG['search_all'] = 'Tout';
 
 //Administration
 $LANG['search_management'] = 'Gestion de la recherche';
