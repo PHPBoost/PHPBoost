@@ -174,7 +174,7 @@ elseif( !empty($del) && !empty($id) ) //Suppression du menu.
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_menus_add' => '../templates/' . $CONFIG['theme'] . '/admin/admin_menus_add.tpl'
+		'admin_menus_add'=> 'admin/admin_menus_add.tpl'
 	));
 	
 	$Template->Assign_vars(array(

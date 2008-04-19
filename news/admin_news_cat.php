@@ -87,7 +87,7 @@ elseif( !empty($_POST['add']) ) //Ajout de la catégorie.
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_news_cat' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_cat.tpl'
+		'admin_news_cat'=> 'news/admin_news_cat.tpl'
 	));
 	  
 	//Images disponibles

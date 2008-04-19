@@ -37,7 +37,7 @@ $is_admin = $Member->Check_level(ADMIN_LEVEL);
 if( empty($idnews) && empty($idcat) ) 
 {
 	$Template->Set_filenames(array(
-		'news' => '../templates/' . $CONFIG['theme'] . '/news/news.tpl'
+		'news'=> 'news/news.tpl'
 	));
 
 	if( $CONFIG_NEWS['activ_edito'] == '1' ) //Affichage de l'édito
@@ -210,7 +210,7 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 	if( empty($news['id']) )
 		$Errorh->Error_handler('e_unexist_news', E_USER_REDIRECT);
 	
-	$Template->Set_filenames(array('news' => '../templates/' . $CONFIG['theme'] . '/news/news.tpl'));
+	$Template->Set_filenames(array('news'=> 'news/news.tpl'));
 	
 	//Initialisation
 	list($admin, $del) = array('', ''); 		
@@ -243,7 +243,7 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 }
 elseif( !empty($idcat) )
 {
-	$Template->Set_filenames(array('news' => '../templates/' . $CONFIG['theme'] . '/news/news_cat.tpl'));
+	$Template->Set_filenames(array('news'=> 'news/news_cat.tpl'));
 	
 	$cat = $Sql->Query_array('news_cat', 'id', 'name', 'icon', "WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	if( empty($cat['id']) )

@@ -116,13 +116,13 @@ if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
 include_once('../includes/connect.php'); //Inclusion du gestionnaire de connexion.
 	
 //Cache des autorisations des modules
-$Cache->Load_file('modules'); 
+$Cache->Load_file('modules');
 
-//Autorisation sur le module chargé.
+//Autorisation sur le module chargé
 define('MODULE_NAME', get_module_name());
 if( isset($MODULES[MODULE_NAME]) && $MODULES[MODULE_NAME]['activ'] == 1 )
 {
-	if( !$Member->Check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE) ) //Accès non autorisé!
+	if( !$Member->Check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE) ) //Accès non autorisé !
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 

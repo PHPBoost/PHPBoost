@@ -43,7 +43,7 @@ if( empty($key) )
 	if( !$Member->Check_level(MEMBER_LEVEL) && !empty($CONFIG_MEMBER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru) )
 	{
 		$Template->Set_filenames(array(
-			'register' => '../templates/' . $CONFIG['theme'] . '/register.tpl'
+			'register'=> 'register.tpl'
 		));
 		
 		$Template->Assign_block_vars('confirm', array(
@@ -62,7 +62,7 @@ if( empty($key) )
 	elseif( $Member->Check_level(MEMBER_LEVEL) !== true && (!empty($_POST['confirm']) || empty($CONFIG_MEMBER['msg_register']) || !empty($get_error) || !empty($get_erroru)) )
 	{
 		$Template->Set_filenames(array(
-			'register' => '../templates/' . $CONFIG['theme'] . '/register.tpl'
+			'register'=> 'register.tpl'
 		));
 		
 		$Template->Assign_block_vars('register', array(
@@ -267,7 +267,7 @@ if( empty($key) )
 		}
 		else //Thème par défaut forcé.
 		{
-			$theme_info = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
+			$theme_info = load_ini_file('/config/', $CONFIG['lang']);
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'];
 			$Template->Assign_block_vars('register.select_theme', array(
 				'THEME' => '<option value="' . $CONFIG['theme'] . '" selected="selected">' . $theme_name . '</option>'
@@ -363,7 +363,7 @@ if( empty($key) )
 elseif( !empty($key) && $Member->Check_level(MEMBER_LEVEL) !== true ) //Activation du compte membre
 {
 	$Template->Set_filenames(array(
-		'register' => '../templates/' . $CONFIG['theme'] . '/register.tpl'
+		'register'=> 'register.tpl'
 	));
 	
 	$Template->Assign_block_vars('activ', array(

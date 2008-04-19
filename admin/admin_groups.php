@@ -108,7 +108,7 @@ elseif( $del_mbr && !empty($user_id) && !empty($idgroup) ) //Suppression du memb
 elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 {		
 	$Template->Set_filenames(array(
-		'admin_groups_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_groups_management2.tpl'
+		'admin_groups_management2'=> 'admin/admin_groups_management2.tpl'
 	));
 	
 	$group = $Sql->Query_array('group', 'id', 'name', 'img', 'auth', 'members', "WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
@@ -215,7 +215,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 elseif( $add ) //Interface d'ajout du groupe.
 {		
 	$Template->Set_filenames(array(
-	'admin_groups_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_groups_management2.tpl'
+	'admin_groups_management2'=> 'admin/admin_groups_management2.tpl'
 	));
 	
 	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
@@ -269,7 +269,7 @@ elseif( $add ) //Interface d'ajout du groupe.
 else //Liste des groupes.
 {
 	$Template->Set_filenames(array(
-		'admin_groups_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_groups_management.tpl'
+		'admin_groups_management'=> 'admin/admin_groups_management.tpl'
 	 ));
 	 
 	$nbr_group = $Sql->Count_table("group", __LINE__, __FILE__);

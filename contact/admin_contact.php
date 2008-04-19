@@ -47,7 +47,7 @@ if( !empty($_POST['valid'])  )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_contact_config' => '../templates/' . $CONFIG['theme'] . '/contact/admin_contact_config.tpl'
+		'admin_contact_config'=> 'contact/admin_contact_config.tpl'
 	));
 	
 	$Cache->Load_file('contact');

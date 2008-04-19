@@ -32,11 +32,11 @@
 $Sql->Sql_close(); //Fermeture de mysql.
 
 $Template->Set_filenames(array(
-	'admin_footer' => '../templates/' . $CONFIG['theme'] . '/admin/admin_footer.tpl'
+	'admin_footer'=> 'admin/admin_footer.tpl'
 ));
 
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
-$THEME = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
+$THEME = load_ini_file('/config/', $CONFIG['lang']);
 	
 $Template->Assign_vars(array(
 	'HOST' => HOST,

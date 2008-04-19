@@ -247,7 +247,7 @@ elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 			if( empty($_POST['del_cat']) )
 			{
 				$Template->Set_filenames(array(
-					'admin_articles_cat_del' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_cat_del.tpl'
+					'admin_articles_cat_del'=> 'articles/admin_articles_cat_del.tpl'
 				));
 
 				if( $check_articles > 0 ) //Conserve les images.
@@ -710,7 +710,7 @@ elseif( !empty($id) ) //Edition des catégories.
 	$Cache->Load_file('articles');
 	
 	$Template->Set_filenames(array(
-		'admin_articles_cat_edit' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_cat_edit.tpl'
+		'admin_articles_cat_edit'=> 'articles/admin_articles_cat_edit.tpl'
 	));
 			
 	$articles_info = $Sql->Query_array("articles_cats", "id_left", "id_right", "level", "name", "contents", "icon", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -810,7 +810,7 @@ elseif( !empty($root) ) //Edition de la racine.
 	$Cache->Load_file('articles');
 	
 	$Template->Set_filenames(array(
-		'admin_articles_cat_edit2' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_cat_edit2.tpl'
+		'admin_articles_cat_edit2'=> 'articles/admin_articles_cat_edit2.tpl'
 	));
 			
 	//Gestion erreur.
@@ -848,7 +848,7 @@ elseif( !empty($root) ) //Edition de la racine.
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_articles_cat' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_cat.tpl'
+		'admin_articles_cat'=> 'articles/admin_articles_cat.tpl'
 	));
 	
 	//Gestion erreur.

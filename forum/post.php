@@ -92,9 +92,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			$Errorh->Error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
 		
 		$Template->Set_filenames(array(
-			'edit_msg' => '../templates/' . $CONFIG['theme'] . '/forum/forum_edit_msg.tpl',
-			'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-			'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+			'edit_msg'=> 'forum/forum_edit_msg.tpl',
+			'forum_top'=> 'forum/forum_top.tpl',
+			'forum_bottom'=> 'forum/forum_bottom.tpl'
 		));
 		
 		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';	
@@ -207,9 +207,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 			$Template->Set_filenames(array(
-				'forum_post' => '../templates/' . $CONFIG['theme'] . '/forum/forum_post.tpl',
-				'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-				'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+				'forum_post'=> 'forum/forum_post.tpl',
+				'forum_top'=> 'forum/forum_top.tpl',
+				'forum_bottom'=> 'forum/forum_bottom.tpl'
 			));
 			
 			$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
@@ -315,9 +315,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 			$Template->Set_filenames(array(
-				'forum_post' => '../templates/' . $CONFIG['theme'] . '/forum/forum_post.tpl',
-				'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-				'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+				'forum_post'=> 'forum/forum_post.tpl',
+				'forum_top'=> 'forum/forum_top.tpl',
+				'forum_bottom'=> 'forum/forum_bottom.tpl'
 			));
 
 			if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM) )
@@ -511,9 +511,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			elseif( !empty($preview_topic) )
 			{
 				$Template->Set_filenames(array(
-					'forum_post' => '../templates/' . $CONFIG['theme'] . '/forum/forum_post.tpl',
-					'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-					'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+					'forum_post'=> 'forum/forum_post.tpl',
+					'forum_top'=> 'forum/forum_top.tpl',
+					'forum_bottom'=> 'forum/forum_bottom.tpl'
 				));
 				
 				$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
@@ -618,9 +618,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			else
 			{
 				$Template->Set_filenames(array(
-					'forum_post' => '../templates/' . $CONFIG['theme'] . '/forum/forum_post.tpl',
-					'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-					'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+					'forum_post'=> 'forum/forum_post.tpl',
+					'forum_top'=> 'forum/forum_top.tpl',
+					'forum_bottom'=> 'forum/forum_bottom.tpl'
 				));
 				
 				$contents = $Sql->Query("SELECT contents FROM ".PREFIX."forum_msg WHERE id = '" . $id_first . "'", __LINE__, __FILE__);
@@ -781,9 +781,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			else
 			{
 				$Template->Set_filenames(array(
-					'edit_msg' => '../templates/' . $CONFIG['theme'] . '/forum/forum_edit_msg.tpl',
-					'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-					'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+					'edit_msg'=> 'forum/forum_edit_msg.tpl',
+					'forum_top'=> 'forum/forum_top.tpl',
+					'forum_bottom'=> 'forum/forum_bottom.tpl'
 				));
 				
 				$contents = $Sql->Query("SELECT contents FROM ".PREFIX."forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
@@ -827,9 +827,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$Errorh->Error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
 			
 			$Template->Set_filenames(array(
-				'error_post' => '../templates/' . $CONFIG['theme'] . '/forum/forum_edit_msg.tpl',
-				'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-				'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+				'error_post'=> 'forum/forum_edit_msg.tpl',
+				'forum_top'=> 'forum/forum_top.tpl',
+				'forum_bottom'=> 'forum/forum_bottom.tpl'
 			));
 
 			//Gestion erreur.
@@ -876,9 +876,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		elseif( !empty($id_get) && ($error_get === 'c_locked' || $error_get === 'c_write' || $error_get === 'incomplete_t' || $error_get === 'false_t') )
 		{
 			$Template->Set_filenames(array(
-				'error_post' => '../templates/' . $CONFIG['theme'] . '/forum/forum_post.tpl',
-				'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-				'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+				'error_post'=> 'forum/forum_post.tpl',
+				'forum_top'=> 'forum/forum_top.tpl',
+				'forum_bottom'=> 'forum/forum_bottom.tpl'
 			));
 		
 			if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM) )

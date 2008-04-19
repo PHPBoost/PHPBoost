@@ -135,8 +135,8 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 elseif( !empty($id) ) //Vue de la news
 {			
 	$Template->Set_filenames(array(
-		'admin_news_management' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_management.tpl',
-		'admin_news_management_bis' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_management_bis.tpl'
+		'admin_news_management'=> 'news/admin_news_management.tpl',
+		'admin_news_management_bis'=> 'news/admin_news_management_bis.tpl'
 	));
 
 	$row = $Sql->Query_array('news', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -245,8 +245,8 @@ elseif( !empty($id) ) //Vue de la news
 elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la news.
 {
 	$Template->Set_filenames(array(
-		'admin_news_management' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_management.tpl',
-		'admin_news_management_bis' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_management_bis.tpl'
+		'admin_news_management'=> 'news/admin_news_management.tpl',
+		'admin_news_management_bis'=> 'news/admin_news_management_bis.tpl'
 	));
 
 	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
@@ -388,7 +388,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 else
 {
 	$Template->Set_filenames(array(
-		'admin_news_management' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_management.tpl'
+		'admin_news_management'=> 'news/admin_news_management.tpl'
 	));
 	
 	$nbr_news = $Sql->Count_table('news', __LINE__, __FILE__);

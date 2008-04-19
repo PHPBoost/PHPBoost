@@ -153,7 +153,7 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
 elseif( !empty($poll['id']) && empty($archives) )
 {
 	$Template->Set_filenames(array(
-		'poll' => '../templates/' . $CONFIG['theme'] . '/poll/poll.tpl'
+		'poll'=> 'poll/poll.tpl'
 	));
 	
 	list($java, $edit, $del) = array('','','');	
@@ -300,7 +300,7 @@ elseif( !empty($poll['id']) && empty($archives) )
 elseif( empty($archives) ) //Menu principal.
 {
 	$Template->Set_filenames(array(
-		'poll' => '../templates/' . $CONFIG['theme'] . '/poll/poll.tpl'
+		'poll'=> 'poll/poll.tpl'
 	));
 
 	$show_archives = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
@@ -336,7 +336,7 @@ elseif( empty($archives) ) //Menu principal.
 elseif( !empty($archives) ) //Archives.
 {
 	$Template->Set_filenames(array(
-		'poll' => '../templates/' . $CONFIG['theme'] . '/poll/poll.tpl'
+		'poll'=> 'poll/poll.tpl'
 	));
 		
 	$nbrarchives = $Sql->Query("SELECT COUNT(*) as id FROM ".PREFIX."poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);

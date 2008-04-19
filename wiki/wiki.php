@@ -95,8 +95,8 @@ define('TITLE', $page_title);
 require_once('../includes/header.php'); 
 
 $Template->Set_filenames(array(
-	'wiki' => '../templates/' . $CONFIG['theme'] . '/wiki/wiki.tpl',
-	'index' => '../templates/' . $CONFIG['theme'] . '/wiki/index.tpl'
+	'wiki'=> 'wiki/wiki.tpl',
+	'index'=> 'wiki/index.tpl'
 ));
 $Template->Assign_vars(array(
 	'WIKI_PATH' => $Template->Module_data_path('wiki')

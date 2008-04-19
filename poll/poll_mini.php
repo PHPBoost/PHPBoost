@@ -40,7 +40,7 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 	if( in_array($poll_mini['id'], $array_cookie) )
 	{
 		$Template->Set_filenames(array(
-			'poll_mini' => '../templates/' . $CONFIG['theme'] . '/poll/poll_mini.tpl'
+			'poll_mini'=> 'poll/poll_mini.tpl'
 		));
 				
 		$Template->Assign_vars(array(
@@ -68,7 +68,7 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 	{
 		#####################Questions######################
 		$Template->Set_filenames(array(
-			'poll_mini' => '../templates/' . $CONFIG['theme'] . '/poll/poll_mini.tpl'
+			'poll_mini'=> 'poll/poll_mini.tpl'
 		));
 				
 		$Template->Assign_vars(array(			

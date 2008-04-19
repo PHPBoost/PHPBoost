@@ -68,9 +68,9 @@ if( !$Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 
 $Template->Set_filenames(array(
-	'forum_topic' => '../templates/' . $CONFIG['theme'] . '/forum/forum_topic.tpl',
-	'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-	'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+	'forum_topic'=> 'forum/forum_topic.tpl',
+	'forum_top'=> 'forum/forum_top.tpl',
+	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
 $module_data_path = $Template->Module_data_path('forum');

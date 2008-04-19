@@ -33,7 +33,7 @@ $Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
 $Speed_bar->Add_link($LANG['pages_explorer'], transid('explorer.php'));
 require_once('../includes/header.php');
 
-$Template->Set_filenames(array('pages_explorer' => '../templates/' . $CONFIG['theme'] . '/pages/explorer.tpl'));
+$Template->Set_filenames(array('pages_explorer'=> 'pages/explorer.tpl'));
 
 //Liste des dossiers de la racine
 $root = '';

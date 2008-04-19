@@ -39,7 +39,7 @@ $del = !empty($_GET['delete']) ? true : false;
 if( !empty($id) && !$del )
 {
 	$Template->Set_filenames(array(
-		'admin_web_management2' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_management2.tpl'
+		'admin_web_management2'=> 'web/admin_web_management2.tpl'
 	));
 
 	$row = $Sql->Query_array('web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -106,7 +106,7 @@ if( !empty($id) && !$del )
 elseif( !empty($_POST['previs']) && !empty($id_post) )
 {
 	$Template->Set_filenames(array(
-		'admin_web_management' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_management2.tpl'
+		'admin_web_management'=> 'web/admin_web_management2.tpl'
 	));
 
 	$row = $Sql->Query_array('web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -227,7 +227,7 @@ elseif( $del && !empty($id) ) //Suppresion du lien web.
 else
 {			
 	$Template->Set_filenames(array(
-		'admin_web_management' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_management.tpl'
+		'admin_web_management'=> 'web/admin_web_management.tpl'
 	));
 
 	$nbr_web = $Sql->Count_table('web', __LINE__, __FILE__);

@@ -31,7 +31,7 @@ if( defined('PHPBOOST') !== true)	exit;
 load_module_lang('newsletter');
 
 $Template->Set_filenames(array(
-	'newsletter_mini' => '../templates/' . $CONFIG['theme'] . '/newsletter/newsletter_mini.tpl'
+	'newsletter_mini'=> 'newsletter/newsletter_mini.tpl'
 ));
 
 $Template->Assign_vars(array(	

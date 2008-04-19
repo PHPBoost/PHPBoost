@@ -30,7 +30,7 @@ define('TITLE', $LANG['title_error'] . ' 404');
 require_once('../includes/header.php'); 
 
 $Template->Set_filenames(array(
-	'error' => '../templates/' . $CONFIG['theme'] . '/error.tpl'
+	'error'=> 'error.tpl'
 ));
 
 $Template->Assign_vars(array(

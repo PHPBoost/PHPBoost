@@ -24,7 +24,7 @@ if( defined('PHPBOOST') !== true)
 
 	$Cache->Load_file('news'); //Requête des configuration générales (new), $CONFIG_NEWS variable globale.
 
-	$Template->Set_filenames(array('rss' => '../templates/' . $CONFIG['theme'] . '/rss.tpl'));
+	$Template->Set_filenames(array('rss'=> 'rss.tpl'));
 
 	$Template->Assign_vars(array( 
 		'DATE' => gmdate_format('date_format_tiny'),

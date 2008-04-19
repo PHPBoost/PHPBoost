@@ -94,7 +94,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 	}
 	
 	$Template->Set_filenames(array(
-		'calendar' => '../templates/' . $CONFIG['theme'] . '/calendar/calendar.tpl'
+		'calendar'=> 'calendar/calendar.tpl'
 	));
 	
 	//Gestion erreur.
@@ -333,7 +333,7 @@ elseif( !empty($id) )
 		else //Formulaire d'édition
 		{
 			$Template->Set_filenames(array(
-				'calendar' => '../templates/' . $CONFIG['theme'] . '/calendar/calendar.tpl'
+				'calendar'=> 'calendar/calendar.tpl'
 			));
 			
 			//Récupération des infos
@@ -430,7 +430,7 @@ elseif( !empty($add) ) //Ajout d'un évenement
 	else
 	{
 		$Template->Set_filenames(array(
-			'calendar' => '../templates/' . $CONFIG['theme'] . '/calendar/calendar.tpl'
+			'calendar'=> 'calendar/calendar.tpl'
 		));
 
 		$time = gmdate_format('YmdHi');

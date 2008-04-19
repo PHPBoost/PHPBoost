@@ -44,9 +44,9 @@ $preview_topic = !empty($_POST['prw_t']) ? trim($_POST['prw_t']) : ''; //Prévisu
 if( !empty($id_get) ) //Déplacement du sujet.
 {
 	$Template->Set_filenames(array(
-		'forum_move' => '../templates/' . $CONFIG['theme'] . '/forum/forum_move.tpl',
-		'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-		'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+		'forum_move'=> 'forum/forum_move.tpl',
+		'forum_top'=> 'forum/forum_top.tpl',
+		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 
 	$topic = $Sql->Query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
@@ -173,9 +173,9 @@ elseif( !empty($id_post) ) //Déplacement du topic
 elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //Choix de la nouvelle catégorie, titre, sous-titre du topic à scinder.
 {
 	$Template->Set_filenames(array(
-		'forum_move' => '../templates/' . $CONFIG['theme'] . '/forum/forum_post.tpl',
-		'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-		'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+		'forum_move'=> 'forum/forum_post.tpl',
+		'forum_top'=> 'forum/forum_top.tpl',
+		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 
 	$idm = !empty($id_get_msg) ? $id_get_msg : $id_post_msg;

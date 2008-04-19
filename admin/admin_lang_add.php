@@ -111,7 +111,7 @@ elseif( !empty($_FILES['upload_lang']['name']) ) //Upload et décompression de l'
 else
 {
 	$Template->Set_filenames(array(
-		'admin_lang_add' => '../templates/' . $CONFIG['theme'] . '/admin/admin_lang_add.tpl'
+		'admin_lang_add'=> 'admin/admin_lang_add.tpl'
 	));
 	
 	$Template->Assign_vars(array(

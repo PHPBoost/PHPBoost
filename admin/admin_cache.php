@@ -39,7 +39,7 @@ if( !empty($_POST['cache']) )
 else //Sinon on rempli le formulaire	 
 {		
 	$Template->Set_filenames(array(
-		'admin_cache' => '../templates/' . $CONFIG['theme'] . '/admin/admin_cache.tpl'
+		'admin_cache'=> 'admin/admin_cache.tpl'
 	));
 
 	//Gestion erreur.

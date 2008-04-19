@@ -37,7 +37,7 @@ $mail_contents = !empty($_POST['mail_contents']) ? trim($_POST['mail_contents'])
 if( !empty($_POST['mail_valid']) )
 {
 	$Template->Set_filenames(array(
-		'contact' => '../templates/' . $CONFIG['theme'] . '/contact/contact.tpl'
+		'contact'=> 'contact/contact.tpl'
 	));	
 		
 	//Code de vérification si activé
@@ -73,7 +73,7 @@ else
 {	
 	###########################Affichage##############################
 	$Template->Set_filenames(array(
-		'contact' => '../templates/' . $CONFIG['theme'] . '/contact/contact.tpl'
+		'contact'=> 'contact/contact.tpl'
 	));
 	
 	//Gestion erreur.

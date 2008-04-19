@@ -60,7 +60,7 @@ if( !$auth_read )
 include_once('../includes/header.php');
 
 $Template->Set_filenames(array(
-	'faq' => '../templates/' . $CONFIG['theme'] . '/faq/faq.tpl'
+	'faq'=> 'faq/faq.tpl'
 ));
 $Template->Assign_vars(array(
 	'THEME' => $CONFIG['theme'],

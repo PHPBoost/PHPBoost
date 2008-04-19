@@ -124,7 +124,7 @@ $speed_bar_key = 'wiki_property';
 require_once('../wiki/wiki_speed_bar.php');
 require_once('../includes/header.php');
 
-$Template->Set_filenames(array('wiki_properties' => '../templates/' . $CONFIG['theme'] . '/wiki/property.tpl'));
+$Template->Set_filenames(array('wiki_properties'=> 'wiki/property.tpl'));
 $Template->Assign_vars(array(
 	'WIKI_PATH' => $Template->Module_data_path('wiki')
 ));

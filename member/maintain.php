@@ -33,7 +33,7 @@ if( $CONFIG['maintain'] <= time() )
 	redirect(get_start_page());
 
 $Template->Set_filenames(array(
-	'maintain' => '../templates/' . $CONFIG['theme'] . '/maintain.tpl')
+	'maintain'=> 'maintain.tpl')
 );
 
 //Durée de la maintenance.

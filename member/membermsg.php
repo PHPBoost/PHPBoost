@@ -35,7 +35,7 @@ $memberId = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 if( !empty($memberId) ) //Affichage de tous les messages du membre
 {
 	$Template->Set_filenames(array(
-		'membermsg' => '../templates/' . $CONFIG['theme'] . '/membermsg.tpl',
+		'membermsg'=> 'membermsg.tpl',
 	));
 	
 	require_once('../includes/modules.class.php');

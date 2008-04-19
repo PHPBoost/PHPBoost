@@ -48,7 +48,7 @@ if( !empty($_POST['valid'])  )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_calendar_config' => '../templates/' . $CONFIG['theme'] . '/calendar/admin_calendar_config.tpl'
+		'admin_calendar_config'=> 'calendar/admin_calendar_config.tpl'
 	));
 	
 	$Cache->Load_file('calendar');

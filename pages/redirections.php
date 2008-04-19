@@ -154,7 +154,7 @@ else
 
 require_once('../includes/header.php');
 
-$Template->Set_filenames(array('pages_redirections' => '../templates/' . $CONFIG['theme'] . '/pages/redirections.tpl'));
+$Template->Set_filenames(array('pages_redirections'=> 'pages/redirections.tpl'));
 
 if( $id_rename > 0 )
 {

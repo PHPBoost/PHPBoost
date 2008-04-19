@@ -43,7 +43,7 @@ $where_search = !empty($_GET['where']) ? ($_GET['where'] == 'contents' ? 'conten
 $page = !empty($_GET['page']) ? numeric($_GET['page']) : 1;
 $page = $page <= 0 ? 1 : $page;
 
-$Template->Set_filenames(array('wiki_search' => '../templates/' . $CONFIG['theme'] . '/wiki/search.tpl'));
+$Template->Set_filenames(array('wiki_search'=> 'wiki/search.tpl'));
 
 $Template->Assign_vars(array(
 	'L_SEARCH' => $LANG['wiki_search'],

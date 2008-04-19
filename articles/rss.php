@@ -22,7 +22,7 @@ if( defined('PHPBOOST') !== true)
 	require_once('../articles/articles_begin.php');
 	require_once('../includes/header_no_display.php');
 	
-	$Template->Set_filenames(array('rss' => '../templates/' . $CONFIG['theme'] . '/rss.tpl'));
+	$Template->Set_filenames(array('rss'=> 'rss.tpl'));
 
 	$Template->Assign_vars(array(
 		'DATE' => gmdate_format('date_format_rss'),

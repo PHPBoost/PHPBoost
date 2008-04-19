@@ -46,7 +46,7 @@ require_once('../includes/header.php');
 
 if( !empty($id_article) )
 {
-	$Template->Set_filenames(array('wiki_history' => '../templates/' . $CONFIG['theme'] . '/wiki/history.tpl'));
+	$Template->Set_filenames(array('wiki_history'=> 'wiki/history.tpl'));
 
 	$Template->Assign_block_vars('article', array(
 		'L_TITLE' => $LANG['wiki_history'] . ': <a href="' . $article_infos['encoded_title'] . '">' . $article_infos['title'] . '</a>',
@@ -110,7 +110,7 @@ else //On affiche la liste des modifications
 	$Pagination = new Pagination();
 	$show_pagin = $Pagination->Display_pagination(transid('history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'), $nbr_articles, 'p', $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 3); 
 	
-	$Template->Set_filenames(array('wiki_history' => '../templates/' . $CONFIG['theme'] . '/wiki/history.tpl'));
+	$Template->Set_filenames(array('wiki_history'=> 'wiki/history.tpl'));
 
 	$Template->Assign_block_vars('index', array(
 		'L_HISTORY' => $LANG['wiki_history'],

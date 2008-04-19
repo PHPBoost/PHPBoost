@@ -92,7 +92,7 @@ elseif( !empty($_POST['gallery_cache']) ) //Suppression des miniatures.
 else 
 {		
 	$Template->Set_filenames(array(
-		'admin_gallery_config' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_config.tpl'
+		'admin_gallery_config'=> 'gallery/admin_gallery_config.tpl'
 	));
 	
 	$Cache->Load_file('gallery');

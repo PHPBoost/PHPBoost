@@ -29,7 +29,7 @@ require_once('../includes/begin.php');
 require_once('../stats/stats_begin.php'); 
 require_once('../includes/header.php'); 
 
-$Template->Set_filenames(array('stats' => '../templates/' . $CONFIG['theme'] . '/stats/stats.tpl'));
+$Template->Set_filenames(array('stats'=> 'stats/stats.tpl'));
 
 $Template->Assign_vars(array(
 	'U_STATS_SITE' => transid('.php?site=1', '-site.php'),

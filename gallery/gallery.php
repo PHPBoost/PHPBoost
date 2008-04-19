@@ -130,7 +130,7 @@ elseif( isset($_FILES['gallery']) ) //Upload
 elseif( $g_add )
 {
 	$Template->Set_filenames(array(
-		'gallery_add' => '../templates/' . $CONFIG['theme'] . '/gallery/gallery_add.tpl'
+		'gallery_add'=> 'gallery/gallery_add.tpl'
 	));
 	
 	if( !empty($g_idcat) )
@@ -253,7 +253,7 @@ elseif( $g_add )
 else
 {
 	$Template->Set_filenames(array(
-		'gallery' => '../templates/' . $CONFIG['theme'] . '/gallery/gallery.tpl'
+		'gallery'=> 'gallery/gallery.tpl'
 	));
 	
 	if( !empty($g_idcat) )

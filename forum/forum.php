@@ -63,9 +63,9 @@ if( !empty($id_get) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
 	$Template->Set_filenames(array(
-		'forum_forum' => '../templates/' . $CONFIG['theme'] . '/forum/forum_forum.tpl',
-		'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-		'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+		'forum_forum'=> 'forum/forum_forum.tpl',
+		'forum_top'=> 'forum/forum_top.tpl',
+		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 	
 	//Invité?	

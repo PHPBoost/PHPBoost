@@ -75,7 +75,7 @@ if( !empty($_POST['guestbook']) && empty($id_get) ) //Enregistrement
 elseif( !empty($_POST['previs']) ) //Prévisualisation.
 {
 	$Template->Set_filenames(array(
-		'guestbook' => '../templates/' . $CONFIG['theme'] . '/guestbook/guestbook.tpl'
+		'guestbook'=> 'guestbook/guestbook.tpl'
 	));
 
 	$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
@@ -151,7 +151,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 		elseif( $edit )
 		{
 			$Template->Set_filenames(array(
-				'guestbook' => '../templates/' . $CONFIG['theme'] . '/guestbook/guestbook.tpl'
+				'guestbook'=> 'guestbook/guestbook.tpl'
 			));
 
 			if( $row['user_id'] !== -1 )
@@ -215,7 +215,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 else //Affichage.
 {
 	$Template->Set_filenames(array(
-		'guestbook' => '../templates/' . $CONFIG['theme'] . '/guestbook/guestbook.tpl'
+		'guestbook'=> 'guestbook/guestbook.tpl'
 	));
 		
 	//Pseudo du membre connecté.

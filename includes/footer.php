@@ -30,7 +30,7 @@ if( defined('PHPBOOST') !== true) exit;
 $Sql->Sql_close(); //Fermeture de mysql
 
 $Template->Set_filenames(array(
-	'footer' => '../templates/' . $CONFIG['theme'] . '/footer.tpl'
+	'footer'=> 'footer.tpl'
 ));
 
 $Template->Assign_vars(array(

@@ -32,8 +32,8 @@ if( defined('PHPBOOST') !== true)
 
 ############### Header du panneau de modo ################
 $Template->Set_filenames(array(
-	'moderation_panel_top' => '../templates/' . $CONFIG['theme'] . '/moderation_panel_top.tpl',
-	'moderation_panel_bottom' => '../templates/' . $CONFIG['theme'] . '/moderation_panel_bottom.tpl'
+	'moderation_panel_top'=> 'moderation_panel_top.tpl',
+	'moderation_panel_bottom'=> 'moderation_panel_bottom.tpl'
 ));
 
 //Listing des modules disponibles:

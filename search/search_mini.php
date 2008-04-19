@@ -31,7 +31,7 @@ if( defined('PHPBOOST') !== true ) exit;
 load_module_lang('search');
 
 $Template->Set_filenames(array(
-	'search_mini' => '../templates/'.$CONFIG['theme'].'/search/search_mini.tpl',
+	'search_mini' => 'search/search_mini.tpl',
 ));
 
 //--------------------------------------------------------------------- Params

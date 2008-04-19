@@ -32,7 +32,7 @@ $path_redirect = $Note->Get_attribute('path') . sprintf(str_replace('&amp;', '&'
 if( $Note->Note_loaded() ) //Utilisateur connecté.
 {
 	$Template->Set_filenames(array(
-		'handle_note' => '../templates/' . $CONFIG['theme'] . '/note.tpl'
+		'handle_note'=> 'note.tpl'
 	));
 	
 	###########################Insertion##############################

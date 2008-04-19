@@ -34,7 +34,7 @@ if( !defined('TITLE') )
 $Session->Session_check(TITLE); //Vérification de la session.
 
 $Template->Set_filenames(array(
-	'admin_header' => '../templates/' . $CONFIG['theme'] . '/admin/admin_header.tpl'
+	'admin_header'=> 'admin/admin_header.tpl'
 ));
 
 $Template->Assign_vars(array(
@@ -50,7 +50,7 @@ $Template->Pparse('admin_header'); // traitement du modele
 require_once('../includes/admin_access.php');
 
 $Template->Set_filenames(array(
-	'admin_sub_header' => '../templates/' . $CONFIG['theme'] . '/admin/admin_sub_header.tpl'
+	'admin_sub_header'=> 'admin/admin_sub_header.tpl'
 ));
 
 $Template->Assign_vars(array(

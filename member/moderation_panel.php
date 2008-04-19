@@ -36,7 +36,7 @@ if( !$Member->Check_level(MODO_LEVEL) ) //Si il n'est pas modérateur
 include('../includes/moderation_panel_begin.php');	
 	
 $Template->Set_filenames(array(
-	'moderation_panel' => '../templates/' . $CONFIG['theme'] . '/moderation_panel.tpl'
+	'moderation_panel'=> 'moderation_panel.tpl'
 ));	
 
 $Template->Assign_vars(array(
@@ -201,7 +201,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 			'} else' . "\n" .
 			'	document.getElementById(\'action_contents\').disabled = \'disabled\';' . "\n" .
 			'document.getElementById(\'action_info\').innerHTML = replace_value;',
-			'REGEX' => '/[0-9]+ [a-zA-Z]+/',
+			'REGEX'=> '[0-9]+ [a-zA-Z]+/',
 			'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO' => '.php?action=punish&amp;id=' . $id_get,
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
@@ -337,7 +337,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
-			'REGEX' => '/ [0-9]+%/',
+			'REGEX'=> ' [0-9]+%/',
 			'U_ACTION_INFO' => '.php?action=warning&amp;id=' . $id_get,
 			'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],

@@ -38,7 +38,7 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 	if( empty($activ_confirm) )
 	{	
 		$Template->Set_filenames(array(
-			'forget' => '../templates/' . $CONFIG['theme'] . '/forget.tpl'
+			'forget'=> 'forget.tpl'
 		));
 			
 		if( !empty($_POST['forget']))

@@ -54,7 +54,7 @@ if( !empty($_POST['update']) )  //Mise à jour
 }
 
 $Template->Set_filenames(array(
-	'pages_config' => '../templates/' . $CONFIG['theme'] . '/pages/admin_pages.tpl'
+	'pages_config'=> 'pages/admin_pages.tpl'
 ));
 
 $array_auth = isset($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();

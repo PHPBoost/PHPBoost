@@ -64,7 +64,7 @@ elseif( !empty($id) && $del ) //Suppression.
 elseif( !empty($id) && $edit ) //Edition.
 {
 	$Template->Set_filenames(array(
-		'admin_smileys_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_smileys_management2.tpl'
+		'admin_smileys_management2'=> 'admin/admin_smileys_management2.tpl'
 	));
 
 	$row = $Sql->Query_array('smileys', 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
@@ -111,7 +111,7 @@ elseif( !empty($id) && $edit ) //Edition.
 else
 {			
 	$Template->Set_filenames(array(
-		'admin_smileys_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_smileys_management.tpl'
+		'admin_smileys_management'=> 'admin/admin_smileys_management.tpl'
 	));
 
 	$Template->Assign_vars(array(

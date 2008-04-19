@@ -62,7 +62,7 @@ elseif( !empty($del) ) //Suppression d'une image.
 else
 {
 	$Template->Set_filenames(array(
-		'admin_gallery_management' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_management.tpl'
+		'admin_gallery_management'=> 'gallery/admin_gallery_management.tpl'
 	));
 	
 	if( !empty($idcat) && !isset($CAT_GALLERY[$idcat]) )

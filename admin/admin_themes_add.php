@@ -118,7 +118,7 @@ elseif( !empty($_FILES['upload_theme']['name']) ) //Upload et décompression de l
 else  
 {
 	$Template->Set_filenames(array(
-		'admin_themes_add' => '../templates/' . $CONFIG['theme'] . '/admin/admin_themes_add.tpl'
+		'admin_themes_add'=> 'admin/admin_themes_add.tpl'
 	));
 	
 	$Template->Assign_vars(array(

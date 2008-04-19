@@ -68,7 +68,7 @@ elseif( !empty($_GET['del']) && !empty($get_id) ) //Suppression du rang.
 else //Sinon on rempli le formulaire	 
 {	
 	$Template->Set_filenames(array(
-		'admin_ranks' => '../templates/' . $CONFIG['theme'] . '/admin/admin_ranks.tpl'
+		'admin_ranks'=> 'admin/admin_ranks.tpl'
 	));
 
 	$Template->Assign_vars(array(

@@ -51,7 +51,7 @@ if( !empty($_POST['valid'])  )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_shoutbox_config' => '../templates/' . $CONFIG['theme'] . '/shoutbox/admin_shoutbox_config.tpl'
+		'admin_shoutbox_config'=> 'shoutbox/admin_shoutbox_config.tpl'
 	));
 	
 	$Cache->Load_file('shoutbox');

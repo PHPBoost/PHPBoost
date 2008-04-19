@@ -16,7 +16,7 @@ $root = !empty($_GET['root']) ? 1 : 0;
 //Chargement d'un fichier template pour connaître l'emplacement du template
 include_once('../includes/template.class.php');
 $Template = new Templates();
-$Template->Set_filenames(array('pages' => '../templates/' . $CONFIG['theme'] . '/pages/pages.tpl'));
+$Template->Set_filenames(array('pages'=> 'pages/pages.tpl'));
 
 //Listage des répertoires dont le répertoire parent est connu
 if( $id_cat != 0 )

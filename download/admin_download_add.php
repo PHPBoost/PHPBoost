@@ -102,7 +102,7 @@ if( !empty($_POST['valid']) )
 elseif( !empty($_POST['preview']) )
 {
 	$Template->Set_filenames(array(
-		'admin_download_add' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_add.tpl'
+		'admin_download_add'=> 'download/admin_download_add.tpl'
 	));
 	
 	include_once('admin_download_menu.php');
@@ -244,7 +244,7 @@ elseif( !empty($_POST['preview']) )
 else
 {
 	$Template->Set_filenames(array(
-		'admin_download_add' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_add.tpl'
+		'admin_download_add'=> 'download/admin_download_add.tpl'
 	));
 
 	include('../includes/bbcode.php');

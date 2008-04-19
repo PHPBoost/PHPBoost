@@ -142,7 +142,7 @@ elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
 else
 {
 	$Template->Set_filenames(array(
-		'admin_files_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_files_management.tpl'
+		'admin_files_management'=> 'admin/admin_files_management.tpl'
 	));
 
 	$sql_request = !empty($folder_member) 

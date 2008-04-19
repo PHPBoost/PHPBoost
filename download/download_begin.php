@@ -67,11 +67,10 @@ while( $id_cat_for_download > 0 )
 	$id_cat_for_download = (int)$DOWNLOAD_CATS[$id_cat_for_download]['id_parent'];
 	if( !empty($DOWNLOAD_CATS[$id_cat_for_download]['auth']) )
 	{
-			//If we can't read a category, we can't read sub elements.
-			$auth_read = $auth_read && $Member->Check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], READ_CAT_DOWNLOAD);
-			$auth_write = $Member->Check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], WRITE_CAT_DOWNLOAD);
+		//If we can't read a category, we can't read sub elements.
+		$auth_read = $auth_read && $Member->Check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], READ_CAT_DOWNLOAD);
+		$auth_write = $Member->Check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], WRITE_CAT_DOWNLOAD);
 	}
-
 }
 
 $Speed_bar->Add_link($DOWNLOAD_LANG['download'], transid('download.php'));

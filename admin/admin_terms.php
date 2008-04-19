@@ -58,7 +58,7 @@ if( !empty($_POST['msg_register']) ) //Message à l'inscription.
 else
 {			
 	$Template->Set_filenames(array(
-		'admin_terms' => '../templates/' . $CONFIG['theme'] . '/admin/admin_terms.tpl'
+		'admin_terms'=> 'admin/admin_terms.tpl'
 	));
 	
 	$Template->Assign_vars(array(

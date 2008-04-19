@@ -33,7 +33,7 @@ load_module_lang('stats');
 
 #########################Stats.tpl###########################
 $Template->Set_filenames(array(
-	'stats_mini' => '../templates/' . $CONFIG['theme'] . '/stats/stats_mini.tpl'
+	'stats_mini'=> 'stats/stats_mini.tpl'
 ));
 
 $Cache->Load_file('stats');

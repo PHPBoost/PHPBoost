@@ -30,7 +30,7 @@ if( defined('PHPBOOST') !== true )
 else
 {
 	$Template->Set_filenames(array(
-		'confirm' => '../templates/' . $CONFIG['theme'] . '/confirm.tpl'
+		'confirm'=> 'confirm.tpl'
 	));
 		
 	//$URL_ERROR,  $L_ERROR $$DELAY_REDIRECT et en variable globale.

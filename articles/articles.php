@@ -38,7 +38,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 	if( empty($articles['id']) )
 		$Errorh->Error_handler('e_unexist_articles', E_USER_REDIRECT); 
 	
-	$Template->Set_filenames(array('articles' => '../templates/' . $CONFIG['theme'] . '/articles/articles.tpl'));		
+	$Template->Set_filenames(array('articles'=> 'articles/articles.tpl'));		
 	
 	//MAJ du compteur.
 	$Sql->Query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
@@ -135,7 +135,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 else
 {
 	$Template->Set_filenames(array(
-		'articles_cat' => '../templates/' . $CONFIG['theme'] . '/articles/articles_cat.tpl'
+		'articles_cat'=> 'articles/articles_cat.tpl'
 	));	
 
 	if( $idartcat > 0 )

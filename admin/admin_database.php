@@ -50,7 +50,7 @@ $tables_backup = !empty($_POST['backup']) ? true : false;
 $action = !empty($_GET['action']) ? securit($_GET['action']) : '';
 
 $Template->Set_filenames(array(
-'admin_database_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_database_management.tpl'
+'admin_database_management'=> 'admin/admin_database_management.tpl'
 ));
 
 //outils de sauvegarde de la base de données

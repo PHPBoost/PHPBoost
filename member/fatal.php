@@ -94,7 +94,7 @@ if( empty($errinfo) )
 	list($errinfo['errno'], $errinfo['errstr'], $errinfo['errline'], $errinfo['errfile']) = array('-1', '???', '0', 'unknow');
 
 $Template->Set_filenames(array(
-	'error' => '../templates/' . $CONFIG['theme'] . '/error.tpl'
+	'error'=> 'error.tpl'
 ));
 
 $class = $Errorh->Get_errno_class($errinfo['errno']);	

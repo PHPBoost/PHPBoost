@@ -41,7 +41,7 @@ else
 require_once('../includes/header.php'); 
 
 $Template->Set_filenames(array(
-	'forum_index' => '../templates/' . $CONFIG['theme'] . '/forum/forum_index.tpl'
+	'forum_index'=> 'forum/forum_index.tpl'
 ));
 
 //Affichage des sous-catégories de la catégorie.

@@ -223,7 +223,7 @@ else
 
 require_once('../includes/header.php');
 
-$Template->Set_filenames(array('pages_action' => '../templates/' . $CONFIG['theme'] . '/pages/action.tpl'));
+$Template->Set_filenames(array('pages_action'=> 'pages/action.tpl'));
 
 
 if( $del_cat > 0 )

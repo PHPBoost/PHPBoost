@@ -137,7 +137,7 @@ elseif( !empty($_POST['add']) ) //Ajout du lien.
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_web_cat' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_cat.tpl'
+		'admin_web_cat'=> 'web/admin_web_cat.tpl'
 	));
 	  
 	//Images disponibles

@@ -140,7 +140,7 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 elseif( $add )
 {
 	$Template->Set_filenames(array(
-	'admin_links_management' => '../templates/' . $CONFIG['theme'] . '/links/admin_links_management.tpl'
+	'admin_links_management'=> 'links/admin_links_management.tpl'
 	));
 	
 	$Template->Assign_block_vars('add', array(
@@ -178,7 +178,7 @@ elseif( $add )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_links_management' => '../templates/' . $CONFIG['theme'] . '/links/admin_links_management.tpl'
+		'admin_links_management'=> 'links/admin_links_management.tpl'
 	));
 	
 	$Template->Assign_block_vars('management', array(

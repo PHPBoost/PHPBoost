@@ -73,7 +73,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	
 	###########################Affichage##############################
 	$Template->Set_filenames(array(
-		'shoutbox_mini' => '../templates/' . $CONFIG['theme'] . '/shoutbox/shoutbox_mini.tpl'
+		'shoutbox_mini'=> 'shoutbox/shoutbox_mini.tpl'
 	));
 
 	//Pseudo du membre connecté.

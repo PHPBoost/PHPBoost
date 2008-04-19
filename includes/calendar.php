@@ -36,7 +36,7 @@ $input_field = !empty($_GET['input_field']) ? trim($_GET['input_field']) : '';
 $lyear = !empty($_GET['lyear']) ? '&amp;lyear=1' : '';
 
 $Template->Set_filenames(array(
-	'calendar' => '../templates/' . $CONFIG['theme'] . '/calendar.tpl'
+	'calendar'=> 'calendar.tpl'
 ));
 
 //Type date.

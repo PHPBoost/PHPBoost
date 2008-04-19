@@ -143,7 +143,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 elseif( !empty($id) )
 {
 	$Template->Set_filenames(array(
-		'admin_poll_management2' => '../templates/' . $CONFIG['theme'] . '/poll/admin_poll_management2.tpl'
+		'admin_poll_management2'=> 'poll/admin_poll_management2.tpl'
 	));
 
 	$row = $Sql->Query_array('poll', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -238,7 +238,7 @@ elseif( !empty($id) )
 else
 {			
 	$Template->Set_filenames(array(
-		'admin_poll_management' => '../templates/' . $CONFIG['theme'] . '/poll/admin_poll_management.tpl'
+		'admin_poll_management'=> 'poll/admin_poll_management.tpl'
 	));
 	 
 	$nbr_poll = $Sql->Count_table('poll', __LINE__, __FILE__);

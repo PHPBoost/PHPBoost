@@ -30,7 +30,7 @@ $get_show = !empty($_GET['show']) ? true : false;
 if( !$get_show && defined('PHPBOOST') === true )
 {
 	$Template->Set_filenames(array(
-		'handle_bbcode' => '../templates/' . $CONFIG['theme'] . '/bbcode.tpl'
+		'handle_bbcode'=> 'bbcode.tpl'
 	));
 
 	$field = (!isset($_field) ? 'contents' : $_field);
@@ -189,7 +189,7 @@ elseif( $get_show )
 	include_once('../includes/header_no_display.php');
 	
 	$Template->Set_filenames(array(
-		'bbcode_smileys' => '../templates/' . $CONFIG['theme'] . '/bbcode_smileys.tpl'
+		'bbcode_smileys'=> 'bbcode_smileys.tpl'
 	));
 	
 	$_field = !empty($_GET['field']) ? trim($_GET['field']) : '';

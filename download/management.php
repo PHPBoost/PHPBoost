@@ -49,7 +49,7 @@ require_once('../includes/header.php');
 include_once('download_cats.class.php');
 $download_categories = new Download_cats();
 
-$Template->Set_filenames(array('file_management' => '../templates/' . $CONFIG['theme'] . '/download/file_management.tpl'));
+$Template->Set_filenames(array('file_management'=> 'download/file_management.tpl'));
 
 if( $edit_file_id > 0 )
 {
@@ -65,7 +65,7 @@ if( $edit_file_id > 0 )
 		$file_size = request_var(POST, 'size', 0.0, TFLOAT);
 		$file_hits = request_var(POST, 'hits', 0);
 		
-		$Template->Set_filenames(array('download' => '../templates/' . $CONFIG['theme'] . 	'/download/download.tpl'));
+		$Template->Set_filenames(array('download' => 'download/download.tpl'));
 		
 		$Template->Assign_vars(array(
 			'C_DISPLAY_DOWNLOAD' => true,

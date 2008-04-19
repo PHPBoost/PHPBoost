@@ -47,7 +47,7 @@ if( !empty($_POST['valid']))
 else	
 {		
 	$Template->Set_filenames(array(
-	'admin_poll_config' => '../templates/' . $CONFIG['theme'] . '/poll/admin_poll_config.tpl'
+	'admin_poll_config'=> 'poll/admin_poll_config.tpl'
 	));
 
 	$Cache->Load_file('poll');
