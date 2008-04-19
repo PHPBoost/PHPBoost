@@ -103,6 +103,7 @@
 [b]News[/b]
 - [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des news.
 [*] [color=red]Nouveauté:[/color] Possibilité de publier automatiquement des news à la minute près.
+- [color=red]Nouveauté:[/color] Lien vers la news précédente/suivante.
 [*] Possibilité de masquer le nom du posteur de la news.
 [*] Possibilité de masquer la date de la news.
 

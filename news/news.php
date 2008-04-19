@@ -42,7 +42,8 @@ if( empty($idnews) && empty($idcat) )
 
 	if( $CONFIG_NEWS['activ_edito'] == '1' ) //Affichage de l'édito
 	{
-		$Template->Assign_block_vars('edito', array(
+		$Template->Assign_vars( array(
+			'C_NEWS_EDITO' => true,
 			'CONTENTS' => second_parse(stripslashes($CONFIG_NEWS['edito'])),
 			'TITLE' => $CONFIG_NEWS['edito_title'],
 			'EDIT' => $is_admin ? '<a href="../news/admin_news_config.php" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>&nbsp;' : ''
@@ -73,7 +74,6 @@ if( empty($idnews) && empty($idcat) )
 		
 	$Template->Assign_vars(array(
 		'PAGINATION' => $show_pagin,
-		'THEME' => $CONFIG['theme'],
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
 		'L_LAST_NEWS' => !$show_archive ? $LANG['last_news'] : $LANG['archive']
 	));
@@ -81,6 +81,10 @@ if( empty($idnews) && empty($idcat) )
 	//Si les news en block sont activées on recupère la page.
 	if( $CONFIG_NEWS['type'] == 1 && !$show_archive )
 	{		
+		$Template->Assign_vars(array(
+			'C_NEWS_BLOCK' => true
+		));
+		
 		$column = ($CONFIG_NEWS['nbr_column'] > 1) ? true : false;
 		if( $column )
 		{
@@ -110,8 +114,8 @@ if( empty($idnews) && empty($idcat) )
 		{ 
 			if( $is_admin )
 			{
-				$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $row['id'] . '" title="' . $LANG['edit'] . '"><img  style="vertical-align:middle;" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" /></a>';
-				$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $row['id'] . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img style="vertical-align:middle;" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" /></a>';
+				$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $row['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" /></a>';
+				$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $row['id'] . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" /></a>';
 			}
 			
 			//Séparation des news en colonnes si activé.
@@ -123,7 +127,7 @@ if( empty($idnews) && empty($idcat) )
 				
 			$Template->Assign_block_vars('news', array(
 				'ID' => $row['id'],
-				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img src="' . $row['icon'] . '" alt="" style="vertical-align:middle;" /></a>' : ''),
+				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : ''),
 				'TITLE' => $row['title'],
 				'CONTENTS' => second_parse($row['contents']),
 				'EXTEND_CONTENTS' => (!empty($row['extend_contents']) ? '<a style="font-size:10px" href="news' . transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $LANG['extend_contents'] . ']</a><br /><br />' : ''),
@@ -133,7 +137,7 @@ if( empty($idnews) && empty($idcat) )
 				'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? display_com_link($row['nbr_com'], '../news/news' . transid('.php?cat=0&amp;id=' . $row['id'] . '&amp;i=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?i=0'), $row['id'], 'news') : '',
 				'EDIT' => $admin,
 				'DEL' => $del,
-				'NEW_ROW' => $new_row, 
+				'NEW_ROW' => $new_row,
 				'U_MEMBER_ID' => transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 				'U_NEWS_LINK' => transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
 			));
@@ -143,7 +147,8 @@ if( empty($idnews) && empty($idcat) )
 		
 		if( $z == 0 )
 		{
-			$Template->Assign_block_vars('no_news_available', array(
+			$Template->Assign_vars( array(
+				'C_NEWS_NO_AVAILABLE' => true,
 				'L_NO_NEWS_AVAILABLE' => $LANG['no_news_available']
 			));
 		}
@@ -158,14 +163,16 @@ if( empty($idnews) && empty($idcat) )
 			$CONFIG_NEWS['nbr_column'] = !empty($CONFIG_NEWS['nbr_column']) ? $CONFIG_NEWS['nbr_column'] : 1;
 			$column_width = floor(100/$CONFIG_NEWS['nbr_column']);	
 			
-			$Template->Assign_block_vars('news_link', array(
+			$Template->Assign_vars(array(
+				'C_NEWS_LINK' => true,
 				'START_TABLE_NEWS' => '<table style="margin:auto;width:98%"><tr><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">',
 				'END_TABLE_NEWS' => '</ul></td></tr></table>'
 			));	
 		}
 		else
 		{	
-			$Template->Assign_block_vars('news_link', array(
+			$Template->Assign_vars(array(
+				'C_NEWS_LINK' => true,
 				'START_TABLE_NEWS' => '<ul style="margin:0;padding:0;list-style-type:none;">',
 				'END_TABLE_NEWS' => '</ul>'
 			));
@@ -187,9 +194,9 @@ if( empty($idnews) && empty($idcat) )
 				$i++;
 			}
 			
-			$Template->Assign_block_vars('news_link.list', array(
-				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img style="vertical-align:middle;" src="' . $row['icon'] . '" alt="" /></a>' : ''),
-				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+			$Template->Assign_block_vars('list', array(
+				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
+				'DATE' => gmdate_format('date_format_tiny', $row['timestamp']),
 				'TITLE' => $row['title'],
 				'NEW_ROW' => $new_row, 
 				'U_NEWS' => 'news' . transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
@@ -209,19 +216,19 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 	list($admin, $del) = array('', ''); 		
 	if( $is_admin )
 	{
-		$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $news['id'] . '" title="' . $LANG['edit'] . '"><img style="vertical-align:middle;" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" /></a>';
-		$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $news['id'] . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img style="vertical-align:middle;" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" /></a>';
+		$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $news['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" /></a>';
+		$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $news['id'] . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" /></a>';
 	}
 
 	$Template->Assign_vars(array(
-		'THEME' => $CONFIG['theme'],
+		'C_NEWS_BLOCK' => true,
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
 		'L_ON' => $LANG['on']
 	));
 	
 	$Template->Assign_block_vars('news', array(
 		'ID' => $news['id'],
-		'ICON' => ((!empty($news['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news.php?cat=' . $news['idcat'] . '"><img style="vertical-align:middle;" src="' . $news['icon'] . '" alt="" /></a>' : ''),
+		'ICON' => ((!empty($news['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news.php?cat=' . $news['idcat'] . '"><img class="valign_middle" src="' . $news['icon'] . '" alt="" /></a>' : ''),
 		'TITLE' => $news['title'],
 		'CONTENTS' => second_parse($news['contents']),
 		'EXTEND_CONTENTS' => second_parse($news['extend_contents']) . '<br /><br />',
@@ -243,6 +250,7 @@ elseif( !empty($idcat) )
 		$Errorh->Error_handler('error_unexist_cat', E_USER_REDIRECT);
 	
 	$Template->Assign_vars(array(
+		'C_NEWS_LINK' => true,
 		'CAT_NAME' => $cat['name'],
 		'EDIT' => ($is_admin) ? '&nbsp;&nbsp;<a href="admin_news_cat.php?id=' . $cat['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" /></a>' : '',
 		'L_CATEGORY' => $LANG['category']
@@ -256,7 +264,7 @@ elseif( !empty($idcat) )
 	while ($row = $Sql->Sql_fetch_assoc($result))
 	{ 
 		$Template->Assign_block_vars('list', array(
-			'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img style="vertical-align:middle;" src="' . $row['icon'] . '" alt="" /></a>' : ''),
+			'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
 			'TITLE' => $row['title'],
 			'COM' => $row['nbr_com'],
 			'U_NEWS' => 'news' . transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '+'  . url_encode_rewrite($row['title']) . '.php')

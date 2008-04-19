@@ -7,27 +7,25 @@
 		</script>
 		
 		
-		# START edito #
+		# IF C_NEWS_EDITO #
 		<div class="news_container">
 			<div class="msg_top_l"></div>			
 			<div class="msg_top_r"></div>
 			<div class="msg_top">
-				<div style="float:left"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{edito.TITLE}</h3></div>
-				<div style="float:right">{edito.EDIT}</div>
+				<div style="float:left"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{TITLE}</h3></div>
+				<div style="float:right">{EDIT}</div>
 			</div>	
-						
 			<div class="news_content">
-				{edito.CONTENTS}
+				{CONTENTS}
 			</div>
-			
 			<div class="news_bottom_l"></div>		
 			<div class="news_bottom_r"></div>
 			<div class="news_bottom"></div>
 		</div>
-		# END edito #
+		# ENDIF #
 		
 		
-		# START no_news_available #
+		# IF C_NEWS_NO_AVAILABLE #
 		<div class="news_container">
 			<div class="msg_top_l"></div>			
 			<div class="msg_top_r"></div>
@@ -35,15 +33,16 @@
 				<a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3>
 			</div>	
 			<div class="news_content">
-				<p class="text_strong" style="text-align:center">{no_news_available.L_NO_NEWS_AVAILABLE}</p>
+				<p class="text_strong text_center">{L_NO_NEWS_AVAILABLE}</p>
 			</div>
 			<div class="news_bottom_l"></div>		
 			<div class="news_bottom_r"></div>
 			<div class="news_bottom"></div>
 		</div>
-		# END no_news_available #
+		# ENDIF #
 		
 		
+		# IF C_NEWS_BLOCK #
 		{START_TABLE_NEWS}		
 		# START news #
 		
@@ -68,16 +67,16 @@
 				<span style="float:left"><a class="small_link" href="../member/member{news.U_MEMBER_ID}">{news.PSEUDO}</a></span>
 				<span style="float:right">{news.DATE}</span>
 			</div>
-		</div>
-		
+		</div>		
 		# INCLUDE handle_com #
 		
 		# END news #			
 		{END_TABLE_NEWS}
+		<div class="text_center">{PAGINATION}</div>
+		<div class="text_center">{ARCHIVES}</div>
+		# ENDIF #
 		
-		
-		# START news_link #
-			
+		# IF C_NEWS_LINK #		
 		<div class="news_container">
 			<div class="msg_top_l"></div>			
 			<div class="msg_top_r"></div>
@@ -85,22 +84,20 @@
 				<div style="float:left"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
 				<div style="float:right">{news.COM}{news.EDIT}{news.DEL}</div>
 			</div>	
-						
 			<div class="news_content">
-				{news_link.START_TABLE_NEWS}
-				# START news_link.list #
-					{news_link.list.NEW_ROW}
-						<li><img src="../templates/{THEME}/images/li.png" alt="" /> {news_link.list.ICON} <span style="font-weight:bold;font-size:11px;">{news_link.list.DATE}:</span> <a href="{news_link.list.U_NEWS}" style="font-size:11px;">{news_link.list.TITLE}</a></li>
-				# END news_link.list #
-				{news_link.END_TABLE_NEWS}	
+				{START_TABLE_NEWS}
+				# START list #
+					{list.NEW_ROW}
+						<li><img src="../templates/{THEME}/images/li.png" alt="" /> {list.ICON} <span class="text_small">{list.DATE} :</span> <a href="{list.U_NEWS}" class="small_link">{list.TITLE}</a></li>
+				# END list #
+				{END_TABLE_NEWS}
+				<br />
+				<div class="text_center">{PAGINATION}</div>
+				<div class="text_center">{ARCHIVES}</div>				
 			</div>
-			
 			<div class="news_bottom_l"></div>		
 			<div class="news_bottom_r"></div>
 			<div class="news_bottom"></div>
-		</div>	
-		
-		# END news_link #
-		
-		<div style="text-align: center;">{PAGINATION}</div>
+		</div>		
+		# ENDIF #
 		

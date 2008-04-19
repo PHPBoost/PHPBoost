@@ -30,6 +30,9 @@
 ------------------------------------ MODULES -----------------------------------
 [-] Module liens du site
 
+News: 
+- [color=red]Nouveauté:[/color] Lien vers la news précédente/suivante.
+
 Forum: 
 [-] Opérations de masse (suppressions, déplacements, etc)
 [-] Réparation des bugs sur l'arbre intervallaire gérant les catégories
