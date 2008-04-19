@@ -61,7 +61,6 @@ $auth_read = $Member->Check_auth($CONFIG_DOWNLOAD['global_auth'], READ_CAT_DOWNL
 $auth_write = $Member->Check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOWNLOAD);
 
 //Speed_bar : we read categories list recursively
-
 while( $id_cat_for_download > 0 )
 {
 	$Speed_bar->Add_link($DOWNLOAD_CATS[$id_cat_for_download]['name'], transid('download.php?id=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
@@ -79,7 +78,7 @@ $Speed_bar->Add_link($DOWNLOAD_LANG['download'], transid('download.php'));
 
 $Speed_bar->Reverse_links();
 
-if( !$auth_write )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+if( !$auth_read )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 
 ?>

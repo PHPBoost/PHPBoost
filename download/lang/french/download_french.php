@@ -64,6 +64,7 @@ $DOWNLOAD_LANG['num_com'] = '%d commentaire';
 $DOWNLOAD_LANG['num_coms'] = '%d commentaires';
 $DOWNLOAD_LANG['this_note'] = 'Note :';
 $DOWNLOAD_LANG['short_contents'] = 'Courte description';
+$DOWNLOAD_LANG['complete_contents'] = 'Description complète';
 $DOWNLOAD_LANG['url'] = 'Adresse du fichier';
 $DOWNLOAD_LANG['confirm_delete_file'] = 'Etes-vous certain de vouloir supprimer ce fichier ?';
 $DOWNLOAD_LANG['download_file'] = 'Télécharger le fichier';
@@ -73,6 +74,14 @@ $DOWNLOAD_LANG['last_update_date'] = 'Date de sortie ou de dernière mise à jour'
 $DOWNLOAD_LANG['downloaded'] = 'Téléchargé';
 $DOWNLOAD_LANG['n_times'] = '%d fois';
 $DOWNLOAD_LANG['num_notes'] = '%d votant(s)';
+$DOWNLOAD_LANG['edit_file'] = 'Modifier le fichier';
+$DOWNLOAD_LANG['delete_file'] = 'Supprimer le fichier';
+
+//Gestion des fichiers
+$DOWNLOAD_LANG['files_management'] = 'Gestion des fichiers';
+$DOWNLOAD_LANG['file_management'] = 'Modification d\'un fichier';
+$DOWNLOAD_LANG['file_addition'] = 'Ajout d\'un fichier';
+$DOWNLOAD_LANG['add_file'] = 'Ajouter le fichier';
 
 //Catégories
 $DOWNLOAD_LANG['add_category'] = 'Ajouter une catégorie';
@@ -104,5 +113,5 @@ $DOWNLOAD_LANG['infinite_loop'] = 'Vous voulez déplacer la catégorie dans une de
 $DOWNLOAD_LANG['recount_success'] = 'Le nombre de fichiers pour chaque catégorie a été recompté avec succès.';
 
 //Erreurs
-$LANG['e_unexist_file_download'] = 'Le fichier que vous demandez n\'existe pas!';
+$LANG['e_unexist_file_download'] = 'Le fichier que vous demandez n\'existe pas !';
 ?>
