@@ -31,97 +31,23 @@ define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
-$idmodule = empty($id) && !empty($_GET['id']) ? trim($_GET['id']) : '' ; //Module non installé => id : string
 $id_post = !empty($_POST['id']) ? numeric($_POST['id']) : '' ;
 
 $top = !empty($_GET['top']) ? securit($_GET['top']) : '' ;
 $bottom = !empty($_GET['bot']) ? securit($_GET['bot']) : '' ;
 $move = isset($_GET['move']) ? securit($_GET['move']) : '';
 
-if( !empty($idmodule) ) //Module non installé => insertion dans la bdd
-{
-	if( preg_match('`([a-zA-Z0-9._-]+) ([0-9]*)`', $idmodule, $array_get) )
-	{	
-		$module_name = $array_get[1];
-		$idmodule = $array_get[2];
-		$secure = isset($_GET['secure']) ? numeric($_GET['secure']) : -1;
-		$activ = isset($_GET['activ']) ? numeric($_GET['activ']) : 0; //Désactivé par défaut.
-		
-		if( strpos($module_name, '.php') === false ) //Menu associé à un module.
-		{
-			//Récupération des infos de config.
-			$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
-			//Installation du mini module s'il existe
-			if( !empty($info_module['mini_module']) )
-			{
-				$i = 1;
-				$array_menus = parse_ini_array($info_module['mini_module']);
-				foreach($array_menus as $path => $location)
-				{
-					if( $idmodule == $i )
-					{
-						$menu_path = '../' . addslashes($module_name) . '/' . addslashes($path);
-						if( file_exists($menu_path) )
-						{	
-							if( !empty($move) )
-							{
-								$location = $move;
-								$activ = 1; //Activation.
-							}
-							else
-								$location = addslashes($location);
-				
-							$check_menu = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules_mini WHERE name = '" .  addslashes($module_name) . "' AND contents = '" . addslashes($path) . "'", __LINE__, __FILE__);
-							if( empty($check_menu) )
-							{
-								$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-								$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . addslashes($module_name) . "', '" . addslashes($path) . "', '" . addslashes($location) . "', '" . $secure . "', '" . $activ . "', 0, 0)", __LINE__, __FILE__);
-								
-								$Cache->Generate_file('modules_mini');
-							}
-							redirect(HOST . SCRIPT);
-						}
-					}
-					$i++;
-				}
-			}
-		}
-		else //Menu perso dans le dossier /menus.
-		{
-			$menu_path = '../menus/' . addslashes($module_name);
-			if( !empty($move) )
-			{
-				$location = $move;
-				$activ = 1; //Activation.
-			}
-			else
-				$location = 'left';
-
-			$check_menu = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules_mini WHERE name = '" .  str_replace('.php', '', addslashes($module_name)) . "' AND contents = ''" . addslashes($module_name) . "'", __LINE__, __FILE__);
-			if( empty($check_menu) )
-			{
-				$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-				$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . str_replace('.php', '', addslashes($module_name)) . "', '" . addslashes($module_name) . "', '" . $location . "', '" . $secure . "', '" . $activ . "', 2, 0)", __LINE__, __FILE__);
-			
-				$Cache->Generate_file('modules_mini');
-			}
-			redirect(HOST . SCRIPT);
-		}
-	}
-}
-
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {	
-	$result = $Sql->Query_while("SELECT id, activ, secure
+	$result = $Sql->Query_while("SELECT id, activ, auth
 	FROM ".PREFIX."modules_mini", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$activ = isset($_POST[$row['id'] . 'activ']) ? numeric($_POST[$row['id'] . 'activ']) : '0';  
-		$secure = isset($_POST[$row['id'] . 'secure']) ? numeric($_POST[$row['id'] . 'secure']) : '-1'; 
+		$auth = isset($_POST[$row['id'] . 'auth']) ? numeric($_POST[$row['id'] . 'auth']) : '-1'; 
 		
-		if( $row['secure'] != $secure || $row['activ'] != $activ )
-			$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET activ = '" . $activ . "', auth = '" . $auth . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	$Sql->Close($result);
 	
@@ -147,13 +73,6 @@ elseif( isset($_GET['unactiv']) && !empty($id) ) //Gestion de l'inactivation pou
 	$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . $info_menu['location'] . "'", __LINE__, __FILE__);
 
 	$Cache->Generate_file('modules_mini');		
-	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
-}
-elseif( isset($_GET['secure']) && !empty($id) ) //Gestion de la sécurité pour un module donné.
-{
-	$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);	
-	$Cache->Generate_file('modules_mini');		
-	
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
 }
 elseif( !empty($move) && !empty($id) ) //Gestion de la sécurité pour un module donné.
@@ -219,12 +138,12 @@ else
 	$Sql->Close($result);
 	
 	$i = 0;
-	$uncheck_modules = $SECURE_MODULE; //On récupère tous les modules installés.
+	$uncheck_modules = $MODULES; //On récupère tous les modules installés.
 	$installed_menus_perso = array(); //Menu perso dans le dossier /menus
 	$installed_menus = array();
 	$uninstalled_menus = array();
 	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	$result = $Sql->Query_while("SELECT id, class, name, contents, location, activ, secure, added
+	$result = $Sql->Query_while("SELECT id, class, name, contents, location, activ, auth, added
 	FROM ".PREFIX."modules_mini
 	ORDER BY class", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
@@ -258,13 +177,6 @@ else
 				
 			$row['name'] = !empty($config['name']) ? $config['name'] : '';		
 		}
-		//Rangs d'autorisation.
-		$ranks = '';
-		foreach($array_auth_ranks as $rank => $name)
-		{
-			$selected = ($row['secure'] == $rank) ? 'selected="selected"' : '';
-			$ranks .= '<option value="' . $rank . '" ' . $selected . '>' . $name . '</option>';
-		}
 
 		$block_position = $row['location'];		
 		if( ($row['location'] == 'left' || $row['location'] == 'right') && (!$THEME_CONFIG[$CONFIG['theme']]['right_column'] && !$THEME_CONFIG[$CONFIG['theme']]['left_column']) ) 
@@ -273,23 +185,21 @@ else
 			$block_position = 'left'; //Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
 		elseif( ($row['location'] == 'right' || (!$THEME_CONFIG[$CONFIG['theme']]['left_column'] && $row['location'] == 'left')) && $THEME_CONFIG[$CONFIG['theme']]['right_column'] )
 			$block_position = 'right';
-				
+		
 		if( $row['activ'] == 1 && !empty($block_position) )
 		{
 			//Affichage réduit des différents modules.
 			$Template->Assign_block_vars('mod_' . $block_position, array(
 				'IDMENU' => $row['id'],
 				'NAME' => !empty($admin_link) ? '<a href="' . $admin_link . '">' . $row['name'] . '</a>' : ucfirst($row['name']),
-				'EDIT' => ($row['added'] == 1) ? '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>' : '',
-				'DEL' => ($row['added'] == 1) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['location'] . '&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm_menu();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" /></a>' : '',
+				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>',
+				'DEL' => ($row['added'] == 1 || $row['added'] == 2) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['location'] . '&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm_menu();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" /></a>' : '',
 				'ACTIV_ENABLED' => ($row['activ'] == '1') ? 'selected="selected"' : '',
 				'ACTIV_DISABLED' => ($row['activ'] == '0') ? 'selected="selected"' : '',
 				'CONTENTS' => ($row['added'] == 1) ? '<br />' . second_parse($row['contents']) : '',
-				'RANK' => $ranks,
 				'UP' => ($row['class'] > 1) ? '<a href="admin_menus.php?top=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/up.png" alt="" /></a>' : '<div style="float:left;width:32px;">&nbsp;</div>',
 				'DOWN' => ($array_max[$row['location']] != $row['class']) ? '<a href="admin_menus.php?bot=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/down.png" alt="" /></a>' : '<div style="float:left;width:32px;">&nbsp;</div>',
-				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $row['id'] . "&amp;pos=" . $row['location'] . "&amp;unactiv=' + this.options[this.selectedIndex].value",
-				'U_ONCHANGE_SECURE' => "'admin_menus.php?id=" . $row['id'] . "&amp;secure=' + this.options[this.selectedIndex].value"
+				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $row['id'] . "&amp;pos=" . $row['location'] . "&amp;unactiv=' + this.options[this.selectedIndex].value"
 			));
 		}	
 		else //Affichage des menus désactivés
@@ -297,12 +207,10 @@ else
 			$Template->Assign_block_vars('mod_main', array(
 				'IDMENU' => $row['id'],
 				'NAME' => ucfirst($row['name']),
-				'EDIT' => ($row['added'] == 1) ? '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>' : '',
-				'DEL' => ($row['added'] == 1) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['location'] . '&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm_menu();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" /></a>' : '',
+				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>',
+				'DEL' => ($row['added'] == 1 || $row['added'] == 2) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['location'] . '&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm_menu();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" /></a>' : '',
 				'CONTENTS' => ($row['added'] == 1) ? '<br />' . second_parse($row['contents']) : '',
-				'RANK' => $ranks,
-				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $row['id'] . "&amp;pos=" . $row['location'] . "&amp;activ=' + this.options[this.selectedIndex].value",
-				'U_ONCHANGE_SECURE' => "'admin_menus.php?id=" . $row['id'] . "&amp;secure=' + this.options[this.selectedIndex].value"
+				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $row['id'] . "&amp;pos=" . $row['location'] . "&amp;activ=' + this.options[this.selectedIndex].value"
 			));
 		}
 		$i++;
@@ -315,7 +223,7 @@ else
 		$modules_config[$name] = load_ini_file('../' . $name . '/lang/', $CONFIG['lang']);
 		if( !empty($modules_config[$name]['mini_module']) )
 		{	
-			$array_menus = parse_ini_array($config['mini_module']);
+			$array_menus = parse_ini_array($modules_config[$name]['mini_module']);
 			foreach($array_menus as $module_path => $location)
 				$uninstalled_menus[$name][$module_path] = $location; //On ajoute le menu.
 		}
@@ -323,28 +231,21 @@ else
 	//On liste les menus non installés.
 	foreach($uninstalled_menus as $name => $array_menu)
 	{
-		$j = 1;
+		$i = 1;
 		foreach($array_menu as $path => $location)
 		{
 			if( file_exists('../' . $name . '/' . $path) ) //Fichier présent.
 			{
-				$idmodule = $name . '+' . $j++;
-				$Template->Assign_block_vars('mod_main', array(
-					'IDMENU' => $idmodule,
+				$idmodule = $name . '+' . $i++;
+				$Template->Assign_block_vars('mod_main_uninstalled', array(
 					'NAME' => ucfirst($modules_config[$name]['name']),
-					'EDIT' => '',
-					'DEL' => '',
-					'CONTENTS' => '',
-					'RANK' => $ranks,
-					'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $idmodule . "&amp;pos=" . $location . "&amp;activ=' + this.options[this.selectedIndex].value",
-					'U_ONCHANGE_SECURE' => "'admin_menus.php?id=" . $idmodule . "&amp;secure=' + this.options[this.selectedIndex].value"
+					'U_INSTALL' => "admin_menus_add.php?idmodule=" . $idmodule . "&amp;install=1"
 				));
 			}
 		}
 	}
-	
+
 	//On recupère les menus dans le dossier /menus
-	$j = 1;
 	$rep = '../menus/';
 	if( is_dir($rep) ) //Si le dossier existe
 	{
@@ -360,16 +261,9 @@ else
 
 		foreach($file_array as $name)
 		{
-			$idmodule = $name . '+' . $j++;
-			$Template->Assign_block_vars('mod_main', array(
-				'IDMENU' => $idmodule,
+			$Template->Assign_block_vars('mod_main_uninstalled', array(
 				'NAME' => ucfirst(str_replace('.php', '', $name)),
-				'EDIT' => '',
-				'DEL' => '',
-				'CONTENTS' => '',
-				'RANK' => $ranks,
-				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $idmodule . "&amp;pos=" . $location . "&amp;activ=' + this.options[this.selectedIndex].value",
-				'U_ONCHANGE_SECURE' => "'admin_menus.php?id=" . $idmodule . "&amp;secure=' + this.options[this.selectedIndex].value"
+				'U_INSTALL' => "admin_menus_add.php?idmodule=" . $name . "+0&amp;install=1"
 			));
 		}
 	}
@@ -403,6 +297,7 @@ else
 		'L_TOP_FOOTER' => $LANG['menu_top_footer'],
 		'L_FOOTER' => $LANG['menu_footer'],
 		'L_MENUS_AVAILABLE' => ($i > 0) ? $LANG['available_menus'] : $LANG['no_available_menus'],
+		'L_INSTALL' => $LANG['install'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
 	));

@@ -76,11 +76,6 @@
 											<option value="0" {mod_header.ACTIV_DISABLED}>{L_UNACTIV}</option>
 										</select>
 									</p>
-									<p>
-										<select name="{mod_header.IDMENU}secure" onchange="document.location = {mod_header.U_ONCHANGE_SECURE}">
-											{mod_header.RANK}
-										</select>
-									</p>
 									<div style="width:100px;height:30px;">
 										<div style="float:left">
 											{mod_header.UP}
@@ -131,11 +126,6 @@
 											<option value="0" {mod_subheader.ACTIV_DISABLED}>{L_UNACTIV}</option>
 										</select>
 									</p>
-									<p>
-										<select name="{mod_subheader.IDMENU}secure" onchange="document.location = {mod_subheader.U_ONCHANGE_SECURE}">
-											{mod_subheader.RANK}
-										</select>
-									</p>
 									<div style="width:100px;height:30px;">
 										<div style="float:left">
 											{mod_subheader.UP}
@@ -184,11 +174,6 @@
 											<option value="0" {mod_left.ACTIV_DISABLED}>{L_UNACTIV}</option>					
 										</select>
 									</p>						
-									<p>
-										<select name="{mod_left.IDMENU}secure" onchange="document.location = {mod_left.U_ONCHANGE_SECURE}">								
-											{mod_left.RANK}
-										</select>							
-									</p>								
 									<div style="width:100px;height:30px;margin:auto;">
 										<div style="float:left">
 											{mod_left.UP}
@@ -241,11 +226,6 @@
 												<option value="0" {mod_topcentral.ACTIV_DISABLED}>{L_UNACTIV}</option>					
 											</select>
 										</p>
-										<p>							
-											<select name="{mod_topcentral.IDMENU}secure" onchange="document.location = {mod_topcentral.U_ONCHANGE_SECURE}">								
-												{mod_topcentral.RANK}
-											</select>							
-										</p>						
 										<div style="width:100px;height:30px;">
 											<div style="float:left">
 												{mod_topcentral.UP}
@@ -290,11 +270,6 @@
 												<option value="0" selected="selected">{L_UNACTIV}</option>					
 											</select>
 										</p>
-										<p>							
-											<select name="{mod_main.IDMENU}secure" onchange="document.location = {mod_main.U_ONCHANGE_SECURE}">								
-												{mod_main.RANK}
-											</select>
-										</p>
 										<div style="width:100px;height:30px;margin:auto;">
 											<div style="float:left">
 											</div>
@@ -322,6 +297,24 @@
 									</div>
 								</div>
 								# END mod_main #
+								
+								<div class="spacer">&nbsp;</div>
+								
+								<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_UNINSTALLED_MENUS}</p>								
+								# START mod_main_uninstalled #
+								<div class="module_mini_container" style="margin:5px;margin-top:0px;float:left">
+									<div class="module_mini_top">
+										<h5 class="sub_title">{mod_main_uninstalled.NAME}</h5>
+									</div>
+									<div class="module_mini_contents">
+										<a href="{mod_main_uninstalled.U_INSTALL}"><img src="../templates/{THEME}/images/admin/files_mini.png" class="valign_middle" alt="" /><a/>
+										<br />
+										<a href="{mod_main_uninstalled.U_INSTALL}">{L_INSTALL}<a/>
+									</div>
+									<div class="module_mini_bottom">
+									</div>
+								</div>
+								# END mod_main_uninstalled #
 								<div class="spacer">&nbsp;</div>
 							</div>							
 							<div id="bottom_contents" style="border:1px solid black;background:#FF5F5F;clear:both">
@@ -340,11 +333,6 @@
 												<option value="0" {mod_bottomcentral.ACTIV_DISABLED}>{L_UNACTIV}</option>					
 											</select>
 										</p>
-										<p>							
-											<select name="{mod_bottomcentral.IDMENU}secure" onchange="document.location = {mod_bottomcentral.U_ONCHANGE_SECURE}">								
-												{mod_bottomcentral.RANK}
-											</select>							
-										</p>						
 										<div style="width:100px;height:30px;">
 											<div style="float:left">
 												{mod_bottomcentral.UP}
@@ -394,11 +382,6 @@
 											<option value="0" {mod_right.ACTIV_DISABLED}>{L_UNACTIV}</option>					
 										</select>
 									</p>
-									<p>							
-										<select name="{mod_right.IDMENU}secure" onchange="document.location = {mod_right.U_ONCHANGE_SECURE}">								
-											{mod_right.RANK}
-										</select>							
-									</p>						
 									<div style="width:100px;height:30px;margin:auto;">
 										<div style="float:left">
 											{mod_right.UP}
@@ -449,11 +432,6 @@
 											<option value="0" {mod_topfooter.ACTIV_DISABLED}>{L_UNACTIV}</option>
 										</select>
 									</p>
-									<p>
-										<select name="{mod_topfooter.IDMENU}secure" onchange="document.location = {mod_topfooter.U_ONCHANGE_SECURE}">
-											{mod_topfooter.RANK}
-										</select>
-									</p>
 									<div style="width:100px;height:30px;">
 										<div style="float:left">
 											{mod_topfooter.UP}
@@ -502,11 +480,6 @@
 										<select name="{mod_footer.IDMENU}activ" onchange="document.location = {mod_footer.U_ONCHANGE_ACTIV}">
 											<option value="1" {mod_footer.ACTIV_ENABLED}>{L_ACTIV}</option>
 											<option value="0" {mod_footer.ACTIV_DISABLED}>{L_UNACTIV}</option>
-										</select>
-									</p>
-									<p>
-										<select name="{mod_footer.IDMENU}secure" onchange="document.location = {mod_footer.U_ONCHANGE_SECURE}">
-											{mod_footer.RANK}
 										</select>
 									</p>
 									<div style="width:100px;height:30px;">

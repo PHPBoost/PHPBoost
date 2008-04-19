@@ -244,14 +244,19 @@ class Cache
 	{
 		global $Sql;
 		
-		$code = 'global $SECURE_MODULE;' . "\r\n";
-		$code .= '$SECURE_MODULE = array();' . "\r\n";
-		$result = $Sql->Query_while("SELECT name, auth
+		$code = 'global $MODULES;' . "\n";
+		$code .= '$MODULES = array();' . "\n\n";
+		$result = $Sql->Query_while("SELECT name, auth, activ
 		FROM ".PREFIX."modules
-		WHERE activ = 1
 		ORDER BY name", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
-			$code .= '$SECURE_MODULE[\'' . $row['name'] . '\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\r\n";
+		{	
+			$code .= '$MODULES[\'' . $row['name'] . '\'] = array(' . "\n"
+				. "'name' => " . var_export($row['name'], true) . ',' . "\n"
+				. "'activ' => " . var_export($row['activ'], true) . ',' . "\n"
+				. "'auth' => " . var_export(unserialize($row['auth']), true) . ',' . "\n"
+				. ");\n";
+		}
 		$Sql->Close($result);
 
 		return $code;
@@ -263,13 +268,13 @@ class Cache
 		global $Sql;
 		
 		$modules_mini = array();
-		$result = $Sql->Query_while("SELECT name, contents, location, secure, added, use_tpl
+		$result = $Sql->Query_while("SELECT name, contents, location, auth, added, use_tpl
 		FROM ".PREFIX."modules_mini 
 		WHERE activ = 1
 		ORDER BY location, class", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			$modules_mini[$row['location']][] = array('name' => $row['name'], 'contents' => $row['contents'], 'secure' => $row['secure'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
+			$modules_mini[$row['location']][] = array('name' => $row['name'], 'contents' => $row['contents'], 'auth' => $row['auth'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
 		}
 		$Sql->Close($result);
 
@@ -282,20 +287,28 @@ class Cache
 			{
 				foreach($modules_mini[$location] as $location_key => $info)
 				{
-					if( $info['added'] == '0' || $info['added'] == '2' )
+					if( $info['added'] == '0' )
 					{	
-						$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . "\n"
+						$code .= 'if( $Member->Check_auth(' . var_export(unserialize($info['auth']), true) . ', AUTH_MENUS) ){' . "\n"
 						. "\t" . 'include_once(\'../' . $info['name'] . '/' . $info['contents'] . "');\n"
+						. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $info['contents']) . '\', TEMPLATE_STRING_MODE);' 
+						. "\n" . '}' . "\n";
+					}
+					elseif( $info['added'] == '2' )
+					{	
+						$code .= 'if( $Member->Check_auth(' . var_export(unserialize($info['auth']), true) . ', AUTH_MENUS) ){' . "\n"
+						. "\t" . 'include_once(\'../menus/' . $info['contents'] . "');\n"
 						. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $info['contents']) . '\', TEMPLATE_STRING_MODE);' 
 						. "\n" . '}' . "\n";
 					}
 					else
 					{
+						$code .= 'if( $Member->Check_auth(' . var_export(unserialize($info['auth']), true) . ', AUTH_MENUS) ){' . "\n";
+						
 						if( $info['use_tpl'] == '0' )
 							$code .= '$MODULES_MINI[\'' . $location . '\'] .= ' . var_export($info['contents'], true) . ';' . "\n";
 						else
 						{
-							$code .= 'if( $Member->Check_level(' . $info['secure'] . ') ){' . "\n";
 							switch($location)
 							{
 								case 'left':
@@ -316,10 +329,11 @@ class Cache
 									
 								break;		
 							}	
-							$code .=  "\n" 
-								. '}' 
-								. "\n";
 						}
+						
+						$code .=  "\n" 
+							. '}' 
+							. "\n";
 					}
 				}
 				$code .= "\n";

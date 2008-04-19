@@ -63,17 +63,6 @@ if( !empty($idart) && isset($_GET['cat']) )
 		));
 	}
 	
-	//Commentaires
-	$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $idart . "articles") . "', 'articles');\">";
-	$link_current = '<a class="com" href="' . HOST . DIR . '/articles/articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;i=0', '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php?i=0') . '#articles">';	
-	$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
-	
-	$l_com = ($articles['nbr_com'] > 1) ? $LANG['com_s'] : $LANG['com'];
-	
-	$com_true = $l_com . ' (' . $articles['nbr_com'] . ')</a>';
-	$com_false = $LANG['post_com'] . '</a>';
-	$com = (!empty($articles['nbr_com'])) ? $com_true : $com_false;
-
 	//On crée une pagination si il y plus d'une page.
 	include_once('../includes/pagination.class.php'); 
 	$Pagination = new Pagination();
@@ -119,7 +108,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 		'PAGE_NAME' => ($array_page[1][($page-1)] != '&nbsp;') ? $array_page[1][($page-1)] : '',
 		'PAGE_PREVIOUS_ARTICLES' => ($page > 1 && $page <= $nbr_page && $nbr_page > 1) ? '<a href="' . transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page - 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page - 1) . '.php') . '">&laquo; ' . $LANG['previous_page'] . '</a><br />' . $array_page[1][($page-2)] : '',
 		'PAGE_NEXT_ARTICLES' => ($page > 0 && $page < $nbr_page && $nbr_page > 1) ? '<a href="' . transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page + 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page + 1) . '.php') . '">' . $LANG['next_page'] . ' &raquo;</a><br />' . $array_page[1][$page] : '',
-		'COM' => $link . $com,
+		'COM' => display_com_link($articles['nbr_com'], '../articles/articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;i=0', '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title'])), $articles['id'], 'articles'),
 		'U_MEMBER_ID' => transid('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
 		'U_ONCHANGE_ARTICLE' => "'" . transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=\' + this.options[this.selectedIndex].value', 'articles-' . $idartcat . '-' . $idart . '-\'+ this.options[this.selectedIndex].value + \'.php') . "'",
 		'L_SUMMARY' => $LANG['summary'],
@@ -300,11 +289,6 @@ else
 			//On reccourci le lien si il est trop long.
 			$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 
-			//Commentaires
-			$link_pop = "<a href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $row['id'] . "articles") . "', 'articles');\">";
-			$link_current = '<a href="' . HOST . DIR . '/articles/articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;i=0', '-' . $idartcat . '-' . $row['id'] . '.php?i=0') . '#articles">';	
-			$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
-			
 			$Template->Assign_block_vars('articles', array(			
 				'NAME' => $fichier,
 				'ICON' => !empty($row['icon']) ? '<a href="articles' . transid('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
@@ -312,7 +296,7 @@ else
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'COMPT' => $row['views'],
 				'NOTE' => ($row['nbrnote'] > 0) ? $Note->Display_note($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
-				'COM' => $link . $row['nbr_com'] . '</a>',
+				'COM' => $row['nbr_com'],
 				'U_ARTICLES_LINK' => transid('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php')
 			));
 

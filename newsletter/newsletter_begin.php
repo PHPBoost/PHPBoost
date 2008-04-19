@@ -28,10 +28,6 @@
 if( defined('PHPBOOST') !== true)	
 	exit;
 	
-//Autorisation sur le module.
-if( !$Member->Check_auth($SECURE_MODULE['newsletter'], ACCESS_MODULE) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-
 load_module_lang('newsletter'); //Chargement de la langue du module.
 define('TITLE', $LANG['newsletter']);
 

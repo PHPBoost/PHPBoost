@@ -238,23 +238,12 @@ if( $checkdate === true && empty($id) && empty($add) )
 				$java = '';
 			}
 			
-			$l_com = ($row['nbr_com'] > 1) ? $LANG['com_s'] : $LANG['com'];
-
-			$com_true = $l_com . ' (' . $row['nbr_com'] . ')</a>';
-			$com_false = $LANG['post_com'] . '</a>';
-			$com = (!empty($row['nbr_com'])) ? $com_true : $com_false;
-
-			$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $row['id'] . "calendar") . "', 'calendar');\">";						
-			$link_current = '<a class="com" href="' . HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;i=0', '-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?i=0') . '#calendar">';	
-
-			$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
-								
 			$Template->Assign_block_vars('action', array(
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'TITLE' => $row['title'],
 				'CONTENTS' => second_parse($row['contents']),
 				'LOGIN' => '<a class="com" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
-				'COM' => $link . $com,
+				'COM' => display_com_link($row['nbr_com'], '../calendar/calendar' . transid('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;i=0', '-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?i=0'), $row['id'], 'calendar'),
 				'EDIT' => $edit,
 				'DEL' => $del,				
 				'L_ON' => $LANG['on']
@@ -273,7 +262,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 				'CONTENTS' => '<p style="text-align:center;">' . $LANG['no_current_action'] . '</p>'
 			));	
 		}
-					
+		
 		$Template->Assign_vars(array(
 			'JAVA' => $java,
 			'L_ON' => $LANG['on']

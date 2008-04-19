@@ -536,6 +536,7 @@ $LANG['img_assoc_group'] = 'Image associée au groupe';
 $LANG['img_assoc_group_explain'] = 'Mettre dans le dossier images/group/';
 $LANG['add_mbr_group'] = 'Ajouter un membre au groupe';
 $LANG['mbrs_group'] = 'Membres du groupe';
+$LANG['auths'] = 'Autorisations';
 $LANG['auth_access'] = 'Autorisation d\'accès';
 $LANG['auth_read'] = 'Droits de lecture';
 $LANG['auth_write'] = 'Droits d\'écriture';

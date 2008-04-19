@@ -30,9 +30,6 @@ include_once('../wiki/wiki_functions.php');
 
 load_module_lang('wiki');
 
-if( !$Member->Check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-
 require('../wiki/wiki_auth.php');
 
 $id_auth = !empty($_POST['id_auth']) ? numeric($_POST['id_auth']) : 0;

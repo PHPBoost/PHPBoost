@@ -64,15 +64,6 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 		'DEL' => $del
 	));
 		
-	//Commentaires
-	$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $idweb . "web") . "', 'web');\">";
-	$link_current = '<a class="com" href="' . HOST . DIR . '/web/web' . transid('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;i=0', '-' . $idcat . '-' . $idweb . '.php?i=0') . '#web">';	
-	$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
-	
-	$com_true = ($web['nbr_com'] > 1) ? $LANG['com_s'] : $LANG['com'];
-	$com_false = $LANG['post_com'] . '</a>';
-	$l_com = !empty($web['nbr_com']) ? $com_true . ' (' . $web['nbr_com'] . ')</a>' : $com_false;
-	
 	$Template->Assign_vars(array(
 		'C_DISPLAY_WEB' => true,
 		'MODULE_DATA_PATH' => $Template->Module_data_path('web'),
@@ -85,7 +76,7 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 		'COMPT' => $web['compt'],
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'COM' => $link . $l_com,
+		'COM' => display_com_link($web['nbr_com'], '../web/web' . transid('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;i=0', '-' . $idcat . '-' . $idweb . '.php?i=0'), $idweb, 'web'),
 		'U_WEB_CAT' => transid('.php?cat=' . $idcat, '-' . $idcat . '.php'),
 		'L_DESC' => $LANG['description'],
 		'L_CAT' => $LANG['category'],
@@ -188,18 +179,13 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 		//On reccourci le lien si il est trop long.
 		$row['title'] = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 		
-		//Commentaires
-		$link_pop = "<a href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $row['id'] . "web") . "', 'web');\">";
-		$link_current = '<a href="' . HOST . DIR . '/web/web' . transid('.php?cat=' . $idcat . '&amp;id=' . $row['id'] . '&amp;i=0', '-' . $idcat . '-' . $row['id'] . '.php?i=0') . '#web">';	
-		$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
-	
 		$Template->Assign_block_vars('web', array(			
 			'NAME' => $row['title'],
 			'CAT' => $CAT_WEB[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'COMPT' => $row['compt'],
 			'NOTE' => ($row['nbrnote'] > 0) ? $Note->Display_note($row['note'], $CONFIG_WEB['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
-			'COM' => $link . $row['nbr_com'] . '</a>',
+			'COM' => $row['nbr_com'],
 			'U_WEB_LINK' => transid('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));
 	}

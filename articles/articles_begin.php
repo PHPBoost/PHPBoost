@@ -28,10 +28,6 @@
 if( defined('PHPBOOST') !== true)	
 	exit;
 	
-//Autorisation sur le module.
-if( !$Member->Check_auth($SECURE_MODULE['articles'], ACCESS_MODULE) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-
 define('READ_CAT_ARTICLES', 0x01);
 define('WRITE_CAT_ARTICLES', 0x02);
 define('EDIT_CAT_ARTICLES', 0x04);

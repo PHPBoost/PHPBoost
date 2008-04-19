@@ -102,7 +102,7 @@
 					
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
-						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+						<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
 						&nbsp;&nbsp; 
 						<input type="reset" value="{L_RESET}" class="reset" />
 					</fieldset>

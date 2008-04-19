@@ -503,17 +503,6 @@ else
 			$info_pics = $Sql->Sql_fetch_assoc($result);			
 			if( !empty($info_pics['id']) )
 			{
-				//Commentaires
-				$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $info_pics['id'] . "gallery") . "', 'gallery');\">";
-				$link_current = '<a class="com" href="' . HOST . DIR . '/gallery/gallery' . transid('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'] . '&amp;i=0&amp;sort=' . $g_sort, '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php?i=0&amp;sort=' . $g_sort) . '#gallery">';	
-				$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
-				
-				$l_com = ($info_pics['nbr_com'] > 1) ? $LANG['com_s'] : $LANG['com'];
-				
-				$com_true = $l_com . ' (' . $info_pics['nbr_com'] . ')</a>';
-				$com_false = $LANG['post_com'] . '</a>';
-				$com = (!empty($info_pics['nbr_com'])) ? $com_true : $com_false;
-				
 				//Affichage miniatures.		
 				$id_previous = 0;
 				$id_next = 0;
@@ -593,7 +582,7 @@ else
 					'VIEWS' => ($info_pics['views'] + 1),
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 					'SIZE' => number_round($info_pics['weight']/1024, 1),
-					'COM' => $link . $com,
+					'COM' => display_com_link($info_pics['nbr_com'], '../gallery/gallery' . transid('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'] . '&amp;i=0&amp;sort=' . $g_sort, '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php?i=0&amp;sort=' . $g_sort), $info_pics['id'], 'gallery'),
 					'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),	
 					'CAT' => $cat_list,	
 					'RENAME' => addslashes($info_pics['name']),
@@ -689,17 +678,6 @@ else
 				foreach($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $row['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 	
-				//Commentaires
-				$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $row['id'] . "gallery") . "', 'gallery');\">";
-				$link_current = '<a class="com" href="' . HOST . DIR . '/gallery/gallery' . transid('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;i=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?i=0') . '#gallery">';	
-				$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
-				
-				$l_com = ($row['nbr_com'] > 1) ? $LANG['com_s'] : $LANG['com'];
-				
-				$com_true = $l_com . ' (' . $row['nbr_com'] . ')</a>';
-				$com_false = $LANG['post_com'] . '</a>';
-				$com = (!empty($row['nbr_com'])) ? $com_true : $com_false;	
-
 				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $is_connected );
 				if( $activ_note )
 				{
@@ -716,7 +694,7 @@ else
 					'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? '<a class="small_link" href="' . $display_link . '"><span id="fi_' . $row['id'] . '">' . wordwrap_html($row['name'], 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',	
 					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
 					'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br />' . $row['views'] . ' ' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) : '',
-					'COM' => ($CONFIG_GALLERY['activ_com'] == 1) ? '<br />' . $link . $com  : '',
+					'COM' => ($CONFIG_GALLERY['activ_com'] == 1) ? '<br />' . display_com_link($row['nbr_com'], '../gallery/gallery' . transid('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;i=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?i=0'), $row['id'], 'gallery') : '',
 					'NOTE' => $activ_note ? $Template->Pparse('handle_note', TEMPLATE_STRING_MODE) : '',
 					'CAT' => $cat_list,
 					'RENAME' => addslashes($row['name']),

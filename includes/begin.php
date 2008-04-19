@@ -118,4 +118,12 @@ include_once('../includes/connect.php'); //Inclusion du gestionnaire de connexio
 //Cache des autorisations des modules
 $Cache->Load_file('modules'); 
 
+//Autorisation sur le module chargé.
+define('MODULE_NAME', get_module_name());
+if( isset($MODULES[MODULE_NAME]) && $MODULES[MODULE_NAME]['activ'] == 1 )
+{
+	if( !$Member->Check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE) ) //Accès non autorisé!
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+}
+
 ?>

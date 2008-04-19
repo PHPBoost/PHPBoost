@@ -98,6 +98,7 @@ if( empty($idnews) && empty($idcat) )
 			$new_row = '';
 		
 		$z = 0;
+		list($admin, $del) = array('', ''); 			
 		$result = $Sql->Query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
 		FROM ".PREFIX."news n
 		LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
@@ -107,21 +108,6 @@ if( empty($idnews) && empty($idcat) )
 		" . $Sql->Sql_limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
 		while($row = $Sql->Sql_fetch_assoc($result) )
 		{ 
-			//Initialisation
-			list($admin, $del, $com, $link) = array('', '', '', ''); 			
-			if( $CONFIG_NEWS['activ_com'] == 1 ) //Si les commentaires sont activés.
-			{
-				$l_com = ($row['nbr_com'] > 1) ? $LANG['com_s'] : $LANG['com'];
-
-				$com_true = $l_com . ' (' . $row['nbr_com'] . ')</a>';
-				$com_false = $LANG['post_com'] . '</a>';
-				$com = (!empty($row['nbr_com'])) ? $com_true : $com_false;
-
-				$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $row['id'] . "news") . "', 'news');\">";			
-				$link_current = '<a class="com" href="' . HOST . DIR . '/news/news' . transid('.php?cat=0&amp;id=' . $row['id'] . '&amp;i=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?i=0') . '#news">';				
-				$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
-			}
-			
 			if( $is_admin )
 			{
 				$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $row['id'] . '" title="' . $LANG['edit'] . '"><img  style="vertical-align:middle;" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" /></a>';
@@ -144,7 +130,7 @@ if( empty($idnews) && empty($idcat) )
 				'IMG' => (!empty($row['img']) ? '<img src="' . $row['img'] . '" alt="' . $row['alt'] . '" title="' . $row['alt'] . '" class="img_right" />' : ''),
 				'PSEUDO' => $CONFIG_NEWS['display_author'] ? $row['login'] : '',				
 				'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $row['timestamp']) : '',
-				'COM' => $link . $com,
+				'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? display_com_link($row['nbr_com'], '../news/news' . transid('.php?cat=0&amp;id=' . $row['id'] . '&amp;i=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?i=0'), $row['id'], 'news') : '',
 				'EDIT' => $admin,
 				'DEL' => $del,
 				'NEW_ROW' => $new_row, 
@@ -220,7 +206,7 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 	$Template->Set_filenames(array('news' => '../templates/' . $CONFIG['theme'] . '/news/news.tpl'));
 	
 	//Initialisation
-	list($admin, $del, $com, $link) = array('', '', '', '', ''); 		
+	list($admin, $del) = array('', ''); 		
 	if( $is_admin )
 	{
 		$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $news['id'] . '" title="' . $LANG['edit'] . '"><img style="vertical-align:middle;" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" /></a>';
@@ -233,19 +219,6 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		'L_ON' => $LANG['on']
 	));
 	
-	//Commentaires		
-	if( $CONFIG_NEWS['activ_com'] == 1 ) //Si les commentaires sont activés.
-	{
-		$l_com = ($news['nbr_com'] > 1) ? $LANG['com_s'] : $LANG['com'];
-		$com_true = $l_com .  ' (' . $news['nbr_com'] . ')</a>';
-		$com_false = $LANG['post_com'] . '</a>';
-
-		$com = ( !empty($news['nbr_com']) ) ? $com_true : $com_false;			
-		$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $idnews . "news") . "', 'news');\">";			
-		$link_current = '<a class="com" href="' . HOST . DIR . '/news/news' . transid('.php?cat=0&amp;id=' . $idnews . '&amp;i=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?i=0') . '#news">';		
-		$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
-	}
-
 	$Template->Assign_block_vars('news', array(
 		'ID' => $news['id'],
 		'ICON' => ((!empty($news['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news.php?cat=' . $news['idcat'] . '"><img style="vertical-align:middle;" src="' . $news['icon'] . '" alt="" /></a>' : ''),
@@ -255,7 +228,7 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		'IMG' => (!empty($news['img']) ? '<img src="' . $news['img'] . '" alt="' . $news['alt'] . '" title="' . $news['alt'] . '" class="img_right" style="margin: 6px; border: 1px solid #000000;" />' : ''),
 		'PSEUDO' => $news['login'],
 		'DATE' => gmdate_format('date_format_short', $news['timestamp']),
-		'COM' => $link . $com,
+		'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? display_com_link($news['nbr_com'], '../news/news' . transid('.php?cat=0&amp;id=' . $idnews . '&amp;i=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?i=0'), $idnews, 'news') : '',
 		'EDIT' => $admin,
 		'DEL' => $del,
 		'U_MEMBER_ID' => transid('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
