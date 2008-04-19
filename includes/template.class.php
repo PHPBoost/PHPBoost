@@ -132,7 +132,7 @@ class Templates
 				if( is_dir('../templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/images' ) )
 					$this->module_data_path[$get_module[0]] = '../templates/' . $CONFIG['theme'];
 				else	
-					$this->module_data_path[$get_module[0]] = '/templates'; 
+					$this->module_data_path[$get_module[0]] = '../' . $get_module[0] . '/templates'; 
 			}
 			
 			if( file_exists('../templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/' . $get_module[1]) )
