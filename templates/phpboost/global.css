@@ -188,7 +188,7 @@ a.membre{
 .dynamic_menu li li{
 	clear:both;
 	color:#000000;	
-	background:#6D9AC0 url(images/bgmenu.png) repeat-y;
+	background:#EEF2F6 url(images/bgmenu.png) repeat-y;
 	display:block;
 	width:167px;
 }
@@ -207,7 +207,7 @@ a.membre{
 	background-position:5px;
 }
 .dynamic_menu li li a:hover{	
-	background:#93C1E9;
+	background:#E0E6ED;
 	background-repeat:no-repeat;
 	background-position:5px;
 	border:1px solid #287FC9;
