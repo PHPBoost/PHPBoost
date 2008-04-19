@@ -72,6 +72,12 @@ a.SpecializedFormLink {
     border-bottom:5px #ffffff solid;
 }
 
+span.search_field {
+	background:#ff0000;
+	width:100%;
+    /*margin:auto;*/
+}
+
 input#TxTsearched {
     width:99.2%;
 }
