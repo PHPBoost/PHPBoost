@@ -77,7 +77,7 @@ elseif( $remove_favorite > 0 )
 }
 else
 {
-	$Template->Set_filenames(array('wiki_favorites' => '../templates/' . $CONFIG['theme'] . '/wiki/favorites.tpl'));
+	$Template->Set_filenames(array('wiki_favorites'=> 'wiki/favorites.tpl'));
 	
 	//Gestion des erreurs
 	$error = !empty($_GET['error']) ? securit($_GET['error']) : '';

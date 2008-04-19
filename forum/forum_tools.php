@@ -30,8 +30,8 @@ if( defined('PHPBOOST') !== true)
 
 ############### Header du forum ################
 $Template->Set_filenames(array(
-	'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-	'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+	'forum_top'=> 'forum/forum_top.tpl',
+	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
 $is_guest = ($Member->Get_attribute('user_id') !== -1) ? false : true;

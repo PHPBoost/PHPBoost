@@ -113,7 +113,7 @@ if( !empty($_POST['convers']) && empty($pm_edit) && empty($pm_del) ) //Envoi de 
 elseif( !empty($post) || (!empty($pm_get) && $pm_get != $Member->Get_attribute('user_id')) && $pm_get > '0' ) //Interface pour poster la conversation.
 {
 	$Template->Set_filenames(array(
-		'pm' => '../templates/' . $CONFIG['theme'] . '/pm.tpl'
+		'pm'=> 'pm.tpl'
 	));
 
 	$Template->Assign_vars(array(
@@ -182,7 +182,7 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $Member->Get_attribute('
 elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de la conversation.
 {
 	$Template->Set_filenames(array(
-		'pm' => '../templates/' . $CONFIG['theme'] . '/pm.tpl'
+		'pm'=> 'pm.tpl'
 	));
 	
 	$Template->Assign_vars(array(		
@@ -229,7 +229,7 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 	$convers_title = $Sql->Query("SELECT title FROM ".PREFIX."pm_topic WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
 	
 	$Template->Set_filenames(array(
-		'pm' => '../templates/' . $CONFIG['theme'] . '/pm.tpl'
+		'pm'=> 'pm.tpl'
 	));
 
 	$Template->Assign_vars(array(
@@ -453,7 +453,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 			else //Interface d'édition
 			{
 				$Template->Set_filenames(array(
-					'pm' => '../templates/' . $CONFIG['theme'] . '/pm.tpl'
+					'pm'=> 'pm.tpl'
 				));
 				
 				$Template->Assign_vars(array(
@@ -517,7 +517,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 {
 	$Template->Set_filenames(array(
-		'pm' => '../templates/' . $CONFIG['theme'] . '/pm.tpl'
+		'pm'=> 'pm.tpl'
 	));
 	
 	//On crée une pagination si le nombre de MP est trop important.
@@ -753,7 +753,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 else //Liste des conversation, dans la boite du membre.
 {
 	$Template->Set_filenames(array(
-		'pm' => '../templates/' . $CONFIG['theme'] . '/pm.tpl'
+		'pm'=> 'pm.tpl'
 	));
 
 	$nbr_pm = $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id'));

@@ -91,7 +91,7 @@ else
 include_once('../includes/header.php');
 
 $Template->Set_filenames(array(
-	'faq' => '../templates/' . $CONFIG['theme'] . '/faq/management.tpl'
+	'faq'=> 'faq/management.tpl'
 ));
 
 if( $edit_question > 0 )

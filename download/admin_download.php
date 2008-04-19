@@ -41,7 +41,7 @@ $del = !empty($_GET['delete']) ? true : false;
 if( !empty($id) && !$del )
 {
 	$Template->Set_filenames(array(
-		'admin_download_management' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_management.tpl'
+		'admin_download_management'=> 'download/admin_download_management.tpl'
 	 ));
 
 	$row = $Sql->Query_array('download', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -141,7 +141,7 @@ if( !empty($id) && !$del )
 elseif( !empty($_POST['preview']) && !empty($id_post) )
 {
 	$Template->Set_filenames(array(
-		'admin_download_management' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_management.tpl'
+		'admin_download_management'=> 'download/admin_download_management.tpl'
 	 ));
 	 
 	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
@@ -380,7 +380,7 @@ elseif( $del && !empty($id) ) //Suppression du fichier.
 else			
 {	
 	$Template->Set_filenames(array(
-		'admin_download_management' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_management.tpl'
+		'admin_download_management'=> 'download/admin_download_management.tpl'
 	 ));
 
 	$nbr_dl = $Sql->Count_table('download', __LINE__, __FILE__);

@@ -62,9 +62,9 @@ if( !$Member->Check_level(MODO_LEVEL) && $check_auth_by_group !== true ) //Si il
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 
 $Template->Set_filenames(array(
-	'forum_moderation_panel' => '../templates/' . $CONFIG['theme'] . '/forum/forum_moderation_panel.tpl',
-	'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-	'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+	'forum_moderation_panel'=> 'forum/forum_moderation_panel.tpl',
+	'forum_top'=> 'forum/forum_top.tpl',
+	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 $Template->Assign_vars(array(
 	'SID' => SID,
@@ -413,7 +413,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 			'} else' . "\n" .
 			'	document.getElementById(\'action_contents\').disabled = \'disabled\';' . "\n" .
 			'document.getElementById(\'action_info\').innerHTML = replace_value;',
-			'REGEX' => '/[0-9]+ [a-zA-Z]+/',
+			'REGEX'=> '[0-9]+ [a-zA-Z]+/',
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
 			'L_PM' => $LANG['user_contact_pm'],
@@ -560,7 +560,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
-			'REGEX' => '/ [0-9]+%/',
+			'REGEX'=> ' [0-9]+%/',
 			'U_ACTION_INFO' => transid('.php?action=warning&amp;id=' . $id_get),
 			'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],

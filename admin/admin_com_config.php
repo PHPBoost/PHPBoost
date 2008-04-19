@@ -55,7 +55,7 @@ if( !empty($_POST['valid'])  )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_com_config' => '../templates/' . $CONFIG['theme'] . '/admin/admin_com_config.tpl'
+		'admin_com_config'=> 'admin/admin_com_config.tpl'
 	));
 	
 	$Cache->Load_file('com');

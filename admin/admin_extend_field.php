@@ -35,7 +35,7 @@ $top = !empty($_GET['top']) ? numeric($_GET['top']) : '';
 $bottom = !empty($_GET['bot']) ? numeric($_GET['bot']) : '';
 	
 $Template->Set_filenames(array(
-	'admin_extend_field' => '../templates/' . $CONFIG['theme'] . '/admin/admin_extend_field.tpl'
+	'admin_extend_field'=> 'admin/admin_extend_field.tpl'
 ));
 	
 if( $del && !empty($id) )
@@ -225,7 +225,7 @@ elseif( !empty($id) )
 else
 {
 	$Template->Set_filenames(array(
-		'admin_extend_field' => '../templates/' . $CONFIG['theme'] . '/admin/admin_extend_field.tpl'
+		'admin_extend_field'=> 'admin/admin_extend_field.tpl'
 	));
 	
 	$Template->Assign_vars(array(

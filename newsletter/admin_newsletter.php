@@ -42,7 +42,7 @@ $member_list = !empty($_GET['member_list']) ? true : false;
 $del_member = !empty($_GET['del_member']) ? numeric($_GET['del_member']) : 0;
 
 $Template->Set_filenames(array(
-	'admin_newsletter' => '../templates/' . $CONFIG['theme'] . '/newsletter/admin_newsletter.tpl'
+	'admin_newsletter'=> 'newsletter/admin_newsletter.tpl'
 ));	
 
 $Template->Assign_vars(array(

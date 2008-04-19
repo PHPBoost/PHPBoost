@@ -50,7 +50,7 @@ if( !empty($_POST['valid']) )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_wiki_groups' => '../templates/' . $CONFIG['theme'] . '/wiki/admin_wiki_groups.tpl'
+		'admin_wiki_groups'=> 'wiki/admin_wiki_groups.tpl'
 	));
 	
 	$array_auth = isset($_WIKI_CONFIG['auth']) ? $_WIKI_CONFIG['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.

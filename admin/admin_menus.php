@@ -120,7 +120,7 @@ elseif( ($top || $bottom) && !empty($id) ) //Monter/descendre.
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_menus_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_menus_management.tpl'
+		'admin_menus_management'=> 'admin/admin_menus_management.tpl'
 	));
 	
 	$Cache->load_file('themes'); //Récupération de la configuration des thèmes.	

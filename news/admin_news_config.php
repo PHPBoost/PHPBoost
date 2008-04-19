@@ -59,7 +59,7 @@ if( !empty($_POST['valid']) )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_news_config' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_config.tpl'
+		'admin_news_config'=> 'news/admin_news_config.tpl'
 	));
 	
 	$Cache->Load_file('news');

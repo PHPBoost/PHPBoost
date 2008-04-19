@@ -117,26 +117,29 @@ class Templates
 	function check_file($filename)
 	{
 		global $CONFIG;
-				
+		
+		$filename = trim($filename, '/');
 		$get_module = explode('/', $filename);
-		if( !isset($get_module[4]) ) //Template du thème.
-			return $filename;
+
+		if( !isset($get_module[1]) ) //Template du thème (noyau)
+			return '../templates/' . $CONFIG['theme'] . '/' . $filename;
 		
-		//Tpl par défaut.
-		$module_path = '../' . $get_module[3] . '/templates';
-		
-		//Test sur le tpl d'un module.
-		if( is_dir('../templates/' . $CONFIG['theme'] . '/' . $get_module[3]) ) //Tpl perso du module présent sur le serveur!?
+		else //Module
 		{	
-			$this->module_data_path[$get_module[3]] = '../templates/' . $CONFIG['theme'] . '/' . $get_module[3];
-			if( file_exists($filename) )
-				return $filename;			
+			//module data path
+			if( !array_key_exists($get_module[0], $this->module_data_path) )
+			{
+				if( is_dir('../templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/images' ) )
+					$this->module_data_path[$get_module[0]] = '../templates/' . $CONFIG['theme'];
+				else	
+					$this->module_data_path[$get_module[0]] = '/templates'; 
+			}
+			
+			if( file_exists('../templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/' . $get_module[1]) )
+				return '../templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/' . $get_module[1];
+			else
+				return '../' . $get_module[0] . '/templates/' . $get_module[1];
 		}
-		else //Chemin des données par défaut.
-			$this->module_data_path[$get_module[3]] = $module_path;
-		
-		//Chargement de fichier par défaut du module.	
-		return $module_path . '/' . $get_module[4];
 	}
 		
 	//Vérifie le statut du fichier en cache, il sera regénéré s'il n'existe pas ou si il est périmé.
@@ -336,7 +339,7 @@ class Templates
 	## Private Attribute ##
 	var $template = ''; //Chaîne contenant le tpl en cours de parsage.
 	var $files = array(); //Tableau contenant le chemin vers le tpl (vérifié).
-	var $module_data_path; //Chemin vers les données du module.
+	var $module_data_path = array(); //Chemin vers les données du module.
     var $stringMode; // Type de parsage à effectuer, inclusion du tpl parsé ou retourne une chaine.
 }
 

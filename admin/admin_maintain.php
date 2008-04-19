@@ -64,7 +64,7 @@ if( !empty($_POST['valid']) )
 else //Sinon on rempli le formulaire	 
 {		
 	$Template->Set_filenames(array(
-		'admin_maintain' => '../templates/' . $CONFIG['theme'] . '/admin/admin_maintain.tpl'
+		'admin_maintain'=> 'admin/admin_maintain.tpl'
 	));
 	
 	//Durée de la maintenance.

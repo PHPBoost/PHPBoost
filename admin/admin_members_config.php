@@ -55,7 +55,7 @@ if( !empty($_POST['msg_mbr']) ) //Message aux membres.
 else
 {			
 	$Template->Set_filenames(array(
-		'admin_members_config' => '../templates/' . $CONFIG['theme'] . '/admin/admin_members_config.tpl'
+		'admin_members_config'=> 'admin/admin_members_config.tpl'
 	));
 	
 	#####################Activation du mail par le membre pour s'inscrire##################

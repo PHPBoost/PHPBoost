@@ -98,7 +98,7 @@ elseif( $uninstall ) //Désinstallation.
 				$idlang = $key;
 				
 		$Template->Set_filenames(array(
-			'admin_lang_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_lang_management.tpl'
+			'admin_lang_management'=> 'admin/admin_lang_management.tpl'
 		));
 		
 		$Template->Assign_block_vars('del', array(			
@@ -123,7 +123,7 @@ elseif( $uninstall ) //Désinstallation.
 else
 {			
 	$Template->Set_filenames(array(
-		'admin_lang_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_lang_management.tpl'
+		'admin_lang_management'=> 'admin/admin_lang_management.tpl'
 	));
 	 
 	$Template->Assign_vars(array(

@@ -28,7 +28,7 @@
 if( defined('PHPBOOST') !== true)	exit;
 
 //On charge le template associé
-$Template->Set_filenames(array('wiki_tools' => '../templates/' . $CONFIG['theme'] . '/wiki/wiki_tools.tpl'));
+$Template->Set_filenames(array('wiki_tools'=> 'wiki/wiki_tools.tpl'));
 
 $Template->Assign_vars(array(
 	'L_CONTRIBUTION_TOOLS' => $LANG['wiki_contribution_tools'],

@@ -36,7 +36,7 @@ if( $CONFIG['maintain'] <= time() )
 }
 
 $Template->Set_filenames(array(
-	'maintain' => '../templates/' . $CONFIG['theme'] . '/maintain.tpl')
+	'maintain'=> 'maintain.tpl')
 );
 
 //Durée de la maintenance.

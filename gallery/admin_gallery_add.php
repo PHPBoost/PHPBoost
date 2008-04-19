@@ -108,7 +108,7 @@ elseif( !empty($_POST['valid']) && !empty($nbr_pics_post) ) //Ajout massif d'ima
 else
 {
 	$Template->Set_filenames(array(
-		'admin_gallery_add' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_add.tpl'
+		'admin_gallery_add'=> 'gallery/admin_gallery_add.tpl'
 	));
 	
 	//Gestion erreur.

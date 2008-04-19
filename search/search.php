@@ -31,9 +31,9 @@ load_module_lang('search');
 define('ALTERNATIVE_CSS', 'search');
 
 $Template->Set_filenames(array(
-    'search_mini_form' => '../templates/'.$CONFIG['theme'].'/search/search_mini_form.tpl',
-    'search_forms' => '../templates/'.$CONFIG['theme'].'/search/search_forms.tpl',
-    'search_results' => '../templates/'.$CONFIG['theme'].'/search/search_results.tpl'
+    'search_mini_form' => 'search/search_mini_form.tpl',
+    'search_forms' => 'search/search_forms.tpl',
+    'search_results' => 'search/search_results.tpl'
 ));
 
 //--------------------------------------------------------------------- Params

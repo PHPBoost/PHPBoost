@@ -55,7 +55,7 @@ elseif( !empty($_FILES['upload_ranks']['name']) ) //Upload et décompression de l
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
-	$dir = '../templates/' . $CONFIG['theme'] . '/images/ranks/';
+	$dir = '/images/ranks/';
 	if( !is_writable($dir) )
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
 	
@@ -77,7 +77,7 @@ elseif( !empty($_FILES['upload_ranks']['name']) ) //Upload et décompression de l
 else //Sinon on rempli le formulaire	 
 {	
 	$Template->Set_filenames(array(
-		'admin_ranks_add' => '../templates/' . $CONFIG['theme'] . '/admin/admin_ranks_add.tpl'
+		'admin_ranks_add'=> 'admin/admin_ranks_add.tpl'
 	));
 
 	//Gestion erreur.

@@ -133,7 +133,7 @@ elseif( $uninstall ) //Désinstallation du module
 				$idmodule = $key;
 				
 		$Template->Set_filenames(array(
-			'admin_modules_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_modules_management.tpl'
+			'admin_modules_management'=> 'admin/admin_modules_management.tpl'
 		));
 		
 		$Template->Assign_vars(array(
@@ -159,7 +159,7 @@ elseif( $uninstall ) //Désinstallation du module
 else
 {			
 	$Template->Set_filenames(array(
-		'admin_modules_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_modules_management.tpl'
+		'admin_modules_management'=> 'admin/admin_modules_management.tpl'
 	));
 	
 	$Template->Assign_vars(array(

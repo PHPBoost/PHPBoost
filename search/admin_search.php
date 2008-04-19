@@ -79,7 +79,7 @@ elseif( $clearOutCache ) // On vide le contenu du cache de la recherche
 else
 {
     $Template->Set_filenames(array(
-        'admin_search' => '../templates/' . $CONFIG['theme'] . '/search/admin_search.tpl'
+        'admin_search'=> 'search/admin_search.tpl'
     ));
     
     $Cache->Load_file('search');

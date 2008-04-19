@@ -27,7 +27,7 @@ if( !defined('PHPBOOST') )
 	
 	$Cache->Load_file('wiki');	
 	
-	$Template->Set_filenames(array('rss' => '../templates/' . $CONFIG['theme'] . '/rss.tpl'));
+	$Template->Set_filenames(array('rss'=> 'rss.tpl'));
 
 	if( $cat > 0 && array_key_exists($cat, $_WIKI_CATS) )//Catégorie
 	{

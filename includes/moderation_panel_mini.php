@@ -45,7 +45,7 @@ if( isset($_array_group_forum_level) )
 $Cache->Load_file('moderation_panel');
 
 $Template->Set_filenames(array(
-	'moderation_panel_mini' => '../templates/' . $CONFIG['theme'] . '/moderation_panel_mini.tpl'
+	'moderation_panel_mini'=> 'moderation_panel_mini.tpl'
 ));
 
 if( $Member->Check_level(MODO_LEVEL) || $check_auth_by_group )

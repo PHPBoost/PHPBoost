@@ -103,7 +103,7 @@ require_once('../includes/header.php');
 
 if( !empty($encoded_title) && $num_rows == 1 )
 {
-	$Template->Set_filenames(array('page' => '../templates/' . $CONFIG['theme'] . '/pages/page.tpl'));
+	$Template->Set_filenames(array('page'=> 'pages/page.tpl'));
 	$pages_data_path = $Template->Module_data_path('pages');
 	
 	//Autorisation particulière ?
@@ -197,7 +197,7 @@ elseif( $id_com > 0 )
 	if( ($special_auth && !$Member->Check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) && ($special_auth && !$Member->Check_auth($array_auth, READ_COM)) || (!$special_auth && !$Member->Check_auth($_PAGES_CONFIG['auth'], READ_COM)) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth_com');
 	
-	$Template->Set_filenames(array('com' => '../templates/' . $CONFIG['theme'] . '/pages/com.tpl'));
+	$Template->Set_filenames(array('com'=> 'pages/com.tpl'));
 	
 	include_once('../includes/com.class.php'); 
 	$Comments = new Comments('pages', $id_com, transid('pages.php?id=' . $id_com . '&amp;i=%s', ''));
@@ -209,7 +209,7 @@ elseif( $id_com > 0 )
 //gestionnaire d'erreurs
 elseif( !empty($error) )
 {
-	$Template->Set_filenames(array('error' => '../templates/' . $CONFIG['theme'] . '/pages/error.tpl'));
+	$Template->Set_filenames(array('error'=> 'pages/error.tpl'));
 	
 	$Template->Assign_vars(array(
 		'L_TITLE' => $LANG['error']
@@ -242,7 +242,7 @@ elseif( !empty($error) )
 }
 else
 {
-	$Template->Set_filenames(array('index' => '../templates/' . $CONFIG['theme'] . '/pages/index.tpl'));
+	$Template->Set_filenames(array('index'=> 'pages/index.tpl'));
 	
 	$num_pages = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."pages WHERE redirect = '0'", __LINE__, __FILE__);
 	$num_coms = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."com WHERE script = 'pages'", __LINE__, __FILE__);

@@ -56,7 +56,7 @@ elseif( $id_down > 0 )
 elseif( $cat_to_del > 0 )
 {
 	$Template->Set_filenames(array(
-		'admin_download_cat_remove' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_cat_remove.tpl'
+		'admin_download_cat_remove'=> 'download/admin_download_cat_remove.tpl'
 	));
 	
 	$Template->Assign_vars(array(
@@ -138,7 +138,7 @@ elseif( !empty($_GET['recount']) )
 elseif( $new_cat XOR $id_edit > 0 )
 {
 	$Template->Set_filenames(array(
-		'admin_download_cat_edition' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_cat_edition.tpl'
+		'admin_download_cat_edition'=> 'download/admin_download_cat_edition.tpl'
 	));
 	
 	//Images disponibles
@@ -225,7 +225,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 else
 {
 	$Template->Set_filenames(array(
-		'admin_download_cat' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_cat.tpl'
+		'admin_download_cat'=> 'download/admin_download_cat.tpl'
 	));
 	
 	include_once('admin_download_menu.php');

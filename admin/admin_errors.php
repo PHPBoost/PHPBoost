@@ -32,7 +32,7 @@ require_once('../includes/admin_header.php');
 $all = !empty($_GET['all']) ? true : false;
 
 $Template->Set_filenames(array(
-	'admin_errors_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_errors_management.tpl'
+	'admin_errors_management'=> 'admin/admin_errors_management.tpl'
 ));
 
 $file_path = '../cache/error.log';

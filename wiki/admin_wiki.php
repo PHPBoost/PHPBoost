@@ -57,7 +57,7 @@ if( !empty($_POST['update']) )  //Mise à jour
 $Cache->Load_file('wiki');
 
 $Template->Set_filenames(array(
-		'wiki_config' => '../templates/' . $CONFIG['theme'] . '/wiki/admin_wiki.tpl'
+		'wiki_config'=> 'wiki/admin_wiki.tpl'
 	 ));
 
 include_once('../includes/bbcode.php');

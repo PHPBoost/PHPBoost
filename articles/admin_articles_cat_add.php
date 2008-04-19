@@ -97,7 +97,7 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_articles_cat_add' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_cat_add.tpl'
+		'admin_articles_cat_add'=> 'articles/admin_articles_cat_add.tpl'
 	));
 			
 	//Listing des catégories disponibles		

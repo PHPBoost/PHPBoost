@@ -54,7 +54,7 @@ if( !empty($_POST['submit']) )
 if( $page > 0 )
 {
 	$Template->Set_filenames(array(
-		'admin_faq_questions' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq_questions.tpl'
+		'admin_faq_questions'=> 'faq/admin_faq_questions.tpl'
 	));
 	
 	include_once('../includes/pagination.class.php'); 
@@ -96,7 +96,7 @@ if( $page > 0 )
 else
 {
 	$Template->Set_filenames(array(
-		'admin_faq' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq.tpl'
+		'admin_faq'=> 'faq/admin_faq.tpl'
 	));
 
 	$Template->Assign_vars(array(

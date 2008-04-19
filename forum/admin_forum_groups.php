@@ -54,7 +54,7 @@ if( !empty($_POST['valid']) )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_forum_groups' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_groups.tpl'
+		'admin_forum_groups'=> 'forum/admin_forum_groups.tpl'
 	));
 	
 	$array_auth = isset($CONFIG_FORUM['auth']) ? $CONFIG_FORUM['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.

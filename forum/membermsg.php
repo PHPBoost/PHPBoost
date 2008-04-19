@@ -37,9 +37,9 @@ $view_msg = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 if( !empty($view_msg) ) //Affichage de tous les messages du membre
 {
 	$Template->Set_filenames(array(
-		'membermsg' => '../templates/' . $CONFIG['theme'] . '/forum/forum_membermsg.tpl',
-		'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-		'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+		'membermsg'=> 'forum/forum_membermsg.tpl',
+		'forum_top'=> 'forum/forum_top.tpl',
+		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 	
 	include('../includes/pagination.class.php');

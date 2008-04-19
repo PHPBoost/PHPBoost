@@ -322,7 +322,7 @@ elseif( !empty($id) && $delete ) //Suppression du membre.
 elseif( $add )
 {
 	$Template->Set_filenames(array(
-		'admin_members_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_members_management2.tpl'
+		'admin_members_management2'=> 'admin/admin_members_management2.tpl'
 	));
 
 	//Gestion des erreurs.
@@ -372,7 +372,7 @@ elseif( $add )
 elseif( !empty($id) )	
 {		
 	$Template->Set_filenames(array(
-		'admin_members_management2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_members_management2.tpl'
+		'admin_members_management2'=> 'admin/admin_members_management2.tpl'
 	));
 	
 	$mbr = $Sql->Query_array('member', '*', "WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
@@ -432,7 +432,7 @@ elseif( !empty($id) )
 
 	$user_sex = '';
 	if( !empty($mbr['user_sex']) )
-		$user_sex = ($mbr['user_sex'] == 1) ? '../templates/' . $CONFIG['theme'] . '/images/man.png' : '../templates/' . $CONFIG['theme'] . '/images/woman.png';
+		$user_sex = ($mbr['user_sex'] == 1) ? '/images/man.png' : '/images/woman.png';
 	
 	//Rang d'autorisation.
 	$array_ranks = array(0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
@@ -787,7 +787,7 @@ elseif( !empty($id) )
 else
 {			
 	$Template->Set_filenames(array(
-		'admin_members_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_members_management.tpl'
+		'admin_members_management'=> 'admin/admin_members_management.tpl'
 	));
 	 
 	$search = ( !empty($_POST['login_mbr'])) ? securit($_POST['login_mbr']) : '' ; 

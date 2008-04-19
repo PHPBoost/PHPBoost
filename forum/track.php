@@ -70,9 +70,9 @@ if( !empty($_POST['valid']) )
 elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
 {
 	$Template->Set_filenames(array(
-		'forum_track' => '../templates/' . $CONFIG['theme'] . '/forum/forum_track.tpl',
-		'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-		'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+		'forum_track'=> 'forum/forum_track.tpl',
+		'forum_top'=> 'forum/forum_top.tpl',
+		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 
 	

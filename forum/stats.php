@@ -35,9 +35,9 @@ define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['stats']);
 require_once('../includes/header.php'); 
 
 $Template->Set_filenames(array(
-	'forum_stats' => '../templates/' . $CONFIG['theme'] . '/forum/forum_stats.tpl',
-	'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-	'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+	'forum_stats'=> 'forum/forum_stats.tpl',
+	'forum_top'=> 'forum/forum_top.tpl',
+	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
 $total_day = number_round((time() - $CONFIG['start'])/(3600*24), 0);

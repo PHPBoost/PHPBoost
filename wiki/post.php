@@ -173,7 +173,7 @@ if( !empty($contents) ) //On enregistre un article
 }
 
 //On propose le formulaire
-$Template->Set_filenames(array('wiki_edit' => '../templates/' . $CONFIG['theme'] . '/wiki/post.tpl'));
+$Template->Set_filenames(array('wiki_edit'=> 'wiki/post.tpl'));
 $Template->Assign_vars(array(
 	'WIKI_PATH' => $Template->Module_data_path('wiki'),
 ));

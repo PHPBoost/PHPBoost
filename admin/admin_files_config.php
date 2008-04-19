@@ -66,7 +66,7 @@ if( !empty($_POST['valid'])  )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_files_config' => '../templates/' . $CONFIG['theme'] . '/admin/admin_files_config.tpl'
+		'admin_files_config'=> 'admin/admin_files_config.tpl'
 	));
 	
 	$Cache->Load_file('files');

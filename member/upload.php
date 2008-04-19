@@ -247,7 +247,7 @@ elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
 elseif( !empty($move_folder) || !empty($move_file) )
 {
 	$Template->Set_filenames(array(
-		'upload_move' => '../templates/' . $CONFIG['theme'] . '/upload_move.tpl'
+		'upload_move'=> 'upload_move.tpl'
 	));
 	
 	$Template->Assign_vars(array(
@@ -259,7 +259,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'URL' => '/' . trim($Files->Get_url($folder, '', '&amp;' . $popup), '/'),
+		'URL'=> '' . trim($Files->Get_url($folder, '', '&amp;' . $popup), '/'),
 		'L_FILES_MANAGEMENT' => $LANG['files_management'],
 		'L_MOVE_TO' => $LANG['moveto'],
 		'L_ROOT' => $LANG['root'],
@@ -314,7 +314,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 			'SIZE' => ($info_move['size'] > 1024) ? number_round($info_move['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($info_move['size'], 0) . ' ' . $LANG['unit_kilobytes'],
-			'U_IMG_MOVE' => '../templates/' . $CONFIG['theme'] . '/images/upload/' . $get_img_mimetype['img']
+			'U_IMG_MOVE'=> 'images/upload/' . $get_img_mimetype['img']
 		));
 		$Template->Assign_vars(array(
 			'SELECTED_CAT' => $info_move['idcat'],
@@ -334,7 +334,7 @@ else
 	$is_admin = $Member->Check_level(ADMIN_LEVEL);
 	
 	$Template->Set_filenames(array(
-		'upload' => '../templates/' . $CONFIG['theme'] . '/upload.tpl'
+		'upload'=> 'upload.tpl'
 	));
 
 	//Gestion des erreurs.
@@ -357,7 +357,7 @@ else
 		'USER_ID' => $Member->Get_attribute('user_id'),
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'URL' => '/' . trim($Files->Get_url($folder, '', '&amp;' . $popup), '/'),
+		'URL'=> '' . trim($Files->Get_url($folder, '', '&amp;' . $popup), '/'),
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
 		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],

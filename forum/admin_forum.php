@@ -100,7 +100,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 			if( empty($_POST['del_cat']) )
 			{
 				$Template->Set_filenames(array(
-					'admin_forum_cat_del' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_cat_del.tpl'
+					'admin_forum_cat_del'=> 'forum/admin_forum_cat_del.tpl'
 				));
 
 				if( $check_topic > 0 ) //Conserve les topics.
@@ -204,7 +204,7 @@ elseif( !empty($id) )
 	$Cache->Load_file('forum');
 	
 	$Template->Set_filenames(array(
-		'admin_forum_cat_edit' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_cat_edit.tpl'
+		'admin_forum_cat_edit'=> 'forum/admin_forum_cat_edit.tpl'
 	));
 			
 	$forum_info = $Sql->Query_array("forum_cats", "id_left", "id_right", "level", "name", "subname", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -282,7 +282,7 @@ elseif( !empty($id) )
 else	
 {		
 	$Template->Set_filenames(array(
-	'admin_forum_cat' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_cat.tpl'
+	'admin_forum_cat'=> 'forum/admin_forum_cat.tpl'
 	));
 		
 	$Template->Assign_vars(array(

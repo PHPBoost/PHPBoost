@@ -66,7 +66,7 @@ if( $del && !empty($id) ) //Suppresion de l'article.
 elseif( !empty($id) )
 {
 	$Template->Set_filenames(array(
-		'admin_articles_management' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_management.tpl'
+		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
 
 	$articles = $Sql->Query_array('articles', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);	
@@ -178,7 +178,7 @@ elseif( !empty($id) )
 elseif( !empty($_POST['previs']) && !empty($id_post) )
 {
 	$Template->Set_filenames(array(
-		'admin_articles_management' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_management.tpl'
+		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
 
 	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
@@ -423,7 +423,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 else
 {			
 	$Template->Set_filenames(array(
-		'admin_articles_management' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_management.tpl'
+		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
 	 
 	$nbr_articles = $Sql->Count_table('articles', __LINE__, __FILE__);

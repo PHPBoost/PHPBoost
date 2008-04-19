@@ -102,8 +102,8 @@ if( !empty($_POST['valid']) )
 elseif( !empty($_POST['previs']) )
 {
 	$Template->Set_filenames(array(
-		'admin_news_add' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_add.tpl',
-		'admin_news_add_bis' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_add_bis.tpl'
+		'admin_news_add'=> 'news/admin_news_add.tpl',
+		'admin_news_add_bis'=> 'news/admin_news_add_bis.tpl'
 	));
 
 	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
@@ -234,8 +234,8 @@ elseif( !empty($_POST['previs']) )
 else
 {
 	$Template->Set_filenames(array(
-		'admin_news_add' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_add.tpl',
-		'admin_news_add_bis' => '../templates/' . $CONFIG['theme'] . '/news/admin_news_add_bis.tpl'
+		'admin_news_add'=> 'news/admin_news_add.tpl',
+		'admin_news_add_bis'=> 'news/admin_news_add_bis.tpl'
 	));
 	
 	$Template->Assign_vars(array(

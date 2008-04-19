@@ -30,7 +30,7 @@ require_once('../online/online_begin.php');
 require_once('../includes/header.php'); 
 
 $Template->Set_filenames(array(
-	'online' => '../templates/' . $CONFIG['theme'] . '/online/online.tpl'
+	'online'=> 'online/online.tpl'
 ));
 	
 //Membre connectés..

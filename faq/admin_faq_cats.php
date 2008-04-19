@@ -43,7 +43,7 @@ $new_cat = !empty($_GET['new']) ? true : false;
 $error = !empty($_GET['error']) ? securit($_GET['error']) : '';
 
 $Template->Set_filenames(array(
-	'admin_faq_cat' => '../templates/' . $CONFIG['theme'] . '/faq/admin_faq_cats.tpl'
+	'admin_faq_cat'=> 'faq/admin_faq_cats.tpl'
 ));
 
 $Template->Assign_vars(array(

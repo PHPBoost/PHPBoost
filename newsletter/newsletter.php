@@ -34,7 +34,7 @@ $subscribe = !empty($_POST['subscribe']) ? trim($_POST['subscribe']) : 'subscrib
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 	
 $Template->Set_filenames(array(
-	'newsletter' => '../templates/' . $CONFIG['theme'] . '/newsletter/newsletter.tpl'
+	'newsletter'=> 'newsletter/newsletter.tpl'
 ));	
 
 //Inscription ou désinscription

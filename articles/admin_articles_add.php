@@ -110,7 +110,7 @@ if( !empty($_POST['valid']) )
 elseif( !empty($_POST['previs']) )
 {
 	$Template->Set_filenames(array(
-		'admin_articles_add' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_add.tpl'
+		'admin_articles_add'=> 'articles/admin_articles_add.tpl'
 	));
 
 	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
@@ -267,7 +267,7 @@ elseif( !empty($_POST['previs']) )
 else
 {
 	$Template->Set_filenames(array(
-		'admin_articles_add' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_add.tpl'
+		'admin_articles_add'=> 'articles/admin_articles_add.tpl'
 	));
 	
 	$user_pseudo = !empty($user_pseudo) ? $user_pseudo : '';

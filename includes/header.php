@@ -88,8 +88,7 @@ if( $CONFIG['maintain'] > time() )
 }
 	
 $Template->Set_filenames(array(
-	'header' => '../templates/' . $CONFIG['theme'] . '/header.tpl',
-	'topcentral' => '../templates/' . $CONFIG['theme'] . '/topcentral.tpl'
+	'header'=> 'header.tpl'
 ));
 
 $alternative_css = '';
@@ -108,7 +107,7 @@ if( defined('ALTERNATIVE_CSS') )
 }
 
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
-$THEME = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
+$THEME = load_ini_file('/config/', $CONFIG['lang']);
 
 $member_connected = $Member->Check_level(MEMBER_LEVEL);
 $Template->Assign_vars(array(

@@ -189,7 +189,7 @@ elseif( $del_article > 0 )
 		redirect(HOST . DIR . transid('/pages/pages.php?error=delete_failure', '', '&'));
 }
 
-$Template->Set_filenames(array('post' => '../templates/' . $CONFIG['theme'] . '/pages/post.tpl'));
+$Template->Set_filenames(array('post'=> 'pages/post.tpl'));
 
 if( $id_edit > 0 )
 {

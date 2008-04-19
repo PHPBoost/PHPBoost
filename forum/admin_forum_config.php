@@ -97,7 +97,7 @@ elseif( $update_cached ) //Mise à jour des données stockées en cache dans la bdd
 else	
 {	
 	$Template->Set_filenames(array(
-		'admin_forum_config' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_config.tpl'
+		'admin_forum_config'=> 'forum/admin_forum_config.tpl'
 	));
 
 	$Cache->Load_file('forum');

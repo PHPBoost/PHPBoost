@@ -31,7 +31,7 @@ if( defined('PHPBOOST') !== true) exit;
 if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 {
 	$Template->Set_filenames(array(
-		'connect_mini' => '../templates/' . $CONFIG['theme'] . '/connect/connect_mini.tpl'
+		'connect_mini'=> 'connect/connect_mini.tpl'
 	));
 
 	$Template->Assign_vars(array(
@@ -52,7 +52,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 else
 {
 	$Template->Set_filenames(array(
-		'connect_mini' => '../templates/' . $CONFIG['theme'] . '/connect/connect_mini.tpl'
+		'connect_mini'=> 'connect/connect_mini.tpl'
 	));
 	
 	$Template->Assign_vars(array(

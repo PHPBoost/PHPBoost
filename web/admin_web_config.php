@@ -55,7 +55,7 @@ if( !empty($_POST['valid']) )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_web_config' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_config.tpl'
+		'admin_web_config'=> 'web/admin_web_config.tpl'
 	));
 	
 	$Template->Assign_vars(array(

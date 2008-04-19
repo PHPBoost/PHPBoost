@@ -32,7 +32,7 @@ define('TITLE', $LANG['newsletter']);
 require_once('../includes/admin_header.php');
 
 $Template->Set_filenames(array(
-	'admin_newsletter' => '../templates/' . $CONFIG['theme'] . '/newsletter/admin_newsletter.tpl'
+	'admin_newsletter'=> 'newsletter/admin_newsletter.tpl'
 ));	
 
 $Cache->Load_file('newsletter');

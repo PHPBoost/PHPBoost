@@ -30,7 +30,7 @@ define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
 $Template->Set_filenames(array(
-	'admin_index' => '../templates/' . $CONFIG['theme'] . '/admin/admin_index.tpl'
+	'admin_index'=> 'admin/admin_index.tpl'
 ));
 
 //Vérification des mises à jour du noyau  et des modules sur le site officiel.

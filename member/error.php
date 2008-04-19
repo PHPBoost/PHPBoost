@@ -37,7 +37,7 @@ if( in_array($id_error, $array_error) )
 	if( $Member->Get_attribute('user_id') === -1 )
 	{
 		$Template->Set_filenames(array(
-			'error' => '../templates/' . $CONFIG['theme'] . '/error.tpl'
+			'error'=> 'error.tpl'
 		));
 
 		$errno = E_USER_WARNING;
@@ -120,7 +120,7 @@ if( in_array($id_error, $array_error) )
 elseif( !empty($id_error) )
 {
 	$Template->Set_filenames(array(
-		'error' => '../templates/' . $CONFIG['theme'] . '/error.tpl'
+		'error'=> 'error.tpl'
 	));
 
 	//Inclusion des langues des erreurs pour le module si elle existe.
@@ -148,7 +148,7 @@ elseif( !empty($id_error) )
 elseif( $Member->Get_attribute('user_id') === -1 )
 {
 	$Template->Set_filenames(array(
-		'error' => '../templates/' . $CONFIG['theme'] . '/error.tpl'
+		'error'=> 'error.tpl'
 	));
 
 	$Template->Assign_vars(array(

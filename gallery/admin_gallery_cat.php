@@ -220,7 +220,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 			if( empty($_POST['del_cat']) )
 			{
 				$Template->Set_filenames(array(
-					'admin_gallery_cat_del' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_cat_del.tpl'
+					'admin_gallery_cat_del'=> 'gallery/admin_gallery_cat_del.tpl'
 				));
 
 				if( $check_pics > 0 ) //Conserve les images.
@@ -683,7 +683,7 @@ elseif( !empty($id) ) //Edition des catégories.
 	$Cache->Load_file('gallery');
 	
 	$Template->Set_filenames(array(
-		'admin_gallery_cat_edit' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_cat_edit.tpl'
+		'admin_gallery_cat_edit'=> 'gallery/admin_gallery_cat_edit.tpl'
 	));
 			
 	$gallery_info = $Sql->Query_array("gallery_cats", "id_left", "id_right", "level", "name", "contents", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -766,7 +766,7 @@ elseif( !empty($root) ) //Edition de la racine.
 	$Cache->Load_file('gallery');
 	
 	$Template->Set_filenames(array(
-		'admin_gallery_cat_edit2' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_cat_edit2.tpl'
+		'admin_gallery_cat_edit2'=> 'gallery/admin_gallery_cat_edit2.tpl'
 	));
 			
 	//Gestion erreur.
@@ -808,7 +808,7 @@ elseif( !empty($root) ) //Edition de la racine.
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_gallery_cat' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_cat.tpl'
+		'admin_gallery_cat'=> 'gallery/admin_gallery_cat.tpl'
 	));
 		
 	//Gestion erreur.

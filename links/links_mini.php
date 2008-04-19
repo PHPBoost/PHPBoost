@@ -28,7 +28,7 @@
 if( defined('PHPBOOST') !== true)	exit;
 
 $Template->Set_filenames(array(
-	'links_mini' => '../templates/' . $CONFIG['theme'] . '/links/links_mini.tpl'
+	'links_mini'=> 'links/links_mini.tpl'
 ));
 
 //Inclusion du cache des liens pour éviter une requête inutile.

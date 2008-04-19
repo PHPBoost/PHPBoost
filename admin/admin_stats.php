@@ -31,7 +31,7 @@ require_once('../includes/admin_header.php');
 include_once('../lang/' . $CONFIG['lang'] . '/stats.php'); //Chargement de la langue.
 
 $Template->Set_filenames(array(
-	'admin_stats_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_stats_management.tpl'
+	'admin_stats_management'=> 'admin/admin_stats_management.tpl'
 ));
 
 $visit = !empty($_GET['visit']) ? true : false;

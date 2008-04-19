@@ -36,7 +36,7 @@ $idcom = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $module = !empty($_GET['module']) ? securit($_GET['module']) : '';
 
 $Template->Set_filenames(array(
-	'admin_com_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_com_management.tpl'
+	'admin_com_management'=> 'admin/admin_com_management.tpl'
 ));
 
 //Chargement du cache

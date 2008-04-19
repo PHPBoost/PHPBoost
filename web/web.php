@@ -31,7 +31,7 @@ require_once('../includes/header.php');
 
 if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Contenu du lien.
 {
-	$Template->Set_filenames(array('web' => '../templates/' . $CONFIG['theme'] . '/web/web.tpl'));
+	$Template->Set_filenames(array('web'=> 'web/web.tpl'));
 	
 	if( !$Member->Check_level($CAT_WEB[$idcat]['secure']) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -102,7 +102,7 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 }
 elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 {
-	$Template->Set_filenames(array('web' => '../templates/' . $CONFIG['theme'] . '/web/web.tpl'));
+	$Template->Set_filenames(array('web'=> 'web/web.tpl'));
 	
 	if( !$Member->Check_level($CAT_WEB[$idcat]['secure']) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -195,7 +195,7 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 }
 else
 {
-	$Template->Set_filenames(array('web' => '../templates/' . $CONFIG['theme'] . '/web/web.tpl'));
+	$Template->Set_filenames(array('web'=> 'web/web.tpl'));
 	
 	$total_link = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."web_cat wc
 	LEFT JOIN ".PREFIX."web w ON w.idcat = wc.id

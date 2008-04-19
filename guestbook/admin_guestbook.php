@@ -49,7 +49,7 @@ if( !empty($_POST['valid'])  )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_guestbook_config' => '../templates/' . $CONFIG['theme'] . '/guestbook/admin_guestbook_config.tpl'
+		'admin_guestbook_config'=> 'guestbook/admin_guestbook_config.tpl'
 	));
 	
 	$Cache->Load_file('guestbook');

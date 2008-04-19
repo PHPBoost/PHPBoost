@@ -78,7 +78,7 @@ elseif( $edit && !empty($id) ) //Edition
 	else
 	{
 		$Template->Set_filenames(array(
-			'admin_themes_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_themes_management.tpl'
+			'admin_themes_management'=> 'admin/admin_themes_management.tpl'
 		));
 		
 		//Récupération des configuration dans la base de données.
@@ -143,7 +143,7 @@ elseif( $uninstall ) //Désinstallation.
 				$idtheme = $key;
 				
 		$Template->Set_filenames(array(
-			'admin_themes_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_themes_management.tpl'
+			'admin_themes_management'=> 'admin/admin_themes_management.tpl'
 		));
 		
 		$Template->Assign_vars(array(
@@ -166,7 +166,7 @@ elseif( $uninstall ) //Désinstallation.
 else
 {			
 	$Template->Set_filenames(array(
-		'admin_themes_management' => '../templates/' . $CONFIG['theme'] . '/admin/admin_themes_management.tpl'
+		'admin_themes_management'=> 'admin/admin_themes_management.tpl'
 	));
 	 
 	$Template->Assign_vars(array(

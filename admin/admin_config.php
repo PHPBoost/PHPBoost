@@ -95,7 +95,7 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 elseif( !empty($check_advanced) && empty($_POST['advanced']) )
 {
 	$Template->Set_filenames(array(
-		'admin_config2' => '../templates/' . $CONFIG['theme'] . '/admin/admin_config2.tpl'
+		'admin_config2'=> 'admin/admin_config2.tpl'
 	));	
 	
 	//Vérification serveur de l'activation du mod_rewrite.
@@ -208,7 +208,7 @@ elseif( !empty($_POST['advanced']) )
 else //Sinon on rempli le formulaire	 
 {		
 	$Template->Set_filenames(array(
-		'admin_config' => '../templates/' . $CONFIG['theme'] . '/admin/admin_config.tpl'
+		'admin_config'=> 'admin/admin_config.tpl'
 	));
 	
 	$theme_tmp = $CONFIG['theme'];

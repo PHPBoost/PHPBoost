@@ -51,9 +51,9 @@ if( !$Member->Check_level(MEMBER_LEVEL) ) //Si c'est un invité
     $Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 $Template->Set_filenames(array(
-	'forum_alert' => '../templates/' . $CONFIG['theme'] . '/forum/forum_alert.tpl',
-	'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-	'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+	'forum_alert'=> 'forum/forum_alert.tpl',
+	'forum_top'=> 'forum/forum_top.tpl',
+	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 	
 //On fait un formulaire d'alerte

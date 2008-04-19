@@ -92,7 +92,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 		elseif( $edit_message )
 		{
 			$Template->Set_filenames(array(
-				'shoutbox' => '../templates/' . $CONFIG['theme'] . '/shoutbox/shoutbox.tpl'
+				'shoutbox'=> 'shoutbox/shoutbox.tpl'
 			));
 			
 			//Pseudo du membre connecté.
@@ -159,7 +159,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 else //Affichage.
 {
 	$Template->Set_filenames(array(
-		'shoutbox' => '../templates/' . $CONFIG['theme'] . '/shoutbox/shoutbox.tpl'
+		'shoutbox'=> 'shoutbox/shoutbox.tpl'
 	));
 	
 	//Pseudo du membre connecté.

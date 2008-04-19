@@ -43,9 +43,9 @@ if( !$Member->Check_level(MEMBER_LEVEL) ) //Réservé aux membres.
 if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
 {
 	$Template->Set_filenames(array(
-		'forum_forum' => '../templates/' . $CONFIG['theme'] . '/forum/forum_forum.tpl',
-		'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-		'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+		'forum_forum'=> 'forum/forum_forum.tpl',
+		'forum_top'=> 'forum/forum_top.tpl',
+		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 	
 	include_once('../includes/pagination.class.php'); 

@@ -57,7 +57,7 @@ if( !empty($_POST['valid']) )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_download_config' => '../templates/' . $CONFIG['theme'] . '/download/admin_download_config.tpl'
+		'admin_download_config'=> 'download/admin_download_config.tpl'
 	));
 	
 	$Cache->Load_file('download');

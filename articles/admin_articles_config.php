@@ -100,7 +100,7 @@ elseif( !empty($_POST['articles_count']) ) //Recompte le nombre d'articles de ch
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_articles_config' => '../templates/' . $CONFIG['theme'] . '/articles/admin_articles_config.tpl'
+		'admin_articles_config'=> 'articles/admin_articles_config.tpl'
 	));
 	
 	$Cache->Load_file('articles');

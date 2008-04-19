@@ -51,7 +51,7 @@ if( !empty($_POST['valid']) )
 elseif( !empty($_POST['previs']) )
 {
 	$Template->Set_filenames(array(
-		'admin_web_add' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_add.tpl'
+		'admin_web_add'=> 'web/admin_web_add.tpl'
 	));
 
 	$title = !empty($_POST['name']) ? trim($_POST['name']) : '';
@@ -139,7 +139,7 @@ elseif( !empty($_POST['previs']) )
 else
 {
 	$Template->Set_filenames(array(
-		'admin_web_add' => '../templates/' . $CONFIG['theme'] . '/web/admin_web_add.tpl'
+		'admin_web_add'=> 'web/admin_web_add.tpl'
 	));
 	
 	$Template->Assign_vars(array(

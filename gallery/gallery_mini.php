@@ -28,7 +28,7 @@
 if( defined('PHPBOOST') !== true ) exit;
 
 $Template->Set_filenames(array(
-	'gallery_mini' => '../templates/' . $CONFIG['theme'] . '/gallery/gallery_mini.tpl'
+	'gallery_mini'=> 'gallery/gallery_mini.tpl'
 ));
 
 //Chargement de la langue du module.

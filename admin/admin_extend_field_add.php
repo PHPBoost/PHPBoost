@@ -84,7 +84,7 @@ if( !empty($_POST['valid']) ) //Insertion du nouveau champs.
 else
 {
 	$Template->Set_filenames(array(
-		'admin_extend_field_add' => '../templates/' . $CONFIG['theme'] . '/admin/admin_extend_field_add.tpl'
+		'admin_extend_field_add'=> 'admin/admin_extend_field_add.tpl'
 	));
 	
 	//Gestion erreur.

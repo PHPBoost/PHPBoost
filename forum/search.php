@@ -43,9 +43,9 @@ $colorate_result = !empty($_POST['colorate_result']) ? true : false;
 $valid_search = !empty($_POST['valid_search']) ? securit($_POST['valid_search']) : '';
 
 $Template->Set_filenames(array(
-	'search' => '../templates/' . $CONFIG['theme'] . '/forum/forum_search.tpl',
-	'forum_top' => '../templates/' . $CONFIG['theme'] . '/forum/forum_top.tpl',
-	'forum_bottom' => '../templates/' . $CONFIG['theme'] . '/forum/forum_bottom.tpl'
+	'search'=> 'forum/forum_search.tpl',
+	'forum_top'=> 'forum/forum_top.tpl',
+	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
 $Template->Assign_vars(array(

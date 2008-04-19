@@ -81,7 +81,7 @@ elseif( !empty($_FILES['upload_smiley']['name']) ) //Upload et décompression de 
 else
 {
 	$Template->Set_filenames(array(
-		'admin_smileys_add' => '../templates/' . $CONFIG['theme'] . '/admin/admin_smileys_add.tpl'
+		'admin_smileys_add'=> 'admin/admin_smileys_add.tpl'
 	));
 	
 	//Gestion erreur.

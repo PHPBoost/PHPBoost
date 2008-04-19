@@ -41,7 +41,7 @@ $cat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 require_once('../includes/header.php');
 
 
-$Template->Set_filenames(array('wiki_explorer' => '../templates/' . $CONFIG['theme'] . '/wiki/explorer.tpl'));
+$Template->Set_filenames(array('wiki_explorer'=> 'wiki/explorer.tpl'));
 
 //Contenu de la racine:
 $Cache->Load_file('wiki');

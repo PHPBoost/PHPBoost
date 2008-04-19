@@ -62,7 +62,7 @@ $path_redirect = $Comments->Get_attribute('path') . sprintf(str_replace('&amp;',
 if( $Comments->Com_loaded() )
 {
 	$Template->Set_filenames(array(
-		'handle_com' => '../templates/' . $CONFIG['theme'] . '/com.tpl'
+		'handle_com'=> 'com.tpl'
 	));
 	
 	//Chargement du cache

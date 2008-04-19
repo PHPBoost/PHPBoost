@@ -177,7 +177,7 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 else
 {			
 	$Template->Set_filenames(array(
-		'admin_modules_update' => '../templates/' . $CONFIG['theme'] . '/admin/admin_modules_update.tpl'
+		'admin_modules_update'=> 'admin/admin_modules_update.tpl'
 	));
 
 	//Gestion erreur.

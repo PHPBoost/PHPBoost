@@ -31,7 +31,7 @@ require_once('../includes/header.php');
 
 if( $file_id > 0 ) //Contenu
 {
-	$Template->Set_filenames(array('download' => '../templates/' . $CONFIG['theme'] . '/download/download.tpl'));
+	$Template->Set_filenames(array('download'=> 'download/download.tpl'));
 
 	//Commentaires
 	$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $file_id . "download") . "', 'download');\">";
@@ -91,7 +91,7 @@ if( $file_id > 0 ) //Contenu
 }
 else
 {
-	$Template->Set_filenames(array('download' => '../templates/' . $CONFIG['theme'] . '/download/download.tpl'));
+	$Template->Set_filenames(array('download'=> 'download/download.tpl'));
 	
 	$Template->Assign_vars(array(
 		'C_ADMIN' => $Member->Check_level(ADMIN_LEVEL),

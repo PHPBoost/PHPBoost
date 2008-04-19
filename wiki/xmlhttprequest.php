@@ -5,7 +5,7 @@ require_once('../includes/begin.php');
 define('TITLE', 'Utilisation d\'AJAX');
 require_once('../includes/header_no_display.php');
 
-$Template->Set_filenames(array('wiki_explorer' => '../templates/' . $CONFIG['theme'] . '/wiki/explorer.tpl'));
+$Template->Set_filenames(array('wiki_explorer'=> 'wiki/explorer.tpl'));
 
 $id_cat = !empty($_POST['id_cat']) ? numeric($_POST['id_cat']) : 0;
 $select_cat = !empty($_GET['select_cat']) ? true : false;

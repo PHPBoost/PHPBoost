@@ -31,7 +31,7 @@ define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
 $Template->Set_filenames(array(
-	'admin_extend' => '../templates/' . $CONFIG['theme'] . '/admin/admin_extend.tpl'
+	'admin_extend'=> 'admin/admin_extend.tpl'
 ));
 
 $Template->Assign_vars(array(

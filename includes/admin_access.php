@@ -104,7 +104,7 @@ if( !empty($_POST['connect']) && !empty($login) && !empty($password) )
 if( !$Member->Check_level(ADMIN_LEVEL) )
 {
 	$Template->Set_filenames(array(
-		'formulaire' => '../templates/' . $CONFIG['theme'] . '/admin/formulaire.tpl'
+		'formulaire'=> 'admin/formulaire.tpl'
 	));
 	
 	$Template->Assign_vars(array(
@@ -130,7 +130,7 @@ elseif( isset($_GET['flood']) )
 	}
 	
 	$Template->Set_filenames(array(
-		'formulaire' => '../templates/' . $CONFIG['theme'] . '/admin/formulaire.tpl'
+		'formulaire'=> 'admin/formulaire.tpl'
 	));
 	
 	$Template->Assign_vars(array(

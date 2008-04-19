@@ -102,7 +102,7 @@ if( !empty($_POST['valid']) )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_poll_add' => '../templates/' . $CONFIG['theme'] . '/poll/admin_poll_add.tpl'
+		'admin_poll_add'=> 'poll/admin_poll_add.tpl'
 	));
 	 
 	$Template->Assign_vars(array(

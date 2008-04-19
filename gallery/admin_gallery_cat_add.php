@@ -98,7 +98,7 @@ if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_gallery_cat_add' => '../templates/' . $CONFIG['theme'] . '/gallery/admin_gallery_cat_add.tpl'
+		'admin_gallery_cat_add'=> 'gallery/admin_gallery_cat_add.tpl'
 	));
 			
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			

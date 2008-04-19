@@ -48,7 +48,7 @@ $get_l_error = !empty($_GET['erroru']) ? trim($_GET['erroru']) : '';
 if( !empty($id_get) ) //Espace membre
 {	
 	$Template->Set_filenames(array(
-		'member' => '../templates/' . $CONFIG['theme'] . '/member.tpl'
+		'member'=> 'member.tpl'
 	));
 
 	if( !empty($edit_get) && $Member->Get_attribute('user_id') === $id_get && ($Member->Check_level(MEMBER_LEVEL)) ) //Edition du profil
@@ -81,7 +81,7 @@ if( !empty($id_get) ) //Espace membre
 		
 		$user_sex = '';
 		if( !empty($row['user_sex']) )
-			$user_sex = ($row['user_sex'] == 1) ? '../templates/' . $CONFIG['theme'] . '/images/man.png' : '../templates/' . $CONFIG['theme'] . '/images/woman.png';
+			$user_sex = ($row['user_sex'] == 1) ? '/images/man.png' : '/images/woman.png';
 	
 		$Template->Assign_vars(array(
 			'C_MEMBER_UPDATE_PROFIL' => true,
@@ -202,7 +202,7 @@ if( !empty($id_get) ) //Espace membre
 		}
 		else //Thème par défaut forcé.
 		{
-			$theme_info = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
+			$theme_info = load_ini_file('/config/', $CONFIG['lang']);
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'];
 			$Template->Assign_block_vars('select_theme', array(
 				'THEME' => '<option value="' . $CONFIG['theme'] . '" selected="selected">' . $theme_name . '</option>'
@@ -802,7 +802,7 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 	$user_group = !empty($show_group) ? $show_group : $post_group;
 	
 	$Template->Set_filenames(array(
-		'member' => '../templates/' . $CONFIG['theme'] . '/member.tpl'
+		'member'=> 'member.tpl'
 	));
 	
 	$group = $Sql->Query_array('group', 'name', 'img', "WHERE id = '" . $user_group . "'", __LINE__, __FILE__);
@@ -872,7 +872,7 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 else //Show all member!
 {
   	$Template->Set_filenames(array(
-		'member' => '../templates/' . $CONFIG['theme'] . '/member.tpl'
+		'member'=> 'member.tpl'
 	));
 	
 	//Recherche d'un member si javascript bloqué.

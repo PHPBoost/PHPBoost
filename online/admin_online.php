@@ -48,7 +48,7 @@ if( !empty($_POST['valid']) )
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_online' => '../templates/' . $CONFIG['theme'] . '/online/admin_online.tpl'
+		'admin_online'=> 'online/admin_online.tpl'
 	));
 	
 	$Cache->Load_file('online');

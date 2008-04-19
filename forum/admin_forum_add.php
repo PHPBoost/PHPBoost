@@ -98,7 +98,7 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 else	
 {		
 	$Template->Set_filenames(array(
-		'admin_forum_add' => '../templates/' . $CONFIG['theme'] . '/forum/admin_forum_add.tpl'
+		'admin_forum_add'=> 'forum/admin_forum_add.tpl'
 	));
 			
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
