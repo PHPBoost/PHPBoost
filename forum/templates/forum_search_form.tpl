@@ -1,6 +1,6 @@
 <dl>
     <dt><label for="ForumTime">{L_DATE}</label></dt>
-    <dd><label>
+    <dd>
         <select id="ForumTime" name="ForumTime" class="search_field">
             <option value="30000" {IS_SELECTED_30000}>Tout</option>
             <option value="1" {IS_SELECTED_1}>1 {L_DAY}</option>
@@ -10,7 +10,7 @@
             <option value="180" {IS_SELECTED_180}>6 {L_MONTHS}</option>
             <option value="360" {IS_SELECTED_360}>1 {L_YEAR}</option>
         </select>
-    </label></dd>
+    </dd>
 </dl>
 <dl>
     <dt><label for="ForumIdcat">{L_CATEGORY}</label></dt>

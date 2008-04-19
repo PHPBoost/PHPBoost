@@ -3,10 +3,6 @@
             const FORM = 'form_';
             const SPECIALIZED_FORM_LINK = 'specialize_form_link_';
             var LastSpecializedFormUsed = 'all';
-            var modulesForms = new Array('all');
-            # START forms #
-                modulesForms.push("{forms.MODULE_NAME}");
-            # END forms #
             
             function ChangeForm(module)
             // Change le cadre des résultats
@@ -91,6 +87,6 @@
         </div>
         <script type="text/javascript">
         <!--
-            ChangeForm('all');
+            ChangeForm('{SEARCH_MODE_MODULE}');
         -->
         </script>
