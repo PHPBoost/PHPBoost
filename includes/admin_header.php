@@ -100,7 +100,7 @@ $Template->Assign_vars(array(
 
 //Listing des modules disponibles:
 $modules_config = array();
-foreach($SECURE_MODULE as $name => $auth)
+foreach($MODULES as $name => $array)
 {	
 	$array_info = load_ini_file('../' . $name . '/lang/', $CONFIG['lang']);
 	$array_info['module_name'] = $name;

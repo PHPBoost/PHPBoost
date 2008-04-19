@@ -25,14 +25,10 @@
  *
 ###################################################*/
 
-define('ACCESS_MODULE', 0x01); //Accès à un module.
-define('AUTH_FLOOD', 'auth_flood'); //Droit de flooder.
-define('PM_GROUP_LIMIT', 'pm_group_limit'); //Aucune limite de messages privés.
-define('DATA_GROUP_LIMIT', 'data_group_limit');
-define('ADMIN_NOAUTH_DEFAULT', false); //Aucune limite de données uploadables.
+define('ADMIN_NOAUTH_DEFAULT', false); //Admin non obligatoirement sélectionné.
 define('GROUP_DEFAULT_IDSELECT', '');
 define('GROUP_DISABLE_SELECT', 'disabled="disabled" ');
-define('GROUP_DISABLED_ADVANCED_AUTH', true);
+define('GROUP_DISABLED_ADVANCED_AUTH', true); //Désactivation des autorisations avancées.
 
 class Group
 {

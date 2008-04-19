@@ -31,10 +31,13 @@
 		</div>
 			
 		<div id="admin_contents">
-			<form action="admin_menus_add.php" method="post" class="fieldset_content">
+			<form action="admin_menus_add.php{IDMODULE}" method="post" class="fieldset_content">
 				<fieldset> 
 					<legend>{L_ACTION_MENUS}</legend>
+					# IF C_MENUS_ADDED #
 					<p>{L_EXPLAIN_MENUS}</p>
+					# ENDIF #
+					
 					# IF C_ADD_MENU #
 					<dl>
 						<dt><label for="name">{L_NAME}</label></dt>
@@ -65,11 +68,9 @@
 						</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="secure">{L_RANK}</label></dt>
+						<dt><label for="auth">{L_AUTHS}</label></dt>
 						<dd><label>
-							<select name="secure">								
-								{RANKS}								
-							</select>
+							{AUTH_MENUS}
 						</label></dd>
 					</dl>
 					<dl>
@@ -82,11 +83,19 @@
 					</label>
 					# ENDIF #		
 					
+					
 					# IF C_EDIT_MENU #
+					# IF C_MENUS_ADDED #
 					<dl>
 						<dt><label for="name">{L_NAME}</label></dt>
 						<dd><label><input type="text" size="18" value="{NAME}" name="name" id="name" class="text" /></label></dd>
 					</dl>
+					# ENDIF #
+					# IF C_MENUS_NOT_ADDED #
+					<p class="text_center text_strong">{NAME}</p>
+					<hr /><br />
+					# ENDIF #
+					
 					<dl>
 						<dt><label for="location">* {L_LOCATION}</label></dt>
 						<dd><label>
@@ -105,13 +114,13 @@
 						</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="secure">{L_RANK}</label></dt>
+						<dt><label for="secure">{L_AUTHS}</label></dt>
 						<dd><label>
-							<select name="secure">								
-								{RANKS}
-							</select>
+								{AUTH_MENUS}
 						</label></dd>
 					</dl>
+					
+					# IF C_MENUS_ADDED #
 					<dl>
 						<dt><label for="use_tpl">{L_USE_TPL}</label></dt>
 						<dd><label><input type="checkbox" size="18" name="use_tpl" id="use_tpl" {USE_TPL} class="text" /></label></dd>
@@ -121,6 +130,8 @@
 						<textarea type="text" rows="15" cols="5" id="contents" name="contents">{CONTENTS}</textarea> 
 						<br />
 					</label>
+					# ENDIF #
+					
 					# ENDIF #	
 				</fieldset>		
 			

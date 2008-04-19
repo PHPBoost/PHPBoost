@@ -28,11 +28,6 @@
 if( defined('PHPBOOST') !== true)	exit;
 
 $Cache->Load_file('faq');
-
-//Accès au module.
-if( !$Member->Check_auth($SECURE_MODULE['faq'], ACCESS_MODULE) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-
 load_module_lang('faq'); //Chargement de la langue du module.
 
 define('AUTH_READ', 0x01);

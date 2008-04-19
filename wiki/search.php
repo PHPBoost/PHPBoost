@@ -35,7 +35,7 @@ require_once('../wiki/wiki_speed_bar.php');
 
 require_once('../includes/header.php');
 
-if( !$Member->Check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) || !$Member->Check_level(MEMBER_LEVEL) )
+if( !$Member->Check_level(MEMBER_LEVEL) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 
 $search_string = !empty($_GET['search']) ? securit($_GET['search']) : '';

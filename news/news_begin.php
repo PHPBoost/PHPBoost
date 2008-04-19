@@ -28,10 +28,6 @@
 if( defined('PHPBOOST') !== true)	
 	exit;
 	
-//Autorisation sur le module.
-if( !$Member->Check_auth($SECURE_MODULE['news'], ACCESS_MODULE) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-
 load_module_lang('news'); //Chargement de la langue du module.
 
 $idnews = !empty($_GET['id']) ? numeric($_GET['id']) : 0;	

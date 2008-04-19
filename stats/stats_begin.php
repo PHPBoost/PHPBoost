@@ -28,11 +28,7 @@
 if( defined('PHPBOOST') !== true)	
 	exit;
 	
-//Autorisation sur le module.
-if( !$Member->Check_auth($SECURE_MODULE['stats'], ACCESS_MODULE) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-
-include_once('../lang/' . $CONFIG['lang'] . '/stats.php'); //Chargement de la langue.
+load_module_lang('stats'); //Chargement de la langue du module.
 
 $visit = !empty($_GET['visit']) ? true : false;
 $visit_year = !empty($_GET['year']) ? numeric($_GET['year']) : '';

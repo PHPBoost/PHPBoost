@@ -27,9 +27,6 @@
 
 if( defined('PHPBOOST') !== true)	exit;
 
-if( !$Member->Check_auth($SECURE_MODULE['wiki'], ACCESS_MODULE) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-
 require_once('../wiki/wiki_auth.php');
 
 switch($speed_bar_key)

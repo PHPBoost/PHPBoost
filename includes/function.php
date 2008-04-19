@@ -238,6 +238,15 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
     }
 }
 
+//Récupère le dossier du module.
+function get_module_name()
+{
+	$module_name = explode('/', SCRIPT);
+	array_pop($module_name);
+	
+	return array_pop($module_name);
+}
+
 //Redirection.
 function redirect($url)
 {
@@ -300,6 +309,22 @@ function second_parse($content)
     $parse->Second_parse();
     
     return $parse->Get_content(DO_NOT_ADD_SLASHES);
+}
+
+function display_com_link($nbr_com, $path, $idprov, $script, $options = 0)
+{
+	global $CONFIG, $LANG;
+	
+	$link = '';
+	$l_com = ($nbr_com > 1) ? $LANG['com_s'] : $LANG['com'];
+	$l_com = !empty($nbr_com) ? $l_com . ' (' . $nbr_com . ')' : $LANG['post_com'];
+	
+	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . transid('/includes/com.php?i=' . $idprov . $script) . "', '" . $script . "');";			
+	$link_current = $path . '#' . $script;	
+	
+	$link .= '<a class="com" href="' . (($CONFIG['com_popup'] == '0') ? $link_current : $link_pop) . '">' . $l_com . '</a>';
+	
+	return $link;
 }
 
 //Transmet le session_id et le user_id à traver l'url pour les connexions sans cookies. Permet le support de l'url rewritting!

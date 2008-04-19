@@ -27,9 +27,6 @@
 
 if( defined('PHPBOOST') !== true)	exit;
 
-if( !$Member->Check_auth($SECURE_MODULE['pages'], ACCESS_MODULE) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-
 load_module_lang('pages');
 
 require_once('../pages/pages_defines.php');

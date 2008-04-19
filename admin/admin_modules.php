@@ -187,7 +187,7 @@ else
 		'L_MODULES_AVAILABLE' => $LANG['modules_available'],
 		'L_NO_MODULES_INSTALLED' => $LANG['no_modules_installed'],
 		'L_UNINSTALL' => $LANG['uninstall'],
-		'L_SUBMIT' => $LANG['submit'],
+		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
 	));
 	

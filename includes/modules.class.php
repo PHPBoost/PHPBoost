@@ -48,10 +48,10 @@ class Modules
      *  Constructeur de la classe Modules
      */
     {
-        global $SECURE_MODULE;
+        global $MODULES;
         
         $this->loadedModules = array();
-        $this->availablesModules = array_keys($SECURE_MODULE);
+        $this->availablesModules = array_keys($MODULES);
     }
     
     //----------------------------------------------------------------- PUBLIC
@@ -85,11 +85,12 @@ class Modules
         $modules = array();
         if( $modulesList === array() )
         {
-            global $SECURE_MODULE;
-            foreach(array_keys($SECURE_MODULE) as $moduleId)
+            global $MODULES;
+			
+            foreach(array_keys($MODULES) as $moduleId)
             {
                 $module = $this->GetModule($moduleId);
-                if ( !is_array($functionnality) )
+                if( !is_array($functionnality) )
                 {
                     if( !$module->GotError() && $module->HasFunctionnality($functionnality) )
                         array_push($modules, $module);
@@ -105,7 +106,7 @@ class Modules
         {
             foreach($modulesList as $module)
             {
-                if ( !is_array($functionnality) )
+                if( !is_array($functionnality) )
                 {
                     if( !$module->GotError() && $module->HasFunctionnality($functionnality) )
                         array_push($modules, $module);
@@ -129,8 +130,9 @@ class Modules
         {
             if( in_array($moduleId, $this->availablesModules) )
             {
-                global $Member, $SECURE_MODULE;
-                if( $Member->check_auth($SECURE_MODULE[$moduleId], ACCESS_MODULE) )
+                global $Member, $MODULES;
+				
+                if( $Member->check_auth($MODULES[$moduleId]['auth'], ACCESS_MODULE) )
                 {
                     if( @include_once('../'.$moduleId.'/'.$moduleId.'_interface.class.php') )
                     {

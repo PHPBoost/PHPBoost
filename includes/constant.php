@@ -43,7 +43,7 @@ if( @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals
     securit_register_globals();
 }
 
-//Définition des constantes utiles.
+### Définition des constantes utiles. ###
 define('GUEST_LEVEL', -1); //Niveau Visiteur.
 define('MEMBER_LEVEL', 0); //Niveau Membre.
 define('MODO_LEVEL', 1); //Niveau Modo.
@@ -59,7 +59,13 @@ define('E_USER_REDIRECT', -1); //Erreur avec redirection
 define('E_USER_SUCCESS', -2); //Succès.
 define('HTML_UNPROTECT', false); //Non protection de l'html.
 
+### Autorisations ###
+define('AUTH_MENUS', 0x01); //Autorisations en lecture des menus.
 define('AUTH_FILES', 0x01); //Configuration générale des fichiers
+define('ACCESS_MODULE', 0x01); //Accès à un module.
+define('AUTH_FLOOD', 'auth_flood'); //Droit de flooder.
+define('PM_GROUP_LIMIT', 'pm_group_limit'); //Aucune limite de messages privés.
+define('DATA_GROUP_LIMIT', 'data_group_limit'); //Aucune limite de données uploadables.
 
 //Types des variables en request.
 define('GET', 1); 
