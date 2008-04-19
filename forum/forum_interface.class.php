@@ -87,7 +87,7 @@ class ForumInterface extends ModuleInterface
         $colorate_result = !empty($args['ForumColorate_result']) ? true : false;
 
         $Template->Set_filenames(array(
-            'forum_search_form' => '../templates/'.$CONFIG['theme'].'/forum/forum_search_form.tpl'
+            'forum_search_form' => 'forum/forum_search_form.tpl'
         ));
 
         $Template->Assign_vars(Array(
