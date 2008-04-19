@@ -1,4 +1,15 @@
 		<div id="bottom_contents">
+			<div style="width:728px;margin:auto;">
+				<script type="text/javascript">
+				<!--
+				google_ad_client = "pub-9943645616388527";
+				google_ad_slot = "9723631539";
+				google_ad_width = 728;
+				google_ad_height = 90;
+				//-->
+				</script>
+				<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+			</div>
 			{MODULES_MINI_BOTTOMCENTRAL_CONTENT}
 		</div>
 	</div>
