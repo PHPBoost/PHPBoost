@@ -23,7 +23,7 @@
 					# START row #
 						# START row.list_cats #
 							<div style="float:left;width:{row.list_cats.WIDTH}%;text-align:center;margin:20px 0px;">
-								# IF C_CAT_IMG #
+								# IF row.list_cats.C_CAT_IMG #
 									<a href="{row.list_cats.U_CAT}" title="{row.list_cats.IMG_NAME}"><img src="{row.list_cats.SRC}" alt="{row.list_cats.IMG_NAME}" /></a>
 									<br />
 								# ENDIF #
@@ -76,7 +76,7 @@
 									<br />
 									{file.COMS}
 									<br />
-									{L_NOTE} {file.NOTE}
+									{L_NOTE}  {file.NOTE}
 								</div>
 								<div class="spacer"></div>								
 							</div>
@@ -107,7 +107,15 @@
 					{NAME}
 				</div>
 				<div style="float:right">
-					{COM} {EDIT}{DEL}
+					{COMMENTARIES}
+					# IF C_EDIT_AUTH #
+						<a href="{U_EDIT_FILE}">
+							<img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT_FILE}" />
+						</a>
+						<a href="{U_DELETE_FILE}">
+							<img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE_FILE}" />
+						</a>
+					# ENDIF #
 				</div>
 			</div>
 			<div class="module_contents">

@@ -33,9 +33,18 @@ if( $file_id > 0 ) //Contenu
 {
 	$Template->Set_filenames(array('download' => '../templates/' . $CONFIG['theme'] . '/download/download.tpl'));
 
+	//Commentaires
+	$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $file_id . "download") . "', 'download');\">";
+	$link_current = '<a class="com" href="' . HOST . DIR . '/download/download' . transid('.php?cat=' . $category_id . '&amp;id=' . $file_id . '&amp;i=0', '-' . $category_id . '-' . $file_id . '.php?i=0') . '#download">';	
+	$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
+	
+	$com_true = ($download_info['nbr_com'] > 1) ? $LANG['com_s'] : $LANG['com'];
+	$com_false = $LANG['post_com'] . '</a>';
+	$l_com = !empty($download_info['nbr_com']) ? $com_true . ' (' . $download_info['nbr_com'] . ')</a>' : $com_false;
 	$Template->Assign_vars(array(
 		'C_DISPLAY_DOWNLOAD' => true,
 		'C_IMG' => !empty($download_info['image']),
+		'C_EDIT_AUTH' => $auth_write,
 		'MODULE_DATA_PATH' => $Template->Module_data_path('download'),
 		'NAME' => $download_info['title'],
 		'CONTENTS' => second_parse($download_info['contents']),
@@ -48,7 +57,7 @@ if( $file_id > 0 ) //Contenu
 		'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$download_info['count']),
 		'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], (int)$download_info['nbrnote']),
 		'U_IMG' => $download_info['image'],
-		'IMAGE_ALT' => str_replace('"', '\"', $download_info['image']),
+		'IMAGE_ALT' => str_replace('"', '\"', $download_info['title']),
 		'LANG' => $CONFIG['lang'],
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
@@ -58,7 +67,11 @@ if( $file_id > 0 ) //Contenu
 		'L_INSERTION_DATE' => $DOWNLOAD_LANG['insertion_date'],
 		'L_LAST_UPDATE_DATE' => $DOWNLOAD_LANG['last_update_date'],
 		'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
-		'U_DOWNLOAD_FILE' => transid('count.php?id=' . $file_id)
+		'L_EDIT_FILE' => str_replace('"', '\"', $DOWNLOAD_LANG['edit_file']),
+		'L_DELETE_FILE' => str_replace('"', '\"', $DOWNLOAD_LANG['delete_file']),
+		'U_EDIT_FILE' => transid('management.php?edit=' . $file_id),
+		'U_DELETE_FILE' => transid('management.php?del=' . $file_id),
+		'U_DOWNLOAD_FILE' => transid('count.php?id=' . $file_id, 'file-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php')
 	));
 	
 	//Affichage notation.
@@ -119,13 +132,9 @@ else
 					'IMG_NAME' => addslashes($value['name']),
 					'NUM_FILES' => sprintf(((int)$value['num_files'] > 1 ? $DOWNLOAD_LANG['num_files_plural'] : $DOWNLOAD_LANG['num_files_singular']), (int)$value['num_files']),
 					'U_CAT' => transid('faq.php?id=' . $id, 'category-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
-					'U_ADMIN_CAT' => transid('admin_download_cat.php?edit=' . $id)
+					'U_ADMIN_CAT' => transid('admin_download_cat.php?edit=' . $id),
+					'C_CAT_IMG' => !empty($value['icon'])
 				));
-				
-				if( !empty($value['icon']) )
-					$Template->Assign_vars(array(
-						'C_CAT_IMG' => true
-					));
 					
 				$i++;
 			}

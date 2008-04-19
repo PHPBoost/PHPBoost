@@ -31,6 +31,7 @@ define('TITLE', $LANG['administration']);
 require_once('../includes/admin_header.php');
 
 include_once('download_auth.php');
+$Cache->Load_file('download');
 include_once('download_cats.class.php');
 $download_categories = new Download_cats();
 
@@ -208,8 +209,10 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'CATEGORIES_TREE' => $download_categories->Build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit,
 			'JS_SPECIAL_AUTH' => 'false',
-			'DISPLAY_SPECIAL_AUTH' => 'hidden',
-			'SPECIAL_CHECKED' => ''
+			'DISPLAY_SPECIAL_AUTH' => 'none',
+			'SPECIAL_CHECKED' => '',
+			'READ_AUTH' => $Group->Generate_select_auth(READ_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
+			'WRITE_AUTH' => $Group->Generate_select_auth(WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'])
 		));
 	}
 	

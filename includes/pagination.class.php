@@ -31,7 +31,7 @@ define('LINK_START_PAGE', false); //Lien sur la première page.
 class Pagination
 {
 	## Public Methods ##
-	//Renvoi la chaîne de liens formatée.
+	//Renvoie la chaîne de liens formatée.
 	function Display_pagination($path, $total_msg, $var_page, $nbr_msg_page, $nbr_max_link, $font_size = 11, $previous_next = true, $link_start_page = true)
 	{
 		if( $total_msg > $nbr_msg_page )
