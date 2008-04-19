@@ -51,7 +51,7 @@ class WikiInterface extends ModuleInterface
             $args['WikiWhere'] = 'title';
 
         $Template->Set_filenames(array(
-            'wiki_search_form' => '../templates/'.$CONFIG['theme'].'/wiki/wiki_search_form.tpl'
+            'wiki_search_form' => 'wiki/wiki_search_form.tpl'
         ));
 
         $Template->Assign_vars(Array(
