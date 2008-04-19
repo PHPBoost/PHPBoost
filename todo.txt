@@ -48,6 +48,7 @@ Forum:
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Support de Atom dans la classe Rss.
+[-] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml (penser à supprimer l'enregistrement en html simple).
 [-] Système de mise à jour du noyau et des modules
 
 ------------------------------------ MODULES -----------------------------------
