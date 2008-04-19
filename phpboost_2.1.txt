@@ -31,11 +31,11 @@
 [*] Possibilité de se déconnecter dans l'administration.
 [*] Page d'erreur 404 lorsqu'une page n'est pas trouvée.
 [*] Réorganisation du système d'autorisation. 
+- Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml.
 [*] Automatisation des configurations par défaut des modules.
 [*] Nouveau système de chargement des langues/thèmes, avec déclenchement d'erreur en cas d'échec.
 [*] Réorganisation du chargement de la tête de page.
 [*] Amélioration de la gestion des groupes (ajout/edition/suppression). 
-+ Amélioration de la pagination. 
 [*] Nouveau système pour la barre d'arborescence (fil d'ariane).
 [*] Possibilité d'insérer plusieurs css pour les modules.
 [*] Nom des fichiers uploadés conservé (gestionnaire d'upload).
