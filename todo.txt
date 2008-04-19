@@ -21,7 +21,6 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Panneau de modération
-[-] Système de mise à jour du noyau et des modules
 [-] Créer un cache pour les css associés aux menus
 [-] Classe de BBCode et désactivation des balises non autorisées
 [-] Ajout d'un nouveau mode d'affichage pour la balise hide.
@@ -46,6 +45,7 @@ Forum:
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Support de Atom dans la classe Rss.
+[-] Système de mise à jour du noyau et des modules
 
 ------------------------------------ MODULES -----------------------------------
 Search :
