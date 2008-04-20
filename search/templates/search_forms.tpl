@@ -45,8 +45,9 @@
             <div class="module_contents">
                 <div class="spacer">&nbsp;</div>
                 <form id="search_form" action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
-                    <span class="search_field"><input type="text" max="128" id="TxTsearched" name="search" value="{TEXT_SEARCHED}" /></span>
-                    <div style="text-align:center;">
+                    <div class="search_field"><input type="text" max="128" id="TxTsearched" name="search" value="{TEXT_SEARCHED}" class="text" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></div>
+                    <br />
+					<div style="text-align:center;">
                         <p id="forms_selection">
                             <a id="specialize_form_link_all" href="javascript:ChangeForm('all');" class="small_link">{L_SEARCH_ALL}</a>
                             # START forms #
