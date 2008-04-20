@@ -3,7 +3,7 @@
 				<script type="text/javascript">
 				<!--
 				google_ad_client = "pub-9943645616388527";
-				google_ad_slot = "9723631539";
+				google_ad_slot = "5329783055";
 				google_ad_width = 728;
 				google_ad_height = 90;
 				//-->

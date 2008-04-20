@@ -1,6 +1,5 @@
-		<div class="module_mini_container">
+		<div class="module_mini_container" style="margin-top:-10px;">
 			<div class="module_mini_top">
-				<h5 class="sub_title">{L_MENU}</h5>
 			</div>		
 			<div class="module_mini_contents">
 				<ul style="margin:0px;padding:0px;list-style-type:none;">

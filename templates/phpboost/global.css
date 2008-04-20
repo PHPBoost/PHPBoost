@@ -65,13 +65,13 @@
 /* Lien du site
 --------------------------------------*/
 a{ 
-	color:#012871; 
+	color:#0578CC; 
 	text-decoration:none; 
 	font-weight:bold;
 	font-size:11px;
 }
 a:hover{ 
-	color:#001b35; 
+	color:#01528D; 
 	text-decoration:underline;
 	font-weight:bold;
 	font-size:11px; 
@@ -173,7 +173,7 @@ a.membre{
 	height:2px;
 }
 .dynamic_menu ul li.extend{
-	background:url(images/bemenu_extend.png);
+	background:url(images/bgmenu_extend.png);
 }
 /* Case du menu */
 .dynamic_menu li ul {

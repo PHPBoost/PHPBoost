@@ -104,7 +104,7 @@
 				{START_TABLE_NEWS}
 				# START list #
 					{list.NEW_ROW}
-						<li><img src="../templates/{THEME}/images/li.png" alt="" /> {list.ICON} <span class="text_small">{list.DATE}</span> <a href="{list.U_NEWS}">{list.TITLE}</a></li>
+						<li><img src="../templates/{THEME}/images/li.png" alt="" /> {list.ICON} <span class="text_small text_strong">{list.DATE}</span> <a href="{list.U_NEWS}">{list.TITLE}</a></li>
 				# END list #
 				{END_TABLE_NEWS}	
 				

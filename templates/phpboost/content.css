@@ -11,18 +11,17 @@ h3.title{
 }
 /* Sous-Titres */
 h5.sub_title{ /* Titre des menu */
-	font-size:12px;
-	font-weight:bold;
-	text-decoration:underline;
+	font-size:14px;
+	color:#658BD1;
 }
 h6.sub_title2{ /* Sous titre dans les menu */
-	background:url(images/links_title.jpg) no-repeat;
-	color:#FFFFFF;
 	font-size:12px;
 	font-weight:bold;
 	padding:5px;
 	margin:2px 0px;
 	width:154px;
+	background:url(images/menus_title.png) no-repeat;
+	color:#FFFFFF;
 }
 
 .block_top, th{ /* Entête de conteneur et des tableaux */
@@ -448,17 +447,17 @@ a.msg_link_pseudo:hover {
 /* Modules minis
 --------------------------------------*/
 .module_mini_container{ /*Placement des mini modules */
-	width:160px;
+	width:165px;
 	margin:auto;
+	margin-top:15px;
 	margin-bottom:15px;
 }
 .module_mini_top{
-	height:20px;
+	height:22px;
 	font-weight:bold;
-	padding-top:6px;
-	color:#012871;
-	list-style-type:none;
+	padding-top:4px;
 	text-align:center;
+	
 }
 .module_mini_contents{
 	border-top:none;
