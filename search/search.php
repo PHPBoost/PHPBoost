@@ -56,7 +56,7 @@ require_once('../includes/header.php');
 $Template->Assign_vars(Array(
     'L_TITLE_SEARCH' => TITLE,
     'L_SEARCH' => $LANG['title_search'],
-    'TEXT_SEARCHED' => $search,
+    'TEXT_SEARCHED' => $search != '' ? $search : $LANG['search'] . '...',
     'L_SEARCH_ALL' => $LANG['search_all'],
     'L_SEARCH_KEYWORDS' => $LANG['search_keywords'],
     'L_SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
