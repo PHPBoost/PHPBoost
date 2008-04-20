@@ -78,7 +78,7 @@ span.search_field {
 }
 
 input#TxTsearched {
-	background:#FFFFFF url("../search/search_mini.png") no-repeat;
+	background:#FFFFFF url(../search_mini.png) no-repeat;
 	background-position:2px 1px;
 	padding-left:22px;
 	height:14px;
