@@ -94,7 +94,7 @@ function Get_HTML_Results(&$results, &$htmlResults, &$Modules, &$resultsName)
         global $Template, $CONFIG;
 
         $Template->Set_filenames(array(
-            'search_generic_results' => '../templates/'.$CONFIG['theme'].'/search/search_generic_results.tpl',
+            'search_generic_results' => 'search/search_generic_results.tpl',
         ));
         
         $Template->Assign_vars(Array(

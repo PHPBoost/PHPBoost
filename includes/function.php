@@ -145,7 +145,7 @@ function load_module_lang($module_name)
 function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
 {
     $dir = find_require_dir($dir_path, $require_dir, false);
-    return @parse_ini_file($dir_path . $dir . '/' . $ini_name);
+    return @parse_ini_file($dir_path . $require_dir . '/' . $ini_name);
 }
 
 //Parcours d'une chaine sous la forme d'un simili tableau php. Retourne un tableau correctement construit.

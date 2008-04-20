@@ -224,7 +224,7 @@ class ForumInterface extends ModuleInterface
         load_module_lang('forum'); //Chargement de la langue du module.
         
         $Template->Set_filenames(array(
-            'forum_generic_results' => '../templates/'.$CONFIG['theme'].'/forum/forum_generic_results.tpl'
+            'forum_generic_results' => 'forum/forum_generic_results.tpl'
         ));
 
         $Template->Assign_vars(Array(
