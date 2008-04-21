@@ -38,11 +38,9 @@ $Template->Set_filenames(array(
 
 //--------------------------------------------------------------------- Params
 // A protéger impérativement;
-$pageNum = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
-$modName = !empty($_GET['module']) ? securit($_GET['module']) : 'all';
-$search = !empty($_POST['search']) ? securit($_POST['search']) : '';
-$selectedModules = !empty($_POST['searched_modules']) ? $_POST['searched_modules'] : array();
-$searchIn = !empty($_POST['search_in']) ? $_POST['search_in'] : 'all';
+$search = request_var(POST, 'search', '');
+$selectedModules = request_var(POST, 'searched_modules', array());
+$searchIn = request_var(POST, 'search_in', 'all');
 $simpleMode = $searchIn == 'all' ? true : false;
 
 //--------------------------------------------------------------------- Header
