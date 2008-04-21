@@ -7,7 +7,10 @@ CREATE TABLE `phpboost_faq` (
   `answer` text NOT NULL,
   `user_id` int(11) NOT NULL,
   `timestamp` int(11) NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  FULLTEXT KEY `question` (`question`),
+  FULLTEXT KEY `answer` (`answer`),
+  FULLTEXT KEY `question_2` (`question`,`answer`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `phpboost_faq_cats`;
