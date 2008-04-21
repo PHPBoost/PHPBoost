@@ -26,8 +26,8 @@
 ###################################################*/
 
 require_once('../includes/begin.php'); 
-$Speed_bar->Add_link($LANG['member_area'], 'member.php' . SID);
-$Speed_bar->Add_link($LANG['member_msg'], 'membermsg.php' . SID);
+$Bread_crumb->Add_link($LANG['member_area'], 'member.php' . SID);
+$Bread_crumb->Add_link($LANG['member_msg'], 'membermsg.php' . SID);
 define('TITLE', $LANG['member_msg']);
 require_once('../includes/header.php'); 
 

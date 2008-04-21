@@ -47,9 +47,9 @@ else
 	define('TITLE', $LANG['title_news']);
 	
 $news_title = !empty($idnews) ? $news['title'] : '';
-$Speed_bar->Add_link($LANG['title_news'], transid('news.php'));
-$Speed_bar->Add_link($news_title, (!empty($_GET['i']) ? transid('news.php?id=' . $idnews) : ''));
-$Speed_bar->Add_link((isset($_GET['i']) ? $LANG['com'] : ''), '');
+$Bread_crumb->Add_link($LANG['title_news'], transid('news.php'));
+$Bread_crumb->Add_link($news_title, (!empty($_GET['i']) ? transid('news.php?id=' . $idnews) : ''));
+$Bread_crumb->Add_link((isset($_GET['i']) ? $LANG['com'] : ''), '');
 
 //Chargement du cache
 $Cache->Load_file('news');

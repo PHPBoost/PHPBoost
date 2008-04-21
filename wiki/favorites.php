@@ -30,8 +30,8 @@ load_module_lang('wiki');
 
 define('TITLE' , $LANG['wiki_favorites']);
 
-$speed_bar_key = 'wiki_favorites';
-require_once('../wiki/wiki_speed_bar.php');
+$bread_crumb_key = 'wiki_favorites';
+require_once('../wiki/wiki_bread_crumb.php');
 
 require_once('../includes/header.php'); 
 

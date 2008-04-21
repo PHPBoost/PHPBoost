@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              faq_speed_bar.php
+ *                              faq_bread_crumb.php
  *                            -------------------
  *   begin                : December 26, 2007
  *   copyright          : (C) 2007 Sautel Benoit
@@ -30,23 +30,23 @@ if( defined('PHPBOOST') !== true)	exit;
 $auth_read = $Member->Check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
 $auth_write = $Member->Check_auth($FAQ_CONFIG['global_auth'], AUTH_WRITE);
 
-//Speed_bar : we read categories list recursively
+//Bread_crumb : we read categories list recursively
 
-while( $id_cat_for_speed_bar > 0 )
+while( $id_cat_for_bread_crumb > 0 )
 {
-	$Speed_bar->Add_link($FAQ_CATS[$id_cat_for_speed_bar]['name'], transid('faq.php?id=' . $id_cat_for_speed_bar, 'faq-' . $id_cat_for_speed_bar . '+' . url_encode_rewrite($FAQ_CATS[$id_cat_for_speed_bar]['name']) . '.php'));
-	$id_cat_for_speed_bar = (int)$FAQ_CATS[$id_cat_for_speed_bar]['id_parent'];
-	if( !empty($FAQ_CATS[$id_cat_for_speed_bar]['auth']) )
+	$Bread_crumb->Add_link($FAQ_CATS[$id_cat_for_bread_crumb]['name'], transid('faq.php?id=' . $id_cat_for_bread_crumb, 'faq-' . $id_cat_for_bread_crumb . '+' . url_encode_rewrite($FAQ_CATS[$id_cat_for_bread_crumb]['name']) . '.php'));
+	$id_cat_for_bread_crumb = (int)$FAQ_CATS[$id_cat_for_bread_crumb]['id_parent'];
+	if( !empty($FAQ_CATS[$id_cat_for_bread_crumb]['auth']) )
 	{
 			//If we can't read a category, we can't read sub elements.
-			$auth_read = $auth_read && $Member->Check_auth($FAQ_CATS[$id_cat_for_speed_bar]['auth'], AUTH_READ);
-			$auth_write = $Member->Check_auth($FAQ_CATS[$id_cat_for_speed_bar]['auth'], AUTH_WRITE);
+			$auth_read = $auth_read && $Member->Check_auth($FAQ_CATS[$id_cat_for_bread_crumb]['auth'], AUTH_READ);
+			$auth_write = $Member->Check_auth($FAQ_CATS[$id_cat_for_bread_crumb]['auth'], AUTH_WRITE);
 	}
 
 }
 
-$Speed_bar->Add_link($FAQ_CONFIG['faq_name'], transid('faq.php'));
+$Bread_crumb->Add_link($FAQ_CONFIG['faq_name'], transid('faq.php'));
 
-$Speed_bar->Reverse_links();
+$Bread_crumb->Reverse_links();
 
 ?>

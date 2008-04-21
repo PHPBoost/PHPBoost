@@ -39,26 +39,26 @@ if( $edit_question > 0 )
 {
 	define('TITLE', $FAQ_LANG['question_edition']);
 	$question_infos = $Sql->Query_array("faq", "*", "WHERE id = '" . $edit_question . "'", __LINE__, __FILE__);
-	$id_cat_for_speed_bar = $question_infos['idcat'];
+	$id_cat_for_bread_crumb = $question_infos['idcat'];
 }
 elseif( $cat_of_new_question >= 0 && $new )
 {
 	define('TITLE', $FAQ_LANG['question_creation']);
-	$id_cat_for_speed_bar = $cat_of_new_question;
+	$id_cat_for_bread_crumb = $cat_of_new_question;
 }
 elseif( $id_move > 0 )
 {
 	define('TITLE', $FAQ_LANG['moving_a_question']);
 	$question_infos = $Sql->Query_array("faq", "*", "WHERE id = '" . $id_move . "'", __LINE__, __FILE__);
-	$id_cat_for_speed_bar = $question_infos['idcat'];
+	$id_cat_for_bread_crumb = $question_infos['idcat'];
 }
 else
 {
 	define('TITLE', $FAQ_LANG['category_management']);
-	$id_cat_for_speed_bar = $id_faq;
+	$id_cat_for_bread_crumb = $id_faq;
 }
-//Generation of speed_bar
-include_once('faq_speed_bar.php');
+//Generation of bread_crumb
+include_once('faq_bread_crumb.php');
 
 //checking authorization
 if( !$auth_write )
@@ -69,23 +69,23 @@ if( !$auth_write )
 
 if( $edit_question > 0 )
 {
-	$Speed_bar->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $question_infos['idcat'])); 
-	$Speed_bar->Add_link($FAQ_LANG['question_edition'], transid('management.php?edit=' . $edit_question)); 
+	$Bread_crumb->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $question_infos['idcat'])); 
+	$Bread_crumb->Add_link($FAQ_LANG['question_edition'], transid('management.php?edit=' . $edit_question)); 
 }
 elseif( $cat_of_new_question >= 0 && $new )
 {
-	$Speed_bar->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $cat_of_new_question)); 
-	$Speed_bar->Add_link($FAQ_LANG['question_creation'], transid('management.php?new=1&amp;idcat=' . $cat_of_new_question . '&amp;after=' . $new_after_id)); 
+	$Bread_crumb->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $cat_of_new_question)); 
+	$Bread_crumb->Add_link($FAQ_LANG['question_creation'], transid('management.php?new=1&amp;idcat=' . $cat_of_new_question . '&amp;after=' . $new_after_id)); 
 }
 //Moving interface
 elseif( $id_move > 0 )
 {
-	$Speed_bar->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $cat_of_new_question)); 
-	$Speed_bar->Add_link($FAQ_LANG['moving_a_question'], transid('management.php?move=' . $id_move)); 
+	$Bread_crumb->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $cat_of_new_question)); 
+	$Bread_crumb->Add_link($FAQ_LANG['moving_a_question'], transid('management.php?move=' . $id_move)); 
 }
 else
 {
-	$Speed_bar->Add_link($FAQ_LANG['category_management'], transid('management.php' . ($id_faq > 0 ? '?faq=' . $id_faq : ''))); 
+	$Bread_crumb->Add_link($FAQ_LANG['category_management'], transid('management.php' . ($id_faq > 0 ? '?faq=' . $id_faq : ''))); 
 }
 	
 include_once('../includes/header.php');

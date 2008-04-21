@@ -43,7 +43,7 @@ if( !empty($file_id) )
 	$download_info = $Sql->Query_array('download', '*', "WHERE visible = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
 	if( empty($download_info['id']) )
 		$Errorh->Error_handler('e_unexist_file_download', E_USER_REDIRECT);
-	$Speed_bar->Add_link($download_info['title'], transid('download.php?id=' . $file_id, 'download-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php'));
+	$Bread_crumb->Add_link($download_info['title'], transid('download.php?id=' . $file_id, 'download-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php'));
 	$id_cat_for_download = $download_info['idcat'];
 	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . addslashes($download_info['title']));
 }
@@ -60,10 +60,10 @@ $l_com_note = !empty($idurl) ? (!empty($get_note) ? $LANG['note'] : (!empty($_GE
 $auth_read = $Member->Check_auth($CONFIG_DOWNLOAD['global_auth'], READ_CAT_DOWNLOAD);
 $auth_write = $Member->Check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOWNLOAD);
 
-//Speed_bar : we read categories list recursively
+//Bread_crumb : we read categories list recursively
 while( $id_cat_for_download > 0 )
 {
-	$Speed_bar->Add_link($DOWNLOAD_CATS[$id_cat_for_download]['name'], transid('download.php?id=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
+	$Bread_crumb->Add_link($DOWNLOAD_CATS[$id_cat_for_download]['name'], transid('download.php?id=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
 	$id_cat_for_download = (int)$DOWNLOAD_CATS[$id_cat_for_download]['id_parent'];
 	if( !empty($DOWNLOAD_CATS[$id_cat_for_download]['auth']) )
 	{
@@ -73,9 +73,9 @@ while( $id_cat_for_download > 0 )
 	}
 }
 
-$Speed_bar->Add_link($DOWNLOAD_LANG['download'], transid('download.php'));
+$Bread_crumb->Add_link($DOWNLOAD_LANG['download'], transid('download.php'));
 
-$Speed_bar->Reverse_links();
+$Bread_crumb->Reverse_links();
 
 if( !$auth_read )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);

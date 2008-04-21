@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              wiki_begin.php
+ *                              wiki_bread_crumb.php
  *                            -------------------
  *   begin                : May 5, 2007
  *   copyright          : (C) 2007 Sautel Benoit
@@ -36,7 +36,8 @@ switch($bread_crumb_key)
 			$Bread_crumb->Add_link($LANG['wiki_history'], '');
 		if( !empty($article_infos['title']) )
 		{
-			$Bread_crumb->Add_link($article_infos['title'], transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
+			if( $article_infos['is_cat'] == 0 )
+				$Bread_crumb->Add_link($article_infos['title'], transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 			$id_cat = (int)$article_infos['id_cat'];
 		}
 		if( !empty($id_cat)  && is_array($_WIKI_CATS) ) //Catégories infinies
@@ -97,12 +98,14 @@ switch($bread_crumb_key)
 			$Bread_crumb->Add_link($LANG['wiki_create_redirection'], transid('property.php?create_redirection=' . $create_redirection));
 		elseif( isset($_GET['i']) && $idcom > 0 )
 			$Bread_crumb->Add_link($LANG['wiki_article_com'], transid('property.php?com=' . $idcom . '&amp;i=0'));
-		elseif( $del > 0 )
-			$Bread_crumb->Add_link($LANG['wiki_remove_cat'], transid('property.php?del=' . $del));
+		elseif( $del_article > 0 )
+			$Bread_crumb->Add_link($LANG['wiki_remove_cat'], transid('property.php?del=' . $del_article));
 			
-		$Bread_crumb->Add_link($article_infos['title'], transid('wiki.php?title=' . url_encode_rewrite($article_infos['title']), url_encode_rewrite($article_infos['title'])));
+		if( $article_infos['is_cat'] == 0 )
+			$Bread_crumb->Add_link($article_infos['title'], transid('wiki.php?title=' . url_encode_rewrite($article_infos['title']), url_encode_rewrite($article_infos['title'])));
+			
 		$id_cat = !empty($article_infos['id_cat']) ? (int)$article_infos['id_cat'] : 0;
-		if( !empty($id_cat)  && is_array($_WIKI_CATS) ) //Catégories infinies
+		if( $id_cat > 0 && is_array($_WIKI_CATS) ) //Catégories infinies
 		{
 			$id = $id_cat;
 			do

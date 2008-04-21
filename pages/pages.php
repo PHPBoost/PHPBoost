@@ -52,20 +52,20 @@ if( !empty($encoded_title) ) //Si on connait son titre
 	
 	//Définition du fil d'Ariane de la page
 	if( $page_infos['is_cat'] == 0 )
-		$Speed_bar->Add_link($page_infos['title'], transid('pages.php?title=' . $encoded_title, $encoded_title));
+		$Bread_crumb->Add_link($page_infos['title'], transid('pages.php?title=' . $encoded_title, $encoded_title));
 	
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
 		//Si on a les droites de lecture sur la catégorie, on l'affiche	
 		if( empty($_PAGES_CATS[$id]['auth']) || $Member->Check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )
-			$Speed_bar->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+			$Bread_crumb->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}	
 	if( $Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
+		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
 	//On renverse ce fil pour le mettre dans le bon ordre d'arborescence
-	$Speed_bar->Reverse_links();
+	$Bread_crumb->Reverse_links();
 }
 elseif( $id_com > 0 )
 {
@@ -77,24 +77,24 @@ elseif( $id_com > 0 )
 	$page_infos = $Sql->Sql_fetch_assoc($result);
 	$Sql->Close($result);
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
-	$Speed_bar->Add_link($LANG['pages_com'], transid('pages.php?id=' . $id_com . '&amp;i=0'));
-	$Speed_bar->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+	$Bread_crumb->Add_link($LANG['pages_com'], transid('pages.php?id=' . $id_com . '&amp;i=0'));
+	$Bread_crumb->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
-		$Speed_bar->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$Bread_crumb->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if( $Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
-	$Speed_bar->Reverse_links();
+		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
+	$Bread_crumb->Reverse_links();
 }
 else
 {
 	define('TITLE', $LANG['pages']);
 	$auth_index = $Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE);
 	if( $auth_index )
-		$Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
+		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
 	elseif( !$auth_index && empty($error) )
 		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth'));
 }

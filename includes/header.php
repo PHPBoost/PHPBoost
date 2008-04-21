@@ -196,7 +196,7 @@ if( $right_column )  //Gestion des blocs de droite.
 }
 
 //Gestion du fil d'ariane, et des titres des pages dynamiques.
-$Speed_bar->Display_speed_bar();
+$Bread_crumb->Display_bread_crumb();
 
 $Template->Assign_vars(array(
 	'MODULES_MINI_TOPCENTRAL_CONTENT' => $MODULES_MINI['topcentral']

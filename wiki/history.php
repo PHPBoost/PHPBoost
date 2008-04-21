@@ -39,8 +39,8 @@ if( !empty($id_article) )
 	$article_infos = $Sql->Query_array('wiki_articles', 'title', 'auth', 'encoded_title', 'id_cat', 'WHERE id = ' . $id_article, __LINE__, __FILE__);
 }
 
-$speed_bar_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
-require_once('../wiki/wiki_speed_bar.php');
+$bread_crumb_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
+require_once('../wiki/wiki_bread_crumb.php');
 
 require_once('../includes/header.php'); 
 

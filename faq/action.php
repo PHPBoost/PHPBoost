@@ -51,8 +51,8 @@ $move_question = !empty($_POST['move_question']);
 if( $faq_del_id > 0 )
 {
 	$faq_infos = $Sql->Query_array('faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__);
-	$id_cat_for_speed_bar = $faq_infos['idcat'];
-	include('faq_speed_bar.php');
+	$id_cat_for_bread_crumb = $faq_infos['idcat'];
+	include('faq_bread_crumb.php');
 	if( $auth_write )
 	{
 		if( !empty($faq_infos['question']) ) //If the id corresponds to a question existing in the database
@@ -78,8 +78,8 @@ elseif( $down > 0 )
 	$faq_infos = $Sql->Query_array('faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $down . "'", __LINE__, __FILE__);
 	
 	$num_questions = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."faq WHERE idcat = '" . $faq_infos['idcat'] . "'", __LINE__, __FILE__);
-	$id_cat_for_speed_bar = $faq_infos['idcat'];
-	include('faq_speed_bar.php');
+	$id_cat_for_bread_crumb = $faq_infos['idcat'];
+	include('faq_bread_crumb.php');
 	if( $auth_write && !empty($faq_infos['question']) ) //If the id corresponds to a question existing in the database
 	{
 		if( $faq_infos['q_order'] < $num_questions ) //If it's not the last question we exchange it and its previous neighboor
@@ -95,8 +95,8 @@ elseif( $down > 0 )
 elseif( $up > 0 )
 {
 	$faq_infos = $Sql->Query_array('faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $up . "'", __LINE__, __FILE__);
-	$id_cat_for_speed_bar = $faq_infos['idcat'];
-	include('faq_speed_bar.php');
+	$id_cat_for_bread_crumb = $faq_infos['idcat'];
+	include('faq_bread_crumb.php');
 	if( $auth_write && !empty($faq_infos['question']) ) //If the id corresponds to a question existing in the database
 	{
 		if( $faq_infos['q_order'] > 1 ) //If it's not the first question we exchange it and its following
@@ -115,8 +115,8 @@ elseif( !empty($entitled) && !empty($answer) )
 	if( $id_question > 0 )
 	{
 		$faq_infos = $Sql->Query_array('faq', 'idcat', 'q_order', "WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
-		$id_cat_for_speed_bar = $faq_infos['idcat'];
-		include('faq_speed_bar.php');
+		$id_cat_for_bread_crumb = $faq_infos['idcat'];
+		include('faq_bread_crumb.php');
 		if( $auth_write )//If authorized user
 		{			
 			$Sql->Query_inject("UPDATE ".PREFIX."faq SET question = '" . $entitled . "', answer = '" . $answer . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
@@ -128,8 +128,8 @@ elseif( !empty($entitled) && !empty($answer) )
 	}
 	else
 	{
-		$id_cat_for_speed_bar = $new_id_cat;
-		include('faq_speed_bar.php');
+		$id_cat_for_bread_crumb = $new_id_cat;
+		include('faq_bread_crumb.php');
 		if( $auth_write )//If authorized user
 		{
 			//shifting right all questions which will be after this
@@ -155,8 +155,8 @@ elseif( !empty($entitled) && !empty($answer) )
 }
 elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
 {
-	$id_cat_for_speed_bar = $id_cat;
-	include('faq_speed_bar.php');
+	$id_cat_for_bread_crumb = $id_cat;
+	include('faq_bread_crumb.php');
 	if( $auth_write )
 	{
 		if( $global_auth )
@@ -197,13 +197,13 @@ elseif( $id_question > 0 && $move_question && $target >= 0 )
 	if( array_key_exists($target, $FAQ_CATS) || $target == 0 )
 	{
 		$question_infos = $Sql->Query_array("faq", "*", "WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
-		$id_cat_for_speed_bar = $question_infos['idcat'];
+		$id_cat_for_bread_crumb = $question_infos['idcat'];
 		$auth_write = $Member->Check_auth($FAQ_CONFIG['global_auth'], AUTH_WRITE);
-		while( $id_cat_for_speed_bar > 0 )
+		while( $id_cat_for_bread_crumb > 0 )
 		{
-			$id_cat_for_speed_bar = (int)$FAQ_CATS[$id_cat_for_speed_bar]['id_parent'];
-			if( !empty($FAQ_CATS[$id_cat_for_speed_bar]['auth']) )
-				$auth_write = $Member->Check_auth($FAQ_CATS[$id_cat_for_speed_bar]['auth'], AUTH_WRITE);
+			$id_cat_for_bread_crumb = (int)$FAQ_CATS[$id_cat_for_bread_crumb]['id_parent'];
+			if( !empty($FAQ_CATS[$id_cat_for_bread_crumb]['auth']) )
+				$auth_write = $Member->Check_auth($FAQ_CATS[$id_cat_for_bread_crumb]['auth'], AUTH_WRITE);
 		}
 		if( $auth_write )
 		{

@@ -54,7 +54,7 @@ $Sql = new Sql($sql_host, $sql_login, $sql_pass, $sql_base); //!\\Initialisation
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
 
 $Cache = new Cache; //!\\Initialisation  de la class de gestion du cache//!\\
-$Speed_bar = new Speed_bar; //!\\Initialisation  de la class de la speed bar//!\\
+$Bread_crumb = new Bread_crumb; //!\\Initialisation  de la class de la speed bar//!\\
 
 //Chargement ddes fichiers cache, indispensables au noyau.
 $CONFIG = array();

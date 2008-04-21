@@ -52,20 +52,20 @@ else
 if( $id_edit > 0 )
 {
 	$page_infos = $Sql->Query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
-	$Speed_bar->Add_link(TITLE, transid('post.php?id=' . $id_edit));
-	$Speed_bar->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+	$Bread_crumb->Add_link(TITLE, transid('post.php?id=' . $id_edit));
+	$Bread_crumb->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
-		$Speed_bar->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$Bread_crumb->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if( $Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
-	$Speed_bar->Reverse_links();
+		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
+	$Bread_crumb->Reverse_links();
 }
 else
-	$Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
+	$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
 	
 require_once('../includes/header.php');
 
