@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              rss.class.php
+ *                              atom.class.php
  *                            -------------------
- *   begin                : March 10, 2005
- *   copyright         : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : April 21, 2008
+ *   copyright         : (C) 2005 Loïc Rouchon
+ *   email                : horn@phpboost.com
  *
  *
 ###################################################
@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-class RSS
+class ATOM
 {
 	## Public Methods #	
 	//Constructeur.

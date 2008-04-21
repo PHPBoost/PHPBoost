@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              rss.class.php
+ *                         syndication.class.php
  *                            -------------------
- *   begin                : March 10, 2005
- *   copyright         : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : April 21, 2008
+ *   copyright         : (C) 2005 Loïc Rouchon
+ *   email                : horn@phpboost.com
  *
  *
 ###################################################
@@ -25,21 +25,32 @@
  *
 ###################################################*/
 
-class RSS
+class Syndication
 {
-	## Public Methods #	
-	//Constructeur.
-	function Rss($path_flux, $mode = 'include') 
+	## Public Methods #
+	function Syndication()
+	/**
+	 * Constructor
+	 */
 	{
-		$path_flux = trim($path_flux, '/');
-		$this->load_rss('/' . $path_flux);
-		$this->mode = $mode;
 	}
 	
-	//Assigne le chemin vers le dossier du cache.
-	function Cache_path($path_cache)
+	function Parse($feedFile)
+	/**
+	 * Parse the feed contained in the file <$feedFile> et return the result as a string
+	 */
 	{
-		$this->path_cache = $path_cache;
+		parsed = '';
+		return $parsed;
+	}
+	
+	function Generate($feedFile)
+	/**
+	 * Parse the feed contained in the file <$feedFile> et return the result as a string
+	 */
+	{
+		parsed = '';
+		return $parsed;
 	}
 	
 	//Génère les fichier du cache, suivant le type demandé.
