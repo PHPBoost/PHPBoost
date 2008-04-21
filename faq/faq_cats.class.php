@@ -138,7 +138,7 @@ class FaqCats extends Categories_management
 	}
 	
 	//function which changes the visibility of one category
-	function Change_category_visibility($category_id, $visibility, $generate_cache = DO_NOT_LOAD_CACHE)
+	function Change_category_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
 		$result = parent::Change_category_visibility($category_id, $visibility, DO_NOT_LOAD_CACHE);
 		$this->Recount_subquestions($generate_cache);

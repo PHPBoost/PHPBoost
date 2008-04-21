@@ -483,6 +483,7 @@ $LANG['upload_folder_contains_folder'] = 'Vous souhaitez placer cette catégorie 
 
 //gestion des catégories
 $LANG['cats_managment_could_not_be_moved'] = 'Une erreur est survenue, la catégorie n\'a pas pu être déplacée';
+$LANG['cats_managment_visibility_could_not_be_changed'] = 'Une erreur est survenue, la visibilité de la catégorie n\'a pas pu être changée';
 $LANG['cats_managment_no_category_existing'] = 'Aucune catégorie n\'existe';
 $LANG['cats_management_confirm_delete'] = 'Etes-vous sur de vouloir supprimer cette catégorie ?';
 $LANG['cats_management_hide_cat'] = 'Rendre invisible la catégorie';
