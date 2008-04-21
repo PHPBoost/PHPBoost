@@ -61,7 +61,6 @@ class FaqInterface extends ModuleInterface
             WHERE ( MATCH(f.question) AGAINST('" . $args['search'] . "') OR MATCH(f.answer) AGAINST('" . $args['search'] . "') )" . $auth_cats
             . " ORDER BY `relevance` " . $Sql->Sql_limit(0, FAQ_MAX_SEARCH_RESULTS);
         
-//         echo '<pre>'.$request.'</pre>';
         return $request;
     }
 }

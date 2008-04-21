@@ -61,7 +61,18 @@ class NewsInterface extends ModuleInterface
      *  Renvoie la requête de recherche
      */
     {
-        return array();
+		global $Sql;
+		
+		$request = "SELECT " . $args['id_search'] . " AS `id_search`,
+            n.id AS `id_content`,
+            n.title AS `title`,
+            ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 AS `relevance`, "
+            . $Sql->Sql_concat("'../news/news.php?id='","n.id") . " AS `link`
+            FROM " . PREFIX . "news n
+            WHERE ( MATCH(n.title) AGAINST('" . $args['search'] . "') OR MATCH(n.contents) AGAINST('" . $args['search'] . "') OR MATCH(n.extend_contents) AGAINST('" . $args['search'] . "') )"
+            . " ORDER BY `relevance` " . $Sql->Sql_limit(0, NEWS_MAX_SEARCH_RESULTS);
+        
+        return $request;
     }
 }
 

@@ -15,7 +15,10 @@ CREATE TABLE `phpboost_news` (
 	`nbr_com` int(11) unsigned NOT NULL default '0',
 	`lock_com` tinyint(1) NOT NULL default '0',
 	PRIMARY KEY	(`id`),
-	KEY `idcat` (`idcat`)
+	KEY `idcat` (`idcat`),
+	FULLTEXT KEY `title` (`title`),
+	FULLTEXT KEY `contents` (`contents`),
+	FULLTEXT KEY `extend_contents` (`extend_contents`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `phpboost_news_cat`;
