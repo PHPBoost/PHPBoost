@@ -72,7 +72,7 @@
 	</div>
 	<div id="links_vertical">
 		<p style="margin:0px;"><img onclick="new Effect.ScrollTo('scroll_top_page',{duration:1.2}); return false;" style="cursor:pointer;" src="../templates/{THEME}/images/top.png" alt="" /></p>
-		<hr />
+		<hr style="width:90%;margin:auto;" />
 		<p style="margin:0;margin-top:5px;"><a href="../news/news.php"><img src="../templates/{THEME}/images/admin/admin_mini.png" alt="" /></a></p>
 	# IF C_MEMBER_CONNECTED #		
 		<p style="margin:0"><a href="../member/member{U_MEMBER_ID}" class="small_link" title="{L_PRIVATE_PROFIL}"><img src="../templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /></a>	</p>		
@@ -84,7 +84,7 @@
 		<p><a href="../member/moderation_panel.php" class="small_link" title="{L_MODO_PANEL}"><img src="../templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /></a></p>
 		# ENDIF #
 	# END ENDIF #
-		<hr />
+		<hr style="width:90%;margin:auto;" />
 		<p style="margin:0;margin-top:5px;"><img onclick="new Effect.ScrollTo('scroll_bottom_page',{duration:1.2}); return false;" style="cursor:pointer;" src="../templates/{THEME}/images/bottom.png" alt="" /></p>
 	</div>
 	
