@@ -70,6 +70,8 @@ define('RECURSIVE_EXPLORATION', true);
 define('NOT_RECURSIVE_EXPLORATION', false);
 define('MOVE_CATEGORY_UP', 'up');
 define('MOVE_CATEGORY_DOWN', 'down');
+define('DO_NOT_LOAD_CACHE', false);
+define('LOAD_CACHE', true);
 define('CAT_VISIBLE', '1');
 define('CAT_UNVISIBLE', '0');
 define('ADD_THIS_CATEGORY_IN_LIST', true);
@@ -279,9 +281,9 @@ class Categories_management
 	}
 	
 	//Method which changes the visibility of a category
-	function Change_category_visibility($category_id, $visibility)
+	function Change_category_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
-		global $Sql;
+		global $Sql, $Cache;
 		
 		//Default value
 		if( !in_array($visibility, array(CAT_VISIBLE, CAT_UNVISIBLE)) )
@@ -290,9 +292,14 @@ class Categories_management
 			return false;
 		}
 			
-		if( $category_id != 0 || array_key_exists($category_id, $this->cache_var) )
+		if( $category_id > 0 && array_key_exists($category_id, $this->cache_var) )
 		{
 			$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET visible = '" . $visibility . "' WHERE id = '" . $category_id . "'", __LINE__, __FILE__);
+
+			//Regeneration of the cache file
+			if( $generate_cache )
+				$Cache->Generate_module_file($this->cache_file_name);
+			
 			return true;
 		}
 		else
@@ -383,6 +390,28 @@ class Categories_management
 					{
 						document.getElementById(\'l\' + id).innerHTML = "";
 						alert("' . $LANG['cats_managment_could_not_be_moved'] . '");
+					}
+				}
+				xmlhttprequest_sender(xhr_object, null);
+			}
+			
+			// Showing/Hiding a category with AJAX technology
+			function ajax_change_cat_visibility(id, status)
+			{
+				status = (status == \'show\' ? \'show\' : \'hide\');
+				var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?\' + status + \'=\' + id);
+				
+				document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
+				
+				xhr_object.onreadystatechange = function() 
+				{
+					//Transfert finished and successful
+					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != \'\' )
+						document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
+					else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' ) //Error
+					{
+						document.getElementById(\'l\' + id).innerHTML = "";
+						alert("' . $LANG['cats_managment_visibility_could_not_be_changed'] . '");
 					}
 				}
 				xmlhttprequest_sender(xhr_object, null);
@@ -508,15 +537,18 @@ class Categories_management
 							{
 								// Enough url_rewriting
 								$string .= '<a href="' .
-								(empty($this->display_config['url']['rewrited']) ? transid(sprintf($this->display_config['url']['unrewrited'], $id)) :
-								//with url_rewriting
-								(!empty($this->display_config['url']['rewrited']) ?
-								//The rewriting mask contains title
-								(strpos($this->display_config['url']['rewrited'], '%s') !== false ?
-									sprintf($this->display_config['url']['rewrited'], $id, url_encode_rewrite($values['name'])) :
-									//Only id
-									sprintf($this->display_config['url']['rewrited'], $id))
-								: '')) . '">'
+								(empty($this->display_config['url']['rewrited']) ?
+									transid(sprintf($this->display_config['url']['unrewrited'], $id))
+								:
+									//with url_rewriting
+									(!empty($this->display_config['url']['rewrited']) ?
+									//The rewriting mask contains title
+									(strpos($this->display_config['url']['rewrited'], '%s') !== false ?
+										transid(sprintf($this->display_config['url']['unrewrited'], $id), sprintf($this->display_config['url']['rewrited'], $id, url_encode_rewrite($values['name']))) :
+										//Only id
+										transid(sprintf($this->display_config['url']['unrewrited'], $id), sprintf($this->display_config['url']['rewrited'], $id)))
+									: '')
+								) . '">'
 								. $values['name'] . '</a>';
 							}
 							else
@@ -535,6 +567,7 @@ class Categories_management
 										<img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="" class="valign_middle" />
 									</a>';
 									
+									//If the user has enable javascript, we compute his requests in AJAX mode
 									if( $ajax_mode )
 										$string .= '
 										<script type="text/javascript">
@@ -560,9 +593,37 @@ class Categories_management
 										</script>';
 								}
 								
+								//Show/hide category
+								if( $values['visible'] )
+								{
+									$string .= '
+									<a href="' . ($ajax_mode ? transid($this->display_config['administration_file_name'] . '?hide=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');') . '" title="' . $LANG['cats_management_hide_cat'] . '" id="visibility_' . $id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/visible.png" alt="' . $LANG['cats_management_hide_cat'] . '" class="valign_middle" /></a>&nbsp;';
+									if( $ajax_mode )
+										$string .= '
+										<script type="text/javascript">
+										<!--
+											document.getElementById("visibility_' . $id . '").href = "javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');";
+										-->
+										</script>';
+								}
+								else
+								{
+									$string .= '
+									<a href="' . ($ajax_mode ? transid($this->display_config['administration_file_name'] . '?show=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');') . '" title="' . $LANG['cats_management_show_cat'] . '" id="visibility_' . $id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/unvisible.png" alt="' . $LANG['cats_management_show_cat'] . '" class="valign_middle" /></a>&nbsp;';
+									if( $ajax_mode )
+										$string .= '
+										<script type="text/javascript">
+										<!--
+											document.getElementById("visibility_' . $id . '").href = "javascript:ajax_change_cat_visibility(' . $id . ', \'show\');";
+										-->
+										</script>';
+								}
+								
+								//Edit category
 								$string .= '
 								<a href="' . transid($this->display_config['administration_file_name'] . '?edit=' . $id) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>&nbsp;';
 								
+								//Delete category
 								$string .= '
 								<a href="' . transid($this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id) . '" onclick="return confirm(\'' . addslashes($LANG['cats_management_confirm_delete']) . '\');">
 									<img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" />

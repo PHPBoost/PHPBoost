@@ -47,9 +47,9 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 	elseif( $id_down > 0 )
 		$result = $faq_categories->Move_category($id_down, MOVE_CATEGORY_DOWN);
 	elseif( $id_show > 0 )
-		$result = $faq_categories->Change_category_visibility($id_show, CAT_VISIBLE);
+		$result = $faq_categories->Change_category_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
 	elseif( $id_hide > 0 )
-		$result = $faq_categories->Change_category_visibility($id_hide, CAT_UNVISIBLE);
+		$result = $faq_categories->Change_category_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
 	
 	//Operation was successfully
 	if( $result )
@@ -64,7 +64,6 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 		
 		$faq_categories->Set_displaying_configuration($cat_config);
 		
-		$Cache->Generate_module_file('faq');
 		$Cache->Load_file('faq', RELOAD_CACHE);
 		
 		echo $faq_categories->Build_categories_administration_interface(AJAX_MODE);
