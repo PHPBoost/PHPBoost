@@ -33,12 +33,12 @@ $CONFIG = array();
 @include_once('./cache/config.php');
 if( !defined('PHPBOOST_INSTALLED') )
 {
-    require_once('./includes/unusual_functions.php');
+    require_once('./includes/framework/unusual_functions.php');
     redirect(get_server_url_page('install/install.php'));
 }
 elseif( $CONFIG === array() )
 {
-    require_once('./includes/unusual_functions.php');
+    require_once('./includes/framework/unusual_functions.php');
     redirect(get_server_url_page('member/member.php'));
 }
 define('DIR', $CONFIG['server_path']);

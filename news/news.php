@@ -51,7 +51,7 @@ if( empty($idnews) && empty($idcat) )
 	}	
 
 	//On crée une pagination (si activé) si le nombre de news est trop important.
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
 	//Pagination activée, sinon affichage lien vers les archives.
@@ -275,7 +275,7 @@ elseif( !empty($idcat) )
 //Affichage commentaires.
 if( isset($_GET['i']) && !empty($idnews) )
 {
-	include_once('../includes/com.class.php'); 
+	include_once('../includes/framework/content/comments.class.php'); 
 	$Comments = new Comments('news', $idnews, transid('news.php?id=' . $idnews . '&amp;i=%s', 'news-0-' . $idnews . '.php?i=%s'));
 	include_once('../includes/com.php');
 }	

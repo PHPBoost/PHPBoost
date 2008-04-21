@@ -88,7 +88,7 @@ if( !empty($_POST['valid']) )
 		
 		$Sql->Query_inject("INSERT INTO ".PREFIX."download (idcat,title,contents,url,size,count,timestamp,visible,start,end,user_id,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . parse($contents) . "', '" . $url . "', '" . $size . "', '" . $count . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '', 0, 0, 0)", __LINE__, __FILE__);
 		
-		include_once('../includes/rss.class.php'); //Flux rss regénéré!
+		include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('download/rss.php');
 		$Rss->Cache_path('../cache/');
 		$Rss->Generate_file('javascript', 'rss_download');

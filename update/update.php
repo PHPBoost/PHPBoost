@@ -38,7 +38,7 @@ define('DIR', str_replace('/update/update.php', '', $server_path));
 //Thème par défaut.
 define('DEFAULT_THEME', 'main');
 
-if( !@include_once('../includes/template.class.php') )
+if( !@include_once('../includes/framework/template.class.php') )
 	die('Votre dossier de mise à jour n\'est pas placé où il faut');
 include_once('../includes/function.php');
 
@@ -56,13 +56,13 @@ if( $step >= 2 )
 {
 	require_once('../includes/function.php'); //Fonctions de base.
 	require_once('../includes/constant.php'); //Constante utiles.
-	require_once('../includes/mathpublisher.php'); //Gestion des formules mathématiques.
-	require_once('../includes/errors.class.php');
-	require_once('../includes/template.class.php');
-	require_once('../includes/db/' . DBTYPE . '.class.php');
-	require_once('../includes/cache.class.php');
-	require_once('../includes/sessions.class.php');
-	require_once('../includes/groups.class.php');
+	require_once('../includes/framework/content/mathpublisher.php'); //Gestion des formules mathématiques.
+	require_once('../includes/framework/errors.class.php');
+	require_once('../includes/framework/template.class.php');
+	require_once('../includes/framework/db/' . DBTYPE . '.class.php');
+	require_once('../includes/framework/cache.class.php');
+	require_once('../includes/framework/members/sessions.class.php');
+	require_once('../includes/framework/members/groups.class.php');
 
 	//Instanciation des objets indispensables au noyau.
 	$Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\

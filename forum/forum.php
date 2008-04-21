@@ -197,7 +197,7 @@ if( !empty($id_get) )
 	}
 	
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	//Affichage de l'arborescence des catégories.

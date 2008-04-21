@@ -53,7 +53,7 @@ elseif( $db )
 			die('<div class="warning">' . sprintf($LANG['empty_field'], $LANG['field_' . $field_name]) . '</div>');
 	}
 	//Tentative de connexion
-	if( !@include_once('../includes/db/' . $dbms . '.class.php') )
+	if( !@include_once('../includes/framework/db/' . $dbms . '.class.php') )
 		die('<div class="error">' . $LANG['db_error_dbms'] . '</div>');
 	$Sql = new Sql(false);
 	//Connexion

@@ -35,7 +35,7 @@ require_once('../includes/header.php');
 if( !$Member->Check_level(MEMBER_LEVEL) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-include_once('../includes/pm.class.php');
+include_once('../includes/framework/members/pm.class.php');
 $Privatemsg = new Privatemsg();
 
 $pm_get = !empty($_GET['pm']) ? numeric($_GET['pm']) : '';
@@ -303,7 +303,7 @@ elseif( !empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 }
 elseif( !empty($pm_del_convers) ) //Suppression de conversation.
 {
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	$pagination_pm = 25;
 
@@ -521,7 +521,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	));
 	
 	//On crée une pagination si le nombre de MP est trop important.
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	//On récupère les info de la conversation.
@@ -759,7 +759,7 @@ else //Liste des conversation, dans la boite du membre.
 	$nbr_pm = $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id'));
 	
 	//On crée une pagination si le nombre de MP est trop important.
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	$pagination_pm = 25;

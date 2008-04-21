@@ -1,5 +1,5 @@
 		# IF C_BBCODE_TINYMCE_MODE #			
-		<script language="javascript" type="text/javascript" src="../includes/tinymce/tiny_mce.js"></script>
+		<script language="javascript" type="text/javascript" src="../includes/framework/content/tinymce/tiny_mce.js"></script>
 		<script language="javascript" type="text/javascript">
 		<!--
 		tinyMCE.init({
@@ -23,7 +23,7 @@
 		</script>
 		# ENDIF #
 		
-		<script type="text/javascript" src="../includes/js/bbcode.js"></script>
+		<script type="text/javascript" src="../includes/framework/js/bbcode.js"></script>
 		<script type="text/javascript">
 		<!--
 		function XMLHttpRequest_preview()

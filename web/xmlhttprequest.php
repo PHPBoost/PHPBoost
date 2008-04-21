@@ -37,7 +37,7 @@ if( !empty($_GET['note']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur 
 	$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;
 
 	//Initialisation  de la class de gestion des fichiers.
-	include_once('../includes/note.class.php');
+	include_once('../includes/framework/note.class.php');
 	$Note = new Note('web', $id, '', $CONFIG_WEB['note_max'], '', NOTE_DISPLAY_NOTE);
 	
 	if( !empty($note) && !empty($id) )

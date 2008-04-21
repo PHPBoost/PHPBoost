@@ -83,7 +83,7 @@ if( !$Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 //Initialisation  de la class de gestion des fichiers.
-include_once('../includes/files.class.php');
+include_once('../includes/framework/files.class.php');
 $Files = new Files; 
 
 $folder = !empty($_GET['f']) ? numeric($_GET['f']) : 0;
@@ -139,7 +139,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 		if( is_writable($dir) ) //Dossier en écriture, upload possible
 		{
 			$weight_max = $unlimited_data ? 100000000 : ($group_limit - $member_memory_used);
-			include_once('../includes/upload.class.php');
+			include_once('../includes/framework/files/upload.class.php');
 			$Upload = new Upload($dir);
 			$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+`i', UNIQ_NAME, $weight_max);
 			

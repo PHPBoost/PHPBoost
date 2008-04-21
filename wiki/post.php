@@ -112,7 +112,7 @@ if( !empty($contents) ) //On enregistre un article
 	 		//On donne le nouveau id de contenu
 			$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 			//Regénération du flux rss.
-			include_once('../includes/rss.class.php'); //Flux rss regénéré!
+			include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
 			$Rss = new Rss('wiki/rss.php');
 			$Rss->Cache_path('../cache/');
 			$Rss->Generate_file('javascript', 'rss_wiki');
@@ -159,7 +159,7 @@ if( !empty($contents) ) //On enregistre un article
 				$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article, __LINE__, __FILE__);
 				
 				//Regénération du flux rss.
-				include_once('../includes/rss.class.php'); //Flux rss regénéré!
+				include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
 				$Rss = new Rss('wiki/rss.php');
 				$Rss->Cache_path('../cache/');
 				$Rss->Generate_file('javascript', 'rss_wiki');

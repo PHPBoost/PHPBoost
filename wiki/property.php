@@ -306,7 +306,7 @@ elseif( $create_redirection > 0 ) //Création d'une redirection
 }
 elseif( isset($_GET['i']) && $idcom > 0 ) //Affichage des commentaires
 {
-	include_once('../includes/com.class.php'); 
+	include_once('../includes/framework/content/comments.class.php'); 
 	$Comments = new Comments('wiki_articles', $idcom, transid('property.php?com=' . $idcom . '&amp;i=%s', ''), 'wiki');
 	include_once('../includes/com.php');
 }

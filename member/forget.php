@@ -56,7 +56,7 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 					
 					$Sql->Query_inject("UPDATE ".PREFIX."member SET activ_pass = '" . $activ_pass . "', new_pass = '" . md5($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clée d'activation dans la bdd.
 					
-					include_once('../includes/mail.class.php');
+					include_once('../includes/framework/mail.class.php');
 					$Mail = new Mail();
 					$Mail->Send_mail($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass), $CONFIG['mail']);	
 

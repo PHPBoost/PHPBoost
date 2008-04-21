@@ -350,7 +350,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 			
 		$Sql->Query_inject("UPDATE ".PREFIX."download SET title = '" . $title . "', contents = '" . $contents . "', short_contents = '" . $short_contents . "', url = '" . $url . "', size = '" . $size . "', idcat = '" . $idcat . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . ", count = '" . $count . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
-		include_once('../includes/rss.class.php'); //Flux rss regénéré!
+		include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('download/rss.php');
 		$Rss->Cache_path('../cache/');
 		$Rss->Generate_file('javascript', 'rss_download');
@@ -369,7 +369,7 @@ elseif( $del && !empty($id) ) //Suppression du fichier.
 	//On supprimes les éventuels commentaires associés.
 	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'download'", __LINE__, __FILE__);
 	
-	include_once('../includes/rss.class.php'); //Flux rss regénéré!
+	include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
 	$Rss = new Rss('download/rss.php');
 	$Rss->Cache_path('../cache/');
 	$Rss->Generate_file('javascript', 'rss_download');
@@ -386,7 +386,7 @@ else
 	$nbr_dl = $Sql->Count_table('download', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de fichier est trop important.
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
 	$Template->Assign_vars(array(			

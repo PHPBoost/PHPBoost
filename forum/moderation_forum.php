@@ -279,7 +279,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 			{
 				if( !empty($readonly_contents) && !empty($readonly) )
 				{					
-					include_once('../includes/pm.class.php');
+					include_once('../includes/framework/members/pm.class.php');
 					$Privatemsg = new Privatemsg();
 					
 					//Envoi du message.
@@ -449,7 +449,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				{					
 					if( !empty($warning_contents) )
 					{					
-						include_once('../includes/pm.class.php');
+						include_once('../includes/framework/members/pm.class.php');
 						$Privatemsg = new Privatemsg();
 						
 						//Envoi du message.
@@ -469,7 +469,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				forum_history_collector(H_BAN_USER, $info_mbr['user_id'], 'moderation_forum.php?action=warning&id=' . $info_mbr['user_id']);
 				
 				//Envoi du mail
-				include_once('../includes/mail.class.php');
+				include_once('../includes/framework/mail.class.php');
 				$Mail = new Mail();
 				$Mail->Send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 			}	

@@ -55,7 +55,7 @@ if( $del && !empty($id) ) //Suppresion de l'article.
 	//On supprimes les éventuels commentaires associés.
 	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = " . $id . " AND script = 'articles'", __LINE__, __FILE__);
 	
-	include_once('../includes/rss.class.php'); //Flux rss regénéré!
+	include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
 	$Rss = new Rss('articles/rss.php');
 	$Rss->Cache_path('../cache/');
 	$Rss->Generate_file('javascript', 'rss_articles');
@@ -409,7 +409,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		
 		$Sql->Query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
-		include_once('../includes/rss.class.php'); //Flux rss regénéré!
+		include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('articles/rss.php');
 		$Rss->Cache_path('../cache/');
 		$Rss->Generate_file('javascript', 'rss_articles');
@@ -429,7 +429,7 @@ else
 	$nbr_articles = $Sql->Count_table('articles', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre d'articles est trop important.
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$Template->Assign_vars(array(		
