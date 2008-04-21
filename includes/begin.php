@@ -32,7 +32,7 @@ header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 	
 //Inclusion des fichiers
-require_once('../includes/bench.class.php');
+require_once('../includes/framework/bench.class.php');
 $Bench = new Bench; //Début du benchmark
 $Bench->Start_bench('site');
 require_once('../includes/function.php'); //Fonctions de base.
@@ -41,7 +41,7 @@ require_once('../includes/mathpublisher.php'); //Gestion des formules mathématiq
 require_once('../includes/errors.class.php');
 require_once('../includes/template.class.php');
 require_once('../includes/db/' . DBTYPE . '.class.php');
-require_once('../includes/cache.class.php');
+require_once('../includes/framework/cache.class.php');
 require_once('../includes/sessions.class.php');
 require_once('../includes/member.class.php');
 require_once('../includes/groups.class.php');
