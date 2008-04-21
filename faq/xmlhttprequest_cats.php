@@ -34,9 +34,11 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 	include_once('faq_cats.class.php');
 	$faq_categories = new FaqCats();
 	
-	$id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
-	$id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
-	$cat_to_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+	$id_up = request_var(GET, 'id_up', 0);
+	$id_down = request_var(GET, 'id_down', 0);
+	$id_show = request_var(GET, 'show', 0);
+	$id_hide = request_var(GET, 'hide', 0);
+	$cat_to_del = request_var(GET, 'del', 0);
 	
 	$result = false;
 	
@@ -44,6 +46,10 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 		$result = $faq_categories->Move_category($id_up, MOVE_CATEGORY_UP);
 	elseif( $id_down > 0 )
 		$result = $faq_categories->Move_category($id_down, MOVE_CATEGORY_DOWN);
+	elseif( $id_show > 0 )
+		$result = $faq_categories->Change_category_visibility($id_show, CAT_VISIBLE);
+	elseif( $id_hide > 0 )
+		$result = $faq_categories->Change_category_visibility($id_hide, CAT_UNVISIBLE);
 	
 	//Operation was successfully
 	if( $result )
@@ -59,7 +65,7 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 		$faq_categories->Set_displaying_configuration($cat_config);
 		
 		$Cache->Load_file('faq', RELOAD_CACHE);
-	
+		
 		echo $faq_categories->Build_categories_administration_interface(AJAX_MODE);
 	}
 }

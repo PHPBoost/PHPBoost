@@ -34,13 +34,15 @@ include_once('../includes/admin_header.php');
 include_once('faq_cats.class.php');
 $faq_categories = new FaqCats();
 
-$id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
-$id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
-$cat_to_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
-$cat_to_del_post = !empty($_POST['cat_to_del']) ? numeric($_POST['cat_to_del']) : 0;
-$id_edit = !empty($_GET['edit']) ? numeric($_GET['edit']) : 0;
-$new_cat = !empty($_GET['new']) ? true : false;
-$error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+$id_up = request_var(GET, 'id_up', 0);
+$id_down = request_var(GET, 'id_down', 0);
+$id_show = request_var(GET, 'show', 0);
+$id_hide = request_var(GET, 'hide', 0);
+$cat_to_del = request_var(GET, 'del', 0);
+$cat_to_del_post = request_var(POST, 'cat_to_del', 0);
+$id_edit = request_var(GET, 'edit', 0);
+$new_cat = request_var(GET, 'new', false);
+$error = request_var(GET, 'error', '');
 
 $Template->Set_filenames(array(
 	'admin_faq_cat'=> 'faq/admin_faq_cats.tpl'
@@ -62,6 +64,16 @@ if( $id_up > 0 )
 elseif( $id_down > 0 )
 {
 	$faq_categories->Move_category($id_down, MOVE_CATEGORY_DOWN);
+	redirect(transid('admin_faq_cats.php'));
+}
+elseif( $id_show > 0 )
+{
+	$faq_categories->Change_category_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
+	redirect(transid('admin_faq_cats.php'));
+}
+elseif( $id_hide > 0 )
+{
+	$faq_categories->Change_category_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
 	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $cat_to_del > 0 )
