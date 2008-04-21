@@ -1,30 +1,25 @@
-<br />
-<div style="width:90%; margin:auto;">
-    # START forum_results #
-        <div class="msg_position" style="width:100%;">
-            <div class="msg_container">
-                <div class="msg_top_row">
-                    <div class="msg_pseudo_mbr">
-                        {forum_results.USER_ONLINE}
-                        <a class="msg_link_pseudo" href="{forum_results.U_USER_PROFILE}">{forum_results.USER_PSEUDO}</a>
-                    </div>
-                    <span class="text_strong" style="float:left;">&nbsp;&nbsp;{L_TOPIC} :
-                    <a class="small_link" href="{forum_results.U_TOPIC}">{forum_results.TITLE}</a></span>
-                    <span class="text_small" style="float: right;">{L_ON}: {forum_results.DATE}</span>&nbsp;
-                </div>
-                <div class="msg_contents_container">
-                    <div class="msg_info_mbr">
-                    </div>
-                    <div class="msg_contents">
-                        <div class="msg_contents_overflow">
-                            {forum_results.CONTENTS}
-                        </div>
-                    </div>
+<div class="msg_position" style="width:100%;">
+    <div class="msg_container">
+        <div class="msg_top_row">
+            <div class="msg_pseudo_mbr">
+                {USER_ONLINE}
+                <a class="msg_link_pseudo" href="{U_USER_PROFILE}">{USER_PSEUDO}</a>
+            </div>
+            <span class="text_strong" style="float:left;">&nbsp;&nbsp;{L_TOPIC} :
+            <a class="small_link" href="{U_TOPIC}">{TITLE}</a></span>
+            <span class="text_small" style="float: right;">{L_ON}: {DATE}</span>&nbsp;
+        </div>
+        <div class="msg_contents_container">
+            <div class="msg_info_mbr">
+            </div>
+            <div class="msg_contents">
+                <div class="msg_contents_overflow">
+                    {CONTENTS}
                 </div>
             </div>
-            <div class="msg_bottom_l"></div>
-            <div class="msg_bottom_r"></div>
-            <div class="msg_bottom"><span class="text_small">&nbsp;</span></div>
         </div>
-    # END forum_results #
+    </div>
+    <div class="msg_bottom_l"></div>
+    <div class="msg_bottom_r"></div>
+    <div class="msg_bottom"><span class="text_small">&nbsp;</span></div>
 </div>
