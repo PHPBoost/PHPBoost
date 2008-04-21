@@ -114,7 +114,7 @@ elseif( !empty($type) ) //Rédaction
 {
 	if( $type == 'bbcode' )
 	{
-		include_once('../includes/bbcode.php');
+		include_once('../includes/framework/content/bbcode.php');
 	}
 	else
 	{

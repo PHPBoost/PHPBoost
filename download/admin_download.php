@@ -48,7 +48,7 @@ if( !empty($id) && !$del )
 	
 	$idcat = $row['idcat'];
 	
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 
 	$Template->Assign_vars(array(
 		'TITLE' => $row['title'],
@@ -128,7 +128,7 @@ if( !empty($id) && !$del )
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'short_contents';
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	
 	$Template->Assign_vars(array(
 		'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE)
@@ -224,7 +224,7 @@ elseif( !empty($_POST['preview']) && !empty($id_post) )
 		'MODULE_DATA_PATH' => $Template->Module_data_path('download')
 	));
 	
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	
 	$Template->Assign_vars(array(
 		'LANG' => $CONFIG['lang'],
@@ -279,7 +279,7 @@ elseif( !empty($_POST['preview']) && !empty($id_post) )
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'short_contents';
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	
 	$Template->Assign_vars(array(
 		'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE)
@@ -453,7 +453,7 @@ else
 	}
 	$Sql->Close($result);
 	
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 	
 	include_once('admin_download_menu.php');
 	

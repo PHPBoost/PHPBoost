@@ -364,7 +364,7 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 else
 	redirect(HOST . DIR . '/wiki/' . transid('wiki.php'));
 
-include_once('../includes/bbcode.php');
+include_once('../includes/framework/content/bbcode.php');
 
 $Template->Assign_vars(array(
 	'L_SUBMIT' => $LANG['submit'],

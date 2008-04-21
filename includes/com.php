@@ -177,7 +177,7 @@ if( $Comments->Com_loaded() )
 					'U_ACTION' => $Comments->Get_attribute('path') . sprintf($Comments->Get_attribute('vars'), $Comments->Get_attribute('idcom')) . '&amp;updatecom=1'
 				));
 				
-				include_once('../includes/bbcode.php');
+				include_once('../includes/framework/content/bbcode.php');
 			}
 			elseif( $updatecom ) //Mise à jour du commentaire.
 			{
@@ -477,7 +477,7 @@ if( $Comments->Com_loaded() )
 		}
 		$Sql->Close($result);
 		
-		include_once('../includes/bbcode.php');
+		include_once('../includes/framework/content/bbcode.php');
 	}  
 
 	//Com en popup

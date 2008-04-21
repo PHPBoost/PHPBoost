@@ -132,7 +132,7 @@ elseif( !empty($_POST['previs']) )
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_web_add'); 
 }
@@ -188,7 +188,7 @@ else
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_web_add'); 
 }

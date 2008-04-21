@@ -175,7 +175,7 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $Member->Get_attribute('
 	$Template->Assign_block_vars('post_convers.user_id_dest', array(
 	));
 	
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('pm');
 }
@@ -219,7 +219,7 @@ elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de
 	$Template->Assign_block_vars('post_convers.user_id_dest', array(
 	));
 	
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('pm');
 }
@@ -255,7 +255,7 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 		'U_PM_ACTION_POST' => transid('.php?id=' . $pm_id_get)
 	));
 	
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 
 	$Template->Pparse('pm');
 }	
@@ -503,7 +503,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 						'SUBMIT_NAME' => 'edit_pm',
 					));
 					
-				include_once('../includes/bbcode.php');
+				include_once('../includes/framework/content/bbcode.php');
 				
 				$Template->Pparse('pm');
 			}
@@ -745,7 +745,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		if( !empty($errstr) )
 			$Errorh->Error_handler($errstr, $type);
 		
-		include_once('../includes/bbcode.php');
+		include_once('../includes/framework/content/bbcode.php');
 	}
 	
 	$Template->Pparse('pm');

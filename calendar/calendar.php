@@ -378,7 +378,7 @@ elseif( !empty($id) )
 			if( !empty($errstr) )
 				$Errorh->Error_handler($errstr, E_USER_NOTICE);
 				
-			include_once('../includes/bbcode.php');
+			include_once('../includes/framework/content/bbcode.php');
 			
 			
 			$Template->Pparse('calendar');
@@ -482,7 +482,7 @@ elseif( !empty($add) ) //Ajout d'un évenement
 		if( !empty($errstr) )
 			$Errorh->Error_handler($errstr, E_USER_NOTICE);
 		
-		include_once('../includes/bbcode.php');
+		include_once('../includes/framework/content/bbcode.php');
 
 		$Template->Pparse('calendar');
 	}

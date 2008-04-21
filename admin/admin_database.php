@@ -54,7 +54,7 @@ $Template->Set_filenames(array(
 ));
 
 //outils de sauvegarde de la base de données
-include_once('../includes/backup.class.php');
+include_once('../includes/framework/backup.class.php');
 $Backup = new Backup($sql_base);
 
 $Template->Assign_vars(array(

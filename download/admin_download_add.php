@@ -166,7 +166,7 @@ elseif( !empty($_POST['preview']) )
 		'DATE' => gmdate_format('date_format_short')
 	));
 	
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 
 	$Template->Assign_vars(array(
 		'CATEGORIES_TREE' => $download_categories->Build_select_form($idcat, 'idcat', 'idcat'),
@@ -233,7 +233,7 @@ elseif( !empty($_POST['preview']) )
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'short_contents';
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	
 	$Template->Assign_vars(array(
 		'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE)
@@ -247,7 +247,7 @@ else
 		'admin_download_add'=> 'download/admin_download_add.tpl'
 	));
 
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	
 	$Template->Assign_vars(array(
 		'CATEGORIES_TREE' => $download_categories->Build_select_form(0, 'idcat', 'idcat'),
@@ -293,7 +293,7 @@ else
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'short_contents';
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	
 	$Template->Assign_vars(array(
 		'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE)

@@ -60,7 +60,7 @@ $Template->Set_filenames(array(
 		'wiki_config'=> 'wiki/admin_wiki.tpl'
 	 ));
 
-include_once('../includes/bbcode.php');
+include_once('../includes/framework/content/bbcode.php');
 
 $Template->Assign_vars(array(
 	'L_UPDATE' => $LANG['update'],

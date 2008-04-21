@@ -171,7 +171,7 @@ elseif( !empty($id) )
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_articles_management'); 
 }	
@@ -329,7 +329,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_RESET' => $LANG['reset']
 	));	
 	
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_articles_management'); 
 }

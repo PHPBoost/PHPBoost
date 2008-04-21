@@ -339,7 +339,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		));
 	}
 			
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 	
 	//Listes les utilisateurs en lignes.
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');

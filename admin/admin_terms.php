@@ -78,7 +78,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));		
 	
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_terms'); 
 }

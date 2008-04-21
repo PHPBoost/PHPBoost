@@ -278,7 +278,7 @@ else
 	$l_action_submit = $LANG['submit'];
 }
 
-include_once('../includes/bbcode.php');
+include_once('../includes/framework/content/bbcode.php');
 
 $Template->Assign_vars(array(
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], $article_infos['title'])) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], $article_infos['title'])),

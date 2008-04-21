@@ -88,7 +88,7 @@ else
 		'L_ROOT_DESCRIPTION' => $DOWNLOAD_LANG['root_description']
 	));
 	
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	
 	include_once('admin_download_menu.php');
 	

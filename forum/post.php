@@ -129,7 +129,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			'L_RESET' => $LANG['reset']
 		));		
 		
-		include_once('../includes/bbcode.php');
+		include_once('../includes/framework/content/bbcode.php');
 		
 		$Template->Pparse('edit_msg');
 	}
@@ -305,7 +305,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'L_MULTIPLE' => $LANG['multiple_answer']
 			));
 			
-			include_once('../includes/bbcode.php');
+			include_once('../includes/framework/content/bbcode.php');
 			
 			$Template->Pparse('forum_post');
 		}
@@ -376,7 +376,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'L_MULTIPLE' => $LANG['multiple_answer']
 			));
 			
-			include_once('../includes/bbcode.php');
+			include_once('../includes/framework/content/bbcode.php');
 			
 			$Template->Pparse('forum_post');
 		}
@@ -611,7 +611,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'L_DELETE_POLL' => $LANG['delete_poll']
 				));
 					
-				include_once('../includes/bbcode.php');
+				include_once('../includes/framework/content/bbcode.php');
 				
 				$Template->Pparse('forum_post');
 			}
@@ -741,7 +741,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					));
 				}	
 				
-				include_once('../includes/bbcode.php');
+				include_once('../includes/framework/content/bbcode.php');
 				
 				$Template->Pparse('forum_post');
 			}
@@ -812,7 +812,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'L_RESET' => $LANG['reset'],
 				));
 				
-				include_once('../includes/bbcode.php');
+				include_once('../includes/framework/content/bbcode.php');
 				
 				$Template->Pparse('edit_msg');
 			}
@@ -963,7 +963,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		else
 			$Errorh->Error_handler('unknow_error', E_USER_REDIRECT);
 			
-		include_once('../includes/bbcode.php');
+		include_once('../includes/framework/content/bbcode.php');
 		
 		$Template->Pparse('error_post');
 	}

@@ -72,7 +72,7 @@ if( !empty($alert) && empty($alert_post) )
 			'L_REQUIRE_TITLE' => $LANG['require_title']
 		));
 			
-		include_once('../includes/bbcode.php');	
+		include_once('../includes/framework/content/bbcode.php');	
 		
 		$Template->Assign_block_vars('alert_form', array(
 			'TITLE' => $topic_name,

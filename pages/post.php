@@ -310,7 +310,7 @@ $Template->Assign_vars(array(
 	'TARGET' => transid('post.php')
 ));
 
-include_once('../includes/bbcode.php');
+include_once('../includes/framework/content/bbcode.php');
 
 $Template->Pparse('post');
 
