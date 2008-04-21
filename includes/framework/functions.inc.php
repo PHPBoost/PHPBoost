@@ -74,8 +74,8 @@ function request_var($var_type, $var_name, $default_value, $force_type = NULL)
 	}
 	
 	return;
-}            
-            
+}
+
 //Passe à la moulinette les entrées (chaînes) utilisateurs.
 function securit($var, $html_protect = true)
 {
@@ -319,7 +319,7 @@ function display_com_link($nbr_com, $path, $idprov, $script, $options = 0)
 	$l_com = ($nbr_com > 1) ? $LANG['com_s'] : $LANG['com'];
 	$l_com = !empty($nbr_com) ? $l_com . ' (' . $nbr_com . ')' : $LANG['post_com'];
 	
-	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . transid('/includes/com.php?i=' . $idprov . $script) . "', '" . $script . "');";			
+	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . transid('/includes/com.php?i=' . $idprov . $script) . "', '" . $script . "');";	
 	$link_current = $path . '#' . $script;	
 	
 	$link .= '<a class="com" href="' . (($CONFIG['com_popup'] == '0') ? $link_current : $link_pop) . '">' . $l_com . '</a>';

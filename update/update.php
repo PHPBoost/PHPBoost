@@ -40,7 +40,7 @@ define('DEFAULT_THEME', 'main');
 
 if( !@include_once('../includes/framework/template.class.php') )
 	die('Votre dossier de mise à jour n\'est pas placé où il faut');
-include_once('../includes/function.php');
+include_once('../includes/framework/functions.inc.php');
 
 $step = !empty($_GET['step']) ? numeric($_GET['step']) : 1;
 $step = $step > 14 ? 1 : $step;
@@ -54,7 +54,7 @@ $Template = new Templates; //!\\Initialisation des templates//!\\
 
 if( $step >= 2 )
 {
-	require_once('../includes/function.php'); //Fonctions de base.
+	require_once('../includes/framework/functions.inc.php'); //Fonctions de base.
 	require_once('../includes/constant.php'); //Constante utiles.
 	require_once('../includes/framework/content/mathpublisher.php'); //Gestion des formules mathématiques.
 	require_once('../includes/framework/errors.class.php');
