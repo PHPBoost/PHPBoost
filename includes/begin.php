@@ -38,14 +38,14 @@ $Bench->Start_bench('site');
 require_once('../includes/function.php'); //Fonctions de base.
 require_once('../includes/constant.php'); //Constante utiles.
 require_once('../includes/mathpublisher.php'); //Gestion des formules mathématiques.
-require_once('../includes/errors.class.php');
-require_once('../includes/template.class.php');
-require_once('../includes/db/' . DBTYPE . '.class.php');
+require_once('../includes/framework/errors.class.php');
+require_once('../includes/framework/template.class.php');
+require_once('../includes/framework/db/' . DBTYPE . '.class.php');
 require_once('../includes/framework/cache.class.php');
-require_once('../includes/sessions.class.php');
-require_once('../includes/member.class.php');
-require_once('../includes/groups.class.php');
-require_once('../includes/speed_bar.class.php');
+require_once('../includes/framework/members/sessions.class.php');
+require_once('../includes/framework/members/member.class.php');
+require_once('../includes/framework/members/groups.class.php');
+require_once('../includes/framework/breadcrumb.class.php');
 
 //Instanciation des objets indispensables au noyau.
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
