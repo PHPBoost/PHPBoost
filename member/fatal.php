@@ -13,7 +13,7 @@
 ***************************************************************************/
 
 ob_start();
-require_once('../includes/function.php'); //Fonctions de base.
+require_once('../includes/framework/functions.inc.php'); //Fonctions de base.
 require_once('../includes/constant.php'); //Constante utiles.
 require_once('../includes/framework/errors.class.php');
 require_once('../includes/framework/template.class.php');

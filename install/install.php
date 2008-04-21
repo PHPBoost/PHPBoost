@@ -43,7 +43,7 @@ define('DEFAULT_THEME', 'main');
 
 if( !@include_once('../includes/framework/template.class.php') )
 	die('Votre dossier d\'installation n\'est pas placé où il faut');
-include_once('../includes/function.php');
+include_once('../includes/framework/functions.inc.php');
 
 $step = !empty($_GET['step']) ? numeric($_GET['step']) : 1;
 $step = $step > 9 ? 1 : $step;

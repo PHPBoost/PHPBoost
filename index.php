@@ -27,7 +27,7 @@
 
 require_once('./includes/auth/config.php'); //Fichier de configuration.
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
-require_once('./includes/function.php');
+require_once('./includes/framework/functions.inc.php');
 
 $CONFIG = array();
 @include_once('./cache/config.php');
