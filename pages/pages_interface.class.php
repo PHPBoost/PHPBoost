@@ -26,7 +26,7 @@
 ###################################################*/
  
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once('../includes/module_interface.class.php');
+require_once('../includes/framework/modules/module_interface.class.php');
 define('PAGES_MAX_SEARCH_RESULTS', 100);
 
 // Classe WikiInterface qui hérite de la classe ModuleInterface
