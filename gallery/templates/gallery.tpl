@@ -82,9 +82,9 @@
 				{	
 					var img_aprob;
 					if( xhr_object.responseText == 0 )
-						img_aprob = 'unaprob.png';
+						img_aprob = 'unvisible.png';
 					else
-						img_aprob = 'aprob.png';
+						img_aprob = 'visible.png';
 					
 					document.getElementById('img' + id_file).innerHTML = '';
 					if( document.getElementById('img_aprob' + id_file) )

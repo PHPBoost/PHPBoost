@@ -28,7 +28,7 @@ global $Cache;
 $Cache->Load_file('faq');
 include_once('../includes/cats_management.class.php');
 
-define('NOT_GENERATE_CACHE', true);
+define('DO_NOT_GENERATE_CACHE', false);
 
 class FaqCats extends Categories_management
 {
@@ -137,13 +137,21 @@ class FaqCats extends Categories_management
 		return $result;
 	}
 	
+	//function which changes the visibility of one category
+	function Change_category_visibility($category_id, $visibility, $generate_cache = DO_NOT_LOAD_CACHE)
+	{
+		$result = parent::Change_category_visibility($category_id, $visibility, DO_NOT_LOAD_CACHE);
+		$this->Recount_subquestions($generate_cache);
+		return $result;
+	}
+	
 	//Function which recounts the number of subquestions of each category (it should be unuseful but if they are errors it will correct them)
-	function Recount_subquestions($no_cache_generation = false)
+	function Recount_subquestions($generate_cache = true)
 	{
 		global $Cache, $FAQ_CATS;
 		$this->recount_cat_subquestions($FAQ_CATS, 0);
 
-		if( !$no_cache_generation )
+		if( $generate_cache )
 			$Cache->Generate_module_file('faq');
 		return;
 	}
