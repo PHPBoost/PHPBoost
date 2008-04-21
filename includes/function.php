@@ -284,7 +284,7 @@ function check_nbr_links($contents, $max_nbr)
 //Charge le parseur.
 function parse($content, $forbidden_tags = array(), $html_protect = true)
 {
-    include_once('../includes/content.class.php');
+    include_once('../includes/framework/content/content.class.php');
     $parse = new Content($content);
     $parse->Parse_content($forbidden_tags, $html_protect);
     
@@ -294,7 +294,7 @@ function parse($content, $forbidden_tags = array(), $html_protect = true)
 //Charge l'unparseur.
 function unparse($content)
 {
-    include_once('../includes/content.class.php');
+    include_once('../includes/framework/content/content.class.php');
     $parse = new Content($content);
     $parse->Unparse_content();
     
@@ -304,7 +304,7 @@ function unparse($content)
 //Parse temps réel
 function second_parse($content)
 {
-    include_once('../includes/content.class.php');
+    include_once('../includes/framework/content/content.class.php');
     $parse = new Content($content);
     $parse->Second_parse();
     
