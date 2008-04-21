@@ -213,7 +213,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		));		
 
 		$_field = 'action_contents';
-		include_once('../includes/bbcode.php');		
+		include_once('../includes/framework/content/bbcode.php');		
 	}	
 }
 elseif( $action == 'warning' ) //Gestion des utilisateurs
@@ -349,7 +349,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		));			
 
 		$_field = 'action_contents';
-		include_once('../includes/bbcode.php');
+		include_once('../includes/framework/content/bbcode.php');
 	}	
 }
 elseif( $action == 'ban' ) //Gestion des utilisateurs
@@ -480,7 +480,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 			));
 		}	
 		$_field = 'action_contents';
-		include_once('../includes/bbcode.php');
+		include_once('../includes/framework/content/bbcode.php');
 	}
 }
 

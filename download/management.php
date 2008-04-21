@@ -100,7 +100,7 @@ if( $edit_file_id > 0 )
 		));
 	}
 	
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 
 	$Template->Assign_vars(array(
 		'TITLE' => $preview ? $file_title : $file_infos['title'],
@@ -184,7 +184,7 @@ if( $edit_file_id > 0 )
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'short_contents';
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	
 	$Template->Assign_vars(array(
 		'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE)

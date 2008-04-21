@@ -218,7 +218,7 @@ elseif( !empty($_POST['previs']) )
 		'L_RESET' => $LANG['reset']
 	));	
 	
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	$Template->Pparse('admin_news_add');    
 
 	$Template->Unassign_block_vars('tinymce_mode');
@@ -227,7 +227,7 @@ elseif( !empty($_POST['previs']) )
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'extend_contents';
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_news_add_bis'); 
 }
@@ -295,7 +295,7 @@ else
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	$Template->Pparse('admin_news_add');    
 
 	$Template->Unassign_block_vars('tinymce_mode');
@@ -304,7 +304,7 @@ else
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'extend_contents';
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_news_add_bis'); 
 }

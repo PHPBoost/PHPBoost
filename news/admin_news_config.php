@@ -120,7 +120,7 @@ else
 		'L_DISPLAY_NEWS_DATE' => $LANG['display_news_date']
 	));
 
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_news_config'); // traitement du modele	
 }

@@ -128,7 +128,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 			));
 			
 			$_field = 'shout_contents';
-			include_once('../includes/bbcode.php');
+			include_once('../includes/framework/content/bbcode.php');
 			
 			$Template->Pparse('shoutbox'); 
 		}
@@ -374,7 +374,7 @@ else //Affichage.
 	$Sql->Close($result);
 	
 	$_field = 'shout_contents';
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('shoutbox'); 
 }

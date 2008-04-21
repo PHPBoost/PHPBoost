@@ -126,7 +126,7 @@ elseif( !empty($_POST['previs']) ) //Prévisualisation.
 	));	
 	
 	$_field = 'guestbook_contents';
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('guestbook'); 
 }
@@ -185,7 +185,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 			));
 			
 			$_field = 'guestbook_contents';
-			include_once('../includes/bbcode.php');
+			include_once('../includes/framework/content/bbcode.php');
 			
 			$Template->Pparse('guestbook'); 
 		}
@@ -426,7 +426,7 @@ else //Affichage.
 	$Sql->Close($result);
 		
 	$_field = 'guestbook_contents';
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 		
 	$Template->Pparse('guestbook'); 
 }

@@ -229,7 +229,7 @@ elseif( !empty($id) ) //Vue de la news
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 	
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	$Template->Pparse('admin_news_management');    
 
 	$Template->Unassign_block_vars('tinymce_mode');
@@ -238,7 +238,7 @@ elseif( !empty($id) ) //Vue de la news
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'extend_contents';
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_news_management_bis'); 
 }
@@ -372,7 +372,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 		'L_RESET' => $LANG['reset']
 	));	
 	
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	$Template->Pparse('admin_news_management');    
 
 	$Template->Unassign_block_vars('tinymce_mode');
@@ -381,7 +381,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'extend_contents';
-	include('../includes/bbcode.php');
+	include('../includes/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_news_management_bis'); 
 }

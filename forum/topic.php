@@ -506,7 +506,7 @@ else
 	}
 }
 	
-include('../includes/bbcode.php');
+include('../includes/framework/content/bbcode.php');
 $Template->Pparse('forum_topic');
 
 include('../includes/footer.php');

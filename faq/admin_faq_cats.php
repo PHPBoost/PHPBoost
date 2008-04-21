@@ -158,7 +158,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		));
 	}
 	
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 }
 else
 {

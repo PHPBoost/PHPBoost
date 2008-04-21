@@ -425,7 +425,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 		));		
 
 		$_field = 'action_contents';
-		include_once('../includes/bbcode.php');
+		include_once('../includes/framework/content/bbcode.php');
 				
 	}	
 }
@@ -572,7 +572,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		));			
 
 		$_field = 'action_contents';
-		include_once('../includes/bbcode.php');
+		include_once('../includes/framework/content/bbcode.php');
 	}	
 }
 elseif( !empty($_GET['del_h']) && $Member->Check_level(ADMIN_LEVEL) ) //Suppression de l'historique.

@@ -109,7 +109,7 @@ if( $edit_question > 0 )
 		'L_REQUIRE_ENTITLED' => $FAQ_LANG['require_entitled'],
 		'L_REQUIRE_ANSWER' => $FAQ_LANG['require_answer']
 	));
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 }
 elseif( $cat_of_new_question >= 0 && $new )
 {
@@ -127,7 +127,7 @@ elseif( $cat_of_new_question >= 0 && $new )
 		'L_REQUIRE_ENTITLED' => $FAQ_LANG['require_entitled'],
 		'L_REQUIRE_ANSWER' => $FAQ_LANG['require_answer']
 	));
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 }
 elseif( $id_move > 0 )
 {
@@ -253,7 +253,7 @@ else
 				$Template->Assign_block_vars('category.questions.down', array());
 		}
 	}
-	include_once('../includes/bbcode.php');
+	include_once('../includes/framework/content/bbcode.php');
 }
 
 $Template->Assign_vars(array(
