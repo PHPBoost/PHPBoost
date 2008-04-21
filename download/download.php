@@ -75,14 +75,14 @@ if( $file_id > 0 ) //Contenu
 	));
 	
 	//Affichage notation.
-	include_once('../includes/note.class.php'); 
+	include_once('../includes/framework/note.class.php'); 
 	$Note = new Note('download', $file_id, transid('download.php?cat=' . $category_id . '&amp;id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
-	include_once('../includes/note.php');
+	include_once('../includes/framework/note.php');
 	
 	//Affichage commentaires.
 	if( isset($_GET['i']) )
 	{
-		include_once('../includes/com.class.php'); 
+		include_once('../includes/framework/content/comments.class.php'); 
 		$Comments = new Comments('download', $file_id, transid('download.php?cat=' . $category_id . '&amp;id=' . $file_id . '&amp;i=%s', 'category-' . $category_id . '-' . $file_id . '.php?i=%s'));
 		include_once('../includes/com.php');
 	}
@@ -201,11 +201,11 @@ else
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 			
 		//On crée une pagination si le nombre de fichiers est trop important.
-		include_once('../includes/pagination.class.php'); 
+		include_once('../includes/framework/pagination.class.php'); 
 		$Pagination = new Pagination();
 		
 		//Notes
-		include_once('../includes/note.class.php');
+		include_once('../includes/framework/note.class.php');
 		$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
 			
 		$Template->Assign_vars(array(

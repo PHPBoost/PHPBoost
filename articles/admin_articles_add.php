@@ -96,7 +96,7 @@ if( !empty($_POST['valid']) )
 		$clause_update = ($visible == 1) ? 'nbr_articles_visible = nbr_articles_visible + 1' : 'nbr_articles_unvisible = nbr_articles_unvisible + 1';
 		$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 		
-		include_once('../includes/rss.class.php'); //Flux rss regénéré!
+		include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('articles/rss.php');
 		$Rss->Cache_path('../cache/');
 		$Rss->Generate_file('javascript', 'rss_articles');

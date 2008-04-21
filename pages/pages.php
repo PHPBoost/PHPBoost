@@ -199,7 +199,7 @@ elseif( $id_com > 0 )
 	
 	$Template->Set_filenames(array('com'=> 'pages/com.tpl'));
 	
-	include_once('../includes/com.class.php'); 
+	include_once('../includes/framework/content/comments.class.php'); 
 	$Comments = new Comments('pages', $id_com, transid('pages.php?id=' . $id_com . '&amp;i=%s', ''));
 	include_once('../includes/com.php');
 

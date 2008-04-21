@@ -56,7 +56,7 @@ if( !empty($_POST['mail_valid']) )
 	
 	if( $check_verif_code || !$CONFIG_CONTACT['contact_verifcode'] ) //Code de vérification si activé
 	{
-		include_once('../includes/mail.class.php');
+		include_once('../includes/framework/mail.class.php');
 		$Mail = new Mail();
 
 		if( $Mail->Send_mail($CONFIG['mail'], $mail_objet, $mail_contents, $mail_from, '', 'user') ) //Succès mail

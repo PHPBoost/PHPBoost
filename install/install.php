@@ -41,7 +41,7 @@ define('PHPBOOST', true);
 //Thème par défaut.
 define('DEFAULT_THEME', 'main');
 
-if( !@include_once('../includes/template.class.php') )
+if( !@include_once('../includes/framework/template.class.php') )
 	die('Votre dossier d\'installation n\'est pas placé où il faut');
 include_once('../includes/function.php');
 
@@ -210,10 +210,10 @@ elseif( $step == 4 )
 			}
 			
 			//Tentative de connexion
-			if( !@include_once('../includes/db/' . $dbms . '.class.php') )
+			if( !@include_once('../includes/framework/db/' . $dbms . '.class.php') )
 				return '<div class="error">' . $LANG['db_error_dbms'] . '</div>';
 				
-			require_once('../includes/errors.class.php');
+			require_once('../includes/framework/errors.class.php');
 			$Errorh = new Errors;
 			$Sql = new Sql(false);
 
@@ -233,7 +233,7 @@ elseif( $step == 4 )
 
 		if( empty($error) )
 		{
-			require_once('../includes/errors.class.php');
+			require_once('../includes/framework/errors.class.php');
 			$Errorh = new Errors;
 			$Sql = new Sql(false);
             //Connexion
@@ -269,10 +269,10 @@ else
                 @fputs($file, '<?php
 if( !defined(\'DBSECURE\') )
 {
-    $sql_host = "../includes/db/' . $host . '.sqlite"; //Adresse serveur mysql.
+    $sql_host = "../includes/framework/db/' . $host . '.sqlite"; //Adresse serveur mysql.
     $sql_login = "' . $login . '"; //Login
     $sql_pass = "' . $password . '"; //Mot de passe
-    $sql_base = "../includes/db/' . $database . '.sqlite"; //Nom de la base de données (url du fichier SQLite).
+    $sql_base = "../includes/framework/db/' . $database . '.sqlite"; //Nom de la base de données (url du fichier SQLite).
     $table_prefix = "' . $tableprefix . '"; //Préfixe des tables
     $dbtype = "' . $dbms .'"; //Système de gestion de base de données
     define(\'DBSECURE\', true);
@@ -404,11 +404,11 @@ elseif( $step == 5 )
         $CONFIG['search_max_use'] = '200';
 		
 		$config_string = serialize($CONFIG);
-		require_once('../includes/errors.class.php');
+		require_once('../includes/framework/errors.class.php');
 		$Errorh = new Errors;
 		include_once('../includes/auth/config.php');
 		define('PREFIX', $table_prefix);
-		include_once('../includes/db/' . $dbtype . '.class.php');
+		include_once('../includes/framework/db/' . $dbtype . '.class.php');
 		$Sql = new Sql;
 		//On insère dans la base de données
         
@@ -425,7 +425,7 @@ elseif( $step == 5 )
 			$Sql->Query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . securit($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
 		
 		//On génère le cache
-		include('../includes/cache.class.php');
+		include('../includes/framework/cache.class.php');
 		$Cache = new Cache;
 		$Cache->Generate_all_files();
 		redirect(HOST . FILE . add_lang('?step=6', true));
@@ -562,14 +562,14 @@ elseif( $step == 6 )
 		//Si il n'y a pas d'erreur on enregistre dans la table
 		if( empty($error) )
 		{
-			require_once('../includes/errors.class.php');
+			require_once('../includes/framework/errors.class.php');
 			$Errorh = new Errors;
 			require_once('../includes/auth/config.php');
 			define('PREFIX', $table_prefix);
-			include_once('../includes/db/' . $dbtype . '.class.php');
+			include_once('../includes/framework/db/' . $dbtype . '.class.php');
 			$Sql = new Sql;
 			//On crée le code de déverrouillage
-			include_once('../includes/cache.class.php');
+			include_once('../includes/framework/cache.class.php');
 			$Cache = new Cache;
 			$Cache->Load_file('config');
 			
@@ -583,7 +583,7 @@ elseif( $step == 6 )
 			$Cache->Generate_file('config');
 			//On envoie un mail à l'administrateur
 			$LANG['admin'] = '';
-			include_once('../includes/mail.class.php');
+			include_once('../includes/framework/mail.class.php');
 			$Mail = new Mail();
 			$Mail->Send_mail($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail']);
 			
@@ -591,7 +591,7 @@ elseif( $step == 6 )
 			if( $create_session )
 			{
 				include('../includes/constant.php');
-				include('../includes/sessions.class.php');
+				include('../includes/framework/members/sessions.class.php');
 				$Session = new Sessions;
 				$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
 				$Session->Session_begin(1, md5($password), 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); //On lance la session.
@@ -700,15 +700,15 @@ elseif( $step == 7 )
 		$index_module_url = '';
 		$activ_member = !empty($_POST['activ_member']) ? true : false;
 		
-		require_once('../includes/errors.class.php');
+		require_once('../includes/framework/errors.class.php');
 		$Errorh = new Errors;
 		include_once('../includes/auth/config.php');
 		define('PREFIX', $table_prefix);
 		define('DBTYPE', $dbtype);
-		include_once('../includes/db/' . $dbtype . '.class.php');
+		include_once('../includes/framework/db/' . $dbtype . '.class.php');
 		$Sql = new Sql;
 		//On génère le cache
-		include('../includes/cache.class.php');
+		include('../includes/framework/cache.class.php');
 		$Cache = new Cache;
 		
 		$link_installed = false; //Module de lien installé?
@@ -984,15 +984,15 @@ elseif( $step == 8 )
 }
 elseif( $step == 9 )
 {
-	require_once('../includes/errors.class.php');
+	require_once('../includes/framework/errors.class.php');
 	$Errorh = new Errors;
 	include_once('../includes/auth/config.php');
 	define('PREFIX', $table_prefix);
 	define('DBTYPE', $dbtype);
-	include_once('../includes/db/' . $dbtype . '.class.php');
+	include_once('../includes/framework/db/' . $dbtype . '.class.php');
 	$Sql = new Sql;
 	//On génère le cache
-	include('../includes/cache.class.php');
+	include('../includes/framework/cache.class.php');
 	$Cache = new Cache;
 	$Cache->Load_file('config');
 	

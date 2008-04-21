@@ -257,7 +257,7 @@ else //Affichage.
 	
 	$nbr_guestbook = $Sql->Count_table('guestbook', __LINE__, __FILE__);
 	//On crée une pagination si le nombre de msg est trop important.
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
 	$forbidden_tags = implode(', ', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);

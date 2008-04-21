@@ -243,7 +243,7 @@ else
 	 
 	$nbr_poll = $Sql->Count_table('poll', __LINE__, __FILE__);
 
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$Template->Assign_vars(array(

@@ -26,7 +26,7 @@
 ###################################################*/
 
 $Cache->Load_file('download');
-include_once('../includes/cats_management.class.php');
+include_once('../includes/framework/categories.class.php');
 
 define('NOT_GENERATE_CACHE', true);
 

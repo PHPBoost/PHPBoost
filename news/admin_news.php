@@ -92,7 +92,7 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . parse($contents) . "', extend_contents = '" . parse($extend_contents) . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
 		WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 
-		include_once('../includes/rss.class.php'); //Flux rss regénéré!
+		include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('news/rss.php');
 		$Rss->Cache_path('../cache/');
 		$Rss->Generate_file('javascript', 'rss_news');
@@ -119,7 +119,7 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 	//On supprimes les éventuels commentaires associés.
 	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'news'", __LINE__, __FILE__);
 
-	include_once('../includes/rss.class.php'); //Flux rss regénéré!
+	include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
 	$Rss = new Rss('news/rss.php');
 	$Rss->Cache_path('../cache/');
 	$Rss->Generate_file('javascript', 'rss_news');
@@ -393,7 +393,7 @@ else
 	
 	$nbr_news = $Sql->Count_table('news', __LINE__, __FILE__);
 	//On crée une pagination si le nombre de news est trop important.
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$Template->Assign_vars(array(

@@ -272,7 +272,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 	//Affichage commentaires.
 	if( isset($_GET['i']) )
 	{
-		include_once('../includes/com.class.php'); 
+		include_once('../includes/framework/content/comments.class.php'); 
 		$Comments = new Comments('calendar', $get_event, transid('calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;i=%s', 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?i=%s'));
 		include_once('../includes/com.php');
 	}	

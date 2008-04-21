@@ -16,9 +16,9 @@
 		{ALTERNATIVE_CSS}
 		<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
 		<link rel="alternate" type="application/rss+xml" href="../news/rss.php" title="RSS {SITE_NAME}" />
-		<script type="text/javascript" src="../includes/js/scriptaculous/prototype.js"></script>
-		<script type="text/javascript" src="../includes/js/scriptaculous/scriptaculous.js"></script>
-		<script type="text/javascript" src="../includes/js/global.js"></script>
+		<script type="text/javascript" src="../includes/framework/js/scriptaculous/prototype.js"></script>
+		<script type="text/javascript" src="../includes/framework/js/scriptaculous/scriptaculous.js"></script>
+		<script type="text/javascript" src="../includes/framework/js/global.js"></script>
 	</head>
 	<body>
 

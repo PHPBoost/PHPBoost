@@ -88,7 +88,7 @@ if( $members )
 		$stats_array[$name] = $row['compt'];
 	}	
 	$Sql->Close($result);
-	include_once('../includes/stats.class.php');
+	include_once('../includes/framework/stats.class.php');
 	$Stats = new Stats();
 		
 	$Stats->Load_statsdata($stats_array, 'ellipse');
@@ -919,7 +919,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 }
 elseif( $referer )
 {
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$nbr_referer = $Sql->Query("SELECT COUNT(DISTINCT(url)) FROM ".PREFIX."stats_referer WHERE type = 0", __LINE__, __FILE__);
@@ -976,7 +976,7 @@ elseif( $referer )
 }
 elseif( $keyword )
 {
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$nbr_keyword = $Sql->Query("SELECT COUNT(DISTINCT(relative_url)) FROM ".PREFIX."stats_referer WHERE type = 1", __LINE__, __FILE__);
@@ -1075,7 +1075,7 @@ elseif( $browser || $os || $user_lang ) //Graphiques camenbert.
 	$stats_array = @fgets($file);
 	$stats_array = !empty($stats_array) ? unserialize($stats_array) : array();
 	@fclose($file);
-	include_once('../includes/stats.class.php');
+	include_once('../includes/framework/stats.class.php');
 	$Stats = new Stats();
 		
 	$Stats->Load_statsdata($stats_array, 'ellipse', 5);

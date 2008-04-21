@@ -14,7 +14,7 @@ $open_cat = !empty($_POST['open_cat']) ? numeric($_POST['open_cat']) : 0;
 $root = !empty($_GET['root']) ? 1 : 0;
 
 //Chargement d'un fichier template pour connaître l'emplacement du template
-include_once('../includes/template.class.php');
+include_once('../includes/framework/template.class.php');
 $Template = new Templates();
 $Template->Set_filenames(array('pages'=> 'pages/pages.tpl'));
 

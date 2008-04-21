@@ -123,7 +123,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 		
 		$nbr_member_group = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
 		//On crée une pagination si le nombre de membre est trop important.
-		include_once('../includes/pagination.class.php'); 
+		include_once('../includes/framework/pagination.class.php'); 
 		$Pagination = new Pagination();
 		
 		//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
@@ -274,7 +274,7 @@ else //Liste des groupes.
 	 
 	$nbr_group = $Sql->Count_table("group", __LINE__, __FILE__);
 	//On crée une pagination si le nombre de group est trop important.
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$Template->Assign_vars(array(

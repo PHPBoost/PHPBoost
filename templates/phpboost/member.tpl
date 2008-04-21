@@ -46,7 +46,7 @@
 		<br />		
 		# ENDIF #
 		
-		<script type="text/javascript" src="../includes/js/calendar.js"></script>
+		<script type="text/javascript" src="../includes/framework/js/calendar.js"></script>
 		<form action="member{U_MEMBER_ACTION_UPDATE}" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_PROFIL_EDIT}</legend>
