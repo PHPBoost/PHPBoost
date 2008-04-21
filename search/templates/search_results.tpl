@@ -9,7 +9,7 @@
             const NB_RESULTS_PER_PAGE = {NB_RESULTS_PER_PAGE};
             
             var nbResults = new Array();
-            nbResults['all'] = {NB_RESULTS};
+            nbResults['{SEARCH_IN}'] = {NB_RESULTS};
             
             # IF C_SIMPLE_SEARCH #
                 var modulesResults = new Array('all');
@@ -118,18 +118,18 @@
                 # ENDIF #
 		    </div>
 		    <div class="module_contents">
-                <div id="results_all" class="results">
-                    <span id="results_title_all" class="title">{L_TITLE_ALL_RESULTS}</span><br />
-                    <div id="infos_results_all" class="infosResults">
+                <div id="results_{SEARCH_IN}" class="results">
+                    <span id="results_title_{SEARCH_IN}" class="title">{L_TITLE_ALL_RESULTS}</span><br />
+                    <div id="infos_results_{SEARCH_IN}" class="infosResults">
                         # IF NB_RESULTS #
                             {NB_RESULTS} 
                         # ENDIF #
                         {L_NB_RESULTS_FOUND}
                     </div>
-                    <div id="results_list_all" class="ResultsList">
+                    <div id="results_list_{SEARCH_IN}" class="ResultsList">
                         {ALL_RESULTS}
                     </div>
-                    <div id="pagination_results_all" class="PaginationResults">{PAGINATION}</div>
+                    <div id="pagination_results_{SEARCH_IN}" class="PaginationResults">{PAGINATION}</div>
                 </div>
                 # IF C_SIMPLE_SEARCH #
                     # START results #
@@ -158,8 +158,8 @@
 		</div>
 		<script type="text/javascript">
 		<!--
-            ChangePagination(0, Math.ceil(nbResults['all'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + 'all', 'results_all');
-            show_div(RESULTS + 'all_0');
+            ChangePagination(0, Math.ceil(nbResults['{SEARCH_IN}'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + '{SEARCH_IN}', 'results_{SEARCH_IN}');
+            show_div(RESULTS + '{SEARCH_IN}_0');
 
 		    if( browserAJAXFriendly() )
                 show_div('results_choices');

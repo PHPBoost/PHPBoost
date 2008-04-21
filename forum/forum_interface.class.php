@@ -232,50 +232,69 @@ class ForumInterface extends ModuleInterface
             'L_TOPIC' => $LANG['topic']
         ));
 
-        $ids = array();
-        $results =& $args['results'];
-        $newResults = array();
-        $nbResults = count($results);
-        for ( $i = 0; $i < $nbResults; $i++ )
-            $newResults[$results[$i]['id_content']] =& $results[$i];
         
-        $results =& $newResults;
-        
-        $request = "
-        SELECT
-            msg.id AS msg_id,
-            msg.user_id AS user_id,
-            msg.idtopic AS topic_id,
-            msg.timestamp AS date,
-            t.title AS title,
-            m.login AS login,
-            s.user_id AS connect,
-            msg.contents AS contents
-        FROM ".PREFIX."forum_msg msg
-        LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
-        LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
-        JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-        WHERE msg.id IN (".implode(',', array_keys($results)).")
-        GROUP BY t.id";
-        
-        $requestResults = $Sql->Query_while($request, __LINE__, __FILE__);
-        while( $row = $Sql->Sql_fetch_assoc($requestResults) )
-            $results[$row['msg_id']] = $row;
-        $Sql->Close($requestResults);
-        
-        foreach ( $results as $result )
+        if ( $this->GetAttribute('ResultsReqExecuted') === false  || $this->GotError(MODULE_ATTRIBUTE_DOES_NOT_EXIST) )
         {
-            $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($row['title']) : '';
-            $Template->Assign_block_vars('forum_results', array(
-                'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($result['connect']) && $result['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
-                'U_USER_PROFILE' => !empty($result['user_id']) ? '../member/member'.transid('.php?id='.$result['user_id'],'-'.$result['user_id'].'.php') : '',
-                'USER_PSEUDO' => !empty($result['login']) ? wordwrap_html($result['login'], 13) : $LANG['guest'],
-                'U_TOPIC' => '../forum/topic' . transid('.php?id=' . $result['topic_id'], '-' . $result['topic_id'] . $rewrited_title . '.php') . '#m' . $result['msg_id'],
-                'TITLE' => ucfirst($result['title']),
-                'DATE' => gmdate_format('d/m/y', $result['date']),
-                'CONTENTS' => $result['contents']
-            ));
+            $ids = array();
+            $results =& $args['results'];
+            $newResults = array();
+            $nbResults = count($results);
+            for ( $i = 0; $i < $nbResults; $i++ )
+                $newResults[$results[$i]['id_content']] =& $results[$i];
+            
+            $results =& $newResults;
+            
+            $request = "
+            SELECT
+                msg.id AS msg_id,
+                msg.user_id AS user_id,
+                msg.idtopic AS topic_id,
+                msg.timestamp AS date,
+                t.title AS title,
+                m.login AS login,
+                s.user_id AS connect,
+                msg.contents AS contents
+            FROM ".PREFIX."forum_msg msg
+            LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+            LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
+            JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
+            WHERE msg.id IN (".implode(',', array_keys($results)).")
+            GROUP BY t.id";
+            
+            $requestResults = $Sql->Query_while($request, __LINE__, __FILE__);
+            while( $row = $Sql->Sql_fetch_assoc($requestResults) )
+            {
+                $results[$row['msg_id']] = $row;
+            }
+            $Sql->Close($requestResults);
+
+            $this->SetAttribute('ResultsReqExecuted', true);
+            $this->SetAttribute('Results', $results);
+            $this->SetAttribute('ResultsIndex', 0);
         }
+
+        $results =& $this->GetAttribute('Results');
+        $indexes = array_keys($results);
+        $indexSize = count($indexes);
+        $resultsIndex = $this->GetAttribute('ResultsIndex');
+        $resultsIndex = $resultsIndex < $indexSize ? $resultsIndex : ($indexSize > 0 ? $indexSize - 1 : 0);
+        $result =& $results[$indexes[$resultsIndex]];
+
+//         echo '<pre>';print_r($result);echo '</pre>';
+
+        $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($row['title']) : '';
+        $Template->Assign_vars(array(
+            'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($result['connect']) && $result['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
+            'U_USER_PROFILE' => !empty($result['user_id']) ? '../member/member'.transid('.php?id='.$result['user_id'],'-'.$result['user_id'].'.php') : '',
+            'USER_PSEUDO' => !empty($result['login']) ? wordwrap_html($result['login'], 13) : $LANG['guest'],
+            'U_TOPIC' => '../forum/topic' . transid('.php?id=' . $result['topic_id'], '-' . $result['topic_id'] . $rewrited_title . '.php') . '#m' . $result['msg_id'],
+            'TITLE' => ucfirst($result['title']),
+            'DATE' => gmdate_format('d/m/y', $result['date']),
+            'CONTENTS' => $result['contents']
+        ));
+
+        
+        $this->SetAttribute('ResultsIndex', ++$resultsIndex);
         
         return $Template->Pparse('forum_generic_results', TEMPLATE_STRING_MODE);
 

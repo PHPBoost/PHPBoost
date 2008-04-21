@@ -88,48 +88,55 @@ function Get_HTML_Results(&$results, &$htmlResults, &$Modules, &$resultsName)
  *  Renvoie une chaine contenant les resultats
  */
 {
+    global $Template, $CONFIG;
+
     $module = $Modules->GetModule(strtolower($resultsName));
-    if ( ($resultsName == 'all') || (!$module->HasFunctionnality('ParseSearchResults')) )
+    
+    $Template->Set_filenames(array(
+        'search_generic_pagination_results' => 'search/search_generic_pagination_results.tpl',
+        'search_generic_results' => 'search/search_generic_results.tpl'
+    ));
+
+    $Template->Assign_vars(Array(
+        'RESULTS_NAME' => $resultsName,
+        'C_ALL_RESULTS' => ($resultsName == 'all' ? true : false)
+    ));
+
+    $nbPages = round(count($results) / NB_RESULTS_PER_PAGE) + 1;
+    $nbResults = count($results);
+    for ( $numPage = 0; $numPage < $nbPages; $numPage++ )
     {
-        global $Template, $CONFIG;
-
-        $Template->Set_filenames(array(
-            'search_generic_results' => 'search/search_generic_results.tpl',
-        ));
-        
-        $Template->Assign_vars(Array(
-            'RESULTS_NAME' => $resultsName,
-            'C_ALL_RESULTS' => ($resultsName == 'all' ? true : false)
+        $Template->Assign_block_vars('page', array(
+            'NUM_PAGE' => $numPage,
+            'BLOCK_DISPLAY' => ($numPage == 0 ? 'block' : 'none')
         ));
 
-        $nbPages = round(count($results) / NB_RESULTS_PER_PAGE) + 1;
-        $nbResults = count($results);
-        for ( $numPage = 0; $numPage < $nbPages; $numPage++ )
+        $j = $numPage * NB_RESULTS_PER_PAGE;
+        for ( $i = 0 ; $i < NB_RESULTS_PER_PAGE; $i++ )
         {
-            $Template->Assign_block_vars('page', array(
-                'NUM_PAGE' => $numPage,
-                'BLOCK_DISPLAY' => ($numPage == 0 ? 'block' : 'none')
-            ));
+            if ( ($j) >= $nbResults )
+                break;
 
-            $j = $numPage * NB_RESULTS_PER_PAGE;
-            for ( $i = 0 ; $i < NB_RESULTS_PER_PAGE; $i++ )
+            if ( ($resultsName == 'all') || (!$module->HasFunctionnality('ParseSearchResults')) )
             {
-                if ( ($j) >= $nbResults )
-                    break;
-                
                 $module = $Modules->GetModule($results[$j]['module']);
-                $Template->Assign_block_vars('page.results', array(
+                $Template->Assign_vars(array(
                     'L_MODULE_NAME' => ucfirst($module->GetName()),
                     'TITLE' => $results[$j]['title'],
                     'U_LINK' => transid($results[$j]['link'])
                 ));
-                
-                $j++;
+                $tempRes = $Template->Pparse('search_generic_results', TEMPLATE_STRING_MODE);
             }
+            else $tempRes = $module->Functionnality('ParseSearchResults', array('results' => $results));
+            
+            $Template->Assign_block_vars('page.results', array(
+                    'result' => $tempRes
+                ));
+            
+            $j++;
         }
-        $htmlResults = $Template->Pparse('search_generic_results', TEMPLATE_STRING_MODE);
     }
-    else $htmlResults = $module->Functionnality('ParseSearchResults', array('results' => $results));
+    $htmlResults = $Template->Pparse('search_generic_pagination_results', TEMPLATE_STRING_MODE);
 }
 
 ?>

@@ -173,6 +173,7 @@ if( $search != '' )
         'L_SEARCH_RESULTS' => $LANG['search_results'],
         'NB_RESULTS' => $nbResults,
         'ALL_RESULTS' => $allhtmlResult,
+        'SEARCH_IN' => $searchIn,
         'C_SIMPLE_SEARCH' => $searchIn == 'all' ? true : false
     ));
     
