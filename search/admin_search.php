@@ -85,7 +85,7 @@ else
     $Cache->Load_file('search');
     global $SEARCH_CONFIG;
     
-    require_once('../includes/modules.class.php');
+    require_once('../includes/framework/modules/modules.class.php');
     
     $Modules = new Modules();
     $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');

@@ -12,7 +12,9 @@ CREATE TABLE `phpboost_articles_cats` (
 	`aprob` tinyint(1) NOT NULL default '0',
 	`auth` text NOT NULL,
 	PRIMARY KEY  (`id`),
-	KEY `id_left` (`id_left`)
+	KEY `id_left` (`id_left`),
+    FULLTEXT KEY `title` (`title`),
+    FULLTEXT KEY `contents` (`contents`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `phpboost_articles`;

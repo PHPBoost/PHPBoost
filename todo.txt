@@ -53,7 +53,7 @@ Forum:
 
 ------------------------------------ MODULES -----------------------------------
 Search :
-	à terminer (revoir l'interface utilisateur) et finir de l'implémenter
+[+] à terminer (revoir l'interface utilisateur) et ajouter des options de recherches
 	dans les modules.
 
 ################################################################################

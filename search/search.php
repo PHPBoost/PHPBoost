@@ -74,7 +74,7 @@ $Template->Assign_vars(Array(
 ));
 
 //------------------------------------------------------------- Other includes
-require_once('../includes/modules.class.php');
+require_once('../includes/framework/modules/modules.class.php');
 require_once('../search/search.inc.php');
 
 //----------------------------------------------------------------------- Main
