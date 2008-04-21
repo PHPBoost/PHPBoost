@@ -37,7 +37,7 @@ $Bench = new Bench; //Début du benchmark
 $Bench->Start_bench('site');
 require_once('../includes/function.php'); //Fonctions de base.
 require_once('../includes/constant.php'); //Constante utiles.
-require_once('../includes/mathpublisher.php'); //Gestion des formules mathématiques.
+require_once('../includes/framework/content/mathpublisher.php'); //Gestion des formules mathématiques.
 require_once('../includes/framework/errors.class.php');
 require_once('../includes/framework/template.class.php');
 require_once('../includes/framework/db/' . DBTYPE . '.class.php');

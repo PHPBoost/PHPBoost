@@ -1013,7 +1013,7 @@ class Content
 	{
 		if( $language != '' )
 		{
-			include_once('../includes/geshi/geshi.php');
+			include_once('../includes/framework/content/geshi/geshi.php');
 			$Geshi =& new GeSHi($contents, $language);
 			
 			if( $line_number ) //Affichage des numéros de lignes.

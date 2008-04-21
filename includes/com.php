@@ -43,7 +43,7 @@ if( $DEFINED_PHPBOOST )
 			$array_get = array('', '', '', '');
 		$idcom = (empty($array_get[3]) && !empty($_POST['idcom'])) ? numeric($_POST['idcom']) : $array_get[3];	
 	
-		include_once('../includes/framework/comments.class.php'); 
+		include_once('../includes/framework/content/comments.class.php'); 
 		$Comments = new Comments($array_get[2], $array_get[1], transid('?i=' . $array_get[1] . $array_get[2] . '%s', ''), $array_get[2]);
 		$Comments->Set_arg($idcom, '../includes/com.php'); //On met à jour les attributs de l'objet.
 		$_com_vars_simple = sprintf($Comments->Get_attribute('vars'), 0);
