@@ -39,29 +39,30 @@ class FaqInterface extends ModuleInterface
         parent::ModuleInterface('faq');
     }
     
-    // Recherche
-//     function GetSearchForm($args=null)
-//     /**
-//      *  Renvoie le formulaire de recherche
-//      */
-//     {
-//         return '';
-//     }
-//    
-//     function GetSearchArgs()
-//     /**
-//      *  Renvoie la liste des arguments de la méthode <GetSearchRequest>
-//      */
-//     {
-//         return Array();
-//     }
-    
     function GetSearchRequest($args)
     /**
      *  Renvoie la requête de recherche
      */
     {
-        return array();
+        global $Sql;
+        require_once('../faq/faq_cats.class.php');
+        $Cats = new FaqCats();
+        $auth_cats = array();
+        $Cats->Build_children_id_list(0, $list);
+        
+        $auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
+        
+        $request = "SELECT " . $args['id_search'] . " AS `id_search`,
+            f.id AS `id_content`,
+            f.question AS `title`,
+            ( 2 * MATCH(f.question) AGAINST('" . $args['search'] . "') + MATCH(f.answer) AGAINST('" . $args['search'] . "') ) / 3 AS `relevance`, "
+            . $Sql->Sql_concat("'../faq/faq.php?id='","f.idcat","'&amp;question='","f.id","'#q'","f.id") . " AS `link`
+            FROM " . PREFIX . "faq f
+            WHERE ( MATCH(f.question) AGAINST('" . $args['search'] . "') OR MATCH(f.answer) AGAINST('" . $args['search'] . "') )" . $auth_cats
+            . " ORDER BY `relevance` " . $Sql->Sql_limit(0, FAQ_MAX_SEARCH_RESULTS);
+        
+//         echo '<pre>'.$request.'</pre>';
+        return $request;
     }
 }
 

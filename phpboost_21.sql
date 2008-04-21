@@ -277,7 +277,10 @@ CREATE TABLE `phpboost_faq` (
   `answer` text NOT NULL,
   `user_id` int(11) NOT NULL default '0',
   `timestamp` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  FULLTEXT KEY `question` (`question`),
+  FULLTEXT KEY `answer` (`answer`),
+  FULLTEXT KEY `question_2` (`question`,`answer`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- 

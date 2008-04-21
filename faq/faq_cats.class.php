@@ -24,7 +24,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
 ###################################################*/
-
+global $Cache;
 $Cache->Load_file('faq');
 include_once('../includes/cats_management.class.php');
 
