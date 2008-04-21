@@ -57,7 +57,7 @@ if( $page > 0 )
 		'admin_faq_questions'=> 'faq/admin_faq_questions.tpl'
 	));
 	
-	include_once('../includes/pagination.class.php'); 
+	include_once('../includes/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$result = $Sql->Query_while("SELECT q.id, q.question, q.timestamp, q.idcat, c.name

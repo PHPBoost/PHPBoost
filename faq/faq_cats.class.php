@@ -26,7 +26,7 @@
 ###################################################*/
 global $Cache;
 $Cache->Load_file('faq');
-include_once('../includes/cats_management.class.php');
+include_once('../includes/framework/categories.class.php');
 
 define('DO_NOT_GENERATE_CACHE', false);
 
