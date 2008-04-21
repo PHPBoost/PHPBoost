@@ -86,8 +86,8 @@ elseif( !empty($id_contents) )
 }
 
 //Barre d'arborescence
-$speed_bar_key = 'wiki';
-require_once('../wiki/wiki_speed_bar.php');
+$bread_crumb_key = 'wiki';
+require_once('../wiki/wiki_bread_crumb.php');
 
 $page_title = (!empty($article_infos['title']) ? $article_infos['title'] . ' - ' : '') . (!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']);
 define('TITLE', $page_title);

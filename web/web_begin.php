@@ -49,9 +49,9 @@ else
 	define('TITLE', $LANG['title_web']);
 	
 $l_com_note = !empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '');
-$Speed_bar->Add_link($LANG['title_web'], transid('web.php')); 
-$Speed_bar->Add_link($CAT_WEB[$idcat]['name'], (empty($idweb) ? '' : transid('web.php?cat=' . $idcat, 'web-' . $idcat . '.php')));
-$Speed_bar->Add_link($web['title'], ((!empty($get_note) || !empty($_GET['i'])) ? transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php') : ''));
-$Speed_bar->Add_link($l_com_note, '');
+$Bread_crumb->Add_link($LANG['title_web'], transid('web.php')); 
+$Bread_crumb->Add_link($CAT_WEB[$idcat]['name'], (empty($idweb) ? '' : transid('web.php?cat=' . $idcat, 'web-' . $idcat . '.php')));
+$Bread_crumb->Add_link($web['title'], ((!empty($get_note) || !empty($_GET['i'])) ? transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php') : ''));
+$Bread_crumb->Add_link($l_com_note, '');
 
 ?>

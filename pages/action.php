@@ -199,27 +199,27 @@ if( $id_page > 0 )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	if($id_redirection > 0 )
-		$Speed_bar->Add_link($LANG['pages_redirection_management'], transid('action.php?id=' . $id_redirection));
+		$Bread_crumb->Add_link($LANG['pages_redirection_management'], transid('action.php?id=' . $id_redirection));
 	elseif( $id_new > 0 )
-		$Speed_bar->Add_link($LANG['pages_creation_redirection'], transid('action.php?new=' . $id_redirection));
+		$Bread_crumb->Add_link($LANG['pages_creation_redirection'], transid('action.php?new=' . $id_redirection));
 	elseif( $del_cat > 0 )
-		$Speed_bar->Add_link($LANG['pages_delete_cat'], transid('action.php?del_cat=' . $id_redirection));
+		$Bread_crumb->Add_link($LANG['pages_delete_cat'], transid('action.php?del_cat=' . $id_redirection));
 	else
-		$Speed_bar->Add_link($LANG['pages_rename'], transid('action.php?rename=' . $id_rename));
-	$Speed_bar->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+		$Bread_crumb->Add_link($LANG['pages_rename'], transid('action.php?rename=' . $id_rename));
+	$Bread_crumb->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
 	if( empty($_PAGES_CATS[$id]['auth']) || $Member->Check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )	
-		$Speed_bar->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$Bread_crumb->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if( $Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Speed_bar->Add_link($LANG['pages'], transid('pages.php'));
-	$Speed_bar->Reverse_links();
+		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
+	$Bread_crumb->Reverse_links();
 }
 else
-	$Speed_bar->Add_link($LANG['pages'], transid('pages.php'), $LANG['pages_redirections'], transid('action.php'));
+	$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'), $LANG['pages_redirections'], transid('action.php'));
 
 require_once('../includes/header.php');
 

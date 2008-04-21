@@ -1,12 +1,12 @@
 <?php
 /*##################################################
- *                                speed_bar.class.php
+ *                                bread_crumb.class.php
  *                            -------------------
  *   begin                : February 16, 2007
  *   copyright          : (C) 2007 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *   Speed_bar 2.0
+ *   Bread_crumb 2.0
  *
 ###################################################
  *
@@ -26,7 +26,7 @@
  *
 ###################################################*/
 
-class Speed_bar
+class Bread_crumb
 {
 	##  Méthodes publiques  ##
 	//Ajout d'un lien
@@ -54,7 +54,7 @@ class Speed_bar
 	}
 	
 	//Affichage
-	function Display_speed_bar()
+	function Display_bread_crumb()
 	{
 		global $Template, $CONFIG, $LANG;
 		
@@ -68,7 +68,7 @@ class Speed_bar
 		
 		foreach($this->array_links as $key => $array)
 		{
-			$Template->Assign_block_vars('link_speed_bar', array(
+			$Template->Assign_block_vars('link_bread_crumb', array(
 				'URL' => $array[1],
 				'TITLE' => $array[0]
 			));	

@@ -31,15 +31,15 @@ require_once('../forum/forum_tools.php');
 
 $id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 //Récupération de la barre d'arborescence.
-$Speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 foreach($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if( $CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'] )
-		$Speed_bar->Add_link($array_info_cat['name'], ($array_info_cat['level'] == 0) ? transid('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
+		$Bread_crumb->Add_link($array_info_cat['name'], ($array_info_cat['level'] == 0) ? transid('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
 }
 if( !empty($CAT_FORUM[$id_get]['name']) ) //Nom de la catégorie courante.
-	$Speed_bar->Add_link($CAT_FORUM[$id_get]['name'], 'forum' . transid('.php?id=' . $id_get, '-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php'));
-$Speed_bar->Add_link($LANG['title_post'], '');
+	$Bread_crumb->Add_link($CAT_FORUM[$id_get]['name'], 'forum' . transid('.php?id=' . $id_get, '-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php'));
+$Bread_crumb->Add_link($LANG['title_post'], '');
 define('TITLE', $LANG['title_forum']);
 require_once('../includes/header.php'); 
 
@@ -71,8 +71,8 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
 	$forum_cats = '';	
-	$Speed_bar->Remove_last_link();
-	foreach($Speed_bar->array_links as $key => $array)
+	$Bread_crumb->Remove_last_link();
+	foreach($Bread_crumb->array_links as $key => $array)
 	{
 		if( $i == 2 )
 			$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';

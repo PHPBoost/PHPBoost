@@ -62,8 +62,8 @@ if( isset($_GET['popup']) ) //Popup.
 }
 else //Affichage de l'interface de gestion.
 {	
-	$Speed_bar->Add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
-	$Speed_bar->Add_link($LANG['files_management'], transid('upload.php'));
+	$Bread_crumb->Add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->Add_link($LANG['files_management'], transid('upload.php'));
 	require_once('../includes/header.php');
 	$field = '';
 	$header = '';

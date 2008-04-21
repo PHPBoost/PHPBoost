@@ -29,8 +29,8 @@ require_once('../includes/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
-$Speed_bar->Add_link($LANG['show_topic_track'], '');
+$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->Add_link($LANG['show_topic_track'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_topic_track']);
 require_once('../includes/header.php'); 
 

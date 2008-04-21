@@ -26,7 +26,7 @@
 ###################################################*/
 
 require_once('../includes/begin.php');
-$Speed_bar->Add_link($LANG['moderation_panel'], transid('moderation_panel.php'));
+$Bread_crumb->Add_link($LANG['moderation_panel'], transid('moderation_panel.php'));
 define('TITLE', $LANG['moderation_panel']);
 require_once('../includes/header.php');
 

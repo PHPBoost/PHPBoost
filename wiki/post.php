@@ -33,8 +33,8 @@ define('TITLE', $LANG['wiki'] . ': ' . $LANG['wiki_contribuate']);
 define('ALTERNATIVE_CSS', 'wiki');
 
 
-$speed_bar_key = 'wiki_post';
-require_once('../wiki/wiki_speed_bar.php');
+$bread_crumb_key = 'wiki_post';
+require_once('../wiki/wiki_bread_crumb.php');
 
 $is_cat = !empty($_POST['is_cat']) ? 1 : 0;
 $is_cat_get = (!empty($_GET['type']) && $_GET['type'] == 'cat')  ? 1 : 0;

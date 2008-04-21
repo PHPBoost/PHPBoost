@@ -27,7 +27,7 @@
 
 require_once('../includes/begin.php'); 
 require_once('../forum/forum_begin.php');
-$Speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 require_once('../includes/header_no_display.php');
 
 //Variable GET.

@@ -33,8 +33,8 @@ define('TITLE', $LANG['wiki'] . ': ' . $LANG['wiki_explorer']);
 define('ALTERNATIVE_CSS', 'wiki');
 
 
-$speed_bar_key = 'wiki_explorer';
-require_once('../wiki/wiki_speed_bar.php');
+$bread_crumb_key = 'wiki_explorer';
+require_once('../wiki/wiki_bread_crumb.php');
 
 $cat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 

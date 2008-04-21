@@ -34,12 +34,12 @@ $id_get = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $new_status = isset($_GET['new_status']) ? numeric($_GET['new_status']) : '';
 $get_del = !empty($_GET['del']) ? numeric($_GET['del']) : '';
 
-$Speed_bar->Add_link($LANG['moderation_panel'], '../member/moderation_panel.php' . SID);
-$Speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'moderation_forum.php' . SID);
+$Bread_crumb->Add_link($LANG['moderation_panel'], '../member/moderation_panel.php' . SID);
+$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'moderation_forum.php' . SID);
 if( $action == 'alert' )
-	$Speed_bar->Add_link($LANG['alert_management'], transid('moderation_forum.php?action=alert'));
+	$Bread_crumb->Add_link($LANG['alert_management'], transid('moderation_forum.php?action=alert'));
 elseif( $action == 'users' )
-	$Speed_bar->Add_link($LANG['warning_management'], transid('moderation_forum.php?action=warning'));
+	$Bread_crumb->Add_link($LANG['warning_management'], transid('moderation_forum.php?action=warning'));
 	
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['moderation_panel']);
 require_once('../includes/header.php');

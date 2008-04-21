@@ -120,8 +120,8 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 else
 	define('TITLE', '');
 
-$speed_bar_key = 'wiki_property';
-require_once('../wiki/wiki_speed_bar.php');
+$bread_crumb_key = 'wiki_property';
+require_once('../wiki/wiki_bread_crumb.php');
 require_once('../includes/header.php');
 
 $Template->Set_filenames(array('wiki_properties'=> 'wiki/property.tpl'));

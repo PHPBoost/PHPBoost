@@ -46,9 +46,9 @@ else
 
 define('TITLE', $FAQ_CONFIG['faq_name'] . ($id_faq > 0 ? ' - ' . $TITLE : ''));
 
-$id_cat_for_speed_bar = $id_faq;
+$id_cat_for_bread_crumb = $id_faq;
 
-include_once('faq_speed_bar.php');
+include_once('faq_bread_crumb.php');
 
 //checking authorization
 if( !$auth_read )

@@ -43,15 +43,15 @@ if( !isset($CAT_FORUM[$topic['idcat']]) || $CAT_FORUM[$topic['idcat']]['aprob'] 
 	$Errorh->Error_handler('e_unexist_cat', E_USER_REDIRECT);
 
 //Récupération de la barre d'arborescence.
-$Speed_bar->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 foreach($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if( $CAT_FORUM[$topic['idcat']]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$topic['idcat']]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$topic['idcat']]['level'] )
-		$Speed_bar->Add_link($array_info_cat['name'], ($array_info_cat['level'] == 0) ? transid('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
+		$Bread_crumb->Add_link($array_info_cat['name'], ($array_info_cat['level'] == 0) ? transid('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
 }
 if( !empty($CAT_FORUM[$topic['idcat']]['name']) ) //Nom de la catégorie courante.
-	$Speed_bar->Add_link($CAT_FORUM[$topic['idcat']]['name'], 'forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) . '.php'));
-$Speed_bar->Add_link($topic['title'], '');
+	$Bread_crumb->Add_link($CAT_FORUM[$topic['idcat']]['name'], 'forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) . '.php'));
+$Bread_crumb->Add_link($topic['title'], '');
 
 define('TITLE', $LANG['title_topic'] . ' - ' . addslashes($topic['title']));
 require_once('../includes/header.php'); 
@@ -124,8 +124,8 @@ $Pagination = new Pagination();
 //Affichage de l'arborescence des catégories.
 $i = 0;
 $forum_cats = '';	
-$Speed_bar->Remove_last_link();
-foreach($Speed_bar->array_links as $key => $array)
+$Bread_crumb->Remove_last_link();
+foreach($Bread_crumb->array_links as $key => $array)
 {
 	if( $i == 2 )
 		$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';
