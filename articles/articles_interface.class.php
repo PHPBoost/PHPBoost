@@ -61,6 +61,25 @@ class ArticlesInterface extends ModuleInterface
      *  Renvoie la requête de recherche
      */
     {
+		/*global $Sql;
+        require_once('../articles/articles_cats.class.php');
+        $Cats = new ArticlesCats();
+        $auth_cats = array();
+        $Cats->Build_children_id_list(0, $list);
+        
+        $auth_cats = !empty($auth_cats) ? " AND a.idcat IN (" . implode($auth_cats, ',') . ") " : '';
+        
+        $request = "SELECT " . $args['id_search'] . " AS `id_search`,
+            a.id AS `id_content`,
+            a.title AS `title`,
+            ( 2 * MATCH(a.title) AGAINST('" . $args['search'] . "') + MATCH(a.contents) AGAINST('" . $args['search'] . "') ) / 3 AS `relevance`, "
+            . $Sql->Sql_concat("'../articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS `link`
+            FROM " . PREFIX . "articles a
+            WHERE ( MATCH(a.title) AGAINST('" . $args['search'] . "') OR MATCH(a.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats . "
+				AND visible = 1 AND ('" . time() . "' > start AND ( end = 0 OR '" . time() . "' < end ) )
+            ORDER BY `relevance` " . $Sql->Sql_limit(0, FAQ_MAX_SEARCH_RESULTS);
+        
+        return $request;*/
         return array();
     }
 }
