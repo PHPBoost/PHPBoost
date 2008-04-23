@@ -38,11 +38,6 @@ class Sessions
 	
 	
 	## Public Methods ##
-	//Constructeur
-	function Sessions()
-	{	
-	}	
-
 	//Lancement de la session après récupèration des informations par le formulaire de connexion.
 	function Session_begin($user_id, $password, $level, $session_script, $session_script_get, $session_script_title, $autoconnect = false)
 	{

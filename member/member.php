@@ -399,7 +399,7 @@ if( !empty($id_get) ) //Espace membre
 			}
 		}
 		
-		if( $_POST['del_member'] === 'on' ) //Suppression du compte
+		if( !empty($_POST['del_member']) ) //Suppression du compte
 		{
 			$Sql->Query_inject("DELETE FROM ".PREFIX."member WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 			
@@ -428,7 +428,7 @@ if( !empty($id_get) ) //Espace membre
 			$user_yahoo = !empty($_POST['user_yahoo']) ? securit($_POST['user_yahoo']) : '';
 			
 			$user_web = !empty($_POST['user_web']) ? securit($_POST['user_web']) : '';
-			$user_web = ( !empty($user_web) && preg_match('!^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$!', trim($_POST['user_web'])) ) ? $user_web : '';
+			$user_web = ( !empty($user_web) && preg_match('`^https?://(?:[a-z0-9_/-]+\.)*[a-z0-9-]+\.[a-z]{2,4}(?:.*)$`s', $user_web) ) ? $user_web : '';
 			
 			//Gestion de la date de naissance.
 			$user_born = strtodate($_POST['user_born'], $LANG['date_birth_parse']);
