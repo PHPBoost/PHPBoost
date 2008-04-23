@@ -69,7 +69,7 @@ if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-z
 		
 	//Validité de l'adresse du site.
 	$user_web = !empty($_POST['user_web']) ? securit($_POST['user_web']) : '';
-	$user_web = (!empty($user_web) && preg_match('!^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$!', trim($_POST['user_web']))) ? $user_web : '';
+	$user_web = ( !empty($user_web) && preg_match('`^https?://(?:[a-z0-9_/-]+\.)*[a-z0-9-]+\.[a-z]{2,4}(?:.*)$`s', $user_web) ) ? $user_web : '';
 	
 		
 	//Code de vérification si activé
