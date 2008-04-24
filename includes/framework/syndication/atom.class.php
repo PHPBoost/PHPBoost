@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-class ATOM
+class ATOM extends Feed
 {
 	## Public Methods #	
 	//Constructeur.
