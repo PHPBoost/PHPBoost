@@ -3,7 +3,7 @@
  *                         syndication.class.php
  *                            -------------------
  *   begin                : April 21, 2008
- *   copyright         : (C) 2005 Loïc Rouchon
+ *   copyright            : (C) 2005 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -65,15 +65,16 @@ class Feed
     {
         parsed = '';
         if ( in_array(RSS, array_keys($this->feeds)) &&
-             @fopen(trim($feedPath, '/') . '/' . $feedName . RSS, 'r' ) )
+             ($file = @fopen(trim($feedPath, '/') . '/' . $feedName . RSS, 'r' )) )
         {
             parsed = '';
         }
         elseif ( in_array(ATOM, array_keys($this->feeds)) &&
-             @fopen(trim($feedPath, '/') . '/' . $feedName . ATOM, 'r' ) )
+             ($file = @fopen(trim($feedPath, '/') . '/' . $feedName . ATOM, 'r' )) )
         {
             parsed = '';
         }
+        @fclose($file);
         return $parsed;
     }
 
@@ -86,20 +87,20 @@ class Feed
         return $parsed;
     }
 
-    //Génère les fichier du cache, suivant le type demandé.
+    //Gï¿½nï¿½re les fichier du cache, suivant le type demandï¿½.
     function Generate_file($type, $name)
     {
-        if( $type == 'javascript' ) //Génération du 1er fichier javascript.
+        if( $type == 'javascript' ) //Gï¿½nï¿½ration du 1er fichier javascript.
         {
             $file_path = $this->path_cache . $name . '.html';
-            $file = fopen($file_path, 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
+            $file = fopen($file_path, 'w+'); //Si le fichier n'existe pas on le crï¿½e avec droit d'ï¿½criture et lecture.
             fputs($file, "document.write('" . str_replace('\'', '\\\'', $this->flux) . "');");
             fclose($file);
         }
-        elseif( $type == 'php' ) //Génération du 2ème fichier PHP.
+        elseif( $type == 'php' ) //Gï¿½nï¿½ration du 2ï¿½me fichier PHP.
         {
             $file_path2 = $this->path_cache . $name . '.html';
-            $file = fopen($file_path2, 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
+            $file = fopen($file_path2, 'w+'); //Si le fichier n'existe pas on le crï¿½e avec droit d'ï¿½criture et lecture.
             fputs($file, $this->flux);
             fclose($file);
         }
@@ -107,13 +108,13 @@ class Feed
 
 
     ## Private Methods ##
-    //Charge le rss non parsé.
+    //Charge le rss non parsï¿½.
     function load_rss($path_flux)
     {
         if( $this->mode == 'include')
         {
             if( @include('..' . $path_flux) )
-                $this->get_rss($RSS_flux); //Récupère le contenu du rss directement.
+                $this->get_rss($RSS_flux); //Rï¿½cupï¿½re le contenu du rss directement.
             else
                 $this->flux = '';
         }
@@ -123,14 +124,14 @@ class Feed
             if( $file !== false )
             {
                 if( preg_match('`<item>(.*)</item>`is', $file) )
-                    $this->parse_rss($file); //Parse le rss chargé
+                    $this->parse_rss($file); //Parse le rss chargï¿½
             }
             else
                 $this->flux = '';
         }
     }
 
-    //Parse le rss chargé
+    //Parse le rss chargï¿½
     function parse_rss($line)
     {
         $array_items = explode('<item>', $line);
@@ -150,7 +151,7 @@ class Feed
         $this->flux .= '</ul>';
     }
 
-    //Récupère le contenu du rss directement.
+    //Rï¿½cupï¿½re le contenu du rss directement.
     function get_rss($rss_flux)
     {
         $this->flux = '<ul>';
