@@ -79,6 +79,9 @@ input#TxTsearched {
 	height:14px;
 	width:100%;
 }
+#forms_selection a{
+	outline:none;
+}
 
 select.search_field {
     width:300px;
