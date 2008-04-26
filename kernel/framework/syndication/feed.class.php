@@ -52,6 +52,22 @@ class Feed
         }
     }
 
+    function Print($nbItems = 5, $tpl = 'feed.tpl')
+    /**
+     * Return the results of the feed generated as a string
+     */
+    {
+        if ( ($nbItems == 5) && ($tpl == 'feed.tpl') )
+        {
+            if ( ($HTMLfeed = file_get_contents($this->path . $this->name)) !== false )
+                return $HTMLfeed;
+            else
+                return '';
+        }
+        else
+            return $this->getHTMLFeed($this->Parse($nbItems), $tpl);
+    }
+    
     function Parse($nbItem = 5)
     /**
      * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
@@ -81,9 +97,9 @@ class Feed
     }
 
     ## Private Methods ##
-	function generateCache(&$feedInformations, $tpl)
+    function getHTMLFeed(&$feedInformations, $tpl,)
     /**
-     * Generate the HTML cache for direct includes.
+     * Return a HTML String of a parsed feed.
      */
     {
         global $Template;
@@ -105,9 +121,17 @@ class Feed
 				'TITLE' => $item['title']
 			));
 		}
-		
+		return $Template->Pparse('feed', TEMPLATE_STRING_MODE)
+    }
+    
+	function generateCache(&$feedInformations, $tpl)
+    /**
+     * Generate the HTML cache for direct includes.
+     */
+    {
+        
 		$file = fopen($this->path . $this->name, 'w+');
-        fputs($file, $Template->Pparse('feed', TEMPLATE_STRING_MODE));
+        fputs($file, $this->getHTMLFeed($feedInformations, $tpl));
         fclose($file);
     }
 

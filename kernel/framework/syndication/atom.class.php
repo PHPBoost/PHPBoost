@@ -44,8 +44,35 @@ class ATOM extends Feed
      * the result as an Array and <false> if it couldn't open the feed.
      */
     {
-        
-        return false;
+        $file = file_get_contents_emulate(HOST . DIR . $this->path . $this->name);		
+        if( $file !== false )
+        {
+            if( preg_match('`<item>(.*)</item>`is', $file) ) 
+            {
+                $parsed = array();
+                $parsed['items'] = explode('<item>', $file);
+        		$nbItems = count($parsed['items']);
+                
+                $parsed['date'] = $parsed['items'][0];
+                $parsed['title'] = $parsed['items'][0];
+                $parsed['host'] = $parsed['items'][0];
+                $parsed['desc'] = $parsed['items'][0];
+                $parsed['lang'] = $parsed['items'][0];
+                
+                unset($parsed['items'][0]);
+        		
+        		for($i = 1; $i < $nbItems; $i++) 
+        		{
+        			$url = preg_match('`<link>(.*)</link>`is', $parsed['items'][$i], $url) ? $url[1] : '';
+        			$title = preg_match('`<title>(.*)</title>`is', $parsed['items'][$i], $title) ? $title[1] : '';
+        			$date = preg_match('`<pubDate>(.*)</pubDate>`is', $parsed['items'][$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '';
+                    $parsed['items']['link'] = $url;
+                    $parsed['items']['title'] = $title;
+                    $parsed['items']['date'] = $date;
+        		}
+            }
+        }
+        else return false;
     }
 
     function Generate(&$feedInformations)
@@ -54,7 +81,29 @@ class ATOM extends Feed
 	 * and also the HTML cache for direct includes.
      */
     {
-        
+        global $Template;
+        $Template->Set_filenames(array('rss'=> 'rss.tpl'));
+		
+		$Template->Assign_vars(array(
+			'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
+			'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
+			'HOST' => HOST,	
+			'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
+			'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
+		));
+		
+		foreach ( $feedInformations['rss'] as $item )
+		{
+			$Template->Assign_block_vars('items', array(
+				'DATE' => $item['date'],
+				'U_LINK' => $item['link'],
+				'TITLE' => $item['title']
+			));
+		}
+		
+        $file = fopen($this->path . $this->name, 'w+');
+        fputs($file, $Template->Pparse('rss', TEMPLATE_STRING_MODE));
+        fclose($file);
     }
 
     ## Private Methods ##
