@@ -4,8 +4,12 @@
 				<h5 class="sub_title">{L_ONLINE}</h5>
 			</div>
 			<div class="module_mini_contents">
-				<span class="text_small">{VISIT} {L_VISITOR}, {MEMBER} {L_MEMBER}, {MODO} {L_MODO}, {ADMIN} {L_ADMIN} {L_ONLINE}.</span>				
-				<br /><br />					
+				<ul class="text_small" style="text-align:left; margin-left:20px;list-style-type:none">
+					<li>{VISIT} {L_VISITOR}</li>
+					<li>{MEMBER} {L_MEMBER}</li>
+					<li>{MODO} {L_MODO}</li>
+					<li>{ADMIN} {L_ADMIN}</li>
+				</ul><br />					
 				# START online #						
 					{online.MEMBER}												
 				# END online #
