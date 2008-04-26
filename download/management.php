@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 
 load_module_lang('download'); //Chargement de la langue du module.
 
@@ -44,7 +44,7 @@ else
 	define('TITLE', $DOWNLOAD_LANG['file_addition']);
 
 
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 include_once('download_cats.class.php');
 $download_categories = new Download_cats();
@@ -100,7 +100,7 @@ if( $edit_file_id > 0 )
 		));
 	}
 	
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 
 	$Template->Assign_vars(array(
 		'TITLE' => $preview ? $file_title : $file_infos['title'],
@@ -184,7 +184,7 @@ if( $edit_file_id > 0 )
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'short_contents';
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	
 	$Template->Assign_vars(array(
 		'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE)
@@ -196,6 +196,6 @@ elseif( $add_file )
 }
 
 $Template->Pparse('file_management');
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

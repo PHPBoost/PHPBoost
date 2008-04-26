@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../guestbook/guestbook_begin.php'); 
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $id_get = ( !empty($_GET['id'])) ? numeric($_GET['id']) : '' ;
 //Chargement du cache
@@ -126,7 +126,7 @@ elseif( !empty($_POST['previs']) ) //Prévisualisation.
 	));	
 	
 	$_field = 'guestbook_contents';
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('guestbook'); 
 }
@@ -185,7 +185,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 			));
 			
 			$_field = 'guestbook_contents';
-			include_once('../includes/framework/content/bbcode.php');
+			include_once('../kernel/framework/content/bbcode.php');
 			
 			$Template->Pparse('guestbook'); 
 		}
@@ -257,7 +257,7 @@ else //Affichage.
 	
 	$nbr_guestbook = $Sql->Count_table('guestbook', __LINE__, __FILE__);
 	//On crée une pagination si le nombre de msg est trop important.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
 	$forbidden_tags = implode(', ', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
@@ -426,11 +426,11 @@ else //Affichage.
 	$Sql->Close($result);
 		
 	$_field = 'guestbook_contents';
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 		
 	$Template->Pparse('guestbook'); 
 }
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-include_once('../includes/begin.php');
+include_once('../kernel/begin.php');
 include_once('faq_begin.php');
 
 

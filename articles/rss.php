@@ -18,9 +18,9 @@ if( defined('PHPBOOST') !== true)
 	//On genère l'entête xml.
 	header("Content-Type: text/xml");
 
-	require_once('../includes/begin.php'); 
+	require_once('../kernel/begin.php'); 
 	require_once('../articles/articles_begin.php');
-	require_once('../includes/header_no_display.php');
+	require_once('../kernel/header_no_display.php');
 	
 	$Template->Set_filenames(array('rss'=> 'rss.tpl'));
 

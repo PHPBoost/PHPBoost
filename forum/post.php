@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
@@ -41,7 +41,7 @@ if( !empty($CAT_FORUM[$id_get]['name']) ) //Nom de la catégorie courante.
 	$Bread_crumb->Add_link($CAT_FORUM[$id_get]['name'], 'forum' . transid('.php?id=' . $id_get, '-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php'));
 $Bread_crumb->Add_link($LANG['title_post'], '');
 define('TITLE', $LANG['title_forum']);
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $new_get = !empty($_GET['new']) ? securit($_GET['new']) : '';
 $previs = !empty($_POST['prw']) ? true : false; //Prévisualisation des messages.
@@ -129,7 +129,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			'L_RESET' => $LANG['reset']
 		));		
 		
-		include_once('../includes/framework/content/bbcode.php');
+		include_once('../kernel/framework/content/bbcode.php');
 		
 		$Template->Pparse('edit_msg');
 	}
@@ -305,7 +305,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'L_MULTIPLE' => $LANG['multiple_answer']
 			));
 			
-			include_once('../includes/framework/content/bbcode.php');
+			include_once('../kernel/framework/content/bbcode.php');
 			
 			$Template->Pparse('forum_post');
 		}
@@ -376,7 +376,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'L_MULTIPLE' => $LANG['multiple_answer']
 			));
 			
-			include_once('../includes/framework/content/bbcode.php');
+			include_once('../kernel/framework/content/bbcode.php');
 			
 			$Template->Pparse('forum_post');
 		}
@@ -611,7 +611,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'L_DELETE_POLL' => $LANG['delete_poll']
 				));
 					
-				include_once('../includes/framework/content/bbcode.php');
+				include_once('../kernel/framework/content/bbcode.php');
 				
 				$Template->Pparse('forum_post');
 			}
@@ -741,7 +741,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					));
 				}	
 				
-				include_once('../includes/framework/content/bbcode.php');
+				include_once('../kernel/framework/content/bbcode.php');
 				
 				$Template->Pparse('forum_post');
 			}
@@ -812,7 +812,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'L_RESET' => $LANG['reset'],
 				));
 				
-				include_once('../includes/framework/content/bbcode.php');
+				include_once('../kernel/framework/content/bbcode.php');
 				
 				$Template->Pparse('edit_msg');
 			}
@@ -963,7 +963,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		else
 			$Errorh->Error_handler('unknow_error', E_USER_REDIRECT);
 			
-		include_once('../includes/framework/content/bbcode.php');
+		include_once('../kernel/framework/content/bbcode.php');
 		
 		$Template->Pparse('error_post');
 	}
@@ -973,6 +973,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 else
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-include('../includes/footer.php');
+include('../kernel/footer.php');
 
 ?>

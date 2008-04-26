@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 load_module_lang('wiki');
 
 define('ALTERNATIVE_CSS', 'wiki');
@@ -92,7 +92,7 @@ require_once('../wiki/wiki_bread_crumb.php');
 $page_title = (!empty($article_infos['title']) ? $article_infos['title'] . ' - ' : '') . (!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']);
 define('TITLE', $page_title);
 
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $Template->Set_filenames(array(
 	'wiki'=> 'wiki/wiki.tpl',
@@ -294,6 +294,6 @@ else
 	$Template->Pparse('index');
 }
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

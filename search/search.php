@@ -26,7 +26,7 @@
 ###################################################*/
 
 //------------------------------------------------------------------- Language
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 load_module_lang('search');
 define('ALTERNATIVE_CSS', 'search');
 
@@ -49,7 +49,7 @@ if( !empty($search) )
     define('TITLE', $LANG['title_search'].' : '.addslashes($search));
 else
     define('TITLE', $LANG['title_search']);
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 $Template->Assign_vars(Array(
     'L_TITLE_SEARCH' => TITLE,
@@ -72,7 +72,7 @@ $Template->Assign_vars(Array(
 ));
 
 //------------------------------------------------------------- Other includes
-require_once('../includes/framework/modules/modules.class.php');
+require_once('../kernel/framework/modules/modules.class.php');
 require_once('../search/search.inc.php');
 
 //----------------------------------------------------------------------- Main
@@ -180,6 +180,6 @@ if( $search != '' )
 }
 
 //--------------------------------------------------------------------- Footer
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

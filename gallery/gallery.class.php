@@ -601,7 +601,7 @@ class Gallery
 		$width = ($width == 0) ? $CONFIG_GALLERY['width'] : $width;
 		$height = ($height == 0) ? $CONFIG_GALLERY['height'] : $height;
 			
-		$font = '../includes/data/fonts/impact.ttf';		
+		$font = '../kernel/data/fonts/impact.ttf';		
 		$font_size = 12;
 
 		$thumbnail = @imagecreate($width, $height);

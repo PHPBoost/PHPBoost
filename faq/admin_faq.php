@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-include_once('../includes/admin_begin.php');
+include_once('../kernel/admin_begin.php');
 include_once('faq_begin.php'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-include_once('../includes/admin_header.php');
+include_once('../kernel/admin_header.php');
 
 $page = !empty($_GET['p']) ? numeric($_GET['p']) : 0;
 
@@ -57,7 +57,7 @@ if( $page > 0 )
 		'admin_faq_questions'=> 'faq/admin_faq_questions.tpl'
 	));
 	
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$result = $Sql->Query_while("SELECT q.id, q.question, q.timestamp, q.idcat, c.name
@@ -130,6 +130,6 @@ else
 
 }
 
-include_once('../includes/admin_footer.php');
+include_once('../kernel/admin_footer.php');
 
 ?>

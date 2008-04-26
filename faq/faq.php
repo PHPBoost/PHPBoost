@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-include_once('../includes/begin.php'); 
+include_once('../kernel/begin.php'); 
 include_once('faq_begin.php');
 
 $id_faq = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
@@ -57,7 +57,7 @@ if( !$auth_read )
 	exit;
 }
 
-include_once('../includes/header.php');
+include_once('../kernel/header.php');
 
 $Template->Set_filenames(array(
 	'faq'=> 'faq/faq.tpl'
@@ -213,6 +213,6 @@ $Template->Assign_vars(array(
 
 $Template->Pparse('faq');
 
-include_once('../includes/footer.php'); 
+include_once('../kernel/footer.php'); 
 
 ?>

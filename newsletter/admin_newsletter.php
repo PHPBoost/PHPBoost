@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('newsletter'); //Chargement de la langue du module.
 define('TITLE', $LANG['newsletter']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 //On recupère les variables.
 $type = !empty($_GET['type']) ? trim($_GET['type']) : '' ;
@@ -114,7 +114,7 @@ elseif( !empty($type) ) //Rédaction
 {
 	if( $type == 'bbcode' )
 	{
-		include_once('../includes/framework/content/bbcode.php');
+		include_once('../kernel/framework/content/bbcode.php');
 	}
 	else
 	{
@@ -193,6 +193,6 @@ $Template->Assign_vars(array(
 $Template->Pparse('admin_newsletter'); 
 
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

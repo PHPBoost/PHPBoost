@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('news'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 								
 $id = ( !empty($_GET['id'])) ? numeric($_GET['id']) : 0;
 
@@ -162,6 +162,6 @@ else
 	$Template->Pparse('admin_news_cat'); // traitement du modele	
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

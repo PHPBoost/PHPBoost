@@ -26,14 +26,14 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 $Bread_crumb->Add_link($LANG['title_search'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['title_search']);
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 $search = !empty($_POST['search']) ? securit($_POST['search']) : '';
 $idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : -1;
@@ -280,6 +280,6 @@ $Template->Assign_vars(array(
 
 $Template->Pparse('search');
 
-include('../includes/footer.php');
+include('../kernel/footer.php');
 
 ?>

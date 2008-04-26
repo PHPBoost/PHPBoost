@@ -132,7 +132,7 @@
 		-->
 		</script>
 
-		<script type="text/javascript" src="../includes/framework/js/calendar.js"></script>
+		<script type="text/javascript" src="../kernel/framework/js/calendar.js"></script>
 		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
 		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">

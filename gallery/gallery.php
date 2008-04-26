@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../gallery/gallery_begin.php');
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 $g_idpics = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $g_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
@@ -87,7 +87,7 @@ elseif( isset($_FILES['gallery']) ) //Upload
 		redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#errorh');
 	
 	$dir = 'pics/';
-	include_once('../includes/framework/files/upload.class.php');
+	include_once('../kernel/framework/files/upload.class.php');
 	$Upload = new Upload($dir);
 	
 	$idpic = 0;
@@ -295,7 +295,7 @@ else
 		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
 		
 	//On crée une pagination si le nombre de catégories est trop important.
-	include_once('../includes/framework/pagination.class.php');
+	include_once('../kernel/framework/pagination.class.php');
 	$Pagination = new Pagination();
 
 	//Colonnes des catégories.
@@ -560,9 +560,9 @@ else
 				if( $activ_note )
 				{
 					//Affichage notation.
-					include_once('../includes/framework/note.class.php');
+					include_once('../kernel/framework/note.class.php');
 					$Note = new Note('gallery', $info_pics['id'], transid('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
-					include_once('../includes/framework/note.php');
+					include_once('../kernel/framework/note.php');
 				}			
 				
 				if( $thumbnails_before < $nbr_pics_display_before )	
@@ -630,16 +630,16 @@ else
 				//Commentaires
 				if( isset($_GET['i']) )
 				{
-					include_once('../includes/framework/content/comments.class.php');
+					include_once('../kernel/framework/content/comments.class.php');
 					$Comments = new Comments('gallery', $g_idpics, transid('gallery.php?cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;i=%s', 'gallery-' . $g_idcat . '-' . $g_idpics . '.php?i=%s'));
-					include_once('../includes/com.php');
+					include_once('../kernel/com.php');
 				}
 			}
 		}
 		else
 		{
 			//On crée une pagination si le nombre de photos est trop important.
-			include_once('../includes/framework/pagination.class.php');
+			include_once('../kernel/framework/pagination.class.php');
 			$Pagination = new Pagination();
 			
 			$Template->Assign_vars(array(
@@ -648,7 +648,7 @@ else
 				'L_EDIT' => $LANG['edit']
 			));
 			
-			include_once('../includes/framework/note.class.php'); 
+			include_once('../kernel/framework/note.class.php'); 
 			$is_connected = $Member->Check_level(MEMBER_LEVEL);
 			$j = 0;
 			$result = $Sql->Query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
@@ -683,7 +683,7 @@ else
 				{
 					//Affichage notation.					
 					$Note = new Note('gallery', $row['id'], transid('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_NODISPLAY_NBRNOTES | NOTE_DISPLAY_BLOCK);
-					include('../includes/framework/note.php');
+					include('../kernel/framework/note.php');
 				}
 				
 				$Template->Assign_block_vars('pics_list', array(
@@ -724,6 +724,6 @@ else
 	$Template->Pparse('gallery'); 
 }
 
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

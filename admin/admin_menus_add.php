@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 $idmodule = !empty($_GET['idmodule']) ? trim($_GET['idmodule']) : '';
@@ -288,11 +288,11 @@ else
 		));		
 	}
 	
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_menus_add');
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

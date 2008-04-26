@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 require_once('../shoutbox/shoutbox_begin.php');
-require_once('../includes/header_no_display.php');
+require_once('../kernel/header_no_display.php');
 
 $add = !empty($_GET['add']) ? true : false;
 $del = !empty($_GET['del']) ? true : false;

@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('articles'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 ##########################admin_news_config.tpl###########################
 if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
@@ -129,6 +129,6 @@ else
 	$Template->Pparse('admin_articles_config'); // traitement du modele	
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

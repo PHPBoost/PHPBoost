@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('news'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 if( !empty($_POST['valid']) )
 {
@@ -83,7 +83,7 @@ if( !empty($_POST['valid']) )
 		VALUES('" . $idcat . "', '" . $title . "', '" . parse($contents) . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
 		
 		//Regénération du flux rss.
-		include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
+		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('news/rss.php');
 		$Rss->Cache_path('../cache/');
 		$Rss->Generate_file('javascript', 'rss_news');
@@ -218,7 +218,7 @@ elseif( !empty($_POST['previs']) )
 		'L_RESET' => $LANG['reset']
 	));	
 	
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	$Template->Pparse('admin_news_add');    
 
 	$Template->Unassign_block_vars('tinymce_mode');
@@ -227,7 +227,7 @@ elseif( !empty($_POST['previs']) )
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'extend_contents';
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_news_add_bis'); 
 }
@@ -295,7 +295,7 @@ else
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	$Template->Pparse('admin_news_add');    
 
 	$Template->Unassign_block_vars('tinymce_mode');
@@ -304,11 +304,11 @@ else
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'extend_contents';
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_news_add_bis'); 
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

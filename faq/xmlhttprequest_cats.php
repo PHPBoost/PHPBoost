@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 define('TITLE', 'Ajax faq');
-require_once('../includes/header_no_display.php');
+require_once('../kernel/header_no_display.php');
 
 if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 {	
@@ -69,6 +69,6 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 		echo $faq_categories->Build_categories_administration_interface(AJAX_MODE);
 	}
 }
-include_once('../includes/footer_no_display.php');
+include_once('../kernel/footer_no_display.php');
 
 ?>

@@ -31,7 +31,7 @@ if( defined('PHPBOOST') !== true) exit;
 if( $CONFIG['maintain'] > time() && !$Member->Check_level(ADMIN_LEVEL) )
 {	
 	if( SCRIPT !== (DIR . '/member/maintain.php') )
-		redirect(HOST . DIR . '/includes/maintain.php');
+		redirect(HOST . DIR . '/kernel/maintain.php');
 }
 
 ?>

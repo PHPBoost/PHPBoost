@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 require_once('../poll/poll_begin.php'); 
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $poll = array();
 $poll_id = !empty($_GET['id']) ? numeric($_GET['id']) : '0';
@@ -134,7 +134,7 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
 			$DELAY_REDIRECT = 2;
 			$URL_ERROR = HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php');
 			$L_ERROR =  $LANG['confirm_vote'];
-			include('../includes/confirm.php');
+			include('../kernel/confirm.php');
 			
 			if( in_array($poll['id'], $CONFIG_POLL['poll_mini'])  ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
 				$Cache->Generate_module_file('poll');
@@ -144,7 +144,7 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
 			$DELAY_REDIRECT = 2;
 			$URL_ERROR = HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php');
 			$L_ERROR = $LANG['no_vote'];
-			include('../includes/confirm.php');
+			include('../kernel/confirm.php');
 		}
 	}
 	else
@@ -341,7 +341,7 @@ elseif( !empty($archives) ) //Archives.
 		
 	$nbrarchives = $Sql->Query("SELECT COUNT(*) as id FROM ".PREFIX."poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
 	
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$Template->Assign_vars(array(
@@ -398,6 +398,6 @@ elseif( !empty($archives) ) //Archives.
 else
 	$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT); 
 	
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

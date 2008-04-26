@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
@@ -43,7 +43,7 @@ if( !empty($id_get) )
 	define('TITLE', $LANG['title_forum'] . ' - ' . addslashes($CAT_FORUM[$id_get]['name']));
 else
 	define('TITLE', $LANG['title_forum']);	
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 //On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 $rewrited_title = ($CONFIG['rewrite'] == 1 && !empty($CAT_FORUM[$id_get]['name'])) ? '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) : '';
@@ -197,7 +197,7 @@ if( !empty($id_get) )
 	}
 	
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	//Affichage de l'arborescence des catégories.
@@ -393,6 +393,6 @@ if( !empty($id_get) )
 else
 	redirect(HOST . DIR . '/forum/index.php' . SID2);
 
-include('../includes/footer.php');
+include('../kernel/footer.php');
 
 ?>

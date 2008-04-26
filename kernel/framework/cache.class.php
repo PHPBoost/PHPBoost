@@ -449,8 +449,8 @@ class Cache
 		$array_debug[] = 'Site session [' . $CONFIG['site_session'] . ']';
 		$array_debug[] = 'Site session invit [' . $CONFIG['site_session_invit'] . ']';
 		$array_debug[] = '-------------CHMOD-------------';
-		$array_debug[] = 'includes/auth/ [' . (is_writable('../includes/auth/') ? 1 : 0) . ']';
-		$array_debug[] = 'includes/ [' . (is_writable('../includes/') ? 1 : 0) . ']';
+		$array_debug[] = 'includes/auth/ [' . (is_writable('../kernel/auth/') ? 1 : 0) . ']';
+		$array_debug[] = 'includes/ [' . (is_writable('../kernel/') ? 1 : 0) . ']';
 		$array_debug[] = 'cache/ [' . (is_writable('../cache/') ? 1 : 0) . ']';
 		$array_debug[] = 'upload/ [' . (is_writable('../upload/') ? 1 : 0) . ']';
 		$array_debug[] = 'menus/ [' . (is_writable('../menus/') ? 1 : 0) . ']';

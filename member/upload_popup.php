@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 define('TITLE', $LANG['files_management']);
-require_once('../includes/header_no_display.php');
+require_once('../kernel/header_no_display.php');
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 
 if( !empty($id) )
@@ -60,10 +60,10 @@ if( !empty($id) )
 		//Sons
 		case 'mp3':
 		echo '<br />
-			<object type="application/x-shockwave-flash" data="../includes/data/dewplayer.swf?son=' . $basedir . $info_file['path'] . '" width="200" height="20">
+			<object type="application/x-shockwave-flash" data="../kernel/data/dewplayer.swf?son=' . $basedir . $info_file['path'] . '" width="200" height="20">
 			<param name="allowScriptAccess" value="never" />
 			<param name="play" value="true" />
-			<param name="movie" value="../includes/data/dewplayer.swf?son=' . $basedir . $info_file['path'] . '" />
+			<param name="movie" value="../kernel/data/dewplayer.swf?son=' . $basedir . $info_file['path'] . '" />
 			<param name="menu" value="false" />
 			<param name="quality" value="high" />
 			<param name="scalemode" value="noborder" />
@@ -74,6 +74,6 @@ if( !empty($id) )
 	}
 }
 
-require_once('../includes/footer_no_display.php');
+require_once('../kernel/footer_no_display.php');
 
 ?>

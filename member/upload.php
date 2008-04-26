@@ -25,12 +25,12 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 define('TITLE', $LANG['files_management']);
 
 if( isset($_GET['popup']) ) //Popup.
 {	
-	require_once('../includes/header_no_display.php');
+	require_once('../kernel/header_no_display.php');
 	$field = !empty($_GET['fd']) ? trim($_GET['fd']) : '';
 	$header = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . $LANG['xml_lang'] . '" >
@@ -64,7 +64,7 @@ else //Affichage de l'interface de gestion.
 {	
 	$Bread_crumb->Add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
 	$Bread_crumb->Add_link($LANG['files_management'], transid('upload.php'));
-	require_once('../includes/header.php');
+	require_once('../kernel/header.php');
 	$field = '';
 	$header = '';
 	$footer = '';
@@ -83,7 +83,7 @@ if( !$Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 //Initialisation  de la class de gestion des fichiers.
-include_once('../includes/framework/files.class.php');
+include_once('../kernel/framework/files.class.php');
 $Files = new Files; 
 
 $folder = !empty($_GET['f']) ? numeric($_GET['f']) : 0;
@@ -139,7 +139,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 		if( is_writable($dir) ) //Dossier en écriture, upload possible
 		{
 			$weight_max = $unlimited_data ? 100000000 : ($group_limit - $member_memory_used);
-			include_once('../includes/framework/files/upload.class.php');
+			include_once('../kernel/framework/files/upload.class.php');
 			$Upload = new Upload($dir);
 			$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+`i', UNIQ_NAME, $weight_max);
 			
@@ -492,7 +492,7 @@ else
 }
 
 if( empty($popup) )
-	require_once('../includes/footer.php');
+	require_once('../kernel/footer.php');
 else
-	require_once('../includes/footer_no_display.php');
+	require_once('../kernel/footer_no_display.php');
 ?>

@@ -1,4 +1,4 @@
-		<script type="text/javascript" src="../includes/framework/js/calendar.js"></script>
+		<script type="text/javascript" src="../kernel/framework/js/calendar.js"></script>
 		<script type="text/javascript">
 		<!--
 		function check_form(){

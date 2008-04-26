@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 require_once('../newsletter/newsletter_begin.php');
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 $mail_newsletter = !empty($_POST['mail_newsletter']) ? securit($_POST['mail_newsletter']) : '';
 $subscribe = !empty($_POST['subscribe']) ? trim($_POST['subscribe']) : 'subscribe';
@@ -86,7 +86,7 @@ else
 {
 	$Template->Assign_block_vars('arch_title', array());
 	
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$i = 0;	
@@ -128,6 +128,6 @@ else
 
 $Template->Pparse('newsletter');
 
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

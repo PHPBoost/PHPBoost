@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
@@ -38,7 +38,7 @@ if( !empty($id_get) )
 	define('TITLE', $LANG['title_forum'] . ' - ' . addslashes($CAT_FORUM[$id_get]['name']));
 else
 	define('TITLE', $LANG['title_forum']);
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $Template->Set_filenames(array(
 	'forum_index'=> 'forum/forum_index.tpl'
@@ -273,6 +273,6 @@ $Template->Assign_vars(array(
 
 $Template->Pparse('forum_index');	
 
-include('../includes/footer.php');
+include('../kernel/footer.php');
 
 ?>

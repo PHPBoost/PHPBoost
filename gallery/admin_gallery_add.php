@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('gallery'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $Cache->Load_file('gallery');
 include_once('../gallery/gallery.class.php');
@@ -43,7 +43,7 @@ $nbr_pics_post = !empty($_POST['nbr_pics']) ? numeric($_POST['nbr_pics']) : 0;
 if( isset($_FILES['gallery']) && isset($_POST['idcat_post']) ) //Upload
 { 
 	$dir = 'pics/';
-	include_once('../includes/framework/files/upload.class.php');
+	include_once('../kernel/framework/files/upload.class.php');
 	$Upload = new Upload($dir);
 	
 	$idpic = 0;
@@ -293,6 +293,6 @@ else
 	$Template->Pparse('admin_gallery_add'); 
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

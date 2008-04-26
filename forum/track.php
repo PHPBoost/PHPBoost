@@ -25,14 +25,14 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 $Bread_crumb->Add_link($LANG['show_topic_track'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_topic_track']);
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $page = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
 
@@ -44,7 +44,7 @@ if( !$Member->Check_level(MEMBER_LEVEL) ) //Réservé aux membres.
 	
 if( !empty($_POST['valid']) )
 {
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$result = $Sql->Query_while("SELECT t.id, tr.pm, tr.mail
@@ -76,7 +76,7 @@ elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s
 	));
 
 	
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
@@ -261,6 +261,6 @@ elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s
 else
 	redirect(HOST . DIR . '/forum/index.php' . SID2);
 
-include('../includes/footer.php');
+include('../kernel/footer.php');
 
 ?>

@@ -1,5 +1,5 @@
 		# IF C_BBCODE_TINYMCE_MODE #			
-		<script language="javascript" type="text/javascript" src="../includes/framework/content/tinymce/tiny_mce.js"></script>
+		<script language="javascript" type="text/javascript" src="../kernel/framework/content/tinymce/tiny_mce.js"></script>
 		<script language="javascript" type="text/javascript">
 		<!--
 		tinyMCE.init({
@@ -23,7 +23,7 @@
 		</script>
 		# ENDIF #
 		
-		<script type="text/javascript" src="../includes/framework/js/bbcode.js"></script>
+		<script type="text/javascript" src="../kernel/framework/js/bbcode.js"></script>
 		<script type="text/javascript">
 		<!--
 		function XMLHttpRequest_preview()
@@ -40,7 +40,7 @@
 				contents = escape_xmlhttprequest(contents);
 				data = "contents=" + contents + "&ftags=" + forbidden_tags;			
 			  
-				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?preview=1');
+				var xhr_object = xmlhttprequest_init('../kernel/xmlhttprequest.php?preview=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 ) 
@@ -147,7 +147,7 @@
 										# END smiley #
 										# IF C_BBCODE_SMILEY_MORE #
 										<br />
-										<a style="font-size: 10px;" href="#" onclick="window.open('../includes/bbcode.php?show=true&amp;field={FIELD}', '{more.L_SMILEY}', 'height=550,width=650,resizable=yes,scrollbars=yes');return false;">{L_ALL_SMILEY}</a>
+										<a style="font-size: 10px;" href="#" onclick="window.open('../kernel/bbcode.php?show=true&amp;field={FIELD}', '{more.L_SMILEY}', 'height=550,width=650,resizable=yes,scrollbars=yes');return false;">{L_ALL_SMILEY}</a>
 										# ENDIF #
 									</div>
 								</div>

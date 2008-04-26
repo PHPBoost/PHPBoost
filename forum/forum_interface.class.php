@@ -26,7 +26,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once('../includes/framework/modules/module_interface.class.php');
+require_once('../kernel/framework/modules/module_interface.class.php');
 
 define('FORUM_MAX_SEARCH_RESULTS', 100);
 
@@ -220,7 +220,7 @@ class ForumInterface extends ModuleInterface
      */
     {
         global $CONFIG, $LANG, $Sql, $Template;
-        require_once('../includes/begin.php');
+        require_once('../kernel/begin.php');
         load_module_lang('forum'); //Chargement de la langue du module.
         
         $Template->Set_filenames(array(

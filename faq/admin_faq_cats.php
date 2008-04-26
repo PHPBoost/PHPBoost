@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-include_once('../includes/admin_begin.php');
+include_once('../kernel/admin_begin.php');
 include_once('faq_begin.php'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-include_once('../includes/admin_header.php');
+include_once('../kernel/admin_header.php');
 
 include_once('faq_cats.class.php');
 $faq_categories = new FaqCats();
@@ -170,7 +170,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		));
 	}
 	
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 }
 else
 {
@@ -221,6 +221,6 @@ else
 
 $Template->Pparse('admin_faq_cat');
 
-include_once('../includes/admin_footer.php');
+include_once('../kernel/admin_footer.php');
 
 ?>

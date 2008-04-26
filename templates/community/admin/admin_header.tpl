@@ -9,7 +9,7 @@
 		<link href="../templates/{THEME}/generic.css" rel="stylesheet" type="text/css" media="screen" />
 		<link href="../templates/{THEME}/bbcode.css" rel="stylesheet" type="text/css" media="screen" />
 		<link href="../templates/{THEME}/admin.css" rel="stylesheet" type="text/css" media="screen" />
-		<script type="text/javascript" src="../includes/framework/js/global.js"></script>	
+		<script type="text/javascript" src="../kernel/framework/js/global.js"></script>	
 	</head>
 	<body>
 		<div id="header">	

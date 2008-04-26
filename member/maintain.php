@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-include_once('../includes/begin.php'); 
+include_once('../kernel/begin.php'); 
 define('TITLE', $LANG['title_maintain']);
-include_once('../includes/header_no_display.php');
+include_once('../kernel/header_no_display.php');
 
 if( $CONFIG['maintain'] <= time() )
 	redirect(get_start_page());

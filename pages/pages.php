@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 
 $encoded_title = !empty($_GET['title']) ? securit($_GET['title']) : '';
 $id_com = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
@@ -98,7 +98,7 @@ else
 	elseif( !$auth_index && empty($error) )
 		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth'));
 }
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 
 if( !empty($encoded_title) && $num_rows == 1 )
@@ -199,9 +199,9 @@ elseif( $id_com > 0 )
 	
 	$Template->Set_filenames(array('com'=> 'pages/com.tpl'));
 	
-	include_once('../includes/framework/content/comments.class.php'); 
+	include_once('../kernel/framework/content/comments.class.php'); 
 	$Comments = new Comments('pages', $id_com, transid('pages.php?id=' . $id_com . '&amp;i=%s', ''));
-	include_once('../includes/com.php');
+	include_once('../kernel/com.php');
 
 	$Template->Assign_block_vars('com', array());
 	$Template->Pparse('com');
@@ -343,6 +343,6 @@ else
 	$Template->Pparse('index');
 }
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 include_once('../wiki/wiki_functions.php'); 
 load_module_lang('wiki');
 
@@ -38,7 +38,7 @@ require_once('../wiki/wiki_bread_crumb.php');
 
 $cat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 
 $Template->Set_filenames(array('wiki_explorer'=> 'wiki/explorer.tpl'));
@@ -106,6 +106,6 @@ $Template->Assign_vars(array(
 $Template->Pparse('wiki_explorer');
 
 
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

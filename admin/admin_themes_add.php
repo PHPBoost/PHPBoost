@@ -24,9 +24,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 ##########################admin_themes_add.tpl###########################
 //On affiche le contenu du repertoire templates, pour lister les thèmes disponibles..
@@ -77,7 +77,7 @@ elseif( !empty($_FILES['upload_theme']['name']) ) //Upload et décompression de l
 		$check_theme = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."themes WHERE theme = '" . securit($_FILES['upload_theme']['name']) . "'", __LINE__, __FILE__);
 		if( empty($check_theme) && !is_dir('../templates/' . $_FILES['upload_theme']['name']) )
 		{
-			include_once('../includes/framework/files/upload.class.php');
+			include_once('../kernel/framework/files/upload.class.php');
 			$Upload = new Upload($dir);
 			if( $Upload->Upload_file('upload_theme', '`([a-z0-9_-])+\.(gzip|zip)+`i') )
 			{					
@@ -85,13 +85,13 @@ elseif( !empty($_FILES['upload_theme']['name']) ) //Upload et décompression de l
 				//Place à la décompression.
 				if( $Upload->extension['upload_theme'] == 'gzip' )
 				{
-					include_once('../includes/framework/pcl/pcltar.lib.php');
+					include_once('../kernel/framework/pcl/pcltar.lib.php');
 					if( !$zip_files = PclTarExtract($Upload->filename['upload_theme'], '../templates/') )
 						$error = $Upload->error;
 				}
 				elseif( $Upload->extension['upload_theme'] == 'zip' )
 				{
-					include_once('../includes/framework/pcl/pclzip.lib.php');
+					include_once('../kernel/framework/pcl/pclzip.lib.php');
 					$Zip = new PclZip($archive_path);
 					if( !$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../templates/', PCLZIP_OPT_SET_CHMOD, 0666) )
 						$error = $Upload->error;
@@ -223,6 +223,6 @@ else
 	$Template->Pparse('admin_themes_add'); 
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

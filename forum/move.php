@@ -25,12 +25,12 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 define('TITLE', $LANG['title_forum']);
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 //Variables $_GET.
 $id_get = !empty($_GET['id']) ? numeric($_GET['id']) : ''; //Id du topic à déplacer.
@@ -339,7 +339,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		));
 	}
 			
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	//Listes les utilisateurs en lignes.
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
@@ -455,6 +455,6 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 else
 	$Errorh->Error_handler('unknow_error', E_USER_REDIRECT); 
 
-include('../includes/footer.php');
+include('../kernel/footer.php');
 
 ?>

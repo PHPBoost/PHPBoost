@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('articles'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $idcat = !empty($_GET['idcat']) ? numeric($_GET['idcat']) : 0;
 define('READ_CAT_ARTICLES', 0x01);
@@ -173,6 +173,6 @@ else
 	$Template->Pparse('admin_articles_cat_add'); // traitement du modele	
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

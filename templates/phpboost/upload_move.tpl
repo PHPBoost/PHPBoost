@@ -85,7 +85,7 @@
 							<img src="../templates/{THEME}/images/right.png" alt="" />
 						</td>
 						<td class="row1">
-							<script type="text/javascript" src="../includes/framework/js/upload.js">
+							<script type="text/javascript" src="../kernel/framework/js/upload.js">
 							</script>
 							<script type="text/javascript">
 							<!--

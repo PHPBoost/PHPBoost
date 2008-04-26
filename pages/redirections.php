@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../pages/pages_begin.php'); 
 define('TITLE', $LANG['pages'] . ' : ' . $LANG['pages_redirections']);
 
@@ -152,7 +152,7 @@ else
 	$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
 	$Bread_crumb->Add_link($LANG['pages_redirections'], transid('redirections.php'));
 
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 $Template->Set_filenames(array('pages_redirections'=> 'pages/redirections.tpl'));
 
@@ -270,6 +270,6 @@ $Cache->Load_file('pages');
 $Template->Pparse('pages_redirections');
 
 
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

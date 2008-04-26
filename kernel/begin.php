@@ -32,20 +32,20 @@ header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 	
 //Inclusion des fichiers
-require_once('../includes/framework/bench.class.php');
+require_once('../kernel/framework/bench.class.php');
 $Bench = new Bench; //Début du benchmark
 $Bench->Start_bench('site');
-require_once('../includes/framework/functions.inc.php'); //Fonctions de base.
-require_once('../includes/constant.php'); //Constante utiles.
-require_once('../includes/framework/content/mathpublisher.php'); //Gestion des formules mathématiques.
-require_once('../includes/framework/errors.class.php');
-require_once('../includes/framework/template.class.php');
-require_once('../includes/framework/db/' . DBTYPE . '.class.php');
-require_once('../includes/framework/cache.class.php');
-require_once('../includes/framework/members/sessions.class.php');
-require_once('../includes/framework/members/member.class.php');
-require_once('../includes/framework/members/groups.class.php');
-require_once('../includes/framework/breadcrumb.class.php');
+require_once('../kernel/framework/functions.inc.php'); //Fonctions de base.
+require_once('../kernel/constant.php'); //Constante utiles.
+require_once('../kernel/framework/content/mathpublisher.php'); //Gestion des formules mathématiques.
+require_once('../kernel/framework/errors.class.php');
+require_once('../kernel/framework/template.class.php');
+require_once('../kernel/framework/db/' . DBTYPE . '.class.php');
+require_once('../kernel/framework/cache.class.php');
+require_once('../kernel/framework/members/sessions.class.php');
+require_once('../kernel/framework/members/member.class.php');
+require_once('../kernel/framework/members/groups.class.php');
+require_once('../kernel/framework/breadcrumb.class.php');
 
 //Instanciation des objets indispensables au noyau.
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
@@ -110,10 +110,10 @@ if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
     //Vérification pour empêcher une double mise à jour.
     $check_update = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."stats WHERE stats_year = '" . gmdate_format('Y', time(), TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m', time(), TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format('d', time(), TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__);
     
-    require_once('../includes/changeday.php');
+    require_once('../kernel/changeday.php');
 }
 
-include_once('../includes/connect.php'); //Inclusion du gestionnaire de connexion.
+include_once('../kernel/connect.php'); //Inclusion du gestionnaire de connexion.
 	
 //Cache des autorisations des modules
 $Cache->Load_file('modules');

@@ -1,9 +1,9 @@
 <?php
 header('Content-type: text/html; charset=iso-8859-15');
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 define('TITLE', 'Utilisation d\'AJAX');
-require_once('../includes/header_no_display.php');
+require_once('../kernel/header_no_display.php');
 
 $id_cat = !empty($_POST['id_cat']) ? numeric($_POST['id_cat']) : 0;
 $select_cat = !empty($_GET['select_cat']) ? true : false;
@@ -60,5 +60,5 @@ elseif( $select_cat && empty($open_cat) && $root == 0 )
 	}
 }
 
-require_once('../includes/footer_no_display.php');
+require_once('../kernel/footer_no_display.php');
 ?>

@@ -25,9 +25,9 @@
 *
 ###################################################*/
 
-include_once('../includes/begin.php'); 
+include_once('../kernel/begin.php'); 
 define('TITLE', '');
-include_once('../includes/header.php'); 
+include_once('../kernel/header.php'); 
 
 redirect(HOST . DIR . '/wiki/wiki.php');
 

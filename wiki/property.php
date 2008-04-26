@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 include_once('../wiki/wiki_functions.php'); 
 load_module_lang('wiki');
 define('ALTERNATIVE_CSS', 'wiki');
@@ -122,7 +122,7 @@ else
 
 $bread_crumb_key = 'wiki_property';
 require_once('../wiki/wiki_bread_crumb.php');
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 $Template->Set_filenames(array('wiki_properties'=> 'wiki/property.tpl'));
 $Template->Assign_vars(array(
@@ -306,9 +306,9 @@ elseif( $create_redirection > 0 ) //Création d'une redirection
 }
 elseif( isset($_GET['i']) && $idcom > 0 ) //Affichage des commentaires
 {
-	include_once('../includes/framework/content/comments.class.php'); 
+	include_once('../kernel/framework/content/comments.class.php'); 
 	$Comments = new Comments('wiki_articles', $idcom, transid('property.php?com=' . $idcom . '&amp;i=%s', ''), 'wiki');
-	include_once('../includes/com.php');
+	include_once('../kernel/com.php');
 }
 elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 {	
@@ -364,7 +364,7 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 else
 	redirect(HOST . DIR . '/wiki/' . transid('wiki.php'));
 
-include_once('../includes/framework/content/bbcode.php');
+include_once('../kernel/framework/content/bbcode.php');
 
 $Template->Assign_vars(array(
 	'L_SUBMIT' => $LANG['submit'],
@@ -404,6 +404,6 @@ $Template->Assign_vars(array(
 
 $Template->Pparse('wiki_properties');
 
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

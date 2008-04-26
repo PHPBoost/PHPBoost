@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 include_once('../wiki/wiki_functions.php'); 
 
 load_module_lang('wiki');

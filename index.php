@@ -25,20 +25,20 @@
  *
 ###################################################*/
 
-require_once('./includes/auth/config.php'); //Fichier de configuration.
+require_once('./kernel/auth/config.php'); //Fichier de configuration.
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
-require_once('./includes/framework/functions.inc.php');
+require_once('./kernel/framework/functions.inc.php');
 
 $CONFIG = array();
 @include_once('./cache/config.php');
 if( !defined('PHPBOOST_INSTALLED') )
 {
-    require_once('./includes/framework/unusual_functions.php');
+    require_once('./kernel/framework/unusual_functions.php');
     redirect(get_server_url_page('install/install.php'));
 }
 elseif( $CONFIG === array() )
 {
-    require_once('./includes/framework/unusual_functions.php');
+    require_once('./kernel/framework/unusual_functions.php');
     redirect(get_server_url_page('member/member.php'));
 }
 define('DIR', $CONFIG['server_path']);

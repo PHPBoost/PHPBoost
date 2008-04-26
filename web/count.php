@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 
 $idweb = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 if( !empty($idweb) )

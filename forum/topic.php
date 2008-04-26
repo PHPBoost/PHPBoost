@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
@@ -54,7 +54,7 @@ if( !empty($CAT_FORUM[$topic['idcat']]['name']) ) //Nom de la catégorie courante
 $Bread_crumb->Add_link($topic['title'], '');
 
 define('TITLE', $LANG['title_topic'] . ' - ' . addslashes($topic['title']));
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : ''; //On encode l'url pour un éventuel rewriting.
 $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
@@ -118,7 +118,7 @@ if( !empty($idm) )
 }	
 	
 //On crée une pagination si le nombre de msg est trop important.
-include_once('../includes/framework/pagination.class.php'); 
+include_once('../kernel/framework/pagination.class.php'); 
 $Pagination = new Pagination();	
 
 //Affichage de l'arborescence des catégories.
@@ -506,9 +506,9 @@ else
 	}
 }
 	
-include('../includes/framework/content/bbcode.php');
+include('../kernel/framework/content/bbcode.php');
 $Template->Pparse('forum_topic');
 
-include('../includes/footer.php');
+include('../kernel/footer.php');
 
 ?>

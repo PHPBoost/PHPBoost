@@ -25,14 +25,14 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 $Bread_crumb->Add_link($LANG['stats'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['stats']);
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $Template->Set_filenames(array(
 	'forum_stats'=> 'forum/forum_stats.tpl',
@@ -188,6 +188,6 @@ $Template->Assign_vars(array(
 
 $Template->Pparse('forum_stats');	
 
-include('../includes/footer.php');
+include('../kernel/footer.php');
 
 ?>

@@ -28,9 +28,9 @@
 
 header('Content-type: text/html; charset=iso-8859-15');
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 define('TITLE', 'Ajax Galerie');
-require_once('../includes/header_no_display.php');
+require_once('../kernel/header_no_display.php');
 
 if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 {	

@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $check_advanced = !empty($_GET['adv']) ? true : false;
 
@@ -428,7 +428,7 @@ else //Sinon on rempli le formulaire
 //Renvoi du code de déblocage.
 if( !empty($_GET['unlock']) )
 {
-	include_once('../includes/framework/mail.class.php');
+	include_once('../kernel/framework/mail.class.php');
 	$Mail = new Mail();
 	
 	$unlock_admin_clean = substr(md5(uniqid(mt_rand(), true)), 0, 18); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;
@@ -445,6 +445,6 @@ if( !empty($_GET['unlock']) )
 	redirect(HOST . DIR . '/admin/admin_config.php?adv=1&mail=1');
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

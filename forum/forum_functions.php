@@ -92,7 +92,7 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 //Gestion du rss du forum.
 function forum_generate_rss()
 {		
-	include_once('../includes/framework/syndication/rss.class.php');
+	include_once('../kernel/framework/syndication/rss.class.php');
 	$Rss = new Rss('forum/rss.php');
 	$Rss->Cache_path('../cache/');
 	$Rss->Generate_file('javascript', 'rss_forum');

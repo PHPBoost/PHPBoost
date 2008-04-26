@@ -71,7 +71,7 @@ class Stats
 	}		
 	
 	//Graphique camenbert en ellipse.
-	function Draw_ellipse($w_arc, $h_arc, $img_cache = '', $height_3d = 20, $draw_percent = true, $draw_legend = true, $font_size = 10, $font = '../includes/data/fonts/franklinbc.ttf')
+	function Draw_ellipse($w_arc, $h_arc, $img_cache = '', $height_3d = 20, $draw_percent = true, $draw_legend = true, $font_size = 10, $font = '../kernel/data/fonts/franklinbc.ttf')
 	{
 		if( @extension_loaded('gd') && version_compare(phpversion(), '4.0.6', '>=') )
 		{			
@@ -199,7 +199,7 @@ class Stats
 	}
 	
 	//Graphique en baton.
-	function Draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = '../includes/data/fonts/franklinbc.ttf')
+	function Draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = '../kernel/data/fonts/franklinbc.ttf')
 	{
 		if( @extension_loaded('gd') )
 		{					
