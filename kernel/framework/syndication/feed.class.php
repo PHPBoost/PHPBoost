@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         syndication.class.php
+ *                         feed.class.php
  *                            -------------------
  *   begin                : April 21, 2008
  *   copyright            : (C) 2005 Loïc Rouchon
@@ -25,43 +25,39 @@
  *
 ###################################################*/
 
-define('ALL_FEEDS', 'all_feeds');
-define('RSS', 'rss');
-define('ATOM', 'atom');
+define('ALL_FEEDS', 0xffffffff);
+define('RSS', 0x01);
+define('ATOM', 0x02);
 
 class Feed
 {
     ## Public Methods #
-    function Feed($type = ALL_FEEDS)
+    function Feed($feedPath, $feedName, $type = ALL_FEEDS)
     /**
-    * Constructor
-    */
+     * Constructor
+     */
     {
-        switch ( $type )
-        {
-            case ALL_FEEDS:
-                $this->feeds[RSS] = new Rss();
-                $this->feeds[ATOM] = new Atom();
-                break;
-            case RSS:
-                $this->feeds[RSS] = new Rss();
-                break;
-            case ATOM:
-                $this->feeds[ATOM] = new Atom();
-                break;
-            case default:
-                $this->feeds[RSS] = new Rss();
-                $this->feeds[ATOM] = new Atom();
-                break;
+		$this->name = $feedName;
+		$this->path = $feedPath;
+		
+        if ( $type & RSS )
+		{
+			require_once('../kernel/framework/syndication/rss.work.class.php');
+			$this->feeds[RSS] = new Rss($feedPath, $feedName);
+		}
+		else if ( $type & ATOM )
+		{
+			require_once('../kernel/framework/syndication/atom.class.php');
+			$this->feeds[ATOM] = new Atom($feedPath, $feedName);
         }
     }
 
-    function Parse($feedPath, $feedName, $nbItem=5)
+    function Parse($nbItem = 5)
     /**
-    * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
-    * /<$feedPath>/<$feedName>.atom if the rss one does not exist et return
-    * the result as a string.
-    */
+     * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
+     * /<$feedPath>/<$feedName>.atom if the rss one does not exist et return
+     * the result as an Array.
+     */
     {
         $parsed = array();
         if ( in_array(RSS, array_keys($this->feeds)) &&
@@ -78,90 +74,50 @@ class Feed
         return $parsed;
     }
 
-    function Generate($feedFile, $mode = )
+    function Generate(&$feedInformations, $tpl = 'feed.tpl')
     /**
-    * Generate the feed contained into the files <$feedFile>.rss and <$feedFile>.atom
-    */
+     * Generate the feed contained into the files <$feedFile>.rss and <$feedFile>.atom
+	 * and also the HTML cache for direct includes.
+     */
     {
-        parsed = '';
-        return $parsed;
+        foreach ( $this->feeds as $feed )
+		{
+			$feed->Generate($feedInformations);
+		}
+		$this->generateCache($feedInformations, $tpl);
     }
-
-    //Gï¿½nï¿½re les fichier du cache, suivant le type demandï¿½.
-    function Generate_file($type, $name)
-    {
-        if( $type == 'javascript' ) //Gï¿½nï¿½ration du 1er fichier javascript.
-        {
-            $file_path = $this->path_cache . $name . '.html';
-            $file = fopen($file_path, 'w+'); //Si le fichier n'existe pas on le crï¿½e avec droit d'ï¿½criture et lecture.
-            fputs($file, "document.write('" . str_replace('\'', '\\\'', $this->flux) . "');");
-            fclose($file);
-        }
-        elseif( $type == 'php' ) //Gï¿½nï¿½ration du 2ï¿½me fichier PHP.
-        {
-            $file_path2 = $this->path_cache . $name . '.html';
-            $file = fopen($file_path2, 'w+'); //Si le fichier n'existe pas on le crï¿½e avec droit d'ï¿½criture et lecture.
-            fputs($file, $this->flux);
-            fclose($file);
-        }
-    }
-
 
     ## Private Methods ##
-    //Charge le rss non parsï¿½.
-    function load_rss($path_flux)
+	function generateCache(&$feedInformations, $tpl)
+    /**
+     * Generate the HTML cache for direct includes.
+     */
     {
-        if( $this->mode == 'include')
-        {
-            if( @include('..' . $path_flux) )
-                $this->get_rss($RSS_flux); //Rï¿½cupï¿½re le contenu du rss directement.
-            else
-                $this->flux = '';
-        }
-        else
-        {
-            $file = file_get_contents_emulate(HOST . DIR . $path_flux);
-            if( $file !== false )
-            {
-                if( preg_match('`<item>(.*)</item>`is', $file) )
-                    $this->parse_rss($file); //Parse le rss chargï¿½
-            }
-            else
-                $this->flux = '';
-        }
-    }
-
-    //Parse le rss chargï¿½
-    function parse_rss($line)
-    {
-        $array_items = explode('<item>', $line);
-        $lenght_array = count($array_items);
-
-        $this->flux = '<ul>';
-        for($i = 1; $i < $lenght_array; $i++)
-        {
-            $url = preg_match('`<link>(.*)</link>`is', $array_items[$i], $url) ? $url[1] : '';
-            $title = preg_match('`<title>(.*)</title>`is', $array_items[$i], $title) ? $title[1] : '';
-
-            //Conversion heure GMT -> J/M/A.
-            $date = preg_match('`<pubDate>(.*)</pubDate>`is', $array_items[$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '';
-
-            $this->flux .= '<li>' . $date . ' <a href="' . $url . '">' . $title . '</a></li>';
-        }
-        $this->flux .= '</ul>';
-    }
-
-    //Rï¿½cupï¿½re le contenu du rss directement.
-    function get_rss($rss_flux)
-    {
-        $this->flux = '<ul>';
-        foreach($rss_flux as $key => $value)
-            $this->flux .= '<li>' . $value[2] . ' <a href="' . $value[1] . '">' . $value[0] . '</a></li>';
-        $this->flux .= '</ul>';
+		$Template->Set_filenames(array('feed'=> $tpl));
+		
+		$Template->Assign_vars(array(
+			'DATE' => isset($feedInformations['items']) ? $feedInformations['items'] : '',
+			'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
+			'HOST' => HOST,	
+			'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
+			'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
+		));
+		
+		foreach ( $feedInformations['items'] as $item )
+		{
+			$Template->Assign_block_vars('items', array(
+				'DATE' => $item['date'],
+				'U_LINK' => $item['link'],
+				'TITLE' => $item['title']
+			));
+		}
+		
+		$Template->Pparse('feed');	
     }
 
     ## Private attributes ##
-    var $path_cache = ''; //Chemin du cache, lien relatif sur le serveur.
+	var $name = ''; // Feed Name
+    var $path = ''; // Path where the feeds are stored
     var $feeds = array();
 }
 
