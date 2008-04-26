@@ -3,8 +3,8 @@
 /*##################################################
  *                                constant.php
  *                            -------------------
- *   begin                : June 13, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   begin                : April 26, 2008
+ *   copyright            : (C) 2008 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *   Constantes utiles
