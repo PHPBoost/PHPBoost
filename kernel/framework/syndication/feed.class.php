@@ -56,23 +56,23 @@ class Feed
         }
     }
 
-    function Parse($feedPath, $feedName)
+    function Parse($feedPath, $feedName, $nbItem=5)
     /**
     * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
     * /<$feedPath>/<$feedName>.atom if the rss one does not exist et return
     * the result as a string.
     */
     {
-        parsed = '';
+        $parsed = array();
         if ( in_array(RSS, array_keys($this->feeds)) &&
              ($file = @fopen(trim($feedPath, '/') . '/' . $feedName . RSS, 'r' )) )
         {
-            parsed = '';
+            
         }
         elseif ( in_array(ATOM, array_keys($this->feeds)) &&
              ($file = @fopen(trim($feedPath, '/') . '/' . $feedName . ATOM, 'r' )) )
         {
-            parsed = '';
+            
         }
         @fclose($file);
         return $parsed;
