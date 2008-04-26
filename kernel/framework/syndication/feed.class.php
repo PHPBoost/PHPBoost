@@ -26,8 +26,8 @@
 ###################################################*/
 
 define('ALL_FEEDS', 0xffffffff);
-define('RSS', 0x01);
-define('ATOM', 0x02);
+define('USE_RSS', 0x01);
+define('USE_ATOM', 0x02);
 
 class Feed
 {
@@ -38,17 +38,17 @@ class Feed
      */
     {
 		$this->name = $feedName;
-		$this->path = $feedPath;
+		$this->path = trim($feedPath, '/') . '/';
 		
-        if ( $type & RSS )
+        if ( $type & USE_RSS )
 		{
 			require_once('../kernel/framework/syndication/rss.work.class.php');
-			$this->feeds[RSS] = new Rss($feedPath, $feedName);
+			$this->feeds[USE_RSS] = new RSS($this->path, $feedName);
 		}
-		else if ( $type & ATOM )
+		else if ( $type & USE_ATOM )
 		{
 			require_once('../kernel/framework/syndication/atom.class.php');
-			$this->feeds[ATOM] = new Atom($feedPath, $feedName);
+			$this->feeds[USE_ATOM] = new ATOM($this->path, $feedName);
         }
     }
 
@@ -59,19 +59,12 @@ class Feed
      * the result as an Array.
      */
     {
-        $parsed = array();
-        if ( in_array(RSS, array_keys($this->feeds)) &&
-             ($file = @fopen(trim($feedPath, '/') . '/' . $feedName . RSS, 'r' )) )
+        foreach ( $this->feeds as $feed )
         {
-            
+            if ( ($parsed = $feed->Parse($nbItem = 5)) !== false )
+                return $parsed;
         }
-        elseif ( in_array(ATOM, array_keys($this->feeds)) &&
-             ($file = @fopen(trim($feedPath, '/') . '/' . $feedName . ATOM, 'r' )) )
-        {
-            
-        }
-        @fclose($file);
-        return $parsed;
+        return array();
     }
 
     function Generate(&$feedInformations, $tpl = 'feed.tpl')
@@ -93,10 +86,11 @@ class Feed
      * Generate the HTML cache for direct includes.
      */
     {
+        global $Template;
 		$Template->Set_filenames(array('feed'=> $tpl));
 		
 		$Template->Assign_vars(array(
-			'DATE' => isset($feedInformations['items']) ? $feedInformations['items'] : '',
+			'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
 			'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
 			'HOST' => HOST,	
 			'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
@@ -112,7 +106,9 @@ class Feed
 			));
 		}
 		
-		$Template->Pparse('feed');	
+		$file = fopen($this->path . $this->name, 'w+');
+        fputs($file, $Template->Pparse('feed', TEMPLATE_STRING_MODE));
+        fclose($file);
     }
 
     ## Private attributes ##

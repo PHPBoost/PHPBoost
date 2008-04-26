@@ -27,98 +27,41 @@
 
 class ATOM extends Feed
 {
-	## Public Methods #	
-	//Constructeur.
-	function Rss($path_flux, $mode = 'include') 
-	{
-		$path_flux = trim($path_flux, '/');
-		$this->load_rss('/' . $path_flux);
-		$this->mode = $mode;
-	}
-	
-	//Assigne le chemin vers le dossier du cache.
-	function Cache_path($path_cache)
-	{
-		$this->path_cache = $path_cache;
-	}
-	
-	//Génère les fichier du cache, suivant le type demandé.
-	function Generate_file($type, $name)
-	{		
-		if( $type == 'javascript' ) //Génération du 1er fichier javascript.
-		{						
-			$file_path = $this->path_cache . $name . '.html';
-			$file = fopen($file_path, 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
-			fputs($file, "document.write('" . str_replace('\'', '\\\'', $this->flux) . "');");
-			fclose($file);
-		}		
-		elseif( $type == 'php' ) //Génération du 2ème fichier PHP.
-		{			
-			$file_path2 = $this->path_cache . $name . '.html';
-			$file = fopen($file_path2, 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
-			fputs($file, $this->flux);
-			fclose($file);
-		}
-	}
-	
-	
-	## Private Methods ##
-	//Charge le rss non parsé.
-	function load_rss($path_flux)
-	{
-		if( $this->mode == 'include') 
-		{	
-			if( @include('..' . $path_flux) )
-				$this->get_rss($RSS_flux); //Récupère le contenu du rss directement.
-			else
-				$this->flux = '';
-		}	
-		else
-		{	
-			$file = file_get_contents_emulate(HOST . DIR . $path_flux);		
-			if( $file !== false )
-			{
-				if( preg_match('`<item>(.*)</item>`is', $file) ) 
-					$this->parse_rss($file); //Parse le rss chargé
-			}
-			else
-				$this->flux = '';			
-		}
-	}
-	
-	//Parse le rss chargé
-	function parse_rss($line)
-	{
-		$array_items = explode('<item>', $line);
-		$lenght_array = count($array_items);
-		
-		$this->flux = '<ul>';
-		for($i = 1; $i < $lenght_array; $i++) 
-		{
-			$url = preg_match('`<link>(.*)</link>`is', $array_items[$i], $url) ? $url[1] : '';
-			$title = preg_match('`<title>(.*)</title>`is', $array_items[$i], $title) ? $title[1] : '';
-			
-			//Conversion heure GMT -> J/M/A.
-			$date = preg_match('`<pubDate>(.*)</pubDate>`is', $array_items[$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '';
+	## Public Methods #
+    function ATOM($feedPath, $feedName)
+    /**
+     * Constructor
+     */
+    {
+		$this->name = $feedName;
+		$this->path = $feedPath;
+    }
 
-			$this->flux .= '<li>' . $date . ' <a href="' . $url . '">' . $title . '</a></li>';						
-		}
-		$this->flux .= '</ul>';
-	}
-		
-	//Récupère le contenu du rss directement.
-	function get_rss($rss_flux)
-	{
-		$this->flux = '<ul>';
-		foreach($rss_flux as $key => $value)
-			$this->flux .= '<li>' . $value[2] . ' <a href="' . $value[1] . '">' . $value[0] . '</a></li>';						
-		$this->flux .= '</ul>';	
-	}
-	
-	## Private attributes ##
-	var $path_cache = ''; //Chemin du cache, lien relatif sur le serveur.
-	var $flux = ''; //Stock le flux du rss qui va être parsé.
-	var $mode = 'include'; //Type de récupération du contenu du rss.
+    function Parse($nbItem = 5)
+    /**
+     * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
+     * /<$feedPath>/<$feedName>.atom if the rss one does not exist et return
+     * the result as an Array and <false> if it couldn't open the feed.
+     */
+    {
+        
+        return false;
+    }
+
+    function Generate(&$feedInformations)
+    /**
+     * Generate the feed contained into the files <$feedFile>.rss and <$feedFile>.atom
+	 * and also the HTML cache for direct includes.
+     */
+    {
+        
+    }
+
+    ## Private Methods ##
+    
+    ## Private attributes ##
+	var $name = ''; // Feed Name
+    var $path = ''; // Path where the feeds are stored
 }
 
 ?>
