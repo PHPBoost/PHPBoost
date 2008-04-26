@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
@@ -33,7 +33,7 @@ $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 $Bread_crumb->Add_link($LANG['show_last_read'], '');
 
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_last_read']);
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 //Redirection changement de catégorie.
 if( !empty($_POST['change_cat']) )
@@ -49,7 +49,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 	
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
@@ -218,6 +218,6 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 else
 	redirect(HOST . DIR . '/forum/index.php' . SID2);
 
-include('../includes/footer.php');
+include('../kernel/footer.php');
 
 ?>

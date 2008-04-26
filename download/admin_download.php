@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('download'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 include_once('download_cats.class.php');
 $download_categories = new Download_cats();
@@ -48,7 +48,7 @@ if( !empty($id) && !$del )
 	
 	$idcat = $row['idcat'];
 	
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 
 	$Template->Assign_vars(array(
 		'TITLE' => $row['title'],
@@ -128,7 +128,7 @@ if( !empty($id) && !$del )
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'short_contents';
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	
 	$Template->Assign_vars(array(
 		'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE)
@@ -224,7 +224,7 @@ elseif( !empty($_POST['preview']) && !empty($id_post) )
 		'MODULE_DATA_PATH' => $Template->Module_data_path('download')
 	));
 	
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	
 	$Template->Assign_vars(array(
 		'LANG' => $CONFIG['lang'],
@@ -279,7 +279,7 @@ elseif( !empty($_POST['preview']) && !empty($id_post) )
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'short_contents';
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	
 	$Template->Assign_vars(array(
 		'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE)
@@ -350,7 +350,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 			
 		$Sql->Query_inject("UPDATE ".PREFIX."download SET title = '" . $title . "', contents = '" . $contents . "', short_contents = '" . $short_contents . "', url = '" . $url . "', size = '" . $size . "', idcat = '" . $idcat . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . ", count = '" . $count . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
-		include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
+		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('download/rss.php');
 		$Rss->Cache_path('../cache/');
 		$Rss->Generate_file('javascript', 'rss_download');
@@ -369,7 +369,7 @@ elseif( $del && !empty($id) ) //Suppression du fichier.
 	//On supprimes les éventuels commentaires associés.
 	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'download'", __LINE__, __FILE__);
 	
-	include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
+	include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 	$Rss = new Rss('download/rss.php');
 	$Rss->Cache_path('../cache/');
 	$Rss->Generate_file('javascript', 'rss_download');
@@ -386,7 +386,7 @@ else
 	$nbr_dl = $Sql->Count_table('download', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de fichier est trop important.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
 	$Template->Assign_vars(array(			
@@ -453,13 +453,13 @@ else
 	}
 	$Sql->Close($result);
 	
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	include_once('admin_download_menu.php');
 	
 	$Template->Pparse('admin_download_management'); 
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

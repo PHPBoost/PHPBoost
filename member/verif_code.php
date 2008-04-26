@@ -26,15 +26,15 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 define('TITLE', '');
-require_once('../includes/header_no_display.php');
+require_once('../kernel/header_no_display.php');
 header('Content-type: image/jpeg'); //Envoi du header.
 
 //Configuration
 $width = 160;
 $height = 50;
-$font = '../includes/data/fonts/impact.ttf';
+$font = '../kernel/data/fonts/impact.ttf';
 $rand = rand(0,1);
 
 ##Génération du code##
@@ -142,5 +142,5 @@ else
 	$Sql->Query_inject("INSERT INTO ".PREFIX."verif_code (user_id, code, timestamp) VALUES ('" . $user_id . "', '" . $code . "', '" . time() . "')", __LINE__, __FILE__);
 }
 
-require_once('../includes/footer_no_display.php');
+require_once('../kernel/footer_no_display.php');
 ?>

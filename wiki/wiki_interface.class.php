@@ -26,7 +26,7 @@
 ###################################################*/
  
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once('../includes/framework/modules/module_interface.class.php');
+require_once('../kernel/framework/modules/module_interface.class.php');
  
 // Classe WikiInterface qui hérite de la classe ModuleInterface
 class WikiInterface extends ModuleInterface
@@ -43,7 +43,7 @@ class WikiInterface extends ModuleInterface
      *  Renvoie le formulaire de recherche du wiki
      */
     {
-        require_once('../includes/begin.php');
+        require_once('../kernel/begin.php');
         load_module_lang('wiki');
         global $CONFIG, $LANG, $Template;
         

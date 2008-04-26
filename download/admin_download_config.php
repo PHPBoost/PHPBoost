@@ -26,11 +26,11 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('download'); //Chargement de la langue du module.
 $Cache->load_file('download');
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 include_once('download_auth.php');
 
@@ -88,13 +88,13 @@ else
 		'L_ROOT_DESCRIPTION' => $DOWNLOAD_LANG['root_description']
 	));
 	
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	
 	include_once('admin_download_menu.php');
 	
 	$Template->Pparse('admin_download_config'); // traitement du modele
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

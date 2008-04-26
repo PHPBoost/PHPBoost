@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 require_once('../newsletter/newsletter_begin.php');
-require_once('../includes/header_no_display.php');
+require_once('../kernel/header_no_display.php');
 
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 if( !empty($id) )

@@ -26,7 +26,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once('../includes/framework/modules/module_interface.class.php');
+require_once('../kernel/framework/modules/module_interface.class.php');
 
 define('FAQ_MAX_SEARCH_RESULTS', 100);
 

@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $Template->Set_filenames(array(
 	'admin_extend'=> 'admin/admin_extend.tpl'
@@ -102,6 +102,6 @@ if( $i != 0 )
 
 $Template->Pparse('admin_extend'); 
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

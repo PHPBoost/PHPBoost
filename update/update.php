@@ -38,9 +38,9 @@ define('DIR', str_replace('/update/update.php', '', $server_path));
 //Thème par défaut.
 define('DEFAULT_THEME', 'main');
 
-if( !@include_once('../includes/framework/template.class.php') )
+if( !@include_once('../kernel/framework/template.class.php') )
 	die('Votre dossier de mise à jour n\'est pas placé où il faut');
-include_once('../includes/framework/functions.inc.php');
+include_once('../kernel/framework/functions.inc.php');
 
 $step = !empty($_GET['step']) ? numeric($_GET['step']) : 1;
 $step = $step > 14 ? 1 : $step;
@@ -54,15 +54,15 @@ $Template = new Templates; //!\\Initialisation des templates//!\\
 
 if( $step >= 2 )
 {
-	require_once('../includes/framework/functions.inc.php'); //Fonctions de base.
-	require_once('../includes/constant.php'); //Constante utiles.
-	require_once('../includes/framework/content/mathpublisher.php'); //Gestion des formules mathématiques.
-	require_once('../includes/framework/errors.class.php');
-	require_once('../includes/framework/template.class.php');
-	require_once('../includes/framework/db/' . DBTYPE . '.class.php');
-	require_once('../includes/framework/cache.class.php');
-	require_once('../includes/framework/members/sessions.class.php');
-	require_once('../includes/framework/members/groups.class.php');
+	require_once('../kernel/framework/functions.inc.php'); //Fonctions de base.
+	require_once('../kernel/constant.php'); //Constante utiles.
+	require_once('../kernel/framework/content/mathpublisher.php'); //Gestion des formules mathématiques.
+	require_once('../kernel/framework/errors.class.php');
+	require_once('../kernel/framework/template.class.php');
+	require_once('../kernel/framework/db/' . DBTYPE . '.class.php');
+	require_once('../kernel/framework/cache.class.php');
+	require_once('../kernel/framework/members/sessions.class.php');
+	require_once('../kernel/framework/members/groups.class.php');
 
 	//Instanciation des objets indispensables au noyau.
 	$Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
@@ -103,14 +103,14 @@ function add_lang($url, $header_location = false)
 //Préambule
 if( $step == 1 )
 {
-	$config_contents = file_get_contents('../includes/auth/config.php');
+	$config_contents = file_get_contents('../kernel/auth/config.php');
 	//Si le fichier de config est à l'ancien format
 	if( strpos($config_contents, 'DBSECURE') === false )
 	{
 		$INCLUDE_secure = 1;
-		include_once('../includes/auth/config.php');
+		include_once('../kernel/auth/config.php');
 		//Remplacement des fichiers de configuration
-		$file = @fopen('../includes/auth/config.php', 'w+'); //On ouvre le fichier, si il n'existe pas on le crée.
+		$file = @fopen('../kernel/auth/config.php', 'w+'); //On ouvre le fichier, si il n'existe pas on le crée.
 		@fputs($file, '<?php
 if( !defined(\'DBSECURE\') )
 {
@@ -268,7 +268,7 @@ elseif( $step == 2 )
 			`added` tinyint(1) NOT NULL default '0',
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (1, 1, 'connexion', 'if( SCRIPT != DIR . ''/membre/error.php'')include_once(''../includes/connect.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (1, 1, 'connexion', 'if( SCRIPT != DIR . ''/membre/error.php'')include_once(''../kernel/connect.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
 		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (2, 1, 'gallery', 'include_once(''../gallery/gallery_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
 		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (3, 2, 'links', 'include_once(''../links/links_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
 		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (4, 3, 'newsletter', 'include_once(''../newsletter/newsletter_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
@@ -897,7 +897,7 @@ elseif( $step == 9 )
 					{
 						$title = stripslashes($get_title[1]);
 						$contents = preg_replace('`<\?php(.+)\?>`isU', '', $contents, 1);
-						$contents = preg_replace('`<\?php .* include_once\(\'../includes/footer.php\'\); \?>`isU', '', $contents);
+						$contents = preg_replace('`<\?php .* include_once\(\'../kernel/footer.php\'\); \?>`isU', '', $contents);
 						$contents = preg_replace('`<!-- START -->(.*)<!-- END -->`is', '$1', $contents);
 						$contents = trim($contents);
 						$Sql->Query_inject("INSERT INTO ".PREFIX."pages ('title', 'encoded_title', 'contents', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'user_id', 'timestamp', 'activ_com', 'nbr_com', 'lock_com', 'redirect') VALUES ('" . $title . "', '" . str_replace('.php', '', $file) . "', '" . $contents . "', '', '0', '0', '0', '1', '1', '" . time() . "' . '1', '0', '0', '0')", __LINE__, __FILE__);

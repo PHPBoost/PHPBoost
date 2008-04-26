@@ -1,10 +1,10 @@
 <?php
 header('Content-type: text/html; charset=iso-8859-15');
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 require_once('../pages/pages_begin.php');
 define('TITLE', 'Utilisation d\'AJAX');
-require_once('../includes/header_no_display.php');
+require_once('../kernel/header_no_display.php');
 
 $id_cat = !empty($_POST['id_cat']) ? numeric($_POST['id_cat']) : 0;
 $select_cat = !empty($_GET['select_cat']) ? true : false;
@@ -14,7 +14,7 @@ $open_cat = !empty($_POST['open_cat']) ? numeric($_POST['open_cat']) : 0;
 $root = !empty($_GET['root']) ? 1 : 0;
 
 //Chargement d'un fichier template pour connaître l'emplacement du template
-include_once('../includes/framework/template.class.php');
+include_once('../kernel/framework/template.class.php');
 $Template = new Templates();
 $Template->Set_filenames(array('pages'=> 'pages/pages.tpl'));
 
@@ -109,5 +109,5 @@ elseif( !empty($open_cat) || $root == 1 )
 }
 
 
-require_once('../includes/footer_no_display.php');
+require_once('../kernel/footer_no_display.php');
 ?>

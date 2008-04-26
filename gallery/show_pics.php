@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../gallery/gallery_begin.php');
-require_once('../includes/header_no_display.php');
+require_once('../kernel/header_no_display.php');
 
 $g_idpics = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $g_idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
@@ -71,6 +71,6 @@ else
 	die($LANG['no_random_img']); //Echec paramètres images incorrects.
 }
 
-require_once('../includes/footer_no_display.php');
+require_once('../kernel/footer_no_display.php');
 
 ?>

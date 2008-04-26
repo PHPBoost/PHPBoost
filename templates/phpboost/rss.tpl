@@ -7,7 +7,7 @@
 		<title>{TITLE_RSS}</title>
 		<link>{HOST}</link>
 		<description>{DESC}</description>
-		<copyright>© 2005-2008 PHPBoost</copyright>
+		<copyright>&copy; 2005-2008 PHPBoost</copyright>
 		<language>{LANG}</language>
 		<generator>PHPBoost</generator>
 

@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 require_once('../news/news_begin.php');
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
     
 $idnews = request_var(GET, 'id', 0);	
 $idcat = request_var(GET, 'cat', 0);
@@ -51,7 +51,7 @@ if( empty($idnews) && empty($idcat) )
 	}	
 
 	//On crée une pagination (si activé) si le nombre de news est trop important.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
 	//Pagination activée, sinon affichage lien vers les archives.
@@ -275,12 +275,12 @@ elseif( !empty($idcat) )
 //Affichage commentaires.
 if( isset($_GET['i']) && !empty($idnews) )
 {
-	include_once('../includes/framework/content/comments.class.php'); 
+	include_once('../kernel/framework/content/comments.class.php'); 
 	$Comments = new Comments('news', $idnews, transid('news.php?id=' . $idnews . '&amp;i=%s', 'news-0-' . $idnews . '.php?i=%s'));
-	include_once('../includes/com.php');
+	include_once('../kernel/com.php');
 }	
 $Template->Pparse('news');
 	
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

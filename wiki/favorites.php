@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 load_module_lang('wiki');
 
 define('TITLE' , $LANG['wiki_favorites']);
@@ -33,7 +33,7 @@ define('TITLE' , $LANG['wiki_favorites']);
 $bread_crumb_key = 'wiki_favorites';
 require_once('../wiki/wiki_bread_crumb.php');
 
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 if( !$Member->Check_level(MEMBER_LEVEL) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -125,6 +125,6 @@ else
 	$Template->Pparse('wiki_favorites');
 }
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

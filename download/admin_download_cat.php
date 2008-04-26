@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('download'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 include_once('download_auth.php');
 $Cache->Load_file('download');
@@ -216,7 +216,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		));
 	}
 	
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	include_once('admin_download_menu.php');
 	
@@ -272,6 +272,6 @@ else
 	$Template->Pparse('admin_download_cat');
 }
 
-include_once('../includes/admin_footer.php');
+include_once('../kernel/admin_footer.php');
 
 ?>

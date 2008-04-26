@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 define('TITLE', $LANG['title_error'] . ' 404');
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $Template->Set_filenames(array(
 	'error'=> 'error.tpl'
@@ -44,6 +44,6 @@ $Template->Assign_vars(array(
 
 $Template->Pparse('error');
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

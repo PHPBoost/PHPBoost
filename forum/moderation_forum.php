@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
@@ -42,7 +42,7 @@ elseif( $action == 'users' )
 	$Bread_crumb->Add_link($LANG['warning_management'], transid('moderation_forum.php?action=warning'));
 	
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['moderation_panel']);
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 //Au moins modérateur sur une catégorie du forum, ou modérateur global.
 $check_auth_by_group = false;
@@ -279,7 +279,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 			{
 				if( !empty($readonly_contents) && !empty($readonly) )
 				{					
-					include_once('../includes/framework/members/pm.class.php');
+					include_once('../kernel/framework/members/pm.class.php');
 					$Privatemsg = new Privatemsg();
 					
 					//Envoi du message.
@@ -425,7 +425,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 		));		
 
 		$_field = 'action_contents';
-		include_once('../includes/framework/content/bbcode.php');
+		include_once('../kernel/framework/content/bbcode.php');
 				
 	}	
 }
@@ -449,7 +449,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				{					
 					if( !empty($warning_contents) )
 					{					
-						include_once('../includes/framework/members/pm.class.php');
+						include_once('../kernel/framework/members/pm.class.php');
 						$Privatemsg = new Privatemsg();
 						
 						//Envoi du message.
@@ -469,7 +469,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				forum_history_collector(H_BAN_USER, $info_mbr['user_id'], 'moderation_forum.php?action=warning&id=' . $info_mbr['user_id']);
 				
 				//Envoi du mail
-				include_once('../includes/framework/mail.class.php');
+				include_once('../kernel/framework/mail.class.php');
 				$Mail = new Mail();
 				$Mail->Send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 			}	
@@ -572,7 +572,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		));			
 
 		$_field = 'action_contents';
-		include_once('../includes/framework/content/bbcode.php');
+		include_once('../kernel/framework/content/bbcode.php');
 	}	
 }
 elseif( !empty($_GET['del_h']) && $Member->Check_level(ADMIN_LEVEL) ) //Suppression de l'historique.
@@ -706,6 +706,6 @@ $Template->Assign_vars(array(
 	
 $Template->Pparse('forum_moderation_panel');
 
-include('../includes/footer.php');
+include('../kernel/footer.php');
 
 ?>

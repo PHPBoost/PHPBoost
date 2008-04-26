@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 define('TITLE', $LANG['title_error']);
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $id_error = !empty($_GET['e']) ? trim($_GET['e']) : '';
 	
@@ -167,6 +167,6 @@ elseif( $Member->Get_attribute('user_id') === -1 )
 else
 	redirect(get_start_page());
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

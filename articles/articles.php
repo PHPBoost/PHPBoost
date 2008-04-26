@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../articles/articles_begin.php');
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $page = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
 if( !empty($idart) && isset($_GET['cat']) )
@@ -64,7 +64,7 @@ if( !empty($idart) && isset($_GET['cat']) )
 	}
 	
 	//On crée une pagination si il y plus d'une page.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	//Si l'article ne commence pas par une page on l'ajoute.
@@ -118,16 +118,16 @@ if( !empty($idart) && isset($_GET['cat']) )
 	));
 
 	//Affichage notation.
-	include_once('../includes/framework/note.class.php'); 
+	include_once('../kernel/framework/note.class.php'); 
 	$Note = new Note('articles', $idart, transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
-	include_once('../includes/framework/note.php');	
+	include_once('../kernel/framework/note.php');	
 	
 	//Affichage commentaires.
 	if( isset($_GET['i']) )
 	{
-		include_once('../includes/framework/content/comments.class.php'); 
+		include_once('../kernel/framework/content/comments.class.php'); 
 		$Comments = new Comments('articles', $idart, transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;i=%s', 'articles-' . $idartcat . '-' . $idart . '.php?i=%s'));
-		include_once('../includes/com.php');
+		include_once('../kernel/com.php');
 	}	
 
 	$Template->Pparse('articles');	
@@ -224,7 +224,7 @@ else
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	//On crée une pagination si le nombre de fichiers est trop important.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	//Catégories non autorisées.
@@ -277,7 +277,7 @@ else
 			'EDIT' => ($is_admin && !empty($idartcat)) ? '<a href="admin_articles_cat.php?id=' . $idartcat . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));
 
-		include_once('../includes/framework/note.class.php');
+		include_once('../kernel/framework/note.class.php');
 		$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
 		$result = $Sql->Query_while("SELECT id, title, icon, timestamp, views, note, nbrnote, nbr_com
 		FROM ".PREFIX."articles
@@ -307,6 +307,6 @@ else
 	$Template->Pparse('articles_cat');
 }
 			
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

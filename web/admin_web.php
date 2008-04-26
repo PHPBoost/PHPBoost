@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('web'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 //On recupère les variables.
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
@@ -99,7 +99,7 @@ if( !empty($id) && !$del )
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 	
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_web_management2'); 
 }
@@ -192,7 +192,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 		
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_web_management'); 
 }				
@@ -233,7 +233,7 @@ else
 	$nbr_web = $Sql->Count_table('web', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de web est trop important.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	$Template->Assign_vars(array(	
@@ -280,11 +280,11 @@ else
 	}
 	$Sql->Close($result);
 	
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_web_management'); 
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

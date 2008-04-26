@@ -25,10 +25,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('web'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 				
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
 $top = !empty($_GET['top']) ? numeric($_GET['top']) : '' ;
@@ -267,6 +267,6 @@ else
 	$Template->Pparse('admin_web_cat'); // traitement du modele	
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

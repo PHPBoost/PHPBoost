@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('news'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 //On recupère les variables.
 $id = isset($_GET['id']) ? numeric($_GET['id']) : '' ;
@@ -92,7 +92,7 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . parse($contents) . "', extend_contents = '" . parse($extend_contents) . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
 		WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 
-		include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
+		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('news/rss.php');
 		$Rss->Cache_path('../cache/');
 		$Rss->Generate_file('javascript', 'rss_news');
@@ -119,7 +119,7 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 	//On supprimes les éventuels commentaires associés.
 	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'news'", __LINE__, __FILE__);
 
-	include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
+	include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 	$Rss = new Rss('news/rss.php');
 	$Rss->Cache_path('../cache/');
 	$Rss->Generate_file('javascript', 'rss_news');
@@ -229,7 +229,7 @@ elseif( !empty($id) ) //Vue de la news
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 	
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	$Template->Pparse('admin_news_management');    
 
 	$Template->Unassign_block_vars('tinymce_mode');
@@ -238,7 +238,7 @@ elseif( !empty($id) ) //Vue de la news
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'extend_contents';
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_news_management_bis'); 
 }
@@ -372,7 +372,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 		'L_RESET' => $LANG['reset']
 	));	
 	
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	$Template->Pparse('admin_news_management');    
 
 	$Template->Unassign_block_vars('tinymce_mode');
@@ -381,7 +381,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 	$Template->Unassign_block_vars('more');
 	
 	$_field = 'extend_contents';
-	include('../includes/framework/content/bbcode.php');
+	include('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_news_management_bis'); 
 }
@@ -393,7 +393,7 @@ else
 	
 	$nbr_news = $Sql->Count_table('news', __LINE__, __FILE__);
 	//On crée une pagination si le nombre de news est trop important.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$Template->Assign_vars(array(
@@ -459,7 +459,7 @@ else
 	$Template->Pparse('admin_news_management'); 
 }			
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 	
 
 ?>

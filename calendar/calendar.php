@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../calendar/calendar_begin.php'); 
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $time = gmdate_format('Ymd');
 $year = substr($time, 0, 4);
@@ -272,9 +272,9 @@ if( $checkdate === true && empty($id) && empty($add) )
 	//Affichage commentaires.
 	if( isset($_GET['i']) )
 	{
-		include_once('../includes/framework/content/comments.class.php'); 
+		include_once('../kernel/framework/content/comments.class.php'); 
 		$Comments = new Comments('calendar', $get_event, transid('calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;i=%s', 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?i=%s'));
-		include_once('../includes/com.php');
+		include_once('../kernel/com.php');
 	}	
 
 	$Template->Pparse('calendar');
@@ -378,7 +378,7 @@ elseif( !empty($id) )
 			if( !empty($errstr) )
 				$Errorh->Error_handler($errstr, E_USER_NOTICE);
 				
-			include_once('../includes/framework/content/bbcode.php');
+			include_once('../kernel/framework/content/bbcode.php');
 			
 			
 			$Template->Pparse('calendar');
@@ -482,7 +482,7 @@ elseif( !empty($add) ) //Ajout d'un évenement
 		if( !empty($errstr) )
 			$Errorh->Error_handler($errstr, E_USER_NOTICE);
 		
-		include_once('../includes/framework/content/bbcode.php');
+		include_once('../kernel/framework/content/bbcode.php');
 
 		$Template->Pparse('calendar');
 	}
@@ -490,6 +490,6 @@ elseif( !empty($add) ) //Ajout d'un évenement
 else
 	redirect(HOST . SCRIPT . transid('?error=invalid_date', '', '&') . '#errorh');
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

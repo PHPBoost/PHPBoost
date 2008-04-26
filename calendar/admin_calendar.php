@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('calendar'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 ##########################admin_calendar.tpl###########################
 if( !empty($_POST['valid'])  )
@@ -92,6 +92,6 @@ else
 	$Template->Pparse('admin_calendar_config');
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

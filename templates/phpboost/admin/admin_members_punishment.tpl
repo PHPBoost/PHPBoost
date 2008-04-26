@@ -54,7 +54,7 @@
 					if( login != "" )
 					{
 						data = "login=" + login + "&admin=1";
-						var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?{U_XMLHTTPREQUEST}=1');
+						var xhr_object = xmlhttprequest_init('../kernel/xmlhttprequest.php?{U_XMLHTTPREQUEST}=1');
 						xhr_object.onreadystatechange = function() 
 						{
 							if( xhr_object.readyState == 4 ) 

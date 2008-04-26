@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../pages/pages_begin.php'); 
 include_once('pages_functions.php');
 
@@ -67,7 +67,7 @@ if( $id_edit > 0 )
 else
 	$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
 	
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 //On crée ou on édite une page
 if( !empty($contents) )
@@ -310,10 +310,10 @@ $Template->Assign_vars(array(
 	'TARGET' => transid('post.php')
 ));
 
-include_once('../includes/framework/content/bbcode.php');
+include_once('../kernel/framework/content/bbcode.php');
 
 $Template->Pparse('post');
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

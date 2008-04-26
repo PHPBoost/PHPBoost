@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 include_once('pages_begin.php');
 include_once('pages_functions.php');
 
@@ -221,7 +221,7 @@ if( $id_page > 0 )
 else
 	$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'), $LANG['pages_redirections'], transid('action.php'));
 
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 $Template->Set_filenames(array('pages_action'=> 'pages/action.tpl'));
 
@@ -398,6 +398,6 @@ else
 $Template->Pparse('pages_action');
 
 
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

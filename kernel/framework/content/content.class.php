@@ -186,7 +186,7 @@ class Content
 		<param name=\"wmode\" value=\"transparent\" />
 		<param name=\"bgcolor\" value=\"#000000\" />
 		</object>",
-			'movie' => "<object type=\"application/x-shockwave-flash\" data=\"../includes/data/movieplayer.swf?movie=$3\" width=\"$1\" height=\"$2\">
+			'movie' => "<object type=\"application/x-shockwave-flash\" data=\"../kernel/data/movieplayer.swf?movie=$3\" width=\"$1\" height=\"$2\">
 		<param name=\"allowScriptAccess\" value=\"never\" />
 		<param name=\"play\" value=\"true\" />
 		<param name=\"movie\" value=\"$1\" />
@@ -196,10 +196,10 @@ class Content
 		<param name=\"wmode\" value=\"transparent\" />
 		<param name=\"bgcolor\" value=\"#FFFFFF\" />
 		</object>",
-			'sound' => "<object type=\"application/x-shockwave-flash\" data=\"../includes/data/dewplayer.swf?son=$1\" width=\"200\" height=\"20\">
+			'sound' => "<object type=\"application/x-shockwave-flash\" data=\"../kernel/data/dewplayer.swf?son=$1\" width=\"200\" height=\"20\">
 		<param name=\"allowScriptAccess\" value=\"never\" />
 		<param name=\"play\" value=\"true\" />
-		<param name=\"movie\" value=\"../includes/data/dewplayer.swf?son=$1\" />
+		<param name=\"movie\" value=\"../kernel/data/dewplayer.swf?son=$1\" />
 		<param name=\"menu\" value=\"false\" />
 		<param name=\"quality\" value=\"high\" />
 		<param name=\"scalemode\" value=\"noborder\" />
@@ -360,8 +360,8 @@ class Content
 				'`<h4 class="stitle2">(.*)</h4>`isU',
 				'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
 				'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
-				'`<object type="application/x-shockwave-flash" data="\.\./includes/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
-				'`<object type="application/x-shockwave-flash" data="\.\./includes/data/movieplayer\.swf\?movie=(.*)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU'
+				'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
+				'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/movieplayer\.swf\?movie=(.*)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU'
 			);
 			$array_preg_replace = array( 
 				"$1",
@@ -435,8 +435,8 @@ class Content
 				'`<h3 class="title([1-2]+)">(.*)</h3>`isU',
 				'`<h4 class="stitle([1-2]+)">(.*)</h4>`isU',
 				'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
-				'`<object type="application/x-shockwave-flash" data="\.\./includes/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
-				'`<object type="application/x-shockwave-flash" data="\.\./includes/data/movieplayer\.swf\?movie=(.*)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
+				'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
+				'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/movieplayer\.swf\?movie=(.*)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
 				'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
 				'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isU'
 			);
@@ -1013,7 +1013,7 @@ class Content
 	{
 		if( $language != '' )
 		{
-			include_once('../includes/framework/content/geshi/geshi.php');
+			include_once('../kernel/framework/content/geshi/geshi.php');
 			$Geshi =& new GeSHi($contents, $language);
 			
 			if( $line_number ) //Affichage des numéros de lignes.

@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('gallery'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 $idpics = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
@@ -97,7 +97,7 @@ else
 		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
 		
 	//On crée une pagination si le nombre de catégories est trop important.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	//Colonnes des catégories.
@@ -205,7 +205,7 @@ else
 		));	
 			
 		//On crée une pagination si le nombre de photos est trop important.
-		include_once('../includes/framework/pagination.class.php'); 
+		include_once('../kernel/framework/pagination.class.php'); 
 		$Pagination = new Pagination();
 			
 		$Template->Assign_vars(array(
@@ -420,6 +420,6 @@ else
 	$Template->Pparse('admin_gallery_management'); 
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

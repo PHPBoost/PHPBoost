@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('newsletter'); //Chargement de la langue du module.
 define('TITLE', $LANG['newsletter']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $Template->Set_filenames(array(
 	'admin_newsletter'=> 'newsletter/admin_newsletter.tpl'
@@ -73,6 +73,6 @@ $Template->Assign_vars(array(
 $Template->Pparse('admin_newsletter'); 
 
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

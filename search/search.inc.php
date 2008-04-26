@@ -27,8 +27,8 @@
 
 if( defined('PHPBOOST') !== true ) exit;
 
-require_once ( '../includes/framework/modules/modules.class.php' );
-require_once ( '../includes/framework/search.class.php' );
+require_once ( '../kernel/framework/modules/modules.class.php' );
+require_once ( '../kernel/framework/search.class.php' );
 
 
 $Cache->Load_file('search');

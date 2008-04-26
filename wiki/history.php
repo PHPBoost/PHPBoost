@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 load_module_lang('wiki');
 
 $id_article = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
@@ -42,7 +42,7 @@ if( !empty($id_article) )
 $bread_crumb_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
 require_once('../wiki/wiki_bread_crumb.php');
 
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 if( !empty($id_article) )
 {
@@ -106,7 +106,7 @@ else //On affiche la liste des modifications
 	$nbr_articles = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE redirect = '0'", __LINE__, __FILE__);
 	
 	//On instancie la classe de pagination
-	include_once('../includes/framework/pagination.class.php');
+	include_once('../kernel/framework/pagination.class.php');
 	$Pagination = new Pagination();
 	$show_pagin = $Pagination->Display_pagination(transid('history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'), $nbr_articles, 'p', $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 3); 
 	
@@ -144,5 +144,5 @@ else //On affiche la liste des modifications
 	$Template->Pparse('wiki_history');
 }
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 ?>

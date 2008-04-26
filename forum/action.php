@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
 $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
-require_once('../includes/header_no_display.php');
+require_once('../kernel/header_no_display.php');
 
 //Variable GET.
 $idt_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
@@ -207,6 +207,6 @@ elseif( $read ) //Marquer comme lu.
 else
 	redirect(HOST . DIR . '/forum/index.php' . SID2);
 
-require_once('../includes/footer_no_display.php');
+require_once('../kernel/footer_no_display.php');
 
 ?>

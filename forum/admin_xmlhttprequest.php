@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 define('TITLE', 'Ajax forum');
-require_once('../includes/header_no_display.php');
+require_once('../kernel/header_no_display.php');
 
 if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 {			

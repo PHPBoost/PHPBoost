@@ -67,7 +67,7 @@
 			else if( name != '' )
 			{
 				data = "id_folder=" + id_folder + "&name=" + name + "&previous_name=" + previous_name + "&user_id=" + {USER_ID};
-				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?rename_folder=1');
+				var xhr_object = xmlhttprequest_init('../kernel/xmlhttprequest.php?rename_folder=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
@@ -105,7 +105,7 @@
 			else if( name != '' )
 			{
 				data = "name=" + name + "&user_id=" + user_id + "&id_parent=" + id_parent;
-				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?new_folder=1');
+				var xhr_object = xmlhttprequest_init('../kernel/xmlhttprequest.php?new_folder=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
@@ -165,7 +165,7 @@
 			else if( name != '' )
 			{
 				data = "id_file=" + id_file + "&name=" + name + "&previous_name=" + previous_cut_name + "&user_id=" + {USER_ID};
-				var xhr_object = xmlhttprequest_init('../includes/xmlhttprequest.php?rename_file=1');
+				var xhr_object = xmlhttprequest_init('../kernel/xmlhttprequest.php?rename_file=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' ) 

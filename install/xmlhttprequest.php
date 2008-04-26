@@ -15,7 +15,7 @@ if( $chmod )
 	//Mise à jour du cache.
 	@clearstatcache();
 	
-	$chmod_dir = array('../', '../cache', '../cache/backup', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../includes/auth', '../lang', '../templates', '../upload');
+	$chmod_dir = array('../', '../cache', '../cache/backup', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/auth', '../lang', '../templates', '../upload');
 	
 	//Vérifications et le cas échéants changements des autorisations en écriture.
 	foreach($chmod_dir as $dir)
@@ -53,7 +53,7 @@ elseif( $db )
 			die('<div class="warning">' . sprintf($LANG['empty_field'], $LANG['field_' . $field_name]) . '</div>');
 	}
 	//Tentative de connexion
-	if( !@include_once('../includes/framework/db/' . $dbms . '.class.php') )
+	if( !@include_once('../kernel/framework/db/' . $dbms . '.class.php') )
 		die('<div class="error">' . $LANG['db_error_dbms'] . '</div>');
 	$Sql = new Sql(false);
 	//Connexion

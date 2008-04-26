@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 load_module_lang('wiki');
 
 define('TITLE' , $LANG['wiki'] . ' - ' . $LANG['wiki_search']);
@@ -33,7 +33,7 @@ define('TITLE' , $LANG['wiki'] . ' - ' . $LANG['wiki_search']);
 $bread_crumb_key = 'wiki_search';
 require_once('../wiki/wiki_bread_crumb.php');
 
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 if( !$Member->Check_level(MEMBER_LEVEL) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
@@ -82,7 +82,7 @@ if( $search_string != '' ) //recherche
 	
 	$num_rows = $Sql->Sql_num_rows($result, $query_rows, __LINE__, __FILE__);
 	
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	$pages_links = $Pagination->Display_pagination('search' . transid('.php?search=' . $search_string . '&amp;where=' . $where_search . '&amp;page=%d'), $num_rows, 'page', 10, 3);
 	
@@ -111,6 +111,6 @@ if( $search_string != '' ) //recherche
 $Template->Pparse('wiki_search');
 
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

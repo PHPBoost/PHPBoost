@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 define('TITLE', 'Ajax forum');
-require_once('../includes/header_no_display.php');
+require_once('../kernel/header_no_display.php');
 
 $track = !empty($_GET['t']) ? numeric($_GET['t']) : '';	
 $untrack = !empty($_GET['ut']) ? numeric($_GET['ut']) : '';	

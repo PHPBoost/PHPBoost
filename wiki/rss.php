@@ -18,12 +18,12 @@ if( !defined('PHPBOOST') )
 	//On genère l'entête xml.
 	header("Content-Type: text/xml");
 	
-	require_once('../includes/begin.php');
+	require_once('../kernel/begin.php');
 	$cat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 	//Chargement de la langue du module.
 	load_module_lang('wiki');
 	define('TITLE', $LANG['wiki_rss']);
-	require_once('../includes/header_no_display.php');
+	require_once('../kernel/header_no_display.php');
 	
 	$Cache->Load_file('wiki');	
 	

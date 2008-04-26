@@ -27,7 +27,7 @@
 
 
 //------------------------------------------------------------------- Includes
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 
 //----------------------------------------------------------------------- Main
 if( defined('PHPBOOST') !== true ) exit;

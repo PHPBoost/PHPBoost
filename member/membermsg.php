@@ -25,11 +25,11 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 $Bread_crumb->Add_link($LANG['member_area'], 'member.php' . SID);
 $Bread_crumb->Add_link($LANG['member_msg'], 'membermsg.php' . SID);
 define('TITLE', $LANG['member_msg']);
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $memberId = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 if( !empty($memberId) ) //Affichage de tous les messages du membre
@@ -38,7 +38,7 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 		'membermsg'=> 'membermsg.tpl',
 	));
 	
-	require_once('../includes/framework/modules/modules.class.php');
+	require_once('../kernel/framework/modules/modules.class.php');
 	$modulesLoader = new Modules();
 	$modules = $modulesLoader->GetAvailablesModules('GetMembermsgLink');
 	foreach($modules as $module)
@@ -65,7 +65,7 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 	if( isset($_GET['script']) )
 	{
 		//On crée une pagination si le nombre de commentaires est trop important.
-		include_once('../includes/framework/pagination.class.php'); 
+		include_once('../kernel/framework/pagination.class.php'); 
 		$Pagination = new Pagination();
 
 		$nbr_msg = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."com WHERE user_id = '" . $memberId . "'", __LINE__, __FILE__);
@@ -101,6 +101,6 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 else
 	redirect(HOST . DIR . '/member/member.php');
 
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

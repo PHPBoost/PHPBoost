@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-include_once('../includes/begin.php'); 
+include_once('../kernel/begin.php'); 
 include_once('faq_begin.php');
 
 $id_faq = !empty($_GET['faq']) ? numeric($_GET['faq']) : 0;
@@ -88,7 +88,7 @@ else
 	$Bread_crumb->Add_link($FAQ_LANG['category_management'], transid('management.php' . ($id_faq > 0 ? '?faq=' . $id_faq : ''))); 
 }
 	
-include_once('../includes/header.php');
+include_once('../kernel/header.php');
 
 $Template->Set_filenames(array(
 	'faq'=> 'faq/management.tpl'
@@ -109,7 +109,7 @@ if( $edit_question > 0 )
 		'L_REQUIRE_ENTITLED' => $FAQ_LANG['require_entitled'],
 		'L_REQUIRE_ANSWER' => $FAQ_LANG['require_answer']
 	));
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 }
 elseif( $cat_of_new_question >= 0 && $new )
 {
@@ -127,7 +127,7 @@ elseif( $cat_of_new_question >= 0 && $new )
 		'L_REQUIRE_ENTITLED' => $FAQ_LANG['require_entitled'],
 		'L_REQUIRE_ANSWER' => $FAQ_LANG['require_answer']
 	));
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 }
 elseif( $id_move > 0 )
 {
@@ -253,7 +253,7 @@ else
 				$Template->Assign_block_vars('category.questions.down', array());
 		}
 	}
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 }
 
 $Template->Assign_vars(array(
@@ -269,6 +269,6 @@ $Template->Assign_vars(array(
 
 $Template->Pparse('faq');
 
-include_once('../includes/footer.php'); 
+include_once('../kernel/footer.php'); 
 
 ?>

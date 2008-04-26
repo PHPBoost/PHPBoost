@@ -25,16 +25,16 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../download/download_begin.php');
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 if( $file_id > 0 ) //Contenu
 {
 	$Template->Set_filenames(array('download'=> 'download/download.tpl'));
 
 	//Commentaires
-	$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/includes/com.php?i=" . $file_id . "download") . "', 'download');\">";
+	$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/kernel/com.php?i=" . $file_id . "download") . "', 'download');\">";
 	$link_current = '<a class="com" href="' . HOST . DIR . '/download/download' . transid('.php?cat=' . $category_id . '&amp;id=' . $file_id . '&amp;i=0', '-' . $category_id . '-' . $file_id . '.php?i=0') . '#download">';	
 	$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
 	
@@ -75,16 +75,16 @@ if( $file_id > 0 ) //Contenu
 	));
 	
 	//Affichage notation.
-	include_once('../includes/framework/note.class.php'); 
+	include_once('../kernel/framework/note.class.php'); 
 	$Note = new Note('download', $file_id, transid('download.php?cat=' . $category_id . '&amp;id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
-	include_once('../includes/framework/note.php');
+	include_once('../kernel/framework/note.php');
 	
 	//Affichage commentaires.
 	if( isset($_GET['i']) )
 	{
-		include_once('../includes/framework/content/comments.class.php'); 
+		include_once('../kernel/framework/content/comments.class.php'); 
 		$Comments = new Comments('download', $file_id, transid('download.php?cat=' . $category_id . '&amp;id=' . $file_id . '&amp;i=%s', 'category-' . $category_id . '-' . $file_id . '.php?i=%s'));
-		include_once('../includes/com.php');
+		include_once('../kernel/com.php');
 	}
 	
 	$Template->Pparse('download');
@@ -201,11 +201,11 @@ else
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 			
 		//On crée une pagination si le nombre de fichiers est trop important.
-		include_once('../includes/framework/pagination.class.php'); 
+		include_once('../kernel/framework/pagination.class.php'); 
 		$Pagination = new Pagination();
 		
 		//Notes
-		include_once('../includes/framework/note.class.php');
+		include_once('../kernel/framework/note.class.php');
 		$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
 			
 		$Template->Assign_vars(array(
@@ -252,6 +252,6 @@ else
 	$Template->Pparse('download');
 }
 	
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

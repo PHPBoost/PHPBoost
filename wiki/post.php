@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 include_once('../wiki/wiki_functions.php'); 
 load_module_lang('wiki');
 
@@ -51,7 +51,7 @@ $preview = !empty($_POST['preview']) ? true : false;
 $id_edit_get = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_get;
 
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 //Variable d'erreur
 $error = '';
@@ -112,7 +112,7 @@ if( !empty($contents) ) //On enregistre un article
 	 		//On donne le nouveau id de contenu
 			$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 			//Regénération du flux rss.
-			include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
+			include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 			$Rss = new Rss('wiki/rss.php');
 			$Rss->Cache_path('../cache/');
 			$Rss->Generate_file('javascript', 'rss_wiki');
@@ -159,7 +159,7 @@ if( !empty($contents) ) //On enregistre un article
 				$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article, __LINE__, __FILE__);
 				
 				//Regénération du flux rss.
-				include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
+				include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 				$Rss = new Rss('wiki/rss.php');
 				$Rss->Cache_path('../cache/');
 				$Rss->Generate_file('javascript', 'rss_wiki');
@@ -278,7 +278,7 @@ else
 	$l_action_submit = $LANG['submit'];
 }
 
-include_once('../includes/framework/content/bbcode.php');
+include_once('../kernel/framework/content/bbcode.php');
 
 $Template->Assign_vars(array(
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], $article_infos['title'])) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], $article_infos['title'])),
@@ -313,6 +313,6 @@ if( !empty($errstr) )
 $Template->Pparse('wiki_edit');
 
 
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 define('TITLE', $LANG['title_forget']);
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $activ_confirm = !empty($_GET['activate']) ? securit($_GET['activate']) : '';
 $activ_get = !empty($_GET['activ']) ? securit($_GET['activ']) : '';
@@ -56,7 +56,7 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 					
 					$Sql->Query_inject("UPDATE ".PREFIX."member SET activ_pass = '" . $activ_pass . "', new_pass = '" . md5($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clée d'activation dans la bdd.
 					
-					include_once('../includes/framework/mail.class.php');
+					include_once('../kernel/framework/mail.class.php');
 					$Mail = new Mail();
 					$Mail->Send_mail($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass), $CONFIG['mail']);	
 
@@ -126,6 +126,6 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 else
 	redirect(get_start_page());
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

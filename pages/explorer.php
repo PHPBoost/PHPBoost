@@ -25,13 +25,13 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../pages/pages_begin.php'); 
 define('TITLE', $LANG['pages'] . ' : ' . $LANG['pages_explorer']);
 $cat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 $Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
 $Bread_crumb->Add_link($LANG['pages_explorer'], transid('explorer.php'));
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 $Template->Set_filenames(array('pages_explorer'=> 'pages/explorer.tpl'));
 
@@ -110,6 +110,6 @@ $Template->Assign_vars(array(
 $Template->Pparse('pages_explorer');
 
 
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

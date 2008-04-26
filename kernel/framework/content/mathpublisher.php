@@ -12,7 +12,7 @@
  ***************************************************************************/
 
 define('DIR_IMG', '../images/maths'); //path to the images directory
-define('DIR_FONT', '../includes/data/fonts'); // path to the fonts directory
+define('DIR_FONT', '../kernel/data/fonts'); // path to the fonts directory
 
 function detectimg($n)
 {
@@ -42,7 +42,7 @@ function mathimage($text, $size)
 	{
 		//the image doesn't exist in the cache directory. we create it.		
 		global $symboles, $fontesmath;
-		include_once('../includes/framework/content/mathpublisher.class.php');
+		include_once('../kernel/framework/content/mathpublisher.class.php');
 		
 		$formula = new expression_math(tableau_expression(trim($text)));
 		$formula->dessine($size);

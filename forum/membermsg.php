@@ -25,13 +25,13 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 define('TITLE', $LANG['title_forum']);
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $view_msg = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 if( !empty($view_msg) ) //Affichage de tous les messages du membre
@@ -42,7 +42,7 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 	
-	include('../includes/framework/pagination.class.php');
+	include('../kernel/framework/pagination.class.php');
 	$Pagination = new Pagination;
 	
 	$auth_cats = '';
@@ -164,6 +164,6 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 else
 	redirect(HOST . DIR . '/forum/index.php');
 
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

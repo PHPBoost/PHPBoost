@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
@@ -42,7 +42,7 @@ $Bread_crumb->Add_link($topic['title'], 'topic' . transid('.php?id=' . $alert, '
 $Bread_crumb->Add_link($LANG['alert_topic'], '');
 
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['alert_topic']);
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 if( empty($alert) && empty($alert_post) || empty($topic['idcat']) ) 
 	redirect(HOST . DIR . '/forum/index' . transid('.php'));  
@@ -72,7 +72,7 @@ if( !empty($alert) && empty($alert_post) )
 			'L_REQUIRE_TITLE' => $LANG['require_title']
 		));
 			
-		include_once('../includes/framework/content/bbcode.php');	
+		include_once('../kernel/framework/content/bbcode.php');	
 		
 		$Template->Assign_block_vars('alert_form', array(
 			'TITLE' => $topic_name,
@@ -190,6 +190,6 @@ $Template->Assign_vars(array(
 
 $Template->Pparse('forum_alert');	
 
-include('../includes/footer.php');
+include('../kernel/footer.php');
 
 ?>

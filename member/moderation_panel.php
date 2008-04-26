@@ -25,15 +25,15 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 $Bread_crumb->Add_link($LANG['moderation_panel'], transid('moderation_panel.php'));
 define('TITLE', $LANG['moderation_panel']);
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 
 if( !$Member->Check_level(MODO_LEVEL) ) //Si il n'est pas modérateur
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-include('../includes/moderation_panel_begin.php');	
+include('../kernel/moderation_panel_begin.php');	
 	
 $Template->Set_filenames(array(
 	'moderation_panel'=> 'moderation_panel.tpl'
@@ -75,7 +75,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 			{
 				if( !empty($readonly_contents) && !empty($readonly) )
 				{					
-					include_once('../includes/framework/members/pm.class.php');
+					include_once('../kernel/framework/members/pm.class.php');
 					$Privatemsg = new Privatemsg();
 					
 					//Envoi du message.
@@ -213,7 +213,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		));		
 
 		$_field = 'action_contents';
-		include_once('../includes/framework/content/bbcode.php');		
+		include_once('../kernel/framework/content/bbcode.php');		
 	}	
 }
 elseif( $action == 'warning' ) //Gestion des utilisateurs
@@ -236,7 +236,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				{					
 					if( !empty($warning_contents) )
 					{					
-						include_once('../includes/framework/members/pm.class.php');
+						include_once('../kernel/framework/members/pm.class.php');
 						$Privatemsg = new Privatemsg();
 						
 						//Envoi du message.
@@ -250,7 +250,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				$Sql->Query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
 				//Envoi du mail
-				include_once('../includes/framework/mail.class.php');
+				include_once('../kernel/framework/mail.class.php');
 				$Mail = new Mail();
 				$Mail->Send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 			}	
@@ -349,7 +349,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		));			
 
 		$_field = 'action_contents';
-		include_once('../includes/framework/content/bbcode.php');
+		include_once('../kernel/framework/content/bbcode.php');
 	}	
 }
 elseif( $action == 'ban' ) //Gestion des utilisateurs
@@ -370,7 +370,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 			
 			if( !empty($user_ban) ) //Envoi du mail
 			{
-				include_once('../includes/framework/mail.class.php');
+				include_once('../kernel/framework/mail.class.php');
 				$Mail = new Mail();
 				$Mail->Send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 			}			
@@ -480,12 +480,12 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 			));
 		}	
 		$_field = 'action_contents';
-		include_once('../includes/framework/content/bbcode.php');
+		include_once('../kernel/framework/content/bbcode.php');
 	}
 }
 
 $Template->Pparse('moderation_panel');
 
-require_once('../includes/footer.php');
+require_once('../kernel/footer.php');
 
 ?>

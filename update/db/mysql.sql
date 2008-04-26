@@ -149,7 +149,7 @@ CREATE TABLE `phpboost_modules_mini` (
 	PRIMARY KEY	(`id`)
 ) ENGINE=MyISAM;
 
-INSERT INTO `phpboost_modules_mini` (`class`, `name`, `code`, `contents`, `side`, `secure`, `activ`, `added`) VALUES (2, 'connexion', 'if( SCRIPT != DIR . ''/membre/error.php'')include_once(''../includes/connect.php'');', '', 0, -1, 1, 0);
+INSERT INTO `phpboost_modules_mini` (`class`, `name`, `code`, `contents`, `side`, `secure`, `activ`, `added`) VALUES (2, 'connexion', 'if( SCRIPT != DIR . ''/membre/error.php'')include_once(''../kernel/connect.php'');', '', 0, -1, 1, 0);
 
 
 DROP TABLE IF EXISTS `phpboost_pm_msg`;

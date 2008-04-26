@@ -26,7 +26,7 @@
  *
 ###################################################*/
 
-require_once('../includes/framework/modules/module_interface.class.php');
+require_once('../kernel/framework/modules/module_interface.class.php');
 
 /**
  *  Les arguments de fonction nommé "$modules" sont assez particulier.

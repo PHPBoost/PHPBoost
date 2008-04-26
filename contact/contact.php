@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
+require_once('../kernel/begin.php');
 require_once('../contact/contact_begin.php');
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $mail_from = !empty($_POST['mail_email']) ? trim($_POST['mail_email']) : '';
 $mail_objet = !empty($_POST['mail_objet']) ? trim($_POST['mail_objet']) : '';
@@ -56,7 +56,7 @@ if( !empty($_POST['mail_valid']) )
 	
 	if( $check_verif_code || !$CONFIG_CONTACT['contact_verifcode'] ) //Code de vérification si activé
 	{
-		include_once('../includes/framework/mail.class.php');
+		include_once('../kernel/framework/mail.class.php');
 		$Mail = new Mail();
 
 		if( $Mail->Send_mail($CONFIG['mail'], $mail_objet, $mail_contents, $mail_from, '', 'user') ) //Succès mail
@@ -119,6 +119,6 @@ else
 	$Template->Pparse('contact'); 
 }
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

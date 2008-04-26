@@ -24,9 +24,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $install = !empty($_GET['install']) ? true : false;
 
@@ -146,7 +146,7 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 		$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . securit($module_name) . "'", __LINE__, __FILE__);
 		if( empty($ckeck_module) && !is_dir('../' . $module_name) )
 		{
-			include_once('../includes/framework/files/upload.class.php');
+			include_once('../kernel/framework/files/upload.class.php');
 			$Upload = new Upload($dir);
 			if( $Upload->Upload_file('upload_module', '`([a-z0-9_-])+\.(gzip|zip)+`i') )
 			{					
@@ -154,13 +154,13 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 				//Place à la décompression.
 				if( $Upload->extension['upload_module'] == 'gzip' )
 				{
-					include_once('../includes/framework/pcl/pcltar.lib.php');
+					include_once('../kernel/framework/pcl/pcltar.lib.php');
 					if( !$zip_files = PclTarExtract($Upload->filename['upload_module'], '../') )
 						$error = $Upload->error;
 				}
 				elseif( $Upload->extension['upload_module'] == 'zip' )
 				{
-					include_once('../includes/framework/pcl/pclzip.lib.php');
+					include_once('../kernel/framework/pcl/pclzip.lib.php');
 					$Zip = new PclZip($archive_path);
 					if( !$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../', PCLZIP_OPT_SET_CHMOD, 0666) )
 						$error = $Upload->error;
@@ -291,6 +291,6 @@ else
 	$Template->Pparse('admin_modules_add'); 
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

@@ -26,8 +26,8 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php');
-require_once('../includes/header_no_display.php');
+require_once('../kernel/begin.php');
+require_once('../kernel/header_no_display.php');
 include_once('../download/download_begin.php');
 
 //Notation.
@@ -37,7 +37,7 @@ if( !empty($_GET['note']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur 
 	$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;
 
 	//Initialisation  de la class de gestion des fichiers.
-	include_once('../includes/framework/note.class.php');
+	include_once('../kernel/framework/note.class.php');
 	$Note = new Note('download', $id, '', $CONFIG_DOWNLOAD['note_max'], '', NOTE_DISPLAY_NOTE);
 	
 	if( !empty($note) && !empty($id) )

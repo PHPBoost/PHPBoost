@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 define('TITLE', $LANG['title_register']);
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $Cache->Load_file('member');
 if( !$CONFIG_MEMBER['activ_register'] )
@@ -392,6 +392,6 @@ elseif( !empty($key) && $Member->Check_level(MEMBER_LEVEL) !== true ) //Activati
 else
 	redirect(get_start_page());
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

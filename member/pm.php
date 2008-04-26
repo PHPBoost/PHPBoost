@@ -25,17 +25,17 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 define('TITLE', $LANG['title_pm']);
 $Bread_crumb->Add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
 $Bread_crumb->Add_link($LANG['title_pm'], transid('pm.php'));
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 //Interdit aux non membres.
 if( !$Member->Check_level(MEMBER_LEVEL) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-include_once('../includes/framework/members/pm.class.php');
+include_once('../kernel/framework/members/pm.class.php');
 $Privatemsg = new Privatemsg();
 
 $pm_get = !empty($_GET['pm']) ? numeric($_GET['pm']) : '';
@@ -175,7 +175,7 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $Member->Get_attribute('
 	$Template->Assign_block_vars('post_convers.user_id_dest', array(
 	));
 	
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('pm');
 }
@@ -219,7 +219,7 @@ elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de
 	$Template->Assign_block_vars('post_convers.user_id_dest', array(
 	));
 	
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('pm');
 }
@@ -255,7 +255,7 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 		'U_PM_ACTION_POST' => transid('.php?id=' . $pm_id_get)
 	));
 	
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 
 	$Template->Pparse('pm');
 }	
@@ -303,7 +303,7 @@ elseif( !empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 }
 elseif( !empty($pm_del_convers) ) //Suppression de conversation.
 {
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	$pagination_pm = 25;
 
@@ -503,7 +503,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 						'SUBMIT_NAME' => 'edit_pm',
 					));
 					
-				include_once('../includes/framework/content/bbcode.php');
+				include_once('../kernel/framework/content/bbcode.php');
 				
 				$Template->Pparse('pm');
 			}
@@ -521,7 +521,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	));
 	
 	//On crée une pagination si le nombre de MP est trop important.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	//On récupère les info de la conversation.
@@ -745,7 +745,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		if( !empty($errstr) )
 			$Errorh->Error_handler($errstr, $type);
 		
-		include_once('../includes/framework/content/bbcode.php');
+		include_once('../kernel/framework/content/bbcode.php');
 	}
 	
 	$Template->Pparse('pm');
@@ -759,7 +759,7 @@ else //Liste des conversation, dans la boite du membre.
 	$nbr_pm = $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id'));
 	
 	//On crée une pagination si le nombre de MP est trop important.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	$pagination_pm = 25;
@@ -911,6 +911,6 @@ else //Liste des conversation, dans la boite du membre.
 }
 
 	
-include('../includes/footer.php');
+include('../kernel/footer.php');
 
 ?>

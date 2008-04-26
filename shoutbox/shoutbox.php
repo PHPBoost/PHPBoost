@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 require_once('../shoutbox/shoutbox_begin.php'); 
-require_once('../includes/header.php');
+require_once('../kernel/header.php');
 	
 $shout_id = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 if( !empty($_POST['shoutbox']) && empty($shout_id) ) //Insertion
@@ -128,7 +128,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 			));
 			
 			$_field = 'shout_contents';
-			include_once('../includes/framework/content/bbcode.php');
+			include_once('../kernel/framework/content/bbcode.php');
 			
 			$Template->Pparse('shoutbox'); 
 		}
@@ -220,7 +220,7 @@ else //Affichage.
 	$nbr_shout = $Sql->Count_table('shoutbox', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de messages est trop important.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
 	$Template->Assign_vars(array(
@@ -374,11 +374,11 @@ else //Affichage.
 	$Sql->Close($result);
 	
 	$_field = 'shout_contents';
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('shoutbox'); 
 }
 
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>

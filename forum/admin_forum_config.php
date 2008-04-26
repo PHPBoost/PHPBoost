@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('forum'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $get_id = !empty($_GET['id']) ? numeric($_GET['id']) : '';	
 $id_post = !empty($_POST['idc']) ? numeric($_POST['idc']) : '';  
@@ -181,6 +181,6 @@ else
 	$Template->Pparse('admin_forum_config');
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

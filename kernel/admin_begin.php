@@ -26,7 +26,7 @@
 ###################################################*/
 
 //Inclusion des fichiers
-include_once('../includes/begin.php');
+include_once('../kernel/begin.php');
 
 //Inclusion des langues de l'administration.
 include_once('../lang/' . $CONFIG['lang'] . '/admin.php'); 

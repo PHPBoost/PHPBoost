@@ -284,7 +284,7 @@ function check_nbr_links($contents, $max_nbr)
 //Charge le parseur.
 function parse($content, $forbidden_tags = array(), $html_protect = true)
 {
-    include_once('../includes/framework/content/content.class.php');
+    include_once('../kernel/framework/content/content.class.php');
     $parse = new Content($content);
     $parse->Parse_content($forbidden_tags, $html_protect);
     
@@ -294,7 +294,7 @@ function parse($content, $forbidden_tags = array(), $html_protect = true)
 //Charge l'unparseur.
 function unparse($content)
 {
-    include_once('../includes/framework/content/content.class.php');
+    include_once('../kernel/framework/content/content.class.php');
     $parse = new Content($content);
     $parse->Unparse_content();
     
@@ -304,7 +304,7 @@ function unparse($content)
 //Parse temps réel
 function second_parse($content)
 {
-    include_once('../includes/framework/content/content.class.php');
+    include_once('../kernel/framework/content/content.class.php');
     $parse = new Content($content);
     $parse->Second_parse();
     
@@ -319,7 +319,7 @@ function display_com_link($nbr_com, $path, $idprov, $script, $options = 0)
 	$l_com = ($nbr_com > 1) ? $LANG['com_s'] : $LANG['com'];
 	$l_com = !empty($nbr_com) ? $l_com . ' (' . $nbr_com . ')' : $LANG['post_com'];
 	
-	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . transid('/includes/com.php?i=' . $idprov . $script) . "', '" . $script . "');";	
+	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . transid('/kernel/com.php?i=' . $idprov . $script) . "', '" . $script . "');";	
 	$link_current = $path . '#' . $script;	
 	
 	$link .= '<a class="com" href="' . (($CONFIG['com_popup'] == '0') ? $link_current : $link_pop) . '">' . $l_com . '</a>';

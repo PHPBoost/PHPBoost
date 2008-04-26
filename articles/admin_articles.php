@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('articles'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 //On recupère les variables.
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
@@ -55,7 +55,7 @@ if( $del && !empty($id) ) //Suppresion de l'article.
 	//On supprimes les éventuels commentaires associés.
 	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = " . $id . " AND script = 'articles'", __LINE__, __FILE__);
 	
-	include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
+	include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 	$Rss = new Rss('articles/rss.php');
 	$Rss->Cache_path('../cache/');
 	$Rss->Generate_file('javascript', 'rss_articles');
@@ -171,7 +171,7 @@ elseif( !empty($id) )
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_articles_management'); 
 }	
@@ -329,7 +329,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_RESET' => $LANG['reset']
 	));	
 	
-	include_once('../includes/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_articles_management'); 
 }
@@ -409,7 +409,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		
 		$Sql->Query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
-		include_once('../includes/framework/syndication/rss.class.php'); //Flux rss regénéré!
+		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('articles/rss.php');
 		$Rss->Cache_path('../cache/');
 		$Rss->Generate_file('javascript', 'rss_articles');
@@ -429,7 +429,7 @@ else
 	$nbr_articles = $Sql->Count_table('articles', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre d'articles est trop important.
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$Template->Assign_vars(array(		
@@ -499,6 +499,6 @@ else
 	$Template->Pparse('admin_articles_management'); 
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

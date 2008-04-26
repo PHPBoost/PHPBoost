@@ -25,9 +25,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 
@@ -67,7 +67,7 @@ elseif( !empty($_FILES['upload_smiley']['name']) ) //Upload et décompression de 
 	$error = '';
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
-		include_once('../includes/framework/files/upload.class.php');
+		include_once('../kernel/framework/files/upload.class.php');
 		$Upload = new Upload($dir);
 		if( !$Upload->Upload_file('upload_smiley', '`([a-z0-9_-])+\.(jpg|gif|png|bmp)+`i') )
 			$error = $Upload->error;
@@ -150,6 +150,6 @@ else
 	$Template->Pparse('admin_smileys_add'); 
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

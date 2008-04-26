@@ -24,10 +24,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 load_module_lang('poll'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 //On recupère les variables.
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
@@ -243,7 +243,7 @@ else
 	 
 	$nbr_poll = $Sql->Count_table('poll', __LINE__, __FILE__);
 
-	include_once('../includes/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$Template->Assign_vars(array(
@@ -307,6 +307,6 @@ else
 	$Template->Pparse('admin_poll_management'); 
 }
 
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

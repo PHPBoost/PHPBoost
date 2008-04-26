@@ -13,10 +13,10 @@
 ***************************************************************************/
 
 ob_start();
-require_once('../includes/framework/functions.inc.php'); //Fonctions de base.
-require_once('../includes/constant.php'); //Constante utiles.
-require_once('../includes/framework/errors.class.php');
-require_once('../includes/framework/template.class.php');
+require_once('../kernel/framework/functions.inc.php'); //Fonctions de base.
+require_once('../kernel/constant.php'); //Constante utiles.
+require_once('../kernel/framework/errors.class.php');
+require_once('../kernel/framework/template.class.php');
 
 $Errorh = new Errors(); //!\\Initialisation  de la class des erreurs//!\\
 $Template = new Templates; //!\\Initialisation des templates//!\\ 

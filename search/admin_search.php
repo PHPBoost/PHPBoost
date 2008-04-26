@@ -26,14 +26,14 @@
  *
 ###################################################*/
 
-require_once('../includes/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 
 //------------------------------------------------------------------- Language
 load_module_lang('search'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 
 //--------------------------------------------------------------------- Header
-require_once('../includes/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 //--------------------------------------------------------------------- Params
 $id_post = !empty($_POST['idc']) ? numeric($_POST['idc']) : '';
@@ -85,7 +85,7 @@ else
     $Cache->Load_file('search');
     global $SEARCH_CONFIG;
     
-    require_once('../includes/framework/modules/modules.class.php');
+    require_once('../kernel/framework/modules/modules.class.php');
     
     $Modules = new Modules();
     $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
@@ -128,6 +128,6 @@ else
 }
 
 //--------------------------------------------------------------------- Footer
-require_once('../includes/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

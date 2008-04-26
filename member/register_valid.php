@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../includes/begin.php'); 
+require_once('../kernel/begin.php'); 
 define('TITLE', $LANG['title_register']);
-require_once('../includes/header.php'); 
+require_once('../kernel/header.php'); 
 
 $Cache->Load_file('member');
 if( !$CONFIG_MEMBER['activ_register'] )
@@ -96,7 +96,7 @@ if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-z
 				$user_avatar = '';
 				//Gestion upload d'avatar.				
 				$dir = '../images/avatars/';
-				include_once('../includes/framework/files/upload.class.php');
+				include_once('../kernel/framework/files/upload.class.php');
 				$Upload = new Upload($dir);
 				
 				if( is_writable($dir) && $CONFIG_MEMBER['activ_up_avatar'] == 1 )
@@ -256,7 +256,7 @@ if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-z
 						$valid = '';
 					}
 					
-					include_once('../includes/framework/mail.class.php');
+					include_once('../kernel/framework/mail.class.php');
 					$Mail = new Mail();
 					
 					$Mail->Send_mail($user_mail, sprintf(addslashes($LANG['register_title_mail']), $CONFIG['site_name']), sprintf(addslashes($LANG['register_mail']), $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid), $CONFIG['mail']);
@@ -273,7 +273,7 @@ if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-z
 					$URL_ERROR = get_start_page();
 					$L_ERROR = sprintf($l_register_confirm, stripslashes($login));
 					$DELAY_REDIRECT = 7;
-					include('../includes/confirm.php');
+					include('../kernel/confirm.php');
 				}
 			}
 			elseif( !empty($_POST['register_valid']) && $password !== $password_bis )
@@ -292,6 +292,6 @@ elseif( !empty($user_mail) )
 else
 	redirect(get_start_page());
 	
-require_once('../includes/footer.php'); 
+require_once('../kernel/footer.php'); 
 
 ?>
