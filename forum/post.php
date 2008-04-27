@@ -184,7 +184,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						$nbr_votes = 0;
 						for($i = 0; $i < 20; $i++)
 						{
-							$answer = str_replace('|', '', request_var(POST, 'a'.$i, ''))
+							$answer = str_replace('|', '', request_var(POST, 'a'.$i, ''));
 							if( !empty($answer) )
 							{				
 								$answers[$i] = $answer;
@@ -542,7 +542,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$nbr_poll_field = 0;
 				for($i = 0; $i < 20; $i++)
 				{	
-					$answer = request_var(POST, 'a'.$i, '')
+					$answer = request_var(POST, 'a'.$i, '');
 					if( !empty($anwser) )
 					{
 						$Template->Assign_block_vars('answers_poll', array(
@@ -669,11 +669,12 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				{	
 					if( !empty($answer) )
 					{
+						$nbr_votes = isset($array_votes[$key]) ? $array_votes[$key] : 0;
 						$Template->Assign_block_vars('answers_poll', array(
 							'ID' => $nbr_poll_field,
 							'ANSWER' => $answer,
-							'NBR_VOTES' => $array_votes[$key],
-							'L_VOTES' => ($array_votes[$key] > 1) ? $LANG['votes'] : $LANG['vote']
+							'NBR_VOTES' => $nbr_votes,
+							'L_VOTES' => ($nbr_votes > 1) ? $LANG['votes'] : $LANG['vote']
 						));
 						$nbr_poll_field++;
 					}
