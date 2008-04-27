@@ -33,6 +33,13 @@ class Templates
 	## Public Attribute ##
 	var $_var = array(); //Tableau contenant les variables de remplacement des variables simples.
 	var $_block = array(); //Tableau contenant les variables de remplacement des variables simples.
+
+    // Constructeur
+    function Templates($tpl = '')
+    {
+        $this->tpl = $this->check_file($tpl);
+        $this->files[$this->tpl] = $this->tpl;
+    }
 	
 	//Stock les différents tpl en cours de traitement.
 	function Set_filenames($array_tpl)
@@ -82,7 +89,15 @@ class Templates
 		if( isset($this->_block[$block_name]) )
 			unset($this->_block[$block_name]);
 	}
-	
+
+    //
+    function Tparse($stringMode = false)
+    {
+        if ( $stringMode )
+            return $this->Pparse($this->tpl, $stringMode);
+        else $this->Pparse($this->tpl, $stringMode);
+    }
+    
 	//Affichage du traitement du tpl.
 	function Pparse($parse_name, $stringMode = false)
 	{
@@ -96,14 +111,14 @@ class Templates
 		if( !$this->check_cache_file($this->files[$parse_name], $file_cache_path) )
 		{
 			//Chargement du template.
-			if( !$this->load_tpl($parse_name) ) 
+			if( !$this->load_tpl($parse_name) )
 				die('Template->load_tpl(): Chargement impossible template: ' . $parse_name . '!');
 
 			//Parse
 			$this->parse($parse_name, $stringMode);
 			$this->clean(); //On nettoie avant d'envoyer le flux.
 			$this->save($file_cache_path, $stringMode); //Enregistrement du fichier de cache.
-		}	
+		}
         
 		include($file_cache_path);
 		
@@ -337,6 +352,7 @@ class Templates
 	
 
 	## Private Attribute ##
+    var $tpl = ''; // Nom du fichier de template
 	var $template = ''; //Chaîne contenant le tpl en cours de parsage.
 	var $files = array(); //Tableau contenant le chemin vers le tpl (vérifié).
 	var $module_data_path = array(); //Chemin vers les données du module.

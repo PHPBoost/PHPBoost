@@ -25,14 +25,16 @@
  *
 ###################################################*/
 
-define('ALL_FEEDS', 0xffffffff);
+define('FEED_PATH', '../cache/syndication');
+
 define('USE_RSS', 0x01);
 define('USE_ATOM', 0x02);
+define('ALL_FEEDS', USE_RSS|USE_ATOM);
 
 class Feed
 {
     ## Public Methods #
-    function Feed($feedPath, $feedName, $type = ALL_FEEDS)
+    function Feed($feedName, $feedPath = FEED_PATH , $type = ALL_FEEDS)
     /**
      * Constructor
      */
@@ -43,23 +45,23 @@ class Feed
         if ( $type & USE_RSS )
 		{
 			require_once('../kernel/framework/syndication/rss.work.class.php');
-			$this->feeds[USE_RSS] = new RSS($this->path, $feedName);
+			$this->feeds[USE_RSS] = new RSS($this->name, $this->path);
 		}
-		else if ( $type & USE_ATOM )
+		if ( $type & USE_ATOM )
 		{
 			require_once('../kernel/framework/syndication/atom.class.php');
-			$this->feeds[USE_ATOM] = new ATOM($this->path, $feedName);
+			$this->feeds[USE_ATOM] = new ATOM($this->name, $this->path);
         }
     }
 
-    function Print($nbItems = 5, $tpl = 'feed.tpl')
+    function Get($nbItems = 5, $tpl = 'syndication/feed.tpl')
     /**
      * Return the results of the feed generated as a string
      */
     {
-        if ( ($nbItems == 5) && ($tpl == 'feed.tpl') )
+        if ( ($nbItems == 5) && ($tpl == 'syndication/feed.tpl') )
         {
-            if ( ($HTMLfeed = file_get_contents($this->path . $this->name)) !== false )
+            if ( ($HTMLfeed = @file_get_contents($this->path . $this->name . '.html')) !== false )
                 return $HTMLfeed;
             else
                 return '';
@@ -83,54 +85,56 @@ class Feed
         return array();
     }
 
-    function Generate(&$feedInformations, $tpl = 'feed.tpl')
+    function Generate(&$feedInformations, $tpl = 'syndication/feed.tpl')
     /**
      * Generate the feed contained into the files <$feedFile>.rss and <$feedFile>.atom
-	 * and also the HTML cache for direct includes.
+     * and also the HTML cache for direct includes.
      */
     {
         foreach ( $this->feeds as $feed )
-		{
-			$feed->Generate($feedInformations);
-		}
-		$this->generateCache($feedInformations, $tpl);
+        {
+            $feed->Generate($feedInformations);
+        }
+        $this->generateCache($feedInformations, $tpl);
     }
-
+    
     ## Private Methods ##
-    function getHTMLFeed(&$feedInformations, $tpl,)
+    function getHTMLFeed(&$feedInformations, $tpl)
     /**
      * Return a HTML String of a parsed feed.
      */
     {
-        global $Template;
-		$Template->Set_filenames(array('feed'=> $tpl));
-		
-		$Template->Assign_vars(array(
-			'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
-			'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
-			'HOST' => HOST,	
-			'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
-			'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
-		));
-		
-		foreach ( $feedInformations['items'] as $item )
-		{
-			$Template->Assign_block_vars('items', array(
-				'DATE' => $item['date'],
-				'U_LINK' => $item['link'],
-				'TITLE' => $item['title']
-			));
-		}
-		return $Template->Pparse('feed', TEMPLATE_STRING_MODE)
+        require_once('../kernel/framework/template.class.php');
+        $Template = new Templates($tpl);
+        
+        $Template->Assign_vars(array(
+            'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
+            'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
+            'HOST' => HOST,
+            'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
+            'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
+        ));
+        
+        if ( isset($feedInformations['items']) )
+        {
+            foreach ( $feedInformations['items'] as $item )
+            {
+                $Template->Assign_block_vars('item', array(
+                    'DATE' => $item['date'],
+                    'U_LINK' => $item['link'],
+                    'TITLE' => $item['title']
+                ));
+            }
+        }
+        return $Template->Tparse(TEMPLATE_STRING_MODE);
     }
     
-	function generateCache(&$feedInformations, $tpl)
+    function generateCache(&$feedInformations, $tpl)
     /**
      * Generate the HTML cache for direct includes.
      */
     {
-        
-		$file = fopen($this->path . $this->name, 'w+');
+        $file = fopen($this->path . $this->name . '.html', 'w+');
         fputs($file, $this->getHTMLFeed($feedInformations, $tpl));
         fclose($file);
     }
