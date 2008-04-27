@@ -31,6 +31,9 @@ define('USE_RSS', 0x01);
 define('USE_ATOM', 0x02);
 define('ALL_FEEDS', USE_RSS|USE_ATOM);
 
+define('STATIC_MODE', 0x01);
+define('DYNAMIC_MODE', 0x02);
+
 class Feed
 {
     ## Public Methods #
@@ -63,11 +66,8 @@ class Feed
         {
             if ( ($HTMLfeed = @file_get_contents($this->path . $this->name . '.html')) !== false )
                 return $HTMLfeed;
-            else
-                return '';
         }
-        else
-            return $this->getHTMLFeed($this->Parse($nbItems), $tpl);
+        return $this->getHTMLFeed($this->Parse($nbItems), $tpl);
     }
     
     function Parse($nbItem = 5)
@@ -85,7 +85,7 @@ class Feed
         return array();
     }
 
-    function Generate(&$feedInformations, $tpl = 'syndication/feed.tpl')
+    function Generate(&$feedInformations, $mode = STATIC_MODE)
     /**
      * Generate the feed contained into the files <$feedFile>.rss and <$feedFile>.atom
      * and also the HTML cache for direct includes.
@@ -94,10 +94,20 @@ class Feed
         foreach ( $this->feeds as $feed )
         {
             $feed->Generate($feedInformations);
+            if ( $mode != STATIC_MODE )
+                break;
         }
-        $this->generateCache($feedInformations, $tpl);
     }
     
+    function GenerateCache(&$feedInformations, $tpl = 'syndication/feed.tpl')
+    /**
+     * Generate the HTML cache for direct includes.
+     */
+    {
+        $file = fopen($this->path . $this->name . '.html', 'w+');
+        fputs($file, $this->getHTMLFeed($feedInformations, $tpl));
+        fclose($file);
+    }
     ## Private Methods ##
     function getHTMLFeed(&$feedInformations, $tpl)
     /**
@@ -129,18 +139,8 @@ class Feed
         return $Template->Tparse(TEMPLATE_STRING_MODE);
     }
     
-    function generateCache(&$feedInformations, $tpl)
-    /**
-     * Generate the HTML cache for direct includes.
-     */
-    {
-        $file = fopen($this->path . $this->name . '.html', 'w+');
-        fputs($file, $this->getHTMLFeed($feedInformations, $tpl));
-        fclose($file);
-    }
-
     ## Private attributes ##
-	var $name = ''; // Feed Name
+    var $name = ''; // Feed Name
     var $path = ''; // Path where the feeds are stored
     var $feeds = array();
 }
