@@ -1,5 +1,5 @@
 <ul>
-    # START items #
-    <li>{items.DATE} <a href="{items.U_LINK} ">{items.TITLE} </a></li>
-    # END items #
+    # START item #
+    <li>{item.DATE} <a href="{item.U_LINK} ">{item.TITLE} </a></li>
+    # END item #
 </ul>

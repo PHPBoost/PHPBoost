@@ -28,7 +28,7 @@
 class ATOM extends Feed
 {
     ## Public Methods #
-    function ATOM($feedPath, $feedName)
+    function ATOM($feedName, $feedPath)
     /**
      * Constructor
      */
@@ -44,7 +44,7 @@ class ATOM extends Feed
      * the result as an Array and <false> if it couldn't open the feed.
      */
     {
-        $file = file_get_contents_emulate(HOST . DIR . $this->path . $this->name);		
+        $file = file_get_contents($this->path . $this->name . '.atom');
         if( $file !== false )
         {
             if( preg_match('`<item>(.*)</item>`is', $file) ) 
@@ -81,8 +81,8 @@ class ATOM extends Feed
      * and also the HTML cache for direct includes.
      */
     {
-        global $Template;
-        $Template->Set_filenames(array('rss'=> 'rss.tpl'));
+        require_once('../kernel/framework/template.class.php');
+        $Template = new Templates('syndication/atom.tpl');
         
         $Template->Assign_vars(array(
             'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
@@ -92,17 +92,23 @@ class ATOM extends Feed
             'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
         ));
         
-        foreach ( $feedInformations['rss'] as $item )
+        if ( isset($feedInformations['items']) )
         {
-            $Template->Assign_block_vars('items', array(
-                'DATE' => $item['date'],
-                'U_LINK' => $item['link'],
-                'TITLE' => $item['title']
-            ));
+            foreach ( $feedInformations['items'] as $item )
+            {
+                $Template->Assign_block_vars('item', array(
+                    'DATE' => $item['date'],
+                    'U_LINK' => $item['link'],
+                    'TITLE' => $item['title']
+                ));
+            }
         }
+
+//         echo 'ATOM<br />';
+//         echo '<pre>'; print_r($feedInformations['items']); echo '</pre>';
         
-        $file = fopen($this->path . $this->name, 'w+');
-        fputs($file, $Template->Pparse('rss', TEMPLATE_STRING_MODE));
+        $file = fopen($this->path . $this->name . '.atom', 'w+');
+        fputs($file, $Template->Tparse(TEMPLATE_STRING_MODE));
         fclose($file);
     }
 
