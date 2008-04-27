@@ -79,7 +79,7 @@ class Feed
     {
         foreach ( $this->feeds as $feed )
         {
-            if ( ($parsed = $feed->Parse($nbItem = 5)) !== false )
+            if ( ($parsed = $feed->Parse($nbItem)) !== false )
                 return $parsed;
         }
         return array();

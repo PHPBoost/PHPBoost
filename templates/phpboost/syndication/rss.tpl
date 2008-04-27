@@ -13,7 +13,7 @@
         # START item #
         <item>
             <title>{item.TITLE}</title>
-            <link>{item.LINK}</link>
+            <link>{item.U_LINK}</link>
             <description>{item.DESC}</description>
             <pubDate>{item.DATE}</pubDate>
         </item>
