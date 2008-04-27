@@ -34,7 +34,7 @@ define('ALL_FEEDS', USE_RSS|USE_ATOM);
 class Feed
 {
     ## Public Methods #
-    function Feed($feedName, $feedPath = FEED_PATH , $type = ALL_FEEDS)
+    function Feed($feedName, $type = ALL_FEEDS, $feedPath = FEED_PATH)
     /**
      * Constructor
      */
