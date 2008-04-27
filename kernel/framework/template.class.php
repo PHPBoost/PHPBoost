@@ -323,8 +323,7 @@ class Templates
         if( $this->stringMode )
         {
             $this->template = str_replace('$tplString .= \'\';', '', $this->template);
-            $this->template = preg_replace('`[\s]+\';`', ' \';', $this->template);
-            $this->template = preg_replace('`\.= \'[\s]+`', '.= \' ', $this->template);
+            $this->template = preg_replace(array('`[\n]{2,}`', '`[\r]{2,}`', '`[\t]{2,}`', '`[ ]{2,}`'), array('', '', '', ''), $this->template);
         }
         else
         {
