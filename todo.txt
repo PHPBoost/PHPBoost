@@ -25,7 +25,6 @@
 [-] Classe de BBCode et désactivation des balises non autorisées
 [-] Ajout d'un nouveau mode d'affichage pour la balise hide.
 [-] Changer fonction d'insertion des membres pour ie (groupes)
-[-] Correction du bug des stats (graphiques)
 
 ------------------------------------ MODULES -----------------------------------
 [-] Module liens du site
@@ -47,13 +46,15 @@ Forum:
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[-] Support de Atom dans la classe Rss.
-[-] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml (penser à supprimer l'enregistrement en html simple).
+[*] Support de Atom dans la classe Rss.
+[*] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml
+    (penser à supprimer l'enregistrement en html simple).
 [-] Système de mise à jour du noyau et des modules
+[-] Correction du bug des stats (graphiques)
 
 ------------------------------------ MODULES -----------------------------------
 Search :
-[+] à terminer (revoir l'interface utilisateur) et ajouter des options de recherches
-	dans les modules.
+[+] à terminer (revoir l'interface utilisateur) et ajouter des options de
+    recherches dans les modules.
 
 ################################################################################
