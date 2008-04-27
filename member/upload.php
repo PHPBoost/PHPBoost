@@ -28,10 +28,12 @@
 require_once('../kernel/begin.php');
 define('TITLE', $LANG['files_management']);
 
-if( isset($_GET['popup']) ) //Popup.
+$popup = request_var(GET, 'popup', '');
+if( !empty($popup) ) //Popup.
 {	
 	require_once('../kernel/header_no_display.php');
-	$field = !empty($_GET['fd']) ? trim($_GET['fd']) : '';
+	$field = request_var(GET, 'fd', '');
+	
 	$header = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . $LANG['xml_lang'] . '" >
 <head>
@@ -83,22 +85,22 @@ if( !$Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 //Initialisation  de la class de gestion des fichiers.
-include_once('../kernel/framework/files.class.php');
+include_once('../kernel/framework/files/files.class.php');
 $Files = new Files; 
 
-$folder = !empty($_GET['f']) ? numeric($_GET['f']) : 0;
-$parent_folder = !empty($_GET['fup']) ? numeric($_GET['fup']) : 0;
-$home_folder = !empty($_GET['root']) ? true : false;
-$del_folder = !empty($_GET['delf']) ? numeric($_GET['delf']) : 0;
-$empty_folder = !empty($_GET['eptf']) ? numeric($_GET['eptf']) : 0;
-$del_file = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
-$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
-$get_l_error = !empty($_GET['erroru']) ? trim($_GET['erroru']) : '';
-$move_folder = !empty($_GET['movefd']) ? numeric($_GET['movefd']) : 0;
-$move_file = !empty($_GET['movefi']) ? numeric($_GET['movefi']) : 0;
-$to = isset($_POST['new_cat']) ? numeric($_POST['new_cat']) : -1;
+$folder = request_var(GET, 'f', 0);
+$parent_folder = request_var(GET, 'fup', 0);
+$home_folder = request_var(GET, 'root', false);
+$del_folder = request_var(GET, 'delf', 0);
+$empty_folder = request_var(GET, 'eptf', 0);
+$del_file = request_var(GET, 'del', 0);
+$get_error = request_var(GET, 'error', '');
+$get_l_error = request_var(GET, 'erroru', '');
+$move_folder = request_var(GET, 'movefd', 0);
+$move_file = request_var(GET, 'movefi', 0);
+$to = request_var(POST, 'new_cat', -1);
 
-if( isset($_GET['fup']) ) //Changement de dossier
+if( !empty($parent_folder) ) //Changement de dossier
 {
 	if( empty($parent_folder) )
 		redirect(HOST . DIR . transid('/member/upload.php?f=0&' . $popup_noamp, '', '&'));
@@ -118,7 +120,6 @@ elseif( $home_folder ) //Retour à la racine.
 	redirect(HOST . DIR . transid('/member/upload.php?' . $popup_noamp, '', '&'));
 elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'un fichier.
 {		
-	$folder = !empty($_GET['f']) ? numeric($_GET['f']) : 0;
 	$error = '';
 	//Autorisation d'upload aux groupes.
 	$group_limit = $Member->Check_max_value(DATA_GROUP_LIMIT, $CONFIG_FILES['size_limit']);
@@ -357,7 +358,7 @@ else
 		'USER_ID' => $Member->Get_attribute('user_id'),
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'URL'=> '' . trim($Files->Get_url($folder, '', '&amp;' . $popup), '/'),
+		'URL' => '' . trim($Files->Get_url($folder, '', '&amp;' . $popup), '/'),
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
 		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],
@@ -381,7 +382,7 @@ else
 		'L_EMPTY' => $LANG['empty'],
 		'L_UPLOAD' => $LANG['upload'],
 		'L_URL' => $LANG['url'],
-		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . $Member->Get_attribute('login') . '</a>'
+		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . $Member->Get_attribute('login') . '</a>/'
 	));
 	
 	list($total_folder_size, $total_files, $total_directories) = array(0, 0, 0);
@@ -483,11 +484,13 @@ else
 	));
 
 	if( $total_directories == 0 && $total_files == 0 )
-		$Template->Assign_vars('empty_folder', array(
+	{	
+		$Template->Assign_vars(array(
 			'C_EMPTY_FOLDER' => true,
 			'L_EMPTY_FOLDER' => $LANG['empty_folder']
 		));
-
+	}
+	
 	$Template->Pparse('upload');	
 }
 

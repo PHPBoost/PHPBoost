@@ -30,7 +30,7 @@ require_once('../poll/poll_begin.php');
 require_once('../kernel/header.php'); 
 
 $poll = array();
-$poll_id = !empty($_GET['id']) ? numeric($_GET['id']) : '0';
+$poll_id = request_var(GET, 'id', 0);
 if( !empty($poll_id) )
 {
 	$poll = $Sql->Query_array('poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
@@ -40,12 +40,10 @@ if( !empty($poll_id) )
 		$Errorh->Error_handler('e_unexist_poll', E_USER_REDIRECT); 
 }	
 	
-//On vérifie si on est sur les archives
-$archives = !empty($_GET['archives']) ? numeric($_GET['archives']) : '';
-//Affichage des résulats.
-$show_result = !empty($_GET['r']) ? numeric($_GET['r']) : '';
+$archives = request_var(GET, 'archives', false); //On vérifie si on est sur les archives
+$show_result = request_var(GET, 'r', false); //Affichage des résulats.
 
-if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
+if( !empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives )
 {
 	//Niveau d'autorisation.
 	if( $Member->Check_level($CONFIG_POLL['poll_auth']) )
@@ -150,7 +148,7 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && empty($archives) )
 	else
 		redirect(HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#errorh');
 }
-elseif( !empty($poll['id']) && empty($archives) )
+elseif( !empty($poll['id']) && !$archives )
 {
 	$Template->Set_filenames(array(
 		'poll'=> 'poll/poll.tpl'
@@ -190,7 +188,7 @@ elseif( !empty($poll['id']) && empty($archives) )
 	
 	//Si le cookie existe, ou l'ip est connue on redirige vers les resulats, sinon on prend en compte le vote.
 	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
-	if( !empty($show_result) || in_array($poll['id'], $array_cookie) === true || $check_bdd )
+	if( $show_result || in_array($poll['id'], $array_cookie) === true || $check_bdd )
 	{		
 		$array_answer = explode('|', $poll['answers']);
 		$array_vote = explode('|', $poll['votes']);
@@ -229,7 +227,7 @@ elseif( !empty($poll['id']) && empty($archives) )
 	else //Questions.
 	{
 		//Gestion des erreurs
-		$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+		$get_error = request_var(GET, 'error', '');
 		switch($get_error)
 		{
 			case 'e_already_vote':
@@ -297,7 +295,7 @@ elseif( !empty($poll['id']) && empty($archives) )
 		$Template->Pparse('poll');
 	}
 }
-elseif( empty($archives) ) //Menu principal.
+elseif( !$archives ) //Menu principal.
 {
 	$Template->Set_filenames(array(
 		'poll'=> 'poll/poll.tpl'
@@ -333,7 +331,7 @@ elseif( empty($archives) ) //Menu principal.
 	
 	$Template->Pparse('poll');	
 }
-elseif( !empty($archives) ) //Archives.
+elseif( $archives ) //Archives.
 {
 	$Template->Set_filenames(array(
 		'poll'=> 'poll/poll.tpl'

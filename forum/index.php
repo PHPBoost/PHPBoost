@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
+$id_get = request_var(GET, 'id', 0);
 $cat_name = !empty($CAT_FORUM[$id_get]['name']) ? $CAT_FORUM[$id_get]['name'] : '';
 $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 $Bread_crumb->Add_link($cat_name, '');

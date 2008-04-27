@@ -31,21 +31,21 @@ include_once('pages_functions.php');
 
 define('TITLE', $LANG['pages'] . ' : ' . $LANG['pages_redirections']);
 
-$id_redirection = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$id_rename = !empty($_GET['rename']) ? numeric($_GET['rename']) : 0;
-$id_rename_post = !empty($_POST['id_rename']) ? numeric($_POST['id_rename']) : 0;
-$id_new = !empty($_GET['new']) ? numeric($_GET['new']) : 0;
-$id_new_post = !empty($_POST['id_new']) ? numeric($_POST['id_new']) : 0;
-$del_redirection = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+$id_redirection = request_var(GET, 'id', 0);
+$id_rename = request_var(GET, 'rename', 0);
+$id_rename_post = request_var(POST, 'id_rename', 0);
+$id_new = request_var(GET, 'new', 0);
+$id_new_post = request_var(POST, 'id_new', 0);
+$del_redirection = request_var(GET, 'del', 0);
 $id_page = $id_redirection > 0 ? $id_redirection : ($id_new > 0 ? $id_new : $id_rename);
-$new_title = !empty($_POST['new_title']) ? securit($_POST['new_title']) : '';
-$redirection_name = !empty($_POST['redirection_name']) ? securit($_POST['redirection_name']) : '';
-$error = !empty($_GET['error']) ? securit($_GET['error']) : '';
-$del_cat = !empty($_GET['del_cat']) ? numeric($_GET['del_cat']) : 0;
+$new_title = request_var(POST, 'new_title', '');
+$redirection_name = request_var(POST, 'redirection_name', '');
+$error = request_var(GET, 'error', '');
+$del_cat = request_var(GET, 'del_cat', 0);
 $id_page = $id_page > 0 ? $id_page : $del_cat;
-$del_cat_post = !empty($_POST['del_cat']) ? numeric($_POST['del_cat']) : 0;
-$report_cat = !empty($_POST['report_cat']) ? numeric($_POST['report_cat']) : 0;
-$remove_action = !empty($_POST['action']) ? securit($_POST['action']) : ''; //Action à faire lors de la suppression
+$del_cat_post = request_var(GET, 'del_cat', 0);
+$report_cat = request_var(GET, 'report_cat', 0);
+$remove_action = request_var(POST, 'action', ''); //Action à faire lors de la suppression
 
 if( !empty($new_title) && $id_rename_post > 0 )
 {
@@ -275,7 +275,7 @@ if( $del_cat > 0 )
 	));	
 	
 	//Gestion des erreurs
-	$error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$error = request_var(GET, 'error', '');
 	if( $error == 'e_cat_contains_cat' )
 		$errstr = $LANG['pages_cat_contains_cat'];
 	elseif( $error == 'e_not_a_cat' )

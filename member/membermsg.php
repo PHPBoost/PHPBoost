@@ -31,7 +31,9 @@ $Bread_crumb->Add_link($LANG['member_msg'], 'membermsg.php' . SID);
 define('TITLE', $LANG['member_msg']);
 require_once('../kernel/header.php'); 
 
-$memberId = !empty($_GET['id']) ? numeric($_GET['id']) : '';
+$memberId = request_var(GET, 'id', 0, TUNSIGNED_INT);
+$script = request_var(GET, 'script', '');
+
 if( !empty($memberId) ) //Affichage de tous les messages du membre
 {
 	$Template->Set_filenames(array(
@@ -62,7 +64,7 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 		'U_COMMENTS' => transid('.php?id=' . $memberId . '&amp;script=com')
 	));
 		
-	if( isset($_GET['script']) )
+	if( !empty($script) )
 	{
 		//On crée une pagination si le nombre de commentaires est trop important.
 		include_once('../kernel/framework/pagination.class.php'); 

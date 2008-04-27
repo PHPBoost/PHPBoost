@@ -19,7 +19,7 @@
 		<form action="{U_CONNECT}" method="post" onsubmit="return check_conect();" style="text-align:right;">
 			<label><input size="15" type="text" class="text" id="login" name="login" value="{L_PSEUDO}" onclick="this.value='';" maxlength="25" /></label>
 			<label><input size="15" type="password" id="password" name="password" class="text" maxlength="30" /></label>
-			<label><input checked="checked" type="hidden" name="auto" /></label>
+			<label><input checked="checked" type="checkbox" name="auto" /></label>
 			<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
 			{U_REGISTER}&nbsp;&nbsp;&nbsp;
 		</form>	

@@ -29,24 +29,24 @@ include_once('../kernel/begin.php');
 include_once('faq_begin.php');
 
 
-$faq_del_id = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
-$down = !empty($_GET['down']) ? numeric($_GET['down']) : 0;
-$up = !empty($_GET['up']) ? numeric($_GET['up']) : 0;
-$id_question = !empty($_POST['id_question']) ? numeric($_POST['id_question']) : 0;
-$entitled = !empty($_POST['entitled']) ? securit($_POST['entitled']) : '';
-$answer = !empty($_POST['answer']) ? parse($_POST['answer']) : '';
-$new_id_cat = !empty($_POST['id_cat']) ? numeric($_POST['id_cat']) : 0;
-$id_after = !empty($_POST['after']) ? numeric($_POST['after']) : 0;
+$faq_del_id = request_var(GET, 'del', 0);
+$down = request_var(GET, 'down', 0);
+$up = request_var(GET, 'up', 0);
+$id_question = request_var(POST, 'id_question', 0);
+$entitled = request_var(POST, 'entitled', '');
+$answer = request_var(POST, 'answer', '');
+$new_id_cat = request_var(POST, 'id_cat', 0);
+$id_after = request_var(POST, 'after', 0);
 //Properties of the category
-$cat_properties = !empty($_GET['cat_properties']);
-$id_cat = !empty($_POST['id_faq']) ? numeric($_POST['id_faq']) : 0;
-$display_mode = !empty($_POST['display_mode']) ? numeric($_POST['display_mode']) : 0;
-$global_auth = !empty($_POST['global_auth']);
-$cat_name = !empty($_POST['cat_name']) ? securit($_POST['cat_name']) : '';
-$description = !empty($_POST['description']) ? parse($_POST['description']) : '';
+$cat_properties = request_var(GET, 'cat_properties', 0);
+$id_cat = request_var(POST, 'id_faq', 0);
+$display_mode = request_var(POST, 'display_mode', 0);
+$global_auth = request_var(POST, 'global_auth', array());
+$cat_name = request_var(POST, 'cat_name', '');
+$description = request_var(POST, 'description', '', TSTRING_PARSE);
 
-$target = !empty($_POST['target']) ? numeric($_POST['target']) : 0;
-$move_question = !empty($_POST['move_question']);
+$target = request_var(POST, 'target', 0);
+$move_question = request_var(POST, 'move_question', 0);
 
 if( $faq_del_id > 0 )
 {

@@ -29,8 +29,10 @@ require_once('../kernel/begin.php');
 require_once('../articles/articles_begin.php');
 require_once('../kernel/header.php'); 
 
-$page = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
-if( !empty($idart) && isset($_GET['cat']) )
+$page = request_var(GET, 'p', 1);
+$cat = request_var(GET, 'cat', 0);
+
+if( !empty($idart) && !empty($idartcat)  )
 {
 	//Niveau d'autorisation de la catégorie
 	if( !isset($CAT_ARTICLES[$idartcat]) || !$Member->Check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
@@ -197,7 +199,7 @@ else
 		'U_ARTICLES_COM_BOTTOM' => transid('.php?sort=com&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=asc')
 	));		
 	
-	$get_sort = !empty($_GET['sort']) ? trim($_GET['sort']) : '';	
+	$get_sort = request_var(GET, 'sort', '');	
 	switch($get_sort)
 	{
 		case 'alpha' : 
@@ -219,8 +221,8 @@ else
 		$sort = 'timestamp';
 	}
 
-	$get_mode = !empty($_GET['mode']) ? trim($_GET['mode']) : '';	
-	$mode = ($get_mode == 'asc' || $get_mode == 'desc') ? strtoupper(trim($_GET['mode'])) : 'DESC';	
+	$get_mode = request_var(GET, 'mode', '');	
+	$mode = ($get_mode == 'asc' || $get_mode == 'desc') ? strtoupper($get_mode) : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	//On crée une pagination si le nombre de fichiers est trop important.

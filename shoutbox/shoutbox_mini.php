@@ -34,14 +34,15 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	$Cache->Load_file('shoutbox'); //Chargement du cache
 	
 	###########################Insertion##############################
-	if( !empty($_POST['shoutbox']) )
+	$shoutbox = request_var(POST, 'shoutbox', false);
+	if( $shoutbox )
 	{		
 		//Membre en lecture seule?
 		if( $Member->Get_attribute('user_readonly') > time() ) 
 			$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 			
-		$shout_pseudo = !empty($_POST['shout_pseudo']) ? securit(substr($_POST['shout_pseudo'], 0, 25)) : $LANG['guest']; //Pseudo posté.
-		$shout_contents = !empty($_POST['shout_contents']) ? trim($_POST['shout_contents']) : '';	
+		$shout_pseudo = securit(substr(request_var(POST, 'shout_pseudo', $LANG['guest'], TSTRING_UNSECURE), 0, 25)); //Pseudo posté.
+		$shout_contents = request_var(POST, 'shout_contents', '', TSTRING_UNSECURE);	
 		if( !empty($shout_pseudo) && !empty($shout_contents) )
 		{		
 			//Accès pour poster.

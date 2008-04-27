@@ -33,7 +33,7 @@ $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php'); 
 
-$view_msg = !empty($_GET['id']) ? numeric($_GET['id']) : '';
+$view_msg = request_var(GET, 'id', 0);
 if( !empty($view_msg) ) //Affichage de tous les messages du membre
 {
 	$Template->Set_filenames(array(

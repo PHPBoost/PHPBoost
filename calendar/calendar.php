@@ -34,22 +34,22 @@ $year = substr($time, 0, 4);
 $month = substr($time, 4, 2);
 $day = substr($time, 6, 2);
 
-$year = !empty($_GET['y']) ? numeric($_GET['y']) : $year;
+$year = request_var(GET, 'y', $year);
 $year = empty($year) ? 0 : $year;
-$month = !empty($_GET['m']) ? numeric($_GET['m']) : $month;
+$month = request_var(GET, 'm', $month);
 $month = empty($month) ? 0 : $month;
-$day = !empty($_GET['d']) ? numeric($_GET['d']) : $day;
+$day = request_var(GET, 'd', $day);
 $day = empty($day) ? 0 : $day;
 $bissextile = (($year % 4) == 0) ? 29 : 28;
 
-$get_event = !empty($_GET['e']) ? trim($_GET['e']) : '';
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$add = !empty($_GET['add']) ? trim($_GET['add']) : '';
-$del = !empty($_GET['delete']) ? trim($_GET['delete']) : '';
-$edit = !empty($_GET['edit']) ? trim($_GET['edit']) : '';
+$get_event = request_var(GET, 'e', '');
+$id = request_var(GET, 'id', 0);
+$add = request_var(GET, 'add', false);
+$del = request_var(GET, 'delete', false);
+$edit = request_var(GET, 'edit', false);
 	
 $checkdate = checkdate($month, $day, $year); //Validité de la date entrée.
-if( $checkdate === true && empty($id) && empty($add) )
+if( $checkdate === true && empty($id) && !$add )
 {
 	//Redirection vers l'évenement suivant/précédent.
 	if( $get_event == 'up' )
@@ -98,7 +98,7 @@ if( $checkdate === true && empty($id) && empty($add) )
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = request_var(GET, 'error', '');
 	switch($get_error)
 	{
 		case 'invalid_date':
@@ -284,7 +284,7 @@ elseif( !empty($id) )
 	if( !$Member->Check_level(ADMIN_LEVEL) ) //Admins seulement autorisés à editer/supprimer!
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
-	if( !empty($del) ) //Suppression simple.
+	if( $del ) //Suppression simple.
 	{
 		$Sql->Query_inject("DELETE FROM ".PREFIX."calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
@@ -293,7 +293,7 @@ elseif( !empty($id) )
 		
 		redirect(HOST . SCRIPT . SID2);
 	}
-	elseif( !empty($edit) )
+	elseif( $edit )
 	{
 		if( !empty($_POST['valid']) )
 		{
@@ -363,7 +363,7 @@ elseif( !empty($id) )
 			));
 		
 			//Gestion erreur.
-			$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+			$get_error = request_var(GET, 'error', '');
 			switch($get_error)
 			{
 				case 'invalid_date':
@@ -387,7 +387,7 @@ elseif( !empty($id) )
 	else
 		redirect(HOST . SCRIPT . SID2);
 }
-elseif( !empty($add) ) //Ajout d'un évenement
+elseif( $add ) //Ajout d'un évenement
 {
 	if( !$Member->Check_level($CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -467,7 +467,7 @@ elseif( !empty($add) ) //Ajout d'un évenement
 		));
 		
 		//Gestion erreur.
-		$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+		$get_error = request_var(GET, 'error', '');
 		switch($get_error)
 		{
 			case 'invalid_date':

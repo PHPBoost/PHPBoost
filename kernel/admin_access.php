@@ -28,12 +28,12 @@
 if( defined('PHPBOOST') !== true ) exit;
 
 //Module de connexion
-$login = !empty($_POST['login']) ? securit($_POST['login']) : '';
-$password = !empty($_POST['password']) ? md5($_POST['password']) : '';
-$autoconnexion = !empty($_POST['auto']) ? true : false;
-$unlock = !empty($_POST['unlock']) ? md5($_POST['unlock']) : '';
+$login = request_var(POST, 'login', '');
+$password = md5(request_var(POST, 'password', '', TSTRING_UNSECURE));
+$autoconnexion = request_var(POST, 'auto', false);
+$unlock = md5(request_var(POST, 'unlock', '', TSTRING_UNSECURE));
 
-if( !empty($_GET['disconnect']) ) //Déconnexion.
+if( request_var(GET, 'disconnect', false) ) //Déconnexion.
 {
 	$Session->Session_end();
 	redirect(get_start_page());
@@ -41,7 +41,7 @@ if( !empty($_GET['disconnect']) ) //Déconnexion.
 
 //On vérifie si l'ip est valide sinon on refuse le lancement de la session!
 //Lancement de la session
-if( !empty($_POST['connect']) && !empty($login) && !empty($password) )
+if( request_var(POST, 'connect', false) && !empty($login) && !empty($password) )
 {
 	$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "' AND level = 2", __LINE__, __FILE__);
 	if( !empty($user_id) ) //Membre existant.

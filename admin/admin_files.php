@@ -30,7 +30,7 @@ define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
 //Initialisation  de la class de gestion des fichiers.
-include_once('../kernel/framework/files.class.php');
+include_once('../kernel/framework/files/files.class.php');
 $Files = new Files; 
 
 $folder = !empty($_GET['f']) ? numeric($_GET['f']) : 0;

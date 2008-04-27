@@ -29,15 +29,16 @@ require_once('../kernel/begin.php');
 require_once('../shoutbox/shoutbox_begin.php'); 
 require_once('../kernel/header.php');
 	
-$shout_id = !empty($_GET['id']) ? numeric($_GET['id']) : '';
-if( !empty($_POST['shoutbox']) && empty($shout_id) ) //Insertion
+$shout_id = request_var(GET, 'id', 0);
+$shoutbox = request_var(POST, 'shoutbox', false);
+if( $shoutbox && empty($shout_id) ) //Insertion
 {		
 	//Membre en lecture seule?
 	if( $Member->Get_attribute('user_readonly') > time() ) 
 		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
-	$shout_pseudo = !empty($_POST['shout_pseudo']) ? securit(substr($_POST['shout_pseudo'], 0, 25)) : $LANG['guest']; //Pseudo posté.
-	$shout_contents = !empty($_POST['shout_contents']) ? trim($_POST['shout_contents']) : '';
+	$shout_pseudo = securit(substr(request_var(POST, 'shout_pseudo', $LANG['guest'], TSTRING_UNSECURE), 0, 25)); //Pseudo posté.
+		$shout_contents = request_var(POST, 'shout_contents', '', TSTRING_UNSECURE);
 	if( !empty($shout_pseudo) && !empty($shout_contents) )
 	{		
 		//Accès pour poster.		
@@ -74,9 +75,9 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 	if( $Member->Get_attribute('user_readonly') > time() ) 
 		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
-	$del_message = !empty($_GET['del']) ? true : false;
-	$edit_message = !empty($_GET['edit']) ? true : false;
-	$update = !empty($_GET['update']) ? true : false;
+	$del_message = request_var(GET, 'del', false);
+	$edit_message = request_var(GET, 'edit', false);
+	$update = request_var(GET, 'update', false);
 	
 	$row = $Sql->Query_array('shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
@@ -175,7 +176,7 @@ else //Affichage.
 		));
 		  	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = request_var(GET, 'error', '');
 	switch($get_error)
 	{
 		case 'auth':

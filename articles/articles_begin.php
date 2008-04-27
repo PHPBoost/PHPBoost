@@ -35,10 +35,8 @@ define('EDIT_CAT_ARTICLES', 0x04);
 $Cache->Load_file('articles');
 load_module_lang('articles'); //Chargement de la langue du module.
 
-
-$get_note =  !empty($_GET['note']) ? numeric($_GET['note']) : 0;
-$idartcat = isset($_GET['cat']) ? numeric($_GET['cat']) : 0;
-$idart = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
+$idartcat = request_var(GET, 'cat', 0);
+$idart = request_var(GET, 'id', 0);
 
 if( empty($idartcat) )//Racine.
 {

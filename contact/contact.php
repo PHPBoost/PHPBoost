@@ -29,12 +29,14 @@ require_once('../kernel/begin.php');
 require_once('../contact/contact_begin.php');
 require_once('../kernel/header.php'); 
 
-$mail_from = !empty($_POST['mail_email']) ? trim($_POST['mail_email']) : '';
-$mail_objet = !empty($_POST['mail_objet']) ? trim($_POST['mail_objet']) : '';
-$mail_contents = !empty($_POST['mail_contents']) ? trim($_POST['mail_contents']) : '';
+$mail_from = request_var(POST, 'mail_email', '', TSTRING_UNSECURE);
+$mail_objet = request_var(POST, 'mail_objet', '', TSTRING_UNSECURE);
+$mail_contents = request_var(POST, 'mail_contents', '', TSTRING_UNSECURE);
+$mail_valid = request_var(POST, 'mail_valid', '');
+$get_verif_code = request_var(POST, 'verif_code', '', TSTRING_UNSECURE);
 
 ###########################Envoi##############################
-if( !empty($_POST['mail_valid']) )
+if( !empty($mail_valid) )
 {
 	$Template->Set_filenames(array(
 		'contact'=> 'contact/contact.tpl'
@@ -46,7 +48,6 @@ if( !empty($_POST['mail_valid']) )
 	{
 		$user_id = substr(md5(USER_IP), 0, 8);
 		$verif_code = $Sql->Query("SELECT code FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
-		$get_verif_code = !empty($_POST['verif_code']) ? trim($_POST['verif_code']) : '';
 
 		if( empty($verif_code) || ($verif_code != $get_verif_code) )
 			$check_verif_code = false;
@@ -77,7 +78,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = request_var(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $get_error == 'verif' )

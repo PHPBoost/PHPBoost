@@ -142,10 +142,10 @@ class Templates
 		else //Module
 		{	
 			//module data path
-			if( !array_key_exists($get_module[0], $this->module_data_path) )
+			if( !isset($this->module_data_path[$get_module[0]]) )
 			{
-				if( is_dir('../templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/images' ) )
-					$this->module_data_path[$get_module[0]] = '../templates/' . $CONFIG['theme'];
+				if( is_dir('../templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/images') )
+					$this->module_data_path[$get_module[0]] = '../templates/' . $CONFIG['theme'] . '/' . $get_module[0];
 				else	
 					$this->module_data_path[$get_module[0]] = '../' . $get_module[0] . '/templates'; 
 			}

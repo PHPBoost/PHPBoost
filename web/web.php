@@ -133,7 +133,7 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 		'U_WEB_COM_BOTTOM' => transid('.php?sort=com&amp;mode=asc&amp;cat=' . $idcat, '-' . $idcat . '.php?sort=com&amp;mode=asc')
 	));		
 	
-	$get_sort = !empty($_GET['sort']) ? trim($_GET['sort']) : '';	
+	$get_sort = request_var(GET, 'sort', '');	
 	switch($get_sort)
 	{
 		case 'alpha' : 
@@ -155,8 +155,8 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 		$sort = 'timestamp';
 	}
 	
-	$get_mode = !empty($_GET['mode']) ? trim($_GET['mode']) : '';	
-	$mode = ($get_mode == 'asc' || $get_mode == 'desc') ? strtoupper(trim($_GET['mode'])) : 'DESC';	
+	$get_mode = request_var(GET, 'mode', '');	
+	$mode = ($get_mode == 'asc' || $get_mode == 'desc') ? strtoupper($mode) : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	//On crée une pagination si le nombre de lien est trop important.

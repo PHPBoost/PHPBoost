@@ -30,11 +30,11 @@ require_once('../forum/forum_begin.php');
 define('TITLE', 'Ajax forum');
 require_once('../kernel/header_no_display.php');
 
-$track = !empty($_GET['t']) ? numeric($_GET['t']) : '';	
-$untrack = !empty($_GET['ut']) ? numeric($_GET['ut']) : '';	
-$msg_d = !empty($_GET['msg_d']) ? numeric($_GET['msg_d']) : '';
+$track = request_var(GET, 't', '');	
+$untrack = request_var(GET, 'ut', '');	
+$msg_d = request_var(GET, 'msg_d', '');
 
-if( !empty($_GET['refresh_unread']) ) //Suppression d'un message.
+if( request_var(GET, 'refresh_unread', false) ) //Suppression d'un message.
 {
 	$is_guest = ($Member->Get_attribute('user_id') !== -1) ? false : true;
 	$nbr_msg_not_read = 0;
@@ -102,13 +102,13 @@ if( !empty($_GET['refresh_unread']) ) //Suppression d'un message.
 	else
 		echo '';
 }
-elseif( !empty($_GET['del']) ) //Suppression d'un message.
+elseif( request_var(GET, 'del', false) ) //Suppression d'un message.
 {
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
 	$Forumfct = new Forum;
 
-	$idm_get = !empty($_GET['idm']) ? numeric($_GET['idm']) : '';	
+	$idm_get = request_var(GET, 'idm', '');	
 	//Info sur le message.	
 	$msg = $Sql->Query_array('forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'", __LINE__, __FILE__);	
 	//On va chercher les infos sur le topic	
@@ -157,7 +157,7 @@ elseif( !empty($msg_d) )
 		echo ($topic['display_msg']) ? 2 : 1;
 	}	
 }
-elseif( !empty($_GET['warning_moderation_panel'])  || !empty($_GET['punish_moderation_panel']) ) //Recherche d'un membre
+elseif( request_var(GET, 'warning_moderation_panel', false) || request_var(GET, 'punish_moderation_panel', false) ) //Recherche d'un membre
 {
 	$login = !empty($_POST['login']) ? securit(utf8_decode($_POST['login'])) : '';
 	$login = str_replace('*', '%', $login);
@@ -167,9 +167,9 @@ elseif( !empty($_GET['warning_moderation_panel'])  || !empty($_GET['punish_moder
 		$result = $Sql->Query_while("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			if( !empty($_GET['warning_moderation_panel']) )
+			if( request_var(GET, 'warning_moderation_panel', false) )
 				echo '<a href="moderation_forum.php?action=warning&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />';
-			elseif( !empty($_GET['punish_moderation_panel']) )
+			elseif( request_var(GET, 'punish_moderation_panel', false) )
 				echo '<a href="moderation_forum.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />';
 			
 			$i++;

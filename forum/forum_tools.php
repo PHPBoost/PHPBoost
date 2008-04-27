@@ -57,7 +57,7 @@ if( !$is_guest )
 	$clause_topic = '';
 	if( strpos(SCRIPT, '/forum/topic.php') !== false )
 	{
-		$id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
+		$id_get = request_var(GET, 'id', 0);
 		$clause_topic = " AND t.id != '" . $id_get . "'";
 	}
 	

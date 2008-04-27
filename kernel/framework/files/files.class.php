@@ -35,11 +35,6 @@ class Files
 	
 	
 	## Public Methods ##	
-	//Constructeur
-	function Files()
-	{
-	}
-
 	//Ajout d'un dossier virtuel
 	function Add_folder($id_parent, $user_id, $name)
 	{
@@ -65,9 +60,7 @@ class Files
 		FROM ".PREFIX."upload 
 		WHERE idcat = '" . $id_folder . "'", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
-		{
 			delete_file('../upload/' . $row['path']);
-		}
 		
 		//Suppression des entrées dans la base de données
 		if( $empty_folder && $i == 0 ) //Non suppression du dossier racine.

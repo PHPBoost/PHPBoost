@@ -33,8 +33,8 @@ require_once('../kernel/header_no_display.php');
 //Notation.
 if( !empty($_GET['note']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
 {	
-	$id = !empty($_POST['id']) ? numeric($_POST['id']) : 0;
-	$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;
+	$id = request_var(POST, 'id', 0);
+	$note = request_var(POST, 'note', 0);
 
 	//Initialisation  de la class de gestion des fichiers.
 	include_once('../kernel/framework/note.class.php');

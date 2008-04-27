@@ -179,8 +179,8 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 	$current_year = substr($time, 0, 4);
 	$current_month = substr($time, 4, 2);
 	
-	$month = !empty($_GET['m']) ? numeric($_GET['m']) : (int) $current_month;
-	$year = !empty($_GET['y']) ? numeric($_GET['y']) : $current_year;
+	$month = request_var(GET, 'm', (int)$current_month);
+	$year = request_var(GET, 'y', (int)$current_year);
 	if( $visit_year )
 		$year = $visit_year;
 	
@@ -497,22 +497,22 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 	$current_month = substr($time, 4, 2);
 	$current_day = substr($time, 6, 2);
 
-	$day = !empty($_GET['d']) ? numeric($_GET['d']) : (int) $current_day;
-	$month = !empty($_GET['m']) ? numeric($_GET['m']) : (int) $current_month;
+	$day = request_var(GET, 'd', (int)$current_day);
+	$month = request_var(GET, 'm', (int)$current_month);
 	if( $pages_year )
 	{	
 		$year = $pages_year;
 		$clause = '';
 	}
-	elseif( isset($_GET['d']) )
+	elseif( request_var(GET, 'd', false) )
 	{
-		$clause = "AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'";
-		$year = !empty($_GET['y']) ? numeric($_GET['y']) : $current_year;
+		$clause = " AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'";
+		$year = request_var(GET, 'y', (int)$current_year);
 	}	
 	else
 	{
-		$clause = "AND stats_month = '" . $month . "'";
-		$year = !empty($_GET['y']) ? numeric($_GET['y']) : $current_year;
+		$clause = " AND stats_month = '" . $month . "'";
+		$year = request_var(GET, 'y', (int)$current_year);
 	}	
 	
 	//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
@@ -678,7 +678,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			}
 		}
 	}
-	elseif( isset($_GET['d'])  )
+	elseif( request_var(GET, 'd', false) )
 	{
 		//Nombre de jours pour chaque mois (gestion des années bissextiles)
 		$bissextile = (($year % 4) == 0) ? 29 : 28;

@@ -33,9 +33,9 @@ $Cache->Load_file('download');
 
 include_once('download_auth.php');
 
-$page = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
-$category_id = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
-$file_id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
+$page = request_var(GET, 'p', 1);
+$category_id = request_var(GET, 'cat', 0);
+$file_id = request_var(GET, 'id', 0);
 $id_cat_for_download = 0;
 
 if( !empty($file_id) )

@@ -29,14 +29,15 @@ require_once('../kernel/begin.php');
 require_once('../guestbook/guestbook_begin.php'); 
 require_once('../kernel/header.php'); 
 
-$id_get = ( !empty($_GET['id'])) ? numeric($_GET['id']) : '' ;
+$id_get = request_var(GET, 'id', 0);
+$guestbook = request_var(POST, 'guestbook', false);
 //Chargement du cache
 $Cache->Load_file('guestbook');
 		
-if( !empty($_POST['guestbook']) && empty($id_get) ) //Enregistrement
+if( $guestbook && empty($id_get) ) //Enregistrement
 {
-	$guestbook_contents = !empty($_POST['guestbook_contents']) ? trim($_POST['guestbook_contents']) : '';
-	$guestbook_pseudo = !empty($_POST['guestbook_pseudo']) ? securit($_POST['guestbook_pseudo']) : $LANG['guest'];
+	$guestbook_contents = request_var(POST, 'guestbook_contents', '', TSTRING_UNSECURE);
+	$guestbook_pseudo = request_var(POST, 'guestbook_pseudo', $LANG['guest']);
 
 	//Membre en lecture seule?
 	if( $Member->Get_attribute('user_readonly') > time() ) 
@@ -72,7 +73,7 @@ if( !empty($_POST['guestbook']) && empty($id_get) ) //Enregistrement
 	else
 		redirect(HOST . SCRIPT . transid('?error=incomplete', '', '&') . '#errorh');
 }
-elseif( !empty($_POST['previs']) ) //Prévisualisation.
+elseif( request_var(POST, 'previs', false) ) //Prévisualisation.
 {
 	$Template->Set_filenames(array(
 		'guestbook'=> 'guestbook/guestbook.tpl'
@@ -81,9 +82,9 @@ elseif( !empty($_POST['previs']) ) //Prévisualisation.
 	$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	$user_id = (int)$user_id;
 	
-	$guestbook_contents = !empty($_POST['guestbook_contents']) ? trim($_POST['guestbook_contents']) : '';
-	$guestbook_pseudo = !empty($_POST['guestbook_pseudo']) ? securit($_POST['guestbook_pseudo']) : '';
-	
+	$guestbook_contents = request_var(POST, 'guestbook_contents', '');
+	$guestbook_pseudo = request_var(POST, 'guestbook_pseudo', $LANG['guest']);
+
 	//Pseudo du membre connecté.
 	if( $user_id !== -1)
 		$Template->Assign_block_vars('hidden_guestbook', array(
@@ -106,7 +107,8 @@ elseif( !empty($_POST['previs']) ) //Prévisualisation.
 	));
 
 	//On met à jour en cas d'édition après prévisualisation du message
-	$update = (!empty($_GET['update']) && !empty($id_get)) ? '?update=1&amp;id=' . $id_get : '';
+	$update = request_var(GET, 'update', false);
+	$update = $update && !empty($id_get) ? '?update=1&amp;id=' . $id_get : '';
 	
 	$Template->Assign_vars(array(
 		'CONTENTS' => stripslashes($guestbook_contents),
@@ -132,9 +134,9 @@ elseif( !empty($_POST['previs']) ) //Prévisualisation.
 }
 elseif( !empty($id_get) ) //Edition + suppression!
 {
-	$del = !empty($_GET['del']) ? true : false;
-	$edit = !empty($_GET['edit']) ? true : false;
-	$update = !empty($_GET['update']) ? true : false;
+	$del = request_var(GET, 'del', false);
+	$edit = request_var(GET, 'edit', false);
+	$update = request_var(GET, 'update', false);
 	
 	$row = $Sql->Query_array('guestbook', '*', 'WHERE id="' . $id_get . '"', __LINE__, __FILE__);
 	$row['user_id'] = (int)$row['user_id'];
@@ -191,8 +193,8 @@ elseif( !empty($id_get) ) //Edition + suppression!
 		}
 		elseif( $update )
 		{
-			$guestbook_contents = !empty($_POST['guestbook_contents']) ? trim($_POST['guestbook_contents']) : '';			
-			$guestbook_pseudo = !empty($_POST['guestbook_pseudo']) ? securit($_POST['guestbook_pseudo']) : '';			
+			$guestbook_contents = request_var(POST, 'guestbook_contents', '', TSTRING_UNSECURE);
+			$guestbook_pseudo = request_var(POST, 'guestbook_pseudo', $LANG['guest']);
 			if( !empty($guestbook_contents) && !empty($guestbook_pseudo) )
 			{
 				$guestbook_contents = parse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']); 			
@@ -231,7 +233,7 @@ else //Affichage.
 		));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = request_var(GET, 'error', '');
 	switch($get_error)
 	{
 		case 'auth':
