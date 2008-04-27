@@ -28,9 +28,9 @@
 require_once('../kernel/begin.php'); 
 load_module_lang('wiki');
 
-$id_article = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$field = !empty($_GET['field']) ? securit($_GET['field']) : '';
-$order = !empty($_GET['order']) ? securit($_GET['order']) : '';
+$id_article = request_var(GET, 'id', 0);
+$field = request_var(GET, 'field', '');
+$order = request_var(GET, 'order', '');
 
 define('TITLE' , $LANG['wiki_history']);
 

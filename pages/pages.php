@@ -27,9 +27,9 @@
 
 require_once('../kernel/begin.php'); 
 
-$encoded_title = !empty($_GET['title']) ? securit($_GET['title']) : '';
-$id_com = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+$encoded_title = request_var(GET, 'title', '');
+$id_com = request_var(GET, 'id', 0);
+$error = request_var(GET, 'error', '');
 
 include_once('pages_begin.php');
 include_once('pages_functions.php');

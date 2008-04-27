@@ -30,13 +30,16 @@ require_once('../kernel/begin.php');
 require_once('../gallery/gallery_begin.php');
 require_once('../kernel/header.php');
 
-$g_idpics = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$g_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
-$g_add = !empty($_GET['add']) ? true : false;
-$g_page = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
-$g_views = !empty($_GET['views']) ? true : false;
-$g_notes = !empty($_GET['notes']) ? true : false;
-$g_sort =  !empty($_GET['sort']) ? 'sort=' . securit($_GET['sort']) : '';
+$g_idpics = request_var(GET, 'id', 0);
+$g_del = request_var(GET, 'del', 0);
+$g_move = request_var(GET, 'move', 0);
+$g_add = request_var(GET, 'add', false);
+$g_page = request_var(GET, 'p', 1);
+$g_views = request_var(GET, 'views', false);
+$g_notes = request_var(GET, 'notes', false);
+$g_sort = request_var(GET, 'sort', '');
+$g_sort = !empty($g_sort) ? 'sort=' . $g_sort : '';
+
 //Récupération du mode d'ordonnement.
 if( preg_match('`([a-z]+)_([a-z]+)`', $g_sort, $array_match) )
 {	
@@ -58,10 +61,9 @@ if( !empty($g_del) ) //Suppression d'une image.
 	
 	redirect(HOST . DIR . '/gallery/gallery' . transid('.php?cat=' . $g_idcat, '-' . $g_idcat . '.php', '&'));
 }
-elseif( !empty($g_idpics) && isset($_GET['move']) ) //Déplacement d'une image.
+elseif( !empty($g_idpics) && $g_move ) //Déplacement d'une image.
 {
-	$move = !empty($_GET['move']) ? numeric($_GET['move']) : 0;
-	$Gallery->Move_pics($g_idpics, $move);
+	$Gallery->Move_pics($g_idpics, $g_move);
 	
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
@@ -91,8 +93,8 @@ elseif( isset($_FILES['gallery']) ) //Upload
 	$Upload = new Upload($dir);
 	
 	$idpic = 0;
-	$idcat_post = !empty($_POST['cat']) ? numeric($_POST['cat']) : 0;
-	$name_post = !empty($_POST['name']) ? securit($_POST['name']) : '';
+	$idcat_post = request_var(POST, 'cat', '');
+	$name_post = request_var(POST, 'name', '');
 
 	if( is_writable($dir) )
 	{
@@ -175,7 +177,7 @@ elseif( $g_add )
 	}
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$get_error = request_var(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
 	if( in_array($get_error, $array_error) )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
@@ -290,7 +292,7 @@ else
 	$total_cat = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
 
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$get_error = request_var(GET, 'error', '');
 	if( $get_error == 'unexist_cat' )
 		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
 		

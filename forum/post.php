@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
+$id_get = request_var(GET, 'id', 0);
 //Récupération de la barre d'arborescence.
 $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 foreach($CAT_FORUM as $idcat => $array_info_cat)
@@ -43,12 +43,12 @@ $Bread_crumb->Add_link($LANG['title_post'], '');
 define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php'); 
 
-$new_get = !empty($_GET['new']) ? securit($_GET['new']) : '';
-$previs = !empty($_POST['prw']) ? true : false; //Prévisualisation des messages.
-$idt_get = !empty($_GET['idt']) ? numeric($_GET['idt']) : '';
-$error_get = !empty($_GET['error']) ? securit($_GET['error']) : '';
-$post_topic = !empty($_POST['post_topic']) ? trim($_POST['post_topic']) : '';
-$preview_topic = !empty($_POST['prw_t']) ? trim($_POST['prw_t']) : '';
+$new_get = request_var(GET, 'new', '');
+$idt_get = request_var(GET, 'idt', '');
+$error_get = request_var(GET, 'error', '');
+$previs = request_var(POST, 'prw', false); //Prévisualisation des messages.
+$post_topic = request_var(POST, 'post_topic', false);
+$preview_topic = request_var(POST, 'prw_t', '');
 
 ############# Vérification d'autorisation dans la catégorie envoyée #############
 //Existance de la catégorie.
@@ -97,8 +97,8 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			'forum_bottom'=> 'forum/forum_bottom.tpl'
 		));
 		
-		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';	
-		$post_update = isset($_POST['p_update']) ? trim($_POST['p_update']) : '';
+		$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE);	
+		$post_update = request_var(POST, 'p_update', '', TSTRING_UNSECURE);
 		
 		$update = !empty($post_update) ? $post_update : transid('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get);
 		$submit = !empty($post_update) ? $LANG['update'] : $LANG['submit'];
@@ -135,14 +135,14 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 	}
 	elseif( $new_get === 'topic' && empty($error_get) ) //Nouveau topic.
 	{			
-		if( !empty($post_topic) && !empty($id_get) )
+		if( $post_topic && !empty($id_get) )
 		{
 			$is_modo = $Member->Check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 			if( !$Member->Check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
 				redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 			if( $is_modo )
-				$type = isset($_POST['type']) ? numeric($_POST['type']) : 0; 
+				$type = request_var(POST, 'type', 0); 
 			else
 				$type = 0;
 			
@@ -152,9 +152,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			if( $is_modo ) 
 				$check_status = 1;
 			
-			$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : ''; 
-			$title = !empty($_POST['title']) ? securit($_POST['title']) : ''; 
-			$subtitle = !empty($_POST['desc']) ? securit($_POST['desc']) : ''; 
+			$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE); 
+			$title = request_var(POST, 'tite', ''); 
+			$subtitle = request_var(POST, 'desc', ''); 
 		
 			//Mod anti Flood
 			if( $check_time !== false && $check_status != 0 ) 
@@ -174,19 +174,20 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					list($last_topic_id, $last_msg_id) = $Forumfct->Add_topic($id_get, $title, $subtitle, $contents, $type); //Insertion nouveau topic.
 					
 					//Ajout d'un sondage en plus du topic.
-					$question = isset($_POST['question']) ? securit($_POST['question']) : '';
+					$question = request_var(POST, 'question', '');
 					if( !empty($question) )
 					{
-						$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
+						$poll_type = request_var(POST, 'poll_type', 0);
 						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
 						$answers = array();
 						$nbr_votes = 0;
 						for($i = 0; $i < 20; $i++)
 						{
-							if( !empty($_POST['a'.$i]) )
+							$answer = str_replace('|', '', request_var(POST, 'a'.$i, ''))
+							if( !empty($answer) )
 							{				
-								$answers[$i] = securit(str_replace('|', '', $_POST['a'.$i]));
+								$answers[$i] = $answer;
 								$nbr_votes++;
 							}
 						}
@@ -212,20 +213,17 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'forum_bottom'=> 'forum/forum_bottom.tpl'
 			));
 			
-			$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
-			$subtitle = !empty($_POST['desc']) ? trim($_POST['desc']) : '';
-			$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
+			$title = request_var(POST, 'title', '', TSTRING_UNSECURE);
+			$subtitle = request_var(POST, 'desc', '', TSTRING_UNSECURE);
+			$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE);
+			$question = request_var(POST, 'question', '', TSTRING_UNSECURE);
 			
 			$is_modo = $Member->Check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
-			if( $is_modo )
-				$type = isset($_POST['type']) ? numeric($_POST['type']) : 0; 
-			else
-			{
-				$type = isset($_POST['type']) ? numeric($_POST['type']) : ''; 
-				$type = ( $type == 1 || $type == 0 ) ? $type : 0;
-			}
+			$type = request_var(POST, 'type', 0); 
 			
-			if( $is_modo )
+			if( !$is_modo )
+				$type = ( $type == 1 || $type == 0 ) ? $type : 0;
+			else
 			{
 				$Template->Assign_vars(array(
 					'C_FORUM_POST_TYPE' => true,
@@ -243,11 +241,12 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			$nbr_poll_field = 0;
 			for($i = 0; $i < 20; $i++)
 			{	
-				if( !empty($_POST['a'.$i]) )
+				$answer = request_var(POST, 'a'.$i, '');
+				if( !empty($answer) )
 				{
 					$Template->Assign_block_vars('answers_poll', array(
 						'ID' => $i,
-						'ANSWER' => stripslashes($_POST['a'.$i])
+						'ANSWER' => stripslashes($answer)
 					));
 					$nbr_poll_field++;
 				} 					
@@ -261,7 +260,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			}
 				
 			//Type de réponses du sondage.
-			$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
+			$poll_type = request_var(POST, 'poll_type', 0);
 				
 			$Template->Assign_vars(array(
 				'THEME' => $CONFIG['theme'],
@@ -272,7 +271,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'TITLE' => stripslashes($title),
 				'DESC' => stripslashes($subtitle),
 				'CONTENTS' => stripslashes($contents),
-				'QUESTION' => !empty($_POST['question']) ? stripslashes($_POST['question']) : '',
+				'QUESTION' => stripslashes($question),
 				'IDTOPIC' => 0,
 				'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
 				'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',	
@@ -410,7 +409,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				redirect( transid(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
 		}
 		
-		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
+		$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE);
 		
 		//Si le topic n'est pas vérrouilé on ajoute le message.
 		if( $topic['status'] != 0 || $is_modo )
@@ -437,8 +436,8 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		if( !$Member->Check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
 			redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
-		$id_m = !empty($_GET['idm']) ? numeric($_GET['idm']) : 0;		
-		$update = !empty($_GET['update']) ? true : false;
+		$id_m = request_var(GET, 'idm', 0);		
+		$update = request_var(GET, 'update', false);
 		$id_first = $Sql->Query("SELECT MIN(id) FROM ".PREFIX."forum_msg WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 		$topic = $Sql->Query_array('forum_topics', 'title', 'subtitle', 'type', 'user_id', 'display_msg', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 		
@@ -461,35 +460,36 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			if( !$check_auth )
 				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 			
-			if( $update && !empty($post_topic) )
+			if( $update && $post_topic )
 			{
-				$title = !empty($_POST['title']) ? securit($_POST['title']) : '';
-				$subtitle = !empty($_POST['desc']) ? securit($_POST['desc']) : '';
-				$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-				$type = ($is_modo && isset($_POST['type'])) ? numeric($_POST['type']) : 0; 
+				$title = request_var(POST, 'title', '');
+				$subtitle = request_var(POST, 'desc', '');
+				$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE);
+				$type = $is_modo ? request_var(POST, 'type', 0) : 0; 
 				
 				if( !empty($title) && !empty($contents) )
 				{				
 					$Forumfct->Update_topic($idt_get, $id_m, $title, $subtitle, $contents, $type, $user_id_msg); //Mise à jour du topic.
 
 					//Mise à jour du sondage en plus du topic.
-					$del_poll = isset($_POST['del_poll']) ? trim($_POST['del_poll']) : '';
-					$question = isset($_POST['question']) ? securit($_POST['question']) : '';
-					if( !empty($question) && empty($del_poll) ) //Enregistrement du sondage.
+					$del_poll = request_var(POST, 'del_poll', false);
+					$question = request_var(POST, 'question', '');
+					if( !empty($question) && !$del_poll ) //Enregistrement du sondage.
 					{
 						//Mise à jour si le sondage existe, sinon création.
 						$check_poll = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."forum_poll WHERE idtopic = '" . $idt_get . "'",  __LINE__, __FILE__);
 						
-						$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
+						$poll_type = request_var(POST, 'poll_type', 0);
 						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 						
 						$answers = array();
 						$nbr_votes = 0;
 						for($i = 0; $i < 20; $i++)
 						{
-							if( !empty($_POST['a'.$i]) )
+							$answer = str_replace('|', '', request_var(POST, 'a'.$i, ''));
+							if( !empty($answer) )
 							{				
-								$answers[$i] = securit(str_replace('|', '', $_POST['a'.$i]));
+								$answers[$i] = $answer;
 								$nbr_votes++;
 							}
 						}	
@@ -499,7 +499,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						elseif( $check_poll == 0 ) //Ajout du sondage.
 							$Forumfct->Add_poll($idt_get, $question, $answers, $nbr_votes, $poll_type); 
 					}
-					elseif( !empty($del_poll) && $Member->Check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM) ) //Suppression du sondage, admin et modo seulement biensûr...
+					elseif( $del_poll && $Member->Check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM) ) //Suppression du sondage, admin et modo seulement biensûr...
 						$Forumfct->Del_poll($idt_get);
 					
 					//Redirection après post.
@@ -516,19 +516,15 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'forum_bottom'=> 'forum/forum_bottom.tpl'
 				));
 				
-				$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
-				$subtitle = !empty($_POST['desc']) ? trim($_POST['desc']) : '';
-				$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
+				$title = request_var(POST, 'title', '', TSTRING_UNSECURE);
+				$subtitle = request_var(POST, 'desc', '', TSTRING_UNSECURE);
+				$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE);
+				$question = request_var(POST, 'question', '', TSTRING_UNSECURE);
 				
-				if( $is_modo )
-					$type = isset($_POST['type']) ? numeric($_POST['type']) : 0; 
-				else
-				{
-					$type = isset($_POST['type']) ? numeric($_POST['type']) : 0; 
+				$type = request_var(POST, 'type', 0); 
+				if( !$is_modo )
 					$type = ($type == 1 || $type == 0) ? $type : 0;
-				}
-
-				if( $is_modo )
+				else
 				{
 					$Template->Assign_vars(array(
 						'C_FORUM_POST_TYPE' => true,
@@ -546,11 +542,12 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$nbr_poll_field = 0;
 				for($i = 0; $i < 20; $i++)
 				{	
-					if( !empty($_POST['a'.$i]) )
+					$answer = request_var(POST, 'a'.$i, '')
+					if( !empty($anwser) )
 					{
 						$Template->Assign_block_vars('answers_poll', array(
 							'ID' => $i,
-							'ANSWER' => stripslashes($_POST['a'.$i])
+							'ANSWER' => stripslashes($anwser)
 						));
 						$nbr_poll_field++;
 					} 
@@ -564,7 +561,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				}
 				
 				//Type de réponses du sondage.
-				$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
+				$poll_type = request_var(POST, 'poll_type', 0);
 						
 				$Template->Assign_vars(array(
 					'THEME' => $CONFIG['theme'],
@@ -575,10 +572,10 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'TITLE' => stripslashes($title),
 					'DESC' => stripslashes($subtitle),
 					'CONTENTS' => stripslashes($contents),
-					'QUESTION' => !empty($_POST['question']) ? stripslashes($_POST['question']) : '',
+					'QUESTION' => stripslashes($question),
 					'IDTOPIC' => 0,
 					'SELECTED_SIMPLE' => 'checked="ckecked"',
-					'NO_DISPLAY_POLL' => !empty($_POST['question']) ? 'false' : 'true',
+					'NO_DISPLAY_POLL' => !empty($question) ? 'false' : 'true',
 					'NBR_POLL_FIELD' => $nbr_poll_field,
 					'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
 					'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',
@@ -626,7 +623,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$contents = $Sql->Query("SELECT contents FROM ".PREFIX."forum_msg WHERE id = '" . $id_first . "'", __LINE__, __FILE__);
 							
 				//Gestion des erreurs à l'édition.
-				$get_error_e = !empty($_GET['errore']) ? trim($_GET['errore']) : '';
+				$get_error_e = request_var(GET, 'errore', '');
 				if( $get_error_e == 'incomplete_t' )
 					$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 
@@ -760,9 +757,9 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			if( !$check_auth ) //Non autorisé!
 				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 			
-			if( $update && !empty($_POST['edit_msg']) )
+			if( $update && request_var(POST, 'edit_msg', false) )
 			{
-				$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
+				$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE);
 				if( !empty($contents) )
 				{		
 					$nbr_msg_before = $Forumfct->Update_msg($idt_get, $id_m, $contents, $user_id_msg);
@@ -788,7 +785,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				
 				$contents = $Sql->Query("SELECT contents FROM ".PREFIX."forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
 				//Gestion des erreurs à l'édition.
-				$get_error_e = !empty($_GET['errore']) ? trim($_GET['errore']) : '';
+				$get_error_e = request_var(GET, 'errore', '');
 				if( $get_error_e == 'incomplete' )
 					$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 					

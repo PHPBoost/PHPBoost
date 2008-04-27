@@ -32,15 +32,15 @@ define('ALTERNATIVE_CSS', 'wiki');
 
 require_once('../wiki/wiki_auth.php');
 
-$random = !empty($_GET['random']) ? true : false;
-$id_auth = !empty($_GET['auth']) ? numeric($_GET['auth']) : 0;
-$wiki_status = !empty($_GET['status']) ? numeric($_GET['status']) : 0;
-$move = !empty($_GET['move']) ? numeric($_GET['move']) : 0;
-$rename = !empty($_GET['rename']) ? numeric($_GET['rename']) : 0;
-$redirect = !empty($_GET['redirect']) ? numeric($_GET['redirect']) : 0;
-$create_redirection = !empty($_GET['create_redirection']) ? numeric($_GET['create_redirection']) : 0;
-$idcom = !empty($_GET['com']) ? numeric($_GET['com']) : 0;
-$del_article = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+$random = request_var(GET, 'random', false);
+$id_auth = request_var(GET, 'auth', 0);
+$wiki_status = request_var(GET, 'status', 0);
+$move = request_var(GET, 'move', 0);
+$rename = request_var(GET, 'rename', 0);
+$redirect = request_var(GET, 'redirect', 0);
+$create_redirection = request_var(GET, 'create_redirection', 0);
+$idcom = request_var(GET, 'com', 0);
+$del_article = request_var(GET, 'del', 0);
 
 if( $id_auth > 0 ) //Autorisations de l'article
 {
@@ -225,7 +225,7 @@ elseif( $move > 0 ) //On déplace l'article
 	));	
 	
 	//Gestion des erreurs
-	$error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$error = request_var(GET, 'error', '');
 	if( $error == 'e_cat_contains_cat' )
 		$errstr = $LANG['wiki_cat_contains_cat'];
 	else
@@ -244,7 +244,7 @@ elseif( $rename > 0 )//On renomme un article
 	));
 	
 	//Gestion des erreurs
-	$error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$error = request_var(GET, 'error', '');
 	if( $error == 'title_already_exists' )
 		$errstr = $LANG['wiki_title_already_exists'];
 	else
@@ -296,7 +296,7 @@ elseif( $create_redirection > 0 ) //Création d'une redirection
 	));
 	
 	//Gestion des erreurs
-	$error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$error = request_var(GET, 'error', '');
 	if( $error == 'title_already_exists' )
 		$errstr = $LANG['wiki_title_already_exists'];
 	else
@@ -350,7 +350,7 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 		));	
 		
 		//Gestion des erreurs
-		$error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+		$error = request_var(GET, 'error', '');
 		if( $error == 'e_cat_contains_cat' )
 			$errstr = $LANG['wiki_cat_contains_cat'];
 		elseif( $error == 'e_not_a_cat' )

@@ -32,25 +32,25 @@ load_module_lang('wiki');
 
 require('../wiki/wiki_auth.php');
 
-$id_auth = !empty($_POST['id_auth']) ? numeric($_POST['id_auth']) : 0;
-$id_status = !empty($_POST['id_status']) ? numeric($_POST['id_status']) : 0;
-$type_status = !empty($_POST['status']) ? securit($_POST['status']) : '';
-$id_change_status = !empty($_POST['id_change_status']) ? numeric($_POST['id_change_status']) : 0;
-$contents = !empty($_POST['contents']) ? wiki_parse($_POST['contents']) : '';
-$move = !empty($_POST['id_to_move']) ? numeric($_POST['id_to_move']) : 0;
-$new_cat = !empty($_POST['new_cat']) ? numeric($_POST['new_cat']) : 0;
-$id_to_rename = !empty($_POST['id_to_rename']) ? numeric($_POST['id_to_rename']) : 0;
-$new_title = !empty($_POST['new_title']) ? securit($_POST['new_title']) : '';
-$create_redirection_while_renaming = !empty($_POST['create_redirection_while_renaming']) ? true : false;
-$create_redirection = !empty($_POST['create_redirection']) ? numeric($_POST['create_redirection']) : 0;
-$redirection_title = !empty($_POST['redirection_title']) ? securit($_POST['redirection_title']) : '';
-$del_redirection = !empty($_GET['del_redirection']) ? numeric($_GET['del_redirection']) : 0;
-$restore = !empty($_GET['restore']) ? numeric($_GET['restore']) : 0;
-$del_archive = !empty($_GET['del_contents']) ? numeric($_GET['del_contents']) : 0;
-$del_article = !empty($_GET['del_article']) ? numeric($_GET['del_article']) : 0;
-$del_to_remove = !empty($_POST['id_to_remove']) ? numeric($_POST['id_to_remove']) : 0;
-$report_cat = !empty($_POST['report_cat']) ? numeric($_POST['report_cat']) : 0;
-$remove_action = !empty($_POST['action']) ? securit($_POST['action']) : ''; //Action à faire lors de la suppression
+$id_auth = request_var(GET, 'id_auth', 0);
+$id_status = request_var(GET, 'id_status', 0);
+$type_status = request_var(GET, 'status', '');
+$id_change_status = request_var(GET, 'id_change_status', 0);
+$contents = wiki_parse(request_var(GET, 'contents', ''), TSTRING_UNSECURE);
+$move = request_var(GET, 'id_to_move', 0);
+$new_cat = request_var(GET, 'new_cat', 0);
+$id_to_rename = request_var(GET, 'id_to_rename', 0);
+$new_title = request_var(GET, 'new_title', '');
+$create_redirection_while_renaming = request_var(GET, 'create_redirection_while_renaming', false)
+$create_redirection = request_var(GET, 'create_redirection', 0);
+$redirection_title = request_var(GET, 'redirection_title', '');
+$del_redirection = request_var(GET, 'del_redirection', 0);
+$restore = request_var(GET, 'restore', 0);
+$del_archive = request_var(GET, 'del_contents', 0);
+$del_article = request_var(GET, 'del_article', 0);
+$del_to_remove = request_var(GET, 'id_to_remove', 0);
+$report_cat = request_var(GET, 'report_cat', 0);
+$remove_action = request_var(GET, 'action', ''); //Action à faire lors de la suppression
 
 if( $id_auth > 0 )
 {

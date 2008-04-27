@@ -30,8 +30,8 @@ require_once('../kernel/begin.php');
 require_once('../gallery/gallery_begin.php');
 require_once('../kernel/header_no_display.php');
 
-$g_idpics = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$g_idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
+$g_idpics = request_var(GET, 'id', 0);
+$g_idcat = request_var(GET, 'cat', 0);
 	
 if( !empty($g_idpics) )
 {

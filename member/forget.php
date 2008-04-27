@@ -29,22 +29,23 @@ require_once('../kernel/begin.php');
 define('TITLE', $LANG['title_forget']);
 require_once('../kernel/header.php'); 
 
-$activ_confirm = !empty($_GET['activate']) ? securit($_GET['activate']) : '';
-$activ_get = !empty($_GET['activ']) ? securit($_GET['activ']) : '';
-$user_get = !empty($_GET['u']) ? numeric($_GET['u']) : '';
+$activ_confirm = request_var(GET, 'activate', false);
+$activ_get = request_var(GET, 'activ', '');
+$user_get = request_var(GET, 'u', 0);
+$forget = request_var(POST, 'forget', '');
 
 if( !$Member->Check_level(MEMBER_LEVEL) )
 {
-	if( empty($activ_confirm) )
+	if( !$activ_confirm )
 	{	
 		$Template->Set_filenames(array(
 			'forget'=> 'forget.tpl'
 		));
 			
-		if( !empty($_POST['forget']))
+		if( !empty($forget))
 		{
-			$user_mail = !empty($_POST['mail']) ? securit($_POST['mail']) : '';
-			$login = !empty($_POST['name']) ?  securit($_POST['name']) : '';
+			$user_mail = request_var(POST, 'mail', '');
+			$login = request_var(POST, 'name', '');
 
 			if( !empty($user_mail) && preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,6}$!", $user_mail) )
 			{	
@@ -103,7 +104,7 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 		
 		$Template->Pparse('forget');
 	}
-	elseif( !empty($activ_get) && !empty($user_get) && $activ_confirm === 'true' )
+	elseif( !empty($activ_get) && !empty($user_get) && $activ_confirm )
 	{
 		$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE user_id = '" . $user_get . "' AND activ_pass = '" . $activ_get . "'", __LINE__, __FILE__);
 		if( !empty($user_id) )

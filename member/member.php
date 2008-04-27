@@ -28,8 +28,8 @@
 require_once('../kernel/begin.php'); 
 define('TITLE', $LANG['member_area']);
 
-$edit_get = !empty($_GET['edit']) ? trim($_GET['edit']) : '';
-$id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
+$edit_get = request_var(GET, 'edit', false);
+$id_get = request_var(GET, 'id', 0, TUNSIGNED_INT);
 
 $title_mbr = !empty($id_get) ? (!empty($edit_get) ? $LANG['profil_edit'] : $LANG['member']) : $LANG['member_s'];
 if( $Member->Check_level(MEMBER_LEVEL) )
@@ -38,12 +38,11 @@ $Bread_crumb->Add_link($title_mbr, '');
 
 require_once('../kernel/header.php'); 
 
-$view_get = !empty($_GET['view']) ? trim($_GET['view']) : '';
-$view_msg = !empty($_GET['msg']) ? numeric($_GET['msg']) : '';
-$show_group = !empty($_GET['g']) ? numeric($_GET['g']) : '';
-$post_group = !empty($_POST['show_group']) ? numeric($_POST['show_group']) : '';
-$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
-$get_l_error = !empty($_GET['erroru']) ? trim($_GET['erroru']) : '';
+$view_get = request_var(GET, 'view', 0);
+$show_group = request_var(GET, 'g', 0);
+$post_group = request_var(GET, 'show_group', 0);
+$get_error = request_var(GET, 'error', '');
+$get_l_error = request_var(GET, 'erroru', '');
 
 if( !empty($id_get) ) //Espace membre
 {	
@@ -51,7 +50,7 @@ if( !empty($id_get) ) //Espace membre
 		'member'=> 'member.tpl'
 	));
 
-	if( !empty($edit_get) && $Member->Get_attribute('user_id') === $id_get && ($Member->Check_level(MEMBER_LEVEL)) ) //Edition du profil
+	if( $edit_get && $Member->Get_attribute('user_id') === $id_get && ($Member->Check_level(MEMBER_LEVEL)) ) //Edition du profil
 	{
 		//Update profil
 		$row = $Sql->Query_array('member', 'user_lang', 'user_theme', 'user_mail', 'user_local', 'user_web', 'user_occupation', 'user_hobbies', 'user_avatar', 'user_show_mail', 'user_editor', 'user_timezone', 'user_sex', 'user_born', 'user_sign', 'user_desc', 'user_msn', 'user_yahoo', "WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
@@ -805,7 +804,10 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 		'member'=> 'member.tpl'
 	));
 	
-	$group = $Sql->Query_array('group', 'name', 'img', "WHERE id = '" . $user_group . "'", __LINE__, __FILE__);
+	$group = $Sql->Query_array('group', 'id', 'name', 'img', "WHERE id = '" . $user_group . "'", __LINE__, __FILE__);
+	if( empty($group['id']) ) //Groupe inexistant.
+		redirect(HOST . DIR . '/member/member.php');
+		
 	$Template->Assign_vars(array(
 		'SID' => SID,
 		'C_GROUP_LIST' => true,

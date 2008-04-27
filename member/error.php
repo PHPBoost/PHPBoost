@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 define('TITLE', $LANG['title_error']);
 require_once('../kernel/header.php'); 
 
-$id_error = !empty($_GET['e']) ? trim($_GET['e']) : '';
+$id_error = request_var(GET, 'e', '');
 	
 $array_error = array('e_member_ban', 'e_member_ban_w', 'e_unexist_member', 'e_unactiv_member', 'e_member_flood');	
 if( in_array($id_error, $array_error) )

@@ -35,12 +35,12 @@ $Bread_crumb->Add_link($LANG['title_search'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['title_search']);
 require_once('../kernel/header.php');
 
-$search = !empty($_POST['search']) ? securit($_POST['search']) : '';
-$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : -1;
-$time = !empty($_POST['time']) ? numeric($_POST['time']) * 3600 * 24 : 0; //X jour en secondes.
-$where = !empty($_POST['where']) ? securit($_POST['where']) : '';
-$colorate_result = !empty($_POST['colorate_result']) ? true : false;
-$valid_search = !empty($_POST['valid_search']) ? securit($_POST['valid_search']) : '';
+$search = request_var(POST, 'search', '');
+$idcat = request_var(POST, 'idcat', -1);
+$time = request_var(POST, 'time', 0) * 3600 * 24; //X jour en secondes.
+$where = request_var(POST, 'where', '');
+$colorate_result = request_var(POST, 'colorate_result', false);
+$valid_search = request_var(POST, 'valid_search', '');
 
 $Template->Set_filenames(array(
 	'search'=> 'forum/forum_search.tpl',

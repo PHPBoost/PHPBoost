@@ -29,21 +29,22 @@ if( defined('PHPBOOST') !== true)
 	exit;
 	
 load_module_lang('stats'); //Chargement de la langue du module.
+include_once('../lang/' . $CONFIG['lang'] . '/stats.php'); //Chargement de la langue.
 
-$visit = !empty($_GET['visit']) ? true : false;
-$visit_year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
-$pages = !empty($_GET['pages']) ? true : false;
-$pages_year = !empty($_GET['pages_year']) ? numeric($_GET['pages_year']) : '';
-$referer = !empty($_GET['referer']) ? true : false;
-$keyword = !empty($_GET['keyword']) ? true : false;
-$members = !empty($_GET['members']) ? true : false;
-$browser = !empty($_GET['browser']) ? true : false;
-$os = !empty($_GET['os']) ? true : false;
-$all = !empty($_GET['all']) ? true : false;
-$user_lang = !empty($_GET['lang']) ? true : false;
+$visit = request_var(GET, 'visit', false);
+$visit_year = request_var(GET, 'year', 0);
+$pages = request_var(GET, 'pages', false);
+$pages_year = request_var(GET, 'pages_year', 0);
+$referer = request_var(GET, 'referer', false);
+$keyword = request_var(GET, 'keyword', false);
+$members = request_var(GET, 'members', false);
+$browser = request_var(GET, 'browser', false);
+$os = request_var(GET, 'os', false);
+$all = request_var(GET, 'all', false);
+$user_lang = request_var(GET, 'lang', false);
 
 $l_title = $LANG['site'];
-$l_title = (!empty($_GET['visit']) || !empty($_GET['year'])) ? $LANG['guest_s'] : $l_title;
+$l_title = ($visit || $visit_year) ? $LANG['guest_s'] : $l_title;
 $l_title = $pages ? $LANG['page_s'] : $l_title;
 $l_title = $referer ? $LANG['referer_s'] : $l_title;
 $l_title = $keyword ? $LANG['keyword_s'] : $l_title;
@@ -54,8 +55,8 @@ $l_title = $user_lang ? $LANG['stat_lang'] : $l_title;
 $l_title = !empty($l_title) ? $l_title : '';
 
 if( !empty($l_title) ) 
-	$Bread_crumb->Add_link($LANG['title_stats'], transid('stats.php'));
+	$Bread_crumb->Add_link($LANG['stats'], transid('stats.php'));
 	$Bread_crumb->Add_link($l_title, '');	
-define('TITLE', $LANG['title_stats'] . (!empty($l_title) ? ' - ' . $l_title : ''));
+define('TITLE', $LANG['stats'] . (!empty($l_title) ? ' - ' . $l_title : ''));
 
 ?>

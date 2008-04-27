@@ -28,12 +28,12 @@
 include_once('../kernel/begin.php'); 
 include_once('faq_begin.php');
 
-$id_faq = !empty($_GET['faq']) ? numeric($_GET['faq']) : 0;
-$edit_question = !empty($_GET['edit']) ? numeric($_GET['edit']) : 0;
-$cat_of_new_question = !empty($_GET['idcat']) ? numeric($_GET['idcat']) : 0;
-$new = !empty($_GET['new']) ? true : false;
-$new_after_id = !empty($_GET['after']) ? numeric($_GET['after']) : 0;
-$id_move = !empty($_GET['move']) ? numeric($_GET['move']) : 0;
+$id_faq = request_var(GET, 'faq', 0);
+$edit_question = request_var(GET, 'edit', 0);
+$cat_of_new_question = equest_var(GET, 'idcat', 0);
+$new = request_var(GET, 'new', false);
+$new_after_id = request_var(GET, 'after', 0);
+$id_move = request_var(GET, 'move', 0);
 
 if( $edit_question > 0 )
 {

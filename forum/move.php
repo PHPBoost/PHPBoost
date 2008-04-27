@@ -33,13 +33,13 @@ define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php'); 
 
 //Variables $_GET.
-$id_get = !empty($_GET['id']) ? numeric($_GET['id']) : ''; //Id du topic à déplacer.
-$id_post = !empty($_POST['id']) ? numeric($_POST['id']) : ''; //Id du topic à déplacer.
-$id_get_msg = !empty($_GET['idm']) ? numeric($_GET['idm']) : ''; //Id du message à partir duquel il faut scinder le topic.
-$id_post_msg = !empty($_POST['idm']) ? numeric($_POST['idm']) : ''; //Id du message à partir duquel il faut scinder le topic.
-$error_get = !empty($_GET['error']) ? securit($_GET['error']) : ''; //Gestion des erreurs.
-$post_topic = !empty($_POST['post_topic']) ? trim($_POST['post_topic']) : ''; //Création du topic scindé.
-$preview_topic = !empty($_POST['prw_t']) ? trim($_POST['prw_t']) : ''; //Prévisualisation du topic scindé.
+$id_get = request_var(GET, 'id', 0); //Id du topic à déplacer.
+$id_post = request_var(POST, 'id', 0); //Id du topic à déplacer.
+$id_get_msg = request_var(GET, 'idm', 0); //Id du message à partir duquel il faut scinder le topic.
+$id_post_msg = request_var(POST, 'idm', 0); //Id du message à partir duquel il faut scinder le topic.
+$error_get = request_var(GET, 'error', ''); //Gestion des erreurs.
+$post_topic = request_var(POST, 'post_topic', ''); //Création du topic scindé.
+$preview_topic = request_var(POST, 'prw_t', ''); //Prévisualisation du topic scindé.
 
 if( !empty($id_get) ) //Déplacement du sujet.
 {
@@ -152,7 +152,7 @@ elseif( !empty($id_post) ) //Déplacement du topic
 	$idcat = $Sql->Query("SELECT idcat FROM ".PREFIX."forum_topics WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 	if( $Member->Check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
 	{		
-		$to = !empty($_POST['to']) ? numeric($_POST['to']) : $idcat; //Catégorie cible.
+		$to = request_var(POST, 'to', $idcat); //Catégorie cible.
 		$level = $Sql->Query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
 		if( !empty($to) && $level > 0 && $idcat != $to )
 		{
@@ -191,7 +191,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		$Errorh->Error_handler('e_unable_cut_forum', E_USER_REDIRECT); 
 			
 	$cat = $Sql->Query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
-	$to = !empty($_POST['to']) ? numeric($_POST['to']) : $cat['id']; //Catégorie cible.
+	$to = request_var(POST, 'to', $cat['id']); //Catégorie cible.
 	
 	$auth_cats = '';
 	if( is_array($CAT_FORUM) )
@@ -280,10 +280,11 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	}
 	elseif( !empty($preview_topic) && !empty($id_post_msg) )
 	{
-		$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
-		$subtitle = !empty($_POST['desc']) ? trim($_POST['desc']) : '';
-		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-		$type = isset($_POST['type']) ? numeric($_POST['type']) : 0; 
+		$title = request_var(POST, 'title', '', TSTRING_UNSECURE);
+		$subtitle = request_var(POST, 'desc', '', TSTRING_UNSECURE);
+		$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE);
+		$question = request_var(POST, 'question', '', TSTRING_UNSECURE);
+		$type = request_var(POST, 'type', 0); 
 		
 		$checked_normal = ($type == 0) ? 'checked="ckecked"' : '';
 		$checked_postit = ($type == 1) ? 'checked="ckecked"' : '';
@@ -293,11 +294,12 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		$nbr_poll_field = 0;
 		for($i = 0; $i < 20; $i++)
 		{	
-			if( !empty($_POST['a'.$i]) )
+			$answer = request_var(POST, 'a'.$i, '', TSTRING_UNSECURE);
+			if( !empty($answer) )
 			{
 				$Template->Assign_block_vars('answers_poll', array(
 					'ID' => $i,
-					'ANSWER' => stripslashes($_POST['a'.$i])
+					'ANSWER' => stripslashes($answer)
 				));
 				$nbr_poll_field++;
 			}	
@@ -311,13 +313,13 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		}
 		
 		//Type de réponses du sondage.
-		$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
+		$poll_type = request_var(POST, 'poll_type', 0);
 		
 		$Template->Assign_vars(array(	
 			'TITLE' => stripslashes($title),
 			'DESC' => stripslashes($subtitle),
 			'CONTENTS' => stripslashes($contents),
-			'QUESTION' => !empty($_POST['question']) ? stripslashes($_POST['question']) : '',
+			'QUESTION' => stripslashes($question),
 			'IDM' => $id_post_msg,			
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
 			'CONTENTS_PREVIEW' => second_parse(stripslashes(parse($contents))),
@@ -326,7 +328,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			'CHECKED_ANNONCE' => $checked_annonce,
 			'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
 			'SELECTED_MULTIPLE' => ($poll_type == 1) ? 'checked="ckecked"' : '',
-			'NO_DISPLAY_POLL' => !empty($_POST['question']) ? 'false' : 'true',
+			'NO_DISPLAY_POLL' => !empty($question) ? 'false' : 'true',
 			'NBR_POLL_FIELD' => $nbr_poll_field,
 			'C_FORUM_PREVIEW_MSG' => true,
 			'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 18) ? true : false,
@@ -397,7 +399,7 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 {
 	$msg =  $Sql->Query_array('forum_msg', 'idtopic', 'user_id', 'timestamp', 'contents', "WHERE id = '" . $id_post_msg . "'", __LINE__, __FILE__);
 	$topic = $Sql->Query_array('forum_topics', 'idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
-	$to = !empty($_POST['to']) ? numeric($_POST['to']) : ''; //Catégorie cible.
+	$to = request_var(POST, 'to', 0); //Catégorie cible.
 	
 	if( !$Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -410,10 +412,10 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 	$level = $Sql->Query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
 	if( !empty($to) && $level > 0 )
 	{
-		$type = isset($_POST['type']) ? numeric($_POST['type']) : 0; 
-		$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : ''; 
-		$title = !empty($_POST['title']) ? securit($_POST['title']) : ''; 
-		$subtitle = !empty($_POST['desc']) ? securit($_POST['desc']) : ''; 
+		$title = request_var(POST, 'title', '');
+		$subtitle = request_var(POST, 'desc', '');
+		$contents = request_var(POST, 'contents', '', TSTRING_PARSE);
+		$type = request_var(POST, 'type', 0); 
 		
 		//Requête de "scindage" du topic.
 		if( !empty($to) && !empty($contents) && !empty($title) )
@@ -425,19 +427,20 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 			$last_topic_id = $Forumfct->Cut_topic($id_post_msg, $msg['idtopic'], $topic['idcat'], $to, $title, $subtitle, $contents, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id'], $topic['last_timestamp']); //Scindement du topic
 			
 			//Ajout d'un sondage en plus du topic.
-			$question = isset($_POST['question']) ? securit($_POST['question']) : '';
+			$question = request_var(POST, 'question', '');
 			if( !empty($question) )
 			{
-				$poll_type = isset($_POST['poll_type']) ? numeric($_POST['poll_type']) : 0;
+				$poll_type = request_var(POST, 'poll_type', 0);
 				$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 				
 				$answers = array();
 				$nbr_votes = 0;
 				for($i = 0; $i < 20; $i++)
 				{
-					if( !empty($_POST['a'.$i]) )
+					$answer = str_replace('|', '', request_var(POST, 'a'.$i, ''));
+					if( !empty($answer) )
 					{				
-						$answers[$i] = securit(str_replace('|', '', $_POST['a'.$i]));
+						$answers[$i] = $answer;
 						$nbr_votes++;
 					}
 				}

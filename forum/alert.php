@@ -29,9 +29,9 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$alert = !empty($_GET['id']) ? numeric($_GET['id']) : '';	
-$alert_post = !empty($_POST['id']) ? numeric($_POST['id']) : '';	
-$topic_id = (!empty($alert)) ? $alert : $alert_post;
+$alert = request_var(GET, 'id', 0);	
+$alert_post = request_var(POST, 'id', 0);	
+$topic_id = !empty($alert) ? $alert : $alert_post;
 $topic = $Sql->Query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $topic_id . "'", __LINE__, __FILE__);
 
 $cat_name = !empty($CAT_FORUM[$topic['idcat']]['name']) ? $CAT_FORUM[$topic['idcat']]['name'] : '';
@@ -107,8 +107,8 @@ if( !empty($alert_post) )
 	$nbr_alert = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."forum_alerts WHERE idtopic = '" . $alert_post ."'", __LINE__, __FILE__);
 	if( empty($nbr_alert) ) //On enregistre
 	{
-		$alert_title = !empty($_POST['title']) ? securit($_POST['title']) : '';
-		$alert_contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
+		$alert_title = request_var(POST, 'title', '');
+		$alert_contents = request_var(POST, 'contents', '', TSTRING_PARSE);
 		
 		//Instanciation de la class du forum.
 		include_once('../forum/forum.class.php');

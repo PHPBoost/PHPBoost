@@ -38,17 +38,18 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 include_once('../kernel/framework/members/pm.class.php');
 $Privatemsg = new Privatemsg();
 
-$pm_get = !empty($_GET['pm']) ? numeric($_GET['pm']) : '';
-$pm_id_get = !empty($_GET['id']) ? numeric($_GET['id']) : '';
-$pm_del_convers = !empty($_GET['del_convers']) ? trim($_GET['del_convers']) : '';
-$quote_get = !empty($_GET['quote']) ? numeric($_GET['quote']) : '';	
-$page = !empty($_GET['p']) ? numeric($_GET['p']) : 1;
-$post = !empty($_GET['post']) ? trim($_GET['post']) : '';
-$pm_edit = !empty($_GET['edit']) ? numeric($_GET['edit']) : '';
-$pm_del = !empty($_GET['del']) ? numeric($_GET['del']) : '';
+$pm_get = request_var(GET, 'pm', 0);
+$pm_id_get = request_var(GET, 'id', 0);
+$pm_del_convers = request_var(GET, 'del_convers', false);
+$quote_get = request_var(GET, 'quote', 0);	
+$page = request_var(GET, 'p', 0);
+$post = request_var(GET, 'post', false);
+$pm_edit = request_var(GET, 'edit', 0);
+$pm_del = request_var(GET, 'del', 0);
+$read = request_var(GET, 'read', false);
 
 //Marque les messages privés comme lus
-if( !empty($_GET['read']) )
+if( $read )
 {
 	$nbr_pm = $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id'));
 	$limit_group = $Member->Check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
@@ -79,19 +80,17 @@ if( !empty($_GET['read']) )
 	redirect(HOST . DIR . transid('/member/pm.php', '', '&'));
 }
 
-if( !empty($_POST['convers']) && empty($pm_edit) && empty($pm_del) ) //Envoi de conversation.
+$convers = request_var(POST, 'convers', false);
+if( $convers && empty($pm_edit) && empty($pm_del) ) //Envoi de conversation.
 {
-	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$login = !empty($_POST['login']) ? securit($_POST['login']) : '';
+	$title = request_var(POST, 'title', '', TSTRING_UNSECURE);
+	$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE);
+	$login = request_var(POST, 'login', '');
 	
 	$limit_group = $Member->Check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
 	//Vérification de la boite de l'expéditeur.
-	if( $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id')) >= $limit_group && (!$Member->Check_level(MODO_LEVEL) && !($limit_group === -1)) )
-	{
-		//Boîte de l'expéditeur pleine.
+	if( $Privatemsg->Get_total_convers_pm($Member->Get_attribute('user_id')) >= $limit_group && (!$Member->Check_level(MODO_LEVEL) && !($limit_group === -1)) ) //Boîte de l'expéditeur pleine.
 		redirect(HOST . DIR . '/member/pm' . transid('.php?post=1&error=e_pm_full_post', '', '&') . '#errorh');
-	}	
 		
 	if( !empty($title) && !empty($contents) && !empty($login) )
 	{	
@@ -150,7 +149,7 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $Member->Get_attribute('
 	else
 	{
 		//Gestion des erreurs
-		$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+		$get_error = request_var(GET, 'error', '');
 		switch($get_error)
 		{
 			case 'e_unexist_user':
@@ -261,7 +260,7 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 }	
 elseif( !empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del) ) //Envoi de messages.
 {
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
+	$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE);
 	if( !empty($contents) )
 	{
 		//user_view_pm => nombre de messages non lu par l'un des 2 participants.
@@ -301,7 +300,7 @@ elseif( !empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 	else //Champs manquants.
 		redirect(HOST . DIR . '/member/pm' . transid('.php?id=' . $pm_id_get . '&error=e_incomplete', '-0-' . $pm_id_get . '-0-e_incomplete.php', '&') . '#errorh');
 }
-elseif( !empty($pm_del_convers) ) //Suppression de conversation.
+elseif( $pm_del_convers ) //Suppression de conversation.
 {
 	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
@@ -421,11 +420,10 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 		if( $view === false )
 		{
 			$id_first = $Sql->Query("SELECT MIN(id) as id FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);			
-			
 			if( !empty($_POST['convers']) XOR !empty($_POST['edit_pm']) )
 			{
-				$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
-				$title = !empty($_POST['title']) ? securit($_POST['title']) : '';
+				$contents = request_var(POST, 'contents', '', TSTRING_PARSE);
+				$title = request_var(POST, 'title', '');
 				
 				if( !empty($_POST['edit_pm']) && !empty($contents) )
 				{
@@ -469,8 +467,8 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 					'L_RESET' => $LANG['reset']
 				));
 				
-				$contents = !empty($_POST['contents']) ? stripslashes($_POST['contents']) : '';
-				$title = !empty($_POST['title']) ? stripslashes($_POST['title']) : '';
+				$contents = stripslashes(request_var(POST, 'contents', '', TSTRING_UNSECURE));
+				$title = stripslashes(request_var(POST, 'title', '', TSTRING_UNSECURE));
 				
 				$Template->Assign_block_vars('edit_pm', array(
 					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : unparse($pm['contents']),
@@ -566,7 +564,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	
 	//Gestion des rangs.	
 	$Cache->Load_file('ranks');
-	$page = isset($_GET['pt']) ? numeric($_GET['pt']) : 0; //Redéfinition de la variable $page pour prendre en compte les redirections.
+	$page = request_var(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 	$i = 0;	
 	$j = 0;	
@@ -728,7 +726,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		));
 		
 		//Gestion des erreurs
-		$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+		$get_error = request_var(GET, 'error', '');
 		switch($get_error)
 		{
 			case 'e_incomplete':

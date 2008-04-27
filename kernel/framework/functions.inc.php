@@ -48,6 +48,9 @@ function request_var($var_type, $var_name, $default_value, $force_type = NULL)
 		case COOKIE:
 			$var = isset($_COOKIE[$var_name]) ? $_COOKIE[$var_name] : $default_value;
 			break;
+		case FILES:
+			$var = isset($_FILES[$var_name]) ? $_FILES[$var_name] : $default_value;
+			break;
 		default:
 			return;
 	}
@@ -58,19 +61,26 @@ function request_var($var_type, $var_name, $default_value, $force_type = NULL)
 		case TINTEGER:
 			return (int)$var;
 		case TSTRING:
-			return (string)$var;
+			return securit($var); //Chaine protégée.
+		case TSTRING_UNSECURE:
+			$var = trim($var);
+			return (string)$var; //Chaine non protégée.
+		case TSTRING_PARSE:
+			return parse($var); //Chaine parsée.
 		case TBOOL:
 			return (bool)$var;
-		case TARRAY:
-			return (array)$var;
-	    case TDOUBLE:
-			return (double)$var;
 		case TUNSIGNED_INT:
 			$var = (int)$var;
 			return $var > 0 ? $var : max(0, $default_value);
 		case TUNSIGNED_DOUBLE:
 			$var = (double)$var;
 			return $var > 0.0 ? $var : max(0.0, $default_value);
+		case TSTRING_HTML:
+			return securit($var, HTML_NO_PROTECT); //Chaine non protégée pour l'html.
+		case TARRAY:
+			return (array)$var;
+	    case TDOUBLE:
+			return (double)$var;
 	}
 	
 	return;
@@ -89,7 +99,7 @@ function securit($var, $html_protect = true)
     if( MAGIC_QUOTES == false )
         $var = addslashes($var);
 
-    return (string) $var;
+    return (string)$var;
 }
 
 //Vérifie les entrées numeriques.
@@ -304,10 +314,12 @@ function unparse($content)
 //Parse temps réel
 function second_parse($content)
 {
-    include_once('../kernel/framework/content/content.class.php');
-    $parse = new Content($content);
-    $parse->Second_parse();
+	$content = str_replace('../includes/data', '../kernel/data', $content);
     
+    include_once('../kernel/framework/content/content.class.php');
+	$parse = new Content($content);
+    $parse->Second_parse();
+	
     return $parse->Get_content(DO_NOT_ADD_SLASHES);
 }
 

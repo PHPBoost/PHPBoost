@@ -38,9 +38,10 @@ require_once('../kernel/header.php');
 if( !$Member->Check_level(MEMBER_LEVEL) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 
-$search_string = !empty($_GET['search']) ? securit($_GET['search']) : '';
-$where_search = !empty($_GET['where']) ? ($_GET['where'] == 'contents' ? 'contents' : 'title') : 'title';
-$page = !empty($_GET['page']) ? numeric($_GET['page']) : 1;
+$search_string = request_var(GET, 'search', '');
+$where_search = request_var(GET, 'where', '');
+$where_search = !empty($where_search) ? ($where_search == 'contents' ? 'contents' : 'title') : 'title';
+$page = request_var(GET, 'page', 1);
 $page = $page <= 0 ? 1 : $page;
 
 $Template->Set_filenames(array('wiki_search'=> 'wiki/search.tpl'));

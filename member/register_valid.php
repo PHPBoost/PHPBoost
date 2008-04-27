@@ -34,42 +34,41 @@ $Cache->Load_file('member');
 if( !$CONFIG_MEMBER['activ_register'] )
 	redirect(get_start_page());
 
-$user_mail = !empty($_POST['mail']) ? strtolower($_POST['mail']) : '';
-if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $user_mail) )
-{	
+$user_mail = strtolower(request_var(POST, 'mail', ''));
+$valid = request_var(POST, 'register_valid', false);
+if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $user_mail) )
+{
 	//Info de connexion
-	$login = !empty($_POST['log']) ? securit(substr($_POST['log'], 0, 25)) : '';
-	$password = !empty($_POST['pass']) ? trim($_POST['pass']) : '';
-	$password_md5 = !empty($password) ? md5($password) : '';
-	$password_bis = !empty($_POST['pass_bis']) ? trim($_POST['pass_bis']) : '';
-	$password_bis_md5 = !empty($password_bis) ? md5($password_bis) : '';
-			
+	$login = securit(substr(request_var(POST, 'user_lang', '', TSTRING_UNSECURE), 0, 25));
+	$password = request_var(POST, 'pass', '', TSTRING_UNSECURE);
+	$password_md5 = md5($password);
+	$password_bis = request_var(POST, 'pass_biss', '', TSTRING_UNSECURE);
+	$password_bis_md5 = md5($password_bis);
+		
 	//Configuration
-	$user_mail = securit($user_mail);
-	$user_show_mail = !empty($_POST['user_show_mail']) ? 1 : 0;
-	$user_lang = !empty($_POST['user_lang']) ? securit($_POST['user_lang']) : '';
-	$user_theme = !empty($_POST['user_theme']) ? securit($_POST['user_theme']) : '';	
-	$user_editor = !empty($_POST['user_editor']) ? securit($_POST['user_editor']) : '';	
-	$user_timezone = !empty($_POST['user_timezone']) ? numeric($_POST['user_timezone']) : '';	
+	$user_show_mail = request_var(POST, 'user_show_mail', 0) ? 1 : 0;
+	$user_lang = request_var(POST, 'user_lang', '');
+	$user_theme = request_var(POST, 'user_theme', '');	
+	$user_editor = request_var(POST, 'user_editor', '');	
+	$user_timezone = request_var(POST, 'user_timezone', 0);	
 	
 	//Informations.
-	$user_avatar = !empty($_POST['user_avatar']) ? securit($_POST['user_avatar']) : '';
-	$user_local = !empty($_POST['user_local']) ? securit($_POST['user_local']) : '';
-	$user_occupation = !empty($_POST['user_occupation']) ? securit($_POST['user_occupation']) : '';
-	$user_hobbies = !empty($_POST['user_hobbies']) ? securit($_POST['user_hobbies']) : '';
-	$user_desc = !empty($_POST['user_desc']) ? parse($_POST['user_desc']) : '';
-	$user_sex = !empty($_POST['user_sex']) ? numeric($_POST['user_sex']) : 0;
-	$user_sign = !empty($_POST['user_sign']) ? parse($_POST['user_sign']) : '';
-	$user_msn = !empty($_POST['user_msn']) ? securit($_POST['user_msn']) : '';
-	$user_yahoo = !empty($_POST['user_yahoo']) ? securit($_POST['user_yahoo']) : '';
+	$user_avatar = request_var(POST, 'user_avatar', '');
+	$user_local = request_var(POST, 'user_local', '');
+	$user_occupation = request_var(POST, 'user_occupation', '');
+	$user_hobbies = request_var(POST, 'user_hobbies', '');
+	$user_desc = request_var(POST, 'user_desc', '', TSTRING_PARSE);
+	$user_sex = request_var(POST, 'user_sex', 0);
+	$user_sign = request_var(POST, 'user_sign', '', TSTRING_PARSE);
+	$user_msn = request_var(POST, 'user_msn', '');
+	$user_yahoo = request_var(POST, 'user_yahoo', '');
 	
 	//Gestion de la date de naissance.
-	$user_born = !empty($_POST['user_born']) ? $_POST['user_born'] : 0;
-	$user_born = strtodate($user_born, $LANG['date_birth_parse']);
+	$user_born = strtodate(request_var(POST, 'user_born', '0'), $LANG['date_birth_parse']);
 		
 	//Validité de l'adresse du site.
-	$user_web = !empty($_POST['user_web']) ? securit($_POST['user_web']) : '';
-	$user_web = ( !empty($user_web) && preg_match('`^https?://(?:[a-z0-9_/-]+\.)*[a-z0-9-]+\.[a-z]{2,4}(?:.*)$`s', $user_web) ) ? $user_web : '';
+	$user_web = request_var(POST, 'user_web', '');
+	$user_web = preg_match('`^https?://(?:[a-z0-9_/-]+\.)*[a-z0-9-]+\.[a-z]{2,4}(?:.*)$`s', $user_web) ? $user_web : '';
 	
 		
 	//Code de vérification si activé
@@ -78,7 +77,7 @@ if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-z
 	{
 		$user_id = substr(md5(USER_IP), 0, 8);
 		$verif_code = $Sql->Query("SELECT code FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
-		$get_verif_code = !empty($_POST['verif_code']) ? trim($_POST['verif_code']) : '';
+		$get_verif_code = request_var(POST, 'verif_code', '', TSTRING_UNSECURE);
 
 		if( empty($verif_code) || ($verif_code != $get_verif_code) )
 			$check_verif_code = false;
@@ -119,9 +118,9 @@ if( !empty($_POST['register_valid']) && !empty($user_mail) && preg_match('`^[a-z
 					}
 				}
 				
-				if( !empty($_POST['avatar']) )
+				$path = request_var(POST, 'avatar', '');
+				if( !empty($path) )
 				{
-					$path = securit($_POST['avatar']);
 					$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 					if( !empty($error) ) //Erreur, on arrête ici
 						redirect(HOST . DIR . '/member/register' . transid('.php?erroru=' . $error) . '#errorh');
