@@ -37,42 +37,41 @@ class ATOM extends Feed
         $this->path = $feedPath;
     }
 
-    function Parse($nbItem = 5)
+    function Parse($nbItems = 5)
     /**
      * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
      * /<$feedPath>/<$feedName>.atom if the rss one does not exist et return
      * the result as an Array and <false> if it couldn't open the feed.
      */
     {
-        $file = file_get_contents($this->path . $this->name . '.atom');
+        $file = @file_get_contents($this->path . $this->name . '.atom');
         if( $file !== false )
         {
-            if( preg_match('`<item>(.*)</item>`is', $file) ) 
+            if( preg_match('`<entry>(.*)</entry>`is', $file) )
             {
+                $expParsed = explode('<entry>', $file);
+                $nbItems = (count($expParsed) - 1) > $nbItems ? $nbItems : count($expParsed) - 1;
+                
                 $parsed = array();
-                $parsed['items'] = explode('<item>', $file);
-                $nbItems = count($parsed['items']);
+                $parsed['date'] = preg_match('`<updated>(.*)</updated>`is', $expParsed[0], $var) ? $var[1] : '';
+                $parsed['title'] = preg_match('`<title>(.*)</title>`is', $expParsed[0], $var) ? $var[1] : '';
+                $parsed['host'] = preg_match('`<link href="(.*)"/>`is', $expParsed[0], $var) ? $var[1] : '';
+                $parsed['items'] = array();
                 
-                $parsed['date'] = $parsed['items'][0];
-                $parsed['title'] = $parsed['items'][0];
-                $parsed['host'] = $parsed['items'][0];
-                $parsed['desc'] = $parsed['items'][0];
-                $parsed['lang'] = $parsed['items'][0];
-                
-                unset($parsed['items'][0]);
-                
-                for($i = 1; $i < $nbItems; $i++)
+                for($i = 1; $i <= $nbItems; $i++)
                 {
-                    $url = preg_match('`<link>(.*)</link>`is', $parsed['items'][$i], $url) ? $url[1] : '';
-                    $title = preg_match('`<title>(.*)</title>`is', $parsed['items'][$i], $title) ? $title[1] : '';
-                    $date = preg_match('`<pubDate>(.*)</pubDate>`is', $parsed['items'][$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '';
-                    $parsed['items']['link'] = $url;
-                    $parsed['items']['title'] = $title;
-                    $parsed['items']['date'] = $date;
+                    $url = preg_match('`<link href="(.*)"/>`is', $expParsed[$i], $url) ? $url[1] : '';
+                    $title = preg_match('`<title>(.*)</title>`is', $expParsed[$i], $title) ? $title[1] : '';
+                    $date = preg_match('`<updated>(.*)</updated>`is', $expParsed[$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '';
+                    $summary = preg_match('`<summary>(.*)</summary>`is', $expParsed[$i], $summary) ? $summary[1] : '';
+                    array_push($parsed['items'], array('link' => $url, 'title' => $title, 'date' => $date, 'desc' => $summary));
+                    unset($parsed['items'][$i]);
                 }
+                return $parsed;
             }
+            return array();
         }
-        else return false;
+        return false;
     }
 
     function Generate(&$feedInformations)
