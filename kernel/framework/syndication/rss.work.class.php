@@ -3,8 +3,8 @@
  *                              rss.class.php
  *                            -------------------
  *   begin                : March 10, 2005
- *   copyright         : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   copyright            : (C) 2005 Régis Viarre, Loïc Rouchon
+ *   email                : crowkait@phpboost.com, horn@phpboost.com
  *
  *
 ###################################################
@@ -33,8 +33,8 @@ class RSS
      * Constructor
      */
     {
-		$this->name = $feedName;
-		$this->path = $feedPath;
+        $this->name = $feedName;
+        $this->path = $feedPath;
     }
 
     function Parse($nbItem = 5)
@@ -51,7 +51,7 @@ class RSS
             {
                 $parsed = array();
                 $parsed['items'] = explode('<item>', $file);
-        		$nbItems = count($parsed['items']);
+                $nbItems = count($parsed['items']);
                 
                 $parsed['date'] = $parsed['items'][0];
                 $parsed['title'] = $parsed['items'][0];
@@ -60,16 +60,16 @@ class RSS
                 $parsed['lang'] = $parsed['items'][0];
                 
                 unset($parsed['items'][0]);
-        		
-        		for($i = 1; $i < $nbItems; $i++) 
-        		{
-        			$url = preg_match('`<link>(.*)</link>`is', $parsed['items'][$i], $url) ? $url[1] : '';
-        			$title = preg_match('`<title>(.*)</title>`is', $parsed['items'][$i], $title) ? $title[1] : '';
-        			$date = preg_match('`<pubDate>(.*)</pubDate>`is', $parsed['items'][$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '';
+                
+                for($i = 1; $i < $nbItems; $i++)
+                {
+                    $url = preg_match('`<link>(.*)</link>`is', $parsed['items'][$i], $url) ? $url[1] : '';
+                    $title = preg_match('`<title>(.*)</title>`is', $parsed['items'][$i], $title) ? $title[1] : '';
+                    $date = preg_match('`<pubDate>(.*)</pubDate>`is', $parsed['items'][$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '';
                     $parsed['items']['link'] = $url;
                     $parsed['items']['title'] = $title;
                     $parsed['items']['date'] = $date;
-        		}
+                }
             }
         }
         else return false;
@@ -78,38 +78,38 @@ class RSS
     function Generate(&$feedInformations)
     /**
      * Generate the feed contained into the files <$feedFile>.rss and <$feedFile>.atom
-	 * and also the HTML cache for direct includes.
+     * and also the HTML cache for direct includes.
      */
     {
         global $Template;
         $Template->Set_filenames(array('rss'=> 'rss.tpl'));
-		
-		$Template->Assign_vars(array(
-			'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
-			'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
-			'HOST' => HOST,	
-			'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
-			'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
-		));
-		
-		foreach ( $feedInformations['rss'] as $item )
-		{
-			$Template->Assign_block_vars('items', array(
-				'DATE' => $item['date'],
-				'U_LINK' => $item['link'],
-				'TITLE' => $item['title']
-			));
-		}
-		
+        
+        $Template->Assign_vars(array(
+            'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
+            'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
+            'HOST' => HOST,
+            'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
+            'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
+        ));
+        
+        foreach ( $feedInformations['rss'] as $item )
+        {
+            $Template->Assign_block_vars('items', array(
+                'DATE' => $item['date'],
+                'U_LINK' => $item['link'],
+                'TITLE' => $item['title']
+            ));
+        }
+        
         $file = fopen($this->path . $this->name, 'w+');
         fputs($file, $Template->Pparse('rss', TEMPLATE_STRING_MODE));
         fclose($file);
     }
-
+    
     ## Private Methods ##
     
     ## Private attributes ##
-	var $name = ''; // Feed Name
+    var $name = ''; // Feed Name
     var $path = ''; // Path where the feeds are stored
 }
 
