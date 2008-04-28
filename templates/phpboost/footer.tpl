@@ -14,6 +14,18 @@
 		</div>
 	</div>
 	<div id="top_footer">
+		<div style="margin:10px 10px">
+			<form action="../newsletter/newsletter.php{SID}" method="post">
+				<div style="width:240px;height:20px;color:#FFFFFF;background:url(../templates/{THEME}/newsletter/images/newsletter_form.png) no-repeat">
+					<span class="text_strong" style="text-indent:10px;font-size:11px;margin:0;margin-top:3px;float:left">Newsletter</span> 
+					<span style="float:right;">
+						<input type="text" name="mail_newsletter" maxlength="50" size="16" class="text" value="{USER_MAIL}" style="height:14px;border:none;border-left:1px solid #A9A9A9" />
+						<input type="image" style="margin-left:-4px;padding:0;border:none" value="1" src="../templates/{THEME}/newsletter/images/newsletter_submit.png" />
+						<input type="hidden" name="subscribe" value="subscribe" />
+					</span> 
+				</div>
+			</form>
+		</div>
 		{MODULES_MINI_TOP_FOOTER_CONTENT}
 		<div class="spacer"></div>
 	</div>
