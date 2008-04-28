@@ -43,7 +43,7 @@ if( !empty($_POST['msg_mbr']) ) //Message aux membres.
 	$config_member['height_max'] = !empty($_POST['height_max']) ? numeric($_POST['height_max']) : '120';
 	$config_member['weight_max'] = !empty($_POST['weight_max']) ? numeric($_POST['weight_max']) : '20';
 	$config_member['activ_avatar'] = isset($_POST['activ_avatar']) ? numeric($_POST['activ_avatar']) : 0;
-	$config_member['avatar_url'] = !empty($_POST['avatar_url']) ? securit($_POST['avatar_url']) : '';
+	$config_member['avatar_url'] = !empty($_POST['avatar_url']) ? securize_string($_POST['avatar_url']) : '';
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
 	

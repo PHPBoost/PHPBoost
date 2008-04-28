@@ -39,7 +39,7 @@ if( !empty($referer) )
 	if( in_array($search_engine, $array_search) )
 	{
 		$query = !empty($referer['query']) ? $referer['query'] : '';
-		$keyword = securit(strtolower(str_replace('+', ' ', preg_replace('`(?:.*)(?:q|p|query|rdata)=([^&]+)(.*)`i', '$1', $query))));
+		$keyword = securize_string(strtolower(str_replace('+', ' ', preg_replace('`(?:.*)(?:q|p|query|rdata)=([^&]+)(.*)`i', '$1', $query))));
 		
 		$check_search_engine = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."stats_referer WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
 		if( !empty($keyword) )
@@ -53,10 +53,10 @@ if( !empty($referer) )
 	else
 	{
 		########### Détection du site de provenance ###########
-		$url = securit($referer['scheme'] . '://' . $referer['host']);
+		$url = securize_string($referer['scheme'] . '://' . $referer['host']);
 		if( !preg_match('`' . preg_quote(HOST) . '`i', $url) )
 		{				
-			$relative_url = securit(((substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
+			$relative_url = securize_string(((substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
 			
 			$check_url = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."stats_referer WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);
 			if( !empty($check_url) )

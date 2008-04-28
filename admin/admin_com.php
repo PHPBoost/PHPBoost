@@ -33,7 +33,7 @@ require_once('../kernel/admin_header.php');
 $del = !empty($_GET['del']) ? true : false;
 $edit = !empty($_GET['edit']) ? true : false;
 $idcom = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$module = !empty($_GET['module']) ? securit($_GET['module']) : '';
+$module = !empty($_GET['module']) ? securize_string($_GET['module']) : '';
 
 $Template->Set_filenames(array(
 	'admin_com_management'=> 'admin/admin_com_management.tpl'

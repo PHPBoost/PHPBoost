@@ -39,9 +39,9 @@ if( !empty($_POST['valid']) )
 	FROM ".PREFIX."ranks", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$name = !empty($_POST[$row['id'] . 'name']) ? securit($_POST[$row['id'] . 'name']) : '';
+		$name = !empty($_POST[$row['id'] . 'name']) ? securize_string($_POST[$row['id'] . 'name']) : '';
 		$msg = !empty($_POST[$row['id'] . 'msg']) ? numeric($_POST[$row['id'] . 'msg']) : '0';
-		$icon = !empty($_POST[$row['id'] . 'icon']) ? securit($_POST[$row['id'] . 'icon']) : '';
+		$icon = !empty($_POST[$row['id'] . 'icon']) ? securize_string($_POST[$row['id'] . 'icon']) : '';
 
 		if( !empty($name) && $row['special'] != 1 )
 			$Sql->Query_inject("UPDATE ".PREFIX."ranks SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);

@@ -34,7 +34,7 @@ include_once('../wiki/wiki_functions.php');
 
 $Cache->Load_file('wiki');
 
-$wiki_name = !empty($_POST['wiki_name']) ? stripslashes(securit($_POST['wiki_name'])) : $LANG['wiki'];
+$wiki_name = !empty($_POST['wiki_name']) ? stripslashes(securize_string($_POST['wiki_name'])) : $LANG['wiki'];
 $index_text = !empty($_POST['contents']) ? stripslashes(wiki_parse($_POST['contents'])) : '';
 $last_articles = !empty($_POST['last_articles']) ? numeric($_POST['last_articles']) : 0;
 $display_cats = !empty($_POST['display_cats']) ? 1 : 0;

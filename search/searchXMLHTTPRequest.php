@@ -31,8 +31,8 @@ load_module_lang('search');
 
 //--------------------------------------------------------------------- Params
 
-$searchTxt = !empty($_POST['search']) ? securit($_POST['search']) : '';
-$MODULE_NAME = strtolower(!empty($_POST['moduleName']) ? securit($_POST['moduleName']) : '');
+$searchTxt = !empty($_POST['search']) ? securize_string($_POST['search']) : '';
+$MODULE_NAME = strtolower(!empty($_POST['moduleName']) ? securize_string($_POST['moduleName']) : '');
 $idSearch = !empty($_POST['idSearch']) ? numeric($_POST['idSearch']) : -1;
 
 //--------------------------------------------------------------------- Header

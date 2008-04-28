@@ -34,7 +34,7 @@ if( !empty($_POST['valid']))
 	$config_poll = array();
 	$config_poll['poll_auth'] = isset($_POST['poll_auth']) ? numeric($_POST['poll_auth']) : -1;
 	$config_poll['poll_mini'] = !empty($_POST['poll_mini']) ? $_POST['poll_mini'] : array();	
-	$config_poll['poll_cookie'] = !empty($_POST['poll_cookie']) ? stripslashes(securit($_POST['poll_cookie'])) : 'poll';	
+	$config_poll['poll_cookie'] = !empty($_POST['poll_cookie']) ? stripslashes(securize_string($_POST['poll_cookie'])) : 'poll';	
 	$config_poll['poll_cookie_lenght'] = !empty($_POST['poll_cookie_lenght']) ? (numeric($_POST['poll_cookie_lenght']) * 3600 * 24) : 30*24*3600;	
 		
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_poll)) . "' WHERE name = 'poll'", __LINE__, __FILE__);

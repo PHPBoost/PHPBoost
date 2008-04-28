@@ -112,8 +112,8 @@ elseif( !empty($_POST['submit']) )
 	{
 		$id_cat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
-		$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
-		$image = !empty($_POST['image']) ? securit($_POST['image']) : '';
+		$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
+		$image = !empty($_POST['image']) ? securize_string($_POST['image']) : '';
 		$description = !empty($_POST['description']) ? parse($_POST['description']) : '';
 		
 		if( empty($name) )

@@ -44,21 +44,21 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 {
 	//Gestion de la page de démarrage.
 	if( !empty($_POST['start_page2'])  )
-		$start_page = securit($_POST['start_page2']);
+		$start_page = securize_string($_POST['start_page2']);
 	elseif( !empty($_POST['start_page']) )
-		$start_page = securit($_POST['start_page']);
+		$start_page = securize_string($_POST['start_page']);
 		
 	$config = array();	 
 	$config['server_name'] = $CONFIG['server_name'];
 	$config['server_path'] = $CONFIG['server_path'];	
-	$config['site_name'] = !empty($_POST['site_name']) ? stripslashes(securit($_POST['site_name'])) : '';	
-	$config['site_desc'] = !empty($_POST['site_desc']) ? stripslashes(securit($_POST['site_desc'])) : '';    
-	$config['site_keyword'] = !empty($_POST['site_keyword']) ? stripslashes(securit($_POST['site_keyword'])) : '';	
+	$config['site_name'] = !empty($_POST['site_name']) ? stripslashes(securize_string($_POST['site_name'])) : '';	
+	$config['site_desc'] = !empty($_POST['site_desc']) ? stripslashes(securize_string($_POST['site_desc'])) : '';    
+	$config['site_keyword'] = !empty($_POST['site_keyword']) ? stripslashes(securize_string($_POST['site_keyword'])) : '';	
 	$config['start'] = $CONFIG['start'];
 	$config['version'] = $CONFIG['version'];
-	$config['lang'] = !empty($_POST['lang']) ? stripslashes(securit($_POST['lang'])) : ''; 
-	$config['theme'] = !empty($_POST['theme']) ? stripslashes(securit($_POST['theme'])) : 'main'; //main par defaut. 
-	$config['editor'] = !empty($_POST['editor']) ? stripslashes(securit($_POST['editor'])) : 'bbcode'; //bbcode par defaut. 
+	$config['lang'] = !empty($_POST['lang']) ? stripslashes(securize_string($_POST['lang'])) : ''; 
+	$config['theme'] = !empty($_POST['theme']) ? stripslashes(securize_string($_POST['theme'])) : 'main'; //main par defaut. 
+	$config['editor'] = !empty($_POST['editor']) ? stripslashes(securize_string($_POST['editor'])) : 'bbcode'; //bbcode par defaut. 
 	$config['timezone'] = $CONFIG['timezone'];
 	$config['start_page'] = !empty($start_page) ? stripslashes($start_page) : '/member/member.php';
 	$config['maintain'] = $CONFIG['maintain'];
@@ -74,9 +74,9 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 	$config['site_cookie'] = $CONFIG['site_cookie'];
 	$config['site_session'] = $CONFIG['site_session'];				
 	$config['site_session_invit'] = $CONFIG['site_session_invit'];	
-	$config['mail'] = !empty($_POST['mail']) ? stripslashes(securit($_POST['mail'])) : '';  
+	$config['mail'] = !empty($_POST['mail']) ? stripslashes(securize_string($_POST['mail'])) : '';  
 	$config['activ_mail'] = isset($_POST['activ_mail']) ? numeric($_POST['activ_mail']) : '1'; //activé par defaut. 
-	$config['sign'] = !empty($_POST['sign']) ? stripslashes(securit($_POST['sign'])) : '';   
+	$config['sign'] = !empty($_POST['sign']) ? stripslashes(securize_string($_POST['sign'])) : '';   
 	$config['anti_flood'] = isset($_POST['anti_flood']) ? numeric($_POST['anti_flood']) : 0;
 	$config['delay_flood'] = !empty($_POST['delay_flood']) ? numeric($_POST['delay_flood']) : 0;
 	$config['unlock_admin'] = $CONFIG['unlock_admin'];
@@ -108,7 +108,7 @@ elseif( !empty($check_advanced) && empty($_POST['advanced']) )
 		$check_rewrite = '<span class="unspecified">' . $LANG['undefined'] . '</span>';
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( isset($_GET['mail']) )
@@ -179,11 +179,11 @@ elseif( !empty($check_advanced) && empty($_POST['advanced']) )
 elseif( !empty($_POST['advanced']) )
 {
 	$CONFIG['rewrite'] = 1;
-	$CONFIG['server_name'] = !empty($_POST['server_name']) ? stripslashes(securit($_POST['server_name'])) : stripslashes(securit($server_name)); 
-	$CONFIG['server_path'] = !empty($_POST['server_path']) ? stripslashes(securit($_POST['server_path'])) : '';  
+	$CONFIG['server_name'] = !empty($_POST['server_name']) ? stripslashes(securize_string($_POST['server_name'])) : stripslashes(securize_string($server_name)); 
+	$CONFIG['server_path'] = !empty($_POST['server_path']) ? stripslashes(securize_string($_POST['server_path'])) : '';  
 	$CONFIG['timezone'] = !empty($_POST['timezone']) ? numeric($_POST['timezone']) : 0;  
 	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
-	$CONFIG['site_cookie'] = !empty($_POST['site_cookie']) ? stripslashes(securit($_POST['site_cookie'])) : 'session'; //Session par defaut.
+	$CONFIG['site_cookie'] = !empty($_POST['site_cookie']) ? stripslashes(securize_string($_POST['site_cookie'])) : 'session'; //Session par defaut.
 	$CONFIG['site_session'] = !empty($_POST['site_session']) ? numeric($_POST['site_session']) : 3600; //Valeur par defaut à 3600.					
 	$CONFIG['site_session_invit'] = !empty($_POST['site_session_invit']) ? numeric($_POST['site_session_invit']) : 300; //Durée compteur 5min par defaut.	
 	
@@ -216,7 +216,7 @@ else //Sinon on rempli le formulaire
 	$Cache->Load_file('config', RELOAD_CACHE);
 
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	

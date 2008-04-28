@@ -40,8 +40,8 @@ $user_id = !empty($_GET['user_id']) ? numeric($_GET['user_id']) : 0;
 
 if( !empty($_POST['valid']) && !empty($idgroup_post) ) //Modification du groupe.
 {
-	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
-	$img = !empty($_POST['img']) ? securit($_POST['img']) : '';
+	$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
+	$img = !empty($_POST['img']) ? securize_string($_POST['img']) : '';
 	$auth_flood = isset($_POST['auth_flood']) ? numeric($_POST['auth_flood']) : '1';
 	$pm_group_limit = isset($_POST['pm_group_limit']) ? numeric($_POST['pm_group_limit']) : '75';	
 	$data_group_limit = isset($_POST['data_group_limit']) ? numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';	
@@ -55,8 +55,8 @@ if( !empty($_POST['valid']) && !empty($idgroup_post) ) //Modification du groupe.
 }
 elseif( !empty($_POST['valid']) && $add_post ) //ajout  du groupe.
 {
-	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
-	$img = !empty($_POST['img']) ? securit($_POST['img']) : '';
+	$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
+	$img = !empty($_POST['img']) ? securize_string($_POST['img']) : '';
 	$auth_flood = isset($_POST['auth_flood']) ? numeric($_POST['auth_flood']) : '1';
 	$pm_group_limit = isset($_POST['pm_group_limit']) ? numeric($_POST['pm_group_limit']) : '75';	
 	$data_group_limit = isset($_POST['data_group_limit']) ? numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';	
@@ -88,7 +88,7 @@ elseif( !empty($idgroup) && $del_group ) //Suppression du groupe.
 }
 elseif( !empty($idgroup) && $add_mbr ) //Ajout du membre au groupe.
 {
-	$login = !empty($_POST['login_mbr']) ? securit($_POST['login_mbr']) : '';
+	$login = !empty($_POST['login_mbr']) ? securize_string($_POST['login_mbr']) : '';
 	$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
 	if( !empty($user_id) )
 	{	
@@ -115,7 +115,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 	if( !empty($group['id']) )
 	{
 		//Gestion erreur.
-		$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+		$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
 		if( $get_error == 'incomplete' )
 			$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		elseif( $get_error == 'already_group' )

@@ -45,10 +45,10 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$Cache->Load_file('articles');
 	
 	$to = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
-	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
-	$contents = !empty($_POST['desc']) ? securit($_POST['desc']) : '';
-	$icon = !empty($_POST['icon']) ? securit($_POST['icon']) : '';
-	$icon_path = !empty($_POST['icon_path']) ? securit($_POST['icon_path']) : '';
+	$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
+	$contents = !empty($_POST['desc']) ? securize_string($_POST['desc']) : '';
+	$icon = !empty($_POST['icon']) ? securize_string($_POST['icon']) : '';
+	$icon_path = !empty($_POST['icon_path']) ? securize_string($_POST['icon_path']) : '';
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 1;  
 
 	//Génération du tableau des droits.
@@ -57,7 +57,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 	if( !empty($name) )
 	{
 		$icon = !empty($icon) ? $icon : $icon_path;
-		$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET name = '" . $name . "', contents = '"  . $contents . "', aprob = '" . $aprob . "', icon = '" . $icon . "', auth = '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET name = '" . $name . "', contents = '"  . $contents . "', aprob = '" . $aprob . "', icon = '" . $icon . "', auth = '" . securize_string(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 		//Empêche le déplacement dans une catégorie fille.
 		$to = $Sql->Query("SELECT id FROM ".PREFIX."articles_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
@@ -852,7 +852,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
 	if( $get_error == 'unexist_cat' )
 		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 		

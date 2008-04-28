@@ -41,7 +41,7 @@ if( isset($_POST['valid']) )
 		$activ = isset($_POST['activ' . $row['id']]) ? numeric($_POST['activ' . $row['id']]) : '0';
 		$array_auth_all = $Group->Return_array_auth_simple(ACCESS_MODULE, $row['id']);
 		
-		$Sql->Query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', auth = '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', auth = '" . securize_string(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	//Génération du cache des modules
 	$Cache->Generate_file('modules');
@@ -71,15 +71,15 @@ elseif( $uninstall ) //Désinstallation du module
 			
 			//Suppression des commentaires associés.
 			if( !empty($info_module['com']) )
-				$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . securit($info_module['com']) . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . securize_string($info_module['com']) . "'", __LINE__, __FILE__);
 			
 			//Suppression de la configuration.
 			$config = get_ini_config('../news/lang/', $CONFIG['lang']); //Récupération des infos de config.
 			if( !empty($config) )
-				$Sql->Query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . securit($module_name) . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . securize_string($module_name) . "'", __LINE__, __FILE__);
 			
 			//Suppression du module mini.
-			$Sql->Query_inject("DELETE FROM ".PREFIX."modules_mini WHERE name = '" . securit($module_name) . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("DELETE FROM ".PREFIX."modules_mini WHERE name = '" . securize_string($module_name) . "'", __LINE__, __FILE__);
 			
 			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 			$dir_db_module = $CONFIG['lang'];
@@ -192,7 +192,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( !empty($get_error) && isset($LANG[$get_error]) )

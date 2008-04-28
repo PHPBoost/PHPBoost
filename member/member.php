@@ -410,23 +410,23 @@ if( !empty($id_get) ) //Espace membre
 		$mail = strtolower($_POST['mail']); //Mail en minuscule.
 		if( preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$!", $mail) )
 		{
-			$user_lang = !empty($_POST['user_lang']) ? securit($_POST['user_lang']) : '';
-			$user_theme = !empty($_POST['user_theme']) ? securit($_POST['user_theme']) : '';
-			$user_editor = !empty($_POST['user_editor']) ? securit($_POST['user_editor']) : '';
+			$user_lang = !empty($_POST['user_lang']) ? securize_string($_POST['user_lang']) : '';
+			$user_theme = !empty($_POST['user_theme']) ? securize_string($_POST['user_theme']) : '';
+			$user_editor = !empty($_POST['user_editor']) ? securize_string($_POST['user_editor']) : '';
 			$user_timezone = !empty($_POST['user_timezone']) ? numeric($_POST['user_timezone']) : '';
 			
-			$user_mail = securit($mail);
+			$user_mail = securize_string($mail);
 			$user_show_mail = !empty($_POST['user_show_mail']) ? '0' : '1';
-			$user_local = !empty($_POST['user_local']) ? securit($_POST['user_local']) : '';
-			$user_occupation =  !empty($_POST['user_occupation']) ? securit($_POST['user_occupation']) : '';
-			$user_hobbies = !empty($_POST['user_hobbies']) ? securit($_POST['user_hobbies']) : '';
+			$user_local = !empty($_POST['user_local']) ? securize_string($_POST['user_local']) : '';
+			$user_occupation =  !empty($_POST['user_occupation']) ? securize_string($_POST['user_occupation']) : '';
+			$user_hobbies = !empty($_POST['user_hobbies']) ? securize_string($_POST['user_hobbies']) : '';
 			$user_desc = !empty($_POST['user_desc']) ? parse($_POST['user_desc']) : '';
 			$user_sex = !empty($_POST['user_sex']) ? numeric($_POST['user_sex']) : 0;
 			$user_sign = !empty($_POST['user_sign']) ? parse($_POST['user_sign']) : '';
-			$user_msn = !empty($_POST['user_msn']) ? securit($_POST['user_msn']) : '';
-			$user_yahoo = !empty($_POST['user_yahoo']) ? securit($_POST['user_yahoo']) : '';
+			$user_msn = !empty($_POST['user_msn']) ? securize_string($_POST['user_msn']) : '';
+			$user_yahoo = !empty($_POST['user_yahoo']) ? securize_string($_POST['user_yahoo']) : '';
 			
-			$user_web = !empty($_POST['user_web']) ? securit($_POST['user_web']) : '';
+			$user_web = !empty($_POST['user_web']) ? securize_string($_POST['user_web']) : '';
 			$user_web = ( !empty($user_web) && preg_match('`^https?://(?:[a-z0-9_/-]+\.)*[a-z0-9-]+\.[a-z]{2,4}(?:.*)$`s', $user_web) ) ? $user_web : '';
 			
 			//Gestion de la date de naissance.
@@ -481,7 +481,7 @@ if( !empty($id_get) ) //Espace membre
 			
 			if( !empty($_POST['avatar']) )
 			{
-				$path = securit($_POST['avatar']);
+				$path = securize_string($_POST['avatar']);
 				$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
 					redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
@@ -553,7 +553,7 @@ if( !empty($id_get) ) //Espace membre
 							$array_field = is_array($field) ? $field : array();
 							$field = '';
 							foreach($array_field as $value)
-								$field .= securit($value) . '|';
+								$field .= securize_string($value) . '|';
 						}
 						elseif( $row['field'] == 6 )
 						{
@@ -567,7 +567,7 @@ if( !empty($id_get) ) //Espace membre
 							}
 						}
 						else
-							$field = securit($field);
+							$field = securize_string($field);
 							
 						if( !empty($field) )
 						{
@@ -881,7 +881,7 @@ else //Show all member!
 	$login = '';
 	if( !empty($_POST['search_member']) )
 	{
-		$login = !empty($_POST['login']) ? securit($_POST['login']) : '';
+		$login = !empty($_POST['login']) ? securize_string($_POST['login']) : '';
 		$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 		if( !empty($user_id) )
 			redirect(HOST . DIR . '/member/member' . transid('.php?id=' . $user_id, '-' . $user_id . '.php', '&'));

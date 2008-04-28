@@ -33,9 +33,9 @@ require_once('../kernel/admin_header.php');
 //Ajout du rang.
 if( !empty($_POST['add']) )
 {
-	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
+	$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
 	$msg = !empty($_POST['msg']) ? numeric($_POST['msg']) : 0;    
-	$icon = !empty($_POST['icon']) ? securit($_POST['icon']) : ''; 
+	$icon = !empty($_POST['icon']) ? securize_string($_POST['icon']) : ''; 
 	
 	if( !empty($name) && $msg >= 0 )
 	{	

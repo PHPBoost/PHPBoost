@@ -48,7 +48,7 @@ include_once('../kernel/framework/functions.inc.php');
 $step = !empty($_GET['step']) ? numeric($_GET['step']) : 1;
 $step = $step > 9 ? 1 : $step;
 
-$lang = !empty($_GET['lang']) ? securit($_GET['lang']) : 'french';
+$lang = !empty($_GET['lang']) ? securize_string($_GET['lang']) : 'french';
 if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
 	include_once('lang/french/install_french.php');
 	
@@ -194,7 +194,7 @@ elseif( $step == 4 )
 	if( !empty($_POST['submit']) )
 	{
 		//Préfixe des tables
-		$tableprefix = !empty($_POST['tableprefix']) ? securit($_POST['tableprefix']) : 'phpboost_';
+		$tableprefix = !empty($_POST['tableprefix']) ? securize_string($_POST['tableprefix']) : 'phpboost_';
 			
 		function test_db_config()
 		{
@@ -364,13 +364,13 @@ elseif( $step == 5 )
 	
 	if( !empty($_POST['submit']) )
 	{
-		$server_url = !empty($_POST['site_url']) ? securit($_POST['site_url']) : $server_name;
-		$server_path = !empty($_POST['site_path']) ? securit($_POST['site_path']) : $server_path;
-		$site_name = !empty($_POST['site_name']) ? stripslashes(securit($_POST['site_name'])) : '';
-		$site_desc = !empty($_POST['site_desc']) ? stripslashes(securit($_POST['site_desc'])) : '';
-		$site_keyword = !empty($_POST['site_keyword']) ? stripslashes(securit($_POST['site_keyword'])) : '';
-		$site_lang = !empty($_POST['lang']) ? stripslashes(securit($_POST['lang'])) : $lang;
-		$site_theme = !empty($_POST['theme']) ? stripslashes(securit($_POST['theme'])) : DEFAULT_THEME;
+		$server_url = !empty($_POST['site_url']) ? securize_string($_POST['site_url']) : $server_name;
+		$server_path = !empty($_POST['site_path']) ? securize_string($_POST['site_path']) : $server_path;
+		$site_name = !empty($_POST['site_name']) ? stripslashes(securize_string($_POST['site_name'])) : '';
+		$site_desc = !empty($_POST['site_desc']) ? stripslashes(securize_string($_POST['site_desc'])) : '';
+		$site_keyword = !empty($_POST['site_keyword']) ? stripslashes(securize_string($_POST['site_keyword'])) : '';
+		$site_lang = !empty($_POST['lang']) ? stripslashes(securize_string($_POST['lang'])) : $lang;
+		$site_theme = !empty($_POST['theme']) ? stripslashes(securize_string($_POST['theme'])) : DEFAULT_THEME;
         
 		$CONFIG = array();
 		$CONFIG['server_name'] = $server_url;
@@ -415,14 +415,14 @@ elseif( $step == 5 )
 		echo $Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes($config_string) . "' WHERE name = 'config'", __LINE__, __FILE__);
         
 		//On insère la langue dans la bdd.
-		$check_lang = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . securit($CONFIG['lang']) . "'", __LINE__, __FILE__);
+		$check_lang = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . securize_string($CONFIG['lang']) . "'", __LINE__, __FILE__);
 		if( $check_lang == 0 )	
-			$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES ('" . securit($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES ('" . securize_string($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
 		
 		//On insère le thème dans la bdd.
-		$check_theme = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."themes WHERE theme = '" . securit($CONFIG['theme']) . "'", __LINE__, __FILE__);
+		$check_theme = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."themes WHERE theme = '" . securize_string($CONFIG['theme']) . "'", __LINE__, __FILE__);
 		if( $check_theme == 0 )	
-			$Sql->Query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . securit($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . securize_string($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
 		
 		//On génère le cache
 		include('../kernel/framework/cache.class.php');
@@ -574,7 +574,7 @@ elseif( $step == 6 )
 			$Cache->Load_file('config');
 			
 			//On enregistre le membre
-			$Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . securit($login) . "', password = '" . md5($password) . "', level = '2', user_lang = '" . $user_lang . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . securize_string($login) . "', password = '" . md5($password) . "', level = '2', user_lang = '" . $user_lang . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
 			
 			$unlock_admin = substr(md5(uniqid(mt_rand(), true)), 0, 12); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;
 			$CONFIG['unlock_admin'] = md5($unlock_admin);
@@ -695,8 +695,8 @@ elseif( $step == 7 )
 				$unexisting_modules[] = $module_name;
 		}
 		
-		$preselection = !empty($_POST['preselection_name']) ? securit($_POST['preselection_name']) : 'perso';
-		$index_module = !empty($_POST['index_module']) ? securit($_POST['index_module']) : 'default';
+		$preselection = !empty($_POST['preselection_name']) ? securize_string($_POST['preselection_name']) : 'perso';
+		$index_module = !empty($_POST['index_module']) ? securize_string($_POST['index_module']) : 'default';
 		$index_module_url = '';
 		$activ_member = !empty($_POST['activ_member']) ? true : false;
 		
@@ -754,7 +754,7 @@ elseif( $step == 7 )
 						$Sql->Sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
 
 					//Insertion du modules dans la bdd => module installé.
-					$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . securit($module_name) . "', '" . securit($info_module['version']) . "', '" . addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1))) . "', '1')", __LINE__, __FILE__);
+					$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . securize_string($module_name) . "', '" . securize_string($info_module['version']) . "', '" . addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1))) . "', '1')", __LINE__, __FILE__);
 					
 					if( $module_name == 'links' )
 						$link_installed = true;
@@ -827,7 +827,7 @@ elseif( $step == 7 )
 							$Sql->Sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
 
 						//Insertion du modules dans la bdd => module installé.
-						$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . securit($module_name) . "', '" . securit($info_module['version']) . "', '" . addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1))) . "', '1')", __LINE__, __FILE__);
+						$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . securize_string($module_name) . "', '" . securize_string($info_module['version']) . "', '" . addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1))) . "', '1')", __LINE__, __FILE__);
 						
 						if( $module_name == 'links' )
 							$link_installed = true;

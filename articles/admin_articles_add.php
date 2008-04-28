@@ -33,8 +33,8 @@ require_once('../kernel/admin_header.php');
 
 if( !empty($_POST['valid']) )
 {
-	$title = !empty($_POST['title']) ? securit($_POST['title']) : '';
-	$icon = !empty($_POST['icon']) ? securit($_POST['icon']) : '';
+	$title = !empty($_POST['title']) ? securize_string($_POST['title']) : '';
+	$icon = !empty($_POST['icon']) ? securize_string($_POST['icon']) : '';
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
@@ -338,7 +338,7 @@ else
 	));
 		
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 

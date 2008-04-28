@@ -159,7 +159,7 @@ elseif( !empty($msg_d) )
 }
 elseif( request_var(GET, 'warning_moderation_panel', false) || request_var(GET, 'punish_moderation_panel', false) ) //Recherche d'un membre
 {
-	$login = !empty($_POST['login']) ? securit(utf8_decode($_POST['login'])) : '';
+	$login = !empty($_POST['login']) ? securize_string(utf8_decode($_POST['login'])) : '';
 	$login = str_replace('*', '%', $login);
 	if( !empty($login) )
 	{

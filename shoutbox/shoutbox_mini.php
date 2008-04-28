@@ -41,7 +41,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 		if( $Member->Get_attribute('user_readonly') > time() ) 
 			$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 			
-		$shout_pseudo = securit(substr(request_var(POST, 'shout_pseudo', $LANG['guest'], TSTRING_UNSECURE), 0, 25)); //Pseudo posté.
+		$shout_pseudo = securize_string(substr(request_var(POST, 'shout_pseudo', $LANG['guest'], TSTRING_UNSECURE), 0, 25)); //Pseudo posté.
 		$shout_contents = request_var(POST, 'shout_contents', '', TSTRING_UNSECURE);	
 		if( !empty($shout_pseudo) && !empty($shout_contents) )
 		{		

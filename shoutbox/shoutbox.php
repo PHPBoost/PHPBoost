@@ -37,7 +37,7 @@ if( $shoutbox && empty($shout_id) ) //Insertion
 	if( $Member->Get_attribute('user_readonly') > time() ) 
 		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
-	$shout_pseudo = securit(substr(request_var(POST, 'shout_pseudo', $LANG['guest'], TSTRING_UNSECURE), 0, 25)); //Pseudo posté.
+	$shout_pseudo = securize_string(substr(request_var(POST, 'shout_pseudo', $LANG['guest'], TSTRING_UNSECURE), 0, 25)); //Pseudo posté.
 		$shout_contents = request_var(POST, 'shout_contents', '', TSTRING_UNSECURE);
 	if( !empty($shout_pseudo) && !empty($shout_contents) )
 	{		
@@ -136,7 +136,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 		elseif( $update )
 		{
 			$shout_contents = !empty($_POST['shout_contents']) ? trim($_POST['shout_contents']) : '';			
-			$shout_pseudo = !empty($_POST['shout_pseudo']) ? securit($_POST['shout_pseudo']) : '';			
+			$shout_pseudo = !empty($_POST['shout_pseudo']) ? securize_string($_POST['shout_pseudo']) : '';			
 			if( !empty($shout_contents) && !empty($shout_pseudo) )
 			{
 				//Vérifie que le message ne contient pas du flood de lien.

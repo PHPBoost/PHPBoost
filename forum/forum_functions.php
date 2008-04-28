@@ -86,7 +86,7 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 {
 	global $Sql, $Member;
 	
-	$Sql->Query_inject("INSERT INTO ".PREFIX."forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . securit($type) . "', '" . $Member->Get_attribute('user_id') . "', '" . numeric($user_id_action) . "', '" . securit($url_action) . "', '" . time() . "')", __LINE__, __FILE__);
+	$Sql->Query_inject("INSERT INTO ".PREFIX."forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . securize_string($type) . "', '" . $Member->Get_attribute('user_id') . "', '" . numeric($user_id_action) . "', '" . securize_string($url_action) . "', '" . time() . "')", __LINE__, __FILE__);
 }
 
 //Gestion du rss du forum.

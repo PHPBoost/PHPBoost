@@ -33,9 +33,9 @@ require_once('../kernel/admin_header.php');
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
 $id_post = !empty($_POST['id']) ? numeric($_POST['id']) : '' ;
 
-$top = !empty($_GET['top']) ? securit($_GET['top']) : '' ;
-$bottom = !empty($_GET['bot']) ? securit($_GET['bot']) : '' ;
-$move = isset($_GET['move']) ? securit($_GET['move']) : '';
+$top = !empty($_GET['top']) ? securize_string($_GET['top']) : '' ;
+$bottom = !empty($_GET['bot']) ? securize_string($_GET['bot']) : '' ;
+$move = isset($_GET['move']) ? securize_string($_GET['move']) : '';
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )

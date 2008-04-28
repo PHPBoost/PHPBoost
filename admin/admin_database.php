@@ -47,7 +47,7 @@ require_once('../kernel/admin_header.php');
 $repair = !empty($_POST['repair']) ? true : false;
 $optimize = !empty($_POST['optimize']) ? true : false;
 $tables_backup = !empty($_POST['backup']) ? true : false;
-$action = !empty($_GET['action']) ? securit($_GET['action']) : '';
+$action = !empty($_GET['action']) ? securize_string($_GET['action']) : '';
 
 $Template->Set_filenames(array(
 'admin_database_management'=> 'admin/admin_database_management.tpl'
@@ -100,7 +100,7 @@ if( !empty($_GET['query']) )
 				//On parse les valeurs de sortie
 				foreach( $row as $field_name => $field_value )
 				$Template->Assign_block_vars('line.field', array(
-					'FIELD' => securit($field_value),
+					'FIELD' => securize_string($field_value),
 					'CLASS' => 'row1',
 					'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 				));
@@ -131,7 +131,7 @@ elseif( $action == 'restore' )
 	//Suppression d'un fichier
 	if( !empty($_GET['del']) )
 	{
-		$file = securit($_GET['del']);
+		$file = securize_string($_GET['del']);
 		$file_path = '../cache/backup/' . $file;
 		//Si le fichier existe
 		if( preg_match('`[^/]+\.sql$`', $file) && is_file($file_path) )
@@ -149,7 +149,7 @@ elseif( $action == 'restore' )
 	
 	if( !empty($_GET['file']) ) //Restauration d'un fichier sur le ftp
 	{
-		$file = securit($_GET['file']);
+		$file = securize_string($_GET['file']);
 		$file_path = '../cache/backup/' . $file;
 		if( preg_match('`[^/]+\.sql$`', $file) && is_file($file_path) )
 		{

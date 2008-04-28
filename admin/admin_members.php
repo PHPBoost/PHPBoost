@@ -49,7 +49,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 		redirect(HOST . SCRIPT);
 	}
 
-	$login = !empty($_POST['name']) ?  securit(substr($_POST['name'], 0, 25)) : '';
+	$login = !empty($_POST['name']) ?  securize_string(substr($_POST['name'], 0, 25)) : '';
 	$user_mail = strtolower($_POST['mail']);
 	if( preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $user_mail) )
 	{	
@@ -82,28 +82,28 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			}
 			
 			$user_level = isset($_POST['level']) ? numeric($_POST['level']) : '-1';  
-			$user_mail = !empty($user_mail) ? securit($user_mail) : '';	
+			$user_mail = !empty($user_mail) ? securize_string($user_mail) : '';	
 			$user_aprob = !empty($_POST['user_aprob']) ? numeric($_POST['user_aprob']) : '0';  
 			
 			//Informations.
 			$user_show_mail = !empty($_POST['user_show_mail']) ? '0' : '1';
-			$user_lang = !empty($_POST['user_lang']) ? securit($_POST['user_lang']) : '';
-			$user_theme = !empty($_POST['user_theme']) ? securit($_POST['user_theme']) : '';
-			$user_editor = !empty($_POST['user_editor']) ? securit($_POST['user_editor']) : '';
+			$user_lang = !empty($_POST['user_lang']) ? securize_string($_POST['user_lang']) : '';
+			$user_theme = !empty($_POST['user_theme']) ? securize_string($_POST['user_theme']) : '';
+			$user_editor = !empty($_POST['user_editor']) ? securize_string($_POST['user_editor']) : '';
 			$user_timezone = !empty($_POST['user_timezone']) ? numeric($_POST['user_timezone']) : '';
 			
-			$user_local = !empty($_POST['user_local']) ? securit($_POST['user_local']) : '';
+			$user_local = !empty($_POST['user_local']) ? securize_string($_POST['user_local']) : '';
 			//Validité de l'adresse du site.
-			$user_web = !empty($_POST['user_web']) ? securit($_POST['user_web']) : '';
+			$user_web = !empty($_POST['user_web']) ? securize_string($_POST['user_web']) : '';
 			$user_web = (!empty($user_web) && preg_match('`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`', trim($_POST['user_web']))) ? $user_web : '';
 					
-			$user_occupation = !empty($_POST['user_occupation']) ? securit($_POST['user_occupation']) : '';
-			$user_hobbies = !empty($_POST['user_hobbies']) ? securit($_POST['user_hobbies']) : '';
+			$user_occupation = !empty($_POST['user_occupation']) ? securize_string($_POST['user_occupation']) : '';
+			$user_hobbies = !empty($_POST['user_hobbies']) ? securize_string($_POST['user_hobbies']) : '';
 			$user_desc = !empty($_POST['user_desc']) ? parse($_POST['user_desc']) : '';
 			$user_sex = !empty($_POST['user_sex']) ? numeric($_POST['user_sex']) : '0';
 			$user_sign = !empty($_POST['user_sign']) ? parse($_POST['user_sign']) : '';			
-			$user_msn = !empty($_POST['user_msn']) ? securit($_POST['user_msn']) : '';
-			$user_yahoo= !empty($_POST['user_yahoo']) ? securit($_POST['user_yahoo']) : '';
+			$user_msn = !empty($_POST['user_msn']) ? securize_string($_POST['user_msn']) : '';
+			$user_yahoo= !empty($_POST['user_yahoo']) ? securize_string($_POST['user_yahoo']) : '';
 			
 			$user_warning = isset($_POST['user_warning']) ? numeric($_POST['user_warning']) : 0;
 			$user_readonly = isset($_POST['user_readonly']) ? numeric($_POST['user_readonly']) : 0;
@@ -170,7 +170,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			
 			if( !empty($_POST['avatar']) )
 			{
-				$path = securit($_POST['avatar']);
+				$path = securize_string($_POST['avatar']);
 				$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
 					redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
@@ -233,7 +233,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 							}
 						}
 						else
-							$field = securit($field);
+							$field = securize_string($field);
 							
 						if( !empty($field) )
 						{
@@ -268,12 +268,12 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 }
 elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 {
-	$login = !empty($_POST['login2']) ? securit(substr($_POST['login2'], 0, 25)) : '';
+	$login = !empty($_POST['login2']) ? securize_string(substr($_POST['login2'], 0, 25)) : '';
 	$password = !empty($_POST['password2']) ? trim($_POST['password2']) : '';
 	$password_bis = !empty($_POST['password2_bis']) ? trim($_POST['password2_bis']) : '';
 	$password_md5 = !empty($password) ? md5($password) : '';
 	$level = isset($_POST['level2']) ? numeric($_POST['level2']) : '-1';
-	$mail = !empty($_POST['mail2']) ? securit($_POST['mail2']) : '';
+	$mail = !empty($_POST['mail2']) ? securize_string($_POST['mail2']) : '';
 	
 	if( preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$!", strtolower($mail)) )
 	{	
@@ -790,7 +790,7 @@ else
 		'admin_members_management'=> 'admin/admin_members_management.tpl'
 	));
 	 
-	$search = ( !empty($_POST['login_mbr'])) ? securit($_POST['login_mbr']) : '' ; 
+	$search = ( !empty($_POST['login_mbr'])) ? securize_string($_POST['login_mbr']) : '' ; 
 	if( !empty($search) ) //Moteur de recherche des members
 	{
 		$search = str_replace('*', '%', $search);

@@ -41,7 +41,7 @@ if( $install ) //Installation du module
 	$activ_module = isset($_POST[$module_name . 'activ']) ? numeric($_POST[$module_name . 'activ']) : '0';
 	
 	//Vérification de l'unicité du module
-	$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . securit($module_name) . "'", __LINE__, __FILE__);
+	$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . securize_string($module_name) . "'", __LINE__, __FILE__);
 	
 	//Installation du module
 	if( !empty($module_name) && empty($ckeck_module) )
@@ -102,13 +102,13 @@ if( $install ) //Installation du module
 				if( file_exists($module_mini_path) )
 				{	
 					$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  addslashes($location) . "'", __LINE__, __FILE__) + 1;
-					$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . securit($module_name) . "', '" . addslashes($path) . "', '" . addslashes($location) . "', -1, 1, 0, 0)", __LINE__, __FILE__);
+					$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . securize_string($module_name) . "', '" . addslashes($path) . "', '" . addslashes($location) . "', -1, 1, 0, 0)", __LINE__, __FILE__);
 				}
 			}
 		}
 
 		//Insertion du modules dans la bdd => module installé.
-		$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . securit($module_name) . "', '" . securit($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . $activ_module . "')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . securize_string($module_name) . "', '" . securize_string($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . $activ_module . "')", __LINE__, __FILE__);
 		
 		//Génération du cache des modules
 		$Cache->Generate_file('modules');
@@ -143,7 +143,7 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 	$error = '';
 	if( is_writable($dir) && is_writable($dir . $module_name) ) //Dossier en écriture, upload possible
 	{
-		$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . securit($module_name) . "'", __LINE__, __FILE__);
+		$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . securize_string($module_name) . "'", __LINE__, __FILE__);
 		if( empty($ckeck_module) && !is_dir('../' . $module_name) )
 		{
 			include_once('../kernel/framework/files/upload.class.php');

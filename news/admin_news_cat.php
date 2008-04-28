@@ -39,10 +39,10 @@ if( !empty($_POST['valid']) )
 	FROM ".PREFIX."news_cat", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$cat = !empty($_POST[$row['id'] . 'cat']) ? securit($_POST[$row['id'] . 'cat']) : '';  
-		$icon = !empty($_POST[$row['id'] . 'icon']) ? securit($_POST[$row['id'] . 'icon']) : '';  
-		$icon_path = !empty($_POST[$row['id'] . 'icon_path']) ? securit($_POST[$row['id'] . 'icon_path']) : '';  
-		$contents = !empty($_POST[$row['id'] . 'contents']) ? securit($_POST[$row['id'] . 'contents']) : '';
+		$cat = !empty($_POST[$row['id'] . 'cat']) ? securize_string($_POST[$row['id'] . 'cat']) : '';  
+		$icon = !empty($_POST[$row['id'] . 'icon']) ? securize_string($_POST[$row['id'] . 'icon']) : '';  
+		$icon_path = !empty($_POST[$row['id'] . 'icon_path']) ? securize_string($_POST[$row['id'] . 'icon_path']) : '';  
+		$contents = !empty($_POST[$row['id'] . 'contents']) ? securize_string($_POST[$row['id'] . 'contents']) : '';
 		
 		if( !empty($icon_path) )
 			$icon = $icon_path;
@@ -65,10 +65,10 @@ elseif( !empty($_GET['del']) && !empty($id) ) //Suppression de la catégorie.
 //On ajoute la nouvelle catégorie
 elseif( !empty($_POST['add']) ) //Ajout de la catégorie.
 {
-	$cat = !empty($_POST['cat']) ? securit($_POST['cat']) : '';  
-	$icon = !empty($_POST['icon']) ? securit($_POST['icon']) : ''; 
-	$icon_path = !empty($_POST['icon_path']) ? securit($_POST['icon_path']) : ''; 
-	$contents = !empty($_POST['contents']) ? securit($_POST['contents']) : ''; 
+	$cat = !empty($_POST['cat']) ? securize_string($_POST['cat']) : '';  
+	$icon = !empty($_POST['icon']) ? securize_string($_POST['icon']) : ''; 
+	$icon_path = !empty($_POST['icon_path']) ? securize_string($_POST['icon_path']) : ''; 
+	$contents = !empty($_POST['contents']) ? securize_string($_POST['contents']) : ''; 
 		
 	if( !empty($icon_path) )
 		$icon = $icon_path;
@@ -128,7 +128,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
