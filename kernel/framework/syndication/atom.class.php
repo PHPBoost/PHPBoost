@@ -102,9 +102,6 @@ class ATOM extends Feed
                 ));
             }
         }
-
-//         echo 'ATOM<br />';
-//         echo '<pre>'; print_r($feedInformations['items']); echo '</pre>';
         
         $file = fopen($this->path . $this->name . '.atom', 'w+');
         fputs($file, $Template->Tparse(TEMPLATE_STRING_MODE));
