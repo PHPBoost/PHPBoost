@@ -171,25 +171,10 @@
 	
 	<div id="main">
 		<div id="links">
-			<div style="float:left;">
 			&nbsp;&nbsp;<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
 			# START link_bread_crumb #
 			<img src="../templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
 			# END link_bread_crumb #
-			</div>
-			<div style="float:right;margin-top:-2px">
-				<form action="../newsletter/newsletter.php{SID}" method="post">
-					<div style="width:240px;height:20px;color:#FFFFFF;background:url(../templates/{THEME}/newsletter/images/newsletter_form.png) no-repeat">
-						<span class="text_strong" style="text-indent:10px;font-size:11px;margin:0;margin-top:3px;float:left">Newsletter</span> 
-						<span style="float:right;">
-							<input type="text" name="mail_newsletter" maxlength="50" size="16" class="text" value="{USER_MAIL}" style="height:14px;border:none;border-left:1px solid #A9A9A9" />
-							<input type="image" style="margin-left:-4px;padding:0;border:none" value="1" src="../templates/{THEME}/newsletter/images/newsletter_submit.png" />
-							<input type="hidden" name="subscribe" value="subscribe" />
-						</span> 
-					</div>
-				</form>
-			</div>
-			<div class="spacer"></div>
 		</div>	
 		<div id="top_contents">
 			{MODULES_MINI_TOPCENTRAL_CONTENT}
