@@ -103,7 +103,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<span style="float:left;">
-					<a href="rss.php?cat={ID}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a>
+					<a href="rss.php?cat={ID}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					&bull; {U_FORUM_CAT} {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span>
 				</span>
 				<span style="float:right;">{PAGINATION} {LOCK} {MOVE}</span>&nbsp;
@@ -210,7 +210,7 @@
 			<div class="msg_bottom_r"></div>
 			<div class="msg_bottom" style="text-align:center;">
 				<span style="float:left;">
-					<a href="rss.php?cat={ID}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a>
+					<a href="rss.php?cat={ID}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					&bull; {U_FORUM_CAT} {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span>
 				</span>
 				<span style="float:right;">{PAGINATION} {LOCK} {MOVE}</span>&nbsp;

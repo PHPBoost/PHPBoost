@@ -176,7 +176,7 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 		$num_articles = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE a.id_cat = '" . $article_infos['id_cat'] . "' AND a.id <> '" . $id_article . "' AND a.redirect = 0", __LINE__, __FILE__);
 		
 		$Template->Assign_block_vars('cat', array(
-			'RSS' => $num_articles > 0 ? '<a href="rss.php?cat=' . $article_infos['id_cat'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/rss.gif" alt="RSS" /></a>' : ''
+			'RSS' => $num_articles > 0 ? '<a href="rss.php?cat=' . $article_infos['id_cat'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/rss.png" alt="RSS" /></a>' : ''
 		));
 
 		while( $row = $Sql->Sql_fetch_assoc($result) )
@@ -234,7 +234,7 @@ else
 		
 		$Template->Assign_block_vars('last_articles', array(
 			'L_ARTICLES' => $LANG['wiki_last_articles_list'],
-			'RSS' => $articles_number > 0 ? '<a href="rss.php"><img src="../templates/' . $CONFIG['theme'] . '/images/rss.gif" alt="RSS" /></a>' : ''
+			'RSS' => $articles_number > 0 ? '<a href="rss.php"><img src="../templates/' . $CONFIG['theme'] . '/images/rss.png" alt="RSS" /></a>' : ''
 		));
 		
 		$i = 0;
