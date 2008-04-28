@@ -167,7 +167,7 @@ elseif( !empty($id) )
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 
@@ -335,9 +335,9 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 }
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
-	$title = !empty($_POST['title']) ? securize_string($_POST['title']) : '';
-	$icon = !empty($_POST['icon']) ? securize_string($_POST['icon']) : '';
-	$icon_path = !empty($_POST['icon_path']) ? securize_string($_POST['icon_path']) : '';
+	$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
+	$icon = !empty($_POST['icon']) ? strprotect($_POST['icon']) : '';
+	$icon_path = !empty($_POST['icon_path']) ? strprotect($_POST['icon_path']) : '';
 	$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';

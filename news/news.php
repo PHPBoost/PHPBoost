@@ -29,9 +29,9 @@ require_once('../kernel/begin.php');
 require_once('../news/news_begin.php');
 require_once('../kernel/header.php');
     
-$idnews = request_var(GET, 'id', 0);	
-$idcat = request_var(GET, 'cat', 0);
-$show_archive = request_var(GET, 'arch', false);
+$idnews = retrieve(GET, 'id', 0);	
+$idcat = retrieve(GET, 'cat', 0);
+$show_archive = retrieve(GET, 'arch', false);
 
 $is_admin = $Member->Check_level(ADMIN_LEVEL);
 if( empty($idnews) && empty($idcat) ) 

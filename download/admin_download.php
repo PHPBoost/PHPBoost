@@ -117,7 +117,7 @@ if( !empty($id) && !$del )
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
@@ -291,11 +291,11 @@ elseif( !empty($_POST['preview']) && !empty($id_post) )
 }	
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
-	$title = !empty($_POST['title']) ? securize_string($_POST['title']) : '';	
+	$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';	
 	$count = isset($_POST['count']) ? numeric($_POST['count']) : '0';
 	$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
 	$short_contents = !empty($_POST['short_contents']) ? parse($_POST['short_contents']) : '';
-	$url = !empty($_POST['url']) ? securize_string($_POST['url']) : '';
+	$url = !empty($_POST['url']) ? strprotect($_POST['url']) : '';
 	$size = isset($_POST['size']) ? numeric($_POST['size'], 'float') : 0;
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : '';
 	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';

@@ -53,8 +53,8 @@ if( $Member->Check_level(MODO_LEVEL) ) //Modo
 		$Gallery = new Gallery;
 		
 		$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
-		$name = !empty($_POST['name']) ? securize_string(utf8_decode($_POST['name'])) : '';
-		$previous_name = !empty($_POST['previous_name']) ? securize_string(utf8_decode($_POST['previous_name'])) : '';
+		$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
+		$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
 		
 		if( !empty($id_file) )
 			echo $Gallery->Rename_pics($id_file, $name, $previous_name);

@@ -31,8 +31,8 @@ $Bread_crumb->Add_link($LANG['member_msg'], 'membermsg.php' . SID);
 define('TITLE', $LANG['member_msg']);
 require_once('../kernel/header.php'); 
 
-$memberId = request_var(GET, 'id', 0, TUNSIGNED_INT);
-$script = request_var(GET, 'script', '');
+$memberId = retrieve(GET, 'id', 0, TUNSIGNED_INT);
+$script = retrieve(GET, 'script', '');
 
 if( !empty($memberId) ) //Affichage de tous les messages du membre
 {

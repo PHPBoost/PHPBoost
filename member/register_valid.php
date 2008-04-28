@@ -34,40 +34,40 @@ $Cache->Load_file('member');
 if( !$CONFIG_MEMBER['activ_register'] )
 	redirect(get_start_page());
 
-$user_mail = strtolower(request_var(POST, 'mail', ''));
-$valid = request_var(POST, 'register_valid', false);
+$user_mail = strtolower(retrieve(POST, 'mail', ''));
+$valid = retrieve(POST, 'register_valid', false);
 if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $user_mail) )
 {
 	//Info de connexion
-	$login = securize_string(substr(request_var(POST, 'user_lang', '', TSTRING_UNSECURE), 0, 25));
-	$password = request_var(POST, 'pass', '', TSTRING_UNSECURE);
+	$login = strprotect(substr(retrieve(POST, 'user_lang', '', TSTRING_UNSECURE), 0, 25));
+	$password = retrieve(POST, 'pass', '', TSTRING_UNSECURE);
 	$password_md5 = md5($password);
-	$password_bis = request_var(POST, 'pass_biss', '', TSTRING_UNSECURE);
+	$password_bis = retrieve(POST, 'pass_biss', '', TSTRING_UNSECURE);
 	$password_bis_md5 = md5($password_bis);
 		
 	//Configuration
-	$user_show_mail = request_var(POST, 'user_show_mail', 0) ? 1 : 0;
-	$user_lang = request_var(POST, 'user_lang', '');
-	$user_theme = request_var(POST, 'user_theme', '');	
-	$user_editor = request_var(POST, 'user_editor', '');	
-	$user_timezone = request_var(POST, 'user_timezone', 0);	
+	$user_show_mail = retrieve(POST, 'user_show_mail', 0) ? 1 : 0;
+	$user_lang = retrieve(POST, 'user_lang', '');
+	$user_theme = retrieve(POST, 'user_theme', '');	
+	$user_editor = retrieve(POST, 'user_editor', '');	
+	$user_timezone = retrieve(POST, 'user_timezone', 0);	
 	
 	//Informations.
-	$user_avatar = request_var(POST, 'user_avatar', '');
-	$user_local = request_var(POST, 'user_local', '');
-	$user_occupation = request_var(POST, 'user_occupation', '');
-	$user_hobbies = request_var(POST, 'user_hobbies', '');
-	$user_desc = request_var(POST, 'user_desc', '', TSTRING_PARSE);
-	$user_sex = request_var(POST, 'user_sex', 0);
-	$user_sign = request_var(POST, 'user_sign', '', TSTRING_PARSE);
-	$user_msn = request_var(POST, 'user_msn', '');
-	$user_yahoo = request_var(POST, 'user_yahoo', '');
+	$user_avatar = retrieve(POST, 'user_avatar', '');
+	$user_local = retrieve(POST, 'user_local', '');
+	$user_occupation = retrieve(POST, 'user_occupation', '');
+	$user_hobbies = retrieve(POST, 'user_hobbies', '');
+	$user_desc = retrieve(POST, 'user_desc', '', TSTRING_PARSE);
+	$user_sex = retrieve(POST, 'user_sex', 0);
+	$user_sign = retrieve(POST, 'user_sign', '', TSTRING_PARSE);
+	$user_msn = retrieve(POST, 'user_msn', '');
+	$user_yahoo = retrieve(POST, 'user_yahoo', '');
 	
 	//Gestion de la date de naissance.
-	$user_born = strtodate(request_var(POST, 'user_born', '0'), $LANG['date_birth_parse']);
+	$user_born = strtodate(retrieve(POST, 'user_born', '0'), $LANG['date_birth_parse']);
 		
 	//Validité de l'adresse du site.
-	$user_web = request_var(POST, 'user_web', '');
+	$user_web = retrieve(POST, 'user_web', '');
 	$user_web = preg_match('`^https?://(?:[a-z0-9_/-]+\.)*[a-z0-9-]+\.[a-z]{2,4}(?:.*)$`s', $user_web) ? $user_web : '';
 	
 		
@@ -77,7 +77,7 @@ if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,
 	{
 		$user_id = substr(md5(USER_IP), 0, 8);
 		$verif_code = $Sql->Query("SELECT code FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
-		$get_verif_code = request_var(POST, 'verif_code', '', TSTRING_UNSECURE);
+		$get_verif_code = retrieve(POST, 'verif_code', '', TSTRING_UNSECURE);
 
 		if( empty($verif_code) || ($verif_code != $get_verif_code) )
 			$check_verif_code = false;
@@ -118,7 +118,7 @@ if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,
 					}
 				}
 				
-				$path = request_var(POST, 'avatar', '');
+				$path = retrieve(POST, 'avatar', '');
 				if( !empty($path) )
 				{
 					$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
@@ -193,7 +193,7 @@ if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,
 								$array_field = is_array($field) ? $field : array();
 								$field = '';
 								foreach($array_field as $value)
-									$field .= securize_string($value) . '|';
+									$field .= strprotect($value) . '|';
 							}
 							elseif( $row['field'] == 6 )
 							{
@@ -207,7 +207,7 @@ if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,
 								}
 							}
 							else
-								$field = securize_string($field);
+								$field = strprotect($field);
 								
 							if( !empty($field) )
 							{

@@ -29,11 +29,11 @@ require_once('../kernel/begin.php');
 require_once('../contact/contact_begin.php');
 require_once('../kernel/header.php'); 
 
-$mail_from = request_var(POST, 'mail_email', '', TSTRING_UNSECURE);
-$mail_objet = request_var(POST, 'mail_objet', '', TSTRING_UNSECURE);
-$mail_contents = request_var(POST, 'mail_contents', '', TSTRING_UNSECURE);
-$mail_valid = request_var(POST, 'mail_valid', '');
-$get_verif_code = request_var(POST, 'verif_code', '', TSTRING_UNSECURE);
+$mail_from = retrieve(POST, 'mail_email', '', TSTRING_UNSECURE);
+$mail_objet = retrieve(POST, 'mail_objet', '', TSTRING_UNSECURE);
+$mail_contents = retrieve(POST, 'mail_contents', '', TSTRING_UNSECURE);
+$mail_valid = retrieve(POST, 'mail_valid', '');
+$get_verif_code = retrieve(POST, 'verif_code', '', TSTRING_UNSECURE);
 
 ###########################Envoi##############################
 if( !empty($mail_valid) )
@@ -78,7 +78,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = request_var(GET, 'error', '');
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $get_error == 'verif' )

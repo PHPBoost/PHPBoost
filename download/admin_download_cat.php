@@ -41,7 +41,7 @@ $cat_to_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 $cat_to_del_post = !empty($_POST['cat_to_del']) ? numeric($_POST['cat_to_del']) : 0;
 $id_edit = !empty($_GET['edit']) ? numeric($_GET['edit']) : 0;
 $new_cat = !empty($_GET['new']) ? true : false;
-$error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
+$error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
 
 if( $id_up > 0 )
 {
@@ -95,10 +95,10 @@ elseif( !empty($_POST['submit']) )
 	{
 		$id_cat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
-		$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
+		$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
 		$description = !empty($_POST['description']) ? parse($_POST['description']) : '';
-		$icon = !empty($_POST['image']) ? securize_string($_POST['image']) : ''; 
-		$icon_path = !empty($_POST['alt_image']) ? securize_string($_POST['alt_image']) : ''; 
+		$icon = !empty($_POST['image']) ? strprotect($_POST['image']) : ''; 
+		$icon_path = !empty($_POST['alt_image']) ? strprotect($_POST['alt_image']) : ''; 
 		$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : '0';
 		$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : '-1';
 

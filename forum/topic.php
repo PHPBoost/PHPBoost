@@ -29,9 +29,9 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$page = request_var(GET, 'pt', 1);
-$id_get = request_var(GET, 'id', 0);
-$quote_get = request_var(GET, 'quote', 0);	
+$page = retrieve(GET, 'pt', 1);
+$id_get = retrieve(GET, 'id', 0);
+$quote_get = retrieve(GET, 'quote', 0);	
 
 //On va chercher les infos sur le topic	
 $topic = !empty($id_get) ? $Sql->Query_array('forum_topics', 'id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__) : '';
@@ -100,7 +100,7 @@ if( $check_group_edit_auth )
 mark_topic_as_read($id_get, $topic['last_msg_id'], $topic['last_timestamp']);
 	
 //Gestion de la page si redirection vers le dernier message lu.
-$idm = request_var(GET, 'idm', 0);
+$idm = retrieve(GET, 'idm', 0);
 if( !empty($idm) )
 {
 	//Calcul de la page sur laquelle se situe le message.
@@ -167,7 +167,7 @@ $array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG[
 $track = false;
 $poll_done = false; //N'execute qu'une fois les actions propres au sondage.
 $Cache->Load_file('ranks'); //Récupère les rangs en cache.
-$page = request_var(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
+$page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;	
 $j = 0;	

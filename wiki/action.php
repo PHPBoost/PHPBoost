@@ -32,25 +32,25 @@ load_module_lang('wiki');
 
 require('../wiki/wiki_auth.php');
 
-$id_auth = request_var(GET, 'id_auth', 0);
-$id_status = request_var(GET, 'id_status', 0);
-$type_status = request_var(GET, 'status', '');
-$id_change_status = request_var(GET, 'id_change_status', 0);
-$contents = wiki_parse(request_var(GET, 'contents', ''), TSTRING_UNSECURE);
-$move = request_var(GET, 'id_to_move', 0);
-$new_cat = request_var(GET, 'new_cat', 0);
-$id_to_rename = request_var(GET, 'id_to_rename', 0);
-$new_title = request_var(GET, 'new_title', '');
-$create_redirection_while_renaming = request_var(GET, 'create_redirection_while_renaming', false)
-$create_redirection = request_var(GET, 'create_redirection', 0);
-$redirection_title = request_var(GET, 'redirection_title', '');
-$del_redirection = request_var(GET, 'del_redirection', 0);
-$restore = request_var(GET, 'restore', 0);
-$del_archive = request_var(GET, 'del_contents', 0);
-$del_article = request_var(GET, 'del_article', 0);
-$del_to_remove = request_var(GET, 'id_to_remove', 0);
-$report_cat = request_var(GET, 'report_cat', 0);
-$remove_action = request_var(GET, 'action', ''); //Action à faire lors de la suppression
+$id_auth = retrieve(GET, 'id_auth', 0);
+$id_status = retrieve(GET, 'id_status', 0);
+$type_status = retrieve(GET, 'status', '');
+$id_change_status = retrieve(GET, 'id_change_status', 0);
+$contents = wiki_parse(retrieve(GET, 'contents', ''), TSTRING_UNSECURE);
+$move = retrieve(GET, 'id_to_move', 0);
+$new_cat = retrieve(GET, 'new_cat', 0);
+$id_to_rename = retrieve(GET, 'id_to_rename', 0);
+$new_title = retrieve(GET, 'new_title', '');
+$create_redirection_while_renaming = retrieve(GET, 'create_redirection_while_renaming', false)
+$create_redirection = retrieve(GET, 'create_redirection', 0);
+$redirection_title = retrieve(GET, 'redirection_title', '');
+$del_redirection = retrieve(GET, 'del_redirection', 0);
+$restore = retrieve(GET, 'restore', 0);
+$del_archive = retrieve(GET, 'del_contents', 0);
+$del_article = retrieve(GET, 'del_article', 0);
+$del_to_remove = retrieve(GET, 'id_to_remove', 0);
+$report_cat = retrieve(GET, 'report_cat', 0);
+$remove_action = retrieve(GET, 'action', ''); //Action à faire lors de la suppression
 
 if( $id_auth > 0 )
 {

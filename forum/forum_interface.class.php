@@ -83,7 +83,7 @@ class ForumInterface extends ModuleInterface
         $search = $args['search'];
         $idcat = !empty($args['ForumIdcat']) ? numeric($args['ForumIdcat']) : -1;
         $time = !empty($args['ForumTime']) ? numeric($args['ForumTime']) : 0;
-        $where = !empty($args['ForumWhere']) ? securize_string($args['ForumWhere']) : 'title';
+        $where = !empty($args['ForumWhere']) ? strprotect($args['ForumWhere']) : 'title';
         $colorate_result = !empty($args['ForumColorate_result']) ? true : false;
 
         $Template->Set_filenames(array(
@@ -154,7 +154,7 @@ class ForumInterface extends ModuleInterface
         $search = $args['search'];
         $idcat = !empty($args['ForumIdcat']) ? numeric($args['ForumIdcat']) : -1;
         $time = !empty($args['ForumTime']) ? numeric($args['ForumTime']) : 0;
-        $where = !empty($args['ForumWhere']) ? securize_string($args['ForumWhere']) : 'title';
+        $where = !empty($args['ForumWhere']) ? strprotect($args['ForumWhere']) : 'title';
         $colorate_result = !empty($args['ForumColorate_result']) ? true : false;
         
         $auth_cats = '';

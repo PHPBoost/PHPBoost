@@ -28,18 +28,18 @@
 if( defined('PHPBOOST') !== true ) exit;
 
 //Module de connexion.
-$login = request_var(POST, 'login', '');
-$password = md5(request_var(POST, 'password', '', TSTRING_UNSECURE));
-$autoconnexion = request_var(POST, 'auto', false);
+$login = retrieve(POST, 'login', '');
+$password = md5(retrieve(POST, 'password', '', TSTRING_UNSECURE));
+$autoconnexion = retrieve(POST, 'auto', false);
 
-if( request_var(GET, 'disconnect', false) ) //Déconnexion.
+if( retrieve(GET, 'disconnect', false) ) //Déconnexion.
 {
 	$Session->Session_end();
 
 	//Redirection avec les variables de session dans l'url.
 	redirect(get_start_page());
 }
-elseif( request_var(POST, 'connect', false) && !empty($login) && !empty($password) ) //Création de la session.
+elseif( retrieve(POST, 'connect', false) && !empty($login) && !empty($password) ) //Création de la session.
 {
 	$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
 	if( !empty($user_id) ) //Membre existant.

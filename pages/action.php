@@ -31,21 +31,21 @@ include_once('pages_functions.php');
 
 define('TITLE', $LANG['pages'] . ' : ' . $LANG['pages_redirections']);
 
-$id_redirection = request_var(GET, 'id', 0);
-$id_rename = request_var(GET, 'rename', 0);
-$id_rename_post = request_var(POST, 'id_rename', 0);
-$id_new = request_var(GET, 'new', 0);
-$id_new_post = request_var(POST, 'id_new', 0);
-$del_redirection = request_var(GET, 'del', 0);
+$id_redirection = retrieve(GET, 'id', 0);
+$id_rename = retrieve(GET, 'rename', 0);
+$id_rename_post = retrieve(POST, 'id_rename', 0);
+$id_new = retrieve(GET, 'new', 0);
+$id_new_post = retrieve(POST, 'id_new', 0);
+$del_redirection = retrieve(GET, 'del', 0);
 $id_page = $id_redirection > 0 ? $id_redirection : ($id_new > 0 ? $id_new : $id_rename);
-$new_title = request_var(POST, 'new_title', '');
-$redirection_name = request_var(POST, 'redirection_name', '');
-$error = request_var(GET, 'error', '');
-$del_cat = request_var(GET, 'del_cat', 0);
+$new_title = retrieve(POST, 'new_title', '');
+$redirection_name = retrieve(POST, 'redirection_name', '');
+$error = retrieve(GET, 'error', '');
+$del_cat = retrieve(GET, 'del_cat', 0);
 $id_page = $id_page > 0 ? $id_page : $del_cat;
-$del_cat_post = request_var(GET, 'del_cat', 0);
-$report_cat = request_var(GET, 'report_cat', 0);
-$remove_action = request_var(POST, 'action', ''); //Action à faire lors de la suppression
+$del_cat_post = retrieve(GET, 'del_cat', 0);
+$report_cat = retrieve(GET, 'report_cat', 0);
+$remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppression
 
 if( !empty($new_title) && $id_rename_post > 0 )
 {
@@ -275,7 +275,7 @@ if( $del_cat > 0 )
 	));	
 	
 	//Gestion des erreurs
-	$error = request_var(GET, 'error', '');
+	$error = retrieve(GET, 'error', '');
 	if( $error == 'e_cat_contains_cat' )
 		$errstr = $LANG['pages_cat_contains_cat'];
 	elseif( $error == 'e_not_a_cat' )

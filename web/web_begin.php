@@ -30,9 +30,9 @@ if( defined('PHPBOOST') !== true)
 	
 load_module_lang('web'); //Chargement de la langue du module.
 
-$get_note = request_var(GET, 'note', 0);
-$idweb = request_var(GET, 'id', 0);
-$idcat = request_var(GET, 'cat', 0);
+$get_note = retrieve(GET, 'note', 0);
+$idweb = retrieve(GET, 'id', 0);
+$idcat = retrieve(GET, 'cat', 0);
 
 $Cache->Load_file('web'); //$CAT_WEB et $CONFIG_WEB en global.
 

@@ -38,7 +38,7 @@ $Template->Set_filenames(array(
 $Cache->Load_file('newsletter');
 
 $sender_mail = !empty($_POST['sender_mail']) ? trim($_POST['sender_mail']) : '';
-$newsletter_name = !empty($_POST['newsletter_name']) ? securize_string($_POST['newsletter_name'], HTML_UNPROTECT) : '';
+$newsletter_name = !empty($_POST['newsletter_name']) ? strprotect($_POST['newsletter_name'], HTML_UNPROTECT) : '';
 
 $Template->Assign_block_vars('config', array(
 ));

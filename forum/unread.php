@@ -67,7 +67,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 	}
 	
 	//Catégorie pour laquelle il faut afficher les messages non lus.
-	$idcat_unread = request_var(GET, 'cat', 0);
+	$idcat_unread = retrieve(GET, 'cat', 0);
 	$clause_cat = !empty($idcat_unread) ? "(c.id_left >= '" . $CAT_FORUM[$idcat_unread]['id_left'] . "' AND c.id_right <= '" . $CAT_FORUM[$idcat_unread]['id_right'] . "') AND " : '';
 	
 	$result = $Sql->Query_while("SELECT c.id as cid, m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack

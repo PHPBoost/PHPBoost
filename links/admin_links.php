@@ -33,8 +33,8 @@ require_once('../kernel/admin_header.php');
 
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
 $add = !empty($_GET['add']) ? true : false;
-$top = !empty($_GET['top']) ? securize_string($_GET['top']) : '' ;
-$bottom = !empty($_GET['bot']) ? securize_string($_GET['bot']) : '' ;
+$top = !empty($_GET['top']) ? strprotect($_GET['top']) : '' ;
+$bottom = !empty($_GET['bot']) ? strprotect($_GET['bot']) : '' ;
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
@@ -44,10 +44,10 @@ if( !empty($_POST['valid']) )
 	ORDER BY class", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$name = !empty($_POST[$row['id'] . 'name']) ? securize_string($_POST[$row['id'] . 'name']) : '';  
+		$name = !empty($_POST[$row['id'] . 'name']) ? strprotect($_POST[$row['id'] . 'name']) : '';  
 		$activ = isset($_POST[$row['id'] . 'activ']) ? numeric($_POST[$row['id'] . 'activ']) : '0'; //Désactivé par défaut.  
 		$secure = isset($_POST[$row['id'] . 'secure']) ? numeric($_POST[$row['id'] . 'secure']) : '-1'; //Visiteurs par défaut.
-		$url = !empty($_POST[$row['id'] . 'url']) ? securize_string($_POST[$row['id'] . 'url']) : ''; 
+		$url = !empty($_POST[$row['id'] . 'url']) ? strprotect($_POST[$row['id'] . 'url']) : ''; 
 		
 		if( ($row['sep'] == 1 || !empty($url)) && !empty($name) )
 			$Sql->Query_inject("UPDATE ".PREFIX."links SET name = '" . $name . "', url = '" . $url . "', activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
@@ -70,8 +70,8 @@ elseif( !empty($_GET['del']) && !empty($id) ) //Suppresion du lien.
 }
 elseif( !empty($_POST['add']) ) //Ajout du lien.
 {
-	$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
-	$url = !empty($_POST['url']) ? securize_string($_POST['url']) : '';    
+	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
+	$url = !empty($_POST['url']) ? strprotect($_POST['url']) : '';    
 	$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '0';   
 	$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : '-1';	
 	
@@ -91,7 +91,7 @@ elseif( !empty($_POST['add']) ) //Ajout du lien.
 }
 elseif( !empty($_POST['sepa']) ) //Insertion d'un séparateur.
 {
-	$name = !empty($_POST['name2']) ? securize_string($_POST['name2']) : '';
+	$name = !empty($_POST['name2']) ? strprotect($_POST['name2']) : '';
 	$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '0';   
 	$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : '-1';	
 	
@@ -147,7 +147,7 @@ elseif( $add )
 	));
 		
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		

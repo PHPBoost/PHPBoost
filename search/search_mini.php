@@ -36,7 +36,7 @@ $Template->Set_filenames(array(
 
 //--------------------------------------------------------------------- Params
 // A protéger impérativement;
-$search = !empty($_POST['search']) ? securize_string($_POST['search']) : '';
+$search = !empty($_POST['search']) ? strprotect($_POST['search']) : '';
 
 //--------------------------------------------------------------------- Header
 

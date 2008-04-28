@@ -43,7 +43,7 @@ else //Sinon on rempli le formulaire
 	));
 
 	//Gestion erreur.
-	$get_error = !empty($_GET['s']) ? securize_string($_GET['s']) : '';
+	$get_error = !empty($_GET['s']) ? strprotect($_GET['s']) : '';
 	if( $get_error == 1 )
 		$Errorh->Error_handler($LANG['cache_success'], E_USER_SUCCESS);
 	

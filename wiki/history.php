@@ -28,9 +28,9 @@
 require_once('../kernel/begin.php'); 
 load_module_lang('wiki');
 
-$id_article = request_var(GET, 'id', 0);
-$field = request_var(GET, 'field', '');
-$order = request_var(GET, 'order', '');
+$id_article = retrieve(GET, 'id', 0);
+$field = retrieve(GET, 'field', '');
+$order = retrieve(GET, 'order', '');
 
 define('TITLE' , $LANG['wiki_history']);
 

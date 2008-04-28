@@ -38,15 +38,15 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 include_once('../kernel/framework/members/pm.class.php');
 $Privatemsg = new Privatemsg();
 
-$pm_get = request_var(GET, 'pm', 0);
-$pm_id_get = request_var(GET, 'id', 0);
-$pm_del_convers = request_var(GET, 'del_convers', false);
-$quote_get = request_var(GET, 'quote', 0);	
-$page = request_var(GET, 'p', 0);
-$post = request_var(GET, 'post', false);
-$pm_edit = request_var(GET, 'edit', 0);
-$pm_del = request_var(GET, 'del', 0);
-$read = request_var(GET, 'read', false);
+$pm_get = retrieve(GET, 'pm', 0);
+$pm_id_get = retrieve(GET, 'id', 0);
+$pm_del_convers = retrieve(GET, 'del_convers', false);
+$quote_get = retrieve(GET, 'quote', 0);	
+$page = retrieve(GET, 'p', 0);
+$post = retrieve(GET, 'post', false);
+$pm_edit = retrieve(GET, 'edit', 0);
+$pm_del = retrieve(GET, 'del', 0);
+$read = retrieve(GET, 'read', false);
 
 //Marque les messages privés comme lus
 if( $read )
@@ -80,12 +80,12 @@ if( $read )
 	redirect(HOST . DIR . transid('/member/pm.php', '', '&'));
 }
 
-$convers = request_var(POST, 'convers', false);
+$convers = retrieve(POST, 'convers', false);
 if( $convers && empty($pm_edit) && empty($pm_del) ) //Envoi de conversation.
 {
-	$title = request_var(POST, 'title', '', TSTRING_UNSECURE);
-	$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE);
-	$login = request_var(POST, 'login', '');
+	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$login = retrieve(POST, 'login', '');
 	
 	$limit_group = $Member->Check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
 	//Vérification de la boite de l'expéditeur.
@@ -149,7 +149,7 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $Member->Get_attribute('
 	else
 	{
 		//Gestion des erreurs
-		$get_error = request_var(GET, 'error', '');
+		$get_error = retrieve(GET, 'error', '');
 		switch($get_error)
 		{
 			case 'e_unexist_user':
@@ -260,7 +260,7 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 }	
 elseif( !empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del) ) //Envoi de messages.
 {
-	$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
 	if( !empty($contents) )
 	{
 		//user_view_pm => nombre de messages non lu par l'un des 2 participants.
@@ -422,8 +422,8 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 			$id_first = $Sql->Query("SELECT MIN(id) as id FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);			
 			if( !empty($_POST['convers']) XOR !empty($_POST['edit_pm']) )
 			{
-				$contents = request_var(POST, 'contents', '', TSTRING_PARSE);
-				$title = request_var(POST, 'title', '');
+				$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+				$title = retrieve(POST, 'title', '');
 				
 				if( !empty($_POST['edit_pm']) && !empty($contents) )
 				{
@@ -467,8 +467,8 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 					'L_RESET' => $LANG['reset']
 				));
 				
-				$contents = stripslashes(request_var(POST, 'contents', '', TSTRING_UNSECURE));
-				$title = stripslashes(request_var(POST, 'title', '', TSTRING_UNSECURE));
+				$contents = stripslashes(retrieve(POST, 'contents', '', TSTRING_UNSECURE));
+				$title = stripslashes(retrieve(POST, 'title', '', TSTRING_UNSECURE));
 				
 				$Template->Assign_block_vars('edit_pm', array(
 					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : unparse($pm['contents']),
@@ -564,7 +564,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	
 	//Gestion des rangs.	
 	$Cache->Load_file('ranks');
-	$page = request_var(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
+	$page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 	$i = 0;	
 	$j = 0;	
@@ -726,7 +726,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		));
 		
 		//Gestion des erreurs
-		$get_error = request_var(GET, 'error', '');
+		$get_error = retrieve(GET, 'error', '');
 		switch($get_error)
 		{
 			case 'e_incomplete':

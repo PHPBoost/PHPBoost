@@ -40,7 +40,7 @@ $Cache->Load_file('forum');
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {
-	$CONFIG_FORUM['forum_name'] = !empty($_POST['forum_name']) ? stripslashes(securize_string($_POST['forum_name'])) : $CONFIG['site_name'] . ' forum';  
+	$CONFIG_FORUM['forum_name'] = !empty($_POST['forum_name']) ? stripslashes(strprotect($_POST['forum_name'])) : $CONFIG['site_name'] . ' forum';  
 	$CONFIG_FORUM['pagination_topic'] = !empty($_POST['pagination_topic']) ? numeric($_POST['pagination_topic']) : '20';  
 	$CONFIG_FORUM['pagination_msg'] = !empty($_POST['pagination_msg']) ? numeric($_POST['pagination_msg']) : '15';
 	$CONFIG_FORUM['view_time'] = !empty($_POST['view_time']) ? (numeric($_POST['view_time']) * 3600 * 24) : (30 * 3600 * 24);
@@ -50,9 +50,9 @@ if( !empty($_POST['valid']) )
 	$CONFIG_FORUM['no_left_column'] = !empty($_POST['no_left_column']) ? numeric($_POST['no_left_column']) : 0;
 	$CONFIG_FORUM['no_right_column'] = !empty($_POST['no_right_column']) ? numeric($_POST['no_right_column']) : 0;
 	$CONFIG_FORUM['activ_display_msg']  = !empty($_POST['activ_display_msg']) ? numeric($_POST['activ_display_msg']) : 0;
-	$CONFIG_FORUM['display_msg'] = !empty($_POST['display_msg']) ? stripslashes(securize_string($_POST['display_msg'])) : '';
-	$CONFIG_FORUM['explain_display_msg'] = !empty($_POST['explain_display_msg']) ? stripslashes(securize_string($_POST['explain_display_msg'])) : '';	
-	$CONFIG_FORUM['explain_display_msg_bis'] = !empty($_POST['explain_display_msg_bis']) ? stripslashes(securize_string($_POST['explain_display_msg_bis'])) : '';
+	$CONFIG_FORUM['display_msg'] = !empty($_POST['display_msg']) ? stripslashes(strprotect($_POST['display_msg'])) : '';
+	$CONFIG_FORUM['explain_display_msg'] = !empty($_POST['explain_display_msg']) ? stripslashes(strprotect($_POST['explain_display_msg'])) : '';	
+	$CONFIG_FORUM['explain_display_msg_bis'] = !empty($_POST['explain_display_msg_bis']) ? stripslashes(strprotect($_POST['explain_display_msg_bis'])) : '';
 	$CONFIG_FORUM['icon_activ_display_msg'] = !empty($_POST['icon_activ_display_msg']) ? numeric($_POST['icon_activ_display_msg']) : 0;
 	$CONFIG_FORUM['auth'] = serialize($CONFIG_FORUM['auth']);
 		
@@ -103,7 +103,7 @@ else
 	$Cache->Load_file('forum');
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	

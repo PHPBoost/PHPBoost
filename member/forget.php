@@ -29,10 +29,10 @@ require_once('../kernel/begin.php');
 define('TITLE', $LANG['title_forget']);
 require_once('../kernel/header.php'); 
 
-$activ_confirm = request_var(GET, 'activate', false);
-$activ_get = request_var(GET, 'activ', '');
-$user_get = request_var(GET, 'u', 0);
-$forget = request_var(POST, 'forget', '');
+$activ_confirm = retrieve(GET, 'activate', false);
+$activ_get = retrieve(GET, 'activ', '');
+$user_get = retrieve(GET, 'u', 0);
+$forget = retrieve(POST, 'forget', '');
 
 if( !$Member->Check_level(MEMBER_LEVEL) )
 {
@@ -44,8 +44,8 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 			
 		if( !empty($forget))
 		{
-			$user_mail = request_var(POST, 'mail', '');
-			$login = request_var(POST, 'name', '');
+			$user_mail = retrieve(POST, 'mail', '');
+			$login = retrieve(POST, 'name', '');
 
 			if( !empty($user_mail) && preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,6}$!", $user_mail) )
 			{	

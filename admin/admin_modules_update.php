@@ -41,7 +41,7 @@ if( $update ) //Mise à jour du module
 	$activ_module = isset($_POST[$module_name . 'activ']) ? numeric($_POST[$module_name . 'activ']) : '0';
 	
 	//Vérification de l'existance du module
-	$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . securize_string($module_name) . "'", __LINE__, __FILE__);
+	$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
 	
 	//Mise à jour du module
 	if( !empty($ckeck_module) )
@@ -50,7 +50,7 @@ if( $update ) //Mise à jour du module
 		$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
 		
 		//Récupération de l'ancienne version du module
-		$previous_version = $Sql->Query("SELECT version FROM ".PREFIX."modules WHERE name = '" . securize_string($module_name) . "'", __LINE__, __FILE__);
+		$previous_version = $Sql->Query("SELECT version FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
 	
 		//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 		$dir_db_module = $CONFIG['lang'];

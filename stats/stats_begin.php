@@ -31,17 +31,17 @@ if( defined('PHPBOOST') !== true)
 load_module_lang('stats'); //Chargement de la langue du module.
 include_once('../lang/' . $CONFIG['lang'] . '/stats.php'); //Chargement de la langue.
 
-$visit = request_var(GET, 'visit', false);
-$visit_year = request_var(GET, 'year', 0);
-$pages = request_var(GET, 'pages', false);
-$pages_year = request_var(GET, 'pages_year', 0);
-$referer = request_var(GET, 'referer', false);
-$keyword = request_var(GET, 'keyword', false);
-$members = request_var(GET, 'members', false);
-$browser = request_var(GET, 'browser', false);
-$os = request_var(GET, 'os', false);
-$all = request_var(GET, 'all', false);
-$user_lang = request_var(GET, 'lang', false);
+$visit = retrieve(GET, 'visit', false);
+$visit_year = retrieve(GET, 'year', 0);
+$pages = retrieve(GET, 'pages', false);
+$pages_year = retrieve(GET, 'pages_year', 0);
+$referer = retrieve(GET, 'referer', false);
+$keyword = retrieve(GET, 'keyword', false);
+$members = retrieve(GET, 'members', false);
+$browser = retrieve(GET, 'browser', false);
+$os = retrieve(GET, 'os', false);
+$all = retrieve(GET, 'all', false);
+$user_lang = retrieve(GET, 'lang', false);
 
 $l_title = $LANG['site'];
 $l_title = ($visit || $visit_year) ? $LANG['guest_s'] : $l_title;

@@ -31,19 +31,19 @@ $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 require_once('../kernel/header_no_display.php');
 
 //Variable GET.
-$idt_get = request_var(GET, 'id', 0);
-$idm_get = request_var(GET, 'idm', 0);
-$del = request_var(GET, 'del', false);
-$track = request_var(GET, 't', '');	
-$untrack = request_var(GET, 'ut', '');	
-$alert = request_var(GET, 'a', '');	
-$read = request_var(GET, 'read', false);
-$msg_d = request_var(GET, 'msg_d', false);
-$lock_get = request_var(GET, 'lock', '');
+$idt_get = retrieve(GET, 'id', 0);
+$idm_get = retrieve(GET, 'idm', 0);
+$del = retrieve(GET, 'del', false);
+$track = retrieve(GET, 't', '');	
+$untrack = retrieve(GET, 'ut', '');	
+$alert = retrieve(GET, 'a', '');	
+$read = retrieve(GET, 'read', false);
+$msg_d = retrieve(GET, 'msg_d', false);
+$lock_get = retrieve(GET, 'lock', '');
 
 //Variable $_POST
-$poll = request_var(POST, 'valid_forum_poll', false); //Sondage forum.
-$massive_action_type = request_var(POST, 'action_type', ''); //Opération de masse.
+$poll = retrieve(POST, 'valid_forum_poll', false); //Sondage forum.
+$massive_action_type = retrieve(POST, 'action_type', ''); //Opération de masse.
 
 //Instanciation de la class du forum.
 include_once('../forum/forum.class.php');
@@ -125,7 +125,7 @@ elseif( !empty($idt_get) )
 				
 			if( $info_poll['type'] == 0 ) //Réponse simple.
 			{
-				$id_answer = request_var(POST, 'radio', -1); 
+				$id_answer = retrieve(POST, 'radio', -1); 
 				if( isset($array_votes[$id_answer]) )
 					$array_votes[$id_answer]++;
 			}
@@ -135,7 +135,7 @@ elseif( !empty($idt_get) )
 				$nbr_answer = count($array_votes);
 				for($i = 0; $i < $nbr_answer; $i++)
 				{
-					if( request_var(POST, $i, false) ) 
+					if( retrieve(POST, $i, false) ) 
 						$array_votes[$i]++;
 				}
 			}

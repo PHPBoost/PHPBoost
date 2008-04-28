@@ -36,9 +36,9 @@ $id_new = !empty($_GET['new']) ? numeric($_GET['new']) : 0;
 $id_new_post = !empty($_POST['id_new']) ? numeric($_POST['id_new']) : 0;
 $del_redirection = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
 $id_page = $id_redirection > 0 ? $id_redirection : ($id_new > 0 ? $id_new : $id_rename);
-$new_title = !empty($_POST['new_title']) ? securize_string($_POST['new_title']) : '';
-$redirection_name = !empty($_POST['redirection_name']) ? securize_string($_POST['redirection_name']) : '';
-$error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
+$new_title = !empty($_POST['new_title']) ? strprotect($_POST['new_title']) : '';
+$redirection_name = !empty($_POST['redirection_name']) ? strprotect($_POST['redirection_name']) : '';
+$error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
 
 if( !empty($new_title) && $id_rename_post > 0 )
 {

@@ -235,7 +235,7 @@ class Sessions
 		{
 			$session_autoconnect = isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) ? unserialize(stripslashes($_COOKIE[$CONFIG['site_cookie'].'_autoconnect'])) : array();
 			$session_autoconnect['user_id'] = !empty($session_autoconnect['user_id']) ? numeric($session_autoconnect['user_id']) : ''; //Validité user id?.				
-			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? securize_string($session_autoconnect['pwd']) : ''; //Validité password.
+			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? strprotect($session_autoconnect['pwd']) : ''; //Validité password.
 			$level = $Sql->Query("SELECT level FROM ".PREFIX."member WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'", __LINE__, __FILE__);
 			
 			if( !empty($session_autoconnect['user_id']) && !empty($session_autoconnect['pwd']) && isset($level) )
@@ -301,13 +301,13 @@ class Sessions
 			
 			$session_data = isset($_COOKIE[$CONFIG['site_cookie'].'_data']) ? unserialize(stripslashes($_COOKIE[$CONFIG['site_cookie'].'_data'])) : array();
 			
-			$this->data['session_id'] = isset($session_data['session_id']) ? securize_string($session_data['session_id']) : ''; //Validité du session id.
+			$this->data['session_id'] = isset($session_data['session_id']) ? strprotect($session_data['session_id']) : ''; //Validité du session id.
 			$this->data['user_id'] = isset($session_data['user_id']) ? numeric($session_data['user_id']) : ''; //Validité user id?
 		}	
 		########SID Existe?########
 		elseif( isset($_GET['sid']) && isset($_GET['suid']) )
 		{
-			$this->data['session_id'] = !empty($_GET['sid']) ? securize_string($_GET['sid']) : ''; //Validité du session id.
+			$this->data['session_id'] = !empty($_GET['sid']) ? strprotect($_GET['sid']) : ''; //Validité du session id.
 			$this->data['user_id'] = !empty($_GET['suid']) ? numeric($_GET['suid']) : ''; //Validité user id?
 			$this->session_mod = 1;
 		}

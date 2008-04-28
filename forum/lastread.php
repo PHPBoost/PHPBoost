@@ -36,7 +36,7 @@ define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_last_read']);
 require_once('../kernel/header.php'); 
 
 //Redirection changement de catégorie.
-$change_cat = request_var(POST, 'change_cat', '');
+$change_cat = retrieve(POST, 'change_cat', '');
 if( !empty($change_cat) )
 	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
 if( !$Member->Check_level(MEMBER_LEVEL) ) //Réservé aux membres.
