@@ -49,7 +49,7 @@ require_once('../kernel/framework/breadcrumb.class.php');
 
 //Instanciation des objets indispensables au noyau.
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
-$Template = new Templates; //!\\Initialisation des templates//!\\
+$Template = new Template; //!\\Initialisation des templates//!\\
 $Sql = new Sql($sql_host, $sql_login, $sql_pass, $sql_base); //!\\Initialisation  de la class sql//!\\
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
 

@@ -81,7 +81,7 @@ class ATOM extends Feed
      */
     {
         require_once('../kernel/framework/template.class.php');
-        $Template = new Templates('syndication/atom.tpl');
+        $Template = new Template('syndication/atom.tpl');
         
         $Template->Assign_vars(array(
             'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',

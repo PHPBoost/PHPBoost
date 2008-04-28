@@ -19,7 +19,7 @@ require_once('../kernel/framework/errors.class.php');
 require_once('../kernel/framework/template.class.php');
 
 $Errorh = new Errors(); //!\\Initialisation  de la class des erreurs//!\\
-$Template = new Templates; //!\\Initialisation des templates//!\\ 
+$Template = new Template; //!\\Initialisation des templates//!\\ 
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
 
 $CONFIG = array();
