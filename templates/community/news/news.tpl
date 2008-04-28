@@ -43,7 +43,7 @@
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<div style="float:left;padding-left:30px;"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a></div>
+				<div style="float:left;padding-left:30px;"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a></div>
 				<div style="float:right;"><h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
 			</div>	
 						
@@ -65,7 +65,7 @@
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<span style="float:left;padding-left:5px;"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> &nbsp;&nbsp;<a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a></span>
+				<span style="float:left;padding-left:5px;"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> &nbsp;&nbsp;<a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a></span>
 				<span style="float:right;">{news.COM}{news.EDIT}{news.DEL}</span>
 			</div>							
 			<div class="news_content">
@@ -95,7 +95,7 @@
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<div style="float:left"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
+				<div style="float:left"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
 				<div style="float:right">{news.COM}{news.EDIT}{news.DEL}</div>
 			</div>	
 						
@@ -122,7 +122,7 @@
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<h3 class="title valign_middle"><a href="../forum/rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> Derniers sujets du forum</h3>
+				<h3 class="title valign_middle"><a href="../forum/rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> Derniers sujets du forum</h3>
 			</div>						
 			<div class="news_content" style="text-align:center">
 				<script type="text/javascript" src="../cache/rss_forum.html"></script>  

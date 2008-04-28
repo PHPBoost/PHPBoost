@@ -20,15 +20,6 @@
 				<img src="../templates/phpboost/news/images/phpboost_version.jpg" alt="PHPBoost 2.0" />
 				<br />
 				&nbsp;&nbsp;{edito.CONTENTS} 
-
-				<div style="width:350px;height:98px;margin:auto;background:url(../templates/phpboost/news/images/phpboost_download.jpg) no-repeat;">
-					<div style="position:relative;width:230px;left:90px;top:35px;text-indent:5px;text-align:left;">
-						<a href="http://www.phpboost.com/download/download-2-52+phpboost-2-0.php" style="color:#F3F6FA;font-size:16px;" title="Télécharger PHPBoost">Téléchargement gratuit et immédiat</a>
-						
-						<p class="text_small" style="color:#F3F6FA">Version 2.0, Multilingue, 3.5Mo</p>
-					</div>
-				</div>
-				<div style="width:350px;margin:auto;text-align:center"><a href="http://www.phpboost.com/wiki/installation" class="small_link" title="Aide installation">Aide installation</a> | <a href="http://www.phpboost.com/wiki/wiki.php" class="small_link" title="Documentation">Documentation</a> | <a href="http://www.phpboost.com/forum/index.php" class="small_link" title="Support PHPBoost">Support</a> | <a href="http://demo.phpboost.com" class="small_link" title="Démonstration">Démonstration</a></div>
 			</div>
 			
 			<div class="news_bottom_l"></div>		
@@ -192,7 +183,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<h3 class="title valign_middle"><a href="../forum/rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> Site de la semaine</h3>
+				<h3 class="title valign_middle">Site de la semaine</h3>
 			</div>						
 			<div class="news_content">
 				<img src="../templates/phpboost/images/theme.jpg" class="img_right" alt="" />

@@ -8,7 +8,7 @@
 				<div class="module_top_r"></div>
 				<div class="module_top">
 					<span style="float:left">
-						<a href="rss.php?cat={forums_list.cats.IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /></a> 
+						<a href="rss.php?cat={forums_list.cats.IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> 
 						&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum_link_cat">{forums_list.cats.NAME}</a>
 					</span>
 					<span style="float:right">

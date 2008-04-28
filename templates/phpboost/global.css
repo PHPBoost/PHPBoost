@@ -187,13 +187,13 @@ a.membre{
 }
 .dynamic_menu li li{
 	clear:both;
-	color:#000000;	
-	background:#EEF2F6 url(images/bgmenu.png) repeat-y;
+	color:#0578CC;	
+	background:#FFFFFF url(images/bgmenu.png) repeat-y;
 	display:block;
 	width:167px;
 }
 .dynamic_menu li li a{
-	color:#000000;	
+	color:#0578CC;	
 	font-size:10px;
 	text-decoration:none;
 	padding-left:32px;
@@ -207,10 +207,10 @@ a.membre{
 	background-position:5px;
 }
 .dynamic_menu li li a:hover{	
-	background:#E0E6ED;
+	background:#D7EDFA;
 	background-repeat:no-repeat;
 	background-position:5px;
-	border:1px solid #287FC9;
+	border:1px solid #0578CC;
 	padding-top:5px;
 	padding-bottom:5px;
 	cursor:pointer;

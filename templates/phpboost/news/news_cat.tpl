@@ -2,7 +2,7 @@
 			<div class="news_top_l"></a></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.gif" alt="Rss" title="Rss" /> <h3 class="title valign_middle">{L_CATEGORY} :: {CAT_NAME} {EDIT}</h3>
+				<a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /> <h3 class="title valign_middle">{L_CATEGORY} :: {CAT_NAME} {EDIT}</h3>
 			</div>	
 			<div class="news_content" style="border-bottom:none;">
 				<ul style="margin:20px;">
