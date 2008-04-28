@@ -220,10 +220,16 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $news['id'] . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" /></a>';
 	}
 
+	$next_news = $Sql->Query_array("news", "title", "id", "WHERE visible = 1 AND id > '" . $idnews . "' " . $Sql->sql_limit(0, 1), __LINE__, __FILE__);
+	$previous_news = $Sql->Query_array("news", "title", "id", "WHERE visible = 1 AND id < '" . $idnews . "' ORDER BY id DESC " . $Sql->sql_limit(0, 1), __LINE__, __FILE__);
+
 	$Template->Assign_vars(array(
 		'C_NEWS_BLOCK' => true,
+		'C_NEWS_NAVIGATION_LINKS' => true,
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
-		'L_ON' => $LANG['on']
+		'L_ON' => $LANG['on'],
+		'U_PREVIOUS_NEWS' => !empty($previous_news['id']) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/left.png" alt="" class="valign_middle" /> <a href="news' . transid('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . url_encode_rewrite($previous_news['title']) . '.php') . '">' . $previous_news['title'] . '</a>' : '',
+		'U_NEXT_NEWS' => !empty($next_news['id']) ? '<a href="news' . transid('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . url_encode_rewrite($next_news['title']) . '.php') . '">' . $next_news['title'] . '</a> <img src="../templates/' . $CONFIG['theme'] . '/images/right.png" alt="" class="valign_middle" />' : ''
 	));
 	
 	$Template->Assign_block_vars('news', array(
@@ -232,13 +238,13 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		'TITLE' => $news['title'],
 		'CONTENTS' => second_parse($news['contents']),
 		'EXTEND_CONTENTS' => second_parse($news['extend_contents']) . '<br /><br />',
-		'IMG' => (!empty($news['img']) ? '<img src="' . $news['img'] . '" alt="' . $news['alt'] . '" title="' . $news['alt'] . '" class="img_right" style="margin: 6px; border: 1px solid #000000;" />' : ''),
+		'IMG' => (!empty($news['img']) ? '<img src="' . $news['img'] . '" alt="' . $news['alt'] . '" title="' . $news['alt'] . '" class="img_right" />' : ''),
 		'PSEUDO' => $news['login'],
 		'DATE' => gmdate_format('date_format_short', $news['timestamp']),
 		'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? display_com_link($news['nbr_com'], '../news/news' . transid('.php?cat=0&amp;id=' . $idnews . '&amp;i=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?i=0'), $idnews, 'news') : '',
 		'EDIT' => $admin,
 		'DEL' => $del,
-		'U_MEMBER_ID' => transid('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
+		'U_MEMBER_ID' => transid('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php')		
 	));	
 }
 elseif( !empty($idcat) )

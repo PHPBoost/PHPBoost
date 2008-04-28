@@ -425,9 +425,9 @@ else
 	" . $Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		if( $row['start'] > time() )
+		if( $row['visible'] && $row['start'] > time() )
 			$aprob = $LANG['waiting'];			
-		elseif( $row['start'] < time() && ($row['end'] > time() || empty($row['end'])) )
+		elseif( $row['visible'] && $row['start'] < time() && ($row['end'] > time() || empty($row['end'])) )
 			$aprob = $LANG['yes'];
 		else
 			$aprob = $LANG['no'];

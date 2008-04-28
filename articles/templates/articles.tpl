@@ -28,7 +28,7 @@
 						</p>
 					</form>
 				</div>
-				<div class="spacer"></div>
+				<div class="spacer">&nbsp;</div>
 				# ENDIF #
 				
 				# IF PAGE_NAME #
@@ -37,13 +37,13 @@
 				
 				{CONTENTS}
 				
-				<div class="spacer" style="margin-top:25px;">&nbsp;</div>
+				<div class="spacer" style="margin-top:35px;">&nbsp;</div>
 				# IF PAGINATION_ARTICLES #
 				<div style="float:left;width:33%;text-align:right">&nbsp;{PAGE_PREVIOUS_ARTICLES}</div>
 				<div style="float:left;width:33%" class="text_center">{PAGINATION_ARTICLES}</div>
 				<div style="float:left;width:33%;">{PAGE_NEXT_ARTICLES}&nbsp;</div>
 				# ENDIF #
-				<div class="spacer"></div>
+				<div class="spacer">&nbsp;</div>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>

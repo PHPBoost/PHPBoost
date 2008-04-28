@@ -20,6 +20,7 @@
 [*] [color=red]Nouveauté:[/color] Gestionnaire de notation (Framework PHPBoost). 
 [*] [color=red]Nouveauté:[/color] Amélioration de l'approche de programmation orienté objet (Framework PHPBoost). 
 - [color=red]Nouveauté:[/color] Support des autorisations avancées pour les menus.
+[*] color=red]Nouveauté:[/color] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml.
 [*] Valeurs par défaut dans les autorisations sur les groupes.
 [*] Système de visualisation des messages du membre, possibilité de communication avec les modules pour récupérer les liens vers les messages.
 [*] Possibilité de désactiver les colonnes droite/gauche du thème.
@@ -31,7 +32,6 @@
 [*] Possibilité de se déconnecter dans l'administration.
 [*] Page d'erreur 404 lorsqu'une page n'est pas trouvée.
 [*] Réorganisation du système d'autorisation. 
-- Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml.
 [*] Automatisation des configurations par défaut des modules.
 [*] Nouveau système de chargement des langues/thèmes, avec déclenchement d'erreur en cas d'échec.
 [*] Réorganisation du chargement de la tête de page.
@@ -103,7 +103,7 @@
 [b]News[/b]
 - [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des news.
 [*] [color=red]Nouveauté:[/color] Possibilité de publier automatiquement des news à la minute près.
-- [color=red]Nouveauté:[/color] Lien vers la news précédente/suivante.
+[*] [color=red]Nouveauté:[/color] Lien vers la news précédente/suivante.
 [*] Possibilité de masquer le nom du posteur de la news.
 [*] Possibilité de masquer la date de la news.
 

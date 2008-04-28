@@ -7,8 +7,8 @@
 --------------------------------------*/
 /* Case générale des tableaux du site*/
 .row1, .block_contents1{
-	background:#E0E6ED;
-	border:1px solid #487B9C;
+	background:#F1F4F6;
+	border:1px solid #7DC1EE;
 	padding:6px;
 	margin-bottom:-1px;
 }
@@ -92,12 +92,12 @@ a.big_link:hover{
 }
 /* Liens des commentaires. */
 a.com{
-	color:#012871; 
+	color:#0578CC; 
 	font-size:10px;
 	font-weight:bold;
 }
 a.com:hover{ 
-	color:#001b35; 
+	color:#01528D; 
 	font-size:10px;
 	font-weight:bold;
 }
