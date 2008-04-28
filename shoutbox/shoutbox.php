@@ -29,16 +29,16 @@ require_once('../kernel/begin.php');
 require_once('../shoutbox/shoutbox_begin.php'); 
 require_once('../kernel/header.php');
 	
-$shout_id = request_var(GET, 'id', 0);
-$shoutbox = request_var(POST, 'shoutbox', false);
+$shout_id = retrieve(GET, 'id', 0);
+$shoutbox = retrieve(POST, 'shoutbox', false);
 if( $shoutbox && empty($shout_id) ) //Insertion
 {		
 	//Membre en lecture seule?
 	if( $Member->Get_attribute('user_readonly') > time() ) 
 		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
-	$shout_pseudo = securize_string(substr(request_var(POST, 'shout_pseudo', $LANG['guest'], TSTRING_UNSECURE), 0, 25)); //Pseudo posté.
-		$shout_contents = request_var(POST, 'shout_contents', '', TSTRING_UNSECURE);
+	$shout_pseudo = strprotect(substr(retrieve(POST, 'shout_pseudo', $LANG['guest'], TSTRING_UNSECURE), 0, 25)); //Pseudo posté.
+		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNSECURE);
 	if( !empty($shout_pseudo) && !empty($shout_contents) )
 	{		
 		//Accès pour poster.		
@@ -75,9 +75,9 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 	if( $Member->Get_attribute('user_readonly') > time() ) 
 		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
-	$del_message = request_var(GET, 'del', false);
-	$edit_message = request_var(GET, 'edit', false);
-	$update = request_var(GET, 'update', false);
+	$del_message = retrieve(GET, 'del', false);
+	$edit_message = retrieve(GET, 'edit', false);
+	$update = retrieve(GET, 'update', false);
 	
 	$row = $Sql->Query_array('shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
@@ -136,7 +136,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 		elseif( $update )
 		{
 			$shout_contents = !empty($_POST['shout_contents']) ? trim($_POST['shout_contents']) : '';			
-			$shout_pseudo = !empty($_POST['shout_pseudo']) ? securize_string($_POST['shout_pseudo']) : '';			
+			$shout_pseudo = !empty($_POST['shout_pseudo']) ? strprotect($_POST['shout_pseudo']) : '';			
 			if( !empty($shout_contents) && !empty($shout_pseudo) )
 			{
 				//Vérifie que le message ne contient pas du flood de lien.
@@ -176,7 +176,7 @@ else //Affichage.
 		));
 		  	
 	//Gestion erreur.
-	$get_error = request_var(GET, 'error', '');
+	$get_error = retrieve(GET, 'error', '');
 	switch($get_error)
 	{
 		case 'auth':

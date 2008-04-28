@@ -46,7 +46,7 @@ $step = !empty($_GET['step']) ? numeric($_GET['step']) : 1;
 $step = $step > 14 ? 1 : $step;
 $go_to_next_step = !empty($_POST['submit']) ? true : false;
 
-$lang = !empty($_GET['lang']) ? securize_string($_GET['lang']) : 'french';
+$lang = !empty($_GET['lang']) ? strprotect($_GET['lang']) : 'french';
 if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
 	include_once('lang/french/install.php');
 	

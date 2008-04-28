@@ -50,17 +50,17 @@ if( $del && !empty($id) )
 }
 elseif( !empty($_POST['valid']) )
 {
-	$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
+	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
 	$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
 	$field = !empty($_POST['field']) ? numeric($_POST['field']) : '';
-	$possible_values = !empty($_POST['possible_values']) ? securize_string($_POST['possible_values']) : '';
-	$default_values = !empty($_POST['default_values']) ? securize_string($_POST['default_values']) : '';
+	$possible_values = !empty($_POST['possible_values']) ? strprotect($_POST['possible_values']) : '';
+	$default_values = !empty($_POST['default_values']) ? strprotect($_POST['default_values']) : '';
 	
 	$regex_type = !empty($_POST['regex_type']) ? numeric($_POST['regex_type']) : '0';
 	if( empty($regex_type) )
 		$regex = !empty($_POST['regex1']) ? numeric($_POST['regex1']) : '0';
 	else
-		$regex = !empty($_POST['regex2']) ? securize_string($_POST['regex2']) : '';
+		$regex = !empty($_POST['regex2']) ? strprotect($_POST['regex2']) : '';
 
 	$array_field = array(
 		1 => 'VARCHAR(255) NOT NULL', 
@@ -148,7 +148,7 @@ elseif( !empty($id) )
 	));
 
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $get_error == 'exist_field' )

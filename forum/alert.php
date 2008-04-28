@@ -29,8 +29,8 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$alert = request_var(GET, 'id', 0);	
-$alert_post = request_var(POST, 'id', 0);	
+$alert = retrieve(GET, 'id', 0);	
+$alert_post = retrieve(POST, 'id', 0);	
 $topic_id = !empty($alert) ? $alert : $alert_post;
 $topic = $Sql->Query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $topic_id . "'", __LINE__, __FILE__);
 
@@ -107,8 +107,8 @@ if( !empty($alert_post) )
 	$nbr_alert = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."forum_alerts WHERE idtopic = '" . $alert_post ."'", __LINE__, __FILE__);
 	if( empty($nbr_alert) ) //On enregistre
 	{
-		$alert_title = request_var(POST, 'title', '');
-		$alert_contents = request_var(POST, 'contents', '', TSTRING_PARSE);
+		$alert_title = retrieve(POST, 'title', '');
+		$alert_contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 		
 		//Instanciation de la class du forum.
 		include_once('../forum/forum.class.php');

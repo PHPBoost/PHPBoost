@@ -100,7 +100,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 	{
 		if( !empty($_POST['search_member']) )
 		{
-			$login = !empty($_POST['login_mbr']) ? securize_string($_POST['login_mbr']) : '';
+			$login = !empty($_POST['login_mbr']) ? strprotect($_POST['login_mbr']) : '';
 			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . transid('/member/moderation_panel.php?action=punish&id=' . $user_id, '', '&'));
@@ -272,7 +272,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 	{
 		if( !empty($_POST['search_member']) )
 		{
-			$login = !empty($_POST['login_mbr']) ? securize_string($_POST['login_mbr']) : '';
+			$login = !empty($_POST['login_mbr']) ? strprotect($_POST['login_mbr']) : '';
 			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . transid('/member/moderation_panel.php?action=warning&id=' . $user_id, '', '&'));
@@ -391,7 +391,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 	{
 		if( !empty($_POST['search_member']) )
 		{
-			$login = !empty($_POST['login_mbr']) ? securize_string($_POST['login_mbr']) : '';
+			$login = !empty($_POST['login_mbr']) ? strprotect($_POST['login_mbr']) : '';
 			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . transid('/member/moderation_panel.php?action=ban&id=' . $user_id, '', '&'));

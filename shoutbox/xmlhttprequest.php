@@ -42,7 +42,7 @@ if( $add )
 		exit;
 	}
 		
-	$shout_pseudo = !empty($_POST['pseudo']) ? securize_string(utf8_decode($_POST['pseudo'])) : $LANG['guest'];
+	$shout_pseudo = !empty($_POST['pseudo']) ? strprotect(utf8_decode($_POST['pseudo'])) : $LANG['guest'];
 	$shout_contents = !empty($_POST['contents']) ? trim(utf8_decode($_POST['contents'])) : '';
 	if( !empty($shout_pseudo) && !empty($shout_contents) )
 	{

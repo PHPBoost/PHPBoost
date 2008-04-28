@@ -28,8 +28,8 @@
 require_once('../kernel/begin.php'); 
 define('TITLE', $LANG['member_area']);
 
-$edit_get = request_var(GET, 'edit', false);
-$id_get = request_var(GET, 'id', 0, TUNSIGNED_INT);
+$edit_get = retrieve(GET, 'edit', false);
+$id_get = retrieve(GET, 'id', 0, TUNSIGNED_INT);
 
 $title_mbr = !empty($id_get) ? (!empty($edit_get) ? $LANG['profil_edit'] : $LANG['member']) : $LANG['member_s'];
 if( $Member->Check_level(MEMBER_LEVEL) )
@@ -38,11 +38,11 @@ $Bread_crumb->Add_link($title_mbr, '');
 
 require_once('../kernel/header.php'); 
 
-$view_get = request_var(GET, 'view', 0);
-$show_group = request_var(GET, 'g', 0);
-$post_group = request_var(GET, 'show_group', 0);
-$get_error = request_var(GET, 'error', '');
-$get_l_error = request_var(GET, 'erroru', '');
+$view_get = retrieve(GET, 'view', 0);
+$show_group = retrieve(GET, 'g', 0);
+$post_group = retrieve(GET, 'show_group', 0);
+$get_error = retrieve(GET, 'error', '');
+$get_l_error = retrieve(GET, 'erroru', '');
 
 if( !empty($id_get) ) //Espace membre
 {	
@@ -410,23 +410,23 @@ if( !empty($id_get) ) //Espace membre
 		$mail = strtolower($_POST['mail']); //Mail en minuscule.
 		if( preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$!", $mail) )
 		{
-			$user_lang = !empty($_POST['user_lang']) ? securize_string($_POST['user_lang']) : '';
-			$user_theme = !empty($_POST['user_theme']) ? securize_string($_POST['user_theme']) : '';
-			$user_editor = !empty($_POST['user_editor']) ? securize_string($_POST['user_editor']) : '';
+			$user_lang = !empty($_POST['user_lang']) ? strprotect($_POST['user_lang']) : '';
+			$user_theme = !empty($_POST['user_theme']) ? strprotect($_POST['user_theme']) : '';
+			$user_editor = !empty($_POST['user_editor']) ? strprotect($_POST['user_editor']) : '';
 			$user_timezone = !empty($_POST['user_timezone']) ? numeric($_POST['user_timezone']) : '';
 			
-			$user_mail = securize_string($mail);
+			$user_mail = strprotect($mail);
 			$user_show_mail = !empty($_POST['user_show_mail']) ? '0' : '1';
-			$user_local = !empty($_POST['user_local']) ? securize_string($_POST['user_local']) : '';
-			$user_occupation =  !empty($_POST['user_occupation']) ? securize_string($_POST['user_occupation']) : '';
-			$user_hobbies = !empty($_POST['user_hobbies']) ? securize_string($_POST['user_hobbies']) : '';
+			$user_local = !empty($_POST['user_local']) ? strprotect($_POST['user_local']) : '';
+			$user_occupation =  !empty($_POST['user_occupation']) ? strprotect($_POST['user_occupation']) : '';
+			$user_hobbies = !empty($_POST['user_hobbies']) ? strprotect($_POST['user_hobbies']) : '';
 			$user_desc = !empty($_POST['user_desc']) ? parse($_POST['user_desc']) : '';
 			$user_sex = !empty($_POST['user_sex']) ? numeric($_POST['user_sex']) : 0;
 			$user_sign = !empty($_POST['user_sign']) ? parse($_POST['user_sign']) : '';
-			$user_msn = !empty($_POST['user_msn']) ? securize_string($_POST['user_msn']) : '';
-			$user_yahoo = !empty($_POST['user_yahoo']) ? securize_string($_POST['user_yahoo']) : '';
+			$user_msn = !empty($_POST['user_msn']) ? strprotect($_POST['user_msn']) : '';
+			$user_yahoo = !empty($_POST['user_yahoo']) ? strprotect($_POST['user_yahoo']) : '';
 			
-			$user_web = !empty($_POST['user_web']) ? securize_string($_POST['user_web']) : '';
+			$user_web = !empty($_POST['user_web']) ? strprotect($_POST['user_web']) : '';
 			$user_web = ( !empty($user_web) && preg_match('`^https?://(?:[a-z0-9_/-]+\.)*[a-z0-9-]+\.[a-z]{2,4}(?:.*)$`s', $user_web) ) ? $user_web : '';
 			
 			//Gestion de la date de naissance.
@@ -481,7 +481,7 @@ if( !empty($id_get) ) //Espace membre
 			
 			if( !empty($_POST['avatar']) )
 			{
-				$path = securize_string($_POST['avatar']);
+				$path = strprotect($_POST['avatar']);
 				$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
 					redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
@@ -553,7 +553,7 @@ if( !empty($id_get) ) //Espace membre
 							$array_field = is_array($field) ? $field : array();
 							$field = '';
 							foreach($array_field as $value)
-								$field .= securize_string($value) . '|';
+								$field .= strprotect($value) . '|';
 						}
 						elseif( $row['field'] == 6 )
 						{
@@ -567,7 +567,7 @@ if( !empty($id_get) ) //Espace membre
 							}
 						}
 						else
-							$field = securize_string($field);
+							$field = strprotect($field);
 							
 						if( !empty($field) )
 						{
@@ -881,7 +881,7 @@ else //Show all member!
 	$login = '';
 	if( !empty($_POST['search_member']) )
 	{
-		$login = !empty($_POST['login']) ? securize_string($_POST['login']) : '';
+		$login = !empty($_POST['login']) ? strprotect($_POST['login']) : '';
 		$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 		if( !empty($user_id) )
 			redirect(HOST . DIR . '/member/member' . transid('.php?id=' . $user_id, '-' . $user_id . '.php', '&'));

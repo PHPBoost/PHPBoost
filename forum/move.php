@@ -33,13 +33,13 @@ define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php'); 
 
 //Variables $_GET.
-$id_get = request_var(GET, 'id', 0); //Id du topic à déplacer.
-$id_post = request_var(POST, 'id', 0); //Id du topic à déplacer.
-$id_get_msg = request_var(GET, 'idm', 0); //Id du message à partir duquel il faut scinder le topic.
-$id_post_msg = request_var(POST, 'idm', 0); //Id du message à partir duquel il faut scinder le topic.
-$error_get = request_var(GET, 'error', ''); //Gestion des erreurs.
-$post_topic = request_var(POST, 'post_topic', ''); //Création du topic scindé.
-$preview_topic = request_var(POST, 'prw_t', ''); //Prévisualisation du topic scindé.
+$id_get = retrieve(GET, 'id', 0); //Id du topic à déplacer.
+$id_post = retrieve(POST, 'id', 0); //Id du topic à déplacer.
+$id_get_msg = retrieve(GET, 'idm', 0); //Id du message à partir duquel il faut scinder le topic.
+$id_post_msg = retrieve(POST, 'idm', 0); //Id du message à partir duquel il faut scinder le topic.
+$error_get = retrieve(GET, 'error', ''); //Gestion des erreurs.
+$post_topic = retrieve(POST, 'post_topic', ''); //Création du topic scindé.
+$preview_topic = retrieve(POST, 'prw_t', ''); //Prévisualisation du topic scindé.
 
 if( !empty($id_get) ) //Déplacement du sujet.
 {
@@ -152,7 +152,7 @@ elseif( !empty($id_post) ) //Déplacement du topic
 	$idcat = $Sql->Query("SELECT idcat FROM ".PREFIX."forum_topics WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 	if( $Member->Check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
 	{		
-		$to = request_var(POST, 'to', $idcat); //Catégorie cible.
+		$to = retrieve(POST, 'to', $idcat); //Catégorie cible.
 		$level = $Sql->Query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
 		if( !empty($to) && $level > 0 && $idcat != $to )
 		{
@@ -191,7 +191,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		$Errorh->Error_handler('e_unable_cut_forum', E_USER_REDIRECT); 
 			
 	$cat = $Sql->Query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
-	$to = request_var(POST, 'to', $cat['id']); //Catégorie cible.
+	$to = retrieve(POST, 'to', $cat['id']); //Catégorie cible.
 	
 	$auth_cats = '';
 	if( is_array($CAT_FORUM) )
@@ -280,11 +280,11 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	}
 	elseif( !empty($preview_topic) && !empty($id_post_msg) )
 	{
-		$title = request_var(POST, 'title', '', TSTRING_UNSECURE);
-		$subtitle = request_var(POST, 'desc', '', TSTRING_UNSECURE);
-		$contents = request_var(POST, 'contents', '', TSTRING_UNSECURE);
-		$question = request_var(POST, 'question', '', TSTRING_UNSECURE);
-		$type = request_var(POST, 'type', 0); 
+		$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
+		$subtitle = retrieve(POST, 'desc', '', TSTRING_UNSECURE);
+		$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+		$question = retrieve(POST, 'question', '', TSTRING_UNSECURE);
+		$type = retrieve(POST, 'type', 0); 
 		
 		$checked_normal = ($type == 0) ? 'checked="ckecked"' : '';
 		$checked_postit = ($type == 1) ? 'checked="ckecked"' : '';
@@ -294,7 +294,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		$nbr_poll_field = 0;
 		for($i = 0; $i < 20; $i++)
 		{	
-			$answer = request_var(POST, 'a'.$i, '', TSTRING_UNSECURE);
+			$answer = retrieve(POST, 'a'.$i, '', TSTRING_UNSECURE);
 			if( !empty($answer) )
 			{
 				$Template->Assign_block_vars('answers_poll', array(
@@ -313,7 +313,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		}
 		
 		//Type de réponses du sondage.
-		$poll_type = request_var(POST, 'poll_type', 0);
+		$poll_type = retrieve(POST, 'poll_type', 0);
 		
 		$Template->Assign_vars(array(	
 			'TITLE' => stripslashes($title),
@@ -399,7 +399,7 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 {
 	$msg =  $Sql->Query_array('forum_msg', 'idtopic', 'user_id', 'timestamp', 'contents', "WHERE id = '" . $id_post_msg . "'", __LINE__, __FILE__);
 	$topic = $Sql->Query_array('forum_topics', 'idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
-	$to = request_var(POST, 'to', 0); //Catégorie cible.
+	$to = retrieve(POST, 'to', 0); //Catégorie cible.
 	
 	if( !$Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -412,10 +412,10 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 	$level = $Sql->Query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
 	if( !empty($to) && $level > 0 )
 	{
-		$title = request_var(POST, 'title', '');
-		$subtitle = request_var(POST, 'desc', '');
-		$contents = request_var(POST, 'contents', '', TSTRING_PARSE);
-		$type = request_var(POST, 'type', 0); 
+		$title = retrieve(POST, 'title', '');
+		$subtitle = retrieve(POST, 'desc', '');
+		$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+		$type = retrieve(POST, 'type', 0); 
 		
 		//Requête de "scindage" du topic.
 		if( !empty($to) && !empty($contents) && !empty($title) )
@@ -427,17 +427,17 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 			$last_topic_id = $Forumfct->Cut_topic($id_post_msg, $msg['idtopic'], $topic['idcat'], $to, $title, $subtitle, $contents, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id'], $topic['last_timestamp']); //Scindement du topic
 			
 			//Ajout d'un sondage en plus du topic.
-			$question = request_var(POST, 'question', '');
+			$question = retrieve(POST, 'question', '');
 			if( !empty($question) )
 			{
-				$poll_type = request_var(POST, 'poll_type', 0);
+				$poll_type = retrieve(POST, 'poll_type', 0);
 				$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 				
 				$answers = array();
 				$nbr_votes = 0;
 				for($i = 0; $i < 20; $i++)
 				{
-					$answer = str_replace('|', '', request_var(POST, 'a'.$i, ''));
+					$answer = str_replace('|', '', retrieve(POST, 'a'.$i, ''));
 					if( !empty($answer) )
 					{				
 						$answers[$i] = $answer;

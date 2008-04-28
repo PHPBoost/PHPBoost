@@ -35,7 +35,7 @@ define('TIMEZONE_SITE', 1);
 define('TIMEZONE_SYSTEM', 2);
 
 //Récupère les superglobales
-function request_var($var_type, $var_name, $default_value, $force_type = NULL)
+function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 {
 	switch($var_type)
 	{
@@ -61,7 +61,7 @@ function request_var($var_type, $var_name, $default_value, $force_type = NULL)
 		case TINTEGER:
 			return (int)$var;
 		case TSTRING:
-			return securize_string($var); //Chaine protégée.
+			return strprotect($var); //Chaine protégée.
 		case TSTRING_UNSECURE:
 			$var = trim($var);
 			return (string)$var; //Chaine non protégée.
@@ -76,7 +76,7 @@ function request_var($var_type, $var_name, $default_value, $force_type = NULL)
 			$var = (double)$var;
 			return $var > 0.0 ? $var : max(0.0, $default_value);
 		case TSTRING_HTML:
-			return securize_string($var, HTML_NO_PROTECT); //Chaine non protégée pour l'html.
+			return strprotect($var, HTML_NO_PROTECT); //Chaine non protégée pour l'html.
 		case TARRAY:
 			return (array)$var;
 	    case TDOUBLE:
@@ -87,7 +87,7 @@ function request_var($var_type, $var_name, $default_value, $force_type = NULL)
 }
 
 //Passe à la moulinette les entrées (chaînes) utilisateurs.
-function securize_string($var, $html_protect = true)
+function strprotect($var, $html_protect = true)
 {
     $var = trim($var);
     

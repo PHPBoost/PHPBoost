@@ -30,11 +30,11 @@ require_once('../forum/forum_begin.php');
 define('TITLE', 'Ajax forum');
 require_once('../kernel/header_no_display.php');
 
-$track = request_var(GET, 't', '');	
-$untrack = request_var(GET, 'ut', '');	
-$msg_d = request_var(GET, 'msg_d', '');
+$track = retrieve(GET, 't', '');	
+$untrack = retrieve(GET, 'ut', '');	
+$msg_d = retrieve(GET, 'msg_d', '');
 
-if( request_var(GET, 'refresh_unread', false) ) //Suppression d'un message.
+if( retrieve(GET, 'refresh_unread', false) ) //Suppression d'un message.
 {
 	$is_guest = ($Member->Get_attribute('user_id') !== -1) ? false : true;
 	$nbr_msg_not_read = 0;
@@ -102,13 +102,13 @@ if( request_var(GET, 'refresh_unread', false) ) //Suppression d'un message.
 	else
 		echo '';
 }
-elseif( request_var(GET, 'del', false) ) //Suppression d'un message.
+elseif( retrieve(GET, 'del', false) ) //Suppression d'un message.
 {
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
 	$Forumfct = new Forum;
 
-	$idm_get = request_var(GET, 'idm', '');	
+	$idm_get = retrieve(GET, 'idm', '');	
 	//Info sur le message.	
 	$msg = $Sql->Query_array('forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'", __LINE__, __FILE__);	
 	//On va chercher les infos sur le topic	
@@ -157,9 +157,9 @@ elseif( !empty($msg_d) )
 		echo ($topic['display_msg']) ? 2 : 1;
 	}	
 }
-elseif( request_var(GET, 'warning_moderation_panel', false) || request_var(GET, 'punish_moderation_panel', false) ) //Recherche d'un membre
+elseif( retrieve(GET, 'warning_moderation_panel', false) || retrieve(GET, 'punish_moderation_panel', false) ) //Recherche d'un membre
 {
-	$login = !empty($_POST['login']) ? securize_string(utf8_decode($_POST['login'])) : '';
+	$login = !empty($_POST['login']) ? strprotect(utf8_decode($_POST['login'])) : '';
 	$login = str_replace('*', '%', $login);
 	if( !empty($login) )
 	{
@@ -167,9 +167,9 @@ elseif( request_var(GET, 'warning_moderation_panel', false) || request_var(GET, 
 		$result = $Sql->Query_while("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			if( request_var(GET, 'warning_moderation_panel', false) )
+			if( retrieve(GET, 'warning_moderation_panel', false) )
 				echo '<a href="moderation_forum.php?action=warning&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />';
-			elseif( request_var(GET, 'punish_moderation_panel', false) )
+			elseif( retrieve(GET, 'punish_moderation_panel', false) )
 				echo '<a href="moderation_forum.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />';
 			
 			$i++;

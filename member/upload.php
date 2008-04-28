@@ -28,11 +28,11 @@
 require_once('../kernel/begin.php');
 define('TITLE', $LANG['files_management']);
 
-$popup = request_var(GET, 'popup', '');
+$popup = retrieve(GET, 'popup', '');
 if( !empty($popup) ) //Popup.
 {	
 	require_once('../kernel/header_no_display.php');
-	$field = request_var(GET, 'fd', '');
+	$field = retrieve(GET, 'fd', '');
 	
 	$header = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . $LANG['xml_lang'] . '" >
@@ -88,17 +88,17 @@ if( !$Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) )
 include_once('../kernel/framework/files/files.class.php');
 $Files = new Files; 
 
-$folder = request_var(GET, 'f', 0);
-$parent_folder = request_var(GET, 'fup', 0);
-$home_folder = request_var(GET, 'root', false);
-$del_folder = request_var(GET, 'delf', 0);
-$empty_folder = request_var(GET, 'eptf', 0);
-$del_file = request_var(GET, 'del', 0);
-$get_error = request_var(GET, 'error', '');
-$get_l_error = request_var(GET, 'erroru', '');
-$move_folder = request_var(GET, 'movefd', 0);
-$move_file = request_var(GET, 'movefi', 0);
-$to = request_var(POST, 'new_cat', -1);
+$folder = retrieve(GET, 'f', 0);
+$parent_folder = retrieve(GET, 'fup', 0);
+$home_folder = retrieve(GET, 'root', false);
+$del_folder = retrieve(GET, 'delf', 0);
+$empty_folder = retrieve(GET, 'eptf', 0);
+$del_file = retrieve(GET, 'del', 0);
+$get_error = retrieve(GET, 'error', '');
+$get_l_error = retrieve(GET, 'erroru', '');
+$move_folder = retrieve(GET, 'movefd', 0);
+$move_file = retrieve(GET, 'movefi', 0);
+$to = retrieve(POST, 'new_cat', -1);
 
 if( !empty($parent_folder) ) //Changement de dossier
 {
@@ -152,7 +152,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 			}
 			else //Insertion dans la bdd
 			{
-				$Sql->Query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . securize_string($_FILES['upload_file']['name']) . "', '" . securize_string($Upload->filename['upload_file']) . "', '" . $Member->Get_attribute('user_id') . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->Query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . strprotect($_FILES['upload_file']['name']) . "', '" . strprotect($Upload->filename['upload_file']) . "', '" . $Member->Get_attribute('user_id') . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
 			}
 		}
 		else

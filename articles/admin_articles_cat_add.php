@@ -42,9 +42,9 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 	$Cache->Load_file('articles');
 	
 	$parent_category = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
-	$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
-	$contents = !empty($_POST['desc']) ? securize_string($_POST['desc']) : '';
-	$icon = !empty($_POST['icon']) ? securize_string($_POST['icon']) : ''; 
+	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
+	$contents = !empty($_POST['desc']) ? strprotect($_POST['desc']) : '';
+	$icon = !empty($_POST['icon']) ? strprotect($_POST['icon']) : ''; 
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;    
 		
 	//Génération du tableau des droits.
@@ -84,7 +84,7 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 			$level = 0;
 		}
 			
-		$Sql->Query_inject("INSERT INTO ".PREFIX."articles_cats (id_left, id_right, level, name, contents, nbr_articles_visible, nbr_articles_unvisible, icon, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $icon . "', '" . $aprob . "', '" . securize_string(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
+		$Sql->Query_inject("INSERT INTO ".PREFIX."articles_cats (id_left, id_right, level, name, contents, nbr_articles_visible, nbr_articles_unvisible, icon, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $icon . "', '" . $aprob . "', '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
 
 		###### Regénération du cache #######
 		$Cache->Generate_module_file('articles');

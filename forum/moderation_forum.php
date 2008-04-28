@@ -29,10 +29,10 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$action = request_var(GET, 'action', '');
-$id_get = request_var(GET, 'id', 0);
-$new_status = request_var(GET, 'new_status', '');
-$get_del = request_var(GET, 'del', '');
+$action = retrieve(GET, 'action', '');
+$id_get = retrieve(GET, 'id', 0);
+$new_status = retrieve(GET, 'new_status', '');
+$get_del = retrieve(GET, 'del', '');
 
 $Bread_crumb->Add_link($LANG['moderation_panel'], '../member/moderation_panel.php' . SID);
 $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'moderation_forum.php' . SID);
@@ -79,7 +79,7 @@ $Template->Assign_vars(array(
 ));
 
 //Redirection changement de catégorie.
-$id_topic_get = request_var(POST, 'change_cat', '');
+$id_topic_get = retrieve(POST, 'change_cat', '');
 if( !empty($id_topic_get) )
 {	
 	//On va chercher les infos sur le topic	
@@ -262,10 +262,10 @@ if( $action == 'alert' ) //Gestion des alertes
 }
 elseif( $action == 'punish' ) //Gestion des utilisateurs
 {
-	$readonly = request_var(POST, 'new_info', 0);
+	$readonly = retrieve(POST, 'new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
-	$readonly_contents = request_var(POST, 'action_contents', '', TSTRING_UNSECURE);
-	if( !empty($id_get) && request_var(POST, 'valid_user', false) ) //On met à  jour le niveau d'avertissement
+	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
+	if( !empty($id_get) && retrieve(POST, 'valid_user', false) ) //On met à  jour le niveau d'avertissement
 	{
 		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
@@ -308,9 +308,9 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 	
 	if( empty($id_get) ) //On liste les membres qui ont déjà un avertissement
 	{
-		if( request_var(POST, 'search_member', false) )
+		if( retrieve(POST, 'search_member', false) )
 		{
-			$login = request_var(POST, 'login_mbr', '');
+			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=punish&id=' . $user_id, '', '&'));
@@ -431,9 +431,9 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 }
 elseif( $action == 'warning' ) //Gestion des utilisateurs
 {
-	$new_warning_level = request_var(POST, 'new_info', 0);
-	$warning_contents = request_var(POST, 'action_contents', '', TSTRING_UNSECURE);
-	if( $new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && request_var(POST, 'valid_user', false) ) //On met à  jour le niveau d'avertissement
+	$new_warning_level = retrieve(POST, 'new_info', 0);
+	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
+	if( $new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && retrieve(POST, 'valid_user', false) ) //On met à  jour le niveau d'avertissement
 	{
 		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
@@ -492,9 +492,9 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 	
 	if( empty($id_get) ) //On liste les membres qui ont déjà un avertissement
 	{
-		if( request_var(POST, 'search_member', false) )
+		if( retrieve(POST, 'search_member', false) )
 		{
-			$login = request_var(POST, 'login_member', '');
+			$login = retrieve(POST, 'login_member', '');
 			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=warning&id=' . $user_id, '', '&'));
@@ -575,7 +575,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		include_once('../kernel/framework/content/bbcode.php');
 	}	
 }
-elseif( request_var(GET, 'del_h', false) && $Member->Check_level(ADMIN_LEVEL) ) //Suppression de l'historique.
+elseif( retrieve(GET, 'del_h', false) && $Member->Check_level(ADMIN_LEVEL) ) //Suppression de l'historique.
 {
 	$Sql->Query_inject("DELETE FROM ".PREFIX."forum_history");
 	
@@ -583,7 +583,7 @@ elseif( request_var(GET, 'del_h', false) && $Member->Check_level(ADMIN_LEVEL) ) 
 }
 else //Panneau de modération
 {
-	$get_more = request_var(GET, 'more', 0);
+	$get_more = retrieve(GET, 'more', 0);
 	
 	$Template->Assign_vars(array(
 		'C_FORUM_MODO_MAIN' => true,

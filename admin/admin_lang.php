@@ -147,7 +147,7 @@ else
 	));
 		
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_NOTICE);
 	elseif( !empty($get_error) && isset($LANG[$get_error]) )

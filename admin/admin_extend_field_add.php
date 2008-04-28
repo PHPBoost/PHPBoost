@@ -32,17 +32,17 @@ require_once('../kernel/admin_header.php');
 // field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 if( !empty($_POST['valid']) ) //Insertion du nouveau champs.
 {
-	$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
+	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
 	$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
 	$field = !empty($_POST['field']) ? numeric($_POST['field']) : '';
-	$possible_values = !empty($_POST['possible_values']) ? securize_string($_POST['possible_values']) : '';
-	$default_values = !empty($_POST['default_values']) ? securize_string($_POST['default_values']) : '';
+	$possible_values = !empty($_POST['possible_values']) ? strprotect($_POST['possible_values']) : '';
+	$default_values = !empty($_POST['default_values']) ? strprotect($_POST['default_values']) : '';
 	
 	$regex_type = !empty($_POST['regex_type']) ? numeric($_POST['regex_type']) : '0';
 	if( empty($regex_type) )
 		$regex = !empty($_POST['regex1']) ? numeric($_POST['regex1']) : '0';
 	else
-		$regex = !empty($_POST['regex2']) ? securize_string($_POST['regex2']) : '';
+		$regex = !empty($_POST['regex2']) ? strprotect($_POST['regex2']) : '';
 
 	$array_field = array(
 		1 => 'VARCHAR(255) NOT NULL', 

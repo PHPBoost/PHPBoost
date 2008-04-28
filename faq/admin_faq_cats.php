@@ -34,15 +34,15 @@ include_once('../kernel/admin_header.php');
 include_once('faq_cats.class.php');
 $faq_categories = new FaqCats();
 
-$id_up = request_var(GET, 'id_up', 0);
-$id_down = request_var(GET, 'id_down', 0);
-$id_show = request_var(GET, 'show', 0);
-$id_hide = request_var(GET, 'hide', 0);
-$cat_to_del = request_var(GET, 'del', 0);
-$cat_to_del_post = request_var(POST, 'cat_to_del', 0);
-$id_edit = request_var(GET, 'edit', 0);
-$new_cat = request_var(GET, 'new', false);
-$error = request_var(GET, 'error', '');
+$id_up = retrieve(GET, 'id_up', 0);
+$id_down = retrieve(GET, 'id_down', 0);
+$id_show = retrieve(GET, 'show', 0);
+$id_hide = retrieve(GET, 'hide', 0);
+$cat_to_del = retrieve(GET, 'del', 0);
+$cat_to_del_post = retrieve(POST, 'cat_to_del', 0);
+$id_edit = retrieve(GET, 'edit', 0);
+$new_cat = retrieve(GET, 'new', false);
+$error = retrieve(GET, 'error', '');
 
 $Template->Set_filenames(array(
 	'admin_faq_cat'=> 'faq/admin_faq_cats.tpl'
@@ -112,8 +112,8 @@ elseif( !empty($_POST['submit']) )
 	{
 		$id_cat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
-		$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
-		$image = !empty($_POST['image']) ? securize_string($_POST['image']) : '';
+		$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
+		$image = !empty($_POST['image']) ? strprotect($_POST['image']) : '';
 		$description = !empty($_POST['description']) ? parse($_POST['description']) : '';
 		
 		if( empty($name) )

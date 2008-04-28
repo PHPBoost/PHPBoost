@@ -43,10 +43,10 @@ if( !empty($_POST['valid']) )
 	ORDER BY class", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$cat = !empty($_POST[$row['id'] . 'cat']) ? securize_string($_POST[$row['id'] . 'cat']) : '';  
-		$contents = !empty($_POST[$row['id'] . 'contents']) ? securize_string($_POST[$row['id'] . 'contents']) : '';
-		$icon = !empty($_POST[$row['id'] . 'icon']) ? securize_string($_POST[$row['id'] . 'icon']) : ''; 
-		$icon_path = !empty($_POST[$row['id'] . 'icon_path']) ? securize_string($_POST[$row['id'] . 'icon_path']) : ''; 
+		$cat = !empty($_POST[$row['id'] . 'cat']) ? strprotect($_POST[$row['id'] . 'cat']) : '';  
+		$contents = !empty($_POST[$row['id'] . 'contents']) ? strprotect($_POST[$row['id'] . 'contents']) : '';
+		$icon = !empty($_POST[$row['id'] . 'icon']) ? strprotect($_POST[$row['id'] . 'icon']) : ''; 
+		$icon_path = !empty($_POST[$row['id'] . 'icon_path']) ? strprotect($_POST[$row['id'] . 'icon_path']) : ''; 
 		$aprob = isset($_POST[$row['id'] . 'aprob']) ? numeric($_POST[$row['id'] . 'aprob']) : '0';
 		$secure = isset($_POST[$row['id'] . 'secure']) ? numeric($_POST[$row['id'] . 'secure']) : '-1';
 		
@@ -107,10 +107,10 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 //On ajoute la nouvelle catégorie
 elseif( !empty($_POST['add']) ) //Ajout du lien.
 {
-	$cat = !empty($_POST['cat']) ? securize_string($_POST['cat']) : '';  
-	$contents = !empty($_POST['contents']) ? securize_string($_POST['contents']) : '';
-	$icon = !empty($_POST['icon']) ? securize_string($_POST['icon']) : ''; 
-	$icon_path = !empty($_POST['icon_path']) ? securize_string($_POST['icon_path']) : ''; 
+	$cat = !empty($_POST['cat']) ? strprotect($_POST['cat']) : '';  
+	$contents = !empty($_POST['contents']) ? strprotect($_POST['contents']) : '';
+	$icon = !empty($_POST['icon']) ? strprotect($_POST['icon']) : ''; 
+	$icon_path = !empty($_POST['icon_path']) ? strprotect($_POST['icon_path']) : ''; 
 	$aprob = isset ($_POST['aprob']) ? numeric($_POST['aprob']) : '0';
 	$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : '-1';
 		
@@ -188,7 +188,7 @@ else
 	));	
 		
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	

@@ -34,19 +34,19 @@ $year = substr($time, 0, 4);
 $month = substr($time, 4, 2);
 $day = substr($time, 6, 2);
 
-$year = request_var(GET, 'y', $year);
+$year = retrieve(GET, 'y', $year);
 $year = empty($year) ? 0 : $year;
-$month = request_var(GET, 'm', $month);
+$month = retrieve(GET, 'm', $month);
 $month = empty($month) ? 0 : $month;
-$day = request_var(GET, 'd', $day);
+$day = retrieve(GET, 'd', $day);
 $day = empty($day) ? 0 : $day;
 $bissextile = (($year % 4) == 0) ? 29 : 28;
 
-$get_event = request_var(GET, 'e', '');
-$id = request_var(GET, 'id', 0);
-$add = request_var(GET, 'add', false);
-$del = request_var(GET, 'delete', false);
-$edit = request_var(GET, 'edit', false);
+$get_event = retrieve(GET, 'e', '');
+$id = retrieve(GET, 'id', 0);
+$add = retrieve(GET, 'add', false);
+$del = retrieve(GET, 'delete', false);
+$edit = retrieve(GET, 'edit', false);
 	
 $checkdate = checkdate($month, $day, $year); //Validité de la date entrée.
 if( $checkdate === true && empty($id) && !$add )
@@ -98,7 +98,7 @@ if( $checkdate === true && empty($id) && !$add )
 	));
 	
 	//Gestion erreur.
-	$get_error = request_var(GET, 'error', '');
+	$get_error = retrieve(GET, 'error', '');
 	switch($get_error)
 	{
 		case 'invalid_date':
@@ -298,7 +298,7 @@ elseif( !empty($id) )
 		if( !empty($_POST['valid']) )
 		{
 			$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-			$title = !empty($_POST['title']) ? securize_string($_POST['title']) : '';
+			$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
 			
 			//Cacul du timestamp à partir de la date envoyé.
 			$date = !empty($_POST['date']) ? trim($_POST['date']) : 0;
@@ -363,7 +363,7 @@ elseif( !empty($id) )
 			));
 		
 			//Gestion erreur.
-			$get_error = request_var(GET, 'error', '');
+			$get_error = retrieve(GET, 'error', '');
 			switch($get_error)
 			{
 				case 'invalid_date':
@@ -395,7 +395,7 @@ elseif( $add ) //Ajout d'un évenement
 	if( !empty($_POST['valid']) ) //Enregistrement
 	{
 		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-		$title = !empty($_POST['title']) ? securize_string($_POST['title']) : '';
+		$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
 		
 		//Cacul du timestamp à partir de la date envoyé.
 		$date = !empty($_POST['date']) ? trim($_POST['date']) : 0;
@@ -467,7 +467,7 @@ elseif( $add ) //Ajout d'un évenement
 		));
 		
 		//Gestion erreur.
-		$get_error = request_var(GET, 'error', '');
+		$get_error = retrieve(GET, 'error', '');
 		switch($get_error)
 		{
 			case 'invalid_date':

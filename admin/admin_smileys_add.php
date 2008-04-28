@@ -34,8 +34,8 @@ $error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 //Si c'est confirmé on execute
 if( !empty($_POST['add']) )
 {
-	$code_smiley = !empty($_POST['code_smiley']) ? securize_string($_POST['code_smiley']) : '';
-	$url_smiley = !empty($_POST['url_smiley']) ? securize_string($_POST['url_smiley']) : '';
+	$code_smiley = !empty($_POST['code_smiley']) ? strprotect($_POST['code_smiley']) : '';
+	$url_smiley = !empty($_POST['url_smiley']) ? strprotect($_POST['url_smiley']) : '';
 	
 	if( !empty($code_smiley) && !empty($url_smiley) )
 	{

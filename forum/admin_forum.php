@@ -43,8 +43,8 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$Cache->Load_file('forum');
 	
 	$to = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
-	$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
-	$subname = !empty($_POST['desc']) ? securize_string($_POST['desc']) : '';
+	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
+	$subname = !empty($_POST['desc']) ? strprotect($_POST['desc']) : '';
 	$status = isset($_POST['status']) ? numeric($_POST['status']) : 1;
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;  
 
@@ -53,7 +53,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 		
 	if( !empty($name) )
 	{
-		$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET name = '" . $name . "', subname = '" . $subname . "', status = '" . $status . "', aprob = '" . $aprob . "', auth = '" . securize_string(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET name = '" . $name . "', subname = '" . $subname . "', status = '" . $status . "', aprob = '" . $aprob . "', auth = '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 		//Empêche le déplacement dans une catégorie fille.
 		$to = $Sql->Query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'", __LINE__, __FILE__);

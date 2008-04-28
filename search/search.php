@@ -38,9 +38,9 @@ $Template->Set_filenames(array(
 
 //--------------------------------------------------------------------- Params
 // A protéger impérativement;
-$search = request_var(POST, 'search', '');
-$selectedModules = request_var(POST, 'searched_modules', array());
-$searchIn = request_var(POST, 'search_in', 'all');
+$search = retrieve(POST, 'search', '');
+$selectedModules = retrieve(POST, 'searched_modules', array());
+$searchIn = retrieve(POST, 'search_in', 'all');
 $simpleMode = $searchIn == 'all' ? true : false;
 
 //--------------------------------------------------------------------- Header

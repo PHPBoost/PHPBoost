@@ -13,8 +13,8 @@ if( !empty($_GET['preview']) ) //Prévisualisation des messages.
 }
 elseif( !empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['add_member_auth']) || !empty($_GET['admin_member']) || !empty($_GET['warning_member']) || !empty($_GET['punish_member']) ) //Recherche d'un membre
 {
-	$login = !empty($_POST['login']) ? securize_string(utf8_decode($_POST['login'])) : '';
-	$divid = !empty($_POST['divid']) ? securize_string(utf8_decode($_POST['divid'])) : '';
+	$login = !empty($_POST['login']) ? strprotect(utf8_decode($_POST['login'])) : '';
+	$divid = !empty($_POST['divid']) ? strprotect(utf8_decode($_POST['divid'])) : '';
 	$login = str_replace('*', '%', $login);
 	if( !empty($login) )
 	{
@@ -162,7 +162,7 @@ elseif( !empty($_GET['new_folder']) ) //Ajout d'un dossier dans la gestion des f
 	
 	$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : '0';
 	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $Member->Get_attribute('user_id');
-	$name = !empty($_POST['name']) ? securize_string(utf8_decode($_POST['name'])) : '';
+	$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
 
 	if( $Member->Get_attribute('user_id') != $user_id )
 	{	
@@ -181,9 +181,9 @@ elseif( !empty($_GET['rename_folder']) ) //Renomme un dossier dans la gestion de
 	$Files = new Files; 
 	
 	$id_folder = !empty($_POST['id_folder']) ? numeric($_POST['id_folder']) : '0';
-	$name = !empty($_POST['name']) ? securize_string(utf8_decode($_POST['name'])) : '';
+	$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
 	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $Member->Get_attribute('user_id');
-	$previous_name = !empty($_POST['previous_name']) ? securize_string(utf8_decode($_POST['previous_name'])) : '';
+	$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
 	
 	if( !empty($id_folder) && !empty($name) )
 	{
@@ -208,8 +208,8 @@ elseif( !empty($_GET['rename_file']) ) //Renomme un fichier d'un dossier dans la
 	
 	$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
 	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $Member->Get_attribute('user_id');
-	$name = !empty($_POST['name']) ? securize_string(utf8_decode($_POST['name'])) : '';
-	$previous_name = !empty($_POST['previous_name']) ? securize_string(utf8_decode($_POST['previous_name'])) : '';
+	$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
+	$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
 	
 	if( !empty($id_file) && !empty($name) )
 	{		
@@ -228,7 +228,7 @@ elseif( !empty($_GET['rename_file']) ) //Renomme un fichier d'un dossier dans la
 }
 elseif( !empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty($_GET['ban_user']) ) //Recherche d'un membre
 {
-	$login = !empty($_POST['login']) ? securize_string(utf8_decode($_POST['login'])) : '';
+	$login = !empty($_POST['login']) ? strprotect(utf8_decode($_POST['login'])) : '';
 	$login = str_replace('*', '%', $login);
 	$admin = !empty($_POST['admin']) ? true : false;
 	if( !empty($login) )

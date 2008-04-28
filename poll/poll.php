@@ -30,7 +30,7 @@ require_once('../poll/poll_begin.php');
 require_once('../kernel/header.php'); 
 
 $poll = array();
-$poll_id = request_var(GET, 'id', 0);
+$poll_id = retrieve(GET, 'id', 0);
 if( !empty($poll_id) )
 {
 	$poll = $Sql->Query_array('poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
@@ -40,8 +40,8 @@ if( !empty($poll_id) )
 		$Errorh->Error_handler('e_unexist_poll', E_USER_REDIRECT); 
 }	
 	
-$archives = request_var(GET, 'archives', false); //On vérifie si on est sur les archives
-$show_result = request_var(GET, 'r', false); //Affichage des résulats.
+$archives = retrieve(GET, 'archives', false); //On vérifie si on est sur les archives
+$show_result = retrieve(GET, 'r', false); //Affichage des résulats.
 
 if( !empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives )
 {
@@ -227,7 +227,7 @@ elseif( !empty($poll['id']) && !$archives )
 	else //Questions.
 	{
 		//Gestion des erreurs
-		$get_error = request_var(GET, 'error', '');
+		$get_error = retrieve(GET, 'error', '');
 		switch($get_error)
 		{
 			case 'e_already_vote':

@@ -34,11 +34,11 @@ require_once('../kernel/admin_header.php');
 if( !empty($_POST['valid']) )
 {
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$title = !empty($_POST['title']) ? securize_string($_POST['title']) : '';
+	$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 	$extend_contents = !empty($_POST['extend_contents']) ? parse($_POST['extend_contents']) : '';
-	$img = !empty($_POST['img']) ? securize_string($_POST['img']) : '';
-	$alt = !empty($_POST['alt']) ? securize_string($_POST['alt']) : '';
+	$img = !empty($_POST['img']) ? strprotect($_POST['img']) : '';
+	$alt = !empty($_POST['alt']) ? strprotect($_POST['alt']) : '';
 	
 	//Gestion de la parution
 	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
@@ -289,7 +289,7 @@ else
 	$Sql->Close($result);
 
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 

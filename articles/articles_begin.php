@@ -35,8 +35,8 @@ define('EDIT_CAT_ARTICLES', 0x04);
 $Cache->Load_file('articles');
 load_module_lang('articles'); //Chargement de la langue du module.
 
-$idartcat = request_var(GET, 'cat', 0);
-$idart = request_var(GET, 'id', 0);
+$idartcat = retrieve(GET, 'cat', 0);
+$idart = retrieve(GET, 'id', 0);
 
 if( empty($idartcat) )//Racine.
 {

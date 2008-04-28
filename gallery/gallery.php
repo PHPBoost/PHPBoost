@@ -30,14 +30,14 @@ require_once('../kernel/begin.php');
 require_once('../gallery/gallery_begin.php');
 require_once('../kernel/header.php');
 
-$g_idpics = request_var(GET, 'id', 0);
-$g_del = request_var(GET, 'del', 0);
-$g_move = request_var(GET, 'move', 0);
-$g_add = request_var(GET, 'add', false);
-$g_page = request_var(GET, 'p', 1);
-$g_views = request_var(GET, 'views', false);
-$g_notes = request_var(GET, 'notes', false);
-$g_sort = request_var(GET, 'sort', '');
+$g_idpics = retrieve(GET, 'id', 0);
+$g_del = retrieve(GET, 'del', 0);
+$g_move = retrieve(GET, 'move', 0);
+$g_add = retrieve(GET, 'add', false);
+$g_page = retrieve(GET, 'p', 1);
+$g_views = retrieve(GET, 'views', false);
+$g_notes = retrieve(GET, 'notes', false);
+$g_sort = retrieve(GET, 'sort', '');
 $g_sort = !empty($g_sort) ? 'sort=' . $g_sort : '';
 
 //Récupération du mode d'ordonnement.
@@ -93,8 +93,8 @@ elseif( isset($_FILES['gallery']) ) //Upload
 	$Upload = new Upload($dir);
 	
 	$idpic = 0;
-	$idcat_post = request_var(POST, 'cat', '');
-	$name_post = request_var(POST, 'name', '');
+	$idcat_post = retrieve(POST, 'cat', '');
+	$name_post = retrieve(POST, 'name', '');
 
 	if( is_writable($dir) )
 	{
@@ -177,7 +177,7 @@ elseif( $g_add )
 	}
 	
 	//Gestion erreur.
-	$get_error = request_var(GET, 'error', '');
+	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
 	if( in_array($get_error, $array_error) )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
@@ -292,7 +292,7 @@ else
 	$total_cat = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
 
 	//Gestion erreur.
-	$get_error = request_var(GET, 'error', '');
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'unexist_cat' )
 		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
 		

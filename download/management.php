@@ -29,9 +29,9 @@ require_once('../kernel/begin.php');
 
 load_module_lang('download'); //Chargement de la langue du module.
 
-$edit_file_id = request_var(GET, 'edit', 0);
-$add_file = request_var(GET, 'new', false);
-$preview = request_var(POST, 'preview', false);
+$edit_file_id = retrieve(GET, 'edit', 0);
+$add_file = retrieve(GET, 'new', false);
+$preview = retrieve(POST, 'preview', false);
 
 if( $edit_file_id > 0 )
 {
@@ -55,15 +55,15 @@ if( $edit_file_id > 0 )
 {
 	if( $preview )
 	{
-		$file_title = request_var(POST, 'title', '');
-		$file_image = request_var(POST, 'image', '');
-		$file_contents = request_var(POST, 'contents', '');
-		$file_url = request_var(POST, 'url', '');
-		$file_short_contents = request_var(POST, 'short_contents', '');
-		$file_timestamp = request_var(POST, 'timestamp', 0);
-		$file_last_update_timestamp = request_var(POST, 'last_update_timestamp', 0);
-		$file_size = request_var(POST, 'size', 0.0, TFLOAT);
-		$file_hits = request_var(POST, 'hits', 0);
+		$file_title = retrieve(POST, 'title', '');
+		$file_image = retrieve(POST, 'image', '');
+		$file_contents = retrieve(POST, 'contents', '');
+		$file_url = retrieve(POST, 'url', '');
+		$file_short_contents = retrieve(POST, 'short_contents', '');
+		$file_timestamp = retrieve(POST, 'timestamp', 0);
+		$file_last_update_timestamp = retrieve(POST, 'last_update_timestamp', 0);
+		$file_size = retrieve(POST, 'size', 0.0, TFLOAT);
+		$file_hits = retrieve(POST, 'hits', 0);
 		
 		$Template->Set_filenames(array('download' => 'download/download.tpl'));
 		
@@ -173,7 +173,7 @@ if( $edit_file_id > 0 )
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		

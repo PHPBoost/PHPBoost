@@ -41,12 +41,12 @@ $del = !empty($_GET['del']) ? true : false;
 //Si c'est confirmé on execute
 if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà existant.
 {	
-	$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
+	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
 	$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '';  
 	$auth = isset($_POST['auth']) ? numeric($_POST['auth']) : ''; 
 	$array_auth = $Group->Return_array_auth(AUTH_MENUS);	
 	$contents = !empty($_POST['contents']) ? parse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
-	$location = !empty($_POST['location']) ? securize_string($_POST['location']) : 'left';
+	$location = !empty($_POST['location']) ? strprotect($_POST['location']) : 'left';
 	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
 
 	$previous = $Sql->Query_array("modules_mini", "location", "added", "WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
@@ -59,7 +59,7 @@ if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà exista
 	if( $previous['added'] == 1 )
 		$clause_class .= " name = '" . $name . "', contents = '" . $contents . "', use_tpl = '" . $use_tpl . "', ";
 
-	$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET " . $clause_class . " location = '" . $location . "', activ = '" . $activ . "', auth = '" . securize_string(serialize($array_auth), HTML_NO_PROTECT) . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET " . $clause_class . " location = '" . $location . "', activ = '" . $activ . "', auth = '" . strprotect(serialize($array_auth), HTML_NO_PROTECT) . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 	
 	$Cache->Generate_file('modules_mini');		
 	
@@ -102,7 +102,7 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 							if( empty($check_menu) )
 							{
 								$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-								$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . addslashes($module_name) . "', '" . addslashes($path) . "', '" . addslashes($location) . "', '" . securize_string(serialize($array_auth), HTML_NO_PROTECT) . "', '" . $activ . "', 0, 0)", __LINE__, __FILE__);
+								$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . addslashes($module_name) . "', '" . addslashes($path) . "', '" . addslashes($location) . "', '" . strprotect(serialize($array_auth), HTML_NO_PROTECT) . "', '" . $activ . "', 0, 0)", __LINE__, __FILE__);
 								
 								$Cache->Generate_file('modules_mini');
 							}
@@ -128,7 +128,7 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 			if( empty($check_menu) )
 			{
 				$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-				$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . str_replace('.php', '', addslashes($module_name)) . "', '" . addslashes($module_name) . "', '" . $location . "', '" . securize_string(serialize($array_auth), HTML_NO_PROTECT) . "', '" . $activ . "', 2, 0)", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . str_replace('.php', '', addslashes($module_name)) . "', '" . addslashes($module_name) . "', '" . $location . "', '" . strprotect(serialize($array_auth), HTML_NO_PROTECT) . "', '" . $activ . "', 2, 0)", __LINE__, __FILE__);
 			
 				$Cache->Generate_file('modules_mini');
 			}
@@ -140,11 +140,11 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 }
 elseif( $action == 'add' ) //Ajout d'un menu.
 {		
-	$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
+	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
 	$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '';  
 	$array_auth = $Group->Return_array_auth(AUTH_MENUS);	
 	$contents = !empty($_POST['contents']) ? parse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
-	$location = !empty($_POST['location']) ? securize_string($_POST['location']) : 'left';
+	$location = !empty($_POST['location']) ? strprotect($_POST['location']) : 'left';
 	$use_tpl = isset($_POST['use_tpl']) ? numeric($_POST['use_tpl']) : '';
 	
 	if( empty($activ) )
@@ -152,7 +152,7 @@ elseif( $action == 'add' ) //Ajout d'un menu.
 	
 	$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE activ = 1 AND location = '" . $location . "'", __LINE__, __FILE__);
 	$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES 
-	('" . ($class + 1) . "', '" . $name . "', '" . $contents ."', '" . $location . "', '" . securize_string(serialize($array_auth), HTML_NO_PROTECT) . "', '" . $activ . "', 1, '" . $use_tpl . "')", __LINE__, __FILE__);
+	('" . ($class + 1) . "', '" . $name . "', '" . $contents ."', '" . $location . "', '" . strprotect(serialize($array_auth), HTML_NO_PROTECT) . "', '" . $activ . "', 1, '" . $use_tpl . "')", __LINE__, __FILE__);
 	$last_menu_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."modules_mini");
 	
 	$Cache->Generate_file('modules_mini');		

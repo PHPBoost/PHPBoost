@@ -29,8 +29,8 @@ require_once('../kernel/begin.php');
 require_once('../articles/articles_begin.php');
 require_once('../kernel/header.php'); 
 
-$page = request_var(GET, 'p', 1);
-$cat = request_var(GET, 'cat', 0);
+$page = retrieve(GET, 'p', 1);
+$cat = retrieve(GET, 'cat', 0);
 
 if( !empty($idart) && !empty($idartcat)  )
 {
@@ -199,7 +199,7 @@ else
 		'U_ARTICLES_COM_BOTTOM' => transid('.php?sort=com&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=asc')
 	));		
 	
-	$get_sort = request_var(GET, 'sort', '');	
+	$get_sort = retrieve(GET, 'sort', '');	
 	switch($get_sort)
 	{
 		case 'alpha' : 
@@ -221,7 +221,7 @@ else
 		$sort = 'timestamp';
 	}
 
-	$get_mode = request_var(GET, 'mode', '');	
+	$get_mode = retrieve(GET, 'mode', '');	
 	$mode = ($get_mode == 'asc' || $get_mode == 'desc') ? strtoupper($get_mode) : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 

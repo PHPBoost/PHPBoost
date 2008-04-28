@@ -34,9 +34,9 @@ $Cache->Load_file('member');
 if( !$CONFIG_MEMBER['activ_register'] )
 	redirect(get_start_page());
 
-$key = request_var(GET, 'key', '');
-$get_error = request_var(GET, 'error', '');
-$get_erroru = request_var(GET, 'erroru', '');
+$key = retrieve(GET, 'key', '');
+$get_error = retrieve(GET, 'error', '');
+$get_erroru = retrieve(GET, 'erroru', '');
 
 if( empty($key) )
 {

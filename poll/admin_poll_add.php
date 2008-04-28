@@ -31,7 +31,7 @@ require_once('../kernel/admin_header.php');
 
 if( !empty($_POST['valid']) )
 {
-	$question = !empty($_POST['question']) ? securize_string($_POST['question']) : '';
+	$question = !empty($_POST['question']) ? strprotect($_POST['question']) : '';
 	$type = isset($_POST['type']) ? numeric($_POST['type']) : 1;
 	$archive = isset($_POST['archive']) ? numeric($_POST['archive']) : 0;
 	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
@@ -87,8 +87,8 @@ if( !empty($_POST['valid']) )
 		{	
 			if( !empty($_POST['a'.$i]) )
 			{				
-				$answers .= securize_string(str_replace('|', '', $_POST['a'.$i])) . '|';
-				$votes .= securize_string(str_replace('|', '', $_POST['v'.$i])) . '|';
+				$answers .= strprotect(str_replace('|', '', $_POST['a'.$i])) . '|';
+				$votes .= strprotect(str_replace('|', '', $_POST['v'.$i])) . '|';
 			}
 		}
 
@@ -133,7 +133,7 @@ else
 	));					 
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['incomplete'], E_USER_NOTICE);
 		

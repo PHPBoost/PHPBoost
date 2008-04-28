@@ -35,7 +35,7 @@ if( !empty($_POST['valid']) )
 {
 	$config_online = array();
 	$config_online['online_displayed'] = !empty($_POST['online_displayed']) ? numeric($_POST['online_displayed']) : 4;
-	$config_online['display_order_online'] = !empty($_POST['display_order_online']) ? securize_string($_POST['display_order_online']) : 's.level, s.session_time DESC';
+	$config_online['display_order_online'] = !empty($_POST['display_order_online']) ? strprotect($_POST['display_order_online']) : 's.level, s.session_time DESC';
 		
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_online)) . "' WHERE name = 'online'", __LINE__, __FILE__);
 	

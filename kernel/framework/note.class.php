@@ -38,9 +38,9 @@ class Note
 	{
 		if( ($options & NOTE_NO_CONSTRUCT) === 0 )
 		{
-			$this->module_folder = !empty($module_folder) ? securize_string($module_folder) : securize_string($script);
+			$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
 			$this->options = (int)$options;
-			list($this->script, $this->idprov, $this->vars, $this->notation_scale, $this->path) = array(securize_string($script), numeric($idprov), $vars, $notation_scale, '../' . $this->module_folder . '/');
+			list($this->script, $this->idprov, $this->vars, $this->notation_scale, $this->path) = array(strprotect($script), numeric($idprov), $vars, $notation_scale, '../' . $this->module_folder . '/');
 			$this->sql_table = $this->get_table_module();
 		}
 	}

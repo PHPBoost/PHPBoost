@@ -34,11 +34,11 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 	include_once('faq_cats.class.php');
 	$faq_categories = new FaqCats();
 	
-	$id_up = request_var(GET, 'id_up', 0);
-	$id_down = request_var(GET, 'id_down', 0);
-	$id_show = request_var(GET, 'show', 0);
-	$id_hide = request_var(GET, 'hide', 0);
-	$cat_to_del = request_var(GET, 'del', 0);
+	$id_up = retrieve(GET, 'id_up', 0);
+	$id_down = retrieve(GET, 'id_down', 0);
+	$id_show = retrieve(GET, 'show', 0);
+	$id_hide = retrieve(GET, 'hide', 0);
+	$cat_to_del = retrieve(GET, 'del', 0);
 	
 	$result = false;
 	
