@@ -50,7 +50,7 @@ $lang = !empty($_GET['lang']) ? securit($_GET['lang']) : 'french';
 if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
 	include_once('lang/french/install.php');
 	
-$Template = new Templates; //!\\Initialisation des templates//!\\
+$Template = new Template; //!\\Initialisation des templates//!\\
 
 if( $step >= 2 )
 {
@@ -66,7 +66,7 @@ if( $step >= 2 )
 
 	//Instanciation des objets indispensables au noyau.
 	$Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
-	$Template = new Templates; //!\\Initialisation des templates//!\\
+	$Template = new Template; //!\\Initialisation des templates//!\\
 	$Sql = new Sql; //!\\Initialisation  de la class sql//!\\
 	$Cache = new Cache; //!\\Initialisation  de la class de gestion du cache//!\\
 		

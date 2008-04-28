@@ -115,7 +115,7 @@ class Feed
      */
     {
         require_once('../kernel/framework/template.class.php');
-        $Template = new Templates($tpl);
+        $Template = new Template($tpl);
         
         $Template->Assign_vars(array(
             'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',

@@ -28,7 +28,7 @@
 
 define('TEMPLATE_STRING_MODE', true);
 
-class Templates
+class Template
 {
 	## Public Attribute ##
 	var $_var = array(); //Tableau contenant les variables de remplacement des variables simples.

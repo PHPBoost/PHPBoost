@@ -55,7 +55,7 @@ if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
 if( !empty($_GET['restart']) )
 	redirect(HOST . add_lang(FILE, true));
 
-$Template = new Templates; //!\\Initialisation des templates//!\\
+$Template = new Template; //!\\Initialisation des templates//!\\
 
 $Template->Set_filenames(array('install' => '../install/templates/install.tpl'));
 

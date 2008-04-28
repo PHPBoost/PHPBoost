@@ -82,7 +82,7 @@ class RSS
      */
     {
         require_once('../kernel/framework/template.class.php');
-        $Template = new Templates('syndication/rss.tpl');
+        $Template = new Template('syndication/rss.tpl');
         
         $Template->Assign_vars(array(
             'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
