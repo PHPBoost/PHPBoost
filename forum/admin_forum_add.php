@@ -43,8 +43,8 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 	$Cache->Load_file('forum');
 	
 	$parent_category = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
-	$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
-	$subname = !empty($_POST['desc']) ? securit($_POST['desc']) : '';
+	$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
+	$subname = !empty($_POST['desc']) ? securize_string($_POST['desc']) : '';
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;   
 	$status = isset($_POST['status']) ? numeric($_POST['status']) : 0;   
 
@@ -85,7 +85,7 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 			$level = 0;
 		}
 		
-		$Sql->Query_inject("INSERT INTO ".PREFIX."forum_cats (id_left,id_right,level,name,subname,nbr_topic,nbr_msg,last_topic_id,status,aprob,auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . securit(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
+		$Sql->Query_inject("INSERT INTO ".PREFIX."forum_cats (id_left,id_right,level,name,subname,nbr_topic,nbr_msg,last_topic_id,status,aprob,auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . securize_string(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
 
 		###### Regénération du cache des catégories (liste déroulante dans le forum) #######
 		$Cache->Generate_module_file('forum');

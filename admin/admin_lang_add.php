@@ -45,10 +45,10 @@ if( $install )
 	$secure = isset($_POST[$lang.'secure']) ? numeric($_POST[$lang.'secure']) : '-1';
 	$activ = isset($_POST[$lang.'activ']) ? numeric($_POST[$lang.'activ']) : '0';
 		
-	$check_lang = $Sql->Query("SELECT lang FROM ".PREFIX."lang WHERE lang = '" . securit($lang) . "'", __LINE__, __FILE__);	
+	$check_lang = $Sql->Query("SELECT lang FROM ".PREFIX."lang WHERE lang = '" . securize_string($lang) . "'", __LINE__, __FILE__);	
 	if( empty($check_lang) && !empty($lang) )
 	{
-		$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES('" . securit($lang) . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES('" . securize_string($lang) . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
 		
 		redirect(HOST . SCRIPT); 
 	}
@@ -67,7 +67,7 @@ elseif( !empty($_FILES['upload_lang']['name']) ) //Upload et décompression de l'
 	$error = '';
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
-		$check_lang = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . securit($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
+		$check_lang = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . securize_string($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
 		if( empty($check_lang) )
 		{
 			include_once('../kernel/framework/files/upload.class.php');

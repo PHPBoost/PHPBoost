@@ -54,7 +54,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
 	$Cache->Load_file('poll');
 	
-	$question = !empty($_POST['question']) ? securit($_POST['question']) : '';
+	$question = !empty($_POST['question']) ? securize_string($_POST['question']) : '';
 	$type = isset($_POST['type']) ? numeric($_POST['type']) : '';
 	$archive = isset($_POST['archive']) ? numeric($_POST['archive']) : 0;
 	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
@@ -114,8 +114,8 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		{
 			if( !empty($_POST['a'.$i]) )
 			{				
-				$answers .= securit(str_replace('|', '', $_POST['a'.$i])) . '|';
-				$votes .= securit(str_replace('|', '', (!empty($_POST['v'.$i]) ? $_POST['v'.$i] : '0'))) . '|';
+				$answers .= securize_string(str_replace('|', '', $_POST['a'.$i])) . '|';
+				$votes .= securize_string(str_replace('|', '', (!empty($_POST['v'.$i]) ? $_POST['v'.$i] : '0'))) . '|';
 				$check_nbr_answer++;
 			}
 		}
@@ -201,7 +201,7 @@ elseif( !empty($id) )
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['incomplete'], E_USER_NOTICE);
 	

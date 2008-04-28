@@ -298,7 +298,7 @@ elseif( !empty($id) )
 		if( !empty($_POST['valid']) )
 		{
 			$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-			$title = !empty($_POST['title']) ? securit($_POST['title']) : '';
+			$title = !empty($_POST['title']) ? securize_string($_POST['title']) : '';
 			
 			//Cacul du timestamp à partir de la date envoyé.
 			$date = !empty($_POST['date']) ? trim($_POST['date']) : 0;
@@ -395,7 +395,7 @@ elseif( $add ) //Ajout d'un évenement
 	if( !empty($_POST['valid']) ) //Enregistrement
 	{
 		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-		$title = !empty($_POST['title']) ? securit($_POST['title']) : '';
+		$title = !empty($_POST['title']) ? securize_string($_POST['title']) : '';
 		
 		//Cacul du timestamp à partir de la date envoyé.
 		$date = !empty($_POST['date']) ? trim($_POST['date']) : 0;

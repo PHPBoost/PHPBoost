@@ -39,7 +39,7 @@ $valid = request_var(POST, 'register_valid', false);
 if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $user_mail) )
 {
 	//Info de connexion
-	$login = securit(substr(request_var(POST, 'user_lang', '', TSTRING_UNSECURE), 0, 25));
+	$login = securize_string(substr(request_var(POST, 'user_lang', '', TSTRING_UNSECURE), 0, 25));
 	$password = request_var(POST, 'pass', '', TSTRING_UNSECURE);
 	$password_md5 = md5($password);
 	$password_bis = request_var(POST, 'pass_biss', '', TSTRING_UNSECURE);
@@ -193,7 +193,7 @@ if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,
 								$array_field = is_array($field) ? $field : array();
 								$field = '';
 								foreach($array_field as $value)
-									$field .= securit($value) . '|';
+									$field .= securize_string($value) . '|';
 							}
 							elseif( $row['field'] == 6 )
 							{
@@ -207,7 +207,7 @@ if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,
 								}
 							}
 							else
-								$field = securit($field);
+								$field = securize_string($field);
 								
 							if( !empty($field) )
 							{

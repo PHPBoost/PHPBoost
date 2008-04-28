@@ -32,9 +32,9 @@ require_once('../kernel/admin_header.php');
 
 if( !empty($_POST['valid']) )
 {
-	$title = !empty($_POST['name']) ? securit($_POST['name']) : '';
+	$title = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
 	$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
-	$url = !empty($_POST['url']) ? securit($_POST['url']) : '';
+	$url = !empty($_POST['url']) ? securize_string($_POST['url']) : '';
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 	$compt = isset($_POST['compt']) ? numeric($_POST['compt']) : 0;
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;
@@ -182,7 +182,7 @@ else
 	$Sql->Close($result);
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 

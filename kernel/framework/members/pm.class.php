@@ -79,7 +79,7 @@ class Privatemsg
 			$user_convers_status = '0';
 			
 		//Insertion de la conversation.
-		$Sql->Query_inject("INSERT INTO ".PREFIX."pm_topic (title, user_id, user_id_dest, user_convers_status, user_view_pm, nbr_msg, last_user_id, last_msg_id, last_timestamp) VALUES ('" . securit($pm_objet) . "', '" . $pm_from . "', '" . $pm_to . "', '" . $user_convers_status . "', 1, 1, '" . $pm_from . "', 0, '" . time() . "')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."pm_topic (title, user_id, user_id_dest, user_convers_status, user_view_pm, nbr_msg, last_user_id, last_msg_id, last_timestamp) VALUES ('" . securize_string($pm_objet) . "', '" . $pm_from . "', '" . $pm_to . "', '" . $user_convers_status . "', 1, 1, '" . $pm_from . "', 0, '" . time() . "')", __LINE__, __FILE__);
 		$this->pm_convers_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."pm_topic");			
 
 		//Insertion du message associé à la conversation.

@@ -80,7 +80,7 @@ else
 	$Template->Set_filenames(array('wiki_favorites'=> 'wiki/favorites.tpl'));
 	
 	//Gestion des erreurs
-	$error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
 	if( $error == 'e_no_favorite' )
 		$errstr = $LANG['wiki_article_is_not_a_favorite'];
 	elseif( $error == 'e_already_favorite' )

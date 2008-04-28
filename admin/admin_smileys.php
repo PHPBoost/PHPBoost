@@ -35,8 +35,8 @@ $del = !empty($_GET['del']) ? true : false;
 
 if( !empty($_POST['valid']) && !empty($id_post) ) //Mise à jour.
 {
-	$url_smiley = !empty($_POST['url_smiley']) ? securit($_POST['url_smiley']) : '';
-	$code_smiley = !empty($_POST['code_smiley']) ? securit($_POST['code_smiley']) : '';
+	$url_smiley = !empty($_POST['url_smiley']) ? securize_string($_POST['url_smiley']) : '';
+	$code_smiley = !empty($_POST['code_smiley']) ? securize_string($_POST['code_smiley']) : '';
 
 	//On met à jour 
 	if( !empty($url_smiley) && !empty($code_smiley) )
@@ -71,7 +71,7 @@ elseif( !empty($id) && $edit ) //Edition.
 	$url_smiley = $row['url_smiley'];
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? securit($_GET['error']) : '';
+	$get_error = !empty($_GET['error']) ? securize_string($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		

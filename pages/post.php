@@ -32,7 +32,7 @@ include_once('pages_functions.php');
 $id_edit = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 $id_edit_post = !empty($_POST['id_edit']) ? numeric($_POST['id_edit']) : 0;
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_post;
-$title = !empty($_POST['title']) ? securit($_POST['title']) : '';
+$title = !empty($_POST['title']) ? securize_string($_POST['title']) : '';
 $contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 $count_hits = !empty($_POST['count_hits']) ? 1 : 0;
 $enable_com = !empty($_POST['activ_com']) ? 1 : 0;

@@ -67,7 +67,7 @@ if( isset($_FILES['gallery']) && isset($_POST['idcat_post']) ) //Upload
 					if( !empty($Gallery->error) )
 						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Gallery->error . '#errorh');
 					
-					$name = !empty($_POST['name']) ? securit($_POST['name']) : '';
+					$name = !empty($_POST['name']) ? securize_string($_POST['name']) : '';
 					$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->filename['gallery'], $Member->Get_attribute('user_id'));
 					if( !empty($Gallery->error) )
 						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Gallery->error . '#errorh');
@@ -86,10 +86,10 @@ elseif( !empty($_POST['valid']) && !empty($nbr_pics_post) ) //Ajout massif d'ima
 	for($i = 1; $i <= $nbr_pics_post; $i++)
 	{
 		$activ = !empty($_POST[$i . 'activ']) ? trim($_POST[$i . 'activ']) : '';
-		$uniq = !empty($_POST[$i . 'uniq']) ? securit($_POST[$i . 'uniq']) : '';
+		$uniq = !empty($_POST[$i . 'uniq']) ? securize_string($_POST[$i . 'uniq']) : '';
 		if( $activ && !empty($uniq) ) //Sélectionné.
 		{
-			$name = !empty($_POST[$i . 'name']) ? securit($_POST[$i . 'name']) : 0;
+			$name = !empty($_POST[$i . 'name']) ? securize_string($_POST[$i . 'name']) : 0;
 			$cat = !empty($_POST[$i . 'cat']) ? numeric($_POST[$i . 'cat']) : 0;
 			$del = !empty($_POST[$i . 'del']) ? numeric($_POST[$i . 'del']) : 0;
 			

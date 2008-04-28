@@ -75,7 +75,7 @@ if( $Comments->Com_loaded() )
 		if( $Member->Get_attribute('user_readonly') > time() ) 
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 		
-		$login = !empty($_POST['login']) ? securit($_POST['login']) : ''; //Pseudo posté.
+		$login = !empty($_POST['login']) ? securize_string($_POST['login']) : ''; //Pseudo posté.
 		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 		if( !empty($login) && !empty($contents) )
 		{
@@ -182,7 +182,7 @@ if( $Comments->Com_loaded() )
 			elseif( $updatecom ) //Mise à jour du commentaire.
 			{
 				$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';			
-				$login = !empty($_POST['login']) ? securit($_POST['login']) : '';			
+				$login = !empty($_POST['login']) ? securize_string($_POST['login']) : '';			
 				if( !empty($contents) && !empty($login) )
 				{
 					$contents = parse($contents, $CONFIG_COM['forbidden_tags']);

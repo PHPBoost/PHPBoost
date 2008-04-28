@@ -105,7 +105,7 @@ class Newsletter_sender
 			}
 			$nbr = $Sql->Count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . securit($mail_object) . "', '" . addslashes($message) . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . securize_string($mail_object) . "', '" . addslashes($message) . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
 			return $error_mailing_list;
 		}
 		else
