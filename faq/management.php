@@ -30,7 +30,7 @@ include_once('faq_begin.php');
 
 $id_faq = retrieve(GET, 'faq', 0);
 $edit_question = retrieve(GET, 'edit', 0);
-$cat_of_new_question = equest_var(GET, 'idcat', 0);
+$cat_of_new_question = retrieve(GET, 'idcat', 0);
 $new = retrieve(GET, 'new', false);
 $new_after_id = retrieve(GET, 'after', 0);
 $id_move = retrieve(GET, 'move', 0);
