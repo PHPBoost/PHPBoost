@@ -19,11 +19,9 @@ h6.sub_title2{ /* Sous titre dans les menu */
 	font-weight:bold;
 	padding-top:4px;
 	text-indent:10px;
-	margin:2px 0px;
 	width:155px;
-	height:20px;
-	background:url(images/menus_title.png) no-repeat;
-	color:#FFFFFF;
+	height:32px;
+	color:#E53B00;
 }
 
 .block_top, th{ /* Entête de conteneur et des tableaux */
@@ -382,8 +380,8 @@ a.msg_link_pseudo:hover {
 	text-indent:10px;
 	font-size:12px;
 	font-weight:bold;
-	color:#FF5A00;
-	border-bottom:2px solid #FF5A00;
+	color:#E53B00;
+	border-bottom:2px solid #E53B00;
 }
 .module_top a{
 }

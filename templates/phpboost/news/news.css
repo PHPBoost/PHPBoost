@@ -1,7 +1,7 @@
 /* News */
 /* Contenu de la news */
 .news_container{	
-	width:98%;
+	width:100%;
 	margin:auto;
 	margin-bottom:25px;
 }
@@ -16,8 +16,8 @@
 	height:18px;
 	font-size:12px;
 	font-weight:bold;
-	color:#FF5A00;
-	border-bottom:2px solid #FF5A00;
+	color:#E53B00;
+	border-bottom:2px solid #E53B00;
 }
 /* Titre et contenu de la news */
 .news_top a.com{
@@ -25,7 +25,7 @@
 a.news_title{
 	font-size:12px;
 	font-weight:bold;
-	color:#FF5A00;
+	color:#E53B00;
 }
 .news_content{
 	padding:8px;
