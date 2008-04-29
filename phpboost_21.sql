@@ -278,7 +278,10 @@ CREATE TABLE `phpboost_faq` (
   `answer` text NOT NULL,
   `user_id` int(11) NOT NULL default '0',
   `timestamp` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  FULLTEXT KEY `question` (`question`),
+  FULLTEXT KEY `answer` (`answer`),
+  FULLTEXT KEY `question_2` (`question`,`answer`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- 
@@ -973,6 +976,7 @@ CREATE TABLE `phpboost_member` (
 -- 
 
 INSERT INTO `phpboost_member` VALUES (1, 'crowkait', '4e65740f918bfcc8fa545c2bb50846cd', 2, '1|3|', 'french', 'phpboost', 'crowkait@hyf.hdf', 1, 'bbcode', 0, 1194096703, '../images/avatars/boostor_mi_g_cro.jpg', 90, '', '', '', '', '', '', '', 0, '0000-00-00', '', 0, 0, 0, 1209424480, 0, '0', '', 0, 1);
+INSERT INTO `phpboost_member` VALUES (3, 'test', '3d334c201172a06a1126f04b84299ad8', 2, '1|3|', 'french', 'phpboost', 'test@hyf.hdf', 1, 'bbcode', 0, 1194096703, '', 90, '', '', '', '', '', '', '', 0, '0000-00-00', '', 0, 0, 0, 1209424480, 0, '0', '', 0, 1);
 INSERT INTO `phpboost_member` VALUES (2, 'teston', '3d334c201172a06a1126f04b84299ad8', 0, '3|', 'french', 'phpboost', 'teston@gd.dg', 0, 'bbcode', 0, 1195258091, '', 32, '', '', '', '', '', '', '', 0, '0000-00-00', '', 2, 10, 0, 1208730720, 0, '0ffeaf245848b22', '', 0, 1);
 INSERT INTO `phpboost_member` VALUES (4, 'robairt', '5bc48559987b9c5e4cef7948cff6ef73', 1, '0', 'french', '', 'robairt@robairt.fd', 1, '', 0, 1206129577, '', 0, '', '', '', '', '', '', '', 0, '0000-00-00', '', 0, 40, 0, 1206129641, 0, '', '', 0, 1);
 
@@ -1121,7 +1125,10 @@ CREATE TABLE `phpboost_news` (
   `nbr_com` int(11) unsigned NOT NULL default '0',
   `lock_com` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
-  KEY `idcat` (`idcat`)
+  KEY `idcat` (`idcat`),
+  FULLTEXT KEY `title` (`title`),
+  FULLTEXT KEY `contents` (`contents`),
+  FULLTEXT KEY `extend_contents` (`extend_contents`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 
 -- 
@@ -1222,7 +1229,10 @@ CREATE TABLE `phpboost_pages` (
   `lock_com` tinyint(1) NOT NULL default '0',
   `redirect` int(11) NOT NULL default '0',
   PRIMARY KEY  (`encoded_title`),
-  KEY `id` (`id`)
+  KEY `id` (`id`),
+  FULLTEXT KEY `title` (`title`),
+  FULLTEXT KEY `contents` (`contents`),
+  FULLTEXT KEY `all` (`title`,`contents`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- 
