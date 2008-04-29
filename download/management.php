@@ -73,7 +73,7 @@ if( $edit_file_id > 0 )
 			'C_EDIT_AUTH' => false,
 			'MODULE_DATA_PATH' => $Template->Module_data_path('download'),
 			'NAME' => $file_title,
-			'CONTENTS' => second_parse(parse($file_contents)),
+			'CONTENTS' => second_parse(strparse($file_contents)),
 			'INSERTION_DATE' => gmdate_format('date_format_short', $file_timestamp),
 			'LAST_UPDATE_DATE' => gmdate_format('date_format_short', $file_last_update_timestamp),
 			'SIZE' => ($file_size >= 1) ? $file_size . ' ' . $LANG['unit_megabytes'] : ($file_size * 1024) . ' ' . $LANG['unit_kilobytes'],

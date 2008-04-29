@@ -79,7 +79,7 @@ class Newsletter_sender
 		global $_NEWSLETTER_CONFIG, $LANG, $Sql;
 		
 		$error_mailing_list = array();
-		$message = stripslashes(parse($message));
+		$message = stripslashes(strparse($message));
 		$message = str_replace('"../', '"' . HOST . DIR . '/' , $message);
 		
 		//On définit les headers

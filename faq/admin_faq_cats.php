@@ -114,7 +114,7 @@ elseif( !empty($_POST['submit']) )
 		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
 		$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
 		$image = !empty($_POST['image']) ? strprotect($_POST['image']) : '';
-		$description = !empty($_POST['description']) ? parse($_POST['description']) : '';
+		$description = !empty($_POST['description']) ? strparse($_POST['description']) : '';
 		
 		if( empty($name) )
 			redirect(transid(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');

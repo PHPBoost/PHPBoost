@@ -86,7 +86,7 @@ if( !empty($_POST['valid']) )
 		else //Ajout des heures et minutes
 			$timestamp = time();
 		
-		$Sql->Query_inject("INSERT INTO ".PREFIX."download (idcat,title,contents,url,size,count,timestamp,visible,start,end,user_id,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . parse($contents) . "', '" . $url . "', '" . $size . "', '" . $count . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '', 0, 0, 0)", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."download (idcat,title,contents,url,size,count,timestamp,visible,start,end,user_id,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . strparse($contents) . "', '" . $url . "', '" . $size . "', '" . $count . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '', 0, 0, 0)", __LINE__, __FILE__);
 		
 		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('download/rss.php');
@@ -153,13 +153,13 @@ elseif( !empty($_POST['preview']) )
 	$Template->Assign_block_vars('articles', array(
 		'TITLE' => stripslashes($title),
 		'DATE' => gmdate_format('date_format_short'),
-		'CONTENTS' => second_parse(stripslashes(parse($contents)))
+		'CONTENTS' => second_parse(stripslashes(strparse($contents)))
 	));
 	
 	$Template->Assign_block_vars('download', array(
 		'TITLE' => stripslashes($title),
-		'CONTENTS' => second_parse(stripslashes(parse($contents))),
-		'SHORT_CONTENTS' => second_parse(stripslashes(parse($short_contents))),
+		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
+		'SHORT_CONTENTS' => second_parse(stripslashes(strparse($short_contents))),
 		'URL' => stripslashes($url),
 		'IDCAT' => $idcat,
 		'COUNT' => $count,

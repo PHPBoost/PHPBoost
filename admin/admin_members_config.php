@@ -32,7 +32,7 @@ require_once('../kernel/admin_header.php');
 if( !empty($_POST['msg_mbr']) ) //Message aux membres.
 {
 	$config_member['activ_register'] = !empty($_POST['activ_register']) ? numeric($_POST['activ_register']) : 0;
-	$config_member['msg_mbr'] = !empty($_POST['contents']) ? stripslashes(parse($_POST['contents'])) : '';
+	$config_member['msg_mbr'] = !empty($_POST['contents']) ? stripslashes(strparse($_POST['contents'])) : '';
 	$config_member['msg_register'] = $CONFIG_MEMBER['msg_register'];
 	$config_member['activ_mbr'] = isset($_POST['activ_mbr']) ? numeric($_POST['activ_mbr']) : 0; //désactivé par defaut. 
 	$config_member['verif_code'] = (isset($_POST['verif_code']) && @extension_loaded('gd')) ? numeric($_POST['verif_code']) : 0; //désactivé par defaut. 

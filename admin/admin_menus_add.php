@@ -45,7 +45,7 @@ if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà exista
 	$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '';  
 	$auth = isset($_POST['auth']) ? numeric($_POST['auth']) : ''; 
 	$array_auth = $Group->Return_array_auth(AUTH_MENUS);	
-	$contents = !empty($_POST['contents']) ? parse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
+	$contents = !empty($_POST['contents']) ? strparse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
 	$location = !empty($_POST['location']) ? strprotect($_POST['location']) : 'left';
 	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
 
@@ -143,7 +143,7 @@ elseif( $action == 'add' ) //Ajout d'un menu.
 	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
 	$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '';  
 	$array_auth = $Group->Return_array_auth(AUTH_MENUS);	
-	$contents = !empty($_POST['contents']) ? parse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
+	$contents = !empty($_POST['contents']) ? strparse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
 	$location = !empty($_POST['location']) ? strprotect($_POST['location']) : 'left';
 	$use_tpl = isset($_POST['use_tpl']) ? numeric($_POST['use_tpl']) : '';
 	

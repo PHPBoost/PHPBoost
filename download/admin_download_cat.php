@@ -92,7 +92,7 @@ elseif( !empty($_POST['submit']) )
 		$id_cat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
 		$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-		$description = !empty($_POST['description']) ? parse($_POST['description']) : '';
+		$description = !empty($_POST['description']) ? strparse($_POST['description']) : '';
 		$icon = !empty($_POST['image']) ? strprotect($_POST['image']) : ''; 
 		$icon_path = !empty($_POST['alt_image']) ? strprotect($_POST['alt_image']) : ''; 
 		$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : '0';

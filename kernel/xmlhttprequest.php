@@ -7,7 +7,7 @@ if( !empty($_GET['preview']) ) //Prévisualisation des messages.
 {
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
 	$ftags = !empty($_POST['ftags']) ? trim($_POST['ftags']) : '';
-	$contents = second_parse(stripslashes(parse(utf8_decode($contents), explode(', ', $ftags))));
+	$contents = second_parse(stripslashes(strparse(utf8_decode($contents), explode(', ', $ftags))));
 
 	echo !empty($contents) ? $contents : '';	
 }

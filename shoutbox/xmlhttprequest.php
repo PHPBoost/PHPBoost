@@ -61,7 +61,7 @@ if( $add )
 			}
 			
 			//Vérifie que le message ne contient pas du flood de lien.
-			$shout_contents = parse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);		
+			$shout_contents = strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);		
 			if( !check_nbr_links($shout_pseudo, 0) ) //Nombre de liens max dans le pseudo.
 			{	
 				echo -3;

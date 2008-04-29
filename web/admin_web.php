@@ -125,7 +125,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	
 	$Template->Assign_block_vars('web', array(
 		'NAME' => stripslashes($title),
-		'CONTENTS' => second_parse(stripslashes(parse($contents))),
+		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
 		'URL' => stripslashes($url),
 		'IDCAT' => $idcat,
 		'CAT' => $cat,
@@ -199,7 +199,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
 	$title = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
+	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';
 	$url = !empty($_POST['url']) ? strprotect($_POST['url']) : '';
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 	$compt = isset($_POST['compt']) ? numeric($_POST['compt']) : 0;

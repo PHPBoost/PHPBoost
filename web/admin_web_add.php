@@ -33,7 +33,7 @@ require_once('../kernel/admin_header.php');
 if( !empty($_POST['valid']) )
 {
 	$title = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
+	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';
 	$url = !empty($_POST['url']) ? strprotect($_POST['url']) : '';
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 	$compt = isset($_POST['compt']) ? numeric($_POST['compt']) : 0;
@@ -68,7 +68,7 @@ elseif( !empty($_POST['previs']) )
 	
 	$Template->Assign_block_vars('web', array(
 		'NAME' => stripslashes($title),
-		'CONTENTS' => second_parse(stripslashes(parse($contents))),
+		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
 		'URL' => stripslashes($url),
 		'IDCAT' => $idcat,
 		'CAT' => $cat,

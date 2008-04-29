@@ -50,7 +50,7 @@ if( !empty($_POST['valid']) )
 		$maintain = '0';
 	}
 
-	$CONFIG['maintain_text'] = !empty($_POST['contents']) ? stripslashes(parse($_POST['contents'])) : '';
+	$CONFIG['maintain_text'] = !empty($_POST['contents']) ? stripslashes(strparse($_POST['contents'])) : '';
 	$CONFIG['maintain_delay'] = isset($_POST['display_delay']) ? numeric($_POST['display_delay']) : 0;
 	$CONFIG['maintain_display_admin'] = isset($_POST['maintain_display_admin']) ? numeric($_POST['maintain_display_admin']) : 0;
 	$CONFIG['maintain'] = $maintain;

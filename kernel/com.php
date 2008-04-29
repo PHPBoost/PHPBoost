@@ -94,7 +94,7 @@ if( $Comments->Com_loaded() )
 						redirect($path_redirect . '&errorh=flood#errorh');
 				}
 				
-				$contents = parse($contents, $CONFIG_COM['forbidden_tags']);
+				$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
 				if( !check_nbr_links($login, 0) ) //Nombre de liens max dans le pseudo.
 					redirect($path_redirect . '&errorh=l_pseudo#errorh');
 				if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
@@ -185,7 +185,7 @@ if( $Comments->Com_loaded() )
 				$login = !empty($_POST['login']) ? strprotect($_POST['login']) : '';			
 				if( !empty($contents) && !empty($login) )
 				{
-					$contents = parse($contents, $CONFIG_COM['forbidden_tags']);
+					$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
 					if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
 						redirect($path_redirect . '&errorh=l_flood#errorh');
 

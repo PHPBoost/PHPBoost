@@ -124,7 +124,7 @@ function pages_parse($contents)
 	$contents = strip_tags($contents);
 	$contents = nl2br($contents);
 
-	$contents = parse($contents, array(), false);
+	$contents = strparse($contents, array(), false);
 	$contents = htmlspecialchars_decode($contents, ENT_NOQUOTES);
 	
 	return (string) $contents;
