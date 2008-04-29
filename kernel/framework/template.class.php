@@ -112,7 +112,7 @@ class Template
 		{
 			//Chargement du template.
 			if( !$this->load_tpl($parse_name) )
-				die('Template->load_tpl(): Chargement impossible template: ' . $parse_name . '!');
+				return '';
 
 			//Parse
 			$this->parse($parse_name, $stringMode);
@@ -175,7 +175,7 @@ class Template
 	function load_tpl($parse_name)
 	{
 		if( !isset($this->files[$parse_name]) )
-			die('Template->load_tpl(): Aucun fichier specifié pour parser ' . $parse_name);
+			return false;
 			
 		$this->template = @file_get_contents_emulate($this->files[$parse_name]); //Charge le contenu du fichier tpl.
 		if( $this->template === false )

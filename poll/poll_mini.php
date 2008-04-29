@@ -34,15 +34,15 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 	load_module_lang('poll');
 	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage aléatoire.
 	
+	$Template->Set_filenames(array(
+		'poll_mini'=> 'poll/poll_mini.tpl'
+	));
+		
 	#####################Résultats######################
 	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
 	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
 	if( in_array($poll_mini['id'], $array_cookie) )
 	{
-		$Template->Set_filenames(array(
-			'poll_mini'=> 'poll/poll_mini.tpl'
-		));
-				
 		$Template->Assign_vars(array(
 			'THEME' => $CONFIG['theme'],
 			'MODULE_DATA_PATH' => $Template->Module_data_path('poll'),
@@ -67,10 +67,6 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 	else
 	{
 		#####################Questions######################
-		$Template->Set_filenames(array(
-			'poll_mini'=> 'poll/poll_mini.tpl'
-		));
-				
 		$Template->Assign_vars(array(			
 			'L_MINI_POLL' => $LANG['mini_poll'],
 			'L_VOTE' => $LANG['poll_vote'],

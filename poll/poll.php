@@ -153,7 +153,6 @@ elseif( !empty($poll['id']) && !$archives )
 	$Template->Set_filenames(array(
 		'poll'=> 'poll/poll.tpl'
 	));
-	
 	list($java, $edit, $del) = array('','','');	
 	if( $Member->Check_level(ADMIN_LEVEL) )
 	{
@@ -186,6 +185,24 @@ elseif( !empty($poll['id']) && !$archives )
 			$check_bdd = true;
 	}
 	
+	//Gestion des erreurs
+	$get_error = retrieve(GET, 'error', '');
+	switch($get_error)
+	{
+		case 'e_already_vote':
+		$errstr = $LANG['e_already_vote'];
+		$type = E_USER_WARNING;
+		break;
+		case 'e_unauth_poll':
+		$errstr = $LANG['e_unauth_poll'];
+		$type = E_USER_WARNING;
+		break;
+		default:
+		$errstr = '';
+	}
+	if( !empty($errstr) )
+		$Errorh->Error_handler($errstr, $type);
+			
 	//Si le cookie existe, ou l'ip est connue on redirige vers les resulats, sinon on prend en compte le vote.
 	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
 	if( $show_result || in_array($poll['id'], $array_cookie) === true || $check_bdd )
@@ -226,24 +243,6 @@ elseif( !empty($poll['id']) && !$archives )
 	}
 	else //Questions.
 	{
-		//Gestion des erreurs
-		$get_error = retrieve(GET, 'error', '');
-		switch($get_error)
-		{
-			case 'e_already_vote':
-			$errstr = $LANG['e_already_vote'];
-			$type = E_USER_WARNING;
-			break;
-			case 'e_unauth_poll':
-			$errstr = $LANG['e_unauth_poll'];
-			$type = E_USER_WARNING;
-			break;
-			default:
-			$errstr = '';
-		}
-		if( !empty($errstr) )
-			$Errorh->Error_handler($errstr, $type);
-		
 		$Template->Assign_vars(array(
 			'C_POLL_VIEW' => true,
 			'C_POLL_QUESTION' => true,

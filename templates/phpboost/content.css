@@ -83,22 +83,24 @@ textarea{
 	margin:auto;
 }
 input.text{
-	padding:2px;	
+	padding:2px;
 }
 input.submit{
-	border:1px solid #5B5A5A;	
-	color:#061729;	
+	border:1px outset #71BAF1;	
+	color:#FFFFFF;	
 	padding:2px;
 	font-weight:bold;
-	background:#FFFFFF url('images/form/form.gif') repeat-x;
+	font-size:10px;
+	background:#FFFFFF url(images/form/form.png) repeat-x;
 }
 input.reset{
-	border:1px solid #5B5A5A;	
+	border:1px outset #71BAF1;	
 	color:#E10000;
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	font-weight:bold;
+	font-size:10px;
 	padding:2px;
-	background:#FFFFFF url('images/form/form.gif') repeat-x;
+	background:#FFFFFF url(images/form/form.png) repeat-x;
 }
 input.reset:hover, input.submit:hover{
 	border:1px solid #22435F;
