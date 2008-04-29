@@ -83,13 +83,9 @@ elseif( !empty($_POST['submit']) )
 		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
 		
 		if( $delete_content )
-		{
 			$download_categories->Delete_category_recursively($cat_to_del_post);
-		}
 		else
-		{
 			$download_categories->Delete_category_and_move_content($cat_to_del_post, $id_parent);
-		}
 	}
 	else
 	{
@@ -112,9 +108,7 @@ elseif( !empty($_POST['submit']) )
 			$new_auth = addslashes(serialize($array_auth_all));
 		}
 		else
-		{
 			$new_auth = '';
-		}
 
 		if( empty($name) )
 			redirect(transid(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
@@ -148,7 +142,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		$img_str = '<option value="">--</option>';
 		$dh = @opendir( $rep);
 		$in_dir_icon = false;
-		while( ! is_bool($image_name = @readdir($dh)) )
+		while( !is_bool($image_name = @readdir($dh)) )
 		{       
 			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $image_name) )
 			{
@@ -185,6 +179,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 	));
 		
 	if( $id_edit > 0 && array_key_exists($id_edit, $DOWNLOAD_CATS) )	
+	{
 		$Template->Assign_vars(array(
 			'NAME' => $DOWNLOAD_CATS[$id_edit]['name'],
 			'DESCRIPTION' => unparse($DOWNLOAD_CATS[$id_edit]['description']),
@@ -199,6 +194,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'READ_AUTH' => $Group->Generate_select_auth(READ_CAT_DOWNLOAD, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth']),
 			'WRITE_AUTH' => $Group->Generate_select_auth(WRITE_CAT_DOWNLOAD, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth'])
 		));
+	}
 	else
 	{
 		$id_edit = '0';
@@ -217,7 +213,6 @@ elseif( $new_cat XOR $id_edit > 0 )
 	}
 	
 	include_once('../kernel/framework/content/bbcode.php');
-	
 	include_once('admin_download_menu.php');
 	
 	$Template->Pparse('admin_download_cat_edition');

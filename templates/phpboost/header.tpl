@@ -27,13 +27,13 @@
 	<div id="header">
 		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
 		{MODULES_MINI_HEADER_CONTENT}
-		<div class="dynamic_menu" style="left:190px;top:113px;">
+		<div class="dynamic_menu" style="left:190px;top:113px">
 			<ul>
 				<li>
-					<h5 class="links"><a href="../news/news.php" title="Accueil PHPBoost"><img src="../templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> Accueil</a></h5>
+					<h5 class="links"><a href="../news/news.php" title="Accueil"><img src="../templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> Accueil</a></h5>
 				</li>
 				<li onmouseover="show_menu('l1', 0);" onmouseout="hide_menu(0);">
-					<h5 class="links"><a href="../download/download-2-52+phpboost-2-0.php" title="Télécharger PHPBoost"><img src="../download/download_mini.png" class="valign_middle" alt="" /> PHPBoost</a></h5>
+					<h5 class="links"><a href="../download/download-2-52+phpboost-2-0.php" title="PHPBoost"><img src="../download/download_mini.png" class="valign_middle" alt="" /> PHPBoost</a></h5>
 					<ul id="smenul1">
 						<li><a href="../download/download-2-52+phpboost-2-0.php" style="background-image:url(../download/download_mini.png);">PHPBoost 2</a></li>
 						<li><a href="http://demo.phpboost.com" title="Démonstration PHPBoost" style="background-image:url(../templates/phpboost/images/admin/com_mini.png);">Démonstration</a></li>
@@ -53,10 +53,10 @@
 					</ul>
 				</li>
 				<li>
-					<h5 class="links"><a href="../forum/index.php" title="Forum PHPBoost"><img src="../articles/articles_mini.png" class="valign_middle" alt="" /> Dossiers</a></h5>
+					<h5 class="links"><a href="../articles/articles.php" title="Dossiers"><img src="../articles/articles_mini.png" class="valign_middle" alt="" /> Dossiers</a></h5>
 				</li>
 				<li onmouseover="show_menu('l4', 0);" onmouseout="hide_menu(0);">
-					<h5 class="links"><a href="../forum/index.php" title="Forum PHPBoost"><img src="../forum/forum_mini.png" class="valign_middle" alt="" /> Communauté</a></h5>
+					<h5 class="links"><a href="../forum/index.php" title="Communauté"><img src="../forum/forum_mini.png" class="valign_middle" alt="" /> Communauté</a></h5>
 					<ul id="smenul4">
 						<li><a href="../forum/index.php" style="background-image:url(../forum/forum_mini.png);">Forum</a></li>						
 						<li><a href="../shoutbox/shoutbox.php" style="background-image:url(../shoutbox/shoutbox_mini.png);">Discussion</a></li>						
@@ -66,7 +66,6 @@
 			</ul>
 		</div>
 	</div>
-	
 	<div id="sub_header">
 		{MODULES_MINI_SUB_HEADER_CONTENT}
 	</div>

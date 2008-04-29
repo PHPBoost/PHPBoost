@@ -91,7 +91,7 @@
 		
 		
 		# IF C_NEWS_LINK #			
-		<div class="news_container" style="float:left;width:45%;margin-left:25px;">
+		<div class="news_container" style="float:left;width:370px;margin-left:10px;">
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
@@ -115,11 +115,11 @@
 			<div class="news_bottom"></div>
 		</div>	
 		
-		<div class="news_container" style="float:left;width:45%;margin-left:25px;">
+		<div class="news_container" style="float:left;width:370px;margin-left:30px;">
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<h3 class="title valign_middle"><a href="../forum/rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> Dossier</h3>
+				<h3 class="title valign_middle"><a href="../forum/rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> Dossiers</h3>
 			</div>						
 			<div class="news_content">
 				<div style="float:left;width:73px"><img src="http://img.clubic.com/photo/0049003701299648.jpg" alt="Aventure au sommet, le Pic Rouge en Test" /></div>
@@ -148,7 +148,7 @@
 			<div class="news_bottom"></div>
 		</div>
 		
-		<div class="news_container" style="float:left;width:93%;margin-left:25px;">
+		<div class="news_container" style="float:left;width:770px;margin-left:10px;">
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
@@ -179,7 +179,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
 			<div class="news_bottom"></div>
 		</div>
 		
-		<div class="news_container" style="float:left;width:93%;margin-left:25px;">
+		<div class="news_container" style="float:left;width:770px;margin-left:10px;">
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
@@ -194,7 +194,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
 			<div class="news_bottom"></div>
 		</div>
 		
-		<div class="news_container" style="float:left;width:45%;margin-left:25px;">
+		<div class="news_container" style="float:left;width:370px;margin-left:10px;">
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
@@ -220,7 +220,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
 			<div class="news_bottom"></div>
 		</div>
 		
-		<div class="news_container" style="float:left;width:45%;margin-left:25px;">
+		<div class="news_container" style="float:left;width:370px;margin-left:30px;">
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
@@ -254,7 +254,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
 		</div>
 		
 		
-		<div class="news_container" style="float:left;width:45%;margin-left:25px;">
+		<div class="news_container" style="float:left;width:370px;margin-left:10px;">
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
@@ -268,7 +268,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
 			<div class="news_bottom"></div>
 		</div>
 		
-		<div class="news_container" style="float:left;width:45%;margin-left:25px;">
+		<div class="news_container" style="float:left;width:370px;margin-left:30px;">
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
