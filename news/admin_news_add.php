@@ -36,7 +36,7 @@ if( !empty($_POST['valid']) )
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 	$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
 	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$extend_contents = !empty($_POST['extend_contents']) ? parse($_POST['extend_contents']) : '';
+	$extend_contents = !empty($_POST['extend_contents']) ? strparse($_POST['extend_contents']) : '';
 	$img = !empty($_POST['img']) ? strprotect($_POST['img']) : '';
 	$alt = !empty($_POST['alt']) ? strprotect($_POST['alt']) : '';
 	
@@ -80,7 +80,7 @@ if( !empty($_POST['valid']) )
 			$timestamp = time();
 		
 		$Sql->Query_inject("INSERT INTO ".PREFIX."news (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com) 
-		VALUES('" . $idcat . "', '" . $title . "', '" . parse($contents) . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
+		VALUES('" . $idcat . "', '" . $title . "', '" . strparse($contents) . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
 		
 		//Regénération du flux rss.
 		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
@@ -133,8 +133,8 @@ elseif( !empty($_POST['previs']) )
 
 	$Template->Assign_block_vars('news', array(
 		'TITLE' => stripslashes($title),
-		'CONTENTS' => second_parse(stripslashes(parse($contents))),
-		'EXTEND_CONTENTS' => second_parse(stripslashes(parse($extend_contents))) . '<br /><br />',
+		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
+		'EXTEND_CONTENTS' => second_parse(stripslashes(strparse($extend_contents))) . '<br /><br />',
 		'PSEUDO' => $Member->Get_attribute('login'),
 		'IMG' => (!empty($img) ? '<img src="' . stripslashes($img) . '" alt="' . stripslashes($alt) . '" title="' . stripslashes($alt) . '" class="img_right" style="margin:6px;border:1px solid #000000;" />' : ''),
 		'DATE' => gmdate_format('date_format_short')

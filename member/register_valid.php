@@ -187,7 +187,7 @@ if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,
 							}
 						
 							if( $row['field'] == 2 )
-								$field = parse($field);
+								$field = strparse($field);
 							elseif( $row['field'] == 4 )
 							{
 								$array_field = is_array($field) ? $field : array();

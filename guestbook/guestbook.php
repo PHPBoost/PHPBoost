@@ -56,7 +56,7 @@ if( $guestbook && empty($id_get) ) //Enregistrement
 					redirect(HOST . SCRIPT . transid('?error=flood', '', '&') . '#errorh');
 			}
 
-			$guestbook_contents = parse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']); 			
+			$guestbook_contents = strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']); 			
 			if( !check_nbr_links($guestbook_pseudo, 0) ) //Nombre de liens max dans le pseudo.
 				redirect(HOST . SCRIPT . transid('?error=l_pseudo', '', '&') . '#errorh');
 			if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
@@ -97,7 +97,7 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 
 	$forbidden_tags = implode(', ', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
 	$Template->Assign_block_vars('guestbook', array(
-		'CONTENTS' => second_parse(stripslashes(parse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']))),
+		'CONTENTS' => second_parse(stripslashes(strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']))),
 		'PSEUDO' => stripslashes($guestbook_pseudo),
 		'DATE' => gmdate_format('date_format_short'),
 		'THEME' => $CONFIG['theme'],
@@ -197,7 +197,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 			$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
 			if( !empty($guestbook_contents) && !empty($guestbook_pseudo) )
 			{
-				$guestbook_contents = parse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']); 			
+				$guestbook_contents = strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']); 			
 				if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
 					redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			

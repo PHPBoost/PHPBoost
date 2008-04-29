@@ -33,7 +33,7 @@ require_once('../kernel/admin_header.php');
 if( !empty($_POST['valid']) ) //Insertion du nouveau champs.
 {
 	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
+	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';
 	$field = !empty($_POST['field']) ? numeric($_POST['field']) : '';
 	$possible_values = !empty($_POST['possible_values']) ? strprotect($_POST['possible_values']) : '';
 	$default_values = !empty($_POST['default_values']) ? strprotect($_POST['default_values']) : '';

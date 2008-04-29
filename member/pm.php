@@ -212,7 +212,7 @@ elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de
 	
 	$Template->Assign_block_vars('post_convers.show_convers', array(
 		'DATE' => gmdate_format('date_format'),
-		'CONTENTS' => second_parse(stripslashes(parse($_POST['contents'])))
+		'CONTENTS' => second_parse(stripslashes(strparse($_POST['contents'])))
 	));
 	
 	$Template->Assign_block_vars('post_convers.user_id_dest', array(
@@ -243,7 +243,7 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 	
 	$Template->Assign_block_vars('show_pm', array(
 		'DATE' => gmdate_format('date_format'),
-		'CONTENTS' => second_parse(stripslashes(parse($_POST['contents']))),
+		'CONTENTS' => second_parse(stripslashes(strparse($_POST['contents']))),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . transid('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers_title . '</a>',
 		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
@@ -481,7 +481,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 				{				
 					$Template->Assign_block_vars('edit_pm.show_pm', array(
 						'DATE' => gmdate_format('date_format'),
-						'CONTENTS' => second_parse(stripslashes(parse($_POST['contents']))),
+						'CONTENTS' => second_parse(stripslashes(strparse($_POST['contents']))),
 					));				
 				}
 

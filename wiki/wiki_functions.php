@@ -30,7 +30,7 @@ if( defined('PHPBOOST') !== true)	exit;
 //Interprétation du BBCode en ajoutant la balise [link]
 function wiki_parse($var)
 {
-	$var = parse($var);
+	$var = strparse($var);
 	$var = preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="$1">$2</a>', $var);
 	return $var;
 }

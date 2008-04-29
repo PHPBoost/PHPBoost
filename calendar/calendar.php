@@ -315,7 +315,7 @@ elseif( !empty($id) )
 			{
 				if( !empty($title) && !empty($contents) ) //succès
 				{
-					$contents = parse($contents);
+					$contents = strparse($contents);
 					$Sql->Query_inject("UPDATE ".PREFIX."calendar SET title = '" . $title . "', contents = '" . $contents . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					
 					$day = gmdate_format('d', $timestamp);
@@ -412,7 +412,7 @@ elseif( $add ) //Ajout d'un évenement
 		{
 			if( !empty($title) && !empty($contents) ) //succès
 			{
-				$contents = parse($contents);
+				$contents = strparse($contents);
 				$Sql->Query_inject("INSERT INTO ".PREFIX."calendar (timestamp,title,contents,user_id,nbr_com) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $Member->Get_attribute('user_id') . "', 0)", __LINE__, __FILE__);
 				
 				$day = gmdate_format('d', $timestamp);

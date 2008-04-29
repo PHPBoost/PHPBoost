@@ -99,9 +99,9 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 					
 			$user_occupation = !empty($_POST['user_occupation']) ? strprotect($_POST['user_occupation']) : '';
 			$user_hobbies = !empty($_POST['user_hobbies']) ? strprotect($_POST['user_hobbies']) : '';
-			$user_desc = !empty($_POST['user_desc']) ? parse($_POST['user_desc']) : '';
+			$user_desc = !empty($_POST['user_desc']) ? strparse($_POST['user_desc']) : '';
 			$user_sex = !empty($_POST['user_sex']) ? numeric($_POST['user_sex']) : '0';
-			$user_sign = !empty($_POST['user_sign']) ? parse($_POST['user_sign']) : '';			
+			$user_sign = !empty($_POST['user_sign']) ? strparse($_POST['user_sign']) : '';			
 			$user_msn = !empty($_POST['user_msn']) ? strprotect($_POST['user_msn']) : '';
 			$user_yahoo= !empty($_POST['user_yahoo']) ? strprotect($_POST['user_yahoo']) : '';
 			
@@ -213,7 +213,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 					{
 						$field = isset($_POST[$row['field_name']]) ? trim($_POST[$row['field_name']]) : '';
 						if( $row['field'] == 2 )
-							$field = parse($field);
+							$field = strparse($field);
 						elseif( $row['field'] == 4 )
 						{
 							$array_field = is_array($field) ? $field : array();

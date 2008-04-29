@@ -89,7 +89,7 @@ if( !empty($_POST['valid']) )
 			$CAT_ARTICLES[0]['id_right'] = 0;
 		}
 			
-		$Sql->Query_inject("INSERT INTO ".PREFIX."articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . parse(str_replace('[page][/page]', '', $contents)) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . strparse(str_replace('[page][/page]', '', $contents)) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
 		$last_articles_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."articles");
 		
 		//Mise à jours du nombre d'articles des parents.
@@ -167,7 +167,7 @@ elseif( !empty($_POST['previs']) )
 		'C_ARTICLES_PREVIEW' => true,
 		'TITLE_PRW' => stripslashes($title),
 		'DATE_PRW' => gmdate_format('date_format_short'),
-		'CONTENTS_PRW' => second_parse(stripslashes(parse($contents))),
+		'CONTENTS_PRW' => second_parse(stripslashes(strparse($contents))),
 		'PSEUDO_PRW' => $pseudo
 	));
 	

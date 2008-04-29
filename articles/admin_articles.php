@@ -290,7 +290,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$Template->Assign_block_vars('articles.preview', array(
 		'USER_ID' => $user_id,
 		'TITLE' => stripslashes($title),
-		'CONTENTS' => second_parse(stripslashes(parse($contents))),
+		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
 		'PSEUDO' => $pseudo,
 		'DATE' => gmdate_format('date_format_short')
 	));
@@ -338,7 +338,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 	$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
 	$icon = !empty($_POST['icon']) ? strprotect($_POST['icon']) : '';
 	$icon_path = !empty($_POST['icon_path']) ? strprotect($_POST['icon_path']) : '';
-	$contents = !empty($_POST['contents']) ? parse($_POST['contents']) : '';
+	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';
 	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
 	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
 	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;

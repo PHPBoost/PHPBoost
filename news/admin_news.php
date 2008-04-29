@@ -89,7 +89,7 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		else //Ajout des heures et minutes
 			$timestamp = ' , timestamp = \'' . time() . '\'';
 			
-		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . parse($contents) . "', extend_contents = '" . parse($extend_contents) . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
+		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . strparse($contents) . "', extend_contents = '" . strparse($extend_contents) . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
 		WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 
 		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
@@ -328,8 +328,8 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 	$Template->Assign_block_vars('news.preview', array(
 		'THEME' => $CONFIG['theme'],
 		'TITLE' => stripslashes($title),
-		'CONTENTS' => second_parse(stripslashes(parse($contents))),
-		'EXTEND_CONTENTS' => second_parse(stripslashes(parse($extend_contents))) . '<br /><br />',
+		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
+		'EXTEND_CONTENTS' => second_parse(stripslashes(strparse($extend_contents))) . '<br /><br />',
 		'PSEUDO' => $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__),
 		'USER_ID' => $user_id,
 		'IMG_PREVIEW' => !empty($img) ? '<img src="' . $img . '" alt="" />': $LANG['no_img'],

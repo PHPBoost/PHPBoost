@@ -745,7 +745,7 @@ class expression_math extends  expression
 		$this->noeuds = $this->parse();
 	}
 
-	function parse()
+	function strparse()
 	{
 		if( count($this->noeuds) <= 3 ) return $this->noeuds;
 		$ret = array();

@@ -42,7 +42,7 @@ class Forum
 		
 		##### Insertion message #####
 		$last_timestamp = time();
-		$Sql->Query_inject("INSERT INTO ".PREFIX."forum_msg (idtopic, user_id, contents, timestamp, timestamp_edit, user_id_edit, user_ip) VALUES ('" . $idtopic . "', '" . $Member->Get_attribute('user_id') . "', '" . parse($contents) . "', '" . $last_timestamp . "', '0', '0', '" . USER_IP . "')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."forum_msg (idtopic, user_id, contents, timestamp, timestamp_edit, user_id_edit, user_ip) VALUES ('" . $idtopic . "', '" . $Member->Get_attribute('user_id') . "', '" . strparse($contents) . "', '" . $last_timestamp . "', '0', '0', '" . USER_IP . "')", __LINE__, __FILE__);
 		$last_msg_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."forum_msg"); 
 		
 		//Topic
@@ -132,7 +132,7 @@ class Forum
 		
 		//Marqueur d'édition du message?					
 		$edit_mark = (!$Member->Check_auth($CONFIG_FORUM['auth'], EDIT_MARK_FORUM)) ? ", timestamp_edit = '" . time() . "', user_id_edit = '" . $Member->Get_attribute('user_id') . "'" : '';
-		$Sql->Query_inject("UPDATE ".PREFIX."forum_msg SET contents = '" . parse($contents) . "'" . $edit_mark . " WHERE id = '" . $idmsg . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."forum_msg SET contents = '" . strparse($contents) . "'" . $edit_mark . " WHERE id = '" . $idmsg . "'", __LINE__, __FILE__);
 		
 		$nbr_msg_before = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "'", __LINE__, __FILE__);
 		

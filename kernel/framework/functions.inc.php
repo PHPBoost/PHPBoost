@@ -66,7 +66,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 			$var = trim($var);
 			return (string)$var; //Chaine non protégée.
 		case TSTRING_PARSE:
-			return parse($var); //Chaine parsée.
+			return strparse($var); //Chaine parsée.
 		case TBOOL:
 			return (bool)$var;
 		case TUNSIGNED_INT:
@@ -292,7 +292,7 @@ function check_nbr_links($contents, $max_nbr)
 }
 
 //Charge le parseur.
-function parse($content, $forbidden_tags = array(), $html_protect = true)
+function strparse($content, $forbidden_tags = array(), $html_protect = true)
 {
     include_once('../kernel/framework/content/content.class.php');
     $parse = new Content($content);

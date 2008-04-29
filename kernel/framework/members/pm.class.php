@@ -83,7 +83,7 @@ class Privatemsg
 		$this->pm_convers_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."pm_topic");			
 
 		//Insertion du message associé à la conversation.
-		$Sql->Query_inject("INSERT INTO ".PREFIX."pm_msg (idconvers,user_id,contents,timestamp,view_status) VALUES('" . $this->pm_convers_id . "', '" . $pm_from . "', '" . parse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."pm_msg (idconvers,user_id,contents,timestamp,view_status) VALUES('" . $this->pm_convers_id . "', '" . $pm_from . "', '" . strparse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
 		$this->pm_msg_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."pm_msg");
 		
 		//MAJ de la conversation.
@@ -107,7 +107,7 @@ class Privatemsg
 		}
 		
 		//Insertion du message.
-		$Sql->Query_inject("INSERT INTO ".PREFIX."pm_msg (idconvers, user_id, contents, timestamp, view_status) VALUES('" . $pm_idconvers . "', '" . $pm_from . "', '" . parse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."pm_msg (idconvers, user_id, contents, timestamp, view_status) VALUES('" . $pm_idconvers . "', '" . $pm_from . "', '" . strparse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
 		$this->pm_msg_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."pm_msg");
 		
 		//On modifie le statut de la conversation.
