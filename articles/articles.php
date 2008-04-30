@@ -32,7 +32,7 @@ require_once('../kernel/header.php');
 $page = retrieve(GET, 'p', 1);
 $cat = retrieve(GET, 'cat', 0);
 
-if( !empty($idart) && !empty($idartcat)  )
+if( !empty($idart) && isset($_GET['cat'])  )
 {
 	//Niveau d'autorisation de la catégorie
 	if( !isset($CAT_ARTICLES[$idartcat]) || !$Member->Check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 

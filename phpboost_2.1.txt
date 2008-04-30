@@ -143,6 +143,9 @@
 [*] Ajout de la localisation du membre, et de la dernière mise à jour.
 [*] Correction du nombre de visiteurs en ligne.
 
+[b]Livre d'or:[/b]
+[*] [color=red]Nouveauté:[/color] Menu affichant aléatoirements les derniers messages postés.
+
 [b]Nouveau module:[/b]
 [*] [color=red]Nouveauté:[/color] Module FAQ. Permet de gérer une liste de questions/réponses.
 

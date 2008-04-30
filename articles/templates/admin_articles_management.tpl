@@ -267,7 +267,6 @@
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="id" value="{articles.IDARTICLES}" />
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
-					&nbsp;&nbsp; 
 					<input type="submit" name="previs" value="{L_PREVIEW}" class="submit" />
 					<input type="reset" value="{L_RESET}" class="reset" />				
 				</fieldset>	
