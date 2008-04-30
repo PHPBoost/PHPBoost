@@ -64,8 +64,9 @@ class RSS
                 {
                     $url = preg_match('`<link>(.*)</link>`is', $expParsed[$i], $url) ? $url[1] : '';
                     $title = preg_match('`<title>(.*)</title>`is', $expParsed[$i], $title) ? $title[1] : '';
+                    $title = preg_match('`<desc>(.*)</desc>`is', $expParsed[$i], $desc) ? $desc[1] : '';
                     $date = preg_match('`<pubDate>(.*)</pubDate>`is', $expParsed[$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '';
-                    array_push($parsed['items'], array('link' => $url, 'title' => $title, 'date' => $date));
+                    array_push($parsed['items'], array('link' => $url, 'title' => $title, 'desc' => $desc, 'date' => $date));
                     unset($parsed['items'][$i]);
                 }
                 return $parsed;
@@ -83,7 +84,7 @@ class RSS
     {
         require_once('../kernel/framework/template.class.php');
         $Template = new Template('syndication/rss.tpl');
-        
+        echo '<pre>'; print_r($feedInformations); echo '</pre>';
         $Template->Assign_vars(array(
             'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
             'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
@@ -97,9 +98,10 @@ class RSS
             foreach ( $feedInformations['items'] as $item )
             {
                 $Template->Assign_block_vars('item', array(
-                    'DATE' => $item['date'],
-                    'U_LINK' => $item['link'],
-                    'TITLE' => $item['title']
+                    'DATE' => isset($item['date']) ? $item['date'] : '',
+                    'U_LINK' => isset($item['link']) ? $item['link'] : '',
+                    'DESC' => isset($item['desc']) ? $item['desc'] : '',
+                    'TITLE' => isset($item['title']) ? $item['title'] : ''
                 ));
             }
         }

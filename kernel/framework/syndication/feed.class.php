@@ -70,6 +70,38 @@ class Feed
         return $this->getHTMLFeed($this->Parse($nbItems), $tpl);
     }
     
+    ## Private Methods ##
+    function TParse(&$feedInformations, $tpl = 'syndication/rss.tpl')
+    /**
+     * Print the feed
+     */
+    {
+        require_once('../kernel/framework/template.class.php');
+        $Template = new Template($tpl);
+        
+        $Template->Assign_vars(array(
+            'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
+            'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
+            'HOST' => HOST,
+            'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
+            'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
+        ));
+        
+        if ( isset($feedInformations['items']) )
+        {
+            foreach ( $feedInformations['items'] as $item )
+            {
+                $Template->Assign_block_vars('item', array(
+                    'DATE' => isset($item['date']) ? $item['date'] : '',
+                    'U_LINK' => isset($item['link']) ? $item['link'] : '',
+                    'DESC' => isset($item['desc']) ? $item['desc'] : '',
+                    'TITLE' => isset($item['title']) ? $item['title'] : ''
+                ));
+            }
+        }
+        $Template->Tparse();
+    }
+    
     function Parse($nbItem = 5)
     /**
      * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
@@ -130,9 +162,10 @@ class Feed
             foreach ( $feedInformations['items'] as $item )
             {
                 $Template->Assign_block_vars('item', array(
-                    'DATE' => $item['date'],
-                    'U_LINK' => $item['link'],
-                    'TITLE' => $item['title']
+                    'DATE' => isset($item['date']) ? $item['date'] : '',
+                    'U_LINK' => isset($item['link']) ? $item['link'] : '',
+                    'DESC' => isset($item['desc']) ? $item['desc'] : '',
+                    'TITLE' => isset($item['title']) ? $item['title'] : ''
                 ));
             }
         }

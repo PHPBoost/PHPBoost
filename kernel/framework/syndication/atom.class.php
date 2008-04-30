@@ -96,9 +96,10 @@ class ATOM extends Feed
             foreach ( $feedInformations['items'] as $item )
             {
                 $Template->Assign_block_vars('item', array(
-                    'DATE' => $item['date'],
-                    'U_LINK' => $item['link'],
-                    'TITLE' => $item['title']
+                    'DATE' => isset($item['date']) ? $item['date'] : '',
+                    'U_LINK' => isset($item['link']) ? $item['link'] : '',
+                    'DESC' => isset($item['desc']) ? $item['desc'] : '',
+                    'TITLE' => isset($item['title']) ? $item['title'] : ''
                 ));
             }
         }
