@@ -49,7 +49,7 @@ if( strpos(SCRIPT, '/guestbook/guestbook.php') === false )
 	$Template->Assign_vars(array(
 		'L_RANDOM_GESTBOOK' => $LANG['title_guestbook'],
 		'RAND_MSG_ID' => $guestbook_rand['id'],
-		'RAND_MSG_CONTENTS' => ucfirst($guestbook_rand['contents']),
+		'RAND_MSG_CONTENTS' => ucfirst(wordwrap_html($guestbook_rand['contents'], 22)),
 		'RAND_MSG_LOGIN' => $guestbook_login,
 		'L_BY' => $LANG['by']
 	));
