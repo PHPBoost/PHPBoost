@@ -32,18 +32,31 @@ function generate_module_file_guestbook()
 {
 	global $Sql;
 	
-	$guestbook_config = 'global $CONFIG_GUESTBOOK;' . "\n";
+	$guestbook_code = 'global $CONFIG_GUESTBOOK;' . "\n";
 		
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_GUESTBOOK = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'guestbook'", __LINE__, __FILE__));
 	$CONFIG_GUESTBOOK = is_array($CONFIG_GUESTBOOK) ? $CONFIG_GUESTBOOK : array();
 	foreach($CONFIG_GUESTBOOK as $key => $value)
 		if( $key == 'guestbook_forbidden_tags' )
-			$guestbook_config .= '$CONFIG_GUESTBOOK[\'guestbook_forbidden_tags\'] = ' . var_export(unserialize($value), 1) . ';' . "\n";
+			$guestbook_code .= '$CONFIG_GUESTBOOK[\'guestbook_forbidden_tags\'] = ' . var_export(unserialize($value), 1) . ';' . "\n";
 		else
-			$guestbook_config .= '$CONFIG_GUESTBOOK[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
+			$guestbook_code .= '$CONFIG_GUESTBOOK[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 	
-	return $guestbook_config;
+	$guestbook_code .= "\n\n" . 'global $_guestbook_rand_msg;' . "\n";
+	$guestbook_code .= "\n" . '$_guestbook_rand_msg = array();' . "\n";
+	$result = $Sql->Query_while("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, g.contents
+	FROM ".PREFIX."guestbook g
+	LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id
+	ORDER BY g.timestamp DESC 
+	" . $Sql->Sql_limit(0, 10), __LINE__, __FILE__);	
+	while ($row = $Sql->Sql_fetch_assoc($result))
+	{
+		$guestbook_code .= '$_guestbook_rand_msg[] = array(\'id\' => ' . var_export($row['id'], true) . ', \'contents\' => ' . var_export(substr_html(strip_tags($row['contents']), 0, 150), true) . ', \'user_id\' => ' . var_export($row['user_id'], true) . ', \'login\' => ' . var_export($row['login'], true) . ');' . "\n";
+	}
+	$Sql->Close($result);
+	
+	return $guestbook_code;
 }
 
 ?>
