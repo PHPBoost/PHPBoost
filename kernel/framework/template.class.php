@@ -35,7 +35,7 @@ class Template
 	var $_block = array(); //Tableau contenant les variables de remplacement des variables simples.
 
     // Constructeur
-    function Templates($tpl = '')
+    function Template($tpl = '')
     {
         $this->tpl = $this->check_file($tpl);
         $this->files[$this->tpl] = $this->tpl;
@@ -222,6 +222,9 @@ class Template
         }
         else
         {
+            // Protection des injections PHP et affichages des tags XML
+            $this->template = preg_replace_callback('`\<\?(.*)\?\>`i', array($this, 'protectFromInject'), $this->template);
+            
             //Remplacement des variables simples.
             $this->template = preg_replace('`{([\w]+)}`i', '<?php echo (isset($this->_var[\'$1\']) ? $this->_var[\'$1\'] : \'\'); ?>', $this->template);
             $this->template = preg_replace_callback('`{([\w\.]+)}`i', array($this, 'parse_blocks_vars'), $this->template);
@@ -239,7 +242,13 @@ class Template
             $this->template = preg_replace('`# INCLUDE ([\w]+) #`', '<?php $this->tpl_include(\'$1\'); ?>', $this->template);
         }
     }
-		
+    
+    function protectFromInject($mask)
+    {
+        return '<?php echo \'<?' . str_replace(array('\\', '\''), array('\\\\', '\\\''), trim($mask[1])) . '?>\'; ?>';
+    }
+
+    
 	//Remplacement des variables de type bloc.
 	function parse_blocks_vars($blocks)
 	{

@@ -83,11 +83,9 @@ if( !empty($_POST['valid']) )
 		VALUES('" . $idcat . "', '" . $title . "', '" . strparse($contents) . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
 		
 		//Regénération du flux rss.
-		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
-		$Rss = new Rss('news/rss.php');
-		$Rss->Cache_path('../cache/');
-		$Rss->Generate_file('javascript', 'rss_news');
-		$Rss->Generate_file('php', 'rss2_news');
+		include_once('../kernel/framework/syndication/fedd.class.php'); //Flux rss regénéré!
+		$Feed = new Feed('news');
+        $Feed->Generate(array());
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.

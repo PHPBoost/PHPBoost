@@ -92,11 +92,9 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . strparse($contents) . "', extend_contents = '" . strparse($extend_contents) . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
 		WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 
-		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
-		$Rss = new Rss('news/rss.php');
-		$Rss->Cache_path('../cache/');
-		$Rss->Generate_file('javascript', 'rss_news');
-		$Rss->Generate_file('php', 'rss2_news');
+        include_once('../kernel/framework/syndication/feed.class.php'); //Flux rss regénéré!
+        $Feed = new Feed('news');
+        $Feed->Generate(array());
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
@@ -119,11 +117,9 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 	//On supprimes les éventuels commentaires associés.
 	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'news'", __LINE__, __FILE__);
 
-	include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
-	$Rss = new Rss('news/rss.php');
-	$Rss->Cache_path('../cache/');
-	$Rss->Generate_file('javascript', 'rss_news');
-	$Rss->Generate_file('php', 'rss2_news');
+    include_once('../kernel/framework/syndication/feed.class.php'); //Flux rss regénéré!
+    $Feed = new Feed('news');
+    $Feed->Generate(array());
 	
 	//Mise à jour du nombre de news dans le cache de la configuration.
 	$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
@@ -227,10 +223,10 @@ elseif( !empty($id) ) //Vue de la news
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
-		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
+        $Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
 	include('../kernel/framework/content/bbcode.php');
-	$Template->Pparse('admin_news_management');    
+	$Template->Pparse('admin_news_management');
 
 	$Template->Unassign_block_vars('tinymce_mode');
     $Template->Unassign_block_vars('bbcode_mode');
@@ -240,7 +236,7 @@ elseif( !empty($id) ) //Vue de la news
 	$_field = 'extend_contents';
 	include('../kernel/framework/content/bbcode.php');
 	
-	$Template->Pparse('admin_news_management_bis'); 
+	$Template->Pparse('admin_news_management_bis');
 }
 elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la news.
 {
