@@ -42,66 +42,45 @@ class Feed
      * Constructor
      */
     {
-		$this->name = $feedName;
-		$this->path = trim($feedPath, '/') . '/';
-		
+        $this->name = $feedName;
+        $this->path = trim($feedPath, '/') . '/';
+        
+        if ( $type & USE_ATOM )
+        {
+            require_once('../kernel/framework/syndication/atom.class.php');
+            $this->feeds[USE_ATOM] = new ATOM($this->name, $this->path);
+            $this->type = 'atom';
+        }
         if ( $type & USE_RSS )
-		{
-			require_once('../kernel/framework/syndication/rss.work.class.php');
-			$this->feeds[USE_RSS] = new RSS($this->name, $this->path);
-		}
-		if ( $type & USE_ATOM )
-		{
-			require_once('../kernel/framework/syndication/atom.class.php');
-			$this->feeds[USE_ATOM] = new ATOM($this->name, $this->path);
+        {
+            require_once('../kernel/framework/syndication/rss.work.class.php');
+            $this->feeds[USE_RSS] = new RSS($this->name, $this->path);
+            $this->type = 'rss';
         }
     }
 
     function Get($nbItems = 5, $tpl = 'syndication/feed.tpl')
     /**
-     * Return the results of the feed generated as a string
+     * Return the results of the HTML feed generated as a string
      */
     {
         if ( ($nbItems == 5) && ($tpl == 'syndication/feed.tpl') )
         {
-            if ( ($HTMLfeed = @file_get_contents($this->path . $this->name . '.html')) !== false )
+            if ( ($HTMLfeed = @file_get_contents_emulate($this->path . $this->name . '.html')) !== false )
                 return $HTMLfeed;
         }
         return $this->getHTMLFeed($this->Parse($nbItems), $tpl);
     }
     
-    ## Private Methods ##
-    function TParse(&$feedInformations, $tpl = 'syndication/rss.tpl')
+    function TParse()
     /**
-     * Print the feed
+     * Print the feed from the rss or atom file
      */
     {
-        require_once('../kernel/framework/template.class.php');
-        $Template = new Template($tpl);
-        
-        $Template->Assign_vars(array(
-            'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
-            'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
-            'HOST' => HOST,
-            'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
-            'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
-        ));
-        
-        if ( isset($feedInformations['items']) )
-        {
-            foreach ( $feedInformations['items'] as $item )
-            {
-                $Template->Assign_block_vars('item', array(
-                    'DATE' => isset($item['date']) ? $item['date'] : '',
-                    'U_LINK' => isset($item['link']) ? $item['link'] : '',
-                    'DESC' => isset($item['desc']) ? $item['desc'] : '',
-                    'TITLE' => isset($item['title']) ? $item['title'] : ''
-                ));
-            }
-        }
-        $Template->Tparse();
+        if ( $feed = @file_get_contents_emulate($this->path . $this->name . '.' . $this->type) )
+            echo $feed;
     }
-    
+
     function Parse($nbItem = 5)
     /**
      * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
@@ -152,6 +131,7 @@ class Feed
         $Template->Assign_vars(array(
             'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
             'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
+            'U_LINK' => isset($feedInformations['link']) ? $feedInformations['link'] : '',
             'HOST' => HOST,
             'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
             'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
@@ -164,6 +144,7 @@ class Feed
                 $Template->Assign_block_vars('item', array(
                     'DATE' => isset($item['date']) ? $item['date'] : '',
                     'U_LINK' => isset($item['link']) ? $item['link'] : '',
+                    'U_GUID' => isset($item['guid']) ? $item['guid'] : '',
                     'DESC' => isset($item['desc']) ? $item['desc'] : '',
                     'TITLE' => isset($item['title']) ? $item['title'] : ''
                 ));
@@ -173,9 +154,10 @@ class Feed
     }
     
     ## Private attributes ##
-    var $name = ''; // Feed Name
-    var $path = ''; // Path where the feeds are stored
-    var $feeds = array();
+    var $name = '';         // Feed Name
+    var $path = '';         // Path where the feeds are stored
+    var $feeds = array();   // Feeds objects
+    var $type = '';         // Type of feed to use by default
 }
 
 ?>
