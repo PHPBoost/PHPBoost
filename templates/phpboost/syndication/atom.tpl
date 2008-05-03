@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>{TITLE}</title>
     <subtitle>{SUBTITLE}</subtitle>
-    <link href="{HOST}"/>
+    <link href="{U_LINK}"/>
     <updated>{DATE}</updated>
     <author>
         <name>PHPBoost</name>
@@ -16,7 +16,7 @@
     <entry>
         <title>{item.TITLE}</title>
         <link href="{item.U_LINK}"/>
-        <id>{item.ID}</id>
+        <id>{item.U_GUID}</id>
         <updated>{item.DATE}</updated>
         <summary>{item.DESC}</summary>
     </entry>

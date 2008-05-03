@@ -55,16 +55,18 @@ class ATOM extends Feed
                 $parsed = array();
                 $parsed['date'] = preg_match('`<updated>(.*)</updated>`is', $expParsed[0], $var) ? $var[1] : '';
                 $parsed['title'] = preg_match('`<title>(.*)</title>`is', $expParsed[0], $var) ? $var[1] : '';
+                $parsed['link'] = preg_match('`<link href="(.*)"/>`is', $expParsed[0], $var) ? $var[1] : '';
                 $parsed['host'] = preg_match('`<link href="(.*)"/>`is', $expParsed[0], $var) ? $var[1] : '';
                 $parsed['items'] = array();
                 
                 for($i = 1; $i <= $nbItems; $i++)
                 {
-                    $url = preg_match('`<link href="(.*)"/>`is', $expParsed[$i], $url) ? $url[1] : '';
                     $title = preg_match('`<title>(.*)</title>`is', $expParsed[$i], $title) ? $title[1] : '';
+                    $url = preg_match('`<link href="(.*)"/>`is', $expParsed[$i], $url) ? $url[1] : '';
+                    $guid = preg_match('`<id>(.*)</id>`is', $expParsed[$i], $guid) ? $guid[1] : '';
                     $date = preg_match('`<updated>(.*)</updated>`is', $expParsed[$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '';
-                    $summary = preg_match('`<summary>(.*)</summary>`is', $expParsed[$i], $summary) ? $summary[1] : '';
-                    array_push($parsed['items'], array('link' => $url, 'title' => $title, 'date' => $date, 'desc' => $summary));
+                    $desc = preg_match('`<summary>(.*)</summary>`is', $expParsed[$i], $desc) ? $desc[1] : '';
+                    array_push($parsed['items'], array('title' => $title, 'link' => $url, 'guid' => $guid, 'desc' => $desc, 'date' => $date));
                     unset($parsed['items'][$i]);
                 }
                 return $parsed;
@@ -86,6 +88,7 @@ class ATOM extends Feed
         $Template->Assign_vars(array(
             'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
             'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
+            'U_LINK' => isset($feedInformations['link']) ? $feedInformations['link'] : '',
             'HOST' => HOST,
             'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
             'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
@@ -98,6 +101,7 @@ class ATOM extends Feed
                 $Template->Assign_block_vars('item', array(
                     'DATE' => isset($item['date']) ? $item['date'] : '',
                     'U_LINK' => isset($item['link']) ? $item['link'] : '',
+                    'U_GUID' => isset($item['guid']) ? $item['guid'] : '',
                     'DESC' => isset($item['desc']) ? $item['desc'] : '',
                     'TITLE' => isset($item['title']) ? $item['title'] : ''
                 ));
