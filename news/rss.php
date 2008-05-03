@@ -59,27 +59,5 @@ if( defined('PHPBOOST') !== true)
     $Feed = new Feed('news', USE_RSS);
     $Feed->TParse($feedInformations);
 }
-else //Récupération directe du contenu.
-{
-    global $Sql, $LANG, $CONFIG, $Cache;
-    $Cache->Load_file('news');
-    global $CONFIG_NEWS;
-
-    $RSS_flux = array();
-    $result = $Sql->Query_while("SELECT id, title, timestamp
-    FROM ".PREFIX."news
-    WHERE visible = 1
-    ORDER BY timestamp DESC
-    " . $Sql->Sql_limit(0, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
-    while ($row = mysql_fetch_array($result))
-    {
-        $rewrited_title = ($CONFIG['rewrite'] == 1) ? '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php' : '.php?id=' . $row['id'];
-        $link = HOST . DIR . '/news/news' . $rewrited_title;
-        
-        //Variable utilisé pour la récupération du flux par le lecteur rss.
-        $RSS_flux[] = array($row['title'], $link, gmdate_format('date_format_tiny', $row['timestamp']));
-    }
-    $Sql->Close($result);
-}
 
 ?>

@@ -44,7 +44,7 @@ class ATOM extends Feed
      * the result as an Array and <false> if it couldn't open the feed.
      */
     {
-        $file = @file_get_contents($this->path . $this->name . '.atom');
+        $file = @file_get_contents_emulate($this->path . $this->name . '.atom');
         if( $file !== false )
         {
             if( preg_match('`<entry>(.*)</entry>`is', $file) )
