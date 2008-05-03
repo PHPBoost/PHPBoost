@@ -13,7 +13,7 @@
 ***************************************************************************/
 
 //Header's generation
-header("Content-Type: text/xml");
+header("Content-Type: application/xml; charset=iso-8859-1");
 
 require_once('../kernel/begin.php');
 require_once('../news/news_begin.php');
@@ -68,7 +68,7 @@ else
             'link' => $link,
             'guid' => $link,
             'desc' => ( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents,
-            'date' => gmdate_format('r', $row['timestamp'])
+            'date' => gmdate_format('Y-m-d',$row['timestamp']) . 'T' . gmdate_format('h:m:s',$row['timestamp']) . 'Z',
         ));
     }
     $Sql->Close($result);
