@@ -39,20 +39,32 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 {
 	switch($var_type)
 	{
-		case GET:
-			$var = isset($_GET[$var_name]) ? $_GET[$var_name] : $default_value;
-			break;
-		case POST:
-			$var = isset($_POST[$var_name]) ? $_POST[$var_name] : $default_value;
-			break;
-		case COOKIE:
-			$var = isset($_COOKIE[$var_name]) ? $_COOKIE[$var_name] : $default_value;
-			break;
-		case FILES:
-			$var = isset($_FILES[$var_name]) ? $_FILES[$var_name] : $default_value;
-			break;
-		default:
-			return;
+        case GET:
+            if( isset($_GET[$var_name]) )
+                $var = $_GET[$var_name];
+            else
+                return $default_value;
+            break;
+        case POST:
+            if( isset($_POST[$var_name]) )
+                $var = isset($_POST[$var_name]);
+            else
+                return $default_value;
+            break;
+        case COOKIE:
+            if( isset($_COOKIE[$var_name]) )
+                $var = isset($_COOKIE[$var_name]);
+            else
+                return $default_value;
+            break;
+        case FILES:
+            if( isset($_FILES[$var_name]) )
+                $var = isset($_FILES[$var_name]);
+            else
+                return $default_value;
+            break;
+        default:
+            return;
 	}
 	
 	$force_type = !isset($force_type) ? gettype($default_value) : $force_type;
