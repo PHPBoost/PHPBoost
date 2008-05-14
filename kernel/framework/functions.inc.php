@@ -47,19 +47,19 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
             break;
         case POST:
             if( isset($_POST[$var_name]) )
-                $var = isset($_POST[$var_name]);
+                $var = $_POST[$var_name];
             else
                 return $default_value;
             break;
         case COOKIE:
             if( isset($_COOKIE[$var_name]) )
-                $var = isset($_COOKIE[$var_name]);
+                $var = $_COOKIE[$var_name];
             else
                 return $default_value;
             break;
         case FILES:
             if( isset($_FILES[$var_name]) )
-                $var = isset($_FILES[$var_name]);
+                $var = $_FILES[$var_name];
             else
                 return $default_value;
             break;
