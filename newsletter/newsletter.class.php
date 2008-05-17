@@ -29,10 +29,6 @@ if( defined('PHPBOOST') !== true)	exit;
 	
 class Newsletter_sender
 {
-	function Newsletter_sender()
-    {
-    }
-	
 	function send_html($mail_object, $message, $email_test = '')
 	{
 		global $_NEWSLETTER_CONFIG, $LANG, $Sql;
