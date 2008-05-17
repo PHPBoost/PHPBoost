@@ -99,7 +99,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 			//Pseudo du membre connecté.
 			if( $Member->Get_attribute('user_id') !== -1 )
 				$Template->Assign_vars(array(
-					'SHOUTBOX_PSEUDO' => $Member->Get_attribute('login'),
+					'SHOUTBOX_PSEUDO' => $row['login'],
 					'C_HIDDEN_SHOUT' => true
 				));
 			else
