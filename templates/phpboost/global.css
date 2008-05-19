@@ -26,8 +26,8 @@
 	margin-bottom:-1px;
 }
 .row3, .block_contents3{
-	background:#A6BACF;
-	border:1px solid #487B9C;
+	background:#F2F7FB;
+	border:1px solid #C4CED6;
 	padding:6px;
 	margin-bottom:-1px;
 }
@@ -123,9 +123,8 @@ a.membre{
 .pagination {
     font-size: 11px;
 }
-
 .pagination_current_page {
-    text-decoration: underline;
+    text-decoration:underline;
 }
 
 /*Menu dynamique des liens
@@ -153,17 +152,17 @@ a.membre{
 }
  /* Lien du menu */
 .dynamic_menu h5{
-	color:#edfff0;
+	color:#0578CC;
 	text-align:center;
-	background:#53708F;
-	border:1px solid #122B40;
+	background:#F2F7FB;
+	border:1px solid #C4CED6;
 	padding:4px 6px;
 	font-weight:bold;
 	font-size:12px;
 }
 .dynamic_menu h5:hover{
-	color:#edfff0;
-	background:#68809B;
+	color:#01528D;
+	background:#80BFEE;
 	cursor:default;
 }
 

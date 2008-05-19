@@ -53,16 +53,22 @@ class Newsletter_sender
 			//On enregistre dans les archives la newsletter envoyée
 			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "','" . addslashes($message) . "', '" . time() . "', 'html', '" . $nbr . "')", __LINE__, __FILE__);
 			
+			$mailing_list = array();
 			$result = $Sql->Query_while("SELECT id, mail 
 			FROM ".PREFIX."newsletter 
 			ORDER BY id", __LINE__, __FILE__);			
 			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
-				if( !@mail($row['mail'], $mail_object, str_replace('[UNSUBSCRIBE_LINK]', '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $row['id'] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a><br /><br />', $message), $headers) )
-					$error_mailing_list[] = $row['mail'];
-			}		
+				$mailing_list[] = array($row['id'], $row['mail']);
+			}
 			$Sql->Close($result);
-			
+			 
+			foreach($mailing_list as $array_mail)
+			{
+				if( !@mail($array_mail[1], $mail_object, str_replace('[UNSUBSCRIBE_LINK]', '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a><br /><br />', $message), $headers) )
+					$error_mailing_list[] = $array_mail[1];
+			}
+
 			return $error_mailing_list;
 		}
 		else
@@ -96,16 +102,22 @@ class Newsletter_sender
 			//On enregistre dans les archives la newsletter envoyée
 			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . strprotect($mail_object) . "', '" . addslashes($message) . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
 			
+			$mailing_list = array();
 			$result = $Sql->Query_while("SELECT id, mail 
 			FROM ".PREFIX."newsletter 
 			ORDER BY id", __LINE__, __FILE__);			
 			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
-				$mail_contents_end = '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $row['id'] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a></body></html>';
-				if( !@mail($row['mail'], $mail_object, $mail_contents . $mail_contents_end, $headers) )
-					$error_mailing_list[] = $row['mail'];
+				$mailing_list[] = array($row['id'], $row['mail']);
 			}
 			$Sql->Close($result);
+			 
+			foreach($mailing_list as $array_mail)
+			{
+				$mail_contents_end = '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a></body></html>';
+				if( !@mail($array_mail[1], $mail_object, $mail_contents . $mail_contents_end, $headers) )
+					$error_mailing_list[] = $array_mail[1];
+			}
 			
 			return $error_mailing_list;
 		}
@@ -131,17 +143,23 @@ class Newsletter_sender
 			//On enregistre dans les archives la newsletter envoyée
 			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . addslashes($message) . "', '" . time() . "', 'text', '" . $nbr . "')", __LINE__, __FILE__);
 			
+			$mailing_list = array();
 			$result = $Sql->Query_while("SELECT id, mail 
 			FROM ".PREFIX."newsletter 
 			ORDER BY id", __LINE__, __FILE__);
 			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
-				$mail_contents = $message . "\n\n" . $LANG['newsletter_unscubscribe_text'] . HOST . DIR . '/membre/newsletter.php?id=' . $row['id'];			
-				if( !@mail($row['mail'], $mail_object, $mail_contents, $header) )
-					$error_mailing_list[] = $row['mail'];
+				$mailing_list[] = array($row['id'], $row['mail']);
 			}
 			$Sql->Close($result);
-				
+			 
+			foreach($mailing_list as $array_mail)
+			{
+				$mail_contents = $message . "\n\n" . $LANG['newsletter_unscubscribe_text'] . HOST . DIR . '/membre/newsletter.php?id=' . $array_mail[0];			
+				if( !@mail($array_mail[1], $mail_object, $mail_contents, $header) )
+					$error_mailing_list[] = $array_mail[1];
+			}
+			
 			return $error_mailing_list;
 		}
 		else
