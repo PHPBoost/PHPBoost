@@ -57,13 +57,14 @@ if( $edit_file_id > 0 )
 	{
 		$file_title = retrieve(POST, 'title', '');
 		$file_image = retrieve(POST, 'image', '');
-		$file_contents = retrieve(POST, 'contents', '');
+		$file_contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+		$file_short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNSECURE);
 		$file_url = retrieve(POST, 'url', '');
-		$file_short_contents = retrieve(POST, 'short_contents', '');
 		$file_timestamp = retrieve(POST, 'timestamp', 0);
 		$file_last_update_timestamp = retrieve(POST, 'last_update_timestamp', 0);
 		$file_size = retrieve(POST, 'size', 0.0, TFLOAT);
 		$file_hits = retrieve(POST, 'hits', 0);
+		$file_cat_id = retrieve(POST, 'idcat', 0);
 		
 		$Template->Set_filenames(array('download' => 'download/download.tpl'));
 		
@@ -73,7 +74,7 @@ if( $edit_file_id > 0 )
 			'C_EDIT_AUTH' => false,
 			'MODULE_DATA_PATH' => $Template->Module_data_path('download'),
 			'NAME' => $file_title,
-			'CONTENTS' => second_parse(strparse($file_contents)),
+			'CONTENTS' => second_parse(stripslashes(strparse($file_contents))),
 			'INSERTION_DATE' => gmdate_format('date_format_short', $file_timestamp),
 			'LAST_UPDATE_DATE' => gmdate_format('date_format_short', $file_last_update_timestamp),
 			'SIZE' => ($file_size >= 1) ? $file_size . ' ' . $LANG['unit_megabytes'] : ($file_size * 1024) . ' ' . $LANG['unit_kilobytes'],
@@ -98,8 +99,33 @@ if( $edit_file_id > 0 )
 			'U_DELETE_FILE' => transid('management.php?del=' . $edit_file_id),
 			'U_DOWNLOAD_FILE' => transid('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php')
 		));
+		
+		$Template->Assign_vars(array(
+			'TITLE' => $file_title,
+			'COUNT' => $file_hits,
+			'DESCRIPTION' => $file_contents,
+			'SHORT_DESCRIPTION' => $file_short_contents,
+			'FILE_IMAGE' => $file_image,
+			'URL' => $file_url,
+			'SIZE' => $file_size,
+			'DATE' => gmdate_format('date_format_short', $file_infos['timestamp']),
+			'CATEGORIES_TREE' => $download_categories->Build_select_form($file_cat_id, 'idcat', 'idcat')
+		));
 	}
-	
+	else
+	{
+		$Template->Assign_vars(array(
+			'TITLE' => $file_infos['title'],
+			'COUNT' => !empty($file_infos['count']) ? $file_infos['count'] : 0,
+			'DESCRIPTION' => unparse($file_infos['contents']),
+			'SHORT_DESCRIPTION' => unparse($file_infos['short_contents']),
+			'FILE_IMAGE' => $file_infos['image'],
+			'URL' => $file_infos['url'],
+			'SIZE' => $file_infos['size'],
+			'DATE' => gmdate_format('date_format_short', $file_infos['timestamp']),
+			'CATEGORIES_TREE' => $download_categories->Build_select_form($file_infos['idcat'], 'idcat', 'idcat')
+		));
+	}
 	include('../kernel/framework/content/bbcode.php');
 
 	$Template->Assign_vars(array(
@@ -107,6 +133,7 @@ if( $edit_file_id > 0 )
 		'COUNT' => $preview ? $file_hits : !empty($file_infos['count']) ? $file_infos['count'] : 0,
 		'DESCRIPTION' => $preview ? $file_contents : unparse($file_infos['contents']),
 		'SHORT_DESCRIPTION' => $preview ? $file_short_contents : unparse($file_infos['short_contents']),
+		'FILE_IMAGE' => $preview ? $file_image : $file_infos['image'],
 		'URL' => $preview ? $file_url : $file_infos['url'],
 		'SIZE' => $preview ? $file_size : $file_infos['size'],
 		'UNIT_SIZE' => $LANG['unit_megabytes'],
@@ -131,6 +158,7 @@ if( $edit_file_id > 0 )
 		'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
 		'L_SIZE' => $LANG['size'],
 		'L_URL' => $LANG['url'],
+		'L_FILE_IMAGE' => $DOWNLOAD_LANG['file_image'],
 		'L_TITLE' => $LANG['title'],
 		'L_CATEGORY' => $LANG['category'],
 		'L_REQUIRE' => $LANG['require'],
@@ -141,9 +169,11 @@ if( $edit_file_id > 0 )
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
 		'L_PREVIEW' => $LANG['preview'],
+		'L_UNIT_SIZE' => $LANG['unit_megabytes'],
 		'L_CONTENTS' => $DOWNLOAD_LANG['complete_contents'],
 		'L_SHORT_CONTENTS' => $DOWNLOAD_LANG['short_contents'],
-		'L_SUBMIT' => $DOWNLOAD_LANG['add_file'],
+		'L_SUBMIT' => $edit_file_id > 0 ? $DOWNLOAD_LANG['update_file'] : $DOWNLOAD_LANG['add_file'],
+		'L_WARNING_PREVIEWING' => $DOWNLOAD_LANG['warning_previewing'],
 		'U_TARGET' => transid('management.php?edit=' . $edit_file_id)
 	));
 	

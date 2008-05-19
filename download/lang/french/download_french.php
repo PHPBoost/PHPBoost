@@ -82,6 +82,9 @@ $DOWNLOAD_LANG['files_management'] = 'Gestion des fichiers';
 $DOWNLOAD_LANG['file_management'] = 'Modification d\'un fichier';
 $DOWNLOAD_LANG['file_addition'] = 'Ajout d\'un fichier';
 $DOWNLOAD_LANG['add_file'] = 'Ajouter le fichier';
+$DOWNLOAD_LANG['update_file'] = 'Modifier le fichier';
+$DOWNLOAD_LANG['warning_previewing'] = 'Attention, vous prévisualisez la fiche correspondant à votre fichier. Tant que vous ne validez pas vos modifications elles ne seront pas prises en compte.';
+$DOWNLOAD_LANG['file_image'] = 'Adresse de l\'image illustrant le fichier';
 
 //Catégories
 $DOWNLOAD_LANG['add_category'] = 'Ajouter une catégorie';
