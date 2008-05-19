@@ -7,8 +7,12 @@
 [-] Editeur de .htaccess
 [-] Interface de rapport du système pour le support
 [-] Intégration des sitemaps dans les interfaces modules
+[-] Supporter https dans l'installation et l'administration
 
 ------------------------------------ MODULES -----------------------------------
+
+[-] Intégration des catégories infinies dans des modules (download, gallery, web
+...)
 
 ################################################################################
 

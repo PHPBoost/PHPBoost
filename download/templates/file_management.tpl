@@ -33,7 +33,7 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				{TITLE}
+				{L_PAGE_TITLE}
 			</div>
 			<div class="module_contents">
 			# IF C_ERROR_HANDLER #
@@ -47,6 +47,9 @@
 			# ENDIF #
 			
 			# IF C_PREVIEW #
+				<div class="notice">
+					{L_WARNING_PREVIEWING}
+				</div>
 				# INCLUDE download #
 			# ENDIF #
 
@@ -70,7 +73,7 @@
 					</dl>
 					<dl>
 						<dt><label for="size">{L_SIZE}</label></dt>
-						<dd><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE}" class="text" /> {UNIT_SIZE}</dd>
+						<dd><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE}" class="text" /> {L_UNIT_SIZE}</dd>
 					</dl>
 					<dl>
 						<dt><label for="count">{L_DOWNLOAD}</label></dt>
@@ -87,6 +90,16 @@
 					{BBCODE_CONTENTS_SHORT}
 					<textarea type="text" rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_DESCRIPTION}</textarea>
 					<br /><br />
+					<dl>
+						<dt>
+							<label for="image">
+								{L_FILE_IMAGE}
+							</label>
+						</dt>
+						<dd>
+							<input type="text" size="50" name="image" class="text" value="{FILE_IMAGE}" />
+						</dd>
+					</dl>
 					<dl class="overflow_visible">
 						<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
 						<dd>
