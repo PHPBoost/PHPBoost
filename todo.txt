@@ -25,6 +25,8 @@
 [-] Classe de BBCode et désactivation des balises non autorisées
 [-] Ajout d'un nouveau mode d'affichage pour la balise hide.
 [-] Changer fonction d'insertion des membres pour ie (groupes)
+[-] Stats, refaire les outils "Sites référents" et "Mots clés"
+[-] Stats, réparer ellipses
 
 ------------------------------------ MODULES -----------------------------------
 [-] Module liens du site

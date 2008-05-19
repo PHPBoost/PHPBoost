@@ -6,8 +6,6 @@
 		<meta name="description" content="{SITE_DESCRIPTION}" />
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
-		<meta name="Robots" content="index, follow, all" />
-		<meta name="classification" content="tout public" />
 		<link rel="stylesheet" href="../templates/{THEME}/design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="../templates/{THEME}/global.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="../templates/{THEME}/generic.css" type="text/css" media="screen, print, handheld" />
