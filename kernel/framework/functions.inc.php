@@ -224,9 +224,12 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
         {
             $config = fgets($handle, 8192);
             if( strpos($config, 'config="') !== false )
-                return $config;
+            {    
+				@fclose($handle);
+				return $config;
+			}
         }
-        fclose($handle);
+        @fclose($handle);
     }
 }
 
@@ -241,7 +244,7 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
             $dh = @opendir($dir_path);
             while( !is_bool($dir = @readdir($dh)) )
             {   
-                if( !preg_match('`\.`', $dir) )
+                if( !strstr($dir, '.') )
                     return $dir;
             }
             @closedir($dh);
@@ -376,10 +379,7 @@ function transid($url, $mod_rewrite = '', $esperluette = '&amp;')
 function url_encode_rewrite($string)
 {
     $string = strtolower(html_entity_decode($string));
-
-    $chars_special = array(' ', 'é', 'è', 'ê', 'à', 'â', 'ù', 'ü', 'û', 'ï', 'î', 'ô', 'ç');
-    $chars_replace = array('-', 'e', 'e', 'e', 'a', 'a', 'u', 'u', 'u', 'i', 'i', 'o', 'c');
-    $string = str_replace($chars_special, $chars_replace, $string);
+	$string = strtr($string, ' éèêàâùüûïîôç', '-eeeaauuuiioc');
 
     $string = preg_replace('`([^a-z0-9]|[\s])`', '-', $string);
     $string = preg_replace('`[-]{2,}`', '-', $string);
@@ -590,7 +590,7 @@ function number_round($number, $dec)
 //Remplacement de la fonction file_get_contents.
 function file_get_contents_emulate($filename, $incpath = false, $resource_context = null)
 {
-    if( false === $fh = fopen($filename, 'rb', $incpath) ) 
+    if( false === $fh = @fopen($filename, 'rb', $incpath) ) 
     {
         user_error('file_get_contents_emulate() failed to open stream: No such file or directory', E_USER_WARNING);
         return false;
