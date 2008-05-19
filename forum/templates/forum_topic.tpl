@@ -106,7 +106,9 @@
 					<a href="rss.php?cat={ID}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					&bull; {U_FORUM_CAT} {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span>
 				</span>
-				<span style="float:right;">{PAGINATION} {LOCK} {MOVE}</span>&nbsp;
+				<span style="float:right;">
+					{PAGINATION} {LOCK} {MOVE}
+				</span>
 			</div>
 		</div>	
 
