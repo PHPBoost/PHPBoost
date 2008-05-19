@@ -7,6 +7,8 @@ Contient les classes supplémentaires pour l'administration.
 div#admin_main{
 	background:#FFFFFF;
 	padding:0px 6px;
+	border-left:1px solid #1C618C;	
+	border-right:1px solid #1C618C;	
 }
 div#admin_contents{
 	height:450px;

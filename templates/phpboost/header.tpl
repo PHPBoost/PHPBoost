@@ -153,7 +153,7 @@
 	# IF C_START_LEFT #
 	<div id="left_menu">
 		<p class="text_center">
-			<a href="../download/download-2-52+phpboost-2-0.php"><img src="../templates/{THEME}/images/theme/download_phpboost.png" alt="" /></a>
+			<a href="../download/download-2-52+phpboost-2-0.php"><img src="../templates/{THEME}/images/theme/download_phpboost.png" id="download_phpboost" alt="" onmouseover="change_img_path('download_phpboost', '../templates/{THEME}/images/theme/download_phpboost2.png')" onmouseout="change_img_path('download_phpboost', '../templates/{THEME}/images/theme/download_phpboost.png')" /></a>
 		</p>		
 		<hr style="width:90%;margin:auto" />
 		{MODULES_MINI_LEFT_CONTENT}
