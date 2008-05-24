@@ -32,7 +32,6 @@ load_module_lang('wiki');
 define('TITLE', $LANG['wiki'] . ': ' . $LANG['wiki_contribuate']);
 define('ALTERNATIVE_CSS', 'wiki');
 
-
 $bread_crumb_key = 'wiki_post';
 require_once('../wiki/wiki_bread_crumb.php');
 
@@ -41,7 +40,7 @@ $is_cat_get = (retrieve(GET, 'type', '') == 'cat') ? 1 : 0;
 $is_cat = $is_cat > 0 ? $is_cat : $is_cat_get;
 $id_edit = retrieve(POST, 'id_edit', 0);
 $title = retrieve(POST, 'title', '');
-$encoded_title = retrieve(GET, 'title', 0);
+$encoded_title = retrieve(GET, 'title', '');
 $contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_UNSECURE));
 $contents_preview = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
 $id_cat = retrieve(GET, 'id_parent', 0);
