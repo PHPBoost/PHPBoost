@@ -25,6 +25,7 @@
  *
 ###################################################*/
 
+header('HTTP/1.0 404 Not Found'); //Header 404
 require_once('../kernel/begin.php'); 
 define('TITLE', $LANG['title_error'] . ' 404');
 require_once('../kernel/header.php'); 
