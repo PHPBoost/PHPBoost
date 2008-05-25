@@ -131,7 +131,7 @@ else
 					'SRC' => $value['icon'],
 					'IMG_NAME' => addslashes($value['name']),
 					'NUM_FILES' => sprintf(((int)$value['num_files'] > 1 ? $DOWNLOAD_LANG['num_files_plural'] : $DOWNLOAD_LANG['num_files_singular']), (int)$value['num_files']),
-					'U_CAT' => transid('faq.php?id=' . $id, 'category-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
+					'U_CAT' => transid('download.php?id=' . $id, 'category-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
 					'U_ADMIN_CAT' => transid('admin_download_cat.php?edit=' . $id),
 					'C_CAT_IMG' => !empty($value['icon'])
 				));

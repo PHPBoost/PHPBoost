@@ -107,7 +107,7 @@ class Upload
 	{
 		if( !empty($regexp) )
 		{
-			if( preg_match($regexp, $filename) && !preg_match('`\.php`', $filename) ) //Valide, sinon supprimé
+			if( preg_match($regexp, $filename) && !preg_match('`\.php`i', $filename) ) //Valide, sinon supprimé
 				return true;
 			return false;
 		}
@@ -118,11 +118,7 @@ class Upload
 	function clean_filename($string)
 	{
 		$string = strtolower($string);
-
-		$chars_special = array(' ', 'é', 'è', 'ê', 'à', 'â', 'ù', 'ü', 'û', 'ï', 'î', 'ô', 'ç');
-		$chars_replace = array('-', 'e', 'e', 'e', 'a', 'a', 'u', 'u', 'u', 'i', 'i', 'o', 'c');
-		$string = str_replace($chars_special, $chars_replace, $string);
-
+		$string = strtr($string, ' éèêàâùüûïîôç', '-eeeaauuuiioc');
 		$string = preg_replace('`([^a-z0-9]|[\s])`', '_', $string);
 		$string = preg_replace('`[_]{2,}`', '_', $string);
 		$string = trim($string, ' _');

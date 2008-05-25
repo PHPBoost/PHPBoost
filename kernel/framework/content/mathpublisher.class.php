@@ -742,7 +742,7 @@ class expression_math extends  expression
 	{
 		$this->texte = "&$";
 		$this->noeuds = $exp;
-		$this->noeuds = $this->parse();
+		$this->noeuds = $this->strparse();
 	}
 
 	function strparse()

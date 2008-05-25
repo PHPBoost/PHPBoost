@@ -51,7 +51,7 @@ elseif( !empty($_GET['stats_referer']) ) //Recherche d'un membre pour envoyer le
 
 	$result = $Sql->Query_while("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
 	FROM ".PREFIX."stats_referer
-	WHERE url = '" . $url . "' AND type = 0
+	WHERE url = '" . addslashes($url) . "' AND type = 0
 	ORDER BY total_visit DESC", __LINE__, __FILE__);
 	while($row = $Sql->Sql_fetch_assoc($result))
 	{	
@@ -106,7 +106,7 @@ elseif( !empty($_GET['stats_keyword']) ) //Recherche d'un membre pour envoyer le
 
 	$result = $Sql->Query_while("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
 	FROM ".PREFIX."stats_referer
-	WHERE relative_url = '" . $keyword . "' AND type = 1
+	WHERE relative_url = '" . addslashes($keyword) . "' AND type = 1
 	ORDER BY total_visit DESC", __LINE__, __FILE__);
 	while($row = $Sql->Sql_fetch_assoc($result))
 	{	
