@@ -53,7 +53,7 @@ class Feed
         }
         if ( $type & USE_RSS )
         {
-            require_once('../kernel/framework/syndication/rss.class.php');
+            require_once('../kernel/framework/syndication/rss.work.class.php');
             $this->feeds[USE_RSS] = new RSS($this->name, $this->path);
             $this->type = 'rss';
         }
