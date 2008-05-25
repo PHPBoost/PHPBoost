@@ -380,7 +380,6 @@ function url_encode_rewrite($string)
 {
     $string = strtolower(html_entity_decode($string));
 	$string = strtr($string, ' יטךאגשüûןמפח', '-eeeaauuuiioc');
-
     $string = preg_replace('`([^a-z0-9]|[\s])`', '-', $string);
     $string = preg_replace('`[-]{2,}`', '-', $string);
     $string = trim($string, ' -');
