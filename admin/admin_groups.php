@@ -292,6 +292,7 @@ else //Liste des groupes.
 	  
 	$result = $Sql->Query_while("SELECT id, name, img
 	FROM ".PREFIX."group 
+	ORDER BY name
 	" . $Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
