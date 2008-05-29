@@ -74,7 +74,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	{
 		include_once('../kernel/framework/files/upload.class.php');
 		$Upload = new Upload($dir);
-		$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+`i', UNIQ_NAME);
+		$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+`i$', UNIQ_NAME);
 		
 		if( !empty($Upload->error) ) //Erreur, on arrête ici
 			redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->error . '#errorh');

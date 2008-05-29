@@ -138,7 +138,7 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 		{
 			include_once('../kernel/framework/files/upload.class.php');
 			$Upload = new Upload($dir);
-			if( $Upload->Upload_file('upload_module', '`([a-z0-9_-])+\.(gzip|zip)+`i') )
+			if( $Upload->Upload_file('upload_module', '`([a-z0-9_-])+\.(gzip|zip)+$`i') )
 			{					
 				$archive_path = '../' . $Upload->filename['upload_module'];
 				//Place à la décompression.

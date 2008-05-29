@@ -455,7 +455,7 @@ if( !empty($id_get) ) //Espace membre
 			{
 				if( $_FILES['avatars']['size'] > 0 )
 				{
-					$Upload->Upload_file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
+					$Upload->Upload_file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 					if( !empty($Upload->error) ) //Erreur, on arrête ici
 						redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->error) . '#errorh');
 					else

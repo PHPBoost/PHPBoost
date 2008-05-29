@@ -107,7 +107,7 @@ class Upload
 	{
 		if( !empty($regexp) )
 		{
-			if( preg_match($regexp, $filename) && !preg_match('`\.php`i', $filename) ) //Valide, sinon supprimé
+			if( preg_match($regexp, $filename) && strpos($filename, '.php') === false ) //Valide, sinon supprimé
 				return true;
 			return false;
 		}

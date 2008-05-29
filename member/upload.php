@@ -142,7 +142,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 			$weight_max = $unlimited_data ? 100000000 : ($group_limit - $member_memory_used);
 			include_once('../kernel/framework/files/upload.class.php');
 			$Upload = new Upload($dir);
-			$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+`i', UNIQ_NAME, $weight_max);
+			$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+$`i', UNIQ_NAME, $weight_max);
 			
 			if( !empty($Upload->error) ) //Erreur, on arrête ici
 			{

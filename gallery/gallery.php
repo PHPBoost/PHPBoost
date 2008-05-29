@@ -100,7 +100,7 @@ elseif( isset($_FILES['gallery']) ) //Upload
 	{
 		if( $_FILES['gallery']['size'] > 0 )
 		{
-			$Upload->Upload_file('gallery', '`([a-z0-9])+\.(jpg|gif|png)+`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
+			$Upload->Upload_file('gallery', '`([a-z0-9])+\.(jpg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 			if( !empty($Upload->error) ) //Erreur, on arrête ici
 				redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->error, '-' . $g_idcat . '.php?add=1&error=' . $Upload->error, '&') . '#errorh');
 			else

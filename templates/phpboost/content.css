@@ -92,7 +92,7 @@ input.submit{
 	padding:1px;
 	font-weight:bold;
 	font-size:10px;
-	background:#FFFFFF url(images/form/form.png) repeat-x;
+	background:#A9CEE9 url(images/form/form.png) repeat-x;
 }
 input.reset{
 	border:1px solid #B0C1CB;	
