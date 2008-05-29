@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                         feed.class.php
- *                            -------------------
- *   begin                : April 21, 2008
- *   copyright            : (C) 2005 Lo�c Rouchon
+ *                        extern_feed.class.php
+ *                         -------------------
+ *   begin                : May 29, 2008
+ *   copyright            : (C) 2005 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -25,54 +25,32 @@
  *
 ###################################################*/
 
-define('FEED_PATH', '../cache/syndication');
+require_once('../kernel/framework/syndication/feed.class.php');
 
-define('USE_RSS', 0x01);
-define('USE_ATOM', 0x02);
-define('EXTERN_FEED', 0x04);
-define('ALL_FEEDS', USE_RSS|USE_ATOM);
-
-define('STATIC_MODE', 0x01);
-define('DYNAMIC_MODE', 0x02);
-
-class Feed
+class ExternFeed
 {
     ## Public Methods #
-    function Feed($feedName, $type = ALL_FEEDS, $feedPath = FEED_PATH)
+    function ExternFeed($url)
     /**
      * Constructor
      */
     {
-        $this->name = $feedName;
-        $this->path = trim($feedPath, '/') . '/';
+        $this->url = $url;
+        $this->str = @file_get_contents_emulate($this->url);
         
-        if ( $type & USE_ATOM )
-        {
-            require_once('../kernel/framework/syndication/atom.class.php');
-            $this->feeds[USE_ATOM] = new ATOM($this->name, $this->path);
-            $this->type = 'atom';
+        // Vérification du type de flux
+        if ( preg_match('`<rss[^>]*>`', $this->str) )
+        {   // RSS
+//             $this->feed = new RSS($this->name, $this->path);
+//             echo 'RSS';
         }
-        if ( $type & USE_RSS )
-        {
-            require_once('../kernel/framework/syndication/rss.work.class.php');
-            $this->feeds[USE_RSS] = new RSS($this->name, $this->path);
-            $this->type = 'rss';
+        else if ( preg_match('`<feed[^>]+atom.*>`', $this->str) )
+        {   // ATOM
+//             $this->feed = new ATOM($this->name, $this->path);
+//             echo 'ATOM';
         }
     }
 
-    function Get($nbItems = 5, $tpl = 'syndication/feed.tpl')
-    /**
-     * Return the results of the HTML feed generated as a string
-     */
-    {
-        if ( ($nbItems == 5) && ($tpl == 'syndication/feed.tpl') )
-        {
-            if ( ($HTMLfeed = @file_get_contents_emulate($this->path . $this->name . '.html')) !== false )
-                return $HTMLfeed;
-        }
-        return $this->getHTMLFeed($this->Parse($nbItems), $tpl);
-    }
-    
     function TParse()
     /**
      * Print the feed from the rss or atom file
@@ -89,37 +67,13 @@ class Feed
      * the result as an Array.
      */
     {
-        foreach ( $this->feeds as $feed )
+        if ( ($parsed = $feed->Parse($nbItem)) !== false )
         {
-            if ( ($parsed = $feed->Parse($nbItem)) !== false )
                 return $parsed;
         }
         return array();
     }
-
-    function Generate(&$feedInformations, $mode = STATIC_MODE)
-    /**
-     * Generate the feed contained into the files <$feedFile>.rss and <$feedFile>.atom
-     * and also the HTML cache for direct includes.
-     */
-    {
-        foreach ( $this->feeds as $feed )
-        {
-            $feed->Generate($feedInformations);
-            if ( $mode != STATIC_MODE )
-                break;
-        }
-    }
     
-    function GenerateCache(&$feedInformations, $tpl = 'syndication/feed.tpl')
-    /**
-     * Generate the HTML cache for direct includes.
-     */
-    {
-        $file = fopen($this->path . $this->name . '.html', 'w+');
-        fputs($file, $this->getHTMLFeed($feedInformations, $tpl));
-        fclose($file);
-    }
     ## Private Methods ##
     function getHTMLFeed(&$feedInformations, $tpl)
     /**
@@ -155,10 +109,9 @@ class Feed
     }
     
     ## Private attributes ##
-    var $name = '';         // Feed Name
-    var $path = '';         // Path where the feeds are stored
-    var $feeds = array();   // Feeds objects
-    var $type = '';         // Type of feed to use by default
+    var $url = '';          // URL of the feed
+    var $str = '';          // String of feed to use by default
+    var $feed = '';         // Feed object
 }
 
 ?>
