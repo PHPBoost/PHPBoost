@@ -34,7 +34,7 @@
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<div style="float:left;padding-left:30px;"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a></div>
+				<div style="float:left;padding-left:30px;"><a href="syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a></div>
 				<div style="float:right;"><h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
 			</div>	
 			<div class="news_content">
@@ -56,7 +56,7 @@
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<span style="float:left;padding-left:5px;"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> &nbsp;&nbsp;<a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a></span>
+				<span style="float:left;padding-left:5px;"><a href="syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> &nbsp;&nbsp;<a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a></span>
 				<span style="float:right;">{news.COM}{news.EDIT}{news.DEL}</span>
 			</div>
 			<div class="news_content">
@@ -95,7 +95,7 @@
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<div style="float:left"><a href="rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
+				<div style="float:left"><a href="syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
 				<div style="float:right">{news.COM}{news.EDIT}{news.DEL}</div>
 			</div>	
 			<div class="news_content">
@@ -119,12 +119,12 @@
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<h3 class="title valign_middle"><a href="../forum/rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> Dossiers</h3>
+				<h3 class="title valign_middle"><a href="../forum/syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> Dossiers</h3>
 			</div>						
 			<div class="news_content">
 				<div style="float:left;width:73px"><img src="http://img.clubic.com/photo/0049003701299648.jpg" alt="Aventure au sommet, le Pic Rouge en Test" /></div>
 				<div style="float:left;width:250px;padding-left:6px;">
-					<a href="">Comment sécuriser votre site</a> 					
+					<a href="">Comment sï¿½curiser votre site</a> 					
 					<p class="text_small">Le 28/04/2008 - <a href="" class="small_link">Lire l'article</a></p>
 				</div>
 				<div class="spacer"></div>
@@ -156,23 +156,23 @@
 			</div>						
 			<div class="news_content">
 				<img src="http://www.phpboost.com/upload/boostor_mini.jpg" class="img_right" alt="" />
-				PHPBoost est un CMS (<em>Content Managing System</em> ou <em>système de gestion de contenu</em>) <strong>français</strong>. Ce logiciel permet à n'importe qui de créer son site de façon très simple, tout est assisté. Conçu pour satisfaire les débutants, il devrait aussi ravir les utilisateurs expérimentés qui souhaiteraient pousser son fonctionnement ou encore développer leurs propres modules.<br>
-PHPBoost est un <strong><a href="http://fr.wikipedia.org/wiki/Logiciel_libre">logiciel libre</a></strong> distribué sous la <a href="http://fr.wikipedia.org/wiki/Licence_publique_g%C3%A9n%C3%A9rale_GNU">licence GPL</a>.<br>
+				PHPBoost est un CMS (<em>Content Managing System</em> ou <em>systï¿½me de gestion de contenu</em>) <strong>franï¿½ais</strong>. Ce logiciel permet ï¿½ n'importe qui de crï¿½er son site de faï¿½on trï¿½s simple, tout est assistï¿½. Conï¿½u pour satisfaire les dï¿½butants, il devrait aussi ravir les utilisateurs expï¿½rimentï¿½s qui souhaiteraient pousser son fonctionnement ou encore dï¿½velopper leurs propres modules.<br>
+PHPBoost est un <strong><a href="http://fr.wikipedia.org/wiki/Logiciel_libre">logiciel libre</a></strong> distribuï¿½ sous la <a href="http://fr.wikipedia.org/wiki/Licence_publique_g%C3%A9n%C3%A9rale_GNU">licence GPL</a>.<br>
 
 <br>
-Comme son nom l'indique, PHPBoost utilise le PHP comme langage de programmation principal, mais, comme toute application Web, il utilise du XHTML et des CSS pour la mise en forme des pages, du JavaScript pour ajouter une touche dynamique sur les pages, ainsi que du SQL pour effectuer des opérations dans la base de données. Il s'installe sur un serveur Web et se paramètre à distance.<br>
+Comme son nom l'indique, PHPBoost utilise le PHP comme langage de programmation principal, mais, comme toute application Web, il utilise du XHTML et des CSS pour la mise en forme des pages, du JavaScript pour ajouter une touche dynamique sur les pages, ainsi que du SQL pour effectuer des opï¿½rations dans la base de donnï¿½es. Il s'installe sur un serveur Web et se paramï¿½tre ï¿½ distance.<br>
 <br>
-Comme pour une grande majorité de logiciels libres, la communauté de PHPBoost lui permet d'avoir à la fois une fiabilité importante car beaucoup d'utilisateurs ont testé chaque version et les ont ainsi approuvées. Il bénéficie aussi par ailleurs d'une évolution rapide car nous essayons d'être le plus possible à l'écoute des commentaires et des propositions de chacun. Même si tout le monde ne participe pas à son développement, beaucoup de gens nous ont aidés, rien qu'en nous donnant des idées, nous suggérant des modifications, des fonctionnalités supplémentaires.<br>
+Comme pour une grande majoritï¿½ de logiciels libres, la communautï¿½ de PHPBoost lui permet d'avoir ï¿½ la fois une fiabilitï¿½ importante car beaucoup d'utilisateurs ont testï¿½ chaque version et les ont ainsi approuvï¿½es. Il bï¿½nï¿½ficie aussi par ailleurs d'une ï¿½volution rapide car nous essayons d'ï¿½tre le plus possible ï¿½ l'ï¿½coute des commentaires et des propositions de chacun. Mï¿½me si tout le monde ne participe pas ï¿½ son dï¿½veloppement, beaucoup de gens nous ont aidï¿½s, rien qu'en nous donnant des idï¿½es, nous suggï¿½rant des modifications, des fonctionnalitï¿½s supplï¿½mentaires.<br>
 <br>
 Si vous ne deviez retenir que quelques points essentiels sur le projet, ce seraient ceux-ci :<br>
 <ul class="bb_ul"><li class="bb_li">Projet Open Source sous licence GNU/GPL
-</li><li class="bb_li">Code XHTML 1.0 strict et sémantique
+</li><li class="bb_li">Code XHTML 1.0 strict et sï¿½mantique
 </li><li class="bb_li">Multilangue
-</li><li class="bb_li">Facilement personnalisable grâce aux thèmes et templates
+</li><li class="bb_li">Facilement personnalisable grï¿½ce aux thï¿½mes et templates
 </li><li class="bb_li">Gestion fine des droits et des groupes multiples pour chaque utilisateur
 </li><li class="bb_li">Url rewriting
-</li><li class="bb_li">Installation et mise à jour automatisées des modules et du noyau
-</li><li class="bb_li">Aide au développement de nouveaux modules grâce au framework de PHPBoost</li>
+</li><li class="bb_li">Installation et mise ï¿½ jour automatisï¿½es des modules et du noyau
+</li><li class="bb_li">Aide au dï¿½veloppement de nouveaux modules grï¿½ce au framework de PHPBoost</li>
 			</div>			
 			<div class="news_bottom_l"></div>		
 			<div class="news_bottom_r"></div>
@@ -198,11 +198,11 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<h3 class="title valign_middle"><a href="../forum/rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> Derniers Modules</h3>
+				<h3 class="title valign_middle"><a href="../forum/syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> Derniers Modules</h3>
 			</div>						
 			<div class="news_content">
 				<ul style="margin:0;padding:0;list-style-type:none;">
-					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">29/04</span> <a href="">Bannière</a></li>
+					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">29/04</span> <a href="">Banniï¿½re</a></li>
 					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">25/04</span> <a href="">Team</a></li>
 					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">23/04</span> <a href="">Agenda</a></li>
 					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">22/04</span> <a href="">Match</a></li>
@@ -224,7 +224,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<h3 class="title valign_middle"><a href="../forum/rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> Derniers Thèmes</h3>
+				<h3 class="title valign_middle"><a href="../forum/syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> Derniers Thï¿½mes</h3>
 			</div>						
 			<div class="news_content">
 				<div style="float:left;width:73px"><img src="http://img.clubic.com/photo/0049003701143224.jpg" alt="Aventure au sommet, le Pic Rouge en Test" /></div>
@@ -258,7 +258,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<h3 class="title valign_middle"><a href="../forum/rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> Derniers sujets du forum</h3>
+				<h3 class="title valign_middle"><a href="../forum/syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> Derniers sujets du forum</h3>
 			</div>						
 			<div class="news_content">
 				<script type="text/javascript" src="../cache/rss_forum.html"></script>  
@@ -272,18 +272,18 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<h3 class="title valign_middle"><a href="../forum/rss.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> Dernières vidéos</h3>
+				<h3 class="title valign_middle"><a href="../forum/syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> Derniï¿½res vidï¿½os</h3>
 			</div>						
 			<div class="news_content">
 				<ul style="margin:0;padding:0;list-style-type:none;">
-					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">29/04</span> <a href="">Bannière</a></li>
+					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">29/04</span> <a href="">Banniï¿½re</a></li>
 					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">25/04</span> <a href="">Ajouter une news</a></li>
 					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">24/03</span> <a href="">Ajouter des photos dans la galerie</a></li>
-					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">12/03</span> <a href="">Créer des articles</a></li>
+					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">12/03</span> <a href="">Crï¿½er des articles</a></li>
 					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">09/03</span> <a href="">Ajouter des menus</a></li>
-					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">04/03</span> <a href="">Fonctionnalités avancées du BBcode</a></li>
-					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">28/02</span> <a href="">Sauvegarder votre base de donnnées</a></li>
-					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">19/02</span> <a href="">Transférer des fichiers sur votre FTP</a></li>
+					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">04/03</span> <a href="">Fonctionnalitï¿½s avancï¿½es du BBcode</a></li>
+					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">28/02</span> <a href="">Sauvegarder votre base de donnnï¿½es</a></li>
+					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">19/02</span> <a href="">Transfï¿½rer des fichiers sur votre FTP</a></li>
 					<li><img src="../templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">10/02</span> <a href="">Installer PHPBoost</a></li>  
 				</ul>
 			</div>			
