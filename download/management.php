@@ -109,7 +109,8 @@ if( $edit_file_id > 0 )
 			'URL' => $file_url,
 			'SIZE' => $file_size,
 			'DATE' => gmdate_format('date_format_short', $file_infos['timestamp']),
-			'CATEGORIES_TREE' => $download_categories->Build_select_form($file_cat_id, 'idcat', 'idcat')
+			'CATEGORIES_TREE' => $download_categories->Build_select_form($file_cat_id, 'idcat', 'idcat'),
+			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($short_contents)))
 		));
 	}
 	else
@@ -164,7 +165,6 @@ if( $edit_file_id > 0 )
 		'L_REQUIRE' => $LANG['require'],
 		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
 		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
-		'L_DOWNLOAD_CAT' => $LANG['cat_management'],
 		'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
