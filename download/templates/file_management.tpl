@@ -51,6 +51,21 @@
 					{L_WARNING_PREVIEWING}
 				</div>
 				# INCLUDE download #
+				<hr />
+				<br />
+				<div class="module_position">			
+					<div class="module_top_l"></div>		
+					<div class="module_top_r"></div>
+					<div class="module_top">
+						{L_SHORT_CONTENTS}
+					</div>
+					<div class="module_contents">
+						{SHORT_DESCRIPTION_PREVIEW}
+					</div>
+					<div class="module_bottom_l"></div>		
+					<div class="module_bottom_r"></div>
+					<div class="module_bottom"></div>
+				</div>
 			# ENDIF #
 
 			<form action="{U_TARGET}" method="post" onsubmit="return check_form();" class="fieldset_content">
