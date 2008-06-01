@@ -88,7 +88,7 @@
 					</dl>
 					<dl>
 						<dt><label for="size">{L_SIZE}</label></dt>
-						<dd><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE}" class="text" /> {L_UNIT_SIZE}</dd>
+						<dd><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE_FORM}" class="text" /> {L_UNIT_SIZE}</dd>
 					</dl>
 					<dl>
 						<dt><label for="count">{L_DOWNLOAD}</label></dt>
