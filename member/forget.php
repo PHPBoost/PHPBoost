@@ -3,7 +3,7 @@
  *                                forget.php
  *                            -------------------
  *   begin                : August 08 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright          : (C) 2005 Viarre RÃ©gis
  *   email                : crowkait@phpboost.com
  *
  *   
@@ -50,16 +50,16 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 			if( !empty($user_mail) && preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,6}$!", $user_mail) )
 			{	
 				$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login = '" . $login . "'", __LINE__, __FILE__);
-				if( !empty($user_id) ) //Succès mail trouvé, en crée un nouveau mdp, et la clée d'activ et on l'envoi au membre
+				if( !empty($user_id) ) //SuccÃ©s mail trouvÃ©, en crÃ©e un nouveau mdp, et la clÃ©e d'activ et on l'envoi au membre
 				{
-					$new_pass = substr(md5(uniqid(rand(), true)), 0, 6); //Génération du nouveau mot de pass unique!
-					$activ_pass =  substr(md5(uniqid(rand(), true)), 0, 30); //Génération de la clée d'activation!
+					$new_pass = substr(md5(uniqid(rand(), true)), 0, 6); //GÃ©nÃ©ration du nouveau mot de pass unique!
+					$activ_pass =  substr(md5(uniqid(rand(), true)), 0, 30); //GÃ©nÃ©ration de la clÃ©e d'activation!
 					
-					$Sql->Query_inject("UPDATE ".PREFIX."member SET activ_pass = '" . $activ_pass . "', new_pass = '" . md5($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clée d'activation dans la bdd.
+					$Sql->Query_inject("UPDATE ".PREFIX."member SET activ_pass = '" . $activ_pass . "', new_pass = '" . md5($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clÃ©e d'activation dans la bdd.
 					
 					include_once('../kernel/framework/mail.class.php');
 					$Mail = new Mail();
-					$Mail->Send_mail($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass), $CONFIG['mail']);	
+					$Mail->Send_mail($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass, $CONFIG['sign']), $CONFIG['mail']);
 
 					//Affichage de la confirmation.
 					redirect(HOST . DIR . '/member/forget.php?error=forget_mail_send');
@@ -109,10 +109,10 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 		$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE user_id = '" . $user_get . "' AND activ_pass = '" . $activ_get . "'", __LINE__, __FILE__);
 		if( !empty($user_id) )
 		{
-			//Mise à jour du nouveau password
+			//Mise Ã© jour du nouveau password
 			$Sql->Query_inject("UPDATE ".PREFIX."member SET password = new_pass WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
-			//Effacement des clées d'activations.
+			//Effacement des clÃ©es d'activations.
 			$Sql->Query_inject("UPDATE ".PREFIX."member SET activ_pass = '', new_pass = '' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 			//Affichage de l'echec

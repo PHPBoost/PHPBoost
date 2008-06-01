@@ -258,7 +258,7 @@ if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,
 					include_once('../kernel/framework/mail.class.php');
 					$Mail = new Mail();
 					
-					$Mail->Send_mail($user_mail, sprintf(addslashes($LANG['register_title_mail']), $CONFIG['site_name']), sprintf(addslashes($LANG['register_mail']), $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid), $CONFIG['mail']);
+					$Mail->Send_mail($user_mail, sprintf(addslashes($LANG['register_title_mail']), $CONFIG['site_name']), sprintf(addslashes($LANG['register_mail']), $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail']);
 					
 					//On connecte le membre directement si aucune activation demandée.
 					if( $CONFIG_MEMBER['activ_mbr'] == 0 )
