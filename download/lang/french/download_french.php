@@ -76,10 +76,12 @@ $DOWNLOAD_LANG['n_times'] = '%d fois';
 $DOWNLOAD_LANG['num_notes'] = '%d votant(s)';
 $DOWNLOAD_LANG['edit_file'] = 'Modifier le fichier';
 $DOWNLOAD_LANG['delete_file'] = 'Supprimer le fichier';
+$DOWNLOAD_LANG['unknown_size'] = 'inconnue';
+$DOWNLOAD_LANG['unknown_date'] = 'inconnue';
 
 //Gestion des fichiers
 $DOWNLOAD_LANG['files_management'] = 'Gestion des fichiers';
-$DOWNLOAD_LANG['file_management'] = 'Modification d\'un fichier';
+$DOWNLOAD_LANG['file_management'] = 'Modification du fichier';
 $DOWNLOAD_LANG['file_addition'] = 'Ajout d\'un fichier';
 $DOWNLOAD_LANG['add_file'] = 'Ajouter le fichier';
 $DOWNLOAD_LANG['update_file'] = 'Modifier le fichier';

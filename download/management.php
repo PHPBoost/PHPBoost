@@ -28,6 +28,9 @@
 require_once('../kernel/begin.php');
 
 load_module_lang('download'); //Chargement de la langue du module.
+$Cache->Load_file('download');
+
+include_once('download_auth.php');
 
 $edit_file_id = retrieve(GET, 'edit', 0);
 $add_file = retrieve(GET, 'new', false);
@@ -39,15 +42,42 @@ if( $edit_file_id > 0 )
 	if( empty($file_infos['title']) )
 		redirect(HOST. DIR . 'download/download.php');
 	define('TITLE', $DOWNLOAD_LANG['file_management']);
+	
+	//Barre d'arborescence
+	$auth_write = $Member->Check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOWNLOAD);
+	
+	$Bread_crumb->Add_link($DOWNLOAD_LANG['file_management'], transid('management.php?edit=' . $edit_file_id));
+	
+	$Bread_crumb->Add_link($file_infos['title'], transid('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_infos['title']) . '.php'));
+	
+	$id_cat = $file_infos['idcat'];
+
+	//Bread_crumb : we read categories list recursively
+	while( $id_cat > 0 )
+	{
+		$Bread_crumb->Add_link($DOWNLOAD_CATS[$id_cat]['name'], transid('download.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php'));
+		
+		$id_cat = (int)$DOWNLOAD_CATS[$id_cat]['id_parent'];
+		
+		if( !empty($DOWNLOAD_CATS[$id_cat]['auth']) )
+			$auth_write = $Member->Check_auth($DOWNLOAD_CATS[$id_cat]['auth'], WRITE_CAT_DOWNLOAD);
+	}
 }
 else
 	define('TITLE', $DOWNLOAD_LANG['file_addition']);
 
 
+$Bread_crumb->Add_link($DOWNLOAD_LANG['download'], transid('download.php'));
+
+$Bread_crumb->Reverse_links();
+	
+
 require_once('../kernel/header.php');
 
 include_once('download_cats.class.php');
 $download_categories = new Download_cats();
+
+include_once('../kernel/framework/util/date.class.php');
 
 $Template->Set_filenames(array('file_management'=> 'download/file_management.tpl'));
 
@@ -68,6 +98,13 @@ if( $edit_file_id > 0 )
 		
 		$Template->Set_filenames(array('download' => 'download/download.tpl'));
 		
+		if( $file_size > 1 )
+			$size_tpl = $file_size . ' ' . $LANG['unit_megabytes'];
+		elseif( $file_size > 0 )
+			$size_tpl = ($file_size * 1024) . ' ' . $LANG['unit_kilobytes'];
+		else
+			$size_tpl = $DOWNLOAD_LANG['unknown_size'];
+
 		$Template->Assign_vars(array(
 			'C_DISPLAY_DOWNLOAD' => true,
 			'C_IMG' => !empty($file_image),
@@ -76,8 +113,8 @@ if( $edit_file_id > 0 )
 			'NAME' => $file_title,
 			'CONTENTS' => second_parse(stripslashes(strparse($file_contents))),
 			'INSERTION_DATE' => gmdate_format('date_format_short', $file_timestamp),
-			'LAST_UPDATE_DATE' => gmdate_format('date_format_short', $file_last_update_timestamp),
-			'SIZE' => ($file_size >= 1) ? $file_size . ' ' . $LANG['unit_megabytes'] : ($file_size * 1024) . ' ' . $LANG['unit_kilobytes'],
+			'LAST_UPDATE_DATE' => $file_last_update_timestamp > 0 ? gmdate_format('date_format_short', $file_last_update_timestamp) : $DOWNLOAD_LANG['unknown_date'],
+			'SIZE' => $size_tpl,
 			'COUNT' => $file_hits,
 			'THEME' => $CONFIG['theme'],
 			'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$file_hits),
@@ -107,10 +144,10 @@ if( $edit_file_id > 0 )
 			'SHORT_DESCRIPTION' => $file_short_contents,
 			'FILE_IMAGE' => $file_image,
 			'URL' => $file_url,
-			'SIZE' => $file_size,
+			'SIZE_FORM' => $file_size,
 			'DATE' => gmdate_format('date_format_short', $file_infos['timestamp']),
 			'CATEGORIES_TREE' => $download_categories->Build_select_form($file_cat_id, 'idcat', 'idcat'),
-			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($short_contents)))
+			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($file_short_contents)))
 		));
 	}
 	else
@@ -122,7 +159,7 @@ if( $edit_file_id > 0 )
 			'SHORT_DESCRIPTION' => unparse($file_infos['short_contents']),
 			'FILE_IMAGE' => $file_infos['image'],
 			'URL' => $file_infos['url'],
-			'SIZE' => $file_infos['size'],
+			'SIZE_FORM' => $file_infos['size'],
 			'DATE' => gmdate_format('date_format_short', $file_infos['timestamp']),
 			'CATEGORIES_TREE' => $download_categories->Build_select_form($file_infos['idcat'], 'idcat', 'idcat')
 		));
@@ -130,17 +167,6 @@ if( $edit_file_id > 0 )
 	include('../kernel/framework/content/bbcode.php');
 
 	$Template->Assign_vars(array(
-		'TITLE' => $preview ? $file_title : $file_infos['title'],
-		'COUNT' => $preview ? $file_hits : !empty($file_infos['count']) ? $file_infos['count'] : 0,
-		'DESCRIPTION' => $preview ? $file_contents : unparse($file_infos['contents']),
-		'SHORT_DESCRIPTION' => $preview ? $file_short_contents : unparse($file_infos['short_contents']),
-		'FILE_IMAGE' => $preview ? $file_image : $file_infos['image'],
-		'URL' => $preview ? $file_url : $file_infos['url'],
-		'SIZE' => $preview ? $file_size : $file_infos['size'],
-		'UNIT_SIZE' => $LANG['unit_megabytes'],
-		'DATE' => gmdate_format('date_format_short', $file_infos['timestamp']),
-		'CATEGORIES_TREE' => $download_categories->Build_select_form($file_infos['idcat'], 'idcat', 'idcat'),
-		'BBCODE_CONTENTS' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE),
 		'C_PREVIEW' => $preview,
 		'L_PAGE_TITLE' => $DOWNLOAD_LANG['file_management'],
 		'L_REQUIRE_DESC' => $LANG['require_text'],

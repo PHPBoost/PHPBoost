@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php'); 
 require_once('../download/download_begin.php');
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 
 if( $file_id > 0 ) //Contenu
 {
@@ -41,6 +41,14 @@ if( $file_id > 0 ) //Contenu
 	$com_true = ($download_info['nbr_com'] > 1) ? $LANG['com_s'] : $LANG['com'];
 	$com_false = $LANG['post_com'] . '</a>';
 	$l_com = !empty($download_info['nbr_com']) ? $com_true . ' (' . $download_info['nbr_com'] . ')</a>' : $com_false;
+	
+	if( $download_info['size'] > 1 )
+		$size_tpl = $download_info['size'] . ' ' . $LANG['unit_megabytes'];
+	elseif( $download_info['size'] > 0 )
+		$size_tpl = ($download_info['size'] * 1024) . ' ' . $LANG['unit_kilobytes'];
+	else
+		$size_tpl = $DOWNLOAD_LANG['unknown_size'];
+	
 	$Template->Assign_vars(array(
 		'C_DISPLAY_DOWNLOAD' => true,
 		'C_IMG' => !empty($download_info['image']),
@@ -49,8 +57,8 @@ if( $file_id > 0 ) //Contenu
 		'NAME' => $download_info['title'],
 		'CONTENTS' => second_parse($download_info['contents']),
 		'INSERTION_DATE' => gmdate_format('date_format_short', $download_info['timestamp']),
-		'LAST_UPDATE_DATE' => gmdate_format('date_format_short', $download_info['last_update_timestamp']),
-		'SIZE' => ($download_info['size'] >= 1) ? $download_info['size'] . ' ' . $LANG['unit_megabytes'] : ($download_info['size'] * 1024) . ' ' . $LANG['unit_kilobytes'],
+		'LAST_UPDATE_DATE' => $download_info['last_update_timestamp'] > 0 ? gmdate_format('date_format_short', $download_info['last_update_timestamp']) : $DOWNLOAD_LANG['unknown_date'],
+		'SIZE' => $size_tpl,
 		'COUNT' => $download_info['count'],
 		'THEME' => $CONFIG['theme'],
 		'COM' => display_com_link($download_info['nbr_com'], '../download/download' . transid('.php?cat=' . $category_id . '&amp;id=' . $file_id . '&amp;i=0', '-' . $category_id . '-' . $file_id . '.php?i=0'), $file_id, 'download'),
@@ -94,7 +102,7 @@ else
 	$Template->Set_filenames(array('download'=> 'download/download.tpl'));
 	
 	$Template->Assign_vars(array(
-		'C_ADMIN' => $Member->Check_level(ADMIN_LEVEL),
+		'C_ADMIN' => $auth_write,
 		'U_ADMIN_CAT' => $category_id > 0 ? transid('admin_download_cat.php?edit=' . $category_id) : transid('admin_download_cat.php'),
 		'C_DOWNLOAD_CAT' => true,
 		'TITLE' => sprintf($DOWNLOAD_LANG['title_download'] . ($category_id > 0 ? ' - ' . $DOWNLOAD_CATS[$category_id]['name'] : ''))
@@ -235,8 +243,8 @@ else
 				'C_IMG' => !empty($row['image']),
 				'IMG' => $row['image'],
 				'U_DOWNLOAD_LINK' => transid('download/admin_download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
-				'U_ADMIN_EDIT_FILE' => transid('admin_download.php?id=' . $row['id']),
-				'U_ADMIN_DELETE_FILE' => transid('admin_download.php?delete=1&id=' . $row['id'])
+				'U_ADMIN_EDIT_FILE' => transid('management.php?edit=' . $row['id']),
+				'U_ADMIN_DELETE_FILE' => transid('action.php?del=' . $row['id'])
 			));
 		}
 		$Sql->Close($result);

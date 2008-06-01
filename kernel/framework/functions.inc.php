@@ -33,6 +33,7 @@ define('NO_FATAL_ERROR', false);
 define('NO_EDITOR_UNPARSE', false);
 define('TIMEZONE_SITE', 1);
 define('TIMEZONE_SYSTEM', 2);
+define('TIMEZONE_USER', 3);
 
 //Récupère les superglobales
 function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
@@ -472,7 +473,7 @@ function strtotimestamp($str, $date_format)
     return ($timestamp > 0) ? $timestamp : time();
 }
 
-//Converti une chaîne au format $LANG['date_format'] (ex:DD/MM/YYYY) en type DATE, si la date saisie est valide sinon retourne 0000-00-00.
+//Convertit une chaîne au format $LANG['date_format'] (ex:DD/MM/YYYY) en type DATE, si la date saisie est valide sinon retourne 0000-00-00.
 function strtodate($str, $date_format)
 {
     list($month, $day, $year) = array(0, 0, 0);
