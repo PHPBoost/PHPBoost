@@ -415,7 +415,7 @@ Password : %s
 
 %s 
 
-' . $CONFIG['sign'];
+%s';
 
 //Mp
 $LANG['pm_box'] = 'Boite de réception';
@@ -447,7 +447,7 @@ Mot de passe : %s
 
 Vous pourrez bien sur changer vous-même ce mot de passe par la suite via votre profil membre. Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site.
 
-' . $CONFIG['sign'];
+%s';
 
 //Gestion des fichiers
 $LANG['confim_del_file'] = 'Supprimer ce fichier?';

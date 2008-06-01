@@ -415,7 +415,7 @@ Password: %s
 
 %s
 
-' . $CONFIG['sign'];
+%s';
 
 //Mp
 $LANG['pm_box'] = 'Private message box';
@@ -447,7 +447,7 @@ Password: %s
 
 Anyway, you can change this password later in your member account. If you encountered some issues contact the administrator.
 
-' . $CONFIG['sign'];
+%s';
 
 //Gestion des fichiers
 $LANG['confim_del_file'] = 'Delete this file?';
