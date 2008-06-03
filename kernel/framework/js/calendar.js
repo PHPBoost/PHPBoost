@@ -86,7 +86,7 @@ function xmlhttprequest_calendar(field, vars)
 {
 	var xhr_object = null;
 	var data = null;
-	var filename = '../kernel/calendar.php' + vars;
+	var filename = '../kernel/mini_calendar_xmlhttprequest.php' + vars;
 	
 	if(window.XMLHttpRequest) // Firefox
 	   xhr_object = new XMLHttpRequest();
