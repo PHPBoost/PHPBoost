@@ -1,4 +1,3 @@
-		<script type="text/javascript" src="../kernel/framework/js/calendar.js"></script>
 		<script type="text/javascript">
 		<!--
 		function check_form(){
@@ -119,7 +118,7 @@
 						<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
 						<dd>
 							<label><input type="radio" value="2" name="visible" {VISIBLE_WAITING} /> 
-						<input type="text" size="8" maxlength="8" id="start" name="start" value="{START}" class="text" /> 
+						<input type="text" size="8" maxlength="8" id="start" name="creation" value="{START}" class="text" /> 
 						<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
 							<div id="start_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 							</div>
@@ -128,7 +127,7 @@
 						
 						{L_UNTIL}&nbsp;
 						
-						<input type="text" size="8" maxlength="8" id="end" name="end" value="{END}" class="text" />					
+						<input type="text" size="8" maxlength="8" id="end" name="last_update" value="{END}" class="text" />					
 						<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
 							<div id="end_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
 							</div>
@@ -142,17 +141,9 @@
 					</dl>
 					<dl class="overflow_visible">
 						<dt><label for="current_date">* {L_DOWNLOAD_DATE}</label></dt>
-						<dd><label>
-							<input type="text" size="8" maxlength="8" id="current_date" name="current_date" value="{CURRENT_DATE}" class="text" /> 
-							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar3">
-								<div id="current" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">							
-								</div>
-							</div>
-							<a onClick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={DAY_DATE}&amp;m={MONTH_DATE}&amp;y={YEAR_DATE}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
-							
-							{L_AT}
-							<input type="text" size="2" maxlength="2" name="hour" value="{HOUR}" class="text" /> H <input type="text" size="2" maxlength="2" name="min" value="{MIN}" class="text" />
-						</label></dd>
+						<dd>
+							{DATE_CALENDAR_CREATION}
+						</dd>
 					</dl>
 				</fieldset>
 				

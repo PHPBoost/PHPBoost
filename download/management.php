@@ -78,6 +78,7 @@ include_once('download_cats.class.php');
 $download_categories = new Download_cats();
 
 include_once('../kernel/framework/util/date.class.php');
+include_once('../kernel/framework/util/mini_calendar.class.php');
 
 $Template->Set_filenames(array('file_management'=> 'download/file_management.tpl'));
 
@@ -91,10 +92,11 @@ if( $edit_file_id > 0 )
 		$file_short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNSECURE);
 		$file_url = retrieve(POST, 'url', '');
 		$file_timestamp = retrieve(POST, 'timestamp', 0);
-		$file_last_update_timestamp = retrieve(POST, 'last_update_timestamp', 0);
 		$file_size = retrieve(POST, 'size', 0.0, TFLOAT);
 		$file_hits = retrieve(POST, 'hits', 0);
 		$file_cat_id = retrieve(POST, 'idcat', 0);
+		$file_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNSECURE), 'd/m/y');
+		$file_last_update_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'last_update', ''), TSTRING_UNSECURE);
 		
 		$Template->Set_filenames(array('download' => 'download/download.tpl'));
 		
@@ -104,6 +106,9 @@ if( $edit_file_id > 0 )
 			$size_tpl = ($file_size * 1024) . ' ' . $LANG['unit_kilobytes'];
 		else
 			$size_tpl = $DOWNLOAD_LANG['unknown_size'];
+		
+		//Création des calendriers
+		$creation_calendar = new Mini_calendar('creation');
 
 		$Template->Assign_vars(array(
 			'C_DISPLAY_DOWNLOAD' => true,
@@ -113,7 +118,7 @@ if( $edit_file_id > 0 )
 			'NAME' => $file_title,
 			'CONTENTS' => second_parse(stripslashes(strparse($file_contents))),
 			'INSERTION_DATE' => gmdate_format('date_format_short', $file_timestamp),
-			'LAST_UPDATE_DATE' => $file_last_update_timestamp > 0 ? gmdate_format('date_format_short', $file_last_update_timestamp) : $DOWNLOAD_LANG['unknown_date'],
+			'LAST_UPDATE_DATE' => $file_last_update_date->Get_timestamp() > 0 ? $file_last_update_date->Format_date(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
 			'SIZE' => $size_tpl,
 			'COUNT' => $file_hits,
 			'THEME' => $CONFIG['theme'],
@@ -122,6 +127,7 @@ if( $edit_file_id > 0 )
 			'U_IMG' => $file_image,
 			'IMAGE_ALT' => str_replace('"', '\"', $file_title),
 			'LANG' => $CONFIG['lang'],
+			'DATE_CALENDAR_CREATION' => $creation_calendar->Display_calendar($file_creation_date),
 			'L_DATE' => $LANG['date'],
 			'L_SIZE' => $LANG['size'],
 			'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
@@ -207,16 +213,6 @@ if( $edit_file_id > 0 )
 		'TITLE' => $file_infos['title'],
 		'IDURL' => $file_infos['id'],
 		'CONTENTS' => unparse($file_infos['contents']),
-		'CURRENT_DATE' => gmdate_format('date_format_short', $file_infos['timestamp']),
-		'DAY_RELEASE_S' => !empty($file_infos['start']) ? gmdate_format('d', $file_infos['start']) : '',
-		'MONTH_RELEASE_S' => !empty($file_infos['start']) ? gmdate_format('m', $file_infos['start']) : '',
-		'YEAR_RELEASE_S' => !empty($file_infos['start']) ? gmdate_format('Y', $file_infos['start']) : '',
-		'DAY_RELEASE_E' => !empty($file_infos['end']) ? gmdate_format('d', $file_infos['end']) : '',
-		'MONTH_RELEASE_E' => !empty($file_infos['end']) ? gmdate_format('m', $file_infos['end']) : '',
-		'YEAR_RELEASE_E' => !empty($file_infos['end']) ? gmdate_format('Y', $file_infos['end']) : '',
-		'DAY_DATE' => !empty($file_infos['timestamp']) ? gmdate_format('d', $file_infos['timestamp']) : '',
-		'MONTH_DATE' => !empty($file_infos['timestamp']) ? gmdate_format('m', $file_infos['timestamp']) : '',
-		'YEAR_DATE' => !empty($file_infos['timestamp']) ? gmdate_format('Y', $file_infos['timestamp']) : '',
 		'USER_ID' => $file_infos['user_id'],
 		'VISIBLE_WAITING' => (($file_infos['visible'] == 2 || !empty($file_infos['end'])) ? 'checked="checked"' : ''),
 		'VISIBLE_ENABLED' => (($file_infos['visible'] == 1 && empty($file_infos['end'])) ? 'checked="checked"' : ''),
