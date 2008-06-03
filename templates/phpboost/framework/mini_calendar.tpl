@@ -1,5 +1,14 @@
 		# IF C_INCLUDE_JS #
 			<script type="text/javascript" src="../kernel/framework/js/calendar.js"></script>
+			<script type="text/javascript">
+			<!--
+				function check_form(form_name)
+				{
+					reg_exp = new RegExp(\"[0-9]{2}/[0-9]{2}/[0-9]{2}\", \"g\");");
+					return document.getElementById(form_name).value.match(reg_exp);
+				}
+			-->
+			</script>
 		# ENDIF #
 		
 		<input type="text" size="8" maxlength="8" id="{CALENDAR_ID}" name="creation" value="{DEFAULT_DATE}" class="text" />
