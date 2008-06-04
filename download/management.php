@@ -95,8 +95,8 @@ if( $edit_file_id > 0 )
 		$file_size = retrieve(POST, 'size', 0.0, TFLOAT);
 		$file_hits = retrieve(POST, 'hits', 0);
 		$file_cat_id = retrieve(POST, 'idcat', 0);
-		$file_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNSECURE), 'd/m/y');
-		$file_last_update_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'last_update', ''), TSTRING_UNSECURE);
+		$file_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNSECURE), $LANG['date_format_short']);
+		$file_last_update_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'last_update', $LANG['date_format_short']), TSTRING_UNSECURE);
 		
 		$Template->Set_filenames(array('download' => 'download/download.tpl'));
 		
@@ -109,6 +109,7 @@ if( $edit_file_id > 0 )
 		
 		//Création des calendriers
 		$creation_calendar = new Mini_calendar('creation');
+		$creation_calendar->Set_date($file_creation_date);
 
 		$Template->Assign_vars(array(
 			'C_DISPLAY_DOWNLOAD' => true,
@@ -127,7 +128,7 @@ if( $edit_file_id > 0 )
 			'U_IMG' => $file_image,
 			'IMAGE_ALT' => str_replace('"', '\"', $file_title),
 			'LANG' => $CONFIG['lang'],
-			'DATE_CALENDAR_CREATION' => $creation_calendar->Display_calendar($file_creation_date),
+			'DATE_CALENDAR_CREATION' => $creation_calendar->Display_calendar(),
 			'L_DATE' => $LANG['date'],
 			'L_SIZE' => $LANG['size'],
 			'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
