@@ -31,36 +31,47 @@ include_once('../kernel/framework/template.class.php');
 
 class Mini_calendar
 {
+	# Public #
 	// Constructeur d'un calendrier : il dépend du nom qu'il aura lorsqu'on le récupèrera dans le formulaire
 	function Mini_calendar($form_name)
 	{
 		// Feinte pour PHP 4, en PHP 5 on mettra un attribut static à la classe
-		static $nbr_instances = 0;
+		static $num_instance = 0;
 		$this->form_name = $form_name;
-		$this->nbr_instances = ++$nbr_instances;
+		$this->num_instance = ++$num_instance;
+		$this->date = new Date(DATE_NOW);
+	}
+	
+	//Fonction d'assignation de la date
+	function Set_date($date)
+	{
+		$this->date = $date;
+	}
+	
+	//Fonction de renvoi de la date
+	function Get_date()
+	{
+		return $this->date;
 	}
 	
 	//Fonction d'affichage du calendrier, qui charge automatiquement le javascript
-	function Display_calendar($date = false)
+	function Display_calendar()
 	{
 		global $CONFIG;
 		// Feine pour PHP 4, en PHP 5 ce sera un attribut static
 		static $js_inclusion_already_done = false;
-
-		if( $date === false )
-			$date = new Date(DATE_NOW);
 		
 		//On crée le code selon le template
 		$template = new Template('framework/mini_calendar.tpl');
 		
 		$template->Assign_vars(array(
-			'DEFAULT_DATE' => $date->Format_date(DATE_FORMAT_SHORT),
+			'DEFAULT_DATE' => $this->date->Format_date(DATE_FORMAT_SHORT),
 			'THEME' => $CONFIG['theme'],
-			'CALENDAR_ID' => 'calendar_' . $this->nbr_instances,
-			'CALENDAR_NUMBER' => (string)$this->nbr_instances,
-			'DAY' => $date->Get_day(),
-			'MONTH' => $date->Get_month(),
-			'YEAR' => $date->Get_year(),
+			'CALENDAR_ID' => 'calendar_' . $this->num_instance,
+			'CALENDAR_NUMBER' => (string)$this->num_instance,
+			'DAY' => $this->date->Get_day(),
+			'MONTH' => $this->date->Get_month(),
+			'YEAR' => $this->date->Get_year(),
 			'C_INCLUDE_JS' => !$js_inclusion_already_done
 		));
 		
@@ -69,8 +80,11 @@ class Mini_calendar
 		return $template->Tparse(TEMPLATE_STRING_MODE);
 	}
 	
-	var $nbr_instances = 0;
+	# Private #
+	
+	var $num_instance = 0;
 	var $form_name = '';
+	var $date;
 }
 
 
