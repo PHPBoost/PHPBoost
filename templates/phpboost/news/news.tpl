@@ -1,12 +1,13 @@
         <script type="text/javascript">
         <!--
         function Confirm() {
-        return confirm("{L_ALERT_DELETE_NEWS}");
+            return confirm("{L_ALERT_DELETE_NEWS}");
         }
         function ShowSyndication(element) {
-//             element.parentNode.parentNode.childNodes[1].style.display = 'block';
-//             alert(element.parentNode.parentNode.childNodes[1].childNodes[1].innerHTML);
-            alert(element.nextSibling.nextSibling.nodeType.innerHTML);
+            if ( element.firstChild.nextSibling.nextSibling.nextSibling.style.display == 'none' )
+                element.firstChild.nextSibling.nextSibling.nextSibling.style.display = 'block';
+            else
+                element.firstChild.nextSibling.nextSibling.nextSibling.style.display = 'none';
         }
         -->
         </script>
@@ -31,7 +32,6 @@
             <div class="news_bottom"></div>
         </div>
         # ENDIF #
-        
         
         # IF C_NEWS_NO_AVAILABLE #
         <div class="news_container">
@@ -60,8 +60,18 @@
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
-                <span style="float:left;padding-left:5px;"><a href="#" title="Syndication" onclick="ShowSyndication(this)"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a>
-                <span id="syndication_choice" style="display:none">coucou</span> &nbsp;&nbsp;<a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a></span>
+                <span style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)" onmouseout="ShowSyndication(this)">
+                    <a href="#" title="Syndication">
+                        <img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" />
+                    </a>
+                    <span id="syndication_choice" style="float:left;display:none;overflow:visible;width:0px;height:0px;">
+                        <ul style="width:60px;padding-top:5px;padding-bottom:5px;padding-left:20px;padding-right:20px;background:#ffffff;border:1px #ccccff solid;">
+                            <li><a href="../news/syndication.php?feed=rss" title="RSS">RSS</a></li>
+                            <li><a href="../news/syndication.php?feed=atom" title="ATOM">ATOM</a></li>
+                        </ul>
+                    </span> &nbsp;&nbsp;
+                    <a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a>
+                </span>
                 <span style="float:right;">{news.COM}{news.EDIT}{news.DEL}</span>
             </div>
             <div class="news_content">
