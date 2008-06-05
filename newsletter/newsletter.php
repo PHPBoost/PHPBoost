@@ -58,7 +58,7 @@ if( !empty($mail_newsletter) )
 				$Errorh->Error_handler($LANG['newsletter_add_success'], E_USER_NOTICE);
 			}			
 			else
-				$Errorh->Error_handler($LANG['newsletter_add_failure'], E_USER_NOTICE);
+				$Errorh->Error_handler($LANG['newsletter_add_failure'], E_USER_WARNING);
 		}
 		else
 		{
@@ -69,7 +69,7 @@ if( !empty($mail_newsletter) )
 				$Errorh->Error_handler($LANG['newsletter_del_success'], E_USER_NOTICE);
 			}
 			else
-				$Errorh->Error_handler($LANG['newsletter_del_success'], E_USER_WARNING);
+				$Errorh->Error_handler($LANG['newsletter_del_failure'], E_USER_WARNING);
 		}
 	}
 	else
@@ -79,7 +79,7 @@ if( !empty($mail_newsletter) )
 elseif( $id > 0 )
 {
 	$check_mail = $Sql->Query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	$Errorh->Error_handler($LANG['newsletter_del_success'], E_USER_WARNING);
+	$Errorh->Error_handler($LANG['newsletter_del_success'], E_USER_NOTICE);
 }
 //Affichage des archives
 else

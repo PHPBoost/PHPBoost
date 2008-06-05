@@ -31,7 +31,7 @@ load_module_lang('articles'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
-$idcat = !empty($_GET['idcat']) ? numeric($_GET['idcat']) : 0;
+$idcat = retrieve(GET, 'idcat', 0);
 define('READ_CAT_ARTICLES', 0x01);
 define('WRITE_CAT_ARTICLES', 0x02);
 define('EDIT_CAT_ARTICLES', 0x04);
@@ -41,11 +41,11 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 {
 	$Cache->Load_file('articles');
 	
-	$parent_category = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
-	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$contents = !empty($_POST['desc']) ? strprotect($_POST['desc']) : '';
-	$icon = !empty($_POST['icon']) ? strprotect($_POST['icon']) : ''; 
-	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;    
+	$parent_category = retrieve(POST, 'category', 0);
+	$name = retrieve(POST, 'name', '');
+	$contents = retrieve(POST, 'desc', '');
+	$icon = retrieve(POST, 'icon', ''); 
+	$aprob = retrieve(POST, 'aprob', 0);    
 		
 	//Génération du tableau des droits.
 	$array_auth_all = $Group->Return_array_auth(READ_CAT_ARTICLES);
@@ -59,10 +59,10 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 			$result = $Sql->Query_while("SELECT id
 			FROM ".PREFIX."articles_cats 
 			WHERE id_left <= '" . $CAT_ARTICLES[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$parent_category]['id_right'] . "'", __LINE__, __FILE__);
+			
 			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
 				$list_parent_cats .= $row['id'] . ', ';
-			}
+			
 			$Sql->Close($result);
 			$list_parent_cats = trim($list_parent_cats, ', ');
 				
@@ -84,7 +84,7 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 			$level = 0;
 		}
 			
-		$Sql->Query_inject("INSERT INTO ".PREFIX."articles_cats (id_left, id_right, level, name, contents, nbr_articles_visible, nbr_articles_unvisible, icon, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $icon . "', '" . $aprob . "', '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
+		$Sql->Query_inject("INSERT INTO ".PREFIX."articles_cats (id_left, id_right, level, name, contents, nbr_articles_visible, nbr_articles_unvisible, icon, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $icon . "', '" . $aprob . "', '" . addslashes(serialize($array_auth_all)) . "')", __LINE__, __FILE__);	
 
 		###### Regénération du cache #######
 		$Cache->Generate_module_file('articles');
@@ -121,7 +121,7 @@ else
 		$dh = @opendir( $rep);
 		while( ! is_bool($lang = @readdir($dh)) )
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $lang) )
+			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		@closedir($dh); //On ferme le dossier
@@ -131,7 +131,7 @@ else
 	}
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? $_GET['error'] : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 		

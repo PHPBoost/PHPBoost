@@ -150,15 +150,15 @@ function load_module_lang($module_name)
 {
     global $CONFIG, $LANG;
 
-    if( !@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . $CONFIG['lang'] . '/' . $module_name . '_' . $CONFIG['lang'] . '.php') )
+    if( !@include_once('../' . $module_name . '/lang/' . $CONFIG['lang'] . '/' . $module_name . '_' . $CONFIG['lang'] . '.php') )
     {
-        $lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', $CONFIG['lang'], NO_FATAL_ERROR);
-        if( !@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php') )
+        $lang = find_require_dir('../' . $module_name . '/lang/', $CONFIG['lang'], NO_FATAL_ERROR);
+        if( !@include_once('../' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php') )
         {
             global $Errorh;
             
             //Déclenchement d'une erreur fatale.
-            $Errorh->Error_handler(sprintf('Unable to load lang file \'%s\'!', PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__);
+            $Errorh->Error_handler(sprintf('Unable to load lang file \'%s\'!', '../' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__);
             exit;
         }
     }
@@ -224,8 +224,8 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
         while( !feof($handle) )
         {
             $config = fgets($handle, 8192);
-            if( strpos($config, 'config="') !== false )
-            {    
+            if( strpos($config, 'config="') !== false ) // here
+			{
 				@fclose($handle);
 				return $config;
 			}
@@ -240,15 +240,17 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
     //Si le dossier de langue n'existe pas on prend le suivant exisant.
     if( !file_exists($dir_path . $require_dir) )
     {
-        if( is_dir($dir_path) ) //Si le dossier existe
+        if( is_dir($dir_path) && $dh = @opendir($dir_path)) //Si le dossier existe et qu'on a les permissions suffisantes
         {       
-            $dh = @opendir($dir_path);
-            while( !is_bool($dir = @readdir($dh)) )
+            while( !is_bool($dir = readdir($dh)) )
             {   
                 if( !strstr($dir, '.') )
+				{
+					closedir($dh);
                     return $dir;
+				}
             }
-            @closedir($dh);
+            closedir($dh);
         }
     }
     else
@@ -307,10 +309,16 @@ function check_nbr_links($contents, $max_nbr)
     return true;
 }
 
+//Vérifie la validité du mail
+function check_mail($mail)
+{
+	return preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $mail);
+}
+
 //Charge le parseur.
 function strparse($content, $forbidden_tags = array(), $html_protect = true)
 {
-    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
+    include_once('../kernel/framework/content/content.class.php');
     $parse = new Content($content);
     $parse->Parse_content($forbidden_tags, $html_protect);
     
@@ -320,7 +328,7 @@ function strparse($content, $forbidden_tags = array(), $html_protect = true)
 //Charge l'unparseur.
 function unparse($content)
 {
-    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
+    include_once('../kernel/framework/content/content.class.php');
     $parse = new Content($content);
     $parse->Unparse_content();
     
@@ -330,9 +338,9 @@ function unparse($content)
 //Parse temps réel
 function second_parse($content)
 {
-	$content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $content);
+	$content = str_replace('../includes/data', '../kernel/data', $content);
     
-    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
+    include_once('../kernel/framework/content/content.class.php');
 	$parse = new Content($content);
     $parse->Second_parse();
 	
@@ -553,11 +561,10 @@ function delete_directory($dir_path, $path)
 //Compte le nombre de page vues.
 function pages_displayed($no_update = false)
 {
-    $file = @fopen(PATH_TO_ROOT . 'cache/pages.txt', 'r+');
-    if( $file )
+    if( $file = @fopen('../cache/pages.txt', 'r+') )
     {
         $hour = gmdate_format('G');
-        $data = unserialize(@fgets($file, 4096)); //Renvoi la première ligne du fichier (le array précédement crée).
+        $data = unserialize(fgets($file, 4096)); //Renvoi la première ligne du fichier (le array précédement crée).
         if( !$no_update )
         {
             if( isset($data[$hour]) ) //Robo repasse.
@@ -566,16 +573,15 @@ function pages_displayed($no_update = false)
                 $data[$hour] = 1;
         }
         
-        @rewind($file);
-        @fwrite($file, serialize($data)); //On stock le tableau dans le fichier de données
-        @fclose($file);
+        rewind($file);
+        fwrite($file, serialize($data)); //On stock le tableau dans le fichier de données
+        fclose($file);
     }
-    else
+    else if( $file = @fopen('../cache/pages.txt', 'w+') ) //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
     {
-        $file = @fopen(PATH_TO_ROOT . 'cache/pages.txt', 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
         $data = array();
-        @fwrite($file, serialize($data)); //On insère un tableau vide.
-        @fclose($file);
+        fwrite($file, serialize($data)); //On insère un tableau vide.
+        fclose($file);
     }
     
     return $data;
@@ -590,7 +596,7 @@ function number_round($number, $dec)
 //Remplacement de la fonction file_get_contents.
 function file_get_contents_emulate($filename, $incpath = false, $resource_context = null)
 {
-    if( false === $fh = @fopen($filename, 'rb', $incpath) ) 
+    if( false === ($fh = @fopen($filename, 'rb', $incpath)) ) 
     {
         user_error('file_get_contents_emulate() failed to open stream: No such file or directory', E_USER_WARNING);
         return false;

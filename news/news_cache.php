@@ -36,9 +36,9 @@ function generate_module_file_news()
 	
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_NEWS = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'news'", __LINE__, __FILE__));
-	foreach($CONFIG_NEWS as $key => $value)
-		$news_config .= '$CONFIG_NEWS[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 	
+	$news_config .= '$CONFIG_NEWS = ' . var_export($CONFIG_NEWS, true) . ';' . "\n";
+
 	return $news_config;
 }
 

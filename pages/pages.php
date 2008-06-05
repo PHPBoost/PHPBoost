@@ -73,7 +73,7 @@ elseif( $id_com > 0 )
 		FROM ".PREFIX."pages
 		WHERE id = '" . $id_com . "'"
 	, __LINE__, __FILE__);
-	$num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."pages WHERE id = '" . $id_com . "'", __LINE__, __FILE__);
+	$num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."pages WHERE id = '" . $id_com . "'");
 	$page_infos = $Sql->Sql_fetch_assoc($result);
 	$Sql->Close($result);
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));

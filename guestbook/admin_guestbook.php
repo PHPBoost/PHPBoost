@@ -34,9 +34,9 @@ require_once('../kernel/admin_header.php');
 if( !empty($_POST['valid'])  )
 {
 	$config_guestbook = array();
-	$config_guestbook['guestbook_auth'] = isset($_POST['guestbook_auth']) ? numeric($_POST['guestbook_auth']) : -1;
+	$config_guestbook['guestbook_auth'] = retrieve(POST, 'guestbook_auth', -1);
 	$config_guestbook['guestbook_forbidden_tags'] = isset($_POST['guestbook_forbidden_tags']) ? serialize($_POST['guestbook_forbidden_tags']) : serialize(array());
-	$config_guestbook['guestbook_max_link'] = isset($_POST['guestbook_max_link']) ? numeric($_POST['guestbook_max_link']) : -1;
+	$config_guestbook['guestbook_max_link'] = retrieve(POST, 'guestbook_max_link', -1);
 		
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_guestbook)) . "' WHERE name = 'guestbook'", __LINE__, __FILE__);
 	

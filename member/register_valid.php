@@ -36,10 +36,10 @@ if( !$CONFIG_MEMBER['activ_register'] )
 
 $user_mail = strtolower(retrieve(POST, 'mail', ''));
 $valid = retrieve(POST, 'register_valid', false);
-if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $user_mail) )
+if( $valid && !empty($user_mail) && check_mail($user_mail) )
 {
 	//Info de connexion
-	$login = strprotect(substr(retrieve(POST, 'user_lang', '', TSTRING_UNSECURE), 0, 25));
+	$login = strprotect(substr(retrieve(POST, 'log', '', TSTRING_UNSECURE), 0, 25));
 	$password = retrieve(POST, 'pass', '', TSTRING_UNSECURE);
 	$password_md5 = md5($password);
 	$password_bis = retrieve(POST, 'pass_biss', '', TSTRING_UNSECURE);
@@ -163,7 +163,7 @@ if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,
 						WHERE display = 1", __LINE__, __FILE__);
 						while( $row = $Sql->Sql_fetch_assoc($result) )
 						{
-							$field = isset($_POST[$row['field_name']]) ? trim($_POST[$row['field_name']]) : '';
+							$field = retrieve(POST, $row['field_name'], '', TSTRING_UNSECURE);
 							//Validation par expressions régulières.
 							if( is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
 							{
@@ -180,7 +180,7 @@ if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,
 							$valid_field = true;
 							if( !empty($row['regex']) && $row['field'] <= 2 )
 							{
-								if( @preg_match($row['regex'], trim($field)) )
+								if( @preg_match($row['regex'], $field) )
 									$valid_field = true;
 								else
 									$valid_field = false;
@@ -222,16 +222,10 @@ if( $valid && !empty($user_mail) && preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,
 						$Sql->Close($result);	
 											
 						$check_member = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__);
-						if( $check_member )
-						{	
-							if( !empty($req_update) )
+						if( $check_member && !empty($req_update) )
 								$Sql->Query_inject("UPDATE ".PREFIX."member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); 
-						}
-						else
-						{	
-							if( !empty($req_insert) )
+						else if( !empty($req_insert) )
 								$Sql->Query_inject("INSERT INTO ".PREFIX."member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $last_mbr_id . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
-						}
 					}
 					
 					//On régénère le cache

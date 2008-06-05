@@ -38,13 +38,10 @@ function generate_module_file_gallery()
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_GALLERY = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'gallery'", __LINE__, __FILE__));
 	$CONFIG_GALLERY = is_array($CONFIG_GALLERY) ? $CONFIG_GALLERY : array();
-	foreach($CONFIG_GALLERY as $key => $value)
-	{
-		if( $key == 'auth_root' )
-			$gallery_config .= '$CONFIG_GALLERY[\'' . $key . '\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
-		else
-			$gallery_config .= '$CONFIG_GALLERY[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
-	}
+	if( isset($CONFIG_GALLERY['auth_root']) )
+		$CONFIG_GALLERY['auth_root'] = unserialize($CONFIG_GALLERY['auth_root']);
+	
+	$gallery_config .= '$CONFIG_GALLERY = ' . var_export($CONFIG_GALLERY, true) . ';' . "\n";
 
 	$cat_gallery = 'global $CAT_GALLERY;' . "\n";
 	$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, aprob, auth

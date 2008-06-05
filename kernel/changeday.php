@@ -41,7 +41,7 @@ if( empty($check_update) )
     
     //Visites et pages vues.
     $pages_displayed = pages_displayed();
-    @delete_file(PATH_TO_ROOT . '/cache/pages.txt');
+    @delete_file('../cache/pages.txt');
 
     //Vidage de la table des visites de la journée.
     $total_visit = $Sql->Query("SELECT total FROM ".PREFIX."compteur WHERE id = 1", __LINE__, __FILE__);
@@ -56,7 +56,7 @@ if( empty($check_update) )
 	$Session->session_garbage_collector();
 
 	//Suppression des images du cache des formules mathématiques, supprimé chaque semaine.
-	$rep = PATH_TO_ROOT . '/images/maths/';
+	$rep = '../images/maths/';
 	$dh = @opendir($rep);
 	$week = 3600*24*7;
 	while( !is_bool($fichier = readdir($dh)) )
@@ -76,8 +76,8 @@ if( empty($check_update) )
 	WHERE activ = 1", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{	
-		if( is_file(PATH_TO_ROOT . '/' . $row['name'] . '/' . $row['name'] . '_changeday.php') ) //On regarde si le module a des actions journalières à executer.
-			$array_changeday[$row['name']] = PATH_TO_ROOT . '/' . $row['name'] . '/' . $row['name'] . '_changeday.php';
+		if( is_file('../' . $row['name'] . '/' . $row['name'] . '_changeday.php') ) //On regarde si le module a des actions journalières à executer.
+			$array_changeday[$row['name']] = '../' . $row['name'] . '/' . $row['name'] . '_changeday.php';
 	}
 	$Sql->Close($result);
 	foreach($array_changeday as $name => $include)
@@ -88,7 +88,7 @@ if( empty($check_update) )
 	if( !empty($CONFIG_MEMBER['delay_unactiv_max']) && $CONFIG_MEMBER['activ_mbr'] != 2 )
 		$Sql->Query_inject("DELETE FROM ".PREFIX."member WHERE timestamp < '" . (time() - $CONFIG_MEMBER['delay_unactiv_max']) . "' AND user_aprob = 0", __LINE__, __FILE__);
     
-    $rep = PATH_TO_ROOT . '/cache/';
+    $rep = '../cache/';
     $dh = @opendir($rep);
     while( !is_bool($fichier = readdir($dh)) )
     {

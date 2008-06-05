@@ -37,13 +37,9 @@ function generate_module_file_forum()
 	
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_FORUM = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'forum'", __LINE__, __FILE__));
-	foreach($CONFIG_FORUM as $key => $value)
-	{	
-		if( $key == 'auth' )
-			$forum_config .= '$CONFIG_FORUM[\'auth\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
-		else
-			$forum_config .= '$CONFIG_FORUM[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
-	}
+	$CONFIG_FORUM['auth'] = unserialize($CONFIG_FORUM['auth']);
+		
+	$forum_config .= '$CONFIG_FORUM = ' . var_export($CONFIG_FORUM, true) . ';' . "\n";
 	
 	//Liste des catégories du forum
 	$i = 0;

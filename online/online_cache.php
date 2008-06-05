@@ -37,8 +37,8 @@ function generate_module_file_online()
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_ONLINE = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'online'", __LINE__, __FILE__));
 	$CONFIG_ONLINE = is_array($CONFIG_ONLINE) ? $CONFIG_ONLINE : array();
-	foreach($CONFIG_ONLINE as $key => $value)
-		$online_config .= '$CONFIG_ONLINE[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
+	
+	$online_config .= '$CONFIG_ONLINE = ' . var_export($CONFIG_ONLINE, true) . ';' . "\n";
 	
 	return $online_config;
 }

@@ -37,10 +37,10 @@ if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
 	$Cache->Load_file('articles');
 	
 	$config_articles = array();
-	$config_articles['nbr_articles_max'] = !empty($_POST['nbr_articles_max']) ? numeric($_POST['nbr_articles_max']) : 10;
-	$config_articles['nbr_cat_max'] = !empty($_POST['nbr_cat_max']) ? numeric($_POST['nbr_cat_max']) : 10;
-	$config_articles['nbr_column'] = !empty($_POST['nbr_column']) ? numeric($_POST['nbr_column']) : 2;
-	$config_articles['note_max'] = !empty($_POST['note_max']) ? max(1, numeric($_POST['note_max'])) : 5;
+	$config_articles['nbr_articles_max'] = retrieve(POST, 'nbr_articles_max', 10);
+	$config_articles['nbr_cat_max'] = retrieve(POST, 'nbr_cat_max', 10);
+	$config_articles['nbr_column'] = retrieve(POST, 'nbr_column', 2);
+	$config_articles['note_max'] = max(1, retrieve(POST, 'note_max', 5));
 	$config_articles['auth_root'] = isset($CONFIG_ARTICLES['auth_root']) ? serialize($CONFIG_ARTICLES['auth_root']) : serialize(array());
 		
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
@@ -62,16 +62,20 @@ elseif( !empty($_POST['articles_count']) ) //Recompte le nombre d'articles de ch
 	FROM ".PREFIX."articles 
 	WHERE visible = 1 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
+	
 	while($row = $Sql->Sql_fetch_assoc($result) )
 		$info_cat[$row['idcat']]['visible'] = $row['nbr_articles_visible'];
+		
 	$Sql->Close($result);
 	
 	$result = $Sql->Query_while("SELECT idcat, COUNT(*) as nbr_articles_unvisible 
 	FROM ".PREFIX."articles 
 	WHERE visible = 0 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
+	
 	while($row = $Sql->Sql_fetch_assoc($result) )
 		$info_cat[$row['idcat']]['unvisible'] = $row['nbr_articles_unvisible'];
+		
 	$Sql->Close($result);
 	
 	$result = $Sql->Query_while("SELECT id, id_left, id_right

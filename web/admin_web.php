@@ -32,8 +32,8 @@ define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
 //On recupère les variables.
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
-$id_post = !empty($_POST['id']) ? numeric($_POST['id']) : '' ;
+$id = retrieve(GET, 'id', 0);
+$id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
 if( !empty($id) && !$del )
@@ -93,7 +93,7 @@ if( !empty($id) && !$del )
 	$Sql->Close($result);
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
@@ -111,12 +111,12 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 
 	$row = $Sql->Query_array('web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
-	$title = !empty($_POST['name']) ? trim($_POST['name']) : '';
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$url = !empty($_POST['url']) ? trim($_POST['url']) : '';
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$compt = isset($_POST['compt']) ? numeric($_POST['compt']) : 0;
-	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;
+	$title = retrieve(POST, 'name', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$url = retrieve(POST, 'url', '', TSTRING_UNSECURE);
+	$idcat = retrieve(POST, 'idcat', 0);
+	$compt = retrieve(POST, 'compt', 0);
+	$aprob = retrieve(POST, 'aprob', 0);
 	
 	$aprob_enable = ($aprob == 1) ? 'checked="checked"' : '';
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
@@ -198,12 +198,12 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 }				
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
-	$title = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';
-	$url = !empty($_POST['url']) ? strprotect($_POST['url']) : '';
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$compt = isset($_POST['compt']) ? numeric($_POST['compt']) : 0;
-	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;
+	$title = retrieve(POST, 'name', '');
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$url = retrieve(POST, 'url', '');
+	$idcat = retrieve(POST, 'idcat', 0);
+	$compt = retrieve(POST, 'compt', 0);
+	$aprob = retrieve(POST, 'aprob', 0);
 
 	if( !empty($title) && !empty($url) && !empty($idcat) )
 	{

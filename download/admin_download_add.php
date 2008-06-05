@@ -35,18 +35,18 @@ $download_categories = new Download_cats();
 
 if( !empty($_POST['valid']) )
 {
-	$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$url = !empty($_POST['url']) ? strprotect($_POST['url']) : '';
-	$size = isset($_POST['size']) ? numeric($_POST['size'], 'float') : '';
-	$count = isset($_POST['count']) ? numeric($_POST['count']) : '0';
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
-	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$title = retrieve(POST, 'title', '');
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$idcat = retrieve(POST, 'idcat', 0);
+	$url = retrieve(POST, 'url', '');
+	$size = retrieve(POST, 'size', 0, TUNSIGNED_DOUBLE);
+	$count = retrieve(POST, 'count', 0);
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);
+	$get_visible = retrieve(POST, 'visible', 0);
 		
 	if( !empty($title) && !empty($contents) && !empty($url) )
 	{	
@@ -86,7 +86,7 @@ if( !empty($_POST['valid']) )
 		else //Ajout des heures et minutes
 			$timestamp = time();
 		
-		$Sql->Query_inject("INSERT INTO ".PREFIX."download (idcat,title,contents,url,size,count,timestamp,visible,start,end,user_id,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . strparse($contents) . "', '" . $url . "', '" . $size . "', '" . $count . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '', 0, 0, 0)", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."download (idcat,title,contents,url,size,count,timestamp,visible,start,end,user_id,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $size . "', '" . $count . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '', 0, 0, 0)", __LINE__, __FILE__);
 		
 		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('download/rss.php');
@@ -107,19 +107,19 @@ elseif( !empty($_POST['preview']) )
 	
 	include_once('admin_download_menu.php');
 	
-	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$short_contents = !empty($_POST['short_contents']) ? trim($_POST['short_contents']) : '';
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$url = !empty($_POST['url']) ? trim($_POST['url']) : '';
-	$size = isset($_POST['size']) ? numeric($_POST['size'], 'float') : 0;
-	$count = isset($_POST['count']) ? numeric($_POST['count']) : 0;
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
-	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$short_contents = etrieve(POST, 'short_contents', '', TSTRING_UNSECURE);
+	$idcat = retrieve(POST, 'idcat', 0);
+	$url = retrieve(POST, 'url', '', TSTRING_UNSECURE);
+	$size = retrieve(POST, 'size', 0, TUNSIGNED_DOUBLE);
+	$count = retrieve(POST, 'count', 0);
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);
+	$get_visible = retrieve(POST, 'visible', 0);
 
 	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
@@ -300,7 +300,7 @@ else
 	));
 	
 	//Gestion erreur
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 

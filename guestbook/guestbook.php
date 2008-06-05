@@ -79,8 +79,7 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 		'guestbook'=> 'guestbook/guestbook.tpl'
 	));
 
-	$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
-	$user_id = (int)$user_id;
+	$user_id = (int)$Sql->Query("SELECT user_id FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	
 	$guestbook_contents = retrieve(POST, 'guestbook_contents', '');
 	$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);

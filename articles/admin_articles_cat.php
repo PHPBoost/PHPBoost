@@ -30,10 +30,10 @@ load_module_lang('articles'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 		
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
-$move = !empty($_GET['move']) ? trim($_GET['move']) : 0;
-$root = !empty($_GET['root']) ? numeric($_GET['root']) : 0;
+$id = retrieve(GET, 'id', 0);
+$del = retrieve(GET, 'del', 0);
+$move = retrieve(GET, 'move', '', TSTRING_UNSECURE);
+$root = retrieve(GET, 'root', 0);
 
 define('READ_CAT_ARTICLES', 0x01);
 define('WRITE_CAT_ARTICLES', 0x02);
@@ -44,12 +44,12 @@ if( !empty($_POST['valid']) && !empty($id) )
 {
 	$Cache->Load_file('articles');
 	
-	$to = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
-	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$contents = !empty($_POST['desc']) ? strprotect($_POST['desc']) : '';
-	$icon = !empty($_POST['icon']) ? strprotect($_POST['icon']) : '';
-	$icon_path = !empty($_POST['icon_path']) ? strprotect($_POST['icon_path']) : '';
-	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 1;  
+	$to = retrieve(POST, 'category', 0);
+	$name = retrieve(POST, 'name', '');
+	$contents = retrieve(POST, 'desc', '');
+	$icon = retrieve(POST, 'icon', '');
+	$icon_path = retrieve(POST, 'icon_path', '');
+	$aprob = retrieve(POST, 'aprob', 1);  
 
 	//Génération du tableau des droits.
 	$array_auth_all = $Group->Return_array_auth(READ_CAT_ARTICLES);
@@ -57,7 +57,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 	if( !empty($name) )
 	{
 		$icon = !empty($icon) ? $icon : $icon_path;
-		$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET name = '" . $name . "', contents = '"  . $contents . "', aprob = '" . $aprob . "', icon = '" . $icon . "', auth = '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET name = '" . $name . "', contents = '"  . $contents . "', aprob = '" . $aprob . "', icon = '" . $icon . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 		//Empêche le déplacement dans une catégorie fille.
 		$to = $Sql->Query("SELECT id FROM ".PREFIX."articles_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
@@ -75,10 +75,10 @@ if( !empty($_POST['valid']) && !empty($id) )
 			FROM ".PREFIX."articles_cats 
 			WHERE id_left BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'
 			ORDER BY id_left", __LINE__, __FILE__);
+			
 			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
 				$list_cats .= $row['id'] . ', ';
-			}
+			
 			$Sql->Close($result);
 			$list_cats = trim($list_cats, ', ');
 			
@@ -87,10 +87,10 @@ if( !empty($_POST['valid']) && !empty($id) )
 			$result = $Sql->Query_while("SELECT id 
 			FROM ".PREFIX."articles_cats 
 			WHERE id_left < '" . $CAT_ARTICLES[$id]['id_left'] . "' AND id_right > '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
+			
 			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
 				$list_parent_cats .= $row['id'] . ', ';
-			}
+				
 			$Sql->Close($result);
 			$list_parent_cats = trim($list_parent_cats, ', ');
 			
@@ -106,9 +106,8 @@ if( !empty($_POST['valid']) && !empty($id) )
 				FROM ".PREFIX."articles_cats 
 				WHERE id_left <= '" . $CAT_ARTICLES[$to]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$to]['id_right'] . "'", __LINE__, __FILE__);
 				while( $row = $Sql->Sql_fetch_assoc($result) )
-				{
 					$list_parent_cats_to .= $row['id'] . ', ';
-				}
+				
 				$Sql->Close($result);
 				$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 						
@@ -322,7 +321,7 @@ elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 				else
 				{
 					//Déplacement de sous catégories.
-					$f_to = !empty($_POST['f_to']) ? numeric($_POST['f_to']) : 0;
+					$f_to = retrieve(POST, 'f_to', 0);
 					$f_to = $Sql->Query("SELECT id FROM ".PREFIX."articles_cats WHERE id = '" . $f_to . "' AND id_left NOT BETWEEN '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 					
 					//Déplacement d'articles
@@ -336,9 +335,8 @@ elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 					FROM ".PREFIX."articles_cats 
 					WHERE id_left < '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 					while( $row = $Sql->Sql_fetch_assoc($result) )
-					{
 						$list_parent_cats .= $row['id'] . ', ';
-					}
+					
 					$Sql->Close($result);
 					$list_parent_cats = trim($list_parent_cats, ', ');
 					
@@ -371,12 +369,11 @@ elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 						$list_sub_cats = '';
 						$result = $Sql->Query_while("SELECT id
 						FROM ".PREFIX."articles_cats 
-						WHERE id_left BETWEEN '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND '" . $CAT_ARTICLES[$idcat]['id_right'] . "' AND id != '" . $idcat . "'
-						ORDER BY id_left", __LINE__, __FILE__);
+						WHERE id_left BETWEEN '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND '" . $CAT_ARTICLES[$idcat]['id_right'] . "' AND id != '" . $idcat . "' ORDER BY id_left", __LINE__, __FILE__);
+						
 						while( $row = $Sql->Sql_fetch_assoc($result) )
-						{
 							$list_sub_cats .= $row['id'] . ', ';
-						}
+						
 						$Sql->Close($result);
 						$list_sub_cats = trim($list_sub_cats, ', ');
 						
@@ -386,9 +383,8 @@ elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 						FROM ".PREFIX."articles_cats 
 						WHERE id_left < '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 						while( $row = $Sql->Sql_fetch_assoc($result) )
-						{
 							$list_parent_cats .= $row['id'] . ', ';
-						}
+						
 						$Sql->Close($result);
 						$list_parent_cats = trim($list_parent_cats, ', ');
 						
@@ -404,9 +400,8 @@ elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 							FROM ".PREFIX."articles_cats 
 							WHERE id_left <= '" . $CAT_ARTICLES[$f_to]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$f_to]['id_right'] . "'", __LINE__, __FILE__);
 							while( $row = $Sql->Sql_fetch_assoc($result) )
-							{
 								$list_parent_cats_to .= $row['id'] . ', ';
-							}
+							
 							$Sql->Close($result);
 							$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 						
@@ -509,9 +504,8 @@ elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 			FROM ".PREFIX."articles_cats 
 			WHERE id_left < '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
 				$list_parent_cats .= $row['id'] . ', ';
-			}
+			
 			$Sql->Close($result);
 			$list_parent_cats = trim($list_parent_cats, ', ');
 			
@@ -552,9 +546,8 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 	FROM ".PREFIX."articles_cats 
 	WHERE id_left < '" . $CAT_ARTICLES[$id]['id_left'] . "' AND id_right > '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
-	{
 		$list_parent_cats .= $row['id'] . ', ';
-	}
+	
 	$Sql->Close($result);
 	$list_parent_cats = trim($list_parent_cats, ', ');
 	
@@ -626,10 +619,10 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 		FROM ".PREFIX."articles_cats 
 		WHERE id_left BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'
 		ORDER BY id_left", __LINE__, __FILE__);
+		
 		while( $row = $Sql->Sql_fetch_assoc($result) )
-		{
 			$list_cats .= $row['id'] . ', ';
-		}
+		
 		$Sql->Close($result);
 		$list_cats = trim($list_cats, ', ');
 	
@@ -647,10 +640,10 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 		$result = $Sql->Query_while("SELECT id, level 
 		FROM ".PREFIX."articles_cats 
 		WHERE id_left <= '" . $CAT_ARTICLES[$to]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$to]['id_right'] . "'", __LINE__, __FILE__);
+		
 		while( $row = $Sql->Sql_fetch_assoc($result) )
-		{
 			$list_parent_cats_to .= $row['id'] . ', ';
-		}
+		
 		$Sql->Close($result);
 		$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 	
@@ -742,7 +735,7 @@ elseif( !empty($id) ) //Edition des catégories.
 		$dh = @opendir( $rep);
 		while( ! is_bool($lang = readdir($dh)) )
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $lang) )
+			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		closedir($dh); //On ferme le dossier
@@ -852,7 +845,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'unexist_cat' )
 		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 		

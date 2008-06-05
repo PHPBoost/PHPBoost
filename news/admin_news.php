@@ -32,32 +32,32 @@ define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
 //On recupère les variables.
-$id = isset($_GET['id']) ? numeric($_GET['id']) : '' ;
-$id_post = isset($_POST['id']) ? numeric($_POST['id']) : '' ;
+$id = retrieve(GET, 'id', 0);
+$id_post = retrieve(POST, 'id', 0);
 $del = isset($_GET['delete']) ? true : false;
 
 if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : '';
-	$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$extend_contents = !empty($_POST['extend_contents']) ? trim($_POST['extend_contents']) : '';
-	$img = !empty($_POST['img']) ? strprotect($_POST['img']) : '';
-	$alt = !empty($_POST['alt']) ? strprotect($_POST['alt']) : '';	
+	$idcat = retrieve(POST, 'idcat', 0);
+	$title = retrieve(POST, 'title', '');
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$extend_contents = retrieve(POST, 'extend_contents', '', TSTRING_PARSE);
+	$img = retrieve(POST, 'img', '');
+	$alt = retrieve(POST, 'alt', '');	
 	
 	//Gestion de la parution
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$start_hour = !empty($_POST['start_hour']) ? trim($_POST['start_hour']) : 0;
-	$start_min = !empty($_POST['start_min']) ? trim($_POST['start_min']) : 0;	
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$end_hour = !empty($_POST['end_hour']) ? trim($_POST['end_hour']) : 0;
-	$end_min = !empty($_POST['end_min']) ? trim($_POST['end_min']) : 0;
+	$get_visible = retrieve(POST, 'visible', 0);
+	$start = retrieve(POST, 'start', 0, TSTRING_UNSECURE);
+	$start_hour = retrieve(POST, 'start_hour', 0, TSTRING_UNSECURE);
+	$start_min = retrieve(POST, 'start_min', 0, TSTRING_UNSECURE);	
+	$end = retrieve(POST, 'end', 0, TSTRING_UNSECURE);
+	$end_hour = retrieve(POST, 'end_hour', 0, TSTRING_UNSECURE);
+	$end_min = retrieve(POST, 'end_min', 0, TSTRING_UNSECURE);
 	
 	//Date de la news
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$current_hour = !empty($_POST['current_hour']) ? trim($_POST['current_hour']) : 0;
-	$current_min = !empty($_POST['current_min']) ? trim($_POST['current_min']) : 0;
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
+	$current_hour = retrieve(POST, 'current_hour', 0, TSTRING_UNSECURE);
+	$current_min = retrieve(POST, 'current_min', 0, TSTRING_UNSECURE);
 	
 	//On met à jour 
 	if( !empty($idcat) && !empty($title) && !empty($contents) && isset($get_visible) )
@@ -89,7 +89,7 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		else //Ajout des heures et minutes
 			$timestamp = ' , timestamp = \'' . time() . '\'';
 			
-		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . strparse($contents) . "', extend_contents = '" . strparse($extend_contents) . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
+		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . $contents . "', extend_contents = '" . $extend_contents . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
 		WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 
         include_once('../kernel/framework/syndication/feed.class.php'); //Flux rss regénéré!
@@ -219,7 +219,7 @@ elseif( !empty($id) ) //Vue de la news
 	$Sql->Close($result);
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
@@ -245,27 +245,27 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 		'admin_news_management_bis'=> 'news/admin_news_management_bis.tpl'
 	));
 
-	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$extend_contents = !empty($_POST['extend_contents']) ? trim($_POST['extend_contents']) : '';
-	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : '';
-	$img = !empty($_POST['img']) ? trim($_POST['img']) : '';
-	$alt = !empty($_POST['alt']) ? trim($_POST['alt']) : '';
+	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
+	$idcat = retrieve(POST, 'idcat', 0);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$extend_contents = retrieve(POST, 'extend_contents', '', TSTRING_UNSECURE);
+	$user_id = retrieve(POST, 'user_id', '');
+	$img = retrieve(POST, 'img', '', TSTRING_UNSECURE);
+	$alt = retrieve(POST, 'alt', '', TSTRING_UNSECURE);
 	
 	//Gestion de la parution
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$start_hour = !empty($_POST['start_hour']) ? trim($_POST['start_hour']) : 0;
-	$start_min = !empty($_POST['start_min']) ? trim($_POST['start_min']) : 0;	
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$end_hour = !empty($_POST['end_hour']) ? trim($_POST['end_hour']) : 0;
-	$end_min = !empty($_POST['end_min']) ? trim($_POST['end_min']) : 0;
+	$get_visible = retrieve(POST, 'visible', 0);
+	$start = retrieve(POST, 'start', 0, TSTRING_UNSECURE);
+	$start_hour = retrieve(POST, 'start_hour', 0, TSTRING_UNSECURE);
+	$start_min = retrieve(POST, 'start_min', 0, TSTRING_UNSECURE);	
+	$end = retrieve(POST, 'end', 0, TSTRING_UNSECURE);
+	$end_hour = retrieve(POST, 'end_hour', 0, TSTRING_UNSECURE);
+	$end_min = retrieve(POST, 'end_min', 0, TSTRING_UNSECURE);
 	
 	//Date de la news
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$current_hour = !empty($_POST['current_hour']) ? trim($_POST['current_hour']) : 0;
-	$current_min = !empty($_POST['current_min']) ? trim($_POST['current_min']) : 0;
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
+	$current_hour = retrieve(POST, 'current_hour', 0, TSTRING_UNSECURE);
+	$current_min = retrieve(POST, 'current_min', 0, TSTRING_UNSECURE);
 
 	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);

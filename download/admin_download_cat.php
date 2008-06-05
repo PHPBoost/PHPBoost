@@ -35,13 +35,13 @@ $Cache->Load_file('download');
 include_once('download_cats.class.php');
 $download_categories = new Download_cats();
 
-$id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
-$id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
-$cat_to_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
-$cat_to_del_post = !empty($_POST['cat_to_del']) ? numeric($_POST['cat_to_del']) : 0;
-$id_edit = !empty($_GET['edit']) ? numeric($_GET['edit']) : 0;
+$id_up = retrieve(GET, 'id_up', 0);
+$id_down = retrieve(GET, 'id_down', 0);
+$cat_to_del = retrieve(GET, 'del', 0);
+$cat_to_del_post = retrieve(POST, 'cat_to_del', 0);
+$id_edit = retrieve(GET, 'edit', 0);
 $new_cat = !empty($_GET['new']) ? true : false;
-$error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+$error = retrieve(GET, 'error', '');
 
 if( $id_up > 0 )
 {
@@ -79,8 +79,8 @@ elseif( !empty($_POST['submit']) )
 	//Deleting a category
 	if( !empty( $cat_to_del_post) )
 	{
-		$delete_content = !empty($_POST['action']) && $_POST['action'] == 'move' ? false : true;
-		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
+		$delete_content = (!empty($_POST['action']) && $_POST['action'] == 'move') ? false : true;
+		$id_parent = retrieve(POST, 'id_parent', 0);
 		
 		if( $delete_content )
 			$download_categories->Delete_category_recursively($cat_to_del_post);
@@ -89,14 +89,14 @@ elseif( !empty($_POST['submit']) )
 	}
 	else
 	{
-		$id_cat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
-		$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-		$description = !empty($_POST['description']) ? strparse($_POST['description']) : '';
-		$icon = !empty($_POST['image']) ? strprotect($_POST['image']) : ''; 
-		$icon_path = !empty($_POST['alt_image']) ? strprotect($_POST['alt_image']) : ''; 
-		$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : '0';
-		$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : '-1';
+		$id_cat = retrieve(POST, 'idcat', 0);
+		$id_parent = retrieve(POST, 'id_parent', 0);
+		$name = retrieve(POST, 'name', '');
+		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
+		$icon = retrieve(POST, 'image', ''); 
+		$icon_path = retrieve(POST, 'alt_image', ''); 
+		$aprob = retrieve(POST, 'aprob', 0);
+		$secure = retrieve(POST, 'secure', -1);
 
 		if( !empty($icon_path) )
 			$icon = $icon_path;
@@ -144,7 +144,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		$in_dir_icon = false;
 		while( !is_bool($image_name = @readdir($dh)) )
 		{       
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $image_name) )
+			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $image_name) )
 			{
 				if( $id_edit > 0 && $DOWNLOAD_CATS[$id_edit]['icon'] == $image_name )
 				{

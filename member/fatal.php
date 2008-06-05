@@ -9,70 +9,24 @@
  *   
  *
  ***************************************************************************
-
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
 ***************************************************************************/
 
-ob_start();
-require_once('../kernel/framework/functions.inc.php'); //Fonctions de base.
-require_once('../kernel/constant.php'); //Constante utiles.
-require_once('../kernel/framework/errors.class.php');
-require_once('../kernel/framework/template.class.php');
-
-$Errorh = new Errors(); //!\\Initialisation  de la class des erreurs//!\\
-$Template = new Template; //!\\Initialisation des templates//!\\ 
-unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
-
-$CONFIG = array();
-@include_once('../cache/config.php');
-if( !isset($CONFIG) )
-	die('Unable to load config cache!');
-define('DIR', $CONFIG['server_path']);
-define('HOST', $CONFIG['server_name']);
-
-$get_error_id = !empty($_GET['error']) ? numeric($_GET['error']) : '';
-
-//Si le dossier de langue n'existe pas on prend le suivant exisant.
-if( !file_exists('../lang/' . $CONFIG['lang']) )
-{
-	$rep = '../lang/';
-	if( is_dir($rep) ) //Si le dossier existe
-	{		
-		$dh = @opendir( $rep);
-		while( !is_bool($lang = @readdir($dh)) )
-		{	
-			if( !preg_match('`\.`', $lang) )
-			{
-				$CONFIG['lang'] = $lang;
-				break;
-			}
-		}	
-		@closedir($dh);
-	}	
-}
-
-$LANG = array();
-//!\\ Langues //!\\
-include_once('../lang/' . $CONFIG['lang'] . '/main.php'); 
-
-//!\\Initialisation des thèmes//!\\
-//Si le thème n'existe pas on prend le suivant présent sur le serveur/
-if( !file_exists('../templates/' . $CONFIG['theme']) )
-{
-	$rep = '../templates/';
-	if( is_dir($rep) ) //Si le dossier existe
-	{
-		$dh = @opendir($rep);
-		while ( !is_bool( $theme = readdir( $dh ) ) )
-		{	
-			if( !preg_match('`\.`', $theme) )
-			{
-				$CONFIG['theme'] = $theme;
-				break;
-			}
-		}	
-		closedir($dh);
-	}	
-}
+require_once('../kernel/begin.php');
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" >
@@ -114,6 +68,6 @@ $Template->Pparse('error');
 
 echo '</body></html>';
 
-ob_end_flush();
+require_once('../kernel/footer_no_display.php');
 
 ?>

@@ -41,20 +41,21 @@ $Template->Set_filenames(array(
 $search = retrieve(POST, 'search', '');
 $selectedModules = retrieve(POST, 'searched_modules', array());
 $searchIn = retrieve(POST, 'search_in', 'all');
-$simpleMode = $searchIn == 'all' ? true : false;
+$simpleMode = ($searchIn == 'all') ? true : false;
 
 //--------------------------------------------------------------------- Header
 
 if( !empty($search) )
-    define('TITLE', $LANG['title_search'].' : '.addslashes($search));
+    define('TITLE', $LANG['title_search'].' : '.$search);
 else
     define('TITLE', $LANG['title_search']);
+
 require_once('../kernel/header.php');
 
 $Template->Assign_vars(Array(
     'L_TITLE_SEARCH' => TITLE,
     'L_SEARCH' => $LANG['title_search'],
-    'TEXT_SEARCHED' => $search != '' ? $search : $LANG['search'] . '...',
+    'TEXT_SEARCHED' => !empty($search) ? $search : $LANG['search'] . '...',
     'L_SEARCH_ALL' => $LANG['search_all'],
     'L_SEARCH_KEYWORDS' => $LANG['search_keywords'],
     'L_SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
@@ -134,7 +135,7 @@ foreach( $SEARCH_CONFIG['authorised_modules'] as $moduleId )
 // parsage des formulaires de recherches
 $Template->Pparse('search_forms');
 
-if( $search != '' )
+if( !empty($search) )
 {
     $results = array();
     $idsSearch = array();
@@ -172,7 +173,7 @@ if( $search != '' )
         'NB_RESULTS' => $nbResults,
         'ALL_RESULTS' => $allhtmlResult,
         'SEARCH_IN' => $searchIn,
-        'C_SIMPLE_SEARCH' => $searchIn == 'all' ? true : false
+        'C_SIMPLE_SEARCH' => ($searchIn == 'all') ? true : false
     ));
     
     // parsage des résultats de la recherche

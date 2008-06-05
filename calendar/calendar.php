@@ -297,13 +297,13 @@ elseif( !empty($id) )
 	{
 		if( !empty($_POST['valid']) )
 		{
-			$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-			$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
+			$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+			$title = retrieve(POST, 'title', '');
 			
 			//Cacul du timestamp à partir de la date envoyé.
-			$date = !empty($_POST['date']) ? trim($_POST['date']) : 0;
-			$hour = !empty($_POST['hour']) ? numeric($_POST['hour']) : 0;
-			$min = !empty($_POST['min']) ? numeric($_POST['min']) : 0;
+			$date = retrieve(POST, 'date', '', TSTRING_UNSECURE);
+			$hour = retrieve(POST, 'hour', 0);
+			$min = retrieve(POST, 'min', 0);
 			
 			$timestamp = strtotimestamp($date, $LANG['date_format_short']);
 			if( $timestamp > 0 )
@@ -315,7 +315,6 @@ elseif( !empty($id) )
 			{
 				if( !empty($title) && !empty($contents) ) //succès
 				{
-					$contents = strparse($contents);
 					$Sql->Query_inject("UPDATE ".PREFIX."calendar SET title = '" . $title . "', contents = '" . $contents . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					
 					$day = gmdate_format('d', $timestamp);
@@ -394,13 +393,13 @@ elseif( $add ) //Ajout d'un évenement
 
 	if( !empty($_POST['valid']) ) //Enregistrement
 	{
-		$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-		$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
+		$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+		$title = retrieve(POST, 'title', '');
 		
 		//Cacul du timestamp à partir de la date envoyé.
-		$date = !empty($_POST['date']) ? trim($_POST['date']) : 0;
-		$hour = !empty($_POST['hour']) ? numeric($_POST['hour']) : 0;
-		$min = !empty($_POST['min']) ? numeric($_POST['min']) : 0;
+		$date = retrieve(POST, 'date', '', TSTRING_UNSECURE);
+		$hour = retrieve(POST, 'hour', 0);
+		$min = retrieve(POST, 'min', 0);
 		
 		$timestamp = strtotimestamp($date, $LANG['date_format_short']);
 		if( $timestamp > 0 )
@@ -412,7 +411,6 @@ elseif( $add ) //Ajout d'un évenement
 		{
 			if( !empty($title) && !empty($contents) ) //succès
 			{
-				$contents = strparse($contents);
 				$Sql->Query_inject("INSERT INTO ".PREFIX."calendar (timestamp,title,contents,user_id,nbr_com) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $Member->Get_attribute('user_id') . "', 0)", __LINE__, __FILE__);
 				
 				$day = gmdate_format('d', $timestamp);

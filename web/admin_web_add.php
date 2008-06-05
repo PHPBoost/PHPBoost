@@ -32,12 +32,12 @@ require_once('../kernel/admin_header.php');
 
 if( !empty($_POST['valid']) )
 {
-	$title = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';
-	$url = !empty($_POST['url']) ? strprotect($_POST['url']) : '';
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$compt = isset($_POST['compt']) ? numeric($_POST['compt']) : 0;
-	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;
+	$title = retrieve(POST, 'name', '');
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$url = retrieve(POST, 'url', '');
+	$idcat = retrieve(POST, 'idcat', 0);
+	$compt = retrieve(POST, 'compt', 0);
+	$aprob = retrieve(POST, 'aprob', 0);
 
 	if( !empty($title) && !empty($url) && !empty($idcat) && isset($aprob) )
 	{	
@@ -54,12 +54,12 @@ elseif( !empty($_POST['previs']) )
 		'admin_web_add'=> 'web/admin_web_add.tpl'
 	));
 
-	$title = !empty($_POST['name']) ? trim($_POST['name']) : '';
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$url = !empty($_POST['url']) ? trim($_POST['url']) : '';
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$compt = isset($_POST['compt']) ? numeric($_POST['compt']) : 0;
-	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;
+	$title = retrieve(POST, 'name', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$url = retrieve(POST, 'url', '', TSTRING_UNSECURE);
+	$idcat = retrieve(POST, 'idcat', 0);
+	$compt = retrieve(POST, 'compt', 0);
+	$aprob = retrieve(POST, 'aprob', 0);
 	
 	$aprob_enable = ($aprob == 1) ? 'checked="checked"' : '';
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
@@ -182,7 +182,7 @@ else
 	$Sql->Close($result);
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 

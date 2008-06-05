@@ -35,7 +35,7 @@ if( defined('PHPBOOST') !== true)
 
 	$Cache->Load_file('forum');
 	
-	$cat_get = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
+	$cat_get = retrieve(GET, 'cat', 0);
 	$clause_cat = !empty($cat_get) ? " AND c.id_left >= '" . $CAT_FORUM[$cat_get]['id_left'] . "' AND id_right <= '" . $CAT_FORUM[$cat_get]['id_right'] . "'" : '';
 	
 	$result = $Sql->Query_while("SELECT t.id, t.title, t.last_timestamp, msg.contents

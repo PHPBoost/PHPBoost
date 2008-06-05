@@ -34,8 +34,8 @@ include_once('download_cats.class.php');
 $download_categories = new Download_cats();
 
 //On recupère les variables.
-$id = isset($_GET['id']) ? numeric($_GET['id']) : '' ;
-$id_post = isset($_POST['id']) ? numeric($_POST['id']) : '' ;
+$id = retrieve(GET, 'id', '');
+$id_post = retrieve(POST, 'id', '');
 $del = !empty($_GET['delete']) ? true : false;
 
 if( !empty($id) && !$del )
@@ -117,7 +117,7 @@ if( !empty($id) && !$del )
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
@@ -144,20 +144,20 @@ elseif( !empty($_POST['preview']) && !empty($id_post) )
 		'admin_download_management'=> 'download/admin_download_management.tpl'
 	 ));
 	 
-	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
-	$count = isset($_POST['count']) ? numeric($_POST['count']) : 0;
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$short_contents = !empty($_POST['short_contents']) ? trim($_POST['short_contents']) : '';
-	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : 0;
-	$url = !empty($_POST['url']) ? trim($_POST['url']) : '';
-	$size = !empty($_POST['size']) ? numeric($_POST['size'], 'float') : 0;
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
-	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;	
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
+	$count = retrieve(POST, 'count', 0);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNSECURE);
+	$user_id = retrieve(POST, 'user_id', 0);
+	$url = retrieve(POST, 'url', '', TSTRING_UNSECURE);
+	$size = retrieve(POST, 'size', 0, TUNSIGNED_DOUBLE);
+	$idcat = retrieve(POST, 'idcat', 0);
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$get_visible = retrieve(POST, 'visible', 0);
 	
 	$cat = $idcat > 0 ? $DOWNLOAD_CATS[$idcat]['name'] : $LANG['root'];
 		
@@ -291,19 +291,19 @@ elseif( !empty($_POST['preview']) && !empty($id_post) )
 }	
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
-	$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';	
-	$count = isset($_POST['count']) ? numeric($_POST['count']) : '0';
-	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';
-	$short_contents = !empty($_POST['short_contents']) ? strparse($_POST['short_contents']) : '';
-	$url = !empty($_POST['url']) ? strprotect($_POST['url']) : '';
-	$size = isset($_POST['size']) ? numeric($_POST['size'], 'float') : 0;
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : '';
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
-	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$title = retrieve(POST, 'title', '');	
+	$count = retrieve(POST, 'count', 0);
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$short_contents = retrieve(POST, 'short_contents', '', TSTRING_PARSE);
+	$url = retrieve(POST, 'url', '');
+	$size = retrieve(POST, 'size', 0, TUNSIGNED_DOUBLE);
+	$idcat = retrieve(POST, 'idcat', '');
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);
+	$get_visible = retrieve(POST, 'visible', 0);
 	
 	//On met à jour la config de base du sondage
 	if( !empty($title) && !empty($contents) && !empty($url) && !empty($idcat) )
@@ -340,15 +340,12 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		
 		$timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 		if( $timestamp > 0 )
-		{
 			//Ajout des heures et minutes
 			$timestamp += ($hour * 3600) + ($min * 60);
-			$timestamp = ' , timestamp = \'' . $timestamp . '\'';
-		}
 		else
-			$timestamp = ' , timestamp = \'' . time() . '\'';
+			$timestamp = time();
 			
-		$Sql->Query_inject("UPDATE ".PREFIX."download SET title = '" . $title . "', contents = '" . $contents . "', short_contents = '" . $short_contents . "', url = '" . $url . "', size = '" . $size . "', idcat = '" . $idcat . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . ", count = '" . $count . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->Query_inject("UPDATE ".PREFIX."download SET title = '" . $title . "', contents = '" . $contents . "', short_contents = '" . $short_contents . "', url = '" . $url . "', size = '" . $size . "', idcat = '" . $idcat . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "', count = '" . $count . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('download/rss.php');
@@ -426,7 +423,7 @@ else
 		else
 			$aprob = $LANG['no'];
 			
-		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
+		//On raccourci le lien si il est trop long pour éviter de déformer l'administration.
 		$title = html_entity_decode($row['title']);
 		$title = strlen($title) > 45 ? substr($title, 0, 45) . '...' : $title;
 

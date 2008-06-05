@@ -96,8 +96,8 @@ elseif( !empty($_POST['submit']) )
 	//Deleting a category
 	if( !empty( $cat_to_del_post) )
 	{
-		$delete_content = !empty($_POST['action']) && $_POST['action'] == 'move' ? false : true;
-		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
+		$delete_content = (!empty($_POST['action']) && $_POST['action'] == 'move') ? false : true;
+		$id_parent = retrieve(POST, 'id_parent', 0);
 		
 		if( $delete_content )
 		{
@@ -110,11 +110,11 @@ elseif( !empty($_POST['submit']) )
 	}
 	else
 	{
-		$id_cat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-		$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : 0;
-		$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-		$image = !empty($_POST['image']) ? strprotect($_POST['image']) : '';
-		$description = !empty($_POST['description']) ? strparse($_POST['description']) : '';
+		$id_cat = retrieve(POST, 'idcat', 0);
+		$id_parent = retrieve(POST, 'id_parent', 0);
+		$name = retrieve(POST, 'name', '');
+		$image = retrieve(POST, 'image', '');
+		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
 		
 		if( empty($name) )
 			redirect(transid(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');

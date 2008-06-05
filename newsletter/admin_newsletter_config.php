@@ -37,8 +37,8 @@ $Template->Set_filenames(array(
 
 $Cache->Load_file('newsletter');
 
-$sender_mail = !empty($_POST['sender_mail']) ? trim($_POST['sender_mail']) : '';
-$newsletter_name = !empty($_POST['newsletter_name']) ? strprotect($_POST['newsletter_name'], HTML_UNPROTECT) : '';
+$sender_mail = retrieve(POST, 'sender_mail', '', TSTRING_UNSECURE);
+$newsletter_name = retrieve(POST, 'newsletter_name', '', TSTRING_HTML);
 
 $Template->Assign_block_vars('config', array(
 ));
@@ -48,7 +48,7 @@ if( !empty($sender_mail) && !empty($newsletter_name) )
 {
 	if( preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $sender_mail) )
 	{
-		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize(array('sender_mail' => $sender_mail, 'newsletter_name' => $newsletter_name))) . "' WHERE name = 'newsletter'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . serialize(array('sender_mail' => $sender_mail, 'newsletter_name' => $newsletter_name)) . "' WHERE name = 'newsletter'", __LINE__, __FILE__);
 		$Cache->Generate_module_file('newsletter');
 		$_NEWSLETTER_CONFIG['sender_mail'] = $sender_mail;
 		$_NEWSLETTER_CONFIG['newsletter_name'] = $newsletter_name;

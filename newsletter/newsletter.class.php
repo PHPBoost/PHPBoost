@@ -45,13 +45,11 @@ class Newsletter_sender
 		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
 		$headers .= "\r\n";
 		
-		$mail_contents = $message;
-		
 		if( $email_test == '' ) // envoi définitif
 		{
 			$nbr = $Sql->Count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "','" . addslashes($message) . "', '" . time() . "', 'html', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "','" . $message . "', '" . time() . "', 'html', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
 			$result = $Sql->Query_while("SELECT id, mail 
@@ -100,7 +98,7 @@ class Newsletter_sender
 		{
 			$nbr = $Sql->Count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . strprotect($mail_object) . "', '" . addslashes($message) . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . $message . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
 			$result = $Sql->Query_while("SELECT id, mail 
@@ -141,7 +139,7 @@ class Newsletter_sender
 		{
 			$nbr = $Sql->Count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . addslashes($message) . "', '" . time() . "', 'text', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . $message . "', '" . time() . "', 'text', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
 			$result = $Sql->Query_while("SELECT id, mail 

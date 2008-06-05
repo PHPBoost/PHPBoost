@@ -135,12 +135,14 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 		}
 		elseif( $update )
 		{
-			$shout_contents = !empty($_POST['shout_contents']) ? trim($_POST['shout_contents']) : '';			
-			$shout_pseudo = !empty($_POST['shout_pseudo']) ? strprotect($_POST['shout_pseudo']) : '';			
+			$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNSECURE);			
+			$shout_pseudo = retrieve(POST, 'shout_pseudo', '');			
 			if( !empty($shout_contents) && !empty($shout_pseudo) )
 			{
 				//Vérifie que le message ne contient pas du flood de lien.
-				$shout_contents = strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);		
+				$shout_contents = strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
+				if( !check_nbr_links($shout_pseudo, 0) ) //Nombre de liens max dans le pseudo.
+					redirect(HOST . SCRIPT . transid('?error=l_pseudo', '', '&') . '#errorh');
 				if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
 					redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			

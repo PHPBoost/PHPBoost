@@ -60,7 +60,7 @@ class Files
 		FROM ".PREFIX."upload 
 		WHERE idcat = '" . $id_folder . "'", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
-			delete_file(PATH_TO_ROOT . '/upload/' . $row['path']);
+			delete_file('../upload/' . $row['path']);
 		
 		//Suppression des entrées dans la base de données
 		if( $empty_folder && $i == 0 ) //Non suppression du dossier racine.
@@ -88,7 +88,7 @@ class Files
 		{
 			$name = $Sql->Query("SELECT path FROM ".PREFIX."upload WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 			$Sql->Query_inject("DELETE FROM ".PREFIX."upload WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
-			delete_file(PATH_TO_ROOT . '/upload/' . $name);
+			delete_file('../upload/' . $name);
 			return '';
 		}		
 		else
@@ -99,7 +99,7 @@ class Files
 			{
 				$name = $Sql->Query("SELECT path FROM ".PREFIX."upload WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 				$Sql->Query_inject("DELETE FROM ".PREFIX."upload WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
-				delete_file(PATH_TO_ROOT . '/upload/' . $name);
+				delete_file('../upload/' . $name);
 				return '';
 			}
 			return 'e_auth';

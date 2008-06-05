@@ -29,18 +29,18 @@ require_once('../kernel/begin.php');
 require_once('../pages/pages_begin.php'); 
 include_once('pages_functions.php');
 
-$id_edit = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$id_edit_post = !empty($_POST['id_edit']) ? numeric($_POST['id_edit']) : 0;
+$id_edit = retrieve(GET, 'id', 0);
+$id_edit_post = retrieve(POST, 'id_edit', 0);
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_post;
-$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
-$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
+$title = retrieve(POST, 'title', '');
+$contents = retrieve(POST, 'contents', '');
 $count_hits = !empty($_POST['count_hits']) ? 1 : 0;
 $enable_com = !empty($_POST['activ_com']) ? 1 : 0;
 $own_auth = !empty($_POST['own_auth']);
 $is_cat = !empty($_POST['is_cat']) ? 1 : 0;
-$id_cat = !empty($_POST['id_cat']) ? numeric($_POST['id_cat']) : 0;
+$id_cat = retrieve(POST, 'id_cat', 0);
 $preview = !empty($_POST['preview']);
-$del_article = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+$del_article = retrieve(GET, 'del', 0);
 
 //Variable d'erreur
 $error = '';

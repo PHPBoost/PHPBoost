@@ -98,16 +98,16 @@ if( defined('ALTERNATIVE_CSS') )
 	$module = $array_alternative_css[0];
 	foreach($array_alternative_css as $alternative)
 	{
-		if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/' . $alternative . '.css') )
-			$alternative = PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/' . $alternative . '.css';
+		if( file_exists('../templates/' . $CONFIG['theme'] . '/' . $module . '/' . $alternative . '.css') )
+			$alternative = '../templates/' . $CONFIG['theme'] . '/' . $module . '/' . $alternative . '.css';
 		else
-			$alternative = PATH_TO_ROOT . '/' . $module . '/templates/' . $alternative . '.css';
+			$alternative = '../' . $module . '/templates/' . $alternative . '.css';
 		$alternative_css .= '<link rel="stylesheet" href="' . $alternative . '" type="text/css" media="screen, handheld" />' . "\n";
 	}
 }
 
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
-$THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
+$THEME = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
 
 $member_connected = $Member->Check_level(MEMBER_LEVEL);
 $Template->Assign_vars(array(
@@ -125,18 +125,17 @@ $Template->Assign_vars(array(
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],	
 	'L_VISIT' => $LANG['guest_s'],
 	'L_TODAY' => $LANG['today'],
-	'PATH_TO_ROOT' => PATH_TO_ROOT,
 	'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 	'L_REQUIRE_PASSWORD' => $LANG['require_password']
 ));
 
 //Inclusion des modules
-if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
+if( @!include_once('../cache/modules_mini.php') )
 {
 	$Cache->Generate_file('modules_mini');
 	
 	//On inclue une nouvelle fois
-	if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
+	if( @!include_once('../cache/modules_mini.php') )
 		$Errorh->Error_handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 }
 $Template->Assign_vars(array(

@@ -37,8 +37,8 @@ function generate_module_file_calendar()
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_CALENDAR = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'calendar'", __LINE__, __FILE__));
 	$CONFIG_CALENDAR = is_array($CONFIG_CALENDAR) ? $CONFIG_CALENDAR : array();
-	foreach($CONFIG_CALENDAR as $key => $value)
-		$code .= '$CONFIG_CALENDAR[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
+	
+	$code .= '$CONFIG_CALENDAR = ' . var_export($CONFIG_CALENDAR, true) . ';' . "\n";
 	
 	return $code;
 }

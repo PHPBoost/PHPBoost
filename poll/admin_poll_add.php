@@ -31,15 +31,15 @@ require_once('../kernel/admin_header.php');
 
 if( !empty($_POST['valid']) )
 {
-	$question = !empty($_POST['question']) ? strprotect($_POST['question']) : '';
-	$type = isset($_POST['type']) ? numeric($_POST['type']) : 1;
-	$archive = isset($_POST['archive']) ? numeric($_POST['archive']) : 0;
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
-	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$question = retrieve(POST, 'question', '');
+	$type = retrieve(POST, 'type', 1);
+	$archive = retrieve(POST, 'archive', 0);
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$get_visible = retrieve(POST, 'visible', 0);
 	
 	//On verifie les conditions!
 	if( !empty($question) )
@@ -133,7 +133,7 @@ else
 	));					 
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['incomplete'], E_USER_NOTICE);
 		

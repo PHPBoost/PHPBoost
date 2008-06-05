@@ -31,9 +31,9 @@ load_module_lang('search');
 
 //--------------------------------------------------------------------- Params
 
-$searchTxt = !empty($_POST['search']) ? strprotect($_POST['search']) : '';
-$MODULE_NAME = strtolower(!empty($_POST['moduleName']) ? strprotect($_POST['moduleName']) : '');
-$idSearch = !empty($_POST['idSearch']) ? numeric($_POST['idSearch']) : -1;
+$searchTxt = retrieve(POST, 'search', '');
+$MODULE_NAME = strtolower(retrieve(POST, 'moduleName', ''));
+$idSearch = retrieve(POST, 'idSearch', -1);
 
 //--------------------------------------------------------------------- Header
 //------------------------------------------------------------- Other includes

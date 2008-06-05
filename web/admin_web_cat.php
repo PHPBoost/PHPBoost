@@ -29,10 +29,10 @@ require_once('../kernel/admin_begin.php');
 load_module_lang('web'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
-				
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
-$top = !empty($_GET['top']) ? numeric($_GET['top']) : '' ;
-$bottom = !empty($_GET['bot']) ? numeric($_GET['bot']) : '' ;
+
+$id = retrieve(GET, 'id', '');
+$top = retrieve(GET, 'top', '');
+$bottom = retrieve(GET, 'bot', '');
 $del = isset($_GET['del']) ?  true : false;
 
 //Si c'est confirmé on met à jour!
@@ -43,12 +43,12 @@ if( !empty($_POST['valid']) )
 	ORDER BY class", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$cat = !empty($_POST[$row['id'] . 'cat']) ? strprotect($_POST[$row['id'] . 'cat']) : '';  
-		$contents = !empty($_POST[$row['id'] . 'contents']) ? strprotect($_POST[$row['id'] . 'contents']) : '';
-		$icon = !empty($_POST[$row['id'] . 'icon']) ? strprotect($_POST[$row['id'] . 'icon']) : ''; 
-		$icon_path = !empty($_POST[$row['id'] . 'icon_path']) ? strprotect($_POST[$row['id'] . 'icon_path']) : ''; 
-		$aprob = isset($_POST[$row['id'] . 'aprob']) ? numeric($_POST[$row['id'] . 'aprob']) : '0';
-		$secure = isset($_POST[$row['id'] . 'secure']) ? numeric($_POST[$row['id'] . 'secure']) : '-1';
+		$cat = retrieve(POST, $row['id'] . 'cat', '');  
+		$contents = retrieve(POST, $row['id'] . 'contents', '');
+		$icon = retrieve(POST, $row['id'] . 'icon', ''); 
+		$icon_path = retrieve(POST, $row['id'] . 'icon_path', ''); 
+		$aprob = retrieve(POST, $row['id'] . 'aprob', 0);
+		$secure = retrieve(POST, $row['id'] . 'secure', -1);
 		
 		if( !empty($icon_path) )
 			$icon = $icon_path;
@@ -107,12 +107,12 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 //On ajoute la nouvelle catégorie
 elseif( !empty($_POST['add']) ) //Ajout du lien.
 {
-	$cat = !empty($_POST['cat']) ? strprotect($_POST['cat']) : '';  
-	$contents = !empty($_POST['contents']) ? strprotect($_POST['contents']) : '';
-	$icon = !empty($_POST['icon']) ? strprotect($_POST['icon']) : ''; 
-	$icon_path = !empty($_POST['icon_path']) ? strprotect($_POST['icon_path']) : ''; 
-	$aprob = isset ($_POST['aprob']) ? numeric($_POST['aprob']) : '0';
-	$secure = isset($_POST['secure']) ? numeric($_POST['secure']) : '-1';
+	$cat = retrieve(POST, 'cat', '');  
+	$contents = retrieve(POST, 'contents', '');
+	$icon = retrieve(POST, 'icon', ''); 
+	$icon_path = retrieve(POST, 'icon_path', ''); 
+	$aprob = retrieve(POST, 'aprob', 0);
+	$secure = retrieve(POST, 'secure', -1);
 		
 	if( !empty($icon_path) )
 		$icon = $icon_path;
@@ -148,7 +148,7 @@ else
 		$dh = @opendir( $rep);
 		while( ! is_bool($lang = @readdir($dh)) )
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $lang) )
+			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)$`i', $lang) )
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		@closedir($dh); //On ferme le dossier
@@ -188,7 +188,7 @@ else
 	));	
 		
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	

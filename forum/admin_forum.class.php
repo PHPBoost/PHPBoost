@@ -194,11 +194,11 @@ class Admin_forum
 		else //Déplacement.
 		{
 			//Déplacement de sous forums.
-			$f_to = !empty($_POST['f_to']) ? numeric($_POST['f_to']) : 0;
+			$f_to = retrieve(POST, 'f_to', 0);
 			$f_to = $Sql->Query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $f_to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 			
 			//Déplacement de topics.
-			$t_to = !empty($_POST['t_to']) ? numeric($_POST['t_to']) : 0;
+			$t_to = retrieve(POST, 't_to', 0);
 			$t_to = $Sql->Query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $t_to . "' AND id <> '" . $idcat . "'", __LINE__, __FILE__);
 			
 			//Déplacement des topics dans la catégorie sélectionnée.
@@ -426,10 +426,10 @@ class Admin_forum
 		$result = $Sql->Query_while("SELECT id
 		FROM ".PREFIX."forum_cats 
 		" . $clause, __LINE__, __FILE__);
+		
 		while( $row = $Sql->Sql_fetch_assoc($result) )
-		{
 			$list_parent_cats .= $row['id'] . ', ';
-		}
+		
 		$Sql->Close($result);
 		$list_parent_cats = trim($list_parent_cats, ', ');
 		
@@ -448,10 +448,10 @@ class Admin_forum
 		FROM ".PREFIX."forum_cats 
 		" . $clause . "
 		ORDER BY id_left", __LINE__, __FILE__);
+		
 		while( $row = $Sql->Sql_fetch_assoc($result) )
-		{
 			$list_cats .= $row['id'] . ', ';
-		}
+		
 		$Sql->Close($result);
 		$list_cats = trim($list_cats, ', ');
 		
@@ -472,10 +472,10 @@ class Admin_forum
 			FROM ".PREFIX."forum_cats 
 			WHERE id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
 			ORDER BY id_left", __LINE__, __FILE__);
+			
 			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
 				$list_cats .= $row['id'] . ', ';
-			}
+			
 			$Sql->Close($result);
 			$clause = "idcat IN (" . trim($list_cats, ', ') . ")";			
 		}
