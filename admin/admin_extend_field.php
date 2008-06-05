@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 $del = !empty($_GET['del']) ? true : false;
@@ -267,6 +267,6 @@ else
 
 $Template->Pparse('admin_extend_field');		
 	
-require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

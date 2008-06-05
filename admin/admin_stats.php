@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
-include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php'); //Chargement de la langue.
+require_once('../kernel/admin_header.php');
+include_once('../lang/' . $CONFIG['lang'] . '/stats.php'); //Chargement de la langue.
 
 $Template->Set_filenames(array(
 	'admin_stats_management'=> 'admin/admin_stats_management.tpl'
@@ -99,7 +99,7 @@ if( !empty($members) )
 		$stats_array[$name] = $row['compt'];
 	}	
 	$Sql->Close($result);
-	include_once(PATH_TO_ROOT . '/kernel/framework/stats.class.php');
+	include_once('../kernel/framework/stats.class.php');
 	$Stats = new Stats();
 		
 	$Stats->Load_statsdata($stats_array, 'ellipse');
@@ -925,7 +925,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 }
 elseif( !empty($referer) )
 {
-	include_once(PATH_TO_ROOT . '/kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$nbr_referer = $Sql->Query("SELECT COUNT(DISTINCT(url)) FROM ".PREFIX."stats_referer WHERE type = 0", __LINE__, __FILE__);
@@ -982,7 +982,7 @@ elseif( !empty($referer) )
 }
 elseif( !empty($keyword) )
 {
-	include_once(PATH_TO_ROOT . '/kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$nbr_keyword = $Sql->Query("SELECT COUNT(DISTINCT(relative_url)) FROM ".PREFIX."stats_referer WHERE type = 1", __LINE__, __FILE__);
@@ -1039,7 +1039,7 @@ elseif( !empty($keyword) )
 }
 elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques camenbert.
 {
-	include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php');
+	include_once('../lang/' . $CONFIG['lang'] . '/stats.php');
 	
 	if( !empty($browser) )
 	{
@@ -1080,7 +1080,7 @@ elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques cam
 	$stats_array = @fgets($file);
 	$stats_array = !empty($stats_array) ? unserialize($stats_array) : array();
 	@fclose($file);
-	include_once(PATH_TO_ROOT . '/kernel/framework/stats.class.php');
+	include_once('../kernel/framework/stats.class.php');
 	$Stats = new Stats();
 		
 	$Stats->Load_statsdata($stats_array, 'ellipse', 5);
@@ -1157,7 +1157,7 @@ elseif( $bot )
 		}
 	}
 
-	include_once(PATH_TO_ROOT . '/kernel/framework/stats.class.php');
+	include_once('../kernel/framework/stats.class.php');
 	$Stats = new Stats();
 		
 	$Stats->Load_statsdata($stats_array, 'ellipse');
@@ -1195,6 +1195,6 @@ else
 
 $Template->Pparse('admin_stats_management');
 
-require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>
