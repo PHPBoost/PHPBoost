@@ -40,7 +40,7 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 
 $search_string = retrieve(GET, 'search', '');
 $where_search = retrieve(GET, 'where', '');
-$where_search = !empty($where_search) ? ($where_search == 'contents' ? 'contents' : 'title') : 'title';
+$where_search = !empty($where_search &&$where_search == 'contents') ? 'contents' : 'title';
 $page = retrieve(GET, 'page', 1);
 $page = $page <= 0 ? 1 : $page;
 
@@ -60,7 +60,7 @@ $Template->Assign_vars(array(
 	'L_CONTENTS' => $LANG['contents']
 ));
 
-if( $search_string != '' ) //recherche
+if( !empty($search_string) ) //recherche
 {
 	$title_search = "SELECT title, encoded_title, MATCH(title) AGAINST('" . $search_string . "') AS relevance
 		FROM ".PREFIX."wiki_articles

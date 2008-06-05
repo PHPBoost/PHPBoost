@@ -38,8 +38,8 @@ require_once('../kernel/header.php');
 if( !$Member->Check_level(MEMBER_LEVEL) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-$add_favorite = !empty($_GET['add']) ? numeric($_GET['add']) : 0;
-$remove_favorite = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+$add_favorite = retrieve(GET, 'add', 0);
+$remove_favorite = retrieve(GET, 'del', 0);
 
 if( $add_favorite > 0 )//Ajout d'un favori
 {

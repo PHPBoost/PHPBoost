@@ -19,7 +19,7 @@ if( !defined('PHPBOOST') )
 	header("Content-Type: text/xml");
 	
 	require_once('../kernel/begin.php');
-	$cat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
+	$cat = retrieve(GET, 'cat', 0);
 	//Chargement de la langue du module.
 	load_module_lang('wiki');
 	define('TITLE', $LANG['wiki_rss']);

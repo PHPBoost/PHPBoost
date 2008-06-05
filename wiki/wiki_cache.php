@@ -48,14 +48,9 @@ function generate_module_file_wiki()
 	$code = 'global $_WIKI_CONFIG;' . "\n" . '$_WIKI_CONFIG = array();' . "\n";
 	$CONFIG_WIKI = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'wiki'", __LINE__, __FILE__));
 	$CONFIG_WIKI = is_array($CONFIG_WIKI) ? $CONFIG_WIKI : array();
-	foreach($CONFIG_WIKI as $key => $value)
-	{
-		if( $key != 'auth' )
-			$code .= '$_WIKI_CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
-	}
-
-	$code .=  '$_WIKI_CONFIG[\'auth\'] = ' . var_export(unserialize(stripslashes($CONFIG_WIKI['auth'])), true)  . ';' . "\n";
-	$code .= "\n";
+	$CONFIG_WIKI['auth'] = unserialize($CONFIG_WIKI['auth']);
+	
+	$code .= '$_WIKI_CONFIG = ' . var_export($CONFIG_WIKI, true) . ';' . "\n";
 	
 	return $config . "\n\r" . $code;
 }
