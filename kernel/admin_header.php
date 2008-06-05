@@ -57,6 +57,7 @@ $Template->Assign_vars(array(
 	'SID' => SID,
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
+	'PATH_TO_ROOT' => PATH_TO_ROOT,
 	'L_ADMINISTRATION' => $LANG['administration'],
 	'L_INDEX' => $LANG['index'],
 	'L_SITE' => $LANG['site'],
