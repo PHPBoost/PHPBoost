@@ -96,7 +96,7 @@ class Group
 
 		return $this->generate_select_groups($auth_bit, $array_auth, $array_ranks_default, $idselect, $disabled) . ($disabled_advanced_auth ? '<div class="spacer"></div>' : $this->generate_select_members($auth_bit, $array_auth, $idselect) . 
 		'<div class="spacer"></div>
-		<a class="small_link" href="javascript:display_div_auto(\'advanced_auth' . $idselect . '\', \'\');display_div_auto(\'advanced_auth2' . $idselect . '\', \'\');switch_img(\'advanced_auth_plus' . $idselect . '\', \'../templates/' . $CONFIG['theme'] . '/images/upload/minus.png\', \'../templates/' . $CONFIG['theme'] . '/images/upload/plus.png\');"><img id="advanced_auth_plus' . $idselect . '" src="../templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" class="valign_middle" /> ' . $LANG['advanced_authorization'] . '</a><br />') . 
+		<a class="small_link" href="javascript:display_div_auto(\'advanced_auth' . $idselect . '\', \'\');display_div_auto(\'advanced_auth2' . $idselect . '\', \'\');switch_img(\'advanced_auth_plus' . $idselect . '\', \'' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/upload/minus.png\', \'' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/upload/plus.png\');"><img id="advanced_auth_plus' . $idselect . '" src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" class="valign_middle" /> ' . $LANG['advanced_authorization'] . '</a><br />') .
 		'<a class="small_link" href="javascript:check_select_multiple(\'' . $idselect . '\', true);">' . $LANG['select_all'] . '</a>/<a class="small_link" href="javascript:check_select_multiple(\'' . $idselect . '\', false);">' . $LANG['select_none'] . '</a>
 		<br />
 		<span class="text_small">(' . $LANG['explain_select_multiple'] . ')</span>';

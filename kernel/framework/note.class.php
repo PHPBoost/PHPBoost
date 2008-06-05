@@ -40,7 +40,7 @@ class Note
 		{
 			$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
 			$this->options = (int)$options;
-			list($this->script, $this->idprov, $this->vars, $this->notation_scale, $this->path) = array(strprotect($script), numeric($idprov), $vars, $notation_scale, '../' . $this->module_folder . '/');
+			list($this->script, $this->idprov, $this->vars, $this->notation_scale, $this->path) = array(strprotect($script), numeric($idprov), $vars, $notation_scale, PATH_TO_ROOT . '/' . $this->module_folder . '/');
 			$this->sql_table = $this->get_table_module();
 		}
 	}
@@ -128,7 +128,7 @@ class Note
 		global $Sql, $CONFIG;
 
 		//Récupération des informations sur le module.
-		$info_module = load_ini_file('../' . $this->module_folder . '/lang/', $CONFIG['lang']);
+		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', $CONFIG['lang']);
 		$check_script = false;
 		if( isset($info_module['note']) )
 		{

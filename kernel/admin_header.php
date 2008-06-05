@@ -102,7 +102,7 @@ $Template->Assign_vars(array(
 $modules_config = array();
 foreach($MODULES as $name => $array)
 {	
-	$array_info = load_ini_file('../' . $name . '/lang/', $CONFIG['lang']);
+	$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', $CONFIG['lang']);
 	$array_info['module_name'] = $name;
 	$modules_config[$array_info['name']] = $array_info;
 }
@@ -139,7 +139,7 @@ foreach($modules_config as $module_name => $auth)
 					'LINKS' => $links,
 					'DM_A_STYLE' => ' style="background-image:url(../' . $name . '/' . $name . '_mini.png);"',
 					'NAME' => $modules_config[$module_name]['name'],
-					'U_ADMIN_MODULE' => '../' . $name . '/admin_' . $name . '.php'
+					'U_ADMIN_MODULE' => PATH_TO_ROOT . '/' . $name . '/admin_' . $name . '.php'
 				));
 			}
 			else
@@ -149,7 +149,7 @@ foreach($modules_config as $module_name => $auth)
 					'C_ADVANCED_LINK' => false,
 					'DM_A_STYLE' => ' style="background-image:url(../' . $name . '/' . $name . '_mini.png);"',
 					'NAME' => $modules_config[$module_name]['name'],
-					'U_ADMIN_MODULE' => '../' . $name . '/admin_' . $name . '.php'
+					'U_ADMIN_MODULE' => PATH_TO_ROOT . '/' . $name . '/admin_' . $name . '.php'
 				));
 			}
 		}

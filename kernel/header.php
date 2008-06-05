@@ -98,16 +98,16 @@ if( defined('ALTERNATIVE_CSS') )
 	$module = $array_alternative_css[0];
 	foreach($array_alternative_css as $alternative)
 	{
-		if( file_exists('../templates/' . $CONFIG['theme'] . '/' . $module . '/' . $alternative . '.css') )
-			$alternative = '../templates/' . $CONFIG['theme'] . '/' . $module . '/' . $alternative . '.css';
+		if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/' . $alternative . '.css') )
+			$alternative = PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/' . $alternative . '.css';
 		else
-			$alternative = '../' . $module . '/templates/' . $alternative . '.css';
+			$alternative = PATH_TO_ROOT . '/' . $module . '/templates/' . $alternative . '.css';
 		$alternative_css .= '<link rel="stylesheet" href="' . $alternative . '" type="text/css" media="screen, handheld" />' . "\n";
 	}
 }
 
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
-$THEME = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
+$THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
 
 $member_connected = $Member->Check_level(MEMBER_LEVEL);
 $Template->Assign_vars(array(
