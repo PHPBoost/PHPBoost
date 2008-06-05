@@ -184,9 +184,9 @@ if( !$get_show && defined('PHPBOOST') === true )
 }
 elseif( $get_show )
 {
-	include_once('../kernel/begin.php');
+	include_once(PATH_TO_ROOT . '/kernel/begin.php');
 	define('TITLE', '');
-	include_once('../kernel/header_no_display.php');
+	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 	
 	$Template->Set_filenames(array(
 		'bbcode_smileys'=> 'bbcode_smileys.tpl'
@@ -276,7 +276,7 @@ elseif( $get_show )
 	}	
 	
 	$Template->Pparse('bbcode_smileys'); 
-	include_once('../kernel/footer_no_display.php');
+	include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 }
 
 ?>

@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-include_once('../kernel/begin.php');
+include_once(PATH_TO_ROOT . '/kernel/begin.php');
 define('TITLE', '');
-include_once('../kernel/header_no_display.php');
+include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 //Vide par défaut => Type date.
 $calendar_type = !empty($_GET['date']) ? 'timestamp' : 'date';
@@ -151,5 +151,5 @@ else
 
 $Template->Pparse('calendar');  
         
-include_once('../kernel/footer_no_display.php');
+include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>

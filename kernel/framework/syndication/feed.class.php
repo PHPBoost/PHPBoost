@@ -48,13 +48,13 @@ class Feed
         
         if ( $type & USE_ATOM )
         {
-            require_once('../kernel/framework/syndication/atom.class.php');
+            require_once(PATH_TO_ROOT . '/kernel/framework/syndication/atom.class.php');
             $this->feeds[USE_ATOM] = new ATOM($this->name, $this->path);
             $this->type = 'atom';
         }
         if ( $type & USE_RSS )
         {
-            require_once('../kernel/framework/syndication/rss.work.class.php');
+            require_once(PATH_TO_ROOT . '/kernel/framework/syndication/rss.work.class.php');
             $this->feeds[USE_RSS] = new RSS($this->name, $this->path);
             $this->type = 'rss';
         }
@@ -126,7 +126,7 @@ class Feed
      * Return a HTML String of a parsed feed.
      */
     {
-        require_once('../kernel/framework/template.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
         $Template = new Template($tpl);
         
         $Template->Assign_vars(array(

@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
 
 if( !empty($_POST['msg_mbr']) ) //Message aux membres.
 {
@@ -123,11 +123,11 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	include_once('../kernel/framework/content/bbcode.php');
+	include_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_members_config'); 
 }
 
-require_once('../kernel/admin_footer.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
 
 ?>

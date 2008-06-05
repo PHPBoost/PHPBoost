@@ -84,7 +84,7 @@ class RSS
      * and also the HTML cache for direct includes.
      */
     {
-        require_once('../kernel/framework/template.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
         $Template = new Template('syndication/rss.tpl');
         
         $Template->Assign_vars(array(

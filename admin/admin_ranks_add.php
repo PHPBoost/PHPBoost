@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
 
 //Ajout du rang.
 if( !empty($_POST['add']) )
@@ -63,7 +63,7 @@ elseif( !empty($_FILES['upload_ranks']['name']) ) //Upload et décompression de l
 	$error = '';
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
-		include_once('../kernel/framework/files/upload.class.php');
+		include_once(PATH_TO_ROOT . '/kernel/framework/files/upload.class.php');
 		$Upload = new Upload($dir);
 		if( !$Upload->Upload_file('upload_ranks', '`([a-z0-9_-])+\.(jpg|gif|png|bmp)+$`i') )
 			$error = $Upload->error;
@@ -129,6 +129,6 @@ else //Sinon on rempli le formulaire
 	$Template->Pparse('admin_ranks_add');
 }
 
-require_once('../kernel/admin_footer.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
 
 ?>

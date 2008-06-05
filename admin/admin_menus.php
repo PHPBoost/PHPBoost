@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
 
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
 $id_post = !empty($_POST['id']) ? numeric($_POST['id']) : '' ;
@@ -305,6 +305,6 @@ else
 	$Template->Pparse('admin_menus_management');
 }
 
-require_once('../kernel/admin_footer.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
 
 ?>

@@ -47,7 +47,7 @@ $Template->Assign_vars(array(
 $Template->Pparse('admin_header'); // traitement du modele
 
 //!\\ Connexion à l'administration //!\\
-require_once('../kernel/admin_access.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_access.php');
 
 $Template->Set_filenames(array(
 	'admin_sub_header'=> 'admin/admin_sub_header.tpl'

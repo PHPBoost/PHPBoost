@@ -98,7 +98,7 @@ class Content
 		$this->content = preg_replace('`&amp;((?:#[0-9]{2,4})|(?:[a-z0-9]{2,6}));`i', "&$1;", $this->content);
 		
 		//Smilies
-		@include('../cache/smileys.php');
+		@include(PATH_TO_ROOT . '/cache/smileys.php');
 		if( !empty($_array_smiley_code) )
 		{
 			//Création du tableau de remplacement.
@@ -300,7 +300,7 @@ class Content
 		$this->unparse_code(PICK_UP);
 
 		//Smiley.
-		@include('../cache/smileys.php');
+		@include(PATH_TO_ROOT . '/cache/smileys.php');
 		if(!empty($_array_smiley_code) )
 		{
 			//Création du tableau de remplacement
@@ -1013,7 +1013,7 @@ class Content
 	{
 		if( $language != '' )
 		{
-			include_once('../kernel/framework/content/geshi/geshi.php');
+			include_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
 			$Geshi =& new GeSHi($contents, $language);
 			
 			if( $line_number ) //Affichage des numéros de lignes.

@@ -26,7 +26,7 @@
  *
 ###################################################*/
 
-require_once('../kernel/framework/modules/module_interface.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
 
 /**
  *  Les arguments de fonction nommé "$modules" sont assez particulier.
@@ -134,7 +134,7 @@ class Modules
 				
                 if( $Member->check_auth($MODULES[$moduleId]['auth'], ACCESS_MODULE) )
                 {
-                    if( @include_once('../'.$moduleId.'/'.$moduleId.'_interface.class.php') )
+                    if( @include_once(PATH_TO_ROOT . '/'.$moduleId.'/'.$moduleId.'_interface.class.php') )
                     {
                         $moduleConstructor = ucfirst($moduleId.'Interface');
                         $Module = new $moduleConstructor();

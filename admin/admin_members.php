@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
 
 $id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
 $id_post = !empty($_POST['id']) ? numeric($_POST['id']) : '' ;
@@ -137,7 +137,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			$user_avatar = '';
 			$dir = '../images/avatars/';
 			
-			include_once('../kernel/framework/files/upload.class.php');
+			include_once(PATH_TO_ROOT . '/kernel/framework/files/upload.class.php');
 			$Upload = new Upload($dir);
 			
 			if( is_writable($dir) )
@@ -194,7 +194,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 				if( $user_ban > 0 )	//Suppression de la session si le membre se fait bannir.
 				{	
 					$Sql->Query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-					include_once('../kernel/framework/mail.class.php');
+					include_once(PATH_TO_ROOT . '/kernel/framework/mail.class.php');
 					$Mail = new Mail();
 					$Mail->Send_mail($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST), $CONFIG['mail']);
 				}
@@ -821,7 +821,7 @@ else
 
 	$nbr_membre = $Sql->Count_table("member", __LINE__, __FILE__);
 	//On crée une pagination si le nombre de membre est trop important.
-	include_once('../kernel/framework/pagination.class.php'); 
+	include_once(PATH_TO_ROOT . '/kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	 
 	$get_sort = !empty($_GET['sort']) ? trim($_GET['sort']) : '';	
@@ -918,10 +918,10 @@ else
 	}
 	$Sql->Close($result);
 	
-	include_once('../kernel/framework/content/bbcode.php');
+	include_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_members_management'); 
 }
-require_once('../kernel/admin_footer.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
 
 ?>

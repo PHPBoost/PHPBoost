@@ -26,12 +26,12 @@
  *
 ###################################################*/
 
-require_once('../kernel/auth/config.php'); //Fichier de configuration.
+require_once(PATH_TO_ROOT . '/kernel/auth/config.php'); //Fichier de configuration.
 
 //PHPBoost installé? Si non redirection manuelle, car chemin non connu.
 if( !defined('PHPBOOST_INSTALLED') )
 {
-    require_once('../kernel/framework/unusual_functions.php');
+    require_once(PATH_TO_ROOT . '/kernel/framework/unusual_functions.php');
     redirect(get_server_url_page('install/install.php'));
 }
 
@@ -39,7 +39,7 @@ set_magic_quotes_runtime(0); //Désactivation du magic_quotes_runtime (échappe le
 //Si register_globals activé, suppression des variables qui trainent.
 if( @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on' )
 {
-    require_once('../kernel/framework/unusual_functions.php');
+    require_once(PATH_TO_ROOT . '/kernel/framework/unusual_functions.php');
     securit_register_globals();
 }
 

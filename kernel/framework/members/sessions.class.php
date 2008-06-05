@@ -63,7 +63,7 @@ class Sessions
 		}
 		
 		//On lance les stats.
-		include_once('../kernel/save_stats.php');
+		include_once(PATH_TO_ROOT . '/kernel/save_stats.php');
 			
 		########Génération d'un ID de session unique########
 		$session_uniq_id = md5(uniqid(mt_rand(), true)); //On génère un numéro de session aléatoire.

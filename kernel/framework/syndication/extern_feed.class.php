@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../kernel/framework/syndication/feed.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
 
 class ExternFeed
 {
@@ -80,7 +80,7 @@ class ExternFeed
      * Return a HTML String of a parsed feed.
      */
     {
-        require_once('../kernel/framework/template.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
         $Template = new Template($tpl);
         
         $Template->Assign_vars(array(

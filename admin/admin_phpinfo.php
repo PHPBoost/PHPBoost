@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
 
 ob_start();
 phpinfo();
@@ -40,6 +40,6 @@ ob_end_clean();
 ob_start();
 echo $phpinfo;
 
-require_once('../kernel/admin_footer.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
 
 ?>

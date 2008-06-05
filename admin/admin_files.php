@@ -25,12 +25,12 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
 
 //Initialisation  de la class de gestion des fichiers.
-include_once('../kernel/framework/files/files.class.php');
+include_once(PATH_TO_ROOT . '/kernel/framework/files/files.class.php');
 $Files = new Files; 
 
 $folder = !empty($_GET['f']) ? numeric($_GET['f']) : 0;
@@ -72,7 +72,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	$error = '';
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
-		include_once('../kernel/framework/files/upload.class.php');
+		include_once(PATH_TO_ROOT . '/kernel/framework/files/upload.class.php');
 		$Upload = new Upload($dir);
 		$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+`i$', UNIQ_NAME);
 		
@@ -357,6 +357,6 @@ else
 	$Template->Pparse('admin_files_management');
 }
 	
-require_once('../kernel/admin_footer.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
 
 ?>
