@@ -10,7 +10,8 @@
 		<link rel="stylesheet" href="../templates/{THEME}/global.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="../templates/{THEME}/generic.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="../templates/{THEME}/content.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="../templates/{THEME}/bbcode.css" type="text/css" media="screen, print, handheld" />
+        <link rel="stylesheet" href="../templates/{THEME}/bbcode.css" type="text/css" media="screen, print, handheld" />
+        <link rel="stylesheet" href="../templates/{THEME}/framework/syndication/syndication.css" type="text/css" media="screen, print, handheld" />
 		{ALTERNATIVE_CSS}
 		<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
 		<link rel="alternate" type="application/rss+xml" href="../news/rss.php" title="RSS {SITE_NAME}" />
@@ -41,19 +42,19 @@
 					<h5 class="links"><a href="../download/download-2-52+phpboost-2-0.php" title="PHPBoost"><img src="../download/download_mini.png" class="valign_middle" alt="" /> PHPBoost</a></h5>
 					<ul id="smenul1">
 						<li><a href="../download/download-2-52+phpboost-2-0.php" style="background-image:url(../download/download_mini.png);">PHPBoost 2</a></li>
-						<li><a href="http://demo.phpboost.com" title="Démonstration PHPBoost" style="background-image:url(../templates/phpboost/images/admin/com_mini.png);">Démonstration</a></li>
-						<li><a href="http://themes.phpboost.com" style="background-image:url(../templates/phpboost/images/admin/themes_mini.png);">Thèmes</a></li>
+						<li><a href="http://demo.phpboost.com" title="Dï¿½monstration PHPBoost" style="background-image:url(../templates/phpboost/images/admin/com_mini.png);">Dï¿½monstration</a></li>
+						<li><a href="http://themes.phpboost.com" style="background-image:url(../templates/phpboost/images/admin/themes_mini.png);">Thï¿½mes</a></li>
 						<li><a href="../phpboost/modules.php" style="background-image:url(../templates/phpboost/images/admin/modules_mini.png);">Modules</a></li>
 					</ul>
 				</li>
 				<li onmouseover="show_menu('l2', 0);" onmouseout="hide_menu(0);">
 					<h5 class="links"><a href="../wiki/wiki.php" title="Documentation PHPBoost"><img src="../wiki/wiki_mini.png" class="valign_middle" alt="" /> Documentation</a></h5>
-					<ul id="smenul2"><li><a href="../wiki/presentation-de-phpboost" style="background-image:url(../images/doc/presentation_mini.png);">Présentation</a></li>
+					<ul id="smenul2"><li><a href="../wiki/presentation-de-phpboost" style="background-image:url(../images/doc/presentation_mini.png);">Prï¿½sentation</a></li>
 						<li><a href="../wiki/installation" style="background-image:url(../images/doc/installation_mini.png);">Installation</a></li>
 						<li><a href="../wiki/utilisation" style="background-image:url(../images/doc/utilisation_mini.png);">Utilisation</a></li>
 						<li><a href="../wiki/modules" style="background-image:url(../images/doc/modules_mini.png);">Modules</a></li>
-						<li><a href="../wiki/personnalisation-de-phpboost" style="background-image:url(../images/doc/personnalisation_mini.png);">Personnalisation</a></li><li><a href="../wiki/developpement" style="background-image:url(../images/doc/developpement_mini.png);">Développement</a></li>
-						<li><a href="../pages/videos-de-demonstration" style="background-image:url(../images/doc/videos_mini.png);">Vidéos</a></li>
+						<li><a href="../wiki/personnalisation-de-phpboost" style="background-image:url(../images/doc/personnalisation_mini.png);">Personnalisation</a></li><li><a href="../wiki/developpement" style="background-image:url(../images/doc/developpement_mini.png);">Dï¿½veloppement</a></li>
+						<li><a href="../pages/videos-de-demonstration" style="background-image:url(../images/doc/videos_mini.png);">Vidï¿½os</a></li>
 						<li><a href="../faq/faq.php" style="background-image:url(../faq/faq_mini.png);">FAQ</a></li>
 					</ul>
 				</li>
@@ -61,7 +62,7 @@
 					<h5 class="links"><a href="../articles/articles.php" title="Dossiers"><img src="../articles/articles_mini.png" class="valign_middle" alt="" /> Dossiers</a></h5>
 				</li>
 				<li onmouseover="show_menu('l4', 0);" onmouseout="hide_menu(0);">
-					<h5 class="links"><a href="../forum/index.php" title="Communauté"><img src="../forum/forum_mini.png" class="valign_middle" alt="" /> Communauté</a></h5>
+					<h5 class="links"><a href="../forum/index.php" title="Communautï¿½"><img src="../forum/forum_mini.png" class="valign_middle" alt="" /> Communautï¿½</a></h5>
 					<ul id="smenul4">
 						<li><a href="../forum/index.php" style="background-image:url(../forum/forum_mini.png);">Forum</a></li>						
 						<li><a href="../shoutbox/shoutbox.php" style="background-image:url(../shoutbox/shoutbox_mini.png);">Discussion</a></li>						

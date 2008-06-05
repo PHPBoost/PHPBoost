@@ -57,12 +57,13 @@
                     <a href="#" title="Syndication">
                         <img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" />
                     </a>
-                    <div id="syndication_choices" style="position:absolute;width:0px;height:0px;overflow:visible;visibility:hidden;">
-                        <ul style="width:60px;padding-top:5px;padding-bottom:5px;padding-left:20px;padding-right:20px;background:#ffffff;border:1px #ccccff solid;">
-                            <li><a href="../news/syndication.php?feed=rss" title="RSS">RSS</a></li>
-                            <li><a href="../news/syndication.php?feed=atom" title="ATOM">ATOM</a></li>
+                    <div id="syndication_choices" class="syndication_choices">
+                        <ul>
+                            <li><a href="{U_RSS}" title="{L_RSS}">RSS</a></li>
+                            <li><a href="{U_ATOM}" title="{L_ATOM}">ATOM</a></li>
                         </ul>
-                    </div> &nbsp;&nbsp;
+                    </div>
+                    &nbsp;&nbsp;
                     <a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a>
                 </span>
                 <span style="float:right;">{news.COM}{news.EDIT}{news.DEL}</span>
