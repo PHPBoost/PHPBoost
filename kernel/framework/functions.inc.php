@@ -150,10 +150,10 @@ function load_module_lang($module_name)
 {
     global $CONFIG, $LANG;
 
-    if( !@include_once('../' . $module_name . '/lang/' . $CONFIG['lang'] . '/' . $module_name . '_' . $CONFIG['lang'] . '.php') )
+    if( !@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . $CONFIG['lang'] . '/' . $module_name . '_' . $CONFIG['lang'] . '.php') )
     {
         $lang = find_require_dir('../' . $module_name . '/lang/', $CONFIG['lang'], NO_FATAL_ERROR);
-        if( !@include_once('../' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php') )
+        if( !@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php') )
         {
             global $Errorh;
             
@@ -310,7 +310,7 @@ function check_nbr_links($contents, $max_nbr)
 //Charge le parseur.
 function strparse($content, $forbidden_tags = array(), $html_protect = true)
 {
-    include_once('../kernel/framework/content/content.class.php');
+    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
     $parse = new Content($content);
     $parse->Parse_content($forbidden_tags, $html_protect);
     
@@ -320,7 +320,7 @@ function strparse($content, $forbidden_tags = array(), $html_protect = true)
 //Charge l'unparseur.
 function unparse($content)
 {
-    include_once('../kernel/framework/content/content.class.php');
+    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
     $parse = new Content($content);
     $parse->Unparse_content();
     
@@ -332,7 +332,7 @@ function second_parse($content)
 {
 	$content = str_replace('../includes/data', '../kernel/data', $content);
     
-    include_once('../kernel/framework/content/content.class.php');
+    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
 	$parse = new Content($content);
     $parse->Second_parse();
 	

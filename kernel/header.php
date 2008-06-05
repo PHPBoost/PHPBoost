@@ -130,12 +130,12 @@ $Template->Assign_vars(array(
 ));
 
 //Inclusion des modules
-if( @!include_once('../cache/modules_mini.php') )
+if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
 {
 	$Cache->Generate_file('modules_mini');
 	
 	//On inclue une nouvelle fois
-	if( @!include_once('../cache/modules_mini.php') )
+	if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
 		$Errorh->Error_handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 }
 $Template->Assign_vars(array(

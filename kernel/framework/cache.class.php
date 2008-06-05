@@ -49,7 +49,7 @@ class Cache
 		global $Errorh, $Sql;
 		
 		//On charge le fichier
-		$include = !$reload_cache ? !@include_once('../cache/' . $file . '.php') : !@include('../cache/' . $file . '.php');
+		$include = !$reload_cache ? !@include_once(PATH_TO_ROOT . '/cache/' . $file . '.php') : !@include(PATH_TO_ROOT . '/cache/' . $file . '.php');
 		if( $include )
 		{
 			if( in_array($file, $this->files) )
@@ -57,7 +57,7 @@ class Cache
 				//Régénération du fichier
 				$this->generate_file($file);
 				//On inclue une nouvelle fois				
-				if( !@include('../cache/' . $file . '.php') )
+				if( !@include(PATH_TO_ROOT . '/cache/' . $file . '.php') )
 				{
 					//Enregistrement dans le log d'erreur.
 					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
@@ -68,7 +68,7 @@ class Cache
 				//Régénération du fichier du module.
 				$this->generate_module_file($file);
 				//On inclue une nouvelle fois
-				if( !@include('../cache/' . $file . '.php') )
+				if( !@include(PATH_TO_ROOT . '/cache/' . $file . '.php') )
 				{
 					//Enregistrement dans le log d'erreur.
 					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
@@ -231,7 +231,7 @@ class Cache
 			if( !empty($config['cache']) && $config['cache'] )
 			{
 				//génération du cache.
-				@include_once('../' . $row['name'] . '/' . $row['name'] . '_cache.php');
+				@include_once(PATH_TO_ROOT . '/' . $row['name'] . '/' . $row['name'] . '_cache.php');
 				$this->Generate_module_file($row['name']);
 			}
 		}

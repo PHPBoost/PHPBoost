@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
 
 //On regarde si on doit lire un fichier
 $read_file = (!empty($_GET['read_file'])) ? trim($_GET['read_file']) : '';
@@ -42,7 +42,7 @@ if( !empty($read_file) && preg_match('`.\.sql$`', $read_file) )
 }
 
 define('TITLE', $LANG['database_management']);
-require_once('../kernel/admin_header.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
 
 $repair = !empty($_POST['repair']) ? true : false;
 $optimize = !empty($_POST['optimize']) ? true : false;
@@ -54,7 +54,7 @@ $Template->Set_filenames(array(
 ));
 
 //outils de sauvegarde de la base de données
-include_once('../kernel/framework/backup.class.php');
+include_once(PATH_TO_ROOT . '/kernel/framework/backup.class.php');
 $Backup = new Backup($sql_base);
 
 $Template->Assign_vars(array(
@@ -464,6 +464,6 @@ $Template->Assign_vars(array(
 
 $Template->Pparse('admin_database_management');
 
-require_once('../kernel/admin_footer.php');
+require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
 
 ?>

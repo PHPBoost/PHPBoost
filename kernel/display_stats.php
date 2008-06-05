@@ -37,10 +37,10 @@ $get_pages_day = !empty($_GET['pages_day']) ? true : false;
 $get_pages_month = !empty($_GET['pages_month']) ? true : false;
 $get_pages_year = !empty($_GET['pages_year']) ? true : false;
 
-include_once('../kernel/begin.php');
+include_once(PATH_TO_ROOT . '/kernel/begin.php');
 
-include_once('../lang/' . $CONFIG['lang'] . '/stats.php');
-include_once('../kernel/framework/stats.class.php');
+include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php');
+include_once(PATH_TO_ROOT . '/kernel/framework/stats.class.php');
 $Stats = new Stats();
 
 $array_stats = array('other' => 0);
@@ -252,9 +252,9 @@ elseif( $get_lang )
 }
 elseif( $get_theme )
 {
-	include_once('../kernel/begin.php');
+	include_once(PATH_TO_ROOT . '/kernel/begin.php');
 	define('TITLE', '');
-	include_once('../kernel/header_no_display.php');
+	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 	
 	$array_stats = array();
 	$result = $Sql->Query_while("SELECT at.theme, COUNT(m.user_theme) AS compt
@@ -274,9 +274,9 @@ elseif( $get_theme )
 }
 elseif( $get_sex )
 {
-	include_once('../kernel/begin.php');
+	include_once(PATH_TO_ROOT . '/kernel/begin.php');
 	define('TITLE', '');
-	include_once('../kernel/header_no_display.php');
+	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 	
 	$array_stats = array();
 	$result = $Sql->Query_while("SELECT count(user_sex) as compt, user_sex

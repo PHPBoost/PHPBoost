@@ -28,7 +28,7 @@
 if( defined('PHPBOOST') !== true )
 	exit;
 	
-include_once('../lang/' . $CONFIG['lang'] . '/stats.php');
+include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php');
 
 $referer = !empty($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : '';
 if( !empty($referer) )
