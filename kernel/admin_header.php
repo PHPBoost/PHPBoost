@@ -26,9 +26,6 @@
  *
 ###################################################*/
 
-if (!defined(PATH_TO_ROOT))
-    define('PATH_TO_ROOT', '..');
-
 if( defined('PHPBOOST') !== true) exit;
 
 if( !defined('TITLE') )
