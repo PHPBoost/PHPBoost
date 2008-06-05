@@ -25,6 +25,9 @@
  *
 ###################################################*/
 
+if(!(defined(PATH_TO_ROOT)))
+    define('PATH_TO_ROOT', '..');
+
 //Inclusion des fichiers
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 
