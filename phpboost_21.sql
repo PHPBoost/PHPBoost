@@ -203,11 +203,12 @@ INSERT INTO `phpboost_configs` VALUES (29, 'download', 'a:6:{s:12:"nbr_file_max"
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Structure de la table `phpboost_download`
--- 
+--
 
-CREATE TABLE `phpboost_download` (
+DROP TABLE IF EXISTS `phpboost_download`;
+CREATE TABLE IF NOT EXISTS `phpboost_download` (
   `id` int(11) NOT NULL auto_increment,
   `idcat` int(11) NOT NULL default '0',
   `title` varchar(100) NOT NULL default '',
@@ -218,6 +219,7 @@ CREATE TABLE `phpboost_download` (
   `size` float NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
   `timestamp` int(11) NOT NULL default '0',
+  `release_timestamp` int(11) NOT NULL,
   `visible` tinyint(1) NOT NULL default '0',
   `start` int(11) NOT NULL default '0',
   `end` int(11) NOT NULL default '0',
@@ -229,21 +231,23 @@ CREATE TABLE `phpboost_download` (
   `lock_com` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `idcat` (`idcat`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
--- 
+--
 -- Contenu de la table `phpboost_download`
--- 
+--
 
-INSERT INTO `phpboost_download` VALUES (1, 1, 'PHPBoost 2.0', '', '<p class="float_left"><img src="../download/images/phpboost_box_v2.jpg" alt="" class="valign_" /></p><br />\r\nLa dernière version de PHPBoost.<br />\r\n<br />\r\nPHPBoost 2.0 marque une profonde différence avec ses prédécesseurs, c''est le fruit de plus d''un an intensif de développement. Ce n''était au début qu''une évolution d''une partie du code, au final c''est la quasi totalité qui a été reprise!<br />\r\n<br />\r\nL''architecture du système a été repensée entièrement, elle offre désormais une modularité totale.<br />\r\nLe nombre de modification est tel qu''un <a href="../wiki/version-phpboost-2-0">article</a> lui est dédié.<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n<p style="text-align:center">Merci de contribuer à la communauté PHPBoost.<br />\r\n<img src="../upload/logophpboost.jpg" alt="" class="valign_" /></p><br />\r\n<br />\r\n<br /><h4 class="stitle1">Informations diverses</h4><br /><br />\r\n<ul class="bb_ul"><li class="bb_li"><a href="../wiki/installation">Documentation : installation de PHPBoost</a>\r\n</li><li class="bb_li"><a href="../wiki/version-phpboost-2-0">Changelog 2.0</a>\r\n</li><li class="bb_li"><a href="../wiki/mise-a-jour-phpboost-1-6-0-vers-2-0">Mise à jour depuis PHPBoost 1.6.0</a><br />\r\n</li></ul>', 'http://www.phpboost.com/download/phpboost/PHPBoost_2.0.zip', '', 3.51, 7845, 1209469202, 1, 0, 0, 1, '1', 1, 5, 0, 0);
+INSERT INTO `phpboost_download` (`id`, `idcat`, `title`, `short_contents`, `contents`, `url`, `image`, `size`, `count`, `timestamp`, `release_timestamp`, `visible`, `start`, `end`, `user_id`, `users_note`, `nbrnote`, `note`, `nbr_com`, `lock_com`) VALUES
+(1, 1, 'PHPBoost 2.0', 'Cette version est bien, mais la prochaine sera encore mieux.<br />\r\n<strong>Ca va dépoter</strong>', '<p class="float_left"><img src="../download/images/phpboost_box_v2.jpg" alt="" class="valign_" /></p><br />\r\nLa dernière version de PHPBoost.<br />\r\n<br />\r\nPHPBoost 2.0 marque une profonde différence avec ses prédécesseurs, c''est le fruit de plus d''un an intensif de développement. Ce n''était au début qu''une évolution d''une partie du code, au final c''est la quasi totalité qui a été reprise!<br />\r\n<br />\r\nL''architecture du système a été repensée entièrement, elle offre désormais une modularité totale.<br />\r\nLe nombre de modification est tel qu''un <a href="../wiki/version-phpboost-2-0">article</a> lui est dédié.<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n<p style="text-align:center">Merci de contribuer à la communauté PHPBoost.<br />\r\n<img src="../upload/logophpboost.jpg" alt="" class="valign_" /></p><br />\r\n<br />\r\n<br /><h4 class="stitle1">Informations diverses</h4><br /><br />\r\n<ul class="bb_ul"><li class="bb_li"><a href="../wiki/installation">Documentation : installation de PHPBoost</a>\r\n</li><li class="bb_li"><a href="../wiki/version-phpboost-2-0">Changelog 2.0</a>\r\n</li><li class="bb_li"><a href="../wiki/mise-a-jour-phpboost-1-6-0-vers-2-0">Mise à jour depuis PHPBoost 1.6.0</a><br />\r\n</li></ul>', 'http://www.phpboost.com/download/phpboost/PHPBoost_2.0.zip', 'http://localhost/PHPBoost_2.1/download/templates/images/download_file.png', 3.51, 23, 1212271201, 1212357601, 1, 1212444001, 1212703201, 1, '1/2', 2, 3.5, 0, 0);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Structure de la table `phpboost_download_cat`
--- 
+--
 
-CREATE TABLE `phpboost_download_cat` (
+DROP TABLE IF EXISTS `phpboost_download_cat`;
+CREATE TABLE IF NOT EXISTS `phpboost_download_cat` (
   `id` int(11) NOT NULL auto_increment,
   `c_order` int(11) NOT NULL default '0',
   `id_parent` int(11) NOT NULL default '0',
@@ -255,14 +259,15 @@ CREATE TABLE `phpboost_download_cat` (
   `num_files` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `class` (`c_order`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
--- 
+--
 -- Contenu de la table `phpboost_download_cat`
--- 
+--
 
-INSERT INTO `phpboost_download_cat` VALUES (1, 1, 0, 'Catégorie de test', 'Catégorie de test de téléchargements!', 'download.png', 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:3;s:2:"r2";i:3;}', 0);
-INSERT INTO `phpboost_download_cat` VALUES (2, 2, 0, 'Catégorie de test 2', 'Catégorie de test de téléchargements 2!', 'download.png', 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:3;s:2:"r2";i:3;}', 0);
+INSERT INTO `phpboost_download_cat` (`id`, `c_order`, `id_parent`, `name`, `contents`, `icon`, `visible`, `auth`, `num_files`) VALUES
+(1, 1, 0, 'Catégorie de test', 'Catégorie de test de téléchargements!', 'download.png', 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:3;s:2:"r2";i:3;}', 1),
+(2, 2, 0, 'Catégorie de test 2', 'Catégorie de test de téléchargements 2!', 'download.png', 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:3;s:2:"r2";i:3;}', 0);
 
 -- --------------------------------------------------------
 
