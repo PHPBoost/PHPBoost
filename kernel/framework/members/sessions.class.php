@@ -138,7 +138,7 @@ class Sessions
 		if( $this->data['user_id'] !== -1 && !empty($this->data['user_id']) )
 		{	
 			//Récupère également les champs membres supplémentaires
-			$result = $Sql->Query_inject("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_readonly, me.*
+			$result = $Sql->Query_inject("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_avatar avatar, m.user_readonly, me.*
 			FROM ".PREFIX."member m
 			LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $this->data['user_id'] . "'
 			WHERE m.user_id = '" . $this->data['user_id'] . "'", __LINE__, __FILE__);	
@@ -157,6 +157,7 @@ class Sessions
 		$this->data['user_readonly'] = isset($userdata['user_readonly']) ? $userdata['user_readonly'] : '0';
 		$this->data['user_editor'] = !empty($userdata['user_editor']) ? $userdata['user_editor'] : $CONFIG['editor'];
 		$this->data['user_timezone'] = isset($userdata['user_timezone']) ? $userdata['user_timezone'] : $CONFIG['timezone'];
+		$this->data['avatar'] = isset($userdata['avatar']) ? $userdata['user_timezone'] : '';
 	}
 	
 	//Vérification de la session.

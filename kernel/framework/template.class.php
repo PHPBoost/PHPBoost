@@ -102,7 +102,7 @@ class Template
 	function Pparse($parse_name, $stringMode = false)
 	{
         $this->stringMode = $stringMode;
-		$file_cache_path = '../cache/tpl/' . trim(str_replace(array('/', '.', '..', 'tpl', 'templates'), array('_', '', '', '', 'tpl'), $this->files[$parse_name]), '_');
+		$file_cache_path = PATH_TO_ROOT . '/cache/tpl/' . trim(str_replace(array('/', '.', '..', 'tpl', 'templates'), array('_', '', '', '', 'tpl'), $this->files[$parse_name]), '_');
         if( $stringMode )
             $file_cache_path .= '_str';
         $file_cache_path .= '.php';
@@ -137,26 +137,26 @@ class Template
 		$get_module = explode('/', $filename);
 
 		if( !isset($get_module[1]) ) //Template du thème (noyau)
-			return '../templates/' . $CONFIG['theme'] . '/' . $filename;
+			return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
 		
 		else //Module
 		{	
 			//module data path
 			if( !isset($this->module_data_path[$get_module[0]]) )
 			{
-				if( is_dir('../templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/images') )
-					$this->module_data_path[$get_module[0]] = '../templates/' . $CONFIG['theme'] . '/' . $get_module[0];
+				if( is_dir(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/images') )
+					$this->module_data_path[$get_module[0]] = PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $get_module[0];
 				else	
-					$this->module_data_path[$get_module[0]] = '../' . $get_module[0] . '/templates'; 
+					$this->module_data_path[$get_module[0]] = PATH_TO_ROOT . '/' . $get_module[0] . '/templates'; 
 			}
 			
-			if( file_exists('../templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/' . $get_module[1]) )
-				return '../templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/' . $get_module[1];
+			if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/' . $get_module[1]) )
+				return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/' . $get_module[1];
 			else
-				return '../' . $get_module[0] . '/templates/' . $get_module[1];
+				return PATH_TO_ROOT . '/' . $get_module[0] . '/templates/' . $get_module[1];
 		}
 	}
-		
+	
 	//Vérifie le statut du fichier en cache, il sera regénéré s'il n'existe pas ou si il est périmé.
 	function check_cache_file($tpl_path, $file_cache_path)
 	{
