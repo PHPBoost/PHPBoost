@@ -27,21 +27,29 @@
 
 require_once('../kernel/begin.php');
 
-$idurl = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-if( !empty($idurl) )
-	$Sql->Query_inject("UPDATE ".PREFIX."download SET count = count + 1 WHERE id = '" . $idurl . "'", __LINE__, __FILE__); //MAJ du counteur.
+$idurl = retrieve(GET, 'id', 0);
+	
 $info_file = $Sql->Query_array("download", "url", "size", "WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
 
-//Redirection vers le fichier demandé!
-$filesize = @filesize(str_replace(HOST . DIR . '/', '../', $info_file['url']));
-$filesize = ($filesize !== false) ? $filesize : (!empty($info_file) ? number_round($info_file['size']*1048576, 0) : false);
-if( $filesize !== false )
-	header('Content-Length: ' . $filesize);
-header('content-type:application/force-download');
-header('Content-Disposition:attachment;filename="' . substr(strrchr($info_file['url'], '/'), 1) . '"');
-header('Expires:0');
-header('Cache-Control:must-revalidate');
-header('Pragma:public');
-if( @readfile($info_file['url']) === false )
-	redirect($info_file['url']);
+//Si le fichier existe vraiment
+if( !empty($info_file['url']) )
+{
+	//On incrémente le compteur
+	$Sql->Query_inject("UPDATE ".PREFIX."download SET count = count + 1 WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
+
+	//Redirection vers le fichier demandé!
+	$filesize = @filesize(str_replace(HOST . DIR . '/', '../', $info_file['url']));
+	$filesize = ($filesize !== false) ? $filesize : (!empty($info_file) ? number_round($info_file['size']*1048576, 0) : false);
+	if( $filesize !== false )
+		header('Content-Length: ' . $filesize);
+	header('content-type:application/force-download');
+	header('Content-Disposition:attachment;filename="' . substr(strrchr($info_file['url'], '/'), 1) . '"');
+	header('Expires:0');
+	header('Cache-Control:must-revalidate');
+	header('Pragma:public');
+	if( @readfile($info_file['url']) === false )
+		redirect($info_file['url']);
+}
+else
+	redirect(HOST . DIR . '/download/' . transid('download.php'));
 ?>

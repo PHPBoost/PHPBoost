@@ -40,8 +40,10 @@ $DOWNLOAD_LANG['download_config'] = 'Configuration des téléchargements';
 $DOWNLOAD_LANG['file_list'] = 'Liste des fichiers';
 $DOWNLOAD_LANG['edit_file'] = 'Edition du fichier';
 $DOWNLOAD_LANG['nbr_download_max'] = 'Nombre maximum de fichiers affichés';
-$DOWNLOAD_LANG['download_date'] = 'Date du fichier <span class="text_small">(jj/mm/aa)</span> <br />
-<span class="text_small">(Laisser vide pour mettre la date d\'aujourd\'hui)';
+$DOWNLOAD_LANG['download_date'] = 'Date d\'ajout du fichier';
+$DOWNLOAD_LANG['release_date'] = 'Date de sortie (ou dernière mise à jour) du fichier';
+$DOWNLOAD_LANG['ignore_release_date'] = 'Ignorer la date de sortie du fichier';
+$DOWNLOAD_LANG['file_visibility'] = 'Parution du fichier';
 $DOWNLOAD_LANG['icon_cat'] = 'Image de la catégorie';
 $DOWNLOAD_LANG['explain_icon_cat'] = 'Vous pouvez choisir une image du répertoire download/ ou mettre son adresse dans le champ prévu à cet effet';
 $DOWNLOAD_LANG['root_description'] = 'Description de la racine des téléchargements';

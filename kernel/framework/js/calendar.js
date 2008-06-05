@@ -25,52 +25,50 @@
 ###################################################*/
 
 var delay = 1000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
-var timeout;
-var displayed = false;
+var timeouts = new Array();
+var calendars_num = 0;
+var displayed_calendars = new Array();
 
 //Affiche le bloc.
 function display_calendar(id)
 {
-	var i;
-	
-	if( timeout )
-		clearTimeout(timeout);
-	
-	for(i = 1; i <= 3; i++)
+	for( var i = 1; i <=calendars_num; i++ )
 	{
-		var block = document.getElementById('calendar' + i);
-		if( block )
-		{
-			if( id == i )
-			{				
-				if( block.style.display == 'none' )
-				{
-					block.style.display = 'block';
-					displayed = true;
-				}
-				else
-				{
-					block.style.display = 'none';
-					displayed = false;
-				}
-			}
-			else
-				block.style.display = 'none';	
-		}
-	}	
+		if( i != id )
+			hide_calendar(i, 2);
+	}
+	
+	if( timeouts[id] )
+		clearTimeout(timeouts[id]);
+	
+	if( !displayed_calendars[id] )
+	{
+		document.getElementById('calendar' + id).style.display = 'block';
+		displayed_calendars[id] = true;
+	}
 }
 
 //Cache le bloc.
-function hide_calendar(id, stop)
+//Mode : 
+// * 1 désarme le timeout
+// * 2 cache immédiatement le bloc
+// * Autrement on arme le timeout de fermeture
+function hide_calendar(id, mode)
 {
-	if( stop && timeout )
+	if( mode == 1 && timeouts[id] )
 	{	
-		clearTimeout(timeout);
+		clearTimeout(timeouts[id]);
 	}
-	else if( displayed )
+	else if( mode == 2 && displayed_calendars[id] )
 	{
-		clearTimeout(timeout);
-		timeout = setTimeout('display_calendar(\'' + id + '\')', delay);
+		document.getElementById('calendar' + id).style.display = 'none';
+		displayed_calendars[id] = false;
+		if( timeouts[id] )
+			clearTimeout(timeouts[id]);
+	}
+	else if( displayed_calendars[id] )
+	{
+		timeouts[id] = setTimeout('hide_calendar(\'' + id + '\', 2)', delay);
 	}	
 }
 
@@ -107,4 +105,10 @@ function xmlhttprequest_calendar(field, vars)
 
 	xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhr_object.send(data);		
+}
+
+function check_mini_calendar_form(name)
+{
+	reg_exp = new RegExp("[0-9]{2}/[0-9]{2}/[0-9]{2}", "g");
+	return document.getElementById(name).value.match(reg_exp);
 }

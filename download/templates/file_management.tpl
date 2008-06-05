@@ -45,6 +45,21 @@
 			</div>
 			# ENDIF #
 			
+			<script type="text/javascript">
+			<!--
+				var enabled = {BOOL_IGNORE_RELEASE_DATE};
+				function show_hide_release_date()
+				{
+					if( enabled )
+						document.getElementById("release_date_form").style.display = 'block';
+					else
+						document.getElementById("release_date_form").style.display = 'none';
+					
+					enabled = !enabled;
+				}
+			-->
+			</script>
+			
 			# IF C_PREVIEW #
 				<div class="notice">
 					{L_WARNING_PREVIEWING}
@@ -73,7 +88,7 @@
 					<p>{L_REQUIRE}</p>
 					<dl>
 						<dt><label for="title">* {L_TITLE}</label></dt>
-						<dd><input type="text" size="65" maxlength="100" id="title" name="title" value="{TITLE}" class="text" /></dd>
+						<dd><input type="text" size="50" maxlength="100" id="title" name="title" value="{TITLE}" class="text" /></dd>
 					</dl>
 					<dl>
 						<dt><label for="idcat">* {L_CATEGORY}</label></dt>
@@ -83,7 +98,7 @@
 					</dl>
 					<dl>
 						<dt><label for="url">* {L_URL}</label></dt>
-						<dd><input type="text" size="65" id="url" name="url" id="url" value="{URL}" class="text" /></dd>
+						<dd><input type="text" size="50" id="url" name="url" id="url" value="{URL}" class="text" /></dd>
 					</dl>
 					<dl>
 						<dt><label for="size">{L_SIZE}</label></dt>
@@ -114,42 +129,49 @@
 							<input type="text" size="50" name="image" class="text" value="{FILE_IMAGE}" />
 						</dd>
 					</dl>
-					<dl class="overflow_visible">
-						<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
+					<dl>
+						<dt><label for="creation">* {L_DOWNLOAD_DATE}</label></dt>
 						<dd>
-							<label><input type="radio" value="2" name="visible" {VISIBLE_WAITING} /> 
-						<input type="text" size="8" maxlength="8" id="start" name="creation" value="{START}" class="text" /> 
-						<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
-							<div id="start_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
-							</div>
-						</div>
-						<a onClick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
-						
-						{L_UNTIL}&nbsp;
-						
-						<input type="text" size="8" maxlength="8" id="end" name="last_update" value="{END}" class="text" />					
-						<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
-							<div id="end_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
-							</div>
-						</div>
-						<a onClick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_E}&amp;m={MONTH_RELEASE_E}&amp;y={YEAR_RELEASE_E}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
-						<br />
-						<label><input type="radio" value="1" name="visible" {VISIBLE_ENABLED} id="release_date" /> {L_IMMEDIATE}</label>
-						<br />
-						<label><input type="radio" value="0" name="visible" {VISIBLE_UNAPROB} /> {L_UNAPROB}</label>
+							{DATE_CALENDAR_CREATION}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label>* {L_IGNORE_RELEASE_DATE}</label>
+						</dt>
+						<dd>
+							<input type="checkbox" name="ignore_release_date" onclick="show_hide_release_date();" {IGNORE_RELEASE_DATE_CHECKED} />
+						</dd>
+					</dl>
+					<dl id="release_date_form" style="display:{STYLE_FIELD_RELEASE_DATE};">
+						<dt><label for="release">* {L_RELEASE_DATE}</label></dt>
+						<dd>
+							{DATE_CALENDAR_RELEASE}
 						</dd>
 					</dl>
 					<dl class="overflow_visible">
-						<dt><label for="current_date">* {L_DOWNLOAD_DATE}</label></dt>
+						<dt><label for="visible">* {L_FILE_VISIBILITY}</label></dt>
 						<dd>
-							{DATE_CALENDAR_CREATION}
+							<input type="radio" value="2" name="visibility" {VISIBLE_WAITING} /> 
+						{L_FROM_DATE}&nbsp;
+						{BEGINING_CALENDAR}
+						&nbsp;{L_TO_DATE}&nbsp;
+						{END_CALENDAR}
+						<br />
+						<label>
+							<input type="radio" value="1" name="visibility" {VISIBLE_ENABLED} id="release_date" /> {L_NOW}
+						</label>
+						<br />
+						<label>
+							<input type="radio" value="0" name="visibility" {VISIBLE_UNAPROVED} /> {L_UNAPPROVED}
+						</label>
 						</dd>
 					</dl>
 				</fieldset>
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
-					<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 					&nbsp;&nbsp; 
 					<input type="submit" name="preview" value="{L_PREVIEW}" class="submit" />
 					&nbsp;&nbsp; 

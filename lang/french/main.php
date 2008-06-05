@@ -30,11 +30,15 @@
 #                                                           French                                                                #
 ####################################################
 
+// Dates
 $LANG['xml_lang'] = 'fr';
 $LANG['date_format_tiny'] = 'd/m';
 $LANG['date_format_short'] = 'd/m/y';
 $LANG['date_format'] = 'd/m/y \à H\hi';
 $LANG['date_format_long'] = 'd/m/y \à H\hi\m\i\ns\s';
+$LANG['from_date'] = 'du';
+$LANG['to_date'] = 'au';
+$LANG['now'] = 'Maintenant';
 
 //Unités
 $LANG['unit_megabytes'] = 'Mo';
@@ -265,6 +269,7 @@ $LANG['direction'] = 'Direction';
 $LANG['other'] = 'Autre';
 $LANG['aprob'] = 'Approuver';
 $LANG['unaprob'] = 'Désapprouver';
+$LANG['unapproved'] = 'Désapprouvé';
 $LANG['final'] = 'Définitif';
 $LANG['pm'] = 'Mp';
 $LANG['code'] = 'Code';

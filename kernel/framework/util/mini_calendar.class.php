@@ -55,7 +55,7 @@ class Mini_calendar
 	}
 	
 	//Fonction d'affichage du calendrier, qui charge automatiquement le javascript
-	function Display_calendar()
+	function Display()
 	{
 		global $CONFIG;
 		// Feine pour PHP 4, en PHP 5 ce sera un attribut static
@@ -72,6 +72,7 @@ class Mini_calendar
 			'DAY' => $this->date->Get_day(),
 			'MONTH' => $this->date->Get_month(),
 			'YEAR' => $this->date->Get_year(),
+			'FORM_NAME' => $this->form_name,
 			'C_INCLUDE_JS' => !$js_inclusion_already_done
 		));
 		

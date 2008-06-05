@@ -50,7 +50,9 @@
 							<div class="row1 block_contents">
 								# IF file.C_IMG #
 									<div class="float_right">
-										<img src="{file.IMG}" alt="{file.IMG_NAME}" />
+										<a href="{file.U_DOWNLOAD_LINK}"}">
+											<img src="{file.IMG}" alt="{file.IMG_NAME}" />
+										</a>
 									</div>
 								# ENDIF #
 								<p style="margin-bottom:10px">
@@ -158,15 +160,15 @@
 							{L_INSERTION_DATE}
 						</td>
 						<td class="row2" style="padding:3px">
-							{INSERTION_DATE}
+							{CREATION_DATE}
 						</td>
 					</tr>
 					<tr>
 						<td class="row1" style="padding:3px">
-							{L_LAST_UPDATE_DATE}
+							{L_RELEASE_DATE}
 						</td>
 						<td class="row2" style="padding:3px">
-							{LAST_UPDATE_DATE}
+							{RELEASE_DATE}
 						</td>
 					</tr>
 					<tr>
