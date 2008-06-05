@@ -3,12 +3,6 @@
         function Confirm() {
             return confirm("{L_ALERT_DELETE_NEWS}");
         }
-        function ShowSyndication(element) {
-            if ( element.ownerDocument.getElementById('syndication_choices').style.visibility == 'hidden' )
-                element.ownerDocument.getElementById('syndication_choices').style.visibility = 'visible';
-            else
-                element.ownerDocument.getElementById('syndication_choices').style.visibility = 'hidden';
-        }
         -->
         </script>
         

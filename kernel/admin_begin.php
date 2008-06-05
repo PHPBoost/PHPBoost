@@ -26,9 +26,9 @@
 ###################################################*/
 
 //Inclusion des fichiers
-include_once('../kernel/begin.php');
+include_once(PATH_TO_ROOT . '/kernel/begin.php');
 
 //Inclusion des langues de l'administration.
-include_once('../lang/' . $CONFIG['lang'] . '/admin.php'); 
+include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/admin.php'); 
 
 ?>
