@@ -68,7 +68,7 @@ elseif( !empty($g_idpics) && $g_move ) //Déplacement d'une image.
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
 					
-	redirect(HOST . DIR . '/gallery/gallery' . transid('.php?cat=' . $move, '-' . $move . '.php', '&'));
+	redirect(HOST . DIR . '/gallery/gallery' . transid('.php?cat=' . $g_move, '-' . $g_move . '.php', '&'));
 }
 elseif( isset($_FILES['gallery']) ) //Upload
 {

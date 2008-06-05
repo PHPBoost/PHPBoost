@@ -479,10 +479,10 @@ class Forum
 			FROM ".PREFIX."forum_cats 
 			WHERE id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
 			ORDER BY id_left", __LINE__, __FILE__);
+			
 			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
 				$list_cats .= $row['id'] . ', ';
-			}
+			
 			$Sql->Close($result);
 			$clause = "idcat IN (" . trim($list_cats, ', ') . ")";			
 		}

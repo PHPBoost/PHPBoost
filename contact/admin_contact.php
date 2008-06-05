@@ -34,7 +34,7 @@ require_once('../kernel/admin_header.php');
 if( !empty($_POST['valid'])  )
 {
 	$config_contact = array();
-	$config_contact['contact_verifcode'] = isset($_POST['contact_verifcode']) ? numeric($_POST['contact_verifcode']) : 1;
+	$config_contact['contact_verifcode'] = retrieve(POST, 'contact_verifcode', 1);
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_contact)) . "' WHERE name = 'contact'", __LINE__, __FILE__);
 	

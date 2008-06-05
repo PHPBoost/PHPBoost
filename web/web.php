@@ -156,7 +156,7 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 	}
 	
 	$get_mode = retrieve(GET, 'mode', '');	
-	$mode = ($get_mode == 'asc' || $get_mode == 'desc') ? strtoupper($mode) : 'DESC';	
+	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	//On crée une pagination si le nombre de lien est trop important.

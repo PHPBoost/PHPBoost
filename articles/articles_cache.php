@@ -37,14 +37,11 @@ function generate_module_file_articles()
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_ARTICLES = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'articles'", __LINE__, __FILE__));
 	$CONFIG_ARTICLES = is_array($CONFIG_ARTICLES) ? $CONFIG_ARTICLES : array();
-	foreach($CONFIG_ARTICLES as $key => $value)
-	{
-		if( $key == 'auth_root' )
-			$config_articles .= '$CONFIG_ARTICLES[\'' . $key . '\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
-		else
-			$config_articles .= '$CONFIG_ARTICLES[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
-	}
-	$config_articles .= "\n";
+	
+	if(isset($CONFIG_ARTICLES['auth_root']))
+		$CONFIG_ARTICLES['auth_root'] = unserialize($CONFIG_ARTICLES['auth_root']);
+	
+	$config_articles .= '$CONFIG_ARTICLES = ' . var_export($CONFIG_ARTICLES, true) . ';' . "\n";
 	
 	$cat_articles = 'global $CAT_ARTICLES;' . "\n";
 	$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, aprob, auth

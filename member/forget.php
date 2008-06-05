@@ -47,7 +47,7 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 			$user_mail = retrieve(POST, 'mail', '');
 			$login = retrieve(POST, 'name', '');
 
-			if( !empty($user_mail) && preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,6}$!", $user_mail) )
+			if( !empty($user_mail) && check_mail($user_mail) )
 			{	
 				$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login = '" . $login . "'", __LINE__, __FILE__);
 				if( !empty($user_id) ) //Succés mail trouvé, en crée un nouveau mdp, et la clée d'activ et on l'envoi au membre
@@ -71,7 +71,7 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 				$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		}
 		
-		$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';			
+		$get_error = retrieve(GET, 'error', '', TSTRING_UNSECURE);			
 		$errno = E_USER_NOTICE;
 		switch($get_error)
 		{ 

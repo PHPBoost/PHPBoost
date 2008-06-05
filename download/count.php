@@ -28,15 +28,15 @@
 require_once('../kernel/begin.php');
 
 $idurl = retrieve(GET, 'id', 0);
-	
-$info_file = $Sql->Query_array("download", "url", "size", "WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
 
-//Si le fichier existe vraiment
-if( !empty($info_file['url']) )
+if( !empty($idurl) )
 {
-	//On incrémente le compteur
-	$Sql->Query_inject("UPDATE ".PREFIX."download SET count = count + 1 WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
-
+	$Sql->Query_inject("UPDATE ".PREFIX."download SET count = count + 1 WHERE id = '" . $idurl . "'", __LINE__, __FILE__); //MAJ du counteur.
+	$info_file = $Sql->Query_array("download", "url", "size", "WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
+	
+	if(empty($info_file['url']))
+		$Errorh->Error_handler('e_unexist_file_download', E_USER_REDIRECT);
+	
 	//Redirection vers le fichier demandé!
 	$filesize = @filesize(str_replace(HOST . DIR . '/', '../', $info_file['url']));
 	$filesize = ($filesize !== false) ? $filesize : (!empty($info_file) ? number_round($info_file['size']*1048576, 0) : false);
@@ -51,5 +51,5 @@ if( !empty($info_file['url']) )
 		redirect($info_file['url']);
 }
 else
-	redirect(HOST . DIR . '/download/' . transid('download.php'));
+	$Errorh->Error_handler('e_unexist_file_download', E_USER_REDIRECT);
 ?>

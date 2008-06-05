@@ -32,14 +32,13 @@ define('TITLE', $LANG['newsletter']);
 require_once('../kernel/admin_header.php');
 
 //On recupère les variables.
-$type = !empty($_GET['type']) ? trim($_GET['type']) : '' ;
+$type = retrieve(GET, 'type', '', TSTRING_UNSECURE);
 $send = !empty($_POST['send']) ? true : false ;
 $send_test = !empty($_POST['send_test']) ? true : false ;
-$mail_contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-$mail_object = !empty($_POST['title']) ? trim($_POST['title']) : '';
-$mail_object = get_magic_quotes_gpc() ? addslashes($mail_object) : $mail_object;
+$mail_contents = retrieve(POST, 'contents', '');
+$mail_object = trim(retrieve(POST, 'title', ''));
 $member_list = !empty($_GET['member_list']) ? true : false;
-$del_member = !empty($_GET['del_member']) ? numeric($_GET['del_member']) : 0;
+$del_member = retrieve(GET, 'del_member', 0);
 
 $Template->Set_filenames(array(
 	'admin_newsletter'=> 'newsletter/admin_newsletter.tpl'

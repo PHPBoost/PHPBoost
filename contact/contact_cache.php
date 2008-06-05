@@ -37,8 +37,8 @@ function generate_module_file_contact()
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_CONTACT = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'contact'", __LINE__, __FILE__));
 	$CONFIG_CONTACT = is_array($CONFIG_CONTACT) ? $CONFIG_CONTACT : array();
-	foreach($CONFIG_CONTACT as $key => $value)
-			$contact_config .= '$CONFIG_CONTACT[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
+	
+	$contact_config .= '$CONFIG_CONTACT = ' . var_export($CONFIG_CONTACT, true) . ';' . "\n";
 	
 	return $contact_config;
 }

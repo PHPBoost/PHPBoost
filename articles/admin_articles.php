@@ -32,8 +32,8 @@ define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
 //On recupère les variables.
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$id_post = !empty($_POST['id']) ? numeric($_POST['id']) : 0;
+$id = retrieve(GET, 'id', 0);
+$id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
 if( $del && !empty($id) ) //Suppresion de l'article.
@@ -125,7 +125,7 @@ elseif( !empty($id) )
 		$dh = @opendir( $rep);
 		while( ! is_bool($lang = readdir($dh)) )
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $lang) )
+			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		closedir($dh); //On ferme le dossier
@@ -167,7 +167,7 @@ elseif( !empty($id) )
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 
@@ -181,19 +181,19 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
 
-	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
-	$icon = !empty($_POST['icon']) ? trim($_POST['icon']) : '';
-	$icon_path = !empty($_POST['icon_path']) ? trim($_POST['icon_path']) : '';
-	$compt = !empty($_POST['views']) ? numeric($_POST['views']) : '';
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : 0;
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : '';
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
-	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;	
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
+	$icon = retrieve(POST, 'icon', '', TSTRING_UNSECURE);
+	$icon_path = retrieve(POST, 'icon_path', '', TSTRING_UNSECURE);
+	$compt = retrieve(POST, 'views', 0);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$user_id = retrieve(POST, 'user_id', 0);
+	$idcat = retrieve(POST, 'idcat', 0);
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$get_visible = retrieve(POST, 'visible', 0);
 
 	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
@@ -246,7 +246,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		$dh = @opendir( $rep);
 		while( ! is_bool($lang = readdir($dh)) )
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $lang) )
+			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		closedir($dh); //On ferme le dossier
@@ -335,17 +335,17 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 }
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
-	$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
-	$icon = !empty($_POST['icon']) ? strprotect($_POST['icon']) : '';
-	$icon_path = !empty($_POST['icon_path']) ? strprotect($_POST['icon_path']) : '';
-	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
-	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$title = retrieve(POST, 'title', '');
+	$icon = retrieve(POST, 'icon', '');
+	$icon_path = retrieve(POST, 'icon_path', '');
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$idcat = retrieve(POST, 'idcat', 0);
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$get_visible = retrieve(POST, 'visible', 0);
 	
 	if( !empty($icon_path) )
 		$icon = $icon_path;		
@@ -385,13 +385,10 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		
 		$timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 		if( $timestamp > 0 )
-		{
 			//Ajout des heures et minutes
 			$timestamp += ($hour * 3600) + ($min * 60);
-			$timestamp = ' , timestamp = \'' . $timestamp . '\'';
-		}
 		else
-			$timestamp = ' , timestamp = \'' . time() . '\'';
+			$timestamp = time();
 		
 		$cat_clause = ' ';
 		//Changement de catégorie parente?
@@ -407,7 +404,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 			$cat_clause = " idcat = '" . $idcat . "', ";
 		}	
 		
-		$Sql->Query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->Query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
 		$Rss = new Rss('articles/rss.php');

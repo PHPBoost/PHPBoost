@@ -103,7 +103,7 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives )
 		$array_votes = explode('|', $poll['votes']);
 		if( $poll['type'] == '1' ) //Réponse unique.
 		{	
-			$id_answer = isset($_POST['radio']) ? numeric($_POST['radio']) : '-1';		
+			$id_answer = retrieve(POST, 'radio', -1);		
 			if( isset($array_votes[$id_answer]) )
 			{
 				$array_votes[$id_answer]++;

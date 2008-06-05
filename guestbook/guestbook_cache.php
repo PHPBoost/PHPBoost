@@ -37,11 +37,11 @@ function generate_module_file_guestbook()
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_GUESTBOOK = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'guestbook'", __LINE__, __FILE__));
 	$CONFIG_GUESTBOOK = is_array($CONFIG_GUESTBOOK) ? $CONFIG_GUESTBOOK : array();
-	foreach($CONFIG_GUESTBOOK as $key => $value)
-		if( $key == 'guestbook_forbidden_tags' )
-			$guestbook_code .= '$CONFIG_GUESTBOOK[\'guestbook_forbidden_tags\'] = ' . var_export(unserialize($value), 1) . ';' . "\n";
-		else
-			$guestbook_code .= '$CONFIG_GUESTBOOK[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
+	
+	if(isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']))
+		$CONFIG_GUESTBOOK['guestbook_forbidden_tags'] = unserialize($CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
+		
+	$guestbook_code .= '$CONFIG_GUESTBOOK = ' . var_export($CONFIG_GUESTBOOK, true) . ';' . "\n";
 	
 	$guestbook_code .= "\n\n" . 'global $_guestbook_rand_msg;' . "\n";
 	$guestbook_code .= "\n" . '$_guestbook_rand_msg = array();' . "\n";

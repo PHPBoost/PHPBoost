@@ -54,13 +54,13 @@ $Template->Assign_vars(array(
 	'U_BAN' => transid('.php?action=ban')
 ));
 	
-$action = !empty($_GET['action']) ? trim($_GET['action']) : '';
-$id_get = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
+$action = retrieve(GET, 'action', '', TSTRING_UNSECURE);
+$id_get = retrieve(GET, 'id', 0);
 if( $action == 'punish' ) //Gestion des utilisateurs
 {
-	$readonly = isset($_POST['new_info']) ? numeric($_POST['new_info']) : 0;
+	$readonly = retrieve(POST, 'new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
-	$readonly_contents = !empty($_POST['action_contents']) ? trim($_POST['action_contents']) : '';
+	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
 	if( !empty($id_get) && !empty($_POST['valid_user']) ) //On met à  jour le niveau d'avertissement
 	{
 		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
@@ -100,7 +100,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 	{
 		if( !empty($_POST['search_member']) )
 		{
-			$login = !empty($_POST['login_mbr']) ? strprotect($_POST['login_mbr']) : '';
+			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . transid('/member/moderation_panel.php?action=punish&id=' . $user_id, '', '&'));
@@ -218,8 +218,8 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 }
 elseif( $action == 'warning' ) //Gestion des utilisateurs
 {
-	$new_warning_level = isset($_POST['new_info']) ? numeric($_POST['new_info']) : 0;
-	$warning_contents = !empty($_POST['action_contents']) ? trim($_POST['action_contents']) : '';
+	$new_warning_level = retrieve(POST, 'new_info', 0);
+	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
 	if( $new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user']) ) //On met à  jour le niveau d'avertissement
 	{
 		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
@@ -272,7 +272,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 	{
 		if( !empty($_POST['search_member']) )
 		{
-			$login = !empty($_POST['login_mbr']) ? strprotect($_POST['login_mbr']) : '';
+			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . transid('/member/moderation_panel.php?action=warning&id=' . $user_id, '', '&'));
@@ -354,7 +354,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 }
 elseif( $action == 'ban' ) //Gestion des utilisateurs
 {
-	$user_ban = !empty($_POST['user_ban']) ? trim($_POST['user_ban']) : '';
+	$user_ban = retrieve(POST, 'user_ban', '', TSTRING_UNSECURE);
 	$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
 	if( !empty($_POST['valid_user']) && !empty($id_get) ) //On banni le membre
 	{
@@ -391,7 +391,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 	{
 		if( !empty($_POST['search_member']) )
 		{
-			$login = !empty($_POST['login_mbr']) ? strprotect($_POST['login_mbr']) : '';
+			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . transid('/member/moderation_panel.php?action=ban&id=' . $user_id, '', '&'));

@@ -34,19 +34,19 @@ require_once('../kernel/admin_header.php');
 if( !empty($_POST['valid']) )
 {
 	$config_news = array();
-	$config_news['type'] = isset($_POST['type']) ? numeric($_POST['type']) : 0;
-	$config_news['activ_pagin'] = !empty($_POST['activ_pagin']) ? numeric($_POST['activ_pagin']) : 0;
-	$config_news['activ_edito'] = !empty($_POST['activ_edito']) ? numeric($_POST['activ_edito']) : 0;
-	$config_news['pagination_news'] = isset($_POST['pagination_news']) ? numeric($_POST['pagination_news']) : '6';
-	$config_news['pagination_arch'] = isset($_POST['pagination_arch']) ? numeric($_POST['pagination_arch']) : '15';
-	$config_news['activ_com'] = isset($_POST['activ_com']) ? numeric($_POST['activ_com']) : 0;  
-	$config_news['activ_icon'] = isset($_POST['activ_icon']) ? numeric($_POST['activ_icon']) : 0;  
-	$config_news['display_author'] = isset($_POST['display_author']) ? numeric($_POST['display_author']) : 0;  
-	$config_news['display_date'] = isset($_POST['display_date']) ? numeric($_POST['display_date']) : 0;  
+	$config_news['type'] = retrieve(POST, 'type', 0);
+	$config_news['activ_pagin'] = retrieve(POST, 'activ_pagin', 0);
+	$config_news['activ_edito'] = retrieve(POST, 'activ_edito', 0);
+	$config_news['pagination_news'] = retrieve(POST, 'pagination_news', 6);
+	$config_news['pagination_arch'] = retrieve(POST, 'pagination_arch', 15);
+	$config_news['activ_com'] = retrieve(POST, 'activ_com', 0);  
+	$config_news['activ_icon'] = retrieve(POST, 'activ_icon', 0);  
+	$config_news['display_author'] = retrieve(POST, 'display_author', 0);  
+	$config_news['display_date'] = retrieve(POST, 'display_date', 0);  
 	$config_news['nbr_news'] = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
-	$config_news['nbr_column'] = !empty($_POST['nbr_column']) ? numeric($_POST['nbr_column']) : 1;
-	$config_news['edito'] = !empty($_POST['edito']) ? stripslashes(strparse($_POST['edito'])) : '';
-	$config_news['edito_title'] = !empty($_POST['edito_title']) ? stripslashes(strprotect($_POST['edito_title'])) : '';
+	$config_news['nbr_column'] = retrieve(POST, 'nbr_column', 1);
+	$config_news['edito'] = retrieve(POST, 'edito', '', TSTRING_PARSE);
+	$config_news['edito_title'] = strislashes(retrieve(POST, 'edito_title', ''));
 		
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_news)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 	

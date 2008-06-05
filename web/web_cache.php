@@ -37,9 +37,8 @@ function generate_module_file_web()
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_WEB = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'web'", __LINE__, __FILE__));
 	$CONFIG_WEB = is_array($CONFIG_WEB) ? $CONFIG_WEB : array();
-	foreach($CONFIG_WEB as $key => $value)
-		$code .= '$CONFIG_WEB[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 	
+	$code .= '$CONFIG_WEB = ' . var_export($CONFIG_WEB, true) . ';' . "\n";
 	$code .= "\n";
 	
 	$result = $Sql->Query_while("SELECT id, name, secure

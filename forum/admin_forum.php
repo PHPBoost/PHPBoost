@@ -33,27 +33,27 @@ require_once('../kernel/admin_header.php');
 
 require_once('../forum/forum_begin.php');
 
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
-$move = !empty($_GET['move']) ? trim($_GET['move']) : 0;
+$id = retrieve(GET, 'id', 0);
+$del = retrieve(GET, 'del', 0);
+$move = retrieve(GET, 'move', '', TSTRING_UNSECURE);
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) && !empty($id) )
 {
 	$Cache->Load_file('forum');
 	
-	$to = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
-	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$subname = !empty($_POST['desc']) ? strprotect($_POST['desc']) : '';
-	$status = isset($_POST['status']) ? numeric($_POST['status']) : 1;
-	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;  
+	$to = retrieve(POST, 'category', 0);
+	$name = retrieve(POST, 'name', '');
+	$subname = retrieve(POST, 'desc', '');
+	$status = retrieve(POST, 'status', 1);
+	$aprob = retrieve(POST, 'aprob', 0);  
 
 	//Génération du tableau des droits.
 	$array_auth_all = $Group->Return_array_auth(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 		
 	if( !empty($name) )
 	{
-		$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET name = '" . $name . "', subname = '" . $subname . "', status = '" . $status . "', aprob = '" . $aprob . "', auth = '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET name = '" . $name . "', subname = '" . $subname . "', status = '" . $status . "', aprob = '" . $aprob . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 		//Empêche le déplacement dans une catégorie fille.
 		$to = $Sql->Query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'", __LINE__, __FILE__);
@@ -224,7 +224,7 @@ elseif( !empty($id) )
 	$Sql->Close($result);
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	

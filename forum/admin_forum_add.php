@@ -33,8 +33,8 @@ require_once('../kernel/admin_header.php');
 
 require_once('../forum/forum_begin.php');
 
-$idcat = !empty($_GET['idcat']) ? numeric($_GET['idcat']) : 0;
-$class = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
+$idcat = retrieve(GET, 'idcat', 0);
+$class = retrieve(GET, 'id', 0);
 
 
 //Si c'est confirmé on execute
@@ -42,11 +42,11 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 {
 	$Cache->Load_file('forum');
 	
-	$parent_category = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
-	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$subname = !empty($_POST['desc']) ? strprotect($_POST['desc']) : '';
-	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 0;   
-	$status = isset($_POST['status']) ? numeric($_POST['status']) : 0;   
+	$parent_category = retrieve(POST, 'category', 0);
+	$name = retrieve(POST, 'name', '');
+	$subname = retrieve(POST, 'desc', '');
+	$aprob = retrieve(POST, 'aprob', 0);   
+	$status = retrieve(POST, 'status', 0);   
 
 	//Génération du tableau des droits.
 	$array_auth_all = $Group->Return_array_auth(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
@@ -85,7 +85,7 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 			$level = 0;
 		}
 		
-		$Sql->Query_inject("INSERT INTO ".PREFIX."forum_cats (id_left,id_right,level,name,subname,nbr_topic,nbr_msg,last_topic_id,status,aprob,auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
+		$Sql->Query_inject("INSERT INTO ".PREFIX."forum_cats (id_left,id_right,level,name,subname,nbr_topic,nbr_msg,last_topic_id,status,aprob,auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . addslashes(serialize($array_auth_all)) . "')", __LINE__, __FILE__);	
 
 		###### Regénération du cache des catégories (liste déroulante dans le forum) #######
 		$Cache->Generate_module_file('forum');
@@ -114,7 +114,7 @@ else
 	$Sql->Close($result);
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	

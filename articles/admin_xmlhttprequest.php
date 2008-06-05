@@ -7,10 +7,10 @@ require_once('../kernel/header_no_display.php');
 
 $Cache->Load_file('articles');
 
-$move = !empty($_GET['move']) ? trim($_GET['move']) : 0;
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$get_parent_up = !empty($_GET['g_up']) ? numeric($_GET['g_up']) : 0;
-$get_parent_down = !empty($_GET['g_down']) ? numeric($_GET['g_down']) : 0;
+$move = retrieve(GET, 'move', '', TSTRING_UNSECURE);
+$id = retrieve(GET, 'id', 0);
+$get_parent_up = retrieve(GET, 'g_up', 0);
+$get_parent_down = retrieve(GET, 'g_down', 0);
 
 //Récupération de la catégorie d'échange.
 if( !empty($get_parent_up) )
@@ -161,10 +161,10 @@ if( !empty($move) && !empty($id) )
 			FROM ".PREFIX."articles_cats 
 			WHERE id_left BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'
 			ORDER BY id_left", __LINE__, __FILE__);
+			
 			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
 				$list_cats .= $row['id'] . ', ';
-			}
+			
 			$Sql->Close($result);
 			$list_cats = trim($list_cats, ', ');
 		
@@ -183,9 +183,8 @@ if( !empty($move) && !empty($id) )
 			FROM ".PREFIX."articles_cats 
 			WHERE id_left <= '" . $CAT_ARTICLES[$to]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$to]['id_right'] . "'", __LINE__, __FILE__);
 			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
 				$list_parent_cats_to .= $row['id'] . ', ';
-			}
+			
 			$Sql->Close($result);
 			$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 		

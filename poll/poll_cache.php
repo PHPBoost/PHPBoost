@@ -37,8 +37,8 @@ function generate_module_file_poll()
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_POLL = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'poll'", __LINE__, __FILE__));
 	$CONFIG_POLL = is_array($CONFIG_POLL) ? $CONFIG_POLL : array();
-	foreach($CONFIG_POLL as $key => $value)
-		$code .= '$CONFIG_POLL[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
+	
+	$code .= '$CONFIG_POLL = ' . var_export($CONFIG_POLL, true) . ';' . "\n";
 
 	$_array_poll = '';
 	if( is_array($CONFIG_POLL['poll_mini']) )
@@ -62,6 +62,7 @@ function generate_module_file_poll()
 			}
 		}
 	}
+	
 	if( !empty($_array_poll) )
 		$code .= "\n" . 'global $_array_poll;' . "\n\n" . '$_array_poll = array(' . $_array_poll . ');';
 

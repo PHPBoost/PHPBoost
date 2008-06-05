@@ -38,9 +38,7 @@ function generate_module_file_download()
 	$CONFIG_DOWNLOAD = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'download'", __LINE__, __FILE__));
 	$CONFIG_DOWNLOAD['global_auth'] = unserialize(stripslashes($CONFIG_DOWNLOAD['global_auth']));
 	
-	$code .= '$CONFIG_DOWNLOAD = ' . var_export($CONFIG_DOWNLOAD, true) . ';';
-	
-	$code .= "\n";
+	$code .= '$CONFIG_DOWNLOAD = ' . var_export($CONFIG_DOWNLOAD, true) . ';' . "\n";
 	
 	//Liste des catégories et de leurs propriétés
 	$code .= '$DOWNLOAD_CATS = array();' . "\n\n";

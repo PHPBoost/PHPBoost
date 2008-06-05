@@ -29,8 +29,8 @@ require_once('../kernel/admin_begin.php');
 load_module_lang('news'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
-								
-$id = ( !empty($_GET['id'])) ? numeric($_GET['id']) : 0;
+
+$id = retrieve(GET, 'id', 0);
 
 //Si c'est confirmé on met à jour!
 if( !empty($_POST['valid']) )
@@ -39,10 +39,10 @@ if( !empty($_POST['valid']) )
 	FROM ".PREFIX."news_cat", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$cat = !empty($_POST[$row['id'] . 'cat']) ? strprotect($_POST[$row['id'] . 'cat']) : '';  
-		$icon = !empty($_POST[$row['id'] . 'icon']) ? strprotect($_POST[$row['id'] . 'icon']) : '';  
-		$icon_path = !empty($_POST[$row['id'] . 'icon_path']) ? strprotect($_POST[$row['id'] . 'icon_path']) : '';  
-		$contents = !empty($_POST[$row['id'] . 'contents']) ? strprotect($_POST[$row['id'] . 'contents']) : '';
+		$cat = retrieve(POST, $row['id'] . 'cat', '');  
+		$icon = retrieve(POST, $row['id'] . 'icon', '');  
+		$icon_path = retrieve(POST, $row['id'] . 'icon_path', '');  
+		$contents = retrieve(POST, $row['id'] . 'contents', '');
 		
 		if( !empty($icon_path) )
 			$icon = $icon_path;
@@ -65,19 +65,19 @@ elseif( !empty($_GET['del']) && !empty($id) ) //Suppression de la catégorie.
 //On ajoute la nouvelle catégorie
 elseif( !empty($_POST['add']) ) //Ajout de la catégorie.
 {
-	$cat = !empty($_POST['cat']) ? strprotect($_POST['cat']) : '';  
-	$icon = !empty($_POST['icon']) ? strprotect($_POST['icon']) : ''; 
-	$icon_path = !empty($_POST['icon_path']) ? strprotect($_POST['icon_path']) : ''; 
-	$contents = !empty($_POST['contents']) ? strprotect($_POST['contents']) : ''; 
-		
+	$cat = retrieve(POST, 'cat', '');  
+	$icon = retrieve(POST, 'icon', ''); 
+	$icon_path = retrieve(POST, 'icon_path', ''); 
+	$contents = retrieve(POST, 'contents', ''); 
+	
 	if( !empty($icon_path) )
 		$icon = $icon_path;
-			
+	
 	if( !empty($cat) )
-	{	
+	{
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
 		$Sql->Query_inject("INSERT INTO ".PREFIX."news_cat (name, contents, icon) VALUES('" . $cat . "', '" . $contents . "', '" . $icon . "')", __LINE__, __FILE__);
-			
+		
 		redirect(HOST . SCRIPT); 	
 	}
 	else
@@ -89,7 +89,7 @@ else
 	$Template->Set_filenames(array(
 		'admin_news_cat'=> 'news/admin_news_cat.tpl'
 	));
-	  
+	
 	//Images disponibles
 	$rep = './';
 	if( is_dir($rep) ) //Si le dossier existe
@@ -98,7 +98,7 @@ else
 		$dh = @opendir( $rep);
 		while( ! is_bool($lang = @readdir($dh)) )
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $lang) )
+			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)$`i', $lang) )
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		@closedir($dh); //On ferme le dossier
@@ -128,7 +128,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	

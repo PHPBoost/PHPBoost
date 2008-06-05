@@ -89,8 +89,8 @@ if( in_array($id_error, $array_error) )
 				$errstr = $LANG['e_unactiv_member'];
 			break;
 			case 'e_member_flood':			
-				$flood = !empty($_GET['flood']) ? numeric($_GET['flood']) : '0';		
-				$flood = ($flood > 0 && $flood <= 5) ? $flood : '0';		
+				$flood = retrieve(GET, 'flood', 0);		
+				$flood = ($flood > 0 && $flood <= 5) ? $flood : 0;		
 				$flood = ($flood > 0) ? sprintf($LANG['e_test_connect'], $flood) : $LANG['e_nomore_test_connect'];
 				$errstr = $flood;
 			break;

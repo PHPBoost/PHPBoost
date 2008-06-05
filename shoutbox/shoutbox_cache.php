@@ -37,11 +37,11 @@ function generate_module_file_shoutbox()
 	//Récupération du tableau linéarisé dans la bdd.
 	$CONFIG_SHOUTBOX = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'shoutbox'", __LINE__, __FILE__));
 	$CONFIG_SHOUTBOX = is_array($CONFIG_SHOUTBOX) ? $CONFIG_SHOUTBOX : array();
-	foreach($CONFIG_SHOUTBOX as $key => $value)
-		if( $key == 'shoutbox_forbidden_tags' )
-			$shoutbox_config .= '$CONFIG_SHOUTBOX[\'shoutbox_forbidden_tags\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
-		else
-			$shoutbox_config .= '$CONFIG_SHOUTBOX[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
+	
+	if(isset($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
+		$CONFIG_SHOUTBOX['shoutbox_forbidden_tags'] = unserialize($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
+	
+	$shoutbox_config .= '$CONFIG_SHOUTBOX = ' . var_export($CONFIG_SHOUTBOX, true) . ';' . "\n";
 	
 	return $shoutbox_config;
 }

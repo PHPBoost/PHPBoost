@@ -376,9 +376,9 @@ if( !empty($id_get) ) //Espace membre
 		if( $check_pass && $check_pass_bis )
 		{			
 			$password_old_md5 = !empty($_POST['pass_old']) ? md5($_POST['pass_old']) : '';			
-			$password = !empty($_POST['pass']) ? trim($_POST['pass']) : '';
+			$password = retrieve(POST, 'pass', '', TSTRING_UNSECURE);
 			$password_md5 = !empty($password) ? md5($password) : '';
-			$password_bis = !empty($_POST['pass_bis']) ? trim($_POST['pass_bis']) : '';
+			$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNSECURE);
 			$password_bis_md5 = !empty($password_bis) ? md5($password_bis) : '';				
 			$password_old_bdd = $Sql->Query("SELECT password FROM ".PREFIX."member WHERE user_id = '" . $Member->Get_attribute('user_id') . "'",  __LINE__, __FILE__);
 			
@@ -407,26 +407,25 @@ if( !empty($id_get) ) //Espace membre
 		}
 		
 		//Mise à jour du reste de la config.
-		$mail = strtolower($_POST['mail']); //Mail en minuscule.
-		if( preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$!", $mail) )
+		$user_mail = strtolower($_POST['mail']); //Mail en minuscule.
+		if( check_mail($user_mail) )
 		{
-			$user_lang = !empty($_POST['user_lang']) ? strprotect($_POST['user_lang']) : '';
-			$user_theme = !empty($_POST['user_theme']) ? strprotect($_POST['user_theme']) : '';
-			$user_editor = !empty($_POST['user_editor']) ? strprotect($_POST['user_editor']) : '';
-			$user_timezone = !empty($_POST['user_timezone']) ? numeric($_POST['user_timezone']) : '';
+			$user_lang = retrieve(POST, 'user_lang', '');
+			$user_theme = retrieve(POST, 'user_theme', '');
+			$user_editor = retrieve(POST, 'user_editor', '');
+			$user_timezone = retrieve(POST, 'user_timezone', '');
 			
-			$user_mail = strprotect($mail);
 			$user_show_mail = !empty($_POST['user_show_mail']) ? '0' : '1';
-			$user_local = !empty($_POST['user_local']) ? strprotect($_POST['user_local']) : '';
-			$user_occupation =  !empty($_POST['user_occupation']) ? strprotect($_POST['user_occupation']) : '';
-			$user_hobbies = !empty($_POST['user_hobbies']) ? strprotect($_POST['user_hobbies']) : '';
-			$user_desc = !empty($_POST['user_desc']) ? strparse($_POST['user_desc']) : '';
-			$user_sex = !empty($_POST['user_sex']) ? numeric($_POST['user_sex']) : 0;
-			$user_sign = !empty($_POST['user_sign']) ? strparse($_POST['user_sign']) : '';
-			$user_msn = !empty($_POST['user_msn']) ? strprotect($_POST['user_msn']) : '';
-			$user_yahoo = !empty($_POST['user_yahoo']) ? strprotect($_POST['user_yahoo']) : '';
+			$user_local = retrieve(POST, 'user_local', '');
+			$user_occupation =  retrieve(POST, 'user_occupation', '');
+			$user_hobbies = retrieve(POST, 'user_hobbies', '');
+			$user_desc = retrieve(POST, 'user_desc', '', TSTRING_PARSE);
+			$user_sex = retrieve(POST, 'user_sex', 0);
+			$user_sign = retrieve(POST, 'user_sign', '', TSTRING_PARSE);
+			$user_msn = retrieve(POST, 'user_msn', '');
+			$user_yahoo = retrieve(POST, 'user_yahoo', '');
 			
-			$user_web = !empty($_POST['user_web']) ? strprotect($_POST['user_web']) : '';
+			$user_web = retrieve(POST, 'user_web', '');
 			$user_web = ( !empty($user_web) && preg_match('`^https?://(?:[a-z0-9_/-]+\.)*[a-z0-9-]+\.[a-z]{2,4}(?:.*)$`s', $user_web) ) ? $user_web : '';
 			
 			//Gestion de la date de naissance.
@@ -881,7 +880,7 @@ else //Show all member!
 	$login = '';
 	if( !empty($_POST['search_member']) )
 	{
-		$login = !empty($_POST['login']) ? strprotect($_POST['login']) : '';
+		$login = retrieve(POST, 'login', '');
 		$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 		if( !empty($user_id) )
 			redirect(HOST . DIR . '/member/member' . transid('.php?id=' . $user_id, '-' . $user_id . '.php', '&'));
@@ -923,15 +922,13 @@ else //Show all member!
 	$result = $Sql->Query_while("SELECT id, name 
 	FROM ".PREFIX."group", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
-	{
 		$Template->Assign_block_vars('group_select', array(
 			'OPTION' => '<option value="' . $row['id'] .'">' . $row['name'] . '</option>'
 		));
-	}
 	
 	$nbr_member = $Sql->Count_table('member', __LINE__, __FILE__);
 	
-	$get_sort = !empty($_GET['sort']) ? trim($_GET['sort']) : '';	
+	$get_sort = retrieve(GET, 'sort', '', TSTRING_UNSECURE);	
 	switch($get_sort)
 	{
 		case 'time' : 
@@ -950,8 +947,8 @@ else //Show all member!
 		$sort = 'timestamp';
 	}
 	
-	$get_mode = !empty($_GET['mode']) ? trim($_GET['mode']) : '';	
-	$mode = ($get_mode == 'asc' || $get_mode == 'desc') ? strtoupper(trim($_GET['mode'])) : '';	
+	$get_mode = retrieve(GET, 'mode', '', TSTRING_UNSECURE);	
+	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	//On crée une pagination si le nombre de membre est trop important.

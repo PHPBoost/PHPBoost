@@ -33,16 +33,16 @@ require_once('../kernel/admin_header.php');
 
 if( !empty($_POST['valid']) )
 {
-	$title = !empty($_POST['title']) ? strprotect($_POST['title']) : '';
-	$icon = !empty($_POST['icon']) ? strprotect($_POST['icon']) : '';
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
-	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$title = retrieve(POST, 'title', '');
+	$icon = retrieve(POST, 'icon', '');
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$idcat = retrieve(POST, 'idcat', 0);
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$get_visible = retrieve(POST, 'visible', 0);
 	
 	if( !empty($title) && !empty($contents) )
 	{	
@@ -113,17 +113,17 @@ elseif( !empty($_POST['previs']) )
 		'admin_articles_add'=> 'articles/admin_articles_add.tpl'
 	));
 
-	$title = !empty($_POST['title']) ? trim($_POST['title']) : '';
-	$icon = !empty($_POST['icon']) ? trim($_POST['icon']) : '';
-	$icon_path = !empty($_POST['icon_path']) ? trim($_POST['icon_path']) : '';
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$idcat = !empty($_POST['idcat']) ? numeric($_POST['idcat']) : 0;
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
-	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
+	$icon = retrieve(POST, 'icon', '', TSTRING_UNSECURE);
+	$icon_path = retrieve(POST, 'icon_path', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$idcat = retrieve(POST, 'idcat', 0);
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$get_visible = retrieve(POST, 'visible', 0);
 		
 	if( !empty($icon_path) )
 		$icon = $icon_path;
@@ -196,7 +196,7 @@ elseif( !empty($_POST['previs']) )
 		$dh = @opendir( $rep);
 		while( ! is_bool($lang = readdir($dh)) )
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $lang) )
+			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		closedir($dh); //On ferme le dossier
@@ -295,7 +295,7 @@ else
 		$dh = @opendir( $rep);
 		while( ! is_bool($lang = readdir($dh)) )
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)`i', $lang) )
+			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		closedir($dh); //On ferme le dossier
@@ -338,7 +338,7 @@ else
 	));
 		
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 

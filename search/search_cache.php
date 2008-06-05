@@ -45,8 +45,7 @@ function generate_module_file_search()
     //Configuration
     $search_config = unserialize($Sql->Query($request, __LINE__, __FILE__));
     
-    return 'global $SEARCH_CONFIG;
-            $SEARCH_CONFIG = '.var_export($search_config, true).';';
+    return 'global $SEARCH_CONFIG;' . "\n" . '$SEARCH_CONFIG = '.var_export($search_config, true).';';
 }
 
 ?>

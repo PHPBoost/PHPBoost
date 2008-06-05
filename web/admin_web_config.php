@@ -36,10 +36,10 @@ $Cache->Load_file('web');
 if( !empty($_POST['valid']) )
 {
 	$config_web = array();
-	$config_web['nbr_web_max'] = !empty($_POST['nbr_web_max']) ? numeric($_POST['nbr_web_max']) : 10;
-	$config_web['nbr_cat_max'] = !empty($_POST['nbr_cat_max']) ? numeric($_POST['nbr_cat_max']) : 10;
-	$config_web['nbr_column'] = !empty($_POST['nbr_column']) ? numeric($_POST['nbr_column']) : 2;
-	$config_web['note_max'] = !empty($_POST['note_max']) ? max(1, numeric($_POST['note_max'])) : 5;
+	$config_web['nbr_web_max'] = retrieve(POST, 'nbr_web_max', 10);
+	$config_web['nbr_cat_max'] = retrieve(POST, 'nbr_cat_max', 10);
+	$config_web['nbr_column'] = retrieve(POST, 'nbr_column', 2);
+	$config_web['note_max'] = max(1, retrieve(POST, 'note_max', 5));
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_web)) . "' WHERE name = 'web'", __LINE__, __FILE__);
 	

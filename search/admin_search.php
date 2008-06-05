@@ -36,7 +36,7 @@ define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
 //--------------------------------------------------------------------- Params
-$id_post = !empty($_POST['idc']) ? numeric($_POST['idc']) : '';
+$id_post = retrieve(POST, 'idc', 0);
 $clearOutCache = !empty($_GET['clear']) ? true : false;
 
 //Si c'est confirmé on execute
@@ -46,13 +46,13 @@ if( !empty($_POST['valid']) )
     global $Sql;
     
     // Configuration de la classe search.class.php
-    $CONFIG['search_cache_time'] = !empty($_POST['cache_time']) ? numeric($_POST['cache_time']) : 15;
-    $CONFIG['search_max_use'] = !empty($_POST['max_use']) ? numeric($_POST['max_use']) : 200;
+    $CONFIG['search_cache_time'] = retrieve(POST, 'cache_time', 15);
+    $CONFIG['search_max_use'] = retrieve(POST, 'max_use', 200);
     
     // Configuration du module 'Search'
     $SEARCH_CONFIG = array();
-    $SEARCH_CONFIG['nb_results_per_page'] = !empty($_POST['nb_results_p']) ? numeric($_POST['nb_results_p']) : 15;
-    $SEARCH_CONFIG['authorised_modules'] = !empty($_POST['authorised_modules']) ? $_POST['authorised_modules'] : array();
+    $SEARCH_CONFIG['nb_results_per_page'] = retrieve(POST, 'nb_results_p', 15);
+    $SEARCH_CONFIG['authorised_modules'] = retrieve(POST, 'authorised_modules', array());
     
     // Enregistrement des modifications de la config
     $config_string = addslashes(serialize($CONFIG));

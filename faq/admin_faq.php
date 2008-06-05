@@ -35,9 +35,10 @@ $page = !empty($_GET['p']) ? numeric($_GET['p']) : 0;
 
 if( !empty($_POST['submit']) )
 {
-	$FAQ_CONFIG['faq_name'] = !empty($_POST['faq_name']) ? strprotect($_POST['faq_name']) : $FAQ_LANG['faq'];
-	$FAQ_CONFIG['num_cols'] = !empty($_POST['num_cols']) ? numeric($_POST['num_cols']) : 3;
-	$FAQ_CONFIG['display_block'] = !empty($_POST['display_mode']) && $_POST['display_mode'] == 'inline' ? false : true;
+	$FAQ_CONFIG['faq_name'] = retrieve(POST, 'faq_name', $FAQ_LANG['faq']);
+	$FAQ_CONFIG['num_cols'] = retrieve(POST, 'num_cols', 3);
+	$FAQ_CONFIG['display_block'] = (!empty($_POST['display_mode']) && $_POST['display_mode'] == 'inline') ? false : true;
+	// unused auth variables ?
 	$auth_read = isset($_POST['groups_auth1']) ? $_POST['groups_auth1'] : '';
 	$auth_write = isset($_POST['groups_auth2']) ? $_POST['groups_auth2'] : '';
 	$FAQ_CONFIG['global_auth'] = $Group->Return_array_auth(AUTH_READ, AUTH_WRITE);

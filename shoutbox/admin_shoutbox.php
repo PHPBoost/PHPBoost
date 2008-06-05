@@ -34,11 +34,11 @@ require_once('../kernel/admin_header.php');
 if( !empty($_POST['valid'])  )
 {
 	$config_shoutbox = array();
-	$config_shoutbox['shoutbox_max_msg'] = !empty($_POST['shoutbox_max_msg']) ? numeric($_POST['shoutbox_max_msg']) : 10;
-	$config_shoutbox['shoutbox_auth'] = isset($_POST['shoutbox_auth']) ? numeric($_POST['shoutbox_auth']) : -1;
+	$config_shoutbox['shoutbox_max_msg'] = retrieve(POST, 'shoutbox_max_msg', 10);
+	$config_shoutbox['shoutbox_auth'] = retrieve(POST, 'shoutbox_auth', -1);
 	$config_shoutbox['shoutbox_forbidden_tags'] = isset($_POST['shoutbox_forbidden_tags']) ? serialize($_POST['shoutbox_forbidden_tags']) : serialize(array());
-	$config_shoutbox['shoutbox_max_link'] = isset($_POST['shoutbox_max_link']) ? numeric($_POST['shoutbox_max_link']) : -1;
-	$config_shoutbox['shoutbox_refresh_delay'] = isset($_POST['shoutbox_refresh_delay']) ? numeric($_POST['shoutbox_refresh_delay'] * 60000, 'float') : 0;
+	$config_shoutbox['shoutbox_max_link'] = retrieve(POST, 'shoutbox_max_link', -1);
+	$config_shoutbox['shoutbox_refresh_delay'] = numeric(retrieve(POST, 'shoutbox_refresh_delay', 0)* 60000, 'float');
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_shoutbox)) . "' WHERE name = 'shoutbox'", __LINE__, __FILE__);
 	

@@ -5,11 +5,11 @@ require_once('../kernel/begin.php');
 define('TITLE', 'Utilisation d\'AJAX');
 require_once('../kernel/header_no_display.php');
 
-$id_cat = !empty($_POST['id_cat']) ? numeric($_POST['id_cat']) : 0;
+$id_cat = retrieve(POST, 'id_cat', 0);
 $select_cat = !empty($_GET['select_cat']) ? true : false;
-$selected_cat = !empty($_POST['selected_cat']) ? numeric($_POST['selected_cat']) : 0;
+$selected_cat = retrieve(POST, 'selected_cat', 0);
 $display_select_link = !empty($_GET['display_select_link']) ? 1 : 0;
-$open_cat = !empty($_POST['open_cat']) ? numeric($_POST['open_cat']) : 0;
+$open_cat = retrieve(POST, 'open_cat', 0);
 $root = !empty($_GET['root']) ? 1 : 0;
 
 

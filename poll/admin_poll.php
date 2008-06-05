@@ -30,8 +30,8 @@ define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
 //On recupère les variables.
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
-$id_post = !empty($_POST['id']) ? numeric($_POST['id']) : '' ;
+$id = retrieve(GET, 'id', 0);
+$id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
 if( $del && !empty($id) ) //Suppresion poll
@@ -54,15 +54,15 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
 	$Cache->Load_file('poll');
 	
-	$question = !empty($_POST['question']) ? strprotect($_POST['question']) : '';
-	$type = isset($_POST['type']) ? numeric($_POST['type']) : '';
-	$archive = isset($_POST['archive']) ? numeric($_POST['archive']) : 0;
-	$current_date = !empty($_POST['current_date']) ? trim($_POST['current_date']) : '';
-	$start = !empty($_POST['start']) ? trim($_POST['start']) : 0;
-	$end = !empty($_POST['end']) ? trim($_POST['end']) : 0;
-	$hour = !empty($_POST['hour']) ? trim($_POST['hour']) : 0;
-	$min = !empty($_POST['min']) ? trim($_POST['min']) : 0;
-	$get_visible = !empty($_POST['visible']) ? numeric($_POST['visible']) : 0;
+	$question = retrieve(POST, 'question', '');
+	$type = retrieve(POST, 'type', 0);
+	$archive = retrieve(POST, 'archive', 0);
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$get_visible = retrieve(POST, 'visible', 0);
 	
 	//On verifie les conditions!
 	if( !empty($question) && !empty($id_post) )
@@ -99,13 +99,10 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		
 		$timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 		if( $timestamp > 0 )
-		{
 			//Ajout des heures et minutes
 			$timestamp += ($hour * 3600) + ($min * 60);
-			$timestamp = ' , timestamp = \'' . $timestamp . '\'';
-		}
 		else
-			$timestamp = ' , timestamp = \'' . time() . '\'';
+			$timestamp = time();
 			
 		$answers = '';
 		$votes = '';
@@ -121,7 +118,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		}
 		$votes = trim($votes, '|');
 		
-		$Sql->Query_inject("UPDATE ".PREFIX."poll SET question = '" . $question . "', answers = '" . substr($answers, 0, strlen($answers) - 1) . "', votes = '" . $votes . "', type = '" . $type . "', archive = '" . $archive . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."poll SET question = '" . $question . "', answers = '" . substr($answers, 0, strlen($answers) - 1) . "', votes = '" . $votes . "', type = '" . $type . "', archive = '" . $archive . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 		
 		if( $id_post == $CONFIG_POLL['poll_mini'] && ($visible == '0' || $archive == '1') )
 		{
@@ -201,7 +198,7 @@ elseif( !empty($id) )
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['incomplete'], E_USER_NOTICE);
 	

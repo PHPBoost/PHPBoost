@@ -33,8 +33,8 @@ require_once('../kernel/header_no_display.php');
 //Notation.
 if( !empty($_GET['note']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
 {	
-	$id = !empty($_POST['id']) ? numeric($_POST['id']) : 0;
-	$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;
+	$id = retrieve(POST, 'id', 0);
+	$note = retrieve(POST, 'note', 0);
 
 	//Initialisation  de la class de gestion des fichiers.
 	include_once('../kernel/framework/note.class.php');
@@ -52,7 +52,7 @@ if( $Member->Check_level(MODO_LEVEL) ) //Modo
 		include_once('../gallery/gallery.class.php');
 		$Gallery = new Gallery;
 		
-		$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
+		$id_file = retrieve(POST, 'id_file', 0);
 		$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
 		$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
 		
@@ -67,7 +67,7 @@ if( $Member->Check_level(MODO_LEVEL) ) //Modo
 		include_once('../gallery/gallery.class.php');
 		$Gallery = new Gallery;
 		
-		$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
+		$id_file = retrieve(POST, 'id_file', 0);
 		if( !empty($id_file) )
 		{
 			echo $Gallery->Aprob_pics($id_file);

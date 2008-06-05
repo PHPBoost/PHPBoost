@@ -31,8 +31,8 @@ load_module_lang('forum'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
-$get_id = !empty($_GET['id']) ? numeric($_GET['id']) : '';	
-$id_post = !empty($_POST['idc']) ? numeric($_POST['idc']) : '';  
+$get_id = retrieve(GET, 'id', 0);	
+$id_post = retrieve(POST, 'idc', 0);  
 $update_cached = !empty($_GET['upd']) ? true : false;	
 
 $Cache->Load_file('forum');
@@ -40,20 +40,20 @@ $Cache->Load_file('forum');
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {
-	$CONFIG_FORUM['forum_name'] = !empty($_POST['forum_name']) ? stripslashes(strprotect($_POST['forum_name'])) : $CONFIG['site_name'] . ' forum';  
-	$CONFIG_FORUM['pagination_topic'] = !empty($_POST['pagination_topic']) ? numeric($_POST['pagination_topic']) : '20';  
-	$CONFIG_FORUM['pagination_msg'] = !empty($_POST['pagination_msg']) ? numeric($_POST['pagination_msg']) : '15';
-	$CONFIG_FORUM['view_time'] = !empty($_POST['view_time']) ? (numeric($_POST['view_time']) * 3600 * 24) : (30 * 3600 * 24);
-	$CONFIG_FORUM['topic_track'] = !empty($_POST['topic_track']) ? numeric($_POST['topic_track']) : '40';
-	$CONFIG_FORUM['edit_mark'] = !empty($_POST['edit_mark']) ? numeric($_POST['edit_mark']) : 0;
-	$CONFIG_FORUM['display_connexion'] = !empty($_POST['display_connexion']) ? numeric($_POST['display_connexion']) : 0;
-	$CONFIG_FORUM['no_left_column'] = !empty($_POST['no_left_column']) ? numeric($_POST['no_left_column']) : 0;
-	$CONFIG_FORUM['no_right_column'] = !empty($_POST['no_right_column']) ? numeric($_POST['no_right_column']) : 0;
-	$CONFIG_FORUM['activ_display_msg']  = !empty($_POST['activ_display_msg']) ? numeric($_POST['activ_display_msg']) : 0;
-	$CONFIG_FORUM['display_msg'] = !empty($_POST['display_msg']) ? stripslashes(strprotect($_POST['display_msg'])) : '';
-	$CONFIG_FORUM['explain_display_msg'] = !empty($_POST['explain_display_msg']) ? stripslashes(strprotect($_POST['explain_display_msg'])) : '';	
-	$CONFIG_FORUM['explain_display_msg_bis'] = !empty($_POST['explain_display_msg_bis']) ? stripslashes(strprotect($_POST['explain_display_msg_bis'])) : '';
-	$CONFIG_FORUM['icon_activ_display_msg'] = !empty($_POST['icon_activ_display_msg']) ? numeric($_POST['icon_activ_display_msg']) : 0;
+	$CONFIG_FORUM['forum_name'] = retrive(POST, 'forum_name', $CONFIG['site_name'] . ' forum', TSTRING_UNSECURE);  
+	$CONFIG_FORUM['pagination_topic'] = retrive(POST, 'pagination_topic', 20);  
+	$CONFIG_FORUM['pagination_msg'] = retrieve(POST, 'pagination_msg', 15);
+	$CONFIG_FORUM['view_time'] = retrieve(POST, 'view_time', 30) * 3600 * 24;
+	$CONFIG_FORUM['topic_track'] = retrieve(POST, 'topic_track', 40);
+	$CONFIG_FORUM['edit_mark'] = retrieve(POST, 'edit_mark', 0);
+	$CONFIG_FORUM['display_connexion'] = retrieve(POST, 'display_connexion', 0);
+	$CONFIG_FORUM['no_left_column'] = retrieve(POST, 'no_left_column', 0);
+	$CONFIG_FORUM['no_right_column'] = retrieve(POST, 'no_right_column', 0);
+	$CONFIG_FORUM['activ_display_msg']  = retrieve(POST, 'activ_display_msg', 0);
+	$CONFIG_FORUM['display_msg'] = retrieve(POST, 'display_msg', '', TSTRING_UNSECURE);
+	$CONFIG_FORUM['explain_display_msg'] = retrieve(POST, 'explain_display_msg', '', TSTRING_UNSECURE);	
+	$CONFIG_FORUM['explain_display_msg_bis'] = retrieve(POST, 'explain_display_msg_bis', '', TSTRING_UNSECURE);
+	$CONFIG_FORUM['icon_activ_display_msg'] = retrieve(POST, 'icon_activ_display_msg', 0);
 	$CONFIG_FORUM['auth'] = serialize($CONFIG_FORUM['auth']);
 		
 	if( !empty($CONFIG_FORUM['forum_name']) && !empty($CONFIG_FORUM['pagination_topic']) && !empty($CONFIG_FORUM['pagination_msg']) && !empty($CONFIG_FORUM['view_time']) )
@@ -81,10 +81,9 @@ elseif( $update_cached ) //Mise à jour des données stockées en cache dans la bdd
 			$result2 = $Sql->Query_while("SELECT id
 			FROM ".PREFIX."forum_cats
 			WHERE id_left >= '" . $row['id_left'] . "' AND id_right <= '" . $row['id_right'] ."'", __LINE__, __FILE__);
+			
 			while($row2 = $Sql->Sql_fetch_assoc($result2) )
-			{
 				$cat_list .=  ', ' . $row2['id'];
-			}
 		}
 		
 		$info_cat = $Sql->Query_array("forum_topics", "COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg", "WHERE idcat IN (" . $cat_list . ")", __LINE__, __FILE__);
@@ -103,7 +102,7 @@ else
 	$Cache->Load_file('forum');
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	

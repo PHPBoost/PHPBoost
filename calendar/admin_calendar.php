@@ -35,7 +35,7 @@ require_once('../kernel/admin_header.php');
 if( !empty($_POST['valid'])  )
 {
 	$config_calendar = array();
-	$config_calendar['calendar_auth'] = isset($_POST['calendar_auth']) ? numeric($_POST['calendar_auth']) : -1;
+	$config_calendar['calendar_auth'] = retrieve(POST, 'calendar_auth', -1);
 		
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_calendar)) . "' WHERE name = 'calendar'", __LINE__, __FILE__);
 	

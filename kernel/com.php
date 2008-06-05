@@ -25,8 +25,6 @@
  *
 ###################################################*/
 
-define('PATH_TO_ROOT','..');
-
 $delcom = !empty($_GET['delcom']) ? true : false;
 $editcom = !empty($_GET['editcom']) ? true : false;
 $updatecom = !empty($_GET['updatecom']) ? true : false;
@@ -35,9 +33,9 @@ $updatecom = !empty($_GET['updatecom']) ? true : false;
 $DEFINED_PHPBOOST = !defined('PHPBOOST');
 if( $DEFINED_PHPBOOST )
 {
-	include_once(PATH_TO_ROOT . '/kernel/begin.php');
+	include_once('../kernel/begin.php');	
 	define('TITLE', $LANG['title_com']);	
-	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
+	include_once('../kernel/header_no_display.php');
 	
 	if( !empty($_GET['i']) )
 	{
@@ -45,9 +43,9 @@ if( $DEFINED_PHPBOOST )
 			$array_get = array('', '', '', '');
 		$idcom = (empty($array_get[3]) && !empty($_POST['idcom'])) ? numeric($_POST['idcom']) : $array_get[3];	
 	
-		include_once(PATH_TO_ROOT . '/kernel/framework/content/comments.class.php'); 
+		include_once('../kernel/framework/content/comments.class.php'); 
 		$Comments = new Comments($array_get[2], $array_get[1], transid('?i=' . $array_get[1] . $array_get[2] . '%s', ''), $array_get[2]);
-		$Comments->Set_arg($idcom, PATH_TO_ROOT . '/kernel/com.php'); //On met à jour les attributs de l'objet.
+		$Comments->Set_arg($idcom, '../kernel/com.php'); //On met à jour les attributs de l'objet.
 		$_com_vars_simple = sprintf($Comments->Get_attribute('vars'), 0);
 	}
 }
@@ -179,7 +177,7 @@ if( $Comments->Com_loaded() )
 					'U_ACTION' => $Comments->Get_attribute('path') . sprintf($Comments->Get_attribute('vars'), $Comments->Get_attribute('idcom')) . '&amp;updatecom=1'
 				));
 				
-				include_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode.php');
+				include_once('../kernel/framework/content/bbcode.php');
 			}
 			elseif( $updatecom ) //Mise à jour du commentaire.
 			{
@@ -222,7 +220,7 @@ if( $Comments->Com_loaded() )
 		}
 
 		//On crée une pagination si le nombre de commentaires est trop important.
-		include_once(PATH_TO_ROOT . '/kernel/framework/pagination.class.php'); 
+		include_once('../kernel/framework/pagination.class.php'); 
 		$Pagination = new Pagination();
 
 		$block = ($CONFIG['com_popup'] == 0 && $DEFINED_PHPBOOST !== true); 
@@ -479,7 +477,7 @@ if( $Comments->Com_loaded() )
 		}
 		$Sql->Close($result);
 		
-		include_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode.php');
+		include_once('../kernel/framework/content/bbcode.php');
 	}  
 
 	//Com en popup
@@ -488,5 +486,5 @@ if( $Comments->Com_loaded() )
 }
 
 if( $DEFINED_PHPBOOST )
-	include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
+	include_once('../kernel/footer_no_display.php');
 ?>

@@ -33,9 +33,9 @@ require_once('../kernel/admin_header.php');
 
 require_once('../forum/forum_begin.php');
 
-$class = ( !empty($_GET['id'])) ? numeric($_GET['id']) : 0;
-$top = ( !empty($_GET['top'])) ? strprotect($_GET['top']) : '' ;
-$bottom = ( !empty($_GET['bot'])) ? strprotect($_GET['bot']) : '' ;
+$class = retrieve(GET, 'id', 0);
+$top = retrieve(GET, 'top', '');
+$bottom = retrieve(GET, 'bot', '');
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )

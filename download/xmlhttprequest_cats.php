@@ -34,9 +34,9 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 	include_once('download_cats.class.php');
 	$download_categories = new Download_cats();
 	
-	$id_up = !empty($_GET['id_up']) ? numeric($_GET['id_up']) : 0;
-	$id_down = !empty($_GET['id_down']) ? numeric($_GET['id_down']) : 0;
-	$cat_to_del = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
+	$id_up = retrieve(GET, 'id_up', 0);
+	$id_down = retrieve(GET, 'id_down', 0);
+	$cat_to_del = retrieve(GET, 'del', 0);
 	
 	$result = false;
 	
