@@ -486,3 +486,11 @@ function isInteger(int)
     for ( var i = 0; i < int.length && numbers.indexOf(int[i]) != -1; i++ );
     return i == int.length ;
 }
+
+// Print the syndication's choice menu
+function ShowSyndication(element) {
+    if ( element.ownerDocument.getElementById('syndication_choices').style.visibility == 'hidden' )
+        element.ownerDocument.getElementById('syndication_choices').style.visibility = 'visible';
+    else
+        element.ownerDocument.getElementById('syndication_choices').style.visibility = 'hidden';
+}

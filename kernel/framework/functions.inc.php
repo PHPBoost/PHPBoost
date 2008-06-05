@@ -150,15 +150,15 @@ function load_module_lang($module_name)
 {
     global $CONFIG, $LANG;
 
-    if( !@include_once('../' . $module_name . '/lang/' . $CONFIG['lang'] . '/' . $module_name . '_' . $CONFIG['lang'] . '.php') )
+    if( !@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . $CONFIG['lang'] . '/' . $module_name . '_' . $CONFIG['lang'] . '.php') )
     {
-        $lang = find_require_dir('../' . $module_name . '/lang/', $CONFIG['lang'], NO_FATAL_ERROR);
-        if( !@include_once('../' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php') )
+        $lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', $CONFIG['lang'], NO_FATAL_ERROR);
+        if( !@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php') )
         {
             global $Errorh;
             
             //Déclenchement d'une erreur fatale.
-            $Errorh->Error_handler(sprintf('Unable to load lang file \'%s\'!', '../' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__);
+            $Errorh->Error_handler(sprintf('Unable to load lang file \'%s\'!', PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__);
             exit;
         }
     }
@@ -318,7 +318,7 @@ function check_mail($mail)
 //Charge le parseur.
 function strparse($content, $forbidden_tags = array(), $html_protect = true)
 {
-    include_once('../kernel/framework/content/content.class.php');
+    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
     $parse = new Content($content);
     $parse->Parse_content($forbidden_tags, $html_protect);
     
@@ -328,7 +328,7 @@ function strparse($content, $forbidden_tags = array(), $html_protect = true)
 //Charge l'unparseur.
 function unparse($content)
 {
-    include_once('../kernel/framework/content/content.class.php');
+    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
     $parse = new Content($content);
     $parse->Unparse_content();
     
@@ -338,9 +338,9 @@ function unparse($content)
 //Parse temps réel
 function second_parse($content)
 {
-	$content = str_replace('../includes/data', '../kernel/data', $content);
+	$content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $content);
     
-    include_once('../kernel/framework/content/content.class.php');
+    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
 	$parse = new Content($content);
     $parse->Second_parse();
 	
@@ -561,7 +561,7 @@ function delete_directory($dir_path, $path)
 //Compte le nombre de page vues.
 function pages_displayed($no_update = false)
 {
-    if( $file = @fopen('../cache/pages.txt', 'r+') )
+    if( $file = @fopen(PATH_TO_ROOT . '/cache/pages.txt', 'r+') )
     {
         $hour = gmdate_format('G');
         $data = unserialize(fgets($file, 4096)); //Renvoi la première ligne du fichier (le array précédement crée).
@@ -577,7 +577,7 @@ function pages_displayed($no_update = false)
         fwrite($file, serialize($data)); //On stock le tableau dans le fichier de données
         fclose($file);
     }
-    else if( $file = @fopen('../cache/pages.txt', 'w+') ) //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
+    else if( $file = @fopen(PATH_TO_ROOT . '/cache/pages.txt', 'w+') ) //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
     {
         $data = array();
         fwrite($file, serialize($data)); //On insère un tableau vide.

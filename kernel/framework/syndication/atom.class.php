@@ -3,7 +3,7 @@
  *                              atom.class.php
  *                            -------------------
  *   begin                : April 21, 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 Loï¿½c Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -83,7 +83,7 @@ class ATOM extends Feed
      */
     {
         require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
-        $Template = new Template('syndication/atom.tpl');
+        $Template = new Template('framework/syndication/atom.tpl');
         
         $Template->Assign_vars(array(
             'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',

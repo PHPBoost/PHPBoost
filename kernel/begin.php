@@ -25,6 +25,9 @@
  *
 ###################################################*/
 
+if (!defined(PATH_TO_ROOT))
+    define('PATH_TO_ROOT', '..');
+
 header('Content-type: text/html; charset=iso-8859-1');
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date du passé
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // toujours modifié
@@ -32,20 +35,20 @@ header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 	
 //Inclusion des fichiers
-require_once('../kernel/framework/bench.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/bench.class.php');
 $Bench = new Bench; //Début du benchmark
 $Bench->Start_bench('site');
-require_once('../kernel/framework/functions.inc.php'); //Fonctions de base.
-require_once('../kernel/constant.php'); //Constante utiles.
-require_once('../kernel/framework/content/mathpublisher.php'); //Gestion des formules mathématiques.
-require_once('../kernel/framework/errors.class.php');
-require_once('../kernel/framework/template.class.php');
-require_once('../kernel/framework/db/' . DBTYPE . '.class.php');
-require_once('../kernel/framework/cache.class.php');
-require_once('../kernel/framework/members/sessions.class.php');
-require_once('../kernel/framework/members/member.class.php');
-require_once('../kernel/framework/members/groups.class.php');
-require_once('../kernel/framework/breadcrumb.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
+require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
+require_once(PATH_TO_ROOT . '/kernel/framework/content/mathpublisher.php'); //Gestion des formules mathématiques.
+require_once(PATH_TO_ROOT . '/kernel/framework/errors.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/db/' . DBTYPE . '.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/cache.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/members/sessions.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/members/member.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/members/groups.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/breadcrumb.class.php');
 
 //Instanciation des objets indispensables au noyau.
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
@@ -91,13 +94,13 @@ else
 }
 
 //Si le thème n'existe pas on prend le suivant présent sur le serveur/
-$CONFIG['theme'] = find_require_dir('../templates/', ($Member->Get_attribute('user_theme') == '' || $CONFIG_MEMBER['force_theme'] == 1) ? $CONFIG['theme'] : $Member->Get_attribute('user_theme'));
+$CONFIG['theme'] = find_require_dir(PATH_TO_ROOT . '/templates/', ($Member->Get_attribute('user_theme') == '' || $CONFIG_MEMBER['force_theme'] == 1) ? $CONFIG['theme'] : $Member->Get_attribute('user_theme'));
 
 //Si le dossier de langue n'existe pas on prend le suivant exisant.
-$CONFIG['lang'] = find_require_dir('../lang/', ($Member->Get_attribute('user_lang') == '' ? $CONFIG['lang'] : $Member->Get_attribute('user_lang')));
+$CONFIG['lang'] = find_require_dir(PATH_TO_ROOT . '/lang/', ($Member->Get_attribute('user_lang') == '' ? $CONFIG['lang'] : $Member->Get_attribute('user_lang')));
 $LANG = array();
-require_once('../lang/' . $CONFIG['lang'] . '/main.php'); //!\\ Langues //!\\
-require_once('../lang/' . $CONFIG['lang'] . '/errors.php'); //Inclusion des langues des erreurs.
+require_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/main.php'); //!\\ Langues //!\\
+require_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/errors.php'); //Inclusion des langues des erreurs.
 
 //Chargement du cache du jour actuel.
 $Cache->Load_file('day');
@@ -110,10 +113,10 @@ if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
     //Vérification pour empêcher une double mise à jour.
     $check_update = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."stats WHERE stats_year = '" . gmdate_format('Y', time(), TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m', time(), TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format('d', time(), TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__);
     
-    require_once('../kernel/changeday.php');
+    require_once(PATH_TO_ROOT . '/kernel/changeday.php');
 }
 
-include_once('../kernel/connect.php'); //Inclusion du gestionnaire de connexion.
+include_once(PATH_TO_ROOT . '/kernel/connect.php'); //Inclusion du gestionnaire de connexion.
 	
 //Cache des autorisations des modules
 $Cache->Load_file('modules');

@@ -60,12 +60,12 @@ class Feed
         }
     }
 
-    function Get($nbItems = 5, $tpl = 'syndication/feed.tpl')
+    function Get($nbItems = 5, $tpl = 'framework/syndication/feed.tpl')
     /**
      * Return the results of the HTML feed generated as a string
      */
     {
-        if ( ($nbItems == 5) && ($tpl == 'syndication/feed.tpl') )
+        if ( ($nbItems == 5) && ($tpl == 'framework/syndication/feed.tpl') )
         {
             if ( ($HTMLfeed = @file_get_contents_emulate($this->path . $this->name . '.html')) !== false )
                 return $HTMLfeed;
@@ -111,7 +111,7 @@ class Feed
         }
     }
     
-    function GenerateCache(&$feedInformations, $tpl = 'syndication/feed.tpl')
+    function GenerateCache(&$feedInformations, $tpl = 'framework/syndication/feed.tpl')
     /**
      * Generate the HTML cache for direct includes.
      */

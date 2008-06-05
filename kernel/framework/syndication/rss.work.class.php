@@ -3,7 +3,7 @@
  *                              rss.class.php
  *                            -------------------
  *   begin                : March 10, 2005
- *   copyright            : (C) 2005 Régis Viarre, Loïc Rouchon
+ *   copyright            : (C) 2005 Rï¿½gis Viarre, Loï¿½c Rouchon
  *   email                : crowkait@phpboost.com, horn@phpboost.com
  *
  *
@@ -85,7 +85,7 @@ class RSS
      */
     {
         require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
-        $Template = new Template('syndication/rss.tpl');
+        $Template = new Template('framework/syndication/rss.tpl');
         
         $Template->Assign_vars(array(
             'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',

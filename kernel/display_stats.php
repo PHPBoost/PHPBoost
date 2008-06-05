@@ -37,10 +37,10 @@ $get_pages_day = !empty($_GET['pages_day']) ? true : false;
 $get_pages_month = !empty($_GET['pages_month']) ? true : false;
 $get_pages_year = !empty($_GET['pages_year']) ? true : false;
 
-include_once('../kernel/begin.php');
+include_once(PATH_TO_ROOT . '/kernel/begin.php');
 
-include_once('../lang/' . $CONFIG['lang'] . '/stats.php');
-include_once('../kernel/framework/stats.class.php');
+include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php');
+include_once(PATH_TO_ROOT . '/kernel/framework/stats.class.php');
 $Stats = new Stats();
 
 $array_stats = array('other' => 0);
@@ -175,7 +175,7 @@ elseif( $get_pages_year )
 elseif( $get_brw ) //Navigateurs.
 {
 	//On lit le fichier
-	$file = @fopen('../cache/browsers.txt', 'r');
+	$file = @fopen(PATH_TO_ROOT . '/cache/browsers.txt', 'r');
 	$browsers_serial = @fgets($file);
 	$array_browsers = !empty($browsers_serial) ? unserialize($browsers_serial) : array();
 	$array_stats = array();
@@ -194,12 +194,12 @@ elseif( $get_brw ) //Navigateurs.
 	
 	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
-	$Stats->Draw_ellipse(210, 100, '../cache/browsers.png');
+	$Stats->Draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/browsers.png');
 }
 elseif( $get_os )
 {
 	//On lit le fichier
-	$file = @fopen('../cache/os.txt', 'r');
+	$file = @fopen(PATH_TO_ROOT . '/cache/os.txt', 'r');
 	$os_serial = @fgets($file);
 	$array_os = !empty($os_serial) ? unserialize($os_serial) : array();
 	$array_stats = array();
@@ -217,12 +217,12 @@ elseif( $get_os )
 	
 	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
-	$Stats->Draw_ellipse(210, 100, '../cache/os.png');
+	$Stats->Draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/os.png');
 }	
 elseif( $get_lang )
 {
 	//On lit le fichier
-	$file = @fopen('../cache/lang.txt', 'r');
+	$file = @fopen(PATH_TO_ROOT . '/cache/lang.txt', 'r');
 	$lang_serial = @fgets($file);
 	$array_lang = !empty($lang_serial) ? unserialize($lang_serial) : array();
 	$array_stats = array();
@@ -248,13 +248,13 @@ elseif( $get_lang )
 	
 	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
-	$Stats->Draw_ellipse(210, 100, '../cache/lang.png');
+	$Stats->Draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/lang.png');
 }
 elseif( $get_theme )
 {
-	include_once('../kernel/begin.php');
+	include_once(PATH_TO_ROOT . '/kernel/begin.php');
 	define('TITLE', '');
-	include_once('../kernel/header_no_display.php');
+	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 	
 	$array_stats = array();
 	$result = $Sql->Query_while("SELECT at.theme, COUNT(m.user_theme) AS compt
@@ -270,13 +270,13 @@ elseif( $get_theme )
 	
 	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
-	$Stats->Draw_ellipse(210, 100, '../cache/theme.png');
+	$Stats->Draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/theme.png');
 }
 elseif( $get_sex )
 {
-	include_once('../kernel/begin.php');
+	include_once(PATH_TO_ROOT . '/kernel/begin.php');
 	define('TITLE', '');
-	include_once('../kernel/header_no_display.php');
+	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 	
 	$array_stats = array();
 	$result = $Sql->Query_while("SELECT count(user_sex) as compt, user_sex
@@ -303,12 +303,12 @@ elseif( $get_sex )
 	
 	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
-	$Stats->Draw_ellipse(210, 100, '../cache/sex.png');
+	$Stats->Draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/sex.png');
 }
 elseif( $get_bot )
 {
 	//On lit le fichier
-	$file = @fopen('../cache/robots.txt', 'r');
+	$file = @fopen(PATH_TO_ROOT . '/cache/robots.txt', 'r');
 	$robot_serial = @fgets($file);	
 	$array_robot = !empty($robot_serial) ? unserialize($robot_serial) : array('other' => 0);
 	$array_stats = array();
@@ -325,7 +325,7 @@ elseif( $get_bot )
 	
 	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
-	$Stats->Draw_ellipse(210, 100, '../cache/bot.png');
+	$Stats->Draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/bot.png');
 }
 
 ?>
