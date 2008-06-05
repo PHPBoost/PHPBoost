@@ -125,6 +125,7 @@ $Template->Assign_vars(array(
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],	
 	'L_VISIT' => $LANG['guest_s'],
 	'L_TODAY' => $LANG['today'],
+	'PATH_TO_ROOT' => PATH_TO_ROOT,
 	'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 	'L_REQUIRE_PASSWORD' => $LANG['require_password']
 ));

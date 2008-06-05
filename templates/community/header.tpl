@@ -16,6 +16,13 @@
 		{ALTERNATIVE_CSS}
 		<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
 		<link rel="alternate" type="application/rss+xml" href="../news/rss.php" title="RSS {SITE_NAME}" />
+		
+		<script type="text/javascript">
+		<!--
+			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
+		-->
+		</script>
+		
 		<script type="text/javascript" src="../kernel/framework/js/global.js"></script>
 	</head>
 	<body>

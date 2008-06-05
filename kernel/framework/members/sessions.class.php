@@ -157,7 +157,7 @@ class Sessions
 		$this->data['user_readonly'] = isset($userdata['user_readonly']) ? $userdata['user_readonly'] : '0';
 		$this->data['user_editor'] = !empty($userdata['user_editor']) ? $userdata['user_editor'] : $CONFIG['editor'];
 		$this->data['user_timezone'] = isset($userdata['user_timezone']) ? $userdata['user_timezone'] : $CONFIG['timezone'];
-		$this->data['avatar'] = isset($userdata['avatar']) ? $userdata['user_timezone'] : '';
+		$this->data['avatar'] = isset($userdata['avatar']) ? $userdata['avatar'] : '';
 	}
 	
 	//Vérification de la session.
