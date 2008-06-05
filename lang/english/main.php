@@ -30,11 +30,15 @@
 #                                                             English                                                              #
 ####################################################
 
+// Dates
 $LANG['xml_lang'] = 'en';
 $LANG['date_format_tiny'] = 'm/d';
 $LANG['date_format_short'] = 'm/d/y';
 $LANG['date_format'] = 'm/d/y \a\t H\hi';
 $LANG['date_format_long'] = 'm/d/y \a\t H\hi\m\i\ns\s';
+$LANG['from_date'] = 'from';
+$LANG['to_date'] = 'to';
+$LANG['now'] = 'Now';
 
 //Unités
 $LANG['unit_megabytes'] = 'Mb';
@@ -265,6 +269,7 @@ $LANG['direction'] = 'Direction';
 $LANG['other'] = 'Other';
 $LANG['aprob'] = 'Approve';
 $LANG['unaprob'] = 'Unapprove';
+$LANG['unapproved'] = 'Unapproved';
 $LANG['final'] = 'Final';
 $LANG['pm'] = 'Pm';
 $LANG['code'] = 'Code';

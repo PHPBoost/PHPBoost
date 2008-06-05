@@ -247,6 +247,9 @@ class Date
 			case TIMEZONE_USER:
 				$timezone = $Member->Get_attribute('user_timezone') - $server_hour;
 				break;
+			
+			default:
+				$timezone = 0;
 		}
 	    return $timezone;
 	}
