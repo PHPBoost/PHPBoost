@@ -67,7 +67,6 @@ $Cache->Load_file('groups'); //Cache des groupes.
 $Cache->Load_file('member'); //Chargement de la configuration des membres.
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
-
 $Session = new Sessions; //!\\Initialisation  de la class des sessions//!\\
 
 //Activation de la bufférisation de sortie
@@ -94,11 +93,12 @@ else
 	define('SID2', '');
 }
 
+// exit(0);
 //Si le thème n'existe pas on prend le suivant présent sur le serveur/
-$CONFIG['theme'] = find_require_dir('../templates/', ($Member->Get_attribute('user_theme') == '' || $CONFIG_MEMBER['force_theme'] == 1) ? $CONFIG['theme'] : $Member->Get_attribute('user_theme'));
+$CONFIG['theme'] = find_require_dir(PATH_TO_ROOT . '/templates/', ($Member->Get_attribute('user_theme') == '' || $CONFIG_MEMBER['force_theme'] == 1) ? $CONFIG['theme'] : $Member->Get_attribute('user_theme'));
 
 //Si le dossier de langue n'existe pas on prend le suivant exisant.
-$CONFIG['lang'] = find_require_dir('../lang/', ($Member->Get_attribute('user_lang') == '' ? $CONFIG['lang'] : $Member->Get_attribute('user_lang')));
+$CONFIG['lang'] = find_require_dir(PATH_TO_ROOT . '/lang/', ($Member->Get_attribute('user_lang') == '' ? $CONFIG['lang'] : $Member->Get_attribute('user_lang')));
 $LANG = array();
 require_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/main.php'); //!\\ Langues //!\\
 require_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/errors.php'); //Inclusion des langues des erreurs.
@@ -129,5 +129,4 @@ if( isset($MODULES[MODULE_NAME]) && $MODULES[MODULE_NAME]['activ'] == 1 )
 	if( !$Member->Check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE) ) //Accès non autorisé !
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
-
 ?>
