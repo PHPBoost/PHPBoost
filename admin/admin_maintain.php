@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
@@ -125,11 +125,11 @@ else //Sinon on rempli le formulaire
 		'L_RESET' => $LANG['reset']		
 	));
 		
-	include_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_maintain');
 }
 
-require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

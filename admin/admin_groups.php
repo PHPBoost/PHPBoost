@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $idgroup = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
 $idgroup_post = !empty($_POST['id']) ? numeric($_POST['id']) : '' ;
@@ -123,7 +123,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 		
 		$nbr_member_group = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
 		//On crée une pagination si le nombre de membre est trop important.
-		include_once(PATH_TO_ROOT . '/kernel/framework/pagination.class.php'); 
+		include_once('../kernel/framework/pagination.class.php'); 
 		$Pagination = new Pagination();
 		
 		//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
@@ -274,7 +274,7 @@ else //Liste des groupes.
 	 
 	$nbr_group = $Sql->Count_table("group", __LINE__, __FILE__);
 	//On crée une pagination si le nombre de group est trop important.
-	include_once(PATH_TO_ROOT . '/kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$Template->Assign_vars(array(
@@ -305,11 +305,11 @@ else //Liste des groupes.
 	}
 	$Sql->Close($result);
 	
-	include_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode.php');
+	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_groups_management'); 
 }
 
-require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $del = !empty($_GET['del']) ? true : false;
 $edit = !empty($_GET['edit']) ? true : false;
@@ -54,7 +54,7 @@ while($row = $Sql->Sql_fetch_assoc($result) )
 $Sql->Close($result);
 
 //On crée une pagination si le nombre de commentaires est trop important.
-include_once(PATH_TO_ROOT . '/kernel/framework/pagination.class.php'); 
+include_once('../kernel/framework/pagination.class.php'); 
 $Pagination = new Pagination();
 
 $nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->Count_table('com', __LINE__, __FILE__);
@@ -226,6 +226,6 @@ while($row = $Sql->Sql_fetch_assoc($result) )
 
 $Template->Pparse('admin_com_management'); // traitement du modele	
 
-require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>

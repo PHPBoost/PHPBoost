@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/admin_begin.php');
+require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once(PATH_TO_ROOT . '/kernel/admin_header.php');
+require_once('../kernel/admin_header.php');
 
 $Template->Set_filenames(array(
 	'admin_index'=> 'admin/admin_index.tpl'
@@ -160,6 +160,6 @@ $Sql->Close($result);
 	
 $Template->Pparse('admin_index'); // traitement du modele
 
-require_once(PATH_TO_ROOT . '/kernel/admin_footer.php');
+require_once('../kernel/admin_footer.php');
 
 ?>
