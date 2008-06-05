@@ -34,7 +34,7 @@ class Cache
 	//On vérifie que le répertoire cache existe et est inscriptible
     function Cache()
     {
-        if( !is_dir('../cache') || !is_writable('../cache') )
+        if( !is_dir(PATH_TO_ROOT . '/cache') || !is_writable(PATH_TO_ROOT . '/cache') )
         {
             global $Errorh;
 		
@@ -95,7 +95,7 @@ class Cache
 		global $Errorh;
 		
 		$content = $this->{'generate_file_' . $file}();
-		$file_path = '../cache/' . $file . '.php';
+		$file_path = PATH_TO_ROOT . '/cache/' . $file . '.php';
 		@delete_file($file_path); //Supprime le fichier
 		if( $handle = @fopen($file_path, 'wb') ) //On crée le fichier avec droit d'écriture et lecture.
 		{
@@ -116,7 +116,7 @@ class Cache
     {
 		global $CONFIG, $Errorh;
 		
-		$root = '../';
+		$root = PATH_TO_ROOT . '/';
 		$dir = $file;
 		
 		//On vérifie que le fichier de configuration est présent.
@@ -128,7 +128,7 @@ class Cache
 			{
 				include_once($root . $dir . '/' . $dir . '_cache.php');
 				$content = call_user_func('generate_module_file_' . $dir);
-				$file_path = '../cache/' . $file . '.php';
+				$file_path = PATH_TO_ROOT . '/cache/' . $file . '.php';
 				@delete_file($file_path); //Supprime le fichier
 				if( $handle = @fopen($file_path, 'wb') ) //On crée le fichier avec droit d'écriture et lecture.
 				{
@@ -165,7 +165,7 @@ class Cache
 			while( $row = $Sql->Sql_fetch_assoc($result) )
 			{
 				//Récupération des infos de config.
-				$get_info_modules = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
+				$get_info_modules = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', $CONFIG['lang']);
 				if( !empty($get_info_modules['url_rewrite']) )
 					$htaccess_rules .= str_replace('\n', "\n", str_replace('DIR', DIR, $get_info_modules['url_rewrite'])) . "\n\n";
 			}
@@ -186,7 +186,7 @@ class Cache
 			}	
 
 			//Ecriture du fichier .htaccess
-			$file_path = '../.htaccess';
+			$file_path = PATH_TO_ROOT . '/.htaccess';
 			@delete_file($file_path); //Supprime le fichier.
 			$handle = @fopen($file_path, 'w+'); //On crée le fichier avec droit d'écriture et lecture.
 			@fwrite($handle, $htaccess_rules);
@@ -197,7 +197,7 @@ class Cache
 			$htaccess_rules = 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';	
 
 			//Ecriture du fichier .htaccess
-			$file_path = '../.htaccess';
+			$file_path = PATH_TO_ROOT . '/.htaccess';
 			@delete_file($file_path); //Supprime le fichier.
 			$handle = @fopen($file_path, 'w+'); //On crée le fichier avec droit d'écriture et lecture.
 			@fwrite($handle, $htaccess_rules);
@@ -208,8 +208,8 @@ class Cache
 	//Suppression d'un fichier cache
 	function Delete_file($file)
 	{
-		if( is_file('../cache/' . $file . '.php') )
-			return @unlink('../cache/' . $file . '.php');
+		if( is_file(PATH_TO_ROOT . '/cache/' . $file . '.php') )
+			return @unlink(PATH_TO_ROOT . '/cache/' . $file . '.php');
 		else
 			return false;
 	}
@@ -226,7 +226,7 @@ class Cache
 		WHERE activ = 1", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			$config = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
+			$config = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', $CONFIG['lang']);
 			//On récupère l'information sur le cache, si le cache est activé, on va chercher les fonctions de régénération de cache.
 			if( !empty($config['cache']) && $config['cache'] )
 			{
@@ -290,14 +290,14 @@ class Cache
 					if( $info['added'] == '0' )
 					{	
 						$code .= 'if( $Member->Check_auth(' . var_export(unserialize($info['auth']), true) . ', AUTH_MENUS) ){' . "\n"
-						. "\t" . 'include_once(\'../' . $info['name'] . '/' . $info['contents'] . "');\n"
+						. "\t" . 'include_once(\'PATH_TO_ROOT . \'/' . $info['name'] . '/' . $info['contents'] . "');\n"
 						. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $info['contents']) . '\', TEMPLATE_STRING_MODE);' 
 						. "\n" . '}' . "\n";
 					}
 					elseif( $info['added'] == '2' )
 					{	
 						$code .= 'if( $Member->Check_auth(' . var_export(unserialize($info['auth']), true) . ', AUTH_MENUS) ){' . "\n"
-						. "\t" . 'include_once(\'../menus/' . $info['contents'] . "');\n"
+						. "\t" . 'include_once(\'PATH_TO_ROOT . \'/menus/' . $info['contents'] . "');\n"
 						. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $info['contents']) . '\', TEMPLATE_STRING_MODE);' 
 						. "\n" . '}' . "\n";
 					}
@@ -313,7 +313,7 @@ class Cache
 							{
 								case 'left':
 								case 'right':
-									$code .= "\$Template->Set_filenames(array('modules_mini' => '../templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\n" 
+									$code .= "\$Template->Set_filenames(array('modules_mini' => PATH_TO_ROOT . '/templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\n"
 									. "\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\n"
 									. '$MODULES_MINI[\'' . $location . '\'] .= \$Template->Pparse(\'modules_mini\', TEMPLATE_STRING_MODE);';
 								break;
@@ -323,7 +323,7 @@ class Cache
 								case 'bottomcentral':
 								case 'topfooter':
 								case 'footer':
-									$code .= "\$Template->Set_filenames(array('modules_mini_horizontal' => '../templates/' . \$CONFIG['theme'] . '/modules_mini_horizontal.tpl'));"
+									$code .= "\$Template->Set_filenames(array('modules_mini_horizontal' => PATH_TO_ROOT . '/templates/' . \$CONFIG['theme'] . '/modules_mini_horizontal.tpl'));"
 										. "\t\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\n"
 										. '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'modules_mini_horizontal\', TEMPLATE_STRING_MODE);';
 									
@@ -449,12 +449,12 @@ class Cache
 		$array_debug[] = 'Site session [' . $CONFIG['site_session'] . ']';
 		$array_debug[] = 'Site session invit [' . $CONFIG['site_session_invit'] . ']';
 		$array_debug[] = '-------------CHMOD-------------';
-		$array_debug[] = 'includes/auth/ [' . (is_writable('../kernel/auth/') ? 1 : 0) . ']';
-		$array_debug[] = 'includes/ [' . (is_writable('../kernel/') ? 1 : 0) . ']';
-		$array_debug[] = 'cache/ [' . (is_writable('../cache/') ? 1 : 0) . ']';
-		$array_debug[] = 'upload/ [' . (is_writable('../upload/') ? 1 : 0) . ']';
-		$array_debug[] = 'menus/ [' . (is_writable('../menus/') ? 1 : 0) . ']';
-		$array_debug[] = '/ [' . (is_writable('../') ? 1 : 0) . ']';
+		$array_debug[] = 'includes/auth/ [' . (is_writable(PATH_TO_ROOT . '/kernel/auth/') ? 1 : 0) . ']';
+		$array_debug[] = 'includes/ [' . (is_writable(PATH_TO_ROOT . '/kernel/') ? 1 : 0) . ']';
+		$array_debug[] = 'cache/ [' . (is_writable(PATH_TO_ROOT . '/cache/') ? 1 : 0) . ']';
+		$array_debug[] = 'upload/ [' . (is_writable(PATH_TO_ROOT . '/upload/') ? 1 : 0) . ']';
+		$array_debug[] = 'menus/ [' . (is_writable(PATH_TO_ROOT . '/menus/') ? 1 : 0) . ']';
+		$array_debug[] = '/ [' . (is_writable(PATH_TO_ROOT . '/') ? 1 : 0) . ']';
 		
 		$debug = '$array_debug = ' . var_export($array_debug, true) . ';' . "\n";
 		$debug .= 'echo \'<pre>\'; print_r($array_debug); echo \'</pre>\';';
@@ -573,7 +573,7 @@ class Cache
 		
 		$array_stats_img = array('browser.png', 'os.png', 'lang.png', 'theme.png', 'sex.png');
 		foreach($array_stats_img as $key => $value)
-			@unlink('../cache/' . $value);
+			@unlink(PATH_TO_ROOT . '/cache/' . $value);
 		
 		return $code;
 	}

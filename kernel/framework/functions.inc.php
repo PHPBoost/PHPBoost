@@ -152,13 +152,13 @@ function load_module_lang($module_name)
 
     if( !@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . $CONFIG['lang'] . '/' . $module_name . '_' . $CONFIG['lang'] . '.php') )
     {
-        $lang = find_require_dir('../' . $module_name . '/lang/', $CONFIG['lang'], NO_FATAL_ERROR);
+        $lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', $CONFIG['lang'], NO_FATAL_ERROR);
         if( !@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php') )
         {
             global $Errorh;
             
             //Déclenchement d'une erreur fatale.
-            $Errorh->Error_handler(sprintf('Unable to load lang file \'%s\'!', '../' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__);
+            $Errorh->Error_handler(sprintf('Unable to load lang file \'%s\'!', PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__);
             exit;
         }
     }
@@ -330,7 +330,7 @@ function unparse($content)
 //Parse temps réel
 function second_parse($content)
 {
-	$content = str_replace('../includes/data', '../kernel/data', $content);
+	$content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $content);
     
     include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
 	$parse = new Content($content);
@@ -553,7 +553,7 @@ function delete_directory($dir_path, $path)
 //Compte le nombre de page vues.
 function pages_displayed($no_update = false)
 {
-    $file = @fopen('../cache/pages.txt', 'r+');
+    $file = @fopen(PATH_TO_ROOT . 'cache/pages.txt', 'r+');
     if( $file )
     {
         $hour = gmdate_format('G');
@@ -572,7 +572,7 @@ function pages_displayed($no_update = false)
     }
     else
     {
-        $file = @fopen('../cache/pages.txt', 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
+        $file = @fopen(PATH_TO_ROOT . 'cache/pages.txt', 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
         $data = array();
         @fwrite($file, serialize($data)); //On insère un tableau vide.
         @fclose($file);
