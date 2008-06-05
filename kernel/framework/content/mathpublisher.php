@@ -11,8 +11,8 @@
  *                                                                         *
  ***************************************************************************/
 
-define('DIR_IMG', '../images/maths'); //path to the images directory
-define('DIR_FONT', '../kernel/data/fonts'); // path to the fonts directory
+define('DIR_IMG', PATH_TO_ROOT . '/images/maths'); //path to the images directory
+define('DIR_FONT', PATH_TO_ROOT . '/kernel/data/fonts'); // path to the fonts directory
 
 function detectimg($n)
 {

@@ -117,7 +117,7 @@ class Errors
 	function Get_last_error_log()
 	{
 		$errinfo = '';		
-		$handle = @fopen('../cache/error.log', 'r');
+		$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'r');
 		if( $handle ) 
 		{
 			$i = 1;
@@ -189,7 +189,7 @@ class Errors
 		    $error .= basename($errfile) . "\n";
 		    $error .= $errline . "\n";
 		   
-			$handle = @fopen('../cache/error.log', 'a+'); //On crée le fichier avec droit d'écriture et lecture.
+			$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'a+'); //On crée le fichier avec droit d'écriture et lecture.
 			@fwrite($handle,  $error);
 			@fclose($handle);
 			return true;

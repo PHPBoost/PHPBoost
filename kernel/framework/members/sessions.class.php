@@ -377,7 +377,7 @@ class Sessions
 			if( $user_ip >= $start_ip && $user_ip <= $end_ip ) 
 			{
 				//Insertion dans le fichier texte des visites des robots.
-				$file_path = '../cache/robots.txt';
+				$file_path = PATH_TO_ROOT . '/cache/robots.txt';
 				if( !file_exists($file_path) ) 
 				{
 					$file = @fopen($file_path, 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.

@@ -4,7 +4,7 @@
 *                      module_interface.class.php
 *                            -------------------
 *   begin                : January 15, 2008
-*   copyright            :(C) 2008 Loïc Rouchon
+*   copyright            :(C) 2008 Loï¿½c Rouchon
 *   email                : horn@phpboost.com
 *
 *
@@ -49,7 +49,7 @@ class ModuleInterface
         if( $error == 0 )
         {
             // Get the config.ini informations
-            $this->infos = load_ini_file('../'.$this->id.'/lang/', $CONFIG['lang']);
+            $this->infos = load_ini_file(PATH_TO_ROOT . '/'.$this->id.'/lang/', $CONFIG['lang']);
             if ( isset($this->infos['name']) )
                 $this->name = $this->infos['name'];
             

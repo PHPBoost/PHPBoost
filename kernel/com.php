@@ -25,6 +25,8 @@
  *
 ###################################################*/
 
+define('PATH_TO_ROOT','..');
+
 $delcom = !empty($_GET['delcom']) ? true : false;
 $editcom = !empty($_GET['editcom']) ? true : false;
 $updatecom = !empty($_GET['updatecom']) ? true : false;
@@ -33,7 +35,7 @@ $updatecom = !empty($_GET['updatecom']) ? true : false;
 $DEFINED_PHPBOOST = !defined('PHPBOOST');
 if( $DEFINED_PHPBOOST )
 {
-	include_once(PATH_TO_ROOT . '/kernel/begin.php');	
+	include_once(PATH_TO_ROOT . '/kernel/begin.php');
 	define('TITLE', $LANG['title_com']);	
 	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 	
@@ -45,7 +47,7 @@ if( $DEFINED_PHPBOOST )
 	
 		include_once(PATH_TO_ROOT . '/kernel/framework/content/comments.class.php'); 
 		$Comments = new Comments($array_get[2], $array_get[1], transid('?i=' . $array_get[1] . $array_get[2] . '%s', ''), $array_get[2]);
-		$Comments->Set_arg($idcom, '../kernel/com.php'); //On met à jour les attributs de l'objet.
+		$Comments->Set_arg($idcom, PATH_TO_ROOT . '/kernel/com.php'); //On met à jour les attributs de l'objet.
 		$_com_vars_simple = sprintf($Comments->Get_attribute('vars'), 0);
 	}
 }

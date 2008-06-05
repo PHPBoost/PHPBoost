@@ -57,8 +57,8 @@ You can also have other fields such as auth level, description, visible, that cl
 	'xmlhttprequest_file' => 'xmlhttprequest.php',
 	'administration_file_name' => 'admin_news_cats.php',
 	'url' => array(
-		'unrewrited' => '../news/news.php?id=%d',
-		'rewrited' => '../news-%d+%s.php'),
+		'unrewrited' => PATH_TO_ROOT . '/news/news.php?id=%d',
+		'rewrited' => PATH_TO_ROOT . '/news-%d+%s.php'),
 ); */
 
 //Class constants

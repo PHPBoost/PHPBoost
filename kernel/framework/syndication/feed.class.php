@@ -3,7 +3,7 @@
  *                         feed.class.php
  *                         -------------------
  *   begin                : April 21, 2008
- *   copyright            : (C) 2005 Loïc Rouchon
+ *   copyright            : (C) 2005 LoÃ¯c Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-define('FEED_PATH', '../cache/syndication');
+define('FEED_PATH', PATH_TO_ROOT . '/cache/syndication');
 
 define('USE_RSS', 0x01);
 define('USE_ATOM', 0x02);

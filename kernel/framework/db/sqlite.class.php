@@ -27,7 +27,7 @@
 
 define('LOW_PRIORITY', 'LOW_PRIORITY');
 define('DB_NO_CONNECT', false);
-define('SQLITE_DB_FOLDER','../cache/db/');
+define('SQLITE_DB_FOLDER', PATH_TO_ROOT . '/cache/db/');
 
 class Sql
 {
@@ -56,8 +56,8 @@ class Sql
         fputs($fic, 'coucou');
         fclose($file);
 
-//         $this->link = sqlite_open('../cache/db/test.sqlite');//$file);
-        echo sqlite_open('../cache/db/test.sqlite');//$file);
+//         $this->link = sqlite_open(PATH_TO_ROOT . '/cache/db/test.sqlite');//$file);
+        echo sqlite_open(PATH_TO_ROOT . '/cache/db/test.sqlite');//$file);
         echo 'link: '.$this->link.'<br />';
         if ( !$this->link ) // création de la base de données
         {

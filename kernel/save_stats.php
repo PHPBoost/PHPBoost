@@ -75,12 +75,12 @@ if( $_include_once ) //Variable provenant de sessions.class.php
 	//Suppression des images de statistiques en cache.
 	$array_stats_img = array('browsers.png', 'os.png', 'lang.png');
 	foreach($array_stats_img as $key => $value)
-		@unlink('../cache/' . $value);
+		@unlink(PATH_TO_ROOT . '/cache/' . $value);
 		
 	//Enregistrement	
 	function write_stats($file_path, $stats_item)
 	{
-		$file_path = '../cache/' . $file_path . '.txt';
+		$file_path = PATH_TO_ROOT . '/cache/' . $file_path . '.txt';
 		if( !file_exists($file_path) ) 
 		{
 			$file = @fopen($file_path, 'w+');

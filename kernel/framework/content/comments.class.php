@@ -32,7 +32,7 @@ class Comments
 	function Comments($script, $idprov, $vars, $module_folder = '') 
 	{
 		$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
-		list($this->script, $this->idprov, $this->vars, $this->path) = array(strprotect($script), numeric($idprov), $vars, '../' . $this->module_folder . '/');
+		list($this->script, $this->idprov, $this->vars, $this->path) = array(strprotect($script), numeric($idprov), $vars, PATH_TO_ROOT . '/' . $this->module_folder . '/');
 	}
 	
 	//Ajoute un commentaire et retourne l'identifiant inséré.
@@ -116,7 +116,7 @@ class Comments
 		global $Sql, $CONFIG;
 
 		//Récupération des informations sur le module.
-		$info_module = load_ini_file('../' . $this->module_folder . '/lang/', $CONFIG['lang']);
+		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', $CONFIG['lang']);
 		$check_script = false;
 		if( isset($info_module['com']) )
 		{

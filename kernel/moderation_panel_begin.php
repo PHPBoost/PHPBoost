@@ -44,7 +44,7 @@ WHERE activ = 1", __LINE__, __FILE__);
 $nbr_modules = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."modules WHERE activ = 1 AND admin = 1");
 while( $row = $Sql->Sql_fetch_assoc($result) )
 {
-	$config = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
+	$config = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', $CONFIG['lang']);
 	if( is_array($config) )
 	{	
 		if( isset($config['moderation_panel']) && $config['moderation_panel'] == 1 )

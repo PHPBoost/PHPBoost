@@ -3,7 +3,7 @@
  *                               bbcode.php
  *                            -------------------
  *   begin                : August 01, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright          : (C) 2005 Viarre Rï¿½gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -40,7 +40,7 @@ if( !$get_show && defined('PHPBOOST') === true )
 		'L_REQUIRE_TEXT' => $LANG['require_text']
 	));
 	
-	//Mode bbcode activé.
+	//Mode bbcode activï¿½.
 	if( $Member->Get_attribute('user_editor') == 'tinymce' )
 	{
 		$Template->Assign_vars(array(
@@ -57,7 +57,7 @@ if( !$get_show && defined('PHPBOOST') === true )
 		$Template->Assign_vars(array(	
 			'C_BBCODE_TINYMCE_MODE' => false,
 			'C_BBCODE_NORMAL_MODE' => true,
-			'UPLOAD_MANAGEMENT' => $Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) ? '<a style="font-size: 10px;" title="' . $LANG['bb_upload'] . '" href="#" onclick="window.open(\'../member/upload.php?popup=1&amp;fd=' . $field  . '\', \'\', \'height=435,width=680,resizable=yes,scrollbars=yes\');return false;"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/files_add.png" alt="" /></a>' : '',
+			'UPLOAD_MANAGEMENT' => $Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) ? '<a style="font-size: 10px;" title="' . $LANG['bb_upload'] . '" href="#" onclick="window.open(\'' . PATH_TO_ROOT . '/member/upload.php?popup=1&amp;fd=' . $field  . '\', \'\', \'height=435,width=680,resizable=yes,scrollbars=yes\');return false;"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/upload/files_add.png" alt="" /></a>' : '',
 			'L_BB_SMILEYS' => $LANG['bb_smileys'],
 			'L_BB_BOLD' => $LANG['bb_bold'],
 			'L_BB_ITALIC' => $LANG['bb_italic'],
@@ -115,7 +115,7 @@ if( !$get_show && defined('PHPBOOST') === true )
 			'L_INSERT_TABLE' => $LANG['insert_table']
 		));
 		
-		//Inclusion du cache des smileys pour éviter une requête inutile.
+		//Inclusion du cache des smileys pour ï¿½viter une requï¿½te inutile.
 		$Cache->Load_file('smileys');
 		
 		$smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
@@ -134,11 +134,11 @@ if( !$get_show && defined('PHPBOOST') === true )
 				break;		
 			}
 			
-			$width_source = 18; //Valeur par défaut.
+			$width_source = 18; //Valeur par dï¿½faut.
 			$height_source = 18;		
 			
-			// On recupère la hauteur et la largeur de l'image.
-			list($width_source, $height_source) = @getimagesize('../images/smileys/' . $url_smile);
+			// On recupï¿½re la hauteur et la largeur de l'image.
+			list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $url_smile);
 			if( $width_source > $width_max || $height_source > $height_max )
 			{
 				if( $width_source > $height_source )
@@ -207,7 +207,7 @@ elseif( $get_show )
 		'L_CLOSE' => $LANG['close']
 	));
 	
-	//Inclusion du cache des smileys pour éviter une requête inutile.
+	//Inclusion du cache des smileys pour ï¿½viter une requï¿½te inutile.
 	$Cache->Load_file('smileys'); //include simple et non include_once car inclusion double avec unparse();.
 	
 	$height_max = 50;
@@ -216,11 +216,11 @@ elseif( $get_show )
 	$j = 0;	
 	foreach($_array_smiley_code as $code_smile => $url_smile)
 	{
-		$width_source = 18; //Valeur par défaut.
+		$width_source = 18; //Valeur par dï¿½faut.
 		$height_source = 18;		
 		
-		// On recupère la hauteur et la largeur de l'image.
-		list($width_source, $height_source) = @getimagesize('../images/smileys/' . $url_smile);
+		// On recupï¿½re la hauteur et la largeur de l'image.
+		list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $url_smile);
 		if( $width_source > $width_max || $height_source > $height_max )
 		{
 			if( $width_source > $height_source )
@@ -244,14 +244,14 @@ elseif( $get_show )
 		
 		$img = '<img src="../images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />'; 
 		
-		//On genère le tableau pour $smile_by_line colonnes
+		//On genï¿½re le tableau pour $smile_by_line colonnes
 		$multiple_x = $j / $smile_by_line ;
 		$tr_start = (is_int($multiple_x)) ? '<tr>' : '';
 		$j++;	
 		$multiple_x = $j / $smile_by_line ;
 		$tr_end = (is_int($multiple_x)) ? '</tr>' : '';
 		
-		//Si la ligne n'est pas complète on termine par </tr>.
+		//Si la ligne n'est pas complï¿½te on termine par </tr>.
 		if( $nbr_smile == $j )
 			$tr_end = '</tr>';
 
@@ -262,7 +262,7 @@ elseif( $get_show )
 			'TR_END' => $tr_end,
 		));	
 
-		//Création des cellules du tableau si besoin est.
+		//Crï¿½ation des cellules du tableau si besoin est.
 		if( $nbr_smile == $j && $nbr_smile > $smile_by_line )
 		{
 			while( !is_int($j / $smile_by_line) )
