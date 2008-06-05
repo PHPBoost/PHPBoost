@@ -4,10 +4,10 @@
             return confirm("{L_ALERT_DELETE_NEWS}");
         }
         function ShowSyndication(element) {
-            if ( element.firstChild.nextSibling.nextSibling.nextSibling.style.display == 'none' )
-                element.firstChild.nextSibling.nextSibling.nextSibling.style.display = 'block';
+            if ( element.firstChild.nextSibling.nextSibling.nextSibling.style.visibility == 'hidden' )
+                element.firstChild.nextSibling.nextSibling.nextSibling.style.visibility = 'visible';
             else
-                element.firstChild.nextSibling.nextSibling.nextSibling.style.display = 'none';
+                element.firstChild.nextSibling.nextSibling.nextSibling.style.visibility = 'hidden';
         }
         -->
         </script>
@@ -64,7 +64,7 @@
                     <a href="#" title="Syndication">
                         <img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" />
                     </a>
-                    <span id="syndication_choice" style="float:left;display:none;overflow:visible;width:0px;height:0px;">
+                    <span id="syndication_choice" style="position:absolute;top:10px;overflow:visible;width:0px;height:0px;visibility:hidden;">
                         <ul style="width:60px;padding-top:5px;padding-bottom:5px;padding-left:20px;padding-right:20px;background:#ffffff;border:1px #ccccff solid;">
                             <li><a href="../news/syndication.php?feed=rss" title="RSS">RSS</a></li>
                             <li><a href="../news/syndication.php?feed=atom" title="ATOM">ATOM</a></li>
