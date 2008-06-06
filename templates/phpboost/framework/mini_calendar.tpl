@@ -4,7 +4,7 @@
 		
 		<input type="text" size="8" maxlength="8" id="{CALENDAR_ID}" name="{FORM_NAME}" value="{DEFAULT_DATE}" class="text" />
 		
-		<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar{CALENDAR_NUMBER}">
+		<div style="position:absolute;z-index:100;float:left;display:none;" id="calendar{CALENDAR_NUMBER}">
 			<div id="{CALENDAR_ID}_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar({CALENDAR_NUMBER}, 1);" onmouseout="hide_calendar({CALENDAR_NUMBER}, 0);">							
 			</div>
 		</div>

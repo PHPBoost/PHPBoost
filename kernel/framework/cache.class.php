@@ -290,7 +290,7 @@ class Cache
 					if( $info['added'] == '0' )
 					{	
 						$code .= 'if( $Member->Check_auth(' . var_export(unserialize($info['auth']), true) . ', AUTH_MENUS) ){' . "\n"
-						. "\t" . 'include_once(\'PATH_TO_ROOT . \'/' . $info['name'] . '/' . $info['contents'] . "');\n"
+						. "\t" . 'include_once(PATH_TO_ROOT . \'/' . $info['name'] . '/' . $info['contents'] . "');\n"
 						. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $info['contents']) . '\', TEMPLATE_STRING_MODE);' 
 						. "\n" . '}' . "\n";
 					}

@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 require_once('../download/download_begin.php');
 require_once('../kernel/header.php');
 
@@ -49,6 +49,10 @@ if( $file_id > 0 ) //Contenu
 	else
 		$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 	
+	include('../kernel/framework/util/date.class.php');
+ 	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['timestamp']);
+ 	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['release_timestamp']);
+	
 	$Template->Assign_vars(array(
 		'C_DISPLAY_DOWNLOAD' => true,
 		'C_IMG' => !empty($download_info['image']),
@@ -56,8 +60,8 @@ if( $file_id > 0 ) //Contenu
 		'MODULE_DATA_PATH' => $Template->Module_data_path('download'),
 		'NAME' => $download_info['title'],
 		'CONTENTS' => second_parse($download_info['contents']),
-		'INSERTION_DATE' => gmdate_format('date_format_short', $download_info['timestamp']),
-		'LAST_UPDATE_DATE' => $download_info['last_update_timestamp'] > 0 ? gmdate_format('date_format_short', $download_info['last_update_timestamp']) : $DOWNLOAD_LANG['unknown_date'],
+		'CREATION_DATE' => $creation_date->Format_date(DATE_FORMAT_SHORT),
+		'RELEASE_DATE' => $release_date->Get_timestamp() > 0 ? $release_date->Format_date(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
 		'SIZE' => $size_tpl,
 		'COUNT' => $download_info['count'],
 		'THEME' => $CONFIG['theme'],
@@ -73,7 +77,7 @@ if( $file_id > 0 ) //Contenu
 		'L_DOWNLOAD_FILE' => $DOWNLOAD_LANG['download_file'],
 		'L_FILE_INFOS' => $DOWNLOAD_LANG['file_infos'],
 		'L_INSERTION_DATE' => $DOWNLOAD_LANG['insertion_date'],
-		'L_LAST_UPDATE_DATE' => $DOWNLOAD_LANG['last_update_date'],
+		'L_RELEASE_DATE' => $DOWNLOAD_LANG['last_update_date'],
 		'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
 		'L_EDIT_FILE' => str_replace('"', '\"', $DOWNLOAD_LANG['edit_file']),
 		'L_DELETE_FILE' => str_replace('"', '\"', $DOWNLOAD_LANG['delete_file']),
@@ -204,7 +208,6 @@ else
 			$sort = 'timestamp';
 		}
 		
-		$get_mode = retrieve(GET, 'mode', '');
 		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 			
