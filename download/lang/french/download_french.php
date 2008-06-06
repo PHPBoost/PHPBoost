@@ -33,7 +33,18 @@
 global $DOWNLOAD_LANG;
 $DOWNLOAD_LANG = array();
 
-//Admin
+//Gestion des fichiers
+$DOWNLOAD_LANG['files_management'] = 'Gestion des fichiers';
+$DOWNLOAD_LANG['file_management'] = 'Modification du fichier';
+$DOWNLOAD_LANG['file_addition'] = 'Ajout d\'un fichier';
+$DOWNLOAD_LANG['add_file'] = 'Ajouter un fichier';
+$DOWNLOAD_LANG['update_file'] = 'Modifier le fichier';
+$DOWNLOAD_LANG['warning_previewing'] = 'Attention, vous prévisualisez la fiche correspondant à votre fichier. Tant que vous ne validez pas vos modifications elles ne seront pas prises en compte.';
+$DOWNLOAD_LANG['file_image'] = 'Adresse de l\'image illustrant le fichier';
+$DOWNLOAD_LANG['require_description'] = 'Veuillez entrer une description !';
+$DOWNLOAD_LANG['require_url'] = 'Veuillez entrer une adresse correcte pour le fichier !';
+$DOWNLOAD_LANG['require_creation_date'] = 'Veuillez entrer une date de création au bon format (jj/mm/aa) !';
+$DOWNLOAD_LANG['require_release_date'] = 'Veuillez entrer une date de sortie (ou de mise à jour) au bon format (jj/mm/aa) !';
 $DOWNLOAD_LANG['download_add'] = 'Ajouter un fichier';
 $DOWNLOAD_LANG['download_management'] = 'Gestion Téléchargements';
 $DOWNLOAD_LANG['download_config'] = 'Configuration des téléchargements';
@@ -80,15 +91,6 @@ $DOWNLOAD_LANG['edit_file'] = 'Modifier le fichier';
 $DOWNLOAD_LANG['delete_file'] = 'Supprimer le fichier';
 $DOWNLOAD_LANG['unknown_size'] = 'inconnue';
 $DOWNLOAD_LANG['unknown_date'] = 'inconnue';
-
-//Gestion des fichiers
-$DOWNLOAD_LANG['files_management'] = 'Gestion des fichiers';
-$DOWNLOAD_LANG['file_management'] = 'Modification du fichier';
-$DOWNLOAD_LANG['file_addition'] = 'Ajout d\'un fichier';
-$DOWNLOAD_LANG['add_file'] = 'Ajouter le fichier';
-$DOWNLOAD_LANG['update_file'] = 'Modifier le fichier';
-$DOWNLOAD_LANG['warning_previewing'] = 'Attention, vous prévisualisez la fiche correspondant à votre fichier. Tant que vous ne validez pas vos modifications elles ne seront pas prises en compte.';
-$DOWNLOAD_LANG['file_image'] = 'Adresse de l\'image illustrant le fichier';
 
 //Catégories
 $DOWNLOAD_LANG['add_category'] = 'Ajouter une catégorie';

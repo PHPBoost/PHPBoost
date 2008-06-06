@@ -1,5 +1,7 @@
 <?php
 
+define('PATH_TO_ROOT', '..');
+
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 

@@ -35,7 +35,7 @@ if( $file_id > 0 ) //Contenu
 
 	//Commentaires
 	$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/kernel/com.php?i=" . $file_id . "download") . "', 'download');\">";
-	$link_current = '<a class="com" href="' . HOST . DIR . '/download/download' . transid('.php?cat=' . $category_id . '&amp;id=' . $file_id . '&amp;i=0', '-' . $category_id . '-' . $file_id . '.php?i=0') . '#download">';	
+	$link_current = '<a class="com" href="' . HOST . DIR . '/download/download' . transid('.php?id=' . $file_id . '&amp;i=0', '-' . $category_id . '-' . $file_id . '.php?i=0') . '#download">';	
 	$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
 	
 	$com_true = ($download_info['nbr_com'] > 1) ? $LANG['com_s'] : $LANG['com'];
@@ -65,7 +65,7 @@ if( $file_id > 0 ) //Contenu
 		'SIZE' => $size_tpl,
 		'COUNT' => $download_info['count'],
 		'THEME' => $CONFIG['theme'],
-		'COM' => display_com_link($download_info['nbr_com'], '../download/download' . transid('.php?cat=' . $category_id . '&amp;id=' . $file_id . '&amp;i=0', '-' . $category_id . '-' . $file_id . '.php?i=0'), $file_id, 'download'),
+		'COM' => display_com_link($download_info['nbr_com'], '../download/download' . transid('.php?id=' . $file_id . '&amp;i=0', '-' . $category_id . '-' . $file_id . '.php?i=0'), $file_id, 'download'),
 		'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$download_info['count']),
 		'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], (int)$download_info['nbrnote']),
 		'U_IMG' => $download_info['image'],
@@ -80,6 +80,7 @@ if( $file_id > 0 ) //Contenu
 		'L_RELEASE_DATE' => $DOWNLOAD_LANG['last_update_date'],
 		'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
 		'L_EDIT_FILE' => str_replace('"', '\"', $DOWNLOAD_LANG['edit_file']),
+		'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $DOWNLOAD_LANG['confirm_delete_file']),
 		'L_DELETE_FILE' => str_replace('"', '\"', $DOWNLOAD_LANG['delete_file']),
 		'U_EDIT_FILE' => transid('management.php?edit=' . $file_id),
 		'U_DELETE_FILE' => transid('management.php?del=' . $file_id),
@@ -88,14 +89,14 @@ if( $file_id > 0 ) //Contenu
 	
 	//Affichage notation.
 	include_once('../kernel/framework/note.class.php'); 
-	$Note = new Note('download', $file_id, transid('download.php?cat=' . $category_id . '&amp;id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
+	$Note = new Note('download', $file_id, transid('download.php?id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
 	include_once('../kernel/framework/note.php');
 	
 	//Affichage commentaires.
 	if( isset($_GET['i']) )
 	{
 		include_once('../kernel/framework/content/comments.class.php'); 
-		$Comments = new Comments('download', $file_id, transid('download.php?cat=' . $category_id . '&amp;id=' . $file_id . '&amp;i=%s', 'category-' . $category_id . '-' . $file_id . '.php?i=%s'));
+		$Comments = new Comments('download', $file_id, transid('download.php?id=' . $file_id . '&amp;i=%s', 'category-' . $category_id . '-' . $file_id . '.php?i=%s'));
 		include_once('../kernel/com.php');
 	}
 	
@@ -109,7 +110,12 @@ else
 		'C_ADMIN' => $auth_write,
 		'U_ADMIN_CAT' => $category_id > 0 ? transid('admin_download_cat.php?edit=' . $category_id) : transid('admin_download_cat.php'),
 		'C_DOWNLOAD_CAT' => true,
-		'TITLE' => sprintf($DOWNLOAD_LANG['title_download'] . ($category_id > 0 ? ' - ' . $DOWNLOAD_CATS[$category_id]['name'] : ''))
+		'TITLE' => sprintf($DOWNLOAD_LANG['title_download'] . ($category_id > 0 ? ' - ' . $DOWNLOAD_CATS[$category_id]['name'] : '')),
+		'C_DESCRIPTION' => !empty($DOWNLOAD_CATS[$category_id]['contents']) || ($category_id == 0 && !empty($CONFIG_DOWNLOAD['root_contents'])),
+		'DESCRIPTION' => $category_id > 0 ? second_parse($DOWNLOAD_CATS[$category_id]['contents']) : second_parse($CONFIG_DOWNLOAD['root_contents']),
+		'C_ADD_FILE' => $auth_write,
+		'U_ADD_FILE' => transid('management.php?new=1&idcat=' . $category_id),
+		'L_ADD_FILE' => $DOWNLOAD_LANG['add_file']
 	));
 	
 	//let's check if there are some subcategories
@@ -143,7 +149,7 @@ else
 					'SRC' => $value['icon'],
 					'IMG_NAME' => addslashes($value['name']),
 					'NUM_FILES' => sprintf(((int)$value['num_files'] > 1 ? $DOWNLOAD_LANG['num_files_plural'] : $DOWNLOAD_LANG['num_files_singular']), (int)$value['num_files']),
-					'U_CAT' => transid('download.php?id=' . $id, 'category-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
+					'U_CAT' => transid('download.php?cat=' . $id, 'category-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
 					'U_ADMIN_CAT' => transid('admin_download_cat.php?edit=' . $id),
 					'C_CAT_IMG' => !empty($value['icon'])
 				));
@@ -168,22 +174,11 @@ else
 			'L_NOTE' => $LANG['note'],
 			'L_COM' => $LANG['com'],
 			'L_NOTE' => $DOWNLOAD_LANG['this_note'],
-			'L_CONFIRM_DELETE_FILE' => $DOWNLOAD_LANG['confirm_delete_file'],
-			'U_DOWNLOAD_ALPHA_TOP' => transid('.php?sort=alpha&amp;mode=desc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=alpha&amp;mode=desc'),
-			'U_DOWNLOAD_ALPHA_BOTTOM' => transid('.php?sort=alpha&amp;mode=asc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?alpha&amp;mode=asc'),
-			'U_DOWNLOAD_SIZE_TOP' => transid('.php?sort=size&amp;mode=desc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=size&amp;mode=desc'),
-			'U_DOWNLOAD_SIZE_BOTTOM' => transid('.php?sort=size&amp;mode=asc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=size&amp;mode=asc'),
-			'U_DOWNLOAD_DATE_TOP' => transid('.php?sort=date&amp;mode=desc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=date&amp;mode=desc'),
-			'U_DOWNLOAD_DATE_BOTTOM' => transid('.php?sort=date&amp;mode=asc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=date&amp;mode=asc'),
-			'U_DOWNLOAD_VIEW_TOP' => transid('.php?sort=view&amp;mode=desc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=view&amp;mode=desc'),
-			'U_DOWNLOAD_VIEW_BOTTOM' => transid('.php?sort=view&amp;mode=asc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=view&amp;mode=asc'),
-			'U_DOWNLOAD_NOTE_TOP' => transid('.php?sort=note&amp;mode=desc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=note&amp;mode=desc'),
-			'U_DOWNLOAD_NOTE_BOTTOM' => transid('.php?sort=note&amp;mode=asc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=note&amp;mode=asc'),
-			'U_DOWNLOAD_COM_TOP' => transid('.php?sort=com&amp;mode=desc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=com&amp;mode=desc'),
-			'U_DOWNLOAD_COM_BOTTOM' => transid('.php?sort=com&amp;mode=asc&amp;cat=' . $category_id, '-' . $category_id . '+' . $rewrited_title . '.php?sort=com&amp;mode=asc')
+			'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $DOWNLOAD_LANG['confirm_delete_file'])
 		));		
 		
 		$get_sort = retrieve(GET, 'sort', '');	
+		$get_mode = retrieve(GET, 'mode', '');	
 		switch($get_sort)
 		{
 			case 'alpha' : 
@@ -195,11 +190,11 @@ else
 			case 'date' : 
 			$sort = 'timestamp';
 			break;		
-			case 'view' : 
+			case 'hits' : 
 			$sort = 'count';
 			break;		
 			case 'note' :
-			$sort = 'note/' . $CONFIG_DOWNLOAD['note_max'];
+			$sort = 'note';
 			break;
 			case 'com' :
 			$sort = 'nbr_com';
@@ -218,12 +213,10 @@ else
 		//Notes
 		include_once('../kernel/framework/note.class.php');
 		$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
-			
+		
 		$Template->Assign_vars(array(
-			'PAGINATION' => $Pagination->Display_pagination('download' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', '-' . $category_id . '-0-%d+' . $rewrited_title . '.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
-			'C_FILES' => true,
-			'C_DESCRIPTION' => !empty($DOWNLOAD_CATS[$category_id]['contents']) || ($category_id == 0 && !empty($CONFIG_DOWNLOAD['root_contents'])),
-			'DESCRIPTION' => $category_id > 0 ? second_parse($DOWNLOAD_CATS[$category_id]['contents']) : second_parse($CONFIG_DOWNLOAD['root_contents'])
+			'PAGINATION' => $Pagination->Display_pagination(transid('download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
+			'C_FILES' => true
 			));
 
 		$result = $Sql->Query_while("SELECT id, title, timestamp, size, count, note, nbrnote, nbr_com, image, short_contents
@@ -245,9 +238,9 @@ else
 				'COMS' => (int)$row['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_coms'], $row['com']) : sprintf($DOWNLOAD_LANG['num_com'], $row['nbr_com']),
 				'C_IMG' => !empty($row['image']),
 				'IMG' => $row['image'],
-				'U_DOWNLOAD_LINK' => transid('download/admin_download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+				'U_DOWNLOAD_LINK' => transid('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
 				'U_ADMIN_EDIT_FILE' => transid('management.php?edit=' . $row['id']),
-				'U_ADMIN_DELETE_FILE' => transid('action.php?del=' . $row['id'])
+				'U_ADMIN_DELETE_FILE' => transid('management.php?del=' . $row['id'])
 			));
 		}
 		$Sql->Close($result);

@@ -6,15 +6,15 @@
 		<meta name="description" content="{SITE_DESCRIPTION}" />
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
-		<link rel="stylesheet" href="../templates/{THEME}/design.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="../templates/{THEME}/global.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="../templates/{THEME}/generic.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="../templates/{THEME}/content.css" type="text/css" media="screen, print, handheld" />
-        <link rel="stylesheet" href="../templates/{THEME}/bbcode.css" type="text/css" media="screen, print, handheld" />
-        <link rel="stylesheet" href="../templates/{THEME}/framework/syndication/syndication.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/design.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/global.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/generic.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/content.css" type="text/css" media="screen, print, handheld" />
+        <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/bbcode.css" type="text/css" media="screen, print, handheld" />
+        <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/framework/syndication/syndication.css" type="text/css" media="screen, print, handheld" />
 		{ALTERNATIVE_CSS}
-		<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
-		<link rel="alternate" type="application/rss+xml" href="../news/rss.php" title="RSS {SITE_NAME}" />
+		<link rel="shortcut icon" type="image/x-icon" href="{PATH_TO_ROOT}/favicon.ico" />
+		<link rel="alternate" type="application/rss+xml" href="{PATH_TO_ROOT}/news/rss.php" title="RSS {SITE_NAME}" />
 		
 		<script type="text/javascript">
 		<!--
@@ -22,9 +22,9 @@
 		-->
 		</script>
 		
-		<script type="text/javascript" src="../kernel/framework/js/scriptaculous/prototype.js"></script>
-		<script type="text/javascript" src="../kernel/framework/js/scriptaculous/scriptaculous.js"></script>
-		<script type="text/javascript" src="../kernel/framework/js/global.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/global.js"></script>
 	</head>
 	<body>
 
@@ -36,37 +36,37 @@
 		<div class="dynamic_menu" style="left:190px;top:113px">
 			<ul>
 				<li>
-					<h5 class="links"><a href="../news/news.php" title="Accueil"><img src="../templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> Accueil</a></h5>
+					<h5 class="links"><a href="{PATH_TO_ROOT}/news/news.php" title="Accueil"><img src="{PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> Accueil</a></h5>
 				</li>
 				<li onmouseover="show_menu('l1', 0);" onmouseout="hide_menu(0);">
-					<h5 class="links"><a href="../download/download-2-52+phpboost-2-0.php" title="PHPBoost"><img src="../download/download_mini.png" class="valign_middle" alt="" /> PHPBoost</a></h5>
+					<h5 class="links"><a href="{PATH_TO_ROOT}/download/download-2-52+phpboost-2-0.php" title="PHPBoost"><img src="{PATH_TO_ROOT}/download/download_mini.png" class="valign_middle" alt="" /> PHPBoost</a></h5>
 					<ul id="smenul1">
-						<li><a href="../download/download-2-52+phpboost-2-0.php" style="background-image:url(../download/download_mini.png);">PHPBoost 2</a></li>
-						<li><a href="http://demo.phpboost.com" title="D�monstration PHPBoost" style="background-image:url(../templates/phpboost/images/admin/com_mini.png);">D�monstration</a></li>
-						<li><a href="http://themes.phpboost.com" style="background-image:url(../templates/phpboost/images/admin/themes_mini.png);">Th�mes</a></li>
-						<li><a href="../phpboost/modules.php" style="background-image:url(../templates/phpboost/images/admin/modules_mini.png);">Modules</a></li>
+						<li><a href="{PATH_TO_ROOT}/download/download-2-52+phpboost-2-0.php" style="background-image:url({PATH_TO_ROOT}/download/download_mini.png);">PHPBoost 2</a></li>
+						<li><a href="http://demo.phpboost.com" title="D�monstration PHPBoost" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/com_mini.png);">D�monstration</a></li>
+						<li><a href="http://themes.phpboost.com" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/themes_mini.png);">Th�mes</a></li>
+						<li><a href="{PATH_TO_ROOT}/phpboost/modules.php" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/modules_mini.png);">Modules</a></li>
 					</ul>
 				</li>
 				<li onmouseover="show_menu('l2', 0);" onmouseout="hide_menu(0);">
-					<h5 class="links"><a href="../wiki/wiki.php" title="Documentation PHPBoost"><img src="../wiki/wiki_mini.png" class="valign_middle" alt="" /> Documentation</a></h5>
-					<ul id="smenul2"><li><a href="../wiki/presentation-de-phpboost" style="background-image:url(../images/doc/presentation_mini.png);">Pr�sentation</a></li>
-						<li><a href="../wiki/installation" style="background-image:url(../images/doc/installation_mini.png);">Installation</a></li>
-						<li><a href="../wiki/utilisation" style="background-image:url(../images/doc/utilisation_mini.png);">Utilisation</a></li>
-						<li><a href="../wiki/modules" style="background-image:url(../images/doc/modules_mini.png);">Modules</a></li>
-						<li><a href="../wiki/personnalisation-de-phpboost" style="background-image:url(../images/doc/personnalisation_mini.png);">Personnalisation</a></li><li><a href="../wiki/developpement" style="background-image:url(../images/doc/developpement_mini.png);">D�veloppement</a></li>
-						<li><a href="../pages/videos-de-demonstration" style="background-image:url(../images/doc/videos_mini.png);">Vid�os</a></li>
-						<li><a href="../faq/faq.php" style="background-image:url(../faq/faq_mini.png);">FAQ</a></li>
+					<h5 class="links"><a href="{PATH_TO_ROOT}/wiki/wiki.php" title="Documentation PHPBoost"><img src="{PATH_TO_ROOT}/wiki/wiki_mini.png" class="valign_middle" alt="" /> Documentation</a></h5>
+					<ul id="smenul2"><li><a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost" style="background-image:url({PATH_TO_ROOT}/images/doc/presentation_mini.png);">Pr�sentation</a></li>
+						<li><a href="{PATH_TO_ROOT}/wiki/installation" style="background-image:url({PATH_TO_ROOT}/images/doc/installation_mini.png);">Installation</a></li>
+						<li><a href="{PATH_TO_ROOT}/wiki/utilisation" style="background-image:url({PATH_TO_ROOT}/images/doc/utilisation_mini.png);">Utilisation</a></li>
+						<li><a href="{PATH_TO_ROOT}/wiki/modules" style="background-image:url({PATH_TO_ROOT}/images/doc/modules_mini.png);">Modules</a></li>
+						<li><a href="{PATH_TO_ROOT}/wiki/personnalisation-de-phpboost" style="background-image:url({PATH_TO_ROOT}/images/doc/personnalisation_mini.png);">Personnalisation</a></li><li><a href="{PATH_TO_ROOT}/wiki/developpement" style="background-image:url({PATH_TO_ROOT}/images/doc/developpement_mini.png);">D�veloppement</a></li>
+						<li><a href="{PATH_TO_ROOT}/pages/videos-de-demonstration" style="background-image:url({PATH_TO_ROOT}/images/doc/videos_mini.png);">Vid�os</a></li>
+						<li><a href="{PATH_TO_ROOT}/faq/faq.php" style="background-image:url({PATH_TO_ROOT}/faq/faq_mini.png);">FAQ</a></li>
 					</ul>
 				</li>
 				<li>
-					<h5 class="links"><a href="../articles/articles.php" title="Dossiers"><img src="../articles/articles_mini.png" class="valign_middle" alt="" /> Dossiers</a></h5>
+					<h5 class="links"><a href="{PATH_TO_ROOT}/articles/articles.php" title="Dossiers"><img src="{PATH_TO_ROOT}/articles/articles_mini.png" class="valign_middle" alt="" /> Dossiers</a></h5>
 				</li>
 				<li onmouseover="show_menu('l4', 0);" onmouseout="hide_menu(0);">
-					<h5 class="links"><a href="../forum/index.php" title="Communaut�"><img src="../forum/forum_mini.png" class="valign_middle" alt="" /> Communaut�</a></h5>
+					<h5 class="links"><a href="{PATH_TO_ROOT}/forum/index.php" title="Communaut�"><img src="{PATH_TO_ROOT}/forum/forum_mini.png" class="valign_middle" alt="" /> Communaut�</a></h5>
 					<ul id="smenul4">
-						<li><a href="../forum/index.php" style="background-image:url(../forum/forum_mini.png);">Forum</a></li>						
-						<li><a href="../shoutbox/shoutbox.php" style="background-image:url(../shoutbox/shoutbox_mini.png);">Discussion</a></li>						
-						<li><a href="../newsletter/newsletter.php" style="background-image:url(../newsletter/newsletter_mini.png);">Newsletter</a></li>						
+						<li><a href="{PATH_TO_ROOT}/forum/index.php" style="background-image:url({PATH_TO_ROOT}/forum/forum_mini.png);">Forum</a></li>						
+						<li><a href="{PATH_TO_ROOT}/shoutbox/shoutbox.php" style="background-image:url({PATH_TO_ROOT}/shoutbox/shoutbox_mini.png);">Discussion</a></li>						
+						<li><a href="{PATH_TO_ROOT}/newsletter/newsletter.php" style="background-image:url({PATH_TO_ROOT}/newsletter/newsletter_mini.png);">Newsletter</a></li>						
 					</ul>
 				</li>
 			</ul>
@@ -76,21 +76,21 @@
 		{MODULES_MINI_SUB_HEADER_CONTENT}
 	</div>
 	<div id="links_vertical">
-		<p style="margin:0px;"><img onclick="new Effect.ScrollTo('scroll_top_page',{duration:1.2}); return false;" style="cursor:pointer;" src="../templates/{THEME}/images/top.png" alt="" /></p>
+		<p style="margin:0px;"><img onclick="new Effect.ScrollTo('scroll_top_page',{duration:1.2}); return false;" style="cursor:pointer;" src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></p>
 		<hr style="width:50%;margin:auto;" />
-		<p style="margin:0;margin-top:5px;"><a href="../news/news.php"><img src="../templates/{THEME}/images/admin/admin_mini.png" alt="" /></a></p>
+		<p style="margin:0;margin-top:5px;"><a href="{PATH_TO_ROOT}/news/news.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png" alt="" /></a></p>
 	# IF C_MEMBER_CONNECTED #		
-		<p style="margin:0"><a href="../member/member{U_MEMBER_ID}" class="small_link" title="{L_PRIVATE_PROFIL}"><img src="../templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /></a>	</p>		
-		<p style="margin:0"><a href="{U_MEMBER_PM}" class="small_link" title="{L_NBR_PM}"><img src="../templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /></a></p>			
+		<p style="margin:0"><a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" class="small_link" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /></a>	</p>		
+		<p style="margin:0"><a href="{U_MEMBER_PM}" class="small_link" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /></a></p>			
 		# IF C_ADMIN_AUTH # 
-		<p style="margin:0"><a href="../admin/admin_index.php" class="small_link" title="{L_ADMIN_PANEL}"><img src="../templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /></a></p>
+		<p style="margin:0"><a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link" title="{L_ADMIN_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /></a></p>
 		# ENDIF #
 		# IF C_MODO_AUTH # 
-		<p><a href="../member/moderation_panel.php" class="small_link" title="{L_MODO_PANEL}"><img src="../templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /></a></p>
+		<p><a href="{PATH_TO_ROOT}/member/moderation_panel.php" class="small_link" title="{L_MODO_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /></a></p>
 		# ENDIF #
 	# END ENDIF #
 		<hr style="width:50%;margin:auto;" />
-		<p style="margin:0;margin-top:5px;"><img onclick="new Effect.ScrollTo('scroll_bottom_page',{duration:1.2}); return false;" style="cursor:pointer;" src="../templates/{THEME}/images/bottom.png" alt="" /></p>
+		<p style="margin:0;margin-top:5px;"><img onclick="new Effect.ScrollTo('scroll_bottom_page',{duration:1.2}); return false;" style="cursor:pointer;" src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></p>
 	</div>
 	
 	
@@ -108,7 +108,7 @@
 			{L_MAINTAIN_DELAY}
 			<br /><br />	
 			<script type="text/javascript">
-				document.write('<div id="release">{L_LOADING}...</div>');
+				document.write('<div id="release">{L_LOADING}{PATH_TO_ROOT}.</div>');
 			</script>
 			<noscript>				
 				<strong>{DELAY}</strong>
@@ -161,7 +161,7 @@
 	# IF C_START_LEFT #
 	<div id="left_menu">
 		<p class="text_center">
-			<a href="../download/download-2-52+phpboost-2-0.php"><img src="../templates/{THEME}/images/theme/download_phpboost.png" id="download_phpboost" alt="" onmouseover="change_img_path('download_phpboost', '../templates/{THEME}/images/theme/download_phpboost2.png')" onmouseout="change_img_path('download_phpboost', '../templates/{THEME}/images/theme/download_phpboost.png')" /></a>
+			<a href="{PATH_TO_ROOT}/download/download-2-52+phpboost-2-0.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/theme/download_phpboost.png" id="download_phpboost" alt="" onmouseover="change_img_path('download_phpboost', '{PATH_TO_ROOT}/templates/{THEME}/images/theme/download_phpboost2.png')" onmouseout="change_img_path('download_phpboost', '{PATH_TO_ROOT}/templates/{THEME}/images/theme/download_phpboost.png')" /></a>
 		</p>		
 		<hr style="width:90%;margin:auto" />
 		{MODULES_MINI_LEFT_CONTENT}
@@ -178,7 +178,7 @@
 		<div id="links">
 			&nbsp;&nbsp;<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
 			# START link_bread_crumb #
-			<img src="../templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
 			# END link_bread_crumb #
 		</div>	
 		<div id="top_contents">

@@ -143,7 +143,34 @@ class Download_cats extends Categories_management
 			$Cache->Generate_module_file('download');
 		return;
 	}
+	
+	//Method which determines if a category is writable by the current user
+	function Check_auth($id)
+	{
+		global $Member, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
+		$auth_write = $Member->Check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOWNLOAD);
 		
+		$id_cat = $id;
+
+		//We read the categories recursively
+		while( $id_cat > 0 )
+		{
+			if( !empty($DOWNLOAD_CATS[$id_cat]['auth']) )
+				$auth_write = $Member->Check_auth($DOWNLOAD_CATS[$id_cat]['auth'], WRITE_CAT_DOWNLOAD);
+			
+			$id_cat = (int)$DOWNLOAD_CATS[$id_cat]['id_parent'];
+		}
+		return $auth_write;
+	}
+	
+	//Method which changes the visibility of a category
+	function Change_category_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
+	{
+		$result = parent::Change_category_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE);
+		$this->Recount_sub_files(NOT_GENERATE_CACHE);
+		return $result;
+	}
+	
 	## Private methods ##	
 	//method which deletes a category and its content (not recursive)
 	function delete_category_with_content($id)

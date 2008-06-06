@@ -1,32 +1,37 @@
 		<script type="text/javascript">
 		<!--
-		function check_form(){
-			if(document.getElementById('contents').value == "") {
-				alert("{L_REQUIRE_DESC}");
+		function check_form()
+		{
+			if( document.getElementById('contents').value == "" )
+			{
+				alert("{L_REQUIRE_DESCRIPTION}");
 				return false;
 		    }
-			if(document.getElementById('cat').value == "") {
-				alert("{L_REQUIRE_CAT}");
-				return false;
-			}
-			if(document.getElementById('title').value == "") {
+			if( document.getElementById('title').value == "" )
+			{
 				alert("{L_REQUIRE_TITLE}");
 				return false;
 		    }
-			if(document.getElementById('url').value == "") {
+			reg_exp = new RegExp(".*", "g");
+			if( !document.getElementById('url').match(reg_exp) )
+			{
 				alert("{L_REQUIRE_URL}");
 				return false;
 		    }
-				if(document.getElementById('cat').value == "") {
-				alert("{L_REQUIRE_CAT}");
+			if( !check_mini_calendar_form('creation') )
+			{
+				alert("{L_REQUIRE_CREATION_DATE}");
 				return false;
-		    }
+			}
+			if( document.getElementById("ignore_release_date").checked == false && !check_mini_calendar_form('release_date') )
+			{
+				alert("{L_REQUIRE_RELEASE_DATE}");
+				return false;
+			}
 			return true;
 		}
 		-->
 		</script>
-
-		# INCLUDE admin_download_menu #
 		
 		<div class="module_position">			
 			<div class="module_top_l"></div>		
@@ -115,7 +120,7 @@
 					<textarea type="text" rows="20" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>
 					
 					<br />
-					<label for="short_contents">* {L_SHORT_CONTENTS}</label>
+					<label for="short_contents">{L_SHORT_CONTENTS}</label>
 					{BBCODE_CONTENTS_SHORT}
 					<textarea type="text" rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_DESCRIPTION}</textarea>
 					<br /><br />
@@ -137,10 +142,10 @@
 					</dl>
 					<dl>
 						<dt>
-							<label>* {L_IGNORE_RELEASE_DATE}</label>
+							<label>{L_IGNORE_RELEASE_DATE}</label>
 						</dt>
 						<dd>
-							<input type="checkbox" name="ignore_release_date" onclick="show_hide_release_date();" {IGNORE_RELEASE_DATE_CHECKED} />
+							<input type="checkbox" id="ignore_release_date" name="ignore_release_date" onclick="show_hide_release_date();" {IGNORE_RELEASE_DATE_CHECKED} />
 						</dd>
 					</dl>
 					<dl id="release_date_form" style="display:{STYLE_FIELD_RELEASE_DATE};">

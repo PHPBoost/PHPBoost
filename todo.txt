@@ -26,11 +26,14 @@
 ------------------------------------- NOYAU ------------------------------------
 [-] Panneau de modération
 [-] Créer un cache pour les css associés aux menus
-[-] Classe de BBCode et désactivation des balises non autorisées
+[-] Classe de BBCode et désactivation des balises non autorisées (un objet par barre d'outil, chargement du template (un objet template pour chaque barre))
 [-] Ajout d'un nouveau mode d'affichage pour la balise hide.
 [-] Changer fonction d'insertion des membres pour ie (groupes)
 [-] Stats, refaire les outils "Sites référents" et "Mots clés"
 [-] Stats, réparer ellipses
+[-] Revoir l'inscription d'un membre (fonctionne pas) et mettre un lien s'inscrire dans le mini module de connexion sur le nouveau thème
+[-] Modification d'un profil dans l'admin, problème de sélection de langue
+[-] Problème quand on prévisualise 2 fois en AJAX (ça se referme au lieu de s'ouvrir, certainement à cause de scriptaculous)
 
 ------------------------------------ MODULES -----------------------------------
 [-] Module liens du site

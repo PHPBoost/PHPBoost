@@ -64,13 +64,13 @@ $auth_write = $Member->Check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOW
 while( $id_cat_for_download > 0 )
 {
 	$Bread_crumb->Add_link($DOWNLOAD_CATS[$id_cat_for_download]['name'], transid('download.php?id=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
-	$id_cat_for_download = (int)$DOWNLOAD_CATS[$id_cat_for_download]['id_parent'];
 	if( !empty($DOWNLOAD_CATS[$id_cat_for_download]['auth']) )
 	{
 		//If we can't read a category, we can't read sub elements.
 		$auth_read = $auth_read && $Member->Check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], READ_CAT_DOWNLOAD);
 		$auth_write = $Member->Check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], WRITE_CAT_DOWNLOAD);
 	}
+	$id_cat_for_download = (int)$DOWNLOAD_CATS[$id_cat_for_download]['id_parent'];
 }
 
 $Bread_crumb->Add_link($DOWNLOAD_LANG['download'], transid('download.php'));

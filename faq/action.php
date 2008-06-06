@@ -221,7 +221,7 @@ elseif( $id_question > 0 && $move_question && $target >= 0 )
 					$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->Build_parent_id_list($question_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 				}
 				
-				//Updating number of subcategories of its new parents
+				//Updating the number of subcategories of its new parents
 				if( $target != 0 )
 				{
 					include_once('faq_cats.class.php');

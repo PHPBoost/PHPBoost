@@ -40,7 +40,7 @@ if( !empty($_POST['valid']) )
 	$config_download['nbr_cat_max'] = retrieve(POST, 'nbr_cat_max', 10);
 	$config_download['nbr_column'] = retrieve(POST, 'nbr_column', 4);
 	$config_download['note_max'] = max(1, retrieve(POST, 'note_max', 5));
-	$config_download['root_contents'] = retrieve(POST, 'root_contents', '', TSTRING_PARSE);
+	$config_download['root_contents'] = stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE));
 	$config_download['global_auth'] = addslashes(serialize($Group->Return_array_auth(READ_CAT_DOWNLOAD, WRITE_CAT_DOWNLOAD)));
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_download)) . "' WHERE name = 'download'", __LINE__, __FILE__);
@@ -69,6 +69,7 @@ else
 		'NOTE_MAX' => !empty($CONFIG_DOWNLOAD['note_max']) ? $CONFIG_DOWNLOAD['note_max'] : '10',
 		'READ_AUTH' => $Group->Generate_select_auth(READ_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
 		'WRITE_AUTH' => $Group->Generate_select_auth(WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
+		'DESCRIPTION' => unparse($CONFIG_DOWNLOAD['root_contents']),
 		'L_REQUIRE' => $LANG['require'],		
 		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
