@@ -36,6 +36,8 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 	
 	$id_up = retrieve(GET, 'id_up', 0);
 	$id_down = retrieve(GET, 'id_down', 0);
+	$id_show = retrieve(GET, 'show', 0);
+	$id_hide = retrieve(GET, 'hide', 0);
 	$cat_to_del = retrieve(GET, 'del', 0);
 	
 	$result = false;
@@ -44,6 +46,10 @@ if( $Member->Check_level(ADMIN_LEVEL) ) //Admin
 		$result = $download_categories->Move_category($id_up, MOVE_CATEGORY_UP);
 	elseif( $id_down > 0 )
 		$result = $download_categories->Move_category($id_down, MOVE_CATEGORY_DOWN);
+	elseif( $id_show > 0 )
+		$result = $download_categories->Change_category_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
+	elseif( $id_hide > 0 )
+		$result = $download_categories->Change_category_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
 	
 	//Operation was successfully
 	if( $result )

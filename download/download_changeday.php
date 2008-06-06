@@ -30,13 +30,17 @@ if( defined('PHPBOOST') !== true) exit;
 //Publication des téléchargements en attente pour la date donnée.
 $result = $Sql->Query_while("SELECT id, start, end
 FROM ".PREFIX."download
-WHERE visible != 0", __LINE__, __FILE__);
+WHERE start > 0 AND end > 0", __LINE__, __FILE__);
+$time = time();
 while($row = $Sql->Sql_fetch_assoc($result) )
-{ 
-	if( $row['start'] <= time() && $row['start'] != 0 )
-		$Sql->Query_inject("UPDATE ".PREFIX."download SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-	if( $row['end'] <= time() && $row['end'] != 0 )
-		$Sql->Query_inject("UPDATE ".PREFIX."download SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+{
+	//If the file wasn't visible and it becomes visible
+	if( $row['start'] <= $time && $row['end'] >= $time && $row['visible'] = 0 )
+		$Sql->Query_inject("UPDATE ".PREFIX."download SET visible = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+	
+	//If it's not visible anymore
+	if( $row['start'] >= $time || $row['end'] <= $time && $row['visible'] = 1 )
+		$Sql->Query_inject("UPDATE ".PREFIX."download SET visible = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 }
 
 ?>

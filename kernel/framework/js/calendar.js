@@ -25,9 +25,10 @@
 ###################################################*/
 
 var delay = 1000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
-var timeouts = new Array();
+var timeout;
 var calendars_num = 0;
 var displayed_calendars = new Array();
+var association_name_id = new Array();
 
 //Affiche le bloc.
 function display_calendar(id)
@@ -38,8 +39,8 @@ function display_calendar(id)
 			hide_calendar(i, 2);
 	}
 	
-	if( timeouts[id] )
-		clearTimeout(timeouts[id]);
+	if( timeout )
+		clearTimeout(timeout);
 	
 	if( !displayed_calendars[id] )
 	{
@@ -55,20 +56,20 @@ function display_calendar(id)
 // * Autrement on arme le timeout de fermeture
 function hide_calendar(id, mode)
 {
-	if( mode == 1 && timeouts[id] )
+	if( mode == 1 && timeout )
 	{	
-		clearTimeout(timeouts[id]);
+		clearTimeout(timeout);
 	}
 	else if( mode == 2 && displayed_calendars[id] )
 	{
 		document.getElementById('calendar' + id).style.display = 'none';
 		displayed_calendars[id] = false;
-		if( timeouts[id] )
-			clearTimeout(timeouts[id]);
+		if( timeout )
+			clearTimeout(timeout);
 	}
 	else if( displayed_calendars[id] )
 	{
-		timeouts[id] = setTimeout('hide_calendar(\'' + id + '\', 2)', delay);
+		timeout = setTimeout('hide_calendar(\'' + id + '\', 2)', delay);
 	}	
 }
 
@@ -109,6 +110,7 @@ function xmlhttprequest_calendar(field, vars)
 
 function check_mini_calendar_form(name)
 {
-	reg_exp = new RegExp("[0-9]{2}/[0-9]{2}/[0-9]{2}", "g");
-	return document.getElementById(name).value.match(reg_exp);
+	reg_exp = new RegExp("[0-9]{2}/[0-9]{2}/[0-9]{2,4}", "g");
+	form_id = association_name_id[name];
+	return document.getElementById(form_id).value.match(reg_exp);
 }

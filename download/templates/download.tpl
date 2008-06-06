@@ -45,12 +45,32 @@
 				# ENDIF #
 				
 				# IF C_FILES #
+					
+					<div style="float:right;" class="row3">
+						<form method="get" action="">
+							<select name="sort" class="nav">
+								<option value="alpha">Alphabétique</option>
+								<option value="size">Taille</option>
+								<option value="date">Date</option>
+								<option value="hits">Nombre de téléchargements</option>
+								<option value="note">Note</option>
+								<option value="com">Nombre de commentaires</option>
+							</select>
+							<select name="mode" class="nav">
+								<option value="asc">Croissant</option>
+								<option value="desc">Décroissant</option>
+							</select>
+							<input type="submit" value="test" class="submit" />
+						</form>
+					</div>
+					<div class="spacer">&nbsp;</div>
+					
 					# START file #
 						<div class="block_position" style="margin-bottom:20px;">
 							<div class="row1 block_contents">
 								# IF file.C_IMG #
 									<div class="float_right">
-										<a href="{file.U_DOWNLOAD_LINK}"}">
+										<a href="{file.U_DOWNLOAD_LINK}">
 											<img src="{file.IMG}" alt="{file.IMG_NAME}" />
 										</a>
 									</div>
@@ -61,7 +81,7 @@
 										<a href="{file.U_ADMIN_EDIT_FILE}">
 											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
 										</a>
-										<a href="{file.U_ADMIN_DELETE_FILE}">
+										<a href="{file.U_ADMIN_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
 											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="">
 										</a>
 									# ENDIF #
@@ -84,12 +104,21 @@
 							</div>
 						</div>						
 					# END file #
-					<div style="align:center;">{PAGINATION}</div>
+					<div style="text-align:center;">{PAGINATION}</div>
 				# ENDIF #
 				
 				# IF C_NO_FILE #
 					<div class="notice">
 						{L_NO_FILE_THIS_CATEGORY}
+					</div>
+				# ENDIF #
+				
+				# IF C_ADD_FILE #
+					<hr style="margin-top:25px; margin-bottom:25px;" />
+					<div style="text-align:center;">
+						<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
+							<img src="../templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" />
+						</a>
 					</div>
 				# ENDIF #
 				<div class="spacer"></div>
@@ -114,7 +143,7 @@
 						<a href="{U_EDIT_FILE}">
 							<img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT_FILE}" />
 						</a>
-						<a href="{U_DELETE_FILE}">
+						<a href="{U_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
 							<img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE_FILE}" />
 						</a>
 					# ENDIF #
@@ -125,7 +154,7 @@
 					<tr>
 						<td style="float:left;text-align:center;padding-right:20px;">
 							# IF C_IMG #
-								<a href="{U_DOWNLOAD_FILE}"><img src="{U_IMG}" alt="{IMAGE_ALT}" /></a>
+								<img src="{U_IMG}" alt="{IMAGE_ALT}" />
 								<br /><br />
 							# ENDIF #
 							<a href="{U_DOWNLOAD_FILE}">

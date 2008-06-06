@@ -14,5 +14,6 @@
 		<!--
 			calendars_num++;
 			displayed_calendars.push(false);
+			association_name_id['{FORM_NAME}'] = '{CALENDAR_ID}';
 		-->
 		</script>

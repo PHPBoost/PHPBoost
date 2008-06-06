@@ -73,10 +73,10 @@ if( $page > 0 )
 	{
 		$Template->Assign_block_vars('question', array(
 			'QUESTION' => $row['question'],
-			'CATEGORY' => $row['name'],
+			'CATEGORY' => !empty($row['idcat']) ? $row['name'] : $LANG['root'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'U_QUESTION' => transid('faq.php?id=' . $row['idcat'] . '&amp;question=' . $row['id'], 'faq-' . $row['idcat'] . '+' . url_encode_rewrite($row['name']) . '.php?question=' . $row['id']) . '#q' . $row['id'],
-			'U_CATEGORY' => transid('faq.php?id=' . $row['idcat'], 'faq-' . $row['idcat'] . '+' . url_encode_rewrite($row['name']) . '.php')
+			'U_CATEGORY' => !empty($row['idcat']) ? transid('faq.php?id=' . $row['idcat'], 'faq-' . $row['idcat'] . '+' . url_encode_rewrite($row['name']) . '.php') : transid('faq.php')
 		));
 	}
 	
