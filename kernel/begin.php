@@ -33,7 +33,7 @@ header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date du passé
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // toujours modifié
 header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
-	
+
 //Inclusion des fichiers
 require_once(PATH_TO_ROOT . '/kernel/framework/bench.class.php');
 $Bench = new Bench; //Début du benchmark
@@ -74,7 +74,7 @@ if( $CONFIG['ob_gzhandler'] == 1 )
 	ob_start('ob_gzhandler'); //Activation de la compression de données
 else
 	ob_start();
-	
+
 //Récupération des informations sur le membre.
 $Session->Session_info();
 
