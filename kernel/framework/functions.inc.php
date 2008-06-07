@@ -76,6 +76,8 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 		case TSTRING:
 			return strprotect($var); //Chaine protégée.
 		case TSTRING_UNSECURE:
+			if( MAGIC_QUOTES != false )
+				$var = stripslashes($var);
 			$var = trim($var);
 			return (string)$var; //Chaine non protégée.
 		case TSTRING_PARSE:

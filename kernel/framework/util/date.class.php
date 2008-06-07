@@ -218,9 +218,9 @@ class Date
 	
 	# This should be static#
 	//Function which determines wether a date is correct
-	function Check_date($month  , $day  , $year)
+	function Check_date($month, $day, $year)
 	{
-		return checkdate($month  , $day  , $year);
+		return checkdate($month, $day, $year);
 	}
 	
 	## Private ##
@@ -229,6 +229,7 @@ class Date
 	function compute_serveur_user_difference($referencial_timezone = 0)
 	{
 		global $CONFIG, $Member;
+		
 		// Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été
 	    $server_hour = number_round(date('Z')/3600, 0) - date('I');
 	    
