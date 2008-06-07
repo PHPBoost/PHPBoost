@@ -732,7 +732,7 @@ function get_feed_menu($feed_url)
     $feedMenu->Assign_vars(array(
         'PATH_TO_ROOT' => PATH_TO_ROOT,
         'THEME' => $CONFIG['theme'],
-        'U_FEED' => $feed_url,
+        'U_FEED' => trim($CONFIG['server_name'], '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . trim($feed_url, '/'),
         'L_RSS' => $LANG['rss'],
         'L_ATOM' => $LANG['atom']
     ));

@@ -7,11 +7,10 @@ div.syndication_choices {
 }
 
 div.syndication_choices ul {
-    width:60px;
+    width:90px;
     padding-top:5px;
-    padding-bottom:5px;
-    padding-left:20px;
-    padding-right:20px;
+    padding-bottom:1px;
     background:#ffffff;
     border:1px #ccccff solid;
+    list-style-type:none
 }

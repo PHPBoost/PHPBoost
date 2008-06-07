@@ -56,6 +56,6 @@ $Bread_crumb->Add_link((isset($_GET['i']) ? $LANG['com'] : ''), '');
 $Cache->Load_file('news');
 //Css alternatif.
 define('ALTERNATIVE_CSS', 'news');
-define('FEED_URL', '../news/syndication.php');
+define('FEED_URL', '/news/syndication.php');
 
 ?>
