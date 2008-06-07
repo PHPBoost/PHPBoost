@@ -134,26 +134,28 @@ class Template
 		global $CONFIG;
 		
 		$filename = trim($filename, '/');
-		$get_module = explode('/', $filename);
+		$i = strpos($filename, '/');
+		$module = substr($filename, 0, $i);
+		$file = substr($filename, $i);
 
-		if( !isset($get_module[1]) ) //Template du thème (noyau)
+		if( !isset($file) ) //Template du thème (noyau)
 			return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
 		
 		else //Module
 		{	
 			//module data path
-			if( !isset($this->module_data_path[$get_module[0]]) )
+			if( !isset($this->module_data_path[$module]) )
 			{
-				if( is_dir(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/images') )
-					$this->module_data_path[$get_module[0]] = PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $get_module[0];
+				if( is_dir(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/images') )
+					$this->module_data_path[$module] = PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module;
 				else	
-					$this->module_data_path[$get_module[0]] = PATH_TO_ROOT . '/' . $get_module[0] . '/templates'; 
+					$this->module_data_path[$module] = PATH_TO_ROOT . '/' . $module . '/templates'; 
 			}
 			
-			if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/' . $get_module[1]) )
-				return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $get_module[0] . '/' . $get_module[1];
+			if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/' . $file) )
+				return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/' . $file;
 			else
-				return PATH_TO_ROOT . '/' . $get_module[0] . '/templates/' . $get_module[1];
+				return PATH_TO_ROOT . '/' . $module . '/templates/' . $file;
 		}
 	}
 	

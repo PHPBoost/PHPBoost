@@ -557,4 +557,9 @@ $LANG['powered_by'] = 'Boosted by';
 $LANG['phpboost_right'] = '';
 $LANG['sql_req'] = ' Requests';
 $LANG['achieved'] = 'Achieved in';
+
+//Feeds
+$LANG['syndication'] = 'Syndication';
+$LANG['rss'] = 'RSS';
+$LANG['atom'] = 'ATOM';
 ?>

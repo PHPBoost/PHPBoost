@@ -489,8 +489,8 @@ function isInteger(int)
 
 // Print the syndication's choice menu
 function ShowSyndication(element) {
-    if ( element.ownerDocument.getElementById('syndication_choices').style.visibility == 'hidden' )
-        element.ownerDocument.getElementById('syndication_choices').style.visibility = 'visible';
-    else
-        element.ownerDocument.getElementById('syndication_choices').style.visibility = 'hidden';
+    element.ownerDocument.getElementById('syndication_choices').style.visibility = 'visible';
+}
+function HideSyndication(element) {
+    element.ownerDocument.getElementById('syndication_choices').style.visibility = 'hidden';
 }

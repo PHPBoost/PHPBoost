@@ -3,7 +3,7 @@
  *                                function.php
  *                            -------------------
  *   begin                : June 13, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *   Function 2.0.0 
@@ -721,6 +721,20 @@ if( !function_exists('array_combine') )
 
         return $combined;
     }
+}
+
+// Return the html string that print the menu to choose the wanted feed's type
+function get_feed_menu($feed_url)
+{
+	global $LANG;
+    require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+    $feedMenu = new Template('framework/syndication/menu.tpl');
+    $feedMenu->Assign_vars(array(
+        'U_FEED' => $feed_url,
+        'L_RSS' => $LANG['rss'],
+        'L_ATOM' => $LANG['atom']
+    ));
+    return $feedMenu->Tparse(TEMPLATE_STRING_MODE);
 }
 
 ?>

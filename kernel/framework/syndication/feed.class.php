@@ -3,7 +3,7 @@
  *                         feed.class.php
  *                         -------------------
  *   begin                : April 21, 2008
- *   copyright            : (C) 2005 LoÃ¯c Rouchon
+ *   copyright            : (C) 2005 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
  *

@@ -3,7 +3,7 @@
  *                                main.php
  *                            -------------------
  *   begin                : November 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : mickaelhemri@gmail.com
  *
  *  
@@ -556,4 +556,9 @@ $LANG['powered_by'] = 'Boosté par';
 $LANG['phpboost_right'] = '';
 $LANG['sql_req'] = 'Requêtes';
 $LANG['achieved'] = 'Exécuté en';
+
+//Flux
+$LANG['syndication'] = 'Syndication';
+$LANG['rss'] = 'RSS';
+$LANG['atom'] = 'ATOM';
 ?>

@@ -3,7 +3,7 @@
  *                              rss.class.php
  *                            -------------------
  *   begin                : March 10, 2005
- *   copyright            : (C) 2005 Rï¿½gis Viarre, Loï¿½c Rouchon
+ *   copyright            : (C) 2005 Régis Viarre, Loïc Rouchon
  *   email                : crowkait@phpboost.com, horn@phpboost.com
  *
  *
