@@ -1,0 +1,17 @@
+div.syndication_choices {
+    position:absolute;
+    width:0px;
+    height:0px;
+    overflow:visible;
+    visibility:hidden;
+}
+
+div.syndication_choices ul {
+    width:60px;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:20px;
+    padding-right:20px;
+    background:#ffffff;
+    border:1px #ccccff solid;
+}
