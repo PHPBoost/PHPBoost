@@ -26,7 +26,8 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true) exit;
+if( defined('PHPBOOST') !== true) 
+	exit;
 
 if( !defined('TITLE') )
 	define('TITLE', $LANG['unknow']);
