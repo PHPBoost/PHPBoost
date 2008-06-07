@@ -32,6 +32,10 @@ var menu_timeout_tmp = new Array(null, null, null);
 var menu_started = new Array(false, false, false);
 var max_level = 3;
 
+// Feeds menu gestion
+var feed_menu_timeout = null;
+var feed_menu_elt = null;
+
 //Fonction de temporisation, permet d'éviter que le menu déroulant perturbe la navigation lors du survol rapide de la souris.
 function show_menu(idmenu, level)
 {
@@ -489,8 +493,11 @@ function isInteger(int)
 
 // Print the syndication's choice menu
 function ShowSyndication(element) {
-    element.ownerDocument.getElementById('syndication_choices').style.visibility = 'visible';
+    feed_menu_elt = element.ownerDocument.getElementById('syndication_choices');
+    setTimeout('feed_menu_elt.style.visibility = \'visible\'', menu_delay_onmouseover);
+    clearTimeout(feed_menu_timeout);
 }
 function HideSyndication(element) {
-    element.ownerDocument.getElementById('syndication_choices').style.visibility = 'hidden';
+    feed_menu_elt = element.ownerDocument.getElementById('syndication_choices');
+    feed_menu_timeout = setTimeout('feed_menu_elt.style.visibility = \'hidden\'', menu_delay);
 }
