@@ -29,7 +29,7 @@ if( defined('PHPBOOST') !== true)	exit;
 
 function wiki_auth($action, $exception = '')
 {
-	global $userdata['level'], $userdata['user_group'];
+	global $userdata;
 	
 	if( !empty($exception) )//Si l'article a une autorisation spéciale
 	{

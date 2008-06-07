@@ -436,7 +436,7 @@ class Categories_management
 	}
 	
 	//Method which builds a select form to choose a category
-	function Build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, &$array_auth = array(), $recursion_mode = STOP_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH)
+	function Build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_auth = array(), $recursion_mode = STOP_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH)
 	{
 		global $LANG, $Member;
 		

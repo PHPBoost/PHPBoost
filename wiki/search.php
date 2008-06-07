@@ -40,7 +40,7 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 
 $search_string = retrieve(GET, 'search', '');
 $where_search = retrieve(GET, 'where', '');
-$where_search = !empty($where_search &&$where_search == 'contents') ? 'contents' : 'title';
+$where_search = !(empty($where_search) || ($where_search == 'contents')) ? 'contents' : 'title';
 $page = retrieve(GET, 'page', 1);
 $page = $page <= 0 ? 1 : $page;
 
