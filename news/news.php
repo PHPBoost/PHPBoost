@@ -2,9 +2,9 @@
 /*##################################################
  *                                news.php
  *                            -------------------
- *   begin                : June 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin              : June 20, 2005
+ *   copyright			: (C) 2005 Viarre Régis
+ *   email              : crowkait@phpboost.com
  *
  *  
  ###################################################
@@ -28,7 +28,7 @@
 require_once('../kernel/begin.php');
 require_once('../news/news_begin.php');
 require_once('../kernel/header.php');
-    
+
 $idnews = retrieve(GET, 'id', 0);	
 $idcat = retrieve(GET, 'cat', 0);
 $show_archive = retrieve(GET, 'arch', false);
