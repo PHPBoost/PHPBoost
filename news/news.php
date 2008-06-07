@@ -73,9 +73,11 @@ if( empty($idnews) && empty($idcat) )
 	}
 		
 	$Template->Assign_vars(array(
+	    'L_SYNDICATION' => $LANG['syndication'],
 		'PAGINATION' => $show_pagin,
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
-		'L_LAST_NEWS' => !$show_archive ? $LANG['last_news'] : $LANG['archive']
+		'L_LAST_NEWS' => !$show_archive ? $LANG['last_news'] : $LANG['archive'],
+	    'FEED_MENU' => get_feed_menu(FEED_URL)
 	));
 	
 	//Si les news en block sont activées on recupère la page.
@@ -139,7 +141,8 @@ if( empty($idnews) && empty($idcat) )
 				'DEL' => $del,
 				'NEW_ROW' => $new_row,
 				'U_MEMBER_ID' => transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-				'U_NEWS_LINK' => transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
+				'U_NEWS_LINK' => transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+                'FEED_MENU' => get_feed_menu(FEED_URL)
 			));
 			$z++;
 		}
@@ -224,6 +227,7 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 	$previous_news = $Sql->Query_array("news", "title", "id", "WHERE visible = 1 AND id < '" . $idnews . "' ORDER BY id DESC " . $Sql->sql_limit(0, 1), __LINE__, __FILE__);
 
 	$Template->Assign_vars(array(
+	    'L_SYNDICATION' => $LANG['syndication'],
 		'C_NEWS_BLOCK' => true,
 		'C_NEWS_NAVIGATION_LINKS' => true,
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
@@ -244,7 +248,8 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? display_com_link($news['nbr_com'], '../news/news' . transid('.php?cat=0&amp;id=' . $idnews . '&amp;i=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?i=0'), $idnews, 'news') : '',
 		'EDIT' => $admin,
 		'DEL' => $del,
-		'U_MEMBER_ID' => transid('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php')		
+		'U_MEMBER_ID' => transid('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
+	    'FEED_MENU' => get_feed_menu(FEED_URL)
 	));	
 }
 elseif( !empty($idcat) )

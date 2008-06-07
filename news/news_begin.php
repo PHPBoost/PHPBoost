@@ -3,7 +3,7 @@
  *                              news_begin.php
  *                            -------------------
  *   begin                : November 28, 2007
- *   copyright          : (C) 2007 Viarre régis
+ *   copyright            : (C) 2007 Viarre régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -56,5 +56,6 @@ $Bread_crumb->Add_link((isset($_GET['i']) ? $LANG['com'] : ''), '');
 $Cache->Load_file('news');
 //Css alternatif.
 define('ALTERNATIVE_CSS', 'news');
+define('FEED_URL', '../news/syndication.php');
 
 ?>
