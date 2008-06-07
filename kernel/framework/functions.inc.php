@@ -726,10 +726,12 @@ if( !function_exists('array_combine') )
 // Return the html string that print the menu to choose the wanted feed's type
 function get_feed_menu($feed_url)
 {
-	global $LANG;
+	global $LANG, $CONFIG;
     require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
     $feedMenu = new Template('framework/syndication/menu.tpl');
     $feedMenu->Assign_vars(array(
+        'PATH_TO_ROOT' => PATH_TO_ROOT,
+        'THEME' => $CONFIG['theme'],
         'U_FEED' => $feed_url,
         'L_RSS' => $LANG['rss'],
         'L_ATOM' => $LANG['atom']
