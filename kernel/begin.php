@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if (!defined(PATH_TO_ROOT))
+if( !defined(PATH_TO_ROOT) ) //Chemin vers la racine.
     define('PATH_TO_ROOT', '..');
 
 header('Content-type: text/html; charset=iso-8859-1');
@@ -56,6 +56,7 @@ $Template = new Template; //!\\Initialisation des templates//!\\
 $Sql = new Sql($sql_host, $sql_login, $sql_pass, $sql_base); //!\\Initialisation  de la class sql//!\\
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
 
+//$Sql->Sql_parse('../backup_phpboost_main_08-05-29-20-23-01.sql');
 $Cache = new Cache; //!\\Initialisation  de la class de gestion du cache//!\\
 $Bread_crumb = new Bread_crumb; //!\\Initialisation  de la class de la speed bar//!\\
 

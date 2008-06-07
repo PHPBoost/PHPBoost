@@ -58,7 +58,8 @@ class Mini_calendar
 	function Display()
 	{
 		global $CONFIG;
-		// Feine pour PHP 4, en PHP 5 ce sera un attribut static
+		
+		// Feinte pour PHP 4, en PHP 5 ce sera un attribut static
 		static $js_inclusion_already_done = false;
 		
 		//On crée le code selon le template
@@ -81,8 +82,7 @@ class Mini_calendar
 		return $template->Tparse(TEMPLATE_STRING_MODE);
 	}
 	
-	# Private #
-	
+	# Private #	
 	var $num_instance = 0;
 	var $form_name = '';
 	var $date;
