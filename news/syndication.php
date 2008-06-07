@@ -16,8 +16,6 @@
 header("Content-Type: application/xml; charset=iso-8859-1");
 
 require_once('../kernel/begin.php');
-require_once('../news/news_begin.php');
-require_once('../kernel/header_no_display.php');
 
 $mode = retrieve(GET, 'feed', 'rss');
 if ( !(($mode == 'atom') || ($mode == 'rss')) )
@@ -29,7 +27,9 @@ if ( $file = @file_get_contents_emulate('../cache/syndication/news.' . $mode) )
 }
 else
 {   // Otherwise, we regenerate it before printing it
-    include_once('../kernel/framework/syndication/feed.class.php');
+	require_once('../news/news_begin.php');
+	require_once('../kernel/header_no_display.php');
+    require_once('../kernel/framework/syndication/feed.class.php');
     
     // Generation of the feed's headers
     $feedInformations = array(
@@ -77,6 +77,8 @@ else
     $Feed = new Feed('news', $mode == 'atom' ? USE_ATOM : USE_RSS);
     $Feed->Generate($feedInformations); // Create the feed's cache
     $Feed->TParse();                    // Print the feed
+    
+	require_once('../kernel/footer_no_display.php');
 }
 
 ?>
