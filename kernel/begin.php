@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( !defined(PATH_TO_ROOT) ) //Chemin vers la racine.
+if( !defined('PATH_TO_ROOT') ) //Chemin vers la racine.
     define('PATH_TO_ROOT', '..');
 
 header('Content-type: text/html; charset=iso-8859-1');
