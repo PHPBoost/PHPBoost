@@ -71,8 +71,7 @@ class RSS extends Feed
                     $guid = preg_match('`<guid>(.*)</guid>`is', $expParsed[$i], $guid) ? $guid[1] : '';
                     $desc = preg_match('`<desc>(.*)</desc>`is', $expParsed[$i], $desc) ? $desc[1] : '';
                     $date = preg_match('`<pubDate>(.*)</pubDate>`is', $expParsed[$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '';
-                    $img = preg_match('`<image><url>(.*)</url>.*</image>`is', $expParsed[$i], $img) ? $img[1] : false;
-                    array_push($parsed['items'], array('title' => $title, 'link' => $url, 'guid' => $guid, 'desc' => $desc, 'date' => $date, 'img' => $img));
+                    array_push($parsed['items'], array('title' => $title, 'link' => $url, 'guid' => $guid, 'desc' => $desc, 'date' => $date));
 
                     unset($parsed['items'][$i]);
                 }

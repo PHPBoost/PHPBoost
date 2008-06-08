@@ -15,9 +15,6 @@
         <item>
             <title>{item.TITLE}</title>
             <link>{item.U_LINK}</link>
-            # IF item.C_IMG #
-                <image><url>{item.U_IMG}</url><title>{item.TITLE}</title><link>{item.U_LINK}</link></image>
-            # ENDIF #
             <guid>{item.U_GUID}</guid>
             <description>{item.DESC}</description>
             <pubDate>{item.DATE}</pubDate>

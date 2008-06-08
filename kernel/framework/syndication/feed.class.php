@@ -84,8 +84,6 @@ class Feed
                     'U_GUID' => isset($item['guid']) ? $item['guid'] : '',
                     'DESC' => isset($item['desc']) ? $item['desc'] : '',
                     'TITLE' => isset($item['title']) ? $item['title'] : '',
-                    'U_IMG' => (!empty($item['img'])) ? $item['img'] : '',
-                    'C_IMG' => (!empty($item['img'])) ? true : false
                 ));
             }
         }
