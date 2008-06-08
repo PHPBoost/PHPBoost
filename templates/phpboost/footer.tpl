@@ -32,7 +32,7 @@
 	<div id="footer">
 		{MODULES_MINI_FOOTER_CONTENT}
 		<span>
-			{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com/news/news.php" title="PHPBoost">PHPBoost 2</a> {L_PHPBOOST_RIGHT}
+			{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com/news/news.php" title="PHPBoost">PHPBoost 2.1</a> {L_PHPBOOST_RIGHT}
 		</span>	
 		# IF C_DISPLAY_BENCH #
 		<br />

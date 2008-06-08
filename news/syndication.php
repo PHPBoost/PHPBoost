@@ -2,15 +2,30 @@
 /***************************************************************************
  *                              syndication.php
  *                            -------------------
- *   begin                : September 09, 2005
- *   copyright            : (C) 2008 Horn
+ *   begin                : June 01, 2008
+ *   copyright            : (C) 2008 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
- *  
  *
- ***************************************************************************
- Print the feed in the RSS 2.0 or ATOM 1.0 format
-***************************************************************************/
+ ###################################################
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################
+ * Print the feed in the RSS 2.0 or ATOM 1.0 format
+ ###################################################*/
 
 //Header's generation
 header("Content-Type: application/xml; charset=iso-8859-1");
@@ -27,55 +42,12 @@ if ( $file = @file_get_contents_emulate('../cache/syndication/news.' . $mode) )
 }
 else
 {   // Otherwise, we regenerate it before printing it
-	require_once('../news/news_begin.php');
-	require_once('../kernel/header_no_display.php');
-    require_once('../kernel/framework/syndication/feed.class.php');
+    require_once('../kernel/header_no_display.php');
     
-    // Generation of the feed's headers
-    $feedInformations = array(
-        'title' => $LANG['xml_news_desc'] . ' ' . $CONFIG['server_name'],
-        'date' => gmdate_format('Y-m-d') . 'T' . gmdate_format('h:m:s') . 'Z',
-        'link' => trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'news/syndication.php?feed=' . $mode,
-        'host' => HOST,
-        'desc' => $LANG['xml_news_desc'] . ' ' . $CONFIG['server_name'],
-        'lang' => $LANG['xml_lang'],
-        'items' => array()
-    );
-
-    // Load the new's config
-    $Cache->Load_file('news');
-    // Last news
-    $result = $Sql->Query_while("SELECT id, title, contents, timestamp
-        FROM ".PREFIX."news
-        WHERE visible = 1
-        ORDER BY timestamp DESC
-    " . $Sql->Sql_limit(0, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
-
-    // Generation of the feed's items
-    while ($row = $Sql->Sql_fetch_assoc($result))
-    {
-        // Rewriting
-        if ( $CONFIG['rewrite'] == 1 )
-            $rewrited_title = '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php';
-        else
-            $rewrited_title = '.php?id=' . $row['id'];
-        $link = HOST . DIR . '/news/news' . $rewrited_title;
-        
-        // XML text's protection
-        $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
-        array_push($feedInformations['items'], array(
-            'title' => htmlspecialchars(html_entity_decode($row['title'])),
-            'link' => $link,
-            'guid' => $link,
-            'desc' => ( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents,
-            'date' => gmdate_format('Y-m-d',$row['timestamp']) . 'T' . gmdate_format('h:m:s',$row['timestamp']) . 'Z',
-        ));
-    }
-    $Sql->Close($result);
-    $Sql->Sql_close();
+    // Feeds Regeneration
+    include_once('../news/syndication_regeneration.php');
+    $Feed = RegenerateSyndication($mode == 'rss' ? USE_RSS : USE_ATOM);
     
-    $Feed = new Feed('news', $mode == 'atom' ? USE_ATOM : USE_RSS);
-    $Feed->Generate($feedInformations); // Create the feed's cache
     $Feed->TParse();                    // Print the feed
     
 	require_once('../kernel/footer_no_display.php');

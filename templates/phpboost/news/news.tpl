@@ -58,7 +58,6 @@
                         <img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" title="{L_SYNDICATION}" />
                     </a>
                     {news.FEED_MENU}
-                    &nbsp;&nbsp;
                     <a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a>
                 </span>
                 <span style="float:right;">{news.COM}{news.EDIT}{news.DEL}</span>
