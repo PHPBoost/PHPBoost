@@ -25,6 +25,11 @@
  *
 ###################################################*/
 
+define('DEFAULT_ATOM_TEMPLATE', 'framework/syndication/atom.tpl');
+
+require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
+
+
 class ATOM extends Feed
 {
     ## Public Methods #
@@ -33,8 +38,7 @@ class ATOM extends Feed
      * Constructor
      */
     {
-        $this->name = $feedName;
-        $this->path = $feedPath;
+        parent::Feed($feedName, $feedPath, 'atom');
     }
 
     function Parse($nbItems = 5)
@@ -66,7 +70,8 @@ class ATOM extends Feed
                     $guid = preg_match('`<id>(.*)</id>`is', $expParsed[$i], $guid) ? $guid[1] : '';
                     $date = preg_match('`<updated>(.*)</updated>`is', $expParsed[$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '';
                     $desc = preg_match('`<summary>(.*)</summary>`is', $expParsed[$i], $desc) ? $desc[1] : '';
-                    array_push($parsed['items'], array('title' => $title, 'link' => $url, 'guid' => $guid, 'desc' => $desc, 'date' => $date));
+                    $img = preg_match('`<logo>(.*)</logo>`is', $expParsed[$i], $img) ? $img[1] : false;
+                    array_push($parsed['items'], array('title' => $title, 'link' => $url, 'guid' => $guid, 'desc' => $desc, 'date' => $date, 'img' => $img));
                     unset($parsed['items'][$i]);
                 }
                 return $parsed;
@@ -76,48 +81,18 @@ class ATOM extends Feed
         return false;
     }
 
-    function Generate(&$feedInformations)
+    function GenerateCache(&$feedInformations)
     /**
      * Generate the feed contained into the files <$feedFile>.rss and <$feedFile>.atom
      * and also the HTML cache for direct includes.
      */
     {
-        require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
-        $Template = new Template('framework/syndication/atom.tpl');
-        
-        $Template->Assign_vars(array(
-            'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
-            'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
-            'U_LINK' => isset($feedInformations['link']) ? $feedInformations['link'] : '',
-            'HOST' => HOST,
-            'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
-            'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
-        ));
-        
-        if ( isset($feedInformations['items']) )
-        {
-            foreach ( $feedInformations['items'] as $item )
-            {
-                $Template->Assign_block_vars('item', array(
-                    'DATE' => isset($item['date']) ? $item['date'] : '',
-                    'U_LINK' => isset($item['link']) ? $item['link'] : '',
-                    'U_GUID' => isset($item['guid']) ? $item['guid'] : '',
-                    'DESC' => isset($item['desc']) ? $item['desc'] : '',
-                    'TITLE' => isset($item['title']) ? $item['title'] : ''
-                ));
-            }
-        }
-        
-        $file = fopen($this->path . $this->name . '.atom', 'w+');
-        fputs($file, $Template->Tparse(TEMPLATE_STRING_MODE));
-        fclose($file);
+        parent::GenerateCache($feedInformations, DEFAULT_ATOM_TEMPLATE, '.atom');
     }
 
     ## Private Methods ##
     
     ## Private attributes ##
-    var $name = ''; // Feed Name
-    var $path = ''; // Path where the feeds are stored
 }
 
 ?>

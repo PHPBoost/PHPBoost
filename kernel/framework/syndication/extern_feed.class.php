@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feeds.class.php');
 
 class ExternFeed
 {

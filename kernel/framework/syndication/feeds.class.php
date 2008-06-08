@@ -25,19 +25,55 @@
  *
 ###################################################*/
 
-class Feed
+define('FEED_PATH', PATH_TO_ROOT . '/cache/syndication');
+define('DEFAULT_FEED_TPL', 'framework/syndication/feed.tpl');
+
+define('USE_RSS', 0x01);
+define('USE_ATOM', 0x02);
+define('EXTERN_FEED', 0x04);
+define('ALL_FEEDS', USE_RSS|USE_ATOM);
+
+define('STATIC_MODE', 0x01);
+define('DYNAMIC_MODE', 0x02);
+
+class Feeds
 {
     ## Public Methods #
-    function Feed($feedName, $feedPath, $type)
+    function Feeds($feedName, $type = ALL_FEEDS, $feedPath = FEED_PATH)
     /**
      * Constructor
      */
     {
         $this->name = $feedName;
-        $this->path = $feedPath;
-        $this->type = $type;
+        $this->path = trim($feedPath, '/') . '/';
+        
+        if ( $type & USE_ATOM )
+        {
+            require_once(PATH_TO_ROOT . '/kernel/framework/syndication/atom.class.php');
+            $this->feeds[USE_ATOM] = new ATOM($this->name, $this->path);
+            $this->type = 'atom';
+        }
+        if ( $type & USE_RSS )
+        {
+            require_once(PATH_TO_ROOT . '/kernel/framework/syndication/rss.work.class.php');
+            $this->feeds[USE_RSS] = new RSS($this->name, $this->path);
+            $this->type = 'rss';
+        }
     }
 
+    function Get($nbItems = 5, $tpl = DEFAULT_FEED_TPL)
+    /**
+     * Return the results of the HTML feed generated as a string
+     */
+    {
+        if ( ($nbItems == 5) && ($tpl == DEFAULT_FEED_TPL) )
+        {
+            if ( ($HTMLfeed = @file_get_contents_emulate($this->path . $this->name . '.html')) !== false )
+                return $HTMLfeed;
+        }
+        return $this->getHTMLFeed($this->Parse($nbItems), $tpl);
+    }
+    
     function TParse()
     /**
      * Print the feed from the rss or atom file
@@ -47,17 +83,49 @@ class Feed
             echo $feed;
     }
 
-    function Parse($nbItem = 5) // Will be virtual with PHP5
+    function Parse($nbItem = 5)
     /**
      * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
      * /<$feedPath>/<$feedName>.atom if the rss one does not exist et return
      * the result as an Array.
      */
     {
+        foreach ( $this->feeds as $feed )
+        {
+            if ( ($parsed = $feed->Parse($nbItem)) !== false )
+                return $parsed;
+        }
         return array();
     }
 
-    function GetParsed(&$feedInformations, $tpl)
+    function Generate(&$feedInformations, $mode = STATIC_MODE)
+    /**
+     * Generate the feed contained into the files <$feedFile>.rss and <$feedFile>.atom
+     * and also the HTML cache for direct includes.
+     */
+    {
+        foreach ( $this->feeds as $feed )
+        {
+            $feed->GenerateCache($feedInformations);
+            if ( $mode != STATIC_MODE )
+                break;
+        }
+        if ( $mode == STATIC_MODE )
+            $this->GenerateHTMLCache($feedInformations);
+    }
+    
+    function GenerateHTMLCache(&$feedInformations, $tpl = 'framework/syndication/feed.tpl')
+    /**
+     * Generate the HTML cache for direct includes.
+     */
+    {
+        $file = fopen($this->path . $this->name . '.html', 'w+');
+        fputs($file, $this->getParsedFeed($feedInformations, $tpl));
+        fclose($file);
+    }
+    
+    ## Private Methods ##
+    function getParsedFeed(&$feedInformations, $tpl)
     /**
      * Return a String of a feed parsed by the <$tpl> template.
      */
@@ -84,26 +152,25 @@ class Feed
                     'U_GUID' => isset($item['guid']) ? $item['guid'] : '',
                     'DESC' => isset($item['desc']) ? $item['desc'] : '',
                     'TITLE' => isset($item['title']) ? $item['title'] : '',
-                    'U_IMG' => (!empty($item['img'])) ? $item['img'] : '',
-                    'C_IMG' => (!empty($item['img'])) ? true : false
+                    'U_IMG' => !empty($feedInformations['img']) ? $feedInformations['img'] : '',
+                    'C_IMG' => !empty($feedInformations['img']) ? true : false
                 ));
             }
         }
         return $Template->Tparse(TEMPLATE_STRING_MODE);
     }
     
-    function GenerateCache(&$feedInformations, $tpl, $extension)
+    function generateFeed(&$feedInformations, $tpl, $extension)
     {
         $file = fopen($this->path . $this->name . $extension, 'w+');
-        fputs($file, $this->GetParsed($feedInformations, $tpl));
+        fputs($file, $this->getParsedFeed($feedInformations, $tpl));
         fclose($file);
     }
-    
-    ## Private Methods ##
     
     ## Private attributes ##
     var $name = '';         // Feed Name
     var $path = '';         // Path where the feeds are stored
+    var $feeds = array();   // Feeds objects
     var $type = '';         // Type of feed to use by default
 }
 

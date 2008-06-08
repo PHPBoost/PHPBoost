@@ -36,18 +36,18 @@ $mode = retrieve(GET, 'feed', 'rss');
 if ( !(($mode == 'atom') || ($mode == 'rss')) )
     $mode = 'rss';
 
-if ( $file = @file_get_contents_emulate('../cache/syndication/news.' . $mode) )
+// if ( $file = @file_get_contents_emulate('../cache/syndication/news.' . $mode) )
 {   // If the file exist, we print it
-    echo $file;
+//     echo $file;
 }
-else
+// else
 {   // Otherwise, we regenerate it before printing it
     require_once('../kernel/header_no_display.php');
     
     // Feeds Regeneration
     include_once('../news/syndication_regeneration.php');
     $Feed = RegenerateSyndication($mode == 'rss' ? USE_RSS : USE_ATOM);
-    
+
     $Feed->TParse();                    // Print the feed
     
 	require_once('../kernel/footer_no_display.php');
