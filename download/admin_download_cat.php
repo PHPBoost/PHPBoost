@@ -261,7 +261,9 @@ else
 	$download_categories->Set_displaying_configuration($cat_config);
 	
 	$Template->Assign_vars(array(
-		'CATEGORIES' => $download_categories->Build_categories_administration_interface()
+		'CATEGORIES' => $download_categories->Build_categories_administration_interface(),
+		'L_RECOUNT_SUBFILES' => $DOWNLOAD_LANG['recount_subfiles'],
+		'U_RECOUNT_SUBFILES' => transid('admin_download_cat.php?recount=1')
 	));
 
 	$Template->Pparse('admin_download_cat');

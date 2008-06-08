@@ -49,9 +49,8 @@ class Date
 		
 		if( $num_args == 0 )
 			$format = DATE_NOW;
-		
-		// Type
-		$format = func_get_arg(0);
+		else
+			$format = func_get_arg(0);
 		
 		if( $format != DATE_NOW )
 		{

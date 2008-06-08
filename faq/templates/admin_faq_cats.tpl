@@ -36,7 +36,7 @@
 					<script type="text/javascript">
 					<!--
 						//Javascript timeout to hide this message
-						setTimeout('document.getElementById("error_msg").innerHTML = "";', 5000);
+						setTimeout('Effect.Fade("error_msg");', 5000);
 					-->
 					</script>
 			# ENDIF #
