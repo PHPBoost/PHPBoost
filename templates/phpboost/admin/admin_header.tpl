@@ -16,6 +16,8 @@
 		-->
 		</script>
 		
+		<script type="text/javascript" src="../kernel/framework/js/scriptaculous/prototype.js"></script>
+		<script type="text/javascript" src="../kernel/framework/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="../kernel/framework/js/global.js"></script>	
 	</head>
 	<body>

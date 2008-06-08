@@ -104,6 +104,7 @@ $DOWNLOAD_LANG['category_location'] = 'Emplacement de la catégorie';
 $DOWNLOAD_LANG['cat_description'] = 'Description de la catégorie';
 $DOWNLOAD_LANG['num_files_singular'] = '%d fichier';
 $DOWNLOAD_LANG['num_files_plural'] = '%d fichiers';
+$DOWNLOAD_LANG['recount_subfiles'] = 'Recompter le nombre de fichiers de chaque catégorie';
 
 //Autorisations
 $DOWNLOAD_LANG['auth_read'] = 'Permissions de lecture';
