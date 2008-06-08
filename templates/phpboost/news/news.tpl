@@ -100,10 +100,10 @@
             <div class="news_top">
                 <div style="float:left">
                     <span style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)" onmouseout="HideSyndication(this)">
-	                    <a href="#" title="{L_SYNDICATION}">
-	                        <img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" title="{L_SYNDICATION}" />
-	                    </a>
-	                    {FEED_MENU}
+                        <a href="#" title="{L_SYNDICATION}">
+                            <img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" title="{L_SYNDICATION}" />
+                        </a>
+                        {FEED_MENU}
                     </span>&nbsp;
                     <h3 class="title valign_middle">{L_LAST_NEWS}</h3>
                 </div>

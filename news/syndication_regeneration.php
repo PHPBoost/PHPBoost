@@ -29,7 +29,7 @@
 
 
 require_once(PATH_TO_ROOT . '/news/news_begin.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feeds.class.php');
 
 function RegenerateSyndication($feedType = ALL_FEEDS)
 /**
@@ -55,7 +55,7 @@ function RegenerateSyndication($feedType = ALL_FEEDS)
     // Load the new's config
     $Cache->Load_file('news');
     // Last news
-    $result = $Sql->Query_while("SELECT id, title, contents, timestamp
+    $result = $Sql->Query_while("SELECT id, title, contents, timestamp, img
         FROM ".PREFIX."news
         WHERE visible = 1
         ORDER BY timestamp DESC
@@ -70,7 +70,7 @@ function RegenerateSyndication($feedType = ALL_FEEDS)
         else
             $rewrited_title = '.php?id=' . $row['id'];
         $link = HOST . DIR . '/news/news' . $rewrited_title;
-        
+//         echo $row['img'];
         // XML text's protection
         $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
         array_push($feedInformations['items'], array(
@@ -79,6 +79,7 @@ function RegenerateSyndication($feedType = ALL_FEEDS)
             'guid' => $link,
             'desc' => ( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents,
             'date' => gmdate_format('Y-m-d',$row['timestamp']) . 'T' . gmdate_format('h:m:s',$row['timestamp']) . 'Z',
+            'img' => $row['img']
         ));
     }
     $Sql->Close($result);
@@ -88,24 +89,24 @@ function RegenerateSyndication($feedType = ALL_FEEDS)
     switch ( $feedType )
     {
         case ALL_FEEDS:
-            $Feed = new Feed('news', USE_ATOM);
+            $Feed = new Feeds('news', USE_ATOM);
             $feedInformations['link'] = $link . '?feed=atom';
             // Don't recreate the HTML cache, only the atom's one
             $Feed->Generate($feedInformations, DYNAMIC_MODE);
             
-            $Feed = new Feed('news', USE_RSS);
+            $Feed = new Feeds('news', USE_RSS);
             $feedInformations['link'] = $link . '?feed=rss';
             // Recreate the HTML cache and the rss's one
             $Feed->Generate($feedInformations);
             break;
         case USE_ATOM:
-            $Feed = new Feed('news', USE_ATOM);
+            $Feed = new Feeds('news', USE_ATOM);
             $feedInformations['link'] = $link . '?feed=atom';
             // Recreate the HTML cache and the rss's one
             $Feed->Generate($feedInformations, DYNAMIC_MODE);
             break;
         case USE_RSS:
-            $Feed = new Feed('news', USE_RSS);
+            $Feed = new Feeds('news', USE_RSS);
             $feedInformations['link'] = $link . '?feed=rss';
             // Recreate the HTML cache and the rss's one
             $Feed->Generate($feedInformations, DYNAMIC_MODE);
