@@ -109,6 +109,8 @@ class Feed
             if ( $mode != STATIC_MODE )
                 break;
         }
+        if ( $mode == STATIC_MODE )
+            $this->GenerateCache($feedInformations);
     }
     
     function GenerateCache(&$feedInformations, $tpl = 'framework/syndication/feed.tpl')

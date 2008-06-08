@@ -91,10 +91,10 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 			
 		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . $contents . "', extend_contents = '" . $extend_contents . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
 		WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
-
-        include_once('../kernel/framework/syndication/feed.class.php'); //Flux rss regénéré!
-        $Feed = new Feed('news');
-        $Feed->Generate(array());
+        
+        // Feeds Regeneration
+        include_once('../news/syndication_regeneration.php');
+        RegenerateSyndication(ALL_FEEDS);
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
@@ -117,9 +117,9 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 	//On supprimes les éventuels commentaires associés.
 	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'news'", __LINE__, __FILE__);
 
-    include_once('../kernel/framework/syndication/feed.class.php'); //Flux rss regénéré!
-    $Feed = new Feed('news');
-    $Feed->Generate(array());
+    // Feeds Regeneration
+    include_once('../news/syndication_regeneration.php');
+    RegenerateSyndication(ALL_FEEDS);
 	
 	//Mise à jour du nombre de news dans le cache de la configuration.
 	$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
@@ -422,7 +422,7 @@ else
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( $row['visible'] && $row['start'] > time() )
-			$aprob = $LANG['waiting'];			
+			$aprob = $LANG['waiting'];
 		elseif( $row['visible'] && $row['start'] < time() && ($row['end'] > time() || empty($row['end'])) )
 			$aprob = $LANG['yes'];
 		else
@@ -452,10 +452,10 @@ else
 	}
 	$Sql->Close($result);
 	
-	$Template->Pparse('admin_news_management'); 
-}			
+	$Template->Pparse('admin_news_management');
+}
 
 require_once('../kernel/admin_footer.php');
-	
+
 
 ?>

@@ -82,10 +82,9 @@ if( !empty($_POST['valid']) )
 		$Sql->Query_inject("INSERT INTO ".PREFIX."news (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com) 
 		VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
 		
-		//Regénération du flux rss.
-		include_once('../kernel/framework/syndication/fedd.class.php'); //Flux rss regénéré!
-		$Feed = new Feed('news');
-        $Feed->Generate(array());
+		// Feeds Regeneration
+		include_once('../news/syndication_regeneration.php');
+        RegenerateSyndication(ALL_FEEDS);
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
