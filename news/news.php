@@ -33,8 +33,6 @@ $idnews = retrieve(GET, 'id', 0);
 $idcat = retrieve(GET, 'cat', 0);
 $show_archive = retrieve(GET, 'arch', false);
 
-$TplNews = null;
-
 $is_admin = $Member->Check_level(ADMIN_LEVEL);
 if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 {
