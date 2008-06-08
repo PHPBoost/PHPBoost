@@ -18,9 +18,6 @@
         <id>{item.U_GUID}</id>
         <updated>{item.DATE}</updated>
         <summary>{item.DESC}</summary>
-        <!--# IF item.C_IMG #
-            <logo>{item.U_IMG}</logo>
-        # ENDIF #-->
     </entry>
     # END item #
     

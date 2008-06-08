@@ -70,8 +70,7 @@ class ATOM extends Feed
                     $guid = preg_match('`<id>(.*)</id>`is', $expParsed[$i], $guid) ? $guid[1] : '';
                     $date = preg_match('`<updated>(.*)</updated>`is', $expParsed[$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '';
                     $desc = preg_match('`<summary>(.*)</summary>`is', $expParsed[$i], $desc) ? $desc[1] : '';
-                    $img = preg_match('`<logo>(.*)</logo>`is', $expParsed[$i], $img) ? $img[1] : false;
-                    array_push($parsed['items'], array('title' => $title, 'link' => $url, 'guid' => $guid, 'desc' => $desc, 'date' => $date, 'img' => $img));
+                    array_push($parsed['items'], array('title' => $title, 'link' => $url, 'guid' => $guid, 'desc' => $desc, 'date' => $date));
                     unset($parsed['items'][$i]);
                 }
                 return $parsed;
