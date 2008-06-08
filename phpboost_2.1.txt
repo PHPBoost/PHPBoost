@@ -76,6 +76,8 @@
 [*] Correction du bug d'affichage des dossiers dans le gestionnaire de fichiers.
 [*] Correction des bugs dù à l'option register_globals.
 [+] Amélioration de la classe Template.
+[+] Nouvelle classe de gestion des RSS avec le support d'ATOM
+[-] Système de gestion des mises à jour du noyau et des modules avec gestion de différents dépôts
 
 [b]Forum[/b]
 [*] [color=red]Nouveauté:[/color] Réorganisation complète du code.
@@ -150,5 +152,5 @@
 [*] [color=red]Nouveauté:[/color] Module FAQ. Permet de gérer une liste de questions/réponses.
 
 [b]Nouveau module:[/b]
-+ [color=red]Nouveauté:[/color] Module Recherche. Possibilité de faire des recherches globales dans les modules (proposant la fonction) et coloration des résultats.
+[*] [color=red]Nouveauté:[/color] Module Recherche. Possibilité de faire des recherches globales dans les modules (proposant la fonction) et coloration des résultats.
 
