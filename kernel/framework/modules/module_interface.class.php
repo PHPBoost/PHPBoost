@@ -4,7 +4,7 @@
 *                      module_interface.class.php
 *                            -------------------
 *   begin                : January 15, 2008
-*   copyright            :(C) 2008 Loï¿½c Rouchon
+*   copyright            :(C) 2008 Loïc Rouchon
 *   email                : horn@phpboost.com
 *
 *
