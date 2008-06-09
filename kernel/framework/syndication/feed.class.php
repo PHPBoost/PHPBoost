@@ -25,16 +25,19 @@
  *
 ###################################################*/
 
+if (!defined('FEED_PATH'))
+    define('FEED_PATH', PATH_TO_ROOT . '/cache/syndication');
+
 class Feed
 {
-    ## Public Methods #
+    ## Public Methods ##
     function Feed($feedName, $feedPath, $type)
     /**
      * Constructor
      */
     {
         $this->name = $feedName;
-        $this->path = $feedPath;
+        $this->path = trim($feedPath, '/') . '/';
         $this->type = $type;
     }
 

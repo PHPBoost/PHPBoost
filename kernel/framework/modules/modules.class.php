@@ -71,7 +71,7 @@ class Modules
             // On nettoie le bit d'erreur correspondant.
             $module->clearFunctionnalityError();
             if( $module->HasFunctionnality($functionnality) == true )
-				$results[$moduleName] = $module->Functionnality($functionnality, $args);
+                $results[$moduleName] = $module->Functionnality($functionnality, $args);
         }
         return $results;
     }
@@ -86,7 +86,7 @@ class Modules
         if( $modulesList === array() )
         {
             global $MODULES;
-			
+            
             foreach(array_keys($MODULES) as $moduleId)
             {
                 $module = $this->GetModule($moduleId);
@@ -131,7 +131,7 @@ class Modules
             if( in_array($moduleId, $this->availablesModules) )
             {
                 global $Member, $MODULES;
-				
+                
                 if( $Member->check_auth($MODULES[$moduleId]['auth'], ACCESS_MODULE) )
                 {
                     if( @include_once(PATH_TO_ROOT . '/'.$moduleId.'/'.$moduleId.'_interface.class.php') )

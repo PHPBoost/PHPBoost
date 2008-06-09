@@ -25,6 +25,8 @@
  *
 ###################################################*/
 
+
+
 define('DEFAULT_ATOM_TEMPLATE', 'framework/syndication/atom.tpl');
 
 require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
@@ -32,8 +34,8 @@ require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
 
 class ATOM extends Feed
 {
-    ## Public Methods #
-    function ATOM($feedName, $feedPath)
+    ## Public Methods ##
+    function ATOM($feedName, $feedPath = FEED_PATH)
     /**
      * Constructor
      */

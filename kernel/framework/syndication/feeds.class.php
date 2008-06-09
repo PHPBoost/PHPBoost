@@ -38,7 +38,7 @@ define('DYNAMIC_MODE', 0x02);
 
 class Feeds
 {
-    ## Public Methods #
+    ## Public Methods ##
     function Feeds($feedName, $type = ALL_FEEDS, $feedPath = FEED_PATH)
     /**
      * Constructor

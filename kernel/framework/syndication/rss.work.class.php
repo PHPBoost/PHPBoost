@@ -31,8 +31,8 @@ require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
 
 class RSS extends Feed
 {
-    ## Public Methods #
-    function RSS($feedName, $feedPath)
+    ## Public Methods ##
+    function RSS($feedName, $feedPath = FEED_PATH)
     /**
      * Constructor
      */
