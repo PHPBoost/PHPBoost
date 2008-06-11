@@ -136,15 +136,16 @@ class Sessions
 		########Valeurs à retourner########
 		$userdata = array();
 		if( $this->data['user_id'] !== -1 && !empty($this->data['user_id']) )
-		{	
+		{
 			//Récupère également les champs membres supplémentaires
 			$result = $Sql->Query_inject("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_avatar avatar, m.user_readonly, me.*
 			FROM ".PREFIX."member m
             JOIN ".PREFIX."sessions s ON s.user_id = '" . $this->data['user_id']. "' AND s.session_id = '" . $this->data['session_id'] . "'
 			LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $this->data['user_id'] . "'
-			WHERE m.user_id = '" . $this->data['user_id'] . "'", __LINE__, __FILE__);	
+			WHERE m.user_id = '" . $this->data['user_id'] . "'", __LINE__, __FILE__);
 			$userdata = $Sql->Sql_fetch_assoc($result);
-			$this->data = array_merge($userdata, $this->data); //Fusion des deux tableaux.
+            if (!empty($userdata))
+			    $this->data = array_merge($userdata, $this->data); //Fusion des deux tableaux.
 		}	
 		
 		$this->data['user_id'] = isset($userdata['m_user_id']) ? (int)$userdata['m_user_id'] : -1;
@@ -309,8 +310,8 @@ class Sessions
 		########SID Existe?########
 		elseif( !empty($_GET['sid']) && !empty($_GET['suid']) )
 		{
-			$this->data['session_id'] = !empty($_GET['sid']) ? strprotect($_GET['sid']) : ''; //Validité du session id.
-			$this->data['user_id'] = !empty($_GET['suid']) ? numeric($_GET['suid']) : ''; //Validité user id?
+			$this->data['session_id'] = strprotect($_GET['sid']); //Validité du session id.
+			$this->data['user_id'] = numeric($_GET['suid']); //Validité user id?
 			$this->session_mod = 1;
 		}
 	}
