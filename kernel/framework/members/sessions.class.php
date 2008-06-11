@@ -140,6 +140,7 @@ class Sessions
 			//Récupère également les champs membres supplémentaires
 			$result = $Sql->Query_inject("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_avatar avatar, m.user_readonly, me.*
 			FROM ".PREFIX."member m
+            JOIN ".PREFIX."sessions s ON s.user_id = '" . $this->data['user_id']. "' AND s.session_id = '" . $this->data['session_id'] . "'
 			LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $this->data['user_id'] . "'
 			WHERE m.user_id = '" . $this->data['user_id'] . "'", __LINE__, __FILE__);	
 			$userdata = $Sql->Sql_fetch_assoc($result);
@@ -306,7 +307,7 @@ class Sessions
 			$this->data['user_id'] = isset($session_data['user_id']) ? numeric($session_data['user_id']) : ''; //Validité user id?
 		}	
 		########SID Existe?########
-		elseif( isset($_GET['sid']) && isset($_GET['suid']) )
+		elseif( !empty($_GET['sid']) && !empty($_GET['suid']) )
 		{
 			$this->data['session_id'] = !empty($_GET['sid']) ? strprotect($_GET['sid']) : ''; //Validité du session id.
 			$this->data['user_id'] = !empty($_GET['suid']) ? numeric($_GET['suid']) : ''; //Validité user id?
