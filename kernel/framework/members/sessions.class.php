@@ -315,7 +315,7 @@ class Sessions
 		}
 	}
 	
-	//Suppression des sessions expirée par le garbage collector.
+	//Suppression des sessions expirées par le garbage collector.
 	function session_garbage_collector() 
 	{
 		global $CONFIG, $Sql;
