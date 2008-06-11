@@ -50,7 +50,8 @@ $DOWNLOAD_LANG['download_management'] = 'Gestion Téléchargements';
 $DOWNLOAD_LANG['download_config'] = 'Configuration des téléchargements';
 $DOWNLOAD_LANG['file_list'] = 'Liste des fichiers';
 $DOWNLOAD_LANG['edit_file'] = 'Edition du fichier';
-$DOWNLOAD_LANG['nbr_download_max'] = 'Nombre maximum de fichiers affichés';
+$DOWNLOAD_LANG['nbr_download_max'] = 'Nombre maximum de fichiers affichés par page';
+$DOWNLOAD_LANG['nbr_columns_for_cats'] = 'Nombre de colonnes dans lesquelles sont présentées les catégories';
 $DOWNLOAD_LANG['download_date'] = 'Date d\'ajout du fichier';
 $DOWNLOAD_LANG['release_date'] = 'Date de sortie (ou dernière mise à jour) du fichier';
 $DOWNLOAD_LANG['ignore_release_date'] = 'Ignorer la date de sortie du fichier';
@@ -105,6 +106,10 @@ $DOWNLOAD_LANG['cat_description'] = 'Description de la catégorie';
 $DOWNLOAD_LANG['num_files_singular'] = '%d fichier';
 $DOWNLOAD_LANG['num_files_plural'] = '%d fichiers';
 $DOWNLOAD_LANG['recount_subfiles'] = 'Recompter le nombre de fichiers de chaque catégorie';
+$DOWNLOAD_LANG['popularity'] = 'Popularité';
+$DOWNLOAD_LANG['sort_alpha'] = 'Alphabétique';
+$DOWNLOAD_LANG['order_by'] = 'Trier selon';
+$DOWNLOAD_LANG['order'] = 'Trier';
 
 //Autorisations
 $DOWNLOAD_LANG['auth_read'] = 'Permissions de lecture';

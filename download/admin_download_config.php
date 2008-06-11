@@ -37,7 +37,6 @@ include_once('download_auth.php');
 if( !empty($_POST['valid']) )
 {
 	$config_download['nbr_file_max'] = retrieve(POST, 'nbr_file_max', 10);
-	$config_download['nbr_cat_max'] = retrieve(POST, 'nbr_cat_max', 10);
 	$config_download['nbr_column'] = retrieve(POST, 'nbr_column', 4);
 	$config_download['note_max'] = max(1, retrieve(POST, 'note_max', 5));
 	$config_download['root_contents'] = stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE));
@@ -64,7 +63,6 @@ else
 	
 	$Template->Assign_vars(array(
 		'NBR_FILE_MAX' => !empty($CONFIG_DOWNLOAD['nbr_file_max']) ? $CONFIG_DOWNLOAD['nbr_file_max'] : '10',
-		'NBR_CAT_MAX' => !empty($CONFIG_DOWNLOAD['nbr_cat_max']) ? $CONFIG_DOWNLOAD['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_DOWNLOAD['nbr_column']) ? $CONFIG_DOWNLOAD['nbr_column'] : '2',
 		'NOTE_MAX' => !empty($CONFIG_DOWNLOAD['note_max']) ? $CONFIG_DOWNLOAD['note_max'] : '10',
 		'READ_AUTH' => $Group->Generate_select_auth(READ_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
@@ -76,8 +74,7 @@ else
 		'L_DOWNLOAD_CAT' => $LANG['cat_management'],
 		'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
 		'L_NBR_FILE_MAX' => $DOWNLOAD_LANG['nbr_download_max'],
-		'L_NBR_CAT_MAX' => $LANG['nbr_cat_max'],
-		'L_NBR_COLUMN_MAX' => $LANG['nbr_column_max'],
+		'L_NBR_COLUMN_MAX' => $DOWNLOAD_LANG['nbr_columns_for_cats'],
 		'L_NOTE_MAX' => $LANG['note_max'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_UPDATE' => $LANG['update'],

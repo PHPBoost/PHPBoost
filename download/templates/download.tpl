@@ -46,21 +46,34 @@
 				
 				# IF C_FILES #
 					
-					<div style="float:right;" class="row3">
-						<form method="get" action="">
-							<select name="sort" class="nav">
-								<option value="alpha">Alphabétique</option>
-								<option value="size">Taille</option>
-								<option value="date">Date</option>
-								<option value="hits">Nombre de téléchargements</option>
-								<option value="note">Note</option>
-								<option value="com">Nombre de commentaires</option>
+					<div style="float:right;" class="row3" id="form">
+						<script type="text/javascript">
+						<!--
+						function change_order()
+						{
+							document.forms["form_order"].submit();
+						}
+						-->
+						</script>
+						<form method="get" action="" name="form_order">
+							{L_ORDER_BY}
+							<select name="sort" class="nav" onchange="change_order()">
+								<option value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
+								<option value="size"{SELECTED_SIZE}>{L_SIZE}</option>
+								<option value="date"{SELECTED_DATE}>{L_DATE}</option>
+								<option value="hits"{SELECTED_HITS}>{L_POPULARITY}</option>
+								<option value="note"{SELECTED_NOTE}>{L_NOTE}</option>
 							</select>
-							<select name="mode" class="nav">
-								<option value="asc">Croissant</option>
-								<option value="desc">Décroissant</option>
+							<select name="mode" class="nav" onchange="change_order()">
+								<option value="asc"{SELECTED_ASC}>{L_ASC}</option>
+								<option value="desc"{SELECTED_DESC}>{L_DESC}</option>
 							</select>
-							<input type="submit" value="test" class="submit" />
+							<input id="submit_order" type="submit" value="{L_ORDER}" class="submit" />
+							<script type="text/javascript">
+							<!--
+							document.getElementById("submit_order").style.display = 'none';
+							-->
+							</script>
 						</form>
 					</div>
 					<div class="spacer">&nbsp;</div>

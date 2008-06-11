@@ -164,47 +164,74 @@ else
 	
 	if( $nbr_files > 0 )
 	{
-		$rewrited_title = $category_id > 0 ? url_encode_rewrite($DOWNLOAD_CATS[$category_id]['name']) : '';
-		
-		$Template->Assign_vars(array(
-			'L_FILE' => $DOWNLOAD_LANG['file'],
-			'L_SIZE' => $LANG['size'],
-			'L_DATE' => $LANG['date'],
-			'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
-			'L_NOTE' => $LANG['note'],
-			'L_COM' => $LANG['com'],
-			'L_NOTE' => $DOWNLOAD_LANG['this_note'],
-			'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $DOWNLOAD_LANG['confirm_delete_file'])
-		));		
-		
 		$get_sort = retrieve(GET, 'sort', '');	
-		$get_mode = retrieve(GET, 'mode', '');	
+		$get_mode = retrieve(GET, 'mode', '');
+		$selected_fields = array(
+			'alpha' => '',
+			'size' => '',
+			'date' => '',
+			'hits' => '',
+			'note' => '',
+			'asc' => '',
+			'desc' => ''
+			);
+		
 		switch($get_sort)
 		{
 			case 'alpha' : 
 			$sort = 'title';
+			$selected_fields['alpha'] = ' selected="selected"';
 			break;	
 			case 'size' : 
 			$sort = 'size';
+			$selected_fields['size'] = ' selected="selected"';
 			break;			
 			case 'date' : 
 			$sort = 'timestamp';
+			$selected_fields['date'] = ' selected="selected"';
 			break;		
 			case 'hits' : 
 			$sort = 'count';
+			$selected_fields['hits'] = ' selected="selected"';
 			break;		
 			case 'note' :
 			$sort = 'note';
+			$selected_fields['note'] = ' selected="selected"';
 			break;
-			case 'com' :
-			$sort = 'nbr_com';
-			break;		
 			default :
 			$sort = 'timestamp';
+			$selected_fields['date'] = ' selected="selected"';
 		}
 		
-		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
+		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
+		if( $mode == 'ASC' )
+			$selected_fields['asc'] = ' selected="selected"';
+		else
+			$selected_fields['desc'] = ' selected="selected"';
+		
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
+		
+		$Template->Assign_vars(array(
+			'L_FILE' => $DOWNLOAD_LANG['file'],
+			'L_ALPHA' => $DOWNLOAD_LANG['sort_alpha'],
+			'L_SIZE' => $LANG['size'],
+			'L_DATE' => $LANG['date'],
+			'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
+			'L_POPULARITY' => $DOWNLOAD_LANG['popularity'],
+			'L_DESC' => $LANG['desc'],
+			'L_ASC' => $LANG['asc'],
+			'L_NOTE' => $LANG['note'],
+			'L_ORDER_BY' => $DOWNLOAD_LANG['order_by'],
+			'L_ORDER' => $DOWNLOAD_LANG['order'],
+			'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $DOWNLOAD_LANG['confirm_delete_file']),
+			'SELECTED_ALPHA' => $selected_fields['alpha'],
+			'SELECTED_SIZE' => $selected_fields['size'],
+			'SELECTED_DATE' => $selected_fields['date'],
+			'SELECTED_HITS' => $selected_fields['hits'],
+			'SELECTED_NOTE' => $selected_fields['note'],
+			'SELECTED_ASC' => $selected_fields['asc'],
+			'SELECTED_DESC' => $selected_fields['desc']
+		));
 			
 		//On crée une pagination si le nombre de fichiers est trop important.
 		include_once('../kernel/framework/pagination.class.php'); 

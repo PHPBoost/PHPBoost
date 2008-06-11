@@ -6,10 +6,6 @@
 				alert("{L_REQUIRE}");
 				return false;
 			}
-			if(document.getElementById('nbr_cat_max').value == "") {
-				alert("{L_REQUIRE}");
-				return false;
-			}
 			if(document.getElementById('nbr_column').value == "") {
 				alert("{L_REQUIRE}");
 				return false;
@@ -59,10 +55,6 @@
 					<dl>
 						<dt><label for="nbr_file_max">* {L_NBR_FILE_MAX}</label></dt>
 						<dd><label><input type="text" size="3" maxlength="3" id="nbr_file_max" name="nbr_file_max" value="{NBR_FILE_MAX}" class="text" /></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="nbr_cat_max">* {L_NBR_CAT_MAX}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="nbr_cat_max" name="nbr_cat_max" value="{NBR_CAT_MAX}" class="text" /></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="nbr_column">* {L_NBR_COLUMN_MAX}</label></dt>
