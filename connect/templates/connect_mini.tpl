@@ -38,10 +38,10 @@
 				</p>
 				<p style="margin:0;margin-top:5px;">
 					# IF C_MEMBER_REGISTER # 
-					<a class="small_link" href="../member/register.php"><img src="../templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a> 
+					<a class="small_link" href="{PATH_TO_ROOT}/member/register.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a> 
 					# ENDIF #
 					<br />
-					<a class="small_link" href="../member/forget.php"><img src="../templates/{THEME}/images/forget_mini.png" alt="" class="valign_middle" /> {L_FORGOT_PASS}</a>
+					<a class="small_link" href="{PATH_TO_ROOT}/member/forget.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/forget_mini.png" alt="" class="valign_middle" /> {L_FORGOT_PASS}</a>
 				</p>
 			</div>		
 			<div class="module_mini_bottom">
@@ -58,17 +58,17 @@
 			</div>
 			<div class="module_mini_contents" style="text-align:left;">
 				<ul style="margin:0;padding:0;padding-left:4px;list-style-type:none;line-height:18px">
-					<li><img src="../templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="../member/member{U_MEMBER_ID}" class="small_link">{L_PRIVATE_PROFIL}</a></li>
-					<li><img src="../templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_MEMBER_PM}" class="small_link">{L_NBR_PM}</a>&nbsp;</li>
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" class="small_link">{L_PRIVATE_PROFIL}</a></li>
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_MEMBER_PM}" class="small_link">{L_NBR_PM}</a>&nbsp;</li>
 					
 					# IF C_ADMIN_AUTH # 
-					<li><img src="../templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="../admin/admin_index.php" class="small_link">{L_ADMIN_PANEL}</a></li> 
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link">{L_ADMIN_PANEL}</a></li> 
 					# ENDIF #
 					# IF C_MODO_AUTH # 
-					<li><img src="../templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /> <a href="../member/moderation_panel.php" class="small_link">{L_MODO_PANEL}</a></li> 
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/moderation_panel.php" class="small_link">{L_MODO_PANEL}</a></li> 
 					# ENDIF #
 					
-					<li><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> <a href="{U_DISCONNECT}" class="small_link">{L_DISCONNECT}</a></li>
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> <a href="{U_DISCONNECT}" class="small_link">{L_DISCONNECT}</a></li>
 				</ul>
 			</div>
 			<div class="module_mini_bottom">

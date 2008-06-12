@@ -7,12 +7,12 @@
 
 			if( pseudo != '' && contents != '' )
 			{
-				document.getElementById('shoutimg').src = '../templates/{THEME}/images/loading_mini.gif';
+				document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
 
 				pseudo = escape_xmlhttprequest(pseudo);
 				contents = escape_xmlhttprequest(contents);
 				data = "pseudo=" + pseudo + "&contents=" + contents;
-				var xhr_object = xmlhttprequest_init('../shoutbox/xmlhttprequest.php?add=1');
+				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?add=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' && xhr_object.responseText != '-2' && xhr_object.responseText != '-3' && xhr_object.responseText != '-4' && xhr_object.responseText != '-5' && xhr_object.responseText != '-6' )
@@ -21,11 +21,11 @@
 						eval(xhr_object.responseText);
 						document.getElementById('shout_container').innerHTML = '<p id="shout_container_' + array_shout[2] + '">' + array_shout[0] + '<span class="text_small">: ' + array_shout[1] + '</span></p>' + document.getElementById('shout_container').innerHTML;
 						document.getElementById('shout_contents').value = '';
-						document.getElementById('shoutimg').src = '../templates/{THEME}/images/refresh_mini.png';
+						document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png';
 					}
 					else if( xhr_object.readyState == 4 )
 					{	
-						document.getElementById('shoutimg').src = '../templates/{THEME}/images/refresh_mini.png';
+						document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png';
 						switch( xhr_object.responseText )
 						{
 							case '-1': 
@@ -56,35 +56,35 @@
 		}
 		function XMLHttpRequest_shoutdelmsg(idmsg)
 		{
-			document.getElementById('shoutimg').src = '../templates/{THEME}/images/loading_mini.gif';
+			document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
 			data = "idmsg=" + idmsg;
-			var xhr_object = xmlhttprequest_init('../shoutbox/xmlhttprequest.php?del=1');
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?del=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText == '1' )
 				{
-					document.getElementById('shoutimg').src = '../templates/{THEME}/images/refresh_mini.png';
+					document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png';
 					document.getElementById('shout_container_' + idmsg).style.display = 'none';
 				}
 				else if( xhr_object.readyState == 4 )
-					document.getElementById('shoutimg').src = '../templates/{THEME}/images/refresh_mini.png';
+					document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png';
 			}
 			xmlhttprequest_sender(xhr_object, data);
 		}
 
 		function XMLHttpRequest_shoutrefresh()
 		{
-			document.getElementById('shoutimg').src = '../templates/{THEME}/images/loading_mini.gif';
-			var xhr_object = xmlhttprequest_init('../shoutbox/xmlhttprequest.php?refresh=1');
+			document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?refresh=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 				{
-					document.getElementById('shoutimg').src = '../templates/{THEME}/images/refresh_mini.png';
+					document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png';
 					document.getElementById('shout_container').innerHTML = xhr_object.responseText;
 				}
 				else if( xhr_object.readyState == 4 )
-					document.getElementById('shoutimg').src = '../templates/{THEME}/images/refresh_mini.png';
+					document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png';
 			}
 			xmlhttprequest_sender(xhr_object, null);
 			if( {SHOUT_REFRESH_DELAY} > 0 )
@@ -135,9 +135,9 @@
 				document.write('<input value="{L_SUBMIT}" onclick="XMLHttpRequest_shoutmsg();" type="button" class="submit" />');
 				-->
 				</script>
-				<a href="javascript:XMLHttpRequest_shoutrefresh();" title="{L_REFRESH}"><img src="../templates/{THEME}/images/refresh_mini.png" id="shoutimg" alt="{L_REFRESH}" class="valign_middle" /></a>					
+				<a href="javascript:XMLHttpRequest_shoutrefresh();" title="{L_REFRESH}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png" id="shoutimg" alt="{L_REFRESH}" class="valign_middle" /></a>					
 				<p style="margin:0;margin-top:10px;">
-					<a class="small_link" href="../shoutbox/shoutbox.php{SID}" title="">{L_ARCHIVES}</a>
+					<a class="small_link" href="{PATH_TO_ROOT}/shoutbox/shoutbox.php{SID}" title="">{L_ARCHIVES}</a>
 				</p>
 			</div>
 			<div class="module_mini_bottom">
