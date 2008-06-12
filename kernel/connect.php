@@ -91,7 +91,7 @@ elseif( retrieve(POST, 'connect', false) && !empty($login) && !empty($password) 
 		redirect(HOST . DIR . '/member/error.php?e=e_unexist_member#errorh');
 	
 	$query_string = QUERY_STRING;
-	$query_string = !empty($query_string) ? '?' . QUERY_STRING . '&sid=' . $Member->Get_attribute('session_id') . '&suid=' . $Member->Get_attribute('user_id') : '?sid=' . $Member->Get_attribute('session_id') . '&suid=' . $Member->Get_attribute('user_id');
+	$query_string = !empty($query_string) ? '?' . QUERY_STRING . '&sid=' . $Session->data['session_id'] . '&suid=' . $Session->data['user_id'] : '?sid=' . $Session->data['session_id'] . '&suid=' . $Session->data['user_id'];
 	
 	//Redirection avec les variables de session dans l'url.
 	if( SCRIPT != DIR . '/member/error.php' )

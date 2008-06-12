@@ -25,13 +25,19 @@
  *
  ###################################################*/
  
-if( defined('PHPBOOST') !== true) exit;
+if( defined('PHPBOOST') !== true) 
+	exit;
+
+if( !defined('TITLE') )
+    define('TITLE', $LANG['unknow']);
+
+$Session->Session_check(TITLE); //Vérification de la session.
 
 //Gestion de la maintenance du site.
 if( $CONFIG['maintain'] > time() && !$Member->Check_level(ADMIN_LEVEL) )
 {	
-	if( SCRIPT !== (DIR . '/member/maintain.php') )
-		redirect(HOST . DIR . '/kernel/maintain.php');
+	if( SCRIPT !== (DIR . '/member/maintain.php') ) //Evite de créer une boucle infine.
+		redirect(HOST . DIR . '/member/maintain.php');
 }
 
 ?>

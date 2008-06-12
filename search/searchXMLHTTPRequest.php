@@ -25,6 +25,7 @@
 *
 ###################################################*/
 
+define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans la session.
 require_once('../kernel/begin.php');
 //------------------------------------------------------------------- Language
 load_module_lang('search');

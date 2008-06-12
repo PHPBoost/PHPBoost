@@ -25,12 +25,15 @@
  *
 ###################################################*/
 
-include_once('../kernel/begin.php'); 
+include_once(PATH_TO_ROOT . '/kernel/begin.php'); 
 define('TITLE', $LANG['title_maintain']);
-include_once('../kernel/header_no_display.php');
+include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 if( $CONFIG['maintain'] <= time() )
-	redirect(get_start_page());
+{	
+	header('location: ' . get_start_page());
+	exit;
+}
 
 $Template->Set_filenames(array(
 	'maintain'=> 'maintain.tpl')
@@ -56,10 +59,10 @@ if( $CONFIG['maintain'] != -1 )
 	}
 	
 	//Calcul du format de la date
-	$seconds = gmdate_format('s', $CONFIG['maintain'], TIMEZONE_SITE);
+	$seconds = gmdate_format('s', $CONFIG['maintain'], TIMEZONE_SYSTEM);
 	$array_release = array(
-	gmdate_format('Y', $CONFIG['maintain'], TIMEZONE_SITE), (gmdate_format('n', $CONFIG['maintain'], TIMEZONE_SITE) - 1), gmdate_format('j', $CONFIG['maintain'], TIMEZONE_SITE), 
-	gmdate_format('G', $CONFIG['maintain'], TIMEZONE_SITE), gmdate_format('i', $CONFIG['maintain'], TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds );
+	gmdate_format('Y', $CONFIG['maintain'], TIMEZONE_SYSTEM), (gmdate_format('n', $CONFIG['maintain'], TIMEZONE_SYSTEM) - 1), gmdate_format('j', $CONFIG['maintain'], TIMEZONE_SYSTEM), 
+	gmdate_format('G', $CONFIG['maintain'], TIMEZONE_SYSTEM), gmdate_format('i', $CONFIG['maintain'], TIMEZONE_SYSTEM), ($seconds < 10) ? trim($seconds, 0) : $seconds );
 }	
 else //Délai indéterminé.
 {	
