@@ -368,12 +368,12 @@ function display_com_link($nbr_com, $path, $idprov, $script, $options = 0)
 //Transmet le session_id et le user_id à traver l'url pour les connexions sans cookies. Permet le support de l'url rewritting!
 function transid($url, $mod_rewrite = '', $esperluette = '&amp;')
 {
-    global $CONFIG, $session;
+    global $CONFIG, $Session;
     
-    if( !is_object($session) )
+    if( !is_object($Session) )
         $session_mod = 0;
     else
-        $session_mod = $session->session_mod;
+        $session_mod = $Session->session_mod;
         
     if( $session_mod == 0 )
     {   

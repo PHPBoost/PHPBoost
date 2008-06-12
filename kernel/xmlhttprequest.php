@@ -1,6 +1,7 @@
 <?php
 
 define('PATH_TO_ROOT', '..');
+define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans la session.
 
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');

@@ -26,10 +26,8 @@
  *
 ###################################################*/
 
-header('Content-type: text/html; charset=iso-8859-15');
-
+define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans la session.
 require_once('../kernel/begin.php');
-define('TITLE', 'Ajax Galerie');
 require_once('../kernel/header_no_display.php');
 
 if( $Member->Check_level(ADMIN_LEVEL) ) //Admin

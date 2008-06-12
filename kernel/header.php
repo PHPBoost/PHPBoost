@@ -38,7 +38,7 @@ if( $CONFIG['maintain'] > time() )
 {	
 	if( !$Member->Check_level(ADMIN_LEVEL) ) //Non admin.
 	{
-		if( SCRIPT !== (DIR . '/kernel/maintain.php') ) //Evite de créer une boucle infine.
+		if( SCRIPT !== (DIR . '/member/maintain.php') ) //Evite de créer une boucle infine.
 			redirect(HOST . DIR . '/member/maintain.php');
 	}
 	elseif( $CONFIG['maintain_display_admin'] ) //Affichage du message d'alerte à l'administrateur.

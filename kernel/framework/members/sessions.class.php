@@ -35,6 +35,7 @@ class Sessions
 	## Public Attribute ##
 	var $data = array(); //Tableau contenant les informations de session.
 	var $session_mod = 0; //Variable contenant le mode de session à utiliser pour récupérer les infos.
+	var $autoconnect = array(); //Vérification de la session pour l'autoconnexion.
 	
 	
 	## Public Methods ##
@@ -67,7 +68,9 @@ class Sessions
 			
 		########Génération d'un ID de session unique########
 		$session_uniq_id = md5(uniqid(mt_rand(), true)); //On génère un numéro de session aléatoire.
-			
+		$this->data['user_id'] = $user_id;
+		$this->data['session_id'] = $session_uniq_id;
+		
 		########Session existe t-elle?#########		
 		$this->session_garbage_collector();	//On nettoie avant les sessions périmées.
 
@@ -132,20 +135,28 @@ class Sessions
 		global $Sql, $CONFIG;
 		
 		$this->get_session_id(); //Récupération des identifiants de session.
-				
+		
 		########Valeurs à retourner########
 		$userdata = array();
-		if( $this->data['user_id'] !== -1 && !empty($this->data['user_id']) )
+		if( $this->data['user_id'] > 0 && !empty($this->data['session_id']) )
 		{
 			//Récupère également les champs membres supplémentaires
 			$result = $Sql->Query_inject("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_avatar avatar, m.user_readonly, me.*
 			FROM ".PREFIX."member m
-            JOIN ".PREFIX."sessions s ON s.user_id = '" . $this->data['user_id']. "' AND s.session_id = '" . $this->data['session_id'] . "'
+            JOIN ".PREFIX."sessions s ON s.user_id = '" . $this->data['user_id'] . "' AND s.session_id = '" . $this->data['session_id'] . "'
 			LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $this->data['user_id'] . "'
 			WHERE m.user_id = '" . $this->data['user_id'] . "'", __LINE__, __FILE__);
 			$userdata = $Sql->Sql_fetch_assoc($result);
-            if (!empty($userdata))
-			    $this->data = array_merge($userdata, $this->data); //Fusion des deux tableaux.
+         
+			if( !empty($userdata) ) //Succès.
+			{    
+				$this->data = array_merge($userdata, $this->data); //Fusion des deux tableaux.
+			}
+			elseif( $this->session_mod == 0 ) //Aucune entrée associée dans la base de donnée, on tente une connexion auto.
+			{
+				$this->autoconnect['user_id'] = $this->data['user_id'];
+				$this->autoconnect['session_id'] = $this->data['session_id'];
+			}
 		}	
 		
 		$this->data['user_id'] = isset($userdata['m_user_id']) ? (int)$userdata['m_user_id'] : -1;
@@ -169,12 +180,24 @@ class Sessions
 
 		$session_script = str_replace(DIR, '', SCRIPT);
 		$session_script_get = QUERY_STRING;
-		if( !empty($this->data['session_id']) && $this->data['user_id'] > 0 )
+		$check_autoconnect = (!empty($this->autoconnect['session_id']) && $this->autoconnect['user_id'] > 0);
+		if( (!empty($this->data['session_id']) && $this->data['user_id'] > 0) || $check_autoconnect )
 		{
-			//On modifie le session_flag pour forcer mysql à modifier l'entrée, pour prendre en compte la mise à jour par mysql_affected_rows().
-			$resource = $Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . time() . "', session_script = '" . addslashes($session_script) . "', session_script_get = '" . addslashes($session_script_get) . "', session_script_title = '" . addslashes($session_script_title) . "', session_flag = 1 - session_flag WHERE session_id = '" . $this->data['session_id'] . "' AND user_id = '" . $this->data['user_id'] . "'", __LINE__, __FILE__);
+			if( !$check_autoconnect )
+			{
+				$this->autoconnect['session_id'] = $this->data['session_id'];
+				$this->autoconnect['user_id'] = $this->data['user_id'];
+			}
+				
+			//Localisation du membre.
+			if( !defined('NO_SESSION_LOCATION') )
+				$location = " session_script = '" . addslashes($session_script) . "', session_script_get = '" . addslashes($session_script_get) . "', session_script_title = '" . addslashes($session_script_title) . "', ";
+			else
+				$location = '';
 			
-			if( $Sql->Sql_affected_rows($resource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE session_id = '" . $this->data['session_id'] . "' AND user_id = '" . $this->data['user_id'] . "'") == 0 ) //Aucune session lancée.
+			//On modifie le session_flag pour forcer mysql à modifier l'entrée, pour prendre en compte la mise à jour par mysql_affected_rows().
+			$resource = $Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . time() . "', " . $location . " session_flag = 1 - session_flag WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'", __LINE__, __FILE__);			
+			if( $Sql->Sql_affected_rows($resource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'") == 0 ) //Aucune session lancée.
 			{
 				if( $this->get_session_autoconnect($session_script, $session_script_get, $session_script_title) === false )
 				{					
@@ -190,9 +213,14 @@ class Sessions
 		}
 		else //Visiteur
 		{
+			//Localisation du visiteur.
+			if( !defined('NO_SESSION_LOCATION') )
+				$location = " session_script = '" . addslashes($session_script) . "', session_script_get = '" . addslashes($session_script_get) . "', session_script_title = '" . addslashes($session_script_title) . "', ";
+			else
+				$location = '';
+				
 			//On modifie le session_flag pour forcer mysql à modifier l'entrée, pour prendre en compte la mise à jour par mysql_affected_rows().
-			$resource = $Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . (time() + 1) . "', session_script = '" . addslashes($session_script) . "', session_script_get = '" . addslashes($session_script_get) . "', session_script_title = '" . addslashes($session_script_title) . "', session_flag = 1 - session_flag WHERE user_id = -1 AND session_ip = '" . USER_IP . "'", __LINE__, __FILE__);
-			
+			$resource = $Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . (time() + 1) . "', " . $location . " session_flag = 1 - session_flag WHERE user_id = -1 AND session_ip = '" . USER_IP . "'", __LINE__, __FILE__);			
 			if( $Sql->Sql_affected_rows($resource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE user_id = -1 AND session_ip = '" . USER_IP . "'") == 0 ) //Aucune session lancée.
 			{
 				if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
@@ -228,11 +256,53 @@ class Sessions
 	
 	
 	## Private Méthods ##
+	//Récupération des l'identifiants de session.
+	function get_session_id()
+	{
+		global $CONFIG, $Sql;
+		
+		//Suppression d'éventuelles données dans ce tableau.
+		$this->data = array();
+		
+		$this->data['session_id'] = '';
+		$this->data['user_id'] = -1;
+		$this->autoconnect['session_id'] = '';
+		$this->autoconnect['user_id'] = -1;
+		
+		$this->session_mod = 0;
+
+		$sid = retrieve(GET, 'sid', '');
+		$suid = retrieve(GET, 'suid', 0);
+		
+		########Cookie Existe?########
+		if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
+		{
+			//Redirection pour supprimer les variables de session en clair dans l'url.
+			if( isset($_GET['sid']) && isset($_GET['suid']) )
+			{
+				$query_string = preg_replace('`&?sid=(.*)&suid=(.*)`', '', QUERY_STRING);
+				redirect(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : ''));				
+			}
+			
+			$session_data = unserialize(stripslashes($_COOKIE[$CONFIG['site_cookie'].'_data']));
+			
+			$this->data['session_id'] = isset($session_data['session_id']) ? strprotect($session_data['session_id']) : ''; //Validité du session id.
+			$this->data['user_id'] = isset($session_data['user_id']) ? numeric($session_data['user_id']) : ''; //Validité user id?
+		}	
+		########SID Existe?########
+		elseif( !empty($sid) && $suid > 0 )
+		{
+			$this->data['session_id'] = $sid; //Validité du session id.
+			$this->data['user_id'] = $suid; //Validité user id?
+			$this->session_mod = 1;
+		}
+	}
+	
 	//Récupération de session en autoconnect.
 	function get_session_autoconnect($session_script, $session_script_get, $session_script_title)
 	{
 		global $CONFIG, $Sql;
-				
+		
 		########Cookie Existe?########
 		if( isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) )
 		{
@@ -241,7 +311,7 @@ class Sessions
 			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? strprotect($session_autoconnect['pwd']) : ''; //Validité password.
 			$level = $Sql->Query("SELECT level FROM ".PREFIX."member WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'", __LINE__, __FILE__);
 			
-			if( !empty($session_autoconnect['user_id']) && !empty($session_autoconnect['pwd']) && isset($level) )
+			if( !empty($session_autoconnect['user_id']) && !empty($session_autoconnect['pwd']) && $level != '' )
 			{
 				$error_report = $this->Session_begin($session_autoconnect['user_id'], $session_autoconnect['pwd'], $level, $session_script, $session_script_get, $session_script_title); //Lancement d'une session utilisateur.
 				
@@ -278,42 +348,6 @@ class Sessions
 				return false;
 		}	
 		return false;
-	}
-	
-	//Récupération des l'identifiants de session.
-	function get_session_id()
-	{
-		global $CONFIG, $Sql;
-		
-		//Suppression d'éventuelles données dans ce tableau.
-		$this->data = array();
-		
-		$this->data['session_id'] = '';
-		$this->data['user_id'] = -1;
-		$this->session_mod = 0;
-
-		########Cookie Existe?########
-		if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
-		{
-			//Redirection pour supprimer les variables de session en clair dans l'url.
-			if( isset($_GET['sid']) && isset($_GET['suid']) )
-			{
-				$query_string = preg_replace('`&?sid=(.*)&suid=(.*)`', '', QUERY_STRING);
-				redirect(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : ''));				
-			}
-			
-			$session_data = isset($_COOKIE[$CONFIG['site_cookie'].'_data']) ? unserialize(stripslashes($_COOKIE[$CONFIG['site_cookie'].'_data'])) : array();
-			
-			$this->data['session_id'] = isset($session_data['session_id']) ? strprotect($session_data['session_id']) : ''; //Validité du session id.
-			$this->data['user_id'] = isset($session_data['user_id']) ? numeric($session_data['user_id']) : ''; //Validité user id?
-		}	
-		########SID Existe?########
-		elseif( !empty($_GET['sid']) && !empty($_GET['suid']) )
-		{
-			$this->data['session_id'] = strprotect($_GET['sid']); //Validité du session id.
-			$this->data['user_id'] = numeric($_GET['suid']); //Validité user id?
-			$this->session_mod = 1;
-		}
 	}
 	
 	//Suppression des sessions expirées par le garbage collector.

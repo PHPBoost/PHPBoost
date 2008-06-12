@@ -25,6 +25,7 @@
  *
 ###################################################*/
 
+define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans la session.
 header('HTTP/1.0 404 Not Found'); //Header 404
 require_once('../kernel/begin.php'); 
 define('TITLE', $LANG['title_error'] . ' 404');
