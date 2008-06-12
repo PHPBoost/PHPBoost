@@ -18,9 +18,9 @@
         </script>
         <div style="position:absolute;top:8px;margin-left:830px;">
 			<form action="{U_FORM_VALID}" onsubmit="return check_search_mini_form_post();" method="post">
-				<input type="text" size="14" id="TxTMiniSearched" name="search" value="{TEXT_SEARCHED}" class="text" style="background:#FFFFFF url(../templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;height:14px" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" />
+				<input type="text" size="14" id="TxTMiniSearched" name="search" value="{TEXT_SEARCHED}" class="text" style="background:#FFFFFF url({PATH_TO_ROOT}/templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;height:14px" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" />
 				<input type="hidden" name="search_submit" id="search_submit" value="{SEARCH}" class="submit" />
-				<input type="image" name="search_submit" style="margin-left:-4px;padding:0;border:none;background:none;" value="1" src="../templates/{THEME}/search/images/search_submit.png" />
+				<input type="image" name="search_submit" style="margin-left:-4px;padding:0;border:none;background:none;" value="1" src="{PATH_TO_ROOT}/templates/{THEME}/search/images/search_submit.png" />
 	        </form>
 		</div>
 		
