@@ -383,7 +383,7 @@ function transid($url, $mod_rewrite = '', $esperluette = '&amp;')
             return $url;
     }
     elseif( $session_mod == 1 )
-        return $url . ((strpos($url, '?') === false) ? '?' : $esperluette) . 'sid=' . $Session->session['session_id'] . $esperluette . 'suid=' . $Session->session['user_id'];
+        return $url . ((strpos($url, '?') === false) ? '?' : $esperluette) . 'sid=' . $Session->data['session_id'] . $esperluette . 'suid=' . $Session->data['user_id'];
 }
 
 //Nettoie l'url de tous les caractères spéciaux, accents, etc....
