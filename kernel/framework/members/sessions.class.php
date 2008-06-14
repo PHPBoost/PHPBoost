@@ -183,7 +183,7 @@ class Sessions
 		$check_autoconnect = (!empty($this->autoconnect['session_id']) && $this->autoconnect['user_id'] > 0);
 		if( (!empty($this->data['session_id']) && $this->data['user_id'] > 0) || $check_autoconnect )
 		{
-			if( !$check_autoconnect )
+			if( !$check_autoconnect ) //Mode de connexion directe par le formulaire.
 			{
 				$this->autoconnect['session_id'] = $this->data['session_id'];
 				$this->autoconnect['user_id'] = $this->data['user_id'];
@@ -199,12 +199,13 @@ class Sessions
 			$resource = $Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . time() . "', " . $location . " session_flag = 1 - session_flag WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'", __LINE__, __FILE__);			
 			if( $Sql->Sql_affected_rows($resource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'") == 0 ) //Aucune session lancée.
 			{
-				if( $this->get_session_autoconnect($session_script, $session_script_get, $session_script_title) === false )
+				if( $this->get_session_autoconnect($session_script, $session_script_get, $session_script_title) === false ) //On essaie de lancer la session automatiquement.
 				{					
 					if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
 						setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.						
 					
-					if( QUERY_STRING != '' )
+					//Redirection une fois la session lancée.
+					if( QUERY_STRING != '' ) 
 						redirect(HOST . SCRIPT . '?' . QUERY_STRING);
 					else
 						redirect(HOST . SCRIPT);
@@ -226,11 +227,6 @@ class Sessions
 				if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
 					setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
 				$this->Session_begin('-1', '', '-1', $session_script, $session_script_get, $session_script_title); //Session visiteur
-				
-				if( QUERY_STRING != '' )
-					redirect(HOST . SCRIPT . '?' . QUERY_STRING);
-				else
-					redirect(HOST . SCRIPT);	
 			}
 		}
 	}
