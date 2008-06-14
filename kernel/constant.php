@@ -103,6 +103,6 @@ else
     else 
 		$ip = getenv('REMOTE_ADDR');
 }
-define('USER_IP', strprotect($ip));
+define('USER_IP', addslashes($ip));
 
 ?>

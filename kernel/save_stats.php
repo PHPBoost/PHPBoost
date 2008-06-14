@@ -35,7 +35,7 @@ if( !empty($referer) )
 {
 	########### Détection des mots clés ###########
 	$array_search = array('google', 'search.live', 'search.msn', 'yahoo', 'exalead', 'altavista', 'lycos', 'ke.voila', 'recherche.aol');
-	$search_engine = preg_replace('`(?:[a-z]{2,4}\.)?([a-z0-9_-]+)\.(.*)`i', '$1', $referer['host']);
+	$search_engine = strprotect(preg_replace('`(?:[a-z]{2,4}\.)?([a-z0-9_-]+)\.(.*)`i', '$1', $referer['host']));
 	if( in_array($search_engine, $array_search) )
 	{
 		$query = !empty($referer['query']) ? $referer['query'] : '';
