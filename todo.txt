@@ -67,14 +67,3 @@ Search :
 ################################################################################
 
 
-################################################################################
-##                            FAILLES A CHECKER                               ##
-################################################################################
-
-l'objet Membre est créé par le avec les informations du $Session->Session_info();
-Et seulement ensuite, on vérifie si les sid et suid sont valide via le
-$Session->Session_check(TITLE);
-
-Donc, en cas d'url ?sid=&suid=1, une portion de code s'exécute donc en mode
-ADMINISTRATEUR => problème éventuel à checker!!!
-
