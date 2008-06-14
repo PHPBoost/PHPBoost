@@ -479,7 +479,7 @@
 								<dl>
 									<dt><label for="theme">* {L_DEFAULT_THEME}</label></dt>
 									<dd><label>
-										<select id="theme" name="theme" onChange="change_img_theme('img_theme', this.options[selectedIndex].value)">
+										<select id="theme" name="theme" onchange="change_img_theme('img_theme', this.options[selectedIndex].value)">
 											# START site_config.theme #
 												<option value="{site_config.theme.THEME}" {site_config.theme.SELECTED}>{site_config.theme.THEME_NAME}</option>
 											# END site_config.theme # 				

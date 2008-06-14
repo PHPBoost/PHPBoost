@@ -22,14 +22,14 @@
                 var calculatedResults = new Array('all');
                 
                 function HideResults()
-                // Cache tous les résultats
+                // Cache tous les rï¿½sultats
                 {
                     for( var i = 0; i < modulesResults.length; i++ )
                         hide_div(RESULTS + modulesResults[i]);
                 }
                 
                 function ChangeResults()
-                // Change le cadre des résultats
+                // Change le cadre des rï¿½sultats
                 {
                     var module = document.getElementById('results_choice').value;
                     HideResults();
@@ -42,7 +42,7 @@
                 }
                 
                 function GetFormData()
-                // Reconstitution d'une chaine "POSTABLE" à partir des formulaires
+                // Reconstitution d'une chaine "POSTABLE" ï¿½ partir des formulaires
                 {
                     var dataString = "";
                     var form = document.getElementById('search_form');
@@ -61,7 +61,7 @@
                 }
                 
                 function XMLHttpRequest_search_module(module)
-                // Affiche les résultats de la recherche pour le module particulier <module>
+                // Affiche les rï¿½sultats de la recherche pour le module particulier <module>
                 {
                     var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php');
                     xhr_object.onreadystatechange = function()
@@ -77,7 +77,7 @@
                             if( xhr_object.status == 200 )
                             {
                                 progress_bar(100, "{L_QUERY_SUCCESS}");
-                                // Si les résultats sont toujours en cache, on les récupère.
+                                // Si les rï¿½sultats sont toujours en cache, on les rï¿½cupï¿½re.
                                 eval(xhr_object.responseText);
                                 if( !syncErr )
                                 {
@@ -85,8 +85,8 @@
                                     document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
                                     ChangePagination(0, Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, RESULTS + module, 2, 2);
                                     
-                                    // Met à jour la liste des résultats affiché, pour ne pas les rechercher
-                                    // dans la base de donnée si ils sont déjà dans le html.
+                                    // Met ï¿½ jour la liste des rï¿½sultats affichï¿½, pour ne pas les rechercher
+                                    // dans la base de donnï¿½e si ils sont dï¿½jï¿½ dans le html.
                                     calculatedResults.push(module);
                                 }
                                 else alert('SYNCHRONISATION ERROR');
@@ -111,7 +111,7 @@
                         <select id="results_choice" name="ResultsSelection" onChange="ChangeResults();">
                             <option value="all">{L_TITLE_ALL_RESULTS}</option>
                             # START results #
-                                <option value="{results.MODULE_NAME}"> --> {results.L_MODULE_NAME}</option>
+                                <option value="{results.MODULE_NAME}"> --&gt; {results.L_MODULE_NAME}</option>
                             # END results #
                         </select>
                     </div>
