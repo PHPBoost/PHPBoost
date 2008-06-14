@@ -44,9 +44,12 @@ if( !empty($idnews) && empty($idcat) )
 	
 	define('TITLE', $LANG['title_news'] . ' - ' . addslashes($news['title']));
 }
-else 
-	define('TITLE', $LANG['title_news']);
-	
+else
+{
+    if (!defined('TITLE'))
+        define('TITLE', $LANG['title_news']);
+}
+
 $news_title = !empty($idnews) ? $news['title'] : '';
 $Bread_crumb->Add_link($LANG['title_news'], transid('news.php'));
 $Bread_crumb->Add_link($news_title, (!empty($_GET['i']) ? transid('news.php?id=' . $idnews) : ''));

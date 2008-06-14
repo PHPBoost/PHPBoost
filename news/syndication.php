@@ -3,7 +3,7 @@
  *                              syndication.php
  *                            -------------------
  *   begin                : June 01, 2008
- *   copyright            : (C) 2008 LoÃ¯c Rouchon
+ *   copyright            : (C) 2008 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -45,7 +45,7 @@ if ( !(($mode == 'atom') || ($mode == 'rss')) )
     require_once('../kernel/header_no_display.php');
     
     // Feeds Regeneration
-    include_once('../news/syndication_regeneration.php');
+    require_once('../news/syndication_regeneration.php');
     $Feed = RegenerateSyndication($mode == 'rss' ? USE_RSS : USE_ATOM);
 
     $Feed->TParse();                    // Print the feed
