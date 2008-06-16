@@ -31,18 +31,18 @@ define('ERROR_REPORTING', E_ALL | E_NOTICE);
 set_magic_quotes_runtime(0);
 $update_version = '2.0';
 
-define('MAGIC_QUOTES', get_magic_quotes_gpc()); //Récupère la valeur du magic quotes
+define('MAGIC_QUOTES', get_magic_quotes_gpc()); //Rï¿½cupï¿½re la valeur du magic quotes
 define('HOST', 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST')));
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 define('FILE', $server_path);
 define('DIR', str_replace('/install/install.php', '', $server_path));
 define('PHPBOOST', true);
 
-//Thème par défaut.
+//Thï¿½me par dï¿½faut.
 define('DEFAULT_THEME', 'main');
 
 if( !@include_once('../kernel/framework/template.class.php') )
-	die('Votre dossier d\'installation n\'est pas placé où il faut');
+	die('Votre dossier d\'installation n\'est pas placï¿½ oï¿½ il faut');
 include_once('../kernel/framework/functions.inc.php');
 
 $step = !empty($_GET['step']) ? numeric($_GET['step']) : 1;
@@ -59,7 +59,7 @@ $Template = new Template; //!\\Initialisation des templates//!\\
 
 $Template->Set_filenames(array('install' => '../install/templates/install.tpl'));
 
-//Fonction pour gérer la langue
+//Fonction pour gï¿½rer la langue
 function add_lang($url, $header_location = false)
 {
 	global $lang;
@@ -82,7 +82,7 @@ if( !empty($_POST['new_language']) && is_file('lang/' . $_POST['new_language'] .
 	redirect(HOST . FILE . add_lang('?step=' . $step, true));
 }
 
-//Préambule
+//Prï¿½ambule
 if( $step == 1 )
 {
 	$Template->Assign_block_vars('intro', array());
@@ -99,7 +99,7 @@ elseif( $step == 2 )
 {
 	$submit = !empty($_POST['submit']) ? true : false;
 	$license_agreement = !empty($_POST['license_agreement']) ? true : false;
-	//On vérifie l'étape et si elle est validée on passe à la suivante
+	//On vï¿½rifie l'ï¿½tape et si elle est validï¿½e on passe ï¿½ la suivante
 	if( $submit && $license_agreement )
 		redirect(HOST . FILE . add_lang('?step=3', true));
 		
@@ -134,12 +134,12 @@ elseif( $step == 3 )
 		'URL_REWRITING' => $check_rewrite
 	));
 	
-	//Mise à jour du cache.
+	//Mise ï¿½ jour du cache.
 	@clearstatcache();
 	
 	$chmod_dir = array('../cache', '../cache/backup', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/auth', '../lang', '../templates', '../upload');
 	
-	//Vérifications et le cas échéants changements des autorisations en écriture.
+	//Vï¿½rifications et le cas ï¿½chï¿½ants changements des autorisations en ï¿½criture.
 	foreach($chmod_dir as $dir)
 	{
 		$is_writable = $is_dir = true;
@@ -188,12 +188,12 @@ elseif( $step == 3 )
 		'U_NEXT_STEP' => add_lang('install.php?step=4')
 	));	
 }
-//Mise en place de la base de données
+//Mise en place de la base de donnï¿½es
 elseif( $step == 4 )
 {
 	if( !empty($_POST['submit']) )
 	{
-		//Préfixe des tables
+		//Prï¿½fixe des tables
 		$tableprefix = !empty($_POST['tableprefix']) ? strprotect($_POST['tableprefix']) : 'phpboost_';
 			
 		function test_db_config()
@@ -221,11 +221,11 @@ elseif( $step == 4 )
 			if( !@$Sql->Sql_connect($host, $login, $password) )
 				return '<div class="error">' . $LANG['db_error_connexion'] . '</div>';
             
-			//Sélection de la base de données
+			//Sï¿½lection de la base de donnï¿½es
 			if( !@$Sql->Sql_select_db($database, $result) )
 				return '<div class="warning">' . $LANG['db_error_selection'] . '</div>';
 				
-			//Déconnexion
+			//Dï¿½connexion
 			$Sql->Sql_close();
 			return '';
 		}
@@ -238,12 +238,12 @@ elseif( $step == 4 )
 			$Sql = new Sql(false);
             //Connexion
 			$result = $Sql->Sql_connect($host, $login, $password);
-			//Sélection de la base de données
+			//Sï¿½lection de la base de donnï¿½es
 			$Sql->Sql_select_db($database, $result);
 						
-			//Création du fichier de configuration.
+			//Crï¿½ation du fichier de configuration.
 			$file_path = '../kernel/auth/config.php';
-			$file = @fopen($file_path, 'w+'); //On ouvre le fichier, si il n'existe pas on le crée.
+			$file = @fopen($file_path, 'w+'); //On ouvre le fichier, si il n'existe pas on le crï¿½e.
             if ( $dbms != 'SQLite' )
             {
                 @fputs($file, '<?php
@@ -252,9 +252,9 @@ if( !defined(\'DBSECURE\') )
     $sql_host = "' . $host . '"; //Adresse serveur mysql.
     $sql_login = "' . $login . '"; //Login
     $sql_pass = "' . $password . '"; //Mot de passe
-    $sql_base = "' . $database . '"; //Nom de la base de données.
-    $table_prefix = "' . $tableprefix . '"; //Préfixe des tables
-    $dbtype = "' . $dbms .'"; //Système de gestion de base de données
+    $sql_base = "' . $database . '"; //Nom de la base de donnï¿½es.
+    $table_prefix = "' . $tableprefix . '"; //Prï¿½fixe des tables
+    $dbtype = "' . $dbms .'"; //Systï¿½me de gestion de base de donnï¿½es
     define(\'DBSECURE\', true);
     define(\'PHPBOOST_INSTALLED\', true);
 }   
@@ -272,9 +272,9 @@ if( !defined(\'DBSECURE\') )
     $sql_host = "../kernel/framework/db/' . $host . '.sqlite"; //Adresse serveur mysql.
     $sql_login = "' . $login . '"; //Login
     $sql_pass = "' . $password . '"; //Mot de passe
-    $sql_base = "../kernel/framework/db/' . $database . '.sqlite"; //Nom de la base de données (url du fichier SQLite).
-    $table_prefix = "' . $tableprefix . '"; //Préfixe des tables
-    $dbtype = "' . $dbms .'"; //Système de gestion de base de données
+    $sql_base = "../kernel/framework/db/' . $database . '.sqlite"; //Nom de la base de donnï¿½es (url du fichier SQLite).
+    $table_prefix = "' . $tableprefix . '"; //Prï¿½fixe des tables
+    $dbtype = "' . $dbms .'"; //Systï¿½me de gestion de base de donnï¿½es
     define(\'DBSECURE\', true);
     define(\'PHPBOOST_INSTALLED\', true);
 }
@@ -285,7 +285,7 @@ else
 ?>');
             }
 			@fclose($file);
-			//On crée la structure de la base de données et on y insère la configuration de base
+			//On crï¿½e la structure de la base de donnï¿½es et on y insï¿½re la configuration de base
             
 			$Sql->Sql_parse('db/' . $dbms . '.sql', $tableprefix);
 			$Sql->Close();
@@ -410,21 +410,21 @@ elseif( $step == 5 )
 		define('PREFIX', $table_prefix);
 		include_once('../kernel/framework/db/' . $dbtype . '.class.php');
 		$Sql = new Sql;
-		//On insère dans la base de données
+		//On insï¿½re dans la base de donnï¿½es
         
 		echo $Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes($config_string) . "' WHERE name = 'config'", __LINE__, __FILE__);
         
-		//On insère la langue dans la bdd.
+		//On insï¿½re la langue dans la bdd.
 		$check_lang = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . strprotect($CONFIG['lang']) . "'", __LINE__, __FILE__);
 		if( $check_lang == 0 )	
 			$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES ('" . strprotect($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
 		
-		//On insère le thème dans la bdd.
+		//On insï¿½re le thï¿½me dans la bdd.
 		$check_theme = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."themes WHERE theme = '" . strprotect($CONFIG['theme']) . "'", __LINE__, __FILE__);
 		if( $check_theme == 0 )	
 			$Sql->Query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
 		
-		//On génère le cache
+		//On gï¿½nï¿½re le cache
 		include('../kernel/framework/cache.class.php');
 		$Cache = new Cache;
 		$Cache->Generate_all_files();
@@ -437,7 +437,7 @@ elseif( $step == 5 )
 		'SITE_PATH' => $server_path
 	));
 	
-	//Gestion langue par défaut.
+	//Gestion langue par dï¿½faut.
 	$array_identifier = '';
 	$lang_identifier = '../images/stats/other.png';
 	$rep = '../lang/';
@@ -447,7 +447,7 @@ elseif( $step == 5 )
 		$dh = @opendir( $rep);
 		while( !is_bool($file = readdir($dh)) )
 		{	
-			//Si c'est un répertoire un regarde si c'est effectivement un dossier de langues
+			//Si c'est un rï¿½pertoire un regarde si c'est effectivement un dossier de langues
 			if( !preg_match('`\.`', $file) )
 			{
 				$lang_info = load_ini_file('../lang/', $file);
@@ -473,7 +473,7 @@ elseif( $step == 5 )
 		closedir($dh); //On ferme le dossier
 	}
 
-	//Gestion thème par défaut.
+	//Gestion thï¿½me par dï¿½faut.
 	$rep = '../templates/';
 	if( is_dir($rep) ) //Si le dossier existe
 	{
@@ -481,7 +481,7 @@ elseif( $step == 5 )
 		$dh = @opendir( $rep);
 		while( !is_bool($file = readdir($dh)) )
 		{	
-			//Si c'est un répertoire un regarde si c'est effectivement un dossier de langues
+			//Si c'est un rï¿½pertoire un regarde si c'est effectivement un dossier de langues
 			if( !preg_match('`\.`', $file) )
 			{
 				$theme_info = load_ini_file('../templates/' . $file . '/config/', $lang);
@@ -528,7 +528,7 @@ elseif( $step == 5 )
 elseif( $step == 6 )
 {
 	$Template->Assign_block_vars('admin', array());
-	//Validation de l'étape
+	//Validation de l'ï¿½tape
 	if( !empty($_POST['submit']) )
 	{
 		$login = !empty($_POST['login']) ? trim($_POST['login']) : '';
@@ -568,36 +568,36 @@ elseif( $step == 6 )
 			define('PREFIX', $table_prefix);
 			include_once('../kernel/framework/db/' . $dbtype . '.class.php');
 			$Sql = new Sql;
-			//On crée le code de déverrouillage
+			//On crï¿½e le code de dï¿½verrouillage
 			include_once('../kernel/framework/cache.class.php');
 			$Cache = new Cache;
 			$Cache->Load_file('config');
 			
 			//On enregistre le membre
-			$Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . strprotect($login) . "', password = '" . md5($password) . "', level = '2', user_lang = '" . $user_lang . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $user_lang . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
 			
-			$unlock_admin = substr(md5(uniqid(mt_rand(), true)), 0, 12); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;
-			$CONFIG['unlock_admin'] = md5($unlock_admin);
+			$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12); //Gï¿½nï¿½ration de la clï¿½e d'activation, en cas de verrouillage de l'administration.;
+			$CONFIG['unlock_admin'] = strhash($unlock_admin);
 			$CONFIG['mail'] = $user_mail;
 			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 			$Cache->Generate_file('config');
-			//On envoie un mail à l'administrateur
+			//On envoie un mail ï¿½ l'administrateur
 			$LANG['admin'] = '';
 			include_once('../kernel/framework/mail.class.php');
 			$Mail = new Mail();
 			$Mail->Send_mail($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail']);
 			
-			//On connecte directement l'administrateur si il l'a demandé
+			//On connecte directement l'administrateur si il l'a demandï¿½
 			if( $create_session )
 			{
 				include('../kernel/constant.php');
 				include('../kernel/framework/members/sessions.class.php');
 				$Session = new Sessions;
-				$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-				$Session->Session_begin(1, md5($password), 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); //On lance la session.
+				$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__); //Remise ï¿½ zï¿½ro du compteur d'essais.
+				$Session->Session_begin(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); //On lance la session.
 			}
 			
-			//On redirige vers l'étape suivante
+			//On redirige vers l'ï¿½tape suivante
 			redirect(HOST . FILE . add_lang('?step=7', true));
 		}
 		else
@@ -606,7 +606,7 @@ elseif( $step == 6 )
 			));
 	}
 
-	//Gestion langue par défaut.
+	//Gestion langue par dï¿½faut.
 	$array_identifier = '';
 	$lang_identifier = '../images/stats/other.png';
 	$rep = '../lang/';
@@ -616,7 +616,7 @@ elseif( $step == 6 )
 		$dh = @opendir( $rep);
 		while( !is_bool($file = readdir($dh)) )
 		{	
-			//Si c'est un répertoire un regarde si c'est effectivement un dossier de langues
+			//Si c'est un rï¿½pertoire un regarde si c'est effectivement un dossier de langues
 			if( !preg_match('`\.`', $file) )
 			{
 				$lang_info = load_ini_file('../lang/', $file);
@@ -678,14 +678,14 @@ elseif( $step == 6 )
 }
 elseif( $step == 7 )
 {
-	//Liste des modules supportés par l'installateur
+	//Liste des modules supportï¿½s par l'installateur
 	$supported_modules = array('articles', 'calendar', 'contact', 'download', 'forum', 'gallery', 'guestbook', 'links', 'news', 'newsletter', 'online', 'pages', 'poll', 'shoutbox', 'stats', 'web', 'wiki');
 	//Tableau contenant les modules inexistants sur le serveur
 	$unexisting_modules = array();
 	$modules_list = '';
 	$index_modules = '';
 	
-	//Validation : installation des modules demandés
+	//Validation : installation des modules demandï¿½s
 	if( !empty($_POST['submit']) )
 	{
 		foreach( $supported_modules as $module_name )
@@ -707,16 +707,16 @@ elseif( $step == 7 )
 		define('DBTYPE', $dbtype);
 		include_once('../kernel/framework/db/' . $dbtype . '.class.php');
 		$Sql = new Sql;
-		//On génère le cache
+		//On gï¿½nï¿½re le cache
 		include('../kernel/framework/cache.class.php');
 		$Cache = new Cache;
 		
-		$link_installed = false; //Module de lien installé?
+		$link_installed = false; //Module de lien installï¿½?
 		
-		//L'utilisateur a choisi une préselection
+		//L'utilisateur a choisi une prï¿½selection
 		if( in_array($preselection, array('no_one', 'all', 'community', 'publication')) )
 		{
-			//Configuration des préselections
+			//Configuration des prï¿½selections
 			$preselections_configs = array(
 				'no_one' => array('default', array(), 1),
 				'community' => array('news', array('articles', 'gallery', 'news', 'forum', 'contact', 'newsletter', 'online', 'poll', 'calendar', 'shoutbox', 'stats', 'wiki', 'web', 'links', 'download', 'guestbook'), 1),
@@ -729,10 +729,10 @@ elseif( $step == 7 )
 			{
 				if( !in_array($module_name, $unexisting_modules) )
 				{
-					//Récupération des infos de config.
+					//Rï¿½cupï¿½ration des infos de config.
 					$info_module = load_ini_file('../' . $module_name . '/lang/', $lang);
 					
-					//Si le dossier de base de données de la langue n'existe pas on prend le suivant exisant.
+					//Si le dossier de base de donnï¿½es de la langue n'existe pas on prend le suivant exisant.
 					$dir_db_module = $lang;
 					$dir = '../' . $module_name . '/db';
 					if( !is_dir($dir . '/' . $dir_db_module) )
@@ -753,7 +753,7 @@ elseif( $step == 7 )
 					if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql') )
 						$Sql->Sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
 
-					//Insertion du modules dans la bdd => module installé.
+					//Insertion du modules dans la bdd => module installï¿½.
 					$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . strprotect($module_name) . "', '" . strprotect($info_module['version']) . "', '" . addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1))) . "', '1')", __LINE__, __FILE__);
 					
 					if( $module_name == 'links' )
@@ -762,7 +762,7 @@ elseif( $step == 7 )
 			}
 			$Cache->Load_file('config');
 			
-			//Page de démarrage
+			//Page de dï¿½marrage
 			$module_infos = load_ini_file('../' . $preselections_configs[$preselection][0] . '/lang/', $lang);
 			if( $preselections_configs[$preselection][0] != 'member' && $module_infos != array() )
 			{
@@ -784,7 +784,7 @@ elseif( $step == 7 )
 			
 			$start_page =  HOST . DIR . $CONFIG['start_page'];
 			
-			$file = @fopen($file_path, 'w+'); //On crée le fichier avec droit d'écriture et lecture.
+			$file = @fopen($file_path, 'w+'); //On crï¿½e le fichier avec droit d'ï¿½criture et lecture.
 			@fwrite($file, '<?php header(\'location: ' . $start_page . '\'); ?>');
 			@fclose($file);
 			
@@ -792,20 +792,20 @@ elseif( $step == 7 )
 			$CONFIG_MEMBER['activ_mbr'] = $preselections_configs[$preselection][2];
 			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_MEMBER)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ
 		}
-		//Sinon combinaison personnalisée
+		//Sinon combinaison personnalisï¿½e
 		else
 		{
 			foreach($supported_modules as $module_name )
 			{
 				if( !in_array($module_name, $unexisting_modules) )
 				{
-					//Si le module est demandé
+					//Si le module est demandï¿½
 					if( !empty($_POST['install_' . $module_name]) )
 					{
-						//Récupération des infos de config.
+						//Rï¿½cupï¿½ration des infos de config.
 						$info_module = load_ini_file('../' . $module_name . '/lang/', $lang);
 
-						//Si le dossier de base de données de la langue n'existe pas on prend le suivant exisant.
+						//Si le dossier de base de donnï¿½es de la langue n'existe pas on prend le suivant exisant.
 						$dir_db_module = $lang;
 						$dir = '../' . $module_name . '/db';
 						if( !is_dir($dir . '/' . $dir_db_module) )
@@ -826,7 +826,7 @@ elseif( $step == 7 )
 						if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql') )
 							$Sql->Sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
 
-						//Insertion du modules dans la bdd => module installé.
+						//Insertion du modules dans la bdd => module installï¿½.
 						$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . strprotect($module_name) . "', '" . strprotect($info_module['version']) . "', '" . addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1))) . "', '1')", __LINE__, __FILE__);
 						
 						if( $module_name == 'links' )
@@ -834,14 +834,14 @@ elseif( $step == 7 )
 					}
 				}
 			}
-			//Désactivation de l'espace membre dans le cas où c'est demandé
+			//Dï¿½sactivation de l'espace membre dans le cas oï¿½ c'est demandï¿½
 			if( !$activ_member )
 			{
 				$Cache->Load_file('member');
 				$CONFIG_MEMBER['activ_mbr'] = 0;
 				$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_MEMBER)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ
 			}
-			//Traitement de la page de démarrage
+			//Traitement de la page de dï¿½marrage
 			if( !empty($_POST['install_' . $index_module]) && in_array($index_module, $supported_modules) )
 			{
 				$info_module = load_ini_file('../' . $index_module . '/lang/', $lang);
@@ -863,12 +863,12 @@ elseif( $step == 7 )
 			
 			$start_page =  HOST . DIR . $CONFIG['start_page'];
 			
-			$file = @fopen($file_path, 'w+'); //On crée le fichier avec droit d'écriture et lecture.
+			$file = @fopen($file_path, 'w+'); //On crï¿½e le fichier avec droit d'ï¿½criture et lecture.
 			@fwrite($file, '<?php header(\'location: ' . $start_page . '\'); ?>');
 			@fclose($file);
 		}
 		
-		//On réassigne le class des modules minis
+		//On rï¿½assigne le class des modules minis
 		$i = 0;
 		$result = $Sql->Query_while("SELECT id
 		FROM ".PREFIX."modules_mini 
@@ -880,7 +880,7 @@ elseif( $step == 7 )
 		}
 		$Sql->Close($result);		
 		
-		//On insère les liens dans le module de liens, s'il est installé.
+		//On insï¿½re les liens dans le module de liens, s'il est installï¿½.
 		if( $link_installed )
 		{
 			$i = 6;
@@ -915,11 +915,11 @@ elseif( $step == 7 )
 		}
 		$Sql->Close($result);
 		
-		//Régénération du cache
+		//Rï¿½gï¿½nï¿½ration du cache
 		$Cache->Generate_htaccess();
 		$Cache->Generate_all_files();		
 		
-		//On redirige vers l'étape suivante
+		//On redirige vers l'ï¿½tape suivante
 		redirect(HOST . FILE . add_lang('?step=8', true));
 	}
 	
@@ -991,7 +991,7 @@ elseif( $step == 9 )
 	define('DBTYPE', $dbtype);
 	include_once('../kernel/framework/db/' . $dbtype . '.class.php');
 	$Sql = new Sql;
-	//On génère le cache
+	//On gï¿½nï¿½re le cache
 	include('../kernel/framework/cache.class.php');
 	$Cache = new Cache;
 	$Cache->Load_file('config');
@@ -1034,7 +1034,7 @@ if( is_dir($rep) ) //Si le dossier existe
 	$dh = @opendir( $rep);
 	while( !is_bool($file = readdir($dh)) )
 	{	
-		//Si c'est un répertoire un regarde si c'est effectivement un dossier de langues
+		//Si c'est un rï¿½pertoire un regarde si c'est effectivement un dossier de langues
 		if( !preg_match('`\.`', $file) )
 		{
 			$info_lang = load_ini_file('../lang/', $file);

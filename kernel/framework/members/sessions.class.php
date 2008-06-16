@@ -29,6 +29,7 @@
 //Constantes de base.
 define('AUTOCONNECT', true);
 define('NO_AUTOCONNECT', false);
+define('ALREADY_HASHED', true);
 
 class Sessions
 {
@@ -40,10 +41,14 @@ class Sessions
 	
 	## Public Methods ##
 	//Lancement de la session après récupèration des informations par le formulaire de connexion.
-	function Session_begin($user_id, $password, $level, $session_script, $session_script_get, $session_script_title, $autoconnect = false)
+	function Session_begin($user_id, $password, $level, $session_script, $session_script_get, $session_script_title, $autoconnect = false, $already_hashed = false)
 	{
-		global $CONFIG, $Sql;
-		
+        global $CONFIG, $Sql;
+        
+        $pwd = $password;
+        if (!$already_hashed)
+            $password = strhash($password);
+        
 		$error = '';
 		$cookie_on = false;
 		$session_script = addslashes($session_script);
@@ -59,20 +64,20 @@ class Sessions
 			$Sql->Query_inject("INSERT ".LOW_PRIORITY." INTO ".PREFIX."compteur (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', 0)", __LINE__, __FILE__);
 			
 			//Mise à jour du last_connect, pour un membre qui vient d'arriver sur le site.
-			if( $user_id !== '-1' ) 
+			if( $user_id !== '-1' )
 				$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		}
 		
 		//On lance les stats.
 		include_once(PATH_TO_ROOT . '/kernel/save_stats.php');
-			
+		
 		########Génération d'un ID de session unique########
-		$session_uniq_id = md5(uniqid(mt_rand(), true)); //On génère un numéro de session aléatoire.
+		$session_uniq_id = strhash(uniqid(mt_rand(), true)); //On génère un numéro de session aléatoire.
 		$this->data['user_id'] = $user_id;
 		$this->data['session_id'] = $session_uniq_id;
 		
-		########Session existe t-elle?#########		
-		$this->session_garbage_collector();	//On nettoie avant les sessions périmées.
+		########Session existe t-elle?#########
+		$this->session_garbage_collector(); //On nettoie avant les sessions périmées.
 
 		if( $user_id !== '-1' )
 		{
@@ -87,20 +92,22 @@ class Sessions
 			//Récupération password BDD
 			$password_m = $Sql->Query("SELECT password FROM ".PREFIX."member WHERE user_id = '" . $user_id . "' AND user_warning < 100 AND '" . time() . "' - user_ban >= 0", __LINE__, __FILE__);
 			
-			if( !empty($password) && $password === $password_m ) //Succès!
+			if( !empty($password) && (($password === $password_m) || (md5($pwd) === $password_m))) //Succès! => md5 gestion des vieux mdp
 			{
-				$Sql->Query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '')", __LINE__, __FILE__);				
-				$cookie_on = true; //Génération du cookie!			
+                if (md5($pwd) === $password_m) // Si le mot de passe est encore stocké en md5, on l'update
+                    $Sql->Query_inject("UPDATE ".PREFIX."member SET `password`='" . $password . "'WHERE `user_id`='" . $user_id . "';", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '')", __LINE__, __FILE__);
+				$cookie_on = true; //Génération du cookie!
 			}
 			else //Session visiteur, echec!
 			{
-				$Sql->Query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0')", __LINE__, __FILE__);		
+				$Sql->Query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0')", __LINE__, __FILE__);
 				$delay_ban = $Sql->Query("SELECT user_ban FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				if( (time - $delay_ban) >= 0 )
 					$error = 'echec';
 				else
-					$error = $delay_ban;		
-			}	
+					$error = $delay_ban;
+			}
 		}
 		else //Session visiteur valide.
 		{
@@ -119,15 +126,15 @@ class Sessions
 			########Génération du cookie d'autoconnection########
 			if( $autoconnect === true )
 			{
-				$session_autoconnect['user_id'] = $user_id;				
+				$session_autoconnect['user_id'] = $user_id;
 				$session_autoconnect['pwd'] = $password;
 				
 				setcookie($CONFIG['site_cookie'].'_autoconnect', serialize($session_autoconnect), time() + 31536000, '/');
 			}
 		}
-		
+		unset($pwd);
 		return $error;
-	}	
+	}
 	
 	//Récupération des informations sur le membre.
 	function Session_info()
@@ -226,7 +233,7 @@ class Sessions
 			{
 				if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
 					setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
-				$this->Session_begin('-1', '', '-1', $session_script, $session_script_get, $session_script_title); //Session visiteur
+				$this->Session_begin('-1', '', '-1', $session_script, $session_script_get, $session_script_title, ALREADY_HASHED); //Session visiteur
 			}
 		}
 	}
@@ -303,13 +310,13 @@ class Sessions
 		if( isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) )
 		{
 			$session_autoconnect = isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) ? unserialize(stripslashes($_COOKIE[$CONFIG['site_cookie'].'_autoconnect'])) : array();
-			$session_autoconnect['user_id'] = !empty($session_autoconnect['user_id']) ? numeric($session_autoconnect['user_id']) : ''; //Validité user id?.				
+			$session_autoconnect['user_id'] = !empty($session_autoconnect['user_id']) ? numeric($session_autoconnect['user_id']) : ''; //Validité user id?.
 			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? strprotect($session_autoconnect['pwd']) : ''; //Validité password.
 			$level = $Sql->Query("SELECT level FROM ".PREFIX."member WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'", __LINE__, __FILE__);
 			
 			if( !empty($session_autoconnect['user_id']) && !empty($session_autoconnect['pwd']) && $level != '' )
 			{
-				$error_report = $this->Session_begin($session_autoconnect['user_id'], $session_autoconnect['pwd'], $level, $session_script, $session_script_get, $session_script_title); //Lancement d'une session utilisateur.
+				$error_report = $this->Session_begin($session_autoconnect['user_id'], $session_autoconnect['pwd'], $level, $session_script, $session_script_get, $session_script_title, ALREADY_HASHED); //Lancement d'une session utilisateur.
 				
 				//Gestion des erreurs pour éviter un brute force.
 				if( $error_report === 'echec' )

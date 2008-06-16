@@ -64,16 +64,16 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 		{
 			//Vérification des password.
 			$password = retrieve(POST, 'pass', '', TSTING_UNSECURE);
-			$password_md5 = !empty($password) ? md5($password) : '';   
+			$password_hash = !empty($password) ? strhash($password) : '';
 			$password_bis = retrieve(POST, 'confirm_pass', '', TSTRING_UNSECURE);
-			$password_bis_md5 = !empty($password_bis) ? md5($password_bis) : '';
+			$password_bis_hash = !empty($password_bis) ? strhash($password_bis) : '';
 	
-			if( !empty($password_md5) && !empty($password_bis_md5) )
+			if( !empty($password_hash) && !empty($password_bis_hash) )
 			{
-				if( $password_md5 === $password_bis_md5 )
+				if( $password_hash === $password_bis_hash )
 				{
 					if( strlen($password) >= 6 && strlen($password_bis) >= 6 )
-						$Sql->Query_inject("UPDATE ".PREFIX."member SET password = '" . $password_md5 . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__); 
+						$Sql->Query_inject("UPDATE ".PREFIX."member SET password = '" . $password_hash . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 					else //Longueur minimale du password
 						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
 				}
@@ -270,7 +270,7 @@ elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 	$login = !empty($_POST['login2']) ? strprotect(substr($_POST['login2'], 0, 25)) : '';
 	$password = retrieve(POST, 'password2', '', TSTRING_UNSECURE);
 	$password_bis = retrieve(POST, 'password2_bis', '', TSTRING_UNSECURE);
-	$password_md5 = !empty($password) ? md5($password) : '';
+	$password_hash = !empty($password) ? strhash($password) : '';
 	$level = retrieve(POST, 'level2', -1);
 	$mail = strtolower(retrieve(POST, 'mail2', ''));
 	
@@ -291,7 +291,7 @@ elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 				{	
 					//On insere le nouveau membre.
 					$Sql->Query_inject("INSERT INTO ".PREFIX."member (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,user_readonly,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
-					VALUES('" . $login . "', '" . $password_md5 . "', '" . $level . "', '0', '" . $CONFIG['lang'] . "', '', '" . $mail . "', '1', '" . time() . "', '', '0', '', '', '', '', '', '', '', '', '', '', '0', '0', '0', '0', '0', '', '', '0', '1')", __LINE__, __FILE__);
+					VALUES('" . $login . "', '" . $password_hash . "', '" . $level . "', '0', '" . $CONFIG['lang'] . "', '', '" . $mail . "', '1', '" . time() . "', '', '0', '', '', '', '', '', '', '', '', '', '', '0', '0', '0', '0', '0', '', '', '0', '1')", __LINE__, __FILE__);
 					
 					//On régénère le cache
 					$Cache->Generate_file('stats');

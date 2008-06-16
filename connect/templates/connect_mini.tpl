@@ -1,7 +1,7 @@
 		# IF C_MEMBER_NOTCONNECTED #		
 		<script type="text/javascript">
 		<!--
-		function check_conect(){
+		function check_connect(){
 			if(document.getElementById('login').value == "") {
 				alert("{L_REQUIRE_PSEUDO}");
 				return false;
@@ -16,7 +16,7 @@
 		-->
 		</script>
 				
-		<form action="{U_CONNECT}" method="post" onsubmit="return check_conect();">
+		<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
 		<div class="module_mini_container">
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_CONNECT}</h5>

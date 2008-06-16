@@ -29,14 +29,14 @@ if( defined('PHPBOOST') !== true ) exit;
 
 //Module de connexion
 $login = retrieve(POST, 'login', '');
-$password = md5(retrieve(POST, 'password', '', TSTRING_UNSECURE));
+$password = retrieve(POST, 'password', '', TSTRING_UNSECURE);
 $autoconnexion = retrieve(POST, 'auto', false);
-$unlock = md5(retrieve(POST, 'unlock', '', TSTRING_UNSECURE));
+$unlock = strhash(retrieve(POST, 'unlock', '', TSTRING_UNSECURE));
 
 if( retrieve(GET, 'disconnect', false) ) //Déconnexion.
 {
-	$Session->Session_end();
-	redirect(get_start_page());
+    $Session->Session_end();
+    redirect(get_start_page());
 }
 
 //On vérifie si l'ip est valide sinon on refuse le lancement de la session!

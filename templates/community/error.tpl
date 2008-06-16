@@ -1,7 +1,7 @@
 		# IF C_ERRORH_CONNEXION #
 		<script type="text/javascript">
 		<!--
-		function check_conect_error(){
+		function check_connect_error(){
 			if(document.getElementById('login_error').value == "") {
 				alert("{L_REQUIRE_PSEUDO}");
 				return false;
@@ -15,7 +15,7 @@
 		-->
 		</script>
 		
-		<form action="" method="post" style="margin:auto;" onsubmit="return check_conect_error();">
+		<form action="" method="post" style="margin:auto;" onsubmit="return check_connect_error();">
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>

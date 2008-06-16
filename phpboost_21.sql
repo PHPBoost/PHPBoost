@@ -941,7 +941,7 @@ INSERT INTO `phpboost_links` VALUES (25, 5, 'Démonstration', 'http://demo.phpboo
 CREATE TABLE `phpboost_member` (
   `user_id` int(11) NOT NULL auto_increment,
   `login` varchar(255) NOT NULL default '',
-  `password` varchar(50) NOT NULL default '',
+  `password` varchar(6) NOT NULL default '',
   `level` tinyint(1) NOT NULL default '0',
   `user_groups` text NOT NULL,
   `user_lang` varchar(25) NOT NULL default '',
@@ -969,7 +969,7 @@ CREATE TABLE `phpboost_member` (
   `last_connect` int(11) NOT NULL default '0',
   `test_connect` tinyint(4) NOT NULL default '0',
   `activ_pass` varchar(30) NOT NULL default '0',
-  `new_pass` varchar(50) NOT NULL default '',
+  `new_pass` varchar(64) NOT NULL default '',
   `user_ban` int(11) NOT NULL default '0',
   `user_aprob` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`user_id`),
@@ -1452,7 +1452,7 @@ CREATE TABLE `phpboost_search_results` (
 -- 
 
 CREATE TABLE `phpboost_sessions` (
-  `session_id` varchar(50) NOT NULL default '',
+  `session_id` varchar(64) NOT NULL default '',
   `user_id` int(11) NOT NULL default '0',
   `level` tinyint(1) NOT NULL default '0',
   `session_ip` varchar(50) NOT NULL default '',

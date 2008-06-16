@@ -46,7 +46,7 @@ if( !empty($mail_valid) )
 	$check_verif_code = true;
 	if( @extension_loaded('gd') && $CONFIG_CONTACT['contact_verifcode'] )
 	{
-		$user_id = substr(md5(USER_IP), 0, 8);
+		$user_id = substr(strhash(USER_IP), 0, 8);
 		$verif_code = $Sql->Query("SELECT code FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
 
 		if( empty($verif_code) || ($verif_code != $get_verif_code) )

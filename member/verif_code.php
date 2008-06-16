@@ -133,7 +133,7 @@ foreach($matches[0] as $key => $letter)
 imagejpeg($img);
 imagedestroy($img);
 
-$user_id = substr(md5(USER_IP), 0, 8);
+$user_id = substr(strhash(USER_IP), 0, 8);
 $check_user_id = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 if( $check_user_id == 1 )
 	$Sql->Query_inject("UPDATE ".PREFIX."verif_code SET code = '" . $code . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
