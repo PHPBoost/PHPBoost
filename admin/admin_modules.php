@@ -29,19 +29,19 @@ define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
 $uninstall = !empty($_GET['uninstall']) ? true : false;
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : '0';
-$error = !empty($_GET['error']) ? trim($_GET['error']) : ''; 
-			
+$id = retrieve(GET, 'id', 0);
+$error = retrieve(GET, 'error', ''); 
+
 if( isset($_POST['valid']) )		
 {
 	$result = $Sql->Query_while("SELECT id, name, auth, activ 
 	FROM ".PREFIX."modules", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$activ = isset($_POST['activ' . $row['id']]) ? numeric($_POST['activ' . $row['id']]) : '0';
+		$activ = retrieve(POST, 'activ' . $row['id'], 0);
 		$array_auth_all = $Group->Return_array_auth_simple(ACCESS_MODULE, $row['id']);
 		
-		$Sql->Query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', auth = '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	//Génération du cache des modules
 	$Cache->Generate_file('modules');
@@ -52,7 +52,7 @@ elseif( $uninstall ) //Désinstallation du module
 {
 	if( !empty($_POST['valid_del']) )
 	{
-		$idmodule = !empty($_POST['idmodule']) ? numeric($_POST['idmodule']) : '0';
+		$idmodule = retrieve(POST, 'idmodule', 0);
 		$drop_files = !empty($_POST['drop_files']) ? true : false; 		
 		//Suppression du modules dans la bdd => module désinstallé.
 		$module_name = $Sql->Query("SELECT name FROM ".PREFIX."modules WHERE id = '" . $idmodule . "'", __LINE__, __FILE__);
@@ -71,15 +71,15 @@ elseif( $uninstall ) //Désinstallation du module
 			
 			//Suppression des commentaires associés.
 			if( !empty($info_module['com']) )
-				$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . strprotect($info_module['com']) . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . addslashes($info_module['com']) . "'", __LINE__, __FILE__);
 			
 			//Suppression de la configuration.
 			$config = get_ini_config('../news/lang/', $CONFIG['lang']); //Récupération des infos de config.
 			if( !empty($config) )
-				$Sql->Query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
+				$Sql->Query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 			
 			//Suppression du module mini.
-			$Sql->Query_inject("DELETE FROM ".PREFIX."modules_mini WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("DELETE FROM ".PREFIX."modules_mini WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 			
 			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 			$dir_db_module = $CONFIG['lang'];
@@ -89,7 +89,7 @@ elseif( $uninstall ) //Désinstallation du module
 				$dh = @opendir($dir);
 				while( !is_bool($dir_db = @readdir($dh)) )
 				{	
-					if( !preg_match('`\.`', $dir_db) )
+					if( strpos($dir_db, '.') === false )
 					{
 						$dir_db_module = $dir_db;
 						break;
@@ -192,7 +192,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( !empty($get_error) && isset($LANG[$get_error]) )

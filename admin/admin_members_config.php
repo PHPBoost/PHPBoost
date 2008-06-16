@@ -31,19 +31,19 @@ require_once('../kernel/admin_header.php');
 
 if( !empty($_POST['msg_mbr']) ) //Message aux membres.
 {
-	$config_member['activ_register'] = !empty($_POST['activ_register']) ? numeric($_POST['activ_register']) : 0;
-	$config_member['msg_mbr'] = !empty($_POST['contents']) ? stripslashes(strparse($_POST['contents'])) : '';
+	$config_member['activ_register'] = retrieve(POST, 'activ_register', 0);
+	$config_member['msg_mbr'] = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));
 	$config_member['msg_register'] = $CONFIG_MEMBER['msg_register'];
-	$config_member['activ_mbr'] = isset($_POST['activ_mbr']) ? numeric($_POST['activ_mbr']) : 0; //désactivé par defaut. 
+	$config_member['activ_mbr'] = retrieve(POST, 'activ_mbr', 0); //désactivé par defaut. 
 	$config_member['verif_code'] = (isset($_POST['verif_code']) && @extension_loaded('gd')) ? numeric($_POST['verif_code']) : 0; //désactivé par defaut. 
-	$config_member['delay_unactiv_max'] = isset($_POST['delay_unactiv_max']) ? numeric($_POST['delay_unactiv_max']) : ''; 
-	$config_member['force_theme'] = isset($_POST['force_theme']) ? numeric($_POST['force_theme']) : '0'; //Désactivé par défaut.
-	$config_member['activ_up_avatar'] = isset($_POST['activ_up_avatar']) ? numeric($_POST['activ_up_avatar']) : '0'; //Désactivé par défaut.
-	$config_member['width_max'] = !empty($_POST['width_max']) ? numeric($_POST['width_max']) : '120';
-	$config_member['height_max'] = !empty($_POST['height_max']) ? numeric($_POST['height_max']) : '120';
-	$config_member['weight_max'] = !empty($_POST['weight_max']) ? numeric($_POST['weight_max']) : '20';
-	$config_member['activ_avatar'] = isset($_POST['activ_avatar']) ? numeric($_POST['activ_avatar']) : 0;
-	$config_member['avatar_url'] = !empty($_POST['avatar_url']) ? strprotect($_POST['avatar_url']) : '';
+	$config_member['delay_unactiv_max'] = retrieve(POST, 'delay_unactiv_max', 0); 
+	$config_member['force_theme'] = retrieve(POST, 'force_theme', 0); //Désactivé par défaut.
+	$config_member['activ_up_avatar'] = retrieve(POST, 'activ_up_avatar', 0); //Désactivé par défaut.
+	$config_member['width_max'] = retrieve(POST, 'width_max', 120);
+	$config_member['height_max'] = retrieve(POST, 'height_max', 120);
+	$config_member['weight_max'] = retrieve(POST, 'weight_max', 20);
+	$config_member['activ_avatar'] = retrieve(POST, 'activ_avatar', 0);
+	$config_member['avatar_url'] = retrieve(POST, 'avatar_url', '');
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
 	

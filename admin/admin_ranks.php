@@ -30,7 +30,7 @@ require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
-$get_id = ( !empty($_GET['id'])) ? numeric($_GET['id']) : '' ;	
+$get_id = retrieve(GET, 'id', 0);	
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
@@ -39,9 +39,9 @@ if( !empty($_POST['valid']) )
 	FROM ".PREFIX."ranks", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$name = !empty($_POST[$row['id'] . 'name']) ? strprotect($_POST[$row['id'] . 'name']) : '';
-		$msg = !empty($_POST[$row['id'] . 'msg']) ? numeric($_POST[$row['id'] . 'msg']) : '0';
-		$icon = !empty($_POST[$row['id'] . 'icon']) ? strprotect($_POST[$row['id'] . 'icon']) : '';
+		$name = retrieve(POST, $row['id'] . 'name', '');
+		$msg = retrieve(POST, $row['id'] . 'msg', 0);
+		$icon = retrieve(POST, $row['id'] . 'icon', '');
 
 		if( !empty($name) && $row['special'] != 1 )
 			$Sql->Query_inject("UPDATE ".PREFIX."ranks SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);

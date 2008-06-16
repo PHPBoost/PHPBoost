@@ -32,17 +32,17 @@ require_once('../kernel/admin_header.php');
 // field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 if( !empty($_POST['valid']) ) //Insertion du nouveau champs.
 {
-	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';
-	$field = !empty($_POST['field']) ? numeric($_POST['field']) : '';
-	$possible_values = !empty($_POST['possible_values']) ? strprotect($_POST['possible_values']) : '';
-	$default_values = !empty($_POST['default_values']) ? strprotect($_POST['default_values']) : '';
+	$name = retrieve(POST, 'name', '');
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$field = retrieve(POST, 'field', 0);
+	$possible_values = retrieve(POST, 'possible_values', '');
+	$default_values = retrieve(POST, 'default_values', '');
 	
-	$regex_type = !empty($_POST['regex_type']) ? numeric($_POST['regex_type']) : '0';
+	$regex_type = retrieve(POST, 'regex_type', 0);
 	if( empty($regex_type) )
-		$regex = !empty($_POST['regex1']) ? numeric($_POST['regex1']) : '0';
+		$regex = retrieve(POST, 'regex1', 0);
 	else
-		$regex = !empty($_POST['regex2']) ? strprotect($_POST['regex2']) : '';
+		$regex = retrieve(POST, 'regex2', '');
 
 	$array_field = array(
 		1 => 'VARCHAR(255) NOT NULL', 
@@ -88,7 +88,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $get_error == 'exist_field' )

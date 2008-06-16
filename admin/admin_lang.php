@@ -29,8 +29,8 @@ define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 	
 $uninstall = isset($_GET['uninstall']) ? true : false;	
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : '0';
-$error = !empty($_GET['error']) ? trim($_GET['error']) : ''; 
+$id = retrieve(GET, 'id', 0);
+$error = retrieve(GET, 'error', ''); 
 
 if( isset($_GET['activ']) && !empty($id) ) //Activation
 {
@@ -51,8 +51,8 @@ elseif( isset($_POST['valid']) ) //Mise à jour
 	WHERE activ = 1 AND lang != '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$activ = isset($_POST[$row['id'] . 'activ']) ? numeric($_POST[$row['id'] . 'activ']) : '0';
-		$secure = isset($_POST[$row['id'] . 'secure']) ? numeric($_POST[$row['id'] . 'secure']) : '0';
+		$activ = retrieve(POST, $row['id'] . 'activ', 0);
+		$secure = retrieve(POST, $row['id'] . 'secure', 0);
 		if( $row['activ'] != $activ || $row['secure'] != $secure )
 			$Sql->Query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
@@ -62,7 +62,7 @@ elseif( $uninstall ) //Désinstallation.
 {
 	if( !empty($_POST['valid_del']) )
 	{		
-		$idlang = !empty($_POST['idlang']) ? numeric($_POST['idlang']) : '0'; 
+		$idlang = retrieve(POST, 'idlang', 0); 
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
 		
 		$previous_lang = $Sql->Query("SELECT lang FROM ".PREFIX."lang WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
@@ -147,7 +147,7 @@ else
 	));
 		
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_NOTICE);
 	elseif( !empty($get_error) && isset($LANG[$get_error]) )
@@ -159,13 +159,13 @@ else
 	$rep = '../lang/';
 	if( is_dir($rep) ) //Si le dossier existe
 	{
-		$file_array = array();
-		$dh = @opendir( $rep);
-		while( !is_bool($fichier = readdir($dh)) )
+		$dir_array = array();
+		$dh = @opendir($rep);
+		while( !is_bool($dir = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( !preg_match('`\.`', $fichier) )
-				$file_array[] = $fichier; //On crée un array, avec les different dossiers.
+			if( strpos($dir, '.') === false )
+				$dir_array[] = $dir; //On crée un array, avec les different dossiers.
 		}	
 		closedir($dh); //On ferme le dossier		
 
@@ -175,7 +175,7 @@ else
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			if( array_search($row['lang'], $file_array) !== false)
+			if( array_search($row['lang'], $dir_array) !== false)
 				$lang_bdd[] = array('id' => $row['id'], 'name' => $row['lang'], 'activ' => $row['activ'], 'secure' => $row['secure']); //On supprime ces clées du tableau.
 		}
 		$Sql->Close($result);

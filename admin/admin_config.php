@@ -47,18 +47,20 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 		$start_page = strprotect($_POST['start_page2']);
 	elseif( !empty($_POST['start_page']) )
 		$start_page = strprotect($_POST['start_page']);
+	else
+		$start_page = '';
 		
 	$config = array();	 
 	$config['server_name'] = $CONFIG['server_name'];
 	$config['server_path'] = $CONFIG['server_path'];	
-	$config['site_name'] = !empty($_POST['site_name']) ? stripslashes(strprotect($_POST['site_name'])) : '';	
-	$config['site_desc'] = !empty($_POST['site_desc']) ? stripslashes(strprotect($_POST['site_desc'])) : '';    
-	$config['site_keyword'] = !empty($_POST['site_keyword']) ? stripslashes(strprotect($_POST['site_keyword'])) : '';	
+	$config['site_name'] = stripslashes(retrieve(POST, 'site_name', ''));	
+	$config['site_desc'] = stripslashes(retrieve(POST, 'site_desc', ''));
+	$config['site_keyword'] = stripslashes(retrieve(POST, 'site_keyword', ''));
 	$config['start'] = $CONFIG['start'];
 	$config['version'] = $CONFIG['version'];
-	$config['lang'] = !empty($_POST['lang']) ? stripslashes(strprotect($_POST['lang'])) : ''; 
-	$config['theme'] = !empty($_POST['theme']) ? stripslashes(strprotect($_POST['theme'])) : 'main'; //main par defaut. 
-	$config['editor'] = !empty($_POST['editor']) ? stripslashes(strprotect($_POST['editor'])) : 'bbcode'; //bbcode par defaut. 
+	$config['lang'] = stripslashes(retrieve(POST, 'lang', ''));
+	$config['theme'] = stripslashes(retrieve(POST, 'theme', 'main')); //main par defaut. 
+	$config['editor'] = stripslashes(retrieve(POST, 'editor', 'bbcode')); //bbcode par defaut. 
 	$config['timezone'] = $CONFIG['timezone'];
 	$config['start_page'] = !empty($start_page) ? stripslashes($start_page) : '/member/member.php';
 	$config['maintain'] = $CONFIG['maintain'];
@@ -67,20 +69,20 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 	$config['maintain_text'] = $CONFIG['maintain_text'];
 	$config['rewrite'] = $CONFIG['rewrite'];
 	$config['com_popup'] = $CONFIG['com_popup'];
-	$config['compteur'] = isset($_POST['compteur']) ? numeric($_POST['compteur']) : 0;
-	$config['bench'] = isset($_POST['bench']) ? numeric($_POST['bench']) : 0;
-	$config['theme_author'] = isset($_POST['theme_author']) ? numeric($_POST['theme_author']) : 0;
+	$config['compteur'] = retrieve(POST, 'compteur', 0);
+	$config['bench'] = retrieve(POST, 'bench', 0);
+	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
 	$config['ob_gzhandler'] = $CONFIG['ob_gzhandler'];
 	$config['site_cookie'] = $CONFIG['site_cookie'];
 	$config['site_session'] = $CONFIG['site_session'];				
 	$config['site_session_invit'] = $CONFIG['site_session_invit'];	
-	$config['mail'] = !empty($_POST['mail']) ? stripslashes(strprotect($_POST['mail'])) : '';  
-	$config['activ_mail'] = isset($_POST['activ_mail']) ? numeric($_POST['activ_mail']) : '1'; //activé par defaut. 
-	$config['sign'] = !empty($_POST['sign']) ? stripslashes(strprotect($_POST['sign'])) : '';   
-	$config['anti_flood'] = isset($_POST['anti_flood']) ? numeric($_POST['anti_flood']) : 0;
-	$config['delay_flood'] = !empty($_POST['delay_flood']) ? numeric($_POST['delay_flood']) : 0;
+	$config['mail'] = stripslashes(retrieve(POST, 'mail', ''));;  
+	$config['activ_mail'] = retrieve(POST, 'activ_mail', 1); //activé par defaut. 
+	$config['sign'] = stripslashes(retrieve(POST, 'sign', ''));;   
+	$config['anti_flood'] = retrieve(POST, 'anti_flood', 0);
+	$config['delay_flood'] = retrieve(POST, 'delay_flood', 0);
 	$config['unlock_admin'] = $CONFIG['unlock_admin'];
-	$config['pm_max'] = isset($_POST['pm_max']) ? numeric($_POST['pm_max']) : 25;
+	$config['pm_max'] = retrieve(POST, 'pm_max', 25);
 
 	if( !empty($config['theme']) && !empty($CONFIG['lang']) ) //Nom de serveur obligatoire
 	{
@@ -108,7 +110,7 @@ elseif( !empty($check_advanced) && empty($_POST['advanced']) )
 		$check_rewrite = '<span class="unspecified">' . $LANG['undefined'] . '</span>';
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( isset($_GET['mail']) )
@@ -179,18 +181,18 @@ elseif( !empty($check_advanced) && empty($_POST['advanced']) )
 elseif( !empty($_POST['advanced']) )
 {
 	$CONFIG['rewrite'] = 1;
-	$CONFIG['server_name'] = !empty($_POST['server_name']) ? stripslashes(strprotect($_POST['server_name'])) : stripslashes(strprotect($server_name)); 
-	$CONFIG['server_path'] = !empty($_POST['server_path']) ? stripslashes(strprotect($_POST['server_path'])) : '';  
-	$CONFIG['timezone'] = !empty($_POST['timezone']) ? numeric($_POST['timezone']) : 0;  
+	$CONFIG['server_name'] = stripslashes(retrieve(POST, 'server_name', stripslashes(strprotect($server_name)) )); 
+	$CONFIG['server_path'] = stripslashes(retrieve(POST, 'server_path', stripslashes(strprotect($server_path)) ));  
+	$CONFIG['timezone'] = retrieve(POST, 'timezone', 0);  
 	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
-	$CONFIG['site_cookie'] = !empty($_POST['site_cookie']) ? stripslashes(strprotect($_POST['site_cookie'])) : 'session'; //Session par defaut.
-	$CONFIG['site_session'] = !empty($_POST['site_session']) ? numeric($_POST['site_session']) : 3600; //Valeur par defaut à 3600.					
-	$CONFIG['site_session_invit'] = !empty($_POST['site_session_invit']) ? numeric($_POST['site_session_invit']) : 300; //Durée compteur 5min par defaut.	
+	$CONFIG['site_cookie'] = stripslashes(retrieve(POST, 'site_cookie', 'session')); //Session par defaut.
+	$CONFIG['site_session'] = retrieve(POST, 'site_session', 3600); //Valeur par defaut à 3600.					
+	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.	
 	
 	if( !empty($CONFIG['server_name']) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit'])  ) //Nom de serveur obligatoire
 	{
 		list($host, $dir) = array($CONFIG['server_name'], $CONFIG['server_path']); //Réassignation pour la redirection.
-		if( empty($_POST['rewrite_engine']) || strpos($_SERVER['SERVER_NAME'], 'free.fr') ) //Désctivation de l'url rewriting.
+		if( empty($_POST['rewrite_engine']) || strpos($_SERVER['SERVER_NAME'], 'free.fr') ) //Désactivation de l'url rewriting.
 			$CONFIG['rewrite'] = 0;
 			
 		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
@@ -216,7 +218,7 @@ else //Sinon on rempli le formulaire
 	$Cache->Load_file('config', RELOAD_CACHE);
 
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
@@ -231,7 +233,7 @@ else //Sinon on rempli le formulaire
 		while( !is_bool($dir = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( !preg_match('`\.`', $dir) )
+			if( strpos($dir, '.') === false )
 			{
 				//Désormais on vérifie que le fichier de configuration est présent.
 				if( is_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini') )
@@ -326,7 +328,7 @@ else //Sinon on rempli le formulaire
 		$dh = @opendir( $rep);
 		while( ! is_bool($lang = readdir($dh)) )
 		{	
-			if( !preg_match('`\.`', $lang) )
+			if( strpos($lang, '.') === false )
 				$lang_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		closedir($dh); //On ferme le dossier
@@ -378,7 +380,7 @@ else //Sinon on rempli le formulaire
 		while( !is_bool($theme = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( !preg_match('`\.`', $theme) )
+			if( strpos($theme, '.') === false )
 				$fichier_array[] = $theme; //On crée un array, avec les different dossiers.
 		}	
 		closedir($dh); //On ferme le dossier

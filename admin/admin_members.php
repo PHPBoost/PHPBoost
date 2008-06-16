@@ -29,12 +29,12 @@ require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
-$id_post = !empty($_POST['id']) ? numeric($_POST['id']) : '' ;
+$id = retrieve(GET, 'id', 0);
+$id_post = retrieve(POST, 'id', 0);
 $delete = !empty($_GET['delete']) ? true : false ;
 $add = !empty($_GET['add']) ? true : false;
-$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
-$get_l_error = !empty($_GET['erroru']) ? trim($_GET['erroru']) : '';
+$get_error = retrieve(GET, 'error', '');
+$get_l_error = retrieve(GET, 'erroru', '');
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) && !empty($id_post) )
@@ -51,7 +51,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 
 	$login = !empty($_POST['name']) ?  strprotect(substr($_POST['name'], 0, 25)) : '';
 	$user_mail = strtolower($_POST['mail']);
-	if( preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $user_mail) )
+	if( check_mail($user_mail) )
 	{	
 		//Vérirication de l'unicité du membre et du mail
 		$check_user = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member WHERE login = '" . $login . "' AND user_id <> '" . $id_post . "'", __LINE__, __FILE__);
@@ -63,9 +63,9 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 		else
 		{
 			//Vérification des password.
-			$password = !empty($_POST['pass']) ? trim($_POST['pass']) : '';
+			$password = retrieve(POST, 'pass', '', TSTING_UNSECURE);
 			$password_md5 = !empty($password) ? md5($password) : '';   
-			$password_bis = !empty($_POST['confirm_pass']) ? trim($_POST['confirm_pass']) : '';
+			$password_bis = retrieve(POST, 'confirm_pass', '', TSTRING_UNSECURE);
 			$password_bis_md5 = !empty($password_bis) ? md5($password_bis) : '';
 	
 			if( !empty($password_md5) && !empty($password_bis_md5) )
@@ -81,34 +81,33 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 					redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_same') . '#errorh');
 			}
 			
-			$user_level = isset($_POST['level']) ? numeric($_POST['level']) : '-1';  
-			$user_mail = !empty($user_mail) ? strprotect($user_mail) : '';	
-			$user_aprob = !empty($_POST['user_aprob']) ? numeric($_POST['user_aprob']) : '0';  
+			$user_level = retrieve(POST, 'level', -1);  
+			$user_aprob = retrieve(POST, 'user_aprob', 0);  
 			
 			//Informations.
-			$user_show_mail = !empty($_POST['user_show_mail']) ? '0' : '1';
-			$user_lang = !empty($_POST['user_lang']) ? strprotect($_POST['user_lang']) : '';
-			$user_theme = !empty($_POST['user_theme']) ? strprotect($_POST['user_theme']) : '';
-			$user_editor = !empty($_POST['user_editor']) ? strprotect($_POST['user_editor']) : '';
-			$user_timezone = !empty($_POST['user_timezone']) ? numeric($_POST['user_timezone']) : '';
+			$user_show_mail = !empty($_POST['user_show_mail']) ? false : true;
+			$user_lang = retrieve(POST, 'user_lang', '');
+			$user_theme = retrieve(POST, 'user_theme', '');
+			$user_editor = retrieve(POST, 'user_editor', '');
+			$user_timezone = retrieve(POST, 'user_timezone', 0);
 			
-			$user_local = !empty($_POST['user_local']) ? strprotect($_POST['user_local']) : '';
+			$user_local = retrieve(POST, 'user_local', '');
 			//Validité de l'adresse du site.
-			$user_web = !empty($_POST['user_web']) ? strprotect($_POST['user_web']) : '';
+			$user_web = retrieve(POST, 'user_web', '');
 			$user_web = (!empty($user_web) && preg_match('`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`', trim($_POST['user_web']))) ? $user_web : '';
 					
-			$user_occupation = !empty($_POST['user_occupation']) ? strprotect($_POST['user_occupation']) : '';
-			$user_hobbies = !empty($_POST['user_hobbies']) ? strprotect($_POST['user_hobbies']) : '';
-			$user_desc = !empty($_POST['user_desc']) ? strparse($_POST['user_desc']) : '';
-			$user_sex = !empty($_POST['user_sex']) ? numeric($_POST['user_sex']) : '0';
-			$user_sign = !empty($_POST['user_sign']) ? strparse($_POST['user_sign']) : '';			
-			$user_msn = !empty($_POST['user_msn']) ? strprotect($_POST['user_msn']) : '';
-			$user_yahoo= !empty($_POST['user_yahoo']) ? strprotect($_POST['user_yahoo']) : '';
+			$user_occupation = retrieve(POST, 'user_occupation', '');
+			$user_hobbies = retrieve(POST, 'user_hobbies', '');
+			$user_desc = retrieve(POST, 'user_desc', '', TSTRING_PARSE);
+			$user_sex = retrieve(POST, 'user_sex', 0);
+			$user_sign = retrieve(POST, 'user_sign', '', TSTRING_PARSE);			
+			$user_msn = retrieve(POST, 'user_msn', '');
+			$user_yahoo= retrieve(POST, 'user_yahoo', '');
 			
-			$user_warning = isset($_POST['user_warning']) ? numeric($_POST['user_warning']) : 0;
-			$user_readonly = isset($_POST['user_readonly']) ? numeric($_POST['user_readonly']) : 0;
+			$user_warning = retrieve(POST, 'user_warning', 0);
+			$user_readonly = retrieve(POST, 'user_readonly', 0);
 			$user_readonly = ($user_readonly > 0) ? (time() + $user_readonly) : 0; //Lecture seule!
-			$user_ban = isset($_POST['user_ban']) ? numeric($_POST['user_ban']) : 0;
+			$user_ban = retrieve(POST, 'user_ban', 0);
 			$user_ban = ($user_ban > 0) ? (time() + $user_ban) : 0; //Bannissement!
 			
 			//Gestion des groupes.				
@@ -144,7 +143,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			{
 				if( $_FILES['avatars']['size'] > 0 )
 				{
-					$Upload->Upload_file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+`i$', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
+					$Upload->Upload_file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 					if( !empty($Upload->error) ) //Erreur, on arrête ici
 						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $Upload->error) . '#errorh');
 					else
@@ -211,7 +210,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 					WHERE display = 1", __LINE__, __FILE__);
 					while( $row = $Sql->Sql_fetch_assoc($result) )
 					{
-						$field = isset($_POST[$row['field_name']]) ? trim($_POST[$row['field_name']]) : '';
+						$field = retrieve(POST, $row['field_name'], '', TSTRING_UNSECURE);
 						if( $row['field'] == 2 )
 							$field = strparse($field);
 						elseif( $row['field'] == 4 )
@@ -269,13 +268,13 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 {
 	$login = !empty($_POST['login2']) ? strprotect(substr($_POST['login2'], 0, 25)) : '';
-	$password = !empty($_POST['password2']) ? trim($_POST['password2']) : '';
-	$password_bis = !empty($_POST['password2_bis']) ? trim($_POST['password2_bis']) : '';
+	$password = retrieve(POST, 'password2', '', TSTRING_UNSECURE);
+	$password_bis = retrieve(POST, 'password2_bis', '', TSTRING_UNSECURE);
 	$password_md5 = !empty($password) ? md5($password) : '';
-	$level = isset($_POST['level2']) ? numeric($_POST['level2']) : '-1';
-	$mail = !empty($_POST['mail2']) ? strprotect($_POST['mail2']) : '';
+	$level = retrieve(POST, 'level2', -1);
+	$mail = strtolower(retrieve(POST, 'mail2', ''));
 	
-	if( preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$!", strtolower($mail)) )
+	if( check_mail($mail) )
 	{	
 		//Vérirication de l'unicité du membre et du mail
 		$check_user = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
@@ -530,7 +529,7 @@ elseif( !empty($id) )
 	while( $row2 = $Sql->Sql_fetch_assoc($result) )
 	{	
 		$lang_info = load_ini_file('../lang/', $row2['lang']);
-		if( $lang_info )
+		if( is_array($lang_info) )
 		{
 			$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $row2['lang'];
 			$array_identifier .= 'array_identifier[\'' . $row2['lang'] . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
@@ -552,7 +551,7 @@ elseif( !empty($id) )
 	while( $row2 = $Sql->Sql_fetch_assoc($result) )
 	{	
 		$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', $CONFIG['lang']);
-		if( $theme_info )
+		if( is_array($theme_info) )
 		{
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];
 			$selected = ($row2['theme'] == $mbr['user_theme']) ? 'selected="selected"' : '';
@@ -790,7 +789,7 @@ else
 		'admin_members_management'=> 'admin/admin_members_management.tpl'
 	));
 	 
-	$search = ( !empty($_POST['login_mbr'])) ? strprotect($_POST['login_mbr']) : '' ; 
+	$search = retrieve(POST, 'login_mbr', ''); 
 	if( !empty($search) ) //Moteur de recherche des members
 	{
 		$search = str_replace('*', '%', $search);
@@ -824,7 +823,7 @@ else
 	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 	 
-	$get_sort = !empty($_GET['sort']) ? trim($_GET['sort']) : '';	
+	$get_sort = retrieve(GET, 'sort', '');	
 	switch($get_sort)
 	{
 		case 'time' : 
@@ -844,8 +843,8 @@ else
 		$sort = 'timestamp';
 	}
 	
-	$get_mode = !empty($_GET['mode']) ? trim($_GET['mode']) : '';	
-	$mode = ($get_mode == 'asc' || $get_mode == 'desc') ? strtoupper(trim($_GET['mode'])) : '';	
+	$get_mode = retrieve(GET, 'mode', '');	
+	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '&amp;sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	$Template->Assign_vars(array(

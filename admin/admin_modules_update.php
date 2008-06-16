@@ -38,7 +38,7 @@ if( $update ) //Mise à jour du module
 		if( $value == $LANG['update_module'] )
 			$module_name = $key;
 	
-	$activ_module = isset($_POST[$module_name . 'activ']) ? numeric($_POST[$module_name . 'activ']) : '0';
+	$activ_module = retrieve(POST, $module_name . 'activ', 0);
 	
 	//Vérification de l'existance du module
 	$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
@@ -60,7 +60,7 @@ if( $update ) //Mise à jour du module
 			$dh = @opendir($dir);
 			while( !is_bool($dir_db = @readdir($dh)) )
 			{	
-				if( !preg_match('`\.`', $dir_db) )
+				if( strpos($dir_db, '.') === false )
 				{
 					$dir_db_module = $dir_db;
 					break;
@@ -181,7 +181,7 @@ else
 	));
 
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled');
 	if( in_array($get_error, $array_error) )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
@@ -193,8 +193,10 @@ else
 	$result = $Sql->Query_while("SELECT name, version
 	FROM ".PREFIX."modules
 	WHERE activ = 1", __LINE__, __FILE__);
+	
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 		$updated_modules[$row['name']] = $row['version'];
+	
 	$Sql->Close($result);
 	
 	//Vérification des mises à jour du noyau  et des modules sur le site officiel.
@@ -235,14 +237,14 @@ else
 		while( !is_bool($dir = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( !preg_match('`\.`', $dir) && array_key_exists($dir, $updated_modules) )
+			if( strpos($dir, '.') === false && array_key_exists($dir, $updated_modules) )
 			{
 				//Désormais on vérifie que le fichier de configuration est présent.
 				if( is_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini') )
 				{
 					//Récupération des infos de config.
 					$info_module = load_ini_file($root . $dir . '/lang/', $CONFIG['lang']);					
-					if( $info_module['version'] != $updated_modules[$dir] )
+					if( is_array($info_module) && $info_module['version'] != $updated_modules[$dir] )
 					{
 						$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
 						$Template->Assign_block_vars('available', array(

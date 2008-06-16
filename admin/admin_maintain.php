@@ -34,26 +34,27 @@ require_once('../kernel/admin_header.php');
 if( !empty($_POST['valid']) )
 {
 	
-	$maintain_check = isset($_POST['maintain_check']) ? numeric($_POST['maintain_check']) : 0;
+	$maintain_check = retrieve(POST, 'maintain_check', 0);
 	switch($maintain_check) 
 	{
 		case 1:
-			$maintain = isset($_POST['maintain']) ? numeric($_POST['maintain']) : 0; //Désactivé par défaut.
+			$maintain = retrieve(POST, 'maintain', 0); //Désactivé par défaut.
 			if( $maintain != -1 )
 				$maintain = !empty($maintain) ? time() + $maintain : '0';	
 		break;
 		case 2:
-			$maintain = isset($_POST['end']) ? trim($_POST['end']) : 0;
+			$maintain = retrieve(POST, 'end', '', TSTRING_UNSECURE);
 			$maintain = strtotimestamp($maintain, $LANG['date_format_short']);
 		break;
 		default:
 		$maintain = '0';
 	}
 
-	$CONFIG['maintain_text'] = !empty($_POST['contents']) ? stripslashes(strparse($_POST['contents'])) : '';
-	$CONFIG['maintain_delay'] = isset($_POST['display_delay']) ? numeric($_POST['display_delay']) : 0;
-	$CONFIG['maintain_display_admin'] = isset($_POST['maintain_display_admin']) ? numeric($_POST['maintain_display_admin']) : 0;
+	$CONFIG['maintain_text'] = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));
+	$CONFIG['maintain_delay'] = retrieve(POST, 'display_delay', 0);
+	$CONFIG['maintain_display_admin'] = retrieve(POST, 'maintain_display_admin', 0);
 	$CONFIG['maintain'] = $maintain;
+	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 	
 	###### Régénération du cache $CONFIG #######

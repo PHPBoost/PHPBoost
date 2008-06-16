@@ -33,17 +33,17 @@ require_once('../kernel/admin_header.php');
 if( !empty($_POST['valid'])  )
 {
 	$config_com = array();
-	$config_com['com_auth'] = isset($_POST['com_auth']) ? numeric($_POST['com_auth']) : -1;
-	$config_com['com_max'] = !empty($_POST['com_max']) ? numeric($_POST['com_max']) : 10;
+	$config_com['com_auth'] = retrieve(POST, 'com_auth', -1);
+	$config_com['com_max'] = retrieve(POST, 'com_max', 10);
 	$config_com['forbidden_tags'] = isset($_POST['forbidden_tags']) ? serialize($_POST['forbidden_tags']) : serialize(array());
-	$config_com['max_link'] = isset($_POST['max_link']) ? numeric($_POST['max_link']) : -1;
+	$config_com['max_link'] = retrieve(POST, 'max_link', -1);
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_com)) . "' WHERE name = 'com'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_file('com');
 		
-	$CONFIG['com_popup'] = isset($_POST['com_popup']) ? numeric($_POST['com_popup']) : 0;
+	$CONFIG['com_popup'] = retrieve(POST, 'com_popup', 0);
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 	
 	###### Régénération du cache dela configuration #######

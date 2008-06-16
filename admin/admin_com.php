@@ -32,8 +32,8 @@ require_once('../kernel/admin_header.php');
 
 $del = !empty($_GET['del']) ? true : false;
 $edit = !empty($_GET['edit']) ? true : false;
-$idcom = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
-$module = !empty($_GET['module']) ? strprotect($_GET['module']) : '';
+$idcom = retrieve(GET, 'id', 0);
+$module = retrieve(GET, 'module', '');
 
 $Template->Set_filenames(array(
 	'admin_com_management'=> 'admin/admin_com_management.tpl'
@@ -47,10 +47,10 @@ $array_com = array();
 $result = $Sql->Query_while("SELECT script, COUNT(*) as total
 FROM ".PREFIX."com 
 GROUP BY script", __LINE__, __FILE__);
+
 while($row = $Sql->Sql_fetch_assoc($result) )
-{
 	$array_com[$row['script']] = $row['total'];
-}
+
 $Sql->Close($result);
 
 //On crée une pagination si le nombre de commentaires est trop important.
@@ -81,7 +81,7 @@ if( is_dir($root) ) //Si le dossier existe
 	while( !is_bool($dir = readdir($dh)) )
 	{	
 		//Si c'est un repertoire, on affiche.
-		if( !preg_match('`\.`', $dir) )
+		if( strpos($dir, '.') === false )
 		{
 			//Désormais on vérifie que le fichier de configuration est présent.
 			if( is_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini') )

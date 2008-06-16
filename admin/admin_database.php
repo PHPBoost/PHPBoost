@@ -28,8 +28,8 @@
 require_once('../kernel/admin_begin.php');
 
 //On regarde si on doit lire un fichier
-$read_file = (!empty($_GET['read_file'])) ? trim($_GET['read_file']) : '';
-if( !empty($read_file) && preg_match('`.\.sql$`', $read_file) )
+$read_file = retrieve(GET, 'read_file', '', TSTRING_UNSECURE);
+if( !empty($read_file) && substr($read_file, -4) == '.sql' )
 {
 	//Si le fichier existe on le lit
 	if( is_file('../cache/backup/' . $read_file) )
@@ -47,7 +47,7 @@ require_once('../kernel/admin_header.php');
 $repair = !empty($_POST['repair']) ? true : false;
 $optimize = !empty($_POST['optimize']) ? true : false;
 $tables_backup = !empty($_POST['backup']) ? true : false;
-$action = !empty($_GET['action']) ? strprotect($_GET['action']) : '';
+$action = retrieve(GET, 'action', '');
 
 $Template->Set_filenames(array(
 'admin_database_management'=> 'admin/admin_database_management.tpl'
@@ -65,7 +65,7 @@ $Template->Assign_vars(array(
 
 if( !empty($_GET['query']) )
 {
-	$query = !empty($_POST['query']) ? trim(stripslashes($_POST['query'])) : '';
+	$query = retrieve(POST, 'query', '', TSTRING_UNSECURE);
 
 	$Template->Assign_vars(array(
 		'C_DATABASE_QUERY' => true
@@ -184,8 +184,8 @@ elseif( $action == 'restore' )
 					$tables[] = $infos['name'];
 				$Backup->Optimize_tables($tables);
 				$Backup->Repair_tables($tables);
-				
 				$Cache->Generate_all_files();
+				
 				redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=success', '', '&'));
 			}
 			elseif( is_file($file_path) )//Le fichier existe déjà, on ne peut pas le copier
@@ -244,7 +244,7 @@ elseif( $action == 'restore' )
 		{
 			while( ($file = readdir($dh)) !== false )
 			{
-				if( preg_match('`.\.sql$`', $file) )					
+				if( strpos($file, '.sql') !== false )					
 				{
 					$Template->Assign_block_vars('file', array(
 						'FILE_NAME' => $file,
