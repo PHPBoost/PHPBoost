@@ -141,7 +141,7 @@ class Upload
 			while( file_exists($this->base_directory . $filename_tmp . '.' . $this->extension[$filepostname]) )
 			{
 				$filename_tmp = $filename;
-				$filename_tmp .= '_' . substr(md5(uniqid(mt_rand(), true)), 0, 5);
+				$filename_tmp .= '_' . substr(strhash(uniqid(mt_rand(), true)), 0, 5);
 			}
 			$filename = $filename_tmp;
 		}

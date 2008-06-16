@@ -375,20 +375,20 @@ if( !empty($id_get) ) //Espace membre
 		//Changement de password
 		if( $check_pass && $check_pass_bis )
 		{			
-			$password_old_md5 = !empty($_POST['pass_old']) ? md5($_POST['pass_old']) : '';			
+			$password_old_hash = !empty($_POST['pass_old']) ? strhash($_POST['pass_old']) : '';
 			$password = retrieve(POST, 'pass', '', TSTRING_UNSECURE);
-			$password_md5 = !empty($password) ? md5($password) : '';
+			$password_hash = !empty($password) ? strhash($password) : '';
 			$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNSECURE);
-			$password_bis_md5 = !empty($password_bis) ? md5($password_bis) : '';				
+			$password_bis_hash = !empty($password_bis) ? strhash($password_bis) : '';
 			$password_old_bdd = $Sql->Query("SELECT password FROM ".PREFIX."member WHERE user_id = '" . $Member->Get_attribute('user_id') . "'",  __LINE__, __FILE__);
 			
-			if( !empty($password_old_md5) && !empty($password_md5) && !empty($password_bis_md5) )
+			if( !empty($password_old_hash) && !empty($password_hash) && !empty($password_bis_hash) )
 			{
-				if( $password_old_md5 === $password_old_bdd && $password_md5 === $password_bis_md5 )
+				if( $password_old_hash === $password_old_bdd && $password_hash === $password_bis_hash )
 				{
 					if( strlen($password) >= 6 && strlen($password_bis) >= 6 )
 					{
-						$Sql->Query_inject("UPDATE ".PREFIX."member SET password = '" . $password_md5 . "' WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__); 
+						$Sql->Query_inject("UPDATE ".PREFIX."member SET password = '" . $password_hash . "' WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 					}
 					else //Longueur minimale du password
 						redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=pass_mini') . '#errorh');

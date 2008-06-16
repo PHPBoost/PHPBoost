@@ -52,10 +52,10 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 				$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login = '" . $login . "'", __LINE__, __FILE__);
 				if( !empty($user_id) ) //Succés mail trouvé, en crée un nouveau mdp, et la clée d'activ et on l'envoi au membre
 				{
-					$new_pass = substr(md5(uniqid(rand(), true)), 0, 6); //Génération du nouveau mot de pass unique!
-					$activ_pass =  substr(md5(uniqid(rand(), true)), 0, 30); //Génération de la clée d'activation!
+					$new_pass = substr(strhash(uniqid(rand(), true)), 0, 6); //Génération du nouveau mot de pass unique!
+					$activ_pass =  substr(strhash(uniqid(rand(), true)), 0, 30); //Génération de la clée d'activation!
 					
-					$Sql->Query_inject("UPDATE ".PREFIX."member SET activ_pass = '" . $activ_pass . "', new_pass = '" . md5($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clée d'activation dans la bdd.
+					$Sql->Query_inject("UPDATE ".PREFIX."member SET activ_pass = '" . $activ_pass . "', new_pass = '" . strhash($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clée d'activation dans la bdd.
 					
 					include_once('../kernel/framework/mail.class.php');
 					$Mail = new Mail();

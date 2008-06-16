@@ -29,7 +29,7 @@ if( defined('PHPBOOST') !== true ) exit;
 
 //Module de connexion.
 $login = retrieve(POST, 'login', '');
-$password = md5(retrieve(POST, 'password', '', TSTRING_UNSECURE));
+$password = retrieve(POST, 'password', '', TSTRING_UNSECURE);
 $autoconnexion = retrieve(POST, 'auto', false);
 
 if( retrieve(GET, 'disconnect', false) ) //Déconnexion.

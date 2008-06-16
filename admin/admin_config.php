@@ -433,8 +433,8 @@ if( !empty($_GET['unlock']) )
 	include_once('../kernel/framework/mail.class.php');
 	$Mail = new Mail();
 	
-	$unlock_admin_clean = substr(md5(uniqid(mt_rand(), true)), 0, 18); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;
-	$unlock_admin = md5($unlock_admin_clean);
+	$unlock_admin_clean = substr(strhash(uniqid(mt_rand(), true)), 0, 18); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;
+	$unlock_admin = strhash($unlock_admin_clean);
 	
 	$CONFIG['unlock_admin'] = $unlock_admin;
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);

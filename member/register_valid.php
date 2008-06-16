@@ -41,9 +41,9 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 	//Info de connexion
 	$login = strprotect(substr(retrieve(POST, 'log', '', TSTRING_UNSECURE), 0, 25));
 	$password = retrieve(POST, 'pass', '', TSTRING_UNSECURE);
-	$password_md5 = md5($password);
+	$password_hash = strhash($password);
 	$password_bis = retrieve(POST, 'pass_biss', '', TSTRING_UNSECURE);
-	$password_bis_md5 = md5($password_bis);
+	$password_bis_hash = strhash($password_bis);
 		
 	//Configuration
 	$user_show_mail = retrieve(POST, 'user_show_mail', 0) ? 1 : 0;
@@ -75,7 +75,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 	$check_verif_code = true;
 	if( $CONFIG_MEMBER['verif_code'] == '1' && @extension_loaded('gd') )
 	{
-		$user_id = substr(md5(USER_IP), 0, 8);
+		$user_id = substr(strhash(USER_IP), 0, 8);
 		$verif_code = $Sql->Query("SELECT code FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
 		$get_verif_code = retrieve(POST, 'verif_code', '', TSTRING_UNSECURE);
 
@@ -89,7 +89,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 	{
 		if( strlen($login) >= 3 && strlen($password) >= 6 && strlen($password_bis) >= 6 )
 		{
-			if( !empty($login) && !empty($user_mail) && $password_md5 === $password_bis_md5 )
+			if( !empty($login) && !empty($user_mail) && $password_hash === $password_bis_hash )
 			{
 				####Vérification de la validité de l'avatar####
 				$user_avatar = '';
@@ -140,14 +140,14 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 				else //Succes.
 				{
 					$user_aprob = ($CONFIG_MEMBER['activ_mbr'] == 0) ? 1 : 0;
-					$activ_mbr = ($CONFIG_MEMBER['activ_mbr'] == 1) ? substr(md5(uniqid(rand(), true)), 0, 15) : ''; //Génération de la clée d'activation!
+					$activ_mbr = ($CONFIG_MEMBER['activ_mbr'] == 1) ? substr(strhash(uniqid(rand(), true)), 0, 15) : ''; //Génération de la clée d'activation!
 					
 					//Suppression des images des stats concernant les membres, si l'info à été modifiée.
 					@unlink('../cache/sex.png');
 					@unlink('../cache/theme.png');
 					
 					$Sql->Query_inject("INSERT INTO ".PREFIX."member (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,user_editor,user_timezone,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
-					VALUES ('" . $login . "', '" . $password_md5 . "', 0, '0', '" . $user_lang . "', '" . $user_theme . "', '" . $user_mail . "', '" . $user_show_mail . "', '" . $user_editor . "', '" . $user_timezone . "', '" . time() . "', '" . $user_avatar . "', 0, '" . $user_local . "', '" . $user_msn . "', '" . $user_yahoo . "', '" . $user_web . "', '" . $user_occupation . "', '" . $user_hobbies . "', '" . $user_desc . "', '" . $user_sex . "', '" . $user_born . "', '" . $user_sign . "', 0, 0, '" . time() . "', 0, '" . $activ_mbr . "', '', 0, '" . $user_aprob . "')", __LINE__, __FILE__); //Compte membre
+					VALUES ('" . $login . "', '" . $password_hash . "', 0, '0', '" . $user_lang . "', '" . $user_theme . "', '" . $user_mail . "', '" . $user_show_mail . "', '" . $user_editor . "', '" . $user_timezone . "', '" . time() . "', '" . $user_avatar . "', 0, '" . $user_local . "', '" . $user_msn . "', '" . $user_yahoo . "', '" . $user_web . "', '" . $user_occupation . "', '" . $user_hobbies . "', '" . $user_desc . "', '" . $user_sex . "', '" . $user_born . "', '" . $user_sign . "', 0, 0, '" . time() . "', 0, '" . $activ_mbr . "', '', 0, '" . $user_aprob . "')", __LINE__, __FILE__); //Compte membre
 					
 					$last_mbr_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."member"); //Dernier message inseré, on met à jour le topic.
 						
@@ -219,8 +219,8 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 								}
 							}
 						}
-						$Sql->Close($result);	
-											
+						$Sql->Close($result);
+						
 						$check_member = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__);
 						if( $check_member && !empty($req_update) )
 								$Sql->Query_inject("UPDATE ".PREFIX."member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); 
@@ -245,7 +245,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					else
 					{
 						$l_register_confirm = $LANG['confirm_register'] . '<br />' . $LANG['register_ready'];
-						$valid_mail = '';							
+						$valid_mail = '';
 						$valid = '';
 					}
 					
@@ -258,9 +258,9 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					if( $CONFIG_MEMBER['activ_mbr'] == 0 )
 					{
 						$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-						$Session->Session_begin($last_mbr_id, $password_md5, 0, SCRIPT, QUERY_STRING, TITLE, 1); //On lance la session.
+						$Session->Session_begin($last_mbr_id, $password, 0, SCRIPT, QUERY_STRING, TITLE, 1); //On lance la session.
 					}
-					unset($password, $password_md5);
+					unset($password, $password_hash);
 					
 					//Affichage de la confirmation d'inscription.
 					$URL_ERROR = get_start_page();

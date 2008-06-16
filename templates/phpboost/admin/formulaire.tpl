@@ -1,6 +1,6 @@
 <script type="text/javascript">
 <!--
-function check_conect(){
+function check_connect(){
 	if(document.getElementById('login').value == "") {
 		alert("{L_REQUIRE_PSEUDO}");
 		return false;
@@ -15,7 +15,7 @@ function check_conect(){
 -->
 </script>
 			
-<form action="../admin/admin_index.php" method="post" onsubmit="return check_conect();" class="fieldset_content">
+<form action="../admin/admin_index.php" method="post" onsubmit="return check_connect();" class="fieldset_content">
 	<fieldset>
 		<legend>{L_ADMIN}</legend>
 		<dl>

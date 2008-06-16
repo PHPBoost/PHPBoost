@@ -70,7 +70,7 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
     {
         array_push($modulesIds, $module->GetId());
         // enleve la chaine search de la chaine options et la tronque a 255 caracteres
-        $modulesOptions[$module->GetId()] = md5(implode('|', $modulesArgs[$module->GetId()]));
+        $modulesOptions[$module->GetId()] = strhash(implode('|', $modulesArgs[$module->GetId()]));
     }
     
     $Search = new Search($searchTxt, $modulesOptions);

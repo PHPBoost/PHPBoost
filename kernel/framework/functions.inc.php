@@ -739,4 +739,10 @@ function get_feed_menu($feed_url)
     return $feedMenu->Tparse(TEMPLATE_STRING_MODE);
 }
 
+// Return a hash of the <$str> string using a sha256 algo
+function strhash($str)
+{
+	return hash_hmac('sha256', $str, md5($str));
+}
+
 ?>
