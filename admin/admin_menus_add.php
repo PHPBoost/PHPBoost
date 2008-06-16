@@ -30,23 +30,23 @@ require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : '';
-$idmodule = !empty($_GET['idmodule']) ? trim($_GET['idmodule']) : '';
+$id = retrieve(GET, 'id', 0);
+$idmodule = retrieve(GET, 'idmodule', '', TSTRING_UNSECURE);
 $edit = !empty($_GET['edit']) ? true : false;
 $install = !empty($_GET['install']) ? true : false;
-$id_post = !empty($_POST['id']) ? numeric($_POST['id']) : '';
-$action = !empty($_POST['action']) ? trim($_POST['action']) : '';
+$id_post = retrieve(POST, 'id', 0);
+$action = retrieve(POST, 'action', '');
 $del = !empty($_GET['del']) ? true : false;
 
 //Si c'est confirmé on execute
 if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà existant.
 {	
-	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '';  
-	$auth = isset($_POST['auth']) ? numeric($_POST['auth']) : ''; 
+	$name = retrieve(POST, 'name', '');
+	$activ = retrieve(POST, 'activ', 0);  
+	$auth = retrieve(POST, 'auth', 0); 
 	$array_auth = $Group->Return_array_auth(AUTH_MENUS);	
 	$contents = !empty($_POST['contents']) ? strparse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
-	$location = !empty($_POST['location']) ? strprotect($_POST['location']) : 'left';
+	$location = retrieve(POST, 'location', 'left');
 	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
 
 	$previous = $Sql->Query_array("modules_mini", "location", "added", "WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
@@ -59,7 +59,7 @@ if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà exista
 	if( $previous['added'] == 1 )
 		$clause_class .= " name = '" . $name . "', contents = '" . $contents . "', use_tpl = '" . $use_tpl . "', ";
 
-	$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET " . $clause_class . " location = '" . $location . "', activ = '" . $activ . "', auth = '" . strprotect(serialize($array_auth), HTML_NO_PROTECT) . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+	$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET " . $clause_class . " location = '" . $location . "', activ = '" . $activ . "', auth = '" . addslashes(serialize($array_auth)) . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 	
 	$Cache->Generate_file('modules_mini');		
 	
@@ -69,9 +69,9 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 {
 	if( preg_match('`([a-zA-Z0-9._-]+) ([0-9]+)`', $idmodule, $array_get) )
 	{	
-		$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '';
+		$activ = retrieve(POST, 'activ', 0);
 		$array_auth = $Group->Return_array_auth(AUTH_MENUS);
-		$module_name = $array_get[1];
+		$module_name = addslashes($array_get[1]);
 		$idmodule = $array_get[2];
 		
 		if( strpos($module_name, '.php') === false ) //Menu associé à un module.
@@ -87,7 +87,8 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 				{
 					if( $idmodule == $i )
 					{
-						$menu_path = '../' . addslashes($module_name) . '/' . addslashes($path);
+						$path = addslashes($path);
+						$menu_path = '../' . $module_name . '/' . $path;
 						if( file_exists($menu_path) )
 						{	
 							if( !empty($move) )
@@ -98,11 +99,11 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 							else
 								$location = addslashes($location);
 				
-							$check_menu = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules_mini WHERE name = '" .  addslashes($module_name) . "' AND contents = '" . addslashes($path) . "'", __LINE__, __FILE__);
+							$check_menu = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules_mini WHERE name = '" .  $module_name . "' AND contents = '" . $path . "'", __LINE__, __FILE__);
 							if( empty($check_menu) )
 							{
 								$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-								$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . addslashes($module_name) . "', '" . addslashes($path) . "', '" . addslashes($location) . "', '" . strprotect(serialize($array_auth), HTML_NO_PROTECT) . "', '" . $activ . "', 0, 0)", __LINE__, __FILE__);
+								$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . $module_name . "', '" . $path . "', '" . $location . "', '" . addslashes(serialize($array_auth)) . "', '" . $activ . "', 0, 0)", __LINE__, __FILE__);
 								
 								$Cache->Generate_file('modules_mini');
 							}
@@ -115,7 +116,7 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 		}
 		else //Menu perso dans le dossier /menus.
 		{
-			$menu_path = '../menus/' . addslashes($module_name);
+			$menu_path = '../menus/' . $module_name;
 			if( !empty($move) )
 			{
 				$location = $move;
@@ -124,11 +125,11 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 			else
 				$location = 'left';
 
-			$check_menu = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules_mini WHERE name = '" .  str_replace('.php', '', addslashes($module_name)) . "' AND contents = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
+			$check_menu = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules_mini WHERE name = '" .  str_replace('.php', '', $module_name) . "' AND contents = '" . $module_name . "'", __LINE__, __FILE__);
 			if( empty($check_menu) )
 			{
 				$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-				$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . str_replace('.php', '', addslashes($module_name)) . "', '" . addslashes($module_name) . "', '" . $location . "', '" . strprotect(serialize($array_auth), HTML_NO_PROTECT) . "', '" . $activ . "', 2, 0)", __LINE__, __FILE__);
+				$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . str_replace('.php', '', $module_name) . "', '" . $module_name . "', '" . $location . "', '" . addslashes(serialize($array_auth)) . "', '" . $activ . "', 2, 0)", __LINE__, __FILE__);
 			
 				$Cache->Generate_file('modules_mini');
 			}
@@ -140,19 +141,19 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 }
 elseif( $action == 'add' ) //Ajout d'un menu.
 {		
-	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$activ = isset($_POST['activ']) ? numeric($_POST['activ']) : '';  
+	$name = retrieve(POST, 'name', '');
+	$activ = retrieve(POST, 'activ', 0);  
 	$array_auth = $Group->Return_array_auth(AUTH_MENUS);	
 	$contents = !empty($_POST['contents']) ? strparse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
-	$location = !empty($_POST['location']) ? strprotect($_POST['location']) : 'left';
-	$use_tpl = isset($_POST['use_tpl']) ? numeric($_POST['use_tpl']) : '';
+	$location = retrieve(POST, 'location', 'left');
+	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
 	
-	if( empty($activ) )
+	if( !$activ )
 		$location = '';
 	
 	$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE activ = 1 AND location = '" . $location . "'", __LINE__, __FILE__);
 	$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES 
-	('" . ($class + 1) . "', '" . $name . "', '" . $contents ."', '" . $location . "', '" . strprotect(serialize($array_auth), HTML_NO_PROTECT) . "', '" . $activ . "', 1, '" . $use_tpl . "')", __LINE__, __FILE__);
+	('" . ($class + 1) . "', '" . $name . "', '" . $contents ."', '" . $location . "', '" . addslashes(serialize($array_auth)) . "', '" . $activ . "', 1, '" . $use_tpl . "')", __LINE__, __FILE__);
 	$last_menu_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."modules_mini");
 	
 	$Cache->Generate_file('modules_mini');		

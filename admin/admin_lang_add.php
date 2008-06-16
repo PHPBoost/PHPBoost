@@ -31,7 +31,7 @@ require_once('../kernel/admin_header.php');
 //On affiche le contenu du repertoire templates, pour lister les thèmes disponibles..
 
 $install = !empty($_GET['install']) ? true : false;
-$error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+$error = retrieve(GET, 'error', '');
 
 //Si c'est confirmé on execute
 if( $install )
@@ -40,15 +40,15 @@ if( $install )
 	$lang = '';
 	foreach($_POST as $key => $value)
 		if( $value == $LANG['install'] )
-			$lang = $key;
+			$lang = strprotect($key);
 			
-	$secure = isset($_POST[$lang.'secure']) ? numeric($_POST[$lang.'secure']) : '-1';
-	$activ = isset($_POST[$lang.'activ']) ? numeric($_POST[$lang.'activ']) : '0';
+	$secure = retrieve(POST, $lang . 'secure', -1);
+	$activ = retrieve(POST, $lang . 'activ', 0);
 		
-	$check_lang = $Sql->Query("SELECT lang FROM ".PREFIX."lang WHERE lang = '" . strprotect($lang) . "'", __LINE__, __FILE__);	
+	$check_lang = $Sql->Query("SELECT lang FROM ".PREFIX."lang WHERE lang = '" . $lang . "'", __LINE__, __FILE__);	
 	if( empty($check_lang) && !empty($lang) )
 	{
-		$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES('" . strprotect($lang) . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES('" . $lang . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
 		
 		redirect(HOST . SCRIPT); 
 	}
@@ -135,7 +135,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_lang_already_exist', 'e_unlink_disabled');
 	if( in_array($get_error, $array_error) )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
@@ -145,13 +145,13 @@ else
 	$rep = '../lang/';
 	if( is_dir($rep) ) //Si le dossier existe
 	{
-		$array_file = array();
+		$array_dir = array();
 		$dh = @opendir($rep);
-		while( !is_bool($file = readdir($dh)) )
+		while( !is_bool($dir = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( !preg_match('`\.`', $file) )
-				$array_file[] = $file; //On crée un array, avec les different dossiers.
+			if( strpos($dir, '.') === false )
+				$array_dir[] = $dir; //On crée un array, avec les different dossiers.
 		}	
 		closedir($dh); //On ferme le dossier
 	
@@ -160,9 +160,9 @@ else
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			$key = array_search($row['lang'], $array_file);
+			$key = array_search($row['lang'], $array_dir);
 			if( $key !== false)
-				unset($array_file[$key]); //On supprime ces clées du tableau.
+				unset($array_dir[$key]); //On supprime ces clées du tableau.
 		}
 		$Sql->Close($result);
 		

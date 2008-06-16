@@ -46,7 +46,7 @@ if( !empty($_POST['msg_register']) ) //Message à l'inscription.
 	$config_member['avatar_url'] = isset($CONFIG_MEMBER['avatar_url']) ? $CONFIG_MEMBER['avatar_url'] : 0;
 	$config_member['msg_mbr'] = isset($CONFIG_MEMBER['msg_mbr']) ? $CONFIG_MEMBER['msg_mbr'] : '';
 	
-	$config_member['msg_register'] = !empty($_POST['contents']) ? stripslashes(strparse($_POST['contents'])) : '';
+	$config_member['msg_register'] = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE);
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
 	

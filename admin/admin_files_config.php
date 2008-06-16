@@ -34,8 +34,8 @@ if( !empty($_POST['valid'])  )
 {
 	$config_files = array();
 	$config_files['size_limit'] = isset($_POST['size_limit']) ? max(numeric($_POST['size_limit'], 'float') * 1024, 1) : 500;
-	$config_files['bandwidth_protect'] = isset($_POST['bandwidth_protect']) ? numeric($_POST['bandwidth_protect']) : 1;
-	$auth_extensions = isset($_POST['auth_extensions']) ? $_POST['auth_extensions'] : '';
+	$config_files['bandwidth_protect'] = retrieve(POST, 'bandwidth_protect', 1);
+	$auth_extensions = isset($_POST['auth_extensions']) ? $_POST['auth_extensions'] : array();
 	$auth_extensions_sup = !empty($_POST['auth_extensions_sup']) ? preg_split('`, ?`', trim($_POST['auth_extensions_sup'])) : '';
 
 	if( is_array($auth_extensions_sup) )

@@ -33,19 +33,19 @@ require_once('../kernel/admin_header.php');
 include_once('../kernel/framework/files/files.class.php');
 $Files = new Files; 
 
-$folder = !empty($_GET['f']) ? numeric($_GET['f']) : 0;
-$folder_member = !empty($_GET['fm']) ? numeric($_GET['fm']) : 0;
-$parent_folder = !empty($_GET['fup']) ? numeric($_GET['fup']) : 0;
+$folder = retrieve(GET, 'f', 0);
+$folder_member = retrieve(GET, 'fm', 0);
+$parent_folder = retrieve(GET, 'fup', 0);
 $home_folder = !empty($_GET['root']) ? true : false;
-$del_folder = !empty($_GET['delf']) ? numeric($_GET['delf']) : 0;
-$empty_folder = !empty($_GET['eptf']) ? numeric($_GET['eptf']) : 0;
-$del_file = !empty($_GET['del']) ? numeric($_GET['del']) : 0;
-$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
-$get_l_error = !empty($_GET['erroru']) ? trim($_GET['erroru']) : '';
+$del_folder = retrieve(GET, 'delf', 0);
+$empty_folder = retrieve(GET, 'eptf', 0);
+$del_file = retrieve(GET, 'del', 0);
+$get_error = retrieve(GET, 'error', '');
+$get_l_error = retrieve(GET, 'erroru', '');
 $show_member = !empty($_GET['showm']) ? true : false;
-$move_folder = !empty($_GET['movef']) ? numeric($_GET['movef']) : 0;
-$move_file = !empty($_GET['movefi']) ? numeric($_GET['movefi']) : 0;
-$to = isset($_GET['to']) ? numeric($_GET['to']) : -1;
+$move_folder = retrieve(GET, 'movef', 0);
+$move_file = retrieve(GET, 'movefi', 0);
+$to = retrieve(GET, 'to', -1);
 
 if( isset($_GET['fup']) ) //Changement de dossier
 {
@@ -74,7 +74,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	{
 		include_once('../kernel/framework/files/upload.class.php');
 		$Upload = new Upload($dir);
-		$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+`i$', UNIQ_NAME);
+		$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+$`i', UNIQ_NAME);
 		
 		if( !empty($Upload->error) ) //Erreur, on arrête ici
 			redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->error . '#errorh');
@@ -84,7 +84,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 			$user_id = ($check_user_folder <= 0) ? -1 : $Member->Get_attribute('user_id');
 			$user_id = max($user_id, $folder_member);
 			
-			$Sql->Query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . strprotect($_FILES['upload_file']['name']) . "', '" . strprotect($Upload->filename['upload_file']) . "', '" . $user_id . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->Query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $user_id . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
 		}
 	}
 	else
@@ -120,10 +120,10 @@ elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 	FROM ".PREFIX."upload_cat
 	WHERE user_id = '" . $Member->Get_attribute('user_id') . "'
 	ORDER BY id", __LINE__, __FILE__);
+	
 	while( $row = $Sql->Sql_fetch_assoc($result) )
-	{
 		$move_list_parent[$row['id']] = $row['id_parent'];
-	}
+	
 	$Sql->Close($result);
 
 	$array_child_folder = array();
@@ -223,7 +223,7 @@ else
 		));
 	}
 	
-	list($total_folder_size, $total_files, $total_directories) = array(0, 0, 0);
+	$total_folder_size = $total_files = $total_directories = 0;
 
 	$sql_files = "SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.login
 	FROM ".PREFIX."upload up
@@ -240,8 +240,7 @@ else
 		FROM ".PREFIX."upload u
 		LEFT JOIN ".PREFIX."member m ON m.user_id = u.user_id
 		WHERE u.user_id <> -1
-		ORDER BY name
-		";
+		ORDER BY name";
 	elseif( !empty($folder_member) )
 	{	
 		$sql_folder = "SELECT id, name, id_parent, user_id
@@ -256,7 +255,7 @@ else
 	else
 		$sql_folder = "SELECT id, name, id_parent, user_id
 		FROM ".PREFIX."upload_cat 
-		WHERE id_parent = '" . $folder . "'" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND user_id = -1' : ' AND user_id != -1') . "
+		WHERE id_parent = '" . $folder . "'" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND user_id = -1' : ' AND user_id <> -1') . "
 		ORDER BY name";
 
 	//Affichage des dossiers

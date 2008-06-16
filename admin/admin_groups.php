@@ -29,21 +29,21 @@ require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
-$idgroup = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
-$idgroup_post = !empty($_POST['id']) ? numeric($_POST['id']) : '' ;
-$add = !empty($_GET['add']) ? numeric($_GET['add']) : '' ;
-$add_post = !empty($_POST['add']) ? numeric($_POST['add']) : '' ;
+$idgroup = retrieve(GET, 'id', 0);
+$idgroup_post = retrieve(POST, 'id', 0);
+$add = retrieve(GET, 'add', 0);
+$add_post = retrieve(POST, 'add', 0);
 $del_group = !empty($_GET['del']) ? true : false;
 $add_mbr = !empty($_POST['add_mbr']) ? true : false;
 $del_mbr = !empty($_GET['del_mbr']) ? true : false;
-$user_id = !empty($_GET['user_id']) ? numeric($_GET['user_id']) : 0;
+$user_id = retrieve(GET, 'user_id', 0);
 
 if( !empty($_POST['valid']) && !empty($idgroup_post) ) //Modification du groupe.
 {
-	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$img = !empty($_POST['img']) ? strprotect($_POST['img']) : '';
-	$auth_flood = isset($_POST['auth_flood']) ? numeric($_POST['auth_flood']) : '1';
-	$pm_group_limit = isset($_POST['pm_group_limit']) ? numeric($_POST['pm_group_limit']) : '75';	
+	$name = retrieve(POST, 'name', '');
+	$img = retrieve(POST, 'img', '');
+	$auth_flood = retrieve(POST, 'auth_flood', 1);
+	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);	
 	$data_group_limit = isset($_POST['data_group_limit']) ? numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';	
 		
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);	
@@ -55,10 +55,10 @@ if( !empty($_POST['valid']) && !empty($idgroup_post) ) //Modification du groupe.
 }
 elseif( !empty($_POST['valid']) && $add_post ) //ajout  du groupe.
 {
-	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$img = !empty($_POST['img']) ? strprotect($_POST['img']) : '';
-	$auth_flood = isset($_POST['auth_flood']) ? numeric($_POST['auth_flood']) : '1';
-	$pm_group_limit = isset($_POST['pm_group_limit']) ? numeric($_POST['pm_group_limit']) : '75';	
+	$name = retrieve(POST, 'name', '');
+	$img = retrieve(POST, 'img', '');
+	$auth_flood = retrieve(POST, 'auth_flood', 1);
+	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);	
 	$data_group_limit = isset($_POST['data_group_limit']) ? numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';	
 	
 	if( !empty($name) )
@@ -88,7 +88,7 @@ elseif( !empty($idgroup) && $del_group ) //Suppression du groupe.
 }
 elseif( !empty($idgroup) && $add_mbr ) //Ajout du membre au groupe.
 {
-	$login = !empty($_POST['login_mbr']) ? strprotect($_POST['login_mbr']) : '';
+	$login = retrieve(POST, 'login_mbr', '');
 	$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
 	if( !empty($user_id) )
 	{	
@@ -115,7 +115,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 	if( !empty($group['id']) )
 	{
 		//Gestion erreur.
-		$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+		$get_error = retrieve(GET, 'error', '');
 		if( $get_error == 'incomplete' )
 			$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		elseif( $get_error == 'already_group' )

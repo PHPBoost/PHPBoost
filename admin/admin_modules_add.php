@@ -38,7 +38,7 @@ if( $install ) //Installation du module
 		if( $value == $LANG['install'] )
 			$module_name = str_replace('module_', '', $key);
 
-	$activ_module = isset($_POST[$module_name . 'activ']) ? numeric($_POST[$module_name . 'activ']) : '0';
+	$activ_module = retrieve(POST, $module_name . 'activ', 0);
 	
 	//Vérification de l'unicité du module
 	$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
@@ -57,7 +57,7 @@ if( $install ) //Installation du module
 			$dh = @opendir($dir);
 			while( !is_bool($dir_db = @readdir($dh)) )
 			{	
-				if( !preg_match('`\.`', $dir_db) )
+				if( strpos($dir_db, '.') === false )
 				{
 					$dir_db_module = $dir_db;
 					break;
@@ -91,6 +91,7 @@ if( $install ) //Installation du module
 		if( !empty($info_module['cache']) )
 			$Cache->Generate_module_file($module_name);
 		
+		$module_name = strprotect($module_name);
 		//Installation du mini module s'il existe
 		if( !empty($info_module['mini_module']) )
 		{
@@ -98,17 +99,19 @@ if( $install ) //Installation du module
 			$links = '';
 			foreach($array_menus as $path => $location)
 			{
-				$module_mini_path = '../' . addslashes($module_name) . '/' . addslashes($path);
+				$path = addslashes($path);
+				$module_mini_path = '../' . $module_name . '/' . $path;
 				if( file_exists($module_mini_path) )
-				{	
-					$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  addslashes($location) . "'", __LINE__, __FILE__) + 1;
-					$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . strprotect($module_name) . "', '" . addslashes($path) . "', '" . addslashes($location) . "', -1, 1, 0, 0)", __LINE__, __FILE__);
+				{
+					$location = addslashes($location);
+					$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
+					$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, secure, activ, added, use_tpl) VALUES ('" . $class . "', '" . $module_name . "', '" . $path . "', '" . $location . "', -1, 1, 0, 0)", __LINE__, __FILE__);
 				}
 			}
 		}
 
 		//Insertion du modules dans la bdd => module installé.
-		$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . strprotect($module_name) . "', '" . strprotect($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . $activ_module . "')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . $module_name . "', '" . addslashes($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . $activ_module . "')", __LINE__, __FILE__);
 		
 		//Génération du cache des modules
 		$Cache->Generate_file('modules');
@@ -143,7 +146,7 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 	$error = '';
 	if( is_writable($dir) && is_writable($dir . $module_name) ) //Dossier en écriture, upload possible
 	{
-		$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
+		$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 		if( empty($ckeck_module) && !is_dir('../' . $module_name) )
 		{
 			include_once('../kernel/framework/files/upload.class.php');
@@ -218,7 +221,7 @@ else
 	));
 
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_config_conflict');
 	if( in_array($get_error, $array_error) )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
@@ -231,8 +234,10 @@ else
 	$result = $Sql->Query_while("SELECT id, name
 	FROM ".PREFIX."modules
 	WHERE activ = 1", __LINE__, __FILE__);
+	
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 		$installed_modules[] = $row['name'];
+	
 	$Sql->Close($result);
 	
 	//Modules disponibles
@@ -244,14 +249,14 @@ else
 		while( !is_bool($dir = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( !preg_match('`\.`', $dir) && !in_array($dir, $installed_modules) )
+			if( strpos($dir, '.') === false && !in_array($dir, $installed_modules) )
 			{
 				//Désormais on vérifie que le fichier de configuration est présent.
 				if( is_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini') )
 				{
 					//Récupération des infos de config.
 					$info_module = load_ini_file($root . $dir . '/lang/', $CONFIG['lang']);
-					if( isset($info_module['info']) )
+					if( is_array($info_module) )
 					{
 						$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
 						$Template->Assign_block_vars('available', array(

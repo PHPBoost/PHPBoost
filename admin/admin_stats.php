@@ -35,9 +35,9 @@ $Template->Set_filenames(array(
 ));
 
 $visit = !empty($_GET['visit']) ? true : false;
-$visit_year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
+$visit_year = retrieve(GET, 'year', 0);
 $pages = !empty($_GET['pages']) ? true : false;
-$pages_year = !empty($_GET['pages_year']) ? numeric($_GET['pages_year']) : '';
+$pages_year = retrieve(GET, 'pages_year', 0);
 $members = !empty($_GET['members']) ? true : false;
 $referer = !empty($_GET['referer']) ? true : false;
 $keyword = !empty($_GET['keyword']) ? true : false;
@@ -190,8 +190,8 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 	$current_year = substr($time, 0, 4);
 	$current_month = substr($time, 4, 2);
 	
-	$month = !empty($_GET['m']) ? numeric($_GET['m']) : (int) $current_month;
-	$year = !empty($_GET['y']) ? numeric($_GET['y']) : $current_year;
+	$month = retrieve(GET, 'm', (int)$current_month);
+	$year = retrieve(GET, 'y', (int)$current_year);
 	if( $visit_year )
 		$year = $visit_year;
 	
@@ -263,10 +263,10 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			WHERE stats_year = '" . $visit_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
 			$max_month = 1;
-			while($row = $Sql->Sql_fetch_assoc($result) )
-			{
+			
+			while($row = $Sql->Sql_fetch_assoc($result))
 				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
-			}			
+			
 				
 			$Template->Assign_vars(array(
 				'C_STATS_NO_GD' => true
@@ -403,7 +403,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			ORDER BY stats_day", __LINE__, __FILE__);
 			while($row = $Sql->Sql_fetch_assoc($result))
 			{	
-				$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
+				$date_day = ($row['day'] < 10) ? '0' . $row['day'] : $row['day'];
 				
 				//On affiche les stats numériquement dans un tableau en dessous
 				$Template->Assign_block_vars('value', array(
@@ -469,7 +469,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 					$Template->Assign_block_vars('values.head', array(
 					));
 						
-					$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
+					$date_day = ($row['day'] < 10) ? '0' . $row['day'] : $row['day'];
 						
 					//On affiche les stats numériquement dans un tableau en dessous
 					$Template->Assign_block_vars('value', array(
@@ -508,8 +508,8 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 	$current_month = substr($time, 4, 2);
 	$current_day = substr($time, 6, 2);
 
-	$day = !empty($_GET['d']) ? numeric($_GET['d']) : (int) $current_day;
-	$month = !empty($_GET['m']) ? numeric($_GET['m']) : (int) $current_month;
+	$day = retrieve(GET, 'd', (int)$current_day);
+	$month = retrieve(GET, 'm', (int)$current_month);
 	if( $pages_year )
 	{
 		$clause = '';
@@ -518,12 +518,12 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 	elseif( isset($_GET['d']) )
 	{
 		$clause = "AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'";
-		$year = !empty($_GET['y']) ? numeric($_GET['y']) : $current_year;
+		$year = retrieve(GET, 'y', (int)$current_year);
 	}	
 	else
 	{
 		$clause = "AND stats_month = '" . $month . "'";
-		$year = !empty($_GET['y']) ? numeric($_GET['y']) : $current_year;
+		$year = retrieve(GET, 'y', (int)$current_year);
 	}	
 	
 	//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
@@ -611,10 +611,10 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			WHERE stats_year = '" . $visit_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
 			$max_month = 1;
-			while($row = $Sql->Sql_fetch_assoc($result) )
-			{
+			
+			while($row = $Sql->Sql_fetch_assoc($result))
 				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
-			}
+			
 						
 			$Template->Assign_vars(array(
 				'C_STATS_NO_GD' => true
@@ -891,7 +891,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 					$Template->Assign_block_vars('values.head', array(
 					));
 						
-					$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
+					$date_day = ($row['day'] < 10) ? '0' . $row['day'] : $row['day'];
 						
 					//On affiche les stats numériquement dans un tableau en dessous
 					$Template->Assign_block_vars('value', array(

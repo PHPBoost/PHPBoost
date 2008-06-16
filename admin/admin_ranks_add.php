@@ -33,9 +33,9 @@ require_once('../kernel/admin_header.php');
 //Ajout du rang.
 if( !empty($_POST['add']) )
 {
-	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-	$msg = !empty($_POST['msg']) ? numeric($_POST['msg']) : 0;    
-	$icon = !empty($_POST['icon']) ? strprotect($_POST['icon']) : ''; 
+	$name = retrieve(POST, 'name', '');
+	$msg = retrieve(POST, 'msg', 0);    
+	$icon = retrieve(POST, 'icon', ''); 
 	
 	if( !empty($name) && $msg >= 0 )
 	{	
@@ -81,7 +81,7 @@ else //Sinon on rempli le formulaire
 	));
 
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable');
 	if( in_array($get_error, $array_error) )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);

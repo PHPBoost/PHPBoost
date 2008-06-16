@@ -30,12 +30,12 @@ require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : '' ;
-$id_post = !empty($_POST['id']) ? numeric($_POST['id']) : '' ;
+$id = retrieve(GET, 'id', 0);
+$id_post = retrieve(POST, 'id', 0);
 
-$top = !empty($_GET['top']) ? strprotect($_GET['top']) : '' ;
-$bottom = !empty($_GET['bot']) ? strprotect($_GET['bot']) : '' ;
-$move = isset($_GET['move']) ? strprotect($_GET['move']) : '';
+$top = retrieve(GET, 'top', '');
+$bottom = retrieve(GET, 'bot', '');
+$move = retrieve(GET, 'move', '');
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
@@ -44,8 +44,8 @@ if( !empty($_POST['valid']) )
 	FROM ".PREFIX."modules_mini", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$activ = isset($_POST[$row['id'] . 'activ']) ? numeric($_POST[$row['id'] . 'activ']) : '0';  
-		$auth = isset($_POST[$row['id'] . 'auth']) ? numeric($_POST[$row['id'] . 'auth']) : '-1'; 
+		$activ = retrieve(POST, $row['id'] . 'activ', 0);  
+		$auth = retrieve(POST, $row['id'] . 'auth', -1); 
 		
 		$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET activ = '" . $activ . "', auth = '" . $auth . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
@@ -131,10 +131,10 @@ else
 	FROM ".PREFIX."modules_mini
 	GROUP BY location
 	ORDER BY class", __LINE__, __FILE__);
+	
 	while( $row = $Sql->Sql_fetch_assoc($result) )
-	{
 		$array_max[$row['location']] = $row['max'];
-	}
+	
 	$Sql->Close($result);
 	
 	$i = 0;

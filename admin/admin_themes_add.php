@@ -32,7 +32,6 @@ require_once('../kernel/admin_header.php');
 //On affiche le contenu du repertoire templates, pour lister les thèmes disponibles..
 
 $install = !empty($_GET['install']) ? true : false;
-$error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 
 //Si c'est confirmé on execute
 if( $install )
@@ -43,8 +42,8 @@ if( $install )
 		if( $value == $LANG['install'] )
 			$theme = $key;
 			
-	$secure = isset($_POST[$theme.'secure']) ? numeric($_POST[$theme.'secure']) : '-1';
-	$activ = isset($_POST[$theme.'activ']) ? numeric($_POST[$theme.'activ']) : '0';
+	$secure = retrieve(POST, $theme . 'secure', -1;
+	$activ = retrieve(POST, $theme . 'activ', 0);
 		
 	$check_theme = $Sql->Query("SELECT theme FROM ".PREFIX."themes WHERE theme = '" . strprotect($theme) . "'", __LINE__, __FILE__);	
 	if( empty($check_theme) && !empty($theme) )
@@ -148,7 +147,7 @@ else
 	));
 
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_theme_already_exist', 'e_unlink_disabled');
 	if( in_array($get_error, $array_error) )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
@@ -158,13 +157,13 @@ else
 	$rep = '../templates/';
 	if( is_dir($rep) ) //Si le dossier existe
 	{
-		$array_file = array();
+		$array_dir = array();
 		$dh = @opendir($rep);
-		while( !is_bool($file = @readdir($dh)) )
+		while( !is_bool($dir = @readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( !preg_match('`\.`', $file) && $file != 'index.php' )
-				$array_file[] = $file; //On crée un array, avec les different dossiers.
+			if( strpos($dir, '.') === false )
+				$array_dir[] = $dir; //On crée un array, avec les different dossiers.
 		}	
 		@closedir($dh); //On ferme le dossier
 	
@@ -173,14 +172,14 @@ else
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			$key = array_search($row['theme'], $array_file);
+			$key = array_search($row['theme'], $array_dir);
 			if( $key !== false)
-				unset($array_file[$key]); //On supprime ces clées du tableau.
+				unset($array_dir[$key]); //On supprime ces clées du tableau.
 		}
 		$Sql->Close($result);
 		
 		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-		foreach($array_file as $theme_array => $value_array) //On effectue la recherche dans le tableau.
+		foreach($array_dir as $theme_array => $value_array) //On effectue la recherche dans le tableau.
 		{
 			$info_theme = load_ini_file('../templates/' . $value_array . '/config/', $CONFIG['lang']);
 		

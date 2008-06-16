@@ -105,8 +105,12 @@ $modules_config = array();
 foreach($MODULES as $name => $array)
 {	
 	$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', $CONFIG['lang']);
-	$array_info['module_name'] = $name;
-	$modules_config[$array_info['name']] = $array_info;
+	
+	if( is_array($array_info) )
+	{
+		$array_info['module_name'] = $name;
+		$modules_config[$array_info['name']] = $array_info;
+	}
 }
 
 ksort($modules_config);

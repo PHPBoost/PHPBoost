@@ -37,7 +37,7 @@ $Template->Set_filenames(array(
 
 $file_path = '../cache/error.log';
 
-if( !empty($_POST['erase']) ) //Suppression de robots.txt
+if( !empty($_POST['erase']) )
 	delete_file($file_path); //On supprime le fichier.
 
 $Template->Assign_vars(array(

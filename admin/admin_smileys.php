@@ -28,15 +28,15 @@ require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
-$id_post = !empty($_POST['idsmiley']) ? numeric($_POST['idsmiley']) : '' ;
-$id =!empty($_GET['id']) ? numeric($_GET['id']) : '' ;
+$id_post = retrieve(POST, 'idsmiley', 0);
+$id = retrieve(GET, 'id', 0);
 $edit = !empty($_GET['edit']) ? true : false;
 $del = !empty($_GET['del']) ? true : false;
 
 if( !empty($_POST['valid']) && !empty($id_post) ) //Mise à jour.
 {
-	$url_smiley = !empty($_POST['url_smiley']) ? strprotect($_POST['url_smiley']) : '';
-	$code_smiley = !empty($_POST['code_smiley']) ? strprotect($_POST['code_smiley']) : '';
+	$url_smiley = retrieve(POST, 'url_smiley', '');
+	$code_smiley = retrieve(POST, 'code_smiley', '');
 
 	//On met à jour 
 	if( !empty($url_smiley) && !empty($code_smiley) )
@@ -71,7 +71,7 @@ elseif( !empty($id) && $edit ) //Edition.
 	$url_smiley = $row['url_smiley'];
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 		

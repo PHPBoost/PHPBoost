@@ -30,8 +30,7 @@ require_once('../kernel/admin_header.php');
 	
 $uninstall = isset($_GET['uninstall']) ? true : false;	
 $edit = isset($_GET['edit']) ? true : false;	
-$id = !empty($_GET['id']) ? numeric($_GET['id']) : '0';
-$error = !empty($_GET['error']) ? trim($_GET['error']) : ''; 
+$id = retrieve(GET, 'id', 0);
 
 $theme_tmp = $CONFIG['theme'];
 //On recupère toute les informations supplementaires.
@@ -54,8 +53,8 @@ elseif( isset($_POST['valid']) ) //Modification de tout les thèmes.
 	WHERE activ = 1 AND theme != '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$activ = isset($_POST[$row['id'] . 'activ']) ? numeric($_POST[$row['id'] . 'activ']) : '0';
-		$secure = isset($_POST[$row['id'] . 'secure']) ? numeric($_POST[$row['id'] . 'secure']) : '0';
+		$activ = retrieve(POST, $row['id'] . 'activ', 0);
+		$secure = retrieve(POST, $row['id'] . 'secure', 0);
 		if( $row['activ'] != $activ || $row['secure'] != $secure )
 			$Sql->Query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
@@ -109,7 +108,7 @@ elseif( $uninstall ) //Désinstallation.
 {
 	if( !empty($_POST['valid_del']) )
 	{		
-		$idtheme = !empty($_POST['idtheme']) ? numeric($_POST['idtheme']) : '0'; 
+		$idtheme = retrieve(POST, 'idtheme', 0); 
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
 		
 		$previous_theme = $Sql->Query("SELECT theme FROM ".PREFIX."themes WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
@@ -198,7 +197,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_NOTICE);
 	elseif( !empty($get_error) && isset($LANG[$get_error]) )
@@ -210,13 +209,13 @@ else
 	$rep = '../templates/';
 	if( is_dir($rep) ) //Si le dossier existe
 	{
-		$file_array = array();
+		$dir_array = array();
 		$dh = @opendir( $rep);
-		while( !is_bool($fichier = readdir($dh)) )
+		while( !is_bool($dir = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( !preg_match('`\.`', $fichier) )
-				$file_array[] = $fichier; //On crée un array, avec les different dossiers.
+			if( strpos($dir, '.') === false )
+				$dir_array[] = $dir; //On crée un array, avec les different dossiers.
 		}	
 		closedir($dh); //On ferme le dossier		
 
@@ -226,7 +225,7 @@ else
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			if( array_search($row['theme'], $file_array) !== false)
+			if( array_search($row['theme'], $dir_array) !== false)
 				$themes_bdd[] = array('id' => $row['id'], 'name' => $row['theme'], 'activ' => $row['activ'], 'secure' => $row['secure']); 		}
 		$Sql->Close($result);
 		
@@ -279,6 +278,7 @@ else
 		
 	$Template->Pparse('admin_themes_management'); 
 }
+
 $CONFIG['theme'] = $theme_tmp;
 
 require_once('../kernel/admin_footer.php');

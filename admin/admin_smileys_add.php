@@ -29,13 +29,12 @@ require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
-$error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 
 //Si c'est confirmé on execute
 if( !empty($_POST['add']) )
 {
-	$code_smiley = !empty($_POST['code_smiley']) ? strprotect($_POST['code_smiley']) : '';
-	$url_smiley = !empty($_POST['url_smiley']) ? strprotect($_POST['url_smiley']) : '';
+	$code_smiley = retrieve(POST, 'code_smiley', '');
+	$url_smiley = retrieve(POST, 'url_smiley', '');
 	
 	if( !empty($code_smiley) && !empty($url_smiley) )
 	{
@@ -85,7 +84,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
+	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_smiley_already_exist');
 	if( in_array($get_error, $array_error) )
 		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
