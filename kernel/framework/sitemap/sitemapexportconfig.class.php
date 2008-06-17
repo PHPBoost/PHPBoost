@@ -1,12 +1,12 @@
 <?php
 /*##################################################
- *                                modulemap.class.php
+ *                                sitemapexportconfig.class.php
  *                            -------------------
  *   begin                : June 16 th 2008
  *   copyright          : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *   Module_map
+ *   Site_map_export_config
  *
 ###################################################
  *
@@ -26,41 +26,39 @@
  *
 ###################################################*/
 
-include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/sitemaplink.class.php');
-include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/sitemapsection.class.php');
-include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/sitemapexportconfig.class.php');
-
-class Module_map
+class Site_map_export_config
 {
 	##  Public methods  ##
-	function Module_map()
+	function Site_map_export_config($module_map_file, $section_file, $link_file)
 	{
-		$this->sub_sections = array();
+		$this->module_map_file = $module_map_file;
+		$this->section_file = $section_file;
+		$this->link_file = $link_file;
 	}
 	
-	function Add_element($link)
+	//Method which returns a module map stream
+	function Get_module_map_stream()
 	{
-		array_push($this->sub_sections, $link);
+		return new Template($this->module_map_file);
 	}
 	
-	function Export(&$export_config)
+	//Method which returns a module section stream
+	function Get_section_stream()
 	{
-		//We get the stream in which we are going to write
-		$template = $export_config->Get_module_map_stream();
-		foreach($this->sub_sections as $sub_section)
-		{
-			$template->Assign_block_vars('children', array(
-				$sub_section->Export($export_config)
-				));
-		}
-		return $template->Tparse(TEMPLATE_STRING_MODE);
+		return new Template($this->module_map_file);
+	}
+	
+	//Method which returns a link stream
+	function Get_link_stream()
+	{
+		return new Template($this->module_map_file);
 	}
 	
 	## Private elements ##
-	//descript
-	var $description;
-	//list of sub sections or links
-	var $sub_sections;
+	//Name of templates
+	var $module_map_file;
+	var $section_file;
+	var $link_file;
 }
 
 ?>
