@@ -46,7 +46,7 @@ class Sessions
         global $CONFIG, $Sql;
         
         $pwd = $password;
-        if (!$already_hashed)
+        if( !$already_hashed )
             $password = strhash($password);
         
 		$error = '';
