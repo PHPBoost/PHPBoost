@@ -941,7 +941,7 @@ INSERT INTO `phpboost_links` VALUES (25, 5, 'Démonstration', 'http://demo.phpboo
 CREATE TABLE `phpboost_member` (
   `user_id` int(11) NOT NULL auto_increment,
   `login` varchar(255) NOT NULL default '',
-  `password` varchar(6) NOT NULL default '',
+  `password` varchar(64) NOT NULL default '',
   `level` tinyint(1) NOT NULL default '0',
   `user_groups` text NOT NULL,
   `user_lang` varchar(25) NOT NULL default '',
