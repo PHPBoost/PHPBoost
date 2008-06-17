@@ -1,12 +1,12 @@
 <?php
 /*##################################################
- *                                modulemapsection.class.php
+ *                                sitemapsection.class.php
  *                            -------------------
  *   begin                : June 16 th 2008
  *   copyright          : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *   Module_map_section
+ *   Site_map_section
  *
 ###################################################
  *
@@ -28,12 +28,13 @@
 
 //Should implement an interface in PHP 5
 
-class Module_map_section
+class Site_map_section
 {
 	##  Public methods  ##
-	function Module_map_section($name = '')
+	function Site_map_section($name = '')
 	{
 		$this->section_name = $name;
+		$this->sub_sections = array();
 	}
 	
 	//Name getter
@@ -51,6 +52,20 @@ class Module_map_section
 	function Add_element($element)
 	{
 		array_push($this->sub_sections, $element);
+	}
+	
+	//Method which exports the section into the stream $template
+	function Export(&$export_config)
+	{
+		//We get the stream in which we are going to write
+		$template = $export_config->Get_section_stream();
+		foreach($this->sub_sections as $sub_section)
+		{
+			$template->Assign_block_vars('children', array(
+				'CHILD_CODE' => $sub_section->Export($export_config),
+			));
+		}
+		return $template->Tparse(TEMPLATE_STRING_MODE);
 	}
 	
 	## Private elements ##

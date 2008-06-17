@@ -1,12 +1,12 @@
 <?php
 /*##################################################
- *                                modulemaplink.class.php
+ *                                sitemaplink.class.php
  *                            -------------------
  *   begin                : June 16 th 2008
  *   copyright          : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *   Module_map_link
+ *   Site_map_link
  *
 ###################################################
  *
@@ -35,12 +35,18 @@ define('SITEMAP_FREQ_YEARLY', 'yearly');
 define('SITEMAP_FREQ_NEVER', 'never');
 define('SITEMAP_FREQ_DEFAULT', SITEMAP_FREQ_MONTHLY);
 
+define('SITEMAP_PRIORITY_MAX', '1');
+define('SITEMAP_PRIORITY_HIGH', '0.75');
+define('SITEMAP_PRIORITY_AVERAGE', '0.5');
+define('SITEMAP_PRIORITY_LOW', '0.25');
+define('SITEMAP_PRIORITY_MIN', '0');
+
 //Should implement an interface in PHP 5
 
-class Module_map_link
+class Site_map_link
 {
 	##  Public methods  ##
-	function Module_map_link($text = '', $link = '', $change_freq)
+	function Site_map_link($text = '', $link = '', $change_freq = SITEMAP_FREQ_MONTHLY)
 	{
 		$this->text = $text;
 		$this->link = $link;
@@ -86,6 +92,35 @@ class Module_map_link
 			$this->change_freq = SITEMAP_FREQ_DEFAULT;
 	}
 	
+	function Get_date()
+	{
+		return $this->last_modification_date;
+	}
+	
+	function Set_date($date)
+	{
+		$this->last_modification_date = $date;
+	}
+	
+	//Method which exports the link into the stream $template
+	function Export(&$export_config)
+	{
+		$display_date = is_object($this->last_modification_date);
+		
+		//We get the stream in which we are going to write
+		$template = $export_config->Get_link_stream();
+		
+		$template->Assign_block_vars('url', array(
+			'LOC' => htmlspecialchars($this->link, ENT_QUOTES),
+			'C_DISPLAY_DATE' => $display_date,
+			'DATE' => $display_date ? $this->last_modification_date->To_date() : '',
+			'ACTUALIZATION_FREQUENCY' => $this->change_freq,
+			'PRIORITY' => $this->priority,
+			));
+		
+		return $template->Tparse(TEMPLATE_STRING_MODE);
+	}
+	
 	## Private elements ##
 	//Text which will be displayed in the HTML interface of the sitemap
 	var $text;
@@ -93,6 +128,10 @@ class Module_map_link
 	var $link;
 	//Actualization frequency of the link
 	var $change_freq = SITEMAP_FREQ_DEFAULT;
+	//Last modification date
+	var $last_modification_date;
+	//Priority of the link
+	var $priority = SITEMAP_PRIORITY_AVERAGE;
 }
 
 ?>
