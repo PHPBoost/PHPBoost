@@ -6,7 +6,7 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *   Function 2.0.0 
+ *   Function 2.0.0
  *
 ###################################################
  *
@@ -726,7 +726,7 @@ if( !function_exists('array_combine') )
 // Return the html string that print the menu to choose the wanted feed's type
 function get_feed_menu($feed_url)
 {
-	global $LANG, $CONFIG;
+    global $LANG, $CONFIG;
     require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
     $feedMenu = new Template('framework/syndication/menu.tpl');
     $feedMenu->Assign_vars(array(
@@ -742,7 +742,8 @@ function get_feed_menu($feed_url)
 // Return a hash of the <$str> string using a sha256 algo
 function strhash($str)
 {
-	return hash_hmac('sha256', $str, md5($str));
+//     return hash_hmac('sha256', $str, md5($str));
+    return md5($str);
 }
 
 ?>
