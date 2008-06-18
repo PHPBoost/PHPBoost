@@ -35,18 +35,14 @@ $url = retrieve(GET, 'url', '', TSTRING_UNSECURE);;
 
 if( !empty($url) )
 {
-    $authorized_protocols = array('http', 'https', 'ftp');
+    $authorized_protocols = array('http', 'https');
     $used_protocol = explode('://', $url);
     if( count($used_protocol) > 1 )
     {
-        $used_protocol = $used_protocol[0];
-        foreach( $authorized_protocols as $protocol )
+        if( in_array($used_protocol[0], $authorized_protocols) )
         {
-            if( $used_protocol === $protocol )
-            {
-                echo @file_get_contents_emulate($url);
-                exit(0);
-            }
+            echo @file_get_contents_emulate($url);
+            exit(0);
         }
         die(UNAUTHORIZED_PROTOCOL);
     }
