@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               footer.php
+ *                               proxy.php
  *                            -------------------
  *   begin                : June 18, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
@@ -31,7 +31,7 @@ define('INVALID_URL', 'INVALID URL');
 
 require_once('functions.inc.php');
 
-$url = retrieve(GET, 'url', '', TSTRING_UNSECURE);;
+$url = retrieve(GET, 'url', '', TSTRING_UNSECURE);
 
 if( !empty($url) )
 {
