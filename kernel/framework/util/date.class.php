@@ -212,7 +212,7 @@ class Date
 	//Renvoie une chaine au format YYYY-mm-dd
 	function To_date()
 	{
-		return date('YYYY-mm-dd', $this->timestamp);
+		return date('Y-m-d', $this->timestamp);
 	}
 	
 	# This should be static#

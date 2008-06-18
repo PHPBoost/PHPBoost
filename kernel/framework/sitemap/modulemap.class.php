@@ -50,7 +50,7 @@ class Module_map
 		foreach($this->sub_sections as $sub_section)
 		{
 			$template->Assign_block_vars('children', array(
-				$sub_section->Export($export_config)
+				'CHILD_CODE' => $sub_section->Export($export_config)
 				));
 		}
 		return $template->Tparse(TEMPLATE_STRING_MODE);

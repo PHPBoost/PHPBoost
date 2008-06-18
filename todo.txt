@@ -15,6 +15,7 @@
 
 [-] Intégration des catégories infinies dans des modules (download, gallery, web...)
 [-] Intégration des sitemaps dans les interfaces modules
+[-] Finir changeday + coms dans download
 
 ################################################################################
 

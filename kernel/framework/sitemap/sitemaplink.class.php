@@ -6,7 +6,7 @@
  *   copyright          : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *   Site_map_link
+ *   Sitemap_link
  *
 ###################################################
  *
@@ -41,16 +41,21 @@ define('SITEMAP_PRIORITY_AVERAGE', '0.5');
 define('SITEMAP_PRIORITY_LOW', '0.25');
 define('SITEMAP_PRIORITY_MIN', '0');
 
+include_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+
 //Should implement an interface in PHP 5
 
-class Site_map_link
+class Sitemap_link
 {
 	##  Public methods  ##
-	function Site_map_link($text = '', $link = '', $change_freq = SITEMAP_FREQ_MONTHLY)
+	function Sitemap_link($text = '', $link = '', $change_freq = SITEMAP_FREQ_MONTHLY, $priority = SITEMAP_PRIORITY_AVERAGE, $last_modification_date = NULL)
 	{
 		$this->text = $text;
 		$this->link = $link;
-		$this->change_freq = $change_freq;
+		$this->Set_change_freq($change_freq);
+		$this->Set_priority($priority);
+		if( is_object($last_modification_date) )
+			$this->last_modification_date = $last_modification_date;
 	}
 	
 	//Text getter
@@ -92,11 +97,28 @@ class Site_map_link
 			$this->change_freq = SITEMAP_FREQ_DEFAULT;
 	}
 	
+	//Priority getter
+	function Get_priority()
+	{
+		return $this->priority;
+	}
+	
+	//Priority setter
+	function Set_priority($priority)
+	{
+		if( in_array($priority, array(SITEMAP_PRIORITY_MAX, SITEMAP_PRIORITY_HIGH, SITEMAP_PRIORITY_AVERAGE, SITEMAP_PRIORITY_LOW, SITEMAP_PRIORITY_MIN)) )
+			$this->priority = $priority;
+		else
+			$this->priority = SITEMAP_PRIORITY_AVERAGE;
+	}
+	
+	//Date getter
 	function Get_date()
 	{
 		return $this->last_modification_date;
 	}
 	
+	//Date setter
 	function Set_date($date)
 	{
 		$this->last_modification_date = $date;
@@ -110,8 +132,9 @@ class Site_map_link
 		//We get the stream in which we are going to write
 		$template = $export_config->Get_link_stream();
 		
-		$template->Assign_block_vars('url', array(
+		$template->Assign_vars(array(
 			'LOC' => htmlspecialchars($this->link, ENT_QUOTES),
+			'TEXT' => htmlspecialchars($this->text, ENT_QUOTES),
 			'C_DISPLAY_DATE' => $display_date,
 			'DATE' => $display_date ? $this->last_modification_date->To_date() : '',
 			'ACTUALIZATION_FREQUENCY' => $this->change_freq,
