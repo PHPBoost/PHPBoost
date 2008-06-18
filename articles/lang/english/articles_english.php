@@ -34,7 +34,7 @@
 $LANG['written_by'] = 'Written by';
 $LANG['explain_page'] = 'Insert a new page';
 $LANG['page_prompt'] = 'New page title';
-$LANG['summary'] = 'Sommaire';
+$LANG['summary'] = 'Summary';
 $LANG['select_page'] = 'Select page';
 $LANG['articles_management'] = 'Articles management';
 $LANG['articles_add'] = 'Add an article';
