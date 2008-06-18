@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-class Site_map_export_config
+class Sitemap_export_config
 {
 	##  Public methods  ##
-	function Site_map_export_config($module_map_file, $section_file, $link_file)
+	function Sitemap_export_config($module_map_file, $section_file, $link_file)
 	{
 		$this->module_map_file = $module_map_file;
 		$this->section_file = $section_file;
@@ -45,13 +45,13 @@ class Site_map_export_config
 	//Method which returns a module section stream
 	function Get_section_stream()
 	{
-		return new Template($this->module_map_file);
+		return new Template($this->section_file);
 	}
 	
 	//Method which returns a link stream
 	function Get_link_stream()
 	{
-		return new Template($this->module_map_file);
+		return new Template($this->link_file);
 	}
 	
 	## Private elements ##

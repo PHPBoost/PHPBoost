@@ -142,7 +142,7 @@ class Template
 			return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
 		
 		else //Module
-		{	
+		{
 			//module data path
 			if( !isset($this->module_data_path[$module]) )
 			{

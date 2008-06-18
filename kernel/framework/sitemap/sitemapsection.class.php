@@ -6,7 +6,7 @@
  *   copyright          : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *   Site_map_section
+ *   Sitemap_section
  *
 ###################################################
  *
@@ -28,10 +28,10 @@
 
 //Should implement an interface in PHP 5
 
-class Site_map_section
+class Sitemap_section
 {
 	##  Public methods  ##
-	function Site_map_section($name = '')
+	function Sitemap_section($name = '')
 	{
 		$this->section_name = $name;
 		$this->sub_sections = array();
@@ -49,6 +49,7 @@ class Site_map_section
 		$this->section_name = $name;
 	}
 	
+	//Add an element to the section (section or link => polymorphism)
 	function Add_element($element)
 	{
 		array_push($this->sub_sections, $element);
@@ -59,6 +60,12 @@ class Site_map_section
 	{
 		//We get the stream in which we are going to write
 		$template = $export_config->Get_section_stream();
+		
+		$template->Assign_vars(array(
+			'C_SECTION_NAME' => !empty($this->section_name),
+			'SECTION_NAME' => $this->section_name
+		));
+		
 		foreach($this->sub_sections as $sub_section)
 		{
 			$template->Assign_block_vars('children', array(
