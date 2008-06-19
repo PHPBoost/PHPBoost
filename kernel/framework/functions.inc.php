@@ -742,8 +742,9 @@ function get_feed_menu($feed_url)
 // Return a hash of the <$str> string using a sha256 algo
 function strhash($str)
 {
-//     return hash_hmac('sha256', $str, md5($str));
-    return md5($str);
+//     return hash('sha256', $str);
+    require_once(PATH_TO_ROOT . '/kernel/framework/sha256.class.php');
+    return SHA256::hash(md5($str) . $str);
 }
 
 ?>
