@@ -58,8 +58,11 @@ Forum :
 [*] Support de Atom dans la classe Rss.
 [*] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml
     (penser à supprimer l'enregistrement en html simple).
-[-] Système de mise à jour du noyau et des modules
 [-] Correction du bug des stats (graphiques)
+[-] Système de mise à jour du noyau et des modules:
+    - Langues ? (à priori non)
+    - Templates ? (à priori non aussi) (pb image avec langue)
+    - Changelog des fichiers
 
 ------------------------------------ MODULES -----------------------------------
 Search :
