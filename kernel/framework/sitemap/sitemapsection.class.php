@@ -49,27 +49,34 @@ class Sitemap_section
 		$this->section_name = $name;
 	}
 	
-	//Add an element to the section (section or link => polymorphism)
-	function Add_element($element)
+	//Adds an element to the section (section or link => polymorphism)
+	function Push_element($element)
 	{
-		array_push($this->sub_sections, $element);
+		$this->sub_sections[] = $element;
+	}
+	
+	//Deletes an element to the section (section or link => polymorphism)
+	function Pop_element()
+	{
+		return array_pop($this->sub_sections);
 	}
 	
 	//Method which exports the section into the stream $template
-	function Export(&$export_config)
+	function Export(&$export_config, $depth = 1)
 	{
 		//We get the stream in which we are going to write
 		$template = $export_config->Get_section_stream();
 		
 		$template->Assign_vars(array(
 			'C_SECTION_NAME' => !empty($this->section_name),
-			'SECTION_NAME' => $this->section_name
+			'SECTION_NAME' => $this->section_name,
+			'DEPTH' => $depth
 		));
 		
 		foreach($this->sub_sections as $sub_section)
 		{
 			$template->Assign_block_vars('children', array(
-				'CHILD_CODE' => $sub_section->Export($export_config),
+				'CHILD_CODE' => $sub_section->Export($export_config, $depth + 1)
 			));
 		}
 		return $template->Tparse(TEMPLATE_STRING_MODE);
