@@ -42,6 +42,7 @@ $Template->Assign_vars(array(
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'SITE_NAME' => $CONFIG['site_name'],
 	'TITLE' => TITLE,
+	'PATH_TO_ROOT' => PATH_TO_ROOT,
 	'THEME' => $CONFIG['theme'],
 ));
 
@@ -59,7 +60,6 @@ $Template->Assign_vars(array(
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
 	'L_ADMINISTRATION' => $LANG['administration'],
-	'PATH_TO_ROOT' => PATH_TO_ROOT,
 	'L_INDEX' => $LANG['index'],
 	'L_SITE' => $LANG['site'],
 	'L_INDEX_SITE' => $LANG['site'],
