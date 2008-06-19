@@ -38,26 +38,66 @@ class Module_map
 		$this->sub_sections = array();
 	}
 	
-	function Add_element($link)
+	//Name setter
+	function Set_name($name)
 	{
-		array_push($this->sub_sections, $link);
+		$this->name = $name;
 	}
 	
+	//Name getter
+	function Get_name()
+	{
+		return $this->name;
+	}
+	
+	//Description setter (warning it's not protected for XML displaying but usefulless in sitemap.xml)
+	function Set_description($description)
+	{
+		$this->description = $description;
+	}
+	
+	//Description getter
+	function Get_description()
+	{
+		return $this->description;
+	}
+	
+	//Adds an element at the end of the list
+	function Push_element($link)
+	{
+		$this->sub_sections[] = $link;
+	}
+	
+	//Removes the latest inserted element
+	function Pop_element()
+	{
+		return array_pop($this->sub_section);
+	}
+	
+	//Exports the sitemap (according to a configuration of templates). It returns a string
 	function Export(&$export_config)
 	{
 		//We get the stream in which we are going to write
 		$template = $export_config->Get_module_map_stream();
+		
+		$template->Assign_vars(array(
+			'MODULE_NAME' => htmlspecialchars($this->name, ENT_QUOTES),
+			'MODULE_DESCRIPTION' => $this->description
+			));
+		
 		foreach($this->sub_sections as $sub_section)
 		{
 			$template->Assign_block_vars('children', array(
-				'CHILD_CODE' => $sub_section->Export($export_config)
+				'CHILD_CODE' => $sub_section->Export($export_config, 1)
 				));
 		}
 		return $template->Tparse(TEMPLATE_STRING_MODE);
 	}
 	
 	## Private elements ##
-	//descript
+	//Module name
+	var $name;	
+	//description
 	var $description;
 	//list of sub sections or links
 	var $sub_sections;

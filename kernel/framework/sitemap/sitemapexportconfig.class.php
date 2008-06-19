@@ -31,31 +31,32 @@ class Sitemap_export_config
 	##  Public methods  ##
 	function Sitemap_export_config($module_map_file, $section_file, $link_file)
 	{
-		$this->module_map_file = $module_map_file;
-		$this->section_file = $section_file;
-		$this->link_file = $link_file;
+		//If we receive a string it's the path of the template, otherwise it's already the Template object
+		$this->module_map_file = is_string($module_map_file) ? new Template($module_map_file) : $module_map_file;
+		$this->section_file = is_string($section_file) ? new Template($section_file) : $section_file;
+		$this->link_file = is_string($link_file) ? new Template($link_file) : $link_file;
 	}
 	
 	//Method which returns a module map stream
 	function Get_module_map_stream()
 	{
-		return new Template($this->module_map_file);
+		return $this->module_map_file;
 	}
 	
 	//Method which returns a module section stream
 	function Get_section_stream()
 	{
-		return new Template($this->section_file);
+		return $this->section_file;
 	}
 	
 	//Method which returns a link stream
 	function Get_link_stream()
 	{
-		return new Template($this->link_file);
+		return $this->link_file;
 	}
 	
 	## Private elements ##
-	//Name of templates
+	//Templates objects
 	var $module_map_file;
 	var $section_file;
 	var $link_file;
