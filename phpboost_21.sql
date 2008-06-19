@@ -1409,9 +1409,9 @@ INSERT INTO `phpboost_ranks` VALUES (2, 'Mod&eacute;rateur', -1, 'rank_modo.gif'
 CREATE TABLE `phpboost_search_index` (
   `id_search` int(11) NOT NULL auto_increment,
   `id_user` int(11) NOT NULL default '0',
-  `module` varchar(128) NOT NULL default '0',
-  `search` varchar(255) NOT NULL default '',
-  `options` varchar(255) NOT NULL default '',
+  `module` varchar(64) NOT NULL default '0',
+  `search` varchar(128) NOT NULL default '',
+  `options` varchar(64) NOT NULL default '',
   `last_search_use` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `times_used` int(3) NOT NULL default '0',
   PRIMARY KEY  (`id_search`),
