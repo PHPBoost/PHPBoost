@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              download_french.php
+ *                              download_english.php
  *                            -------------------
  *   begin                : July 27, 2005
  *   copyright          : (C) 2005 Viarre Régis
