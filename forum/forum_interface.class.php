@@ -278,7 +278,7 @@ class ForumInterface extends ModuleInterface
         $resultsIndex = $resultsIndex < $indexSize ? $resultsIndex : ($indexSize > 0 ? $indexSize - 1 : 0);
         $result =& $results[$indexes[$resultsIndex]];
 
-        $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($row['title']) : '';
+        $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($result['title']) : '';
         $Template->Assign_vars(array(
             'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($result['connect']) && $result['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
             'U_USER_PROFILE' => !empty($result['user_id']) ? '../member/member'.transid('.php?id='.$result['user_id'],'-'.$result['user_id'].'.php') : '',
