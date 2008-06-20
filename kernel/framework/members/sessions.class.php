@@ -44,7 +44,7 @@ class Sessions
 	function Session_begin($user_id, $password, $level, $session_script, $session_script_get, $session_script_title, $autoconnect = false, $already_hashed = false)
 	{
         global $CONFIG, $Sql;
-        
+		
         $pwd = $password;
         if( !$already_hashed )
             $password = strhash($password);
@@ -91,17 +91,18 @@ class Sessions
 			
 			//Récupération password BDD
 			$password_m = $Sql->Query("SELECT password FROM ".PREFIX."member WHERE user_id = '" . $user_id . "' AND user_warning < 100 AND '" . time() . "' - user_ban >= 0", __LINE__, __FILE__);
-			
-			if( !empty($password) && (($password === $password_m) || (md5($pwd) === $password_m))) //Succès! => md5 gestion des vieux mdp
+			if( !empty($password) && (($password === $password_m) || (md5($pwd) === $password_m)) ) //Succès! => md5 gestion des vieux mdp
 			{
-                if (md5($pwd) === $password_m) // Si le mot de passe est encore stocké en md5, on l'update
+                if( md5($pwd) === $password_m ) // Si le mot de passe est encore stocké en md5, on l'update
                     $Sql->Query_inject("UPDATE ".PREFIX."member SET `password`='" . $password . "'WHERE `user_id`='" . $user_id . "';", __LINE__, __FILE__);
+				
 				$Sql->Query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '')", __LINE__, __FILE__);
 				$cookie_on = true; //Génération du cookie!
 			}
 			else //Session visiteur, echec!
 			{
 				$Sql->Query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0')", __LINE__, __FILE__);
+				
 				$delay_ban = $Sql->Query("SELECT user_ban FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				if( (time - $delay_ban) >= 0 )
 					$error = 'echec';
@@ -233,7 +234,7 @@ class Sessions
 			{
 				if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
 					setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
-				$this->Session_begin('-1', '', '-1', $session_script, $session_script_get, $session_script_title, ALREADY_HASHED); //Session visiteur
+				$this->Session_begin('-1', '', '-1', $session_script, $session_script_get, $session_script_title, false, ALREADY_HASHED); //Session visiteur
 			}
 		}
 	}
@@ -316,7 +317,7 @@ class Sessions
 			
 			if( !empty($session_autoconnect['user_id']) && !empty($session_autoconnect['pwd']) && $level != '' )
 			{
-				$error_report = $this->Session_begin($session_autoconnect['user_id'], $session_autoconnect['pwd'], $level, $session_script, $session_script_get, $session_script_title, ALREADY_HASHED); //Lancement d'une session utilisateur.
+				$error_report = $this->Session_begin($session_autoconnect['user_id'], $session_autoconnect['pwd'], $level, $session_script, $session_script_get, $session_script_title, true, ALREADY_HASHED); //Lancement d'une session utilisateur.
 				
 				//Gestion des erreurs pour éviter un brute force.
 				if( $error_report === 'echec' )

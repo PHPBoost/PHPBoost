@@ -116,7 +116,7 @@
 					<dl>
 						<dt><label for="secure">{L_AUTHS}</label></dt>
 						<dd><label>
-								{AUTH_MENUS}
+							{AUTH_MENUS}
 						</label></dd>
 					</dl>
 					

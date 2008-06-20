@@ -278,7 +278,7 @@ class Group
 		$advanced_auth = count($array_auth_members) > 0;
 
 		//Listing des membres autorisés.
-		$select_members = ' <div id="advanced_auth2' . $idselect . '" style="margin-left:5px;' . ($advanced_auth ? 'display:block;' : 'display:none;') . 'float:left"><select id="members_auth' . $idselect . '"  name="members_auth' . $idselect . '[]" size="8" multiple="multiple">
+		$select_members = ' <div id="advanced_auth2' . $idselect . '" style="margin-left:5px;' . ($advanced_auth ? 'display:block;' : 'display:none;') . 'float:left;"><select id="members_auth' . $idselect . '"  name="members_auth' . $idselect . '[]" size="8" multiple="multiple">
 		<optgroup label="' . $LANG['member_s'] . '" id="advanced_auth3' . $idselect . '">';
 		if( $advanced_auth )
 		{
@@ -294,8 +294,8 @@ class Group
 		$select_members .= '</optgroup></select></div>';
 
 		//Formulaire de recherche de membre.
-		$select_members .= '<div id="advanced_auth' . $idselect . '" style="' . ($advanced_auth ? 'display:block;' : 'display:none;') . 'float:left;margin-left:5px;"><strong>' . $LANG['add_member'] . '</strong><br /><input type="text" size="15" class="text" value="" id="login' . $idselect . '" name="login' . $idselect . '" />
-			<span id="search_img' . $idselect . '"></span> <input onclick="XMLHttpRequest_search_members(\'' . $idselect . '\', \'' . $CONFIG['theme'] . '\', \'add_member_auth\', \'' . addslashes($LANG['require_pseudo']) . '\');" type="button" name="valid" value="' . $LANG['search'] . '" class="submit" />
+		$select_members .= '<div id="advanced_auth' . $idselect . '" style="' . ($advanced_auth ? 'display:block;' : 'display:none;') . 'float:left;margin-left:5px;width:150px;"><strong>' . $LANG['add_member'] . '</strong><br /><input type="text" size="15" class="text" value="" id="login' . $idselect . '" name="login' . $idselect . '" />
+			<span id="search_img' . $idselect . '"></span> <br /><input onclick="XMLHttpRequest_search_members(\'' . $idselect . '\', \'' . $CONFIG['theme'] . '\', \'add_member_auth\', \'' . addslashes($LANG['require_pseudo']) . '\');" type="button" name="valid" value="' . $LANG['search'] . '" class="submit" />
 			<div id="xmlhttprequest_result_search' . $idselect . '" style="display:none;height:68px;" class="xmlhttprequest_result_search"></div>
 		</div>';
 		

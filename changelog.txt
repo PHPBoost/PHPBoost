@@ -15,6 +15,8 @@
 [*] [color=red]Nouveauté:[/color] Interface de visualisation/édition des commentaires du site.
 [*] [color=red]Nouveauté:[/color] Gestion du temps global (GMT), et du décalage horaire. 
 [*] [color=red]Nouveauté:[/color] Gestionnaire automatisé des catégories infinies (Framework PHPBoost). 
+[*] [color=red]Nouveauté:[/color] Système de gestion des mises à jour du noyau et des modules avec gestion de différents dépôts.
+[*] [color=red]Nouveauté:[/color] Ajout d'un proxy web permettant d'effectuer des requêtes asynchrones sur des sites distants.
 - [color=red]Nouveauté:[/color] Gestions des liens du site, duplication possible. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
 [*] [color=red]Nouveauté:[/color] Gestionnaire de commentaires (Framework PHPBoost). 
 [*] [color=red]Nouveauté:[/color] Gestionnaire de notation (Framework PHPBoost). 
@@ -76,10 +78,7 @@
 [*] Correction du bug d'affichage des dossiers dans le gestionnaire de fichiers.
 [*] Correction des bugs dù à l'option register_globals.
 [*] Gestion des mots de passe avec l'algorithme de cryptage sha256 en lieu et place du md5
-[*] Ajout d'un proxy web permettant d'effectuer des XML HTTP REQUESTS sur des sites distants
 [*] Amélioration de la classe Template.
-[*] Nouvelle classe de gestion des RSS avec le support d'ATOM
-[+] Système de gestion des mises à jour du noyau et des modules avec gestion de différents dépôts
 
 [b]Forum[/b]
 [*] [color=red]Nouveauté:[/color] Réorganisation complète du code.
