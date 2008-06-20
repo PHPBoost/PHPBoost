@@ -45,10 +45,7 @@ $simpleMode = ($searchIn == 'all') ? true : false;
 
 //--------------------------------------------------------------------- Header
 
-if( !empty($search) )
-    define('TITLE', $LANG['title_search'].' : '.$search);
-else
-    define('TITLE', $LANG['title_search']);
+define('TITLE', $LANG['title_search']);
 
 require_once('../kernel/header.php');
 

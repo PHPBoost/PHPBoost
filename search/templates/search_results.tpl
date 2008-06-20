@@ -1,11 +1,11 @@
         <br />
-		<script type="text/javascript">
-		<!--
-		    const RESULTS = 'results_';
-		    const RESULTS_TITLE = 'results_title_';
-		    const INFOS_RESULTS = 'infos_results_';
-		    const RESULTS_LIST = 'results_list_';
-		    const PAGINATION_RESULTS = 'pagination_results_';
+        <script type="text/javascript">
+        <!--
+            const RESULTS = 'results_';
+            const RESULTS_TITLE = 'results_title_';
+            const INFOS_RESULTS = 'infos_results_';
+            const RESULTS_LIST = 'results_list_';
+            const PAGINATION_RESULTS = 'pagination_results_';
             const NB_RESULTS_PER_PAGE = {NB_RESULTS_PER_PAGE};
             
             var nbResults = new Array();
@@ -22,14 +22,14 @@
                 var calculatedResults = new Array('all');
                 
                 function HideResults()
-                // Cache tous les rï¿½sultats
+                // Cache tous les résultats
                 {
                     for( var i = 0; i < modulesResults.length; i++ )
                         hide_div(RESULTS + modulesResults[i]);
                 }
                 
                 function ChangeResults()
-                // Change le cadre des rï¿½sultats
+                // Change le cadre des résultats
                 {
                     var module = document.getElementById('results_choice').value;
                     HideResults();
@@ -61,7 +61,7 @@
                 }
                 
                 function XMLHttpRequest_search_module(module)
-                // Affiche les rï¿½sultats de la recherche pour le module particulier <module>
+                // Affiche les résultats de la recherche pour le module particulier <module>
                 {
                     var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php');
                     xhr_object.onreadystatechange = function()
@@ -77,7 +77,7 @@
                             if( xhr_object.status == 200 )
                             {
                                 progress_bar(100, "{L_QUERY_SUCCESS}");
-                                // Si les rï¿½sultats sont toujours en cache, on les rï¿½cupï¿½re.
+                                // Si les résultats sont toujours en cache, on les récupère.
                                 eval(xhr_object.responseText);
                                 if( !syncErr )
                                 {
@@ -85,8 +85,8 @@
                                     document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
                                     ChangePagination(0, Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, RESULTS + module, 2, 2);
                                     
-                                    // Met ï¿½ jour la liste des rï¿½sultats affichï¿½, pour ne pas les rechercher
-                                    // dans la base de donnï¿½e si ils sont dï¿½jï¿½ dans le html.
+                                    // Met à jour la liste des résultats affiché, pour ne pas les rechercher
+                                    // dans la base de donnée si ils sont déjà dans le html.
                                     calculatedResults.push(module);
                                 }
                                 else alert('SYNCHRONISATION ERROR');
@@ -98,13 +98,13 @@
                     xmlhttprequest_sender(xhr_object, GetFormData() + '&moduleName=' + module + '&idSearch=' + idSearch[module]);
                 }
             # ENDIF #
-		-->
-		</script>
+        -->
+        </script>
 
-		<div id="results" class="module_position">
-		    <div class="module_top_l"></div>
-		    <div class="module_top_r"></div>
-		    <div class="module_top">{L_SEARCH_RESULTS}
+        <div id="results" class="module_position">
+            <div class="module_top_l"></div>
+            <div class="module_top_r"></div>
+            <div class="module_top">{L_SEARCH_RESULTS}
                 # IF C_SIMPLE_SEARCH #
                     <div id="results_choices" class="resultsChoices" style="display:none">
                         <span>{L_PRINT}</span>
@@ -116,8 +116,8 @@
                         </select>
                     </div>
                 # ENDIF #
-		    </div>
-		    <div class="module_contents">
+            </div>
+            <div class="module_contents">
                 <div id="results_{SEARCH_IN}" class="results">
                     <span id="results_title_{SEARCH_IN}" class="title">{L_TITLE_ALL_RESULTS}</span><br />
                     <div id="infos_results_{SEARCH_IN}" class="infosResults">
@@ -151,17 +151,17 @@
                         </div>
                     # END results #
                 # ENDIF #
-		    </div>
-		    <div class="module_bottom_l"></div>
-		    <div class="module_bottom_r"></div>
-		    <div class="module_bottom" style="text-align:center;">{L_HITS}</div>
-		</div>
-		<script type="text/javascript">
-		<!--
+            </div>
+            <div class="module_bottom_l"></div>
+            <div class="module_bottom_r"></div>
+            <div class="module_bottom" style="text-align:center;">{L_HITS}</div>
+        </div>
+        <script type="text/javascript">
+        <!--
             ChangePagination(0, Math.ceil(nbResults['{SEARCH_IN}'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + '{SEARCH_IN}', 'results_{SEARCH_IN}');
             show_div(RESULTS + '{SEARCH_IN}_0');
 
-		    if( browserAJAXFriendly() )
+            if( browserAJAXFriendly() )
                 show_div('results_choices');
-		-->
-		</script>
+        -->
+        </script>
