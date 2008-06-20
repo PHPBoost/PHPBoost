@@ -25,7 +25,8 @@
  *
 ###################################################*/
 
-define('PATH_TO_ROOT', '..');
+if( !defined('PATH_TO_ROOT') )
+    define('PATH_TO_ROOT', '..');
 
 $delcom = !empty($_GET['delcom']) ? true : false;
 $editcom = !empty($_GET['editcom']) ? true : false;
