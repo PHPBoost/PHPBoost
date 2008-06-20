@@ -140,7 +140,6 @@ class Template
 
 		if( !isset($file) ) //Template du thème (noyau)
 			return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
-		
 		else //Module
 		{
 			//module data path

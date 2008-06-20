@@ -45,7 +45,7 @@
 				{
 					if( xhr_object.readyState == 4 ) 
 					{
-						show_bbcode_div('xmlhttprequest_preview', 0);						
+						show_div('xmlhttprequest_preview');					
 						document.getElementById("xmlhttprequest_preview").innerHTML = xhr_object.responseText;
 					}
 				}
