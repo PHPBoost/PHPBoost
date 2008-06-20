@@ -33,7 +33,7 @@
 	<div id="header">
 		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
 		{MODULES_MINI_HEADER_CONTENT}
-		<div class="dynamic_menu" style="left:190px;top:113px">
+		<div class="dynamic_menu" style="padding-left:190px;top:113px">
 			<ul>
 				<li>
 					<h5 class="links"><a href="{PATH_TO_ROOT}/news/news.php" title="Accueil"><img src="{PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> Accueil</a></h5>
