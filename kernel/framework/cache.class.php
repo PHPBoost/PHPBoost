@@ -313,9 +313,9 @@ class Cache
 							{
 								case 'left':
 								case 'right':
-									$code .= "\$Template->Set_filenames(array('modules_mini' => PATH_TO_ROOT . '/templates/' . \$CONFIG['theme'] . '/modules_mini.tpl'));\n"
+									$code .= "\$Template->Set_filenames(array('modules_mini' => 'modules_mini.tpl'));\n"
 									. "\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\n"
-									. '$MODULES_MINI[\'' . $location . '\'] .= \$Template->Pparse(\'modules_mini\', TEMPLATE_STRING_MODE);';
+									. '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'modules_mini\', TEMPLATE_STRING_MODE);';
 								break;
 								case 'header':
 								case 'subheader':
@@ -323,7 +323,7 @@ class Cache
 								case 'bottomcentral':
 								case 'topfooter':
 								case 'footer':
-									$code .= "\$Template->Set_filenames(array('modules_mini_horizontal' => PATH_TO_ROOT . '/templates/' . \$CONFIG['theme'] . '/modules_mini_horizontal.tpl'));"
+									$code .= "\$Template->Set_filenames(array('modules_mini_horizontal' => 'modules_mini_horizontal.tpl'));"
 										. "\t\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\n"
 										. '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'modules_mini_horizontal\', TEMPLATE_STRING_MODE);';
 									
@@ -356,6 +356,34 @@ class Cache
 			$config .= '$CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ";\n";
 
 		return $config;
+	}
+	
+	//Cache des css associés aux mini-modules.
+	function generate_file_css()
+	{
+		global $MODULES, $CONFIG;
+		
+		$css = 'global $CSS;' . "\n";
+		$css .= '$CSS = array();' . "\n";
+		
+		//Listing des modules disponibles:
+		$modules_config = array();
+		foreach($MODULES as $name => $array)
+		{	
+			$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', $CONFIG['lang']);
+			if( is_array($array_info) && $array['activ'] == '1' ) //module activé.
+			{
+				if( $array_info['css'] == 2 ) //mini css associé
+				{
+					if( file_exists(PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.css') )
+						$css .= '$CSS[] = \'' . PATH_TO_ROOT . '/' . $name . '/' . $name . "_mini.css';\n";
+					elseif( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $name . '/' . $name . '_mini.css') )
+						$css .= '$CSS[] = \'' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $name . '/' . $name . "_mini.css';\n";
+				}
+			}
+		}
+	
+		return $css;
 	}
 	
 	//Configuration des thèmes.
@@ -580,7 +608,7 @@ class Cache
 	
 	## Private Attributes ##
 	//Tableau qui contient tous les fichiers supportés dans cette classe
-    var $files = array('config', 'modules', 'modules_mini', 'themes', 'day', 'groups', 'debug', 'member', 'files', 'com', 'ranks', 'smileys', 'stats');
+    var $files = array('config', 'modules', 'modules_mini', 'themes', 'css', 'day', 'groups', 'debug', 'member', 'files', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

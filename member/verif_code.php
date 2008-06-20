@@ -38,8 +38,9 @@ $font = '../kernel/data/fonts/impact.ttf';
 $rand = rand(0,1);
 
 ##Génération du code##
-$words = array('code', 'goal', 'image', 'php', 'boost', 'query', 'word', 'prog', 'azerty', 'popup', 'exit', 'verif', 'genre', 'order', 'bots', 'search', 'design', 'exec', 'web', 'color', 'lunar', 'url', 'inter', 'extern', 'cache', 'media', 'video', 'cms', 'cesar', 'watt', 'auto', 'audio', 'data', 'dico', 'site', 'mail', 'email', 'spam', 'bot', 'bots', 'index', 'rand', 'text');
+$words = array('code', 'goal', 'image', 'php', 'boost', 'query', 'word', 'prog', 'azerty', 'popup', 'exit', 'verif', 'genre', 'order', 'bots', 'search', 'design', 'exec', 'web', 'color', 'lunar', 'inter', 'extern', 'cache', 'media', 'video', 'cms', 'cesar', 'watt', 'auto', 'audio', 'data', 'dico', 'site', 'mail', 'email', 'spam', 'bot', 'bots', 'index', 'rand', 'text');
 $code = str_shuffle($words[array_rand($words)] . substr(rand(0, 99), 0, rand(1, 2)));
+$code = strtr($code, '1lo0', '    ');
 
 ##Création de l'image##
 if( !function_exists('imagecreatetruecolor') )

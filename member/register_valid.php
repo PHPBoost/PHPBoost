@@ -42,7 +42,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 	$login = strprotect(substr(retrieve(POST, 'log', '', TSTRING_UNSECURE), 0, 25));
 	$password = retrieve(POST, 'pass', '', TSTRING_UNSECURE);
 	$password_hash = strhash($password);
-	$password_bis = retrieve(POST, 'pass_biss', '', TSTRING_UNSECURE);
+	$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNSECURE);
 	$password_bis_hash = strhash($password_bis);
 		
 	//Configuration

@@ -145,13 +145,13 @@ else
 	$rep = '../lang/';
 	if( is_dir($rep) ) //Si le dossier existe
 	{
-		$array_dir = array();
+		$array_file = array();
 		$dh = @opendir($rep);
 		while( !is_bool($dir = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
 			if( strpos($dir, '.') === false )
-				$array_dir[] = $dir; //On crée un array, avec les different dossiers.
+				$array_file[] = $dir; //On crée un array, avec les different dossiers.
 		}	
 		closedir($dh); //On ferme le dossier
 	
@@ -160,9 +160,9 @@ else
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			$key = array_search($row['lang'], $array_dir);
+			$key = array_search($row['lang'], $array_file);
 			if( $key !== false)
-				unset($array_dir[$key]); //On supprime ces clées du tableau.
+				unset($array_file[$key]); //On supprime ces clées du tableau.
 		}
 		$Sql->Close($result);
 		

@@ -205,6 +205,7 @@
 					<dl>
 						<dt><label for="user_lang">{L_LANG_CHOOSE}</label></dt>
 						<dd><label>
+							<select name="user_lang" id="user_lang" onChange="change_img_lang('img_lang', this.options[selectedIndex].value)">	
 								{LANG_OPTIONS}						
 							</select> <img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
 						</label></dd>

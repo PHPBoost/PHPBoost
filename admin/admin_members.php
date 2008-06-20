@@ -602,6 +602,7 @@ elseif( !empty($id) )
 		'SELECT_APROB' => ($mbr['user_aprob'] == 1) ? 'selected="selected"' : '',
 		'RANKS_OPTIONS' => $ranks_options,
 		'GROUPS_OPTIONS' => $groups_options,
+		'NBR_GROUP' => $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."group", __LINE__, __FILE__),
 		'LANG_OPTIONS' => $lang_options,
 		'THEME_OPTIONS' => $theme_options,
 		'EDITOR_OPTIONS' => $editor_options,

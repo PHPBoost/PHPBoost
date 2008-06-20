@@ -28,13 +28,9 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Panneau de modération
-[-] Créer un cache pour les css associés aux menus
 [-] Ajout d'un nouveau mode d'affichage pour la balise hide.
 [-] Changer fonction d'insertion des membres pour ie (groupes)
 [-] Stats, refaire les outils "Sites référents" et "Mots clés"
-[-] Revoir l'inscription d'un membre (fonctionne pas) et mettre un lien s'inscrire dans le mini module de connexion sur le nouveau thème
-[-] Modification d'un profil dans l'admin, problème de sélection de langue
-[-] Problème quand on prévisualise 2 fois en AJAX (ça se referme au lieu de s'ouvrir, certainement à cause de scriptaculous)
 [-] Régler l'affichage du mini-calendrier
 [-] Faire le tpl pour le formulaire d'autorisation
 
