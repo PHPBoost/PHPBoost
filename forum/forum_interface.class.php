@@ -168,7 +168,7 @@ class ForumInterface extends ModuleInterface
         }
         $auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 
-        if ( $where == 'all' )         // All
+        if( $where == 'all' )         // All
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
                 MIN(msg.id) AS `id_content`,
@@ -183,7 +183,7 @@ class ForumInterface extends ModuleInterface
             GROUP BY t.id
             ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
         
-        if ( $where == 'contents' )    // Contents
+        if( $where == 'contents' )    // Contents
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
                 MIN(msg.id) AS `id_content`,
@@ -197,7 +197,6 @@ class ForumInterface extends ModuleInterface
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." ".$auth_cats."
             GROUP BY t.id
             ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
-        
         else                                         // Title only
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
@@ -220,6 +219,7 @@ class ForumInterface extends ModuleInterface
      */
     {
         global $CONFIG, $LANG, $Sql, $Template;
+		
         require_once('../kernel/begin.php');
         load_module_lang('forum'); //Chargement de la langue du module.
         
@@ -231,15 +231,14 @@ class ForumInterface extends ModuleInterface
             'L_ON' => $LANG['on'],
             'L_TOPIC' => $LANG['topic']
         ));
-
         
-        if ( $this->GetAttribute('ResultsReqExecuted') === false  || $this->GotError(MODULE_ATTRIBUTE_DOES_NOT_EXIST) )
+        if( $this->GetAttribute('ResultsReqExecuted') === false  || $this->GotError(MODULE_ATTRIBUTE_DOES_NOT_EXIST) )
         {
             $ids = array();
             $results =& $args['results'];
             $newResults = array();
             $nbResults = count($results);
-            for ( $i = 0; $i < $nbResults; $i++ )
+            for( $i = 0; $i < $nbResults; $i++ )
                 $newResults[$results[$i]['id_content']] =& $results[$i];
             
             $results =& $newResults;
@@ -260,7 +259,6 @@ class ForumInterface extends ModuleInterface
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             WHERE msg.id IN (".implode(',', array_keys($results)).")
             GROUP BY t.id";
-            
             $requestResults = $Sql->Query_while($request, __LINE__, __FILE__);
             while( $row = $Sql->Sql_fetch_assoc($requestResults) )
             {
@@ -280,8 +278,6 @@ class ForumInterface extends ModuleInterface
         $resultsIndex = $resultsIndex < $indexSize ? $resultsIndex : ($indexSize > 0 ? $indexSize - 1 : 0);
         $result =& $results[$indexes[$resultsIndex]];
 
-//         echo '<pre>';print_r($result);echo '</pre>';
-
         $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($row['title']) : '';
         $Template->Assign_vars(array(
             'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($result['connect']) && $result['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
@@ -293,11 +289,9 @@ class ForumInterface extends ModuleInterface
             'CONTENTS' => $result['contents']
         ));
 
-        
         $this->SetAttribute('ResultsIndex', ++$resultsIndex);
         
         return $Template->Pparse('forum_generic_results', TEMPLATE_STRING_MODE);
-
     }
 }
 
