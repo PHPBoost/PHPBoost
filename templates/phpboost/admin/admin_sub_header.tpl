@@ -6,7 +6,7 @@
 					<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
 						<h5 class="links"><img src="../templates/{THEME}/images/admin/admin_mini.png" class="valign_middle" alt="" /> {L_INDEX}</h5>
 						<ul id="smenu1">
-							<li><a href="{PATH_TO_ROOT}/{U_INDEX_SITE}" style="background-image:url(../templates/{THEME}/images/admin/admin_mini.png);">{L_INDEX_SITE}</a></li>
+							<li><a href="{U_INDEX_SITE}" style="background-image:url(../templates/{THEME}/images/admin/admin_mini.png);">{L_INDEX_SITE}</a></li>
 							<li><a href="../admin/admin_index.php" style="background-image:url(../templates/{THEME}/images/admin/ranks_mini.png);">{L_INDEX_ADMIN}</a></li>
 							<li><a href="../admin/admin_index.php?disconnect=true" style="background-image:url(../templates/{THEME}/images/admin/home_mini.png);">{L_DISCONNECT}</a></li>
 						</ul>
