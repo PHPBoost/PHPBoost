@@ -47,7 +47,12 @@ require_once('./kernel/header.php');
                 <div style="float:right"></div>
             </div>
             <div class="news_content">
-                <?php @include('cache/syndication/news.php'); ?>
+                <script type="text/javascript" src="cache/syndication/news.js"></script>
+                <script type="text/javascript">
+                <!--
+                    document.write(get_news_feed(10));
+                -->
+                </script>
                 <div class="text_center"></div>
             </div>
             <div class="news_bottom_l"></div>
@@ -61,7 +66,12 @@ require_once('./kernel/header.php');
                 <h3 class="title valign_middle"><a href="./forum/syndication.php" title="Syndication"><img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" /></a> Dossiers</h3>
             </div>
             <div class="news_content">
-                <?php @include('cache/syndication/articles.php'); ?>
+                <script type="text/javascript" src="cache/syndication/articles.js"></script>
+                <script type="text/javascript">
+                <!--
+                    document.write(get_articles_feed(4));
+                -->
+                </script>
                 <div class="spacer"></div>
             </div>
             <div class="news_bottom_l"></div>

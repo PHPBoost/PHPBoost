@@ -14,3 +14,11 @@ div.syndication_choices ul {
     border:1px #ccccff solid;
     list-style-type:none
 }
+
+ul.rss_feed {
+    margin-left:15px;
+}
+
+ul.rss_feed li {
+    list-style-image:url(../../images/li.png);
+}
