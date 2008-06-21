@@ -25,87 +25,80 @@
  *
 ###################################################*/
 
-if (!defined('FEED_PATH'))
-    define('FEED_PATH', PATH_TO_ROOT . '/cache/syndication');
+define('FEED_PATH', PATH_TO_ROOT . '/cache/syndication/');
+
+require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
 
 class Feed
 {
     ## Public Methods ##
-    function Feed($feedName, $feedPath, $type)
-    /**
-     * Constructor
-     */
-    {
-        $this->name = $feedName;
-        $this->path = trim($feedPath, '/') . '/';
-        $this->type = $type;
-    }
+    function Feed($feedName) { $this->name = $feedName; }
 
-    function display()
-    /**
-     * Print the feed from the rss or atom file
-     */
-    {
-        if ( $feed = @file_get_contents_emulate($this->path . $this->name . '.' . $this->type) )
-            echo $feed;
-    }
+    function load_data($data) { $this->data = $data; }
+    function load_file($url) { }
 
-    function parse($nbItem = 5) // Will be virtual with PHP5
+    function export($template = false)
     /**
-     * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
-     * /<$feedPath>/<$feedName>.atom if the rss one does not exist et return
-     * the result as an Array.
+     *  Export the feed as a string parsed by the <$tpl> template
      */
     {
-        return array();
-    }
-
-    function get_parsed(&$feedInformations, $tpl)
-    /**
-     * Return a String of a feed parsed by the <$tpl> template.
-     */
-    {
-        require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
-        $Template = new Template($tpl);
+        if( $template === false )    // A specific template is used
+            $tpl = $this->tpl->copy();
+        else
+            $tpl = $template->copy();
         
-        $Template->Assign_vars(array(
-            'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
-            'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
-            'U_LINK' => isset($feedInformations['link']) ? $feedInformations['link'] : '',
-            'HOST' => HOST,
-            'DESC' => isset($feedInformations['desc']) ? $feedInformations['desc'] : '',
-            'LANG' => isset($feedInformations['lang']) ? $feedInformations['lang'] : ''
-        ));
-        
-        if ( isset($feedInformations['items']) )
+        if( !empty($this->data) )
         {
-            foreach ( $feedInformations['items'] as $item )
+            $tpl->Assign_vars(array(
+                'DATE' => $this->data->get_date(),
+                'DATE_RFC822' => $this->data->get_date_rfc822(),
+                'DATE_RFC3339' => $this->data->get_date_rfc3339(),
+                'TITLE' => $this->data->get_title(),
+                'U_LINK' => $this->data->get_link(),
+                'HOST' => $this->data->get_host(),
+                'DESC' => $this->data->get_desc(),
+                'LANG' => $this->data->get_lang()
+            ));
+
+            $item = null;
+            foreach( $this->data->get_items() as $item )
             {
-                $Template->Assign_block_vars('item', array(
-                    'DATE' => isset($item['date']) ? $item['date'] : '',
-                    'U_LINK' => isset($item['link']) ? $item['link'] : '',
-                    'U_GUID' => isset($item['guid']) ? $item['guid'] : '',
-                    'DESC' => isset($item['desc']) ? $item['desc'] : '',
-                    'TITLE' => isset($item['title']) ? $item['title'] : '',
+                $tpl->Assign_block_vars('item', array(
+                    'TITLE' => $item->get_title(),
+                    'U_LINK' => $item->get_link(),
+                    'U_GUID' => $item->get_guid(),
+                    'DESC' => $item->get_desc(),
+                    'DATE' => $this->data->get_date(),
+                    'DATE_RFC822' => $item->get_date_rfc822(),
+                    'DATE_RFC3339' => $item->get_date_rfc3339(),
+                    'C_IMG' => ($item->get_image_url() != '') ? true : false,
+                    'U_IMG' => $item->get_image_url()
                 ));
             }
         }
-        return $Template->parse(TEMPLATE_STRING_MODE);
+        return $tpl->parse(TEMPLATE_STRING_MODE);
     }
-    
-    function generate_cache(&$feedInformations, $tpl, $extension)
+
+    function read() { return file_get_contents_emulate(FEED_PATH . $this->name); }
+
+    function cache()
     {
-        $file = fopen($this->path . $this->name . $extension, 'w+');
-        fputs($file, $this->get_parsed($feedInformations, $tpl));
+        if( empty($this->str) )
+            $this->str = $this->export();
+        $file = fopen(FEED_PATH . $this->name, 'w+');
+        fputs($file, $this->str);
         fclose($file);
     }
+
+    function is_in_cache() { return file_exists(FEED_PATH . $this->name); }
     
     ## Private Methods ##
-    
     ## Private attributes ##
     var $name = '';         // Feed Name
-    var $path = '';         // Path where the feeds are stored
-    var $type = '';         // Type of feed to use by default
+    var $str = '';          // The feed as a string
+    var $tpl = null;        // The feed Template to use
+    var $data = null;        // The feed Template to use
 }
 
 ?>
