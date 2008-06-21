@@ -3,7 +3,7 @@
  *                               admin_news_add.php
  *                            -------------------
  *   begin                : July 11, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  * 
@@ -82,9 +82,11 @@ if( !empty($_POST['valid']) )
 		$Sql->Query_inject("INSERT INTO ".PREFIX."news (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com) 
 		VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
 		
-		// Feeds Regeneration
-		include_once('../news/syndication_regeneration.php');
-        regenerate_syndication(ALL_FEEDS);
+        // Feeds Regeneration
+        require_once('../kernel/framework/syndication/feed.class.php');
+        require_once('news_interface.class.php');
+        $News = new NewsInterface();
+        feeds_update_cache('news', $News->syndication_data());
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.

@@ -30,10 +30,24 @@ define('FEED_PATH', PATH_TO_ROOT . '/cache/syndication/');
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
 
+function feeds_update_cache($feed_name, &$data)
+{
+    require_once('../kernel/framework/syndication/rss.work.class.php');
+    require_once('../kernel/framework/syndication/atom.class.php');
+    $RSS = new RSS($feed_name);
+    $ATOM = new ATOM($feed_name);
+
+    $RSS->load_data($data);
+    $RSS->cache();
+
+    $ATOM->load_data($data);
+    $ATOM->cache();
+}
+
 class Feed
 {
     ## Public Methods ##
-    function Feed($feedName) { $this->name = $feedName; }
+    function Feed($feed_name) { $this->name = $feed_name; }
 
     function load_data($data) { $this->data = $data; }
     function load_file($url) { }

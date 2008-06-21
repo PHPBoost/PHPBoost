@@ -3,10 +3,10 @@
  *                               admin_articles_management.php
  *                            -------------------
  *   begin                : July 10, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
  *
 ###################################################
  *
@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -33,6 +33,7 @@ require_once('../kernel/admin_header.php');
 
 //On recupère les variables.
 $id = retrieve(GET, 'id', 0);
+$idcat = retrieve(GET, 'idcat', 0);
 $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
@@ -51,17 +52,17 @@ if( $del && !empty($id) ) //Suppresion de l'article.
 	$visible = $Sql->Query("SELECT visible FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
 	$clause_update = ($visible == 1) ? 'nbr_articles_visible = nbr_articles_visible - 1' : 'nbr_articles_unvisible = nbr_articles_unvisible - 1';
 	$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-		
+	
 	//On supprimes les éventuels commentaires associés.
 	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = " . $id . " AND script = 'articles'", __LINE__, __FILE__);
 	
-	include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
-	$Rss = new Rss('articles/rss.php');
-	$Rss->Cache_path('../cache/');
-	$Rss->Generate_file('javascript', 'rss_articles');
-	$Rss->Generate_file('php', 'rss2_articles');
-	
-	redirect(HOST . SCRIPT);	
+	// Feeds Regeneration
+    require_once('../kernel/framework/syndication/feed.class.php');
+    require_once('articles_interface.class.php');
+    $Articles = new ArticlesInterface();
+    feeds_update_cache('articles', $Articles->syndication_data());
+    
+	redirect(HOST . SCRIPT);
 }	
 elseif( !empty($id) )
 {
@@ -112,9 +113,9 @@ elseif( !empty($id) )
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $articles['idcat']) ? 'selected="selected"' : '';
 		$categories .= '<option value="' . $row['id'] . '" ' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
-	}		
+	}
 	$Sql->Close($result);
-		
+	
 	//Images disponibles
 	$img_direct_path = (strpos($articles['icon'], '/') !== false);
 	$rep = './';
@@ -124,10 +125,10 @@ elseif( !empty($id) )
 		$img_array = array();
 		$dh = @opendir( $rep);
 		while( ! is_bool($lang = readdir($dh)) )
-		{	
+		{
 			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
-				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
-		}	
+				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.
+		}
 		closedir($dh); //On ferme le dossier
 
 		foreach($img_array as $key => $img_path)
@@ -141,7 +142,7 @@ elseif( !empty($id) )
 		'TITLE' => $articles['title'],
 		'IMG_ICON' => !empty($articles['icon']) ? '<img src="' . $articles['icon'] . '" alt="" class="valign_middle" />' : '',
 		'IMG_LIST' => $image_list,
-		'IMG_PATH' => $img_direct_path ? $articles['icon'] : '',	
+		'IMG_PATH' => $img_direct_path ? $articles['icon'] : '',
 		'IDARTICLES' => $articles['id'],
 		'CATEGORIES' => $categories,
 		'CONTENTS' => unparse($articles['contents']),
@@ -233,7 +234,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
 		$categories .= '<option value="' . $row['id'] . '" ' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 		$i++;
-	}		
+	}
 	$Sql->Close($result);
 	
 	//Images disponibles
@@ -247,12 +248,12 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		while( ! is_bool($lang = readdir($dh)) )
 		{	
 			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
-				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
-		}	
+				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.
+		}
 		closedir($dh); //On ferme le dossier
 
 		foreach($img_array as $key => $img_path)
-		{	
+		{
 			$selected = $img_path == $icon ? ' selected="selected"' : '';
 			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
 		}
@@ -260,10 +261,10 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	
 	$Template->Assign_block_vars('articles', array(
 		'IDARTICLES' => $id_post,
-		'TITLE' => stripslashes($title),		
+		'TITLE' => stripslashes($title),
 		'CATEGORIES' => $categories,
 		'IMG_PATH' => $img_direct_path ? $icon : '',
-		'IMG_ICON' => !empty($icon) ? '<img src="' . $icon . '" alt="" class="valign_middle" />' : '',		
+		'IMG_ICON' => !empty($icon) ? '<img src="' . $icon . '" alt="" class="valign_middle" />' : '',
 		'IMG_LIST' => $image_list,
 		'CONTENTS' => stripslashes($contents),
 		'USER_ID' => $user_id,
@@ -304,7 +305,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_ARTICLES_CAT' => $LANG['cat_management'],
 		'L_ARTICLES_CONFIG' => $LANG['articles_config'],
 		'L_ARTICLES_CAT_ADD' => $LANG['articles_cats_add'],
-		'L_PREVIEW' => $LANG['preview'],		
+		'L_PREVIEW' => $LANG['preview'],
 		'L_COM' => $LANG['com'],
 		'L_WRITTEN_BY' => $LANG['written_by'],
 		'L_ON' => $LANG['on'],
@@ -327,7 +328,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_EXPLAIN_PAGE' => $LANG['explain_page'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
-	));	
+	));
 	
 	include_once('../kernel/framework/content/bbcode.php');
 	
@@ -348,7 +349,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 	$get_visible = retrieve(POST, 'visible', 0);
 	
 	if( !empty($icon_path) )
-		$icon = $icon_path;		
+		$icon = $icon_path;
 			
 	//On met à jour la config de base du sondage
 	if( !empty($title) && !empty($contents) )
@@ -400,17 +401,17 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 			else
 				$is_visible = 'nbr_articles_unvisible';
 			$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " - 1 WHERE id = '" . $articles_info['idcat'] . "'", __LINE__, __FILE__);
-			$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " + 1 WHERE id = '" . $idcat . "'", __LINE__, __FILE__);				
+			$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " + 1 WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 			$cat_clause = " idcat = '" . $idcat . "', ";
-		}	
+		}
 		
-		$Sql->Query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->Query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 		
-		include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
-		$Rss = new Rss('articles/rss.php');
-		$Rss->Cache_path('../cache/');
-		$Rss->Generate_file('javascript', 'rss_articles');
-		$Rss->Generate_file('php', 'rss2_articles');
+		// Feeds Regeneration
+        require_once('../kernel/framework/syndication/feed.class.php');
+        require_once('articles_interface.class.php');
+        $Articles = new ArticlesInterface();
+        feeds_update_cache('articles', $Articles->syndication_data());
 		
 		redirect(HOST . SCRIPT);
 	}
@@ -418,21 +419,21 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		redirect(HOST . DIR . '/articles/admin_articles.php?id= ' . $id_post . '&error=incomplete#errorh');
 }		
 else
-{			
+{
 	$Template->Set_filenames(array(
 		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
-	 
+	
 	$nbr_articles = $Sql->Count_table('articles', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre d'articles est trop important.
-	include_once('../kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/pagination.class.php');
 	$Pagination = new Pagination();
 	
-	$Template->Assign_vars(array(		
+	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'PAGINATION' => $Pagination->Display_pagination('admin_articles.php?p=%d', $nbr_articles, 'p', 25, 3),	
+		'PAGINATION' => $Pagination->Display_pagination('admin_articles.php?p=%d', $nbr_articles, 'p', 25, 3),
 		'CHEMIN' => SCRIPT,
 		'L_CONFIRM_DEL_ARTICLE' => $LANG['confirm_del_article'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
@@ -449,7 +450,7 @@ else
 		'L_UPDATE' => $LANG['update'],
 		'L_DELETE' => $LANG['delete'],
 		'L_SHOW' => $LANG['show']
-	)); 
+	));
 
 	$Template->Assign_block_vars('list', array(
 	));
@@ -457,13 +458,13 @@ else
 	$result = $Sql->Query_while("SELECT a.id, a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login 
 	FROM ".PREFIX."articles a
 	LEFT JOIN ".PREFIX."articles_cats ac ON ac.id = a.idcat
-	LEFT JOIN ".PREFIX."member m ON a.user_id = m.user_id	
+	LEFT JOIN ".PREFIX."member m ON a.user_id = m.user_id
 	ORDER BY a.timestamp DESC " .
 	$Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		if( $row['visible'] == 2 )
-			$aprob = $LANG['waiting'];			
+			$aprob = $LANG['waiting'];
 		elseif( $row['visible'] == 1 )
 			$aprob = $LANG['yes'];
 		else
@@ -483,17 +484,17 @@ else
 		$Template->Assign_block_vars('list.articles', array(
 			'TITLE' => $title,
 			'IDCAT' => $row['idcat'],
-			'ID' => $row['id'],			
-			'PSEUDO' => !empty($row['login']) ? $row['login'] : $LANG['guest'],				
+			'ID' => $row['id'],
+			'PSEUDO' => !empty($row['login']) ? $row['login'] : $LANG['guest'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'APROBATION' => $aprob,
 			'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : ''),
-			'U_CAT' => '<a href="articles/articles' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '">' . (!empty($row['idcat']) ? $row['name'] : '<em>' . $LANG['root'] . '</em>') . '</a>'
+			'U_CAT' => '<a href="../articles/articles' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '">' . (!empty($row['idcat']) ? $row['name'] : '<em>' . $LANG['root'] . '</em>') . '</a>'
 		));
 	}
 	$Sql->Close($result);
 	
-	$Template->Pparse('admin_articles_management'); 
+	$Template->Pparse('admin_articles_management');
 }
 
 require_once('../kernel/admin_footer.php');
