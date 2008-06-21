@@ -1,9 +1,9 @@
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{L_XML_LANGUAGE}" >
 	<head>
-		<title>{SITE_NAME} :: {TITLE}</title>
+		<title>{SITE_NAME} : {TITLE}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<meta name="description" content="{SITE_DESCRIPTION}" />
+		<meta name="description" content="{SITE_DESCRIPTION} {TITLE}" />
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/design.css" type="text/css" media="screen" />
@@ -42,19 +42,19 @@
 					<h5 class="links"><a href="{PATH_TO_ROOT}/download/download-2-52+phpboost-2-0.php" title="PHPBoost"><img src="{PATH_TO_ROOT}/download/download_mini.png" class="valign_middle" alt="" /> PHPBoost</a></h5>
 					<ul id="smenul1">
 						<li><a href="{PATH_TO_ROOT}/download/download-2-52+phpboost-2-0.php" style="background-image:url({PATH_TO_ROOT}/download/download_mini.png);">PHPBoost 2</a></li>
-						<li><a href="http://demo.phpboost.com" title="Dï¿½monstration PHPBoost" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/com_mini.png);">Dï¿½monstration</a></li>
-						<li><a href="http://themes.phpboost.com" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/themes_mini.png);">Thï¿½mes</a></li>
+						<li><a href="http://demo.phpboost.com" title="Démonstration PHPBoost" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/com_mini.png);">Démonstration</a></li>
+						<li><a href="http://themes.phpboost.com" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/themes_mini.png);">ThÃ¨mes</a></li>
 						<li><a href="{PATH_TO_ROOT}/phpboost/modules.php" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/modules_mini.png);">Modules</a></li>
 					</ul>
 				</li>
 				<li onmouseover="show_menu('l2', 0);" onmouseout="hide_menu(0);">
 					<h5 class="links"><a href="{PATH_TO_ROOT}/wiki/wiki.php" title="Documentation PHPBoost"><img src="{PATH_TO_ROOT}/wiki/wiki_mini.png" class="valign_middle" alt="" /> Documentation</a></h5>
-					<ul id="smenul2"><li><a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost" style="background-image:url({PATH_TO_ROOT}/images/doc/presentation_mini.png);">Prï¿½sentation</a></li>
+					<ul id="smenul2"><li><a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost" style="background-image:url({PATH_TO_ROOT}/images/doc/presentation_mini.png);">Présentation</a></li>
 						<li><a href="{PATH_TO_ROOT}/wiki/installation" style="background-image:url({PATH_TO_ROOT}/images/doc/installation_mini.png);">Installation</a></li>
 						<li><a href="{PATH_TO_ROOT}/wiki/utilisation" style="background-image:url({PATH_TO_ROOT}/images/doc/utilisation_mini.png);">Utilisation</a></li>
 						<li><a href="{PATH_TO_ROOT}/wiki/modules" style="background-image:url({PATH_TO_ROOT}/images/doc/modules_mini.png);">Modules</a></li>
-						<li><a href="{PATH_TO_ROOT}/wiki/personnalisation-de-phpboost" style="background-image:url({PATH_TO_ROOT}/images/doc/personnalisation_mini.png);">Personnalisation</a></li><li><a href="{PATH_TO_ROOT}/wiki/developpement" style="background-image:url({PATH_TO_ROOT}/images/doc/developpement_mini.png);">Dï¿½veloppement</a></li>
-						<li><a href="{PATH_TO_ROOT}/pages/videos-de-demonstration" style="background-image:url({PATH_TO_ROOT}/images/doc/videos_mini.png);">Vidï¿½os</a></li>
+						<li><a href="{PATH_TO_ROOT}/wiki/personnalisation-de-phpboost" style="background-image:url({PATH_TO_ROOT}/images/doc/personnalisation_mini.png);">Personnalisation</a></li><li><a href="{PATH_TO_ROOT}/wiki/developpement" style="background-image:url({PATH_TO_ROOT}/images/doc/developpement_mini.png);">Développement</a></li>
+						<li><a href="{PATH_TO_ROOT}/pages/videos-de-demonstration" style="background-image:url({PATH_TO_ROOT}/images/doc/videos_mini.png);">Vidéos</a></li>
 						<li><a href="{PATH_TO_ROOT}/faq/faq.php" style="background-image:url({PATH_TO_ROOT}/faq/faq_mini.png);">FAQ</a></li>
 					</ul>
 				</li>
@@ -62,7 +62,7 @@
 					<h5 class="links"><a href="{PATH_TO_ROOT}/articles/articles.php" title="Dossiers"><img src="{PATH_TO_ROOT}/articles/articles_mini.png" class="valign_middle" alt="" /> Dossiers</a></h5>
 				</li>
 				<li onmouseover="show_menu('l4', 0);" onmouseout="hide_menu(0);">
-					<h5 class="links"><a href="{PATH_TO_ROOT}/forum/index.php" title="Communautï¿½"><img src="{PATH_TO_ROOT}/forum/forum_mini.png" class="valign_middle" alt="" /> Communautï¿½</a></h5>
+					<h5 class="links"><a href="{PATH_TO_ROOT}/forum/index.php" title="Communauté"><img src="{PATH_TO_ROOT}/forum/forum_mini.png" class="valign_middle" alt="" /> Communauté</a></h5>
 					<ul id="smenul4">
 						<li><a href="{PATH_TO_ROOT}/forum/index.php" style="background-image:url({PATH_TO_ROOT}/forum/forum_mini.png);">Forum</a></li>						
 						<li><a href="{PATH_TO_ROOT}/shoutbox/shoutbox.php" style="background-image:url({PATH_TO_ROOT}/shoutbox/shoutbox_mini.png);">Discussion</a></li>						
