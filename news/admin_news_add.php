@@ -86,8 +86,7 @@ if( !empty($_POST['valid']) )
         require_once('../kernel/framework/syndication/feed.class.php');
         require_once('news_interface.class.php');
         $News = new NewsInterface();
-        $tpl = new Template('framework/syndication/feed.tpl');
-        feeds_update_cache('news', $News->syndication_data(), $tpl);
+        feeds_update_cache('news', $News->syndication_data());
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
