@@ -33,9 +33,10 @@ include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/sitemapexportconfig.class
 class Module_map
 {
 	##  Public methods  ##
-	function Module_map()
+	function Module_map($name = '')
 	{
 		$this->sub_sections = array();
+		$this->name = $name;
 	}
 	
 	//Name setter

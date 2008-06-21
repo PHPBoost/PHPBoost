@@ -67,11 +67,18 @@ class Sitemap_section
 		//We get the stream in which we are going to write
 		$template = $export_config->Get_section_stream();
 		
-		$template->Assign_vars(array(
-			'C_SECTION_NAME' => !empty($this->section_name),
-			'SECTION_NAME' => $this->section_name,
-			'DEPTH' => $depth
-		));
+		if( is_string($this->section_name) )
+			$template->Assign_vars(array(
+				'C_SECTION_NAME_IS_STRING' => !empty($this->section_name),
+				'SECTION_NAME' => $this->section_name,
+				'DEPTH' => $depth
+			));
+		elseif( is_object($this->section_name) && get_class($this->section_name) == 'Sitemap_link' )
+			$template->Assign_vars(array(
+					'C_SECTION_NAME_IS_LINK' => true,
+					'LINK_CODE' => $this->section_name->Export($export_config),
+					'DEPTH' => $depth
+				));
 		
 		foreach($this->sub_sections as $sub_section)
 		{
@@ -83,7 +90,7 @@ class Sitemap_section
 	}
 	
 	## Private elements ##
-	//Name of the section
+	//Name of the section (can be a string or a link)
 	var $section_name;
 	//List of links or subsections (polymorphism)
 	var $sub_sections;
