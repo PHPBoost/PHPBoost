@@ -55,10 +55,10 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
     {
         // MAJ DES RESULTATS SI ILS NE SONT PLUS DANS LE CACHE
         // Listes des modules de recherches
-        $searchModules = $Modules->get_availables_modules('GetSearchRequest');
+        $searchModules = $Modules->get_available_modules('GetSearchRequest');
         
         // Chargement des modules avec formulaires
-        $formsModule = $Modules->get_availables_modules('GetSearchForm', $searchModules);
+        $formsModule = $Modules->get_available_modules('GetSearchForm', $searchModules);
         
         // Ajout du paramétre search à tous les modules
         foreach( $searchModules as $module)

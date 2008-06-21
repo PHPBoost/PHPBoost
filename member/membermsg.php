@@ -42,7 +42,7 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 	
 	require_once('../kernel/framework/modules/modules.class.php');
 	$modulesLoader = new Modules();
-	$modules = $modulesLoader->get_availables_modules('get_member_msg_link');
+	$modules = $modulesLoader->get_available_modules('get_member_msg_link');
 	foreach($modules as $module)
 	{
 		$img = $module->functionnality('get_member_msg_img');

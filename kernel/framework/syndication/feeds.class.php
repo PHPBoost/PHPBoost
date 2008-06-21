@@ -71,7 +71,7 @@ class Feeds
             if ( ($HTMLfeed = @file_get_contents_emulate($this->path . $this->name . '.html')) !== false )
                 return $HTMLfeed;
         }
-        return $this->getHTMLFeed($this->Parse($nbItems), $tpl);
+        return $this->get_html_feed($this->Parse($nbItems), $tpl);
     }
     
     function display()
@@ -120,12 +120,12 @@ class Feeds
      */
     {
         $file = fopen($this->path . $this->name . '.html', 'w+');
-        fputs($file, $this->get_parsed_feed($feedInformations, $tpl));
+        fputs($file, $this->_get_parsed_feed($feedInformations, $tpl));
         fclose($file);
     }
     
     ## Private Methods ##
-    function get_parsed_feed(&$feedInformations, $tpl)
+    function _get_parsed_feed(&$feedInformations, $tpl)
     /**
      * Return a String of a feed parsed by the <$tpl> template.
      */
@@ -160,10 +160,10 @@ class Feeds
         return $Template->parse(TEMPLATE_STRING_MODE);
     }
     
-    function generate_feed(&$feedInformations, $tpl, $extension)
+    function _generate_feed(&$feedInformations, $tpl, $extension)
     {
         $file = fopen($this->path . $this->name . $extension, 'w+');
-        fputs($file, $this->get_parsed_feed($feedInformations, $tpl));
+        fputs($file, $this->_get_parsed_feed($feedInformations, $tpl));
         fclose($file);
     }
     

@@ -80,7 +80,7 @@ $modulesArgs = array();
 $usedModules = array();
 
 // Chargement des modules avec formulaires
-$searchModule = $Modules->get_availables_modules('get_search_request');
+$searchModule = $Modules->get_available_modules('get_search_request');
 
 // Génération des formulaires précomplétés et passage aux templates
 foreach( $searchModule as $module)

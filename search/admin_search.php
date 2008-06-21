@@ -87,8 +87,8 @@ else
     require_once('../kernel/framework/modules/modules.class.php');
     
     $Modules = new Modules();
-//     $searchModules = $Modules->get_availables_modules('get_search_request');
-    $searchModules = $Modules->get_availables_modules('get_search_request');
+//     $searchModules = $Modules->get_available_modules('get_search_request');
+    $searchModules = $Modules->get_available_modules('get_search_request');
     
     foreach( $searchModules as $module )
     {
