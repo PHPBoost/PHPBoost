@@ -62,6 +62,7 @@ if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà exista
 	$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET " . $clause_class . " location = '" . $location . "', activ = '" . $activ . "', auth = '" . addslashes(serialize($array_auth)) . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 	
 	$Cache->Generate_file('modules_mini');		
+	$Cache->Generate_file('css');
 	
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id_post);	
 }
@@ -106,6 +107,7 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 								$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . $module_name . "', '" . $path . "', '" . $location . "', '" . addslashes(serialize($array_auth)) . "', '" . $activ . "', 0, 0)", __LINE__, __FILE__);
 								
 								$Cache->Generate_file('modules_mini');
+								$Cache->Generate_file('css');
 							}
 							redirect(HOST . DIR . '/admin/admin_menus.php#m' . $class);
 						}
