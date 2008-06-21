@@ -91,15 +91,102 @@ class Group
 	//Génération d'une liste à sélection multiple des rangs, groupes et membres
     function Generate_select_auth($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
     {
-        global $LANG, $CONFIG;
-		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect; //Identifiant du select, par défaut la valeur du bit de l'autorisation.
+        global $Sql, $LANG, $CONFIG, $array_ranks;
+		
+        //Récupération du tableau des rangs.
+		$array_ranks = is_array($array_ranks) ? $array_ranks : array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
+		//Identifiant du select, par défaut la valeur du bit de l'autorisation.
+		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect; 
+		
+		$Template = new Template('framework/groups_auth.tpl');
+       
+		$Template->Assign_vars(array(
+			'C_NO_ADVANCED_AUTH' => ($disabled_advanced_auth) ? true : false,
+			'C_ADVANCED_AUTH' => ($disabled_advanced_auth) ? false : true,
+            'THEME' => $CONFIG['theme'],
+            'PATH_TO_ROOT' => PATH_TO_ROOT,
+			'IDSELECT' => $idselect,
+			'DISABLED_SELECT' => (empty($disabled) ? 'if(disabled == 0)' : ''),
+			'L_MEMBERS' => $LANG['member_s'],
+			'L_ADD_MEMBER' => $LANG['add_member'],
+			'L_REQUIRE_PSEUDO' => addslashes($LANG['require_pseudo']),
+			'L_RANKS' => $LANG['ranks'],
+            'L_GROUPS' => $LANG['groups'],
+            'L_SEARCH' => $LANG['search'],
+			'L_ADVANCED_AUTHORIZATION' => $LANG['advanced_authorization'],
+			'L_SELECT_ALL' => $LANG['select_all'],
+			'L_SELECT_NONE' => $LANG['select_none'],
+			'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple']
+        ));
+	   
+		##### Génération d'une liste à sélection multiple des rangs et membres #####
+		//Liste des rangs
+        $j = 0;
+        foreach($array_ranks as $idrank => $group_name)
+        {
+            $selected = '';   
+            if( array_key_exists('r' . $idrank, $array_auth) && ((int)$array_auth['r' . $idrank] & (int)$auth_bit) !== 0 && empty($disabled) )
+                $selected = ' selected="selected"';
+            $selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
+            
+			$Template->Assign_block_vars('ranks_list', array(
+				'ID' => $j++,
+				'IDRANK' => $idrank,
+				'RANK_NAME' => $group_name,
+				'DISABLED' => $disabled,
+				'SELECTED' => $selected
+			));
+        }
+       
+        //Liste des groupes.
+        foreach($this->groups_name as $idgroup => $group_name)
+        {
+            $selected = '';       
+            if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled) )
+                $selected = ' selected="selected"';
 
-		return $this->generate_select_groups($auth_bit, $array_auth, $array_ranks_default, $idselect, $disabled) . ($disabled_advanced_auth ? '<div class="spacer"></div>' : $this->generate_select_members($auth_bit, $array_auth, $idselect) . 
-		'<div class="spacer"></div>
-		<a class="small_link" href="javascript:display_div_auto(\'advanced_auth' . $idselect . '\', \'\');display_div_auto(\'advanced_auth2' . $idselect . '\', \'\');switch_img(\'advanced_auth_plus' . $idselect . '\', \'' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/upload/minus.png\', \'' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/upload/plus.png\');"><img id="advanced_auth_plus' . $idselect . '" src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" class="valign_middle" /> ' . $LANG['advanced_authorization'] . '</a><br />') .
-		'<a class="small_link" href="javascript:check_select_multiple(\'' . $idselect . '\', true);">' . $LANG['select_all'] . '</a>/<a class="small_link" href="javascript:check_select_multiple(\'' . $idselect . '\', false);">' . $LANG['select_none'] . '</a>
-		<br />
-		<span class="text_small">(' . $LANG['explain_select_multiple'] . ')</span>';
+            $Template->Assign_block_vars('groups_list', array(
+				'IDGROUP' => $idgroup,
+				'GROUP_NAME' => $group_name,
+				'DISABLED' => $disabled,
+				'SELECTED' => $selected
+			));
+        }
+		
+		##### Génération du formulaire pour les autorisations membre par membre. #####
+		//Recherche des membres autorisé.
+		$array_auth_members = array();
+		foreach($array_auth as $type => $auth)
+		{
+			if( substr($type, 0, 1) == 'm' )
+			{	
+				if( array_key_exists($type, $array_auth) && ((int)$array_auth[$type] & (int)$auth_bit) !== 0 )
+					$array_auth_members[$type] = $auth;
+			}
+		}
+		$advanced_auth = count($array_auth_members) > 0;
+
+		$Template->Assign_vars(array(
+			'ADVANCED_AUTH_STYLE' => ($advanced_auth ? 'display:block;' : 'display:none;')
+		));
+		
+		//Listing des membres autorisés.
+		if( $advanced_auth )
+		{
+			$result = $Sql->Query_while("SELECT user_id, login 
+			FROM ".PREFIX."member
+			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")", __LINE__, __FILE__);
+			while( $row = $Sql->Sql_fetch_assoc($result) )
+			{
+				 $Template->Assign_block_vars('members_list', array(
+					'USER_ID' => $row['user_id'],
+					'LOGIN' => $row['login']
+				));
+			}
+			$Sql->Close($result);
+		}
+
+        return $Template->Tparse(TEMPLATE_STRING_MODE);
     }
 
 	//Ajout du membre au groupe, retourne true si le membre est bien ajouté, false si le membre appartient déjà au groupe.
@@ -222,86 +309,6 @@ class Group
 		}
 	}
 	
-	//Génération d'une liste à sélection multiple des rangs et membres
-    function generate_select_groups($auth_bit, $array_auth, $array_ranks_default, $idselect, $disabled)
-    {
-        global $array_ranks, $LANG;
-
-        $array_ranks = is_array($array_ranks) ? $array_ranks : array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-        $j = 0;
-        //Liste des rangs
-		$select_groups = '<div style="float:left"><select id="groups_auth' . $idselect . '" name="groups_auth' . $idselect . '[]" size="8" multiple="multiple" onclick="' . (empty($disabled) ? 'if(disabled == 0)' : '') . 'document.getElementById(\'' . $idselect . 'r3\').selected = true;"><optgroup label="' . $LANG['ranks'] . '">';
-        foreach($array_ranks as $idgroup => $group_name)
-        {
-            $selected = '';   
-            if( array_key_exists('r' . $idgroup, $array_auth) && ((int)$array_auth['r' . $idgroup] & (int)$auth_bit) !== 0 && empty($disabled) )
-                $selected = ' selected="selected"';
-               
-            $selected = (isset($array_ranks_default[$idgroup]) && $array_ranks_default[$idgroup] === true && empty($disabled)) ? 'selected="selected"' : $selected;
-            $select_groups .= '<option ' . $disabled . 'value="r' . $idgroup . '" id="' . $idselect . 'r' . $j . '"' . $selected . ' onclick="check_select_multiple_ranks(\'' . $idselect . 'r\', ' . $j . ')">' . $group_name . '</option>';
-            $j++;
-        }
-        $select_groups .= '</optgroup>';
-       
-        //Liste des groupes.
-        $j = 0;
-        $select_groups .= '<optgroup label="' . $LANG['groups'] . '">';
-        foreach($this->groups_name as $idgroup => $group_name)
-        {
-            $selected = '';       
-            if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled) )
-                $selected = ' selected="selected"';
-
-            $select_groups .= '<option ' . $disabled . 'value="' . $idgroup . '"' . $selected . '>' . $group_name . '</option>';
-            $j++;
-        }
-        $select_groups .= '</optgroup></select></div>';
-		
-        return $select_groups;
-    }
-
-    //Génération du formulaire pour les autorisations membre par membre.
-    function generate_select_members($auth_bit, $array_auth, $idselect)
-	{
-		global $Sql, $LANG, $CONFIG;
-
-		//Recherche des membres autorisé.
-		$array_auth_members = array();
-		foreach($array_auth as $type => $auth)
-		{
-			if( substr($type, 0, 1) == 'm' )
-			{	
-				if( array_key_exists($type, $array_auth) && ((int)$array_auth[$type] & (int)$auth_bit) !== 0 )
-					$array_auth_members[$type] = $auth;
-			}
-		}
-		$advanced_auth = count($array_auth_members) > 0;
-
-		//Listing des membres autorisés.
-		$select_members = ' <div id="advanced_auth2' . $idselect . '" style="margin-left:5px;' . ($advanced_auth ? 'display:block;' : 'display:none;') . 'float:left;"><select id="members_auth' . $idselect . '"  name="members_auth' . $idselect . '[]" size="8" multiple="multiple">
-		<optgroup label="' . $LANG['member_s'] . '" id="advanced_auth3' . $idselect . '">';
-		if( $advanced_auth )
-		{
-			$result = $Sql->Query_while("SELECT user_id, login 
-			FROM ".PREFIX."member
-			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")", __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
-				$select_members .= '<option value="' . $row['user_id'] . '" selected="selected">' . $row['login'] . '</option>';
-			}
-			$Sql->Close($result);
-		}
-		$select_members .= '</optgroup></select></div>';
-
-		//Formulaire de recherche de membre.
-		$select_members .= '<div id="advanced_auth' . $idselect . '" style="' . ($advanced_auth ? 'display:block;' : 'display:none;') . 'float:left;margin-left:5px;width:150px;"><strong>' . $LANG['add_member'] . '</strong><br /><input type="text" size="15" class="text" value="" id="login' . $idselect . '" name="login' . $idselect . '" />
-			<span id="search_img' . $idselect . '"></span> <br /><input onclick="XMLHttpRequest_search_members(\'' . $idselect . '\', \'' . $CONFIG['theme'] . '\', \'add_member_auth\', \'' . addslashes($LANG['require_pseudo']) . '\');" type="button" name="valid" value="' . $LANG['search'] . '" class="submit" />
-			<div id="xmlhttprequest_result_search' . $idselect . '" style="display:none;height:68px;" class="xmlhttprequest_result_search"></div>
-		</div>';
-		
-		return $select_members;
-	}
-	
 	//Ajoute un droit à l'ensemble des autorisations.
 	function add_auth_group($auth_group, $add_auth)
 	{
@@ -315,7 +322,7 @@ class Group
 		return ((int)$auth_group & $remove_auth);
 	}
 	
-	var $groups_info; //Tableau contenant le nom des groupes disponibles.
+	var $groups_name; //Tableau contenant le nom des groupes disponibles.
 	var $groups_auth; //Tableau contenant uniquement les autorisations des groupes disponibles.
 }
 
