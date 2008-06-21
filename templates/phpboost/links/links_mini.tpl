@@ -1,6 +1,4 @@
-		<div class="module_mini_container" style="margin-top:-10px;">
-			<div class="module_mini_top">
-			</div>		
+		<div class="module_mini_container">
 			<div class="module_mini_contents" style="text-align:left;">
 				<ul class="bglinks">
 					<li><h6 class="sub_title2"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/theme/phpboost.png" alt="" class="valign_middle" /> PHPBoost</h6></li>

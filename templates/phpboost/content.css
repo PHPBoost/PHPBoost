@@ -417,8 +417,10 @@ a.msg_link_pseudo:hover {
 .module_mini_container{ /*Placement des mini modules */
 	width:165px;
 	margin:auto;
-	margin-top:15px;
-	margin-bottom:15px;
+	margin-top:10px;
+	padding-top:5px;
+	margin-bottom:10px;
+	border-top:1px solid #C4CED6;
 }
 .module_mini_top{
 	height:24px;

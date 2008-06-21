@@ -163,7 +163,6 @@
 		<p class="text_center">
 			<a href="{PATH_TO_ROOT}/download/download-2-52+phpboost-2-0.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/theme/download_phpboost.png" id="download_phpboost" alt="" onmouseover="change_img_path('download_phpboost', '{PATH_TO_ROOT}/templates/{THEME}/images/theme/download_phpboost2.png')" onmouseout="change_img_path('download_phpboost', '{PATH_TO_ROOT}/templates/{THEME}/images/theme/download_phpboost.png')" /></a>
 		</p>		
-		<hr style="width:90%;margin:auto" />
 		{MODULES_MINI_LEFT_CONTENT}
 	</div>
 	# ENDIF #

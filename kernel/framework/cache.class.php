@@ -375,8 +375,8 @@ class Cache
 			{
 				if( $array_info['css'] == 2 || $array_info['css'] == 3 ) //mini css associé
 				{
-					if( file_exists(PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.css') )
-						$css .= '$CSS[] = \'' . PATH_TO_ROOT . '/' . $name . '/' . $name . "_mini.css';\n";
+					if( file_exists(PATH_TO_ROOT . '/' . $name . '/templates/' . $name . '_mini.css') )
+						$css .= '$CSS[] = \'' . PATH_TO_ROOT . '/' . $name . '/templates/' . $name . "_mini.css';\n";
 					elseif( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $name . '/' . $name . '_mini.css') )
 						$css .= '$CSS[] = \'' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $name . '/' . $name . "_mini.css';\n";
 				}

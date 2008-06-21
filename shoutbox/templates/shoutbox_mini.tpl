@@ -112,7 +112,7 @@
 				<h5 class="sub_title">{L_SHOUTBOX}</h5>
 			</div>
 			<div class="module_mini_contents">
-				<div style="width:142px;height:150px;overflow:auto;text-align:left;margin:auto;" id="shout_container">					
+				<div id="shout_container">					
 					# START shout #
 					<p id="shout_container_{shout.IDMSG}">{shout.PSEUDO}<span class="text_small">: {shout.CONTENTS}</span></p>						
 					# END shout #					
