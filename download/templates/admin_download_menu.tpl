@@ -21,5 +21,10 @@
 					<br />
 					<a href="{U_FILES_LIST}" class="quick_link">{L_FILE_LIST}</a>
 				</li>
+				<li>
+					<a href="{U_ADD_FILE}"><img src="download.png" alt="" /></a>
+					<br />
+					<a href="{U_ADD_FILE}" class="quick_link">{L_ADD_FILE}</a>
+				</li>
 			</ul>
 		</div>

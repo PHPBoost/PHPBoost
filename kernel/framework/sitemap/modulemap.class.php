@@ -30,6 +30,9 @@ include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/sitemaplink.class.php');
 include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/sitemapsection.class.php');
 include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/sitemapexportconfig.class.php');
 
+define('SITE_MAP_AUTH_GUEST', false);
+define('SITE_MAP_AUTH_USER', true);
+
 class Module_map
 {
 	##  Public methods  ##

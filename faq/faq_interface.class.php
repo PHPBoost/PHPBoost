@@ -65,13 +65,14 @@ class FaqInterface extends ModuleInterface
     }
 	
 	// Returns the module map objet to build the global sitemap
-	function get_module_map()
+	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
 	{
 		global $Cache, $FAQ_LANG;
 		include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/modulemap.class.php');
 		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		
 		$module_map = new Module_map($FAQ_LANG['faq']);
+		$module_map->Push_element($this->_create_module_map_sections(0, $auth_mode));
 		
 		$this->_create_module_map_sections(0, $module_map);
 		
@@ -79,35 +80,45 @@ class FaqInterface extends ModuleInterface
 	}
 	
 	#Private#
-	function _create_module_map_sections($id_cat, &$module_map)
+	function _create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $FAQ_CATS;
+		global $FAQ_CATS, $FAQ_LANG, $LANG, $Member, $FAQ_CONFIG;
 		
 		if( $id_cat > 0 )
-		{
 			$this_category = new Sitemap_link($FAQ_CATS[$id_cat]['name'], HOST . DIR . '/faq/' . transid('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
-		
-			$category = new Sitemap_section($this_category);
-		}
 		else
-			$category = new Sitemap_section();
+			$this_category = new Sitemap_link($FAQ_LANG['all_cats'], HOST . DIR . '/faq/faq.php');
+			
+		$category = new Sitemap_section($this_category);
 		
 		$i = 0;
 		
-		foreach($FAQ_CATS as $id => $properties)
+		$keys = array_keys($FAQ_CATS);
+		$num_cats = count($FAQ_CATS);
+		$properties = array();
+		for( $j = 0; $j < $num_cats; $j++)
 		{
-			if( $id > 0 && $properties['id_parent'] == $id_cat )
+			$id = $keys[$j];
+			$properties = $FAQ_CATS[$j];
+			if( $auth_mode == SITE_MAP_AUTH_GUEST )
 			{
-				$category->Push_element($this->_create_module_map_sections($id, $module_map));
+				$this_auth = is_array($properties['auth']) ? array_key_exists('r-1', $properties['auth']) : array_key_exists('r-1', $FAQ_CONFIG['global_auth']);
+			}
+			else
+			{
+				$this_auth = is_array($properties['auth']) ? $Member->Check_auth($properties['auth'], AUTH_READ) : $Member->Check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
+			}
+			if( $this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat )
+			{
+				$category->Push_element($this->_create_module_map_sections($id, $auth_mode));
 				$i++;
 			}
 		}
-		if( $i == 0 && $id_cat > 0 )
-			$category = $this_category;
-		elseif( $i == 0 && $id_cat == 0 )
-			return;
 		
-		$module_map->Push_element($category);
+		if( $i == 0	)
+			$category = $this_category;
+		
+		return $category;
 	}
 }
 
