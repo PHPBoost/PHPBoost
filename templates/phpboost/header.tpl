@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/framework/syndication/syndication.css" type="text/css" media="screen, print, handheld" />
 		{ALTERNATIVE_CSS}
 		<link rel="shortcut icon" type="image/x-icon" href="{PATH_TO_ROOT}/favicon.ico" />
-		<link rel="alternate" type="application/rss+xml" href="{PATH_TO_ROOT}/news/rss.php" title="RSS {SITE_NAME}" />
+		<link rel="alternate" type="application/rss+xml" href="{PATH_TO_ROOT}/news/syndication.php" title="RSS {SITE_NAME}" />
 		
 		<script type="text/javascript">
 		<!--
