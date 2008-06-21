@@ -31,7 +31,7 @@ if( defined('PHPBOOST') !== true)
 load_module_lang('download'); //Chargement de la langue du module.
 $Cache->Load_file('download');
 
-include_once('download_auth.php');
+require_once('download_auth.php');
 
 $page = retrieve(GET, 'p', 1);
 $category_id = retrieve(GET, 'cat', 0);

@@ -373,7 +373,7 @@ class Cache
 			$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', $CONFIG['lang']);
 			if( is_array($array_info) && $array['activ'] == '1' ) //module activé.
 			{
-				if( $array_info['css'] == 2 ) //mini css associé
+				if( $array_info['css'] == 2 || $array_info['css'] == 3 ) //mini css associé
 				{
 					if( file_exists(PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.css') )
 						$css .= '$CSS[] = \'' . PATH_TO_ROOT . '/' . $name . '/' . $name . "_mini.css';\n";
