@@ -9,6 +9,7 @@
 [-] Supporter https dans l'installation et l'administration
 [-] Finir le parseur
 [-] Ajouter le nouveau système de mini calendrier partout sur le site.
+[-] Panneau de modération
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -27,7 +28,7 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Classe de BBCode et désactivation des balises non autorisées (un objet par barre d'outil, chargement du template (un objet template pour chaque barre))
-[-] Panneau de modération
+[-] Interface de contribution des news et des articles.
 [-] Ajout d'un nouveau mode d'affichage pour la balise hide.
 [-] Stats, refaire les outils "Sites référents" et "Mots clés"
 [-] Régler l'affichage du mini-calendrier

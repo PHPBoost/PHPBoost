@@ -54,7 +54,7 @@ if( isset($_GET['cat']) )
 	$Bread_crumb->Add_link($LANG['title_articles'], transid('articles.php'));
 	foreach($CAT_ARTICLES as $id => $array_info_cat)
 	{
-		if( $CAT_ARTICLES[$idartcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_ARTICLES[$idartcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_ARTICLES[$idartcat]['level'] )
+		if( !empty($idartcat) && $CAT_ARTICLES[$idartcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_ARTICLES[$idartcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_ARTICLES[$idartcat]['level'] )
 			$Bread_crumb->Add_link($array_info_cat['name'], 'articles' . transid('.php?cat=' . $id, '-' . $id . '.php'));
 	}
 	if( !empty($idart) )

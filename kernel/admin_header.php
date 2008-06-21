@@ -97,7 +97,7 @@ $Template->Assign_vars(array(
 	'L_MODULES' => $LANG['modules'],
 	'L_CACHE' => $LANG['cache'],
 	'L_EXTEND_MENU' => $LANG['extend_menu'],
-	'U_INDEX_SITE' => ((substr($CONFIG['start_page'], 0, 1) == '/') ? '..' . $CONFIG['start_page'] : $CONFIG['start_page']) 
+	'U_INDEX_SITE' => get_start_page()
 ));
 
 //Listing des modules disponibles:

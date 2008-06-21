@@ -41,14 +41,14 @@ if( !empty($popup) ) //Popup.
 <meta http-equiv="Content-Style-Type" content="text/css" />
 
 <title>' . $LANG['files_management'] . '</title>
-<link rel="stylesheet" href="../templates/' . $CONFIG['theme'] . '/design.css" type="text/css" />
-<link rel="stylesheet" href="../templates/' . $CONFIG['theme'] . '/bbcode.css" type="text/css" />
-<link rel="stylesheet" href="../templates/' . $CONFIG['theme'] . '/global.css" type="text/css" />
-<link rel="stylesheet" href="../templates/' . $CONFIG['theme'] . '/content.css" type="text/css" />
-<link rel="stylesheet" href="../templates/' . $CONFIG['theme'] . '/generic.css" type="text/css" />
-<link href="../templates/' . $CONFIG['theme'] . '/bbcode.css" rel="stylesheet" type="text/css" media="screen" />
-<script type="text/javascript" src="../templates/' . $CONFIG['theme'] . '/images/global.js"></script>
-<script type="text/javascript" src="../templates/' . $CONFIG['theme'] . '/images/bbcode.js"></script>
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/design.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/bbcode.css" type="text/css" media="screen, print, handheld" />
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/global.css" type="text/css" media="screen, print, handheld" />
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/content.css" type="text/css" media="screen, print, handheld" />
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/generic.css" type="text/css" media="screen, print, handheld" />
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/bbcode.css" type="text/css" media="screen, print, handheld" />
+<script type="text/javascript" src="' . PATH_TO_ROOT . '/kernel/framework/js/global.js"></script>
+<script type="text/javascript" src="' . PATH_TO_ROOT . '/kernel/framework/js/bbcode.js"></script>
 </head>
 
 <body>';
@@ -152,7 +152,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 			}
 			else //Insertion dans la bdd
 			{
-				$Sql->Query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslasges($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $Member->Get_attribute('user_id') . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->Query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $Member->Get_attribute('user_id') . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
 			}
 		}
 		else

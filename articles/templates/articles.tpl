@@ -32,7 +32,7 @@
 				# ENDIF #
 				
 				# IF PAGE_NAME #
-				<p class="text_strong" style="text-indent:35px;">{PAGE_NAME}</p>
+				<h2 class="title" style="text-indent:35px;">{PAGE_NAME}</h2>
 				# ENDIF #
 				
 				{CONTENTS}

@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../articles/articles_begin.php');
 require_once('../kernel/header.php'); 
 
-$page = retrieve(GET, 'p', 1);
+$page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
 $cat = retrieve(GET, 'cat', 0);
 
 if( !empty($idart) && isset($_GET['cat'])  )
