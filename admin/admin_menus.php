@@ -52,6 +52,7 @@ if( !empty($_POST['valid']) )
 	$Sql->Close($result);
 	
 	$Cache->Generate_file('modules_mini');
+	$Cache->Generate_file('css');
 	
 	redirect(HOST . SCRIPT);	
 }
@@ -73,6 +74,7 @@ elseif( isset($_GET['unactiv']) && !empty($id) ) //Gestion de l'inactivation pou
 	$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . $info_menu['location'] . "'", __LINE__, __FILE__);
 
 	$Cache->Generate_file('modules_mini');		
+	$Cache->Generate_file('css');		
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
 }
 elseif( !empty($move) && !empty($id) ) //Gestion de la sécurité pour un module donné.
@@ -84,6 +86,7 @@ elseif( !empty($move) && !empty($id) ) //Gestion de la sécurité pour un module d
 	$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . ($max_class + 1) . "', location = '" . $move . "', activ = 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	
 	$Cache->Generate_file('modules_mini');		
+	$Cache->Generate_file('css');
 	
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
 }

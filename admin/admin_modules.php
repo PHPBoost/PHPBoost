@@ -106,6 +106,7 @@ elseif( $uninstall ) //Désinstallation du module
 				
 			$Cache->Generate_file('modules');
 			$Cache->Generate_file('modules_mini');
+			$Cache->Generate_file('css');
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if( $CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']) )
