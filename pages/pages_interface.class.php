@@ -39,7 +39,7 @@ class PagesInterface extends ModuleInterface
     }
     
     // Recherche
-    function GetSearchRequest($args)
+    function get_search_request($args)
     /**
      *  Renvoie la requête de recherche
      */
@@ -69,7 +69,7 @@ class PagesInterface extends ModuleInterface
             p.id AS `id_content`,
             p.title AS `title`,
             ( 2 * MATCH(p.title) AGAINST('".$args['search']."') + MATCH(p.contents) AGAINST('".$args['search']."') ) / 3 AS `relevance`,
-            CONCAT(PATH_TO_ROOT . '/pages/pages.php?title=',p.encoded_title) AS `link`,
+            CONCAT('" . PATH_TO_ROOT . "/pages/pages.php?title=',p.encoded_title) AS `link`,
             p.auth AS `auth`
             FROM ".PREFIX."pages p
             WHERE ( MATCH(title) AGAINST('".$args['search']."') OR MATCH(contents) AGAINST('".$args['search']."') )".$auth_cats

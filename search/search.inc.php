@@ -36,7 +36,7 @@ global $SEARCH_CONFIG;
 
 define ( 'NB_RESULTS_PER_PAGE', $SEARCH_CONFIG['nb_results_per_page']);
 
-function ExecuteSearch($Search, &$searchModules, &$modulesArgs, &$results)
+function execute_search($Search, &$searchModules, &$modulesArgs, &$results)
 /**
  *  Exécute la recherche
  */
@@ -45,18 +45,18 @@ function ExecuteSearch($Search, &$searchModules, &$modulesArgs, &$results)
     
     foreach($searchModules as $module)
     {
-        if( !$Search->IsInCache($module->GetId()) )
+        if( !$Search->is_in_cache($module->get_id()) )
         {
             // On rajoute l'identifiant de recherche comme parametre pour faciliter la requete
-            $modulesArgs[$module->GetId()]['id_search'] = $Search->id_search[$module->GetId()];
-            $requests[$module->GetId()] = $module->Functionnality('GetSearchRequest', $modulesArgs[$module->GetId()]);
+            $modulesArgs[$module->get_id()]['id_search'] = $Search->id_search[$module->get_id()];
+            $requests[$module->get_id()] = $module->functionnality('get_search_request', $modulesArgs[$module->get_id()]);
         }
     }
     
-    $Search->InsertResults($requests);
+    $Search->insert_results($requests);
 }
 
-function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results, &$idsSearch, $justInsert = false)
+function get_search_results($searchTxt, &$searchModules, &$modulesArgs, &$results, &$idsSearch, $justInsert = false)
 /**
  *  Exécute la recherche si les résultats ne sont pas dans le cache et
  *  renvoie les résultats.
@@ -68,29 +68,29 @@ function GetSearchResults($searchTxt, &$searchModules, &$modulesArgs, &$results,
     // Generation des noms des modules utilisés et de la chaine options
     foreach($searchModules as $module)
     {
-        array_push($modulesIds, $module->GetId());
+        array_push($modulesIds, $module->get_id());
         // enleve la chaine search de la chaine options et la tronque a 255 caracteres
-        $modulesOptions[$module->GetId()] = strhash(implode('|', $modulesArgs[$module->GetId()]));
+        $modulesOptions[$module->get_id()] = strhash(implode('|', $modulesArgs[$module->get_id()]));
     }
     
     $Search = new Search($searchTxt, $modulesOptions);
-    ExecuteSearch($Search, $searchModules, $modulesArgs, $results);
+    execute_search($Search, $searchModules, $modulesArgs, $results);
     $idsSearch = $Search->id_search;
     
     if ( !$justInsert )
-        return $Search->GetResults($results, $modulesIds);
+        return $Search->get_results($results, $modulesIds);
     else
         return -1;
 }
 
-function Get_HTML_Results(&$results, &$htmlResults, &$Modules, &$resultsName)
+function get_html_results(&$results, &$htmlResults, &$Modules, &$resultsName)
 /**
  *  Renvoie une chaine contenant les resultats
  */
 {
     global $Template, $CONFIG;
 
-    $module = $Modules->GetModule(strtolower($resultsName));
+    $module = $Modules->get_module(strtolower($resultsName));
     
     $Template->Set_filenames(array(
         'search_generic_pagination_results' => 'search/search_generic_pagination_results.tpl',
@@ -117,17 +117,17 @@ function Get_HTML_Results(&$results, &$htmlResults, &$Modules, &$resultsName)
             if ( ($j) >= $nbResults )
                 break;
 
-            if ( ($resultsName == 'all') || (!$module->HasFunctionnality('ParseSearchResults')) )
+            if ( ($resultsName == 'all') || (!$module->has_functionnality('ParseSearchResults')) )
             {
-                $module = $Modules->GetModule($results[$j]['module']);
+                $module = $Modules->get_module($results[$j]['module']);
                 $Template->Assign_vars(array(
-                    'L_MODULE_NAME' => ucfirst($module->GetName()),
+                    'L_MODULE_NAME' => ucfirst($module->get_name()),
                     'TITLE' => $results[$j]['title'],
                     'U_LINK' => transid($results[$j]['link'])
                 ));
                 $tempRes = $Template->Pparse('search_generic_results', TEMPLATE_STRING_MODE);
             }
-            else $tempRes = $module->Functionnality('ParseSearchResults', array('results' => $results));
+            else $tempRes = $module->functionnality('ParseSearchResults', array('results' => $results));
             
             $Template->Assign_block_vars('page.results', array(
                     'result' => $tempRes

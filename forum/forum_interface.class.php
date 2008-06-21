@@ -33,48 +33,51 @@ define('FORUM_MAX_SEARCH_RESULTS', 100);
 // Classe ForumInterface qui hérite de la classe ModuleInterface
 class ForumInterface extends ModuleInterface
 {
-	## Public Methods ##
+    ## Public Methods ##
     function ForumInterface() //Constructeur de la classe ForumInterface
     {
         parent::ModuleInterface('forum');
     }
-	
-	//Récupère le lien vers la listes des messages du membre.
-	function GetMembermsgLink($memberId)
+
+    //Récupère le lien vers la listes des messages du membre.
+    function get_member_msg_link($memberId)
     {
         return PATH_TO_ROOT . '/forum/membermsg.php?id=' . $memberId[0];
     }
-	
-	//Récupère le nom associé au lien.
-	function GetMembermsgName()
+
+    //Récupère le nom associé au lien.
+    function get_member_msg_name()
     {
         global $LANG;
-		load_module_lang('forum'); //Chargement de la langue du module.
-		
-		return $LANG['forum'];
+        load_module_lang('forum'); //Chargement de la langue du module.
+        
+        return $LANG['forum'];
     }
-	
-	//Récupère l'image associé au lien.
-	function GetMembermsgImg()
+    
+    //Récupère l'image associé au lien.
+    function get_member_msg_img()
     {
-		return PATH_TO_ROOT . '/forum/forum_mini.png';
+        return PATH_TO_ROOT . '/forum/forum_mini.png';
     }
     
     // Recherche
-    function GetSearchForm($args=null)
+    function get_search_form($args=null)
     /**
      *  Renvoie le formulaire de recherche du forum
      */
     {
-        global $Member, $MODULES, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG, $Sql, $Template;
-
-		//Autorisation sur le module.
-		if( isset($MODULES['forum']) && $MODULES['forum']['activ'] == 1 )
-		{
-			if( !$Member->Check_auth($MODULES['forum']['auth'], ACCESS_MODULE) ) //Accès non autorisé!
-				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-		}
-		
+        global $Member, $MODULES, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG, $Sql;
+        
+        require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+        $Tpl = new Template('forum/forum_search_form.tpl');
+        
+        //Autorisation sur le module.
+        if( isset($MODULES['forum']) && $MODULES['forum']['activ'] == 1 )
+        {
+            if( !$Member->Check_auth($MODULES['forum']['auth'], ACCESS_MODULE) ) //Accès non autorisé!
+                $Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+        }
+        
         require_once(PATH_TO_ROOT . '/forum/forum_functions.php');
         require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
         load_module_lang('forum'); //Chargement de la langue du module.
@@ -85,12 +88,8 @@ class ForumInterface extends ModuleInterface
         $time = !empty($args['ForumTime']) ? numeric($args['ForumTime']) : 0;
         $where = !empty($args['ForumWhere']) ? strprotect($args['ForumWhere']) : 'title';
         $colorate_result = !empty($args['ForumColorate_result']) ? true : false;
-
-        $Template->Set_filenames(array(
-            'forum_search_form' => 'forum/forum_search_form.tpl'
-        ));
-
-        $Template->Assign_vars(Array(
+        
+        $Tpl->Assign_vars(Array(
             'L_DATE' => $LANG['date'],
             'L_DAY' => $LANG['day'],
             'L_DAYS' => $LANG['day_s'],
@@ -122,7 +121,7 @@ class ForumInterface extends ModuleInterface
             {
                 if( $Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
                 {
-                    $Template->Assign_block_vars('cats', array(
+                    $Tpl->Assign_block_vars('cats', array(
                         'MARGIN' => ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----',
                         'ID' => $id,
                         'L_NAME' => $key['name'],
@@ -131,19 +130,18 @@ class ForumInterface extends ModuleInterface
                 }
             }
         }
-        
-        return $Template->Pparse('forum_search_form', TEMPLATE_STRING_MODE);
+        return $Tpl->parse(TEMPLATE_STRING_MODE);
     }
     
-    function GetSearchArgs()
+    function get_search_args()
     /**
-     *  Renvoie la liste des arguments de la méthode <GetSearchRequest>
+     *  Renvoie la liste des arguments de la méthode <get_search_args>
      */
     {
         return Array('ForumTime', 'ForumIdcat', 'ForumWhere', 'ForumColorate_result');
     }
     
-    function GetSearchRequest($args)
+    function get_search_request($args)
     /**
      *  Renvoie la requête de recherche dans le forum
      */
@@ -174,7 +172,7 @@ class ForumInterface extends ModuleInterface
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
                 MAX(( 2 * MATCH(t.title) AGAINST('".$search."') + MATCH(msg.contents) AGAINST('".$search."') ) / 3) AS `relevance`,
-                ".$Sql->Sql_concat("PATH_TO_ROOT . '/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                ".$Sql->Sql_concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
@@ -189,7 +187,7 @@ class ForumInterface extends ModuleInterface
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
                 MAX(MATCH(msg.contents) AGAINST('".$search."')) AS `relevance`,
-                ".$Sql->Sql_concat("PATH_TO_ROOT . '/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                ".$Sql->Sql_concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
@@ -203,7 +201,7 @@ class ForumInterface extends ModuleInterface
                 msg.id AS `id_content`,
                 t.title AS `title`,
                 MATCH(t.title) AGAINST('".$search."') AS `relevance`,
-                ".$Sql->Sql_concat("PATH_TO_ROOT . '/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                ".$Sql->Sql_concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
@@ -213,21 +211,19 @@ class ForumInterface extends ModuleInterface
             ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
     }
 
-    function ParseSearchResults(&$args)
+    function parse_search_results(&$args)
     /**
      *  Return the string to print the results
      */
     {
-        global $CONFIG, $LANG, $Sql, $Template;
-		
+        global $CONFIG, $LANG, $Sql;
+        
         require_once(PATH_TO_ROOT . '/kernel/begin.php');
         load_module_lang('forum'); //Chargement de la langue du module.
         
-        $Template->Set_filenames(array(
-            'forum_generic_results' => 'forum/forum_generic_results.tpl'
-        ));
+        $Tpl = new Template('forum/forum_generic_results.tpl');
 
-        $Template->Assign_vars(Array(
+        $Tpl->Assign_vars(Array(
             'L_ON' => $LANG['on'],
             'L_TOPIC' => $LANG['topic']
         ));
@@ -265,21 +261,21 @@ class ForumInterface extends ModuleInterface
                 $results[$row['msg_id']] = $row;
             }
             $Sql->Close($requestResults);
-
-            $this->SetAttribute('ResultsReqExecuted', true);
-            $this->SetAttribute('Results', $results);
-            $this->SetAttribute('ResultsIndex', 0);
+            
+            $this->set_attribute('ResultsReqExecuted', true);
+            $this->set_attribute('Results', $results);
+            $this->set_attribute('ResultsIndex', 0);
         }
-
+        
         $results =& $this->GetAttribute('Results');
         $indexes = array_keys($results);
         $indexSize = count($indexes);
         $resultsIndex = $this->GetAttribute('ResultsIndex');
         $resultsIndex = $resultsIndex < $indexSize ? $resultsIndex : ($indexSize > 0 ? $indexSize - 1 : 0);
         $result =& $results[$indexes[$resultsIndex]];
-
+        
         $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($result['title']) : '';
-        $Template->Assign_vars(array(
+        $Tpl->Assign_vars(array(
             'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($result['connect']) && $result['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
             'U_USER_PROFILE' => !empty($result['user_id']) ? PATH_TO_ROOT . '/member/member'.transid('.php?id='.$result['user_id'],'-'.$result['user_id'].'.php') : '',
             'USER_PSEUDO' => !empty($result['login']) ? wordwrap_html($result['login'], 13) : $LANG['guest'],
@@ -288,10 +284,10 @@ class ForumInterface extends ModuleInterface
             'DATE' => gmdate_format('d/m/y', $result['date']),
             'CONTENTS' => $result['contents']
         ));
-
-        $this->SetAttribute('ResultsIndex', ++$resultsIndex);
         
-        return $Template->Pparse('forum_generic_results', TEMPLATE_STRING_MODE);
+        $this->set_attribute('ResultsIndex', ++$resultsIndex);
+        
+        return $Tpl->parse(TEMPLATE_STRING_MODE);
     }
 }
 

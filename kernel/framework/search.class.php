@@ -51,8 +51,8 @@ class Search
         $this->id_search = array();
         $this->cache = array();
         
-        $this->id_user = $Member->Get_attribute('user_id');
-        $this->modulesConditions = $this->getModulesConditions($this->modules);
+        $this->id_user = $Member->get_attribute('user_id');
+        $this->modules_conditions = $this->_get_modules_conditions($this->modules);
         
         // Si on demande une recherche directe par id, on ne calcule pas de résultats
         if( $search != '' )
@@ -89,8 +89,8 @@ class Search
             // Vérifications des résultats dans le cache.
             $reqCache  = "SELECT `id_search`, `module` FROM ".PREFIX."search_index WHERE ";
             $reqCache .= "`search`='".$search."' AND `id_user`='".$this->id_user."'";
-            if( $this->modulesConditions != '' )
-                $reqCache .= " AND ".$this->modulesConditions;
+            if( $this->modules_conditions != '' )
+                $reqCache .= " AND ".$this->modules_conditions;
             
             $request = $Sql->Query_while($reqCache, __LINE__, __FILE__);
             while($row = $Sql->Sql_fetch_assoc($request))
@@ -116,7 +116,7 @@ class Search
                 // Pour chaque module n'étant pas dans le cache
                 foreach($modules as $moduleName => $options)
                 {
-                    if( !$this->IsInCache($moduleName) )
+                    if( !$this->is_in_cache($moduleName) )
                     {
                         $reqInsert .= "('".$this->id_user."','".$moduleName."','".$search."','".$options."','".time()."', '0'),";
                         // Exécution de 10 requêtes d'insertions
@@ -149,8 +149,8 @@ class Search
                 // Vérifications des résultats dans le cache.
                 $reqCache  = "SELECT id_search, module FROM ".PREFIX."search_index WHERE ";
                 $reqCache .= "search='".$search."' AND id_user='".$this->id_user."'";
-                if( $this->modulesConditions != '' )
-                    $reqCache .= " AND ".$this->modulesConditions;
+                if( $this->modules_conditions != '' )
+                    $reqCache .= " AND ".$this->modules_conditions;
                 
                 $request = $Sql->Query_while( $reqCache, __LINE__, __FILE__ );
                 while($row = $Sql->Sql_fetch_assoc($request))
@@ -163,7 +163,7 @@ class Search
     }
     
     //----------------------------------------------------- Méthodes publiques
-    function GetResultsById( &$results, $idSearch = 0, $nbLines = 0, $offset = 0 )
+    function get_results_by_id( &$results, $idSearch = 0, $nbLines = 0, $offset = 0 )
     /**
      *  Renvoie les résultats de la recherche d'id <idSearch>
      *  Nb requêtes : 5 + k / 10
@@ -197,7 +197,7 @@ class Search
         return $nbResults;
     }
     
-    function GetResults(&$results, &$moduleNames, $nbLines = 0, $offset = 0 )
+    function get_results(&$results, &$moduleNames, $nbLines = 0, $offset = 0 )
     /**
      *  Renvoie le nombre de résultats de la recherche
      *  et mets les résultats dans le tableau $results
@@ -208,7 +208,7 @@ class Search
 
         $results = array( );
         $numModules = 0;
-        $modulesConditions = '';
+        $modules_conditions = '';
         
         // Construction des conditions de recherche
         foreach($moduleNames as $moduleName)
@@ -218,8 +218,8 @@ class Search
             {
                 // Conditions de la recherche
                 if( $numModules > 0 )
-                    $modulesConditions .= ", ";
-                $modulesConditions .= $this->id_search[$moduleName];
+                    $modules_conditions .= ", ";
+                $modules_conditions .= $this->id_search[$moduleName];
                 $numModules++;
             }
         }
@@ -228,8 +228,8 @@ class Search
         $reqResults  = "SELECT module, id_content, title, relevance, link
                         FROM ".PREFIX."search_index idx, ".PREFIX."search_results rst
                         WHERE (idx.id_search = rst.id_search) ";
-        if( $modulesConditions != '' )
-            $reqResults .= " AND rst.id_search  IN (".$modulesConditions.")";
+        if( $modules_conditions != '' )
+            $reqResults .= " AND rst.id_search  IN (".$modules_conditions.")";
         $reqResults .= " ORDER BY relevance DESC ";
         if ( $nbLines > 0 )
             $reqResults .= $Sql->Sql_limit($offset, $nbLines);
@@ -242,8 +242,8 @@ class Search
         }
         
         // Récupération du nombre de résultats correspondant à la recherche
-        $reqNbResults  = "SELECT COUNT(*) FROM ".PREFIX."search_results WHERE id_search IN ( ".$modulesConditions." )";
-        if ( $modulesConditions > 0 )
+        $reqNbResults  = "SELECT COUNT(*) FROM ".PREFIX."search_results WHERE id_search IN ( ".$modules_conditions." )";
+        if ( $modules_conditions > 0 )
             $nbResults = $Sql->Query($reqNbResults, __LINE__, __FILE__  );
         else
             $nbResults = 0;
@@ -254,7 +254,7 @@ class Search
         return $nbResults;
     }
     
-    function InsertResults(&$requestAndResults)
+    function insert_results(&$requestAndResults)
     /**
      *  Enregistre les résultats de la recherche dans la base des résultats
      *  si ils n'y sont pas déjà
@@ -272,7 +272,7 @@ class Search
         {
             if ( !is_array($request) )
             {
-                if( !$this->IsInCache($moduleName) )
+                if( !$this->is_in_cache($moduleName) )
                 {   // Si les résultats ne sont pas dans le cache.
                     // Ajout des résultats dans le cache
                     if( $nbReqSEARCH > 0 )
@@ -320,7 +320,7 @@ class Search
         }
     }
     
-    function IsSearchIdInCache($idSearch)
+    function is_search_id_in_cache($idSearch)
     /**
      *  Renvoie <true> si la recherche est en cache et <false> sinon.
      *  Nb requêtes : 2
@@ -339,7 +339,7 @@ class Search
         else return false;
     }
     
-    function IsInCache($moduleName)
+    function is_in_cache($moduleName)
     /**
      *  Renvoie true si les résultats du module sont dans le cache
      *  Nb requêtes : 0
@@ -348,7 +348,7 @@ class Search
         return in_array($moduleName, $this->cache);
     }
     
-    function ModulesInCache()
+    function modules_in_cache()
     /**
      *  Renvoie la liste des modules présent dans le cache
      *  Nb requêtes : 0
@@ -361,51 +361,51 @@ class Search
     /**
      *  Pour des raisons de compatibilité avec PHP 4, les mots-clés private,
      *  protected et public ne sont pas utilisé.
-     *  
+     *
      *  L'appel aux méthodes et/ou attributs PRIVE/PROTEGE est donc possible.
      *  Cependant il est strictement déconseillé, car cette partie du code
      *  est suceptible de changer sans avertissement et donc vos modules ne
      *  fonctionnerai plus.
-     *  
+     *
      *  Bref, utilisation et vos risques et périls !!!
-     *  
+     *
      */
     
     //----------------------------------------------------- Méthodes protégées
-    function getModulesConditions(&$modules)
+    function _get_modules_conditions(&$modules)
     /**
      *  Génère les conditions de la clause WHERE pour limiter les requêtes
      *  aux seuls modules avec les bonnes options de recherches concernés.
      */
     {
         $nbModules = count($modules);
-        $modulesConditions = '';
+        $modules_conditions = '';
         if( $nbModules > 0 )
         {
-            $modulesConditions .= " ( ";
+            $modules_conditions .= " ( ";
             $i = 0;
             foreach($modules as $moduleName => $options)
             {
-                $modulesConditions .= "( module='".$moduleName."'";
-                $modulesConditions .= " AND options='".$options."'";
-                $modulesConditions .= " )";
+                $modules_conditions .= "( module='".$moduleName."'";
+                $modules_conditions .= " AND options='".$options."'";
+                $modules_conditions .= " )";
                 
                 if( $i < ($nbModules - 1) )
-                    $modulesConditions .= " OR ";
+                    $modules_conditions .= " OR ";
                 else
-                    $modulesConditions .= " ) ";
+                    $modules_conditions .= " ) ";
                 $i++;
             }
         }
         
-        return $modulesConditions;
+        return $modules_conditions;
     }
     
     //----------------------------------------------------- Attributs protégés
     var $id_search;
     var $search;
     var $modules;
-    var $modulesConditions;
+    var $modules_conditions;
     var $id_user;
     var $errors;
 
