@@ -36,7 +36,7 @@
 		<div class="dynamic_menu" style="padding-left:190px;top:113px">
 			<ul>
 				<li>
-					<h5 class="links"><a href="{PATH_TO_ROOT}/news/news.php" title="Accueil"><img src="{PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> Accueil</a></h5>
+					<h5 class="links"><a href="{PATH_TO_ROOT}/index.php" title="Accueil"><img src="{PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> Accueil</a></h5>
 				</li>
 				<li onmouseover="show_menu('l1', 0);" onmouseout="hide_menu(0);">
 					<h5 class="links"><a href="{PATH_TO_ROOT}/download/download-2-52+phpboost-2-0.php" title="PHPBoost"><img src="{PATH_TO_ROOT}/download/download_mini.png" class="valign_middle" alt="" /> PHPBoost</a></h5>
