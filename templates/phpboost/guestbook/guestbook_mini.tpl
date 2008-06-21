@@ -1,4 +1,3 @@
-		<hr style="width:90%;margin:auto" />
 		<div class="module_mini_container">
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_RANDOM_GESTBOOK}</h5>
