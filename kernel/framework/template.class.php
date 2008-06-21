@@ -125,6 +125,20 @@ class Template
         if( $this->stringMode )
             return $tplString;
 	}
+
+	// Object  cloner
+	function Copy()
+	{
+		$copy = new Template();
+		
+		$copy->tpl = $this->tpl;
+		$copy->template = $this->template;
+		$copy->files = $this->files;
+		$copy->module_data_path = $this->module_data_path;
+	    $copy->stringMode = $this->stringMode;
+		
+		return $copy;
+	}
 	
 	
 	## Private Methods ##
