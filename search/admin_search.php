@@ -78,9 +78,8 @@ elseif( $clearOutCache ) // On vide le contenu du cache de la recherche
 }
 else
 {
-    $Template->Set_filenames(array(
-        'admin_search'=> 'search/admin_search.tpl'
-    ));
+    require_once('../kernel/framework/template.class.php');
+    $Tpl = new Template('search/admin_search.tpl');
     
     $Cache->Load_file('search');
     global $SEARCH_CONFIG;
@@ -88,23 +87,24 @@ else
     require_once('../kernel/framework/modules/modules.class.php');
     
     $Modules = new Modules();
-    $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
+//     $searchModules = $Modules->get_availables_modules('get_search_request');
+    $searchModules = $Modules->get_availables_modules('get_search_request');
     
     foreach( $searchModules as $module )
     {
-        if ( in_array($module->GetId(), $SEARCH_CONFIG['authorised_modules']) )
+        if ( in_array($module->get_id(), $SEARCH_CONFIG['authorised_modules']) )
             $selected = ' selected="selected"';
         else
             $selected = '';
 
-        $Template->Assign_block_vars('authorised_modules', array(
-            'MODULE' => $module->GetId(),
+        $Tpl->Assign_block_vars('authorised_modules', array(
+            'MODULE' => $module->get_id(),
             'SELECTED' => $selected,
-            'L_MODULE_NAME' => ucfirst($module->GetName())
+            'L_MODULE_NAME' => ucfirst($module->get_name())
         ));
     }
     
-    $Template->Assign_vars(array(
+    $Tpl->Assign_vars(array(
         'THEME' => $CONFIG['theme'],
         'L_SEARCH_MANAGEMENT' => $LANG['search_management'],
         'L_SEARCH_CONFIG' => $LANG['search_config'],
@@ -124,7 +124,7 @@ else
         'NB_RESULTS_P' => $SEARCH_CONFIG['nb_results_per_page']
     ));
 
-    $Template->Pparse('admin_search');
+    $Tpl->parse();
 }
 
 //--------------------------------------------------------------------- Footer

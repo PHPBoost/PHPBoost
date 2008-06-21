@@ -51,32 +51,32 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
     echo 'var syncErr = false;';
     
     $Search = new Search();
-    if( !$Search->IsSearchIdInCache($idSearch) )
+    if( !$Search->is_search_id_in_cache($idSearch) )
     {
         // MAJ DES RESULTATS SI ILS NE SONT PLUS DANS LE CACHE
         // Listes des modules de recherches
-        $searchModules = $Modules->GetAvailablesModules('GetSearchRequest');
+        $searchModules = $Modules->get_availables_modules('GetSearchRequest');
         
         // Chargement des modules avec formulaires
-        $formsModule = $Modules->GetAvailablesModules('GetSearchForm', $searchModules);
+        $formsModule = $Modules->get_availables_modules('GetSearchForm', $searchModules);
         
         // Ajout du paramétre search à tous les modules
         foreach( $searchModules as $module)
-            $modulesArgs[$module->GetId()] = array('search' => $searchTxt);
+            $modulesArgs[$module->get_id()] = array('search' => $searchTxt);
         
         // Ajout de la liste des paramètres de recherches spécifiques à chaque module
         foreach( $formsModule as $formModule)
         {
-            if( $formModule->HasFunctionnality('GetSearchArgs') )
+            if( $formModule->has_functionnality('GetSearchArgs') )
             {
                 // Récupération de la liste des paramètres
-                $formModuleArgs = $formModule->Functionnality('GetSearchArgs');
+                $formModuleArgs = $formModule->functionnality('GetSearchArgs');
                 // Ajout des paramètres optionnels sans les sécuriser.
                 // Ils sont sécurisés à l'intérieur de chaque module.
                 foreach( $formModuleArgs as $arg)
                 {
                     if ( isset($_POST[$arg]) )
-                        $modulesArgs[$formModule->GetId()][$arg] = $_POST[$arg];
+                        $modulesArgs[$formModule->get_id()][$arg] = $_POST[$arg];
                 }
             }
         }
@@ -84,7 +84,7 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
         $results = array();
         $idsSearch = array();
         
-        GetSearchResults($searchTxt, $searchModules, $modulesArgs, $results, $idsSearch, true);
+        get_search_results($searchTxt, $searchModules, $modulesArgs, $results, $idsSearch, true);
         
         // Propagation des nouveaux id_search
         foreach ( $idsSearch as $moduleName => $id_search )
@@ -97,12 +97,12 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
     
     echo   'var resultsAJAX = new Array();';
     
-    $nbResults = $Search->GetResultsById($results, $Search->id_search[$MODULE_NAME]);
+    $nbResults = $Search->get_results_by_id($results, $Search->id_search[$MODULE_NAME]);
     if( $nbResults > 0 )
     {
-        $module = $Modules->GetModule($MODULE_NAME);
+        $module = $Modules->get_module($MODULE_NAME);
         $htmlResults = '';
-        Get_HTML_Results($results, $htmlResults, $Modules, $MODULE_NAME);
+        get_html_results($results, $htmlResults, $Modules, $MODULE_NAME);
     
         echo   'nbResults[\''.$MODULE_NAME.'\'] = '.$nbResults.';
                 resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.addslashes($nbResults > 1 ? $LANG['nb_results_found']:$LANG['one_result_found']).'\';

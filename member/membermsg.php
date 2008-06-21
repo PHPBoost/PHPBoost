@@ -3,7 +3,7 @@
  *                                membermsg.php
  *                            -------------------
  *   begin                : Februar 23, 2008
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -42,15 +42,15 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 	
 	require_once('../kernel/framework/modules/modules.class.php');
 	$modulesLoader = new Modules();
-	$modules = $modulesLoader->GetAvailablesModules('GetMembermsgLink');
+	$modules = $modulesLoader->get_availables_modules('get_member_msg_link');
 	foreach($modules as $module)
 	{
-		$img = $module->Functionnality('GetMembermsgImg');
+		$img = $module->functionnality('get_member_msg_img');
 		$Template->Assign_block_vars('available_modules_msg', array(
-			'NAME_MEMBER_MSG' => $module->Functionnality('GetMembermsgName'),
+			'NAME_MEMBER_MSG' => $module->functionnality('get_member_msg_name'),
 			'IMG_MEMBER_MSG' => $img,
 			'C_IMG_MEMBER_MSG' => !empty($img) ? true : false,
-			'U_LINK_MEMBER_MSG' => $module->Functionnality('GetMembermsgLink', array($memberId))
+			'U_LINK_MEMBER_MSG' => $module->functionnality('get_member_msg_link', array($memberId))
 		));
 	}
 	

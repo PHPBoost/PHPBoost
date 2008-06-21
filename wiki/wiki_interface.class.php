@@ -38,23 +38,21 @@ class WikiInterface extends ModuleInterface
     }
     
     // Recherche
-    function GetSearchForm($args=null)
+    function get_search_form($args=null)
     /**
      *  Renvoie le formulaire de recherche du wiki
      */
     {
         require_once(PATH_TO_ROOT . '/kernel/begin.php');
         load_module_lang('wiki');
-        global $CONFIG, $LANG, $Template;
+        global $CONFIG, $LANG;
+        
+        $Tpl = new Template('wiki/wiki_search_form.tpl');
         
         if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
             $args['WikiWhere'] = 'title';
 
-        $Template->Set_filenames(array(
-            'wiki_search_form' => 'wiki/wiki_search_form.tpl'
-        ));
-
-        $Template->Assign_vars(Array(
+        $Tpl->Assign_vars(Array(
             'L_WHERE' => $LANG['wiki_search_where'],
             'IS_TITLE_SELECTED' => $args['WikiWhere'] == 'title'? ' selected="selected"': '',
             'IS_CONTENTS_SELECTED' => $args['WikiWhere'] == 'contents'? ' selected="selected"': '',
@@ -63,10 +61,10 @@ class WikiInterface extends ModuleInterface
             'L_CONTENTS' => $LANG['wiki_search_where_contents']
         ));
         
-        return $Template->Pparse('wiki_search_form', TEMPLATE_STRING_MODE);
+        return $Tpl->parse(TEMPLATE_STRING_MODE);
     }
     
-    function GetSearchArgs()
+    function get_search_args()
     /**
      *  Renvoie la liste des arguments de la méthode <GetSearchRequest>
      */
@@ -74,7 +72,7 @@ class WikiInterface extends ModuleInterface
         return Array('WikiWhere');
     }
     
-    function GetSearchRequest($args)
+    function get_search_request($args)
     /**
      *  Renvoie la requête de recherche dans le wiki
      */
@@ -83,34 +81,36 @@ class WikiInterface extends ModuleInterface
             $args['WikiWhere'] = 'title';
         
         if ( $args['WikiWhere'] == 'all' )
-            return "SELECT ".
+            $req = "SELECT ".
                 $args['id_search']." AS `id_search`,
                 a.id AS `id_content`,
                 a.title AS `title`,
                 ( 4 * MATCH(a.title) AGAINST('".$args['search']."') + MATCH(c.content) AGAINST('".$args['search']."') ) / 5 AS `relevance`,
-                CONCAT(PATH_TO_ROOT . '/wiki/wiki.php?title=',a.encoded_title) AS `link`
+                CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles a
                 LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
                 WHERE ( MATCH(a.title) AGAINST('".$args['search']."') OR MATCH(c.content) AGAINST('".$args['search']."') )";
         if ( $args['WikiWhere'] == 'contents' )
-            return "SELECT ".
+            $req = "SELECT ".
                 $args['id_search']." AS `id_search`,
                 a.id AS `id_content`,
                 a.title AS `title`,
                 MATCH(c.content) AGAINST('".$args['search']."') AS `relevance`,
-                CONCAT(PATH_TO_ROOT . '/wiki/wiki.php?title=',a.encoded_title) AS `link`
+                CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles a
                 LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
                 WHERE MATCH(c.content) AGAINST('".$args['search']."')";
         else
-            return "SELECT ".
+            $req = "SELECT ".
                 $args['id_search']." AS `id_search`,
                 `id` AS `id_content`,
                 `title` AS `title`,
                 MATCH(title) AGAINST('".$args['search']."') AS `relevance`,
-                CONCAT(PATH_TO_ROOT . '/wiki/wiki.php?title=',encoded_title) AS `link`
+                CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles
                 WHERE MATCH(title) AGAINST('".$args['search']."')";
+        
+        return $req;
     }
 }
 

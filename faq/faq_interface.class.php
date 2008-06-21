@@ -6,14 +6,14 @@
  *   copyright            : (C) 2008 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
- *  
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -39,10 +39,10 @@ class FaqInterface extends ModuleInterface
         parent::ModuleInterface('faq');
     }
     
-    function GetSearchRequest($args)
+    function get_search_request($args)
     /**
-	 *  Renvoie la requête de recherche
-	 */
+     *  Renvoie la requête de recherche
+     */
     {
         global $Sql;
         require_once(PATH_TO_ROOT . '/faq/faq_cats.class.php');
@@ -74,8 +74,6 @@ class FaqInterface extends ModuleInterface
 		$module_map = new Module_map($FAQ_LANG['faq']);
 		
 		$this->_create_module_map_sections(0, $module_map);
-		
-		
 		
 		return $module_map;
 	}

@@ -50,13 +50,13 @@ class Modules
     {
         global $MODULES;
         
-        $this->loadedModules = array();
-        $this->availablesModules = array_keys($MODULES);
+        $this->loaded_modules = array();
+        $this->availables_modules = array_keys($MODULES);
     }
     
     //----------------------------------------------------------------- PUBLIC
     //----------------------------------------------------- Méthodes publiques
-    function Functionnality($functionnality, $modules)
+    function functionnality($functionnality, $modules)
     /**
      *  Vérifie les fonctionnalités des modules et appelle la méthode
      *  du/des module(s) sélectionné(s) avec les bons arguments.
@@ -66,17 +66,17 @@ class Modules
         foreach($modules as $moduleName => $args)
         {
             // Instanciation de l'objet $module
-            $module = $this->GetModule($moduleName);
+            $module = $this->get_module($moduleName);
             // Si le module à déjà été appelé et a déjà eu une erreur,
             // On nettoie le bit d'erreur correspondant.
-            $module->clearFunctionnalityError();
-            if( $module->HasFunctionnality($functionnality) == true )
-                $results[$moduleName] = $module->Functionnality($functionnality, $args);
+            $module->clear_functionnality_error();
+            if( $module->has_functionnality($functionnality) == true )
+                $results[$moduleName] = $module->functionnality($functionnality, $args);
         }
         return $results;
     }
 
-    function GetAvailablesModules($functionnality='GetId', $modulesList = array())
+    function get_availables_modules($functionnality='get_id', $modulesList = array())
     /**
      *  Renvoie la liste des modules disposant de la fonctionnalité demandée.
      *  Si $modulesList est spécifié, alors on ne recherche que le sous ensemble de celui-ci 
@@ -89,46 +89,30 @@ class Modules
             
             foreach(array_keys($MODULES) as $moduleId)
             {
-                $module = $this->GetModule($moduleId);
-                if( !is_array($functionnality) )
-                {
-                    if( !$module->GotError() && $module->HasFunctionnality($functionnality) )
-                        array_push($modules, $module);
-                }
-                else
-                {
-                    if( !$module->GotError() && $module->HasFunctionnalities($functionnality) )
-                        array_push($modules, $module);
-                }
+                $module = $this->get_module($moduleId);
+                if( !$module->got_error() && $module->has_functionnality($functionnality) )
+                    array_push($modules, $module);
             }
         }
         else
         {
             foreach($modulesList as $module)
             {
-                if( !is_array($functionnality) )
-                {
-                    if( !$module->GotError() && $module->HasFunctionnality($functionnality) )
-                        array_push($modules, $module);
-                }
-                else
-                {
-                    if( !$module->GotError() && $module->HasFunctionnalities($functionnality) )
-                        array_push($modules, $module);
-                }
+                if( !$module->got_error() && $module->has_functionnality($functionnality) )
+                    array_push($modules, $module);
             }
         }
         return $modules;
     }
 
-    function GetModule($moduleId = '')
+    function get_module($moduleId = '')
     /**
      *  Instancie et renvoie le module demandé.
      */
     {
-        if( !isset($this->loadedModules[$moduleId]) )
+        if( !isset($this->loaded_modules[$moduleId]) )
         {
-            if( in_array($moduleId, $this->availablesModules) )
+            if( in_array($moduleId, $this->availables_modules) )
             {
                 global $Member, $MODULES;
                 
@@ -136,31 +120,31 @@ class Modules
                 {
                     if( @include_once(PATH_TO_ROOT . '/'.$moduleId.'/'.$moduleId.'_interface.class.php') )
                     {
-                        $moduleConstructor = ucfirst($moduleId.'Interface');
-                        $Module = new $moduleConstructor();
+                        $module_constructor = ucfirst($moduleId.'Interface');
+                        $Module = new $module_constructor();
                     }
                     else $Module = new ModuleInterface($moduleId, MODULE_NOT_YET_IMPLEMENTED);
                 }
                 else $Module = new ModuleInterface($moduleId, ACCES_DENIED);
             }
             else $Module = new ModuleInterface($moduleId, MODULE_NOT_AVAILABLE);
-            $this->loadedModules[$moduleId] = $Module;
+            $this->loaded_modules[$moduleId] = $Module;
         }
-        return $this->loadedModules[$moduleId];
+        return $this->loaded_modules[$moduleId];
     }
 
     //------------------------------------------------------------------ PRIVE
     /**
      *  Pour des raisons de compatibilité avec PHP 4, les mots-clés private,
      *  protected et public ne sont pas utilisé.
-     *  
+     *
      *  L'appel aux méthodes et/ou attributs PRIVE/PROTEGE est donc possible.
      *  Cependant il est strictement déconseillé, car cette partie du code
      *  est suceptible de changer sans avertissement et donc vos modules ne
      *  fonctionnerai plus.
-     *  
+     *
      *  Bref, utilisation à vos risques et périls !!!
-     *  
+     *
      */
     //----------------------------------------------------- Méthodes protégées
 

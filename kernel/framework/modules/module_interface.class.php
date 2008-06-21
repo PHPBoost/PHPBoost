@@ -69,7 +69,7 @@ class ModuleInterface
     }
     
     //----------------------------------------------------------- PUBLIC METHODS
-    function GetId()
+    function get_id()
     /**
      *  Return the name of the module
      */
@@ -77,7 +77,7 @@ class ModuleInterface
         return $this->id;
     }
     
-    function GetName()
+    function get_name()
     /**
      *  Return the name of the module
      */
@@ -85,7 +85,7 @@ class ModuleInterface
         return $this->name;
     }
     
-    function GetInfos()
+    function get_infos()
     /**
      *  Return all informations that you could find in the .ini file of the module,
      *  his functionnalities and his name
@@ -97,23 +97,23 @@ class ModuleInterface
         );
     }
 
-    function GetAttribute($attribute)
+    function get_attribute($attribute)
     /**
      *  Return the value of the attribute identified by the string <$attribute>
      *  if existing. Else set the <MODULE_ATTRIBUTE_DOES_NOT_EXIST> flag and
      *  return <-1>
      */
     {
-        $this->clearError(MODULE_ATTRIBUTE_DOES_NOT_EXIST);
+        $this->_clear_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST);
         if ( isset($this->attributes[$attribute]) )
             return $this->attributes[$attribute];
 
         // else
-        $this->setError(MODULE_ATTRIBUTE_DOES_NOT_EXIST);
+        $this->_set_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST);
         return -1;
     }
     
-    function SetAttribute($attribute, $value)
+    function set_attribute($attribute, $value)
     /**
      *  Set the value of the attribute identified by the string <$attribute>.
      */
@@ -121,7 +121,7 @@ class ModuleInterface
         $this->attributes[$attribute] = $value;
     }
     
-    function UnsetAttribute($attribute)
+    function unset_attribute($attribute)
     /**
      *  Delete the attribute and free the memory of it.
      */
@@ -129,7 +129,7 @@ class ModuleInterface
         unset($this->attributes[$attribute]);
     }
     
-    function GotError($error = 0)
+    function got_error($error = 0)
     /**
      *  If called with no arguments, return <true> if an error has occured
      *  otherwise, <false>.
@@ -143,7 +143,7 @@ class ModuleInterface
             return ($this->errors & $error) != 0;
     }
     
-    function GetErrors()
+    function get_errors()
     /**
      *  Return the errors flags
      */
@@ -151,20 +151,20 @@ class ModuleInterface
         return $this->errors;
     }
     
-    function Functionnality($functionnality, $args = null)
+    function functionnality($functionnality, $args = null)
     /**
      *  Test the existance of the functionnality and if exist call it.
      *  If she's not available, the FUNCTIONNALITY_NOT_IMPLEMENTED flag is set.
      */
     {
-        $this->clearError(FUNCTIONNALITY_NOT_IMPLEMENTED);
-        if( $this->HasFunctionnality($functionnality) )
+        $this->_clear_error(FUNCTIONNALITY_NOT_IMPLEMENTED);
+        if( $this->has_functionnality($functionnality) )
             return $this->$functionnality($args);
         else
-            $this->setError(FUNCTIONNALITY_NOT_IMPLEMENTED);
+            $this->_set_error(FUNCTIONNALITY_NOT_IMPLEMENTED);
     }
     
-    function HasFunctionnality($functionnality)
+    function has_functionnality($functionnality)
     /**
      *  Test the availability of the functionnality
      */
@@ -172,7 +172,7 @@ class ModuleInterface
         return in_array(strtolower($functionnality), $this->functionnalities);
     }
     
-    function HasFunctionnalities($functionnalities)
+    function has_functionnalities($functionnalities)
     /**
      *  Test the availability of all the functionnalities
      */
@@ -187,13 +187,13 @@ class ModuleInterface
 	/**
 	 *  For compatibility reasons with PHP4, the private, protected and public
 	 *  keywords are not used.
-	 *  
+	 *
 	 *  So please, even if it's possible, do NOT call these methods.
 	 *
      *  At your own risk!
 	 */
 	//-------------------------------------------------------- PROTECTED METHODS
-	function setError($error = 0)
+	function _set_error($error = 0)
 	/**
 	*  Set the flag error.
 	*/
@@ -201,7 +201,7 @@ class ModuleInterface
 		$this->errors |= $error;
 	}
 	
-	function clearError($error)
+	function _clear_error($error)
 	/**
 	*  Clean the functionnality flag
 	*/

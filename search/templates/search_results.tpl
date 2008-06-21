@@ -42,7 +42,7 @@
                 }
                 
                 function GetFormData()
-                // Reconstitution d'une chaine "POSTABLE" ï¿½ partir des formulaires
+                // Reconstitution d'une chaine "POSTABLE" à partir des formulaires
                 {
                     var dataString = "";
                     var form = document.getElementById('search_form');
@@ -89,7 +89,7 @@
                                     // dans la base de donnée si ils sont déjà dans le html.
                                     calculatedResults.push(module);
                                 }
-                                else alert('SYNCHRONISATION ERROR');
+                                else window.alert('SYNCHRONISATION ERROR');
                             }
                             else
                                 progress_bar(99, "{L_QUERY_FAILURE}");
