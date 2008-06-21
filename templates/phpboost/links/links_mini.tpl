@@ -23,7 +23,12 @@
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/wiki/wiki.php" title="Documentation">Documentation</a></li>
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/articles/articles" title="Framework">Framework</a></li>
 				</ul> 
-	
+				<ul class="bglinks">	
+					<li><h6 class="sub_title2"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/browsers.png" alt="" class="valign_middle" /> Communauté</h6></li>
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/wiki/wiki.php" title="Documentation">Tous les membres</a></li>
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/articles/articles" title="Framework">Membres en ligne</a></li>
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/articles/articles" title="Framework">Discussion</a></li>
+				</ul> 
 				<!--<ul style="margin:0px;padding:0px;list-style-type:none;">
 				# START links #		
 					# START links.title #			
