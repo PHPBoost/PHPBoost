@@ -58,7 +58,6 @@
 [*] Ajout de la balise pre.
 [*] Ajout de la balise acronym.
 [*] Ajout de la balise line.
-- Ajout d'un nouveau mode d'affichage pour la balise hide.
 [*] Interface d'insertion (bbcode) pour la balise table.
 [*] Interface d'insertion (bbcode) pour la balise list.
 [*] Interface d'insertion (bbcode) pour la balise url.

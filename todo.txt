@@ -29,7 +29,6 @@
 ------------------------------------- NOYAU ------------------------------------
 [-] Classe de BBCode et désactivation des balises non autorisées (un objet par barre d'outil, chargement du template (un objet template pour chaque barre))
 [-] Interface de contribution des news et des articles.
-[-] Ajout d'un nouveau mode d'affichage pour la balise hide.
 [-] Stats, refaire les outils "Sites référents" et "Mots clés"
 [-] Régler l'affichage du mini-calendrier
 
@@ -39,7 +38,7 @@
 Forum : 
 [-] Opérations de masse (suppressions, déplacements, etc)
 [-] Réparation des bugs sur l'arbre intervallaire gérant les catégories
-
+http://127.0.0.1/PHP/PHPBoost/PHPBoost_2.1/index.php#
 #################################################################################
 
 
