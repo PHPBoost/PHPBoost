@@ -36,9 +36,9 @@
 [-] Module liens du site
 
 Forum : 
-[-] Opérations de masse (suppressions, déplacements, etc)
+[-] Cacher opérations de masse
 [-] Réparation des bugs sur l'arbre intervallaire gérant les catégories
-http://127.0.0.1/PHP/PHPBoost/PHPBoost_2.1/index.php#
+
 #################################################################################
 
 
@@ -49,9 +49,6 @@ http://127.0.0.1/PHP/PHPBoost/PHPBoost_2.1/index.php#
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[*] Problème fonction de sélection des rangs dans le formulaire d'auth => IE
-[*] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml
-    (penser à supprimer l'enregistrement en html simple).
 [-] Correction du bug des stats (graphiques)
 [-] Système de mise à jour du noyau et des modules:
     - Langues ? (à priori non)
@@ -60,8 +57,7 @@ http://127.0.0.1/PHP/PHPBoost/PHPBoost_2.1/index.php#
 
 ------------------------------------ MODULES -----------------------------------
 Search :
-[+] à terminer (revoir l'interface utilisateur) et ajouter des options de
-    recherches dans les modules.
+[+] à terminer module article.
 
 ################################################################################
 
