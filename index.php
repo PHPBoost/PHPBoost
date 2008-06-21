@@ -104,11 +104,21 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
-                <h3 class="title valign_middle">Site de la semaine</h3>
+                <h3 class="title valign_middle">Le site du moment</h3>
             </div>
             <div class="news_content">
-                <img src="./templates/phpboost/images/theme.jpg" class="img_right" alt="" />
-                    <p>Fusce hendrerit, purus id semper vulputate, massa nunc accumsan arcu, quis faucibus dui libero dictum tortor. Vestibulum ut libero sed leo euismod lobortis. Sed eleifend semper quam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam vitae sapien non neque malesuada fringilla. Fusce accumsan quam ut erat. Curabitur rutrum ligula id orci. Duis et massa non lectus accumsan sagittis. Etiam eget massa eget neque aliquet interdum. Duis accumsan luctus sem. Vestibulum ultricies mollis nisi. Sed ante purus, aliquam quis, cursus vel, lacinia ullamcorper, dui. Quisque feugiat. Morbi nibh. Donec vel ante. Nulla facilisi.</p>
+                <a href="http://www.mussotrail.com" title="Mussotrail"><img src="./upload/theme.jpg" class="img_right" alt="" /></a>
+                <h3 class="sub_title">Mussotrail</h3>
+				<p>
+					<br />
+					Le site du Mussotrail, est un site d'un team de BMX et VTT évoluant dans le sud de la france.
+					<br />
+					Il s'agit du site à l'origine de PHPBoost, le projet est issu du développement de ce site.
+					<br />
+					Sa personnalisation poussée en font une référence en terme de sites utilisant le moteur PHPBoost.
+					<br /><br /><br />
+					Pour visiter le site: <a href="http://www.mussotrail.com" title="Mussotrail">Mussotrail.com</a>
+				</p>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>
@@ -145,7 +155,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
-                <h3 class="title valign_middle"><a href="./forum/syndication.php" title="Syndication"><img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" /></a> Derniers Th?mes</h3>
+                <h3 class="title valign_middle"><a href="./forum/syndication.php" title="Syndication"><img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" /></a> Derniers Thèmes</h3>
             </div>
             <div class="news_content">
                 <div style="float:left;width:73px"><img src="http://img.clubic.com/photo/0049003701143224.jpg" alt="Aventure au sommet, le Pic Rouge en Test" /></div>
