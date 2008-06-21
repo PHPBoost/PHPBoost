@@ -378,8 +378,17 @@ function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_
 			return;
 		}
 	}
+	var oOption = document.createElement('OPTION');
+	oOption.value= user_id;
+	//oOption.id = searchid + 'm' + (selectid.length - 1);
+	oOption.text = login;
+	oOption.selected = true;
+
 	if( document.getElementById('advanced_auth3' + searchid) ) //Ajout du membre.
-		document.getElementById('advanced_auth3' + searchid).innerHTML += '<option value="' + user_id + '" id="' + searchid + 'm' + (selectid.length - 1) + '" selected="selected">' + login + '</option>';
+		//document.getElementById('advanced_auth3' + searchid).add(option, selectid.length);
+		//document.getElementById('advanced_auth3' + searchid).add(oOption);
+		document.all.getElementById('advanced_auth3' + searchid).add(oOption)
+
 }
 
 //Sélection des formulaires.

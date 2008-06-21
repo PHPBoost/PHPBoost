@@ -29,7 +29,6 @@
 ------------------------------------- NOYAU ------------------------------------
 [-] Panneau de modération
 [-] Ajout d'un nouveau mode d'affichage pour la balise hide.
-[-] Changer fonction d'insertion des membres pour ie (groupes)
 [-] Stats, refaire les outils "Sites référents" et "Mots clés"
 [-] Régler l'affichage du mini-calendrier
 [-] Faire le tpl pour le formulaire d'autorisation
@@ -51,7 +50,7 @@ Forum :
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[*] Support de Atom dans la classe Rss.
+[-] Changer fonction d'insertion des membres pour ie (groupes)
 [*] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml
     (penser à supprimer l'enregistrement en html simple).
 [-] Correction du bug des stats (graphiques)
