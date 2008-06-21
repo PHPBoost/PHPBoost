@@ -79,7 +79,7 @@ class Sitemap_section
 				'CHILD_CODE' => $sub_section->Export($export_config, $depth + 1)
 			));
 		}
-		return $template->Tparse(TEMPLATE_STRING_MODE);
+		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
 	## Private elements ##

@@ -46,9 +46,9 @@ if ( !(($mode == 'atom') || ($mode == 'rss')) )
     
     // Feeds Regeneration
     require_once('../news/syndication_regeneration.php');
-    $Feed = RegenerateSyndication($mode == 'rss' ? USE_RSS : USE_ATOM);
+    $Feed = regenerate_syndication($mode == 'rss' ? USE_RSS : USE_ATOM);
 
-    $Feed->TParse();                    // Print the feed
+    $Feed->display();                    // Print the feed
     
 	require_once('../kernel/footer_no_display.php');
 }

@@ -43,7 +43,7 @@ class ATOM extends Feed
         parent::Feed($feedName, $feedPath, 'atom');
     }
 
-    function Parse($nbItems = 5)
+    function parse($nbItems = 5)
     /**
      * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
      * /<$feedPath>/<$feedName>.atom if the rss one does not exist et return
@@ -82,13 +82,13 @@ class ATOM extends Feed
         return false;
     }
 
-    function GenerateCache(&$feedInformations)
+    function generate_cache(&$feedInformations)
     /**
      * Generate the feed contained into the files <$feedFile>.rss and <$feedFile>.atom
      * and also the HTML cache for direct includes.
      */
     {
-        parent::GenerateCache($feedInformations, DEFAULT_ATOM_TEMPLATE, '.atom');
+        parent::generate_cache($feedInformations, DEFAULT_ATOM_TEMPLATE, '.atom');
     }
 
     ## Private Methods ##

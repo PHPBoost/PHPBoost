@@ -141,7 +141,7 @@ class Sitemap_link
 			'PRIORITY' => $this->priority,
 			));
 		
-		return $template->Tparse(TEMPLATE_STRING_MODE);
+		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
 	## Private elements ##

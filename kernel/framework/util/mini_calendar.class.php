@@ -79,7 +79,7 @@ class Mini_calendar
 		
 		$js_inclusion_already_done = true;
 		
-		return $template->Tparse(TEMPLATE_STRING_MODE);
+		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
 	# Private #	

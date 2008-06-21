@@ -91,7 +91,7 @@ class Module_map
 				'CHILD_CODE' => $sub_section->Export($export_config, 1)
 				));
 		}
-		return $template->Tparse(TEMPLATE_STRING_MODE);
+		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
 	## Private elements ##

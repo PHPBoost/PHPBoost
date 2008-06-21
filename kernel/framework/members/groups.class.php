@@ -186,7 +186,7 @@ class Group
 			$Sql->Close($result);
 		}
 
-        return $Template->Tparse(TEMPLATE_STRING_MODE);
+        return $Template->parse(TEMPLATE_STRING_MODE);
     }
 
 	//Ajout du membre au groupe, retourne true si le membre est bien ajouté, false si le membre appartient déjà au groupe.
