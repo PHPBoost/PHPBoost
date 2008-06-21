@@ -81,6 +81,7 @@ class NewsInterface extends ModuleInterface
         
         // Load the new's config
         $Cache->Load_file('news');
+        
         // Last news
         $result = $Sql->Query_while("SELECT id, title, contents, timestamp, img
             FROM ".PREFIX."news

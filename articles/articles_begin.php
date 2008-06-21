@@ -26,27 +26,9 @@
 ###################################################*/
 
 if( defined('PHPBOOST') !== true)	
-	exit;
-	
-define('READ_CAT_ARTICLES', 0x01);
-define('WRITE_CAT_ARTICLES', 0x02);
-define('EDIT_CAT_ARTICLES', 0x04);
+    exit;
 
-$Cache->Load_file('articles');
-load_module_lang('articles'); //Chargement de la langue du module.
-
-$idartcat = retrieve(GET, 'cat', 0);
-$idart = retrieve(GET, 'id', 0);
-
-if( empty($idartcat) )//Racine.
-{
-	$CAT_ARTICLES[0]['auth'] = $CONFIG_ARTICLES['auth_root'];
-	$CAT_ARTICLES[0]['aprob'] = 1;
-	$CAT_ARTICLES[0]['name'] = $LANG['root'];
-	$CAT_ARTICLES[0]['level'] = -1;
-	$CAT_ARTICLES[0]['id_left'] = 0;
-	$CAT_ARTICLES[0]['id_right'] = 0;
-}
+require_once('articles_constants.php');
 	
 if( isset($_GET['cat']) )
 { 
