@@ -60,7 +60,8 @@ if( $del && !empty($id) ) //Suppresion de l'article.
     require_once('../kernel/framework/syndication/feed.class.php');
     require_once('articles_interface.class.php');
     $Articles = new ArticlesInterface();
-    feeds_update_cache('articles', $Articles->syndication_data());
+    $tpl = new Template('framework/syndication/feed_with_images.tpl');
+    feeds_update_cache('articles', $Articles->syndication_data(), $tpl);
     
 	redirect(HOST . SCRIPT);
 }	
@@ -411,7 +412,8 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
         require_once('../kernel/framework/syndication/feed.class.php');
         require_once('articles_interface.class.php');
         $Articles = new ArticlesInterface();
-        feeds_update_cache('articles', $Articles->syndication_data());
+        $tpl = new Template('framework/syndication/feed_with_images.tpl');
+        feeds_update_cache('articles', $Articles->syndication_data(), $tpl);
 		
 		redirect(HOST . SCRIPT);
 	}

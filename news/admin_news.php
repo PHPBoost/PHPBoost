@@ -97,7 +97,8 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
         require_once('../kernel/framework/syndication/feed.class.php');
         require_once('news_interface.class.php');
         $News = new NewsInterface();
-        feeds_update_cache('news', $News->syndication_data());
+        $tpl = new Template('framework/syndication/feed.tpl');
+        feeds_update_cache('news', $News->syndication_data(), $tpl);
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
@@ -124,7 +125,8 @@ elseif( $del && !empty($id) ) //Suppression de la news.
     require_once('../kernel/framework/syndication/feed.class.php');
     require_once('news_interface.class.php');
     $News = new NewsInterface();
-    feeds_update_cache('news', $News->syndication_data());
+    $tpl = new Template('framework/syndication/feed.tpl');
+    feeds_update_cache('news', $News->syndication_data(), $tpl);
 	
 	//Mise à jour du nombre de news dans le cache de la configuration.
 	$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
