@@ -369,26 +369,21 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 //Fonction d'ajout de membre dans les autorisations.
 function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_auth)
 {
-	var selectid = document.getElementById('members_auth' + searchid);
-	for(var i = 0; i < selectid.length; i++) //Vérifie que le membre n'est pas déjà dans la liste.
-	{
-		if( selectid[i].value == user_id )
-		{
-			alert(alert_already_auth);
-			return;
-		}
-	}
-	var oOption = document.createElement('OPTION');
-	oOption.value= user_id;
-	//oOption.id = searchid + 'm' + (selectid.length - 1);
-	oOption.text = login;
-	oOption.selected = true;
+    var selectid = document.getElementById('members_auth' + searchid);
+    for(var i = 0; i < selectid.length; i++) //Vérifie que le membre n'est pas déjà dans la liste.
+    {
+        if( selectid[i].value == user_id )
+        {
+            alert(alert_already_auth);
+            return;
+        }
+    }
+    var oOption = new Option(login, user_id);
+    oOption.id = searchid + 'm' + (selectid.length - 1);
+        oOption.selected = true;
 
-	if( document.getElementById('advanced_auth3' + searchid) ) //Ajout du membre.
-		//document.getElementById('advanced_auth3' + searchid).add(option, selectid.length);
-		//document.getElementById('advanced_auth3' + searchid).add(oOption);
-		document.all.getElementById('advanced_auth3' + searchid).add(oOption)
-
+    if( document.getElementById('members_auth' + searchid) ) //Ajout du membre.
+        document.getElementById('members_auth' + searchid).options[selectid.length] = oOption;
 }
 
 //Sélection des formulaires.
