@@ -35,6 +35,12 @@ define('DATE_FORMAT_TINY', 1);
 define('DATE_FORMAT_SHORT', 2);
 define('DATE_FORMAT', 3);
 define('DATE_FORMAT_LONG', 4);
+define('DATE_RFC822_F', 5);
+define('DATE_RFC3339_F', 6);
+
+define('DATE_RFC822_FORMAT', 'D, d M Y H:i:s O');
+define('DATE_RFC3339_FORMAT', 'Y-m-d\TH:i:s');
+
 define('TIMEZONE_AUTO', TIMEZONE_USER);
 
 class Date
@@ -161,7 +167,15 @@ class Date
 			case DATE_TIMESTAMP:
 				return $timestamp;
 				break;
-				
+                
+            case DATE_RFC822_F:
+                return date(DATE_RFC822_FORMAT, $timestamp);
+                break;
+                
+            case DATE_RFC3339_F:
+                return date(DATE_RFC3339_FORMAT, $timestamp) . ($CONFIG['timezone'] < 0 ? '-' : '+') . sprintf('%02d:00',$CONFIG['timezone']);
+                break;
+			 
 			default:
 				return '';
 		}
@@ -236,7 +250,7 @@ class Date
 		{
 			// Référentiel : heure du site
 			case TIMEZONE_SITE:
-				$timezone = $CONFIG['timezone'] - $serveur_hour;
+				$timezone = $CONFIG['timezone'] - $server_hour;
 				break;
 				
 			//Référentiel : heure du serveur

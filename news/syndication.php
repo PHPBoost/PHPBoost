@@ -31,26 +31,34 @@
 header("Content-Type: application/xml; charset=iso-8859-1");
 
 require_once('../kernel/begin.php');
+require_once('../kernel/header_no_display.php');
 
-$mode = retrieve(GET, 'feed', 'rss');
-if ( !(($mode == 'atom') || ($mode == 'rss')) )
-    $mode = 'rss';
+if( retrieve(GET, 'feed', 'rss') == 'rss' )
+{
+    require_once('../kernel/framework/syndication/rss.work.class.php');
+    $Feed = new RSS('news');
+}
+else
+{
+    require_once('../kernel/framework/syndication/atom.class.php');
+    $Feed = new ATOM('news');
+}
 
-// if ( $file = @file_get_contents_emulate('../cache/syndication/news.' . $mode) )
+if ( $Feed->is_in_cache() )
 {   // If the file exist, we print it
-//     echo $file;
+    echo $Feed->read();
 }
-// else
+else
 {   // Otherwise, we regenerate it before printing it
-    require_once('../kernel/header_no_display.php');
-    
     // Feeds Regeneration
-    require_once('../news/syndication_regeneration.php');
-    $Feed = regenerate_syndication($mode == 'rss' ? USE_RSS : USE_ATOM);
-
-    $Feed->display();                    // Print the feed
+    require_once('news_interface.class.php');
+    $News = new NewsInterface();
     
-	require_once('../kernel/footer_no_display.php');
+    $Feed->load_data($News->syndication_data());
+    $Feed->cache();
+    
+    echo $Feed->export();                    // Print the feed
 }
+require_once('../kernel/footer_no_display.php');
 
 ?>
