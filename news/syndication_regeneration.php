@@ -31,7 +31,7 @@
 require_once(PATH_TO_ROOT . '/news/news_begin.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feeds.class.php');
 
-function RegenerateSyndication($feedType = ALL_FEEDS)
+function regenerate_syndication($feedType = ALL_FEEDS)
 /**
  *  Regenerate the feed after an update of the news
  */
@@ -92,24 +92,24 @@ function RegenerateSyndication($feedType = ALL_FEEDS)
             $Feed = new Feeds('news', USE_ATOM);
             $feedInformations['link'] = $link . '?feed=atom';
             // Don't recreate the HTML cache, only the atom's one
-            $Feed->Generate($feedInformations, DYNAMIC_MODE);
+            $Feed->generate($feedInformations, DYNAMIC_MODE);
             
             $Feed = new Feeds('news', USE_RSS);
             $feedInformations['link'] = $link . '?feed=rss';
             // Recreate the HTML cache and the rss's one
-            $Feed->Generate($feedInformations);
+            $Feed->generate($feedInformations);
             break;
         case USE_ATOM:
             $Feed = new Feeds('news', USE_ATOM);
             $feedInformations['link'] = $link . '?feed=atom';
             // Recreate the HTML cache and the rss's one
-            $Feed->Generate($feedInformations, DYNAMIC_MODE);
+            $Feed->generate($feedInformations, DYNAMIC_MODE);
             break;
         case USE_RSS:
             $Feed = new Feeds('news', USE_RSS);
             $feedInformations['link'] = $link . '?feed=rss';
             // Recreate the HTML cache and the rss's one
-            $Feed->Generate($feedInformations, DYNAMIC_MODE);
+            $Feed->generate($feedInformations, DYNAMIC_MODE);
             break;
     }
     

@@ -94,7 +94,7 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
         
         // Feeds Regeneration
         include_once('../news/syndication_regeneration.php');
-        RegenerateSyndication(ALL_FEEDS);
+        regenerate_syndication(ALL_FEEDS);
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
@@ -119,7 +119,7 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 
     // Feeds Regeneration
     include_once('../news/syndication_regeneration.php');
-    RegenerateSyndication(ALL_FEEDS);
+    regenerate_syndication(ALL_FEEDS);
 	
 	//Mise à jour du nombre de news dans le cache de la configuration.
 	$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.

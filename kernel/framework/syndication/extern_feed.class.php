@@ -51,7 +51,7 @@ class ExternFeed
         }
     }
 
-    function TParse()
+    function display()
     /**
      * Print the feed from the rss or atom file
      */
@@ -60,14 +60,14 @@ class ExternFeed
             echo $feed;
     }
 
-    function Parse($nbItem = 5)
+    function parse($nbItem = 5)
     /**
      * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
      * /<$feedPath>/<$feedName>.atom if the rss one does not exist et return
      * the result as an Array.
      */
     {
-        if ( ($parsed = $feed->Parse($nbItem)) !== false )
+        if ( ($parsed = $feed->parse($nbItem)) !== false )
         {
                 return $parsed;
         }
@@ -75,7 +75,7 @@ class ExternFeed
     }
     
     ## Private Methods ##
-    function getHTMLFeed(&$feedInformations, $tpl)
+    function get_html_feed(&$feedInformations, $tpl)
     /**
      * Return a HTML String of a parsed feed.
      */
@@ -105,7 +105,7 @@ class ExternFeed
                 ));
             }
         }
-        return $Template->Tparse(TEMPLATE_STRING_MODE);
+        return $Template->parse(TEMPLATE_STRING_MODE);
     }
     
     ## Private attributes ##

@@ -293,7 +293,7 @@ if( isset($_GET['i']) && !empty($idnews) )
 	include_once('../kernel/com.php');
 }
 
-$TplNews->Tparse();
+$TplNews->parse();
 
 require_once('../kernel/footer.php');
 

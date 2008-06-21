@@ -736,7 +736,7 @@ function get_feed_menu($feed_url)
         'L_RSS' => $LANG['rss'],
         'L_ATOM' => $LANG['atom']
     ));
-    return $feedMenu->Tparse(TEMPLATE_STRING_MODE);
+    return $feedMenu->parse(TEMPLATE_STRING_MODE);
 }
 
 // Return a hash of the <$str> string using a sha256 algo

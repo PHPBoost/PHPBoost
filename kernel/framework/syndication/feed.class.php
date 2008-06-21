@@ -41,7 +41,7 @@ class Feed
         $this->type = $type;
     }
 
-    function TParse()
+    function display()
     /**
      * Print the feed from the rss or atom file
      */
@@ -50,7 +50,7 @@ class Feed
             echo $feed;
     }
 
-    function Parse($nbItem = 5) // Will be virtual with PHP5
+    function parse($nbItem = 5) // Will be virtual with PHP5
     /**
      * Parse the feed contained in the file /<$feedPath>/<$feedName>.rss or
      * /<$feedPath>/<$feedName>.atom if the rss one does not exist et return
@@ -60,7 +60,7 @@ class Feed
         return array();
     }
 
-    function GetParsed(&$feedInformations, $tpl)
+    function get_parsed(&$feedInformations, $tpl)
     /**
      * Return a String of a feed parsed by the <$tpl> template.
      */
@@ -90,13 +90,13 @@ class Feed
                 ));
             }
         }
-        return $Template->Tparse(TEMPLATE_STRING_MODE);
+        return $Template->parse(TEMPLATE_STRING_MODE);
     }
     
-    function GenerateCache(&$feedInformations, $tpl, $extension)
+    function generate_cache(&$feedInformations, $tpl, $extension)
     {
         $file = fopen($this->path . $this->name . $extension, 'w+');
-        fputs($file, $this->GetParsed($feedInformations, $tpl));
+        fputs($file, $this->get_parsed($feedInformations, $tpl));
         fclose($file);
     }
     

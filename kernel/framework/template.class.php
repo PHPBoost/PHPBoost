@@ -6,14 +6,14 @@
  *   copyright            : (C) 2006 Régis Viarre, Loïc Rouchon
  *   email                : mickaelhemri@gmail.com, horn@phpboost.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -91,7 +91,7 @@ class Template
 	}
 
     //
-    function Tparse($stringMode = false)
+    function parse($stringMode = false)
     {
         if ( $stringMode )
             return $this->Pparse($this->tpl, $stringMode);
@@ -115,7 +115,7 @@ class Template
 				return '';
 
 			//Parse
-			$this->parse($parse_name, $stringMode);
+			$this->_parse($parse_name, $stringMode);
 			$this->clean(); //On nettoie avant d'envoyer le flux.
 			$this->save($file_cache_path, $stringMode); //Enregistrement du fichier de cache.
 		}
@@ -214,7 +214,7 @@ class Template
 	}
     
     //Parse du tpl.
-    function parse($parse_name)
+    function _parse($parse_name)
     {
         if( $this->stringMode )
         {
