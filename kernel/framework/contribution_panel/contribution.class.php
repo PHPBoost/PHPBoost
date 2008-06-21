@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : July 21, 2008
  *   copyright          : (C) 2008 Benoît Sautel
- *   email                : ben.popeye@gmail.com
+ *   email                : ben.popeye@phpboost.com
  *
  *   
 ###################################################
@@ -81,7 +81,7 @@ class Contribution
 		if( is_object($date) && get_class($date) == 'Date' )
 			$this->creation_date = $date;
 		else
-			die('<strong>Contribution::set_date error</strong> : parameter 1 expected to be Date and ' . gettype($date) . ' given');
+			die('<strong>Contribution::set_creation_date error</strong> : parameter 1 expected to be Date and ' . gettype($date) . ' given');
 	}
 	
 	//Fixing date setter
@@ -90,7 +90,16 @@ class Contribution
 		if( is_object($date) && get_class($date) == 'Date' )
 			$this->fixing_date = $date;
 		else
-			die('<strong>Contribution::set_date error</strong> : parameter 1 expected to be Date and ' . gettype($date) . ' given');
+			die('<strong>Contribution::set_fixing_date error</strong> : parameter 1 expected to be Date and ' . gettype($date) . ' given');
+	}
+	
+	//Auth setter
+	function set_auth($auth)
+	{
+		if( is_array($auth) )
+			$this->auth = $auth;
+		else
+			die('<strong>Contribution::set_auth error</strong> : parameter 1 expected to be array and ' . gettype($date) . ' given');
 	}
 	
 	// Getters
@@ -102,12 +111,13 @@ class Contribution
 	function get_status() { return $this->status; }
 	function get_creation_date() { return $this->creation_date; }
 	function get_fixing_date() { return $this->fixing_date; }
+	function get_auth() { return $this->auth; }
 	
 	function create_in_db()
 	{
 		global $Sql;
 		$this->creation_date = new Date();
-		$Sql->Query_inject("INSERT INTO ".PREFIX."contributions (entitled, description, url, module, status, creation_date, fixing_date) VALUES (" . $entitled . "', '" . $description . "', '" . $url . "', '" . $module . "', '" . $status . "', '" . $this->creation_date->get_timestamp() . "', 0)", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."contributions (entitled, description, url, module, status, creation_date, fixing_date, auth) VALUES (" . $entitled . "', '" . $description . "', '" . $url . "', '" . $module . "', '" . $status . "', '" . $this->creation_date->get_timestamp() . "', 0, '" . addslashes(serialize($this->auth)) . "')", __LINE__, __FILE__);
 		$this->id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."contributions");
 	}
 	
@@ -116,7 +126,7 @@ class Contribution
 		global $Sql;
 		// If it exists already in the data base
 		if( $this->id > 0 )
-			$Sql->Query_inject("UPDATE ".PREFIX."contributions SET entitled = '" . $entitled . "', description = '" . $description . "', url = '" . $url . "', module = '" . $module . "', status = '" . $status . "', creation_date = '" . $creation_date->to_timestamp() . "', fixing_date = '" . $fixing_date->get_timestamp() . "') WHERE id = '" . $this->id . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."contributions SET entitled = '" . $entitled . "', description = '" . $description . "', url = '" . $url . "', module = '" . $module . "', status = '" . $status . "', creation_date = '" . $creation_date->to_timestamp() . "', fixing_date = '" . $fixing_date->get_timestamp() . "', auth = '" . addslashes(serialize($this->auth)) . "') WHERE id = '" . $this->id . "'", __LINE__, __FILE__);
 	}
 	
 	function delete_in_db()
@@ -136,6 +146,7 @@ class Contribution
 	var $status;
 	var $creation_date;
 	var $fixing_date;
+	var $auth;
 }
 
 ?>

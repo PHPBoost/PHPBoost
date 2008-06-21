@@ -114,13 +114,13 @@
 						<dd><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}" class="text" /></dd>
 					</dl>
 					<br />
-					<label for="short_contents">{L_SHORT_CONTENTS}</label>
-					{BBCODE_CONTENTS_SHORT}
-					<textarea type="text" rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_DESCRIPTION}</textarea>
-					<br />
 					<label for="contents">* {L_CONTENTS}</label>
 					{BBCODE_CONTENTS}
 					<textarea type="text" rows="20" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>					
+					<br />
+					<label for="short_contents">{L_SHORT_CONTENTS}</label>
+					{BBCODE_CONTENTS_SHORT}
+					<textarea type="text" rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_DESCRIPTION}</textarea>
 					<br />
 					<dl>
 						<dt>
