@@ -100,7 +100,8 @@ if( !empty($_POST['valid']) )
         require_once('../kernel/framework/syndication/feed.class.php');
         require_once('articles_interface.class.php');
         $Articles = new ArticlesInterface();
-        feeds_update_cache('articles', $Articles->syndication_data());
+        $tpl = new Template('framework/syndication/feed_with_images.tpl');
+        feeds_update_cache('articles', $Articles->syndication_data(), $tpl);
 		
 		redirect(HOST . DIR . '/articles/admin_articles.php');
 	}

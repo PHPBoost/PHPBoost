@@ -30,7 +30,7 @@ define('FEED_PATH', PATH_TO_ROOT . '/cache/syndication/');
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
 
-function feeds_update_cache($feed_name, &$data)
+function feeds_update_cache($feed_name, &$data, $tpl = false)
 {
     require_once('../kernel/framework/syndication/rss.work.class.php');
     require_once('../kernel/framework/syndication/atom.class.php');
@@ -42,6 +42,18 @@ function feeds_update_cache($feed_name, &$data)
 
     $ATOM->load_data($data);
     $ATOM->cache();
+
+    if( $tpl !== false )
+    {
+        $HTML = new Feed($feed_name);
+        $template = $tpl->copy();
+        
+        $HTML->load_data($data);
+        
+        $file = fopen(FEED_PATH . $feed_name . '.php', 'w+');
+        fputs($file, '<?php echo \'' . addslashes($HTML->export($template)) . '\' ?>');
+        fclose($file);
+    }
 }
 
 class Feed

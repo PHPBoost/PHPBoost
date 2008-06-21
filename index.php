@@ -6,14 +6,14 @@
  *   copyright          : (C) 2007 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -32,7 +32,7 @@ define('TITLE', 'Votre site à portée de main');
 require_once('./kernel/header.php');
 
 ?>
-		<div class="news_container" style="float:left;width:365px;margin-left:10px;">
+        <div class="news_container" style="float:left;width:365px;margin-left:10px;">
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
@@ -45,43 +45,23 @@ require_once('./kernel/header.php');
                     <h3 class="title valign_middle">Dernières news</h3>
                 </div>
                 <div style="float:right"></div>
-            </div>  
+            </div>
             <div class="news_content">
-                                
-                <br />
+                <?php @include('cache/syndication/news.php'); ?>
                 <div class="text_center"></div>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>
             <div class="news_bottom"></div>
-        </div>  
-		
-		<div class="news_container" style="float:left;width:365px;margin-left:30px;">
+        </div>
+        <div class="news_container" style="float:left;width:365px;margin-left:30px;">
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
                 <h3 class="title valign_middle"><a href="./forum/syndication.php" title="Syndication"><img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" /></a> Dossiers</h3>
             </div>
             <div class="news_content">
-                <div style="float:left;width:73px"><img src="http://img.clubic.com/photo/0049003701299648.jpg" alt="Aventure au sommet, le Pic Rouge en Test" /></div>
-                <div style="float:left;width:250px;padding-left:6px;">
-                    <a href="">Comment sécuriser votre site</a>
-                    <p class="text_small">Le 28/04/2008 - <a href="" class="small_link">Lire l'article</a></p>
-                </div>
-                <div class="spacer"></div>
-                
-                <div style="float:left;width:73px"><img src="http://img.clubic.com/photo/0049003701295144.jpg" alt="Aventure au sommet, le Pic Rouge en Test" /></div>
-                <div style="float:left;width:250px;padding-left:6px;">
-                    <a href="">La programmation sous PHPBoost</a>   
-                    <p class="text_small">Le 28/04/2008 - <a href="" class="small_link">Lire l'article</a></p>
-                </div>
-                <div class="spacer"></div>
-                
-                <div style="float:left;width:73px"><img src="http://img.clubic.com/photo/0049003701294702.jpg" alt="Aventure au sommet, le Pic Rouge en Test" /></div>
-                <div style="float:left;width:250px;padding-left:6px;">
-                    <a href="">Installer un nouveau module</a>  
-                    <p class="text_small">Le 28/04/2008 - <a href="" class="small_link">Lire l'article</a></p>
-                </div>
+                <?php @include('cache/syndication/articles.php'); ?>
                 <div class="spacer"></div>
             </div>
             <div class="news_bottom_l"></div>
