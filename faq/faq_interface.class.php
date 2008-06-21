@@ -26,7 +26,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once('../kernel/framework/modules/module_interface.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
 
 define('FAQ_MAX_SEARCH_RESULTS', 100);
 
@@ -41,11 +41,11 @@ class FaqInterface extends ModuleInterface
     
     function GetSearchRequest($args)
     /**
-     *  Renvoie la requête de recherche
-     */
+	 *  Renvoie la requête de recherche
+	 */
     {
         global $Sql;
-        require_once('../faq/faq_cats.class.php');
+        require_once(PATH_TO_ROOT . '/faq/faq_cats.class.php');
         $Cats = new FaqCats();
         $auth_cats = array();
         $Cats->Build_children_id_list(0, $list);
@@ -63,6 +63,54 @@ class FaqInterface extends ModuleInterface
         
         return $request;
     }
+	
+	// Returns the module map objet to build the global sitemap
+	function get_module_map()
+	{
+		global $Cache, $FAQ_LANG;
+		include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/modulemap.class.php');
+		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
+		
+		$module_map = new Module_map($FAQ_LANG['faq']);
+		
+		$this->_create_module_map_sections(0, $module_map);
+		
+		
+		
+		return $module_map;
+	}
+	
+	#Private#
+	function _create_module_map_sections($id_cat, &$module_map)
+	{
+		global $FAQ_CATS;
+		
+		if( $id_cat > 0 )
+		{
+			$this_category = new Sitemap_link($FAQ_CATS[$id_cat]['name'], HOST . DIR . '/faq/' . transid('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
+		
+			$category = new Sitemap_section($this_category);
+		}
+		else
+			$category = new Sitemap_section();
+		
+		$i = 0;
+		
+		foreach($FAQ_CATS as $id => $properties)
+		{
+			if( $id > 0 && $properties['id_parent'] == $id_cat )
+			{
+				$category->Push_element($this->_create_module_map_sections($id, $module_map));
+				$i++;
+			}
+		}
+		if( $i == 0 && $id_cat > 0 )
+			$category = $this_category;
+		elseif( $i == 0 && $id_cat == 0 )
+			return;
+		
+		$module_map->Push_element($category);
+	}
 }
 
 ?>

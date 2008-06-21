@@ -26,7 +26,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once('../kernel/framework/modules/module_interface.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
 
 define('FORUM_MAX_SEARCH_RESULTS', 100);
 
@@ -42,7 +42,7 @@ class ForumInterface extends ModuleInterface
 	//Récupère le lien vers la listes des messages du membre.
 	function GetMembermsgLink($memberId)
     {
-        return '../forum/membermsg.php?id=' . $memberId[0];
+        return PATH_TO_ROOT . '/forum/membermsg.php?id=' . $memberId[0];
     }
 	
 	//Récupère le nom associé au lien.
@@ -57,7 +57,7 @@ class ForumInterface extends ModuleInterface
 	//Récupère l'image associé au lien.
 	function GetMembermsgImg()
     {
-		return '../forum/forum_mini.png';
+		return PATH_TO_ROOT . '/forum/forum_mini.png';
     }
     
     // Recherche
@@ -75,8 +75,8 @@ class ForumInterface extends ModuleInterface
 				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 		}
 		
-        require_once('../forum/forum_functions.php');
-        require_once('../forum/forum_defines.php');
+        require_once(PATH_TO_ROOT . '/forum/forum_functions.php');
+        require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
         load_module_lang('forum'); //Chargement de la langue du module.
         $Cache->Load_file('forum');
         
@@ -174,7 +174,7 @@ class ForumInterface extends ModuleInterface
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
                 MAX(( 2 * MATCH(t.title) AGAINST('".$search."') + MATCH(msg.contents) AGAINST('".$search."') ) / 3) AS `relevance`,
-                ".$Sql->Sql_concat("'../forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                ".$Sql->Sql_concat("PATH_TO_ROOT . '/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
@@ -189,7 +189,7 @@ class ForumInterface extends ModuleInterface
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
                 MAX(MATCH(msg.contents) AGAINST('".$search."')) AS `relevance`,
-                ".$Sql->Sql_concat("'../forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                ".$Sql->Sql_concat("PATH_TO_ROOT . '/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
@@ -203,7 +203,7 @@ class ForumInterface extends ModuleInterface
                 msg.id AS `id_content`,
                 t.title AS `title`,
                 MATCH(t.title) AGAINST('".$search."') AS `relevance`,
-                ".$Sql->Sql_concat("'../forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                ".$Sql->Sql_concat("PATH_TO_ROOT . '/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
@@ -220,7 +220,7 @@ class ForumInterface extends ModuleInterface
     {
         global $CONFIG, $LANG, $Sql, $Template;
 		
-        require_once('../kernel/begin.php');
+        require_once(PATH_TO_ROOT . '/kernel/begin.php');
         load_module_lang('forum'); //Chargement de la langue du module.
         
         $Template->Set_filenames(array(
@@ -281,9 +281,9 @@ class ForumInterface extends ModuleInterface
         $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($result['title']) : '';
         $Template->Assign_vars(array(
             'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($result['connect']) && $result['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
-            'U_USER_PROFILE' => !empty($result['user_id']) ? '../member/member'.transid('.php?id='.$result['user_id'],'-'.$result['user_id'].'.php') : '',
+            'U_USER_PROFILE' => !empty($result['user_id']) ? PATH_TO_ROOT . '/member/member'.transid('.php?id='.$result['user_id'],'-'.$result['user_id'].'.php') : '',
             'USER_PSEUDO' => !empty($result['login']) ? wordwrap_html($result['login'], 13) : $LANG['guest'],
-            'U_TOPIC' => '../forum/topic' . transid('.php?id=' . $result['topic_id'], '-' . $result['topic_id'] . $rewrited_title . '.php') . '#m' . $result['msg_id'],
+            'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . transid('.php?id=' . $result['topic_id'], '-' . $result['topic_id'] . $rewrited_title . '.php') . '#m' . $result['msg_id'],
             'TITLE' => ucfirst($result['title']),
             'DATE' => gmdate_format('d/m/y', $result['date']),
             'CONTENTS' => $result['contents']

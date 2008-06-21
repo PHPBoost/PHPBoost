@@ -26,7 +26,7 @@
 ###################################################*/
  
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once('../kernel/framework/modules/module_interface.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
  
 // Classe WikiInterface qui hérite de la classe ModuleInterface
 class WikiInterface extends ModuleInterface
@@ -43,7 +43,7 @@ class WikiInterface extends ModuleInterface
      *  Renvoie le formulaire de recherche du wiki
      */
     {
-        require_once('../kernel/begin.php');
+        require_once(PATH_TO_ROOT . '/kernel/begin.php');
         load_module_lang('wiki');
         global $CONFIG, $LANG, $Template;
         
@@ -88,7 +88,7 @@ class WikiInterface extends ModuleInterface
                 a.id AS `id_content`,
                 a.title AS `title`,
                 ( 4 * MATCH(a.title) AGAINST('".$args['search']."') + MATCH(c.content) AGAINST('".$args['search']."') ) / 5 AS `relevance`,
-                CONCAT('../wiki/wiki.php?title=',a.encoded_title) AS `link`
+                CONCAT(PATH_TO_ROOT . '/wiki/wiki.php?title=',a.encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles a
                 LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
                 WHERE ( MATCH(a.title) AGAINST('".$args['search']."') OR MATCH(c.content) AGAINST('".$args['search']."') )";
@@ -98,7 +98,7 @@ class WikiInterface extends ModuleInterface
                 a.id AS `id_content`,
                 a.title AS `title`,
                 MATCH(c.content) AGAINST('".$args['search']."') AS `relevance`,
-                CONCAT('../wiki/wiki.php?title=',a.encoded_title) AS `link`
+                CONCAT(PATH_TO_ROOT . '/wiki/wiki.php?title=',a.encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles a
                 LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
                 WHERE MATCH(c.content) AGAINST('".$args['search']."')";
@@ -108,7 +108,7 @@ class WikiInterface extends ModuleInterface
                 `id` AS `id_content`,
                 `title` AS `title`,
                 MATCH(title) AGAINST('".$args['search']."') AS `relevance`,
-                CONCAT('../wiki/wiki.php?title=',encoded_title) AS `link`
+                CONCAT(PATH_TO_ROOT . '/wiki/wiki.php?title=',encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles
                 WHERE MATCH(title) AGAINST('".$args['search']."')";
     }

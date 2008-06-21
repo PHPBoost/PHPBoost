@@ -26,7 +26,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once('../kernel/framework/modules/module_interface.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
 
 define('NEWS_MAX_SEARCH_RESULTS', 100);
 
@@ -67,7 +67,7 @@ class NewsInterface extends ModuleInterface
             n.id AS `id_content`,
             n.title AS `title`,
             ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 AS `relevance`, "
-            . $Sql->Sql_concat("'../news/news.php?id='","n.id") . " AS `link`
+            . $Sql->Sql_concat("PATH_TO_ROOT . '/news/news.php?id='","n.id") . " AS `link`
             FROM " . PREFIX . "news n
             WHERE ( MATCH(n.title) AGAINST('" . $args['search'] . "') OR MATCH(n.contents) AGAINST('" . $args['search'] . "') OR MATCH(n.extend_contents) AGAINST('" . $args['search'] . "') )
 				AND visible = 1 AND ('" . time() . "' > start AND ( end = 0 OR '" . time() . "' < end ) )

@@ -26,7 +26,7 @@
 ###################################################*/
  
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once('../kernel/framework/modules/module_interface.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
 define('PAGES_MAX_SEARCH_RESULTS', 100);
 
 // Classe WikiInterface qui hérite de la classe ModuleInterface
@@ -47,7 +47,7 @@ class PagesInterface extends ModuleInterface
         $search = $args['search'];
         
         global $_PAGES_CATS, $CONFIG_PAGES, $Member, $Cache, $Sql;
-        require_once('../pages/pages_defines.php');
+        require_once(PATH_TO_ROOT . '/pages/pages_defines.php');
         $Cache->Load_file('pages');
         
         $auth_cats = '';
@@ -69,7 +69,7 @@ class PagesInterface extends ModuleInterface
             p.id AS `id_content`,
             p.title AS `title`,
             ( 2 * MATCH(p.title) AGAINST('".$args['search']."') + MATCH(p.contents) AGAINST('".$args['search']."') ) / 3 AS `relevance`,
-            CONCAT('../pages/pages.php?title=',p.encoded_title) AS `link`,
+            CONCAT(PATH_TO_ROOT . '/pages/pages.php?title=',p.encoded_title) AS `link`,
             p.auth AS `auth`
             FROM ".PREFIX."pages p
             WHERE ( MATCH(title) AGAINST('".$args['search']."') OR MATCH(contents) AGAINST('".$args['search']."') )".$auth_cats
