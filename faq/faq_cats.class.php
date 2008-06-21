@@ -145,6 +145,24 @@ class FaqCats extends Categories_management
 		return $result;
 	}
 	
+	//Method which determines if a category is writable by the current user
+	function Check_auth($id)
+	{
+		global $Member, $FAQ_CATS, $FAQ_CONFIG;
+		$auth_read = $Member->Check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
+		$id_cat = $id;
+
+		//We read the categories recursively
+		while( $id_cat > 0 )
+		{
+			if( !empty($FAQ_CONFIG[$id_cat]['auth']) )
+				$auth_read  = $auth_read && $Member->Check_auth($FAQ_CATS[$id_cat]['auth'], AUTH_READ);
+			
+			$id_cat = (int)$FAQ_CATS[$id_cat]['id_parent'];
+		}
+		return $auth_read;
+	}
+	
 	//Function which recounts the number of subquestions of each category (it should be unuseful but if they are errors it will correct them)
 	function Recount_subquestions($generate_cache = true)
 	{

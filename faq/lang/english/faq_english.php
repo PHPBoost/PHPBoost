@@ -115,6 +115,10 @@ $LANG['unexisting_category'] = 'The category you want to select does\'nt exist';
 $LANG['new_cat_does_not_exist'] = 'The target category does\'nt exist';
 $LANG['infinite_loop'] = 'You want to move an category in itself or in its subcategory, that\'s no sense. Please choose another category';
 
+//Module mini
+$FAQ_LANG['random_question'] = 'Random question';
+$FAQ_LANG['no_random_question'] = 'No available question';
+
 //Others
 $LANG['ranks'] = 'Ranks';
 $FAQ_LANG['recount_success'] = 'The number of questions for each category was successfully recounted.';

@@ -35,7 +35,7 @@ function generate_module_file_faq()
 	$root_config = $config['root'];
 	$root_config['auth'] = $config['global_auth'];
 	unset($config['root']);
-	$string = 'global $FAQ_CONFIG, $FAQ_CATS;' . "\n\n";
+	$string = 'global $FAQ_CONFIG, $FAQ_CATS, $RANDOM_QUESTIONS;' . "\n\n";
 	$string .= '$FAQ_CONFIG = ' . var_export($config, true) . ';' . "\n\n";
 	
 	//List of categories and their own properties
@@ -63,6 +63,17 @@ function generate_module_file_faq()
 			true)
 			. ';' . "\n";
 	}
+	
+	//Random questions
+	$query = $Sql->Query_while("SELECT id, question, idcat FROM ".PREFIX."faq LIMIT 0, 20", __LINE__, __FILE__);
+	$questions = array();
+	while($row = $Sql->Sql_fetch_assoc($query) )
+	{
+		$questions[] = array('id' => $row['id'], 'question' => $row['question'], 'idcat' => $row['idcat']);
+	}
+	
+	$string .= "\n" . '$RANDOM_QUESTIONS = ' . var_export($questions, true) . ';';
+	
 	return $string;
 }
 

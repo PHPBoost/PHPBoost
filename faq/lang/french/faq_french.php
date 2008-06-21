@@ -115,6 +115,10 @@ $FAQ_LANG['unexisting_category'] = 'La catégorie que vous avez sélectionnée n\'e
 $FAQ_LANG['new_cat_does_not_exist'] = 'La catégorie cible n\'existe pas';
 $FAQ_LANG['infinite_loop'] = 'Vous voulez déplacer la catégorie dans une de ses catégories filles ou dans elle-même, ce qui n\'a pas de sens. Merci de choisir une autre catégorie';
 
+//Module mini
+$FAQ_LANG['random_question'] = 'Question aléatoire';
+$FAQ_LANG['no_random_question'] = 'Aucune question disponible';
+
 //Others
 $FAQ_LANG['recount_success'] = 'Le nombre de questions pour chaque catégorie a été recompté avec succès.';
 $FAQ_LANG['recount_questions_number'] = 'Recompter le nombre de questions pour chaque catégorie';
