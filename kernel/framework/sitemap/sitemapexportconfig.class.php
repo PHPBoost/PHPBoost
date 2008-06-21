@@ -40,19 +40,19 @@ class Sitemap_export_config
 	//Method which returns a module map stream
 	function Get_module_map_stream()
 	{
-		return $this->module_map_file;
+		return $this->module_map_file->Copy();
 	}
 	
 	//Method which returns a module section stream
 	function Get_section_stream()
 	{
-		return $this->section_file;
+		return $this->section_file->Copy();
 	}
 	
 	//Method which returns a link stream
 	function Get_link_stream()
 	{
-		return $this->link_file;
+		return $this->link_file->Copy();
 	}
 	
 	## Private elements ##
