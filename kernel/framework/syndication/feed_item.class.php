@@ -35,8 +35,6 @@ class FeedItem
     function set_link($value) { $this->link = $value; }
     function set_guid($value) { $this->guid = $value; }
     function set_date($value) { $this->date = $value; }
-    function set_date_rfc822($value) { $this->date_rfc822 = $value; }
-    function set_date_rfc3339($value) { $this->date_rfc3339 = $value; }
     function set_desc($value) { $this->desc = $value; }
     function set_image_url($value) { $this->image_url = $value; }
     
@@ -44,9 +42,9 @@ class FeedItem
     function get_title() { return $this->title; }
     function get_link() { return $this->link; }
     function get_guid() { return $this->guid; }
-    function get_date() { return $this->date; }
-    function get_date_rfc822() { return $this->date_rfc822; }
-    function get_date_rfc3339() { return $this->date_rfc3339; }
+    function get_date() { return $this->date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER); }
+    function get_date_rfc822() { return $this->date->format_date(DATE_RFC822_F, TIMEZONE_USER); }
+    function get_date_rfc3339() { return $this->date->format_date(DATE_RFC3339_F, TIMEZONE_USER); }
     function get_desc() { return $this->desc; }
     function get_image_url() { return $this->image_url; }
     
@@ -54,9 +52,7 @@ class FeedItem
     ## Private attributes ##
     var $title = '';        // Item Title
     var $link = '';         // Item Url
-    var $date = '';         // Feed date
-    var $date_rfc822 = '';  // Feed date RFC822 norm
-    var $date_rfc3339 = ''; // Feed date RFC3339 norm
+    var $date = null;         // Feed date
     var $desc = '';         // Item Description
     var $guid = '';         // Item GUID
     var $image_url = '';        // Item Image
