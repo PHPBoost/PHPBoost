@@ -84,7 +84,7 @@ function feeds_update_cache($feed_name, &$data, $idcat = 0, $tpl = false)
     
     $php_file .= 'return $ret; }' . "\n" . '?>';
     $js_file .= 'return ret; }' . "\n";
-    
+	
     $file = fopen(FEED_PATH . $feed_name . '_' . $idcat . '.php', 'w+');
     fputs($file, $php_file);
     fclose($file);

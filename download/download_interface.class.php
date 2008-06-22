@@ -62,7 +62,7 @@ class DownloadInterface extends ModuleInterface
     function syndication_data($idcat = 0)
     {
         require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
-        global $Cache, $Sql, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD;
+        global $Cache, $Sql, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
         load_module_lang('download');
         $Cache->Load_file('download');
         
@@ -88,7 +88,8 @@ class DownloadInterface extends ModuleInterface
             $req = "SELECT id, title, contents, timestamp, image
             FROM ".PREFIX."download
             WHERE visible = 1 AND idcat IN (" . implode($visible_cats, ', ') . ")
-            ORDER BY timestamp DESC";
+            ORDER BY timestamp DESC" . $Sql->Sql_limit(0, $CONFIG_DOWNLOAD['nbr_file_max']);
+			
             $result = $Sql->Query_while($req, __LINE__, __FILE__);
         
 //             echo $req;
@@ -119,13 +120,13 @@ class DownloadInterface extends ModuleInterface
             }
             $Sql->Close($result);
         }
-        
         return $data;
     }
     
     function syndication_cache($cats = array(), $tpl = false)
     {
-        $cats = array(0, 1, 2);
+        $cats = array(0, 23, 24);
+		//$cats = array(23, 24);
         require_once('../kernel/framework/syndication/feed.class.php');
         require_once('../kernel/framework/template.class.php');
         $tpl = new Template('framework/syndication/feed_with_images.tpl');
@@ -137,7 +138,7 @@ class DownloadInterface extends ModuleInterface
     function _check_cats_auth($id_cat, &$list)
     {
         global $DOWNLOAD_CATS, $CONFIG_DOWNLOAD;
-        
+        //echo $id_cat . '<pre>'; print_r($DOWNLOAD_CATS); echo '</pre><hr />';
         if( $id_cat == 0 )
         {
             if( array_key_exists('r-1', $CONFIG_DOWNLOAD['global_auth']) && $CONFIG_DOWNLOAD['global_auth']['r-1'] & READ_CAT_DOWNLOAD )
@@ -147,7 +148,7 @@ class DownloadInterface extends ModuleInterface
         }
         else
         {
-            if( array_key_exists($id_cat, $DOWNLOAD_CATS) && array_key_exists('r-1', $DOWNLOAD_CATS[$id_cat]['auth']) && $DOWNLOAD_CATS[$id_cat]['auth']['r-1'] & READ_CAT_DOWNLOAD )
+            if( array_key_exists($id_cat, $DOWNLOAD_CATS) && (($DOWNLOAD_CATS[$id_cat]['auth'] === false) || (isset($DOWNLOAD_CATS[$id_cat]['auth']['r-1']) && ($DOWNLOAD_CATS[$id_cat]['auth']['r-1'] & READ_CAT_DOWNLOAD)) ) )
                 $list[] = $id_cat;
             else
                 return;
