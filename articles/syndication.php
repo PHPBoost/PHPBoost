@@ -45,7 +45,7 @@ else
 }
 
 if ( $Feed->is_in_cache() )
-{   // If the file exist, we print it
+{   // If the file exists, we print it
     echo $Feed->read();
 }
 else

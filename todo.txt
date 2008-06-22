@@ -28,6 +28,9 @@
 [-] Interface de contribution des news et des articles.
 [-] Stats, refaire les outils "Sites référents" et "Mots clés"
 [-] Régler l'affichage du mini-calendrier
+[-] Régler l'affichage de la notation lors du vote
+[-] Alerte lorsqu'on a déjà noté
+[-] Reprendre l'objet note
 
 ------------------------------------ MODULES -----------------------------------
 [-] Module liens du site
@@ -48,7 +51,7 @@ Forum :
 ------------------------------------- NOYAU ------------------------------------
 [-] Problème sur les rss lire articles dans le rss des modules et dans celui des thèmes.
 [-] Réhauser l'image des dossiers.
-[-] Faire les miniatures pour le thèmes.
+[-] Faire les miniatures pour les thèmes.
 [-] Date foireuse, toujours la même dans les rss.
 
 [-] Système de mise à jour du noyau et des modules:
