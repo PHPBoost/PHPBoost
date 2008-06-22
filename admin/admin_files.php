@@ -72,6 +72,9 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	$error = '';
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
+		//Chargement de la configuration.
+		$Cache->Load_file('files');
+		
 		include_once('../kernel/framework/files/upload.class.php');
 		$Upload = new Upload($dir);
 		$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+$`i', UNIQ_NAME);
@@ -348,7 +351,7 @@ else
 
 
 	if( $total_directories == 0 && $total_files == 0 && (!empty($folder) || !empty($show_member)) )
-		$Template->Assign_vars('empty_folder', array(
+		$Template->Assign_block_vars('empty_folder', array(
 			'C_EMPTY_FOLDER' => true,
 			'L_EMPTY_FOLDER' => $LANG['empty_folder']
 		));
