@@ -66,7 +66,7 @@ class ArticlesInterface extends ModuleInterface
 //         return array();
 //     }
     
-    function syndication_data()
+    function syndication_data($idcat = 0)
     {
         global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_ARTICLES, $CAT_ARTICLES, $Member;
         require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
@@ -82,7 +82,7 @@ class ArticlesInterface extends ModuleInterface
             $data->set_date($date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER));
             $data->set_date_rfc822($date->format_date(DATE_RFC822_F));
             $data->set_date_rfc3339($date->format_date(DATE_RFC3339_F));
-            $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'news/syndication.php');
+            $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'articles/syndication.php?idcat=' . $idcat);
             $data->set_host(HOST);
             $data->set_desc($LANG['xml_articles_desc']);
             $data->set_lang($LANG['xml_lang']);

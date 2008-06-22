@@ -59,7 +59,7 @@ class NewsInterface extends ModuleInterface
         return $request;
     }
     
-    function syndication_data()
+    function syndication_data($idcat = 0)
     {
         require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
         global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_NEWS;
@@ -74,7 +74,7 @@ class NewsInterface extends ModuleInterface
         $data->set_date($date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER));
         $data->set_date_rfc822($date->format_date(DATE_RFC822_F));
         $data->set_date_rfc3339($date->format_date(DATE_RFC3339_F));
-        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'news/syndication.php');
+        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'news/syndication.php?idcat=' . $idcat);
         $data->set_host(HOST);
         $data->set_desc($LANG['xml_news_desc'] . ' ' . $CONFIG['server_name']);
         $data->set_lang($LANG['xml_lang']);

@@ -4,7 +4,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>{TITLE}</title>
-        <atom:link href="{U_LINK}" rel="self" type="application/rss+xml"/>
+        <atom:link href="{U_LINK}&amp;feed=rss" rel="self" type="application/rss+xml"/>
         <link>{HOST}</link>
         <description>{DESC}</description>
         <copyright>(C) 2005-2008 PHPBoost</copyright>
