@@ -64,17 +64,14 @@ class DownloadInterface extends ModuleInterface
 		require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
 		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_DOWNLOAD;
 		load_module_lang('download');
-		
-		require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
-		$faq_cats = new FaqCats();
+		$Cache->Load_file('download');
 		
 		$visible_cats = array();
 		
 		include_once(PATH_TO_ROOT . '/download/download_auth.php');
 		
-		$faq_cats->Build_children_id_list(0, &$visible_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST, READ_CAT_DOWNLOAD);
 		
-		die('count : ' . count($visible_cats));
+		$this->_check_cats_auth(0, $visible_cats);
 		
 
 		$data = new FeedData();
@@ -89,15 +86,14 @@ class DownloadInterface extends ModuleInterface
 		$data->set_desc($LANG['xml_download_desc']);
 		$data->set_lang($LANG['xml_lang']);
 
-		// Load the new's config
-		$Cache->Load_file('download');
-
-		// Last news
-		$result = $Sql->Query_while("SELECT id, title, contents, timestamp, img
+		// Last files
+		if( count($visible_cats) )
+		{
+			$result = $Sql->Query_while("SELECT id, title, contents, timestamp, image
 			FROM ".PREFIX."download
-			WHERE visible = 1
-			ORDER BY timestamp DESC
-		" . $Sql->Sql_limit(0, $CONFIG_NEWS['download_news']), __LINE__, __FILE__);
+			WHERE visible = 1 AND idcat IN (" . implode($visible_cats, ', ') . ")
+			ORDER BY timestamp DESC", __LINE__, __FILE__);
+		}
 
 		// Generation of the feed's items
 		while ($row = $Sql->Sql_fetch_assoc($result))
@@ -128,6 +124,41 @@ class DownloadInterface extends ModuleInterface
 
 		return $data;
     }
+	
+	## Private ##
+	function _check_cats_auth($id_cat, &$list)
+	{
+		global $DOWNLOAD_CATS, $CONFIG_DOWNLOAD;
+		
+		if( $id_cat == 0 )
+		{
+			if( array_key_exists('r-1', $CONFIG_DOWNLOAD['global_auth']) && $CONFIG_DOWNLOAD['global_auth']['r-1'] & READ_CAT_DOWNLOAD )
+				$list[] = 0;
+			else
+				return;
+		}		
+		
+		$keys = array_keys($DOWNLOAD_CATS);
+		$num_cats = count($DOWNLOAD_CATS);
+		
+		$properties = array();
+		for( $j = 0; $j < $num_cats; $j++)
+		{
+			$id = $keys[$j];
+			$properties = $DOWNLOAD_CATS[$id];
+			
+			if( $properties['id_parent'] == $id_cat )
+			{
+				$this_auth = is_array($properties['auth']) ? array_key_exists('r-1', $properties['auth']) && $properties['auth']['r-1'] & READ_CAT_DOWNLOAD : array_key_exists('r-1', $CONFIG_DOWNLOAD['global_auth']) && $CONFIG_DOWNLOAD['global_auth']['r-1'] & READ_CAT_DOWNLOAD;
+				
+				if( $this_auth )
+				{
+					$list[] = $id;
+					$this->_check_cats_auth($id, $list);
+				}
+			}
+		}
+	}
 }
 
 ?>
