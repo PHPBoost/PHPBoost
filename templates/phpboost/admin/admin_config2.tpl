@@ -99,7 +99,7 @@
 						<p>{L_HTACCESS_MANUAL_CONTENT_EXPLAIN}</p>
 					</dt>
 					<dd>
-						<textarea name="htaccess_manual_content" rows="5" cols="5">{HTACCESS_MANUAL_CONTENT}</textarea>
+						<textarea name="htaccess_manual_content" rows="5" cols="5" style="font-family:'Courier new';">{HTACCESS_MANUAL_CONTENT}</textarea>
 					</dd>
 				</dl>
 			</fieldset>
