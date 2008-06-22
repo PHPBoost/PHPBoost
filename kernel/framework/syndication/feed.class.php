@@ -30,7 +30,7 @@ define('FEED_PATH', PATH_TO_ROOT . '/cache/syndication/');
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
 
-function feeds_update_cache($feed_name, &$data, $tpl = false)
+function feeds_update_cache($feed_name, &$data, $idcat = 0, $tpl = false)
 {
     require_once('../kernel/framework/syndication/rss.work.class.php');
     require_once('../kernel/framework/syndication/atom.class.php');
@@ -51,8 +51,8 @@ function feeds_update_cache($feed_name, &$data, $tpl = false)
     $HTML = new Feed($feed_name);
     $HTML->load_data($data);
 
-    $php_file = '<?php' . "\n" . 'function get_' . $feed_name . '_feed($nb_items) {' . "\n" . '$items = array();' . "\n";
-    $js_file = 'function get_' . $feed_name . '_feed(nb_items) {' . "\n" .'var items = new Array();' . "\n";
+    $php_file = '<?php' . "\n" . 'function get_' . $feed_name . '_' . $idcat . '_feed($nb_items) {' . "\n" . '$items = array();' . "\n";
+    $js_file = 'function get_' . $feed_name . '_' . $idcat  . '_feed(nb_items) {' . "\n" .'var items = new Array();' . "\n";
 
     $items = explode('<!-- ITEM -->', $HTML->export($template));
 
@@ -85,11 +85,11 @@ function feeds_update_cache($feed_name, &$data, $tpl = false)
     $php_file .= 'return $ret; }' . "\n" . '?>';
     $js_file .= 'return ret; }' . "\n";
     
-    $file = fopen(FEED_PATH . $feed_name . '.php', 'w+');
+    $file = fopen(FEED_PATH . $feed_name . '_' . $idcat . '.php', 'w+');
     fputs($file, $php_file);
     fclose($file);
     
-    $file = fopen(FEED_PATH . $feed_name . '.js', 'w+');
+    $file = fopen(FEED_PATH . $feed_name . '_' . $idcat . '.js', 'w+');
     fputs($file, $js_file);
     fclose($file);
 }

@@ -57,11 +57,9 @@ if( $del && !empty($id) ) //Suppresion de l'article.
 	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = " . $id . " AND script = 'articles'", __LINE__, __FILE__);
 	
 	// Feeds Regeneration
-    require_once('../kernel/framework/syndication/feed.class.php');
     require_once('articles_interface.class.php');
     $Articles = new ArticlesInterface();
-    $tpl = new Template('framework/syndication/feed_with_images.tpl');
-    feeds_update_cache('articles', $Articles->syndication_data(), $tpl);
+    $Articles->syndication_cache();
     
 	redirect(HOST . SCRIPT);
 }	
@@ -409,11 +407,9 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		$Sql->Query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 		
 		// Feeds Regeneration
-        require_once('../kernel/framework/syndication/feed.class.php');
         require_once('articles_interface.class.php');
         $Articles = new ArticlesInterface();
-        $tpl = new Template('framework/syndication/feed_with_images.tpl');
-        feeds_update_cache('articles', $Articles->syndication_data(), $tpl);
+        $Articles->syndication_cache();
 		
 		redirect(HOST . SCRIPT);
 	}

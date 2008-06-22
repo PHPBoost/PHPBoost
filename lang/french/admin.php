@@ -323,6 +323,8 @@ $LANG['admin_sign_explain'] = 'En bas de tous les mails envoyés par le site';
 $LANG['cache_success'] = 'Le cache a été régénéré avec succès!';
 $LANG['explain_site_cache'] = 'Rénégération totale du cache du site à partir de la base de données.
 <br /><br />Le cache permet d\'améliorer notablement la vitesse d\'exécution des pages, et allège le travail du serveur SQL. A noter que si vous faites des modifications vous-même dans la base de données, elles ne seront visibles qu\'après avoir régénéré le cache';
+$LANG['explain_site_cache_syndication'] = 'Rénégération totale du cache des flux RSS et ATOM du site à partir de la base de données.
+<br /><br />Le cache permet d\'améliorer notablement la vitesse d\'exécution des pages, et allège le travail du serveur SQL. A noter que si vous faites des modifications vous-même dans la base de données, elles ne seront visibles qu\'après avoir régénéré le cache';
 $LANG['confirm_unlock_admin'] = 'Un email va vous être envoyé avec le code de déverrouillage';
 $LANG['unlock_admin_confirm'] = 'Le code de déverrouillage a été renvoyé avec succès';
 $LANG['unlock_admin'] = 'Code de déverrouillage';

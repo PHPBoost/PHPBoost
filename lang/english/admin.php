@@ -323,6 +323,8 @@ $LANG['admin_sign_explain'] = 'In bottom of all the mails sent by the site';
 $LANG['cache_success'] = 'Cache has been succefully regenerated!';
 $LANG['explain_site_cache'] = 'Total Regeneration of the cache of the site from the database.
 <br /><br />Cache improve speed of pages execution time, and minimize the SQL server charge. Note, if you make your own modifications in the database they will not be visible. You have to regenerate site cache after motifications';
+$LANG['explain_site_cache_syndication'] = 'Total Regeneration of the site\'s feed\'s cache from the database.
+<br /><br />Cache improve speed of pages execution time, and minimize the SQL server charge. Note, if you make your own modifications in the database they will not be visible. You have to regenerate site cache after motifications';
 $LANG['confirm_unlock_admin'] = 'An email will be sent to you with the new unlock code';
 $LANG['unlock_admin_confirm'] = 'Unlock code has been send succefully';
 $LANG['unlock_admin'] = 'Unlock code';

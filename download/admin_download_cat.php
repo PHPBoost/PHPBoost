@@ -88,6 +88,11 @@ elseif( !empty($_POST['submit']) )
 			$download_categories->Delete_category_recursively($cat_to_del_post);
 		else
 			$download_categories->Delete_category_and_move_content($cat_to_del_post, $id_parent);
+        
+        // Feeds Regeneration
+        require_once('download_interface.class.php');
+        $Download = new DownloadInterface();
+        $Download->syndication_cache();
 	}
 	else
 	{
