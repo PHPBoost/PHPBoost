@@ -76,21 +76,29 @@
 		{MODULES_MINI_SUB_HEADER_CONTENT}
 	</div>
 	<div id="links_vertical">
-		<p style="margin:0px;"><img onclick="new Effect.ScrollTo('scroll_top_page',{duration:1.2}); return false;" style="cursor:pointer;" src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></p>
-		<hr style="width:50%;margin:auto;" />
-		<p style="margin:0;margin-top:5px;"><a href="{PATH_TO_ROOT}/news/news.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png" alt="" /></a></p>
+		<div id="links_vertical_top">
+			<p style="margin:0px;"><img onclick="new Effect.ScrollTo('scroll_top_page',{duration:1.2}); return false;" style="cursor:pointer;" src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></p>
+			<hr style="width:50%;margin:auto;" />
+		</div>
+		
+		<div id="links_vertical_central">
+			<p style="margin:0;margin-top:5px;"><a href="{PATH_TO_ROOT}/news/news.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png" alt="" /></a></p>
 	# IF C_MEMBER_CONNECTED #		
-		<p style="margin:0"><a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" class="small_link" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /></a>	</p>		
-		<p style="margin:0"><a href="{U_MEMBER_PM}" class="small_link" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /></a></p>			
-		# IF C_ADMIN_AUTH # 
-		<p style="margin:0"><a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link" title="{L_ADMIN_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /></a></p>
-		# ENDIF #
-		# IF C_MODO_AUTH # 
-		<p><a href="{PATH_TO_ROOT}/member/moderation_panel.php" class="small_link" title="{L_MODO_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /></a></p>
-		# ENDIF #
+			<p style="margin:0"><a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" class="small_link" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /></a>	</p>		
+			<p style="margin:0"><a href="{U_MEMBER_PM}" class="small_link" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /></a></p>			
+			# IF C_ADMIN_AUTH # 
+			<p style="margin:0"><a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link" title="{L_ADMIN_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /></a></p>
+			# ENDIF #
+			# IF C_MODO_AUTH # 
+			<p><a href="{PATH_TO_ROOT}/member/moderation_panel.php" class="small_link" title="{L_MODO_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /></a></p>
+			# ENDIF #
 	# END ENDIF #
-		<hr style="width:50%;margin:auto;" />
-		<p style="margin:0;margin-top:5px;"><img onclick="new Effect.ScrollTo('scroll_bottom_page',{duration:1.2}); return false;" style="cursor:pointer;" src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></p>
+		</div>
+		
+		<div id="links_vertical_bottom">
+			<hr style="width:50%;margin:auto;" />
+			<p style="margin:0;margin-top:5px;"><img onclick="new Effect.ScrollTo('scroll_bottom_page',{duration:1.2}); return false;" style="cursor:pointer;" src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></p>
+		</div>
 	</div>
 	
 	
