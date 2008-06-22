@@ -257,7 +257,7 @@ else
 		'administration_file_name' => 'admin_download_cat.php',
 		'url' => array(
 			'unrewrited' => 'download.php?id=%d',
-			'rewrited' => 'category-%d.php'),
+			'rewrited' => 'category-%d+%s.php'),
 		);
 		
 	$download_categories->Set_displaying_configuration($cat_config);

@@ -37,8 +37,22 @@ class Template
     // Constructeur
     function Template($tpl = '')
     {
+		global $CONFIG, $Member;
+		
         $this->tpl = $this->check_file($tpl);
         $this->files[$this->tpl] = $this->tpl;
+		if( !empty($tpl) )
+		{
+			$member_connected = $Member->Check_level(MEMBER_LEVEL);
+			$this->Assign_vars(array(
+				'SID' => SID,
+				'THEME' => $CONFIG['theme'],
+				'LANG' => $CONFIG['lang'],
+				'C_MEMBER_CONNECTED' => $member_connected,
+				'C_MEMBER_NOTCONNECTED' => !$member_connected,
+				'PATH_TO_ROOT' => PATH_TO_ROOT
+				));
+		}
     }
 	
 	//Stock les différents tpl en cours de traitement.

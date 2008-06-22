@@ -51,9 +51,9 @@ while( !$faq_cats->Check_auth($random_question['idcat']) && $i < 5 )
 
 if( $i < 5 && !empty($random_question['question']) )
 	$Template->Assign_vars(array(
-		'L_RANDOM_QUESTION' => $FAQ_LANG['random_question'],
-		'QUESTION' => $random_question['question'],
-		'U_QUESTION' => PATH_TO_ROOT . '/faq/' . ($random_question['idcat'] > 0 ? transid('faq.php?id=' . $random_question['idcat'] . '&amp;question=' . $random_question['id'], 'faq-' . $random_question['idcat'] . '+' . url_encode_rewrite($FAQ_CATS[$random_question['idcat']]['name']) . '.php?question=' . $random_question['id']) . '#q' . $random_question['id'] : transid('faq.php?question=' . $random_question['id'], 'faq.php?question=' . $random_question['id']) . '#q' . $random_question['id'])
+		'L_FAQ_RANDOM_QUESTION' => $FAQ_LANG['random_question'],
+		'FAQ_QUESTION' => $random_question['question'],
+		'U_FAQ_QUESTION' => PATH_TO_ROOT . '/faq/' . ($random_question['idcat'] > 0 ? transid('faq.php?id=' . $random_question['idcat'] . '&amp;question=' . $random_question['id'], 'faq-' . $random_question['idcat'] . '+' . url_encode_rewrite($FAQ_CATS[$random_question['idcat']]['name']) . '.php?question=' . $random_question['id']) . '#q' . $random_question['id'] : transid('faq.php?question=' . $random_question['id'], 'faq.php?question=' . $random_question['id']) . '#q' . $random_question['id'])
 	));
 else
 	$Template->Assign_vars(array(
