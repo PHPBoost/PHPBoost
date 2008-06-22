@@ -208,7 +208,7 @@ if( $edit_file_id > 0 )
 			'C_IMG' => !empty($file_image),
 			'C_EDIT_AUTH' => false,
 			'MODULE_DATA_PATH' => $Template->Module_data_path('download'),
-			'NAME' => $file_title,
+			'NAME' => stripslashes($file_title),
 			'CONTENTS' => second_parse(stripslashes(strparse($file_contents))),
 			'CREATION_DATE' => $file_creation_date->Format_date(DATE_FORMAT_SHORT) ,
 			'RELEASE_DATE' => $file_release_date->Get_timestamp() > 0 ? $file_release_date->Format_date(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
@@ -389,7 +389,7 @@ elseif( $add_file )
 			'C_IMG' => !empty($file_image),
 			'C_EDIT_AUTH' => false,
 			'MODULE_DATA_PATH' => $Template->Module_data_path('download'),
-			'NAME' => $file_title,
+			'NAME' => stripslashes($file_title),
 			'CONTENTS' => second_parse(stripslashes(strparse($file_contents))),
 			'CREATION_DATE' => $file_creation_date->Format_date(DATE_FORMAT_SHORT) ,
 			'RELEASE_DATE' => $file_release_date->Get_timestamp() > 0 ? $file_release_date->Format_date(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
@@ -415,7 +415,7 @@ elseif( $add_file )
 		));
 
 		$Template->Assign_vars(array(
-			'TITLE' => $file_title,
+			'TITLE' => stripslashes($file_title),
 			'COUNT' => $file_hits,
 			'DESCRIPTION' => $file_contents,
 			'SHORT_DESCRIPTION' => $file_short_contents,
