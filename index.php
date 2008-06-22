@@ -3,7 +3,7 @@
  *                                index.php
  *                            -------------------
  *   begin                : August 23 2007
- *   copyright          : (C) 2007 CrowkaiT
+ *   copyright            : (C) 2007 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
  *
@@ -118,7 +118,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
                 <h3 class="title valign_middle">Le site du moment</h3>
             </div>
             <div class="news_content">
-                <a href="http://www.mussotrail.com" title="Mussotrail"><img src="./upload/theme.jpg" class="img_right" alt="" /></a>
+                <a href="http://www.mussotrail.com" title="Mussotrail"><img src="./upload/theme_cbba8.jpg" class="img_right" alt="" /></a>
                 <h3 class="sub_title">Mussotrail</h3>
 				<p>
 					<br />
@@ -143,7 +143,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
                 <span id="download_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)">
                     <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
                 </span>&nbsp;
-                <?php echo get_feed_menu('/download_feeds/syndication.php'); ?>
+                <?php echo get_feed_menu('/download/syndication.php'); ?>
                 <h3 class="title valign_middle">Derniers Modules</h3>
             </div>
             <div class="news_content">
@@ -164,7 +164,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
                 <span id="download_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)">
                     <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
                 </span>&nbsp;
-                <?php echo get_feed_menu('/download_feeds/syndication.php'); ?>
+                <?php echo get_feed_menu('/download/syndication.php'); ?>
                 <h3 class="title valign_middle">Derniers Thèmes</h3>
             </div>
             <div class="news_content">
