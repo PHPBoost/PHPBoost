@@ -219,20 +219,18 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
-                <h3 class="title valign_middle"><a href="./forum/syndication.php" title="Syndication"><img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" /></a> Dernières vidéos</h3>
+                <span id="forum_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)">
+                    <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
+                </span>&nbsp;
+                <?php echo get_feed_menu('/wiki/syndication.php'); ?>
+                <h3 class="title valign_middle">Dernières articles de la documentation</h3>
             </div>
             <div class="news_content">
-                <ul style="margin:0;padding:0;list-style-type:none;">
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">29/04</span> <a href="">Bannière</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">25/04</span> <a href="">Ajouter une news</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">24/03</span> <a href="">Ajouter des photos dans la galerie</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">12/03</span> <a href="">Créer des articles</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">09/03</span> <a href="">Ajouter des menus</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">04/03</span> <a href="">Fonctionnalités avancées du BBcode</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">28/02</span> <a href="">Sauvegarder votre base de donnnées</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">19/02</span> <a href="">Transférer des fichiers sur votre FTP</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">10/02</span> <a href="">Installer PHPBoost</a></li>
-                </ul>
+
+                <?php
+                    if( @include('cache/syndication/wiki.php') )
+                        echo @get_wiki_feed(10);
+                ?>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>
