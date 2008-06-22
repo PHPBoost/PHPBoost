@@ -110,12 +110,12 @@ if( !empty($contents) ) //On enregistre un article
 
 	 		//On donne le nouveau id de contenu
 			$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
-			//Regénération du flux rss.
-			include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
-			$Rss = new Rss('wiki/rss.php');
-			$Rss->Cache_path('../cache/');
-			$Rss->Generate_file('javascript', 'rss_wiki');
-			$Rss->Generate_file('php', 'rss2_wiki');
+
+        // Feeds Regeneration
+        require_once('../kernel/framework/syndication/feed.class.php');
+        require_once('wiki_interface.class.php');
+        $Wiki = new WikiInterface();
+        feeds_update_cache('wiki', $Wiki->syndication_data());
 			
 			//On redirige
 			$redirect = $article_infos['encoded_title'];
@@ -157,12 +157,11 @@ if( !empty($contents) ) //On enregistre un article
 				}
 				$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article, __LINE__, __FILE__);
 				
-				//Regénération du flux rss.
-				include_once('../kernel/framework/syndication/rss.class.php'); //Flux rss regénéré!
-				$Rss = new Rss('wiki/rss.php');
-				$Rss->Cache_path('../cache/');
-				$Rss->Generate_file('javascript', 'rss_wiki');
-				$Rss->Generate_file('php', 'rss2_wiki');
+                // Feeds Regeneration
+                require_once('../kernel/framework/syndication/feed.class.php');
+                require_once('wiki_interface.class.php');
+                $Wiki = new WikiInterface();
+                feeds_update_cache('wiki', $Wiki->syndication_data());
 		
 				$redirect = $Sql->Query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);
 				redirect(transid('wiki.php?title=' . $redirect, $redirect, '' , '&'));

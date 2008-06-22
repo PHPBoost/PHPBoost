@@ -169,13 +169,13 @@ if( ($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $Memb
 	));
 
 //Explorateur du wiki
-$other_tools[$LANG['wiki_explorer_short']] = array(transid('explorer.php'), 'explorer');	
+$other_tools[$LANG['wiki_explorer_short']] = array(transid('explorer.php'), 'explorer');
 
 //Flux RSS du wiki
 if( $page_type == 'index' )
-	$other_tools[$LANG['wiki_rss']] = array(transid('rss.php'), 'rss');
+	$other_tools[$LANG['wiki_rss']] = array(transid('syndication.php'), 'rss');
 if( $page_type == 'cat' )
-	$other_tools[$LANG['wiki_rss']] = array(transid('rss.php?cat=' . $article_infos['id_cat']), 'rss');
+	$other_tools[$LANG['wiki_rss']] = array(transid('syndication.php?idcat=' . $article_infos['id_cat']), 'rss');
 //On parse
 if( $page_type == 'index' || $page_type == 'article' || $page_type = 'cat' )
 {
