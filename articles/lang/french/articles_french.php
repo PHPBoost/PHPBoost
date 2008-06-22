@@ -41,12 +41,12 @@ $LANG['articles_add'] = 'Ajouter un article';
 $LANG['articles_config'] = 'Configuration des articles';
 $LANG['articles_cats_add'] = 'Ajouter une catégorie';
 $LANG['edit_article'] = 'Editer l\'article';
-$LANG['cat_edit'] = 'Editer la categorie';
+$LANG['cat_edit'] = 'Editer la catégorie';
 $LANG['nbr_articles_max'] = 'Nombre maximum d\'articles affichés';
 $LANG['articles_date'] = 'Date de l\'article <span class="text_small">(jj/mm/aa)</span> <br />
 <span class="text_small">(Laisser vide pour mettre la date d\'aujourd\'hui)';
 $LANG['icon_cat'] = 'Icône de la catégorie';
-$LANG['icon_cat_explain'] = 'A placer dans le repertoire /articles';
+$LANG['icon_cat_explain'] = 'A placer dans le répertoire /articles';
 $LANG['parent_category'] = 'Catégorie parente';
 $LANG['explain_article'] = 'La catégorie que vous désirez supprimer contient <strong>1</strong> article, voulez-vous la conserver en la transférant dans une autre catégorie, ou bien la supprimer?';
 $LANG['explain_articles'] = 'La catégorie que vous désirez supprimer contient <strong>%d</strong> articles, voulez-vous les conserver en les transférants dans une autre catégorie, ou bien tout supprimer?';
