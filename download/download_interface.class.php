@@ -64,6 +64,18 @@ class DownloadInterface extends ModuleInterface
 		require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
 		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_DOWNLOAD;
 		load_module_lang('download');
+		
+		require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
+		$faq_cats = new FaqCats();
+		
+		$visible_cats = array();
+		
+		include_once(PATH_TO_ROOT . '/download/download_auth.php');
+		
+		$faq_cats->Build_children_id_list(0, &$visible_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST, READ_CAT_DOWNLOAD);
+		
+		die('count : ' . count($visible_cats));
+		
 
 		$data = new FeedData();
 

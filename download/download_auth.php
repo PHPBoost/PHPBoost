@@ -27,7 +27,5 @@
 
 define('READ_CAT_DOWNLOAD', 0x01);
 define('WRITE_CAT_DOWNLOAD', 0x02);
-define('READ_FILE_DOWNLOAD', 0x01);
-define('EXEC_FILE_DOWNLOAD', 0x02);
 
 ?>
