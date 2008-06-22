@@ -153,7 +153,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$check_status = 1;
 			
 			$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE); 
-			$title = retrieve(POST, 'tite', ''); 
+			$title = retrieve(POST, 'title', ''); 
 			$subtitle = retrieve(POST, 'desc', ''); 
 		
 			//Mod anti Flood
@@ -883,6 +883,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			{
 				$Template->Assign_vars(array(
 					'C_FORUM_POST_TYPE' => true,
+					'CHECKED_NORMAL' => 'checked="ckecked"',
 					'L_TYPE' => '* ' . $LANG['type'],
 					'L_DEFAULT' => $LANG['default'],
 					'L_POST_IT' => $LANG['forum_postit'],
