@@ -59,106 +59,121 @@ class DownloadInterface extends ModuleInterface
 //         return $request;
 //     }
     
-    function syndication_data()
+    function syndication_data($idcat = 0)
     {
-		require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
-		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_DOWNLOAD;
-		load_module_lang('download');
-		$Cache->Load_file('download');
-		
-		$visible_cats = array();
-		
-		include_once(PATH_TO_ROOT . '/download/download_auth.php');
-		
-		
-		$this->_check_cats_auth(0, $visible_cats);
-		
-
-		$data = new FeedData();
-
-		require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
-		$date = new Date();
-
-		$data->set_title($LANG['xml_download_desc']);
-		$data->set_date($date);
-		$data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'download/syndication.php');
-		$data->set_host(HOST);
-		$data->set_desc($LANG['xml_download_desc']);
-		$data->set_lang($LANG['xml_lang']);
-
-		// Last files
-		if( count($visible_cats) )
-		{
-			$result = $Sql->Query_while("SELECT id, title, contents, timestamp, image
-			FROM ".PREFIX."download
-			WHERE visible = 1 AND idcat IN (" . implode($visible_cats, ', ') . ")
-			ORDER BY timestamp DESC", __LINE__, __FILE__);
-		}
-
-		// Generation of the feed's items
-		while ($row = $Sql->Sql_fetch_assoc($result))
-		{
-			$item = new FeedItem();
-			// Rewriting
-			if ( $CONFIG['rewrite'] == 1 )
-				$rewrited_title = '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php';
-			else
-				$rewrited_title = '.php?id=' . $row['id'];
-			$link = HOST . DIR . '/download/download' . $rewrited_title;
-			
-			// XML text's protection
-			$contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
-			
-			$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
-			
-			$item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
-			$item->set_link($link);
-			$item->set_guid($link);
-			$item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
-			$item->set_date($date);
-			$item->set_image_url($row['img']);
-			
-			$data->add_item($item);
-		}
-		$Sql->Close($result);
-
-		return $data;
+        require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
+        global $Cache, $Sql, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD;
+        load_module_lang('download');
+        $Cache->Load_file('download');
+        
+        $visible_cats = array();
+        include_once(PATH_TO_ROOT . '/download/download_auth.php');
+        $this->_check_cats_auth($idcat, $visible_cats);
+        
+        $data = new FeedData();
+        
+        require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+        $date = new Date();
+        
+        $data->set_title($DOWNLOAD_LANG['xml_download_desc']);
+        $data->set_date($date);
+        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'download/syndication.php');
+        $data->set_host(HOST);
+        $data->set_desc($DOWNLOAD_LANG['xml_download_desc']);
+        $data->set_lang($LANG['xml_lang']);
+        
+        // Last files
+        if( count($visible_cats) )
+        {
+            $req = "SELECT id, title, contents, timestamp, image
+            FROM ".PREFIX."download
+            WHERE visible = 1 AND idcat IN (" . implode($visible_cats, ', ') . ")
+            ORDER BY timestamp DESC";
+            $result = $Sql->Query_while($req, __LINE__, __FILE__);
+        
+//             echo $req;
+            // Generation of the feed's items
+            while ($row = $Sql->Sql_fetch_assoc($result))
+            {
+                $item = new FeedItem();
+                // Rewriting
+                if ( $CONFIG['rewrite'] == 1 )
+                    $rewrited_title = '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php';
+                else
+                    $rewrited_title = '.php?id=' . $row['id'];
+                $link = HOST . DIR . '/download/download' . $rewrited_title;
+                
+                // XML text's protection
+                $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
+                
+                $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
+                
+                $item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
+                $item->set_link($link);
+                $item->set_guid($link);
+                $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
+                $item->set_date($date);
+                $item->set_image_url($row['image']);
+                
+                $data->add_item($item);
+            }
+            $Sql->Close($result);
+        }
+        
+        return $data;
     }
-	
-	## Private ##
-	function _check_cats_auth($id_cat, &$list)
-	{
-		global $DOWNLOAD_CATS, $CONFIG_DOWNLOAD;
-		
-		if( $id_cat == 0 )
-		{
-			if( array_key_exists('r-1', $CONFIG_DOWNLOAD['global_auth']) && $CONFIG_DOWNLOAD['global_auth']['r-1'] & READ_CAT_DOWNLOAD )
-				$list[] = 0;
-			else
-				return;
-		}		
-		
-		$keys = array_keys($DOWNLOAD_CATS);
-		$num_cats = count($DOWNLOAD_CATS);
-		
-		$properties = array();
-		for( $j = 0; $j < $num_cats; $j++)
-		{
-			$id = $keys[$j];
-			$properties = $DOWNLOAD_CATS[$id];
-			
-			if( $properties['id_parent'] == $id_cat )
-			{
-				$this_auth = is_array($properties['auth']) ? array_key_exists('r-1', $properties['auth']) && $properties['auth']['r-1'] & READ_CAT_DOWNLOAD : array_key_exists('r-1', $CONFIG_DOWNLOAD['global_auth']) && $CONFIG_DOWNLOAD['global_auth']['r-1'] & READ_CAT_DOWNLOAD;
-				
-				if( $this_auth )
-				{
-					$list[] = $id;
-					$this->_check_cats_auth($id, $list);
-				}
-			}
-		}
-	}
+    
+    function syndication_cache($cats = array(), $tpl = false)
+    {
+        $cats = array(0, 1, 2);
+        require_once('../kernel/framework/syndication/feed.class.php');
+        require_once('../kernel/framework/template.class.php');
+        $tpl = new Template('framework/syndication/feed_with_images.tpl');
+        foreach( $cats as $cat )
+            feeds_update_cache($this->id, $this->syndication_data($cat), $cat, $tpl);
+    }
+    
+    ## Private ##
+    function _check_cats_auth($id_cat, &$list)
+    {
+        global $DOWNLOAD_CATS, $CONFIG_DOWNLOAD;
+        
+        if( $id_cat == 0 )
+        {
+            if( array_key_exists('r-1', $CONFIG_DOWNLOAD['global_auth']) && $CONFIG_DOWNLOAD['global_auth']['r-1'] & READ_CAT_DOWNLOAD )
+                $list[] = 0;
+            else
+                return;
+        }
+        else
+        {
+            if( array_key_exists($id_cat, $DOWNLOAD_CATS) && array_key_exists('r-1', $DOWNLOAD_CATS[$id_cat]['auth']) && $DOWNLOAD_CATS[$id_cat]['auth']['r-1'] & READ_CAT_DOWNLOAD )
+                $list[] = $id_cat;
+            else
+                return;
+        }
+        
+        $keys = array_keys($DOWNLOAD_CATS);
+        $num_cats = count($DOWNLOAD_CATS);
+        
+        $properties = array();
+        for( $j = 0; $j < $num_cats; $j++)
+        {
+            $id = $keys[$j];
+            $properties = $DOWNLOAD_CATS[$id];
+            
+            if( $properties['id_parent'] == $id_cat )
+            {
+                $this_auth = is_array($properties['auth']) ? array_key_exists('r-1', $properties['auth']) && $properties['auth']['r-1'] & READ_CAT_DOWNLOAD : array_key_exists('r-1', $CONFIG_DOWNLOAD['global_auth']) && $CONFIG_DOWNLOAD['global_auth']['r-1'] & READ_CAT_DOWNLOAD;
+                
+                if( $this_auth )
+                {
+                    $list[] = $id;
+                    $this->_check_cats_auth($id, $list);
+                }
+            }
+        }
+    }
 }
 
 ?>

@@ -3,7 +3,7 @@
  *                               admin_config.php
  *                            -------------------
  *   begin                : June 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -30,30 +30,71 @@ require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
-//Si c'est confirmé on execute
-if( !empty($_POST['cache']) )
-{
-	$Cache->Generate_all_files();
-	redirect(HOST . DIR . '/admin/admin_cache.php?s=1');
-}
-else //Sinon on rempli le formulaire	 
-{		
-	$Template->Set_filenames(array(
-		'admin_cache'=> 'admin/admin_cache.tpl'
-	));
+$cache_mode = retrieve(GET, 'cache', '');
 
-	//Gestion erreur.
-	$get_error = retrieve(GET, 's', 0);
-	if( $get_error == 1 )
-		$Errorh->Error_handler($LANG['cache_success'], E_USER_SUCCESS);
-	
-	$Template->Assign_vars(array(
-		'L_CACHE' => $LANG['cache'],
-		'L_EXPLAIN_SITE_CACHE' => $LANG['explain_site_cache'],
-		'L_GENERATE' => $LANG['generate']	
-	));
-	
-	$Template->Pparse('admin_cache');
+if( empty($cache_mode) )    // Génération du cache de la configuration
+{
+    //Si c'est confirmé on execute
+    if( !empty($_POST['cache']) )
+    {
+        $Cache->Generate_all_files();
+        redirect(HOST . DIR . '/admin/admin_cache.php?s=1');
+    }
+    else //Sinon on rempli le formulaire
+    {
+        $Template->Set_filenames(array(
+            'admin_cache'=> 'admin/admin_cache.tpl'
+        ));
+        
+        //Gestion erreur.
+        $get_error = retrieve(GET, 's', 0);
+        if( $get_error == 1 )
+            $Errorh->Error_handler($LANG['cache_success'], E_USER_SUCCESS);
+        
+        $Template->Assign_vars(array(
+            'L_CACHE' => $LANG['cache'],
+            'L_SYNDICATION' => $LANG['syndication'],
+            'L_EXPLAIN_SITE_CACHE' => $LANG['explain_site_cache'],
+            'L_GENERATE' => $LANG['generate']
+        ));
+        
+        $Template->Pparse('admin_cache');
+    }
+}
+else    // Génération du cache des rss
+{
+    //Si c'est confirmé on execute
+    if( !empty($_POST['cache']) )
+    {
+        require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
+        $Modules = new Modules();
+        $syndication_modules = $Modules->get_available_modules('syndication_cache');
+        
+        foreach( $syndication_modules as $module )
+            $module->functionnality('syndication_cache', array());
+        
+        redirect(HOST . DIR . '/admin/admin_cache.php?cache=syndication&s=1');
+    }
+    else //Sinon on rempli le formulaire
+    {
+        $Template->Set_filenames(array(
+            'admin_cache_syndication'=> 'admin/admin_cache_syndication.tpl'
+        ));
+        
+        //Gestion erreur.
+        $get_error = retrieve(GET, 's', 0);
+        if( $get_error == 1 )
+            $Errorh->Error_handler($LANG['cache_success'], E_USER_SUCCESS);
+        
+        $Template->Assign_vars(array(
+            'L_CACHE' => $LANG['cache'],
+            'L_SYNDICATION' => $LANG['syndication'],
+            'L_EXPLAIN_SITE_CACHE' => $LANG['explain_site_cache_syndication'],
+            'L_GENERATE' => $LANG['generate']
+        ));
+        
+        $Template->Pparse('admin_cache_syndication');
+    }
 }
 
 require_once('../kernel/admin_footer.php');

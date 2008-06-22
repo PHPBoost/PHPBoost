@@ -46,11 +46,11 @@ else
     $Feed = new ATOM('download');
 }
 
-if ( ($idcat == 0) && $Feed->is_in_cache() )
-{   // If the file exist, we print it
-    echo $Feed->read();
-}
-else
+// if ( ($idcat == 0) && $Feed->is_in_cache() )
+// {   // If the file exist, we print it
+//     echo $Feed->read();
+// }
+// else
 {   // Otherwise, we regenerate it before printing it
     // Feeds Regeneration
     require_once('download_interface.class.php');

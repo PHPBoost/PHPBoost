@@ -66,7 +66,7 @@ $auth_write = $Member->Check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOW
 //Bread_crumb : we read categories list recursively
 while( $id_cat_for_download > 0 )
 {
-	$Bread_crumb->Add_link($DOWNLOAD_CATS[$id_cat_for_download]['name'], transid('download.php?id=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
+	$Bread_crumb->Add_link($DOWNLOAD_CATS[$id_cat_for_download]['name'], transid('download.php?cat=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
 	if( !empty($DOWNLOAD_CATS[$id_cat_for_download]['auth']) )
 	{
 		//If we can't read a category, we can't read sub elements.

@@ -137,6 +137,16 @@ class ArticlesInterface extends ModuleInterface
         }
         return $data;
     }
+    
+    function syndication_cache($cats = array(), $tpl = false)
+    {
+        $cats[] = 0;
+        require_once('../kernel/framework/syndication/feed.class.php');
+        require_once('../kernel/framework/template.class.php');
+        $tpl = new Template('framework/syndication/feed_with_images.tpl');
+        foreach( $cats as $cat )
+            feeds_update_cache($this->id, $this->syndication_data($cat), $cat, $tpl);
+    }
 }
 
 ?>

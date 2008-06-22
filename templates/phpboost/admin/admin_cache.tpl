@@ -1,11 +1,16 @@
 		<div id="admin_quick_menu">
 			<ul>
 				<li class="title_menu">{L_CACHE}</li>
-				<li>
-					<a href="admin_cache.php"><img src="../templates/{THEME}/images/admin/cache.png" alt="" /></a>
-					<br />
-					<a href="admin_cache.php" class="quick_link">{L_CACHE}</a>
-				</li>
+                <li>
+                    <a href="admin_cache.php"><img src="../templates/{THEME}/images/admin/cache.png" alt="" /></a>
+                    <br />
+                    <a href="admin_cache.php" class="quick_link">{L_CACHE}</a>
+                </li>
+                <li>
+                    <a href="admin_cache.php?cache=syndication"><img src="../templates/{THEME}/images/rss_big.png" alt="" /></a>
+                    <br />
+                    <a href="admin_cache.php?cache=syndication" class="quick_link">{L_SYNDICATION}</a>
+                </li>
 			</ul>
 		</div>
 		

@@ -116,6 +116,14 @@ class NewsInterface extends ModuleInterface
         
         return $data;
     }
+    
+    function syndication_cache($cats = array(), $tpl = false)
+    {
+        $cats[] = 0;
+        require_once('../kernel/framework/syndication/feed.class.php');
+        foreach( $cats as $cat )
+            feeds_update_cache($this->id, $this->syndication_data($cat), $cat, $tpl);
+    }
 }
 
 ?>

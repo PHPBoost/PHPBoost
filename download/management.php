@@ -81,9 +81,14 @@ if( $delete_file > 0 )
 	{
 		$Sql->Query_inject("DELETE FROM ".PREFIX."download WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
 		redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? transid('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : transid('download.php')));
+        
+        // Feeds Regeneration
+        require_once('download_interface.class.php');
+        $Download = new DownloadInterface();
+        $Download->syndication_cache();
 	}
 	else
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);	
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 }
 elseif( $edit_file_id > 0 )
 {
@@ -168,7 +173,12 @@ if( $edit_file_id > 0 )
 			{
 				$download_categories->Recount_sub_files();
 			}
-			
+
+            // Feeds Regeneration
+            require_once('download_interface.class.php');
+            $Download = new DownloadInterface();
+            $Download->syndication_cache();
+            
 			redirect(HOST . DIR . '/download/' . transid('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php'));
 		}
 		//Error (which souldn't happen because of the javascript checking)
@@ -194,7 +204,7 @@ if( $edit_file_id > 0 )
 		else
 			$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 		
-		//Création des calendriers
+		//Crï¿½ation des calendriers
 		$creation_calendar = new Mini_calendar('creation');
 		$creation_calendar->Set_date($file_creation_date);
 		$release_calendar = new Mini_calendar('release_date');
@@ -349,7 +359,12 @@ elseif( $add_file )
 			{
 				$download_categories->Recount_sub_files();
 			}
-			
+            
+            // Feeds Regeneration
+            require_once('download_interface.class.php');
+            $Download = new DownloadInterface();
+            $Download->syndication_cache();
+            
 			redirect(HOST . DIR . '/download/' . transid('download.php?id=' . $new_id_file, 'download-' . $new_id_file . '+' . url_encode_rewrite($file_title) . '.php'));
 		}
 		//Error (which souldn't happen because of the javascript checking)
@@ -375,7 +390,7 @@ elseif( $add_file )
 		else
 			$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 		
-		//Création des calendriers
+		//Crï¿½ation des calendriers
 		$creation_calendar = new Mini_calendar('creation');
 		$creation_calendar->Set_date($file_creation_date);
 		$release_calendar = new Mini_calendar('release_date');

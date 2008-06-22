@@ -93,10 +93,9 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 function forum_generate_feeds()
 {
     // Feeds Regeneration
-    require_once('../kernel/framework/syndication/feed.class.php');
     require_once('forum_interface.class.php');
     $Forum = new ForumInterface();
-    feeds_update_cache('forum', $Forum->syndication_data());
+    $Forum->syndication_cache();
 }
 
 //Coloration de l'item recherché en dehors des balises html.

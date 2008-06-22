@@ -47,8 +47,8 @@ require_once('./kernel/header.php');
             </div>
             <div class="news_content">
                 <?php
-                    if( @include('cache/syndication/news.php') )
-                        echo @get_news_feed(10);
+                    if( @include('cache/syndication/news_0.php') )
+                        echo @get_news_0_feed(10);
                 ?>
                 <div style="text-align:right;"><a href="./news/news.php" class="small_link">Plus de news...</a></div>
                 <div class="text_center"></div>
@@ -69,8 +69,8 @@ require_once('./kernel/header.php');
             </div>
             <div class="news_content">
                 <?php
-                    if( @include('cache/syndication/articles.php') )
-                        echo @get_articles_feed(3);
+                    if( @include('cache/syndication/articles_0.php') )
+                        echo @get_articles_0_feed(3);
                 ?>
                 <div style="text-align:right;"><a href="./articles/articles.php" class="small_link">Tous les Dossiers...</a></div>
                 <div class="spacer"></div>
@@ -140,22 +140,17 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
-                <h3 class="title valign_middle"><a href="./forum/syndication.php" title="Syndication"><img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" /></a> Derniers Modules</h3>
+                <span id="download_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)">
+                    <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
+                </span>&nbsp;
+                <?php echo get_feed_menu('/download_feeds/syndication.php'); ?>
+                <h3 class="title valign_middle">Derniers Modules</h3>
             </div>
             <div class="news_content">
-                <ul style="margin:0;padding:0;list-style-type:none;">
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">29/04</span> <a href="">Bannière</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">25/04</span> <a href="">Team</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">23/04</span> <a href="">Agenda</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">22/04</span> <a href="">Match</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">20/04</span> <a href="">Wiki</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">18/04</span> <a href="">Blogs</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">24/03</span> <a href="">Bloc notes</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">12/03</span> <a href="">Bugshack</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">04/03</span> <a href="">Todo</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">19/02</span> <a href="">Partenariats</a></li>
-                    <li><img src="./templates/phpboost/images/li.png" alt="" class="valign_middle" /> <span class="text_small">10/02</span> <a href="">Sitemap</a></li>
-                </ul>
+                <?php
+                    if( @include('cache/syndication/download_1.php') )
+                        echo @get_download_1_feed(10);
+                ?>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>
@@ -166,28 +161,17 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
-                <h3 class="title valign_middle"><a href="./forum/syndication.php" title="Syndication"><img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" /></a> Derniers Thèmes</h3>
+                <span id="download_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)">
+                    <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
+                </span>&nbsp;
+                <?php echo get_feed_menu('/download_feeds/syndication.php'); ?>
+                <h3 class="title valign_middle">Derniers Thèmes</h3>
             </div>
             <div class="news_content">
-                <div style="float:left;width:73px"><img src="http://img.clubic.com/photo/0049003701143224.jpg" alt="Aventure au sommet, le Pic Rouge en Test" /></div>
-                <div style="float:left;width:250px;padding-left:6px;">
-                    <a href="">Medieval</a>
-                    <p class="text_small">Le 28/04/2008 - <a href="" class="small_link">Voir</a></p>
-                </div>
-                <div class="spacer"></div>
-                
-                <div style="float:left;width:73px"><img src="http://img.clubic.com/photo/0049003701280722.jpg" alt="Aventure au sommet, le Pic Rouge en Test" /></div>
-                <div style="float:left;width:250px;padding-left:6px;">
-                    <a href="">Heroic fantasy</a>
-                    <p class="text_small">Le 28/04/2008 - <a href="" class="small_link">Voir</a></p>
-                </div>
-                <div class="spacer"></div>
-                
-                <div style="float:left;width:73px"><img src="http://img.clubic.com/photo/0049003701284286.jpg" alt="Aventure au sommet, le Pic Rouge en Test" /></div>
-                <div style="float:left;width:250px;padding-left:6px;">
-                    <a href="">Warcraft III</a>
-                    <p class="text_small">Le 28/04/2008 - <a href="" class="small_link">Voir</a></p>
-                </div>
+                <?php
+                    if( @include('cache/syndication/download_2.php') )
+                        echo @get_download_2_feed(3);
+                ?>
                 <div class="spacer"></div>
             </div>
             <div class="news_bottom_l"></div>
@@ -206,8 +190,8 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             </div>
             <div class="news_content">
                 <?php
-                    if( @include('cache/syndication/forum.php') )
-                        echo @get_forum_feed(10);
+                    if( @include('cache/syndication/forum_0.php') )
+                        echo @get_forum_0_feed(10);
                 ?>
             </div>
             <div class="news_bottom_l"></div>
@@ -228,8 +212,8 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             <div class="news_content">
 
                 <?php
-                    if( @include('cache/syndication/wiki.php') )
-                        echo @get_wiki_feed(10);
+                    if( @include('cache/syndication/wiki_0.php') )
+                        echo @get_wiki_0_feed(10);
                 ?>
             </div>
             <div class="news_bottom_l"></div>

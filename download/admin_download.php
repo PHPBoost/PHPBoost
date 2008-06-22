@@ -3,7 +3,7 @@
  *                               admin_download_management.php
  *                            -------------------
  *   begin                : July 25, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -39,10 +39,10 @@ $Template->Set_filenames(array(
 $nbr_dl = $Sql->Count_table('download', __LINE__, __FILE__);
 
 //On crée une pagination si le nombre de fichier est trop important.
-include_once('../kernel/framework/pagination.class.php'); 
+include_once('../kernel/framework/pagination.class.php');
 $Pagination = new Pagination();
-	
-$Template->Assign_vars(array(			
+
+$Template->Assign_vars(array(
 	'THEME' => $CONFIG['theme'],
 	'LANG' => $CONFIG['lang'],
 	'PAGINATION' => $Pagination->Display_pagination('admin_download.php?p=%d', $nbr_dl, 'p', 25, 3),
