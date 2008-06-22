@@ -46,6 +46,11 @@ Forum :
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
+[-] Problème sur les rss lire articles dans le rss des modules et dans celui des thèmes.
+[-] Réhauser l'image des dossiers.
+[-] Faire les miniatures pour le thèmes.
+[-] Date foireuse, toujours la même dans les rss.
+
 [-] Système de mise à jour du noyau et des modules:
     - Langues ? (à priori non)
     - Templates ? (à priori non aussi) (pb image avec langue)
