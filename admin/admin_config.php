@@ -30,7 +30,7 @@ require_once('../kernel/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../kernel/admin_header.php');
 
-$check_advanced = !empty($_GET['adv']) ? true : false;
+$check_advanced = !empty($_GET['adv']);
 
 //Variables serveur.
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
@@ -68,6 +68,7 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 	$config['maintain_display_admin'] = $CONFIG['maintain_display_admin'];
 	$config['maintain_text'] = $CONFIG['maintain_text'];
 	$config['rewrite'] = $CONFIG['rewrite'];
+	$config['htaccess_manual_content'] = $CONFIG['htaccess_manual_content'];
 	$config['com_popup'] = $CONFIG['com_popup'];
 	$config['compteur'] = retrieve(POST, 'compteur', 0);
 	$config['bench'] = retrieve(POST, 'bench', 0);
@@ -94,7 +95,7 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 	else
 		redirect(HOST . DIR . '/admin/admin_config.php?error=incomplete#errorh');
 }
-elseif( !empty($check_advanced) && empty($_POST['advanced']) )
+elseif( $check_advanced && empty($_POST['advanced']) )
 {
 	$Template->Set_filenames(array(
 		'admin_config2'=> 'admin/admin_config2.tpl'
@@ -132,6 +133,7 @@ elseif( !empty($check_advanced) && empty($_POST['advanced']) )
 		'CHECKED' => ($CONFIG['rewrite'] == '1') ? 'checked="checked"' : '',
 		'UNCHECKED' => ($CONFIG['rewrite'] == '0') ? 'checked="checked"' : '',
 		'CHECK_REWRITE' => $check_rewrite,
+		'HTACCESS_MANUAL_CONTENT' => !empty($CONFIG['htaccess_manual_content']) ? $CONFIG['htaccess_manual_content'] : '',
 		'GZ_DISABLED' => ((!function_exists('ob_gzhandler') || !@extension_loaded('zlib')) ? 'disabled="disabled"' : ''),
 		'GZHANDLER_ENABLED' => ($CONFIG['ob_gzhandler'] == 1 && (function_exists('ob_gzhandler') && @extension_loaded('zlib'))) ? 'checked="checked"' : '',
 		'GZHANDLER_DISABLED' => ($CONFIG['ob_gzhandler'] == 0) ? 'checked="checked"' : '',
@@ -155,6 +157,8 @@ elseif( !empty($check_advanced) && empty($_POST['advanced']) )
 		'L_REWRITE' => $LANG['rewrite'],
 		'L_EXPLAIN_REWRITE' => $LANG['explain_rewrite'], 
 		'L_REWRITE_SERVER' => $LANG['server_rewrite'],
+		'L_HTACCESS_MANUAL_CONTENT' => $LANG['htaccess_manual_content'],
+		'L_HTACCESS_MANUAL_CONTENT_EXPLAIN' => $LANG['htaccess_manual_content_explain'],
 		'L_TIMEZONE_CHOOSE' => $LANG['timezone_choose'],
 		'L_TIMEZONE_CHOOSE_EXPLAIN' => $LANG['timezone_choose_explain'],
 		'L_ACTIV' => $LANG['activ'],
@@ -187,7 +191,8 @@ elseif( !empty($_POST['advanced']) )
 	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
 	$CONFIG['site_cookie'] = stripslashes(retrieve(POST, 'site_cookie', 'session')); //Session par defaut.
 	$CONFIG['site_session'] = retrieve(POST, 'site_session', 3600); //Valeur par defaut à 3600.					
-	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.	
+	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.
+	$CONFIG['htaccess_manual_content'] = retrieve(POST, 'htaccess_manual_content', '', TSTRING);
 	
 	if( !empty($CONFIG['server_name']) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit'])  ) //Nom de serveur obligatoire
 	{

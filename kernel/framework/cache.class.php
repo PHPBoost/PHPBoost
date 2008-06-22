@@ -183,26 +183,21 @@ class Cache
 			if( $CONFIG_FILES['bandwidth_protect'] )
 			{
 				$htaccess_rules .= "\n\n# Bandwith protection #\nRewriteCond %{HTTP_REFERER} !^$\nRewriteCond %{HTTP_REFERER} !^" . HOST . "\nReWriteRule .*upload/.*$ - [F]";
-			}	
-
-			//Ecriture du fichier .htaccess
-			$file_path = PATH_TO_ROOT . '/.htaccess';
-			@delete_file($file_path); //Supprime le fichier.
-			$handle = @fopen($file_path, 'w+'); //On crée le fichier avec droit d'écriture et lecture.
-			@fwrite($handle, $htaccess_rules);
-			@fclose($handle);
+			}
 		}
 		else
-		{
 			$htaccess_rules = 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';	
-
-			//Ecriture du fichier .htaccess
-			$file_path = PATH_TO_ROOT . '/.htaccess';
-			@delete_file($file_path); //Supprime le fichier.
-			$handle = @fopen($file_path, 'w+'); //On crée le fichier avec droit d'écriture et lecture.
-			@fwrite($handle, $htaccess_rules);
-			@fclose($handle);
-		}
+		
+		if( !empty($CONFIG['htaccess_manual_content']) )
+			$htaccess_rules .= "\n\n#Manual content\n" . $CONFIG['htaccess_manual_content'];
+		
+		//Ecriture du fichier .htaccess
+		$file_path = PATH_TO_ROOT . '/.htaccess';
+		@delete_file($file_path); //Supprime le fichier.
+		$handle = @fopen($file_path, 'w+'); //On crée le fichier avec droit d'écriture et lecture.
+		@fwrite($handle, $htaccess_rules);
+		@fclose($handle);
+		
 	}
 	
 	//Suppression d'un fichier cache

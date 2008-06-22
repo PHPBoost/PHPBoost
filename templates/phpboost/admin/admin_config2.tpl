@@ -85,7 +85,24 @@
 					&nbsp;&nbsp; 
 					<label><input type="radio" name="rewrite_engine" value="0" {UNCHECKED} /> {L_UNACTIVE}</label>
 				</p>
-			</fieldset> 
+			</fieldset>
+			
+			<fieldset>
+				<legend>
+					{L_HTACCESS_MANUAL_CONTENT}
+				</legend>
+				<dl>
+					<dt>
+						<label for="htaccess_manual_content">
+							{L_HTACCESS_MANUAL_CONTENT}
+						</label>
+						<p>{L_HTACCESS_MANUAL_CONTENT_EXPLAIN}</p>
+					</dt>
+					<dd>
+						<textarea name="htaccess_manual_content" rows="5" cols="5">{HTACCESS_MANUAL_CONTENT}</textarea>
+					</dd>
+				</dl>
+			</fieldset>
 			
 			<fieldset>  
 				<legend>{L_USER_CONNEXION}</legend> 
