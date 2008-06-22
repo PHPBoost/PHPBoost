@@ -37,7 +37,7 @@ require_once('./kernel/header.php');
             <div class="news_top_r"></div>
             <div class="news_top">
                 <div style="float:left">
-                    <span id="news_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)" onmouseout="HideSyndication(this)">
+                    <span id="news_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)">
                         <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
                     </span>&nbsp;
                     <?php echo get_feed_menu('/news/syndication.php'); ?>
@@ -61,7 +61,7 @@ require_once('./kernel/header.php');
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
-                <span id="articles_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)" onmouseout="HideSyndication(this)">
+                <span id="articles_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)">
                     <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
                 </span>&nbsp;
                 <?php echo get_feed_menu('/articles/syndication.php'); ?>
