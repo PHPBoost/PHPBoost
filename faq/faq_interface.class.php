@@ -99,7 +99,7 @@ class FaqInterface extends ModuleInterface
 		for( $j = 0; $j < $num_cats; $j++)
 		{
 			$id = $keys[$j];
-			$properties = $FAQ_CATS[$j];
+			$properties = $FAQ_CATS[$id];
 			if( $auth_mode == SITE_MAP_AUTH_GUEST )
 			{
 				$this_auth = is_array($properties['auth']) ? array_key_exists('r-1', $properties['auth']) : array_key_exists('r-1', $FAQ_CONFIG['global_auth']);
