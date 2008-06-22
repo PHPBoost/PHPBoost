@@ -104,7 +104,9 @@
 								{SELECT_PAGE}			
 							</select> 
 						</label>
-						<label>{L_OTHER} <input type="text" maxlength="255" size="20" id="start_page2" name="start_page2" class="text" value="{START_PAGE}" /></label>
+						<br />
+						<label>{L_OTHER} 
+						<input type="text" maxlength="255" size="20" id="start_page2" name="start_page2" class="text" value="{START_PAGE}" /></label>
 						</dd>
 					</dl>
 					<dl>
