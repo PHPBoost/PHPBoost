@@ -79,6 +79,7 @@
 [*] Correction des bugs dù à l'option register_globals.
 [*] Gestion des mots de passe avec l'algorithme de cryptage sha256 en lieu et place du md5
 [*] Amélioration de la classe Template.
+[*] Editeur de .htaccess
 
 [b]Forum[/b]
 [*] [color=red]Nouveauté:[/color] Réorganisation complète du code.

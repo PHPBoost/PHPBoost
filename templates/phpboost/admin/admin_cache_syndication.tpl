@@ -18,11 +18,19 @@
             # IF C_ERROR_HANDLER #
             <div class="error_handler_position">
                 <span id="errorh"></span>
-                <div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-                    <img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-                    <br />
-                </div>
-            </div>
+				<div id="error_msg">
+	                <div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+	                    <img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+	                    <br />
+	                </div>
+				</div>
+			</div>
+			<script type="text/javascript">
+			<!--
+				//Javascript timeout to hide this message
+				setTimeout('Effect.Fade("error_msg");', 5000);
+			-->
+			</script>
             # ENDIF #
             
             <form action="admin_cache.php?cache=syndication" method="post" class="fieldset_content">
