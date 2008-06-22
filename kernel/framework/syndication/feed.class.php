@@ -32,8 +32,8 @@ require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php')
 
 function feeds_update_cache($feed_name, &$data, $idcat = 0, $tpl = false)
 {
-    require_once('../kernel/framework/syndication/rss.work.class.php');
-    require_once('../kernel/framework/syndication/atom.class.php');
+    require_once(PATH_TO_ROOT . '/kernel/framework/syndication/rss.work.class.php');
+    require_once(PATH_TO_ROOT . '/kernel/framework/syndication/atom.class.php');
     $RSS = new RSS($feed_name);
     $ATOM = new ATOM($feed_name);
 
@@ -42,7 +42,7 @@ function feeds_update_cache($feed_name, &$data, $idcat = 0, $tpl = false)
 
     $ATOM->load_data($data);
     $ATOM->cache();
-
+	
     if( $tpl !== false )
         $template = $tpl->copy();
     else
