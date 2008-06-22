@@ -110,7 +110,6 @@ $DOWNLOAD_LANG['recount_subfiles'] = 'Recount files number of each category';
 $DOWNLOAD_LANG['popularity'] = 'Popularity';
 $DOWNLOAD_LANG['sort_alpha'] = 'Alphabetic';
 $DOWNLOAD_LANG['order_by'] = 'Order by';
-$DOWNLOAD_LANG['order'] = 'Order';
 
 //Autorisations
 $DOWNLOAD_LANG['auth_read'] = 'Reading permissions';

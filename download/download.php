@@ -222,7 +222,6 @@ else
 			'L_ASC' => $LANG['asc'],
 			'L_NOTE' => $LANG['note'],
 			'L_ORDER_BY' => $DOWNLOAD_LANG['order_by'],
-			'L_ORDER' => $DOWNLOAD_LANG['order'],
 			'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $DOWNLOAD_LANG['confirm_delete_file']),
 			'SELECTED_ALPHA' => $selected_fields['alpha'],
 			'SELECTED_SIZE' => $selected_fields['size'],
@@ -243,7 +242,8 @@ else
 		
 		$Template->Assign_vars(array(
 			'PAGINATION' => $Pagination->Display_pagination(transid('download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
-			'C_FILES' => true
+			'C_FILES' => true,
+			'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
 			));
 
 		$result = $Sql->Query_while("SELECT id, title, timestamp, size, count, note, nbrnote, nbr_com, image, short_contents
