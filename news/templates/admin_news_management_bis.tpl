@@ -1,7 +1,7 @@
 			# START news #
 							<label for="extend_contents">{L_EXTENDED_NEWS}</label>
 							# INCLUDE handle_bbcode #
-							<label><textarea type="text" rows="15" cols="86" id="extend_contents" name="extend_contents">{news.EXTEND_CONTENTS}</textarea></label>
+							<label><textarea type="text" rows="25" cols="86" id="extend_contents" name="extend_contents">{news.EXTEND_CONTENTS}</textarea></label>
 						<br />
 						<dl class="overflow_visible">
 							<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
