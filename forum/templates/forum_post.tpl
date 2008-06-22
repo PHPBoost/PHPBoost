@@ -165,7 +165,7 @@
 							<div id="hidepoll">
 								<dl>
 									<dt><label for="question">* {L_QUESTION}</label></dt>
-									<dd><label><input type="text" size="40" name="question" id="question" value="{QUESTION}" class="text" /></label></dd>
+									<dd><label><input type="text" size="40" name="question" id="question" value="{POLL_QUESTION}" class="text" /></label></dd>
 								</dl>
 								<dl>
 									<dt><label for="poll_type">{L_POLL_TYPE}</label></dt>
