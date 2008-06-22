@@ -489,11 +489,11 @@ function isNumeric(number)
 }
 
 // Teste si une chaine est un entier
-function isInteger(int)
+function isInteger(number)
 {
     var numbers = "0123456789";
-    for ( var i = 0; i < int.length && numbers.indexOf(int[i]) != -1; i++ );
-    return i == int.length ;
+    for ( var i = 0; i < number.length && numbers.indexOf(number[i]) != -1; i++ );
+    return i == number.length ;
 }
 
 // Print the syndication's choice menu
