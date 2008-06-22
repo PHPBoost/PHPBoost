@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                              news_interface.class.php
+ *                          download_interface.class.php
  *                            -------------------
- *   begin                : April 9, 2008
+ *   begin                : June 22, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
@@ -31,38 +31,38 @@ require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.ph
 define('NEWS_MAX_SEARCH_RESULTS', 100);
 
 // Classe ForumInterface qui hérite de la classe ModuleInterface
-class NewsInterface extends ModuleInterface
+class DownloadInterface extends ModuleInterface
 {
     ## Public Methods ##
-    function NewsInterface() //Constructeur de la classe ForumInterface
+    function DownloadInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('news');
+        parent::ModuleInterface('download');
     }
     
-    function GetSearchRequest($args)
-    /**
-     *  Renvoie la requête de recherche
-     */
-    {
-        global $Sql;
-        
-        $request = "SELECT " . $args['id_search'] . " AS `id_search`,
-            n.id AS `id_content`,
-            n.title AS `title`,
-            ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 AS `relevance`, "
-            . $Sql->Sql_concat(PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS `link`
-            FROM " . PREFIX . "news n
-            WHERE ( MATCH(n.title) AGAINST('" . $args['search'] . "') OR MATCH(n.contents) AGAINST('" . $args['search'] . "') OR MATCH(n.extend_contents) AGAINST('" . $args['search'] . "') )
-                AND visible = 1 AND ('" . time() . "' > start AND ( end = 0 OR '" . time() . "' < end ) )
-            ORDER BY `relevance` " . $Sql->Sql_limit(0, NEWS_MAX_SEARCH_RESULTS);
-        
-        return $request;
-    }
+//     function GetSearchRequest($args)
+//     /**
+//      *  Renvoie la requête de recherche
+//      */
+//     {
+//         global $Sql;
+//         
+//         $request = "SELECT " . $args['id_search'] . " AS `id_search`,
+//             n.id AS `id_content`,
+//             n.title AS `title`,
+//             ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 AS `relevance`, "
+//             . $Sql->Sql_concat(PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS `link`
+//             FROM " . PREFIX . "news n
+//             WHERE ( MATCH(n.title) AGAINST('" . $args['search'] . "') OR MATCH(n.contents) AGAINST('" . $args['search'] . "') OR MATCH(n.extend_contents) AGAINST('" . $args['search'] . "') )
+//                 AND visible = 1 AND ('" . time() . "' > start AND ( end = 0 OR '" . time() . "' < end ) )
+//             ORDER BY `relevance` " . $Sql->Sql_limit(0, NEWS_MAX_SEARCH_RESULTS);
+//         
+//         return $request;
+//     }
     
     function syndication_data()
     {
 		require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
-		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_NEWS;
+		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_DOWNLOAD;
 		load_module_lang('download');
 
 		$data = new FeedData();
@@ -70,24 +70,22 @@ class NewsInterface extends ModuleInterface
 		require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 		$date = new Date();
 
-		$data->set_title($LANG['xml_news_desc'] . ' ' . $CONFIG['server_name']);
-		$data->set_date($date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER));
-		$data->set_date_rfc822($date->format_date(DATE_RFC822_F));
-		$data->set_date_rfc3339($date->format_date(DATE_RFC3339_F));
-		$data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'news/syndication.php');
+		$data->set_title($LANG['xml_download_desc']);
+		$data->set_date($date);
+		$data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'download/syndication.php');
 		$data->set_host(HOST);
-		$data->set_desc($LANG['xml_news_desc'] . ' ' . $CONFIG['server_name']);
+		$data->set_desc($LANG['xml_download_desc']);
 		$data->set_lang($LANG['xml_lang']);
 
 		// Load the new's config
-		$Cache->Load_file('news');
+		$Cache->Load_file('download');
 
 		// Last news
 		$result = $Sql->Query_while("SELECT id, title, contents, timestamp, img
-			FROM ".PREFIX."news
+			FROM ".PREFIX."download
 			WHERE visible = 1
 			ORDER BY timestamp DESC
-		" . $Sql->Sql_limit(0, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
+		" . $Sql->Sql_limit(0, $CONFIG_NEWS['download_news']), __LINE__, __FILE__);
 
 		// Generation of the feed's items
 		while ($row = $Sql->Sql_fetch_assoc($result))
@@ -98,7 +96,7 @@ class NewsInterface extends ModuleInterface
 				$rewrited_title = '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php';
 			else
 				$rewrited_title = '.php?id=' . $row['id'];
-			$link = HOST . DIR . '/news/news' . $rewrited_title;
+			$link = HOST . DIR . '/download/download' . $rewrited_title;
 			
 			// XML text's protection
 			$contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
@@ -109,9 +107,7 @@ class NewsInterface extends ModuleInterface
 			$item->set_link($link);
 			$item->set_guid($link);
 			$item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
-			$item->set_date($date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER));
-			$item->set_date_rfc822($date->format_date(DATE_RFC822_F, TIMEZONE_SITE));
-			$item->set_date_rfc3339($date->format_date(DATE_RFC3339_F, TIMEZONE_SITE));
+			$item->set_date($date);
 			$item->set_image_url($row['img']);
 			
 			$data->add_item($item);

@@ -71,9 +71,7 @@ class NewsInterface extends ModuleInterface
         $date = new Date();
         
         $data->set_title($LANG['xml_news_desc'] . ' ' . $CONFIG['server_name']);
-        $data->set_date($date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER));
-        $data->set_date_rfc822($date->format_date(DATE_RFC822_F));
-        $data->set_date_rfc3339($date->format_date(DATE_RFC3339_F));
+        $data->set_date($date);
         $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'news/syndication.php?idcat=' . $idcat);
         $data->set_host(HOST);
         $data->set_desc($LANG['xml_news_desc'] . ' ' . $CONFIG['server_name']);
@@ -109,9 +107,7 @@ class NewsInterface extends ModuleInterface
             $item->set_link($link);
             $item->set_guid($link);
             $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
-            $item->set_date($date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER));
-            $item->set_date_rfc822($date->format_date(DATE_RFC822_F, TIMEZONE_SITE));
-            $item->set_date_rfc3339($date->format_date(DATE_RFC3339_F, TIMEZONE_SITE));
+            $item->set_date($date);
             $item->set_image_url($row['img']);
             
             $data->add_item($item);
