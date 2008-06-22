@@ -102,7 +102,7 @@ class Cache
 			@flock($handle, LOCK_EX); //Pose d'un verrou, pour éviter les conflits.
 			@fwrite($handle, "<?php\n" . $content . "\n?>");
 			@flock($handle, LOCK_UN);
-			@fclose;
+			@fclose($handle);
 			
 			@chmod($file_path, 0666);
 		}
@@ -135,7 +135,7 @@ class Cache
 					@flock($handle, LOCK_EX);
 					@fwrite($handle, "<?php\n" . $content . "\n?>");
 					@flock($handle, LOCK_UN);
-					@fclose;
+					@fclose($handle);
 					
 					@chmod($file_path, 0666);
 				}

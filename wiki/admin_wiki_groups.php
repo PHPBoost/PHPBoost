@@ -40,6 +40,8 @@ if( !empty($_POST['valid']) )
 	$array_auth_all = $Group->Return_array_auth(WIKI_CREATE_ARTICLE, WIKI_CREATE_CAT, WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM, WIKI_RESTRICTION);
 		
 	$_WIKI_CONFIG['auth'] = addslashes(serialize($array_auth_all));
+	print_r($_WIKI_CONFIG);
+	exit;
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
 
 	###### Regénération du cache des catégories (liste déroulante dans le forum) #######

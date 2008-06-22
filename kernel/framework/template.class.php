@@ -166,7 +166,7 @@ class Template
 		$module = substr($filename, 0, $i);
 		$file = substr($filename, $i);
 
-		if( !isset($file) ) //Template du thème (noyau)
+		if( empty($file) ) //Template du thème (noyau)
 			return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
 		else //Module
 		{
