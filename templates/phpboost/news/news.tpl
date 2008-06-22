@@ -53,11 +53,8 @@
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
-                <span style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)" onmouseout="HideSyndication(this)">
-                    <a href="#" title="{L_SYNDICATION}">
-                        <img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" title="{L_SYNDICATION}" />
-                    </a>
-                    {news.FEED_MENU}
+                <span style="float:left;padding-left:5px;">
+                    <a href="syndication.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
                     <a class="news_title" href="news{news.U_NEWS_LINK}">{news.TITLE}</a>
                 </span>
                 <span style="float:right;">{news.COM}{news.EDIT}{news.DEL}</span>
