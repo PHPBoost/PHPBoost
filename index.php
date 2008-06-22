@@ -48,7 +48,7 @@ require_once('./kernel/header.php');
             <div class="news_content">
                 <?php
                     if( @include('cache/syndication/news.php') )
-                        echo get_news_feed(10);
+                        echo @get_news_feed(10);
                 ?>
                 <div style="text-align:right;"><a href="./news/news.php" class="small_link">Plus de news...</a></div>
                 <div class="text_center"></div>
@@ -70,7 +70,7 @@ require_once('./kernel/header.php');
             <div class="news_content">
                 <?php
                     if( @include('cache/syndication/articles.php') )
-                        echo get_articles_feed(3);
+                        echo @get_articles_feed(3);
                 ?>
                 <div style="text-align:right;"><a href="./articles/articles.php" class="small_link">Tous les Dossiers...</a></div>
                 <div class="spacer"></div>
@@ -126,7 +126,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
 					<br />
 					Il s'agit du site à l'origine de PHPBoost, le projet est issu du développement de ce site.
 					<br />
-					Sa personnalisation poussée en font une référence en terme de sites utilisant le moteur PHPBoost.
+					Sa personnalisation poussée en fait une référence en terme de sites utilisant le moteur PHPBoost.
 					<br /><br /><br />
 					Pour visiter le site: <a href="http://www.mussotrail.com" title="Mussotrail">Mussotrail.com</a>
 				</p>
@@ -194,16 +194,21 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             <div class="news_bottom_r"></div>
             <div class="news_bottom"></div>
         </div>
-        
-        
         <div class="news_container" style="float:left;width:365px;margin-left:10px;">
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
-                <h3 class="title valign_middle"><a href="./forum/syndication.php" title="Syndication"><img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" /></a> Derniers sujets du forum</h3>
+                <span id="forum_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)">
+                    <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
+                </span>&nbsp;
+                <?php echo get_feed_menu('/forum/syndication.php'); ?>
+                <h3 class="title valign_middle">Derniers sujets du forum</h3>
             </div>
             <div class="news_content">
-                <script type="text/javascript" src="./cache/rss_forum.html"></script>  
+                <?php
+                    if( @include('cache/syndication/forum.php') )
+                        echo @get_forum_feed(10);
+                ?>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>

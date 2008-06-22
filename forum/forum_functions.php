@@ -96,7 +96,7 @@ function forum_generate_feeds()
     require_once('../kernel/framework/syndication/feed.class.php');
     require_once('forum_interface.class.php');
     $Forum = new ForumInterface();
-    feeds_update_cache('news', $Forum->syndication_data());
+    feeds_update_cache('forum', $Forum->syndication_data());
 }
 
 //Coloration de l'item recherché en dehors des balises html.
