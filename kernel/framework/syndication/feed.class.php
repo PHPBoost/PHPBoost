@@ -56,15 +56,15 @@ function feeds_update_cache($feed_name, &$data, $tpl = false)
 
     $items = explode('<!-- ITEM -->', $HTML->export($template));
 
-    $php_file .= '$ret = \'' . addslashes($items[0]) . '\';';
-    $js_file .= 'var ret = \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $items[0]) . '\';';
+    $php_file .= '$ret = \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $items[0]) . '\';' ."\n";
+    $js_file .= 'var ret = \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $items[0]) . '\';' ."\n";
     
     foreach( $items as $item )
     {
         if( ($i = strpos($item, '<!-- END ITEM -->')) !== false )
         {
             $item = substr($item, 0, $i);
-            $php_file .= 'items[] = \'' . addslashes($item) . '\';' . "\n";
+            $php_file .= '$items[] = \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $item) . '\';' . "\n";
             $js_file .= 'items.push(\'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $item) . '\');' . "\n";
         }
     }
@@ -79,16 +79,16 @@ function feeds_update_cache($feed_name, &$data, $tpl = false)
     $end = explode('<!-- END ITEM -->', $end);
     $end = count($end) > 0 ? $end[count($end) - 1] : '';
     
-    $php_file .= '$ret .= \'' . addslashes($end) . '\';';
+    $php_file .= '$ret .= \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $end) . '\';';
     $js_file .= 'ret += \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $end) . '\';';
-
+    
     $php_file .= 'return $ret; }' . "\n" . '?>';
     $js_file .= 'return ret; }' . "\n";
-
+    
     $file = fopen(FEED_PATH . $feed_name . '.php', 'w+');
     fputs($file, $php_file);
     fclose($file);
-
+    
     $file = fopen(FEED_PATH . $feed_name . '.js', 'w+');
     fputs($file, $js_file);
     fclose($file);

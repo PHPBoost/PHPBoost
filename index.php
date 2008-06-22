@@ -37,22 +37,20 @@ require_once('./kernel/header.php');
             <div class="news_top_r"></div>
             <div class="news_top">
                 <div style="float:left">
-                    <span style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)" onmouseout="HideSyndication(this)">
-                        <a href="#" title="{L_SYNDICATION}">
-                            <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
-                        </a>
+                    <span id="news_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)" onmouseout="HideSyndication(this)">
+                        <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
                     </span>&nbsp;
+                    <?php echo get_feed_menu('/news/syndication.php'); ?>
                     <h3 class="title valign_middle">Dernières news</h3>
                 </div>
                 <div style="float:right"></div>
             </div>
             <div class="news_content">
-                <script type="text/javascript" src="cache/syndication/news.js"></script>
-                <script type="text/javascript">
-                <!--
-                    document.write(get_news_feed(10));
-                -->
-                </script>
+                <?php
+                    if( @include('cache/syndication/news.php') )
+                        echo get_news_feed(10);
+                ?>
+                <div style="text-align:right;"><a href="./news/news.php" class="small_link">Plus de news...</a></div>
                 <div class="text_center"></div>
             </div>
             <div class="news_bottom_l"></div>
@@ -63,15 +61,18 @@ require_once('./kernel/header.php');
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
-                <h3 class="title valign_middle"><a href="./forum/syndication.php" title="Syndication"><img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" /></a> Dossiers</h3>
+                <span id="articles_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)" onmouseout="HideSyndication(this)">
+                    <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
+                </span>&nbsp;
+                <?php echo get_feed_menu('/articles/syndication.php'); ?>
+                <h3 class="title valign_middle">Dossiers</h3>
             </div>
             <div class="news_content">
-                <script type="text/javascript" src="cache/syndication/articles.js"></script>
-                <script type="text/javascript">
-                <!--
-                    document.write(get_articles_feed(4));
-                -->
-                </script>
+                <?php
+                    if( @include('cache/syndication/articles.php') )
+                        echo get_articles_feed(3);
+                ?>
+                <div style="text-align:right;"><a href="./articles/articles.php" class="small_link">Tous les Dossiers...</a></div>
                 <div class="spacer"></div>
             </div>
             <div class="news_bottom_l"></div>

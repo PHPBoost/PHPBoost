@@ -498,12 +498,31 @@ function isInteger(int)
 
 // Print the syndication's choice menu
 function ShowSyndication(element) {
-    feed_menu_elt = element.ownerDocument.getElementById('syndication_choices');
+    feed_menu_elt = null;
+    elts = element.parentNode.getElementsByTagName('div');
+    for( var i = 0; i < elts.length; i++ )
+    {
+        if( elts[i].id == 'syndication_choices')
+        {
+            feed_menu_elt = elts[i];
+            break;
+        }
+    }
     feed_menu_timeout_in = setTimeout('feed_menu_elt.style.visibility = \'visible\'', menu_delay_onmouseover);
     clearTimeout(feed_menu_timeout_out);
 }
 function HideSyndication(element) {
-    feed_menu_elt = element.ownerDocument.getElementById('syndication_choices');
+    feed_menu_elt = null;
+    elts = element.parentNode.getElementsByTagName('div');
+    for( var i = 0; i < elts.length; i++ )
+    {
+        if( elts[i].id == 'syndication_choices')
+        {
+            feed_menu_elt = elts[i];
+            break;
+        }
+    }
+//     feed_menu_elt = element;
     feed_menu_timeout_out = setTimeout('feed_menu_elt.style.visibility = \'hidden\'', menu_delay);
     clearTimeout(feed_menu_timeout_in);
 }

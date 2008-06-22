@@ -3,8 +3,8 @@
  *                                function.php
  *                            -------------------
  *   begin                : June 13, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   copyright            : (C) 2005 Régis Viarre, Loïc Rouchon
+ *   email                : crowkait@phpboost.com, horn@phpboost.com
  *
  *   Function 2.0.0
  *
