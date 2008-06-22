@@ -381,7 +381,7 @@ class Categories_management
 				direction = (direction == \'up\' ? \'up\' : \'down\');
 				var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?id_\' + direction + \'=\' + id);
 				
-				document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
+				document.getElementById(\'l\' + id).innerHTML = \'<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
 				
 				xhr_object.onreadystatechange = function() 
 				{
@@ -403,7 +403,7 @@ class Categories_management
 				status = (status == \'show\' ? \'show\' : \'hide\');
 				var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?\' + status + \'=\' + id);
 				
-				document.getElementById(\'l\' + id).innerHTML = \'<img src="../templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
+				document.getElementById(\'l\' + id).innerHTML = \'<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
 				
 				xhr_object.onreadystatechange = function() 
 				{
@@ -533,7 +533,7 @@ class Categories_management
 					<div style="margin-left:' . ($level * 50) . 'px;">
 						<div class="row3 management_cat_admin">
 							<span style="float:left;">
-								&nbsp;&nbsp;<img src="../templates/' . $CONFIG['theme'] . '/images/upload/folder.png" alt="" style="vertical-align:middle" />
+								&nbsp;&nbsp;<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/upload/folder.png" alt="" style="vertical-align:middle" />
 							&nbsp;';
 							if( !empty($this->display_config['url']) )
 							{
@@ -566,7 +566,7 @@ class Categories_management
 								{
 									$string .= '
 									<a href="' . ($ajax_mode ? $this->display_config['administration_file_name'] . '?id_up=' . $id . '" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');') . '">
-										<img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="" class="valign_middle" />
+										<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/top.png" alt="" class="valign_middle" />
 									</a>';
 									
 									//If the user has enable javascript, we compute his requests in AJAX mode
@@ -584,7 +584,7 @@ class Categories_management
 								{
 									$string .= '
 									<a href="' . ($ajax_mode ? transid($this->display_config['administration_file_name'] . '?id_down=' . $id . '" id="down_' . $id) : 'javascript:ajax_move_cat(' . $id . ', \'down\');') . '">
-										<img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="" class="valign_middle" />
+										<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="" class="valign_middle" />
 									</a>';
 									if( $ajax_mode )
 										$string .= '
@@ -599,7 +599,7 @@ class Categories_management
 								if( $values['visible'] )
 								{
 									$string .= '
-									<a href="' . ($ajax_mode ? transid($this->display_config['administration_file_name'] . '?hide=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');') . '" title="' . $LANG['cats_management_hide_cat'] . '" id="visibility_' . $id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/visible.png" alt="' . $LANG['cats_management_hide_cat'] . '" class="valign_middle" /></a>&nbsp;';
+									<a href="' . ($ajax_mode ? transid($this->display_config['administration_file_name'] . '?hide=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');') . '" title="' . $LANG['cats_management_hide_cat'] . '" id="visibility_' . $id . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/visible.png" alt="' . $LANG['cats_management_hide_cat'] . '" class="valign_middle" /></a>&nbsp;';
 									if( $ajax_mode )
 										$string .= '
 										<script type="text/javascript">
@@ -611,7 +611,7 @@ class Categories_management
 								else
 								{
 									$string .= '
-									<a href="' . ($ajax_mode ? transid($this->display_config['administration_file_name'] . '?show=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');') . '" title="' . $LANG['cats_management_show_cat'] . '" id="visibility_' . $id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/unvisible.png" alt="' . $LANG['cats_management_show_cat'] . '" class="valign_middle" /></a>&nbsp;';
+									<a href="' . ($ajax_mode ? transid($this->display_config['administration_file_name'] . '?show=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');') . '" title="' . $LANG['cats_management_show_cat'] . '" id="visibility_' . $id . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/unvisible.png" alt="' . $LANG['cats_management_show_cat'] . '" class="valign_middle" /></a>&nbsp;';
 									if( $ajax_mode )
 										$string .= '
 										<script type="text/javascript">
@@ -623,12 +623,12 @@ class Categories_management
 								
 								//Edit category
 								$string .= '
-								<a href="' . transid($this->display_config['administration_file_name'] . '?edit=' . $id) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>&nbsp;';
+								<a href="' . transid($this->display_config['administration_file_name'] . '?edit=' . $id) . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>&nbsp;';
 								
 								//Delete category
 								$string .= '
 								<a href="' . transid($this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id) . '" onclick="return confirm(\'' . addslashes($LANG['cats_management_confirm_delete']) . '\');">
-									<img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" />
+									<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" />
 								</a>';
 
 								$string .= '&nbsp;&nbsp;
