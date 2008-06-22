@@ -51,30 +51,22 @@
 						<!--
 						function change_order()
 						{
-							document.forms["form_order"].submit();
+							window.location = "{TARGET_ON_CHANGE_ORDER}sort=" + document.getElementById("sort").value + "&mode=" + document.getElementById("mode").value;
 						}
 						-->
 						</script>
-						<form method="get" action="" name="form_order">
-							{L_ORDER_BY}
-							<select name="sort" class="nav" onchange="change_order()">
-								<option value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
-								<option value="size"{SELECTED_SIZE}>{L_SIZE}</option>
-								<option value="date"{SELECTED_DATE}>{L_DATE}</option>
-								<option value="hits"{SELECTED_HITS}>{L_POPULARITY}</option>
-								<option value="note"{SELECTED_NOTE}>{L_NOTE}</option>
-							</select>
-							<select name="mode" class="nav" onchange="change_order()">
-								<option value="asc"{SELECTED_ASC}>{L_ASC}</option>
-								<option value="desc"{SELECTED_DESC}>{L_DESC}</option>
-							</select>
-							<input id="submit_order" type="submit" value="{L_ORDER}" class="submit" />
-							<script type="text/javascript">
-							<!--
-							document.getElementById("submit_order").style.display = 'none';
-							-->
-							</script>
-						</form>
+						{L_ORDER_BY}
+						<select name="sort" id="sort" class="nav" onchange="change_order()">
+							<option value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
+							<option value="size"{SELECTED_SIZE}>{L_SIZE}</option>
+							<option value="date"{SELECTED_DATE}>{L_DATE}</option>
+							<option value="hits"{SELECTED_HITS}>{L_POPULARITY}</option>
+							<option value="note"{SELECTED_NOTE}>{L_NOTE}</option>
+						</select>
+						<select name="mode" id="mode" class="nav" onchange="change_order()">
+							<option value="asc"{SELECTED_ASC}>{L_ASC}</option>
+							<option value="desc"{SELECTED_DESC}>{L_DESC}</option>
+						</select>
 					</div>
 					<div class="spacer">&nbsp;</div>
 					

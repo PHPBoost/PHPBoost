@@ -109,7 +109,6 @@ $DOWNLOAD_LANG['recount_subfiles'] = 'Recompter le nombre de fichiers de chaque 
 $DOWNLOAD_LANG['popularity'] = 'Popularité';
 $DOWNLOAD_LANG['sort_alpha'] = 'Alphabétique';
 $DOWNLOAD_LANG['order_by'] = 'Trier selon';
-$DOWNLOAD_LANG['order'] = 'Trier';
 
 //Autorisations
 $DOWNLOAD_LANG['auth_read'] = 'Permissions de lecture';
