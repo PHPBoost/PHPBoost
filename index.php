@@ -148,8 +148,8 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             </div>
             <div class="news_content">
                 <?php
-                    if( @include('cache/syndication/download_1.php') )
-                        echo @get_download_1_feed(10);
+                    if( @include('cache/syndication/download_24.php') )
+                        echo get_download_24_feed(3);
                 ?>
             </div>
             <div class="news_bottom_l"></div>
@@ -169,8 +169,8 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             </div>
             <div class="news_content">
                 <?php
-                    if( @include('cache/syndication/download_2.php') )
-                        echo @get_download_2_feed(3);
+                    if( @include('cache/syndication/download_23.php') )
+                        echo @get_download_23_feed(3);
                 ?>
                 <div class="spacer"></div>
             </div>
