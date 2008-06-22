@@ -62,11 +62,12 @@ elseif( $cat_to_del > 0 )
 	$Template->Assign_vars(array(
 		'CATEGORY_TREE' => $download_categories->Build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
 		'IDCAT' => $cat_to_del,
-		'L_REMOVING_CATEGORY' => $LANG['removing_category'],
-		'L_EXPLAIN_REMOVING' => $LANG['explain_removing_category'],
-		'L_DELETE_CATEGORY_AND_CONTENT' => $LANG['delete_category_and_its_content'],
-		'L_MOVE_CONTENT' => $LANG['move_category_content'],
-		'L_SUBMIT' => $LANG['delete']
+		'L_REMOVING_CATEGORY' => $DOWNLOAD_LANG['removing_category'],
+		'L_EXPLAIN_REMOVING' => $DOWNLOAD_LANG['explain_removing_category'],
+		'L_DELETE_CATEGORY_AND_CONTENT' => $DOWNLOAD_LANG['delete_category_and_its_content'],
+		'L_MOVE_CONTENT' => $DOWNLOAD_LANG['move_category_content'],
+		'L_SUBMIT' => $LANG['delete'],
+		'U_FORM_TARGET' => HOST . DIR . transid('/download/admin_download_cat.php')
 	));
 	
 	include_once('admin_download_menu.php');
@@ -76,8 +77,9 @@ elseif( $cat_to_del > 0 )
 elseif( !empty($_POST['submit']) )
 {
 	$error_string = 'e_success';
+	
 	//Deleting a category
-	if( !empty( $cat_to_del_post) )
+	if( $cat_to_del_post > 0 )
 	{
 		$delete_content = (!empty($_POST['action']) && $_POST['action'] == 'move') ? false : true;
 		$id_parent = retrieve(POST, 'id_parent', 0);

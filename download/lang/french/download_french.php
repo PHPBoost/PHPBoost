@@ -30,7 +30,7 @@
 #                                                          French                                                                        #
 ####################################################
 
-global $DOWNLOAD_LANG;
+global $DOWNLOAD_LANG, $LANG;
 $DOWNLOAD_LANG = array();
 
 //Gestion des fichiers
@@ -129,4 +129,5 @@ $DOWNLOAD_LANG['recount_success'] = 'Le nombre de fichiers pour chaque catégorie
 
 //Erreurs
 $LANG['e_unexist_file_download'] = 'Le fichier que vous demandez n\'existe pas !';
+$LANG['e_unexist_category_download'] = 'La catégorie que vous demandez n\'existe pas !';
 ?>

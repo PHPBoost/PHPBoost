@@ -44,14 +44,17 @@ class Download_cats extends Categories_management
 	//Method which removes all subcategories and their content
 	function Delete_category_recursively($id)
 	{
-		//We delete the category
+		global $Cache;
+		//We delete the content of the category
 		$this->delete_category_with_content($id);
-		//Then its content
+		//Then its sub categories
 		foreach( $this->cache_var as $id_cat => $properties )
 		{
 			if( $id_cat != 0 && $properties['id_parent'] == $id )
 				$this->Delete_category_recursively($id_cat);
 		}
+		
+		$Cache->Generate_module_file('download', RELOAD_FILE);
 		
 		$this->Recount_sub_files();
 	}
@@ -73,6 +76,8 @@ class Download_cats extends Categories_management
 			if( $id_cat != 0 && $properties['id_parent'] == $id_category )
 				parent::Move_category_into_another_category($id_cat, $new_id_cat_content);			
 		}
+		
+		$Sql->Query_inject("UPDATE ".PREFIX."download SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
 		
 		$this->Recount_sub_files();
 		

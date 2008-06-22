@@ -30,7 +30,7 @@
 #                                                          French                                                                        #
 ####################################################
 
-global $DOWNLOAD_LANG;
+global $DOWNLOAD_LANG, $LANG;
 $DOWNLOAD_LANG = array();
 
 //Gestion des fichiers
@@ -96,7 +96,8 @@ $DOWNLOAD_LANG['unknown_date'] = 'Unknown';
 //Catégories
 $DOWNLOAD_LANG['add_category'] = 'Add a category';
 $DOWNLOAD_LANG['removing_category'] = 'Deletion of a category';
-$DOWNLOAD_LANG['explain_removing_category'] = 'You will delete the category. You have two choices.You can move the whole content(questions and sub-categories) in another category or delete the whole category. <strong>Be careful, this action is irreversible !</strong>';
+$DOWNLOAD_LANG['explain_removing_category'] = 'You will delete the category. You have two 
+choices.You can move the whole content(questions and sub-categories) in another category or delete the whole category. <strong>Be careful, this action is irreversible !</strong>';
 $DOWNLOAD_LANG['delete_category_and_its_content'] = 'Delete the category and all its content';
 $DOWNLOAD_LANG['move_category_content'] = 'Move its content in :';
 $DOWNLOAD_LANG['required_fields'] = 'The * marked files are required !';
@@ -126,5 +127,9 @@ $DOWNLOAD_LANG['unexisting_category'] = 'The category you have selected does not
 $DOWNLOAD_LANG['new_cat_does_not_exist'] = 'The target category does not exist';
 $DOWNLOAD_LANG['infinite_loop'] = 'You want to move the category in one of its categories or in itself, that makes no sense. Please choose another category';
 $DOWNLOAD_LANG['recount_success'] = 'Files number for each category was recounted successfully.';
-$DOWNLOAD_LANG['e_unexist_file_download'] = 'the file that you asked for does not exist !';
+
+//Erreur
+$LANG['e_unexist_file_download'] = 'The file you asked for does not exist !';
+$LANG['e_unexist_category_download'] = 'The category you asked for does not exist !';
+
 ?>

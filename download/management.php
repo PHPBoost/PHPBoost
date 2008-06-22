@@ -488,7 +488,7 @@ include('../kernel/framework/content/bbcode.php');
 $Template->Assign_vars(array(
 	'BBCODE_CONTENTS' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE),
 	'C_PREVIEW' => $preview,
-	'L_PAGE_TITLE' => $DOWNLOAD_LANG['file_management'],
+	'L_PAGE_TITLE' => TITLE,
 	'L_EDIT_FILE' => $DOWNLOAD_LANG['edit_file'],
 	'L_YES' => $LANG['yes'],
 	'L_NO' => $LANG['no'],
