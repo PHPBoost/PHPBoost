@@ -64,7 +64,7 @@ else
 		'L_FORGOT_PASS' => $LANG['forget_pass'],
 		'L_REGISTER' => $LANG['register'],
 		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) : '',
-		'U_REGISTER' => '../member/register.php' . SID
+		'U_REGISTER' => PATH_TO_ROOT . '/member/register.php' . SID
 	));
 }
 
