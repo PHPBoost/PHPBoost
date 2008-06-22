@@ -40,7 +40,7 @@ div#admin_quick_menu li.title_menu{
 	text-transform:uppercase;
 	font-weight:bold;
 	font-size:0.75em;
-	background:#526F8E;
+	background:#3286C6;
 	border:1px solid #18415B;
 	color:#FFFFFF;	
 	padding:3px 0px;
@@ -51,7 +51,7 @@ div#admin_quick_menu li a.quick_link{
 	font-weight:bold;
 	font-size:0.75em;
 	color:#FFFFFF;	
-	background:#768EA8;
+	background:#56A7E6;
 	border:1px solid #18415B;
 	padding:3px 2px;
 	text-decoration:none;
