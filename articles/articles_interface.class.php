@@ -133,7 +133,7 @@ class ArticlesInterface extends ModuleInterface
                 $item->set_date($date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER));
                 $item->set_date_rfc822($date->format_date(DATE_RFC822_F, TIMEZONE_SITE));
                 $item->set_date_rfc3339($date->format_date(DATE_RFC3339_F, TIMEZONE_SITE));
-                $item->set_image_url(HOST . DIR . '/articles/' . $row['icon']);
+                $item->set_image_url($row['icon']);
                 
                 $data->add_item($item);
             }
