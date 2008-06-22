@@ -90,13 +90,13 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 }
 
 //Gestion du rss du forum.
-function forum_generate_rss()
-{		
-	include_once('../kernel/framework/syndication/rss.class.php');
-	$Rss = new Rss('forum/rss.php');
-	$Rss->Cache_path('../cache/');
-	$Rss->Generate_file('javascript', 'rss_forum');
-	$Rss->Generate_file('php', 'rss2_forum');
+function forum_generate_feeds()
+{
+    // Feeds Regeneration
+    require_once('../kernel/framework/syndication/feed.class.php');
+    require_once('forum_interface.class.php');
+    $Forum = new ForumInterface();
+    feeds_update_cache('news', $Forum->syndication_data());
 }
 
 //Coloration de l'item recherché en dehors des balises html.

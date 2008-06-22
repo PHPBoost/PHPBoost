@@ -38,13 +38,13 @@ class ForumInterface extends ModuleInterface
     {
         parent::ModuleInterface('forum');
     }
-
+    
     //Récupère le lien vers la listes des messages du membre.
     function get_member_msg_link($memberId)
     {
         return PATH_TO_ROOT . '/forum/membermsg.php?id=' . $memberId[0];
     }
-
+    
     //Récupère le nom associé au lien.
     function get_member_msg_name()
     {
@@ -210,7 +210,7 @@ class ForumInterface extends ModuleInterface
             GROUP BY t.id
             ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
     }
-
+    
     function parse_search_results(&$args)
     /**
      *  Return the string to print the results
@@ -288,6 +288,70 @@ class ForumInterface extends ModuleInterface
         $this->set_attribute('ResultsIndex', ++$resultsIndex);
         
         return $Tpl->parse(TEMPLATE_STRING_MODE);
+    }
+    
+    function syndication_data($idcat = 0)
+    {
+        global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_FORUM, $CAT_FORUM, $Member;
+        $_idcat = $idcat;
+        require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
+        $idcat = $_idcat;   // Because <$idcat> is overwrite in /forum/forum_init_auth_cats.php
+        
+        $data = new FeedData();
+        
+        require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+        $date = new Date();
+        
+        $data->set_title($LANG['xml_forum_desc']);
+        $data->set_date($date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER));
+        $data->set_date_rfc822($date->format_date(DATE_RFC822_F));
+        $data->set_date_rfc3339($date->format_date(DATE_RFC3339_F));
+        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'forum/syndication.php?idcat=' . $_idcat);
+        $data->set_host(HOST);
+        $data->set_desc($LANG['xml_forum_desc']);
+        $data->set_lang($LANG['xml_lang']);
+        
+        $req_cats = (($idcat > 0) && isset($CAT_FORUM[$idcat])) ? " AND c.id_left >= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right <= '" . $CAT_FORUM[$idcat]['id_right'] . "' " : "";
+        
+        $req = "SELECT t.id, t.title, t.last_timestamp, msg.id mid, msg.contents
+            FROM ".PREFIX."forum_topics t
+            LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
+            LEFT JOIN ".PREFIX."forum_msg msg ON msg.id = t.last_msg_id
+            WHERE (c.auth LIKE '%s:3:\"r-1\";i:1;%' OR c.auth LIKE '%s:3:\"r-1\";i:3;%') AND c.level != 0 AND c.aprob = 1 " . $req_cats . "
+            ORDER BY t.last_timestamp DESC
+            " . $Sql->Sql_limit(0, $CONFIG_FORUM['pagination_msg']);
+        
+        $result = $Sql->Query_while($req, __LINE__, __FILE__);
+        // Generation of the feed's items
+        while ($row = $Sql->Sql_fetch_assoc($result))
+        {
+            $item = new FeedItem();
+            // Rewriting
+            if ( $CONFIG['rewrite'] == 1 )
+                $rewrited_title = '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php';
+            else
+                $rewrited_title = '.php?id=' . $row['id'];
+            $link = HOST . DIR . '/forum/topic' . $rewrited_title;
+            
+            // XML text's protection
+            $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
+            
+            $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['last_timestamp']);
+            
+            $item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
+            $item->set_link($link);
+            $item->set_guid($link);
+            $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
+            $item->set_date($date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER));
+            $item->set_date_rfc822($date->format_date(DATE_RFC822_F, TIMEZONE_SITE));
+            $item->set_date_rfc3339($date->format_date(DATE_RFC3339_F, TIMEZONE_SITE));
+            
+            $data->add_item($item);
+        }
+        $Sql->Close($result);
+        
+        return $data;
     }
 }
 

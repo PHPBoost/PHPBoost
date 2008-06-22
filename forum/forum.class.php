@@ -103,7 +103,7 @@ class Forum
 					$Privatemsg->Send_pm($row['user_id'], addslashes($LANG['forum_mail_title_new_post']), sprintf(addslashes($LANG['forum_mail_new_post']), addslashes($title_subject_pm), addslashes($pseudo_pm), $preview_contents, addslashes($next_pm)), '-1', SYSTEM_PM);
 			}
 			
-			forum_generate_rss(); //Regénération du flux rss.
+			forum_generate_feeds(); //Regénération du flux rss.
 		}
 		
 		return $last_msg_id;
@@ -120,7 +120,7 @@ class Forum
 		$last_msg_id = $this->Add_msg($last_topic_id, $idcat, $contents, $title, 0, 0, true); //Insertion du message.
 		$Sql->Query_inject("UPDATE ".PREFIX."forum_topics SET first_msg_id = '" . $last_msg_id . "' WHERE id = '" . $last_topic_id . "'", __LINE__, __FILE__);
 				
-		forum_generate_rss(); //Regénération du flux rss.
+		forum_generate_feeds(); //Regénération des flux flux
 		
 		return array($last_topic_id, $last_msg_id);
 	}
@@ -210,7 +210,7 @@ class Forum
 				$msg_page = ($msg_page > 1) ? '&pt=' . $msg_page : '';
 				forum_history_collector(H_DELETE_MSG, $msg_user_id, 'topic' . transid('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $previous_msg_id);
 			}
-			forum_generate_rss(); //Regénération du flux rss.
+			forum_generate_feeds(); //Regénération des flux flux
 			
 			return array($nbr_msg, $previous_msg_id);
 		}
@@ -251,7 +251,7 @@ class Forum
 			forum_history_collector(H_DELETE_TOPIC, $topic['user_id'], 'forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
 		
 		if( $generate_rss )
-			forum_generate_rss(); //Regénération du flux rss.
+            forum_generate_feeds(); //Regénération des flux flux
 	}
 	
 	//Suivi d'un sujet.
