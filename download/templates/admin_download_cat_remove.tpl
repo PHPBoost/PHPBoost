@@ -1,7 +1,7 @@
 		# INCLUDE admin_download_menu #
 		
 		<div id="admin_contents">
-			<form action="admin_faq_cats.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="{U_FORM_TARGET}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_REMOVING_CATEGORY}</legend>
 					<p>{L_EXPLAIN_REMOVING}</p>
@@ -19,7 +19,7 @@
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
-					<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}" />
+					<input type="hidden" name="cat_to_del" value="{IDCAT}" />
 					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />	
 				</fieldset>
 			</form>

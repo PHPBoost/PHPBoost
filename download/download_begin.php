@@ -49,6 +49,9 @@ if( !empty($file_id) )
 }
 elseif( !empty($category_id) )
 {
+	if( !array_key_exists($category_id, $DOWNLOAD_CATS) )
+		$Errorh->Error_handler('e_unexist_category_download', E_USER_REDIRECT);
+	
 	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . addslashes($DOWNLOAD_CATS[$category_id]['name']));
 	$id_cat_for_download = $category_id;
 }
