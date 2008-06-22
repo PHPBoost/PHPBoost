@@ -182,7 +182,7 @@
 						
 						<label for="contents">* {L_TEXT}</label>
 						# INCLUDE handle_bbcode #
-						<label><textarea type="text" rows="15" cols="86" id="contents" name="contents">{news.CONTENTS}</textarea></label>
+						<label><textarea type="text" rows="25" cols="86" id="contents" name="contents">{news.CONTENTS}</textarea></label>
 						<br /><br />
 
 			# END news #
