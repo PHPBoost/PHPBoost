@@ -36,28 +36,28 @@ $updatecom = !empty($_GET['updatecom']) ? true : false;
 $DEFINED_PHPBOOST = !defined('PHPBOOST');
 if( $DEFINED_PHPBOOST )
 {
-	include_once(PATH_TO_ROOT . '/kernel/begin.php');	
-	define('TITLE', $LANG['title_com']);	
-	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
-	
-	if( !empty($_GET['i']) )
-	{
-		if( !preg_match('`([0-9]+)([a-z]+)([0-9]*)`', trim($_GET['i']), $array_get) )
-			$array_get = array('', '', '', '');
-		$idcom = (empty($array_get[3]) && !empty($_POST['idcom'])) ? numeric($_POST['idcom']) : $array_get[3];	
-	
-		include_once(PATH_TO_ROOT . '/kernel/framework/content/comments.class.php'); 
-		$Comments = new Comments($array_get[2], $array_get[1], transid('?i=' . $array_get[1] . $array_get[2] . '%s', ''), $array_get[2]);
-		$Comments->Set_arg($idcom, PATH_TO_ROOT . '/kernel/com.php'); //On met à jour les attributs de l'objet.
-		$_com_vars_simple = sprintf($Comments->Get_attribute('vars'), 0);
-	}
+    require_once(PATH_TO_ROOT . '/kernel/begin.php');
+    define('TITLE', $LANG['title_com']);
+    require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
+
+    if( !empty($_GET['i']) )
+    {
+        if( !preg_match('`([0-9]+)([a-z]+)([0-9]*)`', trim($_GET['i']), $array_get) )
+            $array_get = array('', '', '', '');
+        $idcom = (empty($array_get[3]) && !empty($_POST['idcom'])) ? numeric($_POST['idcom']) : $array_get[3];
+
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/comments.class.php');
+        $Comments = new Comments($array_get[2], $array_get[1], transid('?i=' . $array_get[1] . $array_get[2] . '%s', ''), $array_get[2]);
+        $Comments->Set_arg($idcom, PATH_TO_ROOT . '/kernel/com.php'); //On met à jour les attributs de l'objet.
+        $_com_vars_simple = sprintf($Comments->Get_attribute('vars'), 0);
+    }
 }
 else
-{	
-	$idcom = !empty($_GET['i']) ? numeric($_GET['i']) : 0;
-	$idcom = (!empty($idcom) && !empty($_POST['idcom'])) ? numeric($_POST['idcom']) : $idcom;
-	$Comments->Set_arg($idcom); //On met à jour les attributs de l'objet.
-	$_com_vars_simple = sprintf($Comments->Get_attribute('vars'), 0);
+{
+    $idcom = !empty($_GET['i']) ? numeric($_GET['i']) : 0;
+    $idcom = (!empty($idcom) && !empty($_POST['idcom'])) ? numeric($_POST['idcom']) : $idcom;
+    $Comments->Set_arg($idcom); //On met à jour les attributs de l'objet.
+    $_com_vars_simple = sprintf($Comments->Get_attribute('vars'), 0);
 }
 $path_redirect = $Comments->Get_attribute('path') . sprintf(str_replace('&amp;', '&', $Comments->Get_attribute('vars')), 0);
 
@@ -223,10 +223,10 @@ if( $Comments->Com_loaded() )
 		}
 
 		//On crée une pagination si le nombre de commentaires est trop important.
-		include_once(PATH_TO_ROOT . '/kernel/framework/pagination.class.php'); 
+		require_once(PATH_TO_ROOT . '/kernel/framework/pagination.class.php');
 		$Pagination = new Pagination();
 
-		$block = ($CONFIG['com_popup'] == 0 && $DEFINED_PHPBOOST !== true); 
+		$block = ($CONFIG['com_popup'] == 0 && $DEFINED_PHPBOOST !== true);
 
 		$Template->Assign_vars(array(
 			'CURRENT_PAGE_COM' => $block ? true : false,
@@ -273,7 +273,7 @@ if( $Comments->Com_loaded() )
 		
 		//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
 		if( !$Comments->Get_attribute('lock_com') || $Member->Check_level(MODO_LEVEL) )
-		{	
+		{
 			if( $Member->Check_level($CONFIG_COM['com_auth']) )
 				$Template->Assign_vars(array(
 					'AUTH_POST_COM' => true
@@ -481,13 +481,12 @@ if( $Comments->Com_loaded() )
 		$Sql->Close($result);
 		
 		include_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode.php');
-	}  
-
+	}
 	//Com en popup
-	if( $DEFINED_PHPBOOST )
-		$Template->Pparse('handle_com'); 
+// 	if( $DEFINED_PHPBOOST )
+		$Template->Pparse('handle_com');
 }
 
 if( $DEFINED_PHPBOOST )
-	include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
+    include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>
