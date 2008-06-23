@@ -3,7 +3,7 @@
  *                         feed.class.php
  *                         -------------------
  *   begin                : April 21, 2008
- *   copyright            : (C) 2005 Loïc Rouchon
+ *   copyright            : (C) 2005 Loï¿½c Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -36,26 +36,26 @@ function feeds_update_cache($feed_name, &$data, $idcat = 0, $tpl = false)
     require_once(PATH_TO_ROOT . '/kernel/framework/syndication/atom.class.php');
     $RSS = new RSS($feed_name);
     $ATOM = new ATOM($feed_name);
-
+    
     $RSS->load_data($data);
     $RSS->cache();
-
+    
     $ATOM->load_data($data);
     $ATOM->cache();
-	
+    
     if( $tpl !== false )
         $template = $tpl->copy();
     else
         $template = new Template('framework/syndication/feed.tpl');
-
+    
     $HTML = new Feed($feed_name);
     $HTML->load_data($data);
-
+    
     $php_file = '<?php' . "\n" . 'function get_' . $feed_name . '_' . $idcat . '_feed($nb_items) {' . "\n" . '$items = array();' . "\n";
     $js_file = 'function get_' . $feed_name . '_' . $idcat  . '_feed(nb_items) {' . "\n" .'var items = new Array();' . "\n";
-
+    
     $items = explode('<!-- ITEM -->', $HTML->export($template));
-
+    
     $php_file .= '$ret = \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $items[0]) . '\';' ."\n";
     $js_file .= 'var ret = \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $items[0]) . '\';' ."\n";
     
@@ -73,7 +73,6 @@ function feeds_update_cache($feed_name, &$data, $idcat = 0, $tpl = false)
     $js_file .= 'nb_items = (nb_items > items.length) ? items.length : nb_items;' . "\n";
     $php_file .= 'for( $i = 0; $i < $nb_items; $i++ ) { $ret .= $items[$i]; }' . "\n";
     $js_file .= 'for( var i = 0; i < nb_items; i++ ) { ret += items[i]; }' . "\n";
-
     
     $end = $items[count($items) - 1];
     $end = explode('<!-- END ITEM -->', $end);
@@ -84,7 +83,7 @@ function feeds_update_cache($feed_name, &$data, $idcat = 0, $tpl = false)
     
     $php_file .= 'return $ret; }' . "\n" . '?>';
     $js_file .= 'return ret; }' . "\n";
-	
+    
     $file = fopen(FEED_PATH . $feed_name . '_' . $idcat . '.php', 'w+');
     fputs($file, $php_file);
     fclose($file);
@@ -133,7 +132,7 @@ class Feed
                     'U_LINK' => $item->get_link(),
                     'U_GUID' => $item->get_guid(),
                     'DESC' => $item->get_desc(),
-                    'DATE' => $this->data->get_date(),
+                    'DATE' => $item->get_date(),
                     'DATE_RFC822' => $item->get_date_rfc822(),
                     'DATE_RFC3339' => $item->get_date_rfc3339(),
                     'C_IMG' => ($item->get_image_url() != '') ? true : false,
