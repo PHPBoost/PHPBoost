@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                                function.php
+ *                             functions.inc.php
  *                            -------------------
  *   begin                : June 13, 2005
  *   copyright            : (C) 2005 Régis Viarre, Loïc Rouchon
@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -732,7 +732,7 @@ function get_feed_menu($feed_url)
     $feedMenu->Assign_vars(array(
         'PATH_TO_ROOT' => PATH_TO_ROOT,
         'THEME' => $CONFIG['theme'],
-        'U_FEED' => trim($CONFIG['server_name'], '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . trim($feed_url, '/'),
+        'U_FEED' => trim($CONFIG['server_name'], '/') . '/' . (!empty($CONFIG['server_path']) ? trim($CONFIG['server_path'], '/') . '/' : '') . trim($feed_url, '/'),
         'L_RSS' => $LANG['rss'],
         'L_ATOM' => $LANG['atom']
     ));
