@@ -78,6 +78,7 @@
                             {
                                 progress_bar(100, "{L_QUERY_SUCCESS}");
                                 // Si les résultats sont toujours en cache, on les récupère.
+//                                 window.alert(xhr_object.responseText);
                                 eval(xhr_object.responseText);
                                 if( !syncErr )
                                 {

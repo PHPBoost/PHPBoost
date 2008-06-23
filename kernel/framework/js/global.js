@@ -452,7 +452,8 @@ function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbP
         var fctArgs = ', '  + nbPages + ', \'' + blocPagin + '\', \'' + blocName + '\', ' + nbPagesBefore + ', ' + nbPagesAfter;
         
         // Début
-        pagin += writePagin(fctName, fctArgs, false, '&laquo;', 0);
+        if( page != 0 )
+            pagin += writePagin(fctName, fctArgs, false, '&laquo;', 0);
         
         // Before
         for ( var i = before; i < page; i++ )
@@ -466,7 +467,8 @@ function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbP
             pagin += writePagin(fctName, fctArgs, false, i + 1, i );
         
         // Fin
-        pagin += writePagin(fctName, fctArgs, false, '&raquo;', nbPages - 1 );
+        if( page != nbPages - 1 )
+            pagin += writePagin(fctName, fctArgs, false, '&raquo;', nbPages - 1 );
     }
     
     // On cache tous les autre résultats du module
