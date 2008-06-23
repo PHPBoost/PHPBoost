@@ -3,7 +3,7 @@
  *                          download_interface.class.php
  *                            -------------------
  *   begin                : June 22, 2008
- *   copyright            : (C) 2008 LoÃ¯c Rouchon
+ *   copyright            : (C) 2008 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -30,7 +30,7 @@ require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.ph
 
 define('NEWS_MAX_SEARCH_RESULTS', 100);
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class DownloadInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -89,7 +89,7 @@ class DownloadInterface extends ModuleInterface
             FROM ".PREFIX."download
             WHERE visible = 1 AND idcat IN (" . implode($visible_cats, ', ') . ")
             ORDER BY timestamp DESC" . $Sql->Sql_limit(0, $CONFIG_DOWNLOAD['nbr_file_max']);
-			
+            
             $result = $Sql->Query_while($req, __LINE__, __FILE__);
         
 //             echo $req;
