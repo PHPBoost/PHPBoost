@@ -117,7 +117,7 @@ function get_html_results(&$results, &$htmlResults, &$Modules, &$resultsName)
             if ( ($j) >= $nbResults )
                 break;
 
-            if ( ($resultsName == 'all') || (!$module->has_functionnality('ParseSearchResults')) )
+            if ( ($resultsName == 'all') || (!$module->has_functionnality('parse_search_results')) )
             {
                 $module = $Modules->get_module($results[$j]['module']);
                 $Template->Assign_vars(array(
@@ -127,7 +127,7 @@ function get_html_results(&$results, &$htmlResults, &$Modules, &$resultsName)
                 ));
                 $tempRes = $Template->Pparse('search_generic_results', TEMPLATE_STRING_MODE);
             }
-            else $tempRes = $module->functionnality('ParseSearchResults', array('results' => $results));
+            else $tempRes = $module->functionnality('parse_search_results', array('results' => $results));
             
             $Template->Assign_block_vars('page.results', array(
                     'result' => $tempRes

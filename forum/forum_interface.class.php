@@ -216,7 +216,7 @@ class ForumInterface extends ModuleInterface
      *  Return the string to print the results
      */
     {
-        global $CONFIG, $LANG, $Sql;
+        global $CONFIG, $LANG, $Sql, $CONFIG_MEMBER;
         
         require_once(PATH_TO_ROOT . '/kernel/begin.php');
         load_module_lang('forum'); //Chargement de la langue du module.
@@ -228,7 +228,7 @@ class ForumInterface extends ModuleInterface
             'L_TOPIC' => $LANG['topic']
         ));
         
-        if( $this->GetAttribute('ResultsReqExecuted') === false  || $this->GotError(MODULE_ATTRIBUTE_DOES_NOT_EXIST) )
+        if( $this->get_attribute('ResultsReqExecuted') === false  || $this->got_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST) )
         {
             $ids = array();
             $results =& $args['results'];
@@ -267,22 +267,23 @@ class ForumInterface extends ModuleInterface
             $this->set_attribute('ResultsIndex', 0);
         }
         
-        $results =& $this->GetAttribute('Results');
+        $results =& $this->get_attribute('Results');
         $indexes = array_keys($results);
         $indexSize = count($indexes);
-        $resultsIndex = $this->GetAttribute('ResultsIndex');
+        $resultsIndex = $this->get_attribute('ResultsIndex');
         $resultsIndex = $resultsIndex < $indexSize ? $resultsIndex : ($indexSize > 0 ? $indexSize - 1 : 0);
         $result =& $results[$indexes[$resultsIndex]];
         
         $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($result['title']) : '';
         $Tpl->Assign_vars(array(
-            'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($result['connect']) && $result['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
+            'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . ((!empty($result['connect']) && $result['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
             'U_USER_PROFILE' => !empty($result['user_id']) ? PATH_TO_ROOT . '/member/member'.transid('.php?id='.$result['user_id'],'-'.$result['user_id'].'.php') : '',
             'USER_PSEUDO' => !empty($result['login']) ? wordwrap_html($result['login'], 13) : $LANG['guest'],
             'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . transid('.php?id=' . $result['topic_id'], '-' . $result['topic_id'] . $rewrited_title . '.php') . '#m' . $result['msg_id'],
             'TITLE' => ucfirst($result['title']),
             'DATE' => gmdate_format('d/m/y', $result['date']),
-            'CONTENTS' => $result['contents']
+            'CONTENTS' => $result['contents'],
+            'USER_AVATAR' => ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : ''
         ));
         
         $this->set_attribute('ResultsIndex', ++$resultsIndex);
