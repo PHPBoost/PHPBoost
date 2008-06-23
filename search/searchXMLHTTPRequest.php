@@ -106,7 +106,7 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
     
         echo   'nbResults[\''.$MODULE_NAME.'\'] = '.$nbResults.';
                 resultsAJAX[\'nbResults\'] = \''.$nbResults.' '.addslashes($nbResults > 1 ? $LANG['nb_results_found']:$LANG['one_result_found']).'\';
-                resultsAJAX[\'results\'] = \''.str_replace("\n","\\\n",$htmlResults).'\';';
+                resultsAJAX[\'results\'] = \''.str_replace("\n","\\\n",addslashes($htmlResults)).'\';';
     }
     else
     {
