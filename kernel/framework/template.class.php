@@ -150,7 +150,10 @@ class Template
 		$copy->files = $this->files;
 		$copy->module_data_path = $this->module_data_path;
 	    $copy->stringMode = $this->stringMode;
-		
+        
+        $copy->_var = $this->_var; //Tableau contenant les variables de remplacement des variables simples.
+        $copy->_block = $this->_block; //Tableau contenant les variables de remplacement des variables simples.
+        
 		return $copy;
 	}
 	
