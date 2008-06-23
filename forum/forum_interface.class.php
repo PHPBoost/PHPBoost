@@ -28,7 +28,7 @@
 // Inclusion du fichier contenant la classe ModuleInterface
 require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
 
-define('FORUM_MAX_SEARCH_RESULTS', 100);
+define('FORUM_MAX_SEARCH_RESULTS', 50);
 
 // Classe ForumInterface qui hérite de la classe ModuleInterface
 class ForumInterface extends ModuleInterface
@@ -267,7 +267,7 @@ class ForumInterface extends ModuleInterface
             $this->set_attribute('ResultsIndex', 0);
         }
         
-        $results =& $this->get_attribute('Results');
+        $results = $this->get_attribute('Results');
         $indexes = array_keys($results);
         $indexSize = count($indexes);
         $resultsIndex = $this->get_attribute('ResultsIndex');
