@@ -126,10 +126,12 @@ class DownloadInterface extends ModuleInterface
     function syndication_cache($cats = array(), $tpl = false)
     {
         $cats = array(0, 23, 24);
-		//$cats = array(23, 24);
+        //$cats = array(23, 24);
         require_once('../kernel/framework/syndication/feed.class.php');
         require_once('../kernel/framework/template.class.php');
         $tpl = new Template('framework/syndication/feed_with_images.tpl');
+        $tpl->Assign_vars(array('L_READ' => 'Téléchager'));
+        
         foreach( $cats as $cat )
             feeds_update_cache($this->id, $this->syndication_data($cat), $cat, $tpl);
     }
