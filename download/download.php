@@ -65,7 +65,7 @@ if( $file_id > 0 ) //Contenu
 		'SIZE' => $size_tpl,
 		'COUNT' => $download_info['count'],
 		'THEME' => $CONFIG['theme'],
-		'COM' => display_com_link($download_info['nbr_com'], '../download/download' . transid('.php?id=' . $file_id . '&amp;i=0', '-' . $category_id . '-' . $file_id . '.php?i=0'), $file_id, 'download'),
+		'COM' => com_display_link($download_info['nbr_com'], '../download/download' . transid('.php?id=' . $file_id . '&amp;i=0', '-' . $category_id . '-' . $file_id . '.php?i=0'), $file_id, 'download'),
 		'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$download_info['count']),
 		'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], (int)$download_info['nbrnote']),
 		'U_IMG' => $download_info['image'],
