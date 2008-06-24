@@ -76,7 +76,7 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 		'COMPT' => $web['compt'],
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'COM' => display_com_link($web['nbr_com'], '../web/web' . transid('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;i=0', '-' . $idcat . '-' . $idweb . '.php?i=0'), $idweb, 'web'),
+		'COM' => com_display_link($web['nbr_com'], '../web/web' . transid('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;i=0', '-' . $idcat . '-' . $idweb . '.php?i=0'), $idweb, 'web'),
 		'U_WEB_CAT' => transid('.php?cat=' . $idcat, '-' . $idcat . '.php'),
 		'L_DESC' => $LANG['description'],
 		'L_CAT' => $LANG['category'],

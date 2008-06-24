@@ -73,7 +73,9 @@
                 <span style="float:right">{news.DATE}</span>
             </div>
         </div>
-        # INCLUDE handle_com #
+		
+       {COMMENTS}
+	   
         # END news #
         
         {END_TABLE_NEWS}

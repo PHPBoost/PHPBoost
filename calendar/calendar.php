@@ -243,7 +243,7 @@ if( $checkdate === true && empty($id) && !$add )
 				'TITLE' => $row['title'],
 				'CONTENTS' => second_parse($row['contents']),
 				'LOGIN' => '<a class="com" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
-				'COM' => display_com_link($row['nbr_com'], '../calendar/calendar' . transid('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;i=0', '-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?i=0'), $row['id'], 'calendar'),
+				'COM' => com_display_link($row['nbr_com'], '../calendar/calendar' . transid('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;i=0', '-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?i=0'), $row['id'], 'calendar'),
 				'EDIT' => $edit,
 				'DEL' => $del,				
 				'L_ON' => $LANG['on']

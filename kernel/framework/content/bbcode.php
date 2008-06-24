@@ -27,6 +27,12 @@
 
 $get_show = !empty($_GET['show']) ? true : false;
 
+//Gros cochon de Régis... si on est dans une fonction les variables ne sont pas définies
+if( !isset($CONFIG_FILES) )
+	global $CONFIG_FILES;
+if( !isset($_array_smiley_code) )
+	global $_array_smiley_code;
+
 if( !$get_show && defined('PHPBOOST') === true )
 {
 	$Template->Set_filenames(array(
