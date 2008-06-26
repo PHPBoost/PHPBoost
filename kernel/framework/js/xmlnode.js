@@ -33,35 +33,45 @@ function XmlNode(arg1, arg2) {
         
         switch( c ) {
             case "<":
-                if( XmlNode.Stream.charAt(XmlNode.iterator + 1) == "/" ) {
-                    while( XmlNode.Stream.charAt(XmlNode.iterator++) != ">" );
+                if( this.type == XmlNode.TEXT_NODE ) {
+                    XmlNode.iterator--;
                     ended = true;
+                }
+                else if( XmlNode.Stream.charAt(XmlNode.iterator + 1) == "/" ) {
+                    //while( XmlNode.Stream.charAt(XmlNode.iterator++) != ">" );
+                    if( XmlNode.Stream.substr(XmlNode.iterator + 2, this.name.length + 1) == (this.name + '>') ) {
+                        XmlNode.iterator += this.name.length + 3;
+                        ended = true;
+                    }
+                    else throw XmlNode.XML_CLOSE_TAG_MISMATCH_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'";
                     break;
                 }
-                if( isTagOpened == false ) isTagOpened = true;
-                else throw XmlNode.XML_EXCEPTION + " at " + XmlNode.iterator + " on '" + c + "'";
-                XmlNode.iterator++;
-                try {
-                    xNode = new XmlNode(XmlNode.XML_NODE, true);
-                } catch (ex) {
-                    throw ex;
+                else {
+                    if( isTagOpened == false ) isTagOpened = true;
+                    else throw XmlNode.XML_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'";
+                    XmlNode.iterator++;
+                    try {
+                        xNode = new XmlNode(XmlNode.XML_NODE, true);
+                    } catch (ex) {
+                        throw ex;
+                    }
+                    this.nodes.push(xNode);
                 }
-                this.nodes.push(xNode);
                 break;
             case ">":
                 if( isTagOpened == true ) isTagOpened = false;
-                else throw XmlNode.XML_EXCEPTION + " at " + XmlNode.iterator + " on '" + c + "'";
+                else throw XmlNode.XML_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'";
                 break;
             default:
                 if( isTagOpened && !hasName ) { // Name Construction
                     if( this.name == "" ) {
                         if( XmlNode.isAlpha(code) ) this.name += c;
-                        else throw XmlNode.XML_NODE_NAME_EXCEPTION + " at " + XmlNode.iterator + " on '" + c + "'";
+                        else throw XmlNode.XML_NODE_NAME_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'";
                     }
                     else {
                         if( XmlNode.isAlphaNum(code) || c == "_" || c == "-" || c == ":") this.name += c;
                         else if ( c = " ") hasName = true;
-                        else throw XmlNode.XML_NODE_NAME_EXCEPTION + " at " + XmlNode.iterator + " on '" + c + "'"
+                        else throw XmlNode.XML_NODE_NAME_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'"
                     }
                 }
                 else if( isTagOpened ) {  // Attibutes Construction
@@ -73,26 +83,24 @@ function XmlNode(arg1, arg2) {
                         currentAttribute = '';
                         currentValue = '';
                     }
-                    else throw ATTRIBUTE_EXCEPTION + " at " + XmlNode.iterator + " on '" + c + "'";
+                    else throw ATTRIBUTE_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'";
                 }
                 else if( !isTagOpened ) {
-                    if( this.type == XmlNode.XML_NODE ) {
-                        if( this.text == "" ) { // Text Node Creation
-                            try {
-                                xNode = new XmlNode(XmlNode.TEXT_NODE, false);
-                            } catch (ex) {
-                                throw ex;
-                            }
-                            this.nodes.push(xNode);
+                    if( this.type == XmlNode.XML_NODE ) {   // Text Node Creation
+                        try {
+                            xNode = new XmlNode(XmlNode.TEXT_NODE, false);
+                        } catch (ex) {
+                            throw ex;
                         }
+                        this.nodes.push(xNode);
                     }
                 }
-//                     this.text += this.text;
+                this.text += c;
                 break;
         }
         if( ended ) break;
         previousChar = c;
-        this.text += this.text;
+        //this.text += c;
     }
 }
 
@@ -107,10 +115,14 @@ XmlNode.XML_NODE = 0x02;
 XmlNode.XML_EXCEPTION = "INVALID XML";
 XmlNode.XML_NODE_NAME_EXCEPTION = "XML NODE NAME INVALID";
 XmlNode.ATTRIBUTE_EXCEPTION = "XML ATTRIBUTE NAME INVALID";
+XmlNode.XML_CLOSE_TAG_MISMATCH_EXCEPTION = "XML CLOSE TAG MISMATCH";
 
-// XmlNode.prototype.setName = new function ( newName ) {
-//     this.name = newName;
-// }
+XmlNode.charBeforeError = 0;
+XmlNode.textErrorLength = 10;
+
+XmlNode.textOnError = function ( ) {
+    return XmlNode.Stream.substr(XmlNode.iterator - XmlNode.charBeforeError, XmlNode.textErrorLength);
+}
 
 XmlNode.isSeparator = function (code) {
     return !XmlNode.isAlphaNum(code);
