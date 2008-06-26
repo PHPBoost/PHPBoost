@@ -1,11 +1,11 @@
 <?php
 /*##################################################
- *                             com.class.php
+ *                             comments.class.php
  *                            -------------------
  *   begin                : March 08, 2008
- *   copyright          : (C) 2008 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
+ *   copyright          : (C) 2008 Viarre Régis, Sautel Benoit
+ *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com
+ * v 2.0
  *
 ###################################################
  *
@@ -120,7 +120,7 @@ class Comments
 	{
 		if( !empty($path) )
 			$this->path = $path;
-		$this->idcom = max($idcom, 0);
+		$this->idcom = (int)max($idcom, 0);
 		list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->get_info_module();
 	}
 	
@@ -135,11 +135,14 @@ class Comments
 	{
 		global $Cache, $Member, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_MEMBER, $CONFIG_COM, $_array_rank, $_array_groups_auth;
 		
-		$idcom_get = retrieve(GET, 'coms', 0);
-		$idcom_post = retrieve(POST, 'idcom', 0);
-	    $idcom = $idcom_post > 0 ? $idcom_post : $idcom_get;
-		
-	    $this->Set_arg($idcom); //On met à jour les attributs de l'objet.
+		if( $integrated_in_environment )
+		{
+			$idcom_get = retrieve(GET, 'coms', 0);
+			$idcom_post = retrieve(POST, 'idcom', 0);
+		    $idcom = $idcom_post > 0 ? $idcom_post : $idcom_get;
+			
+		    $this->idcom = $idcom; //On met à jour les attributs de l'objet.
+		}
 	    $vars_simple = sprintf($this->vars, 0);
 		
 		$delcom = retrieve(GET, 'delcom', false);
@@ -149,7 +152,7 @@ class Comments
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0);
 		
 		if( !is_object($Template) || get_class($Template) != 'Template' )
-			$Template = new Template('com.tpl');
+			$Template = new Template('framework/content/com.tpl');
 		
 		//Commentaires chargés?
 		if( $this->is_loaded() )
@@ -210,8 +213,8 @@ class Comments
 				
 				$row = $Sql->Query_array('com', '*', "WHERE idcom = '" . $this->get_attribute('idcom') . "' AND idprov = '" . $this->get_attribute('idprov') . "' AND script = '" . $this->get_attribute('script') . "'", __LINE__, __FILE__);
 				$row['user_id'] = (int)$row['user_id'];
-
-				if( $this->get_attribute('idcom') != '0' && ($Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1)) ) //Modération des commentaires.
+				
+				if( $this->get_attribute('idcom') != 0 && ($Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1)) ) //Modération des commentaires.
 				{
 					if( $delcom ) //Suppression du commentaire.
 					{
@@ -296,8 +299,11 @@ class Comments
 			}
 			elseif( isset($_GET['lock']) && $Member->Check_level(MODO_LEVEL) ) //Verrouillage des commentaires.
 			{
-				$lock = retrieve(GET, 'lock', 0);
-				$this->lock($lock);
+				if( $Member->Check_level(MODO_LEVEL) )
+				{
+					$lock = retrieve(GET, 'lock', 0);
+					$this->lock($lock);
+				}
 				redirect($path_redirect . '#' . $this->get_attribute('script'));
 			}
 			else
@@ -308,7 +314,7 @@ class Comments
 				
 				if( $get_quote > 0 )
 				{
-					$info_com = $Sql->Query_array('com', 'login', 'contents', "WHERE script = '" . $script . "' AND idprov = '" . $this->idprov . "' AND idcom = '" . $get_quote . "'", __LINE__, __FILE__);
+					$info_com = $Sql->Query_array('com', 'login', 'contents', "WHERE script = '" . $this->script . "' AND idprov = '" . $this->idprov . "' AND idcom = '" . $get_quote . "'", __LINE__, __FILE__);
 					$contents = '[quote=' . $info_com['login'] . ']' . $info_com['contents'] . '[/quote]';
 				}
 
@@ -450,20 +456,20 @@ class Comments
 					$readonly = '';
 					if( $is_modo && !$is_guest ) //Modération.
 					{
-						$warning = '&nbsp;<a href="../member/moderation_panel' . transid('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
-						$readonly = '<a href="../member/moderation_panel' . transid('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
+						$warning = '&nbsp;<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . transid('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
+						$readonly = '<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . transid('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
 					}
 					
 					//Edition/suppression.
 					if( $is_modo || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1) )
 					{
-						$edit = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&editcom=1#' . $this->script . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&delcom=1#' . $this->script . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+						$edit = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&editcom=1#' . $this->script . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&delcom=1#' . $this->script . '" onClick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 					}
 					
 					//Pseudo.
 					if( !$is_guest ) 
-						$com_pseudo = '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
+						$com_pseudo = '<a class="msg_link_pseudo" href="' . PATH_TO_ROOT . '/member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
 					else
 						$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
 					
@@ -497,7 +503,7 @@ class Comments
 					}
 					
 					//Image associée au rang.
-					$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
+					$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 								
 					//Affichage des groupes du membre.		
 					if( !empty($row['user_groups']) && $_array_groups_auth ) 
@@ -507,7 +513,7 @@ class Comments
 						foreach($_array_groups_auth as $idgroup => $array_group_info)
 						{
 							if( is_numeric(array_search($idgroup, $array_user_groups)) )
-								$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
+								$user_groups .= !empty($array_group_info['img']) ? '<img src="' . PATH_TO_ROOT . '/images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
 						}
 					}
 					else
@@ -518,16 +524,16 @@ class Comments
 					
 					//Avatar			
 					if( empty($row['user_avatar']) ) 
-						$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
+						$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
 					else
 						$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 					
 					//Affichage du sexe et du statut (connecté/déconnecté).	
 					$user_sex = '';
 					if( $row['user_sex'] == 1 )	
-						$user_sex = $LANG['sex'] . ': <img src="../templates/' . $CONFIG['theme'] . '/images/man.png" alt="" /><br />';	
+						$user_sex = $LANG['sex'] . ': <img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/man.png" alt="" /><br />';	
 					elseif( $row['user_sex'] == 2 ) 
-						$user_sex = $LANG['sex'] . ': <img src="../templates/' . $CONFIG['theme'] . '/images/woman.png" alt="" /><br />';
+						$user_sex = $LANG['sex'] . ': <img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/woman.png" alt="" /><br />';
 							
 					//Nombre de message.
 					$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
@@ -545,7 +551,7 @@ class Comments
 						'CONTENTS' => ucfirst(second_parse($row['contents'])),
 						'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
 						'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
-						'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
+						'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
 						'USER_PSEUDO' => $com_pseudo,			
 						'USER_RANK' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
 						'USER_IMG_ASSOC' => $user_assoc_img,
@@ -555,16 +561,16 @@ class Comments
 						'USER_SEX' => $user_sex,
 						'USER_MSG' => !$is_guest ? $user_msg : '',
 						'USER_LOCAL' => $user_local,
-						'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
-						'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
-						'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+						'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
+						'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
+						'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 						'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . $row['user_sign'] : '',
-						'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+						'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 						'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
 						'PUNISHMENT' => $readonly,			
 						'DEL' => $del,
 						'EDIT' => $edit,
-						'U_MEMBER_PM' => '<a href="../member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>',
+						'U_MEMBER_PM' => '<a href="' . PATH_TO_ROOT . '/member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>',
 						'U_ANCHOR' => $this->path . $this->vars . '#m' . $row['idcom'],
 						'U_QUOTE' => $this->path . sprintf($this->vars, $row['idcom']) . '&amp;quote=' . $row['idcom'] . '#' . $this->script
 					));
@@ -574,8 +580,6 @@ class Comments
 				
 				include_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode.php');
 			}
-			//Com en popup
-		 	//if( $integrated_in_environment )
 			return $Template->parse(TEMPLATE_STRING_MODE);
 		}
 		else
