@@ -44,6 +44,7 @@ class Search
      */
     {
         global $Sql, $Member;
+        $search = md5($search); // Identifiant de la recherche
         
         $this->errors = 0;
         $this->search = $search;
@@ -355,6 +356,14 @@ class Search
      */
     {
         return array_keys($this->id_search);
+    }
+    
+    function get_ids()
+    /**
+     *  Renvoie l'id de la recherche
+     */
+    {
+        return $this->id_search;
     }
     
     //------------------------------------------------------------------ PRIVE

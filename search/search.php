@@ -97,7 +97,9 @@ foreach( $searchModule as $module)
         {
             foreach( $formModuleArgs as $arg)
             {
-                if ( isset($_POST[$arg]) )
+                if ( $arg == 'search' ) // 'search' non sécurisé
+                    $modulesArgs[$module->get_id()]['search'] = $search;
+                elseif ( isset($_POST[$arg]) )  // Argument non sécurisé (sécurisé par le module en question)
                     $modulesArgs[$module->get_id()][$arg] = $_POST[$arg];
             }
         }
