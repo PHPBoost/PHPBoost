@@ -63,17 +63,19 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 		else
 		{
 			//Vérification des password.
-			$password = retrieve(POST, 'pass', '', TSTING_UNSECURE);
+			$password = retrieve(POST, 'pass', '', TSTRING_UNSECURE);
 			$password_hash = !empty($password) ? strhash($password) : '';
 			$password_bis = retrieve(POST, 'confirm_pass', '', TSTRING_UNSECURE);
 			$password_bis_hash = !empty($password_bis) ? strhash($password_bis) : '';
-	
+            
 			if( !empty($password_hash) && !empty($password_bis_hash) )
 			{
 				if( $password_hash === $password_bis_hash )
 				{
-					if( strlen($password) >= 6 && strlen($password_bis) >= 6 )
+					if( strlen($password) >= 6 )
+                    {
 						$Sql->Query_inject("UPDATE ".PREFIX."member SET password = '" . $password_hash . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+                        }
 					else //Longueur minimale du password
 						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
 				}

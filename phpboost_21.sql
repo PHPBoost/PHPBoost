@@ -1412,7 +1412,7 @@ CREATE TABLE `phpboost_search_index` (
   `module` varchar(64) NOT NULL default '0',
   `search` varchar(50) NOT NULL default '',
   `options` varchar(50) NOT NULL default '',
-  `last_search_use` int(14) NOT NULL default '0'
+  `last_search_use` int(14) NOT NULL default '0',
   `times_used` int(3) NOT NULL default '0',
   PRIMARY KEY  (`id_search`),
   UNIQUE KEY `id_user` (`id_user`,`module`,`search`,`options`),
