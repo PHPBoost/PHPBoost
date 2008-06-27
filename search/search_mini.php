@@ -46,9 +46,9 @@ $Template->Assign_vars(Array(
     'TEXT_SEARCHED' => !empty($search) ? $search : $LANG['search'] . '...',
     'WARNING_LENGTH_STRING_SEARCH' => $LANG['warning_length_string_searched'],
 	'L_SEARCH' => $LANG['search'],
-    'U_FORM_VALID' => transid('../search/search.php#results'),
+    'U_FORM_VALID' => transid(PATH_TO_ROOT . '/search/search.php#results'),
     'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-    'U_ADVANCED_SEARCH' => transid('../search/search.php'),
+    'U_ADVANCED_SEARCH' => transid(PATH_TO_ROOT . '/search/search.php'),
 ));
 
 //------------------------------------------------------------- Other includes
