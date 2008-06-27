@@ -1,119 +1,140 @@
-function Node() {
+function XmlDocument(stream) {
+    this.root = null;
+    XmlDocument.stream = stream;
+    XmlDocument.iterator = 0;
+    
+    while( XmlDocument.stream.charAt(XmlDocument.iterator++) != "<" );
+    try {
+        this.root = new XmlNode();
+    }
+    catch( ex ) {
+        throw ex;
+    }
+}
 
+XmlDocument.prototype.toString = function() {
+    return this.root.toString();
+}
+
+function Node() {
 }
 
 function TextNode() {
-
+    this.text = "";
+    for( ; XmlDocument.iterator < XmlDocument.stream.length; XmlDocument.iterator++ )
+    {
+        var c = XmlDocument.stream.charAt(XmlDocument.iterator);
+        if( c == "<" ) break;
+        else this.text += c;
+    }
 }
 
-function XmlNode(arg1, arg2) {
+TextNode.prototype.toString = function() {
+    return this.text;
+}
+
+function XmlNode() {
     this.name = "";
-    this.text = "";
     this.attributes = new Array();
     this.nodes = new Array();
     
     var hasName = false;
-    var isTagOpened = false;
+    var isTagOpened = true;
     var currentAttribute = "";
     var currentValue = "";
     var previousChar = "";
     var ended = false;
     
-    switch( arguments.length ) {
-        case 1:
-            XmlNode.Stream = arg1;
-            XmlNode.iterator = 0;
-            this.type = XmlNode.XML_NODE;
-            isTagOpened = false;
-            break;
-        case 2:
-            this.type = arg1;
-            isTagOpened = arg2;
-            break;
-        default:
-            break;
-    }
-    
-    for( ; XmlNode.iterator < XmlNode.Stream.length; XmlNode.iterator++ )
+    for( ; XmlDocument.iterator < XmlDocument.stream.length; XmlDocument.iterator++ )
     {
-        var c = XmlNode.Stream.charAt(XmlNode.iterator);
+        var c = XmlDocument.stream.charAt(XmlDocument.iterator);
         var code = c.charCodeAt(0);
         
         switch( c ) {
             case "<":
-                if( this.type == XmlNode.TEXT_NODE ) {
-                    XmlNode.iterator--;
-                    ended = true;
-                }
-                else if( XmlNode.Stream.charAt(XmlNode.iterator + 1) == "/" ) {
-                    //while( XmlNode.Stream.charAt(XmlNode.iterator++) != ">" );
-                    if( XmlNode.Stream.substr(XmlNode.iterator + 2, this.name.length + 1) == (this.name + '>') ) {
-                        XmlNode.iterator += this.name.length + 3;
+                if( XmlDocument.stream.charAt(XmlDocument.iterator + 1) == "/" ) {    // XML Close Tag
+                    if( XmlDocument.stream.substr(XmlDocument.iterator + 2, this.name.length + 1) == (this.name + '>') ) {
+                        XmlDocument.iterator += this.name.length + 2;
                         ended = true;
                     }
-                    else throw XmlNode.XML_CLOSE_TAG_MISMATCH_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'";
+                    else XmlNode.Throw(XmlNode.XML_CLOSE_TAG_MISMATCH_EXCEPTION);
                     break;
                 }
-                else {
-                    if( isTagOpened == false ) isTagOpened = true;
-                    else throw XmlNode.XML_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'";
-                    XmlNode.iterator++;
+                else {  // Opening a XML Tag
+                    if( isTagOpened == true ) XmlNode.Throw(XmlNode.XML_EXCEPTION);
+                    XmlDocument.iterator++;
                     try {
-                        xNode = new XmlNode(XmlNode.XML_NODE, true);
+                        this.nodes.push(new XmlNode());
                     } catch (ex) {
                         throw ex;
                     }
-                    this.nodes.push(xNode);
                 }
                 break;
             case ">":
                 if( isTagOpened == true ) isTagOpened = false;
-                else throw XmlNode.XML_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'";
+                else XmlNode.Throw(XmlNode.XML_EXCEPTION);
+                if( previousChar == "/" ) ended = true; // Empty XML Node
                 break;
             default:
-                if( isTagOpened && !hasName ) { // Name Construction
-                    if( this.name == "" ) {
-                        if( XmlNode.isAlpha(code) ) this.name += c;
-                        else throw XmlNode.XML_NODE_NAME_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'";
-                    }
-                    else {
-                        if( XmlNode.isAlphaNum(code) || c == "_" || c == "-" || c == ":") this.name += c;
-                        else if ( c = " ") hasName = true;
-                        else throw XmlNode.XML_NODE_NAME_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'";
-                    }
-                }
-                else if( isTagOpened ) {  // Attibutes Construction
-                    if( XmlNode.isAlphaNum(code) || c == "_" || c == "-" ) currentAttribute += c;
-                    else if( c == "=" || " " ) {}
-                    else if( (previousChar = "\"" && c != "\"") || currentValue != "" ) currentValue += c;
-                    else if( c == "\"" && previousChar != "\\" ) {
-                        this.attributes[currentAttribute] = currentValue;
-                        currentAttribute = '';
-                        currentValue = '';
-                    }
-                    else throw ATTRIBUTE_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'";
-                }
-                else if( !isTagOpened ) {
-                    if( this.type == XmlNode.XML_NODE ) {   // Text Node Creation
-                        try {
-                            xNode = new XmlNode(XmlNode.TEXT_NODE, false);
-                        } catch (ex) {
-                            throw ex;
+                if( isTagOpened ) {
+                    if( !hasName ) {    // Name Construction
+                        if( this.name == "" ) {
+                            if( XmlNode.isAlpha(code) ) this.name += c;
+                            else XmlNode.Throw(XmlNode.XML_NODE_NAME_EXCEPTION);
                         }
-                        this.nodes.push(xNode);
+                        else {
+                            if( XmlNode.isAlphaNum(code) || c == "_" || c == "-" || c == ":") this.name += c;
+                            else if ( c == " ") hasName = true;
+                            else XmlNode.Throw(XmlNode.XML_NODE_NAME_EXCEPTION);
+                        }
+                    }
+                    else {  // Attibutes Construction
+                        if( XmlNode.isAlphaNum(code) || c == "_" || c == "-" ) currentAttribute += c;
+                        else if( c == "=" || " " ) {}
+                        else if( (previousChar = "\"" && c != "\"") || currentValue != "" ) currentValue += c;
+                        else if( c == "\"" && previousChar != "\\" ) {
+                            this.attributes[currentAttribute] = currentValue;
+                            currentAttribute = '';
+                            currentValue = '';
+                        }
+                        else XmlNode.Throw(XmlNode.ATTRIBUTE_EXCEPTION);
                     }
                 }
-                this.text += c;
+                else this.nodes.push(new TextNode());// Text Node Creation
                 break;
         }
-        if( ended ) break;
         previousChar = c;
-        //this.text += c;
+        if( ended ) break;
     }
 }
 
-XmlNode.Stream = "";
-XmlNode.iterator = 0;
+XmlNode.prototype.toString = function( pDepht ) {
+    var depht = 0;
+    var toStr = "";
+    
+    if( arguments.length == 1 ) depht = pDepht;
+
+    for( var j = 0; j < depht; j++ ) toStr += "\t";
+    toStr += "&lt;" + this.name;
+
+    if( this.attributes.length > 0 ) {
+        for( attr in this.attributes.length )
+            toStr += " " + attr + "=\"" + this.attributes[attr] + "\"";
+    }
+    if( this.nodes.length > 0 ) {
+        toStr += "&gt;\n"
+        for( var i = 0; i < this.nodes.length; i++ ) {
+            toStr += this.nodes[i].toString( depht + 1);
+        }
+        for( var j = 0; j < depht; j++ ) toStr += "\t";
+        toStr += "&lt;/" + this.name + "&gt;\n";
+    }
+    else toStr += " /&gt;\n";
+    return toStr;
+}
+
+XmlDocument.stream = "";
+XmlDocument.iterator = 0;
 
 // Types
 XmlNode.TEXT_NODE = 0x01;
@@ -128,8 +149,23 @@ XmlNode.XML_CLOSE_TAG_MISMATCH_EXCEPTION = "XML CLOSE TAG MISMATCH";
 XmlNode.charBeforeError = 0;
 XmlNode.textErrorLength = 10;
 
+XmlNode.Throw = function ( ex ) {
+    throw ex + " at " + XmlDocument.iterator + " on '" + XmlDocument.stream.charAt(XmlDocument.iterator) +"' in context : ..." + XmlNode.textOnError() + "...\n" + XmlNode.Dump();
+}
+
+XmlNode.Dump = function ( ) {
+    var dump = "";
+//     dump += "\nhasName = " + hasName;
+//     dump += "\nisTagOpened = " + isTagOpened;
+//     dump += "\ncurrentAttribute = " + currentAttribute;
+//     dump += "\ncurrentValue = " + currentValue;
+//     dump += "\npreviousChar = " + previousChar;
+//     dump += "\nended = " + ended;
+    return dump;
+}
+
 XmlNode.textOnError = function ( ) {
-    return XmlNode.Stream.substr(XmlNode.iterator - XmlNode.charBeforeError, XmlNode.textErrorLength);
+    return XmlDocument.stream.substr(XmlDocument.iterator - XmlNode.charBeforeError, XmlNode.textErrorLength);
 }
 
 XmlNode.isSeparator = function (code) {
