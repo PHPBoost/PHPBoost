@@ -1,3 +1,11 @@
+function Node() {
+
+}
+
+function TextNode() {
+
+}
+
 function XmlNode(arg1, arg2) {
     this.name = "";
     this.text = "";
@@ -71,7 +79,7 @@ function XmlNode(arg1, arg2) {
                     else {
                         if( XmlNode.isAlphaNum(code) || c == "_" || c == "-" || c == ":") this.name += c;
                         else if ( c = " ") hasName = true;
-                        else throw XmlNode.XML_NODE_NAME_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'"
+                        else throw XmlNode.XML_NODE_NAME_EXCEPTION + " at " + XmlNode.iterator + " on '" + XmlNode.textOnError() + "'";
                     }
                 }
                 else if( isTagOpened ) {  // Attibutes Construction

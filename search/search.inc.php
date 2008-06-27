@@ -48,7 +48,7 @@ function execute_search($Search, &$searchModules, &$modulesArgs, &$results)
         if( !$Search->is_in_cache($module->get_id()) )
         {
             // On rajoute l'identifiant de recherche comme parametre pour faciliter la requete
-            $modulesArgs[$module->get_id()]['id_search'] = $Search->id_search[$module->get_id()];
+            $modulesArgs[$module->get_id()]['id_search'] = !empty($Search->id_search[$module->get_id()]) ? $Search->id_search[$module->get_id()] : 0;
             $requests[$module->get_id()] = $module->functionnality('get_search_request', $modulesArgs[$module->get_id()]);
         }
     }
@@ -70,12 +70,12 @@ function get_search_results($searchTxt, &$searchModules, &$modulesArgs, &$result
     {
         array_push($modulesIds, $module->get_id());
         // enleve la chaine search de la chaine options et la tronque a 255 caracteres
-        $modulesOptions[$module->get_id()] = strhash(implode('|', $modulesArgs[$module->get_id()]));
+        $modulesOptions[$module->get_id()] = md5(implode('|', $modulesArgs[$module->get_id()]));
     }
     
     $Search = new Search($searchTxt, $modulesOptions);
     execute_search($Search, $searchModules, $modulesArgs, $results);
-    $idsSearch = $Search->id_search;
+    $idsSearch = $Search->get_ids();
     
     if ( !$justInsert )
         return $Search->get_results($results, $modulesIds);
