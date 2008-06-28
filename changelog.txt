@@ -21,7 +21,7 @@
 [*] [color=red]Nouveauté:[/color] Gestionnaire de commentaires (Framework PHPBoost). 
 [*] [color=red]Nouveauté:[/color] Gestionnaire de notation (Framework PHPBoost). 
 [*] [color=red]Nouveauté:[/color] Amélioration de l'approche de programmation orienté objet (Framework PHPBoost). 
-- [color=red]Nouveauté:[/color] Support des autorisations avancées pour les menus.
+[*] [color=red]Nouveauté:[/color] Support des autorisations avancées pour les menus.
 [*] color=red]Nouveauté:[/color] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml.
 [*] Valeurs par défaut dans les autorisations sur les groupes.
 [*] Système de visualisation des messages du membre, possibilité de communication avec les modules pour récupérer les liens vers les messages.
@@ -51,8 +51,8 @@
 [*] Message d'avertissement dans les commentaires si non autorisé à poster.
 [*] Couleur alternée dans les messages (configurable par le css).
 [*] Ajout d'une barre de progression ajax automatisée.
-+ Ajout de la balise fieldset.
-+ Ajout de la balise block.
+[*] Ajout de la balise fieldset.
+[*] Ajout de la balise block.
 [*] Ajout de la balise font, permet de changer la police d'écriture.
 [*] Ajout de la balise bgcolor, permet de définir une couleur de fond.
 [*] Ajout de la balise pre.
@@ -83,7 +83,6 @@
 
 [b]Forum[/b]
 [*] [color=red]Nouveauté:[/color] Réorganisation complète du code.
-- [color=red]Nouveauté:[/color] Panneau de modération: opérations de masse (suppressions, déplacements, etc).
 [*] [color=red]Nouveauté:[/color] Lien précis vers l'action concernée dans l'historique du panneau de modération.
 [*] [color=red]Nouveauté:[/color] Interface pour visualiser partout sur le forum et instantanemment les messages non lus.
 [*] [color=red]Nouveauté:[/color] Affichage du nombre de messages non lus.
@@ -100,7 +99,6 @@
 [*] Correction de la fonction de recomptage des sujets/messages.
 
 [b]Galerie:[/b]
-- [color=red]Nouveauté:[/color] Nouveau système pour la gestion des catégories infinies (moins lourd et plus sûr).
 [*] Nom des images uploadées conservé.
 [*] Nouveau système de notation.
 
@@ -112,16 +110,15 @@
 [*] Possibilité de masquer la date de la news.
 
 [b]Articles[/b]
-- [color=red]Nouveauté:[/color] Nouveau système pour la gestion des catégories infinies (moins lourd et plus sûr).
 - [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des articles.
 [*] [color=red]Nouveauté:[/color] Création d'une liste déroulante des pages consultables.
 [*] Ajout de la balise nouvelle page.
 [*] Nouveau système de notation.
 
 [b]Téléchargement[/b]
-+ [color=red]Nouveauté:[/color] Nouveau système pour la gestion des catégories infinies (moins lourd et plus sûr).
+[*] [color=red]Nouveauté:[/color] Nouveau système pour la gestion des catégories infinies (moins lourd et plus sûr).
 - [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des fichiers.
-+ [color=red]Nouveauté:[/color] Nouvelle interface.
+[*] [color=red]Nouveauté:[/color] Nouvelle interface.
 [*] Nouveau système de notation.
 
 [b]Liens web[/b]
