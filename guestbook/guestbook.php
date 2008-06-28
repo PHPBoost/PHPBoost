@@ -142,10 +142,12 @@ elseif( !empty($id_get) ) //Edition + suppression!
 	
 	if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 	{
-		if( $del )
+		if( $del ) //Suppression.
 		{
 			$Sql->Query_inject("DELETE FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 			$previous_id = $Sql->Query("SELECT MAX(id) FROM ".PREFIX."guestbook", __LINE__, __FILE__);
+			
+			$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
 			
 			redirect(HOST . SCRIPT . SID2 . '#m' . $previous_id);
 		}
@@ -201,6 +203,8 @@ elseif( !empty($id_get) ) //Edition + suppression!
 					redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
 				$Sql->Query_inject("UPDATE ".PREFIX."guestbook SET contents = '" . $guestbook_contents . "', login = '" . $guestbook_pseudo . "' WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+				
+				$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
 			
 				redirect(HOST . SCRIPT. SID2 . '#m' . $id_get);
 			}
