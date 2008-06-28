@@ -6,7 +6,7 @@
 [-] Nouvelles options d'installation (Communautaire, Vitrine, etc)
 [-] Interface de rapport du système pour le support
 [-] Supporter https dans l'installation et l'administration
-[-] Finir le parseur BBCode
+[-] Finir le parseur BBCode (+Ajout des nouvelles balises)
 [-] Panneau de modération
 
 ------------------------------------ MODULES -----------------------------------
