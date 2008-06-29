@@ -42,7 +42,7 @@ if( $install )
 		if( $value == $LANG['install'] )
 			$theme = $key;
 			
-	$secure = retrieve(POST, $theme . 'secure', -1;
+	$secure = retrieve(POST, $theme . 'secure', -1);
 	$activ = retrieve(POST, $theme . 'activ', 0);
 		
 	$check_theme = $Sql->Query("SELECT theme FROM ".PREFIX."themes WHERE theme = '" . strprotect($theme) . "'", __LINE__, __FILE__);	
