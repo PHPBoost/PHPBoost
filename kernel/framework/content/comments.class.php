@@ -583,7 +583,7 @@ class Comments
 			return $Template->parse(TEMPLATE_STRING_MODE);
 		}
 		else
-			return 'error : class Comments unloaded correctly';
+			return 'error : class Comments loaded uncorrectly';
 	}
 	
 	## Private Methods ##
