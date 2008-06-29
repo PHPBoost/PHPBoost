@@ -34,7 +34,8 @@ if( empty($check_update) )
 	
     //Pose d'un verrou supplémentaire
     $Sql->Query_inject("INSERT INTO ".PREFIX."stats (stats_year, stats_month, stats_day, nbr, pages, pages_detail) VALUES ('" . gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('m', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '', '', '')", __LINE__, __FILE__);
-    
+    $last_stats = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."stats"); //Récupération de la dernière insertion.
+	
     #######Statistiques#######
     $Sql->Query_inject("UPDATE ".PREFIX."stats_referer SET yesterday_visit = today_visit", __LINE__, __FILE__);
     $Sql->Query_inject("UPDATE ".PREFIX."stats_referer SET today_visit = 0, nbr_day = nbr_day + 1", __LINE__, __FILE__);
@@ -50,7 +51,7 @@ if( empty($check_update) )
     $Sql->Query_inject("INSERT INTO ".PREFIX."compteur (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', '0')", __LINE__, __FILE__); //Insère l'utilisateur qui a déclanché les requêtes de changement de jour.
 
     //Mise à jour des stats.
-    $Sql->Query_inject("UPDATE ".PREFIX."stats SET nbr = '" . $total_visit . "', pages = '" . array_sum($pages_displayed) . "', pages_detail = '" . addslashes(serialize($pages_displayed)) . "'", __LINE__, __FILE__);
+    $Sql->Query_inject("UPDATE ".PREFIX."stats SET nbr = '" . $total_visit . "', pages = '" . array_sum($pages_displayed) . "', pages_detail = '" . addslashes(serialize($pages_displayed)) . "' WHERE id = '" . $last_stats . "'", __LINE__, __FILE__);
 
 	//Suppression des sessions périmées
 	$Session->session_garbage_collector();
