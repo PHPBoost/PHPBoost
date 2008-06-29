@@ -154,10 +154,10 @@ else
 		if( $row['added'] == 2 ) //Menu perso dans le dossier /menus
 			$installed_menus_perso[] = $row['name'];
 		
-		$config = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
-		if( is_array($config) )
-		{	
-			if( $row['added'] == 0 ) //On récupère la liste des modules installés et non installés parmis la liste des menus qui y sont ratachés.
+		if( $row['added'] == 0 ) //On récupère la liste des modules installés et non installés parmis la liste des menus qui y sont ratachés.
+		{
+			$config = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
+			if( is_array($config) )
 			{	
 				unset($uncheck_modules[$row['name']]); //Module vérifié!
 				$array_menus = parse_ini_array($config['mini_module']);
@@ -176,11 +176,11 @@ else
 							unset($installed_menus[$row['name']][$module_path]);
 					}	
 				}				
+					
+				$row['name'] = !empty($config['name']) ? $config['name'] : $row['name'];		
 			}
-				
-			$row['name'] = !empty($config['name']) ? $config['name'] : '';		
 		}
-
+		
 		$block_position = $row['location'];		
 		if( ($row['location'] == 'left' || $row['location'] == 'right') && (!$THEME_CONFIG[$CONFIG['theme']]['right_column'] && !$THEME_CONFIG[$CONFIG['theme']]['left_column']) ) 
 			$block_position = 'main';
@@ -194,7 +194,7 @@ else
 			//Affichage réduit des différents modules.
 			$Template->Assign_block_vars('mod_' . $block_position, array(
 				'IDMENU' => $row['id'],
-				'NAME' => !empty($admin_link) ? '<a href="' . $admin_link . '">' . $row['name'] . '</a>' : ucfirst($row['name']),
+				'NAME' => ucfirst($row['name']),
 				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>',
 				'DEL' => ($row['added'] == 1 || $row['added'] == 2) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['location'] . '&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm_menu();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" /></a>' : '',
 				'ACTIV_ENABLED' => ($row['activ'] == '1') ? 'selected="selected"' : '',
