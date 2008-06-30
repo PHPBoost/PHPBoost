@@ -72,7 +72,6 @@ elseif( !empty($_POST['articles_count']) ) //Recompte le nombre d'articles de ch
 	FROM ".PREFIX."articles 
 	WHERE visible = 0 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
-	
 	while($row = $Sql->Sql_fetch_assoc($result) )
 		$info_cat[$row['idcat']]['unvisible'] = $row['nbr_articles_unvisible'];
 		

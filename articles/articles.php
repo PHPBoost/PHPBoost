@@ -249,7 +249,7 @@ else
 		));	
 			
 		$i = 0;	
-		$result = $Sql->Query_while("SELECT ac.id, ac.name, ac.contents, ac.icon, (ac.nbr_articles_visible + ac.nbr_articles_unvisible) AS nbr_articles, ac.nbr_articles_unvisible
+		$result = $Sql->Query_while("SELECT ac.id, ac.name, ac.contents, ac.icon, ac.nbr_articles_visible AS nbr_articles
 		FROM ".PREFIX."articles_cats ac
 		" . $clause_cat . $clause_unauth_cats . "
 		ORDER BY ac.id_left
