@@ -96,4 +96,9 @@ $LANG['e_pm_del'] = 'The recipient has delete the conversation, you can\'t post 
 $LANG['e_pm_noedit'] = 'The recipient has already read your message, you can\'t edit it anymore';
 $LANG['e_pm_nodel'] = 'The recipient has already read your message, you can\'t delete it anymore';
 
+//PHP Error Handler
+$LANG['notice'] = 'Notice';
+$LANG['warning'] = 'Warning';
+$LANG['infile'] = 'in file';
+$LANG['atline'] = 'at line';
 ?>

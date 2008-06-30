@@ -32,7 +32,7 @@
 
 //Erreurs
 $LANG['error'] = 'Erreur';
-$LANG['unknow_error'] = 'Erreur inconnue!';
+$LANG['unknow_error'] = 'Erreur inconnue';
 $LANG['e_auth'] = 'Vous n\'avez pas le niveau requis !';
 $LANG['e_unexist_module'] = 'Le module associé n\'existe pas !';
 $LANG['e_incomplete'] = 'Tous les champs obligatoires doivent être remplis !';
@@ -97,4 +97,9 @@ $LANG['e_pm_del'] = 'Le destinataire a supprimé la conversation, vous ne pouvez 
 $LANG['e_pm_noedit'] = 'Le destinataire a déjà lu votre message, vous ne pouvez plus l\'éditer';
 $LANG['e_pm_nodel'] = 'Le destinataire a déjà lu votre message, vous ne pouvez plus le supprimer';
 
+//Gestionnaire d'erreur php
+$LANG['notice'] = 'Suggestion';
+$LANG['warning'] = 'Avertissement';
+$LANG['infile'] = 'dans le fichier';
+$LANG['atline'] = 'à la ligne';
 ?>

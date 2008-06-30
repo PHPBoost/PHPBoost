@@ -25,8 +25,6 @@
  *
 ###################################################*/
 
-//Niveau de rapport d'erreurs.
-@error_reporting(ERROR_REPORTING); 
 
 //Constantes de base.
 define('ARCHIVE_ALL_ERRORS', true); //Archivage de toutes les erreurs, quel que soit le type.
@@ -44,7 +42,53 @@ class Errors
 		$this->archive_all = $archive_all;
 		//Récupération de l'adresse de redirection => constantes non initialisées.
 		$this->redirect = 'http://' . $_SERVER['HTTP_HOST'] . preg_replace('`(/(.*))?/(.*)/(.*)\.php`', '$1', $_SERVER['PHP_SELF']);
+		//On utilise notre propre handler pour la gestion des erreurs php
+		set_error_handler(array($this, 'Error_handler_php'), ERROR_REPORTING);
 	}	
+	
+	function Error_handler_php($errno, $errstr, $errfile, $errline)
+	{
+		global $LANG;
+		
+		// si une erreur est supprimé par un @ alors on passe
+		if (error_reporting() == 0) {
+			return true;
+		}
+		
+		switch($errno)
+		{
+			//Notice utilisateur.
+			case E_USER_NOTICE:
+			case E_NOTICE:
+				$errclass = $LANG['notice'];
+			break;
+			//Warning utilisateur.
+			case E_USER_WARNING:
+			case E_WARNING:
+				$errclass = $LANG['warning'];
+			break;
+			//Erreur fatale.
+			case E_USER_ERROR:
+				$errclass = $LANG['error'];
+			break;
+			//Erreur inconnue.
+			default:
+				$errclass = $LANG['unknown_error'];
+		}
+		
+		//on affiche l'erreur
+		echo '<b>'.$errclass.'</b> : '.$errstr.' '.$LANG['infile'].' <b>'.$errfile.'</b> '.$LANG['atline'].' <b>'.$errline.'</b><br />';
+		
+		// et on l'archive
+		$this->error_log($errfile, $errline, $errno, $errstr, true);
+		
+		//dans le cas d'un E_USER_ERROR on arrête l'execution
+		if($errno == E_USER_ERROR)
+			exit;
+		
+		//on ne veut pas que le gestionnaire d'erreur de php s'occupe de l'erreur en question
+		return true;
+	}
 	
 	//Gestionnaire d'erreurs controlées par le développeur.
 	function Error_handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false)
