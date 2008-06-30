@@ -97,8 +97,9 @@ $LANG['e_pm_noedit'] = 'The recipient has already read your message, you can\'t 
 $LANG['e_pm_nodel'] = 'The recipient has already read your message, you can\'t delete it anymore';
 
 //PHP Error Handler
-$LANG['notice'] = 'Notice';
-$LANG['warning'] = 'Warning';
+$LANG['e_notice'] = 'Notice';
+$LANG['e_warning'] = 'Warning';
+$LANG['e_unknow'] = 'Unknow';
 $LANG['infile'] = 'in file';
 $LANG['atline'] = 'at line';
 ?>
