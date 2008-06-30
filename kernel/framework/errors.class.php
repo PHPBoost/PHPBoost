@@ -43,47 +43,63 @@ class Errors
 		//Récupération de l'adresse de redirection => constantes non initialisées.
 		$this->redirect = 'http://' . $_SERVER['HTTP_HOST'] . preg_replace('`(/(.*))?/(.*)/(.*)\.php`', '$1', $_SERVER['PHP_SELF']);
 		//On utilise notre propre handler pour la gestion des erreurs php
-		set_error_handler(array($this, 'Error_handler_php'), ERROR_REPORTING);
+		set_error_handler(array($this, 'Error_handler_php'));
 	}	
 	
+	//Gestionnaire d'erreur.
 	function Error_handler_php($errno, $errstr, $errfile, $errline)
 	{
-		global $LANG;
+		global $LANG, $CONFIG;
 		
-		// si une erreur est supprimé par un @ alors on passe
-		if (error_reporting() == 0) {
+		if( !($errno & ERROR_REPORTING) ) //Niveau de repport d'erreur.
 			return true;
-		}
+		
+		//Si une erreur est supprimé par un @ alors on passe
+		if( error_reporting() == 0 ) 
+			return true;
 		
 		switch($errno)
 		{
 			//Notice utilisateur.
 			case E_USER_NOTICE:
 			case E_NOTICE:
-				$errclass = $LANG['notice'];
+				$errdesc = $LANG['e_notice'];
+				$errimg = 'notice';
+				$errclass = 'error_notice';
 			break;
 			//Warning utilisateur.
 			case E_USER_WARNING:
 			case E_WARNING:
-				$errclass = $LANG['warning'];
+				$errdesc = $LANG['e_warning'];
+				$errimg = 'important';
+				$errclass = 'error_warning';
 			break;
 			//Erreur fatale.
 			case E_USER_ERROR:
-				$errclass = $LANG['error'];
+			case E_ERROR:
+				$errdesc = $LANG['error'];
+				$errimg = 'stop';
+				$errclass = 'error_fatal';
 			break;
 			//Erreur inconnue.
 			default:
-				$errclass = $LANG['unknown_error'];
+				$errdesc = $LANG['e_unknown'];
+				$errimg = 'question';
+				$errclass = 'error_unknow';
 		}
+
+		//On affiche l'erreur
+		echo '<div class="' . $errclass . '" style="width:500px;margin:auto;padding:15px;">
+			<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $errimg . '.png" alt="" style="float:left;padding-right:6px;" /> 
+			<strong>' . $errdesc . '</strong> : ' . $errstr . ' ' . $LANG['infile'] . ' <strong>' . $errfile . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
+			<br />	
+		</div>';
 		
-		//on affiche l'erreur
-		echo '<b>'.$errclass.'</b> : '.$errstr.' '.$LANG['infile'].' <b>'.$errfile.'</b> '.$LANG['atline'].' <b>'.$errline.'</b><br />';
-		
-		// et on l'archive
+		//Et on l'archive
 		$this->error_log($errfile, $errline, $errno, $errstr, true);
 		
-		//dans le cas d'un E_USER_ERROR on arrête l'execution
-		if($errno == E_USER_ERROR)
+		//Dans le cas d'un E_USER_ERROR on arrête l'execution
+		if( $errno == E_USER_ERROR )
 			exit;
 		
 		//on ne veut pas que le gestionnaire d'erreur de php s'occupe de l'erreur en question

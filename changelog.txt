@@ -22,7 +22,7 @@
 [*] [color=red]Nouveauté:[/color] Gestionnaire de notation (Framework PHPBoost). 
 [*] [color=red]Nouveauté:[/color] Amélioration de l'approche de programmation orienté objet (Framework PHPBoost). 
 [*] [color=red]Nouveauté:[/color] Support des autorisations avancées pour les menus.
-[*] color=red]Nouveauté:[/color] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml.
+[*] [color=red]Nouveauté:[/color] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml.
 [*] Valeurs par défaut dans les autorisations sur les groupes.
 [*] Système de visualisation des messages du membre, possibilité de communication avec les modules pour récupérer les liens vers les messages.
 [*] Possibilité de désactiver les colonnes droite/gauche du thème.
@@ -64,6 +64,7 @@
 [*] Possibilité de saisir des dates avant 1970 dans le mini calendrier.
 [*] Diminution de la taille du copyright dans le pied de page.
 [*] Changement du système de page de démarrage (plus fiable).
+[*] Capture de toutes les erreurs php par le gestionnaire, et archivage.
 [*] Pose de verroux lors de l'écriture des fichiers de cache (plus sûr).
 [*] Nouvelle fonction de redirection.
 [*] Amélioration du chargement des fichiers de configuration.

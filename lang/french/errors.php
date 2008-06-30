@@ -98,8 +98,9 @@ $LANG['e_pm_noedit'] = 'Le destinataire a déjà lu votre message, vous ne pouvez 
 $LANG['e_pm_nodel'] = 'Le destinataire a déjà lu votre message, vous ne pouvez plus le supprimer';
 
 //Gestionnaire d'erreur php
-$LANG['notice'] = 'Suggestion';
-$LANG['warning'] = 'Avertissement';
+$LANG['e_notice'] = 'Suggestion';
+$LANG['e_warning'] = 'Avertissement';
+$LANG['e_unknow'] = 'Inconnue';
 $LANG['infile'] = 'dans le fichier';
 $LANG['atline'] = 'à la ligne';
 ?>
