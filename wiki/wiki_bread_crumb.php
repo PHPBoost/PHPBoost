@@ -101,7 +101,7 @@ switch($bread_crumb_key)
 		elseif( $del_article > 0 )
 			$Bread_crumb->Add_link($LANG['wiki_remove_cat'], transid('property.php?del=' . $del_article));
 			
-		if( $article_infos['is_cat'] == 0 )
+		if( isset($article_infos) && $article_infos['is_cat'] == 0 )
 			$Bread_crumb->Add_link($article_infos['title'], transid('wiki.php?title=' . url_encode_rewrite($article_infos['title']), url_encode_rewrite($article_infos['title'])));
 			
 		$id_cat = !empty($article_infos['id_cat']) ? (int)$article_infos['id_cat'] : 0;
