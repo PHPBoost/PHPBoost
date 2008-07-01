@@ -266,6 +266,7 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="id" value="{articles.IDARTICLES}" />
+					<input type="hidden" name="user_id" value="{articles.USER_ID}" />
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
 					<input type="submit" name="previs" value="{L_PREVIEW}" class="submit" />
 					<input type="reset" value="{L_RESET}" class="reset" />				

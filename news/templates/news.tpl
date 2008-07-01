@@ -59,7 +59,8 @@
 				{news.ICON} 
 				{news.CONTENTS}					
 				<br /><br />
-				{news.EXTEND_CONTENTS}	
+				{news.EXTEND_CONTENTS}
+				<div class="spacer"></div>
 			</div>			
 			<div class="news_bottom_l"></div>		
 			<div class="news_bottom_r"></div>
