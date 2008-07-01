@@ -53,16 +53,16 @@ elseif( retrieve(POST, 'connect', false) && !empty($login) && !empty($password) 
 			if( $delay_connect >= 600 ) //5 nouveau essais, 10 minutes après.
 			{
 				$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-				$error_report = $Session->Session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, TITLE, $autoconnexion); //On lance la session.
+				$error_report = $Session->Session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
 			}
 			elseif( $delay_connect >= 300 ) //2 essais 5 minutes après
 			{
 				$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Redonne 2 essais.
-				$error_report = $Session->Session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, TITLE, $autoconnexion); //On lance la session.
+				$error_report = $Session->Session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
 			}
 			elseif( $info_connect['test_connect'] < 5 ) //Succès.
 			{
-				$error_report = $Session->Session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, TITLE, $autoconnexion); //On lance la session.
+				$error_report = $Session->Session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
 			}
 			else //plus d'essais
 				redirect(HOST . DIR . '/member/error.php?e=e_member_flood#errorh');
