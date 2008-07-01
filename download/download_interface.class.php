@@ -128,9 +128,8 @@ class DownloadInterface extends ModuleInterface
         $cats = array(0, 23, 24);
         //$cats = array(23, 24);
         require_once('../kernel/framework/syndication/feed.class.php');
-        require_once('../kernel/framework/template.class.php');
-        $tpl = new Template('framework/syndication/feed_with_images.tpl');
-        $tpl->Assign_vars(array('L_READ' => 'Télécharger'));
+//         require_once('../kernel/framework/template.class.php');
+//         $tpl = new Template('download/framework/syndication/feed.tpl');
         
         foreach( $cats as $cat )
             feeds_update_cache($this->id, $this->syndication_data($cat), $cat, $tpl);

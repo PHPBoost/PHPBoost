@@ -38,11 +38,14 @@ class Template
     function Template($tpl = '')
     {
 		global $CONFIG, $Member;
-		
+        
         $this->tpl = $this->check_file($tpl);
         $this->files[$this->tpl] = $this->tpl;
 		if( !empty($tpl) )
 		{
+//             echo '<b>' . $tpl . '</b> - ';
+//             print_r($this->files);
+//             echo '<hr />';
 			$member_connected = $Member->Check_level(MEMBER_LEVEL);
 			$this->Assign_vars(array(
 				'SID' => SID,
@@ -163,12 +166,14 @@ class Template
 	function check_file($filename)
 	{
 		global $CONFIG;
-		
 		$filename = trim($filename, '/');
 		$i = strpos($filename, '/');
 		$module = substr($filename, 0, $i);
-		$file = substr($filename, $i);
-
+        $file = trim(substr($filename, $i), '/');
+        $folder = trim(substr($file, 0, strpos($file, '/')), '/');
+        
+//         echo '<hr />' . $filename . ' - ' . $file . ' - ' . $module . '<br />';
+        
 		if( empty($file) ) //Template du thème (noyau)
 			return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
 		else //Module
@@ -178,13 +183,14 @@ class Template
 			{
 				if( is_dir(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/images') )
 					$this->module_data_path[$module] = PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module;
-				else	
-					$this->module_data_path[$module] = PATH_TO_ROOT . '/' . $module . '/templates'; 
+				else
+					$this->module_data_path[$module] = PATH_TO_ROOT . '/' . $module . '/templates';
 			}
-			
 			if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/' . $file) )
-				return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/' . $file;
-			else
+                return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/' . $file;
+            elseif( ($folder == 'framework') && file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $file) )
+                return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $file;
+            else
 				return PATH_TO_ROOT . '/' . $module . '/templates/' . $file;
 		}
 	}

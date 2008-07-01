@@ -46,7 +46,7 @@ function feeds_update_cache($feed_name, &$data, $idcat = 0, $tpl = false)
     if( $tpl !== false )
         $template = $tpl->copy();
     else
-        $template = new Template('framework/syndication/feed.tpl');
+        $template = new Template($feed_name . '/framework/syndication/feed.tpl');
     
     $HTML = new Feed($feed_name);
     $HTML->load_data($data);
