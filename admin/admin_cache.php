@@ -73,6 +73,7 @@ else    // Génération du cache des rss
         foreach( $syndication_modules as $module )
             $module->functionnality('syndication_cache', array());
         
+        exit ( 0 );
         redirect(HOST . DIR . '/admin/admin_cache.php?cache=syndication&s=1');
     }
     else //Sinon on rempli le formulaire

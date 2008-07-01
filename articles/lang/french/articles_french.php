@@ -93,4 +93,6 @@ Posté par: %s
 
 Rendez-vous dans le panneau gestion des articles de l\'administration, pour l\'approuver.
 ' . HOST . DIR . '/admin/admin_articles_gestion.php';
+
+$LANG['read_feed'] = 'Lire l\'article';
 ?>

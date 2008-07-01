@@ -142,9 +142,12 @@ class ArticlesInterface extends ModuleInterface
     {
         $cats[] = 0;
         require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
-//         require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
-//         $tpl = new Template('articles/framework/syndication/feed.tpl');
-        
+        require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+        $tpl = new Template('articles/framework/syndication/feed.tpl');
+        global $LANG;
+        load_module_lang('articles');
+        $tpl->Assign_vars(array('L_READ' => $LANG['read_feed']));
+
         foreach( $cats as $cat )
             feeds_update_cache($this->id, $this->syndication_data($cat), $cat, $tpl);
     }
