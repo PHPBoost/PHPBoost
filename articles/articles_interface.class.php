@@ -142,9 +142,8 @@ class ArticlesInterface extends ModuleInterface
     {
         $cats[] = 0;
         require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
-        require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
-        $tpl = new Template('framework/syndication/feed_with_images.tpl');
-        $tpl->Assign_vars(array('L_READ' => 'Lire l\'article'));
+//         require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+//         $tpl = new Template('articles/framework/syndication/feed.tpl');
         
         foreach( $cats as $cat )
             feeds_update_cache($this->id, $this->syndication_data($cat), $cat, $tpl);
