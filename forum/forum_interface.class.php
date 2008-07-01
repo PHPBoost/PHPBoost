@@ -354,7 +354,12 @@ class ForumInterface extends ModuleInterface
     function syndication_cache($cats = array(), $tpl = false)
     {
         $cats[] = 0;
-        require_once('../kernel/framework/syndication/feed.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+        $tpl = new Template('forum/framework/syndication/feed.tpl');
+        global $LANG;
+        load_module_lang('forum');
+        $tpl->Assign_vars(array('L_READ' => $LANG['forum_read_feed']));
         foreach( $cats as $cat )
             feeds_update_cache($this->id, $this->syndication_data($cat), $cat, $tpl);
     }

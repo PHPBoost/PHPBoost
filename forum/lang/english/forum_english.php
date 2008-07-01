@@ -75,6 +75,7 @@ $LANG['explain_forum_groups'] = 'These configuration are only on the forum';
 $LANG['flood_auth'] = 'Allowed flood';
 $LANG['edit_mark_auth'] = 'Unactiv edit mark';
 $LANG['track_topic_auth'] = 'Unactiv tracked topics limit';
+$LANG['forum_read_feed'] = 'Read the thread';
 	
 //Require
 $LANG['require_topic_p'] = 'Please enter the number of topics per page!';

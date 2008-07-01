@@ -92,6 +92,7 @@ $DOWNLOAD_LANG['edit_file'] = 'Edit the file';
 $DOWNLOAD_LANG['delete_file'] = 'Delete the file';
 $DOWNLOAD_LANG['unknown_size'] = 'Unknown';
 $DOWNLOAD_LANG['unknown_date'] = 'Unknown';
+$DOWNLOAD_LANG['read_feed'] = 'Download';
 
 //Catégories
 $DOWNLOAD_LANG['add_category'] = 'Add a category';

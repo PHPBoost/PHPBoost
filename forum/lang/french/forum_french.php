@@ -75,6 +75,7 @@ $LANG['forum_groups_config'] = 'Configuration des groupes';
 $LANG['flood_auth'] = 'Droit de flooder';
 $LANG['edit_mark_auth'] = 'Désactivation du marqueur d\'édition des messages';
 $LANG['track_topic_auth'] = 'Désactivation de la limite de sujet suivis';
+$LANG['forum_read_feed'] = 'Lire le sujet';
 
 //Requis
 $LANG['require_topic_p'] = 'Veuillez entrer le nombre de sujets par page!';

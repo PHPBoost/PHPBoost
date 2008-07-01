@@ -40,6 +40,7 @@ $LANG['wiki_author'] = 'Author';
 $LANG['wiki_empty_index'] = 'The wiki is empty. If you have an administrator account you can create pages and edit the wiki index into the administration panel.';
 $LANG['wiki_previewing'] = 'Previewing';
 $LANG['wiki_table_of_contents'] = 'Table of contents';
+$LANG['wiki_read_feed'] = 'Read the article';
 
 //Actions
 $LANG['wiki_random_page'] = 'Random page';

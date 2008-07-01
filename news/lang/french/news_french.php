@@ -86,6 +86,7 @@ $LANG['extend_contents'] = 'Lire la suite...';
 $LANG['no_news_available'] = 'Aucune news disponible pour le moment';
 $LANG['archive'] = 'Archives';
 $LANG['display_archive'] = 'Voir les archives';
+$LANG['read_feed'] = 'Lire';
 
 //Ajout news.
 $MAIL['new_news_website'] = 'Nouvelle news sur votre site web';
