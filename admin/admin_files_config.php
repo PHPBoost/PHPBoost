@@ -74,7 +74,7 @@ else
 	$CONFIG_FILES['auth_extensions'] = is_array($CONFIG_FILES['auth_extensions']) ? $CONFIG_FILES['auth_extensions'] : array();
 	$array_ext_sup = $CONFIG_FILES['auth_extensions'];
 	$array_extensions_type = array(
-		$LANG['files_image'] => array('jpg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico'),
+		$LANG['files_image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico'),
 		$LANG['files_archives'] => array('rar', 'zip', 'gz'), 
 		$LANG['files_text'] => array('txt', 'doc', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf'),
 		$LANG['files_media'] => array('flv', 'mp3', 'ogg', 'mpg', 'mov', 'swf', 'wav', 'wmv', 'midi', 'mng', 'qt'), 
