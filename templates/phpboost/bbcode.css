@@ -16,7 +16,7 @@
 	position:absolute;
 	text-align:center;
 	padding:6px 4px;
-	background:#AFD2E8;
+	background:#ACD6F5;
 	border:1px solid #2C5169;
 	bottom:28px; 
 	z-index:100;
@@ -38,7 +38,7 @@ h3.title1, h3.title2{
 }
 /* Titre 1 */
 h3.title1{
-	background:#9BBBCF;	
+	background:#FFFFFF;	
 	border:1px solid #2C5169;
 	border-left:3px solid #2C5169;
 	border-right:3px solid #2C5169;
@@ -62,7 +62,7 @@ h4.stitle1, h4.stitle2{
 }
 /* Sous titre 1 */
 h4.stitle1{
-	background:#9BBBCF;	
+	background:#FFFFFF;	
 	border:1px solid #2C5169;
 	border-left:3px solid #2C5169;
 	border-right:3px solid #2C5169;

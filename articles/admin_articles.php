@@ -143,6 +143,7 @@ elseif( !empty($id) )
 		'IMG_LIST' => $image_list,
 		'IMG_PATH' => $img_direct_path ? $articles['icon'] : '',
 		'IDARTICLES' => $articles['id'],
+		'USER_ID' => $articles['user_id'],
 		'CATEGORIES' => $categories,
 		'CONTENTS' => unparse($articles['contents']),
 		'CURRENT_DATE' => gmdate_format('date_format_short', $articles['timestamp']),
