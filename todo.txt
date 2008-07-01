@@ -31,6 +31,7 @@
 [-] Régler l'affichage de la notation lors du vote
 [-] Alerte lorsqu'on a déjà noté
 [-] Reprendre l'objet note
+[-] Ajouter l'alerter sur la shoutbox quand textarea vide
 
 ------------------------------------ MODULES -----------------------------------
 [-] Module liens du site
