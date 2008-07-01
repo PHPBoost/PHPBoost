@@ -64,6 +64,19 @@ else
 	
 	$Cache->Load_file('news');
 	
+	$CONFIG_NEWS['pagination_news'] = isset($CONFIG_NEWS['pagination_news']) ? $CONFIG_NEWS['pagination_news'] : 6;
+	$CONFIG_NEWS['pagination_arch'] = isset($CONFIG_NEWS['pagination_arch']) ? $CONFIG_NEWS['pagination_arch'] : 15;
+	$CONFIG_NEWS['edito_title'] = isset($CONFIG_NEWS['edito_title']) ? $CONFIG_NEWS['edito_title'] : '';
+	$CONFIG_NEWS['edito'] = isset($CONFIG_NEWS['edito']) ? $CONFIG_NEWS['edito'] : '';
+	$CONFIG_NEWS['type'] = isset($CONFIG_NEWS['type']) ? $CONFIG_NEWS['type'] : 0;
+	$CONFIG_NEWS['activ_pagin'] = isset($CONFIG_NEWS['activ_pagin']) ? $CONFIG_NEWS['activ_pagin'] : 0;
+	$CONFIG_NEWS['nbr_column'] = isset($CONFIG_NEWS['nbr_column']) ? $CONFIG_NEWS['nbr_column'] : 1;
+	$CONFIG_NEWS['activ_edito'] = isset($CONFIG_NEWS['activ_edito']) ? $CONFIG_NEWS['activ_edito'] : 0;
+	$CONFIG_NEWS['activ_com'] = isset($CONFIG_NEWS['activ_com']) ? $CONFIG_NEWS['activ_com'] : 1;
+	$CONFIG_NEWS['activ_icon'] = isset($CONFIG_NEWS['activ_icon']) ? $CONFIG_NEWS['activ_icon'] : 0;
+	$CONFIG_NEWS['display_author'] = isset($CONFIG_NEWS['display_author']) ? $CONFIG_NEWS['display_author'] : 1;
+	$CONFIG_NEWS['display_date'] = isset($CONFIG_NEWS['display_date']) ? $CONFIG_NEWS['display_date'] : 1;
+	
 	$Template->Assign_vars(array(
 		'PAGINATION' => !empty($CONFIG_NEWS['pagination_news']) ? $CONFIG_NEWS['pagination_news'] : '6',
 		'PAGINATION_ARCH' => !empty($CONFIG_NEWS['pagination_arch']) ? numeric($CONFIG_NEWS['pagination_arch']) : '15',

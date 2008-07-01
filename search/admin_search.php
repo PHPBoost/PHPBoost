@@ -42,9 +42,6 @@ $clearOutCache = !empty($_GET['clear']) ? true : false;
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {
-    global $CONFIG;
-    global $Sql;
-    
     // Configuration de la classe search.class.php
     $CONFIG['search_cache_time'] = retrieve(POST, 'cache_time', 15);
     $CONFIG['search_max_use'] = retrieve(POST, 'max_use', 200);
@@ -82,11 +79,15 @@ else
     $Tpl = new Template('search/admin_search.tpl');
     
     $Cache->Load_file('search');
-    global $SEARCH_CONFIG;
     
     require_once('../kernel/framework/modules/modules.class.php');
     
-    $Modules = new Modules();
+	$SEARCH_CONFIG['nb_results_per_page'] = isset($SEARCH_CONFIG['nb_results_per_page']) ? $SEARCH_CONFIG['nb_results_per_page'] : 15;
+	$SEARCH_CONFIG['search_cache_time'] = isset($SEARCH_CONFIG['search_cache_time']) ? $SEARCH_CONFIG['search_cache_time'] : 15;
+    $SEARCH_CONFIG['search_max_use'] = isset($SEARCH_CONFIG['search_max_use']) ? $SEARCH_CONFIG['search_max_use'] : 200;
+	$SEARCH_CONFIG['authorised_modules'] = isset($SEARCH_CONFIG['authorised_modules']) && is_array($SEARCH_CONFIG['authorised_modules']) ? $SEARCH_CONFIG['authorised_modules'] : array();
+
+	$Modules = new Modules();
 //     $searchModules = $Modules->get_available_modules('get_search_request');
     $searchModules = $Modules->get_available_modules('get_search_request');
     
@@ -119,8 +120,8 @@ else
         'L_UPDATE' => $LANG['update'],
         'L_RESET' => $LANG['reset'],
         'L_SEARCH_CACHE' => $LANG['search_cache'],
-        'CACHE_TIME' => $CONFIG['search_cache_time'],
-        'MAX_USE' => $CONFIG['search_max_use'],
+        'CACHE_TIME' => $SEARCH_CONFIG['search_cache_time'],
+        'MAX_USE' => $SEARCH_CONFIG['search_max_use'],
         'NB_RESULTS_P' => $SEARCH_CONFIG['nb_results_per_page']
     ));
 

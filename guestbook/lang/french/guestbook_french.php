@@ -36,5 +36,6 @@ $LANG['rank_post'] = 'Rang pour pouvoir poster';
 
 //Titre
 $LANG['title_guestbook'] = 'Livre d\'or';
+$LANG['guestbook_more_contents'] = '[Suite...]';
 
 ?>
