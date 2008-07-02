@@ -57,9 +57,9 @@ if( $i < 5 && !empty($random_question['question']) )
 	));
 else
 	$Template->Assign_vars(array(
-		'L_RANDOM_QUESTION' => $FAQ_LANG['random_question'],
-		'QUESTION' => $FAQ_LANG['no_random_question'],
-		'U_QUESTION' => PATH_TO_ROOT . '/faq/faq.php'
+		'L_FAQ_RANDOM_QUESTION' => $FAQ_LANG['random_question'],
+		'FAQ_QUESTION' => $FAQ_LANG['no_random_question'],
+		'U_FAQ_QUESTION' => PATH_TO_ROOT . '/faq/' . transid('faq.php')
 	));
 
 

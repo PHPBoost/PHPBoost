@@ -304,11 +304,14 @@ elseif( $create_redirection > 0 ) //Création d'une redirection
 	if( !empty($errstr) )
 		$Errorh->Error_handler($errstr, E_USER_WARNING);
 }
-elseif( isset($_GET['i']) && $idcom > 0 ) //Affichage des commentaires
+elseif( isset($_GET['com']) && $idcom > 0 ) //Affichage des commentaires
 {
 	include_once('../kernel/framework/content/comments.class.php'); 
-	$Comments = new Comments('wiki_articles', $idcom, transid('property.php?com=' . $idcom . '&amp;i=%s', ''), 'wiki');
-	include_once('../kernel/com.php');
+	$Comments = new Comments('wiki_articles', $idcom, transid('property.php?com=' . $idcom . '&amp;com=%s', ''), 'wiki');
+	$Template->Assign_vars(array(
+		'C_COMMENTS' => true,
+		'COMMENTS' => $Comments->display()
+	));
 }
 elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 {	

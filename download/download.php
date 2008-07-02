@@ -32,15 +32,6 @@ require_once('../kernel/header.php');
 if( $file_id > 0 ) //Contenu
 {
 	$Template->Set_filenames(array('download'=> 'download/download.tpl'));
-
-	//Commentaires
-	$link_pop = "<a class=\"com\" href=\"#\" onclick=\"popup('" . HOST . DIR . transid("/kernel/com.php?i=" . $file_id . "download") . "', 'download');\">";
-	$link_current = '<a class="com" href="' . HOST . DIR . '/download/download' . transid('.php?id=' . $file_id . '&amp;i=0', '-' . $category_id . '-' . $file_id . '.php?i=0') . '#download">';	
-	$link = ($CONFIG['com_popup'] == '0') ? $link_current : $link_pop;
-	
-	$com_true = ($download_info['nbr_com'] > 1) ? $LANG['com_s'] : $LANG['com'];
-	$com_false = $LANG['post_com'] . '</a>';
-	$l_com = !empty($download_info['nbr_com']) ? $com_true . ' (' . $download_info['nbr_com'] . ')</a>' : $com_false;
 	
 	if( $download_info['size'] > 1 )
 		$size_tpl = $download_info['size'] . ' ' . $LANG['unit_megabytes'];
@@ -65,12 +56,13 @@ if( $file_id > 0 ) //Contenu
 		'SIZE' => $size_tpl,
 		'COUNT' => $download_info['count'],
 		'THEME' => $CONFIG['theme'],
-		'COM' => com_display_link($download_info['nbr_com'], '../download/download' . transid('.php?id=' . $file_id . '&amp;i=0', '-' . $category_id . '-' . $file_id . '.php?i=0'), $file_id, 'download'),
+		'COM' => com_display_link($download_info['nbr_com'], '../download/download' . transid('.php?id=' . $file_id . '&amp;com=0', '-' . $category_id . '-' . $file_id . '.php?com=0'), $file_id, 'download'),
 		'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$download_info['count']),
 		'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], (int)$download_info['nbrnote']),
 		'U_IMG' => $download_info['image'],
 		'IMAGE_ALT' => str_replace('"', '\"', $download_info['title']),
 		'LANG' => $CONFIG['lang'],
+		'U_COM' => com_display_link($download_info['nbr_com'], '../download/download' . transid('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php?com=0'), $file_id, 'download'),
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
 		'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
@@ -93,11 +85,11 @@ if( $file_id > 0 ) //Contenu
 	include_once('../kernel/framework/note.php');
 	
 	//Affichage commentaires.
-	if( isset($_GET['i']) )
+	if( isset($_GET['com']) )
 	{
 		include_once('../kernel/framework/content/comments.class.php'); 
-		$Comments = new Comments('download', $file_id, transid('download.php?id=' . $file_id . '&amp;i=%s', 'category-' . $category_id . '-' . $file_id . '.php?i=%s'));
-		include_once('../kernel/com.php');
+		$Comments = new Comments('download', $file_id, transid('download.php?id=' . $file_id . '&amp;com=%s', 'download-' . $file_id . '.php?com=%s'));
+		$Template->Assign_vars(array('COMMENTS' => $Comments->display()));
 	}
 	
 	$Template->Pparse('download');

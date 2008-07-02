@@ -25,25 +25,8 @@
  *
 ###################################################*/
 
-define('INTEGRATED_IN_ENVIRONMENT', false);
-define('POP_UP_WINDOW', true);
-
-//This will be a static method of the class when we will be only in PHP 5 :)
-function com_display_link($nbr_com, $path, $idprov, $script, $options = 0)
-{
-	global $CONFIG, $LANG;
-	
-	$link = '';
-	$l_com = ($nbr_com > 1) ? $LANG['com_s'] : $LANG['com'];
-	$l_com = !empty($nbr_com) ? $l_com . ' (' . $nbr_com . ')' : $LANG['post_com'];
-	
-	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . transid('/kernel/framework/content/pop_up_comments.php?com=' . $idprov . $script) . "', '" . $script . "');";	
-	$link_current = $path . '#' . $script;	
-	
-	$link .= '<a class="com" href="' . (($CONFIG['com_popup'] == '0') ? $link_current : $link_pop) . '">' . $l_com . '</a>';
-	
-	return $link;
-}
+define('INTEGRATED_IN_ENVIRONMENT', true);
+define('POP_UP_WINDOW', false);
 
 class Comments
 {
@@ -131,22 +114,21 @@ class Comments
 	}
 	
 	//Méthode d'affichage
-	function display($Template = false, $integrated_in_environment = INTEGRATED_IN_ENVIRONMENT)
+	function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false)
 	{
 		global $Cache, $Member, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_MEMBER, $CONFIG_COM, $_array_rank, $_array_groups_auth;
 		
 		if( $integrated_in_environment )
 		{
-			$idcom_get = retrieve(GET, 'coms', 0);
+			$idcom_get = retrieve(GET, 'com', 0);
 			$idcom_post = retrieve(POST, 'idcom', 0);
 		    $idcom = $idcom_post > 0 ? $idcom_post : $idcom_get;
 			
-		    $this->idcom = $idcom; //On met à jour les attributs de l'objet.
+		    $this->set_arg($idcom); //On met à jour les attributs de l'objet.			
 		}
 	    $vars_simple = sprintf($this->vars, 0);
-		
-		$delcom = retrieve(GET, 'delcom', false);
-		$editcom = retrieve(GET, 'editcom', false);
+		$delcom = retrieve(GET, 'delcom', 0);
+		$editcom = retrieve(GET, 'editcom', 0);
 		$updatecom = retrieve(GET, 'updatecom', false);		
 		
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0);
@@ -205,7 +187,7 @@ class Comments
 				else
 					redirect($path_redirect . '&errorh=incomplete#errorh');
 			}
-			elseif( $updatecom || $delcom || $editcom ) //Modération des commentaires.
+			elseif( $updatecom || $delcom > 0 || $editcom > 0 ) //Modération des commentaires.
 			{
 				//Membre en lecture seule?
 				if( $Member->get_attribute('user_readonly') > time() ) 
@@ -214,9 +196,9 @@ class Comments
 				$row = $Sql->Query_array('com', '*', "WHERE idcom = '" . $this->get_attribute('idcom') . "' AND idprov = '" . $this->get_attribute('idprov') . "' AND script = '" . $this->get_attribute('script') . "'", __LINE__, __FILE__);
 				$row['user_id'] = (int)$row['user_id'];
 				
-				if( $this->get_attribute('idcom') != 0 && ($Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1)) ) //Modération des commentaires.
+				if( $this->idcom != 0 && ($Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1)) ) //Modération des commentaires.
 				{
-					if( $delcom ) //Suppression du commentaire.
+					if( $delcom > 0) //Suppression du commentaire.
 					{
 						$lastid_com = $this->del();
 						$lastid_com = !empty($lastid_com) ? '#m' . $lastid_com : '';
@@ -224,11 +206,11 @@ class Comments
 						//Succès redirection.
 						redirect($path_redirect . $lastid_com);
 					}
-					elseif( $editcom ) //Edition du commentaire.
+					elseif( $editcom > 0 ) //Edition du commentaire.
 					{
 						$block = ($CONFIG['com_popup'] == 0 && !$integrated_in_environment); 
 						$Template->Assign_vars(array(
-							'CURRENT_PAGE_COM' => $block,
+							'CURRENT_PAGE_COM' => !$block,
 							'POPUP_PAGE_COM' => $block,
 							'AUTH_POST_COM' => true
 						));
@@ -594,6 +576,7 @@ class Comments
 
 		//Récupération des informations sur le module.
 		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', $CONFIG['lang']);
+		
 		$check_script = false;
 		if( isset($info_module['com']) )
 		{

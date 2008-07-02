@@ -369,6 +369,7 @@
 		</form>
 		# END remove #
 
-		
-		# INCLUDE handle_com #
+		# IF C_COMMENTS #
+		{COMMENTS}
+		# ENDIF #
 		

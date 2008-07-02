@@ -77,7 +77,7 @@ elseif( $id_com > 0 )
 	$page_infos = $Sql->Sql_fetch_assoc($result);
 	$Sql->Close($result);
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
-	$Bread_crumb->Add_link($LANG['pages_com'], transid('pages.php?id=' . $id_com . '&amp;i=0'));
+	$Bread_crumb->Add_link($LANG['pages_com'], transid('pages.php?id=' . $id_com . '&amp;com=0'));
 	$Bread_crumb->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
@@ -161,7 +161,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	{	
 		$Template->Assign_vars(array(
 			'C_ACTIV_COM' => true,
-			'U_COM' => transid('pages.php?id=' . $page_infos['id'] . '&amp;i=0'),
+			'U_COM' => transid('pages.php?id=' . $page_infos['id'] . '&amp;com=0'),
 			'L_COM' => $page_infos['nbr_com'] > 0 ? sprintf($LANG['pages_display_coms'], $page_infos['nbr_com']) : $LANG['pages_post_com']
 		));
 	}
@@ -200,10 +200,9 @@ elseif( $id_com > 0 )
 	$Template->Set_filenames(array('com'=> 'pages/com.tpl'));
 	
 	include_once('../kernel/framework/content/comments.class.php'); 
-	$Comments = new Comments('pages', $id_com, transid('pages.php?id=' . $id_com . '&amp;i=%s', ''));
-	include_once('../kernel/com.php');
+	$Comments = new Comments('pages', $id_com, transid('pages.php?id=' . $id_com . '&amp;com=%s', ''));
+	$Template->Assign_vars(array('COMMENTS' => $Comments->display()));
 
-	$Template->Assign_block_vars('com', array());
 	$Template->Pparse('com');
 }
 //gestionnaire d'erreurs

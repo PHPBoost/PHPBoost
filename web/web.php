@@ -76,7 +76,7 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 		'COMPT' => $web['compt'],
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'COM' => com_display_link($web['nbr_com'], '../web/web' . transid('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;i=0', '-' . $idcat . '-' . $idweb . '.php?i=0'), $idweb, 'web'),
+		'COM' => com_display_link($web['nbr_com'], '../web/web' . transid('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0'), $idweb, 'web'),
 		'U_WEB_CAT' => transid('.php?cat=' . $idcat, '-' . $idcat . '.php'),
 		'L_DESC' => $LANG['description'],
 		'L_CAT' => $LANG['category'],
@@ -91,11 +91,11 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 	include_once('../kernel/framework/note.php');
 	
 	//Affichage commentaires.
-	if( isset($_GET['i']) )
+	if( isset($_GET['com']) )
 	{
 		include_once('../kernel/framework/content/comments.class.php'); 
-		$Comments = new Comments('web', $idweb, transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;i=%s', 'web-' . $idcat . '-' . $idweb . '.php?i=%s'));
-		include_once('../kernel/com.php');
+		$Comments = new Comments('web', $idweb, transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=%s', 'web-' . $idcat . '-' . $idweb . '.php?com=%s'));
+		$Template->Assign_vars(array('COMMENTS' => $Comments->display()));
 	}	
 
 	$Template->Pparse('web');

@@ -362,7 +362,7 @@
 								</td>
 							</tr>
 						</table>
-					# INCLUDE handle_com #
+					{COMMENTS}
 					# ENDIF #
 					
 					<table style="margin:auto;width:96%">
