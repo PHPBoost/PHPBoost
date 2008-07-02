@@ -111,9 +111,7 @@ if( defined('ALTERNATIVE_CSS') )
 //On ajoute les css associés aux mini-modules.
 $Cache->Load_file('css');
 foreach($CSS as $css_mini_module)
-{
 	$alternative_css .= "\t\t" . '<link rel="stylesheet" href="' . $css_mini_module . '" type="text/css" media="screen, handheld" />' . "\n";
-}
 
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
 $THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);

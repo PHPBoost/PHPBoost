@@ -40,8 +40,18 @@ class Errors
 	function Errors($archive_all = false)
 	{
 		$this->archive_all = $archive_all;
+		
 		//Récupération de l'adresse de redirection => constantes non initialisées.
-		$this->redirect = 'http://' . $_SERVER['HTTP_HOST'] . preg_replace('`(/(.*))?/(.*)/(.*)\.php`', '$1', $_SERVER['PHP_SELF']);
+		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
+		if( !$server_path )
+			$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
+		$server_path = trim(dirname($server_path));
+		
+		$nbr_occur = substr_count(PATH_TO_ROOT, '..'); //On supprime les x dossiers par rapport au PATH_TO_ROOT
+		for($i = 0; $i < $nbr_occur; $i++)
+			$server_path = str_replace(substr(strrchr($server_path, '/'), 0), '', $server_path);
+		$this->redirect = 'http://' . $_SERVER['HTTP_HOST'] . $server_path;
+		
 		//On utilise notre propre handler pour la gestion des erreurs php
 		set_error_handler(array($this, 'Error_handler_php'));
 	}	
