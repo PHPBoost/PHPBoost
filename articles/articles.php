@@ -27,7 +27,9 @@
 
 require_once('../kernel/begin.php'); 
 require_once('../articles/articles_begin.php');
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
+
+require_once('../kernel/framework/content/comments.class.php'); 
 
 $page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
 $cat = retrieve(GET, 'cat', 0);
