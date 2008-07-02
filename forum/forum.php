@@ -30,6 +30,15 @@ require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $id_get = retrieve(GET, 'id', 0);
+
+//Vérification de l'existance de la catégorie.
+if( empty($id_get) || !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0 )
+	$Errorh->Error_handler('e_unexist_cat_forum', E_USER_REDIRECT);
+	
+//Vérification des autorisations d'accès.
+if( !$Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
+	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+
 //Récupération de la barre d'arborescence.
 $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 foreach($CAT_FORUM as $idcat => $array_info_cat)
@@ -55,14 +64,6 @@ if( !empty($change_cat) )
 	
 if( !empty($id_get) )
 {
-	//Vérification de l'existance de la catégorie.
-	if( !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0 )
-		$Errorh->Error_handler('e_unexist_cat_forum', E_USER_REDIRECT);
-		
-	//Vérification des autorisations d'accès.
-	if( !$Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-	
 	$Template->Set_filenames(array(
 		'forum_forum'=> 'forum/forum_forum.tpl',
 		'forum_top'=> 'forum/forum_top.tpl',
