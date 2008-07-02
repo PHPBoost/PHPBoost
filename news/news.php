@@ -33,8 +33,6 @@ $idnews = retrieve(GET, 'id', 0);
 $idcat = retrieve(GET, 'cat', 0);
 $show_archive = retrieve(GET, 'arch', false);
 
-include_once('../kernel/framework/content/comments.class.php'); 
-
 $is_admin = $Member->Check_level(ADMIN_LEVEL);
 if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 {
@@ -290,6 +288,7 @@ elseif( !empty($idcat) )
 //Affichage commentaires.
 if( isset($_GET['com']) && $idnews > 0 )
 {
+	include_once('../kernel/framework/content/comments.class.php'); 
 	$Comments = new Comments('news', $idnews, transid('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s'));
 	$tpl_news->Assign_vars(array('COMMENTS' => $Comments->display()));
 }
