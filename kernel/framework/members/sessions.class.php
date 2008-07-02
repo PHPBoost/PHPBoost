@@ -104,7 +104,7 @@ class Sessions
 				$Sql->Query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0')", __LINE__, __FILE__);
 				
 				$delay_ban = $Sql->Query("SELECT user_ban FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-				if( (time - $delay_ban) >= 0 )
+				if( (time() - $delay_ban) >= 0 )
 					$error = 'echec';
 				else
 					$error = $delay_ban;
