@@ -231,7 +231,7 @@ class Comments
 						$Template->Assign_vars(array(					
 							'IDPROV' => $row['idprov'],
 							'IDCOM' => $row['idcom'],
-							'SCRIPT' => $this->get_attribute('script'),
+							'SCRIPT' => $script,
 							'CONTENTS' => unparse($row['contents']),
 							'DATE' => gmdate_format('date_format', $row['timestamp']),
 							'THEME' => $CONFIG['theme'],
@@ -304,11 +304,9 @@ class Comments
 				require_once(PATH_TO_ROOT . '/kernel/framework/pagination.class.php');
 				$Pagination = new Pagination();
 
-				$block = $CONFIG['com_popup'] == 0 && !$integrated_in_environment;
-
 				$Template->Assign_vars(array(
-					'CURRENT_PAGE_COM' => $block,
-					'POPUP_PAGE_COM' => !$block
+					'CURRENT_PAGE_COM' => $integrated_in_environment,
+					'POPUP_PAGE_COM' => !$integrated_in_environment
 				));
 				
 				//Affichage du lien de verrouillage/déverrouillage.

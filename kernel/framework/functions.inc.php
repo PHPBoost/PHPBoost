@@ -321,7 +321,7 @@ function com_display_link($nbr_com, $path, $idprov, $script, $options = 0)
 	$l_com = !empty($nbr_com) ? $l_com . ' (' . $nbr_com . ')' : $LANG['post_com'];
 	
 	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . transid('/kernel/framework/content/pop_up_comments.php?com=' . $idprov . $script) . "', '" . $script . "');";	
-	$link_current = $path . '#' . $script;	
+	$link_current = $path . '#anchor_' . $script;	
 	
 	$link .= '<a class="com" href="' . (($CONFIG['com_popup'] == '0') ? $link_current : $link_pop) . '">' . $l_com . '</a>';
 	
