@@ -107,7 +107,7 @@
 		</div>
 		<br /><br />
 
-		# INCLUDE handle_com #
+		{COMMENTS}
 		
 		# END action #
 		# ENDIF #

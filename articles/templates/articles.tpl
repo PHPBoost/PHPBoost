@@ -58,7 +58,7 @@
 			</div>
 		</div>
 		<br /><br />
-		# INCLUDE handle_com #
+		{COMMENTS}
 		
 		# ENDIF #
 		

@@ -143,7 +143,7 @@
 					{NAME}
 				</div>
 				<div style="float:right">
-					{COMMENTARIES}
+					{U_COM}
 					# IF C_EDIT_AUTH #
 						<a href="{U_EDIT_FILE}">
 							<img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT_FILE}" />
@@ -229,5 +229,5 @@
 			</div>
 		</div>		
 		<br /><br />
-		# INCLUDE handle_com #
+		{COMMENTS}
 		# ENDIF #

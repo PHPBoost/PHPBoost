@@ -138,7 +138,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 				'IMG' => (!empty($row['img']) ? '<img src="' . $row['img'] . '" alt="' . $row['alt'] . '" title="' . $row['alt'] . '" class="img_right" />' : ''),
 				'PSEUDO' => $CONFIG_NEWS['display_author'] ? $row['login'] : '',				
 				'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $row['timestamp']) : '',
-				'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($row['nbr_com'], '../news/news' . transid('.php?cat=0&amp;id=' . $row['id'] . '&amp;i=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?i=0'), $row['id'], 'news') : '',
+				'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($row['nbr_com'], '../news/news' . transid('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
 				'EDIT' => $admin,
 				'DEL' => $del,
 				'NEW_ROW' => $new_row,
@@ -249,7 +249,7 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		'IMG' => (!empty($news['img']) ? '<img src="' . $news['img'] . '" alt="' . $news['alt'] . '" title="' . $news['alt'] . '" class="img_right" />' : ''),
 		'PSEUDO' => $news['login'],
 		'DATE' => gmdate_format('date_format_short', $news['timestamp']),
-		'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($news['nbr_com'], '../news/news' . transid('.php?cat=0&amp;id=' . $idnews . '&amp;i=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?i=0'), $idnews, 'news') : '',
+		'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($news['nbr_com'], '../news/news' . transid('.php?cat=0&amp;id=' . $idnews . '&amp;com=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : '',
 		'EDIT' => $admin,
 		'DEL' => $del,
 		'U_MEMBER_ID' => transid('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
@@ -288,10 +288,9 @@ elseif( !empty($idcat) )
 }
 	
 //Affichage commentaires.
-if( isset($_GET['i']) && $idnews > 0 )
+if( isset($_GET['com']) && $idnews > 0 )
 {
-	$Comments = new Comments('news', $idnews, transid('news.php?id=' . $idnews . '&amp;i=%s', 'news-0-' . $idnews . '.php?i=%s'));
-	//include_once('../kernel/com.php');
+	$Comments = new Comments('news', $idnews, transid('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s'));
 	$tpl_news->Assign_vars(array('COMMENTS' => $Comments->display()));
 }
 
