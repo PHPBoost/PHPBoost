@@ -45,16 +45,16 @@ if( !empty($file_id) )
 		$Errorh->Error_handler('e_unexist_file_download', E_USER_REDIRECT);
 	$Bread_crumb->Add_link($download_info['title'], transid('download.php?cat=' . $file_id, 'download-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php'));
 	$id_cat_for_download = $download_info['idcat'];
-	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . addslashes($download_info['title']));
+	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . $download_info['title']);
 }
 elseif( !empty($category_id) )
 {
 	if( !array_key_exists($category_id, $DOWNLOAD_CATS) )
 		$Errorh->Error_handler('e_unexist_category_download', E_USER_REDIRECT);
 	
-	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . addslashes($DOWNLOAD_CATS[$category_id]['name']));
-	
+	$Bread_crumb->Add_link($DOWNLOAD_LANG['title_download'] . ' - ' . $DOWNLOAD_CATS[$category_id]['name']);
 	$id_cat_for_download = $category_id;
+	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . $DOWNLOAD_CATS[$category_id]['name']);
 }
 else
 	define('TITLE', $DOWNLOAD_LANG['title_download']);

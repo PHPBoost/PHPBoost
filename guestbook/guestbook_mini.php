@@ -46,11 +46,11 @@ if( strpos(SCRIPT, '/guestbook/guestbook.php') === false )
 	else
 		$guestbook_login = '<span style="font-style:italic;">' . (!empty($guestbook_rand['login']) ? wordwrap_html($guestbook_rand['login'], 13) : $LANG['guest']) . '</span>';
 	
-	$contents = ucfirst(wordwrap_html($guestbook_rand['contents'], 22));
+	$guestbook_contents = ucfirst(wordwrap_html($guestbook_rand['contents'], 22));
 	$Template->Assign_vars(array(
 		'L_RANDOM_GESTBOOK' => $LANG['title_guestbook'],
 		'RAND_MSG_ID' => $guestbook_rand['id'],
-		'RAND_MSG_CONTENTS' => (strlen($contents) > 22) ? $contents . ' <a href="' . PATH_TO_ROOT . '/guestbook/guestbook.php" class="small_link">' . $LANG['guestbook_more_contents'] . '</a>' : $contents,
+		'RAND_MSG_CONTENTS' => (strlen($guestbook_contents) > 22) ? $guestbook_contents . ' <a href="' . PATH_TO_ROOT . '/guestbook/guestbook.php" class="small_link">' . $LANG['guestbook_more_contents'] . '</a>' : $guestbook_contents,
 		'RAND_MSG_LOGIN' => $guestbook_login,
 		'L_BY' => $LANG['by']
 	));
