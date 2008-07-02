@@ -83,7 +83,7 @@ if( $read )
 $convers = retrieve(POST, 'convers', false);
 if( $convers && empty($pm_edit) && empty($pm_del) ) //Envoi de conversation.
 {
-	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
+	$title = retrieve(POST, 'title', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
 	$login = retrieve(POST, 'login', '');
 	

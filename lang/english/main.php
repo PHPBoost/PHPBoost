@@ -52,8 +52,10 @@ $LANG['unit_seconds_short'] = 's';
 //Erreurs
 $LANG['error'] = 'Error';
 $LANG['error_fatal'] = '<strong>Fatal error:</strong> %s<br/><br/><br/><strong>Line %s: %s</strong>';
-$LANG['error_warning'] = '<strong>Warning:</strong> %s %s %s';
-$LANG['error_notice'] = '<strong>Notice:</strong> %s %s %s';
+$LANG['error_warning_tiny'] = '<strong>Warning:</strong> %s %s %s';
+$LANG['error_warning'] = '<strong>Warning:</strong> %s<br/><br/><br/><strong>Line %s: %s</strong>';
+$LANG['error_notice_tiny'] = '<strong>Notice:</strong> %s %s %s';
+$LANG['error_notice'] = '<strong>Notice:</strong> %s<br/><br/><br/><strong>Line %s: %s</strong>';
 $LANG['error_success'] = '<strong>Success:</strong> %s<br/>Line %s: %s';
 $LANG['error_unknow'] = '<strong>Error:</strong> Unknow cause %s<br/>Line %s: %s';
 
