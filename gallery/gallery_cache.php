@@ -61,7 +61,7 @@ function generate_module_file_gallery()
 	}
 	$Sql->Close($result);
 	
-	include_once('../gallery/gallery.class.php'); 
+	include_once(PATH_TO_ROOT . '/gallery/gallery.class.php'); 
 	$Gallery = new Gallery;	
 			
 	$_array_random_pics = 'global $_array_random_pics;' . "\n" . '$_array_random_pics = array(';
