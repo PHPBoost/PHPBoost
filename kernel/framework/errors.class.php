@@ -134,7 +134,7 @@ class Errors
 				//Notice utilisateur.
 				case E_USER_NOTICE:
 				case E_NOTICE:
-				$errstr = sprintf($LANG['error_notice'], $errstr, '', '');
+				$errstr = sprintf($LANG['error_notice_tiny'], $errstr, '', '');
 				$Template->Assign_vars(array(
 					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
 					'ERRORH_IMG' => 'notice',
@@ -145,7 +145,7 @@ class Errors
 				//Warning utilisateur.
 				case E_USER_WARNING:
 				case E_WARNING:
-				$errstr = sprintf($LANG['error_warning'], $errstr, '', '');
+				$errstr = sprintf($LANG['error_warning_tiny'], $errstr, '', '');
 				$Template->Assign_vars(array(
 					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
 					'ERRORH_IMG' => 'important',
