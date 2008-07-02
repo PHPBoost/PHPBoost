@@ -52,11 +52,12 @@ elseif( !empty($category_id) )
 	if( !array_key_exists($category_id, $DOWNLOAD_CATS) )
 		$Errorh->Error_handler('e_unexist_category_download', E_USER_REDIRECT);
 	
-	$Bread_crumb->Add_link($DOWNLOAD_LANG['title_download'] . ' - ' . addslashes($DOWNLOAD_CATS[$category_id]['name']));
+	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . addslashes($DOWNLOAD_CATS[$category_id]['name']));
+	
 	$id_cat_for_download = $category_id;
 }
 else
-	$Bread_crumb->Add_link($DOWNLOAD_LANG['title_download']);
+	define('TITLE', $DOWNLOAD_LANG['title_download']);
 
 $l_com_note = !empty($idurl) ? (!empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '') ) : '';
 

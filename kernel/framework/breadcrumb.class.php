@@ -30,7 +30,7 @@ class Bread_crumb
 {
 	##  Méthodes publiques  ##
 	//Ajout d'un lien
-	function Add_link($text, $target)
+	function Add_link($text, $target = '')
 	{
 		if( !empty($text) )
 		{
