@@ -28,8 +28,8 @@
 
 define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans la session.
 require_once('../kernel/begin.php');
-require_once('../kernel/header_no_display.php');
 include_once('../download/download_begin.php');
+require_once('../kernel/header_no_display.php');
 
 //Notation.
 if( !empty($_GET['note']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
