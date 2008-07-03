@@ -79,6 +79,13 @@ class Comments
 		return $lastid_com;
 	}
 	
+	//Supprime tous les commentaires de l'item (lié à la suppression de l'item)
+	function delete_all($idprov)
+	{
+		global $Sql;
+		$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
+	}
+	
 	//Verrouille les commentaires
 	function lock($lock)
 	{

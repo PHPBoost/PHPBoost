@@ -80,6 +80,14 @@ if( $delete_file > 0 )
 	if( $download_categories->Check_auth($file_infos['idcat']) )
 	{
 		$Sql->Query_inject("DELETE FROM ".PREFIX."download WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
+		//Deleting comments if the file has
+		if( $file_infos['nbr_com'] > 0 )
+		{
+			include_once('../kernel/framework/content/comments.class.php');
+			$Comments = new Comments('download', $delete_file, transid('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
+			//$Comments->set_arg($file_id);
+			$Comments->delete_all($delete_file);
+		}
 		redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? transid('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : transid('download.php')));
         
         // Feeds Regeneration
