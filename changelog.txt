@@ -12,6 +12,7 @@
 [*] [color=red]Nouveauté:[/color] Nouvelle interface de déplacement des menus.
 [*] [color=red]Nouveauté:[/color] Nouveau placement possible des menus (Haut/Centre haut/Centre bas).
 [*] [color=red]Nouveauté:[/color] Intégration d'un nouveau colorateur syntaxique (Geshi), support de nombreux languages.
+[*] Refonte totale des commentaires. Intégration simplifiée dans les modules.
 [*] [color=red]Nouveauté:[/color] Interface de visualisation/édition des commentaires du site.
 [*] [color=red]Nouveauté:[/color] Gestion du temps global (GMT), et du décalage horaire. 
 [*] [color=red]Nouveauté:[/color] Gestionnaire automatisé des catégories infinies (Framework PHPBoost). 
@@ -81,6 +82,7 @@
 [*] Gestion des mots de passe avec l'algorithme de cryptage sha256 en lieu et place du md5
 [*] Amélioration de la classe Template.
 [*] Editeur de .htaccess
+[*] Ajout au framework des éléments nécessaires pour traiter à l'avenir dans un nouveau module le plan du site. Ce module génèrera aussi le fichier sitemap.xml qui permet d'affiner le référencement dans les moteurs de recherches.
 
 [b]Forum[/b]
 [*] [color=red]Nouveauté:[/color] Réorganisation complète du code.
