@@ -335,35 +335,44 @@ function check_mail($mail)
 }
 
 //Charge le parseur.
-function strparse($content, $forbidden_tags = array(), $html_protect = true)
+function strparse(&$content, $forbidden_tags = array(), $html_protect = true)
 {
     include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
-    $parse = new Content($content);
-    $parse->Parse_content($forbidden_tags, $html_protect);
-    
-    return $parse->Get_content();
+    $content_manager = new Content($content);
+	$content_manager->set_langage(BBCODE_LANGAGE);
+	$parser =& $content_manager->get_parser();
+    $parser->set_content($content);
+    $parser->parse($forbidden_tags, $html_protect);
+	
+	return $parser->get_parsed_content();
 }
 
 //Charge l'unparseur.
-function unparse($content)
+function unparse(&$content)
 {
     include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
-    $parse = new Content($content);
-    $parse->Unparse_content();
-    
-    return $parse->Get_content(DO_NOT_ADD_SLASHES);
+ $content_manager = new Content();
+	$content_manager->set_langage(BBCODE_LANGAGE);
+	$parser =& $content_manager->get_parser();
+    $parser->set_content($content);
+    $parser->unparse();
+	
+	return $parser->get_parsed_content();
 }
 
 //Parse temps réel
-function second_parse($content)
+function second_parse(&$content)
 {
 	$content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $content);
-    
-    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
-	$parse = new Content($content);
-    $parse->Second_parse();
 	
-    return $parse->Get_content(DO_NOT_ADD_SLASHES);
+	include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
+	$content_manager = new Content();
+	$content_manager->set_langage(BBCODE_LANGAGE);
+	$parser =& $content_manager->get_parser();
+    $parser->set_content($content);
+    $parser->second_parse();
+	
+    return $parser->get_parsed_content(DO_NOT_ADD_SLASHES);
 }
 
 //Transmet le session_id et le user_id à traver l'url pour les connexions sans cookies. Permet le support de l'url rewritting!
