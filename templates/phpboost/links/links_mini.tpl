@@ -29,20 +29,6 @@
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/online/online.php" title="Framework">Membres en ligne</a></li>
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/shoutbox/shoutbox.php" title="Framework">Discussion</a></li>
 				</ul> 
-				<!--<ul style="margin:0px;padding:0px;list-style-type:none;">
-				# START links #		
-					# START links.title #			
-					<li style="text-indent:5px;">
-						<h6 class="sub_title2"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" alt="" /> {links.title.NAME}</h6>
-					</a></li>
-					# END links.title #
-					# START links.subtitle #
-					<li>
-						<span style="font-size:8px;color:#ACCCE2">&bull;</span> <a href="{links.subtitle.URL}" style="font-size:11px;" title="{links.subtitle.NAME}">{links.subtitle.NAME}</a>			
-					</a></li>
-					# END links.subtitle #		
-				# END links #
-				</ul>-->
 			</div>
 			<div class="module_mini_bottom">&nbsp;
 			</div>
