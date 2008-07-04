@@ -50,11 +50,11 @@ if( !empty($referer) )
 				$Sql->Query_inject("INSERT INTO ".PREFIX."stats_referer (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $search_engine . "', '" . $keyword . "', 1, 1, 1, 1, '" . time() . "', 1)", __LINE__, __FILE__);
 		}
 	}
-	else
+	elseif( !empty($referer['host']) )
 	{
 		########### Détection du site de provenance ###########
 		$url = strprotect($referer['scheme'] . '://' . $referer['host']);
-		if( !preg_match('`' . preg_quote(HOST) . '`i', $url) )
+		if( strpos($url, HOST) === false )
 		{				
 			$relative_url = strprotect(((substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
 			
