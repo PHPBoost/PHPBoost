@@ -146,7 +146,7 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom text_small">
-				# INCLUDE handle_note #
+				{KERNEL_NOTATION}
 			</div>
 		</div>
 			

@@ -564,7 +564,6 @@ else
 					//Affichage notation.
 					include_once('../kernel/framework/note.class.php');
 					$Note = new Note('gallery', $info_pics['id'], transid('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
-					include_once('../kernel/framework/note.php');
 				}			
 				
 				if( $thumbnails_before < $nbr_pics_display_before )	
@@ -585,6 +584,7 @@ else
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 					'SIZE' => number_round($info_pics['weight']/1024, 1),
 					'COM' => com_display_link($info_pics['nbr_com'], '../gallery/gallery' . transid('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'] . '&amp;com=0&amp;sort=' . $g_sort, '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php?com=0&amp;sort=' . $g_sort), $info_pics['id'], 'gallery'),
+					'KERNEL_NOTATION' => $activ_note ? $Note->Display_notation() : '',
 					'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),	
 					'CAT' => $cat_list,	
 					'RENAME' => addslashes($info_pics['name']),
@@ -681,12 +681,8 @@ else
 					$cat_list .= ($key_cat == $row['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 	
 				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $is_connected );
-				if( $activ_note )
-				{
-					//Affichage notation.					
+				if( $activ_note ) //Affichage notation.		
 					$Note = new Note('gallery', $row['id'], transid('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_NODISPLAY_NBRNOTES | NOTE_DISPLAY_BLOCK);
-					include('../kernel/framework/note.php');
-				}
 				
 				$Template->Assign_block_vars('pics_list', array(
 					'ID' => $row['id'],
@@ -697,7 +693,7 @@ else
 					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
 					'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br />' . $row['views'] . ' ' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) : '',
 					'COM' => ($CONFIG_GALLERY['activ_com'] == 1) ? '<br />' . com_display_link($row['nbr_com'], '../gallery/gallery' . transid('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0'), $row['id'], 'gallery') : '',
-					'NOTE' => $activ_note ? $Template->Pparse('handle_note', TEMPLATE_STRING_MODE) : '',
+					'KERNEL_NOTATION' => $activ_note ? $Note->Display_notation() : '',
 					'CAT' => $cat_list,
 					'RENAME' => addslashes($row['name']),
 					'RENAME_CUT' => addslashes($row['name']),		

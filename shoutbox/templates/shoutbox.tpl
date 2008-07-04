@@ -1,7 +1,7 @@
 		<script type="text/javascript">
 		<!--
 		function check_form(){
-			if(document.getElementById('contents').value == "") {
+			if(document.getElementById('shout_contents').value == "") {
 				alert("{L_ALERT_TEXT}");
 				return false;
 		    }

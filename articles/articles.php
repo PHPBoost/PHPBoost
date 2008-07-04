@@ -98,6 +98,10 @@ if( !empty($idart) && isset($_GET['cat'])  )
 	$nbr_page = count($array_page[1]);
 	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
 	
+	//Affichage notation.
+	include_once('../kernel/framework/note.class.php'); 
+	$Note = new Note('articles', $idart, transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
+	
 	$Template->Assign_vars(array(
 		'C_DISPLAY_ARTICLE' => true,
 		'IDART' => $articles['id'],
@@ -113,6 +117,7 @@ if( !empty($idart) && isset($_GET['cat'])  )
 		'PAGE_PREVIOUS_ARTICLES' => ($page > 1 && $page <= $nbr_page && $nbr_page > 1) ? '<a href="' . transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page - 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page - 1) . '.php') . '">&laquo; ' . $LANG['previous_page'] . '</a><br />' . $array_page[1][($page-2)] : '',
 		'PAGE_NEXT_ARTICLES' => ($page > 0 && $page < $nbr_page && $nbr_page > 1) ? '<a href="' . transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page + 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page + 1) . '.php') . '">' . $LANG['next_page'] . ' &raquo;</a><br />' . $array_page[1][$page] : '',
 		'COM' => com_display_link($articles['nbr_com'], '../articles/articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=0', '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php?com=0'), $articles['id'], 'articles'),
+		'KERNEL_NOTATION' => $Note->Display_notation(),
 		'U_MEMBER_ID' => transid('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
 		'U_ONCHANGE_ARTICLE' => "'" . transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=\' + this.options[this.selectedIndex].value', 'articles-' . $idartcat . '-' . $idart . '-\'+ this.options[this.selectedIndex].value + \'.php' . "'"),
 		'L_SUMMARY' => $LANG['summary'],
@@ -121,11 +126,6 @@ if( !empty($idart) && isset($_GET['cat'])  )
 		'L_ON' => $LANG['on']	
 	));
 
-	//Affichage notation.
-	include_once('../kernel/framework/note.class.php'); 
-	$Note = new Note('articles', $idart, transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
-	include_once('../kernel/framework/note.php');	
-	
 	//Affichage commentaires.
 	if( isset($_GET['com']) )
 	{

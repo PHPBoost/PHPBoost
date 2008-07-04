@@ -72,7 +72,95 @@ class Note
 			return -2;
 	}
 	
-	//Affiche la notation.
+	//Affiche la notation
+	function Display_notation($Template = false)
+	{
+		global $CONFIG, $Sql, $LANG;
+		
+		$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;
+		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0);
+
+		//Notes chargées?
+		if( $this->Note_loaded() ) //Utilisateur connecté.
+		{
+			if( !is_object($Template) || get_class($Template) != 'Template' )
+			$Template = new Template('framework/note.tpl');
+			
+			###########################Insertion##############################
+			if( !empty($_POST['valid_note']) )
+			{
+				if( !empty($note) )
+					$Note->Add_note($note); //Ajout de la note.
+				
+				redirect($path_redirect);
+			}
+			else
+			{
+				###########################Affichage##############################
+				$row_note = $Sql->Query_array($this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+					
+				//Génération de l'échelle de notation pour ceux ayant le javascript désactivé.
+				$select = '<option value="-1" selected="selected">' . $LANG['note'] . '</option>';
+				for( $i = 0; $i <= $this->notation_scale; $i++)
+					$select .= '<option value="' . $i . '">' . $i . '</option>';
+					
+				### Notation Ajax ###
+				$row_note['note'] = (round($row_note['note'] / 0.25) * 0.25);
+				
+				$l_note = ($this->options & NOTE_DISPLAY_NOTE) !== 0 ? '<strong>' . $LANG['note'] . ':</strong>&nbsp;' : ''; //Affichage du titre devant la note.
+				$display = ($this->options & NOTE_DISPLAY_BLOCK) !== 0 ? 'block' : 'inline'; //Affichage en bloc ou en inline suivant besoin.
+				$width = ($this->options & NOTE_DISPLAY_BLOCK) !== 0 ? 'width:' . ($this->notation_scale*16) . 'px;margin:auto;' : '';
+				
+				$ajax_note = '<div style="' . $width . 'display:none" id="note_stars' . $this->idprov . '" onmouseout="out_div(' . $this->idprov . ', array_note[' . $this->idprov . '])" onmouseover="over_div()">';
+				for($i = 1; $i <= $this->notation_scale; $i++)
+				{
+					$star_img = 'stars.png';
+					if( $row_note['note'] < $i )
+					{							
+						$decimal = $i - $row_note['note'];
+						if( $decimal >= 1 )
+							$star_img = 'stars0.png';
+						elseif( $decimal >= 0.75 )
+							$star_img = 'stars1.png';
+						elseif( $decimal >= 0.50 )
+							$star_img = 'stars2.png';
+						else
+							$star_img = 'stars3.png';
+					}			
+					$ajax_note .= '<a href="javascript:send_note(' . $this->idprov . ', ' . $i . ')" onmouseover="select_stars(' . $this->idprov . ', ' . $i . ');"><img src="../templates/'. $CONFIG['theme'] . '/images/' . $star_img . '" alt="" class="valign_middle" id="' . $this->idprov . '_stars' . $i . '" /></a>';
+				}
+				if( ($this->options & NOTE_NODISPLAY_NBRNOTES) !== 0 ) //Affichage du nombre de votant.
+					$ajax_note .= '</div> <span id="noteloading' . $this->idprov . '"></span>';
+				else
+					$ajax_note .= '</div> <span id="noteloading' . $this->idprov . '"></span> <div style="display:' . $display . '" id="nbrnote' . $this->idprov . '">(' . $row_note['nbrnote'] . ' ' . (($row_note['nbrnote'] > 1) ? strtolower($LANG['notes']) : strtolower($LANG['note'])) . ')</div>';
+				
+				$Template->Assign_vars(array(
+					'C_JS_NOTE' => !defined('HANDLE_NOTE'),
+					'ID' => $this->idprov,
+					'NOTE_MAX' => $this->notation_scale,
+					'SELECT' => $select,
+					'NOTE' => $l_note . '<span id="note_value' . $this->idprov . '">' . (($row_note['nbrnote'] > 0) ? '<strong>' . $row_note['note'] . '</strong>' : '<em>' . $LANG['no_note'] . '</em>') . '</span>' . $ajax_note,
+					'ARRAY_NOTE' => 'array_note[' . $this->idprov . '] = \'' . $row_note['note'] . '\';',
+					'DISPLAY' => $display,
+					'L_AUTH_ERROR' => addslashes($LANG['e_auth']),
+					'L_ALERT_ALREADY_VOTE' => addslashes($LANG['already_vote']),
+					'L_ALREADY_VOTE' => '',
+					'L_NOTE' => addslashes($LANG['note']),
+					'L_NOTES' => addslashes($LANG['notes']),
+					'L_VALID_NOTE' => $LANG['valid_note']
+				));
+			}
+
+			if( !defined('HANDLE_NOTE') )
+				define('HANDLE_NOTE', true);
+
+			return $Template->parse(TEMPLATE_STRING_MODE);				
+		}
+		else 
+			$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT); 
+	}
+	
+	//Affiche les images de la notation.
 	function Display_note($note, $notation_scale, $num_stars_display = 0)
 	{
 		global $CONFIG;

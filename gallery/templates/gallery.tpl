@@ -308,8 +308,7 @@
 							</tr>
 							<tr>										
 								<td class="row2 text_small" style="border:none;padding:4px;">
-									<strong>{L_NOTE}:</strong> 
-									# INCLUDE handle_note #
+									{KERNEL_NOTATION}
 								</td>
 								<td class="row2 text_small" style="border:none;padding:4px;vertical-align:top">
 									<strong>{L_COM}:</strong> {COM}
@@ -374,7 +373,7 @@
 								{pics_list.POSTOR}
 								{pics_list.VIEWS}
 								{pics_list.COM}
-								{pics_list.NOTE}
+								{pics_list.KERNEL_NOTATION}
 									
 								<div style="width:180px;margin:auto;">										
 									# IF C_GALLERY_MODO #
