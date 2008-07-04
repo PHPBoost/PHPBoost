@@ -64,6 +64,10 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 		'DEL' => $del
 	));
 		
+	//Affichage notation.
+	include_once('../kernel/framework/note.class.php'); 
+	$Note = new Note('web', $idweb, transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php'), $CONFIG_WEB['note_max'], '', NOTE_DISPLAY_NOTE);
+	
 	$Template->Assign_vars(array(
 		'C_DISPLAY_WEB' => true,
 		'MODULE_DATA_PATH' => $Template->Module_data_path('web'),
@@ -77,6 +81,7 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'COM' => com_display_link($web['nbr_com'], '../web/web' . transid('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0'), $idweb, 'web'),
+		'KERNEL_NOTATION' => $Note->Display_notation(),
 		'U_WEB_CAT' => transid('.php?cat=' . $idcat, '-' . $idcat . '.php'),
 		'L_DESC' => $LANG['description'],
 		'L_CAT' => $LANG['category'],
@@ -84,11 +89,6 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 		'L_TIMES' => $LANG['n_time'],
 		'L_VIEWS' => $LANG['views']
 	));
-	
-	//Affichage notation.
-	include_once('../kernel/framework/note.class.php'); 
-	$Note = new Note('web', $idweb, transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php'), $CONFIG_WEB['note_max'], '', NOTE_DISPLAY_NOTE);
-	include_once('../kernel/framework/note.php');
 	
 	//Affichage commentaires.
 	if( isset($_GET['com']) )

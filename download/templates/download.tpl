@@ -215,10 +215,10 @@
 					</tr>
 					<tr>
 						<td class="row1" style="padding:3px">
-							{L_NOTE} <em>({NUM_NOTES})</em>
+							{L_NOTE} <em><span id="nbrnote{ID_FILE}">({NUM_NOTES})</span></em>
 						</td>
 						<td class="row2" style="padding:1px">
-							# INCLUDE handle_note #
+							{KERNEL_NOTATION}
 						</td>
 					</tr>
 				</table>

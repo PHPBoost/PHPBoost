@@ -44,11 +44,16 @@ if( $file_id > 0 ) //Contenu
  	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['timestamp']);
  	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['release_timestamp']);
 	
+	//Affichage notation.
+	include_once('../kernel/framework/note.class.php'); 
+	$Note = new Note('download', $file_id, transid('download.php?id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
+	
 	$Template->Assign_vars(array(
 		'C_DISPLAY_DOWNLOAD' => true,
 		'C_IMG' => !empty($download_info['image']),
 		'C_EDIT_AUTH' => $auth_write,
 		'MODULE_DATA_PATH' => $Template->Module_data_path('download'),
+		'ID_FILE' => $file_id,
 		'NAME' => $download_info['title'],
 		'CONTENTS' => second_parse($download_info['contents']),
 		'CREATION_DATE' => $creation_date->Format_date(DATE_FORMAT_SHORT),
@@ -57,6 +62,7 @@ if( $file_id > 0 ) //Contenu
 		'COUNT' => $download_info['count'],
 		'THEME' => $CONFIG['theme'],
 		'COM' => com_display_link($download_info['nbr_com'], '../download/download' . transid('.php?id=' . $file_id . '&amp;com=0', '-' . $category_id . '-' . $file_id . '.php?com=0'), $file_id, 'download'),
+		'KERNEL_NOTATION' => $Note->Display_notation(),
 		'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$download_info['count']),
 		'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], (int)$download_info['nbrnote']),
 		'U_IMG' => $download_info['image'],
@@ -78,11 +84,6 @@ if( $file_id > 0 ) //Contenu
 		'U_DELETE_FILE' => transid('management.php?del=' . $file_id),
 		'U_DOWNLOAD_FILE' => transid('count.php?id=' . $file_id, 'file-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php')
 	));
-	
-	//Affichage notation.
-	include_once('../kernel/framework/note.class.php'); 
-	$Note = new Note('download', $file_id, transid('download.php?id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
-	include_once('../kernel/framework/note.php');
 	
 	//Affichage commentaires.
 	if( isset($_GET['com']) )

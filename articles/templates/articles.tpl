@@ -49,7 +49,7 @@
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
 				<span style="float:left" class="text_small">
-					# INCLUDE handle_note #
+					{KERNEL_NOTATION}
 				</span>
 				<span style="float:right" class="text_small">
 					{L_WRITTEN}: <a class="small_link" href="../member/member{U_MEMBER_ID}">{PSEUDO}</a>, {L_ON}: {DATE}
