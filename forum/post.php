@@ -30,6 +30,14 @@ require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $id_get = retrieve(GET, 'id', 0);
+
+//Existance de la catégorie.
+if( !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0 )
+	$Errorh->Error_handler('e_unexist_cat', E_USER_REDIRECT);
+
+if( $Member->Get_attribute('user_readonly') > time() ) //Lecture seule.
+	$Errorh->Error_handler('e_readonly', E_USER_REDIRECT);
+
 //Récupération de la barre d'arborescence.
 $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 foreach($CAT_FORUM as $idcat => $array_info_cat)
@@ -49,14 +57,6 @@ $error_get = retrieve(GET, 'error', '');
 $previs = retrieve(POST, 'prw', false); //Prévisualisation des messages.
 $post_topic = retrieve(POST, 'post_topic', false);
 $preview_topic = retrieve(POST, 'prw_t', '');
-
-############# Vérification d'autorisation dans la catégorie envoyée #############
-//Existance de la catégorie.
-if( !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0 )
-	$Errorh->Error_handler('e_unexist_cat', E_USER_REDIRECT);
-
-if( $Member->Get_attribute('user_readonly') > time() ) //Lecture seule.
-	$Errorh->Error_handler('e_readonly', E_USER_REDIRECT);
 
 //Niveau d'autorisation de la catégorie
 if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
