@@ -39,7 +39,8 @@ if( empty($check_update) )
     #######Statistiques#######
     $Sql->Query_inject("UPDATE ".PREFIX."stats_referer SET yesterday_visit = today_visit", __LINE__, __FILE__);
     $Sql->Query_inject("UPDATE ".PREFIX."stats_referer SET today_visit = 0, nbr_day = nbr_day + 1", __LINE__, __FILE__);
-    
+    $Sql->Query_inject("DELETE FROM ".PREFIX."stats_referer WHERE last_update < '" . (time() - 604800) . "'", __LINE__, __FILE__); //Suppression des entrées non mise à jour depuis 1 semaine.
+	
     //Visites et pages vues.
     $pages_displayed = pages_displayed();
     @delete_file(PATH_TO_ROOT . '/cache/pages.txt');

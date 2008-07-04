@@ -24,14 +24,12 @@
 ------------------------------------- NOYAU ------------------------------------
 [-] Classe de BBCode et désactivation des balises non autorisées (un objet par barre d'outil, chargement du template (un objet template pour chaque barre)). Attention à ce que ça marche quelque soit le path (voir pop up commentaires)
 [-] Interface de contribution des news et des articles.
-[-] Stats, refaire les outils "Sites référents" et "Mots clés"
 [-] Régler l'affichage du mini-calendrier
 
 ------------------------------------ MODULES -----------------------------------
 [-] Module liens du site
 
 Forum : 
-[-] Cacher opérations de masse
 [-] Réparation des bugs sur l'arbre intervallaire gérant les catégories
 
 #################################################################################
