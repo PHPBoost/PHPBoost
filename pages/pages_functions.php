@@ -122,7 +122,6 @@ function pages_parse($contents)
 	//Protection des données.	
 	$contents = htmlentities($contents, ENT_NOQUOTES);
 	$contents = strip_tags($contents);
-	$contents = nl2br($contents);
 
 	$contents = strparse($contents, array(), false);
 	$contents = htmlspecialchars_decode($contents, ENT_NOQUOTES);

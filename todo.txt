@@ -52,6 +52,7 @@ Forum :
     - Changelog des fichiers
 [-] Correction du bug des stats (graphiques)
 [-] Flux gestion du cache (pour le moment en dur)
+[-] Recherche : harmoniser la pertinence des modules dans la recherche. Prévoir un système d'importance de la recherche dans l'administration selon le module
 
 ------------------------------------ MODULES -----------------------------------
 Search :
