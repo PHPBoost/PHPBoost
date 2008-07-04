@@ -29,17 +29,28 @@ if( defined('PHPBOOST') !== true )
 	exit;
 	
 include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php');
-
+$_SERVER['HTTP_REFERER']='http://www.fd.com/results.aspx?q=phpboost&form=QBHP';
 $referer = !empty($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : '';
 if( !empty($referer) )
 {
 	########### Détection des mots clés ###########
+	$is_search_engine = false;
+	$search_engine = '';
 	$array_search = array('google', 'search.live', 'search.msn', 'yahoo', 'exalead', 'altavista', 'lycos', 'ke.voila', 'recherche.aol');
-	$search_engine = strprotect(preg_replace('`(?:[a-z]{2,4}\.)?([a-z0-9_-]+)\.(.*)`i', '$1', $referer['host']));
-	if( in_array($search_engine, $array_search) )
+	foreach($array_search as $search_engine_check)
+	{	
+		if( strpos($referer['host'], $search_engine_check) !== false )
+		{
+			$is_search_engine = true;
+			$search_engine = $search_engine_check;
+			break;
+		}
+	}	
+
+	if( $is_search_engine )
 	{
 		$query = !empty($referer['query']) ? $referer['query'] : '';
-		$keyword = strprotect(strtolower(str_replace('+', ' ', preg_replace('`(?:.*)(?:q|p|query|rdata)=([^&]+)(.*)`i', '$1', $query))));
+		$keyword = strprotect(strtolower(str_replace('+', ' ', preg_replace('`(?:.*)(?:q|p|query|rdata)=([^&]+)(?:.*)`i', '$1', $query))));
 		
 		$check_search_engine = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."stats_referer WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
 		if( !empty($keyword) )

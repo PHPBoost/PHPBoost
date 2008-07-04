@@ -936,13 +936,13 @@ elseif( $referer )
 		{
 			$trend_img = 'up.png';
 			$sign = '+';
-			$trend = number_round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
+			$trend = number_round((($row['yesterday_visit'] * 100) / $average) - 100, 1);
 		}
 		elseif( $row['yesterday_visit'] < $average )
 		{
 			$trend_img = 'down.png';
 			$sign = '-';
-			$trend = 100 - number_round((($row['yesterday_visit'] * 100) / $average), 1);
+			$trend = number_round(100 - (($row['yesterday_visit'] * 100) / $average), 1);
 		}
 		else
 		{	
