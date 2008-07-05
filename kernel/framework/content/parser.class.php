@@ -37,6 +37,10 @@ class ContentParser
 	//Constructeur
 	function ContentParser()
 	{
+		global $CONFIG;
+		$this->html_auth =& $CONFIG['html_auth'];
+		$this->content = '';
+		$this->parsed_content = '';
 	}
 
 	//Fonction qui renvoie le contenu traité
@@ -52,6 +56,15 @@ class ContentParser
 	function set_content($content)
 	{
 		$this->content = trim(!MAGIC_QUOTES ? $content : stripslashes($content));
+	}
+	
+	function set_html_auth($array_auth)
+	{
+		global $CONFIG;
+		if( is_array($array_auth) )
+			$this->auth = $array_auth;
+		else
+			$this->auth =& $CONFIG['html_auth'];
 	}
 	
 	function get_parsed_content($addslashes = true)
@@ -76,7 +89,7 @@ class ContentParser
 		
 		//Balise code
 		if( strpos($this->parsed_content, '[[CODE') !== false )
-			$this->parsed_content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(,1)?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->parsed_content);
+			$this->parsed_content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(,0|1)?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->parsed_content);
 		
 		//Balise latex.
 		if( strpos($this->parsed_content, '[math]') !== false )
@@ -92,6 +105,7 @@ class ContentParser
 	var $content = '';
 	var $array_tags = array();
 	var $parsed_content;
+	var $html_auth;
 	
 	
 	//Fonction pour éclater la chaîne selon les tableaux (gestion de l'imbrication infinie)
@@ -507,7 +521,7 @@ class ContentParser
 		{
 			$highlight = highlight_string($contents, true);
 			$font_replace = str_replace(array('<font ', '</font>'), array('<span ', '</span>'), $highlight);
-			$contents = preg_replace('`color="(.*?)"`', 'style="color: $1"', $font_replace);
+			$contents = preg_replace('`color="(.*?)"`', 'style="color:$1"', $font_replace);
 		}
 		
 		return $contents ;
