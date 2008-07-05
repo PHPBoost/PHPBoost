@@ -281,7 +281,6 @@ $LANG['site_desc'] = 'Description du site';
 $LANG['site_keyword'] = 'Mots clés du site';
 $LANG['default_language'] = 'Langue (par défaut) du site';
 $LANG['default_theme'] = 'Thème (par défaut) du site';
-$LANG['default_editor'] = 'Editeur texte (par défaut) du site';
 $LANG['start_page'] = 'Page de démarrage du site';
 $LANG['no_module_starteable'] = 'Aucun module de démarrage trouvé';
 $LANG['other_start_page'] = 'Autre adresse relative ou absolue';
@@ -408,6 +407,11 @@ $LANG['menu_top_footer'] = 'Sur pied de page';
 $LANG['menu_footer'] = 'Pied de page';
 $LANG['location'] = 'Emplacement';
 $LANG['use_tpl'] = 'Utiliser la structure des templates';
+
+//Gestion du contenu
+$LANG['content_config'] = 'Config. du contenu';
+$LANG['default_langage'] = 'Langage de formatage du contenu (par défaut) du site';
+$LANG['content_langage_config'] = 'Langage';
 
 //Smiley
 $LANG['upload_smiley'] = 'Uploader un smiley';

@@ -34,7 +34,7 @@ $down = retrieve(GET, 'down', 0);
 $up = retrieve(GET, 'up', 0);
 $id_question = retrieve(POST, 'id_question', 0);
 $entitled = retrieve(POST, 'entitled', '');
-$answer = retrieve(POST, 'answer', '');
+$answer = retrieve(POST, 'answer', '', TSTRING_PARSE);
 $new_id_cat = retrieve(POST, 'id_cat', 0);
 $id_after = retrieve(POST, 'after', 0);
 //Properties of the category
