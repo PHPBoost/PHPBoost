@@ -44,6 +44,7 @@ Forum :
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Réparer la liste des news du site officiel sur l'index de l'admin.
+[-] Langue dans les flux rss (Remlacer "Le" par la langue).
 [-] Réhauser l'image des dossiers.
 [-] Faire les miniatures pour les thèmes.
 
