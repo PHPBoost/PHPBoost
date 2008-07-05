@@ -21,6 +21,8 @@
 		});
 		-->
 		</script>
+		{UPLOAD_MANAGEMENT}
+		
 		# ENDIF #
 		
 		<script type="text/javascript" src="../kernel/framework/js/bbcode.js"></script>
