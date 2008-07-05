@@ -41,12 +41,12 @@ class Note
 			$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
 			$this->options = (int)$options;
 			list($this->script, $this->idprov, $this->vars, $this->notation_scale, $this->path) = array(strprotect($script), numeric($idprov), $vars, $notation_scale, PATH_TO_ROOT . '/' . $this->module_folder . '/');
-			$this->sql_table = $this->get_table_module();
+			$this->sql_table = $this->_get_table_module();
 		}
 	}
 	
 	//Ajoute une note.
-	function Add_note($note)
+	function add_note($note)
 	{
 		global $Sql, $Member;
 		
@@ -73,7 +73,7 @@ class Note
 	}
 	
 	//Affiche la notation
-	function Display_notation($Template = false)
+	function display_form($Template = false)
 	{
 		global $CONFIG, $Sql, $LANG;
 		
@@ -81,7 +81,7 @@ class Note
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0);
 
 		//Notes chargées?
-		if( $this->Note_loaded() ) //Utilisateur connecté.
+		if( $this->_note_loaded() ) //Utilisateur connecté.
 		{
 			if( !is_object($Template) || get_class($Template) != 'Template' )
 			$Template = new Template('framework/note.tpl');
@@ -161,7 +161,7 @@ class Note
 	}
 	
 	//Affiche les images de la notation.
-	function Display_note($note, $notation_scale, $num_stars_display = 0)
+	function display_img($note, $notation_scale, $num_stars_display = 0)
 	{
 		global $CONFIG;
 		
@@ -192,8 +192,15 @@ class Note
 		return $display_note;
 	}
 	
+	//Accesseur
+	function get_attribute($varname)
+	{
+		return $this->$varname;
+	}
+	
+	## Private Methods ##
 	//Vérifie que le système de commentaires est bien chargé.
-	function Note_loaded()
+	function _note_loaded()
 	{
 		global $Errorh;
 		
@@ -203,15 +210,8 @@ class Note
 		return (!empty($this->script) && !empty($this->idprov) && !empty($this->vars));
 	}
 	
-	//Accesseur
-	function Get_attribute($varname)
-	{
-		return $this->$varname;
-	}
-	
-	## Private Methods ##
 	//Récupération de la table du module associée aux notes.
-	function get_table_module()
+	function _get_table_module()
 	{
 		global $Sql, $CONFIG;
 

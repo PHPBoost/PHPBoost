@@ -225,7 +225,7 @@
 		# IF C_AUTH_POST #		
 		<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto;margin-top:15px;" id="go_bottom">		
 			<div style="font-size:11px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
-			# INCLUDE handle_bbcode #		
+			{KERNEL_EDITOR}
 			<label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 			<fieldset class="fieldset_submit" style="padding-top:17px;">
 				<legend>{L_SUBMIT}</legend>

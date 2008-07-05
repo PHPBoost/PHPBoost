@@ -74,7 +74,7 @@
 							<legend>{L_EDIT_MESSAGE}</legend>
 							<p>{L_REQUIRE}</p>
 							<label for="contents">* {L_MESSAGE}</label>
-							# INCLUDE handle_bbcode #
+							{KERNEL_EDITOR}
 							<label><textarea type="text" rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 						</fieldset>
 						

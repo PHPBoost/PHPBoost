@@ -43,9 +43,6 @@ class Template
         $this->files[$this->tpl] = $this->tpl;
 		if( !empty($tpl) )
 		{
-//             echo '<b>' . $tpl . '</b> - ';
-//             print_r($this->files);
-//             echo '<hr />';
 			$member_connected = $Member->Check_level(MEMBER_LEVEL);
 			$this->Assign_vars(array(
 				'SID' => SID,
@@ -54,7 +51,7 @@ class Template
 				'C_MEMBER_CONNECTED' => $member_connected,
 				'C_MEMBER_NOTCONNECTED' => !$member_connected,
 				'PATH_TO_ROOT' => PATH_TO_ROOT
-				));
+			));
 		}
     }
 	
@@ -166,13 +163,12 @@ class Template
 	function check_file($filename)
 	{
 		global $CONFIG;
+		
 		$filename = trim($filename, '/');
 		$i = strpos($filename, '/');
 		$module = substr($filename, 0, $i);
         $file = trim(substr($filename, $i), '/');
         $folder = trim(substr($file, 0, strpos($file, '/')), '/');
-        
-//         echo '<hr />' . $filename . ' - ' . $file . ' - ' . $module . '<br />';
         
 		if( empty($file) ) //Template du thème (noyau)
 			return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;

@@ -1,28 +1,3 @@
-		# IF C_BBCODE_TINYMCE_MODE #			
-		<script language="javascript" type="text/javascript" src="../kernel/framework/content/tinymce/tiny_mce.js"></script>
-		<script language="javascript" type="text/javascript">
-		<!--
-		tinyMCE.init({
-			mode : "exact",
-			elements : "{FIELD}", 
-			theme : "advanced",
-			language : "fr",
-			content_css : "../templates/{THEME}/tinymce.css",
-			theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,sub,sup,charmap,|,undo,redo,|,image,link,unlink,anchor", 
-			theme_advanced_buttons2 : "forecolor,backcolor,|,outdent,indent,|,fontsizeselect,formatselect,|,cleanup,removeformat,|,table,split_cells,merge_cells,flash", 
-			theme_advanced_buttons3 : "",
-			theme_advanced_toolbar_location : "top", 
-			theme_advanced_toolbar_align : "center", 
-			theme_advanced_statusbar_location : "bottom",
-			plugins : "table,flash",
-			extended_valid_elements : "font[face|size|color|style],span[class|align|style],a[href|name]",
-			theme_advanced_resize_horizontal : false, 
-			theme_advanced_resizing : true
-		});
-		-->
-		</script>
-		# ENDIF #
-		
 		<script type="text/javascript" src="../kernel/framework/js/bbcode.js"></script>
 		<script type="text/javascript">
 		<!--
@@ -57,6 +32,32 @@
 		-->
 		</script>
 		<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview"></div>
+		
+		# IF C_BBCODE_TINYMCE_MODE #			
+		<script language="javascript" type="text/javascript" src="../kernel/framework/content/tinymce/tiny_mce.js"></script>
+		<script language="javascript" type="text/javascript">
+		<!--
+		tinyMCE.init({
+			mode : "exact",
+			elements : "{FIELD}", 
+			theme : "advanced",
+			language : "fr",
+			content_css : "../templates/{THEME}/tinymce.css",
+			theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,sub,sup,charmap,|,undo,redo,|,image,link,unlink,anchor", 
+			theme_advanced_buttons2 : "forecolor,backcolor,|,outdent,indent,|,fontsizeselect,formatselect,|,cleanup,removeformat,|,table,split_cells,merge_cells,flash", 
+			theme_advanced_buttons3 : "",
+			theme_advanced_toolbar_location : "top", 
+			theme_advanced_toolbar_align : "center", 
+			theme_advanced_statusbar_location : "bottom",
+			plugins : "table,flash",
+			extended_valid_elements : "font[face|size|color|style],span[class|align|style],a[href|name]",
+			theme_advanced_resize_horizontal : false, 
+			theme_advanced_resizing : true
+		});
+		-->
+		</script>
+		{UPLOAD_MANAGEMENT}
+		# ENDIF #
 		
 		# IF C_BBCODE_NORMAL_MODE #
 		<script type="text/javascript">

@@ -28,7 +28,7 @@
 				# ENDIF #			
 				
 				<label for="guestbook_contents">* {L_MESSAGE}</label>
-				# INCLUDE handle_bbcode #
+				{KERNEL_EDITOR}
 				<label><textarea rows="10" cols="47" id="guestbook_contents" name="guestbook_contents">{CONTENTS}</textarea></label>
 				<p>
 					<strong>{L_FORBIDDEN_TAGS}</strong> {DISPLAY_FORBIDDEN_TAGS}

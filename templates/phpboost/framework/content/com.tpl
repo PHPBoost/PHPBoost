@@ -32,7 +32,7 @@
 				# ENDIF #
 				<br />
 				<label for="contents">* {L_MESSAGE}</label>
-				# INCLUDE handle_bbcode #
+				{KERNEL_EDITOR}
 				<label><textarea rows="10" cols="40" id="contents" name="contents">{CONTENTS}</textarea> </label>
 				<br />
 				<strong>{L_FORBIDDEN_TAGS}</strong> {DISPLAY_FORBIDDEN_TAGS}

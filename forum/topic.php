@@ -485,6 +485,7 @@ else
 	$Template->Assign_vars(array(
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
+		'KERNEL_EDITOR' => display_editor(),
 		'ICON_FAVORITE' => '<img src="' . $module_data_path . '/images/' . $img_favorite_display . '" alt="" class="valign_middle" />',
 		'ICON_FAVORITE2' => '<img src="' . $module_data_path . '/images/' . $img_favorite_display . '" alt="" class="valign_middle" id="forum_favorite_img" />',
 		'U_FORUM_ACTION_POST' => transid('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg')
@@ -505,8 +506,7 @@ else
 		));
 	}
 }
-	
-include('../kernel/framework/content/bbcode.php');
+
 $Template->Pparse('forum_topic');
 
 include('../kernel/footer.php');
