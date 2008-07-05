@@ -409,9 +409,13 @@ $LANG['location'] = 'Emplacement';
 $LANG['use_tpl'] = 'Utiliser la structure des templates';
 
 //Gestion du contenu
-$LANG['content_config'] = 'Config. du contenu';
-$LANG['default_langage'] = 'Langage de formatage du contenu (par défaut) du site';
-$LANG['content_langage_config'] = 'Langage';
+$LANG['content_config'] = 'Contenu';
+$LANG['content_config_extend'] = 'Configuration du contenu';
+$LANG['default_language'] = 'Langage de formatage du contenu (par défaut) du site';
+$LANG['content_language_config'] = 'Langage de formatage';
+$LANG['content_html_language'] = 'Langage HTML';
+$LANG['content_auth_use_html'] = 'Niveau d\'autorisation pour insérer du langage HTML
+<span style="display:block">Attention : le code HTML peut contenir du code Javascript qui peut constituer une source de faille de sécurité si quelqu\'un y insère un code malveillant. Veillez donc à n\'autoriser seulement les personnes de confiance à insérer du HTML.</span>';
 
 //Smiley
 $LANG['upload_smiley'] = 'Uploader un smiley';

@@ -281,7 +281,6 @@ $LANG['site_desc'] = 'Description of the website';
 $LANG['site_keyword'] = 'Keywords for the website';
 $LANG['default_language'] = 'Language (default) of the website';
 $LANG['default_theme'] = 'Website\'s (default) theme';
-$LANG['default_editor'] = 'Website\'s (default) text editor';
 $LANG['start_page'] = 'Website\'s start page';
 $LANG['no_module_starteable'] = 'No starteable module found';
 $LANG['other_start_page'] = 'Other relative or absolute url';
@@ -389,7 +388,7 @@ $LANG['files_text'] = 'Textes';
 $LANG['files_media'] = 'Media';
 $LANG['files_prog'] = 'Programation';
 $LANG['files_misc'] = 'Miscellaneous';
-		
+
 //Gestion des menus
 $LANG['confirm_del_menu'] = 'Delete this menu?';
 $LANG['menus_management'] = 'Menus management';
@@ -408,6 +407,15 @@ $LANG['menu_top_footer'] = 'Sup footer';
 $LANG['menu_footer'] = 'Footer';
 $LANG['location'] = 'Location';
 $LANG['use_tpl'] = 'Use templates structure';
+
+//Gestion du contenu
+$LANG['content_config'] = 'Content';
+$LANG['content_config_extend'] = 'Content configuration';
+$LANG['default_language'] = 'Default formatting language on the website';
+$LANG['content_language_config'] = 'Formatting language';
+$LANG['content_html_language'] = 'HTML language';
+$LANG['content_auth_use_html'] = 'Authorization level to insert HTML langage in the content
+<span style="display:block">Warning : if you can insert HTML tags, you can also insert some javascript and this code can be the source of vulnerabilities. People who can insert some HTML language must be poeple whom you trust.</span>';
 
 //Smiley
 $LANG['upload_smiley'] = 'Upload smiley';

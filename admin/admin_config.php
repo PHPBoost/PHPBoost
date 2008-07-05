@@ -50,39 +50,21 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 	else
 		$start_page = '';
 		
-	$config = array();	 
-	$config['server_name'] = $CONFIG['server_name'];
-	$config['server_path'] = $CONFIG['server_path'];	
+	$config = $CONFIG;	 
 	$config['site_name'] = stripslashes(retrieve(POST, 'site_name', ''));	
 	$config['site_desc'] = stripslashes(retrieve(POST, 'site_desc', ''));
 	$config['site_keyword'] = stripslashes(retrieve(POST, 'site_keyword', ''));
-	$config['start'] = $CONFIG['start'];
-	$config['version'] = $CONFIG['version'];
 	$config['lang'] = stripslashes(retrieve(POST, 'lang', ''));
 	$config['theme'] = stripslashes(retrieve(POST, 'theme', 'main')); //main par defaut. 
-	$config['editor'] = stripslashes(retrieve(POST, 'editor', 'bbcode')); //bbcode par defaut. 
-	$config['timezone'] = $CONFIG['timezone'];
 	$config['start_page'] = !empty($start_page) ? stripslashes($start_page) : '/member/member.php';
-	$config['maintain'] = $CONFIG['maintain'];
-	$config['maintain_delay'] = $CONFIG['maintain_delay'];
-	$config['maintain_display_admin'] = $CONFIG['maintain_display_admin'];
-	$config['maintain_text'] = $CONFIG['maintain_text'];
-	$config['rewrite'] = $CONFIG['rewrite'];
-	$config['htaccess_manual_content'] = $CONFIG['htaccess_manual_content'];
-	$config['com_popup'] = $CONFIG['com_popup'];
 	$config['compteur'] = retrieve(POST, 'compteur', 0);
 	$config['bench'] = retrieve(POST, 'bench', 0);
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
-	$config['ob_gzhandler'] = $CONFIG['ob_gzhandler'];
-	$config['site_cookie'] = $CONFIG['site_cookie'];
-	$config['site_session'] = $CONFIG['site_session'];				
-	$config['site_session_invit'] = $CONFIG['site_session_invit'];	
 	$config['mail'] = stripslashes(retrieve(POST, 'mail', ''));;  
 	$config['activ_mail'] = retrieve(POST, 'activ_mail', 1); //activé par defaut. 
 	$config['sign'] = stripslashes(retrieve(POST, 'sign', ''));;   
 	$config['anti_flood'] = retrieve(POST, 'anti_flood', 0);
 	$config['delay_flood'] = retrieve(POST, 'delay_flood', 0);
-	$config['unlock_admin'] = $CONFIG['unlock_admin'];
 	$config['pm_max'] = retrieve(POST, 'pm_max', 25);
 
 	if( !empty($config['theme']) && !empty($CONFIG['lang']) ) //Nom de serveur obligatoire
@@ -413,19 +395,7 @@ else //Sinon on rempli le formulaire
 			}
 		}
 	}
-	
-	//Gestion éditeur par défaut.
-	$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
-	$select_editors = '';
-	foreach($editors as $code => $name)
-	{
-		$selected = ($code == $CONFIG['editor']) ? 'selected="selected"' : '';
-		$select_editors .= '<option value="' . $code . '" ' . $selected . '>' . $name . '</option>';
-	}
-	$Template->Assign_block_vars('select_editor', array(
-		'EDITOR' => $select_editors
-	));
-	
+
 	$CONFIG['theme'] = $theme_tmp;
 	
 	$Template->Pparse('admin_config');

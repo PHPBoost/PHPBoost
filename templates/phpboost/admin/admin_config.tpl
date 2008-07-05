@@ -88,16 +88,6 @@
 						</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="default_editor">* {L_DEFAULT_EDITOR}</label></dt>
-						<dd><label>
-							<select name="editor" id="default_editor">						
-							# START select_editor #				
-								{select_editor.EDITOR}				
-							# END select_editor #				
-							</select>
-						</label></dd>
-					</dl>
-					<dl>
 						<dt><label for="start_page">* {L_START_PAGE}</label></dt>
 						<dd><label>
 							<select name="start_page" id="start_page">		
