@@ -83,11 +83,29 @@ class Content
 	{
 		global $CONFIG;
 		switch($this->language_type)
+		global $Member;
+		
+		switch($this->language_type)
 		{
 			case BBCODE_LANGUAGE:
 			case TINYMCE_LANGUAGE:
+			case BBCODE_LANGUAGE:
+				require_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode_editor.class.php');
+				return new BBCodeEditor();
+			case TINYMCE_LANGUAGE:
+				require_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode_editor.class.php');
+				return new BBCodeEditor();
 			default:
-				return;
+				if( $Member->Get_attribute('user_editor') == BBCODE_LANGUAGE )
+				{
+					require_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode_editor.class.php');
+					return new BBCodeEditor();
+				}
+				else
+				{
+					require_once(PATH_TO_ROOT . '/kernel/framework/content/tinymce_editor.class.php');
+					return new TinyMCEEditor();
+				}
 		}
 	}
 	

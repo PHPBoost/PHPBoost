@@ -72,7 +72,7 @@
 						</dl>
 						# END category.not_root_name #
 						<label for="contents">{L_DESCRIPTION}</label>
-						# INCLUDE handle_bbcode #
+						{KERNEL_EDITOR}
 						<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
 						<br />
 						<div style="text-align:center;">
@@ -227,7 +227,7 @@
 							</dd>
 						</dl>
 						<label for="contents">{L_ANSWER}</label>
-						# INCLUDE handle_bbcode #
+						{KERNEL_EDITOR}
 						<textarea id="contents" rows="15" cols="66" name="answer">{edit_question.ANSWER}</textarea>
 					</fieldset>
 					<fieldset class="fieldset_submit">

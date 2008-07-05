@@ -147,6 +147,19 @@ function substr_html(&$str, $start, $end = '')
         return htmlspecialchars(substr(html_entity_decode($str), $start, $end), ENT_NOQUOTES);
 }
 
+//Affichage de l'éditeur de contenu.
+function display_editor($forbidden_tags = array(), $field = 'contents', $Template = false)
+{
+	include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');	
+	$content_editor = new Content();
+	$editor =& $content_editor->get_editor();
+	$editor->set_forbidden_tags($forbidden_tags);
+	$editor->set_identifier($field);
+	$editor->set_template($Template);
+	
+	return $editor->display();
+}
+
 //Chercher le dossier langue d'un module, s'il n'est pas trouvé on retourne la première langue.
 function load_module_lang($module_name)
 {
@@ -338,6 +351,12 @@ function check_mail($mail)
 function strparse(&$content, $forbidden_tags = array())
 {
     $content_manager = new Content(BBCODE_LANGUAGE);
+    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
+    $content_manager = new Content($content);
+	$content_manager->set_language(BBCODE_LANGUAGE);
+    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
+    $content_manager = new Content($content);
+	$content_manager->set_language(BBCODE_LANGUAGE);
 	$parser =& $content_manager->get_parser();
     $parser->set_content($content);
     $parser->set_forbidden_tags($forbidden_tags);
@@ -350,6 +369,9 @@ function strparse(&$content, $forbidden_tags = array())
 function unparse(&$content)
 {
 	$content_manager = new Content(BBCODE_LANGUAGE);
+    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
+	$content_manager = new Content();
+	$content_manager->set_language(BBCODE_LANGUAGE);
 	$parser =& $content_manager->get_parser();
     $parser->set_content($content);
     $parser->unparse();
@@ -363,6 +385,9 @@ function second_parse(&$content)
 	$content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $content);
 	
 	$content_manager = new Content(BBCODE_LANGUAGE);
+	include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
+	$content_manager = new Content();
+	$content_manager->set_language(BBCODE_LANGUAGE);
 	$parser =& $content_manager->get_parser();
     $parser->set_content($content);
     $parser->second_parse();

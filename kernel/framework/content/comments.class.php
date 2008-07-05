@@ -234,7 +234,6 @@ class Comments
 								'LOGIN' => $row['login']
 							));
 						
-						$forbidden_tags = implode(', ', $CONFIG_COM['forbidden_tags']);
 						$Template->Assign_vars(array(					
 							'IDPROV' => $row['idprov'],
 							'IDCOM' => $row['idcom'],
@@ -242,9 +241,7 @@ class Comments
 							'CONTENTS' => unparse($row['contents']),
 							'DATE' => gmdate_format('date_format', $row['timestamp']),
 							'THEME' => $CONFIG['theme'],
-							'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
-							'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
-							'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
+							'KERNEL_EDITOR' => display_editor($CONFIG_COM['forbidden_tags']),
 							'L_LANGUAGE' => substr($CONFIG['lang'], 0, 2),				   
 							'L_EDIT_COMMENT' => $LANG['edit_comment'],
 							'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
@@ -258,8 +255,6 @@ class Comments
 							'L_SUBMIT' => $LANG['update'],
 							'U_ACTION' => $this->get_attribute('path') . sprintf($this->get_attribute('vars'), $this->get_attribute('idcom')) . '&amp;updatecom=1'
 						));
-						
-						include_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode.php');
 					}
 					elseif( $updatecom ) //Mise à jour du commentaire.
 					{
@@ -387,7 +382,6 @@ class Comments
 				else
 					$get_page = $_SERVER['QUERY_STRING'] . '&amp;pc';
 				
-				$forbidden_tags = implode(', ', $CONFIG_COM['forbidden_tags']);
 				$Template->Assign_vars(array(
 					'C_COM_DISPLAY' => $this->get_attribute('nbr_com') > 0 ? true : false,
 					'PAGINATION_COM' => $Pagination->Display_pagination($this->path . $vars_simple . '&amp;pc=%d#' . $this->script, $this->nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
@@ -398,9 +392,7 @@ class Comments
 					'PATH' => SCRIPT,
 					'UPDATE' => ($integrated_in_environment == true) ? SID : '',
 					'VAR' => $vars_simple,
-					'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
-					'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
-					'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
+					'KERNEL_EDITOR' => display_editor($CONFIG_COM['forbidden_tags']),
 					'L_XML_LANGUAGE' => $LANG['xml_lang'],
 					'L_TITLE' => ($CONFIG['com_popup'] == 0 || $integrated_in_environment === true) ? $LANG['title_com'] : '',
 					'THEME' => $CONFIG['theme'],
@@ -564,8 +556,6 @@ class Comments
 					$j++;
 				}
 				$Sql->Close($result);
-				
-				include_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode.php');
 			}
 			return $Template->parse(TEMPLATE_STRING_MODE);
 		}

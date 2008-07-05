@@ -81,7 +81,7 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'COM' => com_display_link($web['nbr_com'], '../web/web' . transid('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0'), $idweb, 'web'),
-		'KERNEL_NOTATION' => $Note->Display_notation(),
+		'KERNEL_NOTATION' => $Note->display_form(),
 		'U_WEB_CAT' => transid('.php?cat=' . $idcat, '-' . $idcat . '.php'),
 		'L_DESC' => $LANG['description'],
 		'L_CAT' => $LANG['category'],
@@ -184,7 +184,7 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 			'CAT' => $CAT_WEB[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'COMPT' => $row['compt'],
-			'NOTE' => ($row['nbrnote'] > 0) ? $Note->Display_note($row['note'], $CONFIG_WEB['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
+			'NOTE' => ($row['nbrnote'] > 0) ? $Note->display_img($row['note'], $CONFIG_WEB['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
 			'COM' => $row['nbr_com'],
 			'U_WEB_LINK' => transid('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));

@@ -110,6 +110,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 			'SID' => SID,
 			'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+			'KERNEL_EDITOR' => display_editor(),
 			'DESC' => $topic['subtitle'],
 			'CONTENTS' => stripslashes($contents),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
@@ -128,8 +129,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			'L_PREVIEW' => $LANG['preview'],
 			'L_RESET' => $LANG['reset']
 		));		
-		
-		include_once('../kernel/framework/content/bbcode.php');
 		
 		$Template->Pparse('edit_msg');
 	}
@@ -271,6 +270,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'TITLE' => stripslashes($title),
 				'DESC' => stripslashes($subtitle),
 				'CONTENTS' => stripslashes($contents),
+				'KERNEL_EDITOR' => display_editor(),
 				'POLL_QUESTION' => stripslashes($question),
 				'IDTOPIC' => 0,
 				'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
@@ -303,8 +303,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'L_SINGLE' => $LANG['simple_answer'],
 				'L_MULTIPLE' => $LANG['multiple_answer']
 			));
-			
-			include_once('../kernel/framework/content/bbcode.php');
 			
 			$Template->Pparse('forum_post');
 		}
@@ -349,6 +347,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'DESC' => '',
 				'SELECTED_SIMPLE' => 'checked="ckecked"',
 				'IDTOPIC' => 0,
+				'KERNEL_EDITOR' => display_editor(),
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD' => 0,
 				'C_ADD_POLL_FIELD' => true,
@@ -374,8 +373,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'L_SINGLE' => $LANG['simple_answer'],
 				'L_MULTIPLE' => $LANG['multiple_answer']
 			));
-			
-			include_once('../kernel/framework/content/bbcode.php');
 			
 			$Template->Pparse('forum_post');
 		}
@@ -572,6 +569,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'TITLE' => stripslashes($title),
 					'DESC' => stripslashes($subtitle),
 					'CONTENTS' => stripslashes($contents),
+					'KERNEL_EDITOR' => display_editor(),
 					'POLL_QUESTION' => stripslashes($question),
 					'IDTOPIC' => 0,
 					'SELECTED_SIMPLE' => 'checked="ckecked"',
@@ -607,8 +605,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'L_MULTIPLE' => $LANG['multiple_answer'],
 					'L_DELETE_POLL' => $LANG['delete_poll']
 				));
-					
-				include_once('../kernel/framework/content/bbcode.php');
 				
 				$Template->Pparse('forum_post');
 			}
@@ -697,6 +693,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'SELECTED_SIMPLE' => 'checked="ckecked"',
 					'MODULE_DATA_PATH' => $module_data_path,
 					'IDTOPIC' => $idt_get,
+					'KERNEL_EDITOR' => display_editor(),
 					'NBR_POLL_FIELD' => $nbr_poll_field,
 					'NO_DISPLAY_POLL' => !empty($poll['question']) ? 'false' : 'true',
 					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
@@ -738,8 +735,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						'SELECTED_MULTIPLE' => 'checked="ckecked"'
 					));
 				}	
-				
-				include_once('../kernel/framework/content/bbcode.php');
 				
 				$Template->Pparse('forum_post');
 			}
@@ -797,6 +792,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => unparse($contents),
+					'KERNEL_EDITOR' => display_editor(),
 					'U_ACTION' => 'post.php' . transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 					'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
@@ -809,8 +805,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'L_PREVIEW' => $LANG['preview'],
 					'L_RESET' => $LANG['reset'],
 				));
-				
-				include_once('../kernel/framework/content/bbcode.php');
 				
 				$Template->Pparse('edit_msg');
 			}
@@ -857,6 +851,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'SID' => SID,
 				'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 				'DESC' => $topic['subtitle'],
+				'KERNEL_EDITOR' => display_editor(),
 				'U_ACTION' => 'post.php' . transid('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get),
 				'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 				'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
@@ -933,6 +928,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'TITLE' => '',
 				'SELECTED_SIMPLE' => 'checked="checked"',
 				'IDTOPIC' => 0,
+				'KERNEL_EDITOR' => display_editor(),
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD' => 0,
 				'C_ADD_POLL_FIELD' => true,
@@ -961,8 +957,6 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		}
 		else
 			$Errorh->Error_handler('unknow_error', E_USER_REDIRECT);
-			
-		include_once('../kernel/framework/content/bbcode.php');
 		
 		$Template->Pparse('error_post');
 	}

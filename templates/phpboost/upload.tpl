@@ -281,9 +281,7 @@
 	-->
 	</script>
 	
-	<br />	
-	
-	<table class="module_table">
+	<table class="module_table" style="width:auto;margin:8px;margin-bottom:0px;">
 		<tr> 
 			<th>
 				{L_FILES_ACTION}
@@ -324,61 +322,62 @@
 		
 		<tr>	
 			<td class="row2" style="padding:10px 2px;">
-				# IF C_EMPTY_FOLDER #
-					<p style="text-align:center;" id="empty_folder">					
-						{L_EMPTY_FOLDER}					
-					</p>
-				# ENDIF #
-				
-				# START folder #		
-				<div style="width:210px;height:90px;float:left;margin-top:5px;">
-					<table style="border:0;">
-						<tr>
-							<td style="width:34px;vertical-align:top;">
-								<a href="upload.php?f={folder.ID}&amp;{POPUP}"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></a>
-							</td>
-							<td style="padding-top:8px;">						
-								<span id="f{folder.ID}"><a href="upload.php?f={folder.ID}&amp;{POPUP}" class="com">{folder.NAME}</a></span>
-								<div style="padding-top:5px;">
-									{folder.RENAME_FOLDER}	<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;{POPUP}" onClick="javascript:return Confirm_folder();" title="{folder.L_TYPE_DEL_FOLDER}">{folder.DEL_TYPE_IMG}</a>
+				<div style="height:260px;overflow:auto;">
+					# IF C_EMPTY_FOLDER #
+						<p style="text-align:center;" id="empty_folder">					
+							{L_EMPTY_FOLDER}					
+						</p>
+					# ENDIF #
+					
+					# START folder #		
+					<div style="width:210px;height:90px;float:left;margin-top:5px;">
+						<table style="border:0;">
+							<tr>
+								<td style="width:34px;vertical-align:top;">
+									<a href="upload.php?f={folder.ID}&amp;{POPUP}"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></a>
+								</td>
+								<td style="padding-top:8px;">						
+									<span id="f{folder.ID}"><a href="upload.php?f={folder.ID}&amp;{POPUP}" class="com">{folder.NAME}</a></span>
+									<div style="padding-top:5px;">
+										{folder.RENAME_FOLDER}	<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;{POPUP}" onClick="javascript:return Confirm_folder();" title="{folder.L_TYPE_DEL_FOLDER}">{folder.DEL_TYPE_IMG}</a>
+										
+										<a href="upload{folder.U_MOVE}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
+										
+										<span id="img{folder.ID}"></span>
+									</div>
+								</td>
+							</tr>						
+						</table>
+					</div>
+					# END folder #
+			
+					<span id="new_folder"></span>
+					
+					# START files #
+					<div style="width:210px;height:90px;float:left;margin-top:5px;">
+						<table style="border:0;">
+							<tr>
+								<td style="width:34px;vertical-align:top;">
+									{files.IMG}
+								</td>
+								<td style="padding-top:8px;">	
+									{files.URL}<span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />
+									{files.BBCODE}<br />							
+									<span class="text_small">{files.FILETYPE}</span><br />
+									<span class="text_small">{files.SIZE}</span><br />
+									{files.RENAME_FILE}
+									<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;{POPUP}" onClick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> 
 									
-									<a href="upload{folder.U_MOVE}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
+									<a href="upload{files.U_MOVE}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>								
 									
-									<span id="img{folder.ID}"></span>
-								</div>
-							</td>
-						</tr>						
-					</table>
+									{files.INSERT}
+									<span id="imgf{files.ID}"></span>
+								</td>
+							</tr>
+						</table>
+					</div>	
+					# END files #				
 				</div>
-				# END folder #
-		
-				<span id="new_folder"></span>
-				
-				# START files #
-				<div style="width:210px;height:90px;float:left;margin-top:5px;">
-					<table style="border:0;">
-						<tr>
-							<td style="width:34px;vertical-align:top;">
-								{files.IMG}
-							</td>
-							<td style="padding-top:8px;">	
-								{files.URL}<span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />
-								{files.BBCODE}<br />							
-								<span class="text_small">{files.FILETYPE}</span><br />
-								<span class="text_small">{files.SIZE}</span><br />
-								{files.RENAME_FILE}
-								<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;{POPUP}" onClick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> 
-								
-								<a href="upload{files.U_MOVE}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>								
-								
-								{files.INSERT}
-								<span id="imgf{files.ID}"></span>
-							</td>
-						</tr>
-					</table>
-				</div>	
-				# END files #				
-				
 			</td>
 		</tr>
 		

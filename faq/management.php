@@ -103,13 +103,13 @@ if( $edit_question > 0 )
 		'ID_QUESTION' => $edit_question
 	));
 	$Template->Assign_vars(array(
+		'KERNEL_EDITOR' => display_editor(),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_ENTITLED' => $FAQ_LANG['entitled'],
 		'L_ANSWER' => $FAQ_LANG['answer'],
 		'L_REQUIRE_ENTITLED' => $FAQ_LANG['require_entitled'],
 		'L_REQUIRE_ANSWER' => $FAQ_LANG['require_answer']
 	));
-	include_once('../kernel/framework/content/bbcode.php');
 }
 elseif( $cat_of_new_question >= 0 && $new )
 {
@@ -121,13 +121,13 @@ elseif( $cat_of_new_question >= 0 && $new )
 		'ID_CAT' => $cat_of_new_question
 	));
 	$Template->Assign_vars(array(
+		'KERNEL_EDITOR' => display_editor(),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_ENTITLED' => $FAQ_LANG['entitled'],
 		'L_ANSWER' => $FAQ_LANG['answer'],
 		'L_REQUIRE_ENTITLED' => $FAQ_LANG['require_entitled'],
 		'L_REQUIRE_ANSWER' => $FAQ_LANG['require_answer']
 	));
-	include_once('../kernel/framework/content/bbcode.php');
 }
 elseif( $id_move > 0 )
 {
@@ -148,6 +148,12 @@ elseif( $id_move > 0 )
 else
 {
 	$Template->Assign_vars(array(
+		'KERNEL_EDITOR' => display_editor(),
+		'TARGET' => transid('action.php?idcat=' . $id_faq . '&amp;cat_properties=1'),
+		'AUTO_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 0 ? 'selected="selected"' : '',
+		'INLINE_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 1 ? 'selected="selected"' : '',
+		'BLOCK_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 2 ? 'selected="selected"' : '',
+		'DESCRIPTION' => unparse($FAQ_CATS[$id_faq]['description']),
 		'L_CAT_PROPERTIES' => $FAQ_LANG['cat_properties'],
 		'L_DESCRIPTION' => $FAQ_LANG['cat_description'],
 		'L_DISPLAY_MODE' => $FAQ_LANG['display_mode'],
@@ -172,12 +178,7 @@ else
 		'L_PREVIEW' => $LANG['preview'],
 		'L_CAT_NAME' => $FAQ_LANG['cat_name'],
 		'L_REQUIRE_CAT_NAME' => $FAQ_LANG['require_cat_name'],
-		'U_GO_BACK_TO_CAT' => transid('faq.php' . ($id_faq > 0 ? '?id=' . $id_faq : ''), $id_faq > 0 ? 'faq-' . $id_faq . '+' . url_encode_rewrite($FAQ_CATS[$id_faq]['name']) . '.php' : 'faq.php'),
-		'TARGET' => transid('action.php?idcat=' . $id_faq . '&amp;cat_properties=1'),
-		'AUTO_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 0 ? 'selected="selected"' : '',
-		'INLINE_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 1 ? 'selected="selected"' : '',
-		'BLOCK_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 2 ? 'selected="selected"' : '',
-		'DESCRIPTION' => unparse($FAQ_CATS[$id_faq]['description'])
+		'U_GO_BACK_TO_CAT' => transid('faq.php' . ($id_faq > 0 ? '?id=' . $id_faq : ''), $id_faq > 0 ? 'faq-' . $id_faq . '+' . url_encode_rewrite($FAQ_CATS[$id_faq]['name']) . '.php' : 'faq.php')
 	));
 	
 	//Special authorization
@@ -253,7 +254,6 @@ else
 				$Template->Assign_block_vars('category.questions.down', array());
 		}
 	}
-	include_once('../kernel/framework/content/bbcode.php');
 }
 
 $Template->Assign_vars(array(

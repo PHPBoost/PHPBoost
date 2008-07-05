@@ -108,16 +108,13 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 					'C_VISIBLE_SHOUT' => true
 				));
 			
-			$forbidden_tags = implode(', ', $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
 			$Template->Assign_vars(array(
 				'UPDATE' => transid('?update=1&amp;id=' . $row['id']),
 				'SID' => '',
 				'CONTENTS' => unparse($row['contents']),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'THEME' => $CONFIG['theme'],
-				'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
-				'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
-				'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
+				'KERNEL_EDITOR' => display_editor($CONFIG_SHOUTBOX['shoutbox_forbidden_tags'], 'shout_contents'),
 				'L_ALERT_TEXT' => $LANG['require_text'],
 				'L_UPDATE_MSG' => $LANG['update_msg'],
 				'L_REQUIRE' => $LANG['require'],
@@ -127,9 +124,6 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 				'L_PREVIEW' => $LANG['preview'],
 				'L_RESET' => $LANG['reset']
 			));
-			
-			$_field = 'shout_contents';
-			include_once('../kernel/framework/content/bbcode.php');
 			
 			$Template->Pparse('shoutbox'); 
 		}
@@ -202,12 +196,8 @@ else //Affichage.
 	if( !empty($errstr) )
 		$Errorh->Error_handler($errstr, E_USER_NOTICE);
 	
-	$forbidden_tags = implode(', ', $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
 	$Template->Assign_vars(array(
-		'SID' => SID,
-		'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
-		'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
-		'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
+		'KERNEL_EDITOR' => display_editor($CONFIG_SHOUTBOX['shoutbox_forbidden_tags'], 'shout_contents'),
 		'L_ON' => $LANG['on'],
 		'L_ALERT_TEXT' => $LANG['require_text'],
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
@@ -375,9 +365,6 @@ else //Affichage.
 		$j++;
 	}
 	$Sql->Close($result);
-	
-	$_field = 'shout_contents';
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('shoutbox'); 
 }

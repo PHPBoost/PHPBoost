@@ -42,7 +42,7 @@ if( !empty($_GET['note']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur 
 	$Note = new Note('gallery', $id, '', $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
 	
 	if( !empty($note) && !empty($id) )
-		echo $Note->Add_note($note); //Ajout de la note.
+		echo $Note->add_note($note); //Ajout de la note.
 }
 	
 if( $Member->Check_level(MODO_LEVEL) ) //Modo

@@ -94,15 +94,10 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 			'PSEUDO' => stripslashes($guestbook_pseudo)
 		));
 
-	$forbidden_tags = implode(', ', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
 	$Template->Assign_block_vars('guestbook', array(
 		'CONTENTS' => second_parse(stripslashes(strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']))),
 		'PSEUDO' => stripslashes($guestbook_pseudo),
-		'DATE' => gmdate_format('date_format_short'),
-		'THEME' => $CONFIG['theme'],
-		'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
-		'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
-		'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
+		'DATE' => gmdate_format('date_format_short')
 	));
 
 	//On met à jour en cas d'édition après prévisualisation du message
@@ -115,6 +110,7 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 		'DATE' => gmdate_format('date_format_short'),
 		'UPDATE' => transid($update),
 		'ERROR' => '',
+		'KERNEL_EDITOR' => display_editor($CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'guestbook_contents'),
 		'L_ALERT_TEXT' => $LANG['require_text'],
 		'L_UPDATE_MSG' => $LANG['update_msg'],
 		'L_REQUIRE' => $LANG['require'],
@@ -125,9 +121,6 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 		'L_RESET' => $LANG['reset'],
 		'L_ON' => $LANG['on']
 	));	
-	
-	$_field = 'guestbook_contents';
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('guestbook'); 
 }
@@ -168,13 +161,12 @@ elseif( !empty($id_get) ) //Edition + suppression!
 					'PSEUDO' => $row['login']
 				));		
 			
-			$forbidden_tags = implode(', ', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
 			$Template->Assign_vars(array(
 				'UPDATE' => transid('?update=1&amp;id=' . $id_get),
 				'CONTENTS' => unparse($row['contents']),
+				'KERNEL_EDITOR' => display_editor($CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'guestbook_contents'),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'THEME' => $CONFIG['theme'],
-				'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
 				'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
 				'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
 				'L_ALERT_TEXT' => $LANG['require_text'],
@@ -186,9 +178,6 @@ elseif( !empty($id_get) ) //Edition + suppression!
 				'L_PREVIEW' => $LANG['preview'], 
 				'L_RESET' => $LANG['reset']
 			));
-			
-			$_field = 'guestbook_contents';
-			include_once('../kernel/framework/content/bbcode.php');
 			
 			$Template->Pparse('guestbook'); 
 		}
@@ -265,13 +254,10 @@ else //Affichage.
 	include_once('../kernel/framework/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
-	$forbidden_tags = implode(', ', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
 	$Template->Assign_vars(array(
 		'UPDATE' => transid(''),
 		'PAGINATION' => $Pagination->Display_pagination('guestbook' . transid('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
-		'FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $forbidden_tags : '',
-		'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
-		'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
+		'KERNEL_EDITOR' => display_editor($CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'guestbook_contents'),
 		'L_ALERT_TEXT' => $LANG['require_text'],
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
 		'L_ADD_MSG' => $LANG['add_msg'],
@@ -429,9 +415,6 @@ else //Affichage.
 		$j++;
 	}
 	$Sql->Close($result);
-		
-	$_field = 'guestbook_contents';
-	include_once('../kernel/framework/content/bbcode.php');
 		
 	$Template->Pparse('guestbook'); 
 }
