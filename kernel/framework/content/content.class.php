@@ -37,10 +37,10 @@ class Content
 			$this->set_langage($langage_type);
 	}
 	
-	function set_langage($langage_type = false)
+	function set_langage($langage_type = DEFAULT_LANGAGE)
 	{
 		//If the langage type is specified and correct
-		if( $langage_type !== false && !in_array($langage_type, array(BBCODE_LANGAGE, TINYMCE_LANGAGE)) )
+		if( in_array($langage_type, array(BBCODE_LANGAGE, TINYMCE_LANGAGE)) )
 			$this->langage_type = $langage_type;			
 		else
 			$this->langage_type = DEFAULT_LANGAGE;	

@@ -27,7 +27,7 @@
 				<fieldset>
 					<legend>{L_HTML_LANGUAGE}</legend>
 					<dl> 
-						<dt><label for="com_auth">{L_AUTH_USE_HTML}</label></dt>
+						<dt><label for="groups_auth1">{L_AUTH_USE_HTML}</label></dt>
 						<dd>
 							{SELECT_AUTH_USE_HTML}
 						</dd>

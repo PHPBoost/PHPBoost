@@ -31,20 +31,23 @@ class BBCodeParser extends ContentParser
 {
 	function BBCodeParser()
 	{
-		
+		parent::ContentParser();
 	}
 	
 	//On parse le contenu: bbcode => xhtml.
 	function parse($forbidden_tags = array(), $html_protect = true)
 	{
-		global $LANG;
+		global $LANG, $Member;
 		
 		$this->parsed_content = $this->content;
 		
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
-		$this->_pick_up_tag('code', '=[a-z0-9-]+(?:,(?:0|1)(?:,1)?)?');
+		if( !in_array('code', $forbidden_tags) )
+			$this->_pick_up_tag('code', '=[a-z0-9-]+(?:,(?:0|1)(?:,0|1)?)?');
+		
 		//On prélève tout le code HTML afin de ne pas l'altérer
-		$this->_pick_up_tag('html');
+		if( $Member->check_auth($this->html_auth, 1) )
+			$this->_pick_up_tag('html');
 		
 		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé
 		$this->parsed_content = ' ' . $this->parsed_content . ' ';
@@ -240,14 +243,14 @@ class BBCodeParser extends ContentParser
 		$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->parsed_content);
 		
 		//On remet le code HTML mis de côté
-		if( !empty($this->array_tags['html']) )
+		if( $Member->Check_auth($this->html_auth, 1) && !empty($this->array_tags['html']) )
 		{
 			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
 			$this->_reimplant_tag('html');
 		}
 		
 		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
-		if( !empty($this->array_tags['code']) )
+		if( !in_array('code', $forbidden_tags) && !empty($this->array_tags['code']) )
 		{
 			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
 			$this->_reimplant_tag('code');

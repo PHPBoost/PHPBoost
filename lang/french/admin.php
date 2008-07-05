@@ -411,7 +411,8 @@ $LANG['use_tpl'] = 'Utiliser la structure des templates';
 //Gestion du contenu
 $LANG['content_config'] = 'Contenu';
 $LANG['content_config_extend'] = 'Configuration du contenu';
-$LANG['default_language'] = 'Langage de formatage du contenu (par défaut) du site';
+$LANG['default_language'] = 'Langage de formatage du contenu par défaut du site
+<span style="display:block;">Chaque utilisateur pourra choisir</span>';
 $LANG['content_language_config'] = 'Langage de formatage';
 $LANG['content_html_language'] = 'Langage HTML';
 $LANG['content_auth_use_html'] = 'Niveau d\'autorisation pour insérer du langage HTML
