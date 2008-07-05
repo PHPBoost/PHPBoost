@@ -12,11 +12,11 @@
 		<div id="admin_contents">
 			<form action="admin_content_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
-					<legend>{L_LANGAGE_CONFIG}</legend>
+					<legend>{L_LANGUAGE_CONFIG}</legend>
 					<dl> 
-						<dt><label for="com_auth">* {L_DEFAULT_LANGAGE}</label></dt>
+						<dt><label for="language">{L_DEFAULT_LANGUAGE}</label></dt>
 						<dd>
-							<select name="com_auth" id="com_auth">
+							<select name="language" id="language">
 								<option name="bbcode">BBCode</option>
 								<option name="tinymce">TinyMCE</option>
 							</select>
@@ -24,9 +24,19 @@
 					</dl>
 				</fieldset>
 				
+				<fieldset>
+					<legend>{L_HTML_LANGUAGE}</legend>
+					<dl> 
+						<dt><label for="com_auth">{L_AUTH_USE_HTML}</label></dt>
+						<dd>
+							{SELECT_AUTH_USE_HTML}
+						</dd>
+					</dl>
+				</fieldset>
+				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="submit" name="submit" value="{L_UPDATE}" class="submit" />
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 					<input type="reset" value="{L_RESET}" class="reset" />					
 				</fieldset>	
 			</form>
