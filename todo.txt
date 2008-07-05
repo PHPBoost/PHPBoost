@@ -22,7 +22,6 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[-] Classe de BBCode et désactivation des balises non autorisées (un objet par barre d'outil, chargement du template (un objet template pour chaque barre)). Attention à ce que ça marche quelque soit le path (voir pop up commentaires).
 [-] Interface de contribution des news et des articles.
 [-] Régler l'affichage du mini-calendrier.
 
