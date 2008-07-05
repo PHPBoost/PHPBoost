@@ -31,14 +31,110 @@ class TinyMCEParser extends ContentParser
 {
 	function TinyMCEParser()
 	{
-		
+		parent::ContentParser();
 	}
 	
 	function parse()
 	{
-		$this->parsed_content = $this->content;
+		$this->parsed_content = htmlspecialchars($this->content);
 		
-		$this->_preparse_tinymce($this->parsed_content);
+		$this->parsed_content = str_replace(array('&nbsp;&nbsp;&nbsp;', '&gt;', '&lt;', '<br />', '<br>'), array("\t", '&amp;gt;', '&amp;lt;', "\r\n", "\r\n"), $this->parsed_content); //Permet de poster de l'html.
+		$this->parsed_content = html_entity_decode($this->parsed_content); //On remplace toutes les entitées html.
+
+		//Balise size
+		$this->parsed_content = preg_replace_callback('`<font size="([0-9]+)">(.+)</font>`isU', create_function('$size', 'return \'[size=\' . (6 + (2*$size[1])) . \']\' . $size[2] . \'[/size]\';'), $this->parsed_content);
+		//Balise image
+		$this->parsed_content = preg_replace_callback('`<img src="([^"]+)"(?: border="[^"]*")? alt="[^"]*"(?: hspace="[^"]*")?(?: vspace="[^"]*")?(?: width="[^"]*")?(?: height="[^"]*")?(?: align="(top|middle|bottom)")? />`is', create_function('$img', '$align = \'\'; if( !empty($img[2]) ) $align = \'=\' . $img[2]; return \'[img\' . $align . \']\' . $img[1] . \'[/img]\';'), $this->parsed_content);
+
+		$array_preg = array(
+			'`&lt;strong&gt;(.+)&lt;/strong&gt;`isU',
+			'`&lt;em&gt;(.+)&lt;/em&gt;`isU',
+			'`&lt;u&gt;(.+)&lt;/u&gt;`isU',
+			'`&lt;strike&gt;(.+)&lt;/strike&gt;`isU',
+			'`&lt;a href="([^"]+)"&gt;(.+)&lt;/a&gt;`isU',
+			'`&lt;sub&gt;(.+)&lt;/sub&gt;`isU',
+			'`&lt;sup&gt;(.+)&lt;/sup&gt;`isU',
+			'`&lt;font color="([^"]+)"&gt;(.+)&lt;/font&gt;`isU',
+			'`&lt;font style="background-color: ([^"]+)"&gt;(.+)&lt;/font&gt;`isU',
+			'`&lt;span style="background-color: ([^"]+)"&gt;(.+)&lt;/span&gt;`isU',
+			'`&lt;p style="background-color: ([^"]+)"&gt;(.+)&lt;/p&gt;`isU',
+			'`&lt;font face="([^"]+)"&gt;(.+)&lt;/font&gt;`isU',
+			'`&lt;p align="([a-z]+)"&gt;(.+)&lt;/p&gt;`isU',
+			'`&lt;div style="text-align: ([a-z]+)"&gt;(.+)&lt;/div&gt;`isU',
+			'`&lt;a(?: class="[^"]+")?(?: title="[^"]+" )? name="([^"]+)"&gt;(.*)&lt;/a&gt;`isU',
+			'`&lt;blockquote&gt;(.+)&lt;/blockquote&gt;`isU',
+			'`&lt;ul&gt;(.+)&lt;/ul&gt;`isU',
+			'`&lt;ol&gt;(.+)&lt;/ol&gt;`isU',
+			'`&lt;li&gt;(.+)&lt;/li&gt;`isU',
+			'`&lt;/?font([^&]+)&gt;`i',
+			'`&lt;h1&gt;(.+)&lt;/h1&gt;`isU',
+			'`&lt;h2&gt;(.+)&lt;/h2&gt;`isU',
+			'`&lt;h3&gt;(.+)&lt;/h3&gt;`isU',
+			'`&lt;h4&gt;(.+)&lt;/h4&gt;`isU',
+			'`&lt;h5&gt;(.+)&lt;/h5&gt;`isU',
+			'`&lt;h6&gt;(.+)&lt;/h6&gt;`isU',
+			'`&lt;td( colspan="[^"]+")?( rowspan="[^"]+")?&gt;`is',
+			'`&lt;object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="([^"]+)%?" height="([^"]+)%?"&gt;&lt;param name="movie" value="([^"]+)"(.*)&lt;/object&gt;`isU',
+			'`&lt;span[^&]*&gt;`i',
+			'`&lt;p[^r&]*>`i'
+		);
+		$array_preg_replace = array(
+			'<strong>$1</strong>',
+			'<em>$1</em>',
+			'<span style="text-decoration: underline;">$1</span>',
+			'<span style="text-decoration: underline;">$1</span>',
+			'<a href="$1">$2</a>',
+			'<sub>$1</sub>',
+			'<sup>$1</sup>',
+			'<span style="color:$1;">$2</span>',
+			'<span style="background-color:$1;">$2</span>',
+			'<span style="background-color:$1;">$2</span>',
+			'<span style="background-color:$1;">$2</span>',
+			'<span style="font-family: $1;">$2</span>',
+			'<p style="text-align:$1">$2</p>',
+			'<p style="text-align:$1">$2</p>',
+			'<span id="$1">$2</span>',
+			'<div class="indent">$1</div>',
+			'<ul class="bb_ul">$1</ul>',
+			'<ol class="bb_ol">$1</ol>',
+			'<li class="bb_li">$1</li>',
+			'',
+			'<h3 class="title1">$1</h3>',
+			'<h3 class="title2">$1</h3>',
+			'<br /><h4 class="stitle1">$1</h4><br />',
+			'<br /><h4 class="stitle2">$1</h4><br />',
+			'<span style="font-size: 10px;">$1</span>',
+			'<span style="font-size: 8px;">$1</span>',
+			'[col$1$2]',
+			'<object type="application/x-shockwave-flash" data="$3" width="$1" height="$2">
+		<param name="allowScriptAccess" value="never" />
+		<param name="play" value="true" />
+		<param name="movie" value="$3" />
+		<param name="menu" value="false" />
+		<param name="quality" value="high" />
+		<param name="scalemode" value="noborder" />
+		<param name="wmode" value="transparent" />
+		<param name="bgcolor" value="#000000" />
+		</object>',
+			'',
+			''
+		);
+	   
+		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);	
+
+		//Préparse de la balise table.
+		$this->parsed_content = preg_replace_callback('`<table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?(?: style="([^"]+)")?[^>]*>`i', array(&$this, '_parse_tinymce_table'), $this->parsed_content);
+		
+		$array_str = array( 
+			'</span>', '<address>', '</address>', '<pre>', '</pre>', '<blockquote>', '</blockquote>', '</p>',
+			'<caption>', '</caption>', '<tbody>', '</tbody>', '<tr>', '</tr>', '</td>', '</table>', '&lt;', '&gt;', 
+		);
+		$array_str_replace = array( 
+			'', '', '', '[pre]', '[/pre]', '[indent]', '[/indent]', "\r\n\r\n",
+			'[row][head]', '[/head][/row]', '', '', '[row]', '[/row]', '[/col]', '[/table]', '<', '>', 
+		);
+		
+		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
 		
 		$this->_unparse_html(PICK_UP);
 		$this->_unparse_code(PICK_UP);
@@ -133,102 +229,17 @@ class TinyMCEParser extends ContentParser
 		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);
 		
 		$this->parsed_content = htmlentities($this->parsed_content);
-		$this->unparse_code(REIMPLANT);
+		$this->_unparse_code(REIMPLANT);
 		$this->_unparse_html(REIMPLANT);
 	}
 	
-	//Préparation avant le parsage, avec l'éditeur WYSIWYG.
-	function _preparse_tinymce()
+	//Unparser
+	function unparse()
 	{
-		$this->parsed_content = str_replace(array('&nbsp;&nbsp;&nbsp;', '&gt;', '&lt;', '<br />', '<br>'), array("\t", '&amp;gt;', '&amp;lt;', "\r\n", "\r\n"), $this->parsed_content); //Permet de poster de l'html.
-		$this->parsed_content = html_entity_decode($this->parsed_content); //On remplace toutes les entitées html.
-
-		//Balise size
-		$this->parsed_content = preg_replace_callback('`<font size="([0-9]+)">(.+)</font>`isU', create_function('$size', 'return \'[size=\' . (6 + (2*$size[1])) . \']\' . $size[2] . \'[/size]\';'), $this->parsed_content);
-		//Balise image
-		$this->parsed_content = preg_replace_callback('`<img src="([^"]+)"(?: border="[^"]*")? alt="[^"]*"(?: hspace="[^"]*")?(?: vspace="[^"]*")?(?: width="[^"]*")?(?: height="[^"]*")?(?: align="(top|middle|bottom)")? />`is', create_function('$img', '$align = \'\'; if( !empty($img[2]) ) $align = \'=\' . $img[2]; return \'[img\' . $align . \']\' . $img[1] . \'[/img]\';'), $this->parsed_content);
-
-		$array_preg = array(
-			'`<strong>(.+)</strong>`isU',
-			'`<em>(.+)</em>`isU',
-			'`<u>(.+)</u>`isU',
-			'`<strike>(.+)</strike>`isU',
-			'`<a href="([^"]+)">(.+)</a>`isU',
-			'`<sub>(.+)</sub>`isU',
-			'`<sup>(.+)</sup>`isU',
-			'`<font color="([^"]+)">(.+)</font>`isU',
-			'`<font style="background-color: ([^"]+)">(.+)</font>`isU',
-			'`<span style="background-color: ([^"]+)">(.+)</span>`isU',
-			'`<p style="background-color: ([^"]+)">(.+)</p>`isU',
-			'`<font face="([^"]+)">(.+)</font>`isU',
-			'`<p align="([a-z]+)">(.+)</p>`isU',
-			'`<div style="text-align: ([a-z]+)">(.+)</div>`isU',
-			'`<a(?: class="[^"]+")?(?: title="[^"]+" )? name="([^"]+)">(.*)</a>`isU',
-			'`<blockquote>(.+)</blockquote>`isU',
-			'`<ul>(.+)</ul>`isU',
-			'`<ol>(.+)</ol>`isU',
-			'`<li>(.+)</li>`isU',
-			'`</?font([^>]+)>`i',
-			'`<h1>(.+)</h1>`isU',
-			'`<h2>(.+)</h2>`isU',
-			'`<h3>(.+)</h3>`isU',
-			'`<h4>(.+)</h4>`isU',
-			'`<h5>(.+)</h5>`isU',
-			'`<h6>(.+)</h6>`isU',
-			'`<td( colspan="[^"]+")?( rowspan="[^"]+")?>`is',
-			'`<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="([^"]+)%?" height="([^"]+)%?"><param name="movie" value="([^"]+)"(.*)</object>`isU',
-			'`<span[^>]*>`i',
-			'`<p[^r>]*>`i'
-		);
-		$array_preg_replace = array(
-			'[b]$1[/b]',
-			'[i]$1[/i]',
-			'[u]$1[/u]',
-			'[s]$1[/s]',
-			'[url=$1]$2[/url]',
-			'[sub]$1[/sub]',
-			'[sup]$1[/sup]',
-			'[color=$1]$2[/color]',
-			'[bgcolor=$1]$2[/bgcolor]',
-			'[bgcolor=$1]$2[/bgcolor]',
-			'[bgcolor=$1]$2[/bgcolor]',
-			'[font=$1]$2[/font]',
-			'[align=$1]$2[/align]',
-			'[align=$1]$2[/align]',
-			'[anchor=$1]$2[/anchor]',
-			'[indent]$1[/indent]',
-			'[list]$1[/list]',
-			'[list=ordered]$1[/list]',
-			'[*]$1',
-			'',
-			'[title=1]$1[/title]',
-			'[title=2]$1[/title]',
-			'[stitle=1]$1[/stitle]',
-			'[stitle=2]$1[/stitle]',
-			'[size=10]$1[/size]',
-			'[size=8]$1[/size]',
-			'[col$1$2]',
-			'[swf=$1,$2]$3[/swf]',
-			'',
-			''
-		);
-	   
-		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);	
-
-		//Préparse de la balise table.
-		$this->parsed_content = preg_replace_callback('`<table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?(?: style="([^"]+)")?[^>]*>`i', array('Content', 'parse_tinymce_table'), $this->parsed_content);
-		
-		$array_str = array( 
-			'</span>', '<address>', '</address>', '<pre>', '</pre>', '<blockquote>', '</blockquote>', '</p>',
-			'<caption>', '</caption>', '<tbody>', '</tbody>', '<tr>', '</tr>', '</td>', '</table>', '&lt;', '&gt;', 
-		);
-		$array_str_replace = array( 
-			'', '', '', '[pre]', '[/pre]', '[indent]', '[/indent]', "\r\n\r\n",
-			'[row][head]', '[/head][/row]', '', '', '[row]', '[/row]', '[/col]', '[/table]', '<', '>', 
-		);
-		
-		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
+		$this->parsed_content = $this->content;
 	}
+	
+	## Protected ##
 
 	//Parse la balise table de tinymce pour le bbcode.
 	function _parse_tinymce_table($matches)
