@@ -4,13 +4,18 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org), Ben Keen (ben.keen@gmail.com)
  * Copyright: (c) 2004 Andreas Gohr, Ben Keen (http://www.benjaminkeen.org/), Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.20
+ * Release Version: 1.0.7.22
  * Date Started: 2004/08/20
  *
  * Perl language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *   -  Added description of extra language features (SF#1970248)
+ *   -  Added comment_regexp for predefined variables
+ * 2008/02/15 (1.003)
+ *   -  Fixed SF#1891630 with placebo patch
  * 2006/01/05 (1.0.2)
  *   -  Used hardescape feature for ' strings (Cliff Stanford)
  * 2004/11/27 (1.0.1)
@@ -46,7 +51,27 @@
 $language_data = array (
 	'LANG_NAME' => 'Perl',
 	'COMMENT_SINGLE' => array(1 => '#'),
-	'COMMENT_MULTI' => array( '=pod' => '=cut'),
+	'COMMENT_MULTI' => array(
+        '=back' => '=cut',
+        '=head' => '=cut',
+        '=item' => '=cut',
+        '=over' => '=cut',
+        '=begin' => '=cut',
+        '=end' => '=cut',
+        '=for' => '=cut',
+        '=encoding' => '=cut',
+        '=pod' => '=cut'
+    ),
+    'COMMENT_REGEXP' => array(
+        //Regular expressions
+        2 => "/(?<=[\\s^])(s|tr|y)\\/(?:\\\\.|[^\\/\\\\])+\\/(?:\\\\.|[^\\/\\\\])*\\/[msixpogcde]*(?=[\\s$\\.\\;])|(?<=[\\s^(=])(m|q[qrwx]?)?\\/(?:\\\\.|[^\\/\\\\])+\\/[msixpogc]*(?=[\\s$\\.\\,\\;\\)])/iU",
+        //Regular expression match variables
+        3 => '/\$\d+/',
+        //Heredoc
+        4 => '/<<\s*?([\'"]?)([a-zA-Z0-9]+)\1;[^\n]*?\\n.*\\n\\2(?![a-zA-Z0-9])/siU',
+        //Predefined variables
+        5 => '/\$(\^[a-zA-Z]?|[\$`\'&_.,+\-~:\\\\\/"\|%=\?!@<>\(\)\[\]])|@_/',
+    ),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array('"'),
 	'HARDQUOTE' => array("'", "'"),		    // An optional 2-element array defining the beginning and end of a hard-quoted string
@@ -101,7 +126,10 @@ $language_data = array (
 			)
 		),
 	'SYMBOLS' => array(
-		'(', ')', '[', ']', '!', '@', '%', '&', '*', '|', '/', '<', '>'
+		'<', '>', '=',
+        '!', '@', '~', '&', '|',
+        '+','-', '*', '/', '%',
+        ',', ';', '?', ':'
 		),
 	'CASE_SENSITIVE' => array(
 		GESHI_COMMENTS => true,
@@ -116,14 +144,18 @@ $language_data = array (
 			3 => 'color: #000066;'
 			),
 		'COMMENTS' => array(
-			1 => 'color: #808080; font-style: italic;',
-			'MULTI' => 'color: #808080; font-style: italic;'
+			1 => 'color: #666666; font-style: italic;',
+			2 => 'color: #009966; font-style: italic;',
+			3 => 'color: #0000ff;',
+			4 => 'color: #cc0000; font-style: italic;',
+			5 => 'color: #0000ff;',
+			'MULTI' => 'color: #666666; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
 			0 => 'color: #000099; font-weight: bold;'
 			),
 		'BRACKETS' => array(
-			0 => 'color: #66cc66;'
+			0 => 'color: #009900;'
 			),
 		'STRINGS' => array(
 			0 => 'color: #ff0000;'
@@ -136,7 +168,7 @@ $language_data = array (
 			2 => 'color: #006600;'
 			),
 		'SYMBOLS' => array(
-			0 => 'color: #66cc66;'
+			0 => 'color: #339933;'
 			),
 		'REGEXPS' => array(
 			0 => 'color: #0000ff;',
@@ -154,7 +186,9 @@ $language_data = array (
 		2 => '::'
 		),
 	'REGEXPS' => array(
+        //Variable
 		0 => '[\\$%@]+[a-zA-Z_][a-zA-Z0-9_]*',
+		//File Descriptor
 		4 => '&lt;[a-zA-Z_][a-zA-Z0-9_]*&gt;',
 		),
 	'STRICT_MODE_APPLIES' => GESHI_NEVER,
