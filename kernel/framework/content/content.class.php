@@ -81,8 +81,6 @@ class Content
 	//Function which builds an object editor and returns it
 	function get_editor()
 	{
-		global $CONFIG;
-		switch($this->language_type)
 		global $Member;
 		
 		switch($this->language_type)
