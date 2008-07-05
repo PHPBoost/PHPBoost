@@ -76,7 +76,7 @@ class ContentParser
 		
 		//Balise code
 		if( strpos($this->parsed_content, '[[CODE') !== false )
-			$this->parsed_content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(,1)?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback__highlight_code'), $this->parsed_content);
+			$this->parsed_content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(,1)?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->parsed_content);
 		
 		//Balise latex.
 		if( strpos($this->parsed_content, '[math]') !== false )
@@ -86,7 +86,7 @@ class ContentParser
 	####### Protected #######
 	//Editeurs texte supportés.	
 	//This array should be static
-	var $tag = array('b', 'i', 'u', 's',	'title', 'stitle', 'style', 'url', 
+	var $tag = array('b', 'i', 'u', 's', 'title', 'stitle', 'style', 'url', 
 	'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
 	'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym'); //Balises supportées.
 	var $content = '';
@@ -514,7 +514,7 @@ class ContentParser
 	} 
 
 	//Fonction appliquée aux balises [code] temps réel.
-	function _callback__highlight_code($matches)
+	function _callback_highlight_code($matches)
 	{
 		global $LANG;
 		

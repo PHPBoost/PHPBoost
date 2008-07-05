@@ -49,20 +49,31 @@ $language_data = array (
 	'LANG_NAME' => 'PHP',
 	'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
 	'COMMENT_MULTI' => array('/*' => '*/'),
+	//Heredoc and Nowdoc syntax
+	'COMMENT_REGEXP' => array(3 => '/<<<\s*?(\'?)([a-zA-Z0-9]+)\1[^\n]*?\\n.*\\n\\2(?![a-zA-Z0-9])/siU'),
+    'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array("'", '"'),
 	'ESCAPE_CHAR' => '\\',
 	'KEYWORDS' => array(
 		1 => array(
 			'include', 'require', 'include_once', 'require_once',
-			'for', 'as', 'foreach', 'if', 'elseif', 'else', 'while', 'do', 'endwhile', 'endif', 'switch', 'case', 'endswitch',
-			'return', 'break'
+			'for', 'as', 'foreach', 'if', 'elseif', 'else', 'while', 'do', 'endwhile', 'endif', 'switch', 'case', 'endswitch', 'endfor', 'endforeach',
+			'return', 'break', 'continue'
 			),
 		2 => array(
 			'null', '__LINE__', '__FILE__',
-			'void', 'int', 'string', 'bool', 'float', 'object', 'resource', 'false', 'true', 'var', 'default', 'list',
+			 '&lt;script language', '&lt;/script&gt;',
+            'void', 'int', 'string', 'bool', 'float', 'object', 'resource', 'false', 'true', 'var', 'default', 'list',
 			'echo', 'print', 'global', 'static', 'exit', 'array', 'empty', 'eval', 'isset', 'unset', 'die',
 			'function', 'class', 'new', '&amp;new', 'public', 'private', 'interface', 'extends',
+			'__FUNCTION__', '__CLASS__', '__METHOD__', 'PHP_VERSION',
+            'PHP_OS', 'DEFAULT_INCLUDE_PATH', 'PEAR_INSTALL_DIR', 'PEAR_EXTENSION_DIR',
+            'PHP_EXTENSION_DIR', 'PHP_BINDIR', 'PHP_LIBDIR', 'PHP_DATADIR', 'PHP_SYSCONFDIR',
+            'PHP_LOCALSTATEDIR', 'PHP_CONFIG_FILE_PATH', 'PHP_OUTPUT_HANDLER_START', 'PHP_OUTPUT_HANDLER_CONT',
+            'PHP_OUTPUT_HANDLER_END', 'E_ERROR', 'E_WARNING', 'E_PARSE', 'E_NOTICE',
+            'E_CORE_ERROR', 'E_CORE_WARNING', 'E_COMPILE_ERROR', 'E_COMPILE_WARNING', 'E_USER_ERROR',
+            'E_USER_WARNING', 'E_USER_NOTICE', 'E_ALL'
 			),
 		3 => array(	
 			'&lt;?php', '?&gt;'		
