@@ -75,6 +75,12 @@ class ContentParser
 			return trim($this->parsed_content);
 	}
 	
+	function set_forbidden_tags($forbidden_tags)
+	{
+		if( is_array($forbidden_tags) )
+			$this->forbidden_tags = $forbidden_tags;
+	}
+	
 	//These methods should be abstract
 	//functionparse($forbidden_tags = array(), $html_protect = true)
 	//function unparse()
@@ -105,7 +111,8 @@ class ContentParser
 	var $content = '';
 	var $array_tags = array();
 	var $parsed_content;
-	var $html_auth;
+	var $html_auth = array();
+	var $forbidden_tags = array();
 	
 	
 	//Fonction pour éclater la chaîne selon les tableaux (gestion de l'imbrication infinie)

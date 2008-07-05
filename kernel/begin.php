@@ -47,6 +47,7 @@ require_once(PATH_TO_ROOT . '/kernel/framework/members/sessions.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/members/member.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/members/groups.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/breadcrumb.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
 
 //Instanciation des objets indispensables au noyau.
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\

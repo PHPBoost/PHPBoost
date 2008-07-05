@@ -114,17 +114,8 @@ function pages_find_subcats(&$array, $id_cat)
 //Fonction "parse" pour les pages laissant passer le html tout en remplaçant les caractères spéciaux par leurs entités html correspondantes
 function pages_parse($contents)
 {
+	$contents = strparse($contents);
 	$contents = preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="$1">$2</a>', $contents);
-	$contents = ' ' . trim($contents) . ' '; //Ajout des espaces multiples, et ajout d'espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé.
-	
-	//Début de la fonction parse en manuel car il faut ignorer " et ' dans htmlentities()
-	
-	//Protection des données.	
-	$contents = htmlentities($contents, ENT_NOQUOTES);
-	$contents = strip_tags($contents);
-
-	$contents = strparse($contents, array(), false);
-	$contents = htmlspecialchars_decode($contents, ENT_NOQUOTES);
 	
 	return (string) $contents;
 }

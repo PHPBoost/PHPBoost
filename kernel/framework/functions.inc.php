@@ -335,14 +335,13 @@ function check_mail($mail)
 }
 
 //Charge le parseur.
-function strparse(&$content, $forbidden_tags = array(), $html_protect = true)
+function strparse(&$content, $forbidden_tags = array())
 {
-    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
-    $content_manager = new Content($content);
-	$content_manager->set_langage(BBCODE_LANGAGE);
+    $content_manager = new Content(BBCODE_LANGUAGE);
 	$parser =& $content_manager->get_parser();
     $parser->set_content($content);
-    $parser->parse($forbidden_tags, $html_protect);
+    $parser->set_forbidden_tags($forbidden_tags);
+    $parser->parse();
 	
 	return $parser->get_parsed_content();
 }
@@ -350,9 +349,7 @@ function strparse(&$content, $forbidden_tags = array(), $html_protect = true)
 //Charge l'unparseur.
 function unparse(&$content)
 {
-    include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
-	$content_manager = new Content();
-	$content_manager->set_langage(BBCODE_LANGAGE);
+	$content_manager = new Content(BBCODE_LANGUAGE);
 	$parser =& $content_manager->get_parser();
     $parser->set_content($content);
     $parser->unparse();
@@ -365,9 +362,7 @@ function second_parse(&$content)
 {
 	$content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $content);
 	
-	include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
-	$content_manager = new Content();
-	$content_manager->set_langage(BBCODE_LANGAGE);
+	$content_manager = new Content(BBCODE_LANGUAGE);
 	$parser =& $content_manager->get_parser();
     $parser->set_content($content);
     $parser->second_parse();
