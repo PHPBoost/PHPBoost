@@ -25,47 +25,47 @@
 *
 ###################################################*/
 
-define('BBCODE_LANGAGE', 'bbcode');
-define('TINYMCE_LANGAGE', 'tinymce');
-define('DEFAULT_LANGAGE', 'default');
+define('BBCODE_LANGUAGE', 'bbcode');
+define('TINYMCE_LANGUAGE', 'tinymce');
+define('DEFAULT_LANGUAGE', 'default');
 
 class Content
 {
-	function Content($langage_type = false)
+	function Content($language_type = false)
 	{
-		if( $langage_type !== false )
-			$this->set_langage($langage_type);
+		if( $language_type !== false )
+			$this->set_language($language_type);
 	}
 	
-	function set_langage($langage_type = DEFAULT_LANGAGE)
+	function set_language($language_type = DEFAULT_LANGUAGE)
 	{
-		//If the langage type is specified and correct
-		if( in_array($langage_type, array(BBCODE_LANGAGE, TINYMCE_LANGAGE)) )
-			$this->langage_type = $langage_type;			
+		//If the language type is specified and correct
+		if( in_array($language_type, array(BBCODE_LANGUAGE, TINYMCE_LANGUAGE)) )
+			$this->language_type = $language_type;			
 		else
-			$this->langage_type = DEFAULT_LANGAGE;	
+			$this->language_type = DEFAULT_LANGUAGE;	
 	}
 	
-	//Function which returns the current langage
-	function get_langage()
+	//Function which returns the current language
+	function get_language()
 	{
-		return $this->langage_type;
+		return $this->language_type;
 	}
 	
 	//Function which builds an object parser and returns it
 	function get_parser()
 	{
 		global $CONFIG;
-		switch($this->langage_type)
+		switch($this->language_type)
 		{
-			case BBCODE_LANGAGE:
+			case BBCODE_LANGUAGE:
 				require_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode_parser.class.php');
 				return new BBCodeParser();
-			case TINYMCE_LANGAGE:
+			case TINYMCE_LANGUAGE:
 				require_once(PATH_TO_ROOT . '/kernel/framework/content/tinymce_parser.class.php');
 				return new TinyMCEParser();
 			default:
-				if( $CONFIG['editor'] == TINYMCE_LANGAGE )
+				if( $CONFIG['editor'] == TINYMCE_LANGUAGE )
 				{
 					require_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode_parser.class.php');
 					return new BBCodeParser();
@@ -82,18 +82,18 @@ class Content
 	function get_editor()
 	{
 		global $CONFIG;
-		switch($this->langage_type)
+		switch($this->language_type)
 		{
-			case BBCODE_LANGAGE:
-			case TINYMCE_LANGAGE:
+			case BBCODE_LANGUAGE:
+			case TINYMCE_LANGUAGE:
 			default:
 				return;
 		}
 	}
 	
 	## Private ##
-	//Langage type
-	var $langage_type = DEFAULT_LANGAGE;
+	//Language type
+	var $language_type = DEFAULT_LANGUAGE;
 }
 
 ?>

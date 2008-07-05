@@ -35,14 +35,14 @@ class BBCodeParser extends ContentParser
 	}
 	
 	//On parse le contenu: bbcode => xhtml.
-	function parse($forbidden_tags = array(), $html_protect = true)
+	function parse()
 	{
 		global $LANG, $Member;
 		
 		$this->parsed_content = $this->content;
 		
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
-		if( !in_array('code', $forbidden_tags) )
+		if( !in_array('code', $this->forbidden_tags) )
 			$this->_pick_up_tag('code', '=[a-z0-9-]+(?:,(?:0|1)(?:,0|1)?)?');
 		
 		//On prélève tout le code HTML afin de ne pas l'altérer
@@ -53,11 +53,8 @@ class BBCodeParser extends ContentParser
 		$this->parsed_content = ' ' . $this->parsed_content . ' ';
 
 		//Protection : suppression du code html
-		if( $html_protect )
-		{
-			$this->parsed_content = htmlspecialchars($this->parsed_content, ENT_NOQUOTES);
-			$this->parsed_content = strip_tags($this->parsed_content);
-		}
+		$this->parsed_content = htmlspecialchars($this->parsed_content, ENT_NOQUOTES);
+		$this->parsed_content = strip_tags($this->parsed_content);
 		$this->parsed_content = preg_replace('`&amp;((?:#[0-9]{2,4})|(?:[a-z0-9]{2,6}));`i', "&$1;", $this->parsed_content);
 		
 		//Smilies
@@ -183,22 +180,22 @@ class BBCodeParser extends ContentParser
 		$parse_line = true;
 		
 		//Suppression des remplacements des balises interdites.
-		if( !empty($forbidden_tags) )
+		if( !empty($this->forbidden_tags) )
 		{
 			//Si on interdit les liens, on ajoute toutes les manières par lesquelles elles peuvent passer
-			if( in_array('url', $forbidden_tags) )
+			if( in_array('url', $this->forbidden_tags) )
 			{
-				$forbidden_tags[] = 'url2';
-				$forbidden_tags[] = 'url3';
-				$forbidden_tags[] = 'url4';
-				$forbidden_tags[] = 'url5';
-				$forbidden_tags[] = 'url6';
+				$this->forbidden_tags[] = 'url2';
+				$this->forbidden_tags[] = 'url3';
+				$this->forbidden_tags[] = 'url4';
+				$this->forbidden_tags[] = 'url5';
+				$this->forbidden_tags[] = 'url6';
 			}
-			if( in_array('mail', $forbidden_tags) )
-				$forbidden_tags[] = 'mail2';
+			if( in_array('mail', $this->forbidden_tags) )
+				$this->forbidden_tags[] = 'mail2';
 			
 			$other_tags = array('table', 'code', 'math', 'quote', 'hide', 'indent', 'list'); 
-			foreach($forbidden_tags as $key => $tag)
+			foreach($this->forbidden_tags as $key => $tag)
 			{	
 				if( in_array($tag, $other_tags) )
 				{
@@ -229,14 +226,14 @@ class BBCodeParser extends ContentParser
 		
 		//Tableaux
 		if( strpos($this->parsed_content, '[table') !== false )
-			$this->parse_table();
+			$this->_parse_table();
 		
 		//Listes
 		if( strpos($this->parsed_content, '[list') !== false )
 			$this->_parse_list();
 		
 		##### //Fonction de parsage des balises imbriquées générique à faire #####
-		//Parsage des balises imbriquées.	
+		//Parsage des balises imbriquées.
 		$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->parsed_content);
 		$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->parsed_content);
 		$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->parsed_content);
@@ -250,7 +247,7 @@ class BBCodeParser extends ContentParser
 		}
 		
 		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
-		if( !in_array('code', $forbidden_tags) && !empty($this->array_tags['code']) )
+		if( !in_array('code', $this->forbidden_tags) && !empty($this->array_tags['code']) )
 		{
 			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
 			$this->_reimplant_tag('code');

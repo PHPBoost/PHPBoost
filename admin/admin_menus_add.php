@@ -40,12 +40,12 @@ $del = !empty($_GET['del']) ? true : false;
 
 //Si c'est confirmé on execute
 if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà existant.
-{	
+{
 	$name = retrieve(POST, 'name', '');
 	$activ = retrieve(POST, 'activ', 0);  
 	$auth = retrieve(POST, 'auth', 0); 
 	$array_auth = $Group->Return_array_auth(AUTH_MENUS);	
-	$contents = !empty($_POST['contents']) ? strparse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
+	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';	
 	$location = retrieve(POST, 'location', 'left');
 	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
 
@@ -146,7 +146,7 @@ elseif( $action == 'add' ) //Ajout d'un menu.
 	$name = retrieve(POST, 'name', '');
 	$activ = retrieve(POST, 'activ', 0);  
 	$array_auth = $Group->Return_array_auth(AUTH_MENUS);	
-	$contents = !empty($_POST['contents']) ? strparse($_POST['contents'], array(), HTML_UNPROTECT) : '';	
+	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';	
 	$location = retrieve(POST, 'location', 'left');
 	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
 	
