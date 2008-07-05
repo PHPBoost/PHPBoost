@@ -129,6 +129,7 @@
 									<li><a href="../admin/admin_com_config.php" style="background-image:url(../templates/{THEME}/images/admin/com_mini.png);">{L_CONFIGURATION}</a></li>
 								</ul>
 							</li>
+							<li><a href="../admin/admin_content_config.php" style="background-image:url(../templates/{THEME}/images/admin/content_mini.png);">{L_CONTENT_CONFIG}</a></li>
 						</ul>
 					</li>
 					<li onmouseover="show_menu(6, 0);" onmouseout="hide_menu(0);">

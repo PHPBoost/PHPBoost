@@ -295,7 +295,6 @@ else //Sinon on rempli le formulaire
 		'L_SITE_KEYWORDS' => $LANG['site_keyword'],
 		'L_DEFAULT_LANGUAGES' => $LANG['default_language'],
 		'L_DEFAULT_THEME' => $LANG['default_theme'],
-		'L_DEFAULT_EDITOR' => $LANG['default_editor'],
 		'L_START_PAGE' => $LANG['start_page'],
 		'L_OTHER' => $LANG['other_start_page'],
 		'L_COMPT' => $LANG['compt'],

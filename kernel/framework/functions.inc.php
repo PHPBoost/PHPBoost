@@ -351,13 +351,13 @@ function strparse(&$content, $forbidden_tags = array(), $html_protect = true)
 function unparse(&$content)
 {
     include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
- $content_manager = new Content();
+	$content_manager = new Content();
 	$content_manager->set_langage(BBCODE_LANGAGE);
 	$parser =& $content_manager->get_parser();
     $parser->set_content($content);
     $parser->unparse();
 	
-	return $parser->get_parsed_content();
+	return $parser->get_parsed_content(DO_NOT_ADD_SLASHES);
 }
 
 //Parse temps réel

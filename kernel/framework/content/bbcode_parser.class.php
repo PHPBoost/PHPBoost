@@ -31,7 +31,7 @@ class BBCodeParser extends ContentParser
 {
 	function BBCodeParser()
 	{
-	
+		
 	}
 	
 	//On parse le contenu: bbcode => xhtml.
@@ -230,7 +230,7 @@ class BBCodeParser extends ContentParser
 		
 		//Listes
 		if( strpos($this->parsed_content, '[list') !== false )
-			$this->parse_list();
+			$this->_parse_list();
 		
 		##### //Fonction de parsage des balises imbriquées générique à faire #####
 		//Parsage des balises imbriquées.	

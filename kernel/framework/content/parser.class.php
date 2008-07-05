@@ -51,7 +51,7 @@ class ContentParser
 	//Fonction de chargement de texte
 	function set_content($content)
 	{
-		$this->content = trim((MAGIC_QUOTES == false ? $content : stripslashes($content)));
+		$this->content = trim(!MAGIC_QUOTES ? $content : stripslashes($content));
 	}
 	
 	function get_parsed_content($addslashes = true)
