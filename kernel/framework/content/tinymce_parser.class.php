@@ -54,6 +54,7 @@ class TinyMCEParser extends ContentParser
 		
 		//On casse toutes les balises HTML (sauf celles qui ont été prélevées dans le code et la balise HTML)
 		$this->parsed_content = htmlspecialchars($this->parsed_content, ENT_NOQUOTES);
+		
 		echo $this->parsed_content . '<hr />';
 		
 		//Modification de quelques tags HTML envoyés par YinyMCE
@@ -69,8 +70,14 @@ class TinyMCEParser extends ContentParser
 		}
 		
 		//Balise image
-		$this->parsed_content = preg_replace_callback('`<img src="([^"]+)"(?: border="[^"]*")? alt="[^"]*"(?: hspace="[^"]*")?(?: vspace="[^"]*")?(?: width="[^"]*")?(?: height="[^"]*")?(?: align="(top|middle|bottom)")? />`is', create_function('$img', '$align = \'\'; if( !empty($img[2]) ) $align = \'=\' . $img[2]; return \'[img\' . $align . \']\' . $img[1] . \'[/img]\';'), $this->parsed_content);
+		$this->parsed_content = preg_replace_callback('`&lt;img src="([^"]+)"(?: border="[^"]*")? alt="[^"]*"(?: hspace="[^"]*")?(?: vspace="[^"]*")?(?: width="[^"]*")?(?: height="[^"]*")?(?: align="(top|middle|bottom)")? /&gt;`is', create_function('$img', '$align = \'\'; if( !empty($img[2]) ) $align = \'=\' . $img[2]; return \'<img src="\' . $img[1] . \'" alt="" class="valign_"\' . $align . \' />\';'), $this->parsed_content);
+		
+		//Balise indent
+		$this->_parse_imbricated('&lt;blockquote&gt;', '`&lt;blockquote&gt;(.+)&lt;/blockquote&gt;`isU', '<div class="indent">$1</div>');
 
+		//Préparse de la balise table.
+		$this->parsed_content = preg_replace_callback('`&lt;table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?( style="([^"]+)")?[^&]*&gt;(.+)&lt;/table&gt;`i', array(&$this, '_parse_tinymce_table'), $this->parsed_content);
+		
 		$array_preg = array(
 			'`&lt;div&gt;(.+)&lt;/div&gt;`isU',
 			'`&lt;p&gt;(.+)&lt;/p&gt;`isU',
@@ -90,10 +97,9 @@ class TinyMCEParser extends ContentParser
 			'`&lt;div align="([a-z]+)"&gt;(.+)&lt;/div&gt;`isU',
 			'`&lt;div style="text-align: ([a-z]+)"&gt;(.+)&lt;/div&gt;`isU',
 			'`&lt;a(?: class="[^"]+")?(?: title="[^"]+" )? name="([^"]+)"&gt;(.*)&lt;/a&gt;`isU',
-			'`&lt;blockquote&gt;(.+)&lt;/blockquote&gt;`isU',
 			'`&lt;ul&gt;(.+)&lt;/ul&gt;`isU',
 			'`&lt;ol&gt;(.+)&lt;/ol&gt;`isU',
-			'`&lt;li&gt;(.+)&lt;/li&gt;`isU',
+			'`&lt;li&gt;(.*)&lt;/li&gt;`isU',
 			'`&lt;/?font([^&]+)&gt;`i',
 			'`&lt;h1&gt;(.+)&lt;/h1&gt;`isU',
 			'`&lt;h2&gt;(.+)&lt;/h2&gt;`isU',
@@ -104,7 +110,7 @@ class TinyMCEParser extends ContentParser
 			'`&lt;td( colspan="[^"]+")?( rowspan="[^"]+")?&gt;`is',
 			'`&lt;object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="([^"]+)%?" height="([^"]+)%?"&gt;&lt;param name="movie" value="([^"]+)"(.*)&lt;/object&gt;`isU',
 			'`&lt;span[^&]*&gt;`i',
-			'`&lt;p[^r&]*>`i'
+			'`&lt;p[^&]*&gt;`i'
 		);
 		$array_preg_replace = array(
 			'$1' . "\n<br />",
@@ -125,7 +131,6 @@ class TinyMCEParser extends ContentParser
 			'<div style="text-align:$1">$2</div>',
 			'<div style="text-align:$1">$2</div>',
 			'<span id="$1">$2</span>',
-			'<div class="indent">$1</div>',
 			'<ul class="bb_ul">$1</ul>',
 			'<ol class="bb_ol">$1</ol>',
 			'<li class="bb_li">$1</li>',
@@ -153,19 +158,28 @@ class TinyMCEParser extends ContentParser
 	   
 		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);	
 		
-		//Préparse de la balise table.
-		// $this->parsed_content = preg_replace_callback('`<table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?(?: style="([^"]+)")?[^>]*>`i', array(&$this, '_parse_tinymce_table'), $this->parsed_content);
+		$array_str = array( 
+			'<address>', '</address>', '<caption>', '</caption>', '<tbody>', '</tbody>'
+		);
+		$array_str_replace = array( 
+			'', '', "\r\n\r\n",
+			'[row][head]', '[/head][/row]', ''
+		);
 		
-		// $array_str = array( 
-			// '</span>', '<address>', '</address>', '<pre>', '</pre>', '<blockquote>', '</blockquote>', '</p>',
-			// '<caption>', '</caption>', '<tbody>', '</tbody>', '<tr>', '</tr>', '</td>', '</table>'
-		// );
-		// $array_str_replace = array( 
-			// '', '', '', '[pre]', '[/pre]', '[indent]', '[/indent]', "\r\n\r\n",
-			// '[row][head]', '[/head][/row]', '', '', '[row]', '[/row]', '[/col]', '[/table]'
-		// );
+		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
 		
-		//$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
+		//Smilies
+		@include(PATH_TO_ROOT . '/cache/smileys.php');
+		if( !empty($_array_smiley_code) )
+		{
+			//Création du tableau de remplacement.
+			foreach($_array_smiley_code as $code => $img)
+			{
+				$smiley_code[] = '`(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . str_replace('\'', '\\\\\\\'', preg_quote($code)) . ')`';
+				$smiley_img_url[] = '<img src="../images/smileys/' . $img . '" alt="' . addslashes($code) . '" class="smiley" />';
+			}
+			$this->parsed_content = preg_replace($smiley_code, $smiley_img_url, $this->parsed_content);
+		}
 		
 		//On remet le code HTML mis de côté
 		if( $Member->Check_auth($this->html_auth, 1) && !empty($this->array_tags['html']) )
@@ -292,7 +306,7 @@ class TinyMCEParser extends ContentParser
 		if( !empty($matches[1]) && !empty($matches[2]) ) 
 			$prop .= ' style="width:' . $matches[1] . 'px;' . $matches[2] . '"';
 			
-		return '[table' . $prop . ']';
+		return '<table' . $prop . '>' . $matches[3] . '</table>';
 	}
 }
 

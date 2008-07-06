@@ -359,6 +359,124 @@ class BBCodeParser extends ContentParser
 		$this->_unparse_code(REIMPLANT);
 		$this->_unparse_html(REIMPLANT);
 	}
+	
+	## Private ##
+	//Fonction qui parse les tableaux dans l'ordre inverse à l'ordre hiérarchique
+	function _parse_imbricated_table(&$content)
+	{
+		if( is_array($content) )
+		{
+			$string_content = '';
+			$nbr_occur = count($content);
+			for($i = 0; $i < $nbr_occur; $i++)
+			{
+				//Si c'est le contenu d'un tableau on le parse
+				if( $i % 3 === 2 )
+				{
+					//On parse d'abord les sous tableaux éventuels
+					$this->_parse_imbricated_table($content[$i]);
+					//On parse le tableau concerné (il doit commencer par [row] puis [col] ou [head] et se fermer pareil moyennant espaces et retours à la ligne sinon il n'est pas valide)
+					if( preg_match('`^(?:\s|<br />)*\[row\](?:\s|<br />)*\[(?:col|head)(?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?\].*\[/(?:col|head)\](?:\s|<br />)*\[/row\](?:\s|<br />)*$`sU', $content[$i]) )
+					{						
+						//On nettoie les caractères éventuels (espaces ou retours à la ligne) entre les différentes cellules du tableau pour éviter les erreurs xhtml
+						$content[$i] = preg_replace_callback('`^(\s|<br />)+\[row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+$`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+\[row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[row\](\s|<br />)+\[col.*\]`Us', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[row\](\s|<br />)+\[head[^]]*\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[col.*\]`Us', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[head[^]]*\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[col.*\]`Us', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[head[^]]*\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[/row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[/row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						//Parsage de row, col et head
+						$content[$i] = preg_replace('`\[row\](.*)\[/row\]`sU', '<tr class="bb_table_row">$1</tr>', $content[$i]);
+						$content[$i] = preg_replace('`\[col((?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/col\]`sU', '<td class="bb_table_col"$1>$2</td>', $content[$i]);
+						$content[$i] = preg_replace('`\[head((?: colspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/head\]`sU', '<th class="bb_table_head"$1>$2</th>', $content[$i]);
+						//parsage réussi (tableau valide), on rajoute le tableau devant
+						$content[$i] = '<table class="bb_table"' . $content[$i - 1] . '>' . $content[$i] . '</table>';
+
+					}
+					else
+					{
+						//le tableau n'est pas valide, on met des balises temporaires afin qu'elles ne soient pas parsées au niveau inférieur
+						$content[$i] = str_replace(array('[col', '[row', '[/col', '[/row', '[head', '[/head'), array('[\col', '[\row', '[\/col', '[\/row', '[\head', '[\/head'), $content[$i]);
+						$content[$i] = '[table' . $content[$i - 1] . ']' . $content[$i] . '[/table]';
+					}
+				}
+				//On concatène la chaîne finale si ce n'est pas le style du tableau
+				if( $i % 3 !== 1 )
+					$string_content .= $content[$i];
+			}
+			$content = $string_content;
+		}
+	}
+
+	function _parse_table()
+	{
+		//On supprime les éventuels quote qui ont été transformés en leur entité html
+		//$this->content = preg_replace_callback('`\[(?:table|col|row|head)(?: colspan=\\\&quot;[0-9]+\\\&quot;)?(?: rowspan=\\\&quot;[0-9]+\\\&quot;)?( style=\\\&quot;(?:[^&]+)\\\&quot;)?\]`U', create_function('$matches', 'return str_replace(\'\\\&quot;\', \'"\', $matches[0]);'), $this->content);
+		$this->_split_imbricated_tag($this->parsed_content, 'table', ' style="[^"]+"');
+		$this->_parse_imbricated_table($this->parsed_content);
+		//On remet les tableaux invalides tels qu'ils étaient avant
+		$this->parsed_content = str_replace(array('[\col', '[\row', '[\/col', '[\/row', '[\head', '[\/head'), array('[col', '[row', '[/col', '[/row', '[head', '[/head'), $this->parsed_content);
+	}
+	
+	//Fonction qui parse les listes
+	function _parse_imbricated_list(&$content)
+	{
+		if( is_array($content) )
+		{
+			$string_content = '';
+			$nbr_occur = count($content);
+			for($i = 0; $i < $nbr_occur; $i++)
+			{
+				//Si c'est le contenu d'une liste on le parse
+				if( $i % 3 === 2 )
+				{
+					//On parse d'abord les sous listes éventuelles
+					if( is_array($content[$i]) )
+						$this->_parse_imbricated_list($content[$i]);
+					
+					if( strpos($content[$i], '[*]') !== false ) //Si il contient au moins deux éléments
+					{				
+						//Nettoyage des listes (retours à la ligne)
+						$content[$i] = preg_replace_callback('`\[\*\]((?:\s|<br />)+)`', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`((?:\s|<br />)+)\[\*\]`', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						if( substr($content[$i - 1], 0, 8) == '=ordered' )
+						{
+							$list_tag = 'ol';
+							$content[$i - 1] = substr($content[$i - 1], 8);
+						}
+						else
+						{
+							$list_tag = 'ul';
+						}
+						$content[$i] = preg_replace_callback('`^((?:\s|<br />)*)\[\*\]`U', create_function('$var', 'return str_replace("<br />", "", str_replace("[*]", "<li class=\"bb_li\">", $var[0]));'), $content[$i]);
+						$content[$i] = '<' . $list_tag . $content[$i - 1] . ' class="bb_' . $list_tag . '">' . str_replace('[*]', '</li><li class="bb_li">', $content[$i]) . '</li></' . $list_tag . '>';
+					}
+				}
+				//On concatène la chaîne finale si ce n'est pas le style ou le type de tableau
+				if( $i % 3 !== 1 )
+					$string_content .= $content[$i];
+			}
+			$content = $string_content;
+		}
+	}
+	
+	//Parse les listes imbriquées
+	function _parse_list()
+	{
+		//On nettoie les guillemets échappés
+		//$this->content = preg_replace_callback('`\[list(?:=(?:un)?ordered)?( style=\\\&quot;[^&]+\\\&quot;)?\]`U', create_function('$matches', 'return str_replace(\'\\\&quot;\', \'"\', $matches[0]);'), $this->content);
+		//on travaille dessus
+		if( preg_match('`\[list(=(?:un)?ordered)?( style="[^"]+")?\](\s|<br />)*\[\*\].*\[/list\]`s', $this->parsed_content) )
+		{
+			$this->_split_imbricated_tag($this->parsed_content, 'list', '(?:=ordered)?(?: style="[^"]+")?');
+			$this->_parse_imbricated_list($this->parsed_content);
+		}
+	}
 }
 
 ?>
