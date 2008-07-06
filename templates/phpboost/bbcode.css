@@ -27,51 +27,48 @@
 }
 /** Titres **/
 h3.title1, h3.title2{
-	font-weight:bold;
-	font-size: 18px;
-	font-style:italic;
-	margin:0;
-	padding:0;
-	margin:6px 10px;
-	padding:3px 15px;
-	clear:both;
+	width:98%;
+	margin:auto;
+	font-size:14px;
+	margin-bottom:-15px;
+	padding:0px 5px;
+	border-bottom:2px solid #E53B00;
 }
 /* Titre 1 */
 h3.title1{
-	background:#FFFFFF;	
-	border:1px solid #2C5169;
-	border-left:3px solid #2C5169;
-	border-right:3px solid #2C5169;
+	color:#E53B00;
+	border-bottom:2px solid #E53B00;
 }
 /* Titre 2 */
 h3.title2{
 	background:#FFFFFF;	
 	color:#000000;
-	border-top:4px double #2C5169;
-	border-left:3px solid #2C5169;
-	border-right:3px solid #2C5169;
-	border-bottom:1px solid #2C5169;
+	padding:2px 5px;
+	border:1px solid #E53B00;
+	border-left:3px solid #E53B00;
+	border-right:3px solid #E53B00;
 }
 h4.stitle1, h4.stitle2{
 	display: inline;
-	color:#000000;
-	font-size: 16px;
+	color:#333333;
+	font-size:14px;
 	font-weight:bold;
-	margin-left:25px;
-	padding: 2px 5px;
+	margin-left:45px;
+	margin-bottom:45px;
+	padding:2px 5px;
+	font-weight:bold;
+	background:#FFFFFF;	
 }
 /* Sous titre 1 */
 h4.stitle1{
-	background:#FFFFFF;	
-	border:1px solid #2C5169;
-	border-left:3px solid #2C5169;
-	border-right:3px solid #2C5169;
+	border:1px solid #0578CC;
+	border-left:3px solid #0578CC;
+	border-right:3px solid #0578CC;
 }
 /* Sous titre 2 */
 h4.stitle2{
-	background:#FFFFFF;	
-	border:1px solid #2C5169;
-	border-top:3px solid #2C5169;
+	border:1px solid #0578CC;
+	border-top:3px solid #0578CC;
 }
 .float_left
 {
