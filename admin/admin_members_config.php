@@ -85,6 +85,7 @@ else
 		'WEIGHT_MAX' => !empty($CONFIG_MEMBER['weight_max']) ? $CONFIG_MEMBER['weight_max'] : '20',
 		'AVATAR_URL' => !empty($CONFIG_MEMBER['avatar_url']) ? $CONFIG_MEMBER['avatar_url'] : '',
 		'CONTENTS' => unparse($CONFIG_MEMBER['msg_mbr']),
+		'KERNEL_EDITOR' => display_editor(),
 		'GD_DISABLED' => (!@extension_loaded('gd')) ? 'disabled="disabled"' : '',
 		'L_KB' => $LANG['unit_kilobytes'],
 		'L_PX' => $LANG['unit_pixels'],
@@ -122,8 +123,6 @@ else
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
 	));
-	
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_members_config'); 
 }

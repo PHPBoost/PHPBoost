@@ -281,6 +281,7 @@ else //Liste des groupes.
 		'PAGINATION' => $Pagination->Display_pagination('admin_groups', $nbr_group, 'p', 25, 3),	
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
+		'KERNEL_EDITOR' => display_editor(),
 		'L_CONFIRM_DEL_GROUP' => $LANG['confirm_del_group'],
 		'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
 		'L_ADD_GROUPS' => $LANG['groups_add'],
@@ -304,8 +305,6 @@ else //Liste des groupes.
 		));
 	}
 	$Sql->Close($result);
-	
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_groups_management'); 
 }

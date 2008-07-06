@@ -274,11 +274,16 @@ else
 	$l_action_submit = $LANG['submit'];
 }
 
-include_once('../kernel/framework/content/bbcode.php');
-
 $Template->Assign_vars(array(
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], $article_infos['title'])) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], $article_infos['title'])),
-	'L_TITLE_FIELD' => $LANG['title'],
+	'KERNEL_EDITOR' => display_editor(),
+	'ID_CAT' => $id_edit > 0 ? $article_infos['id_cat'] : '',
+	'CONTENTS' => !empty($contents_preview) ? stripslashes($contents_preview) : ($id_edit > 0 ? wiki_unparse(trim($contents)) : ''),
+	'ID_EDIT' => $id_edit,
+	'IS_CAT' => $is_cat,
+	'ID_CAT' => $id_cat,
+	'ARTICLE_TITLE' => !empty($encoded_title) ? $encoded_title : stripslashes($title),'L_TITLE_FIELD' => $LANG['title'],
+	'TARGET' => transid('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
 	'L_CONTENTS' => $LANG['wiki_contents'],
 	'L_ALERT_CONTENTS' => $LANG['require_text'],
 	'L_ALERT_TITLE' => $LANG['require_title'],
@@ -288,15 +293,8 @@ $Template->Assign_vars(array(
 	'L_CAT' => $LANG['wiki_article_cat'],
 	'L_CURRENT_CAT' => $LANG['wiki_current_cat'],
 	'L_DO_NOT_SELECT_ANY_CAT' => $LANG['wiki_do_not_select_any_cat'],
-	'ID_CAT' => $id_edit > 0 ? $article_infos['id_cat'] : '',
-	'CONTENTS' => !empty($contents_preview) ? stripslashes($contents_preview) : ($id_edit > 0 ? wiki_unparse(trim($contents)) : ''),
-	'ID_EDIT' => $id_edit,
-	'IS_CAT' => $is_cat,
-	'ID_CAT' => $id_cat,
-	'ARTICLE_TITLE' => !empty($encoded_title) ? $encoded_title : stripslashes($title),
 	'L_PREVIEWING' => $LANG['wiki_previewing'],
-	'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
-	'TARGET' => transid('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
+	'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents']
 ));
 
 //outils BBcode en javascript

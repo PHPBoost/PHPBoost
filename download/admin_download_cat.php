@@ -167,6 +167,8 @@ elseif( $new_cat XOR $id_edit > 0 )
 	}
 	
 	$Template->Assign_vars(array(
+		'KERNEL_EDITOR' => display_editor(),
+		'IMG_LIST' => $img_str,
 		'L_CATEGORY' => $LANG['category'],
 		'L_REQUIRED_FIELDS' => $DOWNLOAD_LANG['required_fields'],
 		'L_NAME' => $DOWNLOAD_LANG['category_name'],
@@ -181,8 +183,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		'L_READ_AUTH' => $DOWNLOAD_LANG['auth_read'],
 		'L_WRITE_AUTH' => $DOWNLOAD_LANG['auth_write'],
 		'L_SPECIAL_AUTH' => $DOWNLOAD_LANG['special_auth'],
-		'L_SPECIAL_AUTH_EXPLAIN' => $DOWNLOAD_LANG['special_auth_explain'],
-		'IMG_LIST' => $img_str,
+		'L_SPECIAL_AUTH_EXPLAIN' => $DOWNLOAD_LANG['special_auth_explain']
 	));
 		
 	if( $id_edit > 0 && array_key_exists($id_edit, $DOWNLOAD_CATS) )	
@@ -219,7 +220,6 @@ elseif( $new_cat XOR $id_edit > 0 )
 		));
 	}
 	
-	include_once('../kernel/framework/content/bbcode.php');
 	include_once('admin_download_menu.php');
 	
 	$Template->Pparse('admin_download_cat_edition');

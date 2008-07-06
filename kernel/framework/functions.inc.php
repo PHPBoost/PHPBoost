@@ -148,7 +148,7 @@ function substr_html(&$str, $start, $end = '')
 }
 
 //Affichage de l'éditeur de contenu.
-function display_editor($forbidden_tags = array(), $field = 'contents')
+function display_editor($field = 'contents', $forbidden_tags = array())
 {
 	include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');	
 	$content_editor = new Content();

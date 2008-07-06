@@ -29,7 +29,7 @@
 					<legend>{L_TERMS}</legend>
 					<p>{L_EXPLAIN_TERMS}</p>
 					<label for="contents">{L_CONTENTS}</label>
-					# INCLUDE handle_bbcode #
+					{KERNEL_EDITOR}
 					<label><textarea type="text" rows="20" cols="63" id="contents" name="contents">{CONTENTS}</textarea></label> 
 				</fieldset>
 				

@@ -166,7 +166,7 @@
 				</dl>
 				<br />
 				<label for="contents">* {L_ACTION}</label>
-				# INCLUDE handle_bbcode #
+				{KERNEL_EDITOR}
 				<label><textarea type="text" rows="10" cols="60" id="contents" name="contents">{CONTENTS}</textarea> </label>
 			</fieldset>	
 			

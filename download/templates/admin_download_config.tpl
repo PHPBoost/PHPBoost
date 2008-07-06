@@ -67,7 +67,7 @@
 					<label for="contents">
 						{L_ROOT_DESCRIPTION}
 					</label>
-					# INCLUDE handle_bbcode #
+					{KERNEL_EDITOR}
 					<textarea id="contents" rows="15" cols="40" name="root_contents">{DESCRIPTION}</textarea>
 				</fieldset>
 								

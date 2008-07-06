@@ -1,5 +1,5 @@
 						<label for="extend_contents">{L_EXTENDED_NEWS}</label></dt>
-						# INCLUDE handle_bbcode #
+						{KERNEL_EDITOR}
 						<label><textarea type="text" rows="25" cols="86" id="extend_contents" name="extend_contents">{EXTEND_CONTENTS}</textarea> </label>
 					<br />
 					<dl class="overflow_visible">

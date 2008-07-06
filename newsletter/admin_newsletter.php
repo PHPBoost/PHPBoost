@@ -113,7 +113,9 @@ elseif( !empty($type) ) //Rédaction
 {
 	if( $type == 'bbcode' )
 	{
-		include_once('../kernel/framework/content/bbcode.php');
+		$Template->Assign_vars(array(
+			'KERNEL_EDITOR' => display_editor()
+		));
 	}
 	else
 	{

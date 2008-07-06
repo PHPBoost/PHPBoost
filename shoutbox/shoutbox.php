@@ -114,7 +114,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 				'CONTENTS' => unparse($row['contents']),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'THEME' => $CONFIG['theme'],
-				'KERNEL_EDITOR' => display_editor($CONFIG_SHOUTBOX['shoutbox_forbidden_tags'], 'shout_contents'),
+				'KERNEL_EDITOR' => display_editor('shout_contents', $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']),
 				'L_ALERT_TEXT' => $LANG['require_text'],
 				'L_UPDATE_MSG' => $LANG['update_msg'],
 				'L_REQUIRE' => $LANG['require'],
@@ -197,7 +197,7 @@ else //Affichage.
 		$Errorh->Error_handler($errstr, E_USER_NOTICE);
 	
 	$Template->Assign_vars(array(
-		'KERNEL_EDITOR' => display_editor($CONFIG_SHOUTBOX['shoutbox_forbidden_tags'], 'shout_contents'),
+		'KERNEL_EDITOR' => display_editor('shout_contents', $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']),
 		'L_ON' => $LANG['on'],
 		'L_ALERT_TEXT' => $LANG['require_text'],
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],

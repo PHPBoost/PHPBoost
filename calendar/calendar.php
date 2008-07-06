@@ -340,6 +340,7 @@ elseif( !empty($id) )
 			
 			$Template->Assign_vars(array(				
 				'C_CALENDAR_FORM' => true,
+				'KERNEL_EDITOR' => display_editor(),
 				'UPDATE' => transid('?edit=1&amp;id=' . $id),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'DAY_DATE' => !empty($row['timestamp']) ? gmdate_format('d', $row['timestamp']) : '',
@@ -376,9 +377,6 @@ elseif( !empty($id) )
 			}
 			if( !empty($errstr) )
 				$Errorh->Error_handler($errstr, E_USER_NOTICE);
-				
-			include_once('../kernel/framework/content/bbcode.php');
-			
 			
 			$Template->Pparse('calendar');
 		}
@@ -443,6 +441,7 @@ elseif( $add ) //Ajout d'un évenement
 		
 		$Template->Assign_vars(array(					
 			'C_CALENDAR_FORM' => true,
+			'KERNEL_EDITOR' => display_editor(),
 			'UPDATE' => transid('?add=1'),			
 			'DATE' => gmdate_format('date_format_short'),
 			'DAY_DATE' => $day,
@@ -479,8 +478,6 @@ elseif( $add ) //Ajout d'un évenement
 		}
 		if( !empty($errstr) )
 			$Errorh->Error_handler($errstr, E_USER_NOTICE);
-		
-		include_once('../kernel/framework/content/bbcode.php');
 
 		$Template->Pparse('calendar');
 	}

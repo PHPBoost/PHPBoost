@@ -40,7 +40,7 @@
 								</p>
 								<br />
 								<p style="text-align:center;"><label for="contents">{L_ALERT_CONTENTS}</label></p>
-								# INCLUDE handle_bbcode #
+								{KERNEL_EDITOR}
 								<textarea type="text" class="post" style="width:70%" rows="15" cols="40" id="contents" name="contents"></textarea> 
 								<br />
 								<input type="hidden" name="id" value="{alert_form.ID_ALERT}" />

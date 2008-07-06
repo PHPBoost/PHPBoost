@@ -138,6 +138,7 @@ elseif( !empty($_GET['recount']) )
 elseif( $new_cat XOR $id_edit > 0 )
 {
 	$Template->Assign_vars(array(
+		'KERNEL_EDITOR' => display_editor(),
 		'L_CATEGORY' => $FAQ_LANG['category'],
 		'L_REQUIRED_FIELDS' => $FAQ_LANG['required_fields'],
 		'L_NAME' => $FAQ_LANG['category_name'],
@@ -169,8 +170,6 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'IDCAT' => $id_edit
 		));
 	}
-	
-	include_once('../kernel/framework/content/bbcode.php');
 }
 else
 {

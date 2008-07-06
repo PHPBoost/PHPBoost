@@ -219,6 +219,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	$Template->Assign_vars(array(
 		'C_FORUM_CUT_CAT' => true,
 		'CATEGORIES' => $cat_forum,
+		'KERNEL_EDITOR' => display_editor(),
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
@@ -340,8 +341,6 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			'L_ANOUNCE' => $LANG['forum_announce']
 		));
 	}
-			
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	//Listes les utilisateurs en lignes.
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');

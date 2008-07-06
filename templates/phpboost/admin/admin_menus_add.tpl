@@ -78,7 +78,7 @@
 						<dd><label><input type="checkbox" size="18" name="use_tpl" id="use_tpl" checked="checked" class="text" /></label></dd>
 					</dl>
 					<label>
-						# INCLUDE handle_bbcode #	
+						{KERNEL_EDITOR}	
 						<textarea type="text" rows="15" cols="5" id="contents" name="contents"></textarea> 
 					</label>
 					# ENDIF #		
@@ -126,7 +126,7 @@
 						<dd><label><input type="checkbox" size="18" name="use_tpl" id="use_tpl" {USE_TPL} class="text" /></label></dd>
 					</dl>
 					<label>
-						# INCLUDE handle_bbcode #	
+						{KERNEL_EDITOR}	
 						<textarea type="text" rows="15" cols="5" id="contents" name="contents">{CONTENTS}</textarea> 
 						<br />
 					</label>

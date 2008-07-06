@@ -181,7 +181,7 @@
 						</dl>
 						
 						<label for="contents">* {L_TEXT}</label>
-						# INCLUDE handle_bbcode #
+						{KERNEL_EDITOR}
 						<label><textarea type="text" rows="25" cols="86" id="contents" name="contents">{news.CONTENTS}</textarea></label>
 						<br /><br />
 

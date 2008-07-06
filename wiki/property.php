@@ -367,9 +367,9 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 else
 	redirect(HOST . DIR . '/wiki/' . transid('wiki.php'));
 
-include_once('../kernel/framework/content/bbcode.php');
-
 $Template->Assign_vars(array(
+	'KERNEL_EDITOR' => display_editor(),
+	'EXPLAIN_WIKI_GROUPS' => $LANG['explain_wiki_groups'],
 	'L_SUBMIT' => $LANG['submit'],
 	'L_RESET' => $LANG['reset'],
 	'L_PREVIEW' => $LANG['preview'],
@@ -386,7 +386,6 @@ $Template->Assign_vars(array(
 	'L_EXPLAIN_REMOVE_CAT' => $LANG['wiki_explain_remove_cat'],
 	'L_FUTURE_CAT' => $LANG['wiki_future_cat'],
 	'L_ALERT_REMOVING_CAT' => str_replace('\'', '\\\'', $LANG['wiki_alert_removing_cat']),
-	'EXPLAIN_WIKI_GROUPS' => $LANG['explain_wiki_groups'],
 	'L_UPDATE' => $LANG['update'],
 	'L_RESET' => $LANG['reset'],
 	'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],

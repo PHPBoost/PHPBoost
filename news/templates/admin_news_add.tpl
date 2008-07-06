@@ -113,7 +113,7 @@
 					</dl>
 					<br />
 						<label for="contents">* {L_TEXT}</label></dt>
-						# INCLUDE handle_bbcode #
+						{KERNEL_EDITOR}
 						<label><textarea type="text" rows="25" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
 					<br />
 					<br />
