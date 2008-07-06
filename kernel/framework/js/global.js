@@ -142,28 +142,40 @@ function bb_hide(div2)
 function hide_div(divID)
 {
     if( document.getElementById(divID) )
-        document.getElementById(divID).style.display = 'none';
+    {    
+		Effect.SwitchOff(divID);
+		document.getElementById(divID).style.display = 'none';
+	}
 }
 
 //Affiche un bloc
 function show_div(divID, option)
 {
-   if( document.getElementById(divID) )
-			document.getElementById(divID).style.display = 'block';
+	if( document.getElementById(divID) )
+	{	
+		Effect.Appear(divID, { duration: 0.5 });
+		document.getElementById(divID).style.display = 'block';
+	}
 }
 
 //Masque un bloc.
 function hide_inline(divID)
 {
 	if( document.getElementById(divID) )
+	{
+		Effect.SwitchOff(divID);
 		document.getElementById(divID).style.visibility = 'hidden';
+	}
 }
 
 //Affiche un bloc
 function show_inline(divID)
 {
 	if( document.getElementById(divID) )
+	{	
+		Effect.Appear(divID, { duration: 0.5 });
 		document.getElementById(divID).style.visibility = 'visible';
+	}
 }
 
 //Change l'adresse d'une image
@@ -194,7 +206,10 @@ function display_div_auto(divID, type)
 			type = 'block';
 			
 		if( document.getElementById(divID).style.display == type )
+		{	
+			Effect.SwitchOff(divID);
 			document.getElementById(divID).style.display = 'none';
+		}
 		else if( document.getElementById(divID).style.display == 'none' )
 			document.getElementById(divID).style.display = type;
 	}
@@ -352,7 +367,7 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 					document.getElementById('search_img' + searchid).innerHTML = '';
 				if( document.getElementById("xmlhttprequest_result_search" + searchid) )
 					document.getElementById("xmlhttprequest_result_search" + searchid).innerHTML = xhr_object.responseText;
-				show_div("xmlhttprequest_result_search" + searchid);
+				Effect.BlindDown('xmlhttprequest_result_search'+ searchid, { duration: 0.5 });
 			}
 			else if( xhr_object.readyState == 4 ) 
 			{
