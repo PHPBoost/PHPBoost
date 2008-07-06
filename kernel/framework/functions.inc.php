@@ -353,7 +353,7 @@ function strparse(&$content, $forbidden_tags = array())
     $content_manager = new Content();
 	$parser =& $content_manager->get_parser();
     $parser->set_content($content);
-    $parser->set_forbidden_tags($forbidden_tags);
+    $parser->set_forbidden_tags(&$forbidden_tags);
     $parser->parse();
 	
 	return $parser->get_parsed_content();

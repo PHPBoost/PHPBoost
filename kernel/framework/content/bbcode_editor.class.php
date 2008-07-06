@@ -161,7 +161,7 @@ class BBCodeEditor extends ContentEditor
 			$Template->Assign_block_vars('smiley', array(
 				'IMG' => $img,
 				'CODE' => addslashes($code_smile),
-				'END_LINE' => is_int($i/$smile_by_line) ? '<br />' : ''
+				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
 			));	
 			
 			$i++;	
