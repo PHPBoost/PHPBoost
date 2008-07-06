@@ -52,9 +52,7 @@
 							<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
 							<br />
 							<select name="guestbook_forbidden_tags[]" id="guestbook_forbidden_tags" size="10" multiple="multiple">
-								# START forbidden_tags #
-									{forbidden_tags.TAGS}
-								# END forbidden_tags #						
+								{TAGS}				
 							</select>
 							<br />
 							<a class="small_link"href="javascript:check_select_multiple('tag', true);">{L_SELECT_ALL}</a>/<a class="small_link"href="javascript:check_select_multiple('tag', false);">{L_SELECT_NONE}</a>

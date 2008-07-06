@@ -40,9 +40,7 @@ class BBCodeEditor extends ContentEditor
 		global $CONFIG, $Sql, $LANG, $Cache, $Member, $CONFIG_FILES, $_array_smiley_code;
 		
 		if( !is_object($this->template) || get_class($this->template) != 'Template' )
-			$Template = new Template('framework/content/bbcode.tpl');
-		
-		$this->forbidden_tags;
+			$Template = new Template('framework/content/editor.tpl');
 		
 		//Chargement de la configuration.
 		$Cache->Load_file('files');
@@ -51,7 +49,9 @@ class BBCodeEditor extends ContentEditor
 		$Template->Assign_vars(array(
 			'C_BBCODE_TINYMCE_MODE' => false,
 			'C_BBCODE_NORMAL_MODE' => true,
+			'C_EDITOR_NOT_ALREADY_INCLUDED' => !defined('EDITOR_ALREADY_INCLUDED'),
 			'FIELD' => $this->identifier,
+			'FORBIDDEN_TAGS' => implode(',', $this->forbidden_tags),
 			'UPLOAD_MANAGEMENT' => $Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) ? '<a style="font-size: 10px;" title="' . $LANG['bb_upload'] . '" href="#" onclick="window.open(\'' . PATH_TO_ROOT . '/member/upload.php?popup=1&amp;fd=' . $this->identifier  . '\', \'\', \'height=500,width=720,resizable=yes,scrollbars=yes\');return false;"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/upload/files_add.png" alt="" /></a>' : '',
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_BB_SMILEYS' => $LANG['bb_smileys'],
@@ -110,6 +110,14 @@ class BBCodeEditor extends ContentEditor
 			'L_INSERT_LIST' => $LANG['insert_list'],
 			'L_INSERT_TABLE' => $LANG['insert_table']
 		));
+		
+		foreach($this->forbidden_tags as $forbidden_tag) //Balises interdite.
+		{		
+			$Template->Assign_vars(array( 
+				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
+				'UNACTIV_' . strtoupper($forbidden_tag) => 'if( false ) '
+			));
+		}
 		
 		//Inclusion du cache des smileys pour éviter une requête inutile.
 		$Cache->Load_file('smileys');
@@ -177,13 +185,11 @@ class BBCodeEditor extends ContentEditor
 			));
 		}
 		
+		if( !defined('EDITOR_ALREADY_INCLUDED') ) //Editeur déjà includé.
+			define('EDITOR_ALREADY_INCLUDED', true);
+		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
-	
-	//Private attribute.
-	var $field = 'contents';
-	var $forbidden_tags = array();
-	var $template = false;
 }
 
 ?>
