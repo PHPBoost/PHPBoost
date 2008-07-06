@@ -51,10 +51,14 @@ $LANG['nb_results_found'] = 'results were found';
 $LANG['one_result_found'] = 'result was found';
 $LANG['no_results_found'] = 'no results were found';
 $LANG['search_all'] = 'All';
+$LANG['search_no_options'] = 'No specifics search options';
 
 //Administration
 $LANG['search_management'] = 'Search management';
 $LANG['search_config'] = 'Configuration';
+$LANG['search_config_weighting'] = 'Results\' weighting';
+$LANG['search_config_weighting_explain'] = 'Results\' weighting allow you to give to some modules\' results more importance than other';
+$LANG['search_weights'] = 'Weights';
 $LANG['search_cache'] = 'Search results cache';
 $LANG['cache_time'] = 'Cache\'s life';
 $LANG['cache_time_explain'] = 'in minutes, after, results will be calculated again';

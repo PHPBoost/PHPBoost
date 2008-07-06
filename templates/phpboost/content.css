@@ -444,3 +444,9 @@ a.msg_link_pseudo:hover {
 .module_mini_bottom{ /* Bordure inférieur des modules minis */ 
 	height:15px;
 }
+
+.label {
+    font-weight:bold;
+    font-size: 10px;
+    color: #476a7f;
+}

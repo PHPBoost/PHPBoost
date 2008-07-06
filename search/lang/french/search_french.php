@@ -51,10 +51,14 @@ $LANG['nb_results_found'] = 'résultats ont été trouvés';
 $LANG['one_result_found'] = 'résultat a été trouvé';
 $LANG['no_results_found'] = 'Aucun résultat n\'a été trouvé';
 $LANG['search_all'] = 'Tout';
+$LANG['search_no_options'] = 'Aucune options de recherche spécifique à ce module';
 
 //Administration
 $LANG['search_management'] = 'Gestion de la recherche';
 $LANG['search_config'] = 'Configuration';
+$LANG['search_config_weighting'] = 'Pondération des résultats';
+$LANG['search_config_weighting_explain'] = 'La pondération des résultats vous permet de donner plus d\'importance à certains modules dans les résultats de la recherche qu\'à d\'autres.';
+$LANG['search_weights'] = 'Pondérations';
 $LANG['search_cache'] = 'Cache des résultats des recherches';
 $LANG['cache_time'] = 'Durée de vie du cache';
 $LANG['cache_time_explain'] = 'Durée exprimée en minutes, au dela, les résultats seront recalculés';

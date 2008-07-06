@@ -45,6 +45,7 @@ class FaqInterface extends ModuleInterface
      */
     {
         global $Sql;
+        $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         require_once(PATH_TO_ROOT . '/faq/faq_cats.class.php');
         $Cats = new FaqCats();
         $auth_cats = array();
@@ -55,7 +56,7 @@ class FaqInterface extends ModuleInterface
         $request = "SELECT " . $args['id_search'] . " AS `id_search`,
             f.id AS `id_content`,
             f.question AS `title`,
-            ( 2 * MATCH(f.question) AGAINST('" . $args['search'] . "') + MATCH(f.answer) AGAINST('" . $args['search'] . "') ) / 3 AS `relevance`, "
+            ( 2 * MATCH(f.question) AGAINST('" . $args['search'] . "') + MATCH(f.answer) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS `relevance`, "
             . $Sql->Sql_concat("'../faq/faq.php?id='","f.idcat","'&amp;question='","f.id","'#q'","f.id") . " AS `link`
             FROM " . PREFIX . "faq f
             WHERE ( MATCH(f.question) AGAINST('" . $args['search'] . "') OR MATCH(f.answer) AGAINST('" . $args['search'] . "') )" . $auth_cats
