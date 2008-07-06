@@ -34,19 +34,46 @@ class TinyMCEParser extends ContentParser
 		parent::ContentParser();
 	}
 	
+	//Fonction qui parse le contenu
 	function parse()
 	{
-		$this->parsed_content = htmlspecialchars($this->content);
+		global $Member;
 		
-		$this->parsed_content = str_replace(array('&nbsp;&nbsp;&nbsp;', '&gt;', '&lt;', '<br />', '<br>'), array("\t", '&amp;gt;', '&amp;lt;', "\r\n", "\r\n"), $this->parsed_content); //Permet de poster de l'html.
-		$this->parsed_content = html_entity_decode($this->parsed_content); //On remplace toutes les entitées html.
-
+		$this->parsed_content = $this->content;
+		
+		//On enlève toutes les entités HTML rajoutées par TinyMCE
+		$this->parsed_content = html_entity_decode($this->parsed_content);
+		
+		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
+		if( !in_array('code', $this->forbidden_tags) )
+			$this->_pick_up_tag('code', '=[a-z0-9-]+(?:,(?:0|1)(?:,0|1)?)?');
+		
+		//On prélève tout le code HTML afin de ne pas l'altérer
+		if( $Member->check_auth($this->html_auth, 1) )
+			$this->_pick_up_tag('html');
+		
+		//On casse toutes les balises HTML (sauf celles qui ont été prélevées dans le code et la balise HTML)
+		$this->parsed_content = htmlspecialchars($this->parsed_content, ENT_NOQUOTES);
+		echo $this->parsed_content . '<hr />';
+		
+		//Modification de quelques tags HTML envoyés par YinyMCE
+		$this->parsed_content = str_replace(array('&amp;nbsp;&amp;nbsp;&amp;nbsp;', '&amp;gt;', '&amp;lt;', '&lt;br /&gt;', '&lt;br&gt;', '&amp;nbsp;'), array("\t", '&gt;', '&lt;', "\r\n", "\r\n", ' '), $this->parsed_content);
+		
 		//Balise size
-		$this->parsed_content = preg_replace_callback('`<font size="([0-9]+)">(.+)</font>`isU', create_function('$size', 'return \'[size=\' . (6 + (2*$size[1])) . \']\' . $size[2] . \'[/size]\';'), $this->parsed_content);
+		$this->parsed_content = preg_replace_callback('`&lt;font size="([0-9]+)"&gt;(.+)&lt;/font&gt;`isU', create_function('$size', 'return \'<span style="font-size: \' . (8 + (3*$size[1])) . \'px;">\' . $size[2] . \'</span>\' . "\n<br />";'), $this->parsed_content);
+		
+		//Balise pre
+		if( strpos($this->parsed_content, '&lt;pre&gt;') !== false )
+		{
+			$this->parsed_content = preg_replace('`&lt;/pre&gt;\s*&lt;pre&gt;`isU', "\n", $this->parsed_content);
+		}
+		
 		//Balise image
 		$this->parsed_content = preg_replace_callback('`<img src="([^"]+)"(?: border="[^"]*")? alt="[^"]*"(?: hspace="[^"]*")?(?: vspace="[^"]*")?(?: width="[^"]*")?(?: height="[^"]*")?(?: align="(top|middle|bottom)")? />`is', create_function('$img', '$align = \'\'; if( !empty($img[2]) ) $align = \'=\' . $img[2]; return \'[img\' . $align . \']\' . $img[1] . \'[/img]\';'), $this->parsed_content);
 
 		$array_preg = array(
+			'`&lt;div&gt;(.+)&lt;/div&gt;`isU',
+			'`&lt;p&gt;(.+)&lt;/p&gt;`isU',
 			'`&lt;strong&gt;(.+)&lt;/strong&gt;`isU',
 			'`&lt;em&gt;(.+)&lt;/em&gt;`isU',
 			'`&lt;u&gt;(.+)&lt;/u&gt;`isU',
@@ -54,12 +81,13 @@ class TinyMCEParser extends ContentParser
 			'`&lt;a href="([^"]+)"&gt;(.+)&lt;/a&gt;`isU',
 			'`&lt;sub&gt;(.+)&lt;/sub&gt;`isU',
 			'`&lt;sup&gt;(.+)&lt;/sup&gt;`isU',
+			'`&lt;pre&gt;(.+)&lt;/pre&gt;`isU',
 			'`&lt;font color="([^"]+)"&gt;(.+)&lt;/font&gt;`isU',
 			'`&lt;font style="background-color: ([^"]+)"&gt;(.+)&lt;/font&gt;`isU',
 			'`&lt;span style="background-color: ([^"]+)"&gt;(.+)&lt;/span&gt;`isU',
 			'`&lt;p style="background-color: ([^"]+)"&gt;(.+)&lt;/p&gt;`isU',
 			'`&lt;font face="([^"]+)"&gt;(.+)&lt;/font&gt;`isU',
-			'`&lt;p align="([a-z]+)"&gt;(.+)&lt;/p&gt;`isU',
+			'`&lt;div align="([a-z]+)"&gt;(.+)&lt;/div&gt;`isU',
 			'`&lt;div style="text-align: ([a-z]+)"&gt;(.+)&lt;/div&gt;`isU',
 			'`&lt;a(?: class="[^"]+")?(?: title="[^"]+" )? name="([^"]+)"&gt;(.*)&lt;/a&gt;`isU',
 			'`&lt;blockquote&gt;(.+)&lt;/blockquote&gt;`isU',
@@ -79,20 +107,23 @@ class TinyMCEParser extends ContentParser
 			'`&lt;p[^r&]*>`i'
 		);
 		$array_preg_replace = array(
+			'$1' . "\n<br />",
+			'$1' . "\n<br />",
 			'<strong>$1</strong>',
 			'<em>$1</em>',
 			'<span style="text-decoration: underline;">$1</span>',
-			'<span style="text-decoration: underline;">$1</span>',
+			'<strike>$1</strike>',
 			'<a href="$1">$2</a>',
 			'<sub>$1</sub>',
 			'<sup>$1</sup>',
+			'<pre>$1</pre>',
 			'<span style="color:$1;">$2</span>',
 			'<span style="background-color:$1;">$2</span>',
 			'<span style="background-color:$1;">$2</span>',
 			'<span style="background-color:$1;">$2</span>',
 			'<span style="font-family: $1;">$2</span>',
-			'<p style="text-align:$1">$2</p>',
-			'<p style="text-align:$1">$2</p>',
+			'<div style="text-align:$1">$2</div>',
+			'<div style="text-align:$1">$2</div>',
 			'<span id="$1">$2</span>',
 			'<div class="indent">$1</div>',
 			'<ul class="bb_ul">$1</ul>',
@@ -121,25 +152,42 @@ class TinyMCEParser extends ContentParser
 		);
 	   
 		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);	
-
+		
 		//Préparse de la balise table.
-		$this->parsed_content = preg_replace_callback('`<table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?(?: style="([^"]+)")?[^>]*>`i', array(&$this, '_parse_tinymce_table'), $this->parsed_content);
+		// $this->parsed_content = preg_replace_callback('`<table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?(?: style="([^"]+)")?[^>]*>`i', array(&$this, '_parse_tinymce_table'), $this->parsed_content);
 		
-		$array_str = array( 
-			'</span>', '<address>', '</address>', '<pre>', '</pre>', '<blockquote>', '</blockquote>', '</p>',
-			'<caption>', '</caption>', '<tbody>', '</tbody>', '<tr>', '</tr>', '</td>', '</table>', '&lt;', '&gt;', 
-		);
-		$array_str_replace = array( 
-			'', '', '', '[pre]', '[/pre]', '[indent]', '[/indent]', "\r\n\r\n",
-			'[row][head]', '[/head][/row]', '', '', '[row]', '[/row]', '[/col]', '[/table]', '<', '>', 
-		);
+		// $array_str = array( 
+			// '</span>', '<address>', '</address>', '<pre>', '</pre>', '<blockquote>', '</blockquote>', '</p>',
+			// '<caption>', '</caption>', '<tbody>', '</tbody>', '<tr>', '</tr>', '</td>', '</table>'
+		// );
+		// $array_str_replace = array( 
+			// '', '', '', '[pre]', '[/pre]', '[indent]', '[/indent]', "\r\n\r\n",
+			// '[row][head]', '[/head][/row]', '', '', '[row]', '[/row]', '[/col]', '[/table]'
+		// );
 		
-		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
+		//$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
 		
-		$this->_unparse_html(PICK_UP);
-		$this->_unparse_code(PICK_UP);
-
-		//Smiley.
+		//On remet le code HTML mis de côté
+		if( $Member->Check_auth($this->html_auth, 1) && !empty($this->array_tags['html']) )
+		{
+			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
+			$this->_reimplant_tag('html');
+		}
+		
+		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
+		if( !in_array('code', $this->forbidden_tags) && !empty($this->array_tags['code']) )
+		{
+			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
+			$this->_reimplant_tag('code');
+		}
+	}
+	
+	//Unparser
+	function unparse()
+	{
+		$this->parsed_content = $this->content;
+		
+				//Smiley.
 		@include(PATH_TO_ROOT . '/cache/smileys.php');
 		if(!empty($_array_smiley_code) )
 		{
@@ -164,7 +212,8 @@ class TinyMCEParser extends ContentParser
 			'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
 			'&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;', '&#8211;', '&#8212;', '&#732;', '&#8482;',
 			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;', '<li>', '</tbody></table>', '<tr>', '</caption>'
-		);	
+		);
+		
 		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
 		
 		//Remplacement des balises imbriquées.	
@@ -227,16 +276,6 @@ class TinyMCEParser extends ContentParser
 			"[movie=$2,$3]$1[/movie]"
 		);	
 		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);
-		
-		$this->parsed_content = htmlentities($this->parsed_content);
-		$this->_unparse_code(REIMPLANT);
-		$this->_unparse_html(REIMPLANT);
-	}
-	
-	//Unparser
-	function unparse()
-	{
-		$this->parsed_content = $this->content;
 	}
 	
 	## Protected ##
