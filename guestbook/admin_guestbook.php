@@ -59,7 +59,20 @@ else
 	'img' => 0, 'quote' => 0, 'hide' => 0, 'list' => 0, 'color' => 0, 'bgcolor' => 0, 'font' => 0, 'size' => 0, 'align' => 0, 'float' => 0, 'sup' => 0, 
 	'sub' => 0, 'indent' => 0, 'pre' => 0, 'table' => 0, 'swf' => 1, 'movie' => 1, 'sound' => 1, 'code' => 0, 'math' => 0, 'anchor' => 0, 'acronym' => 0);
 	
+	//Balises interdites
+	$i = 0;
+	$tags = '';
+	$CONFIG_GUESTBOOK['guestbook_forbidden_tags'] = isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']) ? $CONFIG_GUESTBOOK['guestbook_forbidden_tags'] : $array_tags;
+	foreach($array_tags as $name => $is_selected)
+	{
+		$selected = '';
+		if( in_array($name, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']) )
+			$selected = 'selected="selected"';
+		$tags .= '<option id="tag' . $i++ . '" value="' . $name . '" ' . $selected . '>[' . $name . ']</option>';
+	}
+	
 	$Template->Assign_vars(array(
+		'TAGS' => $tags,
 		'NBR_TAGS' => count($array_tags),
 		'MAX_LINK' => isset($CONFIG_GUESTBOOK['guestbook_max_link']) ? $CONFIG_GUESTBOOK['guestbook_max_link'] : '-1',
 		'L_REQUIRE' => $LANG['require'],	
@@ -101,24 +114,6 @@ else
 		$Template->Assign_block_vars('select_auth', array(
 			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 		));
-	}
-	
-	//Balises interdites
-	$i = 0;
-	foreach($array_tags as $name => $is_selected)
-	{
-		if( isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']) )
-		{	
-			if( in_array($name, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']) )
-				$selected = 'selected="selected"';
-		}
-		else
-			$selected = ($is_selected) ? 'selected="selected"' : '';		
-		
-		$Template->Assign_block_vars('forbidden_tags', array(
-			'TAGS' => '<option id="tag' . $i . '" value="' . $name . '" ' . $selected . '>[' . $name . ']</option>'
-		));
-		$i++;
 	}
 	
 	$Template->Pparse('admin_guestbook_config'); // traitement du modele	

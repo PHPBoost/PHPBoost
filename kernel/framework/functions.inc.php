@@ -148,14 +148,13 @@ function substr_html(&$str, $start, $end = '')
 }
 
 //Affichage de l'éditeur de contenu.
-function display_editor($forbidden_tags = array(), $field = 'contents', $Template = false)
+function display_editor($forbidden_tags = array(), $field = 'contents')
 {
 	include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');	
 	$content_editor = new Content();
 	$editor =& $content_editor->get_editor();
 	$editor->set_forbidden_tags($forbidden_tags);
 	$editor->set_identifier($field);
-	$editor->set_template($Template);
 	
 	return $editor->display();
 }
@@ -353,7 +352,7 @@ function strparse(&$content, $forbidden_tags = array())
     $content_manager = new Content();
 	$parser =& $content_manager->get_parser();
     $parser->set_content($content);
-    $parser->set_forbidden_tags(&$forbidden_tags);
+    $parser->set_forbidden_tags($forbidden_tags);
     $parser->parse();
 	
 	return $parser->get_parsed_content();

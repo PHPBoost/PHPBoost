@@ -34,7 +34,7 @@ class ContentEditor
 	}
 	
 	//Balises interdites.
-	function set_forbidden_tags($forbidden_tags)
+	function set_forbidden_tags(&$forbidden_tags)
 	{
 		$this->forbidden_tags = $forbidden_tags;
 	}
@@ -46,14 +46,16 @@ class ContentEditor
 	}
 	
 	//Template alternatif.
-	function set_template($template)
+	function set_template(&$template)
 	{
 		$this->template = $template;
 	}
 	
 	## Private ##
-	//Langage type
-	var $language_type = DEFAULT_LANGUAGE;
+	var $language_type = DEFAULT_LANGUAGE; //Langage type
+	var $forbidden_tags = array();
+	var $identifier = 'contents';
+	var $template = false;
 }
 
 ?>
