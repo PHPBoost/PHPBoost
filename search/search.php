@@ -107,7 +107,17 @@ foreach( $searchModule as $module)
         $Template->Assign_block_vars('forms', array(
             'MODULE_NAME' => $module->get_id(),
             'L_MODULE_NAME' => ucfirst($module->get_name()),
+            'C_SEARCH_FORM' => true,
             'SEARCH_FORM' => $module->functionnality('get_search_form', $modulesArgs[$module->get_id()])
+        ));
+    }
+    else
+    {
+        $Template->Assign_block_vars('forms', array(
+            'MODULE_NAME' => $module->get_id(),
+            'L_MODULE_NAME' => ucfirst($module->get_name()),
+            'C_SEARCH_FORM' => false,
+            'SEARCH_FORM' => $LANG['search_no_options']
         ));
     }
 }

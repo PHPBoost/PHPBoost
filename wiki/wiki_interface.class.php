@@ -3,7 +3,7 @@
  *                              wiki_interface.class.php
  *                            -------------------
  *   begin                : Februar 24, 2008
- *   copyright            : (C) 2007 ROUCHON Loïc
+ *   copyright            : (C) 2008 Loïc ROUCHON
  *   email                : horn@phpboost.com
  *
  *
@@ -77,6 +77,7 @@ class WikiInterface extends ModuleInterface
      *  Renvoie la requête de recherche dans le wiki
      */
     {
+        $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
             $args['WikiWhere'] = 'title';
         
@@ -85,7 +86,7 @@ class WikiInterface extends ModuleInterface
                 $args['id_search']." AS `id_search`,
                 a.id AS `id_content`,
                 a.title AS `title`,
-                ( 4 * MATCH(a.title) AGAINST('".$args['search']."') + MATCH(c.content) AGAINST('".$args['search']."') ) / 5 AS `relevance`,
+                ( 4 * MATCH(a.title) AGAINST('".$args['search']."') + MATCH(c.content) AGAINST('".$args['search']."') ) / 5 * " . $weight . " AS `relevance`,
                 CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles a
                 LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
@@ -95,7 +96,7 @@ class WikiInterface extends ModuleInterface
                 $args['id_search']." AS `id_search`,
                 a.id AS `id_content`,
                 a.title AS `title`,
-                MATCH(c.content) AGAINST('".$args['search']."') AS `relevance`,
+                MATCH(c.content) AGAINST('".$args['search']."') * " . $weight . " AS `relevance`,
                 CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles a
                 LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
@@ -105,7 +106,7 @@ class WikiInterface extends ModuleInterface
                 $args['id_search']." AS `id_search`,
                 `id` AS `id_content`,
                 `title` AS `title`,
-                MATCH(title) AGAINST('".$args['search']."') AS `relevance`,
+                ((MATCH(title) AGAINST('".$args['search']."') )* " . $weight . ") AS `relevance`,
                 CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',encoded_title) AS `link`
                 FROM ".PREFIX."wiki_articles
                 WHERE MATCH(title) AGAINST('".$args['search']."')";

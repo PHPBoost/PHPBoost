@@ -147,6 +147,7 @@ class ForumInterface extends ModuleInterface
      */
     {
         global $CONFIG, $CAT_FORUM, $Member, $Cache, $Sql;
+        $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         $Cache->Load_file('forum');
         
         $search = $args['search'];
@@ -171,7 +172,7 @@ class ForumInterface extends ModuleInterface
                 $args['id_search']." AS `id_search`,
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
-                MAX(( 2 * MATCH(t.title) AGAINST('".$search."') + MATCH(msg.contents) AGAINST('".$search."') ) / 3) AS `relevance`,
+                MAX(( 2 * MATCH(t.title) AGAINST('".$search."') + MATCH(msg.contents) AGAINST('".$search."') ) / 3) * " . $weight . " AS `relevance`,
                 ".$Sql->Sql_concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
@@ -186,7 +187,7 @@ class ForumInterface extends ModuleInterface
                 $args['id_search']." AS `id_search`,
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
-                MAX(MATCH(msg.contents) AGAINST('".$search."')) AS `relevance`,
+                MAX(MATCH(msg.contents) AGAINST('".$search."')) * " . $weight . " AS `relevance`,
                 ".$Sql->Sql_concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
@@ -200,7 +201,7 @@ class ForumInterface extends ModuleInterface
                 $args['id_search']." AS `id_search`,
                 msg.id AS `id_content`,
                 t.title AS `title`,
-                MATCH(t.title) AGAINST('".$search."') AS `relevance`,
+                MATCH(t.title) AGAINST('".$search."') * " . $weight . " AS `relevance`,
                 ".$Sql->Sql_concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic

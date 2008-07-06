@@ -247,7 +247,7 @@ class Template
             $this->template = preg_replace('`# END [\w\.]+ #`', '\';'."\n".'}'."\n".'$tplString .= \'', $this->template);
             
             //Remplacement des blocs conditionnels.
-            $this->template = preg_replace_callback('`# IF ([\w\.]+) #`', array($this, 'parse_conditionnal_blocks'), $this->template);
+            $this->template = preg_replace_callback('`# IF (NOT )?([\w\.]+) #`', array($this, 'parse_conditionnal_blocks'), $this->template);
             $this->template = preg_replace('`# ELSE #`', '\';'."\n".'} else {'."\n".'$tplString .= \'', $this->template);
             $this->template = preg_replace('`# ENDIF #`', '\';'."\n".'}'."\n".'$tplString .= \'', $this->template);
             
@@ -268,7 +268,7 @@ class Template
             $this->template = preg_replace('`# END [\w\.]+ #`', '<?php } ?>', $this->template);
             
             //Remplacement des blocs conditionnels.
-            $this->template = preg_replace_callback('`# IF ([\w\.]+) #`', array($this, 'parse_conditionnal_blocks'), $this->template);
+            $this->template = preg_replace_callback('`# IF (NOT )?([\w\.]+) #`', array($this, 'parse_conditionnal_blocks'), $this->template);
             $this->template = preg_replace('`# ELSE #`', '<?php } else { ?>', $this->template);
             $this->template = preg_replace('`# ENDIF #`', '<?php } ?>', $this->template);
             
@@ -330,25 +330,26 @@ class Template
 	//Remplacement des blocs conditionnels.
 	function parse_conditionnal_blocks($blocks)
 	{
-		if( isset($blocks[1]) ) 
+		if( isset($blocks[2]) )
 		{
-			if( strpos($blocks[1], '.') !== false ) //Contient un bloc imbriqué.
+            $not = ($blocks[1] == 'NOT ' ? '!' : '');
+			if( strpos($blocks[2], '.') !== false ) //Contient un bloc imbriqué.
 			{
-				$array_block = explode('.', $blocks[1]);
+				$array_block = explode('.', $blocks[2]);
 				$varname = array_pop($array_block);
 				$last_block = array_pop($array_block);
 
                 if( $this->stringMode )
-                    return '\';'."\n".'if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && $_tmpb_' . $last_block . '[\'' . $varname . '\'] ) {'."\n".'$tplString .= \'';
+                    return '\';'."\n".'if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && ' . $not . '$_tmpb_' . $last_block . '[\'' . $varname . '\'] ) {'."\n".'$tplString .= \'';
                 else
-				    return '<?php if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && $_tmpb_' . $last_block . '[\'' . $varname . '\'] ) { ?>';
+				    return '<?php if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && ' . $not . '$_tmpb_' . $last_block . '[\'' . $varname . '\'] ) { ?>';
 			}
 			else
             {
                 if( $this->stringMode )
-                    return '\';'."\n".'if( isset($this->_var[\'' . $blocks[1] . '\']) && $this->_var[\'' . $blocks[1] . '\'] ) {'."\n".'$tplString .= \'';
+                    return '\';'."\n".'if( isset($this->_var[\'' . $blocks[2] . '\']) && ' . $not . '$this->_var[\'' . $blocks[2] . '\'] ) {'."\n".'$tplString .= \'';
                 else
-                    return '<?php if( isset($this->_var[\'' . $blocks[1] . '\']) && $this->_var[\'' . $blocks[1] . '\'] ) { ?>';
+                    return '<?php if( isset($this->_var[\'' . $blocks[2] . '\']) && ' . $not . '$this->_var[\'' . $blocks[2] . '\'] ) { ?>';
 		    }
         }
 		return '';

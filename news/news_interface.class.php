@@ -45,11 +45,12 @@ class NewsInterface extends ModuleInterface
      */
     {
         global $Sql;
+        $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         
         $request = "SELECT " . $args['id_search'] . " AS `id_search`,
             n.id AS `id_content`,
             n.title AS `title`,
-            ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 AS `relevance`, "
+            ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS `relevance`, "
             . $Sql->Sql_concat(PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS `link`
             FROM " . PREFIX . "news n
             WHERE ( MATCH(n.title) AGAINST('" . $args['search'] . "') OR MATCH(n.contents) AGAINST('" . $args['search'] . "') OR MATCH(n.extend_contents) AGAINST('" . $args['search'] . "') )

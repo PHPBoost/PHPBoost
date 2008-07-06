@@ -26,6 +26,11 @@
                     <br />
                     <a href="admin_search.php" class="quick_link">{L_SEARCH_CONFIG}</a>
                 </li>
+                <li>
+                    <a href="admin_search.php?weighting=true"><img src="search.png" alt="" /></a>
+                    <br />
+                    <a href="admin_search.php?weighting=true" class="quick_link">{L_SEARCH_CONFIG_WEIGHTING}</a>
+                </li>
             </ul>
         </div>
 
@@ -38,6 +43,7 @@
                 </div>
                 <br />
             # ENDIF #
+            # IF NOT C_WEIGHTING #
             <form action="admin_search.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
                 <fieldset>
                     <legend>{L_SEARCH_CONFIG}</legend>
@@ -86,5 +92,31 @@
                     </p>
                 </fieldset>
             </form>
+            # ELSE #
+            <form action="admin_search.php?weighting=true" method="post" class="fieldset_content">
+                <fieldset>
+                    <legend>{L_SEARCH_CONFIG_WEIGHTING}</legend>
+                    <p>{L_SEARCH_CONFIG_WEIGHTING_EXPLAIN}</p>
+                        <table style="margin-left:50px;border:medium none;border-spacing:0pt;">
+                            <tbody>
+                                <tr><th>{L_MODULES}</th><th>{L_WEIGHTS}</th></tr>
+                                # START weights #
+                                <tr>
+                                    <td class="row2"><label for="{weights.MODULE}">{weights.L_MODULE_NAME}</label></td>
+                                    <td class="row2" style="text-align:center;"><input type="text" id="{weights.MODULE}" name="{weights.MODULE}" value="{weights.WEIGHT}" size="2" maxlength="3" class="text" /></td>
+                                </tr>
+                                # END weights #
+                            </tbody>
+                        </table>
+                </fieldset>
+                
+                <fieldset class="fieldset_submit">
+                <legend>{L_UPDATE}</legend>
+                    <input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+                    &nbsp;&nbsp; 
+                    <input type="reset" value="{L_RESET}" class="reset" />
+                </fieldset>
+            </form>
+            # ENDIF #
         </div>
         
