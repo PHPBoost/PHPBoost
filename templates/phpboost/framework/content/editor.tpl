@@ -4,7 +4,11 @@
 		{
 			{TINYMCE_TRIGGER}
 			var contents = document.getElementById('{FIELD}').value;
-
+			
+			show_div('xmlhttprequest_preview');
+			if( document.getElementById('loading_preview{FIELD}') )
+				document.getElementById('loading_preview{FIELD}').style.display = 'block';
+				
 			if( contents != "" )
 			{
 				contents = escape_xmlhttprequest(contents);
@@ -14,9 +18,10 @@
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 ) 
-					{
-						show_div('xmlhttprequest_preview');					
-						document.getElementById("xmlhttprequest_preview").innerHTML = xhr_object.responseText;
+					{	
+						document.getElementById('xmlhttprequest_preview').innerHTML = xhr_object.responseText;
+						if( document.getElementById('loading_preview{FIELD}') )
+							document.getElementById('loading_preview{FIELD}').style.display = 'none';
 					}
 				}
 				xmlhttprequest_sender(xhr_object, data);
@@ -26,6 +31,7 @@
 		}
 		-->
 		</script>
+		<div style="position:relative;display:none;" id="loading_preview{FIELD}"><div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div></div>
 		<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview"></div>
 		
 		# IF C_BBCODE_TINYMCE_MODE #			
