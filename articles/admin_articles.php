@@ -72,6 +72,7 @@ elseif( !empty($id) )
 	$articles = $Sql->Query_array('articles', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
 	$Template->Assign_vars(array(	
+		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_REQUIRE_CAT' => $LANG['require_cat'],
@@ -171,8 +172,6 @@ elseif( !empty($id) )
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
-
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_articles_management'); 
 }	
@@ -297,6 +296,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	));
 	
 	$Template->Assign_vars(array(	
+		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_REQUIRE_CAT' => $LANG['require_cat'],
@@ -329,8 +329,6 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
 	));
-	
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_articles_management'); 
 }

@@ -283,6 +283,7 @@ $Template->Assign_vars(array(
 	'DISPLAY' => empty($page_infos['auth']) ? 'display:none;' : '',
 	'PAGES_PATH' => $Template->Module_data_path('pages'),
 	'CAT_LIST' => $cat_list,
+	'KERNEL_EDITOR' => display_editor()
 	'L_AUTH' => $LANG['pages_auth'],
 	'L_ACTIV_COM' => $LANG['pages_activ_com'],
 	'L_COUNT_HITS' => $LANG['pages_count_hits'],
@@ -309,8 +310,6 @@ $Template->Assign_vars(array(
 	'L_SUBMIT' => $LANG['submit'],
 	'TARGET' => transid('post.php')
 ));
-
-include_once('../kernel/framework/content/bbcode.php');
 
 $Template->Pparse('post');
 

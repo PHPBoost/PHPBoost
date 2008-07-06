@@ -178,6 +178,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		
 		$Template->Assign_vars(array(
 			'C_MODO_PANEL_USER_INFO' => true,
+			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
 			'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
 			'INFO' => $array_sanction[$key_sanction],
@@ -211,9 +212,6 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_CHANGE_INFO' => $LANG['submit']
 		));		
-
-		$_field = 'action_contents';
-		include_once('../kernel/framework/content/bbcode.php');		
 	}	
 }
 elseif( $action == 'warning' ) //Gestion des utilisateurs
@@ -332,6 +330,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		}
 		$Template->Assign_vars(array(
 			'C_MODO_PANEL_USER_INFO' => true,
+			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
 			'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
@@ -347,9 +346,6 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_CHANGE_INFO' => $LANG['change_user_warning']
 		));			
-
-		$_field = 'action_contents';
-		include_once('../kernel/framework/content/bbcode.php');
 	}	
 }
 elseif( $action == 'ban' ) //Gestion des utilisateurs
@@ -440,6 +436,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		$mbr = $Sql->Query_array('member', 'login', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		$Template->Assign_vars(array(
 			'C_MODO_PANEL_USER_BAN' => true,
+			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $mbr['login'] . '</a>',
 			'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get,
@@ -479,8 +476,6 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 				'TIME' => '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>'
 			));
 		}	
-		$_field = 'action_contents';
-		include_once('../kernel/framework/content/bbcode.php');
 	}
 }
 

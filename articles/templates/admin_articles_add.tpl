@@ -144,7 +144,7 @@
 					<br />
 					<label for="contents">* {L_TEXT}</label>
 					<label>
-						# INCLUDE handle_bbcode #
+						{KERNEL_EDITOR}
 						<textarea type="text" rows="30" cols="90" id="contents" name="contents">{CONTENTS}</textarea> 
 						<p class="text_center" style="margin-top:8px;">
 							<a href="javascript:bbcode_page();"><img src="../articles/articles.png" alt="{L_EXPLAIN_PAGE}" title="{L_EXPLAIN_PAGE}" /></a>

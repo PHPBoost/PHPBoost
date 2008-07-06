@@ -118,6 +118,7 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $Member->Get_attribute('
 	$Template->Assign_vars(array(
 		'LANG' => $CONFIG['lang'],
 		'THEME' => $CONFIG['theme'],
+		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_RECIPIENT' => $LANG['require_recipient'],
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -174,8 +175,6 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $Member->Get_attribute('
 	$Template->Assign_block_vars('post_convers.user_id_dest', array(
 	));
 	
-	include_once('../kernel/framework/content/bbcode.php');
-	
 	$Template->Pparse('pm');
 }
 elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de la conversation.
@@ -187,6 +186,7 @@ elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de
 	$Template->Assign_vars(array(		
 		'LANG' => $CONFIG['lang'],
 		'THEME' => $CONFIG['theme'],
+		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE' => $LANG['require'],
@@ -218,8 +218,6 @@ elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de
 	$Template->Assign_block_vars('post_convers.user_id_dest', array(
 	));
 	
-	include_once('../kernel/framework/content/bbcode.php');
-	
 	$Template->Pparse('pm');
 }
 elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisualisation du message.
@@ -233,6 +231,7 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 
 	$Template->Assign_vars(array(
 		'LANG' => $CONFIG['lang'],
+		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
 		'L_PRIVATE_MESSAGE' => $LANG['private_message'],
@@ -254,8 +253,6 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 		'U_PM_ACTION_POST' => transid('.php?id=' . $pm_id_get)
 	));
 	
-	include_once('../kernel/framework/content/bbcode.php');
-
 	$Template->Pparse('pm');
 }	
 elseif( !empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del) ) //Envoi de messages.
@@ -457,6 +454,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 				$Template->Assign_vars(array(
 					'LANG' => $CONFIG['lang'],
 					'THEME' => $CONFIG['theme'],					
+					'KERNEL_EDITOR' => display_editor(),
 					'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 					'L_REQUIRE' => $LANG['require'],
 					'L_EDIT' => $LANG['edit'],
@@ -501,8 +499,6 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 						'SUBMIT_NAME' => 'edit_pm',
 					));
 					
-				include_once('../kernel/framework/content/bbcode.php');
-				
 				$Template->Pparse('pm');
 			}
 		}
@@ -720,6 +716,10 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	
 	if( $convers['user_id'] != -1 )
 	{		
+		$Template->Assign_vars(array(
+			'KERNEL_EDITOR' => display_editor(),
+		));
+		
 		$Template->Assign_block_vars('post_pm', array(
 			'CONTENTS' => $contents,
 			'U_PM_ACTION_POST' => transid('.php?id=' . $pm_id_get, '-0-' . $pm_id_get . '.php')
@@ -742,8 +742,6 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		}
 		if( !empty($errstr) )
 			$Errorh->Error_handler($errstr, $type);
-		
-		include_once('../kernel/framework/content/bbcode.php');
 	}
 	
 	$Template->Pparse('pm');

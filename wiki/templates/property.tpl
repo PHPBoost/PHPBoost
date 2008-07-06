@@ -130,7 +130,7 @@
 					</dd>					
 				</dl>
 				<br />
-				# INCLUDE handle_bbcode #
+				{KERNEL_EDITOR}
 				<label><textarea type="text" rows="15" cols="66" id="contents" name="contents" {status.SELECTED_TEXTAREA}>{status.UNDEFINED_STATUS}</textarea></label>
 			</fieldset>
 			<fieldset class="fieldset_submit">

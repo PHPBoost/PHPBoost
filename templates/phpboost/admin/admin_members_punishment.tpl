@@ -172,7 +172,7 @@
 						<label for="action_contents">{L_ALTERNATIVE_PM}</label>
 					</td>
 					<td class="row2">
-						# INCLUDE handle_bbcode #
+						{KERNEL_EDITOR}
 						<label><textarea name="action_contents" id="action_contents" class="post" rows="12">{ALTERNATIVE_PM}</textarea></label>
 					</td>
 				</tr>

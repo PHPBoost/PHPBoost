@@ -78,6 +78,7 @@ else
 	$CONFIG_NEWS['display_date'] = isset($CONFIG_NEWS['display_date']) ? $CONFIG_NEWS['display_date'] : 1;
 	
 	$Template->Assign_vars(array(
+		'KERNEL_EDITOR' => display_editor(),
 		'PAGINATION' => !empty($CONFIG_NEWS['pagination_news']) ? $CONFIG_NEWS['pagination_news'] : '6',
 		'PAGINATION_ARCH' => !empty($CONFIG_NEWS['pagination_arch']) ? numeric($CONFIG_NEWS['pagination_arch']) : '15',
 		'TITLE' => !empty($CONFIG_NEWS['edito_title']) ? $CONFIG_NEWS['edito_title'] : '',
@@ -132,8 +133,6 @@ else
 		'L_DISPLAY_NEWS_AUTHOR' => $LANG['display_news_author'],
 		'L_DISPLAY_NEWS_DATE' => $LANG['display_news_date']
 	));
-
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_news_config'); // traitement du modele	
 }

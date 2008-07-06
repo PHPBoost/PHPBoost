@@ -181,6 +181,7 @@ else
 	));
 	
 	$Template->Assign_vars(array(
+		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_NAME' => $LANG['name'],
@@ -290,8 +291,6 @@ else
 			'AUTH_MENUS' => $Group->Generate_select_auth(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		));		
 	}
-	
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_menus_add');
 }

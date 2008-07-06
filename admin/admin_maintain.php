@@ -102,6 +102,7 @@ else //Sinon on rempli le formulaire
 
 	$check_until = ($CONFIG['maintain'] > (time() + 86400));
 	$Template->Assign_vars(array(
+		'KERNEL_EDITOR' => display_editor(),
 		'DELAY_MAINTAIN_OPTION' => $delay_maintain_option,
 		'MAINTAIN_CONTENTS' => !empty($CONFIG['maintain_text']) ? unparse($CONFIG['maintain_text']) : '',
 		'DISPLAY_DELAY_ENABLED' => ($CONFIG['maintain_delay'] == 1) ? 'checked="checked"' : '',
@@ -125,8 +126,6 @@ else //Sinon on rempli le formulaire
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset']		
 	));
-		
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_maintain');
 }

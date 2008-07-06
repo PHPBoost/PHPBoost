@@ -208,6 +208,7 @@ elseif( !empty($_POST['previs']) )
 	}
 	
 	$Template->Assign_vars(array(
+		'KERNEL_EDITOR' => display_editor(),
 		'TITLE' => stripslashes($title),
 		'CATEGORIES' => $categories,
 		'CONTENTS' => stripslashes($contents),
@@ -258,8 +259,6 @@ elseif( !empty($_POST['previs']) )
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset']
 	));	
-
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_articles_add'); 
 }
@@ -304,6 +303,7 @@ else
 	}
 	
 	$Template->Assign_vars(array(
+		'KERNEL_EDITOR' => display_editor(),
 		'TITLE' => '',
 		'IMG_PATH' => '',
 		'IMG_ICON' => '',		
@@ -340,8 +340,6 @@ else
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
-
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_articles_add'); 
 }

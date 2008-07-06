@@ -63,7 +63,7 @@
 				# END create #
 				<br />
 				<label for="contents">{L_CONTENTS}</label>
-				# INCLUDE handle_bbcode #
+				{KERNEL_EDITOR}
 				<label><textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 				<br />
 			</fieldset>	

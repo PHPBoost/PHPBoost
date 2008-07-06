@@ -57,12 +57,17 @@ if( !empty($_POST['update']) )  //Mise à jour
 $Cache->Load_file('wiki');
 
 $Template->Set_filenames(array(
-		'wiki_config'=> 'wiki/admin_wiki.tpl'
-	 ));
-
-include_once('../kernel/framework/content/bbcode.php');
+	'wiki_config'=> 'wiki/admin_wiki.tpl'
+));
 
 $Template->Assign_vars(array(
+	'KERNEL_EDITOR' => display_editor(),
+	'HITS_SELECTED' => ($_WIKI_CONFIG['count_hits'] > 0) ? 'checked="checked"' : '',
+	'WIKI_NAME' => $_WIKI_CONFIG['wiki_name'],
+	'NOT_DISPLAY_CATS' => ( $_WIKI_CONFIG['display_cats'] == 0 ) ? 'checked="checked"' : '',
+	'DISPLAY_CATS' => ( $_WIKI_CONFIG['display_cats'] != 0 ) ? 'checked="checked"' : '',
+	'LAST_ARTICLES' => $_WIKI_CONFIG['last_articles'],
+	'DESCRIPTION' => wiki_unparse($_WIKI_CONFIG['index_text']),
 	'L_UPDATE' => $LANG['update'],
 	'L_RESET' => $LANG['reset'],
 	'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
@@ -76,13 +81,7 @@ $Template->Assign_vars(array(
 	'L_NOT_DISPLAY' => 'Ne pas afficher',
 	'L_DISPLAY' => 'Afficher',
 	'L_LAST_ARTICLES' => 'Nombre des derniers articles à afficher sur l\'accueil (0 pour désactiver)',
-	'L_DESCRIPTION' => 'Texte de l\'accueil',
-	'HITS_SELECTED' => ($_WIKI_CONFIG['count_hits'] > 0) ? 'checked="checked"' : '',
-	'WIKI_NAME' => $_WIKI_CONFIG['wiki_name'],
-	'NOT_DISPLAY_CATS' => ( $_WIKI_CONFIG['display_cats'] == 0 ) ? 'checked="checked"' : '',
-	'DISPLAY_CATS' => ( $_WIKI_CONFIG['display_cats'] != 0 ) ? 'checked="checked"' : '',
-	'LAST_ARTICLES' => $_WIKI_CONFIG['last_articles'],
-	'DESCRIPTION' => wiki_unparse($_WIKI_CONFIG['index_text'])
+	'L_DESCRIPTION' => 'Texte de l\'accueil'
 ));
 	
 $Template->Pparse('wiki_config');

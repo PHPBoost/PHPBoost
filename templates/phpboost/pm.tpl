@@ -261,7 +261,7 @@
 		<span id="quote"></span>			
 		<div style="font-size: 10px;text-align:center;padding-bottom: 2px;">{L_RESPOND}</div>
 		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto">						
-			# INCLUDE handle_bbcode #		
+			{KERNEL_EDITOR}		
 			<label><textarea type="text" class="post" rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea> </label>
 			<div style="padding:17px;">					
 				<fieldset class="fieldset_submit">
@@ -320,7 +320,7 @@
 							# END edit_pm.title #
 							<br />
 							<label for="contents">* {L_MESSAGE}</label>
-							# INCLUDE handle_bbcode #
+							{KERNEL_EDITOR}
 							<textarea type="text" rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
 							<br />
 						</fieldset>
@@ -407,7 +407,7 @@
 								</dl>
 								<br />
 								<label for="contents">* {L_MESSAGE}</label>
-								# INCLUDE handle_bbcode #
+								{KERNEL_EDITOR}
 								<textarea type="text" rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
 								<br />
 							</fieldset>

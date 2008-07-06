@@ -854,6 +854,7 @@ else
 		'PAGINATION' => $Pagination->Display_pagination('admin_members.php?p=%d' . $unget, $nbr_membre, 'p', 25, 3),	
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
+		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE_PASS' => $LANG['require_pass'],
 		'L_REQUIRE_RANK' => $LANG['require_rank'],
@@ -919,8 +920,6 @@ else
 		));
 	}
 	$Sql->Close($result);
-	
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_members_management'); 
 }

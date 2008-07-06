@@ -390,6 +390,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 		
 		$Template->Assign_vars(array(
 			'C_FORUM_USER_INFO' => true,
+			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
 			'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
 			'INFO' => $array_sanction[$key_sanction],
@@ -423,10 +424,6 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 			'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO' => transid('.php?action=punish&amp;id=' . $id_get)
 		));		
-
-		$_field = 'action_contents';
-		include_once('../kernel/framework/content/bbcode.php');
-				
 	}	
 }
 elseif( $action == 'warning' ) //Gestion des utilisateurs
@@ -555,6 +552,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		
 		$Template->Assign_vars(array(
 			'C_FORUM_USER_INFO' => true,
+			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
 			'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
@@ -570,9 +568,6 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_CHANGE_INFO' => $LANG['change_user_warning']
 		));			
-
-		$_field = 'action_contents';
-		include_once('../kernel/framework/content/bbcode.php');
 	}	
 }
 elseif( retrieve(GET, 'del_h', false) && $Member->Check_level(ADMIN_LEVEL) ) //Suppression de l'historique.

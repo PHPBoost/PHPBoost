@@ -64,6 +64,7 @@ if( !empty($alert) && empty($alert_post) )
 	if( empty($nbr_alert) ) //On affiche le formulaire
 	{
 		$Template->Assign_vars(array(
+			'KERNEL_EDITOR' => display_editor(),
 			'L_ALERT' => $LANG['alert_topic'],
 			'L_ALERT_EXPLAIN' => $LANG['alert_modo_explain'],
 			'L_ALERT_TITLE' => $LANG['alert_title'],
@@ -71,8 +72,6 @@ if( !empty($alert) && empty($alert_post) )
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_REQUIRE_TITLE' => $LANG['require_title']
 		));
-			
-		include_once('../kernel/framework/content/bbcode.php');	
 		
 		$Template->Assign_block_vars('alert_form', array(
 			'TITLE' => $topic_name,

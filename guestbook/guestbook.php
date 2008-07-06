@@ -110,7 +110,7 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 		'DATE' => gmdate_format('date_format_short'),
 		'UPDATE' => transid($update),
 		'ERROR' => '',
-		'KERNEL_EDITOR' => display_editor($CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'guestbook_contents'),
+		'KERNEL_EDITOR' => display_editor('guestbook_contents', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']),
 		'L_ALERT_TEXT' => $LANG['require_text'],
 		'L_UPDATE_MSG' => $LANG['update_msg'],
 		'L_REQUIRE' => $LANG['require'],
@@ -164,7 +164,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 			$Template->Assign_vars(array(
 				'UPDATE' => transid('?update=1&amp;id=' . $id_get),
 				'CONTENTS' => unparse($row['contents']),
-				'KERNEL_EDITOR' => display_editor($CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'guestbook_contents'),
+				'KERNEL_EDITOR' => display_editor('guestbook_contents', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'THEME' => $CONFIG['theme'],
 				'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
@@ -257,7 +257,7 @@ else //Affichage.
 	$Template->Assign_vars(array(
 		'UPDATE' => transid(''),
 		'PAGINATION' => $Pagination->Display_pagination('guestbook' . transid('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
-		'KERNEL_EDITOR' => display_editor($CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'guestbook_contents'),
+		'KERNEL_EDITOR' => display_editor('guestbook_contents', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']),
 		'L_ALERT_TEXT' => $LANG['require_text'],
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
 		'L_ADD_MSG' => $LANG['add_msg'],

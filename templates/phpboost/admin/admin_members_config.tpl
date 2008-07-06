@@ -131,7 +131,7 @@
 					<legend>{L_MEMBERS_MSG}</legend>
 					<label for="contents">* {L_CONTENTS}</label>
 					<label>
-						# INCLUDE handle_bbcode #
+						{KERNEL_EDITOR}
 						<textarea type="text" rows="20" cols="63" id="contents" name="contents">{CONTENTS}</textarea> 
 					</label>
 				</fieldset>

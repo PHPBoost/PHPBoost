@@ -70,6 +70,7 @@ else
 	
 	$Template->Assign_vars(array(
 		'CONTENTS' => unparse($CONFIG_MEMBER['msg_register']),
+		'KERNEL_EDITOR' => display_editor(),
 		'L_TERMS' => $LANG['register_terms'],
 		'L_EXPLAIN_TERMS' => $LANG['explain_terms'],
 		'L_CONTENTS' => $LANG['contents'],
@@ -77,8 +78,6 @@ else
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset']
 	));		
-	
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_terms'); 
 }

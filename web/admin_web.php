@@ -54,6 +54,7 @@ if( !empty($id) && !$del )
 		'CONTENTS' => unparse($row['contents']),
 		'URL' => $row['url'],
 		'COMPT' => $row['compt'],
+		'KERNEL_EDITOR' => display_editor()
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_CAT' => $LANG['cat_management'],
@@ -99,8 +100,6 @@ if( !empty($id) && !$del )
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 	
-	include_once('../kernel/framework/content/bbcode.php');
-	
 	$Template->Pparse('admin_web_management2'); 
 }
 elseif( !empty($_POST['previs']) && !empty($id_post) )
@@ -145,6 +144,15 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'LANG' => $CONFIG['lang'],
 		'IDWEB' => $id_post,
 		'TITLE' => stripslashes($title),
+		'KERNEL_EDITOR' => display_editor(),		
+		'NAME' => stripslashes($title),
+		'CONTENTS' => stripslashes($contents),
+		'URL' => stripslashes($url),
+		'IDWEB' => $row['id'],
+		'IDCAT' => $idcat,
+		'COMPT' => $compt,
+		'APROB_ENABLED' => $aprob_enable,
+		'APROB_DISABLED' => $aprob_disable,
 		'L_NOTE' => $LANG['note'],
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
@@ -164,15 +172,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_NO' => $LANG['no'],
 		'L_UPDATE' => $LANG['update'],
 		'L_PREVIEW' => $LANG['preview'],
-		'L_RESET' => $LANG['reset'],
-		'NAME' => stripslashes($title),
-		'CONTENTS' => stripslashes($contents),
-		'URL' => stripslashes($url),
-		'IDWEB' => $row['id'],
-		'IDCAT' => $idcat,
-		'COMPT' => $compt,
-		'APROB_ENABLED' => $aprob_enable,
-		'APROB_DISABLED' => $aprob_disable
+		'L_RESET' => $LANG['reset']
 	));	
 	
 	//Catégories.	
@@ -192,8 +192,6 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 		
-	include_once('../kernel/framework/content/bbcode.php');
-	
 	$Template->Pparse('admin_web_management'); 
 }				
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
@@ -240,6 +238,7 @@ else
 		'PAGINATION' => $Pagination->Display_pagination('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
+		'KERNEL_EDITOR' => display_editor()
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_CAT' => $LANG['cat_management'],
@@ -279,8 +278,6 @@ else
 		));	
 	}
 	$Sql->Close($result);
-	
-	include_once('../kernel/framework/content/bbcode.php');
 	
 	$Template->Pparse('admin_web_management'); 
 }
