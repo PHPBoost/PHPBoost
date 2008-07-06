@@ -174,7 +174,7 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 /* Prévisualisation AJAX. */
 .xmlhttprequest_preview{
 	overflow:auto;
-	height:200px;
+	height:220px;
 	width:94%;	
 	font-size:11px;
 	margin:auto;
