@@ -36,7 +36,7 @@ include_once('../kernel/framework/util/date.class.php');
 include_once('../kernel/framework/util/mini_calendar.class.php');
 
 include_once('download_cats.class.php');
-$download_categories = new Download_cats();
+$download_categories = new DownloadCats();
 
 $edit_file_id = retrieve(GET, 'edit', 0);
 $add_file = retrieve(GET, 'new', false);

@@ -52,7 +52,7 @@ class File
 		{
 			$this->lines[] = file($path);
 			$this->contents = implode("\n", $this->lines);
-			$read = true;
+			$this->is_read = true;
 		}
 	}
 	
