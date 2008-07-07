@@ -35,5 +35,7 @@ CREATE TABLE `phpboost_download` (
   `nbr_com` int(11) unsigned NOT NULL default '0',
   `lock_com` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
+  FULLTEXT KEY `title` (`title`),
+  FULLTEXT KEY `contents` (`contents`),
   KEY `idcat` (`idcat`)
 ) ENGINE=MyISAM;
