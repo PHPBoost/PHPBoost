@@ -288,9 +288,9 @@ elseif( !empty($idcat) )
 //Affichage commentaires.
 if( isset($_GET['com']) && $idnews > 0 )
 {
-	include_once('../kernel/framework/content/comments.class.php'); 
-	$Comments = new Comments('news', $idnews, transid('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s'));
-	$tpl_news->Assign_vars(array('COMMENTS' => $Comments->display()));
+	$tpl_news->Assign_vars(array(
+		'COMMENTS' => display_comments('news', $idnews, transid('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s'))
+	));
 }
 
 $tpl_news->parse();

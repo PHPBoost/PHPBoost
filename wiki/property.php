@@ -306,11 +306,9 @@ elseif( $create_redirection > 0 ) //Création d'une redirection
 }
 elseif( isset($_GET['com']) && $idcom > 0 ) //Affichage des commentaires
 {
-	include_once('../kernel/framework/content/comments.class.php'); 
-	$Comments = new Comments('wiki_articles', $idcom, transid('property.php?com=' . $idcom . '&amp;com=%s', ''), 'wiki');
 	$Template->Assign_vars(array(
 		'C_COMMENTS' => true,
-		'COMMENTS' => $Comments->display()
+		'COMMENTS' => display_comments('wiki_articles', $idcom, transid('property.php?com=' . $idcom . '&amp;com=%s', ''), 'wiki')
 	));
 }
 elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie

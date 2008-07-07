@@ -288,7 +288,7 @@ class Comments
 					$lock = retrieve(GET, 'lock', 0);
 					$this->lock($lock);
 				}
-				redirect($path_redirect . '#' . $this->script);
+				redirect($path_redirect . '#anchor_' . $this->script);
 			}
 			else
 			{
@@ -384,7 +384,7 @@ class Comments
 				
 				$Template->Assign_vars(array(
 					'C_COM_DISPLAY' => $this->get_attribute('nbr_com') > 0 ? true : false,
-					'PAGINATION_COM' => $Pagination->Display_pagination($this->path . $vars_simple . '&amp;pc=%d#' . $this->script, $this->nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
+					'PAGINATION_COM' => $Pagination->Display_pagination($this->path . $vars_simple . '&amp;pc=%d#anchor_' . $this->script, $this->nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
 					'LANG' => $CONFIG['lang'],
 					'IDCOM' => '',
 					'IDPROV' => $this->idprov,
@@ -442,8 +442,8 @@ class Comments
 					//Edition/suppression.
 					if( $is_modo || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1) )
 					{
-						$edit = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&editcom=1#' . $this->script . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&delcom=1#' . $this->script . '" onClick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+						$edit = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&editcom=1#anchor_' . $this->script . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&delcom=1#anchor_' . $this->script . '" onClick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 					}
 					
 					//Pseudo.
@@ -551,7 +551,7 @@ class Comments
 						'EDIT' => $edit,
 						'U_MEMBER_PM' => '<a href="' . PATH_TO_ROOT . '/member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>',
 						'U_ANCHOR' => $this->path . $this->vars . '#m' . $row['idcom'],
-						'U_QUOTE' => $this->path . sprintf($this->vars, $row['idcom']) . '&amp;quote=' . $row['idcom'] . '#' . $this->script
+						'U_QUOTE' => $this->path . sprintf($this->vars, $row['idcom']) . '&amp;quote=' . $row['idcom'] . '#anchor_' . $this->script
 					));
 					$j++;
 				}

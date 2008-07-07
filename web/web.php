@@ -93,9 +93,9 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 	//Affichage commentaires.
 	if( isset($_GET['com']) )
 	{
-		include_once('../kernel/framework/content/comments.class.php'); 
-		$Comments = new Comments('web', $idweb, transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=%s', 'web-' . $idcat . '-' . $idweb . '.php?com=%s'));
-		$Template->Assign_vars(array('COMMENTS' => $Comments->display()));
+		$Template->Assign_vars(array(
+			'COMMENTS' => display_comments('web', $idweb, transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=%s', 'web-' . $idcat . '-' . $idweb . '.php?com=%s'))
+		));
 	}	
 
 	$Template->Pparse('web');

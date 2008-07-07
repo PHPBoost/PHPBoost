@@ -199,10 +199,10 @@ elseif( $id_com > 0 )
 	
 	$Template->Set_filenames(array('com'=> 'pages/com.tpl'));
 	
-	include_once('../kernel/framework/content/comments.class.php'); 
-	$Comments = new Comments('pages', $id_com, transid('pages.php?id=' . $id_com . '&amp;com=%s', ''));
-	$Template->Assign_vars(array('COMMENTS' => $Comments->display()));
-
+	$Template->Assign_vars(array(
+		'COMMENTS' => display_comments('pages', $id_com, transid('pages.php?id=' . $id_com . '&amp;com=%s', ''))
+	));
+	
 	$Template->Pparse('com');
 }
 //gestionnaire d'erreurs
