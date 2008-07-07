@@ -29,9 +29,6 @@
 				<label for="shout_contents">* {L_MESSAGE}</label>
 				{KERNEL_EDITOR}
 				<label><textarea rows="10" cols="50" id="shout_contents" name="shout_contents">{CONTENTS}</textarea></label>
-				<p>
-					<strong>{L_FORBIDDEN_TAGS}</strong> {DISPLAY_FORBIDDEN_TAGS}
-				</p>
 			</fieldset>
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>

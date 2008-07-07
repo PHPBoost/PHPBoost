@@ -34,8 +34,6 @@
 				<label for="contents">* {L_MESSAGE}</label>
 				{KERNEL_EDITOR}
 				<label><textarea rows="10" cols="40" id="contents" name="contents">{CONTENTS}</textarea> </label>
-				<br />
-				<strong>{L_FORBIDDEN_TAGS}</strong> {DISPLAY_FORBIDDEN_TAGS}
 			</fieldset>			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
@@ -184,8 +182,6 @@
 				<label for="contents">* {L_MESSAGE}</label>
 				{KERNEL_EDITOR}
 				<label><textarea rows="10" cols="40" id="contents" name="contents">{CONTENTS}</textarea> </label>
-				<br />
-				<strong>{L_FORBIDDEN_TAGS}</strong> {DISPLAY_FORBIDDEN_TAGS}
 			</fieldset>
 			
 			<fieldset class="fieldset_submit">
