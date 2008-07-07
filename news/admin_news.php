@@ -134,8 +134,7 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 elseif( !empty($id) ) //Vue de la news
 {			
 	$Template->Set_filenames(array(
-		'admin_news_management'=> 'news/admin_news_management.tpl',
-		'admin_news_management_bis'=> 'news/admin_news_management_bis.tpl'
+		'admin_news_management'=> 'news/admin_news_management.tpl'
 	));
 
 	$row = $Sql->Query_array('news', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -174,6 +173,8 @@ elseif( !empty($id) ) //Vue de la news
 	));
 	
 	$Template->Assign_vars(array(
+		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
 		'L_UNTIL' => $LANG['until'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -228,24 +229,12 @@ elseif( !empty($id) ) //Vue de la news
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
         $Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
-	include('../kernel/framework/content/bbcode.php');
 	$Template->Pparse('admin_news_management');
-
-	$Template->Unassign_block_vars('tinymce_mode');
-    $Template->Unassign_block_vars('bbcode_mode');
-    $Template->Unassign_block_vars('smiley');
-	$Template->Unassign_block_vars('more');
-	
-	$_field = 'extend_contents';
-	include('../kernel/framework/content/bbcode.php');
-	
-	$Template->Pparse('admin_news_management_bis');
 }
 elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la news.
 {
 	$Template->Set_filenames(array(
-		'admin_news_management'=> 'news/admin_news_management.tpl',
-		'admin_news_management_bis'=> 'news/admin_news_management_bis.tpl'
+		'admin_news_management'=> 'news/admin_news_management.tpl'
 	));
 
 	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
@@ -337,6 +326,8 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 	));
 
 	$Template->Assign_vars(array(		
+		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
 		'L_UNTIL' => $LANG['until'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -371,18 +362,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 		'L_RESET' => $LANG['reset']
 	));	
 	
-	include('../kernel/framework/content/bbcode.php');
 	$Template->Pparse('admin_news_management');    
-
-	$Template->Unassign_block_vars('tinymce_mode');
-    $Template->Unassign_block_vars('bbcode_mode');
-    $Template->Unassign_block_vars('smiley');
-	$Template->Unassign_block_vars('more');
-	
-	$_field = 'extend_contents';
-	include('../kernel/framework/content/bbcode.php');
-	
-	$Template->Pparse('admin_news_management_bis'); 
 }
 else
 {

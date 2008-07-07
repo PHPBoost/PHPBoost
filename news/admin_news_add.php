@@ -100,8 +100,7 @@ if( !empty($_POST['valid']) )
 elseif( !empty($_POST['previs']) )
 {
 	$Template->Set_filenames(array(
-		'admin_news_add'=> 'news/admin_news_add.tpl',
-		'admin_news_add_bis'=> 'news/admin_news_add_bis.tpl'
+		'admin_news_add'=> 'news/admin_news_add.tpl'
 	));
 
 	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
@@ -183,6 +182,8 @@ elseif( !empty($_POST['previs']) )
 		'VISIBLE_WAITING' => (($get_visible == 2) ? 'checked="checked"' : ''),
 		'VISIBLE_ENABLED' => (($get_visible == 1) ? 'checked="checked"' : ''),
 		'VISIBLE_UNAPROB' => (($get_visible == 0) ? 'checked="checked"' : ''),
+		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
 		'L_NEWS_MANAGEMENT' => $LANG['news_management'],
 		'L_ADD_NEWS' => $LANG['add_news'],
 		'L_CONFIG_NEWS' => $LANG['configuration_news'],
@@ -216,24 +217,12 @@ elseif( !empty($_POST['previs']) )
 		'L_RESET' => $LANG['reset']
 	));	
 	
-	include('../kernel/framework/content/bbcode.php');
 	$Template->Pparse('admin_news_add');    
-
-	$Template->Unassign_block_vars('tinymce_mode');
-    $Template->Unassign_block_vars('bbcode_mode');
-    $Template->Unassign_block_vars('smiley');
-	$Template->Unassign_block_vars('more');
-	
-	$_field = 'extend_contents';
-	include('../kernel/framework/content/bbcode.php');
-	
-	$Template->Pparse('admin_news_add_bis'); 
 }
 else
 {
 	$Template->Set_filenames(array(
-		'admin_news_add'=> 'news/admin_news_add.tpl',
-		'admin_news_add_bis'=> 'news/admin_news_add_bis.tpl'
+		'admin_news_add'=> 'news/admin_news_add.tpl'
 	));
 	
 	$Template->Assign_vars(array(
@@ -241,6 +230,8 @@ else
 		'THEME' => $CONFIG['theme'],
 		'VISIBLE_ENABLED' => 'checked="checked"',
 		'IMG_PREVIEW' => $LANG['no_img'],
+		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
 		'L_ON' => $LANG['on'],
 		'L_NEWS_MANAGEMENT' => $LANG['news_management'],
 		'L_ADD_NEWS' => $LANG['add_news'],
@@ -293,18 +284,7 @@ else
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
-	include('../kernel/framework/content/bbcode.php');
-	$Template->Pparse('admin_news_add');    
-
-	$Template->Unassign_block_vars('tinymce_mode');
-    $Template->Unassign_block_vars('bbcode_mode');
-    $Template->Unassign_block_vars('smiley');
-	$Template->Unassign_block_vars('more');
-	
-	$_field = 'extend_contents';
-	include('../kernel/framework/content/bbcode.php');
-	
-	$Template->Pparse('admin_news_add_bis'); 
+	$Template->Pparse('admin_news_add'); 
 }
 
 require_once('../kernel/admin_footer.php');
