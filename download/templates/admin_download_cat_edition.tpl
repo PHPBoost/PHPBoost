@@ -76,7 +76,7 @@
 					<label for="contents">
 						{L_DESCRIPTION}
 					</label>
-					{BBCODE_CONTENTS}
+					{KERNEL_EDITOR}
 					<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
 				</fieldset>
 				<fieldset>
