@@ -39,7 +39,65 @@ class FaqInterface extends ModuleInterface
         parent::ModuleInterface('faq');
     }
     
-    function get_search_request($args)
+	//Récupération du cache.
+	function get_cache()
+	{
+		global $Sql;
+	
+		//Configuration
+		$config = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'faq'", __LINE__, __FILE__));
+		$root_config = $config['root'];
+		$root_config['auth'] = $config['global_auth'];
+		unset($config['root']);
+		$string = 'global $FAQ_CONFIG, $FAQ_CATS, $RANDOM_QUESTIONS;' . "\n\n";
+		$string .= '$FAQ_CONFIG = ' . var_export($config, true) . ';' . "\n\n";
+		
+		//List of categories and their own properties
+		$string .= '$FAQ_CATS = array();' . "\n\n";
+		$string .= '$FAQ_CATS[0] = ' . var_export($root_config, true) . ';' . "\n";
+		$result = $Sql->Query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, num_questions, description
+		FROM ".PREFIX."faq_cats
+		ORDER BY id_parent, c_order", __LINE__, __FILE__);
+		
+		while ($row = $Sql->Sql_fetch_assoc($result))
+		{
+			$string .= '$FAQ_CATS[' . $row['id'] . '] = ' . 
+				var_export(array(
+				'id_parent' => $row['id_parent'],
+				'order' => $row['c_order'],
+				'name' => $row['name'],
+				'desc' => $row['description'],
+				'visible' => (bool)$row['visible'],
+				'display_mode' => $row['display_mode'],
+				'image' => $row['image'],
+				'num_questions' => $row['num_questions'],
+				'description' => $row['description'],
+				'auth' => unserialize($row['auth'])
+				),
+			true)
+			. ';' . "\n";
+		}
+		
+		//Random questions
+		$query = $Sql->Query_while("SELECT id, question, idcat FROM ".PREFIX."faq LIMIT 0, 20", __LINE__, __FILE__);
+		$questions = array();
+		while($row = $Sql->Sql_fetch_assoc($query) )
+			$questions[] = array('id' => $row['id'], 'question' => $row['question'], 'idcat' => $row['idcat']);
+		
+		$string .= "\n" . '$RANDOM_QUESTIONS = ' . var_export($questions, true) . ';';
+		
+		return $string;
+	}
+
+	//Changement de jour.
+	/*
+	function on_changeday()
+	{
+	
+	}
+	*/
+	
+	function get_search_request($args)
     /**
      *  Renvoie la requête de recherche
      */

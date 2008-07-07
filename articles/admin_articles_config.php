@@ -46,7 +46,7 @@ if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 	
 	if( $CONFIG_ARTICLES['note_max'] != $config_articles['note_max'] )
-		$Sql->Query_inject("UPDATE ".PREFIX."articles SET note = note * " . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']), __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."articles SET note = note * '" . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']) . "'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('articles');

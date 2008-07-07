@@ -25,6 +25,8 @@
  *
 ###################################################*/
 
+if( defined('PHPBOOST') !== true) exit;
+
 // Inclusion du fichier contenant la classe ModuleInterface
 require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
 
@@ -39,6 +41,61 @@ class ArticlesInterface extends ModuleInterface
         parent::ModuleInterface('articles');
     }
     
+	//Récupération du cache.
+	function get_cache()
+	{
+		global $Sql;
+		
+		$config_articles = 'global $CONFIG_ARTICLES;' . "\n";
+		
+		//Récupération du tableau linéarisé dans la bdd.
+		$CONFIG_ARTICLES = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'articles'", __LINE__, __FILE__));
+		$CONFIG_ARTICLES = is_array($CONFIG_ARTICLES) ? $CONFIG_ARTICLES : array();
+		
+		if(isset($CONFIG_ARTICLES['auth_root']))
+			$CONFIG_ARTICLES['auth_root'] = unserialize($CONFIG_ARTICLES['auth_root']);
+		
+		$config_articles .= '$CONFIG_ARTICLES = ' . var_export($CONFIG_ARTICLES, true) . ';' . "\n";
+		
+		$cat_articles = 'global $CAT_ARTICLES;' . "\n";
+		$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, aprob, auth
+		FROM ".PREFIX."articles_cats
+		ORDER BY id_left", __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
+		{		
+			if( empty($row['auth']) )
+				$row['auth'] = serialize(array());
+				
+			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'id_left\'] = ' . var_export($row['id_left'], true) . ';' . "\n";
+			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'id_right\'] = ' . var_export($row['id_right'], true) . ';' . "\n";
+			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'level\'] = ' . var_export($row['level'], true) . ';' . "\n";
+			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";
+			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
+			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
+		}
+		$Sql->Close($result);
+		
+		return $config_articles . "\n" . $cat_articles;
+	}
+
+	//Changement de jour.
+	function on_changeday()
+	{
+		global $Sql;
+		
+		//Publication des articles en attente pour la date donnée.
+		$result = $Sql->Query_while("SELECT id, start, end
+		FROM ".PREFIX."articles	
+		WHERE visible != 0", __LINE__, __FILE__);
+		while($row = $Sql->Sql_fetch_assoc($result) )
+		{ 
+			if( $row['start'] <= time() && $row['start'] != 0 )
+				$Sql->Query_inject("UPDATE ".PREFIX."articles SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			if( $row['end'] <= time() && $row['end'] != 0 )
+				$Sql->Query_inject("UPDATE ".PREFIX."articles SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		}
+	}
+		
 //     function get_search_request($args)
 //     /**
 //      *  Renvoie la requête de recherche

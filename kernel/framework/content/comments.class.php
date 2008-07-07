@@ -111,7 +111,7 @@ class Comments
 		if( !empty($path) )
 			$this->path = $path;
 		$this->idcom = (int)max($idcom, 0);
-		list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->get_info_module();
+		list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->_get_info_module();
 	}
 	
 	//Accesseur
@@ -200,7 +200,7 @@ class Comments
 				if( $Member->get_attribute('user_readonly') > time() ) 
 					$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 				
-				$row = $Sql->Query_array('com', '*', "WHERE idcom = '" . $this->get_attribute('idcom') . "' AND idprov = '" . $this->get_attribute('idprov') . "' AND script = '" . $this->get_attribute('script') . "'", __LINE__, __FILE__);
+				$row = $Sql->Query_array('com', '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 				$row['user_id'] = (int)$row['user_id'];
 				
 				if( $this->idcom != 0 && ($Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1)) ) //Modération des commentaires.
@@ -237,7 +237,7 @@ class Comments
 						$Template->Assign_vars(array(					
 							'IDPROV' => $row['idprov'],
 							'IDCOM' => $row['idcom'],
-							'SCRIPT' => $script,
+							'SCRIPT' => $this->script,
 							'CONTENTS' => unparse($row['contents']),
 							'DATE' => gmdate_format('date_format', $row['timestamp']),
 							'THEME' => $CONFIG['theme'],
@@ -253,7 +253,7 @@ class Comments
 							'L_PREVIEW' => $LANG['preview'],
 							'L_PREVIEW' => $LANG['preview'],
 							'L_SUBMIT' => $LANG['update'],
-							'U_ACTION' => $this->get_attribute('path') . sprintf($this->get_attribute('vars'), $this->get_attribute('idcom')) . '&amp;updatecom=1'
+							'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . '&amp;updatecom=1'
 						));
 					}
 					elseif( $updatecom ) //Mise à jour du commentaire.
@@ -270,7 +270,7 @@ class Comments
 							$this->update($contents, $login);
 							
 							//Succès redirection.
-							redirect($path_redirect . '#m' . $this->get_attribute('idcom'));
+							redirect($path_redirect . '#m' . $this->idcom);
 						}
 						else //Champs incomplet!
 							redirect($path_redirect . '&errorh=incomplete#errorh');
@@ -288,7 +288,7 @@ class Comments
 					$lock = retrieve(GET, 'lock', 0);
 					$this->lock($lock);
 				}
-				redirect($path_redirect . '#' . $this->get_attribute('script'));
+				redirect($path_redirect . '#' . $this->script);
 			}
 			else
 			{
@@ -565,7 +565,7 @@ class Comments
 	
 	## Private Methods ##
 	//Récupération de la table du module associée aux commentaires.
-	function get_info_module()
+	function _get_info_module()
 	{
 		global $Sql, $CONFIG;
 

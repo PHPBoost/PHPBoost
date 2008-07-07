@@ -72,18 +72,14 @@ if( empty($check_update) )
 	@closedir($dh); //On ferme le dossier
 
 	//Parcours des modules afin d'executer les actions journalières.
-	$array_changeday = array();
-	$result = $Sql->Query_while("SELECT name 
-	FROM ".PREFIX."modules
-	WHERE activ = 1", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
-	{	
-		if( is_file(PATH_TO_ROOT . '/' . $row['name'] . '/' . $row['name'] . '_changeday.php') ) //On regarde si le module a des actions journalières à executer.
-			$array_changeday[$row['name']] = PATH_TO_ROOT . '/' . $row['name'] . '/' . $row['name'] . '_changeday.php';
+	require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
+	$modulesLoader = new Modules();
+	$modules = $modulesLoader->get_available_modules('on_changeday');
+	foreach($modules as $module)
+	{
+		if( $MODULES[strtolower($module->id)]['activ'] == '1' ) //Module activé
+			$module->functionnality('on_changeday');
 	}
-	$Sql->Close($result);
-	foreach($array_changeday as $name => $include)
-		@include_once($include);
 
 	//Suppression des membres ayant dépassé le délai d'unactivation max, si non activation par admin.
 	$CONFIG_MEMBER['delay_unactiv_max'] = ($CONFIG_MEMBER['delay_unactiv_max'] * 3600 * 24); //On passe en secondes.

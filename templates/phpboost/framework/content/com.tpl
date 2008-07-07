@@ -19,7 +19,7 @@
 		</script>
 
 		# IF AUTH_POST_COM #
-		<span id="anchor_{SCRIPT}"></span>
+		<span id="{SCRIPT}"></span>
 		<form action="{U_ACTION}" method="post" onsubmit="return check_form_com();" class="fieldset_mini">
 			<fieldset>
 				<legend>{L_EDIT_COMMENT}{L_ADD_COMMENT}</legend>

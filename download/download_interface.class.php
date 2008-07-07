@@ -39,6 +39,67 @@ class DownloadInterface extends ModuleInterface
         parent::ModuleInterface('download');
     }
     
+	//Récupération du cache.
+	function get_cache()
+	{
+		global $Sql;
+	
+		$code = 'global $DOWNLOAD_CATS;' . "\n" . 'global $CONFIG_DOWNLOAD;' . "\n";
+			
+		//Récupération du tableau linéarisé dans la bdd.
+		$CONFIG_DOWNLOAD = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'download'", __LINE__, __FILE__));
+		$CONFIG_DOWNLOAD['global_auth'] = unserialize(stripslashes($CONFIG_DOWNLOAD['global_auth']));
+		
+		$code .= '$CONFIG_DOWNLOAD = ' . var_export($CONFIG_DOWNLOAD, true) . ';' . "\n";
+		
+		//Liste des catégories et de leurs propriétés
+		$code .= '$DOWNLOAD_CATS = array();' . "\n\n";
+		$result = $Sql->Query_while("SELECT id, id_parent, c_order, auth, name, visible, icon, num_files, contents
+		FROM ".PREFIX."download_cat
+		ORDER BY id_parent, c_order", __LINE__, __FILE__);
+		while ($row = $Sql->Sql_fetch_assoc($result))
+		{
+			$code .= '$DOWNLOAD_CATS[' . $row['id'] . '] = ' . 
+			var_export(array(
+				'id_parent' => $row['id_parent'],
+				'order' => $row['c_order'],
+				'name' => $row['name'],
+				'contents' => $row['contents'],
+				'visible' => (bool)$row['visible'],
+				'icon' => $row['icon'],
+				'description' => $row['contents'],
+				'num_files' => $row['num_files'],
+				'auth' => unserialize($row['auth'])
+				),
+			true)
+			. ';' . "\n";
+		}
+		
+		return $code;
+	}
+
+	//Changement de jour.
+	function on_changeday()
+	{
+		global $Sql;
+		
+		//Publication des téléchargements en attente pour la date donnée.
+		$result = $Sql->Query_while("SELECT id, start, end
+		FROM ".PREFIX."download
+		WHERE start > 0 AND end > 0", __LINE__, __FILE__);
+		$time = time();
+		while($row = $Sql->Sql_fetch_assoc($result) )
+		{
+			//If the file wasn't visible and it becomes visible
+			if( $row['start'] <= $time && $row['end'] >= $time && $row['visible'] = 0 )
+				$Sql->Query_inject("UPDATE ".PREFIX."download SET visible = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			
+			//If it's not visible anymore
+			if( $row['start'] >= $time || $row['end'] <= $time && $row['visible'] = 1 )
+				$Sql->Query_inject("UPDATE ".PREFIX."download SET visible = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		}
+	}
+	
 //     function GetSearchRequest($args)
 //     /**
 //      *  Renvoie la requÃªte de recherche

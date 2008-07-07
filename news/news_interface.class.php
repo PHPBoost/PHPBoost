@@ -39,7 +39,40 @@ class NewsInterface extends ModuleInterface
         parent::ModuleInterface('news');
     }
     
-    function GetSearchRequest($args)
+    //Récupération du cache.
+	function get_cache()
+	{
+		global $Sql;
+
+		$news_config = 'global $CONFIG_NEWS;' . "\n";
+		
+		//Récupération du tableau linéarisé dans la bdd.
+		$CONFIG_NEWS = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'news'", __LINE__, __FILE__));
+		
+		$news_config .= '$CONFIG_NEWS = ' . var_export($CONFIG_NEWS, true) . ';' . "\n";
+
+		return $news_config;
+	}
+
+	//Actions journalière.
+	function on_changeday()
+	{
+		global $Sql;
+		
+		//Publication des news en attente pour la date donnée.
+		$result = $Sql->Query_while("SELECT id, start, end
+		FROM ".PREFIX."news	
+		WHERE visible != 0", __LINE__, __FILE__);
+		while($row = $Sql->Sql_fetch_assoc($result) )
+		{ 
+			if( $row['start'] <= time() && $row['start'] != 0 )
+				$Sql->Query_inject("UPDATE ".PREFIX."news SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			if( $row['end'] <= time() && $row['end'] != 0 )
+				$Sql->Query_inject("UPDATE ".PREFIX."news SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		}
+	}		
+	
+	function GetSearchRequest($args)
     /**
      *  Renvoie la requête de recherche
      */

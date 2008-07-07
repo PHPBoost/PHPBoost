@@ -44,7 +44,7 @@ class Cache
     }
         
     //Fonction de chargement d'un fichier cache
-    function Load_file($file, $reload_cache = false)
+    function load_file($file, $reload_cache = false)
     {
 		global $Errorh, $Sql;
 		
@@ -58,10 +58,7 @@ class Cache
 				$this->generate_file($file);
 				//On inclue une nouvelle fois				
 				if( !@include(PATH_TO_ROOT . '/cache/' . $file . '.php') )
-				{
-					//Enregistrement dans le log d'erreur.
-					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
-				}
+					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
 			}
 			else
 			{
@@ -69,139 +66,58 @@ class Cache
 				$this->generate_module_file($file);
 				//On inclue une nouvelle fois
 				if( !@include(PATH_TO_ROOT . '/cache/' . $file . '.php') )
-				{
-					//Enregistrement dans le log d'erreur.
-					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
-				}
+					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
 			}
 		}
     }
     
-    //Génération de tous les fichiers
-    function Generate_all_files()
-    {
-        foreach( $this->files as $cache_file )
-            $this->Generate_file($cache_file);
-		
-		//Génération de tout les fichiers de cache des modules.
-		$this->generate_all_module_files();
-		
-		$this->Generate_htaccess();
-    }
-	
     //Fonction d'enregistrement du fichier.
-    function Generate_file($file)
+    function generate_file($file)
     {
-		global $Errorh;
-		
-		$content = $this->{'generate_file_' . $file}();
-		$file_path = PATH_TO_ROOT . '/cache/' . $file . '.php';
-		@delete_file($file_path); //Supprime le fichier
-		if( $handle = @fopen($file_path, 'wb') ) //On crée le fichier avec droit d'écriture et lecture.
-		{
-			@flock($handle, LOCK_EX); //Pose d'un verrou, pour éviter les conflits.
-			@fwrite($handle, "<?php\n" . $content . "\n?>");
-			@flock($handle, LOCK_UN);
-			@fclose($handle);
-			
-			@chmod($file_path, 0666);
-		}
-		//Il est l'heure de vérifier si la génération a fonctionnée.
-		if( !file_exists($file_path) && filesize($file_path) == '0' )
-			$Errorh->Error_handler('Cache -> La génération du fichier de cache <strong>' . $file . '</strong> a échoué!', E_USER_ERROR, __LINE__, __FILE__);
+		$this->_write_cache($file, $this->{'_get_' . $file}());
     }
     
 	//Fonction d'enregistrement du fichier d'un module.
-    function Generate_module_file($file)
+    function generate_module_file($module_name)
     {
-		global $CONFIG, $Errorh;
+		global $Errorh;
 		
-		$root = PATH_TO_ROOT . '/';
-		$dir = $file;
-		
-		//On vérifie que le fichier de configuration est présent.
-		if( file_exists($root . $dir . '/' . $dir . '_cache.php') )
-		{
-			$config = load_ini_file($root . $dir . '/lang/', $CONFIG['lang']);
-			//On récupère l'information sur le cache, si le cache est activé, on va chercher les fonctions de régénération de cache.
-			if( !empty($config['cache']) && $config['cache'] )
-			{
-				include_once($root . $dir . '/' . $dir . '_cache.php');
-				$content = call_user_func('generate_module_file_' . $dir);
-				$file_path = PATH_TO_ROOT . '/cache/' . $file . '.php';
-				@delete_file($file_path); //Supprime le fichier
-				if( $handle = @fopen($file_path, 'wb') ) //On crée le fichier avec droit d'écriture et lecture.
-				{
-					@flock($handle, LOCK_EX);
-					@fwrite($handle, "<?php\n" . $content . "\n?>");
-					@flock($handle, LOCK_UN);
-					@fclose($handle);
-					
-					@chmod($file_path, 0666);
-				}
-		
-				//Il est l'heure de vérifier si la génération a fonctionnée.
-				if( !file_exists($file_path) && filesize($file_path) == '0' )
-					$Errorh->Error_handler('Cache -> La génération du fichier de cache <strong>' . $file . '</strong> a échoué!', E_USER_ERROR, __LINE__, __FILE__);
-			}	
-			else //Enregistrement dans le log d'erreur.
-				$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
-		}	
-		else //Enregistrement dans le log d'erreur.
-			$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__);
+		include_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
+		$modulesLoader = new Modules();
+		$module = $modulesLoader->get_module($module_name);
+		if( $module->has_functionnality('get_cache') ) //Le module implémente bien la fonction.
+			$this->_write_cache($module_name, $module->functionnality('get_cache'));
+		else
+			$Errorh->Error_handler('Cache -> Le module <strong>' . $module_name . '</strong> n\'a pas de fonction de cache!', E_USER_ERROR, __LINE__, __FILE__);
     }
 	
-	//Génération du fichier htaccess
-	function Generate_htaccess()
+	//Génération de tous les fichiers
+    function generate_all_files()
+    {
+        foreach( $this->files as $cache_file )
+            $this->generate_file($cache_file);
+		
+		//Génération de tout les fichiers de cache des modules.
+		$this->generate_all_modules();
+    }
+	
+	//Parcours les dossiers, à la recherche de fichiers de configuration en vue de regénérer le cache des modules.
+	function generate_all_modules()
 	{
-		global $CONFIG, $Sql;
+		global $MODULES;
 		
-		if( $CONFIG['rewrite'] )
+		require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
+		$modulesLoader = new Modules();
+		$modules = $modulesLoader->get_available_modules('get_cache');
+		foreach($modules as $module)
 		{
-			$htaccess_rules = 'Options +FollowSymlinks' . "\n" . 'RewriteEngine on' . "\n";
-			$result = $Sql->Query_while("SELECT name
-			FROM ".PREFIX."modules
-			WHERE activ = 1", __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
-			{
-				//Récupération des infos de config.
-				$get_info_modules = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', $CONFIG['lang']);
-				if( !empty($get_info_modules['url_rewrite']) )
-					$htaccess_rules .= str_replace('\n', "\n", str_replace('DIR', DIR, $get_info_modules['url_rewrite'])) . "\n\n";
-			}
-			$htaccess_rules .= 
-			'# Core #' . 
-			"\n" . 'RewriteRule ^(.*)member/member-([0-9]+)-?([0-9]*)\.php$ ' . DIR . '/member/member.php?id=$2&p=$3 [L,QSA]' . 
-			"\n" . 'RewriteRule ^(.*)member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$ ' . DIR . '/member/pm.php?pm=$2&id=$3&p=$4&quote=$5 [L,QSA]';	
-			
-			//Page d'erreur.
-			$htaccess_rules .= "\n\n" . '# Error page #' . "\n" . 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';						
-
-			//Protection de la bande passante, interdiction d'accès aux fichiers du répertoire upload depuis un autre serveur.
-			global $CONFIG_FILES;
-			$this->load_file('files');
-			if( $CONFIG_FILES['bandwidth_protect'] )
-			{
-				$htaccess_rules .= "\n\n# Bandwith protection #\nRewriteCond %{HTTP_REFERER} !^$\nRewriteCond %{HTTP_REFERER} !^" . HOST . "\nReWriteRule .*upload/.*$ - [F]";
-			}
+			if( $MODULES[strtolower($module->id)]['activ'] == '1' ) //Module activé
+				$this->_write_cache($module, $module->functionnality('get_cache'));
 		}
-		else
-			$htaccess_rules = 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';	
-		
-		if( !empty($CONFIG['htaccess_manual_content']) )
-			$htaccess_rules .= "\n\n#Manual content\n" . $CONFIG['htaccess_manual_content'];
-		
-		//Ecriture du fichier .htaccess
-		$file_path = PATH_TO_ROOT . '/.htaccess';
-		@delete_file($file_path); //Supprime le fichier.
-		$handle = @fopen($file_path, 'w+'); //On crée le fichier avec droit d'écriture et lecture.
-		@fwrite($handle, $htaccess_rules);
-		@fclose($handle);
-		
 	}
 	
 	//Suppression d'un fichier cache
-	function Delete_file($file)
+	function delete_file($file)
 	{
 		if( is_file(PATH_TO_ROOT . '/cache/' . $file . '.php') )
 			return @unlink(PATH_TO_ROOT . '/cache/' . $file . '.php');
@@ -211,31 +127,27 @@ class Cache
 	
 	
 	## Private Methods ##
-	//Parcours les dossiers, à la recherche de fichiers de configuration en vue de regénérer le cache des modules.
-	function generate_all_module_files()
+	function _write_cache($module_name, &$cache_string)
 	{
-		global $CONFIG, $Sql;
-		
-		$result = $Sql->Query_while("SELECT name 
-		FROM ".PREFIX."modules
-		WHERE activ = 1", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		$file_path = PATH_TO_ROOT . '/cache/' . $module_name . '.php';
+		delete_file($file_path); //Supprime le fichier
+		if( $handle = @fopen($file_path, 'wb') ) //On crée le fichier avec droit d'écriture et lecture.
 		{
-			$config = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', $CONFIG['lang']);
-			//On récupère l'information sur le cache, si le cache est activé, on va chercher les fonctions de régénération de cache.
-			if( !empty($config['cache']) && $config['cache'] )
-			{
-				//génération du cache.
-				@include_once(PATH_TO_ROOT . '/' . $row['name'] . '/' . $row['name'] . '_cache.php');
-				$this->Generate_module_file($row['name']);
-			}
+			@flock($handle, LOCK_EX);
+			@fwrite($handle, "<?php\n" . $cache_string . "\n?>");
+			@flock($handle, LOCK_UN);
+			@fclose($handle);			
+			@chmod($file_path, 0666);
 		}
-		$Sql->Close($result);
+
+		//Il est l'heure de vérifier si la génération a fonctionnée.
+		if( !file_exists($file_path) && filesize($file_path) == '0' )
+			$Errorh->Error_handler('Cache -> La génération du fichier de cache <strong>' . $file . '</strong> a échoué!', E_USER_ERROR, __LINE__, __FILE__);
 	}
 	
     ########## Fonctions de génération des fichiers un à un ##########
 	//Gestions des modules installalés, configuration des autorisations.
-	function generate_file_modules()
+	function _get_modules()
 	{
 		global $Sql;
 		
@@ -258,7 +170,7 @@ class Cache
 	}
 	
 	//Placements et autorisations des modules minis.
-	function generate_file_modules_mini()
+	function _get_modules_mini()
 	{
 		global $Sql;
 		
@@ -339,7 +251,7 @@ class Cache
 	}
 	
 	//Configuration du site
-	function generate_file_config()
+	function _get_config()
 	{
 		global $Sql;
 		
@@ -353,8 +265,56 @@ class Cache
 		return $config;
 	}
 	
+	//Génération du fichier htaccess
+	function _get_htaccess()
+	{
+		global $CONFIG, $Sql;
+		
+		if( $CONFIG['rewrite'] )
+		{
+			$htaccess_rules = 'Options +FollowSymlinks' . "\n" . 'RewriteEngine on' . "\n";
+			$result = $Sql->Query_while("SELECT name
+			FROM ".PREFIX."modules
+			WHERE activ = 1", __LINE__, __FILE__);
+			while( $row = $Sql->Sql_fetch_assoc($result) )
+			{
+				//Récupération des infos de config.
+				$get_info_modules = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', $CONFIG['lang']);
+				if( !empty($get_info_modules['url_rewrite']) )
+					$htaccess_rules .= str_replace('\n', "\n", str_replace('DIR', DIR, $get_info_modules['url_rewrite'])) . "\n\n";
+			}
+			$htaccess_rules .= 
+			'# Core #' . 
+			"\n" . 'RewriteRule ^(.*)member/member-([0-9]+)-?([0-9]*)\.php$ ' . DIR . '/member/member.php?id=$2&p=$3 [L,QSA]' . 
+			"\n" . 'RewriteRule ^(.*)member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$ ' . DIR . '/member/pm.php?pm=$2&id=$3&p=$4&quote=$5 [L,QSA]';	
+			
+			//Page d'erreur.
+			$htaccess_rules .= "\n\n" . '# Error page #' . "\n" . 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';						
+
+			//Protection de la bande passante, interdiction d'accès aux fichiers du répertoire upload depuis un autre serveur.
+			global $CONFIG_FILES;
+			$this->load_file('files');
+			if( $CONFIG_FILES['bandwidth_protect'] )
+			{
+				$htaccess_rules .= "\n\n# Bandwith protection #\nRewriteCond %{HTTP_REFERER} !^$\nRewriteCond %{HTTP_REFERER} !^" . HOST . "\nReWriteRule .*upload/.*$ - [F]";
+			}
+		}
+		else
+			$htaccess_rules = 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';	
+		
+		if( !empty($CONFIG['htaccess_manual_content']) )
+			$htaccess_rules .= "\n\n#Manual content\n" . $CONFIG['htaccess_manual_content'];
+		
+		//Ecriture du fichier .htaccess
+		$file_path = PATH_TO_ROOT . '/.htaccess';
+		@delete_file($file_path); //Supprime le fichier.
+		$handle = @fopen($file_path, 'w+'); //On crée le fichier avec droit d'écriture et lecture.
+		@fwrite($handle, $htaccess_rules);
+		@fclose($handle);
+	}
+	
 	//Cache des css associés aux mini-modules.
-	function generate_file_css()
+	function _get_css()
 	{
 		global $MODULES, $CONFIG;
 		
@@ -382,7 +342,7 @@ class Cache
 	}
 	
 	//Configuration des thèmes.
-	function generate_file_themes()
+	function _get_themes()
 	{
 		global $Sql;
 		
@@ -401,13 +361,13 @@ class Cache
 	}
 	
 	//Day
-	function generate_file_day()
+	function _get_day()
 	{
 		return 'global $_record_day;' . "\n" . '$_record_day = ' . gmdate_format('j', time(), TIMEZONE_SITE) . ';';
 	}
 	
 	//Groupes
-	function generate_file_groups()
+	function _get_groups()
 	{
 		global $Sql;
 		
@@ -426,7 +386,7 @@ class Cache
 	}
 	
 	//Debug.
-	function generate_file_debug()
+	function _get_debug()
 	{
 		global $Sql;
 		
@@ -486,7 +446,7 @@ class Cache
 	}
 	
 	//Configuration des membres
-	function generate_file_member()
+	function _get_member()
 	{
 		global $Sql;
 		
@@ -501,7 +461,7 @@ class Cache
 	}
 
 	//Rangs
-	function generate_file_ranks()
+	function _get_ranks()
 	{
 		global $Sql;
 		
@@ -521,7 +481,7 @@ class Cache
 	}
 	
 	//Commentaires.
-	function generate_file_files()
+	function _get_files()
 	{
 		global $Sql;
 		
@@ -541,7 +501,7 @@ class Cache
 	}
 	
 	//Commentaires.
-	function generate_file_com()
+	function _get_com()
 	{
 		global $Sql;
 		
@@ -561,7 +521,7 @@ class Cache
 	}
 	
 	//Smileys
-	function generate_file_smileys()
+	function _get_smileys()
 	{
 		global $Sql;
 		
@@ -582,7 +542,7 @@ class Cache
 	}
 	
 	//Statistiques
-	function generate_file_stats()
+	function _get_stats()
 	{
 		global $Sql;
 		
@@ -603,7 +563,7 @@ class Cache
 	
 	## Private Attributes ##
 	//Tableau qui contient tous les fichiers supportés dans cette classe
-    var $files = array('config', 'modules', 'modules_mini', 'themes', 'css', 'day', 'groups', 'debug', 'member', 'files', 'com', 'ranks', 'smileys', 'stats');
+    var $files = array('config', 'modules', 'modules_mini', 'htaccess', 'themes', 'css', 'day', 'groups', 'debug', 'member', 'files', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

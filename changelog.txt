@@ -14,6 +14,7 @@
 [*] [color=red]Nouveauté:[/color] Intégration d'un nouveau colorateur syntaxique (Geshi), support de nombreux languages.
 [*] Refonte totale des commentaires. Intégration simplifiée dans les modules.
 [*] [color=red]Nouveauté:[/color] Interface de visualisation/édition des commentaires du site.
+[*] [color=red]Nouveauté:[/color] Nouvelle gestion de l'éditeur de contenu, désactivation des balises améliorée.
 [*] [color=red]Nouveauté:[/color] Gestion du temps global (GMT), et du décalage horaire. 
 [*] [color=red]Nouveauté:[/color] Gestionnaire automatisé des catégories infinies (Framework PHPBoost). 
 [*] [color=red]Nouveauté:[/color] Système de gestion des mises à jour du noyau et des modules avec gestion de différents dépôts.
@@ -24,6 +25,8 @@
 [*] [color=red]Nouveauté:[/color] Amélioration de l'approche de programmation orienté objet (Framework PHPBoost). 
 [*] [color=red]Nouveauté:[/color] Support des autorisations avancées pour les menus.
 [*] [color=red]Nouveauté:[/color] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml.
+[*] Système de cache amélioré.
+[*] Système de cache, et de changement de jour pour les modules intégrés à l'interface de communication noyau/module.
 [*] Valeurs par défaut dans les autorisations sur les groupes.
 [*] Système de visualisation des messages du membre, possibilité de communication avec les modules pour récupérer les liens vers les messages.
 [*] Possibilité de désactiver les colonnes droite/gauche du thème.
