@@ -39,6 +39,33 @@ class DownloadInterface extends ModuleInterface
         parent::ModuleInterface('download');
     }
     
+    function get_search_request($args)
+    /**
+     *  Renvoie la requête de recherche
+     */
+    {
+        global $Sql, $Cache;
+        $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
+        require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
+        $Cats = new Download_cats();
+        $auth_cats = array();
+        $Cats->Build_children_id_list(0, $list);
+        
+        $auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
+        
+        $request = "SELECT " . $args['id_search'] . " AS `id_search`,
+            d.id AS `id_content`,
+            d.title AS `title`,
+            ( 2 * MATCH(d.title) AGAINST('" . $args['search'] . "') + MATCH(d.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS `relevance`, "
+            . $Sql->Sql_concat("'../download/download.php?id='","d.id") . " AS `link`
+            FROM " . PREFIX . "download d
+            WHERE ( MATCH(d.title) AGAINST('" . $args['search'] . "') OR MATCH(d.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats
+            . " ORDER BY `relevance` " . $Sql->Sql_limit(0, FAQ_MAX_SEARCH_RESULTS);
+        
+        return $request;
+
+    }
+    
 	//Récupération du cache.
 	function get_cache()
 	{

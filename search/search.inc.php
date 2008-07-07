@@ -49,7 +49,7 @@ function execute_search($Search, &$searchModules, &$modulesArgs, &$results)
     {
         if( !$Search->is_in_cache($module->get_id()) )
         {
-            $modulesArgs[$module->get_id()]['weight'] = $SEARCH_CONFIG['modules_weighting'][$module->get_id()];
+            $modulesArgs[$module->get_id()]['weight'] = !empty($SEARCH_CONFIG['modules_weighting'][$module->get_id()]) ? $SEARCH_CONFIG['modules_weighting'][$module->get_id()] : 1;
             // On rajoute l'identifiant de recherche comme parametre pour faciliter la requete
             $modulesArgs[$module->get_id()]['id_search'] = !empty($Search->id_search[$module->get_id()]) ? $Search->id_search[$module->get_id()] : 0;
             $requests[$module->get_id()] = $module->functionnality('get_search_request', $modulesArgs[$module->get_id()]);
