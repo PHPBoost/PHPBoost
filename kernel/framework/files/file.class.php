@@ -25,27 +25,34 @@
  *
 ###################################################*/
 
+require_once(PATH_TO_ROOT . 'kernel/framework/file/fse.class.php');
+
 // fonction de gestion des fichiers
-class File
+class File extends FileSystemElement
 {
-	var $path;
 	var $lines = array();
 	var $contents;
-	var $is_read = false;
 	
 	// constructeur
 	function File($path, $readnow = false)
 	{
-		if( is_file($path) )
+		parent::init($path);
+		
+		if( @file_exists($this->path) )
 		{
-			$this->path = $path;
+			if( !@is_file($this->path) )
+				return false;
+			
 			if( $readnow )
 				$this->readfile();
 		}
+		else if( !@touch($this->path) )
+			return false;
+			
+		return true;
 	}
 	
-	// fonction privée qui lit le fichier
-	/* private */
+	// lit le fichier
 	function readfile()
 	{
 		if( !$this->is_read )
