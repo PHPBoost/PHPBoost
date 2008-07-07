@@ -90,10 +90,10 @@ define('INCORRECT_DISPLAYING_CONFIGURATION', 0x40);
 define('NEW_CATEGORY_IS_IN_ITS_CHILDRENS', 0x80);
 define('NEW_STATUS_UNKNOWN', 0x100);
 
-class Categories_management
+class CategoriesManagement
 {
 	## Public methods ##
-	function Categories_management($table, $cache_file_name, &$cache_var)
+	function CategoriesManagement($table, $cache_file_name, &$cache_var)
 	{
 		$this->table = $table;
 		$this->cache_file_name = $cache_file_name;

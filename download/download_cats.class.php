@@ -26,11 +26,11 @@
 ###################################################*/
 
 $Cache->Load_file('download');
-include_once('../kernel/framework/categories.class.php');
+include_once('../kernel/framework/content/categories.class.php');
 
 define('NOT_GENERATE_CACHE', true);
 
-class Download_cats extends Categories_management
+class Download_cats extends CategoriesManagement
 {
 	## Public methods ##
 	
@@ -38,7 +38,7 @@ class Download_cats extends Categories_management
 	function Download_cats()
 	{
 		global $DOWNLOAD_CATS;
-		parent::Categories_management('download_cat', 'download', $DOWNLOAD_CATS);
+		parent::CategoriesManagement('download_cat', 'download', $DOWNLOAD_CATS);
 	}
 	
 	//Method which removes all subcategories and their content
