@@ -30,9 +30,6 @@
 				<label for="guestbook_contents">* {L_MESSAGE}</label>
 				{KERNEL_EDITOR}
 				<label><textarea rows="10" cols="47" id="guestbook_contents" name="guestbook_contents">{CONTENTS}</textarea></label>
-				<p>
-					<strong>{L_FORBIDDEN_TAGS}</strong> {DISPLAY_FORBIDDEN_TAGS}
-				</p>
 			</fieldset>
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
