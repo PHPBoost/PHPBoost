@@ -39,7 +39,55 @@ class ForumInterface extends ModuleInterface
         parent::ModuleInterface('forum');
     }
     
-    //Récupère le lien vers la listes des messages du membre.
+    //Récupération du cache.
+	function get_cache()
+	{
+		global $Sql;
+		
+		//Configuration du forum
+		$forum_config = 'global $CONFIG_FORUM;' . "\n";
+		
+		//Récupération du tableau linéarisé dans la bdd.
+		$CONFIG_FORUM = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'forum'", __LINE__, __FILE__));
+		$CONFIG_FORUM['auth'] = unserialize($CONFIG_FORUM['auth']);
+			
+		$forum_config .= '$CONFIG_FORUM = ' . var_export($CONFIG_FORUM, true) . ';' . "\n";
+		
+		//Liste des catégories du forum
+		$i = 0;
+		$forum_cats = 'global $CAT_FORUM;' . "\n";
+		$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, status, aprob, auth, aprob
+		FROM ".PREFIX."forum_cats
+		ORDER BY id_left", __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
+		{	
+			if( empty($row['auth']) )
+				$row['auth'] = serialize(array());
+				
+			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'id_left\'] = ' . var_export($row['id_left'], true) . ';' . "\n";
+			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'id_right\'] = ' . var_export($row['id_right'], true) . ';' . "\n";
+			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'level\'] = ' . var_export($row['level'], true) . ';' . "\n";
+			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";
+			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'status\'] = ' . var_export($row['status'], true) . ';' . "\n";
+			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
+			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
+		}
+		$Sql->Close($result);		
+		
+		return $forum_config . "\n" . $forum_cats;
+	}
+
+	//Changement de jour.
+	function on_changeday()
+	{
+		global $Sql, $Cache, $CONFIG_FORUM;
+		
+		//Suppression des marqueurs de vue du forum trop anciens.
+		$Cache->Load_file('forum'); //Requête des configuration générales (forum), $CONFIG_FORUM variable globale.
+		$Sql->Query_inject("DELETE FROM ".PREFIX."forum_view WHERE timestamp < '" . (time() - $CONFIG_FORUM['view_time']) . "'", __LINE__, __FILE__);
+	}	
+	
+	//Récupère le lien vers la listes des messages du membre.
     function get_member_msg_link($memberId)
     {
         return PATH_TO_ROOT . '/forum/membermsg.php?id=' . $memberId[0];

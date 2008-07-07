@@ -197,27 +197,9 @@ elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la ra
 {
 	$Cache->Load_file('articles');
 	
-	$auth_read = isset($_POST['groups_authr']) ? $_POST['groups_authr'] : ''; 
-	$auth_write = isset($_POST['groups_authw']) ? $_POST['groups_authw'] : ''; 
-	$auth_edit = isset($_POST['groups_authx']) ? $_POST['groups_authx'] : ''; 
-
-	$array_auth_all = array();
-	if( is_array($auth_read) )
-	{			
-		foreach($auth_read as $key => $value)
-			$array_auth_all[$value] += 1;
-	}
-	if( is_array($auth_write) )
-	{			
-		foreach($auth_write as $key => $value)
-			$array_auth_all[$value] += 2;
-	}
-	if( is_array($auth_edit) )
-	{			
-		foreach($auth_edit as $key => $value)
-			$array_auth_all[$value] += 4;
-	}
+	$array_auth_all = $Group->Return_array_auth(READ_CAT_ARTICLES);
 	$CONFIG_ARTICLES['auth_root'] = serialize($array_auth_all);
+	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_ARTICLES)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 	$Cache->Generate_module_file('articles');
 	
@@ -811,7 +793,7 @@ elseif( !empty($root) ) //Edition de la racine.
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
-	$array_auth = !empty($CONFIG_ARTICLES['auth_root']) ? $CONFIG_ARTICLES['auth_root'] : array(); //Récupération des tableaux des autorisations et des groupes.
+	$array_auth = isset($CONFIG_ARTICLES['auth_root']) ? $CONFIG_ARTICLES['auth_root'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('articles'),

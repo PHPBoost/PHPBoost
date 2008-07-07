@@ -64,6 +64,8 @@ $CONFIG = array();
 $Cache->Load_file('config'); //Requête des configuration générales, $CONFIG variable globale.
 $Cache->Load_file('groups'); //Cache des groupes.
 $Cache->Load_file('member'); //Chargement de la configuration des membres.
+$Cache->Load_file('modules'); //Cache des autorisations des modules
+
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
 
@@ -117,9 +119,6 @@ if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
 }
 
 include_once(PATH_TO_ROOT . '/kernel/connect.php'); //Inclusion du gestionnaire de connexion.
-	
-//Cache des autorisations des modules
-$Cache->Load_file('modules');
 
 //Autorisation sur le module chargé
 define('MODULE_NAME', get_module_name());

@@ -37,8 +37,58 @@ class PagesInterface extends ModuleInterface
     {
         parent::ModuleInterface('pages');
     }
+	
+	//Récupération du cache.
+	function get_cache()
+	{
+		global $Sql;
+		
+		//Catégories des pages
+		$config = 'global $_PAGES_CATS;' . "\n";
+		$config .= '$_PAGES_CATS = array();' . "\n";
+		$result = $Sql->Query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
+		FROM ".PREFIX."pages_cats c
+		LEFT JOIN ".PREFIX."pages p ON p.id = c.id_page
+		ORDER BY p.title", __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
+		{
+			$config .= '$_PAGES_CATS[\'' . $row['id'] . '\'] = ' . var_export(array(
+				'id_parent' => !empty($row['id_parent']) ? $row['id_parent'] : '0',
+				'name' => $row['title'],
+				'auth' => unserialize(stripslashes($row['auth']))
+				), true) . ';' . "\n";
+		}
+
+		//Configuration du module de pages
+		$code = 'global $_PAGES_CONFIG;' . "\n";
+		$CONFIG_PAGES = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'pages'", __LINE__, __FILE__));
+								
+		if( is_array($CONFIG_PAGES) )
+			$CONFIG_PAGES['auth'] = unserialize(stripslashes($CONFIG_PAGES['auth']));
+		else
+			$CONFIG_PAGES = array(
+			'count_hits' => 1,
+			'activ_com' => 1,
+			'auth' => array (
+				'r-1' => 5,
+				'r0' => 5,
+				'r1' => 7,
+				'r2' => 7,
+			));
+		
+		$code .=  '$_PAGES_CONFIG = ' . var_export($CONFIG_PAGES, true) . ';' . "\n";
+		
+		return $config . "\n\r" . $code;	
+	}
     
-    // Recherche
+    //Actions journalière.
+	/*
+	function on_changeday()
+	{
+	}
+	*/
+	
+	// Recherche
     function get_search_request($args)
     /**
      *  Renvoie la requête de recherche
