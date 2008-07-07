@@ -45,7 +45,7 @@ if( !empty($_POST['valid']) )
 	$config_news['display_date'] = retrieve(POST, 'display_date', 0);  
 	$config_news['nbr_news'] = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
 	$config_news['nbr_column'] = retrieve(POST, 'nbr_column', 1);
-	$config_news['edito'] = retrieve(POST, 'edito', '', TSTRING_PARSE);
+	$config_news['edito'] = stripslashes(retrieve(POST, 'edito', '', TSTRING_PARSE));
 	$config_news['edito_title'] = stripslashes(retrieve(POST, 'edito_title', ''));
 		
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_news)) . "' WHERE name = 'news'", __LINE__, __FILE__);
