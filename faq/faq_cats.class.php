@@ -26,11 +26,11 @@
 ###################################################*/
 global $Cache;
 $Cache->Load_file('faq');
-include_once(PATH_TO_ROOT . '/kernel/framework/categories.class.php');
+include_once(PATH_TO_ROOT . '/kernel/framework/content/categories.class.php');
 
 define('DO_NOT_GENERATE_CACHE', false);
 
-class FaqCats extends Categories_management
+class FaqCats extends CategoriesManagement
 {
 	## Public methods ##
 	
@@ -38,7 +38,7 @@ class FaqCats extends Categories_management
 	function FaqCats()
 	{
 		global $FAQ_CATS;
-		parent::Categories_management('faq_cats', 'faq', $FAQ_CATS);
+		parent::CategoriesManagement('faq_cats', 'faq', $FAQ_CATS);
 	}
 	
 	//Method which removes all subcategories and their content
