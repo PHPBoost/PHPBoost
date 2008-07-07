@@ -88,9 +88,9 @@ if( $file_id > 0 ) //Contenu
 	//Affichage commentaires.
 	if( isset($_GET['com']) )
 	{
-		include_once('../kernel/framework/content/comments.class.php'); 
-		$Comments = new Comments('download', $file_id, transid('download.php?id=' . $file_id . '&amp;com=%s', 'download-' . $file_id . '.php?com=%s'));
-		$Template->Assign_vars(array('COMMENTS' => $Comments->display()));
+		$Template->Assign_vars(array(
+			'COMMENTS' => display_comments('download', $file_id, transid('download.php?id=' . $file_id . '&amp;com=%s', 'download-' . $file_id . '.php?com=%s'))
+		));
 	}
 	
 	$Template->Pparse('download');

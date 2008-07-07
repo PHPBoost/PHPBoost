@@ -272,9 +272,9 @@ if( $checkdate === true && empty($id) && !$add )
 	//Affichage commentaires.
 	if( isset($_GET['com']) )
 	{
-		include_once('../kernel/framework/content/comments.class.php'); 
-		$Comments = new Comments('calendar', $get_event, transid('calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;com=%s', 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?com=%s'));
-		$Template->Assign_vars(array('COMMENTS' => $Comments->display()));
+		$Template->Assign_vars(array(
+			'COMMENTS' => display_comments('calendar', $get_event, transid('calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;com=%s', 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?com=%s'))
+		));
 	}	
 
 	$Template->Pparse('calendar');

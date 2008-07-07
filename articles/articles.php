@@ -29,8 +29,6 @@ require_once('../kernel/begin.php');
 require_once('../articles/articles_begin.php');
 require_once('../kernel/header.php');
 
-require_once('../kernel/framework/content/comments.class.php'); 
-
 $page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
 $cat = retrieve(GET, 'cat', 0);
 
@@ -129,11 +127,9 @@ if( !empty($idart) && isset($_GET['cat'])  )
 	//Affichage commentaires.
 	if( isset($_GET['com']) )
 	{
-		include_once('../kernel/framework/content/comments.class.php'); 
-		$Comments = new Comments('articles', $idart, transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=%s', 'articles-' . $idartcat . '-' . $idart . '.php?com=%s'));
 		$Template->Assign_vars(array(
-		'COMMENTS' => $Comments->display()
-	));
+			'COMMENTS' => display_comments('articles', $idart, transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=%s', 'articles-' . $idartcat . '-' . $idart . '.php?com=%s'))
+		));
 	}	
 
 	$Template->Pparse('articles');	

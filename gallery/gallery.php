@@ -632,9 +632,9 @@ else
 				//Commentaires
 				if( isset($_GET['com']) )
 				{
-					include_once('../kernel/framework/content/comments.class.php');
-					$Comments = new Comments('gallery', $g_idpics, transid('gallery.php?cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;com=%s', 'gallery-' . $g_idcat . '-' . $g_idpics . '.php?com=%s'));
-					$Template->Assign_vars(array('COMMENTS' => $Comments->display()));
+					$Template->Assign_vars(array(
+						'COMMENTS' => display_comments('gallery', $g_idpics, transid('gallery.php?cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;com=%s', 'gallery-' . $g_idcat . '-' . $g_idpics . '.php?com=%s'))
+					));
 				}
 			}
 		}
