@@ -350,9 +350,15 @@ class CategoriesManagement
 
 	//Method which builds the list of categories and links to makes operations to administrate them (delete, move, add...), it's return string is ready to be displayed
 	//This method doesn't allow you tu use templates, it's not so important because you are in the administration panel
-	function Build_categories_administration_interface($ajax_mode = NORMAL_MODE)
+	function Build_categories_administration_interface($ajax_mode = NORMAL_MODE, &$category_template = NULL)
 	{
 		global $CONFIG, $LANG;
+		
+		if( is_null($category_template) || !is_object($category_template) || !get_class($category_template) == 'Template' )
+			$category_template = new Template('framework/content/category.tpl');
+		
+		$template = new Template('framework/content/categories.tpl');
+		
 		$this->_clean_error();
 		//If displaying configuration hasn't bee already set
 		if( !$this->Check_displaying_configuration() )
@@ -363,76 +369,24 @@ class CategoriesManagement
 		
 		//If there is no category
 		if( count($this->cache_var) == 0 )
-			return '<div class="notice">' . $LANG['cats_managment_no_category_existing'] . '</div>';
-		
-		//Let's display
-		$string = '';
-		
-		//AJAX functions
-		if( $ajax_mode )
 		{
-			$string .= '
-			<script type="text/javascript">
-			<!--
-			
-			// Moving a category with AJAX technology
-			function ajax_move_cat(id, direction)
-			{
-				direction = (direction == \'up\' ? \'up\' : \'down\');
-				var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?id_\' + direction + \'=\' + id);
-				
-				document.getElementById(\'l\' + id).innerHTML = \'<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
-				
-				xhr_object.onreadystatechange = function() 
-				{
-					//Transfert finished and successful
-					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != \'\' )
-						document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
-					else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' ) //Error
-					{
-						document.getElementById(\'l\' + id).innerHTML = "";
-						alert("' . $LANG['cats_managment_could_not_be_moved'] . '");
-					}
-				}
-				xmlhttprequest_sender(xhr_object, null);
-			}
-			
-			// Showing/Hiding a category with AJAX technology
-			function ajax_change_cat_visibility(id, status)
-			{
-				status = (status == \'show\' ? \'show\' : \'hide\');
-				var xhr_object = xmlhttprequest_init(\'' . $this->display_config['xmlhttprequest_file'] . '?\' + status + \'=\' + id);
-				
-				document.getElementById(\'l\' + id).innerHTML = \'<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/loading_mini.gif" alt="" class="valign_middle" />\';
-				
-				xhr_object.onreadystatechange = function() 
-				{
-					//Transfert finished and successful
-					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != \'\' )
-						document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
-					else if(  xhr_object.readyState == 4 && xhr_object.responseText == \'\' ) //Error
-					{
-						document.getElementById(\'l\' + id).innerHTML = "";
-						alert("' . $LANG['cats_managment_visibility_could_not_be_changed'] . '");
-					}
-				}
-				xmlhttprequest_sender(xhr_object, null);
-			}
-			-->
-			</script>';
-			
-			$string .= '
-			<div id="cat_administration">
-			';
+			$template->assign_vars(array(
+				'L_NO_EXISTING_CATEGORY' => $LANG['cats_managment_no_category_existing'],
+				'C_NO_CATEGORY' => true
+			));
+			return $template->parse(STRING_MODE);
 		}
 		
-		//Categories list
-		$this->_create_row_interface_recount_cat_subquestions($string, 0, 0, $ajax_mode);
-		
-		if( $ajax_mode )
-			$string .= '</div>';
-		
-		return $string;
+		$template->assign_vars(array(
+			'C_AJAX_MODE' => (int)$ajax_mode,
+			'CONFIG_XMLHTTPREQUEST_FILE' => $this->display_config['xmlhttprequest_file'],
+			'L_COULD_NOT_BE_MOVED' => $LANG['cats_managment_could_not_be_moved'],
+			'L_VISIBILITY_COULD_NOT_BE_CHANGED' => $LANG['cats_managment_visibility_could_not_be_changed'],
+			//Categories list
+			'NESTED_CATEGORIES' => $this->_create_row_interface_recount_cat_subquestions(0, 0, $ajax_mode, $category_template)
+		));
+				
+		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
 	//Method which builds a select form to choose a category
@@ -513,33 +467,36 @@ class CategoriesManagement
 
 	## Private methods ##
 	//Recursive method allowing to display the administration panel of a category and its daughters
-	function _create_row_interface_recount_cat_subquestions(&$string, $id_cat, $level, $ajax_mode)
+	function _create_row_interface_recount_cat_subquestions($id_cat, $level, $ajax_mode, &$reference_template)
 	{
 		global $CONFIG, $LANG;
 		
 		$id_categories = array_keys($this->cache_var);
 		$num_cats =	count($id_categories);
 		
+		$template = $reference_template->copy();
+		
+		$template->assign_vars(array(
+			'C_AJAX_MODE' => $ajax_mode,
+			'L_MANAGEMENT_HIDE_CAT' => $LANG['cats_management_hide_cat'],
+			'L_MANAGEMENT_SHOW_CAT' => $LANG['cats_management_show_cat'],
+			'L_CONFIRM_DELETE' => $LANG['cats_management_confirm_delete']
+		));
+		
 		// Browsing categories
 		for( $i = 0; $i < $num_cats; $i++ )
 		{
 			$id = $id_categories[$i];
 			$values =& $this->cache_var[$id];
+			
 			//If this category is in the category $id_cat
 			if( $id != 0 && $values['id_parent'] == $id_cat )
 			{
-				$string .= '
-				<span id="c' . $id . '">
-					<div style="margin-left:' . ($level * 50) . 'px;">
-						<div class="row3 management_cat_admin">
-							<span style="float:left;">
-								&nbsp;&nbsp;<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/upload/folder.png" alt="" style="vertical-align:middle" />
-							&nbsp;';
-							if( !empty($this->display_config['url']) )
-							{
-								// Enough url_rewriting
-								$string .= '<a href="' .
-								(empty($this->display_config['url']['rewrited']) ?
+				$template->assign_block_vars('categories', array(
+					'ID' => $id,
+					'MARGIN_LEFT' => $level * 50,
+					'C_DISPLAY_URL' => !empty($this->display_config['url']),
+					'URL' => (empty($this->display_config['url']['rewrited']) ?
 									transid(sprintf($this->display_config['url']['unrewrited'], $id))
 								:
 									//with url_rewriting
@@ -550,101 +507,30 @@ class CategoriesManagement
 										//Only id
 										transid(sprintf($this->display_config['url']['unrewrited'], $id), sprintf($this->display_config['url']['rewrited'], $id)))
 									: '')
-								) . '">'
-								. $values['name'] . '</a>';
-							}
-							else
-								$string .= $values['name'];
-							
-							$string .= '</span>
-							</span>
-							<span style="float:right;">
-								<span id="l' . $id . '"></span>';
-								
-								//If it's not the first of the category we can make it going downer
-								if( $values['order'] > 1 )
-								{
-									$string .= '
-									<a href="' . ($ajax_mode ? $this->display_config['administration_file_name'] . '?id_up=' . $id . '" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');') . '">
-										<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/top.png" alt="" class="valign_middle" />
-									</a>';
-									
-									//If the user has enable javascript, we compute his requests in AJAX mode
-									if( $ajax_mode )
-										$string .= '
-										<script type="text/javascript">
-										<!--
-											document.getElementById("up_' . $id . '").href = "javascript:ajax_move_cat(' . $id . ', \'up\');";
-										-->
-										</script>';
-								}
-								
-								//If it's not the last of the category we can make it going upper
-								if( $i != $num_cats  - 1 && $this->cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat )
-								{
-									$string .= '
-									<a href="' . ($ajax_mode ? transid($this->display_config['administration_file_name'] . '?id_down=' . $id . '" id="down_' . $id) : 'javascript:ajax_move_cat(' . $id . ', \'down\');') . '">
-										<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="" class="valign_middle" />
-									</a>';
-									if( $ajax_mode )
-										$string .= '
-										<script type="text/javascript">
-										<!--
-											document.getElementById("down_' . $id . '").href = "javascript:			ajax_move_cat(' . $id . ', \'down\');";
-										-->
-										</script>';
-								}
-								
-								//Show/hide category
-								if( $values['visible'] )
-								{
-									$string .= '
-									<a href="' . ($ajax_mode ? transid($this->display_config['administration_file_name'] . '?hide=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');') . '" title="' . $LANG['cats_management_hide_cat'] . '" id="visibility_' . $id . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/visible.png" alt="' . $LANG['cats_management_hide_cat'] . '" class="valign_middle" /></a>&nbsp;';
-									if( $ajax_mode )
-										$string .= '
-										<script type="text/javascript">
-										<!--
-											document.getElementById("visibility_' . $id . '").href = "javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');";
-										-->
-										</script>';
-								}
-								else
-								{
-									$string .= '
-									<a href="' . ($ajax_mode ? transid($this->display_config['administration_file_name'] . '?show=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');') . '" title="' . $LANG['cats_management_show_cat'] . '" id="visibility_' . $id . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/unvisible.png" alt="' . $LANG['cats_management_show_cat'] . '" class="valign_middle" /></a>&nbsp;';
-									if( $ajax_mode )
-										$string .= '
-										<script type="text/javascript">
-										<!--
-											document.getElementById("visibility_' . $id . '").href = "javascript:ajax_change_cat_visibility(' . $id . ', \'show\');";
-										-->
-										</script>';
-								}
-								
-								//Edit category
-								$string .= '
-								<a href="' . transid($this->display_config['administration_file_name'] . '?edit=' . $id) . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>&nbsp;';
-								
-								//Delete category
-								$string .= '
-								<a href="' . transid($this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id) . '" onclick="return confirm(\'' . addslashes($LANG['cats_management_confirm_delete']) . '\');">
-									<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" />
-								</a>';
-
-								$string .= '&nbsp;&nbsp;
-							</span>&nbsp;
-						</div>	
-					</div>
-				</span>';
-				
-				//We call the function for its daughter categories
-				$this->_create_row_interface_recount_cat_subquestions($string, $id, $level + 1, $ajax_mode);
+								),
+					'NAME' => $values['name'],
+					//If it's not the first of the category we can have it go downer
+					'C_NOT_FIRST_CAT' => $values['order'] > 1,
+					'ACTION_GO_UP' => $ajax_mode ? $this->display_config['administration_file_name'] . '?id_up=' . $id . '" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');',
+					//If it's not the last we can have it go upper
+					'C_NOT_LAST_CAT' => $i != $num_cats  - 1 && $this->cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat,
+					'ACTION_GO_DOWN' => $ajax_mode ? transid($this->display_config['administration_file_name'] . '?id_down=' . $id . '" id="down_' . $id) : 'javascript:ajax_move_cat(' . $id . ', \'down\');',
+					'C_VISIBLE' => $values['visible'],
+					'ACTION_HIDE' => $ajax_mode ? transid($this->display_config['administration_file_name'] . '?hide=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');',
+					'ACTION_SHOW' => $ajax_mode ? transid($this->display_config['administration_file_name'] . '?show=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');',
+					'ACTION_EDIT' => transid($this->display_config['administration_file_name'] . '?edit=' . $id),
+					'ACTION_DELETE' => transid($this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id),
+					'CONFIRM_DELETE' => $LANG['cats_management_confirm_delete'],
+					//We call the function for its daughter categories
+					'NEXT_CATEGORY' => $this->_create_row_interface_recount_cat_subquestions($id, $level + 1, $ajax_mode, $reference_template)
+				));
 				
 				//Loop interruption : if we have finished the current category we can stop looping, other keys aren't interesting in this function
 				if( $i + 1 < $num_cats && $this->cache_var[$id_categories[$i + 1]]['id_parent'] != $id_cat )
 					break;
 			}
 		}
+		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
 	//Recursive method which adds the category informations and thoses of its children
