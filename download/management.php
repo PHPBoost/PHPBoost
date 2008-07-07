@@ -142,7 +142,9 @@ $Bread_crumb->Reverse_links();
 
 require_once('../kernel/header.php');
 
-$Template->Set_filenames(array('file_management'=> 'download/file_management.tpl'));
+$Template->Set_filenames(array(
+	'file_management'=> 'download/file_management.tpl'
+));
 
 if( $edit_file_id > 0 )
 {
@@ -506,10 +508,9 @@ elseif( $add_file )
 	}
 }
 
-include('../kernel/framework/content/bbcode.php');
-
 $Template->Assign_vars(array(
-	'BBCODE_CONTENTS' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE),
+	'KERNEL_EDITOR' => display_editor(),
+	'KERNEL_EDITOR_SHORT' => display_editor('short_contents'),
 	'C_PREVIEW' => $preview,
 	'L_PAGE_TITLE' => TITLE,
 	'L_EDIT_FILE' => $DOWNLOAD_LANG['edit_file'],
@@ -549,19 +550,6 @@ $Template->Assign_vars(array(
 	'L_REQUIRE_TITLE' => $LANG['require_title']
 ));
 	
-//On assigne deux fois le BBCode
-$Template->Unassign_block_vars('tinymce_mode');
-$Template->Unassign_block_vars('bbcode_mode');
-$Template->Unassign_block_vars('smiley');
-$Template->Unassign_block_vars('more');
-
-$_field = 'short_contents';
-include('../kernel/framework/content/bbcode.php');
-
-$Template->Assign_vars(array(
-	'BBCODE_CONTENTS_SHORT' => $Template->Pparse('handle_bbcode', TEMPLATE_STRING_MODE)
-));
-
 $Template->Pparse('file_management');
 require_once('../kernel/footer.php');
 

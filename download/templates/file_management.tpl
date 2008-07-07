@@ -115,11 +115,11 @@
 					</dl>
 					<br />
 					<label for="contents">* {L_CONTENTS}</label>
-					{BBCODE_CONTENTS}
+					{KERNEL_EDITOR}
 					<textarea type="text" rows="20" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>					
 					<br />
 					<label for="short_contents">{L_SHORT_CONTENTS}</label>
-					{BBCODE_CONTENTS_SHORT}
+					{KERNEL_EDITOR_SHORT}
 					<textarea type="text" rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_DESCRIPTION}</textarea>
 					<br />
 					<dl>

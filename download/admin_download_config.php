@@ -70,6 +70,7 @@ else
 		'READ_AUTH' => $Group->Generate_select_auth(READ_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
 		'WRITE_AUTH' => $Group->Generate_select_auth(WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
 		'DESCRIPTION' => unparse($CONFIG_DOWNLOAD['root_contents']),
+		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE' => $LANG['require'],		
 		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
@@ -87,8 +88,6 @@ else
 		'L_WRITE_AUTH' => $DOWNLOAD_LANG['auth_write'],
 		'L_ROOT_DESCRIPTION' => $DOWNLOAD_LANG['root_description']
 	));
-	
-	include('../kernel/framework/content/bbcode.php');
 	
 	include_once('admin_download_menu.php');
 	
