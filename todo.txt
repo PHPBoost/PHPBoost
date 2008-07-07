@@ -3,11 +3,12 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[-] Nouvelles options d'installation (Communautaire, Vitrine, etc)
-[-] Interface de rapport du système pour le support
-[-] Supporter https dans l'installation et l'administration
-[-] Finir le parseur BBCode (+Ajout des nouvelles balises)
-[-] Panneau de modération
+[-] Nouvelles options d'installation (Communautaire, Vitrine, etc).
+[-] Remplacer les "." par des "_" dans le nom de la base de données. 
+[-] Interface de rapport du système pour le support.
+[-] Supporter https dans l'installation et l'administration.
+[-] Finir le parseur BBCode (+Ajout des nouvelles balises).
+[-] Panneau de modération.
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -26,10 +27,10 @@
 [-] Régler l'affichage du mini-calendrier.
 
 ------------------------------------ MODULES -----------------------------------
-[-] Module liens du site
+[-] Module liens du site.
 
 Forum : 
-[-] Réparation des bugs sur l'arbre intervallaire gérant les catégories
+[-] Réparation des bugs sur l'arbre intervallaire gérant les catégories.
 
 #################################################################################
 
@@ -50,9 +51,9 @@ Forum :
     - Langues ? (à priori non)
     - Templates ? (à priori non aussi) (pb image avec langue)
     - Changelog des fichiers
-[-] Correction du bug des stats (graphiques)
-[-] Flux gestion du cache (pour le moment en dur)
-[-] Recherche : harmoniser la pertinence des modules dans la recherche. Prévoir un système d'importance de la recherche dans l'administration selon le module
+[-] Correction du bug des stats (graphiques).
+[-] Flux gestion du cache (pour le moment en dur).
+[-] Recherche : harmoniser la pertinence des modules dans la recherche. Prévoir un système d'importance de la recherche dans l'administration selon le module.
 
 ------------------------------------ MODULES -----------------------------------
 Search :
