@@ -111,7 +111,8 @@ class Stats
 				foreach($this->data_stats as $name_value => $angle_value)
 				{					
 					$get_color = $this->array_allocated_color[$this->imagecolorallocatedark($image) . 'dark'];
-					imagefilledarc($image, $w_ellipse + $x_ellipse, $i + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_color, IMG_ARC_NOFILL);
+					if( $angle_value > 5 )
+						imagefilledarc($image, $w_ellipse + $x_ellipse, $i + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_color, IMG_ARC_NOFILL);
 					$angle += $angle_value;
 				}
 			}
@@ -119,15 +120,17 @@ class Stats
 			//Surface.
 			$this->color_index = 0;
 			$angle = 0;
+			$angle_other = 0;
 			foreach($this->data_stats as $name_value => $angle_value)
 			{					
-				$get_color = $this->array_allocated_color[$this->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
-				$this->color_index--;
-				$get_shadow_color = $this->array_allocated_color[$this->imagecolorallocatedark(false, NO_ALLOCATE_COLOR) . 'dark'];
-				imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_color, IMG_ARC_PIE);
-				imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_shadow_color, IMG_ARC_NOFILL);
-				if( $angle_value > 10 && $draw_percent )
-				{					
+				if( $angle_value > 5 && $draw_percent )
+				{
+					$get_color = $this->array_allocated_color[$this->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+					$this->color_index--;
+					$get_shadow_color = $this->array_allocated_color[$this->imagecolorallocatedark(false, NO_ALLOCATE_COLOR) . 'dark'];
+					imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_color, IMG_ARC_PIE);
+					imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_shadow_color, IMG_ARC_NOFILL);
+					
 					//Calcul des coordonées cartésiennes.
 					$angle_tmp = (2*$angle + $angle_value) / 2;
 					$angle_string = deg2rad($angle_tmp);
@@ -145,8 +148,20 @@ class Stats
 					$text_x = $x_string - ($text_width/2);
 					$text_y = ($angle_tmp >= 0 && $angle_tmp <= 180 ) ? $y_string + ($text_height/2) + $height_3d : $y_string + ($text_height/2);
 					imagettftext($image, $font_size, 0, $text_x, $text_y, $black, $font, $text);
+					
+					$angle += $angle_value;
 				}
-				$angle += $angle_value;
+				else
+					$angle_other += $angle_value;
+			}
+			
+			if( !empty($angle_other) )
+			{
+				$get_color = $this->array_allocated_color[$this->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+				$this->color_index--;
+				$get_shadow_color = $this->array_allocated_color[$this->imagecolorallocatedark(false, NO_ALLOCATE_COLOR) . 'dark'];
+				imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_other), $get_color, IMG_ARC_PIE);
+				imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_other), $get_shadow_color, IMG_ARC_NOFILL);
 			}
 			
 			//Légende
