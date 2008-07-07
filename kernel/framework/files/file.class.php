@@ -36,18 +36,19 @@ class File
 	// constructeur
 	function File($path, $readnow = false)
 	{
-		if(is_file($path))
+		if( is_file($path) )
 		{
 			$this->path = $path;
-			if($readnow)
+			if( $readnow )
 				$this->readfile();
 		}
 	}
 	
 	// fonction privée qui lit le fichier
-	/* private */function readfile()
+	/* private */
+	function readfile()
 	{
-		if(!$this->is_read)
+		if( !$this->is_read )
 		{
 			$this->lines[] = file($path);
 			$this->contents = implode("\n", $this->lines);
@@ -61,9 +62,9 @@ class File
 		// si le fichier n'a pas encore été lu alors on le lit maintenant
 		$this->readfile();
 		
-		if(!$start && $len == -1)
+		if( !$start && $len == -1 )
 			return $this->contents;
-		else if($len == -1)
+		else if( $len == -1 )
 			return substr($this->contents, $start);
 		else
 			return substr($this->contents, $start, $len);
@@ -75,9 +76,9 @@ class File
 		// si le fichier n'a pas encore été lu alors on le lit maintenant
 		$this->readfile();
 		
-		if(!$start && $n == -1)
+		if( !$start && $n == -1 )
 			return $this->lines;
-		else if($n == -1)
+		else if( $n == -1 )
 			return array_slice($this->lines, $start);
 		else
 			return array_slice($this->lines, $start, $n);
@@ -88,11 +89,10 @@ class File
 	{
 		$mode = $add ? 'a' : 'w';
 		
-		if( !( $fp = @fopen($file, $mode) ) )
+		if( !($fp = @fopen($file, $mode)) )
 			return false;
 		
 		fwrite($data, $fp);
-		
 		fclose($fp);
 		
 		// on force la relecture du fichier

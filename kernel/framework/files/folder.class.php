@@ -36,7 +36,7 @@ class Folder
 	//constructeur
 	function Folder($path, $readnow = false)
 	{
-		if(is_dir($path))
+		if( is_dir($path) )
 		{
 			$this->path = $path;
 			if($readnow)
@@ -45,17 +45,16 @@ class Folder
 	}
 	
 	// fonction privée qui lit le dossier
-	/* private */ function readfolder()
+	/* private */ 
+	function readfolder()
 	{
 		if( !$this->is_read )
 		{
 			$dir = $files = array();
-			
 			if( $dh = @opendir($this->path) )
 	        {       
 	            while( !is_bool($res = readdir($dh)) )
 	            {
-					
 					if( $res == '.' || $res == '..' )
 						continue;
 					
@@ -113,7 +112,7 @@ class Folder
 		// lit le dossier si ça n'a pas encore été fait
 		$this->readfolder();
 		
-		if(isset($folders[0]))
+		if( isset($folders[0]) )
 			return $folders[0];
 		else
 			return false;
