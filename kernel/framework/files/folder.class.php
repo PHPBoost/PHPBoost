@@ -25,23 +25,32 @@
  *
 ###################################################*/
 
+require_once(PATH_TO_ROOT . 'kernel/framework/file/fse.class.php');
+require_once(PATH_TO_ROOT . 'kernel/framework/file/file.class.php');
+
 // gestion des dossiers
-class Folder
+class Folder extends FileSystemElement
 {
-	var $path;
 	var $files = array();
 	var $folders = array();
-	var $is_read = false;
 	
 	//constructeur
 	function Folder($path, $readnow = false)
 	{
-		if( is_dir($path) )
+		parent::init($path);
+		
+		if( @file_exists($this->path) )
 		{
-			$this->path = $path;
+			if( !@is_dir($this->path) )
+				return false;
+			
 			if($readnow)
 				$this->readfolder();
 		}
+		else if( !@mkdir($this->path) )
+			return false;
+			
+		return true;
 	}
 	
 	// fonction privée qui lit le dossier
@@ -59,9 +68,9 @@ class Folder
 						continue;
 					
 					if( is_file($res) )
-						$this->files[] = $res;
+						$this->files[] = new File($res);
 	                else
-						$this->folders[] = $res;
+						$this->folders[] = new Folder($res);
 	            }
 	            closedir($dh);
 	        }
