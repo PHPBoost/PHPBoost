@@ -150,14 +150,17 @@ class Note
 					'L_VALID_NOTE' => $LANG['valid_note']
 				));
 			}
-
+            
 			if( !defined('HANDLE_NOTE') )
 				define('HANDLE_NOTE', true);
-
-			return $Template->parse(TEMPLATE_STRING_MODE);				
+            
+			return $Template->parse(TEMPLATE_STRING_MODE);
 		}
-		else 
-			$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT); 
+		else
+        {
+            global $Errorh;
+            $Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT);
+        }
 	}
 	
 	//Affiche les images de la notation.

@@ -55,38 +55,38 @@ class Search
         $this->id_user = $Member->get_attribute('user_id');
         $this->modules_conditions = $this->_get_modules_conditions($this->modules);
         
+        // Suppression des vieux résultats du cache
+        
+        // Liste des résultats à supprimer
+        $reqOldIndex = "SELECT `id_search` FROM ".PREFIX."search_index
+                        WHERE  `last_search_use` <= '".(time() - (CACHE_TIME * 60))."'
+                            OR `times_used` >= '".CACHE_TIMES_USED."'";
+        
+        $nbIdsToDelete = 0;
+        $idsToDelete = '';
+        $request = $Sql->Query_while($reqOldIndex, __LINE__, __FILE__);
+        while($row = $Sql->Sql_fetch_assoc($request))
+        {
+            if ( $nbIdsToDelete > 0 )
+                $idsToDelete .= ',';
+            $idsToDelete .= "'".$row['id_search']."'";
+            $nbIdsToDelete++;
+        }
+        $Sql->Close($request);
+        
+        // Si il y a des résultats à supprimer, on les supprime
+        if ( $nbIdsToDelete > 0 )
+        {
+            $reqDeleteIdx = "DELETE FROM ".PREFIX."search_index WHERE `id_search` IN (".$idsToDelete.")";
+            $reqDeleteRst = "DELETE FROM ".PREFIX."search_results WHERE `id_search` IN (".$idsToDelete.")";
+            
+            $Sql->Query_inject($reqDeleteIdx, __LINE__, __FILE__);
+            $Sql->Query_inject($reqDeleteRst, __LINE__, __FILE__);
+        }
+        
         // Si on demande une recherche directe par id, on ne calcule pas de résultats
         if( $search != '' )
         {
-            // Suppression des vieux résultats du cache
-            
-            // Liste des résultats à supprimer
-            $reqOldIndex = "SELECT `id_search` FROM ".PREFIX."search_index
-                            WHERE  `last_search_use` <= '".(time() - (CACHE_TIME * 60))."'
-                                OR `times_used` >= '".CACHE_TIMES_USED."'";
-            
-            $nbIdsToDelete = 0;
-            $idsToDelete = '';
-            $request = $Sql->Query_while($reqOldIndex, __LINE__, __FILE__);
-            while($row = $Sql->Sql_fetch_assoc($request))
-            {
-                if ( $nbIdsToDelete > 0 )
-                    $idsToDelete .= ',';
-                $idsToDelete .= "'".$row['id_search']."'";
-                $nbIdsToDelete++;
-            }
-            $Sql->Close($request);
-            
-            // Si il y a des résultats à supprimer, on les supprime
-            if ( $nbIdsToDelete > 0 )
-            {
-                $reqDeleteIdx = "DELETE FROM ".PREFIX."search_index WHERE `id_search` IN (".$idsToDelete.")";
-                $reqDeleteRst = "DELETE FROM ".PREFIX."search_results WHERE `id_search` IN (".$idsToDelete.")";
-                
-                $Sql->Query_inject($reqDeleteIdx, __LINE__, __FILE__);
-                $Sql->Query_inject($reqDeleteRst, __LINE__, __FILE__);
-            }
-            
             // Vérifications des résultats dans le cache.
             $reqCache  = "SELECT `id_search`, `module` FROM ".PREFIX."search_index WHERE ";
             $reqCache .= "`search`='".$search."' AND `id_user`='".$this->id_user."'";
