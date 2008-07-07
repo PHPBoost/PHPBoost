@@ -139,23 +139,31 @@ function bb_hide(div2)
 }
 
 //Masque un bloc.
-function hide_div(divID)
+function hide_div(divID, useEffects)
 {
+    var use_effects = false
+    if( arguments.length > 1 )
+        use_effects = useEffects;
+    
     if( document.getElementById(divID) )
-    {    
-		Effect.SwitchOff(divID);
-		document.getElementById(divID).style.display = 'none';
-	}
+    {
+        if( useEffects ) Effect.SwitchOff(divID);
+        document.getElementById(divID).style.display = 'none';
+    }
 }
 
 //Affiche un bloc
-function show_div(divID, option)
+function show_div(divID, option, useEffects)
 {
-	if( document.getElementById(divID) )
-	{	
-		Effect.Appear(divID, { duration: 0.5 });
-		document.getElementById(divID).style.display = 'block';
-	}
+    var use_effects = false
+    if( arguments.length > 2 )
+        use_effects = useEffects;
+    
+    if( document.getElementById(divID) )
+    {
+        if( useEffects ) Effect.Appear(divID, { duration: 0.5 });
+        document.getElementById(divID).style.display = 'block';
+    }
 }
 
 //Masque un bloc.

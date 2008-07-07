@@ -50,24 +50,90 @@ class DownloadInterface extends ModuleInterface
 		$Cache->load_file('download');
 		
         require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
-		
         $cats = new DownloadCats();
         $auth_cats = array();
-        $cats->Build_children_id_list(0, $list);
+        $cats->build_children_id_list(0, $list);
         
         $auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
         
         $request = "SELECT " . $args['id_search'] . " AS `id_search`,
             d.id AS `id_content`,
             d.title AS `title`,
-            ( 2 * MATCH(d.title) AGAINST('" . $args['search'] . "') + MATCH(d.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS `relevance`, "
-            . $Sql->Sql_concat("'../download/download.php?id='","d.id") . " AS `link`
+            ( 3 * MATCH(d.title) AGAINST('" . $args['search'] . "') + 2 * MATCH(d.short_contents) AGAINST('" . $args['search'] . "') + MATCH(d.contents) AGAINST('" . $args['search'] . "') ) / 6 * " . $weight . " AS `relevance`, "
+            . $Sql->Sql_concat("'" . PATH_TO_ROOT . "../download/download.php?id='","d.id") . " AS `link`
             FROM " . PREFIX . "download d
-            WHERE ( MATCH(d.title) AGAINST('" . $args['search'] . "') OR MATCH(d.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats
+            WHERE ( MATCH(d.title) AGAINST('" . $args['search'] . "') OR MATCH(d.short_contents) AGAINST('" . $args['search'] . "') OR MATCH(d.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats
             . " ORDER BY `relevance` " . $Sql->Sql_limit(0, FAQ_MAX_SEARCH_RESULTS);
         
         return $request;
 
+    }
+    
+    function parse_search_results(&$args)
+    /**
+     *  Return the string to print the results
+     */
+    {
+        global $Sql, $CONFIG, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD;
+        
+        require_once(PATH_TO_ROOT . '/kernel/begin.php');
+        load_module_lang('download'); //Chargement de la langue du module.
+        
+        $Tpl = new Template('download/download_generic_results.tpl');
+        
+        if( $this->get_attribute('ResultsReqExecuted') === false  || $this->got_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST) )
+        {
+            $ids = array();
+            $results =& $args['results'];
+            $newResults = array();
+            $nbResults = count($results);
+            for( $i = 0; $i < $nbResults; $i++ )
+                $newResults[$results[$i]['id_content']] =& $results[$i];
+            
+            $results =& $newResults;
+            
+            $request = "SELECT `id`,`idcat`,`title`,`short_contents`,`url`,`note`,`image`,`count`,`timestamp`,`nbr_com`
+            FROM " . PREFIX . "download
+            WHERE `id` IN (" . implode(',', array_keys($results)) . ")";
+            $requestResults = $Sql->Query_while($request, __LINE__, __FILE__);
+            while( $row = $Sql->Sql_fetch_assoc($requestResults) )
+            {
+                $results[$row['id']] = $row;
+            }
+            $Sql->Close($requestResults);
+            
+            $this->set_attribute('ResultsReqExecuted', true);
+            $this->set_attribute('Results', $results);
+            $this->set_attribute('ResultsIndex', 0);
+        }
+        
+        $results = $this->get_attribute('Results');
+        $indexes = array_keys($results);
+        $indexSize = count($indexes);
+        $resultsIndex = $this->get_attribute('ResultsIndex');
+        $resultsIndex = $resultsIndex < $indexSize ? $resultsIndex : ($indexSize > 0 ? $indexSize - 1 : 0);
+        $index = $indexes[$resultsIndex];
+        $result =& $results[$index];
+        
+        require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+        $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result['timestamp']);
+        require_once(PATH_TO_ROOT . '/kernel/framework/note.class.php');
+        $Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
+        $Tpl->Assign_vars(array(
+            'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER)),
+            'U_LINK' => $result['url'],
+            'U_IMG' => $result['image'],
+            'E_TITLE' => strprotect($result['title']),
+            'TITLE' => $result['title'],
+            'SHORT_DESCRIPTION' => $result['short_contents'],
+            'L_NB_DOWNLOADS' => $DOWNLOAD_LANG['downloaded'] . ' ' . sprintf($DOWNLOAD_LANG['n_times'], $result['count']),
+            'L_NB_COMMENTS' => $result['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_com'], $result['nbr_com']) : sprintf($DOWNLOAD_LANG['num_coms'], $result['nbr_com']),
+            'L_MARK' => $result['note'] > 0 ? $Note->display_img((int)$result['note'], $CONFIG_DOWNLOAD['note_max'], 5) : ('<em>' . $LANG['no_note'] . '</em>')
+        ));
+        
+        $this->set_attribute('ResultsIndex', ++$resultsIndex);
+        
+        return $Tpl->parse(TEMPLATE_STRING_MODE);
     }
     
 	//Récupération du cache.
@@ -130,26 +196,6 @@ class DownloadInterface extends ModuleInterface
 				$Sql->Query_inject("UPDATE ".PREFIX."download SET visible = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
-	
-//     function GetSearchRequest($args)
-//     /**
-//      *  Renvoie la requÃªte de recherche
-//      */
-//     {
-//         global $Sql;
-//         
-//         $request = "SELECT " . $args['id_search'] . " AS `id_search`,
-//             n.id AS `id_content`,
-//             n.title AS `title`,
-//             ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 AS `relevance`, "
-//             . $Sql->Sql_concat(PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS `link`
-//             FROM " . PREFIX . "news n
-//             WHERE ( MATCH(n.title) AGAINST('" . $args['search'] . "') OR MATCH(n.contents) AGAINST('" . $args['search'] . "') OR MATCH(n.extend_contents) AGAINST('" . $args['search'] . "') )
-//                 AND visible = 1 AND ('" . time() . "' > start AND ( end = 0 OR '" . time() . "' < end ) )
-//             ORDER BY `relevance` " . $Sql->Sql_limit(0, NEWS_MAX_SEARCH_RESULTS);
-//         
-//         return $request;
-//     }
     
     function syndication_data($idcat = 0)
     {

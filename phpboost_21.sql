@@ -231,6 +231,7 @@ CREATE TABLE IF NOT EXISTS `phpboost_download` (
   `lock_com` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   FULLTEXT KEY `title` (`title`),
+  FULLTEXT KEY `short_contents` (`short_contents`),
   FULLTEXT KEY `contents` (`contents`),
   KEY `idcat` (`idcat`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
