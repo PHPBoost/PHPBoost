@@ -46,10 +46,14 @@ class DownloadInterface extends ModuleInterface
     {
         global $Sql, $Cache;
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
+		
+		$Cache->load_file('download');
+		
         require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
-        $Cats = new Download_cats();
+		
+        $cats = new DownloadCats();
         $auth_cats = array();
-        $Cats->Build_children_id_list(0, $list);
+        $cats->Build_children_id_list(0, $list);
         
         $auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
         
@@ -71,7 +75,7 @@ class DownloadInterface extends ModuleInterface
 	{
 		global $Sql;
 	
-		$code = 'global $DOWNLOAD_CATS;' . "\n" . 'global $CONFIG_DOWNLOAD;' . "\n";
+		$code = 'global $DOWNLOAD_CATS;' . "\n" . 'global $CONFIG_DOWNLOAD;' . "\n\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_DOWNLOAD = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'download'", __LINE__, __FILE__));
@@ -229,7 +233,7 @@ class DownloadInterface extends ModuleInterface
     function _check_cats_auth($id_cat, &$list)
     {
         global $DOWNLOAD_CATS, $CONFIG_DOWNLOAD;
-        //echo $id_cat . '<pre>'; print_r($DOWNLOAD_CATS); echo '</pre><hr />';
+
         if( $id_cat == 0 )
         {
             if( array_key_exists('r-1', $CONFIG_DOWNLOAD['global_auth']) && $CONFIG_DOWNLOAD['global_auth']['r-1'] & READ_CAT_DOWNLOAD )

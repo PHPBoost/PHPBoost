@@ -30,12 +30,12 @@ include_once('../kernel/framework/content/categories.class.php');
 
 define('NOT_GENERATE_CACHE', true);
 
-class Download_cats extends CategoriesManagement
+class DownloadCats extends CategoriesManagement
 {
 	## Public methods ##
 	
 	//Constructor
-	function Download_cats()
+	function DownloadCats()
 	{
 		global $DOWNLOAD_CATS;
 		parent::CategoriesManagement('download_cat', 'download', $DOWNLOAD_CATS);
@@ -46,7 +46,7 @@ class Download_cats extends CategoriesManagement
 	{
 		global $Cache;
 		//We delete the content of the category
-		$this->delete_category_with_content($id);
+		$this->_delete_category_with_content($id);
 		//Then its sub categories
 		foreach( $this->cache_var as $id_cat => $properties )
 		{
@@ -142,7 +142,7 @@ class Download_cats extends CategoriesManagement
 	function Recount_sub_files($no_cache_generation = false)
 	{
 		global $Cache, $DOWNLOAD_CATS;
-		$this->recount_cat_subquestions($DOWNLOAD_CATS, 0);
+		$this->_recount_cat_subquestions($DOWNLOAD_CATS, 0);
 
 		if( !$no_cache_generation )
 			$Cache->Generate_module_file('download');
@@ -178,7 +178,7 @@ class Download_cats extends CategoriesManagement
 	
 	## Private methods ##	
 	//method which deletes a category and its content (not recursive)
-	function delete_category_with_content($id)
+	function _delete_category_with_content($id)
 	{
 		global $Sql;
 		
@@ -194,7 +194,7 @@ class Download_cats extends CategoriesManagement
 	}
 	
 	//Recursive function which counts for each category
-	function recount_cat_subquestions($categories, $cat_id)
+	function _recount_cat_subquestions($categories, $cat_id)
 	{
 		global $Sql;
 		
@@ -203,7 +203,7 @@ class Download_cats extends CategoriesManagement
 		foreach($categories as $id => $value)
 		{
 			if( $id != 0 && $value['id_parent'] == $cat_id )
-				$num_subquestions += $this->recount_cat_subquestions($categories, $id);
+				$num_subquestions += $this->_recount_cat_subquestions($categories, $id);
 		}
 		
 		//If its not the root we save it into the database
@@ -212,7 +212,7 @@ class Download_cats extends CategoriesManagement
 			//We add to this number the number of questions of this category
 			$num_subquestions += (int) $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."download WHERE idcat = '" . $cat_id . "'", __LINE__, __FILE__);
 			
-			$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET num_files = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET num_files = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "' AND visible = 1", __LINE__, __FILE__);
 			
 			return $num_subquestions;
 		}

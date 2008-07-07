@@ -25,6 +25,7 @@
 ------------------------------------- NOYAU ------------------------------------
 [-] Interface de contribution des news et des articles.
 [-] Régler l'affichage du mini-calendrier.
+[-] Déplacer note.class.php dans framework/content
 
 ------------------------------------ MODULES -----------------------------------
 [-] Module liens du site.
@@ -46,6 +47,7 @@ Forum :
 [-] Langue dans les flux rss (Remlacer "Le" par la langue).
 [-] Réhauser l'image des dossiers.
 [-] Faire les miniatures pour les thèmes.
+[-] Renommer les méthodes et classes (y compris CategoriesManagement)
 
 [-] Système de mise à jour du noyau et des modules:
     - Langues ? (à priori non)

@@ -105,7 +105,7 @@ class CategoriesManagement
 	function Add_category($id_parent, $name, $visible = 1, $order = 0)
 	{
 		global $Sql, $Cache;
-		$this->clean_error();
+		$this->_clean_error();
 		
 		//We cast this variable to integer
 		if( !is_int($visible) )
@@ -128,7 +128,7 @@ class CategoriesManagement
 		}
 		else
 		{
-			$this->add_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST);
+			$this->_add_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST);
 			return 0;
 		}
 	}
@@ -137,7 +137,7 @@ class CategoriesManagement
 	function Move_category($id, $way)
 	{
 		global $Sql, $Cache;
-		$this->clean_error();
+		$this->_clean_error();
 		if( in_array($way, array(MOVE_CATEGORY_UP, MOVE_CATEGORY_DOWN)) )
 		
 		{
@@ -146,7 +146,7 @@ class CategoriesManagement
 			//Checking that category exists
 			if( empty($cat_info['c_order']) )
 			{
-				$this->add_error(CATEGORY_DOES_NOT_EXIST);
+				$this->_add_error(CATEGORY_DOES_NOT_EXIST);
 				return false;
 			}
 				
@@ -168,7 +168,7 @@ class CategoriesManagement
 				}
 				else
 				{
-					$this->add_error(ERROR_CAT_IS_AT_BOTTOM);
+					$this->_add_error(ERROR_CAT_IS_AT_BOTTOM);
 					return false;
 				}
 			}
@@ -187,14 +187,14 @@ class CategoriesManagement
 				}
 				else
 				{
-					$this->add_error(ERROR_CAT_IS_AT_TOP);
+					$this->_add_error(ERROR_CAT_IS_AT_TOP);
 					return false;
 				}
 			}
 		}
 		else
 		{
-			$this->add_error(ERROR_UNKNOWN_MOTION);
+			$this->_add_error(ERROR_UNKNOWN_MOTION);
 			return false;
 		}
 	}
@@ -204,7 +204,7 @@ class CategoriesManagement
 	function Move_category_into_another_category($id, $new_id_cat, $position = 0)
 	{
 		global $Sql, $Cache;
-		$this->clean_error();
+		$this->_clean_error();
 		
 		//Checking that both current category and new category exist and importing necessary information
 		if( ($id == 0 || array_key_exists($id, $this->cache_var)) && ($new_id_cat == 0 || array_key_exists($new_id_cat, $this->cache_var)) )
@@ -240,16 +240,16 @@ class CategoriesManagement
 			}
 			else
 			{
-				$this->add_error(NEW_CATEGORY_IS_IN_ITS_CHILDRENS);
+				$this->_add_error(NEW_CATEGORY_IS_IN_ITS_CHILDRENS);
 				return false;
 			}
 		}
 		else
 		{
 			if( $new_id_cat != 0 && !array_key_exists($new_id_cat, $this->cache_var) )
-				$this->add_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST);
+				$this->_add_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST);
 			if( $id != 0 && !array_key_exists($id, $this->cache_var) )
-				$this->add_error(CATEGORY_DOES_NOT_EXIST);
+				$this->_add_error(CATEGORY_DOES_NOT_EXIST);
 				
 			return false;
 		}
@@ -259,12 +259,12 @@ class CategoriesManagement
 	function Delete_category($id)
 	{
 		global $Sql, $Cache;
-		$this->clean_error();
+		$this->_clean_error();
 		
 		//Checking that category exists
 		if( $id != 0 && !array_key_exists($id, $this->cache_var) )
 		{
-			$this->add_error(CATEGORY_DOES_NOT_EXIST);
+			$this->_add_error(CATEGORY_DOES_NOT_EXIST);
 			return false;
 		}
 		
@@ -290,7 +290,7 @@ class CategoriesManagement
 		//Default value
 		if( !in_array($visibility, array(CAT_VISIBLE, CAT_UNVISIBLE)) )
 		{
-			$this->add_error(NEW_STATUS_UNKNOWN);
+			$this->_add_error(NEW_STATUS_UNKNOWN);
 			return false;
 		}
 			
@@ -306,7 +306,7 @@ class CategoriesManagement
 		}
 		else
 		{
-			$this->add_error(CATEGORY_DOES_NOT_EXIST);
+			$this->_add_error(CATEGORY_DOES_NOT_EXIST);
 			return false;
 		}
 	}
@@ -353,11 +353,11 @@ class CategoriesManagement
 	function Build_categories_administration_interface($ajax_mode = NORMAL_MODE)
 	{
 		global $CONFIG, $LANG;
-		$this->clean_error();
+		$this->_clean_error();
 		//If displaying configuration hasn't bee already set
 		if( !$this->Check_displaying_configuration() )
 		{
-			$this->add_error(INCORRECT_DISPLAYING_CONFIGURATION);
+			$this->_add_error(INCORRECT_DISPLAYING_CONFIGURATION);
 			return false;
 		}
 		
@@ -427,7 +427,7 @@ class CategoriesManagement
 		}
 		
 		//Categories list
-		$this->create_row_interface($string, 0, 0, $ajax_mode);
+		$this->_create_row_interface_recount_cat_subquestions($string, 0, 0, $ajax_mode);
 		
 		if( $ajax_mode )
 			$string .= '</div>';
@@ -448,7 +448,7 @@ class CategoriesManagement
 		$string = '<select id="' . $form_id . '" name="' . $form_name . '">';
 		$string .= '<option value="0"' . ($selected_id == 0 ? ' selected="selected"' : '') . '>' . $LANG['root'] . '</option>';
 		
-		$this->create_select_row($string, 0, 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth);
+		$this->_create_select_row($string, 0, 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth);
 		
 		$string .= '</select>';
 		return $string;
@@ -513,7 +513,7 @@ class CategoriesManagement
 
 	## Private methods ##
 	//Recursive method allowing to display the administration panel of a category and its daughters
-	function create_row_interface(&$string, $id_cat, $level, $ajax_mode)
+	function _create_row_interface_recount_cat_subquestions(&$string, $id_cat, $level, $ajax_mode)
 	{
 		global $CONFIG, $LANG;
 		
@@ -638,7 +638,7 @@ class CategoriesManagement
 				</span>';
 				
 				//We call the function for its daughter categories
-				$this->create_row_interface($string, $id, $level + 1, $ajax_mode);
+				$this->_create_row_interface_recount_cat_subquestions($string, $id, $level + 1, $ajax_mode);
 				
 				//Loop interruption : if we have finished the current category we can stop looping, other keys aren't interesting in this function
 				if( $i + 1 < $num_cats && $this->cache_var[$id_categories[$i + 1]]['id_parent'] != $id_cat )
@@ -648,7 +648,7 @@ class CategoriesManagement
 	}
 	
 	//Recursive method which adds the category informations and thoses of its children
-	function create_select_row(&$string, $id_cat, $level, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth)
+	function _create_select_row(&$string, $id_cat, $level, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth)
 	{
 		global $Member;
 		//Boolean variable which is true when we can stop the loop
@@ -671,7 +671,7 @@ class CategoriesManagement
 					if( $num_auth == 0 || $general_auth || $Member->Check_auth($value['auth'], $num_auth) )
 					{
 						$string .= '<option value="' . $id . '"' . ($id == $selected_id ? ' selected="selected"' : '') . '>' . str_repeat('--', $level) . ' ' . $value['name'] . '</option>';
-						$this->create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth);
+						$this->_create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth);
 					}
 				}
 				//Exploration with writing behaviour : if we can't write, we don't put it but we continue
@@ -681,18 +681,18 @@ class CategoriesManagement
 					if( $num_auth == 0 )
 					{
 						$string .= '<option value="' . $id . '"' . ($id == $selected_id ? ' selected="selected"' : '') . '>' . str_repeat('--', $level) . ' ' . $value['name'] . '</option>';
-						$this->create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth);
+						$this->_create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth);
 					}
 					//If we must check authorizations and it's good
 					elseif( (empty($value['auth']) && $general_auth) || (!empty($value['auth']) && $Member->Check_auth($value['auth'], $num_auth)) )
 					{
 						$string .= '<option value="' . $id . '"' . ($id == $selected_id ? ' selected="selected"' : '') . '>' . str_repeat('--', $level) . ' ' . $value['name'] . '</option>';
-						$this->create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, true);
+						$this->_create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, true);
 					}
 					//If we must check authorizations and it's not good, we don't display it but we continue browsing
 					elseif( (empty($value['auth']) && !$general_auth) || (!empty($value['auth']) && !$Member->Check_auth($value['auth'], $num_auth)) )
 					{
-						$this->create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, false);
+						$this->_create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, false);
 					}
 				}
 				if( !$end_of_category )
@@ -704,13 +704,13 @@ class CategoriesManagement
 	}
 	
 	//Method which adds an error bit to current status
-	function add_error($error)
+	function _add_error($error)
 	{
 		$this->errors |= $error;
 	}
 
 	//Method which cleans error status
-	function clean_error($error = 0)
+	function _clean_error($error = 0)
 	{
 		if( $error != 0 )
 		{

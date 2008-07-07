@@ -33,7 +33,7 @@ require_once('../kernel/admin_header.php');
 include_once('download_auth.php');
 $Cache->Load_file('download');
 include_once('download_cats.class.php');
-$download_categories = new Download_cats();
+$download_categories = new DownloadCats();
 
 $id_up = retrieve(GET, 'id_up', 0);
 $id_down = retrieve(GET, 'id_down', 0);
