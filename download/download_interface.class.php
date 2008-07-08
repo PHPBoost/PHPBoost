@@ -60,7 +60,7 @@ class DownloadInterface extends ModuleInterface
             d.id AS `id_content`,
             d.title AS `title`,
             ( 3 * MATCH(d.title) AGAINST('" . $args['search'] . "') + 2 * MATCH(d.short_contents) AGAINST('" . $args['search'] . "') + MATCH(d.contents) AGAINST('" . $args['search'] . "') ) / 6 * " . $weight . " AS `relevance`, "
-            . $Sql->Sql_concat("'" . PATH_TO_ROOT . "../download/download.php?id='","d.id") . " AS `link`
+            . $Sql->Sql_concat("'" . PATH_TO_ROOT . "/download/download.php?id='","d.id") . " AS `link`
             FROM " . PREFIX . "download d
             WHERE ( MATCH(d.title) AGAINST('" . $args['search'] . "') OR MATCH(d.short_contents) AGAINST('" . $args['search'] . "') OR MATCH(d.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats
             . " ORDER BY `relevance` " . $Sql->Sql_limit(0, FAQ_MAX_SEARCH_RESULTS);

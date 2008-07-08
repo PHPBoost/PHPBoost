@@ -204,6 +204,7 @@ class ForumInterface extends ModuleInterface
         $where = !empty($args['ForumWhere']) ? strprotect($args['ForumWhere']) : 'title';
         $colorate_result = !empty($args['ForumColorate_result']) ? true : false;
         
+        require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
         $auth_cats = '';
         if( is_array($CAT_FORUM) )
         {

@@ -59,6 +59,7 @@ if( !empty($_POST['valid']) )
         // Enregistrement des modifications de la config
         $config_string = addslashes(serialize($CONFIG));
         $request = "UPDATE ".PREFIX."configs SET value = '".$config_string."' WHERE name = 'config'";
+        echo $request;
         $Sql->Query_inject($request, __LINE__, __FILE__);
         
         // Enregistrement des modifications de la config du module 'Search'
@@ -113,9 +114,9 @@ else
     
     if( !$weighting )
     {
+        $SEARCH_CONFIG['search_cache_time'] = isset($CONFIG['search_cache_time']) ? $CONFIG['search_cache_time'] : 15;
+        $SEARCH_CONFIG['search_max_use'] = isset($CONFIG['search_max_use']) ? $CONFIG['search_max_use'] : 200;
         $SEARCH_CONFIG['nb_results_per_page'] = isset($SEARCH_CONFIG['nb_results_per_page']) ? $SEARCH_CONFIG['nb_results_per_page'] : 15;
-        $SEARCH_CONFIG['search_cache_time'] = isset($SEARCH_CONFIG['search_cache_time']) ? $SEARCH_CONFIG['search_cache_time'] : 15;
-        $SEARCH_CONFIG['search_max_use'] = isset($SEARCH_CONFIG['search_max_use']) ? $SEARCH_CONFIG['search_max_use'] : 200;
         $SEARCH_CONFIG['authorised_modules'] = isset($SEARCH_CONFIG['authorised_modules']) && is_array($SEARCH_CONFIG['authorised_modules']) ? $SEARCH_CONFIG['authorised_modules'] : array();
         
         $Modules = new Modules();
