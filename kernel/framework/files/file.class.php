@@ -30,10 +30,12 @@ require_once(PATH_TO_ROOT . 'kernel/framework/file/fse.class.php');
 // fonction de gestion des fichiers
 class File extends FileSystemElement
 {
+	## Public Attributes ##
 	var $lines = array();
 	var $contents;
 	
-	// constructeur
+	## Public Methods ##	
+	// Constructeur
 	function File($path, $readnow = false)
 	{
 		parent::init($path);
@@ -108,7 +110,8 @@ class File extends FileSystemElement
 		
 		return true;
 	}
-
+	
+	## Private Methods ##	
 }
 
 ?>
