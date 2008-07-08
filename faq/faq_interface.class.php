@@ -123,7 +123,63 @@ class FaqInterface extends ModuleInterface
         return $request;
     }
 	
-	// Returns the module map objet to build the global sitemap
+    function parse_search_results(&$args)
+    /**
+     *  Return the string to print the results
+     */
+    {
+        global $Sql;
+        
+        require_once(PATH_TO_ROOT . '/kernel/begin.php');
+        
+        $Tpl = new Template('faq/search_result.tpl');
+        
+        if( $this->get_attribute('ResultsReqExecuted') === false  || $this->got_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST) )
+        {
+            $ids = array();
+            $results =& $args['results'];
+            $newResults = array();
+            $nbResults = count($results);
+            for( $i = 0; $i < $nbResults; $i++ )
+                $newResults[$results[$i]['id_content']] =& $results[$i];
+            
+            $results =& $newResults;
+            
+            $request = "SELECT `idcat`,`id`,`question`,`answer`
+            FROM " . PREFIX . "faq
+            WHERE `id` IN (" . implode(',', array_keys($results)) . ")";
+            $requestResults = $Sql->Query_while($request, __LINE__, __FILE__);
+            while( $row = $Sql->Sql_fetch_assoc($requestResults) )
+            {
+                $results[$row['id']] = $row;
+            }
+            $Sql->Close($requestResults);
+            
+            $this->set_attribute('ResultsReqExecuted', true);
+            $this->set_attribute('Results', $results);
+            $this->set_attribute('ResultsIndex', 0);
+        }
+        
+        $results = $this->get_attribute('Results');
+        $indexes = array_keys($results);
+        $indexSize = count($indexes);
+        $resultsIndex = $this->get_attribute('ResultsIndex');
+        $resultsIndex = $resultsIndex < $indexSize ? $resultsIndex : ($indexSize > 0 ? $indexSize - 1 : 0);
+        $index = $indexes[$resultsIndex];
+        $result =& $results[$index];
+        
+        $Tpl->Assign_vars(array(
+            'U_QUESTION' => PATH_TO_ROOT . '/faq/faq.php?id=' . $result['idcat'] . '&amp;question=' . $result['id'] . '#q' . $result['id'],
+            'QUESTION' => $result['question'],
+            'ANSWER' => $result['answer']
+        ));
+        
+        $this->set_attribute('ResultsIndex', ++$resultsIndex);
+        
+        return $Tpl->parse(TEMPLATE_STRING_MODE);
+    }
+    
+    // Returns the module map objet to build the global sitemap
 	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
 	{
 		global $Cache, $FAQ_LANG;
