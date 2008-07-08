@@ -30,57 +30,41 @@ class FileSystemElement
 {
 	## Public Attributes ##
 	var $path;
-	var $is_read = false;
+	var $is_open;
 	
 	## Public Methods ##	
-	function FileSystemElement()
-	{
-		$this->path = '';
-		$this->is_read = false;
-	}
-	
-	// initialise le path
+	// c'est un peu le constructeur de cette classe mais comme php n'appelle pas automatique les classes parent on doit le faire explicitement avec parent::init()
 	function init($path)
 	{
 		$this->path = $path;
+		$this->is_open = false;
 	}
 	
-	// fonction générique qui ouvre soit le fichier soit le dossier en appellant les fonctions spécifiques
+	// initialisation avant l'ouverture
 	function open()
 	{
-		global $Errorh;
+		if($this->is_open)
+			return;
 		
-		if( get_class($this) == 'File' )
-			$this->readfile();
-		else if( get_class($this) == 'Folder' )
-			$this->readfolder();
-		else
-			$Errorh->Error_handler('FileSystemElement -> Only class File or Folder must be inherit FileSystemElement', E_USER_ERROR, __LINE__, __FILE__);
+		$this->is_open = true;
 	}
 	
-	// qui permet de supprimer fichier et dossier ( récursivement si il s'agit d'un dossier )
-	function del()
+	// initialisation avant l'accès à un attribut de l'objet
+	function get()
 	{
-		global $Errorh;
-		
-		if( get_class($this) == 'File' )
-			unlink($this->path);
-		else if( get_class($this) == 'Folder' )
-		{
-			if(!$this->is_read)
-				$this->readfolder();
-			
-			foreach($this->get_files as $file)
-				unlink($file->path);
-				
-			foreach($this->get_folders as $folder)
-				$folder->del();
-			
-			rmdir($this->path);
-		}
-		else
-			$Errorh->Error_handler('FileSystemElement -> Only class File or Folder must be inherit FileSystemElement', E_USER_ERROR, __LINE__, __FILE__);
+		if(!$this->is_open)
+			$this->open();
 	}
+	
+	// après une écriture il faut forcer la relecture pour mettre à jour les attributs
+	function write()
+	{
+		$this->is_open = false;
+		$this->open();
+	}
+	
+	// fonction virtuelle
+	function delete() { }
 }
 
 ?>
