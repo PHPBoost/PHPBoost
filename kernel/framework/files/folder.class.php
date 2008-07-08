@@ -39,7 +39,7 @@ class Folder extends FileSystemElement
 	//Constructeur
 	function Folder($path, $readnow = false)
 	{
-		parent::init($path);
+		parent::FileSystemElement($path);
 		
 		if( @file_exists($this->path) )
 		{

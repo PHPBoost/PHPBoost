@@ -33,8 +33,8 @@ class FileSystemElement
 	var $is_open;
 	
 	## Public Methods ##	
-	// c'est un peu le constructeur de cette classe mais comme php n'appelle pas automatique les classes parent on doit le faire explicitement avec parent::init()
-	function init($path)
+	// Constructeur
+	function FileSystemElement($path)
 	{
 		$this->path = $path;
 		$this->is_open = false;

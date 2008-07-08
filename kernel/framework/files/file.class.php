@@ -38,7 +38,7 @@ class File extends FileSystemElement
 	// Constructeur
 	function File($path, $opennow = false)
 	{
-		parent::init($path);
+		parent::FileSystemElement($path);
 		
 		if( @file_exists($this->path) )
 		{
