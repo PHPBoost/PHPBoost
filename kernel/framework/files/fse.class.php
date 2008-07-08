@@ -26,13 +26,19 @@
 ###################################################*/
 
 // FileSystemElement
-class FSE
+class FileSystemElement
 {
 	## Public Attributes ##
 	var $path;
 	var $is_read = false;
 	
 	## Public Methods ##	
+	function FileSystemElement()
+	{
+		$this->path = '';
+		$this->is_read = false;
+	}
+	
 	// initialise le path
 	function init($path)
 	{
