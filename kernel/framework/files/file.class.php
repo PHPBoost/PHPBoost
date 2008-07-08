@@ -36,7 +36,7 @@ class File extends FileSystemElement
 	
 	## Public Methods ##	
 	// Constructeur
-	function File($path, $readnow = false)
+	function File($path, $opennow = false)
 	{
 		parent::init($path);
 		
@@ -45,8 +45,8 @@ class File extends FileSystemElement
 			if( !@is_file($this->path) )
 				return false;
 			
-			if( $readnow )
-				$this->readfile();
+			if( $opennow )
+				$this->open();
 		}
 		else if( !@touch($this->path) )
 			return false;
@@ -54,22 +54,19 @@ class File extends FileSystemElement
 		return true;
 	}
 	
-	// lit le fichier
-	function readfile()
+	// lit le fichier et initialise les attributs
+	function open()
 	{
-		if( !$this->is_read )
-		{
-			$this->lines[] = file($path);
-			$this->contents = implode("\n", $this->lines);
-			$this->is_read = true;
-		}
+		parent::open();
+		
+		$this->lines[] = file($path);
+		$this->contents = implode("\n", $this->lines);
 	}
 	
 	// renvoie le contenu du fichier en commençant à l'octet $start
-	function read($start = 0, $len = -1)
+	function get_contents($start = 0, $len = -1)
 	{
-		// si le fichier n'a pas encore été lu alors on le lit maintenant
-		$this->readfile();
+		parent::get();
 		
 		if( !$start && $len == -1 )
 			return $this->contents;
@@ -80,10 +77,9 @@ class File extends FileSystemElement
 	}
 	
 	// renvoie le contenu du fichier sous forme de tableau
-	function readlines($start = 0, $n = -1)
+	function get_lines($start = 0, $n = -1)
 	{
-		// si le fichier n'a pas encore été lu alors on le lit maintenant
-		$this->readfile();
+		parent::get();
 		
 		if( !$start && $n == -1 )
 			return $this->lines;
@@ -104,11 +100,15 @@ class File extends FileSystemElement
 		fwrite($data, $fp);
 		fclose($fp);
 		
-		// on force la relecture du fichier
-		$this->is_read = false;
-		$this->readfile();
+		parent::write();
 		
 		return true;
+	}
+	
+	// supprime le fichier
+	function delete()
+	{
+		@unlink($this->path);
 	}
 	
 	## Private Methods ##	

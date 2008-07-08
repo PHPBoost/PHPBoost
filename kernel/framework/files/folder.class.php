@@ -47,7 +47,7 @@ class Folder extends FileSystemElement
 				return false;
 			
 			if( $readnow )
-				$this->_readfolder();
+				$this->open();
 		}
 		else if( !@mkdir($this->path) )
 			return false;
@@ -55,11 +55,31 @@ class Folder extends FileSystemElement
 		return true;
 	}
 	
+	// ouvre le dossier et initialise les objets pour un parcours en profondeur ultérieur
+	function open()
+	{
+		parent::open();
+		
+		$this->files = $this->folders = array();
+		if( $dh = @opendir($this->path) )
+	    {       
+	        while( !is_bool($fse_name = readdir($dh)) )
+	        {
+				if( $fse_name == '.' || $fse_name == '..' )
+					continue;
+					
+				if( is_file($res) )
+					$this->files[] = new File($fse_name);
+	            else
+					$this->folders[] = new Folder($fse_name);
+	        }
+	        closedir($dh);
+	    }
+	}
 	// retourne la liste de tout les fichiers correspondant au motif $regex
 	function get_files($regex = '')
 	{
-		// lit le dossier si ça n'a pas encore été fait
-		$this->_readfolder();
+		parent::get();
 		
 		if( empty($regex) )
 			return $this->files;
@@ -76,8 +96,7 @@ class Folder extends FileSystemElement
 	// retourne la liste de tout les dossiers correspondant au motif $regex
 	function get_folders($regex = '')
 	{
-		// lit le dossier si ça n'a pas encore été fait
-		$this->_readfolder();
+		parent::get();
 		
 		if( empty($regex) )
 			return $this->folders;
@@ -94,8 +113,7 @@ class Folder extends FileSystemElement
 	// retourne le premier dossier ou false si il n'y en a pas
 	function get_first_folder()
 	{
-		// lit le dossier si ça n'a pas encore été fait
-		$this->_readfolder();
+		parent::get();
 		
 		if( isset($folders[0]) )
 			return $folders[0];
@@ -103,31 +121,17 @@ class Folder extends FileSystemElement
 			return false;
 	}
 	
-	## Private Methods ##	
-	// fonction privée qui lit le dossier
-	function _readfolder()
+	// supprime le dossier récursivement
+	function delete()
 	{
-		if( !$this->is_read )
-		{
-			$dir = $files = array();
-			if( $dh = @opendir($this->path) )
-	        {       
-	            while( !is_bool($res = readdir($dh)) )
-	            {
-					if( $res == '.' || $res == '..' )
-						continue;
-					
-					if( is_file($res) )
-						$this->files[] = new File($res);
-	                else
-						$this->folders[] = new Folder($res);
-	            }
-	            closedir($dh);
-	        }
+		$fs = array_merge($files, $folders);
+		
+		foreach($fs as $fse)
+			$fse->delete();
 			
-			$this->is_read = true;
-		}
+		rmdir($this->path);
 	}
+	## Private Methods ##	
 }
 
 ?>
