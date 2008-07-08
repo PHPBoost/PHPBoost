@@ -74,7 +74,8 @@ class DownloadInterface extends ModuleInterface
      *  Return the string to print the results
      */
     {
-        global $Sql, $CONFIG, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD;
+        global $Sql, $Cache, $CONFIG, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD;
+        $Cache->load_file('download');
         
         require_once(PATH_TO_ROOT . '/kernel/begin.php');
         load_module_lang('download'); //Chargement de la langue du module.
@@ -121,7 +122,7 @@ class DownloadInterface extends ModuleInterface
         $Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
         $Tpl->Assign_vars(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER)),
-            'U_LINK' => $result['url'],
+            'U_LINK' => transid(PATH_TO_ROOT . '/download/download.php?id=' . $result['id']),
             'U_IMG' => $result['image'],
             'E_TITLE' => strprotect($result['title']),
             'TITLE' => $result['title'],
