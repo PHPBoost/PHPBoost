@@ -55,10 +55,10 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
     {
         // MAJ DES RESULTATS SI ILS NE SONT PLUS DANS LE CACHE
         // Listes des modules de recherches
-        $searchModules = $Modules->get_available_modules('GetSearchRequest');
+        $searchModules = $Modules->get_available_modules('get_search_request');
         
         // Chargement des modules avec formulaires
-        $formsModule = $Modules->get_available_modules('GetSearchForm', $searchModules);
+        $formsModule = $Modules->get_available_modules('get_search_form', $searchModules);
         
         // Ajout du paramétre search à tous les modules
         foreach( $searchModules as $module)
@@ -67,10 +67,10 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
         // Ajout de la liste des paramètres de recherches spécifiques à chaque module
         foreach( $formsModule as $formModule)
         {
-            if( $formModule->has_functionnality('GetSearchArgs') )
+            if( $formModule->has_functionnality('get_search_args') )
             {
                 // Récupération de la liste des paramètres
-                $formModuleArgs = $formModule->functionnality('GetSearchArgs');
+                $formModuleArgs = $formModule->functionnality('get_search_args');
                 // Ajout des paramètres optionnels sans les sécuriser.
                 // Ils sont sécurisés à l'intérieur de chaque module.
                 foreach( $formModuleArgs as $arg)
