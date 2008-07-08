@@ -390,22 +390,28 @@ class CategoriesManagement
 	}
 	
 	//Method which builds a select form to choose a category
-	function Build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_auth = array(), $recursion_mode = STOP_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH)
+	function Build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_auth = array(), $recursion_mode = STOP_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $template = NULL)
 	{
 		global $LANG, $Member;
 		
 		$general_auth = false;
 		
+		if( is_null($template) || !is_object($template) || get_class($template) != 'Template' )
+			$template = new Template('framework/content/categories_select_form.tpl');
+		
 		if( $num_auth != 0 )
 			$general_auth = $Member->Check_auth($array_auth, $num_auth);
 		
-		$string = '<select id="' . $form_id . '" name="' . $form_name . '">';
-		$string .= '<option value="0"' . ($selected_id == 0 ? ' selected="selected"' : '') . '>' . $LANG['root'] . '</option>';
-		
-		$this->_create_select_row($string, 0, 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth);
-		
-		$string .= '</select>';
-		return $string;
+		$template->assign_vars(array(
+			'FORM_ID' =>  $form_id,
+			'FORM_NAME' =>  $form_name,
+			'SELECTED_ROOT' => $selected_id == 0 ? ' selected="selected"' : '',
+			'L_ROOT' => $LANG['root']
+		));
+				
+		$this->_create_select_row(0, 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, $template);
+
+		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
 	//Recursive method which builds the list of all chlidren of one category
@@ -534,7 +540,7 @@ class CategoriesManagement
 	}
 	
 	//Recursive method which adds the category informations and thoses of its children
-	function _create_select_row(&$string, $id_cat, $level, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth)
+	function _create_select_row($id_cat, $level, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, &$template)
 	{
 		global $Member;
 		//Boolean variable which is true when we can stop the loop
@@ -556,8 +562,14 @@ class CategoriesManagement
 				{
 					if( $num_auth == 0 || $general_auth || $Member->Check_auth($value['auth'], $num_auth) )
 					{
-						$string .= '<option value="' . $id . '"' . ($id == $selected_id ? ' selected="selected"' : '') . '>' . str_repeat('--', $level) . ' ' . $value['name'] . '</option>';
-						$this->_create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth);
+						$template->assign_block_vars('options', array(
+							'ID' => $id,
+							'SELECTED_OPTION' => $id == $selected_id ? ' selected="selected"' : '',
+							'PREFIX' => str_repeat('--', $level),
+							'NAME' => $value['name'],
+						));
+						
+						$this->_create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, $template);
 					}
 				}
 				//Exploration with writing behaviour : if we can't write, we don't put it but we continue
@@ -566,19 +578,30 @@ class CategoriesManagement
 					//We mustn't check authorizations
 					if( $num_auth == 0 )
 					{
-						$string .= '<option value="' . $id . '"' . ($id == $selected_id ? ' selected="selected"' : '') . '>' . str_repeat('--', $level) . ' ' . $value['name'] . '</option>';
-						$this->_create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth);
+						$template->assign_block_vars('options', array(
+							'ID' => $id,
+							'SELECTED_OPTION' => $id == $selected_id ? ' selected="selected"' : '',
+							'PREFIX' => str_repeat('--', $level),
+							'NAME' => $value['name'],
+						));
+						$this->_create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, $template);
 					}
 					//If we must check authorizations and it's good
 					elseif( (empty($value['auth']) && $general_auth) || (!empty($value['auth']) && $Member->Check_auth($value['auth'], $num_auth)) )
 					{
-						$string .= '<option value="' . $id . '"' . ($id == $selected_id ? ' selected="selected"' : '') . '>' . str_repeat('--', $level) . ' ' . $value['name'] . '</option>';
-						$this->_create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, true);
+						$template->assign_block_vars('options', array(
+							'ID' => $id,
+							'SELECTED_OPTION' => $id == $selected_id ? ' selected="selected"' : '',
+							'PREFIX' => str_repeat('--', $level),
+							'NAME' => $value['name'],
+						));
+						
+						$this->_create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, true, $template);
 					}
 					//If we must check authorizations and it's not good, we don't display it but we continue browsing
 					elseif( (empty($value['auth']) && !$general_auth) || (!empty($value['auth']) && !$Member->Check_auth($value['auth'], $num_auth)) )
 					{
-						$this->_create_select_row($string, $id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, false);
+						$this->_create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, false, $template);
 					}
 				}
 				if( !$end_of_category )
