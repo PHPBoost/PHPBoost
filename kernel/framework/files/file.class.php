@@ -25,7 +25,10 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . 'kernel/framework/file/fse.class.php');
+require_once('fse.class.php');
+
+define('ERASE', false);
+define('ADD', true);
 
 // fonction de gestion des fichiers
 class File extends FileSystemElement
@@ -36,7 +39,7 @@ class File extends FileSystemElement
 	
 	## Public Methods ##	
 	// Constructeur
-	function File($path, $opennow = false)
+	function File($path, $whenopen = OPEN_AFTER)
 	{
 		parent::FileSystemElement($path);
 		
@@ -45,7 +48,7 @@ class File extends FileSystemElement
 			if( !@is_file($this->path) )
 				return false;
 			
-			if( $opennow )
+			if( $whenopen == OPEN_NOW )
 				$this->open();
 		}
 		else if( !@touch($this->path) )
@@ -59,7 +62,7 @@ class File extends FileSystemElement
 	{
 		parent::open();
 		
-		$this->lines[] = file($path);
+		$this->lines = file($this->path);
 		$this->contents = implode("\n", $this->lines);
 	}
 	
@@ -89,15 +92,15 @@ class File extends FileSystemElement
 			return array_slice($this->lines, $start, $n);
 	}
 	
-	// écrit $data dans le fichier, soit en écrasant les données ( par défaut ), soit en ajoutant à la suite ( envoyer true en deuxième paramètre )
-	function write($data, $add = false)
+	// écrit $data dans le fichier, soit en écrasant les données ( par défaut ), soit passant en troisième paramètre la constante ADD
+	function write($data, $what = ERASE)
 	{
-		$mode = $add ? 'a' : 'w';
+		$mode = ( $what == ADD ) ? 'a' : 'w';
 		
-		if( !($fp = @fopen($file, $mode)) )
+		if( !($fp = @fopen($this->path, $mode)) )
 			return false;
 		
-		fwrite($data, $fp);
+		fwrite($fp, $data);
 		fclose($fp);
 		
 		parent::write();
