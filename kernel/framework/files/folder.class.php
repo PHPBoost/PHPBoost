@@ -31,10 +31,12 @@ require_once(PATH_TO_ROOT . 'kernel/framework/file/file.class.php');
 // gestion des dossiers
 class Folder extends FileSystemElement
 {
+	## Public Attributes ##
 	var $files = array();
 	var $folders = array();
 	
-	//constructeur
+	## Public Methods ##	
+	//Constructeur
 	function Folder($path, $readnow = false)
 	{
 		parent::init($path);
@@ -44,8 +46,8 @@ class Folder extends FileSystemElement
 			if( !@is_dir($this->path) )
 				return false;
 			
-			if($readnow)
-				$this->readfolder();
+			if( $readnow )
+				$this->_readfolder();
 		}
 		else if( !@mkdir($this->path) )
 			return false;
@@ -53,9 +55,57 @@ class Folder extends FileSystemElement
 		return true;
 	}
 	
+	// retourne la liste de tout les fichiers correspondant au motif $regex
+	function get_files($regex = '')
+	{
+		// lit le dossier si ça n'a pas encore été fait
+		$this->_readfolder();
+		
+		if( empty($regex) )
+			return $this->files;
+		else
+		{
+			$ret = array();
+			foreach( $this->files as $file )
+				if( preg_match($regex, $file) )
+					$ret[] = $file;
+			return $ret;
+		}
+	}
+	
+	// retourne la liste de tout les dossiers correspondant au motif $regex
+	function get_folders($regex = '')
+	{
+		// lit le dossier si ça n'a pas encore été fait
+		$this->_readfolder();
+		
+		if( empty($regex) )
+			return $this->folders;
+		else
+		{
+			$ret = array();
+			foreach( $this->folders as $folder )
+				if( preg_match($regex, $folder) )
+					$ret[] = $folder;
+			return $ret;
+		}
+	}
+	
+	// retourne le premier dossier ou false si il n'y en a pas
+	function get_first_folder()
+	{
+		// lit le dossier si ça n'a pas encore été fait
+		$this->_readfolder();
+		
+		if( isset($folders[0]) )
+			return $folders[0];
+		else
+			return false;
+	}
+	
+	## Private Methods ##	
 	// fonction privée qui lit le dossier
-	/* private */ 
-	function readfolder()
+	function _readfolder()
 	{
 		if( !$this->is_read )
 		{
@@ -77,54 +127,6 @@ class Folder extends FileSystemElement
 			
 			$this->is_read = true;
 		}
-	}
-	
-	// retourne la liste de tout les fichiers correspondant au motif $regex
-	function get_files($regex = '')
-	{
-		// lit le dossier si ça n'a pas encore été fait
-		$this->readfolder();
-		
-		if( empty($regex) )
-			return $this->files;
-		else
-		{
-			$ret = array();
-			foreach( $this->files as $file )
-				if( preg_match($regex, $file) )
-					$ret[] = $file;
-			return $ret;
-		}
-	}
-	
-	// retourne la liste de tout les dossiers correspondant au motif $regex
-	function get_folders($regex = '')
-	{
-		// lit le dossier si ça n'a pas encore été fait
-		$this->readfolder();
-		
-		if( empty($regex) )
-			return $this->folders;
-		else
-		{
-			$ret = array();
-			foreach( $this->folders as $folder )
-				if( preg_match($regex, $folder) )
-					$ret[] = $folder;
-			return $ret;
-		}
-	}
-	
-	// retourne le premier dossier ou false si il n'y en a pas
-	function get_first_folder()
-	{
-		// lit le dossier si ça n'a pas encore été fait
-		$this->readfolder();
-		
-		if( isset($folders[0]) )
-			return $folders[0];
-		else
-			return false;
 	}
 }
 

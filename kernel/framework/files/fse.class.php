@@ -28,9 +28,11 @@
 // FileSystemElement
 class FSE
 {
+	## Public Attributes ##
 	var $path;
 	var $is_read = false;
 	
+	## Public Methods ##	
 	// initialise le path
 	function init($path)
 	{
@@ -47,7 +49,7 @@ class FSE
 		else if( get_class($this) == 'Folder' )
 			$this->readfolder();
 		else
-			user_error('Only class File or Folder must be inherit FileSystemElement', E_USER_ERROR);
+			$Errorh->Error_handler('FileSystemElement -> Only class File or Folder must be inherit FileSystemElement', E_USER_ERROR, __LINE__, __FILE__);
 	}
 	
 	// qui permet de supprimer fichier et dossier ( récursivement si il s'agit d'un dossier )
@@ -71,7 +73,7 @@ class FSE
 			rmdir($this->path);
 		}
 		else
-			user_error('Only class File or Folder must be inherit FileSystemElement', E_USER_ERROR);
+			$Errorh->Error_handler('FileSystemElement -> Only class File or Folder must be inherit FileSystemElement', E_USER_ERROR, __LINE__, __FILE__);
 	}
 }
 
