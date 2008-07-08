@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . 'kernel/framework/file/fse.class.php');
-require_once(PATH_TO_ROOT . 'kernel/framework/file/file.class.php');
+require_once('fse.class.php');
+require_once('file.class.php');
 
 // gestion des dossiers
 class Folder extends FileSystemElement
@@ -37,7 +37,7 @@ class Folder extends FileSystemElement
 	
 	## Public Methods ##	
 	//Constructeur
-	function Folder($path, $readnow = false)
+	function Folder($path, $whenopen = OPEN_AFTER)
 	{
 		parent::FileSystemElement($path);
 		
@@ -46,7 +46,7 @@ class Folder extends FileSystemElement
 			if( !@is_dir($this->path) )
 				return false;
 			
-			if( $readnow )
+			if( $whenopen == OPEN_NOW)
 				$this->open();
 		}
 		else if( !@mkdir($this->path) )
@@ -68,10 +68,10 @@ class Folder extends FileSystemElement
 				if( $fse_name == '.' || $fse_name == '..' )
 					continue;
 					
-				if( is_file($res) )
-					$this->files[] = new File($fse_name);
+				if( is_file($this->path . '/' . $fse_name) )
+					$this->files[] = new File($this->path . '/' . $fse_name);
 	            else
-					$this->folders[] = new Folder($fse_name);
+					$this->folders[] = new Folder($this->path . '/' . $fse_name);
 	        }
 	        closedir($dh);
 	    }
@@ -82,13 +82,18 @@ class Folder extends FileSystemElement
 		parent::get();
 		
 		if( empty($regex) )
-			return $this->files;
+		{
+			$ret = array();
+			foreach( $this->files as $file )
+				$ret[] = $file->path;
+			return $ret;
+		}
 		else
 		{
 			$ret = array();
 			foreach( $this->files as $file )
-				if( preg_match($regex, $file) )
-					$ret[] = $file;
+				if( preg_match($regex, $file->path) )
+					$ret[] = $file->path;
 			return $ret;
 		}
 	}
@@ -99,13 +104,18 @@ class Folder extends FileSystemElement
 		parent::get();
 		
 		if( empty($regex) )
-			return $this->folders;
+		{
+			$ret = array();
+			foreach( $this->folders as $folder )
+				$ret[] = $folder->path;
+			return $ret;
+		}
 		else
 		{
 			$ret = array();
 			foreach( $this->folders as $folder )
-				if( preg_match($regex, $folder) )
-					$ret[] = $folder;
+				if( preg_match($regex, $folder->path) )
+					$ret[] = $folder->path;
 			return $ret;
 		}
 	}
@@ -115,8 +125,8 @@ class Folder extends FileSystemElement
 	{
 		parent::get();
 		
-		if( isset($folders[0]) )
-			return $folders[0];
+		if( isset($this->folders[0]) )
+			return $this->folders[0]->path;
 		else
 			return false;
 	}
@@ -124,7 +134,9 @@ class Folder extends FileSystemElement
 	// supprime le dossier récursivement
 	function delete()
 	{
-		$fs = array_merge($files, $folders);
+		$this->open();
+		
+		$fs = array_merge($this->files, $this->folders);
 		
 		foreach($fs as $fse)
 			$fse->delete();

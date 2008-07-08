@@ -25,6 +25,9 @@
  *
 ###################################################*/
 
+define('OPEN_NOW', true);
+define('OPEN_AFTER', false);
+
 // FileSystemElement
 class FileSystemElement
 {
