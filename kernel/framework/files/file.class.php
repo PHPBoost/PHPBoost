@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('fse.class.php');
+require_once(PATH_TO_ROOT . 'kernel/framework/files/fse.class.php');
 
 define('ERASE', false);
 define('ADD', true);
@@ -33,7 +33,7 @@ define('ADD', true);
 // fonction de gestion des fichiers
 class File extends FileSystemElement
 {
-	## Public Attributes ##
+	## Private Attributes ##
 	var $lines = array();
 	var $contents;
 	

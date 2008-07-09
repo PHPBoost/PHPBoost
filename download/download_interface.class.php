@@ -121,7 +121,7 @@ class DownloadInterface extends ModuleInterface
         require_once(PATH_TO_ROOT . '/kernel/framework/note.class.php');
         $Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
         $Tpl->Assign_vars(array(
-            'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER)),
+            'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
             'U_LINK' => transid(PATH_TO_ROOT . '/download/download.php?id=' . $result['id']),
             'U_IMG' => $result['image'],
             'E_TITLE' => strprotect($result['title']),

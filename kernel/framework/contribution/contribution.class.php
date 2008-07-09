@@ -25,8 +25,13 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/contribution_panel/contribution_panel.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/contribution/contribution_panel.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+
+define('CONTRIBUTION_STATUS_UNREAD', 1);
+define('CONTRIBUTION_STATUS_BEING_PROCESSING', 2);
+define('CONTRIBUTION_STATUS_PROCESSED', 3);
+
 
 //Fonction d'importation/exportation de base de donnée.
 class Contribution
@@ -34,6 +39,7 @@ class Contribution
 	## Public ##
 	function Contribution()
 	{
+		$this->current_status = CONTRIBUTION_STATUS_UNREAD;
 	}
 	
 	//Entitled setter
@@ -49,30 +55,30 @@ class Contribution
 	}
 	
 	//Sets a relative URL (from the root of the site)
-	function set_url($url)
+	function set_fixing_url($fixing_url)
 	{
-		$this->url = $url;
+		$this->fixing_url = $fixing_url;
 	}
 	
 	//Module setter
-	function set_module($entitled)
+	function set_module($module)
 	{
 		$this->module = $module;
 	}
 
-	// Status setter
-	function set_status($new_status)
+	// current_status setter
+	function set_current_status($new_current_status)
 	{
-		if( in_array($new_status, array(CONTRIBUTION_STATUS_NOT_READ, CONTRIBUTION_STATUS_PROCESSING, CONTRIBUTION_STATUS_FIXED) )
+		if( in_array($new_current_status, array(CONTRIBUTION_current_status_NOT_READ, CONTRIBUTION_current_status_PROCESSING, CONTRIBUTION_current_status_FIXED)) )
 		{
-			$this->status = $new_status;
+			$this->current_status = $new_current_status;
 			//If we just come to fix it, we assign the fixing date
-			if( $new_status == CONTRIBUTION_STATUS_FIXED )
+			if( $new_current_status == CONTRIBUTION_current_status_FIXED )
 				$this->fixing_date = new Date();
 		}
 		//Default
 		else
-			$this->status = CONTRIBUTION_STATUS_NOT_READ;
+			$this->current_status = CONTRIBUTION_current_status_NOT_READ;
 	}
 		
 	//Creation date setter
@@ -102,22 +108,49 @@ class Contribution
 			die('<strong>Contribution::set_auth error</strong> : parameter 1 expected to be array and ' . gettype($date) . ' given');
 	}
 	
+	//Poster_id setter
+	function set_poster_id($poster_id)
+	{
+		$this->poster_id = $poster_id;
+	}
+
+	//Fixer id setter
+	function set_fixer_id($fixer_id)
+	{
+		$this->fixer_id = $fixer_id;
+	}
+	
 	// Getters
 	function get_id() { return $this->id; }
 	function get_entitled() { return $this->entitled; }
 	function get_description() { return $this->description; }
-	function get_url() { return $this->url; }
+	function get_fixing_url() { return $this->fixing_url; }
 	function get_module() { return $this->module; }
-	function get_status() { return $this->status; }
+	function get_current_status() { return $this->current_status; }
 	function get_creation_date() { return $this->creation_date; }
 	function get_fixing_date() { return $this->fixing_date; }
 	function get_auth() { return $this->auth; }
+	function get_poster_id() { return $this->poster_id; }
+	function get_fixer_id() { return $this->fixer_id; }
 	
+	function get_status_name()
+	{
+		switch($this->current_status)
+		{
+			case CONTRIBUTION_STATUS_UNREAD:
+				return $LANG['contribution_status_unread'];
+			case CONTRIBUTION_STATUS_BEING_PROCESSING:
+				return $LANG['contribution_status_being_processing'];
+			case CONTRIBUTION_STATUS_PROCESSED:
+				return $LANG['contribution_status_processed'];
+		}
+	}
+	//Db creation
 	function create_in_db()
 	{
 		global $Sql;
 		$this->creation_date = new Date();
-		$Sql->Query_inject("INSERT INTO ".PREFIX."contributions (entitled, description, url, module, status, creation_date, fixing_date, auth) VALUES (" . $entitled . "', '" . $description . "', '" . $url . "', '" . $module . "', '" . $status . "', '" . $this->creation_date->get_timestamp() . "', 0, '" . addslashes(serialize($this->auth)) . "')", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."contributions (entitled, description, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id) VALUES ('" . $this->entitled . "', '" . $this->description . "', '" . $this->fixing_url . "', '" . $this->module . "', '" . $this->current_status . "', '" . $this->creation_date->get_timestamp() . "', 0, '" . (!empty($this->auth) ? addslashes(serialize($this->auth)) : '') . "', '" . $this->poster_id . "', '" . $this->fixer_id . "')", __LINE__, __FILE__);
 		$this->id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."contributions");
 	}
 	
@@ -126,7 +159,7 @@ class Contribution
 		global $Sql;
 		// If it exists already in the data base
 		if( $this->id > 0 )
-			$Sql->Query_inject("UPDATE ".PREFIX."contributions SET entitled = '" . $entitled . "', description = '" . $description . "', url = '" . $url . "', module = '" . $module . "', status = '" . $status . "', creation_date = '" . $creation_date->to_timestamp() . "', fixing_date = '" . $fixing_date->get_timestamp() . "', auth = '" . addslashes(serialize($this->auth)) . "') WHERE id = '" . $this->id . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."contributions SET entitled = '" . $this->entitled . "', description = '" . $this->description . "', fixing_url = '" . $this->fixing_url . "', module = '" . $this->module . "', current_status = '" . $this->current_status . "', creation_date = '" . $this->creation_date->to_timestamp() . "', fixing_date = '" . $this->fixing_date->get_timestamp() . "', auth = '" . addslashes(serialize($this->auth)) . "', poster_id = '" . $this->poster_id . "', fixer_id = '" . $this->fixer_id . "' WHERE id = '" . $this->id . "'", __LINE__, __FILE__);
 	}
 	
 	function delete_in_db()
@@ -137,16 +170,34 @@ class Contribution
 		$this->id = 0;
 	}
 	
+	//Construction of a contribution from database
+	function build_from_db($id, $entitled, $description, $fixing_url, $module, $current_status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id)
+	{
+		$this->id = $id;
+		$this->entitled = $entitled;
+		$this->description = $description;
+		$this->fixing_url = $fixing_url;
+		$this->module = $module;
+		$this->current_status = $current_status;
+		$this->creation_date = $creation_date;
+		$this->fixing_date = $fixing_date;
+		$this->auth = $auth;
+		$this->poster_id = $poster_id;
+		$this->fixer_id = $fixer_id;
+	}
+	
 	## Private ##
 	var $id;
 	var $entitled;
 	var $description;
-	var $url;
+	var $fixing_url;
 	var $module;
-	var $status;
+	var $current_status = CONTRIBUTION_STATUS_UNREAD;
 	var $creation_date;
 	var $fixing_date;
 	var $auth;
+	var $poster_id;
+	var $fixer_id;
 }
 
 ?>

@@ -141,7 +141,7 @@ class Date
 	}
 	
 	// Fonction qui retourne la date formatée
-	function Format_date($format, $referencial_timezone = TIMEZONE_USER)
+	function format($format, $referencial_timezone = TIMEZONE_USER)
 	{
 		global $LANG, $CONFIG;
 		

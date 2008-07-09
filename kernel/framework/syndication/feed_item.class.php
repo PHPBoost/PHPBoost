@@ -42,9 +42,9 @@ class FeedItem
     function get_title() { return $this->title; }
     function get_link() { return $this->link; }
     function get_guid() { return $this->guid; }
-    function get_date() { return $this->date->format_date(DATE_FORMAT_TINY, TIMEZONE_USER); }
-    function get_date_rfc822() { return $this->date->format_date(DATE_RFC822_F, TIMEZONE_USER); }
-    function get_date_rfc3339() { return $this->date->format_date(DATE_RFC3339_F, TIMEZONE_USER); }
+    function get_date() { return $this->date->format(DATE_FORMAT_TINY, TIMEZONE_USER); }
+    function get_date_rfc822() { return $this->date->format(DATE_RFC822_F, TIMEZONE_USER); }
+    function get_date_rfc3339() { return $this->date->format(DATE_RFC3339_F, TIMEZONE_USER); }
     function get_desc() { return $this->desc; }
     function get_image_url() { return $this->image_url; }
     

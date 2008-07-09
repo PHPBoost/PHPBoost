@@ -204,6 +204,27 @@ INSERT INTO `phpboost_configs` VALUES (29, 'download', 'a:6:{s:12:"nbr_file_max"
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `phpboost_contributions`
+--
+CREATE TABLE `phpboost_contributions` (
+  `id` int(11) NOT NULL auto_increment,
+  `entitled` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `fixing_url` varchar(255) NOT NULL,
+  `module` varchar(100) NOT NULL,
+  `current_status` tinyint(3) NOT NULL default '1',
+  `creation_date` int(11) NOT NULL,
+  `fixing_date` int(11) NOT NULL,
+  `auth` text NOT NULL,
+  `poster_id` int(11) NOT NULL,
+  `fixer_id` int(11) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `phpboost_download`
 --
 

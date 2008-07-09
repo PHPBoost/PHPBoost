@@ -25,13 +25,13 @@
  *
 ###################################################*/
 
-require_once('fse.class.php');
-require_once('file.class.php');
+require_once(PATH_TO_ROOT . 'kernel/framework/files/fse.class.php');
+require_once(PATH_TO_ROOT . 'kernel/framework/files/file.class.php');
 
 // gestion des dossiers
 class Folder extends FileSystemElement
 {
-	## Public Attributes ##
+	## Private Attributes ##
 	var $files = array();
 	var $folders = array();
 	

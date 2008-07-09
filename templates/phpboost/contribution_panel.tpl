@@ -1,53 +1,61 @@
-	# START contributions_list #
+	# IF C_CONTRIBUTION_LIST #
 		<table class="module_table">
 			<tr>
-				<th colspan="5">
-					{L_CONRIBUTION_PANEL}
+				<th>
+					{L_ENTITLED}Intitulé
+				</th>
+				<th>
+					{L_MODULE}Module
+				</th>
+				<th>
+					{L_STATUS}Statut
+				</th>
+				<th>
+					{L_CREATION_DATE}Date de création
+				</th>
+				<th>
+					{L_FIXING_DATE}Date de traitement
+				</th>
+				<th>
+					{L_POSTER}Contributeur
+				</th>
+				<th>
+					{L_FIXER}Responsable
+				</th>
+				<th>
+					{L_ACTIONS}Actions
 				</th>
 			</tr>
-			<tr>
-				<td class="row3" style="text-align:center;">
-					{contributions_list.TITLE_ASC} {L_TITLE} {contributions_list.TITLE_DESC}
-				</td>
-				<td class="row3" style="text-align:center;">
-					{contributions_list.CONTRIBUTOR_ASC} {L_CONTRIBUTOR} {contributions_list.CONTRIBUTOR_DESC}
-				</td>
-				<td class="row3" style="text-align:center;">
-					{contributions_list.STATUS_ASC} {L_STATUS} {contributions_list.STATUS_DESC}
-				</td>
-				<td class="row3" style="text-align:center;">
-					{contributions_list.TIMESTAMP_ASC} {L_DATE} {contributions_list.TIMESTAMP_DESC}
-				</td>
-				<td class="row3" style="text-align:center;">
-					{L_COMS}
-				</td>
-			</tr>
-			# START contributions_list.item #
+			# START contributions #
 			<tr>
 				<td class="row1">
-				<a href="{contributions_list.item.U_ITEM}">{contributions_list.item.TITLE}</a>
+					{contributions.ENTITLED}
 				</td>
-				<td class="row1" style="text-align:center;">
-					<a href="{contributions_list.item.U_MEMBER}">{contributions_list.item.MEMBER}</a>
+				<td class="row1">
+					{contributions.MODULE}
 				</td>
-				<td class="row1" style="text-align:center;">
-					{contributions_list.item.STATUS}
+				<td class="row1">
+					{contributions.STATUS}
 				</td>
-				<td class="row1" style="text-align:center;">
-					{contributions_list.item.TIME}
+				<td class="row1">
+					{contributions.CREATION_DATE}
 				</td>
-				<td class="row1" style="text-align:center;">
-					{contributions_list.item.COMS_NUMBER}
+				<td class="row1">
+					{contributions.FIXING_DATE}
+				</td>
+				<td class="row1">
+					{contributions.POSTER}
+				</td>
+				<td class="row1">
+					{contributions.FIXER}
+				</td>
+				<td class="row1">
+					{contributions.ACTIONS}
 				</td>
 			</tr>	
 			# END contributions_list.item #
-			<tr>
-				<td class="row2" colspan="5" style="text-align:center;">
-					&nbsp;{contributions_list.PAGINATION}
-				</td>
-			</tr>
 		</table>
-	# END contributions_list #
+	# ENDIF #
 
 	# START contribution #
 		<table class="module_table">

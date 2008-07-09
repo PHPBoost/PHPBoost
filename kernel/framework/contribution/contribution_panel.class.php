@@ -25,15 +25,15 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/contribution_panel/contribution.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/contribution/contribution.class.php');
 
 define('CONTRIBUTION_STATUS_NOT_READ', 1);
 define('CONTRIBUTION_STATUS_PROCESSING', 2);
 define('CONTRIBUTION_STATUS_SETTLED', 3);
 
-class Contribution_panel
+class ContributionPanel
 {
-	function Contribution_panel()
+	function ContributionPanel()
 	{
 		
 	}

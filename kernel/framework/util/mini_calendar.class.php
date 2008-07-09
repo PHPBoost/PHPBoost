@@ -66,7 +66,7 @@ class Mini_calendar
 		$template = new Template('framework/mini_calendar.tpl');
 		
 		$template->Assign_vars(array(
-			'DEFAULT_DATE' => $this->date->Format_date(DATE_FORMAT_SHORT),
+			'DEFAULT_DATE' => $this->date->format(DATE_FORMAT_SHORT),
 			'THEME' => $CONFIG['theme'],
 			'CALENDAR_ID' => 'calendar_' . $this->num_instance,
 			'CALENDAR_NUMBER' => (string)$this->num_instance,
