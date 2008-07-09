@@ -24,8 +24,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
 ###################################################*/
-global $Cache;
-$Cache->Load_file('faq');
+
 include_once(PATH_TO_ROOT . '/kernel/framework/content/categories.class.php');
 
 define('DO_NOT_GENERATE_CACHE', false);
