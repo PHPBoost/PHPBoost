@@ -168,6 +168,9 @@ class Note
 	{
 		global $CONFIG;
 		
+		if( $notation_scale == 0 )
+			return '';
+			
 		$display_note = '';
 		if( $num_stars_display > 0 )
 		{
