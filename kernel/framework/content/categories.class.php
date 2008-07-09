@@ -350,7 +350,7 @@ class CategoriesManagement
 
 	//Method which builds the list of categories and links to makes operations to administrate them (delete, move, add...), it's return string is ready to be displayed
 	//This method doesn't allow you tu use templates, it's not so important because you are in the administration panel
-	function Build_categories_administration_interface($ajax_mode = NORMAL_MODE, &$category_template = NULL)
+	function Build_categories_administration_interface($ajax_mode = NORMAL_MODE, $category_template = NULL)
 	{
 		global $CONFIG, $LANG;
 		
