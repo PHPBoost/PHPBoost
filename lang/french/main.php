@@ -546,6 +546,14 @@ S\'il s\'agit d\'une erreur veuillez contacter l\'administrateur du site.
 
 %s';
 
+
+//Panneau de contribution
+$LANG['contribution_panel'] = 'Panneau de contributions';
+
+$LANG['contribution_status_unread'] = 'Non traitée';
+$LANG['contribution_status_being_processed'] = 'En cours';
+$LANG['contribution_status_processed'] = 'Traitée';
+
 //Barre de chargement.
 $LANG['query_loading'] = 'Chargement de la requête au serveur';
 $LANG['query_sent'] = 'Requête envoyée au serveur, attente d\'une réponse';

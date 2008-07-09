@@ -514,10 +514,10 @@ function strtodate($str, $date_format)
 {
     list($month, $day, $year) = array(0, 0, 0);
     $array_date = explode('/', $str);
-    $array_format_date = explode('/', $date_format);
+    $array_format = explode('/', $date_format);
     for($i = 0; $i < 3; $i++)
     {
-        switch($array_format_date[$i])
+        switch($array_format[$i])
         {
             case 'DD':
             $day = (isset($array_date[$i])) ? numeric($array_date[$i]) : 0;
