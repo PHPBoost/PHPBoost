@@ -28,9 +28,9 @@
 require_once(PATH_TO_ROOT . '/kernel/framework/contribution/contribution_panel.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 
-define('CONTRIBUTION_STATUS_UNREAD', 1);
-define('CONTRIBUTION_STATUS_BEING_PROCESSING', 2);
-define('CONTRIBUTION_STATUS_PROCESSED', 3);
+define('CONTRIBUTION_STATUS_UNREAD', 0);
+define('CONTRIBUTION_STATUS_BEING_PROCESSING', 1);
+define('CONTRIBUTION_STATUS_PROCESSED', 2);
 
 
 //Fonction d'importation/exportation de base de donnée.
@@ -40,6 +40,8 @@ class Contribution
 	function Contribution()
 	{
 		$this->current_status = CONTRIBUTION_STATUS_UNREAD;
+		$this->creation_date = new Date();
+		$this->fixing_date = new Date();
 	}
 	
 	//Entitled setter
@@ -135,6 +137,8 @@ class Contribution
 	
 	function get_status_name()
 	{
+		global $LANG;
+		
 		switch($this->current_status)
 		{
 			case CONTRIBUTION_STATUS_UNREAD:
@@ -145,6 +149,14 @@ class Contribution
 				return $LANG['contribution_status_processed'];
 		}
 	}
+	
+	function get_module_name()
+	{
+		global $CONFIG;
+		$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $this->module . '/lang/', $CONFIG['lang']);
+		return $module_ini['name'];
+	}
+	
 	//Db creation
 	function create_in_db()
 	{
@@ -168,6 +180,22 @@ class Contribution
 		$Sql->Query_inject("DELETE FROM ".PREFIX."contributions WHERE id = '" . $this->id . "'", __LINE__, __FILE__);
 		//We reset the id
 		$this->id = 0;
+	}
+	
+	function load_from_db($id_contrib)
+	{
+		global $Sql;
+		
+		$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, description
+		FROM ".PREFIX."contributions c
+		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
+		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
+		WHERE id = '" . $id_contrib . "'
+		ORDER BY creation_date DESC", __LINE__, __FILE__);
+		
+		$properties = $Sql->sql_fetch_assoc($result);
+		
+		$this->build_from_db($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['fixing_date']), $properties['auth'], $properties['poster_id'], $properties['fixer_id']);
 	}
 	
 	//Construction of a contribution from database

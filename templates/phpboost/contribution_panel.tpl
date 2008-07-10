@@ -28,28 +28,36 @@
 			</tr>
 			# START contributions #
 			<tr>
-				<td class="row1">
-					{contributions.ENTITLED}
+				<td class="row1" style="text-align:center;">
+					<a href="{contributions.U_CONSULT}">{contributions.ENTITLED}</a>
 				</td>
-				<td class="row1">
+				<td class="row1" style="text-align:center;">
 					{contributions.MODULE}
 				</td>
-				<td class="row1">
+				<td class="row1" style="text-align:center;">
 					{contributions.STATUS}
 				</td>
-				<td class="row1">
+				<td class="row1" style="text-align:center;">
 					{contributions.CREATION_DATE}
 				</td>
-				<td class="row1">
+				<td class="row1" style="text-align:center;">
+					# IF contributions.C_FIXED #
 					{contributions.FIXING_DATE}
+					# ELSE #
+					-
+					# ENDIF #
 				</td>
-				<td class="row1">
-					{contributions.POSTER}
+				<td class="row1" style="text-align:center;">
+					<a href="{contributions.U_POSTER_PROFILE}">{contributions.POSTER}</a>
 				</td>
-				<td class="row1">
-					{contributions.FIXER}
+				<td class="row1" style="text-align:center;">
+					# IF contributions.C_FIXED #
+					<a href="{contributions.U_FIXER_PROFILE}">{contributions.FIXER}</a>
+					# ELSE #
+					-
+					# ENDIF #
 				</td>
-				<td class="row1">
+				<td class="row1" style="text-align:center;">
 					{contributions.ACTIONS}
 				</td>
 			</tr>	
@@ -57,66 +65,17 @@
 		</table>
 	# ENDIF #
 
-	# START contribution #
-		<table class="module_table">
-			<tr>
-				<th colspan="2">
-					{L_CONTRIBUTION}
-				</th>
-			</tr>
-			# IF C_ERROR_HANDLER #
-			<tr>
-				<td colspan="2">
-					<span id="errorh"></span>
-					<div class="{ERRORH_CLASS}">
-						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-					</div>
-				</td>
-			</tr>
-			# ENDIF #
-			# START contribution.properties #
-			<tr>
-				<td class="row3">
-					{L_TITLE}
-				</td>
-				<td class="row1">
-					{contribution.properties.TITLE}
-				</td>
-			</tr>
-			<tr>
-				<td class="row3">
-					{L_MODULE}
-				</td>
-				<td class="row1">
-					{contribution.properties.MODULE} - <a href="{contribution.properties.URL}">{L_VIEW_CONTRIBUTION}</a>
-				</td>
-			</tr>
-			<tr>
-				<td class="row3">
-					{L_NOTIFICATIONS}
-				</td>
-				<td class="row1">
-					{contribution.properties.NOTIFICATIONS}
-				</td>
-			</tr>
-			<tr>
-				<td class="row3">
-					{L_STATUS}
-				</td>
-				<td class="row1">
-					{contribution.properties.STATUS}
-					<br />
-					{contribution.properties.TREAT}
-					<br />{L_EXPLAIN_TREAT}
-				</td>
-			</tr>
-			# END contribution.properties #
-			<tr>
-				<td class="row2" colspan="2">
-					&nbsp;
-				</td>
-			</tr>
-		</table>
-		
-		<br /><br /><br />
-	# END contribution #
+# IF C_CONSULT_CONTRIBUTION #
+	<fieldset>
+		<legend>
+		</legend>
+		<dl>
+			<dt>
+				Intitulé
+			</dt>
+			<dd>
+				{ENTITLED}
+			</dd>
+		</dl>
+	</fieldset>
+# ENDIF #
