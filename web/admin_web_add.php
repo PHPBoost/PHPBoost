@@ -92,7 +92,7 @@ elseif( !empty($_POST['previs']) )
 		'COMPT' => $compt,
 		'CHECK_ENABLED' => $aprob_enable,
 		'CHECK_DISABLED' => $aprob_disable,
-		'KERNEL_EDITOR' => display_editor()
+		'KERNEL_EDITOR' => display_editor(),
 		'L_NOTE' => $LANG['note'],
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
@@ -145,7 +145,7 @@ else
 		'COMPT' => '0',
 		'CHECK_ENABLED' => 'checked="ckecked"',
 		'CHECK_DISABLED' => '',
-		'KERNEL_EDITOR' => display_editor()
+		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
 		'L_REQUIRE_CAT' => $LANG['require_cat'],
