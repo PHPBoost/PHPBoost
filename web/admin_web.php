@@ -54,7 +54,7 @@ if( !empty($id) && !$del )
 		'CONTENTS' => unparse($row['contents']),
 		'URL' => $row['url'],
 		'COMPT' => $row['compt'],
-		'KERNEL_EDITOR' => display_editor()
+		'KERNEL_EDITOR' => display_editor(),
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_CAT' => $LANG['cat_management'],
@@ -238,7 +238,7 @@ else
 		'PAGINATION' => $Pagination->Display_pagination('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'KERNEL_EDITOR' => display_editor()
+		'KERNEL_EDITOR' => display_editor(),
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_CAT' => $LANG['cat_management'],
