@@ -356,6 +356,11 @@ class Sql
 		return trim($query);
 	}
 	
+	function get_dbms_version()
+	{
+		return 'MySQL ' . mysql_get_server_info();
+	}
+	
 	## Private Methods ##
 	//Gestion des erreurs.
 	function sql_error($query, $errstr, $errline = '', $errfile = '') 

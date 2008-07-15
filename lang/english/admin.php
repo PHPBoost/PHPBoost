@@ -58,7 +58,6 @@ $LANG['stats'] = 'Statistics';
 $LANG['errors'] = 'Archived errors';
 $LANG['server'] = 'Server';
 $LANG['phpinfo'] = 'PHP info';
-$LANG['system_report'] = 'System report';
 $LANG['cache'] = 'Cache';
 $LANG['punishement'] = 'Punishement';
 $LANG['extend_menu'] = 'Extend menu';
@@ -372,6 +371,19 @@ $LANG['new_version'] = 'New version';
 $LANG['installed_version'] = 'Installed version';
 $LANG['e_config_conflict'] = 'Conflict with module configuration, impossible to install!';
 
+//System report
+$LANG['system_report'] = 'System report';
+$LANG['server'] = 'Server';
+$LANG['php_version'] = 'PHP version';
+$LANG['dbms_version'] = 'DBMS version';
+$LANG['dg_library'] = 'GD Library';
+$LANG['url_rewriting'] = 'URL rewriting';
+$LANG['register_globals_option'] = '<em>register globals</em> option';
+$LANG['phpboost_config'] = 'PHPBoost configuration';
+$LANG['kernel_version'] = 'Kernel version';
+$LANG['output_gz'] = 'Output pages compression';
+$LANG['directories_auth'] = 'Directories authorization';
+
 //Gestion de l'upload
 $LANG['explain_upload_img'] = 'Image format must be jpg, gif, png or bmp';
 $LANG['explain_archive_upload'] = 'Archive file must be zip or tar format';
@@ -413,7 +425,7 @@ $LANG['use_tpl'] = 'Use templates structure';
 //Gestion du contenu
 $LANG['content_config'] = 'Content';
 $LANG['content_config_extend'] = 'Content configuration';
-$LANG['default_language'] = 'Default formatting language on the website
+$LANG['default_formatting_language'] = 'Default formatting language on the website
 <span style="display:block;">Every user will be able to choose</span>';
 $LANG['content_language_config'] = 'Formatting language';
 $LANG['content_html_language'] = 'HTML language';

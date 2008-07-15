@@ -121,7 +121,7 @@ elseif( $check_advanced && empty($_POST['advanced']) )
 		'GZHANDLER_DISABLED' => ($CONFIG['ob_gzhandler'] == 0) ? 'checked="checked"' : '',
 		'SITE_COOKIE' => !empty($CONFIG['site_cookie']) ? $CONFIG['site_cookie'] : 'session',
 		'SITE_SESSION' => !empty($CONFIG['site_session']) ? $CONFIG['site_session'] : '3600',
-		'SITE_SESSION_VISIT' => !empty($CONFIG['site_session_invit']) ? $CONFIG['site_session_invit'] : '300',		
+		'SITE_SESSION_VISIT' => !empty($CONFIG['site_session_invit']) ? $CONFIG['site_session_invit'] : '300',	
 		'L_SECONDS' => $LANG['unit_seconds'],
 		'L_REQUIRE_SERV' => $LANG['require_serv'],
 		'L_REQUIRE_NAME' => $LANG['require_name'],
