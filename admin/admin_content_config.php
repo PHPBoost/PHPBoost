@@ -49,7 +49,7 @@ else
 	$template->assign_vars(array(
 		'SELECT_AUTH_USE_HTML' => $Group->Generate_select_auth(1, $CONFIG['html_auth']),
 		'L_CONTENT_CONFIG' => $LANG['content_config_extend'],
-		'L_DEFAULT_LANGUAGE' => $LANG['default_language'],
+		'L_DEFAULT_LANGUAGE' => $LANG['default_formatting_language'],
 		'L_LANGUAGE_CONFIG' => $LANG['content_language_config'],
 		'L_HTML_LANGUAGE' => $LANG['content_html_language'],
 		'L_AUTH_USE_HTML' => $LANG['content_auth_use_html'],

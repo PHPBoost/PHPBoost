@@ -58,7 +58,6 @@ $LANG['stats'] = 'Statistiques';
 $LANG['errors'] = 'Erreurs archivées';
 $LANG['server'] = 'Serveur';
 $LANG['phpinfo'] = 'PHP info';
-$LANG['system_report'] = 'Rapport système';
 $LANG['cache'] = 'Cache';
 $LANG['punishement'] = 'Sanction';
 $LANG['extend_menu'] = 'Menu étendu';
@@ -274,7 +273,7 @@ $LANG['last_update'] = 'Dernière mise à jour';
 //Config
 $LANG['config_main'] = 'Configuration générale';
 $LANG['config_advanced'] = 'Configuration avancée';
-$LANG['serv_name'] = 'Nom du serveur';
+$LANG['serv_name'] = 'URL du serveur';
 $LANG['serv_path'] = 'Chemin de PHPBoost';
 $LANG['serv_path_explain'] = 'Vide par défaut : site à la racine du serveur';
 $LANG['site_name'] = 'Nom du site';
@@ -302,7 +301,7 @@ $LANG['bench_explain'] = 'Affiche le temps de rendu de la page et le nombre de r
 $LANG['theme_author'] = 'Info sur le thème';
 $LANG['theme_author_explain'] = 'Affiche des informations sur le thème dans le pied de page';
 $LANG['user_connexion'] = 'Connexion utilisateurs';
-$LANG['cookie_name'] = 'Nom du cookie';
+$LANG['cookie_name'] = 'Nom du cookie des sessions';
 $LANG['session_time'] = 'Durée de la session';
 $LANG['session_time_explain'] = '3600 secondes conseillé';
 $LANG['session invit'] = 'Durée utilisateurs actifs';
@@ -372,6 +371,19 @@ $LANG['new_version'] = 'Nouvelle version';
 $LANG['installed_version'] = 'Version installée';
 $LANG['e_config_conflict'] = 'Conflit avec la configuration du module, installation impossible!';
 
+//Rapport système
+$LANG['system_report'] = 'Rapport système';
+$LANG['server'] = 'Serveur';
+$LANG['php_version'] = 'Version de PHP';
+$LANG['dbms_version'] = 'Version du SGBD';
+$LANG['dg_library'] = 'Librairie GD';
+$LANG['url_rewriting'] = 'Réécriture des URL';
+$LANG['register_globals_option'] = 'Option <em>register globals</em>';
+$LANG['phpboost_config'] = 'Configuration de PHPBoost';
+$LANG['kernel_version'] = 'Version du noyau';
+$LANG['output_gz'] = 'Compression des pages';
+$LANG['directories_auth'] = 'Authorisation des répertoires';
+
 //Gestion de l'upload
 $LANG['explain_upload_img'] = 'L\'image uploadée doit être au format jpg, gif, png ou bmp';
 $LANG['explain_archive_upload'] = 'L\'archive uploadée doit être au format zip ou tar';
@@ -413,7 +425,7 @@ $LANG['use_tpl'] = 'Utiliser la structure des templates';
 //Gestion du contenu
 $LANG['content_config'] = 'Contenu';
 $LANG['content_config_extend'] = 'Configuration du contenu';
-$LANG['default_language'] = 'Langage de formatage du contenu par défaut du site
+$LANG['default_formatting_language'] = 'Langage de formatage du contenu par défaut du site
 <span style="display:block;">Chaque utilisateur pourra choisir</span>';
 $LANG['content_language_config'] = 'Langage de formatage';
 $LANG['content_html_language'] = 'Langage HTML';

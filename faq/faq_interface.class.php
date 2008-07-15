@@ -102,7 +102,9 @@ class FaqInterface extends ModuleInterface
      *  Renvoie la requête de recherche
      */
     {
-        global $Sql;
+        global $Sql, $Cache;
+		$Cache->load_file('faq');
+		
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         require_once(PATH_TO_ROOT . '/faq/faq_cats.class.php');
         $Cats = new FaqCats();
