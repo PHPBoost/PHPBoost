@@ -34,7 +34,9 @@ CREATE TABLE `phpboost_articles` (
   `nbr_com` int(11) unsigned NOT NULL default '0',
   `lock_com` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
-  KEY `idcat` (`idcat`)
+  KEY `idcat` (`idcat`),
+  FULLTEXT KEY `title` (`title`),
+  FULLTEXT KEY `contents` (`contents`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- 
