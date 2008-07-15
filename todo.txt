@@ -43,22 +43,20 @@ Forum :
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[-] Réparer la liste des news du site officiel sur l'index de l'admin.
 [-] Langue dans les flux rss (Remlacer "Le" par la langue).
+[-] Flux gestion du cache (pour le moment en dur).
 [-] Réhauser l'image des dossiers.
 [-] Faire les miniatures pour les thèmes.
-[-] Renommer les méthodes et classes (y compris CategoriesManagement)
 
 [-] Système de mise à jour du noyau et des modules:
     - Langues ? (à priori non)
     - Templates ? (à priori non aussi) (pb image avec langue)
     - Changelog des fichiers
-[-] Flux gestion du cache (pour le moment en dur).
-[-] Recherche : harmoniser la pertinence des modules dans la recherche. Prévoir un système d'importance de la recherche dans l'administration selon le module.
+
+[-] Renommer les méthodes et classes (y compris CategoriesManagement)
+	(Pas important pour la béta, sera fait pendant)
 
 ------------------------------------ MODULES -----------------------------------
-Search :
-[+] à terminer module article.
 
 ################################################################################
 
