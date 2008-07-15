@@ -3,7 +3,7 @@
  *                              news_interface.class.php
  *                            -------------------
  *   begin                : April 9, 2008
- *   copyright            : (C) 2008 LoÃ¯c Rouchon
+ *   copyright            : (C) 2008 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -30,7 +30,7 @@ require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.ph
 
 define('NEWS_MAX_SEARCH_RESULTS', 100);
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class NewsInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -39,14 +39,14 @@ class NewsInterface extends ModuleInterface
         parent::ModuleInterface('news');
     }
     
-    //RÃ©cupÃ©ration du cache.
+    //Récupération du cache.
 	function get_cache()
 	{
 		global $Sql;
 
 		$news_config = 'global $CONFIG_NEWS;' . "\n";
 		
-		//RÃ©cupÃ©ration du tableau linÃ©arisÃ© dans la bdd.
+		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_NEWS = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'news'", __LINE__, __FILE__));
 		
 		$news_config .= '$CONFIG_NEWS = ' . var_export($CONFIG_NEWS, true) . ';' . "\n";
@@ -54,12 +54,12 @@ class NewsInterface extends ModuleInterface
 		return $news_config;
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	function on_changeday()
 	{
 		global $Sql;
 		
-		//Publication des news en attente pour la date donnÃ©e.
+		//Publication des news en attente pour la date donnée.
 		$result = $Sql->Query_while("SELECT id, start, end
 		FROM ".PREFIX."news	
 		WHERE visible != 0", __LINE__, __FILE__);
@@ -72,9 +72,9 @@ class NewsInterface extends ModuleInterface
 		}
 	}		
 	
-	function GetSearchRequest($args)
+	function get_search_request($args)
     /**
-     *  Renvoie la requÃªte de recherche
+     *  Renvoie la requête de recherche
      */
     {
         global $Sql;
@@ -84,7 +84,7 @@ class NewsInterface extends ModuleInterface
             n.id AS `id_content`,
             n.title AS `title`,
             ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS `relevance`, "
-            . $Sql->Sql_concat(PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS `link`
+            . $Sql->Sql_concat("'" . PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS `link`
             FROM " . PREFIX . "news n
             WHERE ( MATCH(n.title) AGAINST('" . $args['search'] . "') OR MATCH(n.contents) AGAINST('" . $args['search'] . "') OR MATCH(n.extend_contents) AGAINST('" . $args['search'] . "') )
                 AND visible = 1 AND ('" . time() . "' > start AND ( end = 0 OR '" . time() . "' < end ) )

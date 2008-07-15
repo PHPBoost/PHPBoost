@@ -99,7 +99,7 @@ class FaqInterface extends ModuleInterface
 	
 	function get_search_request($args)
     /**
-     *  Renvoie la requÃªte de recherche
+     *  Renvoie la requête de recherche
      */
     {
         global $Sql, $Cache;
