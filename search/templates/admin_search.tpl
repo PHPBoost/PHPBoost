@@ -52,12 +52,12 @@
                         <dd><label><input type="text" maxlength="2" size="4" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}" class="text" /></label></dd>
                     </dl>
                     <dl>
-                        <dt><label for="authorised_modules[]">* {L_AUTHORISED_MODULES}</label><br /><span>{L_AUTHORISED_MODULES_EXPLAIN}</span></dt>
+                        <dt><label for="authorized_modules[]">* {L_AUTHORIZED_MODULES}</label><br /><span>{L_AUTHORIZED_MODULES_EXPLAIN}</span></dt>
                         <dd><label>
-                            <select id="authorised_modules[]" name="authorised_modules[]" size="5" multiple="multiple" class="list_modules">
-                                # START authorised_modules #
-                                <option value="{authorised_modules.MODULE}" id="{authorised_modules.MODULE}"{authorised_modules.SELECTED}>{authorised_modules.L_MODULE_NAME}</option>
-                                # END authorised_modules #
+                            <select id="authorized_modules[]" name="authorized_modules[]" size="5" multiple="multiple" class="list_modules">
+                                # START authorized_modules #
+                                <option value="{authorized_modules.MODULE}" id="{authorized_modules.MODULE}"{authorized_modules.SELECTED}>{authorized_modules.L_MODULE_NAME}</option>
+                                # END authorized_modules #
                             </select>
                         </label></dd>
                     </dl>

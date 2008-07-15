@@ -54,7 +54,7 @@ if( !empty($_POST['valid']) )
         if( !is_array($SEARCH_CONFIG) )
             $SEARCH_CONFIG = array();
         $SEARCH_CONFIG['nb_results_per_page'] = retrieve(POST, 'nb_results_p', 15);
-        $SEARCH_CONFIG['authorised_modules'] = retrieve(POST, 'authorised_modules', array());
+        $SEARCH_CONFIG['authorized_modules'] = retrieve(POST, 'authorized_modules', array());
         
         // Enregistrement des modifications de la config
         $config_string = addslashes(serialize($CONFIG));
@@ -71,12 +71,15 @@ if( !empty($_POST['valid']) )
         $Cache->Generate_file('config');
         $Cache->Generate_module_file('search');
         
+        
+//        print_r($request);
+//        exit(0);
         redirect(HOST . SCRIPT);
     }
     else
     {
         // Configuration du module 'Search'
-        foreach( $SEARCH_CONFIG['authorised_modules'] as $module )
+        foreach( $SEARCH_CONFIG['authorized_modules'] as $module )
             $SEARCH_CONFIG['modules_weighting'][$module] = retrieve(POST, $module, 1);
         
         // Enregistrement des modifications de la config du module 'Search'
@@ -117,19 +120,19 @@ else
         $SEARCH_CONFIG['search_cache_time'] = isset($CONFIG['search_cache_time']) ? $CONFIG['search_cache_time'] : 15;
         $SEARCH_CONFIG['search_max_use'] = isset($CONFIG['search_max_use']) ? $CONFIG['search_max_use'] : 200;
         $SEARCH_CONFIG['nb_results_per_page'] = isset($SEARCH_CONFIG['nb_results_per_page']) ? $SEARCH_CONFIG['nb_results_per_page'] : 15;
-        $SEARCH_CONFIG['authorised_modules'] = isset($SEARCH_CONFIG['authorised_modules']) && is_array($SEARCH_CONFIG['authorised_modules']) ? $SEARCH_CONFIG['authorised_modules'] : array();
+        $SEARCH_CONFIG['authorized_modules'] = isset($SEARCH_CONFIG['authorized_modules']) && is_array($SEARCH_CONFIG['authorized_modules']) ? $SEARCH_CONFIG['authorized_modules'] : array();
         
         $Modules = new Modules();
         $searchModules = $Modules->get_available_modules('get_search_request');
         
         foreach( $searchModules as $module )
         {
-            if ( in_array($module->get_id(), $SEARCH_CONFIG['authorised_modules']) )
+            if ( in_array($module->get_id(), $SEARCH_CONFIG['authorized_modules']) )
                 $selected = ' selected="selected"';
             else
                 $selected = '';
 
-            $Tpl->Assign_block_vars('authorised_modules', array(
+            $Tpl->Assign_block_vars('authorized_modules', array(
                 'MODULE' => $module->get_id(),
                 'SELECTED' => $selected,
                 'L_MODULE_NAME' => ucfirst($module->get_name())
@@ -143,8 +146,8 @@ else
             'L_MAX_USE' => $LANG['max_use'],
             'L_MAX_USE_EXPLAIN' => $LANG['max_use_explain'],
             'L_CLEAR_OUT_CACHE' => $LANG['clear_out_cache'],
-            'L_AUTHORISED_MODULES' => $LANG['authorised_modules'],
-            'L_AUTHORISED_MODULES_EXPLAIN' => $LANG['authorised_modules_explain'],
+            'L_AUTHORIZED_MODULES' => $LANG['authorized_modules'],
+            'L_AUTHORIZED_MODULES_EXPLAIN' => $LANG['authorized_modules_explain'],
             'L_SEARCH_CACHE' => $LANG['search_cache'],
             'CACHE_TIME' => $SEARCH_CONFIG['search_cache_time'],
             'MAX_USE' => $SEARCH_CONFIG['search_max_use'],
@@ -154,7 +157,7 @@ else
     else
     {
         $Modules = new Modules();
-        foreach( $SEARCH_CONFIG['authorised_modules'] as $module_id )
+        foreach( $SEARCH_CONFIG['authorized_modules'] as $module_id )
         {
             $module = $Modules->get_module($module_id);
             if( !$module->got_error() )
