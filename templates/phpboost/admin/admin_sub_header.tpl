@@ -66,7 +66,13 @@
 							<li><a href="../admin/admin_cache.php" style="background-image:url(../templates/{THEME}/images/admin/cache_mini.png);">{L_CACHE}</a></li>		
 							<li><a href="../admin/admin_stats.php" style="background-image:url(../templates/{THEME}/images/admin/stats_mini.png);">{L_STATS}</a></li>
 							<li><a href="../admin/admin_errors.php" style="background-image:url(../templates/{THEME}/images/admin/errors_mini.png);">{L_ERRORS}</a></li>
-							<li><a href="../admin/admin_phpinfo.php" style="background-image:url(../templates/{THEME}/images/admin/phpinfo_mini.png);">{L_PHPINFO}</a></li>
+							<li class="extend" onmouseover="show_menu(32, 1);" onmouseout="hide_menu(1);">
+								<a href="../admin/admin_database.php" style="background-image:url(../templates/{THEME}/images/admin/server_mini.png);">{L_SERVER}</a>
+								<ul id="ssmenu32">
+									<li><a href="../admin/admin_phpinfo.php" style="background-image:url(../templates/{THEME}/images/admin/phpinfo_mini.png);">{L_PHPINFO}</a></li>
+									<li><a href="../admin/admin_system_report.php" style="background-image:url(../templates/{THEME}/images/admin/system_report_mini.png);">{L_SYSTEM_REPORT}</a></li>
+								</ul>
+							</li>
 						</ul>
 					</li>
 					<li onmouseover="show_menu(4, 0);" onmouseout="hide_menu(0);">
