@@ -128,7 +128,9 @@ class ArticlesInterface extends ModuleInterface
 	             . $Sql->Sql_concat("'" . PATH_TO_ROOT . "/articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS `link`
             FROM " . PREFIX . "articles a
             LEFT JOIN ".PREFIX."articles_cats ac ON ac.id = a.idcat
-            WHERE a.visible = 1 AND ((ac.aprob = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
+            WHERE
+            	a.visible = 1 AND ((ac.aprob = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
+            	AND (MATCH(a.title) AGAINST('" . $args['search'] . "') OR MATCH(a.contents) AGAINST('" . $args['search'] . "'))
             ORDER BY a.timestamp DESC
             " . $Sql->Sql_limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
 
