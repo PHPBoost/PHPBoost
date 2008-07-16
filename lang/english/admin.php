@@ -383,6 +383,8 @@ $LANG['phpboost_config'] = 'PHPBoost configuration';
 $LANG['kernel_version'] = 'Kernel version';
 $LANG['output_gz'] = 'Output pages compression';
 $LANG['directories_auth'] = 'Directories authorization';
+$LANG['system_report_summerization'] = 'Summarization';
+$LANG['system_report_summerization_explain'] = 'This is a summerization of the report, it will be useful for the support, when you will be asker your configuration.';
 
 //Gestion de l'upload
 $LANG['explain_upload_img'] = 'Image format must be jpg, gif, png or bmp';

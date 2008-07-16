@@ -383,6 +383,8 @@ $LANG['phpboost_config'] = 'Configuration de PHPBoost';
 $LANG['kernel_version'] = 'Version du noyau';
 $LANG['output_gz'] = 'Compression des pages';
 $LANG['directories_auth'] = 'Authorisation des répertoires';
+$LANG['system_report_summerization'] = 'Récapitulatif';
+$LANG['system_report_summerization_explain'] = 'Ceci est le récapitulatif du rapport. Cela vous sera particulièrement utile lorsque pour du support on vous demandera la configuration de votre système';
 
 //Gestion de l'upload
 $LANG['explain_upload_img'] = 'L\'image uploadée doit être au format jpg, gif, png ou bmp';
