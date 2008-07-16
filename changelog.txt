@@ -85,7 +85,8 @@
 [*] Conformation des requêtes au standard SQL.
 [*] Amélioration des taches crons.
 [*] Correction du bug d'affichage des dossiers dans le gestionnaire de fichiers.
-[*] Correction des bugs dù à l'option register_globals.
+[*] Correction des bugs dû à l'option register_globals.
+[-] Interface de rapport du système pour le support.
 
 [b]Forum[/b]
 [*] [color=red]Nouveauté:[/color] Réorganisation complète du code.
