@@ -48,12 +48,12 @@ class SearchInterface extends ModuleInterface
 		return 'global $SEARCH_CONFIG;' . "\n" . '$SEARCH_CONFIG = '.var_export($search_config, true).';';	
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalières
 	function on_changeday()
 	{
 		global $Sql;
 		
-		// DÃ©lestage du cache des recherches
+		// Délestage du cache des recherches
 		$Sql->Query_inject("TRUNCATE ".PREFIX."search_results", __LINE__, __FILE__);
 		$Sql->Query_inject("TRUNCATE ".PREFIX."search_index", __LINE__, __FILE__);
 	}
