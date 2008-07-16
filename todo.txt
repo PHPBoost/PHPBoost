@@ -5,7 +5,6 @@
 ------------------------------------- NOYAU ------------------------------------
 [-] Nouvelles options d'installation (Communautaire, Vitrine, etc).
 [-] Remplacer les "." par des "_" dans le nom de la base de données. 
-[-] Interface de rapport du système pour le support.
 [-] Supporter https dans l'installation et l'administration.
 [-] Finir le parseur BBCode (+Ajout des nouvelles balises).
 [-] Panneau de modération.

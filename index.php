@@ -117,18 +117,20 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             <div class="news_top">
                 <h3 class="title valign_middle">Le site du moment</h3>
             </div>
-            <div class="news_content">
-                <a href="http://www.mussotrail.com" title="Mussotrail"><img src="./upload/theme_cbba8.jpg" class="img_right" alt="" /></a>
-                <h3 class="sub_title">Mussotrail</h3>
+            <div class="news_content">                
+                <h3 class="sub_title">Le Lien Lacté</h3>
+				<br />
 				<p>
+					<a href="http://lelienlacte.com" title="Le lien lacté"><img src="./upload/lelienlacte.jpg" class="img_right" alt="" /></a>
+					Le Lien Lacté est un site d'information et de soutien à l'allaitement maternel créé par une maman en novembre 2002. Construit à l'origine avec un autre CMS, sa conceptrice a opté pour PHPBoost début 2008, séduite par ses possibilités aussi bien au niveau du contenu (en particulier le module de Wiki) qu'au niveau des possibilités de personnalisation grâce au système des templates.
 					<br />
-					Le site du Mussotrail, est un site d'un team de BMX et VTT évoluant dans le sud de la france.
 					<br />
-					Il s'agit du site à l'origine de PHPBoost, le projet est issu du développement de ce site.
+					Ce site est avant tout une communauté de mamans et leur propose une riche documentation sur l'allaitement maternel réunie dans le wiki rebaptisé "encyclo-lactée" (bibliographie, questions fréquentes, dossiers pratiques, témoignages, etc..) mais également une galerie de photos, un forum de discussion, des documents à télécharger au format pdf et un annuaire de liens très fourni.
 					<br />
-					Sa personnalisation poussée en fait une référence en terme de sites utilisant le moteur PHPBoost.
+					<br />
+					Le thème graphique principal à l'origine créé par un membre de l'équipe du CMS GuppY a été adapté à PHPBoost par la "webcheftaine" du site.
 					<br /><br /><br />
-					Pour visiter le site: <a href="http://www.mussotrail.com" title="Mussotrail">Mussotrail.com</a>
+					Pour visiter le site: <a href="http://lelienlacte.com" title="Mussotrail">lelienlacte.com</a>
 				</p>
             </div>
             <div class="news_bottom_l"></div>

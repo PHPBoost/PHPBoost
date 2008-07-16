@@ -67,8 +67,7 @@
 
 # IF C_CONSULT_CONTRIBUTION #
 	<fieldset>
-		<legend>
-		</legend>
+		<legend>Contribution</legend>
 		<dl>
 			<dt>
 				Intitulé
