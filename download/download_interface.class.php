@@ -270,8 +270,10 @@ class DownloadInterface extends ModuleInterface
         $tpl = new Template('download/framework/syndication/feed.tpl');
         global $DOWNLOAD_LANG;
         load_module_lang('download');
-        $tpl->Assign_vars(array('L_READ' => $DOWNLOAD_LANG['read_feed']));
-        
+		$tpl->Assign_vars(array(
+			'L_READ' => $DOWNLOAD_LANG['read_feed'],
+			'L_POSTED_ON' => $DOWNLOAD_LANG['posted_on']
+		));
         foreach( $cats as $cat )
             feeds_update_cache($this->id, $this->syndication_data($cat), $cat, $tpl);
     }

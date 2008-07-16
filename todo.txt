@@ -42,7 +42,6 @@ Forum :
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[-] Langue dans les flux rss (Remlacer "Le" par la langue).
 [-] Flux gestion du cache (pour le moment en dur).
 [-] Réhauser l'image des dossiers.
 [-] Faire les miniatures pour les thèmes.

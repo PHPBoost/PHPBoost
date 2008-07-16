@@ -219,7 +219,10 @@ class ArticlesInterface extends ModuleInterface
 		$tpl = new Template('articles/framework/syndication/feed.tpl');
 		global $LANG;
 		load_module_lang('articles');
-		$tpl->Assign_vars(array('L_READ' => $LANG['read_feed']));
+		$tpl->Assign_vars(array(
+			'L_READ' => $LANG['read_feed'],
+			'L_POSTED_ON' => $LANG['posted_on']
+		));
 
 		foreach( $cats as $cat )
 		feeds_update_cache($this->id, $this->syndication_data($cat), $cat, $tpl);
