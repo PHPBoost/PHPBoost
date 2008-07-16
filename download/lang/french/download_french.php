@@ -127,6 +127,10 @@ $DOWNLOAD_LANG['new_cat_does_not_exist'] = 'La catégorie cible n\'existe pas';
 $DOWNLOAD_LANG['infinite_loop'] = 'Vous voulez déplacer la catégorie dans une de ses catégories filles ou dans elle-même, ce qui n\'a pas de sens. Merci de choisir une autre catégorie';
 $DOWNLOAD_LANG['recount_success'] = 'Le nombre de fichiers pour chaque catégorie a été recompté avec succès.';
 
+//Syndication
+$DOWNLOAD_LANG['read_feed'] = 'Télécharger';
+$DOWNLOAD_LANG['posted_on'] = 'Le';
+
 //Erreurs
 $LANG['e_unexist_file_download'] = 'Le fichier que vous demandez n\'existe pas !';
 $LANG['e_unexist_category_download'] = 'La catégorie que vous demandez n\'existe pas !';
