@@ -374,7 +374,7 @@ class CategoriesManagement
 				'L_NO_EXISTING_CATEGORY' => $LANG['cats_managment_no_category_existing'],
 				'C_NO_CATEGORY' => true
 			));
-			return $template->parse(STRING_MODE);
+			return $template->parse(TEMPLATE_STRING_MODE);
 		}
 		
 		$template->assign_vars(array(

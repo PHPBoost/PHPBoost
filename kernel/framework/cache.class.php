@@ -385,66 +385,6 @@ class Cache
 		return $code;
 	}
 	
-	//Debug.
-	function _get_debug()
-	{
-		global $Sql;
-		
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
-		
-		//Url rewriting.
-		if( function_exists('apache_get_modules') )
-		{	
-			$get_rewrite = apache_get_modules();
-			$check_rewrite = (!empty($get_rewrite[5])) ? '1' : '0';
-		}
-		else
-			$check_rewrite = '?';
-		
-		//Variables serveur.
-		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-		if( !$server_path )
-			$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
-		$server_path = trim(str_replace('/admin', '', dirname($server_path)));
-		$server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
-
-		//Informations pour le débuggage.
-		$array_debug[] = 'PHPBoost output debug file';
-		$array_debug[] = '-------------HOST-------------';
-		$array_debug[] = 'PHP [' . phpversion() . ']';
-		$array_debug[] = 'GD [' . (@extension_loaded('gd') ? 1 : 0) . ']';
-		$array_debug[] = 'Mod Rewrite [' . $check_rewrite . ']';
-		$array_debug[] = 'Register globals [' . ((@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on') ? 1 : 0) . ']';
-		$array_debug[] = 'Server name [' . $server_name . ']';
-		$array_debug[] = 'Server path [' . $server_path . ']';
-		$array_debug[] = '-------------CONFIG-------------';
-		$array_debug[] = 'Version [' . $CONFIG['version'] . ']';
-		$array_debug[] = 'Server name [' . $CONFIG['server_name'] . ']';
-		$array_debug[] = 'Server path [' . $CONFIG['server_path'] . ']';
-		$array_debug[] = 'Theme [' . $CONFIG['theme'] . ']';
-		$array_debug[] = 'Lang [' . $CONFIG['lang'] . ']';
-		$array_debug[] = 'Editor [' . $CONFIG['editor'] . ']';
-		$array_debug[] = 'Start page [' . $CONFIG['start_page'] . ']';
-		$array_debug[] = 'Rewrite [' . $CONFIG['rewrite'] . ']';
-		$array_debug[] = 'Gz [' . $CONFIG['ob_gzhandler'] . ']';
-		$array_debug[] = 'Cookie [' . $CONFIG['site_cookie'] . ']';
-		$array_debug[] = 'Site session [' . $CONFIG['site_session'] . ']';
-		$array_debug[] = 'Site session invit [' . $CONFIG['site_session_invit'] . ']';
-		$array_debug[] = '-------------CHMOD-------------';
-		$array_debug[] = 'includes/auth/ [' . (is_writable(PATH_TO_ROOT . '/kernel/auth/') ? 1 : 0) . ']';
-		$array_debug[] = 'includes/ [' . (is_writable(PATH_TO_ROOT . '/kernel/') ? 1 : 0) . ']';
-		$array_debug[] = 'cache/ [' . (is_writable(PATH_TO_ROOT . '/cache/') ? 1 : 0) . ']';
-		$array_debug[] = 'upload/ [' . (is_writable(PATH_TO_ROOT . '/upload/') ? 1 : 0) . ']';
-		$array_debug[] = 'menus/ [' . (is_writable(PATH_TO_ROOT . '/menus/') ? 1 : 0) . ']';
-		$array_debug[] = '/ [' . (is_writable(PATH_TO_ROOT . '/') ? 1 : 0) . ']';
-		
-		$debug = '$array_debug = ' . var_export($array_debug, true) . ';' . "\n";
-		$debug .= 'echo \'<pre>\'; print_r($array_debug); echo \'</pre>\';';
-		
-		return $debug;
-	}
-	
 	//Configuration des membres
 	function _get_member()
 	{
@@ -563,7 +503,7 @@ class Cache
 	
 	## Private Attributes ##
 	//Tableau qui contient tous les fichiers supportés dans cette classe
-    var $files = array('config', 'modules', 'modules_mini', 'htaccess', 'themes', 'css', 'day', 'groups', 'debug', 'member', 'files', 'com', 'ranks', 'smileys', 'stats');
+    var $files = array('config', 'modules', 'modules_mini', 'htaccess', 'themes', 'css', 'day', 'groups', 'member', 'files', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

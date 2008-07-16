@@ -36,7 +36,10 @@ class FaqCats extends CategoriesManagement
 	//Constructor
 	function FaqCats()
 	{
-		global $FAQ_CATS;
+		global $Cache, $FAQ_CATS;
+		if( !isset($FAQ_CATS) )
+			$Cache->load_file('faq');
+		
 		parent::CategoriesManagement('faq_cats', 'faq', $FAQ_CATS);
 	}
 	
