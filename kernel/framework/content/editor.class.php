@@ -51,11 +51,20 @@ class ContentEditor
 		$this->template = $template;
 	}
 	
+	//Fonction qui renvoie le template courant
+	function get_template()
+	{
+		if( !is_object($this->template) || get_class($this->template) != 'Template' )
+			return new template('framework/content/editor.tpl');
+		else
+			return $this->template;
+	}
+	
 	## Private ##
 	var $language_type = DEFAULT_LANGUAGE; //Langage type
 	var $forbidden_tags = array();
 	var $identifier = 'contents';
-	var $template = false;
+	var $template = null;
 }
 
 ?>

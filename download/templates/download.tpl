@@ -13,7 +13,14 @@
 				# END IF #
 			</div>
 			<div class="module_contents">
-			
+				# IF C_ADD_FILE #
+					<div style="text-align:center;">
+						<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
+							<img src="../templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" />
+						</a>
+					</div>
+					<hr style="margin-top:25px; margin-bottom:25px;" />
+				# ENDIF #
 				# IF C_DESCRIPTION #
 					{DESCRIPTION}
 					<hr style="margin-top:25px;" />
@@ -115,15 +122,6 @@
 				# IF C_NO_FILE #
 					<div class="notice">
 						{L_NO_FILE_THIS_CATEGORY}
-					</div>
-				# ENDIF #
-				
-				# IF C_ADD_FILE #
-					<hr style="margin-top:25px; margin-bottom:25px;" />
-					<div style="text-align:center;">
-						<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
-							<img src="../templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" />
-						</a>
 					</div>
 				# ENDIF #
 				<div class="spacer"></div>

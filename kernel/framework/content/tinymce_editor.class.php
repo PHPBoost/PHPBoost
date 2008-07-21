@@ -39,21 +39,22 @@ class TinyMCEEditor extends ContentEditor
 	{
 		global $CONFIG, $Sql, $LANG, $Cache, $Member, $CONFIG_FILES;
 		
-		if( !is_object($this->template) || get_class($this->template) != 'Template' )
-			$Template = new Template('framework/content/editor.tpl');
+		$template = $this->get_template();
 		
 		//Chargement de la configuration.
 		$Cache->Load_file('files');
 		
-		$Template->Assign_vars(array(
+		$template->Assign_vars(array(
 			'C_BBCODE_NORMAL_MODE' => false,
 			'C_BBCODE_TINYMCE_MODE' => true,
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !defined('EDITOR_ALREADY_INCLUDED'),
+			'C_UPLOAD_MANAGEMENT' => $Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES),
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => implode(',', $this->forbidden_tags),
 			'TINYMCE_TRIGGER' => 'TinyMCE.prototype.triggerSave();',
-			'UPLOAD_MANAGEMENT' => $Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) ? '<div style="float:right;margin-left:5px;"><a style="font-size: 10px;" title="' . $LANG['bb_upload'] . '" href="#" onclick="window.open(\'' . PATH_TO_ROOT . '/member/upload.php?popup=1&amp;fd=' . $this->identifier  . '\', \'\', \'height=500,width=720,resizable=yes,scrollbars=yes\');return false;"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/upload/files_add.png" alt="" /></a></div>' : '',
-			'L_REQUIRE_TEXT' => $LANG['require_text']
+			'IDENTIFIER' => $this->identifier,
+			'L_REQUIRE_TEXT' => $LANG['require_text'],
+			'L_BB_UPLOAD' => $LANG['bb_upload']
 		));
 		
 		list($theme_advanced_buttons1, $theme_advanced_buttons2) = array('', '');
@@ -68,15 +69,15 @@ class TinyMCEEditor extends ContentEditor
 			if( !in_array($tag, $this->forbidden_tags) )
 				$theme_advanced_buttons2 .= $tinymce_tag . ',';
 		}
-		$Template->Assign_vars(array( 
+		$template->Assign_vars(array( 
 			'THEME_ADVANCED_BUTTONS1' => trim($theme_advanced_buttons1, ','),
 			'THEME_ADVANCED_BUTTONS2' => trim($theme_advanced_buttons2, ',')
 		));
 		
-		if( !defined('EDITOR_ALREADY_INCLUDED') ) //Editeur déjà includé.
+		if( !defined('EDITOR_ALREADY_INCLUDED') ) //Editeur déjà inclus.
 			define('EDITOR_ALREADY_INCLUDED', true);
 		
-		return $Template->parse(TEMPLATE_STRING_MODE);
+		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
 	//Private attribute.

@@ -61,7 +61,12 @@
 		});
 		-->
 		</script>
-		{UPLOAD_MANAGEMENT}
+			# IF C_UPLOAD_MANAGEMENT #
+				<div style="float:right;margin-left:5px;">
+					<a style="font-size: 10px;" title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd={IDENTIFIER}', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
+				</div>'
+			# ENDIF #
+		
 		# ENDIF #
 		
 		# IF C_BBCODE_NORMAL_MODE #

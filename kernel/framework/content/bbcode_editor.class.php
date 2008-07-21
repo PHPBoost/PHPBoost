@@ -39,14 +39,13 @@ class BBCodeEditor extends ContentEditor
 	{
 		global $CONFIG, $Sql, $LANG, $Cache, $Member, $CONFIG_FILES, $_array_smiley_code;
 		
-		if( !is_object($this->template) || get_class($this->template) != 'Template' )
-			$Template = new Template('framework/content/editor.tpl');
+		$template = $this->get_template();
 		
 		//Chargement de la configuration.
 		$Cache->Load_file('files');
 		$Cache->Load_file('smileys');
 		
-		$Template->Assign_vars(array(
+		$template->Assign_vars(array(
 			'C_BBCODE_TINYMCE_MODE' => false,
 			'C_BBCODE_NORMAL_MODE' => true,
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !defined('EDITOR_ALREADY_INCLUDED'),
@@ -113,7 +112,7 @@ class BBCodeEditor extends ContentEditor
 		
 		foreach($this->forbidden_tags as $forbidden_tag) //Balises interdite.
 		{		
-			$Template->Assign_vars(array( 
+			$template->Assign_vars(array( 
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
 				'UNACTIV_' . strtoupper($forbidden_tag) => 'if( false ) '
 			));
@@ -166,7 +165,7 @@ class BBCodeEditor extends ContentEditor
 			
 			$img = '<img src="../images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />'; 
 						
-			$Template->Assign_block_vars('smiley', array(
+			$template->Assign_block_vars('smiley', array(
 				'IMG' => $img,
 				'CODE' => addslashes($code_smile),
 				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
@@ -178,7 +177,7 @@ class BBCodeEditor extends ContentEditor
 
 		if( $z > $smile_max ) //Lien vers tous les smiley!
 		{		
-			$Template->Assign_vars(array(
+			$template->Assign_vars(array(
 				'C_BBCODE_SMILEY_MORE' => true,
 				'L_ALL_SMILEY' => $LANG['all_smiley'],
 				'L_SMILEY' => $LANG['smiley']
@@ -188,7 +187,7 @@ class BBCodeEditor extends ContentEditor
 		if( !defined('EDITOR_ALREADY_INCLUDED') ) //Editeur déjà includé.
 			define('EDITOR_ALREADY_INCLUDED', true);
 		
-		return $Template->parse(TEMPLATE_STRING_MODE);
+		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 }
 
