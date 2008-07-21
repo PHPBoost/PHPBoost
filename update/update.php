@@ -1020,7 +1020,7 @@ elseif( $step == 13 )
 		$Cache = new Cache; //!\\Initialisation  de la class de gestion du cache//!\\
 		
 		//Régénération du cache
-		$Cache->Generate_htaccess();
+		$Cache->Generate_file('htaccess'); //Régénération du htaccess.	
 		$Cache->Generate_all_files();
 		redirect(HOST . FILE . add_lang('?step=14', true));
 	}

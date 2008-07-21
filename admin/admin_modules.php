@@ -65,9 +65,8 @@ elseif( $uninstall ) //Désinstallation du module
 			//Récupération des infos de config.
 			$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
 			
-			//Suppression du fichier cache si il en  aun
-			if( !empty($info_module['cache']) )
-				$Cache->Delete_file($module_name);
+			//Suppression du fichier cache
+			$Cache->delete_file($module_name);
 			
 			//Suppression des commentaires associés.
 			if( !empty($info_module['com']) )
@@ -110,7 +109,7 @@ elseif( $uninstall ) //Désinstallation du module
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if( $CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']) )
-				$Cache->Generate_htaccess(); //Régénération du htaccess.	 	
+				$Cache->Generate_file('htaccess'); //Régénération du htaccess.	 	
 			
 			//Suppression des fichiers du module
 			if( $drop_files )

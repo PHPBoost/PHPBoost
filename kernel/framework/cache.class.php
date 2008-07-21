@@ -26,6 +26,7 @@
 ###################################################*/
 
 define('RELOAD_CACHE', true);
+define('NO_FATAL_ERROR_CACHE', true);
 
 //Fonction d'importation/exportation de base de donnée.
 class Cache
@@ -78,7 +79,7 @@ class Cache
     }
     
 	//Fonction d'enregistrement du fichier d'un module.
-    function generate_module_file($module_name)
+    function generate_module_file($module_name, $no_alert_on_error = false)
     {
 		global $Errorh;
 		
@@ -87,7 +88,7 @@ class Cache
 		$module = $modulesLoader->get_module($module_name);
 		if( $module->has_functionnality('get_cache') ) //Le module implémente bien la fonction.
 			$this->_write_cache($module_name, $module->functionnality('get_cache'));
-		else
+		elseif( !$no_alert_on_error )
 			$Errorh->Error_handler('Cache -> Le module <strong>' . $module_name . '</strong> n\'a pas de fonction de cache!', E_USER_ERROR, __LINE__, __FILE__);
     }
 	
@@ -119,7 +120,7 @@ class Cache
 	//Suppression d'un fichier cache
 	function delete_file($file)
 	{
-		if( is_file(PATH_TO_ROOT . '/cache/' . $file . '.php') )
+		if( @file_exists(PATH_TO_ROOT . '/cache/' . $file . '.php') )
 			return @unlink(PATH_TO_ROOT . '/cache/' . $file . '.php');
 		else
 			return false;

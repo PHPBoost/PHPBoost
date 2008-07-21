@@ -99,18 +99,19 @@ if( $update ) //Mise à jour du module
 		}
 		
 		//Régénération du cache du module si il l'utilise
-		if( $info_module['use_cache'] == '1' )
-			$Cache->Generate_module_file($module_name);
+		$Cache->generate_module_file($module_name, NO_FATAL_ERROR_CACHE);
 
 		//Insertion du modules dans la bdd => module mis à jour.
 		$Sql->Query_inject("UPDATE ".PREFIX."modules SET version = '" . $info_module['version'] . "' WHERE name = '" . $module_name . "'", __LINE__, __FILE__);
 		
 		//Génération du cache des modules
 		$Cache->Generate_file('modules');
+		$Cache->Generate_file('modules_mini');
+		$Cache->Generate_file('css');
 		
 		//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 		if( $CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']) )
-			$Cache->Generate_htaccess(); //Régénération du htaccess. 
+			$Cache->Generate_file('htaccess'); //Régénération du htaccess.	
 		
 		redirect(HOST . SCRIPT);	
 	}

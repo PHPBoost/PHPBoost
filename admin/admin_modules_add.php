@@ -88,8 +88,7 @@ if( $install ) //Installation du module
 			@include_once('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.php');
 		
 		//Génération du cache du module si il l'utilise
-		if( !empty($info_module['cache']) )
-			$Cache->Generate_module_file($module_name);
+		$Cache->generate_module_file($module_name, NO_FATAL_ERROR_CACHE);
 		
 		$module_name = strprotect($module_name);
 		//Installation du mini module s'il existe
@@ -120,10 +119,7 @@ if( $install ) //Installation du module
 		
 		//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 		if( $CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']) )
-		{
-			//Régénération du htaccess.
-			$Cache->Generate_htaccess(); 				
-		}
+			$Cache->Generate_file('htaccess'); //Régénération du htaccess.			
 		
 		redirect(HOST . SCRIPT);	
 	}

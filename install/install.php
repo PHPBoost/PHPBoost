@@ -916,7 +916,7 @@ elseif( $step == 7 )
 		$Sql->Close($result);
 		
 		//R�g�n�ration du cache
-		$Cache->Generate_htaccess();
+		$Cache->Generate_file('htaccess'); //Régénération du htaccess.	
 		$Cache->Generate_all_files();		
 		
 		//On redirige vers l'�tape suivante
