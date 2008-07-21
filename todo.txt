@@ -7,6 +7,7 @@
 [-] Remplacer les "." par des "_" dans le nom de la base de données. 
 [-] Supporter https dans l'installation et l'administration.
 [-] Finir le parseur BBCode (+Ajout des nouvelles balises).
+[-] Finir le parseur TinyMCE (gérer les balises interdites)
 [-] Panneau de modération.
 
 ------------------------------------ MODULES -----------------------------------

@@ -154,7 +154,7 @@ $LANG['head_add'] = 'Add table head';
 $LANG['insert_table'] = 'Insert table';
 $LANG['ordered_list'] = 'Ordered list';
 $LANG['insert_list'] = 'Insert list';
-$LANG['forbidden_tags'] = 'Forbidden BBcode tags:';
+$LANG['forbidden_tags'] = 'Forbidden formating tags';
 
 //Connexion
 $LANG['connect_private_message'] = 'Private message';

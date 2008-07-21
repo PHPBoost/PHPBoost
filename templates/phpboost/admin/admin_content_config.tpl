@@ -9,8 +9,23 @@
 			</ul>
 		</div>
 		
+		<script type="text/javascript">
+		<!--
+			function check_select_multiple(id, status)
+			{
+				var i;
+				
+				for(i = 0; i < {NBR_TAGS}; i++)
+				{	
+					if( document.getElementById(id + i) )
+						document.getElementById(id + i).selected = status;			
+				}
+			}	
+		-->
+		</script>
+		
 		<div id="admin_contents">
-			<form action="admin_content_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_content_config.php" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_LANGUAGE_CONFIG}</legend>
 					<dl> 
@@ -20,6 +35,25 @@
 								<option name="bbcode">BBCode</option>
 								<option name="tinymce">TinyMCE</option>
 							</select>
+						</dd>
+					</dl>
+					<dl> 
+						<dt><label for="forbidden_tags">{L_FORBIDDEN_TAGS}</label></dt>
+						<dd>
+								<select id="forbidden_tags" name="forbidden_tags[]" size="10" multiple="multiple">
+								# START tag #
+									# IF tag.C_ENABLED #
+									<option id="tag{tag.IDENTIFIER}" selected="selected">{tag.TAG_NAME}</option>
+									# ELSE #
+									<option id="tag{tag.IDENTIFIER}">{tag.TAG_NAME}</option>
+									# ENDIF #
+								# END tags #
+									{FORBIDDEN_TAGS}				
+								</select>
+								<br />
+								<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
+								<br />
+								<a class="small_link" href="javascript:check_select_multiple('tag', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('tag', false);">{L_SELECT_NONE}</a>
 						</dd>
 					</dl>
 				</fieldset>

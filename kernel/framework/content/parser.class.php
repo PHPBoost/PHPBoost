@@ -39,6 +39,7 @@ class ContentParser
 	{
 		global $CONFIG;
 		$this->html_auth =& $CONFIG['html_auth'];
+		$this->forbidden_tags =& $CONFIG['forbidden_tags'];
 		$this->content = '';
 		$this->parsed_content = '';
 	}
@@ -79,6 +80,11 @@ class ContentParser
 	{
 		if( is_array($forbidden_tags) )
 			$this->forbidden_tags = $forbidden_tags;
+	}
+	
+	function get_forbidden_tags()
+	{
+		return $this->forbidden_tags;
 	}
 	
 	//These methods should be abstract
