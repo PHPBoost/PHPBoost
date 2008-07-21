@@ -187,7 +187,7 @@ elseif( !empty($_POST['advanced']) )
 		$Cache->Generate_file('config');
 		
 		//Régénération du htaccess.
-		$Cache->Generate_htaccess();
+		$Cache->Generate_file('htaccess'); //Régénération du htaccess.	
 			
 		redirect($host . $dir . '/admin/admin_config.php?adv=1');
 	}

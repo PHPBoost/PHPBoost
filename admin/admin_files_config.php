@@ -58,7 +58,7 @@ if( !empty($_POST['valid'])  )
 	$Cache->Generate_file('files');
 	
 	//Régénération du htaccess.
-	$Cache->Generate_htaccess(); 
+	$Cache->Generate_file('htaccess'); //Régénération du htaccess.	
 	
 	redirect(HOST . SCRIPT);	
 }
