@@ -27,16 +27,25 @@
 
 class ContentEditor
 {
-	function ContentEditor($language_type = false)
+	function ContentEditor($language_type = NULL)
 	{
-		if( $language_type !== false )
+		global $CONFIG;
+		if( $language_type !== NULL )
 			$this->set_language($language_type);
+		
+		$this->forbidden_tags =& $CONFIG['forbidden_tags'];
 	}
 	
 	//Balises interdites.
 	function set_forbidden_tags(&$forbidden_tags)
 	{
 		$this->forbidden_tags = $forbidden_tags;
+	}
+	
+	// Getter des balises interdites
+	function get_forbidden_tags()
+	{
+		return $this->forbidden_tags;
 	}
 	
 	//Identifiant du textarea de destination.
@@ -64,7 +73,7 @@ class ContentEditor
 	var $language_type = DEFAULT_LANGUAGE; //Langage type
 	var $forbidden_tags = array();
 	var $identifier = 'contents';
-	var $template = null;
+	var $template = NULL;
 }
 
 ?>

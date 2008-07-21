@@ -153,7 +153,8 @@ function display_editor($field = 'contents', $forbidden_tags = array())
 	include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');	
 	$content_editor = new Content();
 	$editor =& $content_editor->get_editor();
-	$editor->set_forbidden_tags($forbidden_tags);
+	if( !empty($forbidden_tags) )
+		$editor->set_forbidden_tags($forbidden_tags);
 	$editor->set_identifier($field);
 	
 	return $editor->display();
@@ -361,7 +362,8 @@ function strparse(&$content, $forbidden_tags = array())
     $content_manager = new Content();
 	$parser =& $content_manager->get_parser();
     $parser->set_content($content);
-    $parser->set_forbidden_tags($forbidden_tags);
+	if( !empty($forbidden_tags) )
+		$parser->set_forbidden_tags($forbidden_tags);
     $parser->parse();
 	
 	return $parser->get_parsed_content();
