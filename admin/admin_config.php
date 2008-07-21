@@ -184,7 +184,7 @@ elseif( !empty($_POST['advanced']) )
 			
 		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		###### Régénération du cache $CONFIG #######
-		$Cache->Generate_file('config');
+		$Cache->generate_file('config');
 		
 		//Régénération du htaccess.
 		$Cache->Generate_file('htaccess'); //Régénération du htaccess.	

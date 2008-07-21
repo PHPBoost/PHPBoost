@@ -52,7 +52,8 @@ if( $contribution_id > 0 )
 	$contribution->load_from_db($contribution_id);
 	
 	$template->assign_vars(array(
-		'ENTITLED' => $contribution->get_entitled()
+		'ENTITLED' => $contribution->get_entitled(),
+		'DESCRIPTION' => second_parse($contribution->get_description()),
 	));
 }
 else

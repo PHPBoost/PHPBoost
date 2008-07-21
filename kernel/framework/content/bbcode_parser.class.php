@@ -117,6 +117,7 @@ class BBCodeParser extends ContentParser
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`i',
 			'mail2' => '`\[mail=([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})\]([^\n\r\t\f]+)\[/mail\]`i'
 		);
+		
 		$array_preg_replace = array( 
 			'b' => "<strong>$1</strong>",
 			'i' => "<em>$1</em>",

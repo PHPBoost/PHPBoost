@@ -65,16 +65,20 @@
 		</table>
 	# ENDIF #
 
-# IF C_CONSULT_CONTRIBUTION #
-	<fieldset>
-		<legend>Contribution</legend>
-		<dl>
-			<dt>
-				Intitulé
-			</dt>
-			<dd>
-				{ENTITLED}
-			</dd>
-		</dl>
-	</fieldset>
-# ENDIF #
+	# IF C_CONSULT_CONTRIBUTION #
+		<fieldset>
+			<legend>Contribution</legend>
+			<dl>
+				<dt>
+					Intitulé
+				</dt>
+				<dd>
+					{ENTITLED}
+				</dd>
+			</dl>
+			<dl>
+				<dt>Description</dt>
+				<dd>{DESCRIPTION}</dd>
+			</dl>
+		</fieldset>
+	# ENDIF #
