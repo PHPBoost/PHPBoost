@@ -60,7 +60,8 @@ class TinyMCEEditor extends ContentEditor
 		list($theme_advanced_buttons1, $theme_advanced_buttons2) = array('', '');
 		foreach($this->array_tags as $tag => $tinymce_tag) //Balises autorisées.
 		{		
-				//bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,sub,sup,charmap,|,undo,redo,|,image,link,unlink,anchor
+			$tag = preg_replace('`[0-9]`', '', $tag);
+			//bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,sub,sup,charmap,|,undo,redo,|,image,link,unlink,anchor
 			if( !in_array($tag, $this->forbidden_tags) )
 				$theme_advanced_buttons1 .= $tinymce_tag . ',';
 		}
@@ -70,8 +71,8 @@ class TinyMCEEditor extends ContentEditor
 				$theme_advanced_buttons2 .= $tinymce_tag . ',';
 		}
 		$template->Assign_vars(array( 
-			'THEME_ADVANCED_BUTTONS1' => trim($theme_advanced_buttons1, ','),
-			'THEME_ADVANCED_BUTTONS2' => trim($theme_advanced_buttons2, ',')
+			'THEME_ADVANCED_BUTTONS1' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons1, ',')),
+			'THEME_ADVANCED_BUTTONS2' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons2, ','))
 		));
 		
 		if( !defined('EDITOR_ALREADY_INCLUDED') ) //Editeur déjà inclus.
@@ -81,7 +82,7 @@ class TinyMCEEditor extends ContentEditor
 	}
 	
 	//Private attribute.
-	var $array_tags = array('b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|1' => '|', 'align' => 'justifyleft', 'align' => 'justifycenter', 'align' => 'justifyright', 'align' => 'justifyfull', '|2' => '|', 'list' => 'bullist', 'list' => 'numlist', '|3' => '|', 'sub' => 'sub', 'sup' => 'sup', '_charmap' => 'charmap', '|4' => '|', '_undo' => 'undo', '_redo' => 'redo', '|5' => '|',  'img' => 'image', 'url' => 'link', 'url' => 'unlink', 'anchor' => 'anchor');
+	var $array_tags = array('b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|1' => '|', 'align1' => 'justifyleft', 'align2' => 'justifycenter', 'align3' => 'justifyright', 'align4' => 'justifyfull', '|2' => '|', 'list' => 'bullist', 'list' => 'numlist', '|3' => '|', 'sub' => 'sub', 'sup' => 'sup', '_charmap' => 'charmap', '|4' => '|', '_undo' => 'undo', '_redo' => 'redo', '|5' => '|',  'img' => 'image', 'url' => 'link', 'url' => 'unlink', 'anchor' => 'anchor');
 	var $array_tags2 = array('color' => 'forecolor', 'color' => 'backcolor', '|1' => '|', 'indent' => 'outdent', 'indent' => 'indent', '|2' => '|', 'size' => 'fontsizeselect', 'title' => 'formatselect', '|3' => '|', '_cleanup' => 'cleanup', '_removeformat' => 'removeformat', '|4' => '|', 'table' => 'table', 'table' => 'split_cells', 'table' => 'merge_cells', '|5' => '|', 'swf' => 'flash');
 }
 
