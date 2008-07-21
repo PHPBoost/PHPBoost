@@ -84,7 +84,7 @@ class TinyMCEEditor extends ContentEditor
 	
 	//Private attribute.
 	var $array_tags = array('b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|1' => '|', 'align1' => 'justifyleft', 'align2' => 'justifycenter', 'align3' => 'justifyright', 'align4' => 'justifyfull', '|2' => '|', 'list' => 'bullist', 'list' => 'numlist', '|3' => '|', 'sub' => 'sub', 'sup' => 'sup', '_charmap' => 'charmap', '|4' => '|', '_undo' => 'undo', '_redo' => 'redo', '|5' => '|',  'img' => 'image', 'url' => 'link', 'url' => 'unlink', 'anchor' => 'anchor');
-	var $array_tags2 = array('color' => 'forecolor', 'color' => 'backcolor', '|1' => '|', 'indent' => 'outdent', 'indent' => 'indent', '|2' => '|', 'size' => 'fontsizeselect', 'title' => 'formatselect', '|3' => '|', '_cleanup' => 'cleanup', '_removeformat' => 'removeformat', '|4' => '|', 'table1' => 'table', 'table2' => 'split_cells', 'table3' => 'merge_cells', '|5' => '|', 'swf' => 'flash');
+	var $array_tags2 = array('color1' => 'forecolor', 'color2' => 'backcolor', '|1' => '|', 'indent' => 'outdent', 'indent' => 'indent', '|2' => '|', 'size' => 'fontsizeselect', 'title' => 'formatselect', '|3' => '|', '_cleanup' => 'cleanup', '_removeformat' => 'removeformat', '|4' => '|', 'table1' => 'table', 'table2' => 'split_cells', 'table3' => 'merge_cells', '|5' => '|', 'swf' => 'flash');
 }
 
 ?>
