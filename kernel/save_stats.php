@@ -29,7 +29,6 @@ if( defined('PHPBOOST') !== true )
 	exit;
 	
 include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php');
-$_SERVER['HTTP_REFERER']='http://www.fd.com/results.aspx?q=phpboost&form=QBHP';
 $referer = !empty($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : '';
 if( !empty($referer) )
 {
