@@ -49,7 +49,8 @@ if( !empty($referer) )
 	if( $is_search_engine )
 	{
 		$query = !empty($referer['query']) ? $referer['query'] : '';
-		$keyword = strprotect(strtolower(str_replace('+', ' ', preg_replace('`(?:.*)(?:q|p|query|rdata)=([^&]+)(?:.*)`i', '$1', $query))));
+		$keyword = strprotect(strtolower(preg_replace('`(?:.*)(?:q|p|query|rdata)=([^&]+)(?:.*)`i', '$1', $query)));
+		$keyword = str_replace('+', ' ', urldecode($keyword));
 		
 		$check_search_engine = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."stats_referer WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
 		if( !empty($keyword) )
