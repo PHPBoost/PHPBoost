@@ -76,7 +76,8 @@ class TinyMCEParser extends ContentParser
 		$this->_parse_imbricated('&lt;blockquote&gt;', '`&lt;blockquote&gt;(.+)&lt;/blockquote&gt;`isU', '<div class="indent">$1</div>');
 
 		//Préparse de la balise table.
-		$this->parsed_content = preg_replace_callback('`&lt;table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?( style="([^"]+)")?[^&]*&gt;(.+)&lt;/table&gt;`i', array(&$this, '_parse_tinymce_table'), $this->parsed_content);
+		//$this->parsed_content = preg_replace_callback('`&lt;table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?( style="([^"]+)")?[^&]*&gt;(.+)&lt;/table&gt;`i', array(&$this, '_parse_tinymce_table'), $this->parsed_content);
+		$this->parsed_content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`is', array(&$this, '_parse_tinymce_table'), $this->parsed_content);
 		
 		$array_preg = array(
 			'`&lt;div&gt;(.+)&lt;/div&gt;`isU',
@@ -107,7 +108,6 @@ class TinyMCEParser extends ContentParser
 			'`&lt;h4&gt;(.+)&lt;/h4&gt;`isU',
 			'`&lt;h5&gt;(.+)&lt;/h5&gt;`isU',
 			'`&lt;h6&gt;(.+)&lt;/h6&gt;`isU',
-			'`&lt;td( colspan="[^"]+")?( rowspan="[^"]+")?&gt;`is',
 			'`&lt;object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="([^"]+)%?" height="([^"]+)%?"&gt;&lt;param name="movie" value="([^"]+)"(.*)&lt;/object&gt;`isU',
 			'`&lt;span[^&]*&gt;`i',
 			'`&lt;p[^&]*&gt;`i'
@@ -141,7 +141,6 @@ class TinyMCEParser extends ContentParser
 			'<br /><h4 class="stitle2">$1</h4><br />',
 			'<span style="font-size: 10px;">$1</span>',
 			'<span style="font-size: 8px;">$1</span>',
-			'[col$1$2]',
 			'<object type="application/x-shockwave-flash" data="$3" width="$1" height="$2">
 		<param name="allowScriptAccess" value="never" />
 		<param name="play" value="true" />
@@ -295,18 +294,13 @@ class TinyMCEParser extends ContentParser
 	## Protected ##
 
 	//Parse la balise table de tinymce pour le bbcode.
-	function _parse_tinymce_table($matches)
+	/*static*/ function _parse_tinymce_table($matches)
 	{
-		$prop = ''; 
-		$matches[2] = !empty($matches[2]) ? str_replace('\'', '', $matches[2]) : '';
-		if( !empty($matches[1]) && empty($matches[2]) ) 
-			$prop .= ' style="width:' . $matches[1] . 'px"';
-		if( empty($matches[1]) && !empty($matches[2]) ) 
-			$prop .= ' style="' . $matches[2] . '"';
-		if( !empty($matches[1]) && !empty($matches[2]) ) 
-			$prop .= ' style="width:' . $matches[1] . 'px;' . $matches[2] . '"';
-			
-		return '<table' . $prop . '>' . $matches[3] . '</table>';
+		$table_content = preg_replace('`&lt;tbody&gt;(.*)&lt;/tbody&gt;`is', '$1', $matches[2]);
+		$table_content = preg_replace('`&lt;tr&gt;(.*)&lt;/tr&gt;`isU', '<tr class="bb_table_row">$1</tr>', $table_content);
+		$table_content = preg_replace('`&lt;td&gt;(.*)&lt;/td&gt;`isU', '<td class="bb_table_col">$1</td>', $table_content);
+		$table_content = preg_replace('`&lt;th&gt;(.*)&lt;/th&gt;`isU', '<td class="bb_table_col">$1</td>', $table_content);
+		return '<table class="bb_table">' . $table_content . '</table>';
 	}
 }
 
