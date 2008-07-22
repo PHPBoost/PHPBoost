@@ -89,6 +89,7 @@ $Template->Assign_vars(array(
 	'L_UPDATER' => $LANG['updater'],
 	'L_MODULES' => $LANG['modules'],
 	'L_CACHE' => $LANG['cache'],
+	'L_SYNDICATION' => $LANG['syndication'],
 	'L_EXTEND_MENU' => $LANG['extend_menu'],
 	'L_CONTENT_CONFIG' => $LANG['content_config'],
 	'U_INDEX_SITE' => get_start_page()
