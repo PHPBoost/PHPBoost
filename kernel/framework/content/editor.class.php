@@ -27,10 +27,10 @@
 
 class ContentEditor
 {
-	function ContentEditor($language_type = NULL)
+	function ContentEditor($language_type = null)
 	{
 		global $CONFIG;
-		if( $language_type !== NULL )
+		if( $language_type !== null )
 			$this->set_language($language_type);
 		
 		$this->forbidden_tags =& $CONFIG['forbidden_tags'];
@@ -73,7 +73,7 @@ class ContentEditor
 	var $language_type = DEFAULT_LANGUAGE; //Langage type
 	var $forbidden_tags = array();
 	var $identifier = 'contents';
-	var $template = NULL;
+	var $template = null;
 }
 
 ?>

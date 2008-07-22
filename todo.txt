@@ -8,7 +8,8 @@
 [-] Supporter https dans l'installation et l'administration.
 [-] Finir le parseur BBCode (+Ajout des nouvelles balises).
 [-] Finir le parseur TinyMCE (gérer les balises interdites)
-[-] Panneau de modération.
+[-] Intégrer une classe captcha au framework
+[-] Panneau de modération (déplacer moderation_begin.php)
 
 ------------------------------------ MODULES -----------------------------------
 

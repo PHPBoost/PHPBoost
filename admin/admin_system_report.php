@@ -83,7 +83,7 @@ php version              : " . phpversion() . "
 dbms version             : " . $Sql->get_dbms_version() . "
 gd library               : " . (int)@extension_loaded('gd') . "
 url rewriting            : " . (function_exists('apache_get_modules') ? (int)!empty($temp_var[5]) : "?") . "
-register globals : " . (int)(@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on') . "
+register globals         : " . (int)(@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on') . "
 server url               : " . $server_name . "
 site path                : " . $server_path  . "
 
