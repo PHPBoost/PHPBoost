@@ -259,7 +259,7 @@ $LANG['default_field_possible_values'] = 'Oui|Non';
 $LANG['extend_field_edit'] = 'Editer le champs';
 
 //Index
-$LANG['admin_alerts'] = 'Alerte et actions en attente';
+$LANG['admin_alerts'] = 'Alertes et actions en attente';
 $LANG['no_alert_or_action'] = 'Aucune alerte ou action en attente';
 $LANG['display_all_alerts'] = 'Voir toutes les alertes';
 $LANG['priority'] = 'Priorité';
@@ -581,7 +581,7 @@ $LANG['auth_access'] = 'Autorisation d\'accès';
 $LANG['auth_read'] = 'Droits de lecture';
 $LANG['auth_write'] = 'Droits d\'écriture';
 $LANG['auth_edit'] = 'Droits de modération';
-		
+
 //Robots
 $LANG['robot'] = 'Robot';
 $LANG['robots'] = 'Robots';

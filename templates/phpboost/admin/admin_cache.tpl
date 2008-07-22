@@ -7,7 +7,7 @@
                     <a href="admin_cache.php" class="quick_link">{L_CACHE}</a>
                 </li>
                 <li>
-                    <a href="admin_cache.php?cache=syndication"><img src="../templates/{THEME}/images/rss_big.png" alt="" /></a>
+                    <a href="admin_cache.php?cache=syndication"><img src="../templates/{THEME}/images/admin/rss.png" alt="" /></a>
                     <br />
                     <a href="admin_cache.php?cache=syndication" class="quick_link">{L_SYNDICATION}</a>
                 </li>
