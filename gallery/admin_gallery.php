@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 load_module_lang('gallery'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 $idcat = !empty($_GET['cat']) ? numeric($_GET['cat']) : 0;
 $idpics = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
@@ -420,6 +420,6 @@ else
 	$Template->Pparse('admin_gallery_management'); 
 }
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 //Ajout du rang.
 if( !empty($_POST['add']) )
@@ -129,6 +129,6 @@ else //Sinon on rempli le formulaire
 	$Template->Pparse('admin_ranks_add');
 }
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

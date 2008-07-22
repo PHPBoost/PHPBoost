@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 $idgroup = retrieve(GET, 'id', 0);
 $idgroup_post = retrieve(POST, 'id', 0);
@@ -309,6 +309,6 @@ else //Liste des groupes.
 	$Template->Pparse('admin_groups_management'); 
 }
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

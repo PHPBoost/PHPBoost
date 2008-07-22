@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 load_module_lang('articles'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 		
 $id = retrieve(GET, 'id', 0);
 $del = retrieve(GET, 'del', 0);
@@ -903,6 +903,6 @@ else
 	$Template->Pparse('admin_articles_cat'); // traitement du modele	
 }
 	
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

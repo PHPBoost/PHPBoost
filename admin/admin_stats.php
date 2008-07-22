@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 include_once('../lang/' . $CONFIG['lang'] . '/stats.php'); //Chargement de la langue.
 
 $Template->Set_filenames(array(
@@ -1195,6 +1195,6 @@ else
 
 $Template->Pparse('admin_stats_management');
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

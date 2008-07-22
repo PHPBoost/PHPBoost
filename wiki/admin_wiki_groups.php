@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 load_module_lang('wiki'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 include_once('../wiki/wiki_auth.php');
 
@@ -93,6 +93,6 @@ else
 	$Template->Pparse('admin_wiki_groups'); // traitement du modele	
 }
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

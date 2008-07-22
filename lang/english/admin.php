@@ -259,16 +259,27 @@ $LANG['default_field_possible_values'] = 'Yes|No';
 $LANG['extend_field_edit'] = 'Edit field';
 
 //Index
-$LANG['admin_index'] = 'Welcome on <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost %s</a>, thank you to have chosen this CMS for your site.<br /><br />You can manage all the website with this administration panel.<br />
-This one is divided into subcategories in which you will find the tools necessary for maintenance and configuration of the website.<br /><br />If you find any bugs or if you have some suggestions, please contact the support on the <a href="http://www.phpboost.com/forum/index.php" title="Official PHPBoost Forum">official forum</a>.<br />You can also consult the <a href="http://www.phpboost.com/wiki/wiki.php">official documentation</a>.<br /><br /><br />Follow the updates on <a href="http://www.phpboost.com">http://www.phpboost.com</a>';
+$LANG['admin_alerts'] = 'Alert and waiting actions';
+$LANG['no_alert_or_action'] = 'No alert or waiting action';
+$LANG['display_all_alerts'] = 'Display all alerts';
+$LANG['priority'] = 'Priority';
+$LANG['flash'] = 'Flash';
+$LANG['urgent'] = 'Urgent';
+$LANG['hight'] = 'Hight';
+$LANG['normal'] = 'Normal';
+$LANG['low'] = 'Low';
 $LANG['update_available'] = 'Update available';
 $LANG['core_update_available'] = 'New core version available, please update PHPBoost ! <a href="http://www.phpboost.com">More informations</a>';
-$LANG['no_core_update_available'] = 'No new core version available, you are up to date !';
+$LANG['no_core_update_available'] = 'No newer version, system is up to date';
 $LANG['module_update_available'] = 'Modules update available !';
-$LANG['no_module_update_available'] = 'No new modules available, you are up to date !';
+$LANG['no_module_update_available'] = 'No newer modules version available, you are up to date !';
 $LANG['unknow_update'] = 'Impossible to check update';
 $LANG['user_online'] = 'Registered user(s)';
 $LANG['last_update'] = 'Last update';
+$LANG['quick_links'] = 'Quick links';
+$LANG['members_managment'] = 'Members managment';
+$LANG['menus_managment'] = 'Menus managment';
+$LANG['modules_managment'] = 'Mdules managment';
 	
 //Config
 $LANG['config_main'] = 'Main configs';

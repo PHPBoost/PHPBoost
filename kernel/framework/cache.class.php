@@ -453,7 +453,12 @@ class Cache
 		$CONFIG_COM = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'com'", __LINE__, __FILE__));
 		$CONFIG_COM = is_array($CONFIG_COM) ? $CONFIG_COM : array();
 		foreach($CONFIG_COM as $key => $value)
-			$com_config .= '$CONFIG_COM[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";		
+		{	
+			if( $key == 'forbidden_tags' )
+				$com_config .= '$CONFIG_COM[\'forbidden_tags\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
+			else
+				$com_config .= '$CONFIG_COM[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";		
+		}
 		
 		return $com_config;
 	}

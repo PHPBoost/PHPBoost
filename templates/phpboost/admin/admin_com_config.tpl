@@ -12,6 +12,15 @@
 			}
 			return true;
 		}
+		function check_select_multiple(id, status)
+		{
+			var i;
+			for(i = 0; i < {NBR_TAGS}; i++)
+			{
+				if( document.getElementById(id + i) )
+					document.getElementById(id + i).selected = status;
+			}
+		}
 		-->
 		</script>
 
@@ -59,6 +68,21 @@
 						<dt><label for="com_max">{L_COM_MAX}</label></dt>
 						<dd><label><input type="text" size="3" id="com_max" name="com_max" value="{COM_MAX}" class="text" /></label></dd>
 					</dl>
+					<dl>
+						<dt><label for="forbidden_tags">{L_FORBIDDEN_TAGS}</label></dt>
+						<dd>
+							<label>
+								<br />
+								<select id="forbidden_tags" name="forbidden_tags[]" size="10" multiple="multiple">
+								{FORBIDDEN_TAGS}
+								</select>
+								<br />
+								<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
+								<br />
+								<a class="small_link" href="javascript:check_select_multiple('tag', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('tag', false);">{L_SELECT_NONE}</a>
+							</label>
+						</dd>
+					</dl> 
 					<dl> 
 						<dt><label for="max_link">{L_MAX_LINK}</label><br /><span>{L_MAX_LINK_EXPLAIN}</span></dt>
 						<dd><label><input type="text" size="2" id="max_link" name="max_link" value="{MAX_LINK}" class="text" /></label></dd>

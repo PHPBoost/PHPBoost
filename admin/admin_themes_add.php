@@ -24,9 +24,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 ##########################admin_themes_add.tpl###########################
 //On affiche le contenu du repertoire templates, pour lister les thèmes disponibles..
@@ -222,6 +222,6 @@ else
 	$Template->Pparse('admin_themes_add'); 
 }
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

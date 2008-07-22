@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 load_module_lang('download'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 include_once('download_auth.php');
 $Cache->Load_file('download');
@@ -276,6 +276,6 @@ else
 	$Template->Pparse('admin_download_cat');
 }
 
-include_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

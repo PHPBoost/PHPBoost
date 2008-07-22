@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-include_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 include_once('faq_begin.php'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-include_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 include_once('faq_cats.class.php');
 $faq_categories = new FaqCats();
@@ -220,6 +220,6 @@ else
 
 $Template->Pparse('admin_faq_cat');
 
-include_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

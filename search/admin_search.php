@@ -26,14 +26,14 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 
 //------------------------------------------------------------------- Language
 load_module_lang('search'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 
 //--------------------------------------------------------------------- Header
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 //--------------------------------------------------------------------- Params
 $clearOutCache = !empty($_GET['clear']) ? true : false;
@@ -181,6 +181,6 @@ else
 }
 
 //--------------------------------------------------------------------- Footer
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 $get_id = retrieve(GET, 'id', 0);	
 
@@ -134,6 +134,6 @@ else //Sinon on rempli le formulaire
 	$Template->Pparse('admin_ranks');
 }
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 load_module_lang('wiki');
 define('TITLE', $LANG['administration'] . ' : ' . $LANG['wiki']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 include_once('../wiki/wiki_functions.php');
 
 $Cache->Load_file('wiki');
@@ -86,6 +86,6 @@ $Template->Assign_vars(array(
 	
 $Template->Pparse('wiki_config');
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

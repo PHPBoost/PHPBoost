@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 load_module_lang('pages');
 define('TITLE', $LANG['administration'] . ' : ' . $LANG['pages']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 include_once('pages_begin.php');
 include_once('pages_functions.php');
@@ -85,6 +85,6 @@ $Template->Assign_vars(array(
 	
 $Template->Pparse('pages_config');
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

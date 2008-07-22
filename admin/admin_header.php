@@ -34,6 +34,10 @@ if( !defined('TITLE') )
 	
 $Session->Session_check(TITLE); //Vérification de la session.
 
+//!\\ Connexion à l'administration //!\\
+require_once(PATH_TO_ROOT . '/admin/admin_access.php');
+
+
 $Template->Set_filenames(array(
 	'admin_header'=> 'admin/admin_header.tpl'
 ));
@@ -43,19 +47,6 @@ $Template->Assign_vars(array(
 	'SITE_NAME' => $CONFIG['site_name'],
 	'TITLE' => TITLE,
 	'PATH_TO_ROOT' => PATH_TO_ROOT,
-	'THEME' => $CONFIG['theme'],
-));
-
-$Template->Pparse('admin_header'); // traitement du modele
-
-//!\\ Connexion à l'administration //!\\
-require_once(PATH_TO_ROOT . '/kernel/admin_access.php');
-
-$Template->Set_filenames(array(
-	'admin_sub_header'=> 'admin/admin_sub_header.tpl'
-));
-
-$Template->Assign_vars(array(
 	'SID' => SID,
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
@@ -164,6 +155,6 @@ foreach($modules_config as $module_name => $auth)
 	}
 }
 
-$Template->Pparse('admin_sub_header'); 
+$Template->Pparse('admin_header'); 
 
 ?>

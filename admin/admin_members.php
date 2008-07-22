@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 $id = retrieve(GET, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
@@ -923,6 +923,6 @@ else
 	
 	$Template->Pparse('admin_members_management'); 
 }
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>
