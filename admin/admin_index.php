@@ -25,14 +25,15 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 $Template->Set_filenames(array(
 	'admin_index'=> 'admin/admin_index.tpl'
 ));
 
+/*
 //Vérification des mises à jour du noyau  et des modules sur le site officiel.
 $get_info_update = @file_get_contents_emulate('http://www.phpboost.com/phpboost/updates.txt');
 $check_core_update = false;
@@ -85,27 +86,16 @@ else
 	$l_core_update = $LANG['unknow_update'];
 	$l_modules_update = $LANG['unknow_update'];
 }
-
 $Template->Assign_vars(array(
 	'VERSION' => $CONFIG['version'],
 	'WARNING_CORE' => ($check_core_update) ? ' error_warning' : '',
 	'WARNING_MODULES' => ($check_modules_update) ? ' error_warning' : '',
 	'UPDATE_AVAILABLE' => ($check_core_update) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/admin/update_available.png" alt="" class="valign_middle" />' : '',
 	'UPDATE_MODULES_AVAILABLE' => ($check_modules_update) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/admin/update_available.png" alt="" class="valign_middle" />' : '',
-	'L_INDEX_ADMIN' => $LANG['administration'],
-	'L_TEXT_INDEX' => sprintf($LANG['admin_index'], $CONFIG['version']),
-	'L_STATS' => $LANG['stats'],
-	'L_USER_ONLINE' => $LANG['user_online'],
-	'L_TOTAL_USER' => $LANG['total_users'],
-	'L_USER_IP' => $LANG['user_ip'],
-	'L_LOCALISATION' => $LANG['localisation'],
-	'L_LAST_UPDATE' => $LANG['last_update'],
-	'L_ON' => $LANG['on'],
 	'L_UPDATE_AVAILABLE' => $LANG['update_available'],
 	'L_CORE_UPDATE' => $l_core_update,
 	'L_MODULES_UPDATE' => $l_modules_update	
 ));
-
 //Listing des modules mis à jour.
 foreach($modules_update as $name => $version)
 {
@@ -113,6 +103,88 @@ foreach($modules_update as $name => $version)
 		'ID' => $name,
 		'NAME' => $modules_config[$name]['name'],
 		'VERSION' => $version
+	));
+}
+*/
+
+$admin_alerts = array();
+/* Niveau de priorité
+	0 : Peu attendre
+	1 : A faire, peu pressé
+	2 : A faire
+	3 : A faire, rapidement
+	4 : A faire, très rapidement
+*/
+$admin_alerts = array(
+	0 => array('url' => 'admin_members.php?id=1', 'details' => 'Membre en attente de validation', 'priority' => 1, 'timestamp' => 1216623232),
+	1 => array('url' => 'http://www.phpboost.com', 'details' => 'Mise à jour du système', 'priority' => 2, 'timestamp' => 1216203232),
+	2 => array('url' => 'http://www.phpboost.com', 'details' => 'Un membre a été banni', 'priority' => 0, 'timestamp' => 1216203232),
+	3 => array('url' => 'http://www.phpboost.com', 'details' => 'Correctif de sécurité', 'priority' => 4, 'timestamp' => 1216003232),
+	4 => array('url' => '../news/admin_news.php?id=1', 'details' => 'News en attente de validation', 'priority' => 1, 'timestamp' => 1206203232),
+	5 => array('url' => '../news/admin_modules.php', 'details' => 'Mise à jour d\'un module', 'priority' => 3, 'timestamp' => 1236203232)
+);
+
+$Template->Assign_vars(array(
+	'C_ALERT_OR_ACTION' => ((bool)count($admin_alerts)),
+	'L_INDEX_ADMIN' => $LANG['administration'],
+	'L_ADMIN_ALERTS' => $LANG['admin_alerts'],
+	'L_NO_ALERT_OR_ACTION' => $LANG['no_alert_or_action'],
+	'L_TYPE' => $LANG['type'],
+	'L_DATE' => $LANG['date'],
+	'L_PRIORITY' => $LANG['priority'],
+	'L_DISPLAY_ALL_ALERTS' => $LANG['display_all_alerts'],
+	'L_QUICK_LINKS' => $LANG['quick_links'],
+	'L_MEMBERS_MANAGMENT' => $LANG['members_managment'],
+	'L_MENUS_MANAGMENT' => $LANG['menus_managment'],
+	'L_MODULES_MANAGMENT' => $LANG['modules_managment'],
+	'L_STATS' => $LANG['stats'],
+	'L_USER_ONLINE' => $LANG['user_online'],
+	'L_TOTAL_USER' => $LANG['total_users'],
+	'L_USER_IP' => $LANG['user_ip'],
+	'L_LOCALISATION' => $LANG['localisation'],
+	'L_LAST_UPDATE' => $LANG['last_update']
+));
+
+//Liste des actions en attente.
+foreach($admin_alerts as $key => $alert_infos)
+{
+	$img_type = '';
+	switch($alert_infos['priority'])
+	{
+		case 0:
+		$color = 'FFFFFF';
+		$priority = $LANG['low'];
+		break;
+		case 1:
+		$color = 'ECDBB7';
+		$priority = $LANG['normal'];
+		break;
+		case 2:
+		$color = 'F5D5C6';
+		$priority = $LANG['hight'];
+		break;
+		case 3:
+		$img_type = 'important.png';
+		$color = 'FFD5D1';
+		$priority = $LANG['urgent'];
+		break;
+		case 4:
+		$img_type = 'errors_mini.png';
+		$color = 'F3A29B';
+		$priority = $LANG['flash'];
+		break;
+		default:
+		$color = 'FFFFFF';
+		$priority = $LANG['low'];
+	}
+	
+	$Template->Assign_block_vars('alerts', array(
+		'URL' => $alert_infos['url'],
+		'DETAILS' => $alert_infos['details'],
+		'PRIORITY' => $priority,
+		'COLOR' => 'background:#' . $color . ';',
+		'IMG' => !empty($img_type) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/admin/' . $img_type . '" alt="" class="valign_middle" />' : '',
+		'DATE' => gmdate_format('date_format', $alert_infos['timestamp'])
 	));
 }
   
@@ -160,6 +232,6 @@ $Sql->Close($result);
 	
 $Template->Pparse('admin_index'); // traitement du modele
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

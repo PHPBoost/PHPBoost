@@ -1,15 +1,26 @@
 /* --------------------------------------
 		admin.css
 Contient les classes supplémentaires pour l'administration.
---------------------------------------*
+--------------------------------------*/
 
-/* Administration */
+/* Entête de la page */
+div#header_admin{
+}
+/* Menu de lien horizontal */
+div#sub_header_admin{
+}
+/* Lien du subheader */
+div#sub_header_admin .dynamic_menu{
+	margin-top:-31px;
+	margin-left:190px;
+}
+/* Conteneur principal */
 div#admin_main{
-	background:#FFFFFF;
 	padding:0px 6px;
 	border-left:1px solid #1C618C;	
 	border-right:1px solid #1C618C;	
 }
+/* Conteneurs */
 div#admin_contents{
 	height:450px;
 	margin-left:170px;	
@@ -19,6 +30,7 @@ html>body div#admin_contents{
 	height:auto;
 	min-height:450px;
 }
+/* Menu déroulants verticaux */
 div#admin_quick_menu{
 	width:155px;
 	float:left;
@@ -57,28 +69,10 @@ div#admin_quick_menu li a.quick_link{
 	text-decoration:none;
 	line-height:2.2em;
 }
-
 #dynamic_menu li ul {
 	margin-top:1px;
 }
 
-/* Liste des news du site officiel sur l'index */
-.phpboost_news{
-	width:450px;
-	margin:auto;
-	padding:5px;
-	text-align:left;
-	background-color:#FFFFFF;
-	border:1px solid #487B9C;	
-}
-.phpboost_news ul{
-	margin:0;
-	padding:0;
-	text-align:center;
-	list-style-type:none;
-	margin:auto;
-}
-			
 /* Tableaux de l'administration */
 .module_table, .block_container{
 	width:95%;	
@@ -97,12 +91,18 @@ div#admin_quick_menu li a.quick_link{
 	padding:4px 0px;
 }
 
+/* Liens vers les menus étendus */
+a.admin_extend_link{
+	text-decoration:none;
+	color:#FFFFFF;
+}
 /* Coloration des moteur de recherche */
 .robot{
 	color:#FF6600; 
 	font-size:12px;
 	font-weight:bold;
 }
+/* Styles */
 .success{
 	text-align:center;
 	width:20%;

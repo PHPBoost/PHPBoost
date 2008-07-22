@@ -26,15 +26,16 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 if( !empty($_POST['valid'])  )
 {
 	$config_com = array();
 	$config_com['com_auth'] = retrieve(POST, 'com_auth', -1);
 	$config_com['com_max'] = retrieve(POST, 'com_max', 10);
+	$config_com['forbidden_tags'] = isset($_POST['forbidden_tags']) ? serialize($_POST['forbidden_tags']) : serialize(array());
 	$config_com['max_link'] = retrieve(POST, 'max_link', -1);
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_com)) . "' WHERE name = 'com'", __LINE__, __FILE__);
@@ -71,12 +72,33 @@ else
 		$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 	}
 	
+	//Balises interdites => valeur 1.
+	$array_unauth_tags = array('b' => 0, 'i' => 0, 'u' => 0, 's' => 0,	'title' => 0, 'stitle' => 0, 'style' => 0, 'url' => 0,
+	'img' => 0, 'quote' => 0, 'hide' => 0, 'list' => 0, 'color' => 0, 'bgcolor' => 0, 'font' => 0, 'size' => 0, 'align' => 0, 'float' => 0, 'sup' => 0, 
+	'sub' => 0, 'indent' => 0, 'pre' => 0, 'table' => 0, 'swf' => 0, 'movie' => 0, 'sound' => 0, 'code' => 0, 'math' => 0, 'anchor' => 0, 'acronym' => 0);
+	$j = 0; 
+	$forbidden_tags = '';
+	foreach($array_unauth_tags as $name => $is_selected)
+	{
+		if( isset($CONFIG_COM['forbidden_tags']) )
+		{
+			if( in_array($name, $CONFIG_COM['forbidden_tags']) )
+				$selected = 'selected="selected"'; 
+		}
+		else 
+			$selected = ($is_selected) ? 'selected="selected"' : ''; 
+		$forbidden_tags .= '<option id="tag' . $j . '" value="' . $name . '" ' . $selected . '>[' . $name . ']</option>';
+		$j++;
+	}
+	
 	$Template->Assign_vars(array(
+		'NBR_TAGS' => $j,
 		'OPTIONS_RANK' =>  $options,
 		'COM_MAX' => !empty($CONFIG_COM['com_max']) ? $CONFIG_COM['com_max'] : '10',
 		'MAX_LINK' => isset($CONFIG_COM['max_link']) ? $CONFIG_COM['max_link'] : '-1',
 		'COM_ENABLED' => ($CONFIG['com_popup'] == 0) ? 'checked="checked"' : '',
 		'COM_DISABLED' => ($CONFIG['com_popup'] == 1) ? 'checked="checked"' : '',
+		'FORBIDDEN_TAGS' => $forbidden_tags,
 		'L_REQUIRE' => $LANG['require'],	
 		'L_COM' => $LANG['com'],
 		'L_COM_MANAGEMENT' => $LANG['com_management'],
@@ -88,6 +110,10 @@ else
 		'L_VIEW_COM' => $LANG['view_com'],	
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
+		'L_FORBIDDEN_TAGS' => $LANG['forbidden_tags'],
+		'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
+		'L_SELECT_ALL' => $LANG['select_all'],
+		'L_SELECT_NONE' => $LANG['select_none'],
 		'L_MAX_LINK' => $LANG['max_link'],
 		'L_MAX_LINK_EXPLAIN' => $LANG['max_link_explain']
 	));
@@ -95,6 +121,6 @@ else
 	$Template->Pparse('admin_com_config'); // traitement du modele	
 }
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

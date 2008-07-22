@@ -50,7 +50,7 @@
 [*] Possibilité d'insérer plusieurs css pour les modules.
 [*] Possibilité de charger un css pour chaque mini-module.
 [*] Nom des fichiers uploadés conservé (gestionnaire d'upload).
-- Ajout d'une interface générant un rapport pour le support.
+[*] Ajout d'une interface affichant les informations sur le serveur et générant un rapport pour le support.
 [*] Possibilité de désactiver les informations de temps de génération de page.
 [*] Possibilité de désactiver les informations sur le thème utilisé.
 [*] Message d'alerte lorsque le site est en maintenance, avec temps restant.
@@ -86,7 +86,6 @@
 [*] Amélioration des taches crons.
 [*] Correction du bug d'affichage des dossiers dans le gestionnaire de fichiers.
 [*] Correction des bugs dû à l'option register_globals.
-[-] Interface de rapport du système pour le support.
 
 [b]Forum[/b]
 [*] [color=red]Nouveauté:[/color] Réorganisation complète du code.

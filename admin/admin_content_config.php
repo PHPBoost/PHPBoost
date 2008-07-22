@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 if( !empty($_POST['submit'])  )
 {
@@ -56,11 +56,13 @@ else
 	$j = 0;
 	
 	foreach($array_unauth_tags as $name)
+	{	
 		$template->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,
-			'TAG_NAME' => $name,
+			'TAG_NAME' => '[' . $name . ']',
 			'C_ENABLED' => in_array($name, $CONFIG['forbidden_tags'])
 		));
+	}
 	
 	$template->assign_vars(array(
 		'SELECT_AUTH_USE_HTML' => $Group->Generate_select_auth(1, $CONFIG['html_auth']),
@@ -82,6 +84,6 @@ else
 	$template->parse(); // traitement du modele	
 }
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

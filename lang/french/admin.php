@@ -259,16 +259,27 @@ $LANG['default_field_possible_values'] = 'Oui|Non';
 $LANG['extend_field_edit'] = 'Editer le champs';
 
 //Index
-$LANG['admin_index'] = 'Bienvenue sur <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost %s</a>, et merci d\'avoir choisi ce portail pour votre site.<br /><br />Vous pouvez administrer l\'ensemble du site à partir de ce panneau d\'administration.<br />
-Celui-ci est divisé en sous-catégories dans lesquelles vous trouverez tous les outils nécessaires à la maintenance et à la configuration du site.<br /><br />Pour tout bug ou suggestion contactez le support sur le <a href="http://www.phpboost.com/forum/index.php" title="Forum PHPBoost officiel">forum officiel</a>.<br />Pensez également à consulter la <a href="http://www.phpboost.com/wiki/wiki.php">documentation officielle</a>.<br /><br /><br />Suivez les mises à jour sur <a href="http://www.phpboost.com">http://www.phpboost.com</a>';
+$LANG['admin_alerts'] = 'Alerte et actions en attente';
+$LANG['no_alert_or_action'] = 'Aucune alerte ou action en attente';
+$LANG['display_all_alerts'] = 'Voir toutes les alertes';
+$LANG['priority'] = 'Priorité';
+$LANG['flash'] = 'Immédiat';
+$LANG['urgent'] = 'Urgent';
+$LANG['hight'] = 'Haut';
+$LANG['normal'] = 'Normal';
+$LANG['low'] = 'Faible';
 $LANG['update_available'] = 'Mises à jour disponibles';
 $LANG['core_update_available'] = 'Nouvelle version <strong>%s</strong> du noyau disponible, pensez à mettre à jour PHPBoost! <a href="http://www.phpboost.com">Plus d\'informations</a>';
-$LANG['no_core_update_available'] = 'Aucune nouvelle version du noyau, vous êtes à jour!';
+$LANG['no_core_update_available'] = 'Aucune nouvelle version disponible, le système est à jour!';
 $LANG['module_update_available'] = 'Des mises à jour des modules sont disponibles!';
 $LANG['no_module_update_available'] = 'Aucune mise à jour des modules, vous êtes à jour!';
 $LANG['unknow_update'] = 'Impossible de déterminer si une mise à jour est disponible!';
 $LANG['user_online'] = 'Utilisateur(s) enregistré(s)';
 $LANG['last_update'] = 'Dernière mise à jour';
+$LANG['quick_links'] = 'Liens rapides';
+$LANG['members_managment'] = 'Gestion des membres';
+$LANG['menus_managment'] = 'Gestion des menus';
+$LANG['modules_managment'] = 'Gestion des modules';
 	
 //Config
 $LANG['config_main'] = 'Configuration générale';

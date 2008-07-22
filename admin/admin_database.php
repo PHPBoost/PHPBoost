@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 
 //On regarde si on doit lire un fichier
 $read_file = retrieve(GET, 'read_file', '', TSTRING_UNSECURE);
@@ -42,7 +42,7 @@ if( !empty($read_file) && substr($read_file, -4) == '.sql' )
 }
 
 define('TITLE', $LANG['database_management']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 $repair = !empty($_POST['repair']) ? true : false;
 $optimize = !empty($_POST['optimize']) ? true : false;
@@ -464,6 +464,6 @@ $Template->Assign_vars(array(
 
 $Template->Pparse('admin_database_management');
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

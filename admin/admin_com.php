@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 $del = !empty($_GET['del']) ? true : false;
 $edit = !empty($_GET['edit']) ? true : false;
@@ -226,6 +226,6 @@ while($row = $Sql->Sql_fetch_assoc($result) )
 
 $Template->Pparse('admin_com_management'); // traitement du modele	
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

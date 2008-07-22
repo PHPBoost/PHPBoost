@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-include_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 include_once('faq_begin.php'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-include_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 $page = !empty($_GET['p']) ? numeric($_GET['p']) : 0;
 
@@ -134,6 +134,6 @@ else
 
 }
 
-include_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>

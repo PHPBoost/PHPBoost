@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once('../kernel/admin_begin.php');
+require_once('../admin/admin_begin.php');
 load_module_lang('newsletter'); //Chargement de la langue du module.
 define('TITLE', $LANG['newsletter']);
-require_once('../kernel/admin_header.php');
+require_once('../admin/admin_header.php');
 
 //On recupère les variables.
 $type = retrieve(GET, 'type', '', TSTRING_UNSECURE);
@@ -194,6 +194,6 @@ $Template->Assign_vars(array(
 $Template->Pparse('admin_newsletter'); 
 
 
-require_once('../kernel/admin_footer.php');
+require_once('../admin/admin_footer.php');
 
 ?>
