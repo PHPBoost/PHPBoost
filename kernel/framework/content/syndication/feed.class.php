@@ -28,12 +28,12 @@
 define('FEED_PATH', PATH_TO_ROOT . '/cache/syndication/');
 
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
 
 function feeds_update_cache($feed_name, &$data, $idcat = 0, $tpl = false)
 {
-    require_once(PATH_TO_ROOT . '/kernel/framework/syndication/rss.work.class.php');
-    require_once(PATH_TO_ROOT . '/kernel/framework/syndication/atom.class.php');
+    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/rss.work.class.php');
+    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/atom.class.php');
     $RSS = new RSS($feed_name);
     $ATOM = new ATOM($feed_name);
     

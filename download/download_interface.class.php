@@ -200,7 +200,7 @@ class DownloadInterface extends ModuleInterface
     
     function syndication_data($idcat = 0)
     {
-        require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
         global $Cache, $Sql, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
         load_module_lang('download');
         $Cache->Load_file('download');
@@ -265,7 +265,7 @@ class DownloadInterface extends ModuleInterface
     function syndication_cache($cats = array(), $tpl = false)
     {
         $cats = array(0, 23, 24);
-        require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
         require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
         $tpl = new Template('download/framework/syndication/feed.tpl');
         global $DOWNLOAD_LANG;

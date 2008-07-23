@@ -36,8 +36,8 @@ if( !$Member->Check_level(MODO_LEVEL) ) //Si il n'est pas modérateur
 	
 $contribution_id = retrieve(GET, 'id', 0);
 	
-require_once(PATH_TO_ROOT . '/kernel/framework/contribution/contribution.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/contribution/contribution_panel.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_panel.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 
 $template = new Template('contribution_panel.tpl');

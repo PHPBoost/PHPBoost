@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/contribution/contribution_panel.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_panel.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 
 define('CONTRIBUTION_STATUS_UNREAD', 0);

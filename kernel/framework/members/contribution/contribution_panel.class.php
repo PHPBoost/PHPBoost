@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/contribution/contribution.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution.class.php');
 
 define('CONTRIBUTION_STATUS_NOT_READ', 1);
 define('CONTRIBUTION_STATUS_PROCESSING', 2);

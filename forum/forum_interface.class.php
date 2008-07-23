@@ -347,7 +347,7 @@ class ForumInterface extends ModuleInterface
 		
         $_idcat = $idcat;
         require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');
-        require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
         $idcat = $_idcat;   // Because <$idcat> is overwrite in /forum/forum_init_auth_cats.php
         
         $data = new FeedData();
@@ -407,7 +407,7 @@ class ForumInterface extends ModuleInterface
         global $LANG;
        
 		$cats[] = 0;
-        require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
         require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
         $tpl = new Template('forum/framework/syndication/feed.tpl');
         
