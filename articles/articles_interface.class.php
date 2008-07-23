@@ -216,7 +216,7 @@ class ArticlesInterface extends ModuleInterface
 		$cats[] = 0;
 		require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
 		require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
-		$tpl = new Template('articles/framework/syndication/feed.tpl');
+		$tpl = new Template('articles/framework/content/syndication/feed.tpl');
 		global $LANG;
 		load_module_lang('articles');
 		$tpl->Assign_vars(array(

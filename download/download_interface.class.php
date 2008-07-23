@@ -267,7 +267,7 @@ class DownloadInterface extends ModuleInterface
         $cats = array(0, 23, 24);
         require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
         require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
-        $tpl = new Template('download/framework/syndication/feed.tpl');
+        $tpl = new Template('download/framework/content/syndication/feed.tpl');
         global $DOWNLOAD_LANG;
         load_module_lang('download');
 		$tpl->Assign_vars(array(

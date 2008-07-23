@@ -28,7 +28,7 @@
 
 
 define('ATOM_EXTENSION', '.atom');
-define('DEFAULT_ATOM_TEMPLATE', 'framework/syndication/atom.tpl');
+define('DEFAULT_ATOM_TEMPLATE', 'framework/content/syndication/atom.tpl');
 
 require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');

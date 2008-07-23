@@ -409,7 +409,7 @@ class ForumInterface extends ModuleInterface
 		$cats[] = 0;
         require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
         require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
-        $tpl = new Template('forum/framework/syndication/feed.tpl');
+        $tpl = new Template('forum/framework/content/syndication/feed.tpl');
         
 		load_module_lang('forum');
         $tpl->Assign_vars(array('L_READ' => $LANG['forum_read_feed']));
