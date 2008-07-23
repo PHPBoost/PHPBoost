@@ -33,7 +33,7 @@ require_once('../kernel/header.php');
 if( !$Member->Check_level(MODO_LEVEL) ) //Si il n'est pas modérateur
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
-include('../kernel/moderation_panel_begin.php');	
+include('../member/moderation_panel_begin.php');	
 	
 $Template->Set_filenames(array(
 	'moderation_panel'=> 'moderation_panel.tpl'
