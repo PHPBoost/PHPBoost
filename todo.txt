@@ -53,7 +53,7 @@ Forum :
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[-] Flux gestion du cache (pour le moment en dur).
+[-] Flux gestion du cache (pour le moment en dur) (presque terminé)
 [-] Réhauser l'image des dossiers.
 [-] Faire les miniatures pour les thèmes.
 

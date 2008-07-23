@@ -26,7 +26,7 @@
 ###################################################*/
 
 load_module_lang('forum'); //Chargement de la langue du module.
-require_once('../forum/forum_defines.php');
+require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
 
 $Cache->Load_file('forum');
 
