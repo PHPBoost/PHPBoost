@@ -26,11 +26,25 @@
 ###################################################*/
 
 require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_item.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 
 class FeedData
 {
     ## Public Methods ##
-    function FeedData() {}
+    function FeedData($serialized_data = null)
+	{
+		if( $serialized_data != null )
+		{
+			$f_data = unserialize($serialized_data);
+			$this->title = $f_data->title;
+			$this->link = $f_data->link;
+			$this->date = $f_data->date;
+			$this->desc = $f_data->desc;
+			$this->lang = $f_data->lang ;
+			$this->host = $f_data->host;
+			$this->items = $f_data->items;
+		}
+	}
     
     ## Setters ##
     function set_title($value) { $this->title = $value; }
@@ -53,6 +67,26 @@ class FeedData
     function get_host() { return $this->host; }
     
     function get_items() { return $this->items; }
+	
+	function serialize()
+	{
+		return serialize($this);
+	}
+	
+    // Returns a new FeedData object with only $number items from the $begin_at one
+    function subitems($number = 10, $begin_at = 0)
+    {
+        $f_data = new FeedData($this->serialize());
+        
+        $f_data_length = count($f_data->items);
+        for($i = $begin_at + $number; $i < $f_data_length; $i++)
+            unset($f_data->items[$i]);
+        
+        for($i = 0; $i < $begin_at; $i++)
+            unset($f_data->items[$i]);
+        
+        return $f_data;
+    }
     
     ## Private Methods ##
     

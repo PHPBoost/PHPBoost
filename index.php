@@ -30,6 +30,7 @@ require_once('./kernel/begin.php');
 define('ALTERNATIVE_CSS', 'news');
 define('TITLE', 'Votre site à portée de main');
 require_once('./kernel/header.php');
+require_once('./kernel/framework/content/syndication/feed.class.php');
 
 ?>
         <div class="news_container" style="float:left;width:365px;margin-left:10px;">
@@ -46,10 +47,7 @@ require_once('./kernel/header.php');
                 <div style="float:right"></div>
             </div>
             <div class="news_content">
-                <?php
-                    if( @include('cache/syndication/news_0.php') )
-                        echo @get_news_0_feed(10);
-                ?>
+                <?php echo display_feed('news', 0); ?>
                 <div style="text-align:right;"><a href="./news/news.php" class="small_link">Plus de news...</a></div>
                 <div class="text_center"></div>
             </div>
@@ -68,10 +66,7 @@ require_once('./kernel/header.php');
                 <h3 class="title valign_middle">Dossiers</h3>
             </div>
             <div class="news_content">
-                <?php
-                    if( @include('cache/syndication/articles_0.php') )
-                        echo @get_articles_0_feed(3);
-                ?>
+                <?php echo display_feed('articles', 0, false, 3); ?>
                 <div style="text-align:right;"><a href="./articles/articles.php" class="small_link">Tous les Dossiers...</a></div>
                 <div class="spacer"></div>
             </div>
@@ -149,10 +144,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
                 <h3 class="title valign_middle">Derniers Modules</h3>
             </div>
             <div class="news_content">
-                <?php
-                    if( @include('cache/syndication/download_24.php') )
-                        echo get_download_24_feed(3);
-                ?>
+                <?php echo display_feed('download', 24, false, 3); ?>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>
@@ -170,10 +162,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
                 <h3 class="title valign_middle">Derniers Thèmes</h3>
             </div>
             <div class="news_content">
-                <?php
-                    if( @include('cache/syndication/download_23.php') )
-                        echo @get_download_23_feed(3);
-                ?>
+                <?php echo display_feed('download', 23, false, 3); ?>
                 <div class="spacer"></div>
             </div>
             <div class="news_bottom_l"></div>
@@ -191,10 +180,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
                 <h3 class="title valign_middle">Derniers sujets du forum</h3>
             </div>
             <div class="news_content">
-                <?php
-                    if( @include('cache/syndication/forum_0.php') )
-                        echo @get_forum_0_feed(10);
-                ?>
+                <?php echo display_feed('forum', 0); ?>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>
@@ -212,11 +198,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
                 <h3 class="title valign_middle">Dernières articles de la documentation</h3>
             </div>
             <div class="news_content">
-
-                <?php
-                    if( @include('cache/syndication/wiki_0.php') )
-                        echo @get_wiki_0_feed(10);
-                ?>
+                <?php echo display_feed('wiki', 0); ?>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>

@@ -26,70 +26,47 @@
 ###################################################*/
 
 define('FEED_PATH', PATH_TO_ROOT . '/cache/syndication/');
+define('ERROR_GETTING_CACHE', 'Error regenerating and / or retrieving the syndication cache of the %s (%s)');
 
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
 
-function feeds_update_cache($feed_name, &$data, $idcat = 0, $tpl = false)
+function display_feed($module_id, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
 {
-    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/rss.work.class.php');
-    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/atom.class.php');
-    $RSS = new RSS($feed_name);
-    $ATOM = new ATOM($feed_name);
-    
-    $RSS->load_data($data);
-    $RSS->cache();
-    
-    $ATOM->load_data($data);
-    $ATOM->cache();
-    
-    if( $tpl !== false )
+    // Choose the correct template
+	if( $tpl !== false )
         $template = $tpl->copy();
     else
-        $template = new Template($feed_name . '/framework/syndication/feed.tpl');
-    
-    $HTML = new Feed($feed_name);
-    $HTML->load_data($data);
-    
-    $php_file = '<?php' . "\n" . 'function get_' . $feed_name . '_' . $idcat . '_feed($nb_items) {' . "\n" . '$items = array();' . "\n";
-    $js_file = 'function get_' . $feed_name . '_' . $idcat  . '_feed(nb_items) {' . "\n" .'var items = new Array();' . "\n";
-    
-    $items = explode('<!-- ITEM -->', $HTML->export($template));
-    
-    $php_file .= '$ret = \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $items[0]) . '\';' ."\n";
-    $js_file .= 'var ret = \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $items[0]) . '\';' ."\n";
-    
-    foreach( $items as $item )
-    {
-        if( ($i = strpos($item, '<!-- END ITEM -->')) !== false )
-        {
-            $item = substr($item, 0, $i);
-            $php_file .= '$items[] = \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $item) . '\';' . "\n";
-            $js_file .= 'items.push(\'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $item) . '\');' . "\n";
-        }
+	{
+		require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
+        $template = new Template($module_id . '/framework/content/syndication/feed.tpl');
     }
     
-    $php_file .= '$nb_items = ($nb_items > count($items)) ? count($items) : $nb_items;' . "\n";
-    $js_file .= 'nb_items = (nb_items > items.length) ? items.length : nb_items;' . "\n";
-    $php_file .= 'for( $i = 0; $i < $nb_items; $i++ ) { $ret .= $items[$i]; }' . "\n";
-    $js_file .= 'for( var i = 0; i < nb_items; i++ ) { ret += items[i]; }' . "\n";
+    // Get the cache content or recreate it if not existing
+    $iteration = 0;
+    while( ($feed_data = @file_get_contents_emulate(PATH_TO_ROOT . '/cache/syndication/' . $module_id . '_' . $idcat . '.php')) === false )
+    {
+        require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
+        $modules = new Modules();
+        $module = $modules->get_module($module_id);
+        $data = $module->syndication_data($idcat);
+        feeds_update_cache($module_id, $data, $idcat);
+        
+        if( $iteration++ > 1 )
+            user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
+    }
     
-    $end = $items[count($items) - 1];
-    $end = explode('<!-- END ITEM -->', $end);
-    $end = count($end) > 0 ? $end[count($end) - 1] : '';
+    $feed = new Feed($module_id);
+    $data = new FeedData($feed_data);
+    $feed->load_data($data->subitems($number, $begin_at));
     
-    $php_file .= '$ret .= \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $end) . '\';';
-    $js_file .= 'ret += \'' . str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $end) . '\';';
-    
-    $php_file .= 'return $ret; }' . "\n" . '?>';
-    $js_file .= 'return ret; }' . "\n";
-    
-    $file = fopen(FEED_PATH . $feed_name . '_' . $idcat . '.php', 'w+');
-    fputs($file, $php_file);
-    fclose($file);
-    
-    $file = fopen(FEED_PATH . $feed_name . '_' . $idcat . '.js', 'w+');
-    fputs($file, $js_file);
+    return $feed->export($template);
+}
+
+function feeds_update_cache($feed_name, &$data, $idcat = 0)
+{
+	$file = fopen(FEED_PATH . $feed_name . '_' . $idcat . '.php', 'w+');
+    fputs($file, $data->serialize());
     fclose($file);
 }
 
