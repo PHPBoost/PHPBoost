@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_item.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_item.class.php');
 
 class FeedData
 {

@@ -109,7 +109,6 @@ class ContentParser
 	}
 	
 	####### Protected #######
-	//Editeurs texte supportés.	
 	//This array should be static
 	var $tag = array('b', 'i', 'u', 's', 'title', 'stitle', 'style', 'url', 
 	'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 

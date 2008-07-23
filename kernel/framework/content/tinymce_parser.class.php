@@ -75,9 +75,15 @@ class TinyMCEParser extends ContentParser
 		//Balise indent
 		$this->_parse_imbricated('&lt;blockquote&gt;', '`&lt;blockquote&gt;(.+)&lt;/blockquote&gt;`isU', '<div class="indent">$1</div>');
 
-		//Préparse de la balise table.
-		//$this->parsed_content = preg_replace_callback('`&lt;table(?: border="[^"]+")?(?: cellspacing="[^"]+")?(?: cellpadding="[^"]+")?(?: height="[^"]+")?(?: width="([^"]+)")?(?: align="[^"]+")?(?: summary="[^"]+")?( style="([^"]+)")?[^&]*&gt;(.+)&lt;/table&gt;`i', array(&$this, '_parse_tinymce_table'), $this->parsed_content);
-		$this->parsed_content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`is', array(&$this, '_parse_tinymce_table'), $this->parsed_content);
+		//Transformation des tableaux en BBCode
+		if( preg_match('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`is', $this->parsed_content) )
+		{
+			$this->parsed_content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`is', array(&$this, '_parse_table_tag'), $this->parsed_content);
+			$this->parsed_content = preg_replace('`&lt;tbody&gt;(.*)&lt;/tbody&gt;`is', '$1', $this->parsed_content);
+			$this->parsed_content = preg_replace('`&lt;tr&gt;(.*)&lt;/tr&gt;`isU', '<tr class="bb_table_row">$1</tr>', $this->parsed_content);
+			$this->parsed_content = preg_replace('`&lt;td&gt;(.*)&lt;/td&gt;`isU', '<td class="bb_table_col">$1</td>', $this->parsed_content);
+			$this->parsed_content = preg_replace('`&lt;th&gt;(.*)&lt;/th&gt;`isU', '<td class="bb_table_col">$1</td>', $this->parsed_content);
+		}
 		
 		$array_preg = array(
 			'`&lt;div&gt;(.+)&lt;/div&gt;`isU',
@@ -294,13 +300,9 @@ class TinyMCEParser extends ContentParser
 	## Protected ##
 
 	//Parse la balise table de tinymce pour le bbcode.
-	/*static*/ function _parse_tinymce_table($matches)
+	/*static*/ function _parse_table_tag($matches)
 	{
-		$table_content = preg_replace('`&lt;tbody&gt;(.*)&lt;/tbody&gt;`is', '$1', $matches[2]);
-		$table_content = preg_replace('`&lt;tr&gt;(.*)&lt;/tr&gt;`isU', '<tr class="bb_table_row">$1</tr>', $table_content);
-		$table_content = preg_replace('`&lt;td&gt;(.*)&lt;/td&gt;`isU', '<td class="bb_table_col">$1</td>', $table_content);
-		$table_content = preg_replace('`&lt;th&gt;(.*)&lt;/th&gt;`isU', '<td class="bb_table_col">$1</td>', $table_content);
-		return '<table class="bb_table">' . $table_content . '</table>';
+		return '<table class="bb_table">' . $matches[2] . '</table>';
 	}
 }
 

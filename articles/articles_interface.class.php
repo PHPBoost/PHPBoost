@@ -143,7 +143,7 @@ class ArticlesInterface extends ModuleInterface
 		$Cache->load_file('articles');
 
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
-		require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
+		require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
 		$data = new FeedData();
 
 		if( $Member->Check_auth($CONFIG_ARTICLES['auth_root'], READ_CAT_ARTICLES) )
@@ -214,7 +214,7 @@ class ArticlesInterface extends ModuleInterface
 	function syndication_cache($cats = array(), $tpl = false)
 	{
 		$cats[] = 0;
-		require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
+		require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
 		require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
 		$tpl = new Template('articles/framework/syndication/feed.tpl');
 		global $LANG;

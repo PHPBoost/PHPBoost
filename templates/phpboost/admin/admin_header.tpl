@@ -92,8 +92,8 @@
 							<li class="extend" onmouseover="show_menu(32, 1);" onmouseout="hide_menu(1);">
 								<a href="../admin/admin_cache.php" style="background-image:url(../templates/{THEME}/images/admin/cache_mini.png);">{L_CACHE}</a>
 								<ul id="ssmenu32">
-									<li><a href="../admin/admin_phpinfo.php" style="background-image:url(../templates/{THEME}/images/admin/cache_mini.png);">{L_CACHE}</a></li>
-									<li><a href="../admin/admin_system_report.php" style="background-image:url(../templates/{THEME}/images/admin/rss_mini.png);">{L_SYNDICATION}</a></li>
+									<li><a href="../admin/admin_cache.php" style="background-image:url(../templates/{THEME}/images/admin/cache_mini.png);">{L_CACHE}</a></li>
+									<li><a href="../admin/admin_cache.php?cache=syndication" style="background-image:url(../templates/{THEME}/images/admin/rss_mini.png);">{L_SYNDICATION}</a></li>
 								</ul>
 							</li>		
 							<li><a href="../admin/admin_stats.php" style="background-image:url(../templates/{THEME}/images/admin/stats_mini.png);">{L_STATS}</a></li>

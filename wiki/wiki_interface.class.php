@@ -151,7 +151,7 @@ class WikiInterface extends ModuleInterface
     
     function syndication_data($idcat = 0)
     {
-        require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed_data.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
         global $Cache, $Sql, $LANG, $CONFIG, $_WIKI_CATS, $_WIKI_CONFIG;
         
         load_module_lang('wiki');
@@ -226,7 +226,7 @@ class WikiInterface extends ModuleInterface
     function syndication_cache($cats = array(), $tpl = false)
     {
         $cats[] = 0;
-        require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
         require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
         $tpl = new Template('wiki/framework/syndication/feed.tpl');
         global $LANG;

@@ -35,12 +35,12 @@ require_once('../kernel/header_no_display.php');
 
 if( retrieve(GET, 'feed', 'rss') == 'rss' )
 {
-    require_once('../kernel/framework/syndication/rss.work.class.php');
+    require_once('../kernel/framework/content/syndication/rss.work.class.php');
     $Feed = new RSS('articles');
 }
 else
 {
-    require_once('../kernel/framework/syndication/atom.class.php');
+    require_once('../kernel/framework/content/syndication/atom.class.php');
     $Feed = new ATOM('articles');
 }
 
