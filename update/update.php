@@ -38,7 +38,7 @@ define('DIR', str_replace('/update/update.php', '', $server_path));
 //Thème par défaut.
 define('DEFAULT_THEME', 'main');
 
-if( !@include_once('../kernel/framework/template.class.php') )
+if( !@include_once('../kernel/framework/io/template.class.php') )
 	die('Votre dossier de mise à jour n\'est pas placé où il faut');
 include_once('../kernel/framework/functions.inc.php');
 
@@ -57,10 +57,10 @@ if( $step >= 2 )
 	require_once('../kernel/framework/functions.inc.php'); //Fonctions de base.
 	require_once('../kernel/constant.php'); //Constante utiles.
 	require_once('../kernel/framework/content/mathpublisher.php'); //Gestion des formules mathématiques.
-	require_once('../kernel/framework/errors.class.php');
-	require_once('../kernel/framework/template.class.php');
+	require_once('../kernel/framework/core/errors.class.php');
+	require_once('../kernel/framework/io/template.class.php');
 	require_once('../kernel/framework/db/' . DBTYPE . '.class.php');
-	require_once('../kernel/framework/cache.class.php');
+	require_once('../kernel/framework/core/cache.class.php');
 	require_once('../kernel/framework/members/sessions.class.php');
 	require_once('../kernel/framework/members/groups.class.php');
 

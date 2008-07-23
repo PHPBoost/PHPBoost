@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . 'kernel/framework/files/fse.class.php');
-require_once(PATH_TO_ROOT . 'kernel/framework/files/file.class.php');
+require_once(PATH_TO_ROOT . 'kernel/framework/io/fse.class.php');
+require_once(PATH_TO_ROOT . 'kernel/framework/io/file.class.php');
 
 // gestion des dossiers
 class Folder extends FileSystemElement

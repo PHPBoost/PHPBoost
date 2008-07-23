@@ -338,7 +338,7 @@ elseif( $archives ) //Archives.
 		
 	$nbrarchives = $Sql->Query("SELECT COUNT(*) as id FROM ".PREFIX."poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
 	
-	include_once('../kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$Template->Assign_vars(array(

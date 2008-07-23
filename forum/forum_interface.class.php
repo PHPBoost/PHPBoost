@@ -116,7 +116,7 @@ class ForumInterface extends ModuleInterface
     {
         global $Member, $MODULES, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG, $Sql;
         
-        require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
         $Tpl = new Template('forum/forum_search_form.tpl');
         
         //Autorisation sur le module.
@@ -408,7 +408,7 @@ class ForumInterface extends ModuleInterface
        
 		$cats[] = 0;
         require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
-        require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
         $tpl = new Template('forum/framework/syndication/feed.tpl');
         
 		load_module_lang('forum');

@@ -237,7 +237,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				$Sql->Query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
 				//Envoi du mail
-				include_once('../kernel/framework/mail.class.php');
+				include_once('../kernel/framework/io/mail.class.php');
 				$Mail = new Mail();
 				$Mail->Send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 			}	
@@ -353,7 +353,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 			
 			if( !empty($user_ban) ) //Envoi du mail
 			{
-				include_once('../kernel/framework/mail.class.php');
+				include_once('../kernel/framework/io/mail.class.php');
 				$Mail = new Mail();
 				$Mail->Send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 			}				

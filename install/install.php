@@ -41,7 +41,7 @@ define('PHPBOOST', true);
 //Th�me par d�faut.
 define('DEFAULT_THEME', 'main');
 
-if( !@include_once('../kernel/framework/template.class.php') )
+if( !@include_once('../kernel/framework/io/template.class.php') )
 	die('Votre dossier d\'installation n\'est pas plac� o� il faut');
 include_once('../kernel/framework/functions.inc.php');
 
@@ -213,7 +213,7 @@ elseif( $step == 4 )
 			if( !@include_once('../kernel/framework/db/' . $dbms . '.class.php') )
 				return '<div class="error">' . $LANG['db_error_dbms'] . '</div>';
 				
-			require_once('../kernel/framework/errors.class.php');
+			require_once('../kernel/framework/core/errors.class.php');
 			$Errorh = new Errors;
 			$Sql = new Sql(false);
 
@@ -233,7 +233,7 @@ elseif( $step == 4 )
 
 		if( empty($error) )
 		{
-			require_once('../kernel/framework/errors.class.php');
+			require_once('../kernel/framework/core/errors.class.php');
 			$Errorh = new Errors;
 			$Sql = new Sql(false);
             //Connexion
@@ -404,7 +404,7 @@ elseif( $step == 5 )
         $CONFIG['search_max_use'] = '200';
 		
 		$config_string = serialize($CONFIG);
-		require_once('../kernel/framework/errors.class.php');
+		require_once('../kernel/framework/core/errors.class.php');
 		$Errorh = new Errors;
 		include_once('../kernel/auth/config.php');
 		define('PREFIX', $table_prefix);
@@ -425,7 +425,7 @@ elseif( $step == 5 )
 			$Sql->Query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
 		
 		//On g�n�re le cache
-		include('../kernel/framework/cache.class.php');
+		include('../kernel/framework/core/cache.class.php');
 		$Cache = new Cache;
 		$Cache->Generate_all_files();
 		redirect(HOST . FILE . add_lang('?step=6', true));
@@ -562,14 +562,14 @@ elseif( $step == 6 )
 		//Si il n'y a pas d'erreur on enregistre dans la table
 		if( empty($error) )
 		{
-			require_once('../kernel/framework/errors.class.php');
+			require_once('../kernel/framework/core/errors.class.php');
 			$Errorh = new Errors;
 			require_once('../kernel/auth/config.php');
 			define('PREFIX', $table_prefix);
 			include_once('../kernel/framework/db/' . $dbtype . '.class.php');
 			$Sql = new Sql;
 			//On cr�e le code de d�verrouillage
-			include_once('../kernel/framework/cache.class.php');
+			include_once('../kernel/framework/core/cache.class.php');
 			$Cache = new Cache;
 			$Cache->Load_file('config');
 			
@@ -583,7 +583,7 @@ elseif( $step == 6 )
 			$Cache->Generate_file('config');
 			//On envoie un mail � l'administrateur
 			$LANG['admin'] = '';
-			include_once('../kernel/framework/mail.class.php');
+			include_once('../kernel/framework/io/mail.class.php');
 			$Mail = new Mail();
 			$Mail->Send_mail($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail']);
 			
@@ -700,7 +700,7 @@ elseif( $step == 7 )
 		$index_module_url = '';
 		$activ_member = !empty($_POST['activ_member']) ? true : false;
 		
-		require_once('../kernel/framework/errors.class.php');
+		require_once('../kernel/framework/core/errors.class.php');
 		$Errorh = new Errors;
 		include_once('../kernel/auth/config.php');
 		define('PREFIX', $table_prefix);
@@ -708,7 +708,7 @@ elseif( $step == 7 )
 		include_once('../kernel/framework/db/' . $dbtype . '.class.php');
 		$Sql = new Sql;
 		//On g�n�re le cache
-		include('../kernel/framework/cache.class.php');
+		include('../kernel/framework/core/cache.class.php');
 		$Cache = new Cache;
 		
 		$link_installed = false; //Module de lien install�?
@@ -984,7 +984,7 @@ elseif( $step == 8 )
 }
 elseif( $step == 9 )
 {
-	require_once('../kernel/framework/errors.class.php');
+	require_once('../kernel/framework/core/errors.class.php');
 	$Errorh = new Errors;
 	include_once('../kernel/auth/config.php');
 	define('PREFIX', $table_prefix);
@@ -992,7 +992,7 @@ elseif( $step == 9 )
 	include_once('../kernel/framework/db/' . $dbtype . '.class.php');
 	$Sql = new Sql;
 	//On g�n�re le cache
-	include('../kernel/framework/cache.class.php');
+	include('../kernel/framework/core/cache.class.php');
 	$Cache = new Cache;
 	$Cache->Load_file('config');
 	

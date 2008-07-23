@@ -43,7 +43,7 @@ $nbr_pics_post = !empty($_POST['nbr_pics']) ? numeric($_POST['nbr_pics']) : 0;
 if( isset($_FILES['gallery']) && isset($_POST['idcat_post']) ) //Upload
 { 
 	$dir = 'pics/';
-	include_once('../kernel/framework/files/upload.class.php');
+	include_once('../kernel/framework/io/upload.class.php');
 	$Upload = new Upload($dir);
 	
 	$idpic = 0;

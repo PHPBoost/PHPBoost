@@ -44,7 +44,7 @@ if( !$Member->Check_level(MEMBER_LEVEL) ) //Réservé aux membres.
 	
 if( !empty($_POST['valid']) )
 {
-	include_once('../kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$result = $Sql->Query_while("SELECT t.id, tr.pm, tr.mail
@@ -76,7 +76,7 @@ elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s
 	));
 
 	
-	include_once('../kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.

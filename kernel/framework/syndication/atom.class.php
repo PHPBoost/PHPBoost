@@ -30,7 +30,7 @@
 define('ATOM_EXTENSION', '.atom');
 define('DEFAULT_ATOM_TEMPLATE', 'framework/syndication/atom.tpl');
 
-require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
 
 class ATOM extends Feed

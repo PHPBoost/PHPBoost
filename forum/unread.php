@@ -48,7 +48,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 	
-	include_once('../kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.

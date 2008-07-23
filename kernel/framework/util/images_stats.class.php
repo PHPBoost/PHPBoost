@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             stats.class.php
+ *                             images_stats.class.php
  *                            -------------------
  *   begin                : August 27, 2007
  *   copyright          : (C) 2007 Viarre Régis

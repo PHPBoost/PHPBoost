@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/files/fse.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/io/fse.class.php');
 
 define('ERASE', false);
 define('ADD', true);

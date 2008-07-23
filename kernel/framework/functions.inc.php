@@ -755,7 +755,7 @@ if( !function_exists('array_combine') )
 function get_feed_menu($feed_url)
 {
     global $LANG, $CONFIG;
-    require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+    require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
     $feedMenu = new Template('framework/syndication/menu.tpl');
     $feedMenu->Assign_vars(array(
         'PATH_TO_ROOT' => PATH_TO_ROOT,
@@ -771,7 +771,7 @@ function get_feed_menu($feed_url)
 function strhash($str)
 {
 //     return hash('sha256', $str);
-    require_once(PATH_TO_ROOT . '/kernel/framework/sha256.class.php');
+    require_once(PATH_TO_ROOT . '/kernel/framework/util/sha256.class.php');
     return SHA256::hash(md5($str) . $str);
 }
 

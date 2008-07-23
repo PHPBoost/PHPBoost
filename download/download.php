@@ -45,7 +45,7 @@ if( $file_id > 0 ) //Contenu
  	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['release_timestamp']);
 	
 	//Affichage notation.
-	include_once('../kernel/framework/note.class.php'); 
+	include_once('../kernel/framework/content/note.class.php'); 
 	$Note = new Note('download', $file_id, transid('download.php?id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
 	
 	$Template->Assign_vars(array(
@@ -226,11 +226,11 @@ else
 		));
 			
 		//On crée une pagination si le nombre de fichiers est trop important.
-		include_once('../kernel/framework/pagination.class.php'); 
+		include_once('../kernel/framework/util/pagination.class.php'); 
 		$Pagination = new Pagination();
 		
 		//Notes
-		include_once('../kernel/framework/note.class.php');
+		include_once('../kernel/framework/content/note.class.php');
 		$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
 		
 		$Template->Assign_vars(array(

@@ -118,7 +118,7 @@ class DownloadInterface extends ModuleInterface
         
         require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
         $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result['timestamp']);
-        require_once(PATH_TO_ROOT . '/kernel/framework/note.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/note.class.php');
         $Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
         $Tpl->Assign_vars(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
@@ -266,7 +266,7 @@ class DownloadInterface extends ModuleInterface
     {
         $cats = array(0, 23, 24);
         require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
-        require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
         $tpl = new Template('download/framework/syndication/feed.tpl');
         global $DOWNLOAD_LANG;
         load_module_lang('download');
