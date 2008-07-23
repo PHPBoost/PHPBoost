@@ -89,7 +89,7 @@ elseif( isset($_FILES['gallery']) ) //Upload
 		redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#errorh');
 	
 	$dir = 'pics/';
-	include_once('../kernel/framework/files/upload.class.php');
+	include_once('../kernel/framework/io/upload.class.php');
 	$Upload = new Upload($dir);
 	
 	$idpic = 0;
@@ -297,7 +297,7 @@ else
 		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
 		
 	//On crée une pagination si le nombre de catégories est trop important.
-	include_once('../kernel/framework/pagination.class.php');
+	include_once('../kernel/framework/util/pagination.class.php');
 	$Pagination = new Pagination();
 
 	//Colonnes des catégories.
@@ -562,7 +562,7 @@ else
 				if( $activ_note )
 				{
 					//Affichage notation.
-					include_once('../kernel/framework/note.class.php');
+					include_once('../kernel/framework/content/note.class.php');
 					$Note = new Note('gallery', $info_pics['id'], transid('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
 				}			
 				
@@ -641,7 +641,7 @@ else
 		else
 		{
 			//On crée une pagination si le nombre de photos est trop important.
-			include_once('../kernel/framework/pagination.class.php');
+			include_once('../kernel/framework/util/pagination.class.php');
 			$Pagination = new Pagination();
 			
 			$Template->Assign_vars(array(
@@ -650,7 +650,7 @@ else
 				'L_EDIT' => $LANG['edit']
 			));
 			
-			include_once('../kernel/framework/note.class.php'); 
+			include_once('../kernel/framework/content/note.class.php'); 
 			$is_connected = $Member->Check_level(MEMBER_LEVEL);
 			$j = 0;
 			$result = $Sql->Query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login

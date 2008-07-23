@@ -447,7 +447,7 @@ if( !empty($id_get) ) //Espace membre
 			//Gestion upload d'avatar.					
 			$user_avatar = '';
 			$dir = '../images/avatars/';
-			include_once('../kernel/framework/files/upload.class.php');
+			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
 			
 			if( is_writable($dir) && $CONFIG_MEMBER['activ_up_avatar'] == 1 )
@@ -952,7 +952,7 @@ else //Show all member!
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	//On crée une pagination si le nombre de membre est trop important.
-	include_once('../kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
 	$Template->Assign_vars(array(

@@ -424,7 +424,7 @@ else
 	$nbr_articles = $Sql->Count_table('articles', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre d'articles est trop important.
-	include_once('../kernel/framework/pagination.class.php');
+	include_once('../kernel/framework/util/pagination.class.php');
 	$Pagination = new Pagination();
 	
 	$Template->Assign_vars(array(

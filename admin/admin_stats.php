@@ -99,7 +99,7 @@ if( !empty($members) )
 		$stats_array[$name] = $row['compt'];
 	}	
 	$Sql->Close($result);
-	include_once('../kernel/framework/stats.class.php');
+	include_once('../kernel/framework/util/images_stats.class.php');
 	$Stats = new Stats();
 		
 	$Stats->Load_statsdata($stats_array, 'ellipse');
@@ -925,7 +925,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 }
 elseif( !empty($referer) )
 {
-	include_once('../kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$nbr_referer = $Sql->Query("SELECT COUNT(DISTINCT(url)) FROM ".PREFIX."stats_referer WHERE type = 0", __LINE__, __FILE__);
@@ -982,7 +982,7 @@ elseif( !empty($referer) )
 }
 elseif( !empty($keyword) )
 {
-	include_once('../kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
 	$nbr_keyword = $Sql->Query("SELECT COUNT(DISTINCT(relative_url)) FROM ".PREFIX."stats_referer WHERE type = 1", __LINE__, __FILE__);
@@ -1080,7 +1080,7 @@ elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques cam
 	$stats_array = @fgets($file);
 	$stats_array = !empty($stats_array) ? unserialize($stats_array) : array();
 	@fclose($file);
-	include_once('../kernel/framework/stats.class.php');
+	include_once('../kernel/framework/util/images_stats.class.php');
 	$Stats = new Stats();
 		
 	$Stats->Load_statsdata($stats_array, 'ellipse', 5);
@@ -1157,7 +1157,7 @@ elseif( $bot )
 		}
 	}
 
-	include_once('../kernel/framework/stats.class.php');
+	include_once('../kernel/framework/util/images_stats.class.php');
 	$Stats = new Stats();
 		
 	$Stats->Load_statsdata($stats_array, 'ellipse');

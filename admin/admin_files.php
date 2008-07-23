@@ -30,7 +30,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 //Initialisation  de la class de gestion des fichiers.
-include_once('../kernel/framework/files/files.class.php');
+include_once('../member/files.class.php');
 $Files = new Files; 
 
 $folder = retrieve(GET, 'f', 0);
@@ -75,7 +75,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 		//Chargement de la configuration.
 		$Cache->Load_file('files');
 		
-		include_once('../kernel/framework/files/upload.class.php');
+		include_once('../kernel/framework/io/upload.class.php');
 		$Upload = new Upload($dir);
 		$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+$`i', UNIQ_NAME);
 		

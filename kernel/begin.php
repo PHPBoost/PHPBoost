@@ -33,20 +33,20 @@ header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 
 //Inclusion des fichiers
-require_once(PATH_TO_ROOT . '/kernel/framework/bench.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/util/bench.class.php');
 $Bench = new Bench; //Début du benchmark
 $Bench->Start_bench('site');
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
 require_once(PATH_TO_ROOT . '/kernel/framework/content/mathpublisher.php'); //Gestion des formules mathématiques.
-require_once(PATH_TO_ROOT . '/kernel/framework/errors.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/core/errors.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/db/' . DBTYPE . '.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/cache.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/core/cache.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/members/sessions.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/members/member.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/members/groups.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/breadcrumb.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/core/breadcrumb.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
 
 //Instanciation des objets indispensables au noyau.

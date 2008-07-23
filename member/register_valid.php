@@ -95,7 +95,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 				$user_avatar = '';
 				//Gestion upload d'avatar.				
 				$dir = '../images/avatars/';
-				include_once('../kernel/framework/files/upload.class.php');
+				include_once('../kernel/framework/io/upload.class.php');
 				$Upload = new Upload($dir);
 				
 				if( is_writable($dir) && $CONFIG_MEMBER['activ_up_avatar'] == 1 )
@@ -249,7 +249,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 						$valid = '';
 					}
 					
-					include_once('../kernel/framework/mail.class.php');
+					include_once('../kernel/framework/io/mail.class.php');
 					$Mail = new Mail();
 					
 					$Mail->Send_mail($user_mail, sprintf(addslashes($LANG['register_title_mail']), $CONFIG['site_name']), sprintf(addslashes($LANG['register_mail']), $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail']);

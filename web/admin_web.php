@@ -231,7 +231,7 @@ else
 	$nbr_web = $Sql->Count_table('web', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de web est trop important.
-	include_once('../kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 
 	$Template->Assign_vars(array(	

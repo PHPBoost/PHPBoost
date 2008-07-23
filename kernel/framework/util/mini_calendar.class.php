@@ -27,7 +27,7 @@
 ###################################################*/
 
 include_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
-include_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+include_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
 
 class Mini_calendar
 {

@@ -28,7 +28,7 @@
 define('RSS_EXTENSION', '.rss');
 define('DEFAULT_RSS_TEMPLATE', 'framework/syndication/rss.tpl');
 
-require_once(PATH_TO_ROOT . '/kernel/framework/template.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/syndication/feed.class.php');
 
 class RSS extends Feed

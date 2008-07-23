@@ -49,7 +49,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 	}	
 
 	//On crée une pagination (si activé) si le nombre de news est trop important.
-	include_once('../kernel/framework/pagination.class.php'); 
+	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
 	//Pagination activée, sinon affichage lien vers les archives.

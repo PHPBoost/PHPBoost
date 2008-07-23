@@ -40,7 +40,7 @@ $get_pages_year = !empty($_GET['pages_year']) ? true : false;
 include_once('../kernel/begin.php');
 
 include_once('../lang/' . $CONFIG['lang'] . '/stats.php');
-include_once('../kernel/framework/stats.class.php');
+include_once('../kernel/framework/util/images_stats.class.php');
 $Stats = new Stats();
 
 $array_stats = array('other' => 0);

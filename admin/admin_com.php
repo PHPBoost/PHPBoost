@@ -54,7 +54,7 @@ while($row = $Sql->Sql_fetch_assoc($result) )
 $Sql->Close($result);
 
 //On crée une pagination si le nombre de commentaires est trop important.
-include_once('../kernel/framework/pagination.class.php'); 
+include_once('../kernel/framework/util/pagination.class.php'); 
 $Pagination = new Pagination();
 
 $nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->Count_table('com', __LINE__, __FILE__);

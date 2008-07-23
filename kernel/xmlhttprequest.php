@@ -160,7 +160,7 @@ elseif( !empty($_GET['stats_keyword']) ) //Recherche d'un membre pour envoyer le
 elseif( !empty($_GET['new_folder']) ) //Ajout d'un dossier dans la gestion des fichiers.
 {
 	//Initialisation  de la class de gestion des fichiers.
-	include_once(PATH_TO_ROOT . '/kernel/framework/files/files.class.php');
+	include_once(PATH_TO_ROOT . '/member/files.class.php');
 	$Files = new Files; 
 	
 	$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : '0';
@@ -180,7 +180,7 @@ elseif( !empty($_GET['new_folder']) ) //Ajout d'un dossier dans la gestion des f
 elseif( !empty($_GET['rename_folder']) ) //Renomme un dossier dans la gestion des fichiers.
 {
 	//Initialisation  de la class de gestion des fichiers.
-	include_once(PATH_TO_ROOT . '/kernel/framework/files/files.class.php');
+	include_once(PATH_TO_ROOT . '/member/files.class.php');
 	$Files = new Files; 
 	
 	$id_folder = !empty($_POST['id_folder']) ? numeric($_POST['id_folder']) : '0';
@@ -206,7 +206,7 @@ elseif( !empty($_GET['rename_folder']) ) //Renomme un dossier dans la gestion de
 elseif( !empty($_GET['rename_file']) ) //Renomme un fichier d'un dossier dans la gestion des fichiers.
 {
 	//Initialisation  de la class de gestion des fichiers.
-	include_once(PATH_TO_ROOT . '/kernel/framework/files/files.class.php');
+	include_once(PATH_TO_ROOT . '/member/files.class.php');
 	$Files = new Files; 
 	
 	$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
