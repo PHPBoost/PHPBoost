@@ -156,7 +156,7 @@ class NewsInterface extends ModuleInterface
         $cats[] = 0;
         require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
         require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
-        $tpl = new Template('news/framework/syndication/feed.tpl');
+        $tpl = new Template('news/framework/content/syndication/feed.tpl');
         global $LANG;
         load_module_lang('news');
         $tpl->Assign_vars(array('L_READ' => $LANG['read_feed']));

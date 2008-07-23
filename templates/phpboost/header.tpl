@@ -11,7 +11,7 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/generic.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/content.css" type="text/css" media="screen, print, handheld" />
         <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/bbcode.css" type="text/css" media="screen, print, handheld" />
-        <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/framework/syndication/syndication.css" type="text/css" media="screen, print, handheld" />
+        <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/framework/content/syndication/syndication.css" type="text/css" media="screen, print, handheld" />
 		{ALTERNATIVE_CSS}
 		<link rel="shortcut icon" type="image/x-icon" href="{PATH_TO_ROOT}/favicon.ico" />
 		<link rel="alternate" type="application/rss+xml" href="{PATH_TO_ROOT}/news/syndication.php" title="RSS {SITE_NAME}" />
