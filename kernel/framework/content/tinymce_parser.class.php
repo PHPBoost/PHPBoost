@@ -75,14 +75,20 @@ class TinyMCEParser extends ContentParser
 		//Balise indent
 		$this->_parse_imbricated('&lt;blockquote&gt;', '`&lt;blockquote&gt;(.+)&lt;/blockquote&gt;`isU', '<div class="indent">$1</div>');
 
-		//Transformation des tableaux en BBCode
-		if( preg_match('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`is', $this->parsed_content) )
+		//Transformation des tableaux
+		$content_contains_table = false;
+		while( preg_match('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`is', $this->parsed_content) )
 		{
-			$this->parsed_content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`is', array(&$this, '_parse_table_tag'), $this->parsed_content);
-			$this->parsed_content = preg_replace('`&lt;tbody&gt;(.*)&lt;/tbody&gt;`is', '$1', $this->parsed_content);
+			$this->parsed_content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`isU', array('TinyMCEParser', '_parse_table_tag'), $this->parsed_content);
+			$content_contains_table = true;
+		}
+		
+		if( $content_contains_table )
+		{
+			$this->parsed_content = preg_replace('`&lt;tbody&gt;(.+)&lt;/tbody&gt;`isU', '$1', $this->parsed_content);
 			$this->parsed_content = preg_replace('`&lt;tr&gt;(.*)&lt;/tr&gt;`isU', '<tr class="bb_table_row">$1</tr>', $this->parsed_content);
 			$this->parsed_content = preg_replace('`&lt;td&gt;(.*)&lt;/td&gt;`isU', '<td class="bb_table_col">$1</td>', $this->parsed_content);
-			$this->parsed_content = preg_replace('`&lt;th&gt;(.*)&lt;/th&gt;`isU', '<td class="bb_table_col">$1</td>', $this->parsed_content);
+			$this->parsed_content = preg_replace('`&lt;th&gt;(.*)&lt;/th&gt;`isU', '<th class="bb_table_head">$1</th>', $this->parsed_content);
 		}
 		
 		$array_preg = array(
