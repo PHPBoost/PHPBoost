@@ -85,7 +85,7 @@ class TinyMCEParser extends ContentParser
 		
 		if( $content_contains_table )
 		{
-			$this->parsed_content = preg_replace('`&lt;tbody&gt;(.+)&lt;/tbody&gt;`isU', '$1', $this->parsed_content);
+			//$this->parsed_content = preg_replace('`&lt;tbody&gt;(.+)&lt;/tbody&gt;`isU', '$1', $this->parsed_content);
 			$this->parsed_content = preg_replace('`&lt;tr&gt;(.*)&lt;/tr&gt;`isU', '<tr class="bb_table_row">$1</tr>', $this->parsed_content);
 			$this->parsed_content = preg_replace('`&lt;td&gt;(.*)&lt;/td&gt;`isU', '<td class="bb_table_col">$1</td>', $this->parsed_content);
 			$this->parsed_content = preg_replace('`&lt;th&gt;(.*)&lt;/th&gt;`isU', '<th class="bb_table_head">$1</th>', $this->parsed_content);
@@ -170,14 +170,10 @@ class TinyMCEParser extends ContentParser
 		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);	
 		
 		$array_str = array( 
-			'<address>', '</address>', '<caption>', '</caption>', '<tbody>', '</tbody>'
-		);
-		$array_str_replace = array( 
-			'', '', "\r\n\r\n",
-			'[row][head]', '[/head][/row]', ''
+			'&lt;address&gt;', '&lt;/address&gt;', '&lt;caption&gt;', '&lt;/caption&gt;', '&lt;tbody&gt;', '&lt;/tbody&gt;'
 		);
 		
-		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
+		$this->parsed_content = str_replace($array_str, '', $this->parsed_content);
 		
 		//Smilies
 		@include(PATH_TO_ROOT . '/cache/smileys.php');
@@ -308,6 +304,32 @@ class TinyMCEParser extends ContentParser
 	//Parse la balise table de tinymce pour le bbcode.
 	/*static*/ function _parse_table_tag($matches)
 	{
+		$table_properties = $matches[1];
+		$style_properties = '';
+		
+		$temp_array();
+		
+		//Border ?
+		if( strpos($table_properties, 'border') !== false )
+		{
+			preg_match('`border="([0-9]+)"`iU', $table_properties, $temp_array);
+			$style_properties .= 'border:' . $temp_array[1] . 'px;';
+		}
+		
+		//Width ?
+		if( strpos($table_properties, 'width') !== false )
+		{
+			preg_match('`width="([0-9]+)"`iU', $table_properties, $temp_array);
+			$style_properties .= 'width:' . $temp_array[1] . 'px;';
+		}
+		
+		//Height ?
+		if( strpos($table_properties, 'height') !== false )
+		{
+			preg_match('`height="([0-9]+)"`iU', $table_properties, $temp_array);
+			$style_properties .= 'height:' . $temp_array[1] . 'px;';
+		}
+		
 		return '<table class="bb_table">' . $matches[2] . '</table>';
 	}
 }
