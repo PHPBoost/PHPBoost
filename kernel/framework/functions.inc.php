@@ -771,7 +771,7 @@ function get_feed_menu($feed_url)
 function strhash($str)
 {
 //     return hash('sha256', $str);
-    require_once(PATH_TO_ROOT . '/kernel/framework/sha256.class.php');
+    require_once(PATH_TO_ROOT . '/kernel/framework/util/sha256.class.php');
     return SHA256::hash(md5($str) . $str);
 }
 
