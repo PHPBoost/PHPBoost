@@ -50,7 +50,7 @@ class BBCodeEditor extends ContentEditor
 			'C_BBCODE_NORMAL_MODE' => true,
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !defined('EDITOR_ALREADY_INCLUDED'),
 			'FIELD' => $this->identifier,
-			'FORBIDDEN_TAGS' => implode(',', $this->forbidden_tags),
+			'FORBIDDEN_TAGS' => !empty($this->forbidden_tags) ? implode(',', $this->forbidden_tags) : '',
 			'UPLOAD_MANAGEMENT' => $Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) ? '<a style="font-size: 10px;" title="' . $LANG['bb_upload'] . '" href="#" onclick="window.open(\'' . PATH_TO_ROOT . '/member/upload.php?popup=1&amp;fd=' . $this->identifier  . '\', \'\', \'height=500,width=720,resizable=yes,scrollbars=yes\');return false;"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/upload/files_add.png" alt="" /></a>' : '',
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_BB_SMILEYS' => $LANG['bb_smileys'],

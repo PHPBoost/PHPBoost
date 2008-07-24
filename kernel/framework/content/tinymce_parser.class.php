@@ -85,10 +85,15 @@ class TinyMCEParser extends ContentParser
 		
 		if( $content_contains_table )
 		{
-			//$this->parsed_content = preg_replace('`&lt;tbody&gt;(.+)&lt;/tbody&gt;`isU', '$1', $this->parsed_content);
 			$this->parsed_content = preg_replace('`&lt;tr&gt;(.*)&lt;/tr&gt;`isU', '<tr class="bb_table_row">$1</tr>', $this->parsed_content);
-			$this->parsed_content = preg_replace('`&lt;td&gt;(.*)&lt;/td&gt;`isU', '<td class="bb_table_col">$1</td>', $this->parsed_content);
-			$this->parsed_content = preg_replace('`&lt;th&gt;(.*)&lt;/th&gt;`isU', '<th class="bb_table_head">$1</th>', $this->parsed_content);
+			
+			//Rows
+			while( preg_match('`&lt;td|h([^&]*)&gt;(.+)&lt;/td|h&gt;`is', $this->parsed_content) )
+			{
+				$this->parsed_content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)&lt;/td&gt;`isU', array('TinyMCEParser', '_parse_col_tag'), $this->parsed_content);
+				$this->parsed_content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)&lt;/th&gt;`isU', array('TinyMCEParser', '_parse_col_tag'), $this->parsed_content);
+				$content_contains_table = true;
+			}
 		}
 		
 		$array_preg = array(
@@ -307,7 +312,7 @@ class TinyMCEParser extends ContentParser
 		$table_properties = $matches[1];
 		$style_properties = '';
 		
-		$temp_array();
+		$temp_array = array();
 		
 		//Border ?
 		if( strpos($table_properties, 'border') !== false )
@@ -330,7 +335,67 @@ class TinyMCEParser extends ContentParser
 			$style_properties .= 'height:' . $temp_array[1] . 'px;';
 		}
 		
-		return '<table class="bb_table">' . $matches[2] . '</table>';
+		//Alignment
+		if( strpos($table_properties, 'align') !== false )
+		{
+			preg_match('`align="([^"]+)"`iU', $table_properties, $temp_array);
+			if( $temp_array[1] == 'center' )
+				$style_properties .= 'margin:auto;';
+			elseif( $temp_array[1] == 'right' )
+				$style_properties .= 'margin-left:auto;';
+			//$style_properties .= 'text-align:' . $temp_array[1] . ';';
+		}
+		
+		//Style ?
+		if( strpos($table_properties, 'style') !== false )
+		{
+			preg_match('`style="([^"])"`iU', $table_properties, $temp_array);
+			$style_properties .= $temp_array[1];
+		}
+		
+		return '<table class="bb_table"' . (!empty($style_properties) ? ' style="' . $style_properties . '"' : '') . '>' . $matches[2] . '</table>';
+	}
+	
+	//Parse la balise table de tinymce pour le bbcode.
+	/*static*/ function _parse_col_tag($matches)
+	{
+		$col_properties = $matches[2];
+		$col_new_properties = '';
+		$col_style = '';
+		
+		$temp_array = array();
+		
+		//Colspan ?
+		if( strpos($col_properties, 'colspan') !== false )
+		{
+			preg_match('`colspan="([0-9]+)"`iU', $col_properties, $temp_array);
+			$col_new_properties .= ' colspan="' . $temp_array[1] . '"';
+		}
+		
+		//Rowspan ?
+		if( strpos($col_properties, 'rowspan') !== false )
+		{
+			preg_match('`rowspan="([0-9]+)"`iU', $col_properties, $temp_array);
+			$col_new_properties .= ' rowspan="' . $temp_array[1] . '"';
+		}
+		
+		//Alignment
+		if( strpos($col_properties, 'align') !== false )
+		{
+			preg_match('`align="([^"]+)"`iU', $col_properties, $temp_array);
+			$col_style .= 'text-align:' . $temp_array[1] . ';';
+		}
+		
+		//Style ?
+		if( strpos($col_properties, 'style') !== false )
+		{
+			preg_match('`style="([^"])"`iU', $col_properties, $temp_array);
+			$col_style .= ' style="' . $temp_array[1] . ' ' . $col_style . '"';
+		}
+		elseif( !empty($col_style) )
+			$col_style = ' style="' . $col_style . '"';
+		
+		return '<' . $matches[1] . ' class="bb_table"' . $col_new_properties . ' ' . $col_style . '>' . $matches[3] . '</' . $matches[1] . '>';
 	}
 }
 
