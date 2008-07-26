@@ -110,7 +110,7 @@ elseif( !empty($_POST['submit']) )
 		//Autorisations
 		if( !empty($_POST['special_auth']) )
 		{
-			$array_auth_all = $Group->Return_array_auth(READ_CAT_DOWNLOAD, WRITE_CAT_DOWNLOAD);
+			$array_auth_all = Authorizations::Return_array_auth(READ_CAT_DOWNLOAD, WRITE_CAT_DOWNLOAD);
 			$new_auth = addslashes(serialize($array_auth_all));
 		}
 		else
@@ -198,8 +198,8 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'JS_SPECIAL_AUTH' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'true' : 'false',
 			'DISPLAY_SPECIAL_AUTH' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'block' : 'none',
 			'SPECIAL_CHECKED' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'checked="checked"' : '',
-			'READ_AUTH' => $Group->Generate_select_auth(READ_CAT_DOWNLOAD, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth']),
-			'WRITE_AUTH' => $Group->Generate_select_auth(WRITE_CAT_DOWNLOAD, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth'])
+			'READ_AUTH' => Authorizations::Generate_select_auth(READ_CAT_DOWNLOAD, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth']),
+			'WRITE_AUTH' => Authorizations::Generate_select_auth(WRITE_CAT_DOWNLOAD, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth'])
 		));
 	}
 	else
@@ -214,8 +214,8 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'JS_SPECIAL_AUTH' => 'false',
 			'DISPLAY_SPECIAL_AUTH' => 'none',
 			'SPECIAL_CHECKED' => '',
-			'READ_AUTH' => $Group->Generate_select_auth(READ_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
-			'WRITE_AUTH' => $Group->Generate_select_auth(WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'])
+			'READ_AUTH' => Authorizations::Generate_select_auth(READ_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
+			'WRITE_AUTH' => Authorizations::Generate_select_auth(WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'])
 		));
 	}
 	

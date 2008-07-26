@@ -66,7 +66,7 @@ if( $id_auth > 0 )
 	else
 	{
 		//Génération du tableau des droits.
-		$array_auth_all = $Group->Return_array_auth(WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM);
+		$array_auth_all = Authorizations::Return_array_auth(WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM);
 		$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id= '" . $id_auth . "'", __LINE__, __FILE__);
 	}
 

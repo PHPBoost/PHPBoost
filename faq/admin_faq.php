@@ -39,7 +39,7 @@ if( !empty($_POST['submit']) )
 	$FAQ_CONFIG['num_cols'] = retrieve(POST, 'num_cols', 3);
 	$FAQ_CONFIG['display_block'] = (!empty($_POST['display_mode']) && $_POST['display_mode'] == 'inline') ? false : true;
 	// unused auth variables ?
-	$FAQ_CONFIG['global_auth'] = $Group->Return_array_auth(AUTH_READ, AUTH_WRITE);
+	$FAQ_CONFIG['global_auth'] = Authorizations::Return_array_auth(AUTH_READ, AUTH_WRITE);
 	$FAQ_CONFIG['root'] = $FAQ_CATS[0];
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
@@ -122,8 +122,8 @@ else
 		'L_AUTH_READ' => $FAQ_LANG['read_auth'],
 		'L_AUTH_WRITE' => $FAQ_LANG['write_auth'],
 		'L_SUBMIT' => $LANG['submit'],
-		'AUTH_READ' => $Group->Generate_select_auth(AUTH_READ, $FAQ_CONFIG['global_auth']),
-		'AUTH_WRITE' => $Group->Generate_select_auth(AUTH_WRITE, $FAQ_CONFIG['global_auth']),
+		'AUTH_READ' => Authorizations::Generate_select_auth(AUTH_READ, $FAQ_CONFIG['global_auth']),
+		'AUTH_WRITE' => Authorizations::Generate_select_auth(AUTH_WRITE, $FAQ_CONFIG['global_auth']),
 		'FAQ_NAME' => $FAQ_CONFIG['faq_name'],
 		'NUM_COLS' => $FAQ_CONFIG['num_cols'],
 		'SELECTED_BLOCK' => $FAQ_CONFIG['display_block'] ? ' selected="selected"' : '',

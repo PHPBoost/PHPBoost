@@ -75,7 +75,7 @@ if( !empty($contents) )
 	if( $own_auth )
 	{
 		//Génération du tableau des droits.
-		$array_auth_all = $Group->Return_array_auth(READ_PAGE, EDIT_PAGE, READ_COM);
+		$array_auth_all = Authorizations::Return_array_auth(READ_PAGE, EDIT_PAGE, READ_COM);
 		$page_auth = addslashes(serialize($array_auth_all));
 	}
 	else
@@ -276,9 +276,9 @@ else
 
 $Template->Assign_vars(array(
 	'ID_EDIT' => $id_edit,
-	'SELECT_READ_PAGE' => $Group->Generate_select_auth(READ_PAGE, $array_auth),
-	'SELECT_EDIT_PAGE' => $Group->Generate_select_auth(EDIT_PAGE, $array_auth),
-	'SELECT_READ_COM' => $Group->Generate_select_auth(READ_COM, $array_auth),
+	'SELECT_READ_PAGE' => Authorizations::Generate_select_auth(READ_PAGE, $array_auth),
+	'SELECT_EDIT_PAGE' => Authorizations::Generate_select_auth(EDIT_PAGE, $array_auth),
+	'SELECT_READ_COM' => Authorizations::Generate_select_auth(READ_COM, $array_auth),
 	'OWN_AUTH_DISABLED' => !empty($page_infos['auth']) ? 'false' : 'true',
 	'DISPLAY' => empty($page_infos['auth']) ? 'display:none;' : '',
 	'PAGES_PATH' => $Template->Module_data_path('pages'),
