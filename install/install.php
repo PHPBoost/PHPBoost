@@ -594,7 +594,7 @@ elseif( $step == 6 )
 				include('../kernel/framework/members/sessions.class.php');
 				$Session = new Sessions;
 				$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__); //Remise � z�ro du compteur d'essais.
-				$Session->Session_begin(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); //On lance la session.
+				$Session->session_begin(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); //On lance la session.
 			}
 			
 			//On redirige vers l'�tape suivante

@@ -31,7 +31,7 @@ if( defined('PHPBOOST') !== true)
 if( !defined('TITLE') )
     define('TITLE', $LANG['unknow']);
 
-$Session->Session_check(TITLE); //Vérification de la session.
+$Session->session_check(TITLE); //Vérification de la session.
 
 //Gestion de la maintenance du site.
 if( $CONFIG['maintain'] > time() )

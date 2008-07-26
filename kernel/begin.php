@@ -77,8 +77,8 @@ if( $CONFIG['ob_gzhandler'] == 1 )
 else
 	ob_start();
 
-//Récupération des informations sur le membre.
-$Session->Session_info();
+$Session->session_info(); //Récupération des informations sur le membre.
+$Session->session_action_checker(); //Action de connexion/déconnexion.
 
 $Group = new Group($_array_groups_auth); //!\\Initialisation  de la class de gestion des groupes//!\\
 $Member = new Member($Session->data, $_array_groups_auth); //!\\Initialisation  de la class de gestion des membres//!\\
@@ -117,8 +117,6 @@ if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
     
     require_once(PATH_TO_ROOT . '/kernel/changeday.php');
 }
-
-include_once(PATH_TO_ROOT . '/kernel/connect.php'); //Inclusion du gestionnaire de connexion.
 
 //Autorisation sur le module chargé
 define('MODULE_NAME', get_module_name());

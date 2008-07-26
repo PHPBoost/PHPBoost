@@ -38,10 +38,85 @@ class Sessions
 	var $session_mod = 0; //Variable contenant le mode de session à utiliser pour récupérer les infos.
 	var $autoconnect = array(); //Vérification de la session pour l'autoconnexion.
 	
-	
 	## Public Methods ##
+	function session_action_checker()
+	{
+		global $Session, $Sql;
+		
+		//Module de connexion.
+		$login = retrieve(POST, 'login', '');
+		$password = retrieve(POST, 'password', '', TSTRING_UNSECURE);
+		$autoconnexion = retrieve(POST, 'auto', false);
+		
+		if( retrieve(GET, 'disconnect', false) ) //Déconnexion.
+		{
+			$Session->session_end();
+			redirect(get_start_page());
+		}
+		elseif( retrieve(POST, 'connect', false) && !empty($login) && !empty($password) ) //Création de la session.
+		{
+			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
+			if( !empty($user_id) ) //Membre existant.
+			{
+				$info_connect = $Sql->Query_array('member', 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', "WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
+				$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
+				$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
+				
+				if( $delay_ban >= 0 && $info_connect['user_aprob'] == '1' && $info_connect['user_warning'] < '100' ) //Utilisateur non (plus) banni.
+				{
+					if( $delay_connect >= 600 ) //5 nouveau essais, 10 minutes après.
+					{
+						$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+						$error_report = $Session->session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
+					}
+					elseif( $delay_connect >= 300 ) //2 essais 5 minutes après
+					{
+						$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Redonne 2 essais.
+						$error_report = $Session->session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
+					}
+					elseif( $info_connect['test_connect'] < 5 ) //Succès.
+					{
+						$error_report = $Session->session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
+					}
+					else //plus d'essais
+						redirect(HOST . DIR . '/member/error.php?e=e_member_flood#errorh');
+				}
+				elseif( $info_connect['user_aprob'] == '0' )
+					redirect(HOST . DIR . '/member/error.php?e=e_unactiv_member#errorh');
+				elseif( $info_connect['user_warning'] == '100' )
+					redirect(HOST . DIR . '/member/error.php?e=e_member_ban_w#errorh');
+				else
+				{
+					$delay_ban = ceil((0 - $delay_ban)/60);
+					redirect(HOST . DIR . '/member/error.php?e=e_member_ban&ban=' . $delay_ban . '#errorh');
+				}
+						
+				if( !empty($error_report) ) //Erreur
+				{
+					$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
+					$info_connect['test_connect']++;
+					$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
+					redirect(HOST . DIR . '/member/error.php?e=e_member_flood&flood=' . $info_connect['test_connect'] . '#errorh');
+				}
+				elseif( $info_connect['test_connect'] > 0 ) //Succès redonne tous les essais.
+					$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+			}
+			else
+				redirect(HOST . DIR . '/member/error.php?e=e_unexist_member#errorh');
+			
+			$query_string = QUERY_STRING;
+			$query_string = !empty($query_string) ? '?' . QUERY_STRING . '&sid=' . $Session->data['session_id'] . '&suid=' . $Session->data['user_id'] : '?sid=' . $Session->data['session_id'] . '&suid=' . $Session->data['user_id'];
+			
+			//Redirection avec les variables de session dans l'url.
+			if( SCRIPT != DIR . '/member/error.php' )
+				redirect(HOST . SCRIPT . $query_string);
+			else
+				redirect(get_start_page());
+		}
+	}
+	
 	//Lancement de la session après récupèration des informations par le formulaire de connexion.
-	function Session_begin($user_id, $password, $level, $session_script, $session_script_get, $session_script_title, $autoconnect = false, $already_hashed = false)
+	function session_begin($user_id, $password, $level, $session_script, $session_script_get, $session_script_title, $autoconnect = false, $already_hashed = false)
 	{
         global $CONFIG, $Sql;
 		
@@ -138,7 +213,7 @@ class Sessions
 	}
 	
 	//Récupération des informations sur le membre.
-	function Session_info()
+	function session_info()
 	{
 		global $Sql, $CONFIG;
 		
@@ -182,7 +257,7 @@ class Sessions
 	}
 	
 	//Vérification de la session.
-	function Session_check($session_script_title)
+	function session_check($session_script_title)
 	{
 		global $CONFIG, $Sql;
 
@@ -234,13 +309,13 @@ class Sessions
 			{
 				if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
 					setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
-				$this->Session_begin('-1', '', '-1', $session_script, $session_script_get, $session_script_title, false, ALREADY_HASHED); //Session visiteur
+				$this->session_begin('-1', '', '-1', $session_script, $session_script_get, $session_script_title, false, ALREADY_HASHED); //Session visiteur
 			}
 		}
 	}
 	
 	//Fin de la session
-	function Session_end()
+	function session_end()
 	{
 		global $CONFIG, $Sql;
 			
@@ -317,7 +392,7 @@ class Sessions
 			
 			if( !empty($session_autoconnect['user_id']) && !empty($session_autoconnect['pwd']) && $level != '' )
 			{
-				$error_report = $this->Session_begin($session_autoconnect['user_id'], $session_autoconnect['pwd'], $level, $session_script, $session_script_get, $session_script_title, true, ALREADY_HASHED); //Lancement d'une session utilisateur.
+				$error_report = $this->session_begin($session_autoconnect['user_id'], $session_autoconnect['pwd'], $level, $session_script, $session_script_get, $session_script_title, true, ALREADY_HASHED); //Lancement d'une session utilisateur.
 				
 				//Gestion des erreurs pour éviter un brute force.
 				if( $error_report === 'echec' )
