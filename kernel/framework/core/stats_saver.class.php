@@ -31,7 +31,7 @@ class Stats_saver
 {
 	## Public Methods ##
 	//Sites référents.
-	function compute_referer()
+	/*static*/ function compute_referer()
 	{
 		global $Sql;
 		
@@ -85,7 +85,7 @@ class Stats_saver
 		}
 	}
 	
-	function compute_users()
+	/*static*/ function compute_users()
 	{
 		//Inclusion une fois par jour et par visiteur.
 		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';

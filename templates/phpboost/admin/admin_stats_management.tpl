@@ -135,7 +135,7 @@
 					</table>
 				</td>
 				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-					<img src="../kernel/display_stats.php?theme=1" alt="" />
+					<img src="../kernel/framework/ajax/display_stats.php?theme=1" alt="" />
 				</td>
 			</tr>
 		</table>
@@ -671,7 +671,7 @@
 						</table>
 					</td>
 					<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-						<img src="../kernel/display_stats.php?bot=1" alt="" />
+						<img src="../kernel/framework/ajax/display_stats.php?bot=1" alt="" />
 					</td>
 				</tr>
 			</table>

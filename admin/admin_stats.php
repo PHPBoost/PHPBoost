@@ -74,8 +74,8 @@ if( !empty($members) )
 		'LAST_USER' => $last_user['login'],
 		'U_LAST_USER_ID' => transid('.php?id=' . $last_user['user_id'], '-' . $last_user['user_id'] . '.php'),
 		'MEMBERS' => $nbr_member,
-		'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="../kernel/display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
-		'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="../kernel/display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
+		'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="../kernel/framework/ajax/display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
+		'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="../kernel/framework/ajax/display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
 		'L_LAST_MEMBER' => $LANG['last_member'],
 		'L_TEMPLATES' => $LANG['theme_s'],
 		'L_PSEUDO' => $LANG['pseudo'],
@@ -238,7 +238,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 		if( @extension_loaded('gd') )
 		{
 			$Template->Assign_vars(array(
-				'GRAPH_RESULT' => '<img src="../kernel/display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="" />'
+				'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="" />'
 			));
 			
 			//On fait la liste des visites journalières
@@ -394,7 +394,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 		if( @extension_loaded('gd') )
 		{
 			$Template->Assign_vars(array(
-				'GRAPH_RESULT' => '<img src="../kernel/display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
+				'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 			));
 			
 			//On fait la liste des visites journalières
@@ -586,7 +586,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 		if( @extension_loaded('gd') )
 		{
 			$Template->Assign_vars(array(
-				'GRAPH_RESULT' => '<img src="../kernel/display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
+				'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
 			));
 			
 			//On fait la liste des visites journalières
@@ -743,7 +743,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			'STATS_DAY' => $days,
 			'STATS_MONTH' => $months,
 			'STATS_YEAR' => $years, 
-			'GRAPH_RESULT' => '<img src="../kernel/display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="" />'
+			'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="" />'
 		));
 		
 		//On fait la liste des visites journalières
@@ -816,7 +816,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 		if( @extension_loaded('gd') )
 		{
 			$Template->Assign_vars(array(
-				'GRAPH_RESULT' => '<img src="../kernel/display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
+				'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 			));
 			
 			//On fait la liste des visites journalières
@@ -1045,7 +1045,7 @@ elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques cam
 	{
 		$Template->Assign_vars(array(
 			'C_STATS_BROWSERS' => true,
-			'GRAPH_RESULT' => '<img src="../kernel/display_stats.php?browsers=1" alt="" />',
+			'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?browsers=1" alt="" />',
 			'L_BROWSERS' => $LANG['browser_s']
 		));		
 		$stats_menu = 'browsers';
@@ -1056,7 +1056,7 @@ elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques cam
 	{
 		$Template->Assign_vars(array(
 			'C_STATS_OS' => true,
-			'GRAPH_RESULT' => '<img src="../kernel/display_stats.php?os=1" alt="" />',
+			'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?os=1" alt="" />',
 			'L_OS' => $LANG['os']
 		));		
 		$stats_menu = 'os';
@@ -1067,7 +1067,7 @@ elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques cam
 	{	
 		$Template->Assign_vars(array(
 			'C_STATS_LANG' => true,
-			'GRAPH_RESULT' => '<img src="../kernel/display_stats.php?lang=1" alt="" />',
+			'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?lang=1" alt="" />',
 			'L_LANG' => $LANG['stat_lang']
 		));	
 		$stats_menu = 'lang';
