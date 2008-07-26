@@ -52,7 +52,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$aprob = retrieve(POST, 'aprob', 1);  
 
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth(READ_CAT_ARTICLES);
+	$array_auth_all = Authorizations::Return_array_auth(READ_CAT_ARTICLES);
 	
 	if( !empty($name) )
 	{
@@ -197,7 +197,7 @@ elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la ra
 {
 	$Cache->Load_file('articles');
 	
-	$array_auth_all = $Group->Return_array_auth(READ_CAT_ARTICLES);
+	$array_auth_all = Authorizations::Return_array_auth(READ_CAT_ARTICLES);
 	$CONFIG_ARTICLES['auth_root'] = serialize($array_auth_all);
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_ARTICLES)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
@@ -748,7 +748,7 @@ elseif( !empty($id) ) //Edition des catégories.
 		'IMG_PATH' => $img_direct_path ? $articles_info['icon'] : '',
 		'IMG_ICON' => !empty($articles_info['icon']) ? '<img src="' . $articles_info['icon'] . '" alt="" class="valign_middle" />' : '',		
 		'IMG_LIST' => $image_list,
-		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_ARTICLES, $array_auth),
+		'AUTH_READ' => Authorizations::Generate_select_auth(READ_CAT_ARTICLES, $array_auth),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
 		'L_ARTICLES_ADD' => $LANG['articles_add'],
@@ -797,7 +797,7 @@ elseif( !empty($root) ) //Edition de la racine.
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('articles'),
-		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_ARTICLES, $array_auth),
+		'AUTH_READ' => Authorizations::Generate_select_auth(READ_CAT_ARTICLES, $array_auth),
 		'L_ROOT' => $LANG['root'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
 		'L_ARTICLES_ADD' => $LANG['articles_add'],

@@ -49,7 +49,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$aprob = retrieve(POST, 'aprob', 0);  
 
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
+	$array_auth_all = Authorizations::Return_array_auth(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 		
 	if( !empty($name) )
 	{
@@ -243,9 +243,9 @@ elseif( !empty($id) )
 		'UNCHECKED_APROB' => ($forum_info['aprob'] == 0) ? 'checked="checked"' : '',
 		'CHECKED_STATUS' => ($forum_info['status'] == 1) ? 'checked="checked"' : '',
 		'UNCHECKED_STATUS' => ($forum_info['status'] == 0) ? 'checked="checked"' : '',
-		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_FORUM, $array_auth),
-		'AUTH_WRITE' => $is_root ? $Group->Generate_select_auth(WRITE_CAT_FORUM, $array_auth) : $Group->Generate_select_auth(WRITE_CAT_FORUM, $array_auth, array(), GROUP_DEFAULT_IDSELECT, GROUP_DISABLE_SELECT),
-		'AUTH_EDIT' => $is_root ? $Group->Generate_select_auth(EDIT_CAT_FORUM, $array_auth) : $Group->Generate_select_auth(EDIT_CAT_FORUM, $array_auth, array(), GROUP_DEFAULT_IDSELECT, GROUP_DISABLE_SELECT),
+		'AUTH_READ' => Authorizations::Generate_select_auth(READ_CAT_FORUM, $array_auth),
+		'AUTH_WRITE' => $is_root ? Authorizations::Generate_select_auth(WRITE_CAT_FORUM, $array_auth) : Authorizations::Generate_select_auth(WRITE_CAT_FORUM, $array_auth, array(), GROUP_DEFAULT_IDSELECT, GROUP_DISABLE_SELECT),
+		'AUTH_EDIT' => $is_root ? Authorizations::Generate_select_auth(EDIT_CAT_FORUM, $array_auth) : Authorizations::Generate_select_auth(EDIT_CAT_FORUM, $array_auth, array(), GROUP_DEFAULT_IDSELECT, GROUP_DISABLE_SELECT),
 		'DISABLED' => $is_root ? '0' : '1',
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],

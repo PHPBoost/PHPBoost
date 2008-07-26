@@ -134,34 +134,6 @@ class Member
 		return $array_user_auth_groups;
 	}
 		
-	//Fonction statique qui regarde les autorisations d'un individu, d'un groupe ou d'un rank
-	/*static*/ function check_some_body_auth($type, $value, &$array_auth, $bit)
-	{
-		if( !is_int($value) )
-			return false;
-		
-		switch($type)
-		{
-			case RANK_TYPE:
-				if( $value <= 2 && $value >= -1 )
-					return @$array_auth['r' . $value] & $bit;
-				else
-					return false;
-			case GROUP_TYPE:
-				if( $value >= 1 )
-					return !empty($array_auth[$value]) ? $array_auth[$value] & $bit : false;
-				else
-					return false;
-			case USER_TYPE:
-				if( $value >= 1 )
-					return !empty($array_auth['m' . $value]) ? $array_auth['m' . $value] & $bit : false;
-				else
-					return false;
-			default:
-				return false;
-		}
-	}
-	
 	## Private attributes ##
 	var $member_data; //Données du membres, obtenues à partir de la class de session.
 	var $groups_auth; //Tableau contenant le nom des groupes disponibles.

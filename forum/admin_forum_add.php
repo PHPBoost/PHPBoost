@@ -49,7 +49,7 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 	$status = retrieve(POST, 'status', 0);   
 
 	//Génération du tableau des droits.
-	$array_auth_all = $Group->Return_array_auth(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
+	$array_auth_all = Authorizations::Return_array_auth(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 
 	if( !empty($name) )
 	{	
@@ -122,9 +122,9 @@ else
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 		'CATEGORIES' => $forums,
-		'AUTH_READ' => $Group->Generate_select_auth(READ_CAT_FORUM, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
-		'AUTH_WRITE' => $Group->Generate_select_auth(WRITE_CAT_FORUM, array(), array(0 => true, 1 => true, 2 => true)),
-		'AUTH_EDIT' => $Group->Generate_select_auth(EDIT_CAT_FORUM, array(), array(1 => true, 2 => true)),
+		'AUTH_READ' => Authorizations::Generate_select_auth(READ_CAT_FORUM, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
+		'AUTH_WRITE' => Authorizations::Generate_select_auth(WRITE_CAT_FORUM, array(), array(0 => true, 1 => true, 2 => true)),
+		'AUTH_EDIT' => Authorizations::Generate_select_auth(EDIT_CAT_FORUM, array(), array(1 => true, 2 => true)),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
