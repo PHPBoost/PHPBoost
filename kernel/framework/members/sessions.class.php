@@ -144,7 +144,10 @@ class Sessions
 		}
 		
 		//On lance les stats.
-		include_once(PATH_TO_ROOT . '/kernel/save_stats.php');
+		include_once(PATH_TO_ROOT . '/kernel/framework/core/stats_saver.php');
+		Stats_saver::compute_referer();
+		if( $_include_once )
+			Stats_saver::compute_users();
 		
 		########Génération d'un ID de session unique########
 		$session_uniq_id = strhash(uniqid(mt_rand(), true)); //On génère un numéro de session aléatoire.
