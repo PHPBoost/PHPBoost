@@ -288,11 +288,11 @@ class ContentParser
 	function _unparse_list()
 	{
 		//On boucle tant qu'il y a de l'imbrication
-		while( strpos($this->parsed_content, '<ul') !== false )
+		while( strpos($this->parsed_content, '<ul class="bb_ul">') !== false )
 			$this->parsed_content = preg_replace('`<ul( style="[^"]+")? class="bb_ul">(.+)</ul>`sU', '[list$1]$2[/list]', $this->parsed_content);
-		while( strpos($this->parsed_content, '<ol') !== false )
+		while( strpos($this->parsed_content, '<ol class="bb_ol">') !== false )
 			$this->parsed_content = preg_replace('`<ol( style="[^"]+")? class="bb_ol">(.+)</ol>`sU', '[list=ordered$1]$2[/list]', $this->parsed_content);
-		while( strpos($this->parsed_content, '<li') !== false )
+		while( strpos($this->parsed_content, '<li class="bb_li">') !== false )
 			$this->parsed_content = preg_replace('`<li class="bb_li">(.+)</li>`isU', '[*]$1', $this->parsed_content);
 	}
 	

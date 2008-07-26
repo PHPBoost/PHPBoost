@@ -392,12 +392,16 @@ class Cache
 	{
 		global $Sql;
 		
-		$config_member = 'global $CONFIG_MEMBER;' . "\n";
+		$config_member = 'global $CONFIG_MEMBER, $CONTRIBUTION_PANEL_UNREAD;' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_MEMBER = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
 		foreach($CONFIG_MEMBER as $key => $value)
 			$config_member .= '$CONFIG_MEMBER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
+		
+		require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_panel.class.php');
+		//Unread contributions for each profile
+		$config_member .= '$CONTRIBUTION_PANEL_UNREAD = ' . var_export(ContributionPanel::compute_number_contrib_for_each_profile(), true) . ';';
 
 		return $config_member;
 	}

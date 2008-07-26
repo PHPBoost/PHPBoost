@@ -30,6 +30,7 @@ require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution
 define('CONTRIBUTION_STATUS_NOT_READ', 1);
 define('CONTRIBUTION_STATUS_PROCESSING', 2);
 define('CONTRIBUTION_STATUS_SETTLED', 3);
+define('CONTRIBUTION_AUTH_BIT', 1);
 
 class ContributionPanel
 {
@@ -52,6 +53,52 @@ class ContributionPanel
 	function delete_contribution(&$contribution)
 	{
 		$contribution->delete_in_db();
+	}
+	
+	/*static*/ function compute_number_contrib_for_each_profile()
+	{
+		global $Sql;
+		
+		$array_result = array('r2' => 0, 'r1' => 0, 'r0' => 0);
+		
+		$result = $Sql->Query_while("SELECT auth FROM ".PREFIX."contributions WHERE current_status = '" . CONTRIBUTION_STATUS_NOT_READ . "'", __LINE__, __FILE__);
+		while($row = $Sql->sql_fetch_assoc($result) )
+		{
+			$this_auth = unserialize($row['auth']);
+			
+			//We can count only for ranks. For groups and users we can't generalize because there can be intersection problems. Yet, we know the maximum number of contributions they can see, and we can be sure if they have at least 1.
+			
+			//Administrators can see everything
+			$array_result['r2']++;
+			
+			//For moderators ?
+			if( Member::check_some_body_auth(RANK_TYPE, MODERATOR_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT) )
+				$array_result['r1']++;
+			
+			//For members ?
+			if( Member::check_some_body_auth(RANK_TYPE, MEMBER_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT) )
+				$array_result['r0']++;
+				
+			foreach($this_auth as $profile => $auth_profile)
+			{
+				//Groups
+				if( is_numeric($profile) )
+				{
+					//If this member has not already an entry and he can see that contribution
+					if( empty($array_result[$profile]) && Member::check_some_body_auth(GROUP_TYPE, (int)$profile, $this_auth, CONTRIBUTION_AUTH_BIT) )
+						$array_result['g' . $profile] = 1;
+				}
+				//Members
+				elseif( substr($profile, 0, 1) == 'm' )
+				{
+					//If this member has not already an entry and he can see that contribution
+					if( empty($array_result[$profile]) && Member::check_some_body_auth(USER_TYPE, (int)substr($profile, 1), $this_auth, CONTRIBUTION_AUTH_BIT) )
+						$array_result[$profile] = 1;
+				}
+			}
+		}
+		
+		return $array_result;
 	}
 }
 

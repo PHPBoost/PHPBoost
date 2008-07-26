@@ -25,6 +25,10 @@
  *
 ###################################################*/
 
+define('RANK_TYPE', 1);
+define('GROUP_TYPE', 2);
+define('USER_TYPE', 3);
+
 class Member
 {
 	## Public methods ##
@@ -185,6 +189,34 @@ class Member
 			$array_auth_all['r2'] = $sum_auth;
 	
 		return $array_auth_all;
+	}
+	
+	//Fonction statique qui regarde les autorisations d'un individu, d'un groupe ou d'un rank
+	/*static*/ function check_some_body_auth($type, $value, &$array_auth, $bit)
+	{
+		if( !is_int($value) )
+			return false;
+		
+		switch($type)
+		{
+			case RANK_TYPE:
+				if( $value <= 2 && $value >= -1 )
+					return @$array_auth['r' . $value] & $bit;
+				else
+					return false;
+			case GROUP_TYPE:
+				if( $value >= 1 )
+					return !empty($array_auth[$value]) ? $array_auth[$value] & $bit : false;
+				else
+					return false;
+			case USER_TYPE:
+				if( $value >= 1 )
+					return !empty($array_auth['m' . $value]) ? $array_auth['m' . $value] & $bit : false;
+				else
+					return false;
+			default:
+				return false;
+		}
 	}
 	
 	## Private attributes ##
