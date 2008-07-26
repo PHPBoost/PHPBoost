@@ -73,6 +73,7 @@ class Stats_saver
 				$url = strprotect($referer['scheme'] . '://' . $referer['host']);
 				if( strpos($url, HOST) === false )
 				{				
+					$referer['path'] = !empty($referer['path']) ? $referer['path'] : '';
 					$relative_url = strprotect(((substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
 					
 					$check_url = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."stats_referer WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);
