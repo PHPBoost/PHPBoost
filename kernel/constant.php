@@ -47,6 +47,7 @@ if( @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals
 define('GUEST_LEVEL', -1); //Niveau Visiteur.
 define('MEMBER_LEVEL', 0); //Niveau Membre.
 define('MODO_LEVEL', 1); //Niveau Modo.
+define('MODERATOR_LEVEL', 1); //Niveau Modo.
 define('ADMIN_LEVEL', 2); //Niveau Admin.
 define('DBTYPE', $dbtype); ///Type de base de données utilisée.
 define('SCRIPT', $_SERVER['PHP_SELF']); //Adresse relative à la racine du script.

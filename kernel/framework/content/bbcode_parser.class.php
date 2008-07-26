@@ -92,7 +92,7 @@ class BBCodeParser extends ContentParser
 			's' => '`\[s\](.+)\[/s\]`isU',
 			'sup' => '`\[sup\](.+)\[/sup\]`isU',
 			'sub' => '`\[sub\](.+)\[/sub\]`isU',
-			'img' => '`\[img(?:=(top|middle|bottom))?\](((\./|\.\./)|([\w]+://))+[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iU',
+			'img' => '`\[img(?:=(top|middle|bottom))?\]((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iU',
 			'color' => '`\[color=((?:white|black|red|green|blue|yellow|purple|orange|maroon|pink)|(?:#[0-9a-f]{6}))\](.+)\[/color\]`isU',
 			'bgcolor' => '`\[bgcolor=((?:white|black|red|green|blue|yellow|purple|orange|maroon|pink)|(?:#[0-9a-f]{6}))\](.+)\[/bgcolor\]`isU',
 			'size' => '`\[size=([1-9]|(?:[1-4][0-9]))\](.+)\[/size\]`isU',

@@ -144,7 +144,7 @@ class Contribution
 			case CONTRIBUTION_STATUS_UNREAD:
 				return $LANG['contribution_status_unread'];
 			case CONTRIBUTION_STATUS_BEING_PROCESSING:
-				return $LANG['contribution_status_being_processing'];
+				return $LANG['contribution_status_being_processed'];
 			case CONTRIBUTION_STATUS_PROCESSED:
 				return $LANG['contribution_status_processed'];
 		}
