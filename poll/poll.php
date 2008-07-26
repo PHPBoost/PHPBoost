@@ -129,21 +129,13 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives )
 			$Sql->Query_inject("UPDATE ".PREFIX."poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'", __LINE__, __FILE__);
 			
 			//Tout c'est bien déroulé, on redirige vers la page des resultats.
-			$DELAY_REDIRECT = 2;
-			$URL_ERROR = HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php');
-			$L_ERROR =  $LANG['confirm_vote'];
-			include('../kernel/confirm.php');
+			redirect_confirm(HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['confirm_vote'], 2);
 			
 			if( in_array($poll['id'], $CONFIG_POLL['poll_mini'])  ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
 				$Cache->Generate_module_file('poll');
 		}	
 		else //Vote blanc
-		{
-			$DELAY_REDIRECT = 2;
-			$URL_ERROR = HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php');
-			$L_ERROR = $LANG['no_vote'];
-			include('../kernel/confirm.php');
-		}
+			redirect_confirm(HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['no_vote'], 2);
 	}
 	else
 		redirect(HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#errorh');

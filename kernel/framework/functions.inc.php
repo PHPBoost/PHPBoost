@@ -311,6 +311,23 @@ function redirect($url)
     exit;
 }
 
+//Redirection.
+function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
+{
+	global $LANG;
+	
+	$template = new Template('confirm.tpl');
+	
+	$template->Assign_vars(array(
+		'URL_ERROR' => !empty($url_error) ? $url_error : get_start_page(),
+		'DELAY_REDIRECT' => $delay_redirect,
+		'L_ERROR' => $l_error,
+		'L_REDIRECT' => $LANG['redirect']
+	));
+	
+	return $template->parse();
+}
+
 //Récupération de la page de démarrage du site.
 function get_start_page()
 {
