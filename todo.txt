@@ -28,12 +28,6 @@
 [-] Régler l'affichage du mini-calendrier.
 [-] Déplacer note.class.php dans framework/content
 
-[-] Faire une classe statistiques, avec méthodes referer/keywords
-[-] Instacier la classe stats dans sessions
-[-] Faire une fonction pour remplacer confirm.php
-[-] Faire une méthode dans sessions, pour remplacer connect.
-[-] Faire un dossier stats et mettre display_stats dedans.
-[-] Déplacer moderation_panel_begin.php dans member.
 [-] Eclater xmlhttprequest.
 
 
