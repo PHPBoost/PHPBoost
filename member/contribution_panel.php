@@ -26,9 +26,7 @@
 ###################################################*/
 
 require_once('../kernel/begin.php');
-
 define('TITLE', $LANG['contribution_panel']);
-
 require_once('../kernel/header.php');
 
 if( !$Member->Check_level(MODO_LEVEL) ) //Si il n'est pas modérateur
@@ -74,22 +72,25 @@ else
 
 	//On liste les contributions
 	$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, description
-		FROM ".PREFIX."contributions c
-		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
-		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
-		ORDER BY creation_date DESC", __LINE__, __FILE__);
-
+	FROM ".PREFIX."contributions c
+	LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
+	LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
+	ORDER BY creation_date DESC", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$this_contribution = new Contribution;
 		$this_contribution->build_from_db($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['fixing_date']), $row['auth'], $row['poster_id'], $row['fixer_id']);
 		
+		//Obligé de faire une variable temp à cause de php4.
+		$creation_date = $this_contribution->get_creation_date();
+		$fixing_date = $this_contribution->get_fixing_date();
+		
 		$template->assign_block_vars('contributions', array(
 			'ENTITLED' => $this_contribution->get_entitled(),
 			'MODULE' => $this_contribution->get_module_name(),
 			'STATUS' => $this_contribution->get_status_name(),
-			'CREATION_DATE' => $this_contribution->get_creation_date()->format(DATE_FORMAT_SHORT),
-			'FIXING_DATE' => $this_contribution->get_fixing_date()->format(DATE_FORMAT_SHORT),
+			'CREATION_DATE' => $creation_date->format(DATE_FORMAT_SHORT),
+			'FIXING_DATE' => $fixing_date->format(DATE_FORMAT_SHORT),
 			'POSTER' => $row['poster_login'],
 			'FIXER' => $row['fixer_login'],
 			'ACTIONS' => '',

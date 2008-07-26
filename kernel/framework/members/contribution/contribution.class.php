@@ -86,7 +86,7 @@ class Contribution
 	//Creation date setter
 	function set_creation_date($date)
 	{
-		if( is_object($date) && get_class($date) == 'Date' )
+		if( is_object($date) && strtolower(get_class($date)) == 'date' )
 			$this->creation_date = $date;
 		else
 			die('<strong>Contribution::set_creation_date error</strong> : parameter 1 expected to be Date and ' . gettype($date) . ' given');
@@ -95,7 +95,7 @@ class Contribution
 	//Fixing date setter
 	function set_fixing_date($date)
 	{
-		if( is_object($date) && get_class($date) == 'Date' )
+		if( is_object($date) && strtolower(get_class($date)) == 'date' )
 			$this->fixing_date = $date;
 		else
 			die('<strong>Contribution::set_fixing_date error</strong> : parameter 1 expected to be Date and ' . gettype($date) . ' given');
