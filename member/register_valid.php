@@ -263,10 +263,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					unset($password, $password_hash);
 					
 					//Affichage de la confirmation d'inscription.
-					$URL_ERROR = get_start_page();
-					$L_ERROR = sprintf($l_register_confirm, stripslashes($login));
-					$DELAY_REDIRECT = 7;
-					include('../kernel/confirm.php');
+					redirect_confirm(get_start_page(), sprintf($l_register_confirm, stripslashes($login)), 7);
 				}
 			}
 			elseif( !empty($_POST['register_valid']) && $password !== $password_bis )

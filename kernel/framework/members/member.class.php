@@ -133,64 +133,7 @@ class Member
 		
 		return $array_user_auth_groups;
 	}
-	
-	//Retourne le tableau avec les droits issus des tableaux passés en argument. Tableau destiné à être serialisé.
-	function return_array_auth()
-	{
-		$array_auth_all = array();
-		$sum_auth = 0;
-		$nbr_arg = func_num_args();
 		
-		//Récupération du dernier argument, si ce n'est pas un tableau => booléen demandant la sélection par défaut de l'admin.
-		$admin_auth_default = true;
-		if( $nbr_arg > 1 )
-		{
-			$admin_auth_default = func_get_arg($nbr_arg - 1);		
-			if( !is_bool($admin_auth_default) )
-				$admin_auth_default = true;
-		}
-		
-		//On balaye les tableaux passés en argument.
-		for($i = 0; $i < $nbr_arg; $i++)
-		{
-			$bit_value = 1 << $i; //On décale à chaque fois d'un bit, pour chaque tableau.
-			$sum_auth += $bit_value;
-			$array_auth = func_get_arg($i);
-			if( is_array($array_auth) )
-			{			
-				//Ajout des autorisations supérieure si une autorisations inférieure est autorisée. Ex: Membres autorisés implique, modérateurs et administrateurs autorisés.
-				$array_level = array(0 => 'r-1', 1 => 'r0', 2 => 'r1', 3 => 'r2');
-				$min_auth = 3;
-				foreach($array_level as $level => $key)
-				{
-					if( in_array($key, $array_auth) )
-						$min_auth = $level;
-					else
-					{
-						if( $min_auth < $level )
-							$array_auth[] = $key;
-					}
-				}
-				
-				//Ajout des autorisations au tableau final.
-				foreach($array_auth as $key => $value)
-				{
-					if( isset($array_auth_all[$value]) )
-						$array_auth_all[$value] += $bit_value;
-					else
-						$array_auth_all[$value] = $bit_value;
-				}
-				ksort($array_auth_all); //Tri des clées du tableau par ordre alphabétique, question de lisibilité.
-			}
-		}
-				
-		//Admin tous les droits dans n'importe quel cas.
-		if( $admin_auth_default )
-			$array_auth_all['r2'] = $sum_auth;
-	
-		return $array_auth_all;
-	}
-	
 	//Fonction statique qui regarde les autorisations d'un individu, d'un groupe ou d'un rank
 	/*static*/ function check_some_body_auth($type, $value, &$array_auth, $bit)
 	{
