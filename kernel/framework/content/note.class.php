@@ -73,7 +73,7 @@ class Note
 	}
 	
 	//Affiche la notation
-	function display_form($Template = false)
+	function display_form($template = false)
 	{
 		global $CONFIG, $Sql, $LANG;
 		
@@ -83,8 +83,8 @@ class Note
 		//Notes chargées?
 		if( $this->_note_loaded() ) //Utilisateur connecté.
 		{
-			if( !is_object($Template) || get_class($Template) != 'Template' )
-			$Template = new Template('framework/note.tpl');
+			if( !is_object($template) || get_class($template) != 'Template' )
+			$template = new template('framework/note.tpl');
 			
 			###########################Insertion##############################
 			if( !empty($_POST['valid_note']) )
@@ -134,7 +134,7 @@ class Note
 				else
 					$ajax_note .= '</div> <span id="noteloading' . $this->idprov . '"></span> <div style="display:' . $display . '" id="nbrnote' . $this->idprov . '">(' . $row_note['nbrnote'] . ' ' . (($row_note['nbrnote'] > 1) ? strtolower($LANG['notes']) : strtolower($LANG['note'])) . ')</div>';
 				
-				$Template->Assign_vars(array(
+				$template->Assign_vars(array(
 					'C_JS_NOTE' => !defined('HANDLE_NOTE'),
 					'ID' => $this->idprov,
 					'NOTE_MAX' => $this->notation_scale,
@@ -154,7 +154,7 @@ class Note
 			if( !defined('HANDLE_NOTE') )
 				define('HANDLE_NOTE', true);
             
-			return $Template->parse(TEMPLATE_STRING_MODE);
+			return $template->parse(TEMPLATE_STRING_MODE);
 		}
 		else
         {

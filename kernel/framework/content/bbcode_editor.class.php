@@ -114,7 +114,7 @@ class BBCodeEditor extends ContentEditor
 		{		
 			$template->Assign_vars(array( 
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
-				'UNACTIV_' . strtoupper($forbidden_tag) => 'if( false ) '
+				'DISABLED_' . strtoupper($forbidden_tag) => 'if( false ) '
 			));
 		}
 		
