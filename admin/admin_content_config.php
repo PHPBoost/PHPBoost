@@ -32,11 +32,11 @@ require_once('../admin/admin_header.php');
 
 if( !empty($_POST['submit'])  )
 {
-	$editor = retrieve(POST, 'language', 'bbcode');
+	$editor = retrieve(POST, 'formatting_language', '');
 	$CONFIG['editor'] = $editor == 'tinymce' ? 'tinymce' : 'bbcode';
 	$CONFIG['html_auth'] = $Group->Return_array_auth(1);
 	$CONFIG['forbidden_tags'] = isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array();
-
+	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 	$Cache->Generate_file('config');
 		
@@ -47,28 +47,29 @@ else
 {		
 	$template = new Template('admin/admin_content_config.tpl');
 	
-	//Balises interdites => valeur 1.
+	//Balises interdites
 	$array_unauth_tags = array('b', 'i', 'u', 's',	'title', 'stitle', 'style', 'url', 
 	'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
 	'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym');
 	
-	$forbidden_tags = '';
 	$j = 0;
 	
 	foreach($array_unauth_tags as $name)
 	{	
 		$template->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,
-			'TAG_NAME' => '[' . $name . ']',
-			'C_ENABLED' => in_array('[' . $name . ']', $CONFIG['forbidden_tags'])
+			'TAG_NAME' => $name,
+			'C_ENABLED' => in_array($name, $CONFIG['forbidden_tags'])
 		));
 	}
 	
 	$template->assign_vars(array(
+		'BBCODE_SELECTED' => $CONFIG['editor'] == 'bbcode' ? 'selected="selected"' : '',
+		'TINYMCE_SELECTED' => $CONFIG['editor'] == 'tinymce' ? 'selected="selected"' : '',
 		'SELECT_AUTH_USE_HTML' => $Group->Generate_select_auth(1, $CONFIG['html_auth']),
 		'NBR_TAGS' => $j,
-		'BBCODE' => $CONFIG['editor'] == 'bbcode' ? true : false,
-		'FORBIDDEN_TAGS' => $forbidden_tags,
+
+
 		'L_CONTENT_CONFIG' => $LANG['content_config_extend'],
 		'L_DEFAULT_LANGUAGE' => $LANG['default_formatting_language'],
 		'L_LANGUAGE_CONFIG' => $LANG['content_language_config'],

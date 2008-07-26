@@ -74,7 +74,13 @@
 							<label>
 								<br />
 								<select id="forbidden_tags" name="forbidden_tags[]" size="10" multiple="multiple">
-								{FORBIDDEN_TAGS}
+								# START tag #
+									# IF tag.C_ENABLED #
+									<option id="tag{tag.IDENTIFIER}" selected="selected" value="{tag.TAG_NAME}">{tag.TAG_NAME}</option>
+									# ELSE #
+									<option id="tag{tag.IDENTIFIER}" value="{tag.TAG_NAME}">{tag.TAG_NAME}</option>
+									# ENDIF #
+								# END tags #
 								</select>
 								<br />
 								<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>

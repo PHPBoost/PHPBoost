@@ -29,11 +29,11 @@
 				<fieldset>
 					<legend>{L_LANGUAGE_CONFIG}</legend>
 					<dl> 
-						<dt><label for="language">{L_DEFAULT_LANGUAGE}</label></dt>
+						<dt><label for="formatting_language">{L_DEFAULT_LANGUAGE}</label></dt>
 						<dd>
-							<select name="language" id="language">
-								<option value="bbcode"# IF BBCODE # selected="selected"# ENDIF #>BBCode</option>
-								<option value="tinymce"# IF NOT BBCODE # selected="selected"# ENDIF #>TinyMCE</option>
+							<select name="formatting_language" id="formatting_language">
+								<option value="bbcode" {BBCODE_SELECTED}>BBCode</option>
+								<option value="tinymce" {TINYMCE_SELECTED}>TinyMCE</option>
 							</select>
 						</dd>
 					</dl>
@@ -43,12 +43,11 @@
 								<select id="forbidden_tags" name="forbidden_tags[]" size="10" multiple="multiple">
 								# START tag #
 									# IF tag.C_ENABLED #
-									<option id="tag{tag.IDENTIFIER}" selected="selected">{tag.TAG_NAME}</option>
+									<option id="tag{tag.IDENTIFIER}" selected="selected" value="{tag.TAG_NAME}">{tag.TAG_NAME}</option>
 									# ELSE #
-									<option id="tag{tag.IDENTIFIER}">{tag.TAG_NAME}</option>
+									<option id="tag{tag.IDENTIFIER}" value="{tag.TAG_NAME}">{tag.TAG_NAME}</option>
 									# ENDIF #
 								# END tags #
-									{FORBIDDEN_TAGS}				
 								</select>
 								<br />
 								<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
