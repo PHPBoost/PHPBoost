@@ -32,8 +32,8 @@
 						<dt><label for="language">{L_DEFAULT_LANGUAGE}</label></dt>
 						<dd>
 							<select name="language" id="language">
-								<option name="bbcode">BBCode</option>
-								<option name="tinymce">TinyMCE</option>
+								<option value="bbcode"# IF BBCODE # selected="selected"# ENDIF #>BBCode</option>
+								<option value="tinymce"# IF NOT BBCODE # selected="selected"# ENDIF #>TinyMCE</option>
 							</select>
 						</dd>
 					</dl>
