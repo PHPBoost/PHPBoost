@@ -107,14 +107,13 @@ if( !empty($contents) ) //On enregistre un article
 			$Sql->Query_inject("INSERT INTO ".PREFIX."wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . $menu . "', '" . $contents . "', 1, " . $Member->Get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
 			//Dernier id enregistré
 			$id_contents = $Sql->Sql_insert_id("SELECT MAX(id_contents) FROM ".PREFIX."wiki_contents");
-
+            
 	 		//On donne le nouveau id de contenu
 			$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
-
-        // Feeds Regeneration
-        require_once('wiki_interface.class.php');
-        $Wiki = new WikiInterface();
-        $Wiki->syndication_cache();
+        
+            // Feeds Regeneration
+            require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+            Feed::clear_cache('wiki');
 			
 			//On redirige
 			$redirect = $article_infos['encoded_title'];
@@ -157,10 +156,9 @@ if( !empty($contents) ) //On enregistre un article
 				$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article, __LINE__, __FILE__);
 				
                 // Feeds Regeneration
-                require_once('wiki_interface.class.php');
-                $Wiki = new WikiInterface();
-                $Wiki->syndication_cache();
-		
+                require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+                Feed::clear_cache('wiki');
+                
 				$redirect = $Sql->Query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);
 				redirect(transid('wiki.php?title=' . $redirect, $redirect, '' , '&'));
 			}

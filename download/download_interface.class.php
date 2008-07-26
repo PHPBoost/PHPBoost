@@ -262,22 +262,6 @@ class DownloadInterface extends ModuleInterface
         return $data;
     }
     
-    function syndication_cache($cats = array(), $tpl = false)
-    {
-        $cats = array(0, 23, 24);
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
-        require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
-        $tpl = new Template('download/framework/content/syndication/feed.tpl');
-        global $DOWNLOAD_LANG;
-        load_module_lang('download');
-		$tpl->Assign_vars(array(
-			'L_READ' => $DOWNLOAD_LANG['read_feed'],
-			'L_POSTED_ON' => $DOWNLOAD_LANG['posted_on']
-		));
-        foreach( $cats as $cat )
-            feeds_update_cache($this->id, $this->syndication_data($cat), $cat, $tpl);
-    }
-    
     ## Private ##
     function _check_cats_auth($id_cat, &$list)
     {

@@ -97,9 +97,8 @@ if( !empty($_POST['valid']) )
 		$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 		
         // Feeds Regeneration
-        require_once('articles_interface.class.php');
-        $Articles = new ArticlesInterface();
-        $Articles->syndication_cache();
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+        Feed::clear_cache('articles');
 		
 		redirect(HOST . DIR . '/articles/admin_articles.php');
 	}

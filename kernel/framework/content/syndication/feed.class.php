@@ -25,50 +25,11 @@
  *
 ###################################################*/
 
-define('FEED_PATH', PATH_TO_ROOT . '/cache/syndication/');
+define('FEEDS_PATH', PATH_TO_ROOT . '/cache/syndication/');
 define('ERROR_GETTING_CACHE', 'Error regenerating and / or retrieving the syndication cache of the %s (%s)');
 
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
-
-function display_feed($module_id, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
-{
-    // Choose the correct template
-	if( $tpl !== false )
-        $template = $tpl->copy();
-    else
-	{
-		require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
-        $template = new Template($module_id . '/framework/content/syndication/feed.tpl');
-    }
-    
-    // Get the cache content or recreate it if not existing
-    $iteration = 0;
-    while( ($feed_data = @file_get_contents_emulate(PATH_TO_ROOT . '/cache/syndication/' . $module_id . '_' . $idcat . '.php')) === false )
-    {
-        require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
-        $modules = new Modules();
-        $module = $modules->get_module($module_id);
-        $data = $module->syndication_data($idcat);
-        feeds_update_cache($module_id, $data, $idcat);
-        
-        if( $iteration++ > 1 )
-            user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
-    }
-    
-    $feed = new Feed($module_id);
-    $data = new FeedData($feed_data);
-    $feed->load_data($data->subitems($number, $begin_at));
-    
-    return $feed->export($template);
-}
-
-function feeds_update_cache($feed_name, &$data, $idcat = 0)
-{
-	$file = fopen(FEED_PATH . $feed_name . '_' . $idcat . '.php', 'w+');
-    fputs($file, $data->serialize());
-    fclose($file);
-}
 
 class Feed
 {
@@ -78,10 +39,8 @@ class Feed
     function load_data($data) { $this->data = $data; }
     function load_file($url) { }
 
+    // Export the feed as a string parsed by the <$tpl> template
     function export($template = false)
-    /**
-     *  Export the feed as a string parsed by the <$tpl> template
-     */
     {
         if( $template === false )    // A specific template is used
             $tpl = $this->tpl->copy();
@@ -120,18 +79,18 @@ class Feed
         return $tpl->parse(TEMPLATE_STRING_MODE);
     }
 
-    function read() { return file_get_contents_emulate(FEED_PATH . $this->name); }
+    function read() { return file_get_contents_emulate(FEEDS_PATH . $this->name); }
 
     function cache()
     {
         if( empty($this->str) )
             $this->str = $this->export();
-        $file = fopen(FEED_PATH . $this->name, 'w+');
+        $file = fopen(FEEDS_PATH . $this->name, 'w+');
         fputs($file, $this->str);
         fclose($file);
     }
 
-    function is_in_cache() { return file_exists(FEED_PATH . $this->name); }
+    function is_in_cache() { return file_exists(FEEDS_PATH . $this->name); }
     
     ## Private Methods ##
     ## Private attributes ##
@@ -139,6 +98,64 @@ class Feed
     var $str = '';          // The feed as a string
     var $tpl = null;        // The feed Template to use
     var $data = null;        // The feed Template to use
-}
 
+    ## Statics Methods ##
+
+    // clear the cache
+    /*static*/ function clear_cache($module_id = false)
+    {
+        require_once(PATH_TO_ROOT . '/kernel/framework/io/folder.class.php');
+        $folder = new Folder(FEEDS_PATH, OPEN_NOW);
+        
+        if( $module_id !== false )  // Clear only this module cache
+            $files = $folder->get_files('`.+/' . $module_id . '_[0-9]+`');
+        else                        // Clear the whole cache
+            $files = $folder->get_files();
+        
+        foreach( $files as $file )
+            $file->delete();
+    }
+
+    /*static*/ function update_cache($module_id, &$data, $idcat = 0)
+    {
+        require_once(PATH_TO_ROOT . '/kernel/framework/io/file.class.php');
+        $file = new File(FEEDS_PATH . $module_id . '_' . $idcat, WRITE);
+        $file->write($data->serialize());
+    }
+
+    /*static*/ function get_parsed($module_id, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
+    {
+        // Choose the correct template
+        if( is_object($tpl) and get_class($tpl) == 'template' )
+            $template = $tpl->copy();
+        else
+        {
+            require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
+            $template = new Template($module_id . '/framework/content/syndication/feed.tpl');
+            if( gettype($tpl) == 'array' )
+                $template->Assign_vars($tpl);
+        }
+        
+        // Get the cache content or recreate it if not existing
+        $iteration = 0;
+        $feed_data = '';
+        while( ($feed_data = @file_get_contents_emulate(PATH_TO_ROOT . '/cache/syndication/' . $module_id . '_' . $idcat)) === false || $feed_data === '')
+        {
+            require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
+            $modules = new Modules();
+            $module = $modules->get_module($module_id);
+            $data = $module->syndication_data($idcat);
+            Feed::update_cache($module_id, $data, $idcat);
+            
+            if( $iteration++ > 1 )
+                user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
+        }
+        
+        $feed = new Feed($module_id);
+        $data = new FeedData($feed_data);
+        $feed->load_data($data->subitems($number, $begin_at));
+        
+        return $feed->export($template);
+    }
+}
 ?>
