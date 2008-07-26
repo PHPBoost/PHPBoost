@@ -91,9 +91,8 @@ if( $delete_file > 0 )
 		redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? transid('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : transid('download.php')));
         
         // Feeds Regeneration
-        require_once('download_interface.class.php');
-        $Download = new DownloadInterface();
-        $Download->syndication_cache();
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+        Feed::clear_cache('download');
 	}
 	else
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
@@ -183,11 +182,10 @@ if( $edit_file_id > 0 )
 			{
 				$download_categories->Recount_sub_files();
 			}
-
+            
             // Feeds Regeneration
-            require_once('download_interface.class.php');
-            $Download = new DownloadInterface();
-            $Download->syndication_cache();
+            require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+            Feed::clear_cache('download');
             
 			redirect(HOST . DIR . '/download/' . transid('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php'));
 		}
@@ -371,9 +369,8 @@ elseif( $add_file )
 			}
             
             // Feeds Regeneration
-            require_once('download_interface.class.php');
-            $Download = new DownloadInterface();
-            $Download->syndication_cache();
+            require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+            Feed::clear_cache('download');
             
 			redirect(HOST . DIR . '/download/' . transid('download.php?id=' . $new_id_file, 'download-' . $new_id_file . '+' . url_encode_rewrite($file_title) . '.php'));
 		}

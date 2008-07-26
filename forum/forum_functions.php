@@ -92,10 +92,8 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 //Gestion du rss du forum.
 function forum_generate_feeds()
 {
-    // Feeds Regeneration
-    require_once('forum_interface.class.php');
-    $Forum = new ForumInterface();
-    $Forum->syndication_cache();
+    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+    Feed::clear_cache('forum');
 }
 
 //Coloration de l'item recherché en dehors des balises html.

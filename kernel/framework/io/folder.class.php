@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . 'kernel/framework/io/fse.class.php');
-require_once(PATH_TO_ROOT . 'kernel/framework/io/file.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/io/fse.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/io/file.class.php');
 
 // gestion des dossiers
 class Folder extends FileSystemElement
@@ -85,7 +85,7 @@ class Folder extends FileSystemElement
 		{
 			$ret = array();
 			foreach( $this->files as $file )
-				$ret[] = $file->path;
+				$ret[] = $file;
 			return $ret;
 		}
 		else
@@ -93,7 +93,7 @@ class Folder extends FileSystemElement
 			$ret = array();
 			foreach( $this->files as $file )
 				if( preg_match($regex, $file->path) )
-					$ret[] = $file->path;
+					$ret[] = $file;
 			return $ret;
 		}
 	}

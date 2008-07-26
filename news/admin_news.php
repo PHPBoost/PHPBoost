@@ -92,11 +92,10 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . $contents . "', extend_contents = '" . $extend_contents . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
 		WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
         
-
+        
         // Feeds Regeneration
-        require_once('news_interface.class.php');
-        $News = new NewsInterface();
-        $News->syndication_cache();
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+        Feed::clear_cache('news');
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
@@ -120,9 +119,8 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'news'", __LINE__, __FILE__);
 
     // Feeds Regeneration
-    require_once('news_interface.class.php');
-    $News = new NewsInterface();
-    $News->syndication_cache();
+    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+    Feed::clear_cache('news');
 	
 	//Mise à jour du nombre de news dans le cache de la configuration.
 	$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.

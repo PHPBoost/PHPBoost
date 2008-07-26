@@ -32,6 +32,7 @@ define('TITLE', 'Votre site à portée de main');
 require_once('./kernel/header.php');
 require_once('./kernel/framework/content/syndication/feed.class.php');
 
+global $LANG;
 ?>
         <div class="news_container" style="float:left;width:365px;margin-left:10px;">
             <div class="news_top_l"></div>
@@ -47,7 +48,7 @@ require_once('./kernel/framework/content/syndication/feed.class.php');
                 <div style="float:right"></div>
             </div>
             <div class="news_content">
-                <?php echo display_feed('news', 0); ?>
+                <?php echo Feed::get_parsed('news', 0); ?>
                 <div style="text-align:right;"><a href="./news/news.php" class="small_link">Plus de news...</a></div>
                 <div class="text_center"></div>
             </div>
@@ -66,7 +67,10 @@ require_once('./kernel/framework/content/syndication/feed.class.php');
                 <h3 class="title valign_middle">Dossiers</h3>
             </div>
             <div class="news_content">
-                <?php echo display_feed('articles', 0, false, 3); ?>
+                <?php
+            		load_module_lang('articles');
+                    echo Feed::get_parsed('articles', 0, array('L_READ' => $LANG['read_feed'], 'L_POSTED_ON' => $LANG['posted_on']) , 3);
+                ?>
                 <div style="text-align:right;"><a href="./articles/articles.php" class="small_link">Tous les Dossiers...</a></div>
                 <div class="spacer"></div>
             </div>
@@ -144,7 +148,13 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
                 <h3 class="title valign_middle">Derniers Modules</h3>
             </div>
             <div class="news_content">
-                <?php echo display_feed('download', 24, false, 3); ?>
+                <?php
+            		load_module_lang('download');
+                    global $DOWNLOAD_LANG;
+                    $dw_langs = array('L_READ' => $DOWNLOAD_LANG['read_feed']);
+                    echo Feed::get_parsed('download', 0, $dw_langs, 3);
+                    // echo Feed::get_parsed('download', 24, false, 3);
+                ?>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>
@@ -162,7 +172,10 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
                 <h3 class="title valign_middle">Derniers Thèmes</h3>
             </div>
             <div class="news_content">
-                <?php echo display_feed('download', 23, false, 3); ?>
+                <?php
+                    echo Feed::get_parsed('download', 0, $dw_langs, 3);
+                    //echo Feed::get_parsed('download', 24, false, 3);
+                ?>
                 <div class="spacer"></div>
             </div>
             <div class="news_bottom_l"></div>
@@ -180,7 +193,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
                 <h3 class="title valign_middle">Derniers sujets du forum</h3>
             </div>
             <div class="news_content">
-                <?php echo display_feed('forum', 0); ?>
+                <?php echo Feed::get_parsed('forum', 0); ?>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>
@@ -198,7 +211,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
                 <h3 class="title valign_middle">Dernières articles de la documentation</h3>
             </div>
             <div class="news_content">
-                <?php echo display_feed('wiki', 0); ?>
+                <?php echo Feed::get_parsed('wiki', 0); ?>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>

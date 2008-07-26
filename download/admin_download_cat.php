@@ -90,9 +90,8 @@ elseif( !empty($_POST['submit']) )
 			$download_categories->Delete_category_and_move_content($cat_to_del_post, $id_parent);
         
         // Feeds Regeneration
-        require_once('download_interface.class.php');
-        $Download = new DownloadInterface();
-        $Download->syndication_cache();
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+        Feed::clear_cache('download');
 	}
 	else
 	{
