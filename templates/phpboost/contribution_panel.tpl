@@ -22,9 +22,6 @@
 				<th>
 					{L_FIXER}Responsable
 				</th>
-				<th>
-					{L_ACTIONS}Actions
-				</th>
 			</tr>
 			# START contributions #
 			<tr>
@@ -57,11 +54,17 @@
 					-
 					# ENDIF #
 				</td>
-				<td class="row1" style="text-align:center;">
-					{contributions.ACTIONS}
-				</td>
 			</tr>	
 			# END contributions_list.item #
+			<tr>
+				<td class="row2" style="text-align:center;" colspan="7">
+					# IF C_NO_CONTRIBUTION #
+						{L_NO_CONTRIBUTION_TO_DISPLAY}
+					# ELSE #
+						{PAGINATION}
+					# ENDIF #
+				</td>
+			</td>
 		</table>
 	# ENDIF #
 

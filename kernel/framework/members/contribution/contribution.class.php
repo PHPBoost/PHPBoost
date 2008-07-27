@@ -28,10 +28,6 @@
 require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_panel.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 
-define('CONTRIBUTION_STATUS_UNREAD', 0);
-define('CONTRIBUTION_STATUS_BEING_PROCESSING', 1);
-define('CONTRIBUTION_STATUS_PROCESSED', 2);
-
 
 //Fonction d'importation/exportation de base de donnée.
 class Contribution

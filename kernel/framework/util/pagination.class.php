@@ -93,6 +93,18 @@ class Pagination
 		return (($page - 1) * $nbr_msg_page); 
 	}
 	
+	//Fonction qui renvoie la page courante
+	function get_current_page()
+	{
+		return $this->get_var_page($this->var_page);
+	}
+	
+	//Fonction qui renvoie la page courante
+	function set_var_name_current_page($var_name)
+	{
+		$this->var_page = $var_name;
+	}
+	
 	
 	## Private Methods ##
 	//Récupère la valeur de la page courante.
