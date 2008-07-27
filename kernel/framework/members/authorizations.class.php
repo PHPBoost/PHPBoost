@@ -48,7 +48,7 @@ class Authorizations
 		}
 		//On balaye les tableaux passés en argument.
 		for($i = 0; $i < $nbr_arg; $i++)
-			get_array_auth(func_get_arg($i), '', $array_auth_all, $sum_auth);
+			Authorizations::get_array_auth(func_get_arg($i), '', $array_auth_all, $sum_auth);
 		
 		//Admin tous les droits dans n'importe quel cas.
 		if( $admin_auth_default )
@@ -65,7 +65,7 @@ class Authorizations
 		$sum_auth = 0;
 		
 		//Récupération du tableau des autorisation.
-		get_array_auth($bit_value, $idselect, $array_auth_all, $sum_auth);
+		Authorizations::get_array_auth($bit_value, $idselect, $array_auth_all, $sum_auth);
 		
 		//Admin tous les droits dans n'importe quel cas.
 		if( $admin_auth_default )
