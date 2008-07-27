@@ -144,7 +144,7 @@ class Sessions
 		}
 		
 		//On lance les stats.
-		include_once(PATH_TO_ROOT . '/kernel/framework/core/stats_saver.php');
+		include_once(PATH_TO_ROOT . '/kernel/framework/core/stats_saver.class.php');
 		Stats_saver::compute_referer();
 		if( $_include_once )
 			Stats_saver::compute_users();
