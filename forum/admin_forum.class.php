@@ -100,6 +100,8 @@ class Admin_forum
 			}
 		}
 
+		
+		die('test' . $to);
 		if( !empty($to) ) //Changement de catégorie possible?
 		{
 			//On vérifie si la catégorie contient des sous forums.
@@ -109,7 +111,7 @@ class Admin_forum
 			//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 			if( empty($list_cats) )
 				return false;
-						
+			
 			## Dernier topic des enfants du forum à supprimer ##
 			$list_parent_cats_to = $this->get_parent_list($to, CAT_INCLUDE); //Forums parent du forum cible.
 			if( empty($list_parent_cats_to) )
@@ -155,7 +157,7 @@ class Admin_forum
 				$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 				$z++;
 			}
-					
+			
 			$Cache->Generate_module_file('forum'); //Régénération du cache.
 			
 			$this->update_last_topic_id($id); //On met à jour l'id du dernier topic.

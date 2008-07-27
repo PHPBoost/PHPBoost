@@ -113,7 +113,7 @@ class Cache
 		foreach($modules as $module)
 		{
 			if( $MODULES[strtolower($module->id)]['activ'] == '1' ) //Module activé
-				$this->_write_cache($module, $module->functionnality('get_cache'));
+				$this->_write_cache(strtolower($module->id), $module->functionnality('get_cache'));
 		}
 	}
 	
