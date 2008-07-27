@@ -431,7 +431,7 @@ class Cache
 	{
 		global $Sql;
 		
-		$CONFIG_UPLOADS = 'global $CONFIG_UPLOADS;' . "\n";
+		$config_uploads = 'global $CONFIG_UPLOADS;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_UPLOADS = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'uploads'", __LINE__, __FILE__));
@@ -439,11 +439,11 @@ class Cache
 		foreach($CONFIG_UPLOADS as $key => $value)
 		{	
 			if( $key == 'auth_files' )
-				$CONFIG_UPLOADS .= '$CONFIG_UPLOADS[\'auth_files\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
+				$config_uploads .= '$CONFIG_UPLOADS[\'auth_files\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
 			else
-				$CONFIG_UPLOADS .= '$CONFIG_UPLOADS[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";		
+				$config_uploads .= '$CONFIG_UPLOADS[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";		
 		}
-		return $CONFIG_UPLOADS;
+		return $config_uploads;
 	}
 	
 	//Commentaires.
