@@ -365,7 +365,7 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 	{
 		if( document.getElementById('search_img' + searchid) )
 			document.getElementById('search_img' + searchid).innerHTML = '<img src="../templates/' + theme +'/images/loading_mini.gif" alt="" class="valign_middle" />';
-		var xhr_object = xmlhttprequest_init('../kernel/xmlhttprequest.php?' + insert_mode + '=1');
+		var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/member_xmlhttprequest.php?' + insert_mode + '=1');
 		data = 'login=' + login + '&divid=' + searchid;
 		xhr_object.onreadystatechange = function() 
 		{

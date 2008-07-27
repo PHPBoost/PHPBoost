@@ -30,8 +30,8 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 //Initialisation  de la class de gestion des fichiers.
-include_once('../member/files.class.php');
-$Files = new Files; 
+include_once('../member/uploads.class.php');
+$Uploads = new Uploads; 
 
 $folder = retrieve(GET, 'f', 0);
 $folder_member = retrieve(GET, 'fm', 0);
@@ -73,11 +73,11 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
 		//Chargement de la configuration.
-		$Cache->Load_file('files');
+		$Cache->Load_file('uploads');
 		
 		include_once('../kernel/framework/io/upload.class.php');
 		$Upload = new Upload($dir);
-		$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+$`i', UNIQ_NAME);
+		$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME);
 		
 		if( !empty($Upload->error) ) //Erreur, on arrête ici
 			redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->error . '#errorh');
@@ -99,20 +99,20 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 elseif( !empty($del_folder) ) //Supprime un dossier.
 {
 	//Suppression du dossier et de tout le contenu	
-	$Files->Del_folder($del_folder);
+	$Uploads->Del_folder($del_folder);
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder);
 }
 elseif( !empty($empty_folder) ) //Vide un dossier membre.
 {
 	//Suppression de tout les dossiers enfants.
-	$Files->Del_folder($empty_folder, EMPTY_FOLDER);
+	$Uploads->Del_folder($empty_folder, EMPTY_FOLDER);
 
 	redirect(HOST . DIR . '/admin/admin_files.php?showm=1');
 }
 elseif( !empty($del_file) ) //Suppression d'un fichier
 {
 	//Suppression d'un fichier.
-	$Files->Del_file($del_file, -1, ADMIN_NO_CHECK);
+	$Uploads->Del_file($del_file, -1, ADMIN_NO_CHECK);
 	
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&fm=' . $folder_member);
 }
@@ -130,15 +130,15 @@ elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 	$Sql->Close($result);
 
 	$array_child_folder = array();
-	$Files->Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
+	$Uploads->Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
 	if( !in_array($to, $array_child_folder) ) //Dossier de destination non sous-dossier du dossier source.
-		$Files->Move_folder($move_folder, $to, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);
+		$Uploads->Move_folder($move_folder, $to, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);
 	
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $to);
 }
 elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
 {
-	$Files->Move_file($move_file, $to, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);
+	$Uploads->Move_file($move_file, $to, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);
 	
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $to);
 }
@@ -177,13 +177,13 @@ else
 		$Errorh->Error_handler($LANG[$get_l_error], E_USER_WARNING);  
 
 	if( $show_member )
-		$url = $Files->Get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
+		$url = $Uploads->Get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
 	elseif( !empty($folder_member) || !empty($folder_info['user_id']) )
-		$url = $Files->Get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
+		$url = $Uploads->Get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
 	elseif( empty($folder) )
 		$url = '/';	
 	else
-		$url = $Files->Get_admin_url($folder, '');
+		$url = $Uploads->Get_admin_url($folder, '');
 		
 	$Template->Assign_vars(array(
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
@@ -293,7 +293,7 @@ else
 		{
 			$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
-			$get_img_mimetype = $Files->Get_img_mimetype($row['type']);
+			$get_img_mimetype = $Uploads->Get_img_mimetype($row['type']);
 			$size_img = '';
 			switch($row['type'])
 			{
