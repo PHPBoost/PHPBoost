@@ -56,12 +56,16 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 		
 		//On regarde dans ses groupes
 		if( $contribution_number == 0 )
+		{
 			foreach($Member->get_groups() as $id_group)
+			{
 				if( !empty($CONTRIBUTION_PANEL_UNREAD['g' . $id_group]) && $CONTRIBUTION_PANEL_UNREAD['g' . $id_group] == 1 )
 				{
 					$contribution_number = -1;
 					break;
 				}
+			}
+		}
 	}
 
 	$Template->Assign_vars(array(

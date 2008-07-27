@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 define('TITLE', $LANG['contribution_panel']);
 require_once('../kernel/header.php');
 
-if( !$Member->Check_level(MODO_LEVEL) ) //Si il n'est pas modérateur
+if( !$Member->Check_level(MEMBER_LEVEL) ) //Si il n'est pas member (les invités n'ont rien à faire ici)
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 $contribution_id = retrieve(GET, 'id', 0);
@@ -56,6 +56,11 @@ if( $contribution_id > 0 )
 }
 else
 {
+	require_once(PATH_TO_ROOT . '/kernel/framework/util/pagination.class.php');
+	
+	$pagination = new Pagination();
+	$pagination->set_var_name_current_page('p');
+	
 	$template->assign_vars(array(
 		'C_CONTRIBUTION_LIST' => true
 	));
@@ -69,37 +74,59 @@ else
 	$contribution->set_creation_date(new Date());
 	$contribution->set_poster_id(4);
 	//$contribution->create_in_db();
-
+	
+	//Nombre de contributions
+	$num_contributions = 1;
+	define('CONTRIBUTIONS_PER_PAGE', 20);
+	
 	//On liste les contributions
 	$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, description
 	FROM ".PREFIX."contributions c
 	LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
 	LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
-	ORDER BY creation_date DESC", __LINE__, __FILE__);
+	ORDER BY current_status ASC, creation_date DESC", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$this_contribution = new Contribution;
-		$this_contribution->build_from_db($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['fixing_date']), $row['auth'], $row['poster_id'], $row['fixer_id']);
+		$this_contribution->build_from_db($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['fixing_date']), unserialize($row['auth']), $row['poster_id'], $row['fixer_id']);
 		
 		//Obligé de faire une variable temp à cause de php4.
 		$creation_date = $this_contribution->get_creation_date();
 		$fixing_date = $this_contribution->get_fixing_date();
 		
-		$template->assign_block_vars('contributions', array(
-			'ENTITLED' => $this_contribution->get_entitled(),
-			'MODULE' => $this_contribution->get_module_name(),
-			'STATUS' => $this_contribution->get_status_name(),
-			'CREATION_DATE' => $creation_date->format(DATE_FORMAT_SHORT),
-			'FIXING_DATE' => $fixing_date->format(DATE_FORMAT_SHORT),
-			'POSTER' => $row['poster_login'],
-			'FIXER' => $row['fixer_login'],
-			'ACTIONS' => '',
-			'U_FIXER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $row['fixer_id'], 'member-' . $row['fixer_id'] . '.php'),
-			'U_POSTER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $row['poster_id'], 'member-' . $row['poster_id'] . '.php'),
-			'U_CONSULT' => PATH_TO_ROOT . '/member/' . transid('contribution_panel.php?id=' . $row['id']),
-			'C_FIXED' => $this_contribution->get_current_status() == CONTRIBUTION_STATUS_PROCESSED
-		));
+		//Affichage des contributions du membre
+		if( $Member->check_auth($this_contribution->get_auth(), CONTRIBUTION_AUTH_BIT) || $Member->get_attribute('user_id') == $this_contribution->get_poster_id() )
+		{
+			//On affiche seulement si on est dans le bon cadre d'affichage
+			if( $num_contributions > CONTRIBUTIONS_PER_PAGE * ($pagination->get_current_page() - 1) && $num_contributions <= CONTRIBUTIONS_PER_PAGE * $pagination->get_current_page() )
+				$template->assign_block_vars('contributions', array(
+					'ENTITLED' => $this_contribution->get_entitled(),
+					'MODULE' => $this_contribution->get_module_name(),
+					'STATUS' => $this_contribution->get_status_name(),
+					'CREATION_DATE' => $creation_date->format(DATE_FORMAT_SHORT),
+					'FIXING_DATE' => $fixing_date->format(DATE_FORMAT_SHORT),
+					'POSTER' => $row['poster_login'],
+					'FIXER' => $row['fixer_login'],
+					'ACTIONS' => '',
+					'U_FIXER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $row['fixer_id'], 'member-' . $row['fixer_id'] . '.php'),
+					'U_POSTER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $row['poster_id'], 'member-' . $row['poster_id'] . '.php'),
+					'U_CONSULT' => PATH_TO_ROOT . '/member/' . transid('contribution_panel.php?id=' . $row['id']),
+					'C_FIXED' => $this_contribution->get_current_status() == CONTRIBUTION_STATUS_PROCESSED
+				));
+			
+			$num_contributions++;
+		}
 	}
+	
+	if( $num_contributions > 0 )
+		$template->assign_vars(array(
+			'PAGINATION' => $pagination->display_pagination('contribution_panel.php?p=%d', $num_contributions, 'p', CONTRIBUTIONS_PER_PAGE, 3)
+		));
+	else
+		$template->assign_vars(array(
+			'C_NO_CONTRIBUTION' => true,
+			'L_NO_CONTRIBUTION_TO_DISPLAY' => 'aucune contribution à afficher'
+		));
 }
 
 $template->parse();

@@ -133,6 +133,12 @@ class Member
 		
 		return $array_user_auth_groups;
 	}
+	
+	//Fonction qui renvoie les groupes auxquels appartient l'utilisateur
+	function get_groups()
+	{
+		return $this->user_groups;
+	}
 		
 	## Private attributes ##
 	var $member_data; //Données du membres, obtenues à partir de la class de session.

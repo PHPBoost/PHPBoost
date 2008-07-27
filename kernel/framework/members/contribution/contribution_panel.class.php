@@ -27,18 +27,13 @@
 
 require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution.class.php');
 
-define('CONTRIBUTION_STATUS_NOT_READ', 1);
-define('CONTRIBUTION_STATUS_PROCESSING', 2);
-define('CONTRIBUTION_STATUS_SETTLED', 3);
+define('CONTRIBUTION_STATUS_UNREAD', 0);
+define('CONTRIBUTION_STATUS_BEING_PROCESSED', 1);
+define('CONTRIBUTION_STATUS_PROCESSED', 2);
 define('CONTRIBUTION_AUTH_BIT', 1);
 
 class ContributionPanel
 {
-	function ContributionPanel()
-	{
-		
-	}
-	
 	function add_contribution(&$contribution)
 	{
 		$contribution->create_in_db();
@@ -55,13 +50,19 @@ class ContributionPanel
 		$contribution->delete_in_db();
 	}
 	
+	/*static*/ function generate_cache()
+	{
+		global $Cache;
+		$Cache->generate_file('member');
+	}
+	
 	/*static*/ function compute_number_contrib_for_each_profile()
 	{
 		global $Sql;
 		
 		$array_result = array('r2' => 0, 'r1' => 0, 'r0' => 0);
 		
-		$result = $Sql->Query_while("SELECT auth FROM ".PREFIX."contributions WHERE current_status = '" . CONTRIBUTION_STATUS_NOT_READ . "'", __LINE__, __FILE__);
+		$result = $Sql->Query_while("SELECT auth FROM ".PREFIX."contributions WHERE current_status = '" . CONTRIBUTION_STATUS_UNREAD . "'", __LINE__, __FILE__);
 		while($row = $Sql->sql_fetch_assoc($result) )
 		{
 			$this_auth = unserialize($row['auth']);
