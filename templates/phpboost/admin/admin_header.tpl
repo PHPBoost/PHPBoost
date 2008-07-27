@@ -105,6 +105,14 @@
 									<li><a href="../admin/admin_system_report.php" style="background-image:url(../templates/{THEME}/images/admin/system_report_mini.png);">{L_SYSTEM_REPORT}</a></li>
 								</ul>
 							</li>
+                            <li class="extend" onmouseover="show_menu(34, 1);" onmouseout="hide_menu(1);">
+								<a href="../admin/admin_updates.php" style="background-image:url(../templates/{THEME}/images/admin/server_mini.png);">{L_WEBSITE_UPDATES}</a>
+								<ul id="ssmenu34">
+									<li><a href="../admin/admin_updates_kernel.php" style="background-image:url(../templates/{THEME}/images/admin/system_report_mini.png);">{L_KERNEL}</a></li>
+									<li><a href="../admin/admin_updates_modules.php" style="background-image:url(../templates/{THEME}/images/admin/phpinfo_mini.png);">{L_MODULES}</a></li>
+									<li><a href="../admin/admin_updates_themes.php" style="background-image:url(../templates/{THEME}/images/admin/system_report_mini.png);">{L_THEMES}</a></li>
+								</ul>
+							</li>
 						</ul>
 					</li>
 					<li onmouseover="show_menu(4, 0);" onmouseout="hide_menu(0);">

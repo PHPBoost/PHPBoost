@@ -16,6 +16,11 @@
 					<br />
 					<a href="admin_modules.php" class="quick_link">{L_MODULES_MANAGMENT}</a>
 				</li>
+				<li>
+					<a href="admin_updates.php"><img src="../templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<br />
+					<a href="admin_updates.php" class="quick_link">{L_WEBSITE_UPDATES}</a>
+				</li>
 			</ul>
 		</div>
 		

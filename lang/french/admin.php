@@ -698,4 +698,7 @@ $LANG['thursday'] = 'Jeu';
 $LANG['friday'] = 'Ven';
 $LANG['saturday'] = 'Sam';
 $LANG['sunday']	= 'Dim';
+
+// Updates
+$LANG['L_WEBSITE_UPDATES'] = 'Mises à jour';
 ?>
