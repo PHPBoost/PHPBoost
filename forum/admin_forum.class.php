@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-define('CAT_INCLUDE', true);
-define('CAT_NOINCLUDE', false);
+define('FORUM_CAT_INCLUDED', true);
+define('FORUM_CAT_NO_INCLUDED', false);
 
 class Admin_forum
 {	
@@ -100,8 +100,6 @@ class Admin_forum
 			}
 		}
 
-		
-		die('test' . $to);
 		if( !empty($to) ) //Changement de catégorie possible?
 		{
 			//On vérifie si la catégorie contient des sous forums.
@@ -111,9 +109,9 @@ class Admin_forum
 			//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 			if( empty($list_cats) )
 				return false;
-			
+						
 			## Dernier topic des enfants du forum à supprimer ##
-			$list_parent_cats_to = $this->get_parent_list($to, CAT_INCLUDE); //Forums parent du forum cible.
+			$list_parent_cats_to = $this->get_parent_list($to, FORUM_CAT_INCLUDED); //Forums parent du forum cible.
 			if( empty($list_parent_cats_to) )
 				$clause_parent_cats_to = " id = '" . $to . "'";
 			else
@@ -122,7 +120,7 @@ class Admin_forum
 			########## Suppression ##########
 			//On supprime virtuellement (changement de signe des bornes) les enfants.
 			$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);								
-			//On modifie les bornes droites et le last_topic_id des parents.
+			//On modifie les bornes droites des parents.
 			if( !empty($list_parent_cats) )
 				$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 			
@@ -157,7 +155,7 @@ class Admin_forum
 				$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 				$z++;
 			}
-			
+					
 			$Cache->Generate_module_file('forum'); //Régénération du cache.
 			
 			$this->update_last_topic_id($id); //On met à jour l'id du dernier topic.
@@ -226,7 +224,7 @@ class Admin_forum
 			//Présence de sous-forums => déplacement de ceux-ci.
 			if( $nbr_sub_cat > 0 )
 			{
-				$list_sub_cats = $this->get_child_list($idcat, CAT_NOINCLUDE); //Sous forums du forum.
+				$list_sub_cats = $this->get_child_list($idcat, FORUM_CAT_NO_INCLUDED); //Sous forums du forum.
 				$list_parent_cats = $this->get_parent_list($idcat);  //Forums parent du forum.
 				
 				//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
@@ -240,7 +238,7 @@ class Admin_forum
 				//On supprime virtuellement (changement de signe des bornes) les enfants.
 				$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);					
 				
-				//On modifie les bornes droites et le last_topic_id des parents.
+				//On modifie les bornes droites des parents.
 				if( !empty($list_parent_cats) )
 					$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 				
@@ -250,7 +248,7 @@ class Admin_forum
 				########## Ajout ##########
 				if( !empty($f_to) ) //Forum cible différent de la racine.
 				{
-					$list_parent_cats_to = $this->get_parent_list($f_to, CAT_INCLUDE);  //Forums parents du forum cible.
+					$list_parent_cats_to = $this->get_parent_list($f_to, FORUM_CAT_INCLUDED);  //Forums parents du forum cible.
 					if( empty($list_parent_cats_to) )
 						$clause_parent_cats_to = " id = '" . $f_to . "'";
 					else
@@ -286,7 +284,6 @@ class Admin_forum
 
 					//On met à jour le nouveau forum.
 					$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET level = level - '" . ($CAT_FORUM[$idcat]['level'] - $CAT_FORUM[$f_to]['level']) . "' WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);
-					$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET last_topic_id = '" . numeric($max_topic_id) . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 				}
 				else //Racine
 				{
@@ -340,28 +337,20 @@ class Admin_forum
 
 		########## Suppression ##########
 		//On supprime virtuellement (changement de signe des bornes) les enfants.
-		$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);							
-		//On modifie les bornes droites et le last_topic_id des parents.
+		$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);	
+		//On modifie les bornes droites des parents.
 		if( !empty($list_parent_cats) )
-			$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET last_topic_id = '" . numeric($max_topic_id_parent) . "', id_right = id_right - '" . ( $nbr_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
-				
+			$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+		
 		//On réduit la taille de l'arbre du nombre de forum supprimé à partir de la position de celui-ci.
 		$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$id]['id_right'] . "'", __LINE__, __FILE__);
-
+		
 		########## Ajout ##########
 		if( !empty($to) ) //Forum cible différent de la racine.
 		{
-			$list_parent_cats_to = $this->get_parent_list($to, CAT_INCLUDE); //Forums parents du forum cible.
-			if( empty($list_parent_cats_to) )
-				$clause_parent_cats_to = " id = '" . $to . "'";
-			else
-				$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
-				
-			//On modifie les bornes droites des parents de la cible.
-			$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_right = id_right + '" . ($nbr_cat*2) . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
-
-			//On augmente la taille de l'arbre du nombre de forum supprimé à partir de la position du forum cible.
-			if( $CAT_FORUM[$id]['id_left'] > $CAT_FORUM[$to]['id_left']  ) //Direction forum source -> forum cible.
+			//On augmente la taille de l'arbre du nombre de forum supprimés à partir de la position du forum cible.
+			$array_parents_cats = explode(', ', $list_parent_cats);
+			if( $CAT_FORUM[$id]['id_left'] > $CAT_FORUM[$to]['id_left'] && !in_array($to, $array_parents_cats) ) //Direction forum source -> forum cible, et source non incluse dans la cible.
 			{	
 				$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$to]['id_right'] . "'", __LINE__, __FILE__);						
 				$limit = $CAT_FORUM[$to]['id_right'];
@@ -370,9 +359,11 @@ class Admin_forum
 			else
 			{	
 				$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_FORUM[$to]['id_right'] - ($nbr_cat*2)) . "'", __LINE__, __FILE__);
+				
 				$limit = $CAT_FORUM[$to]['id_right'] - ($nbr_cat*2);
-				$end = $limit + ($nbr_cat*2) - 1;						
+				$end = $limit + ($nbr_cat*2) - 1;
 			}	
+			
 			//On replace les forums supprimés virtuellement.
 			$array_sub_cats = explode(', ', $list_cats);
 			$z = 0;
@@ -383,7 +374,20 @@ class Admin_forum
 				$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 				$z++;
 			}
-				
+			
+			//On recharge le cache
+			$Cache->Generate_module_file('forum');
+			$Cache->Load_file('forum', RELOAD_CACHE); //Rechargement du cache
+			
+			$list_parent_cats_to = $this->get_parent_list($to, FORUM_CAT_INCLUDED); //Forums parents du forum cible.
+			if( empty($list_parent_cats_to) )
+				$clause_parent_cats_to = " id = '" . $to . "'";
+			else
+				$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
+			
+			//On modifie les bornes droites des parents de la cible.
+			$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_right = id_right + '" . ($nbr_cat*2) . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
+			
 			//On met à jour le nouveau forum.
 			$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET level = level - '" . (($CAT_FORUM[$id]['level'] - $CAT_FORUM[$to]['level']) - 1) . "' WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);
 			
@@ -428,13 +432,14 @@ class Admin_forum
 		$result = $Sql->Query_while("SELECT id
 		FROM ".PREFIX."forum_cats 
 		" . $clause, __LINE__, __FILE__);
-		
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 			$list_parent_cats .= $row['id'] . ', ';
 		
 		$Sql->Close($result);
 		$list_parent_cats = trim($list_parent_cats, ', ');
-		
+		echo "SELECT id
+		FROM ".PREFIX."forum_cats 
+		" . $clause;
 		return $list_parent_cats;
 	}
 	

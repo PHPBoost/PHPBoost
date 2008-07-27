@@ -30,9 +30,6 @@
 ------------------------------------ MODULES -----------------------------------
 [-] Module liens du site.
 
-Forum : 
-[-] Réparation des bugs sur l'arbre intervallaire gérant les catégories.
-
 #################################################################################
 
 
