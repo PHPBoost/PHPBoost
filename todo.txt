@@ -25,7 +25,6 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Interface de contribution des news et des articles.
-[-] Régler l'affichage du mini-calendrier.
 
 ------------------------------------ MODULES -----------------------------------
 [-] Module liens du site.
