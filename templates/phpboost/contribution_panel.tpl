@@ -84,4 +84,6 @@
 				<dd>{DESCRIPTION}</dd>
 			</dl>
 		</fieldset>
+		
+		{COMMENTS}
 	# ENDIF #
