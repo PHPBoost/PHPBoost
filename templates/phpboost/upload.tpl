@@ -87,7 +87,7 @@
 		{
 			name2 = escape_xmlhttprequest(name);
 			data = "id_folder=" + id_folder + "&name=" + name2 + "&previous_name=" + previous_name;
-			var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/files_xmlhttprequest.php?rename_folder=1');
+			var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/uploads_xmlhttprequest.php?rename_folder=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
@@ -128,7 +128,7 @@
 		{
 			name2 = escape_xmlhttprequest(name);
 			data = "name=" + name2 + "&user_id=" + user_id + "&id_parent=" + id_parent;
-			var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/files_xmlhttprequest.php?new_folder=1');
+			var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/uploads_xmlhttprequest.php?new_folder=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
@@ -189,7 +189,7 @@
 		{
 			name2 = escape_xmlhttprequest(name);
 			data = "id_file=" + id_file + "&name=" + name2 + "&previous_name=" + previous_cut_name;
-			var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/files_xmlhttprequest.php?rename_file=1');
+			var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/uploads_xmlhttprequest.php?rename_file=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' ) 
