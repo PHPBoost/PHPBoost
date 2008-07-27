@@ -33,10 +33,43 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 	$Template->Set_filenames(array(
 		'connect_mini'=> 'connect/connect_mini.tpl'
 	));
+	
+	//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions
+	//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
+	$contribution_number = 0;
+	//Panneau de contributions, y-a-t'il des contributions que le membre peut lire ?
+	if( $Member->Check_level(ADMIN_LEVEL) )
+		$contribution_number = $CONTRIBUTION_PANEL_UNREAD['r2'];
+	elseif( $Member->Check_level(MODERATOR_LEVEL) )
+		$contribution_number = $CONTRIBUTION_PANEL_UNREAD['r1'];
+	//On vérifie les groupes et les levels ou tout simplement si il y en a pour les membres
+	else
+	{
+		//Si tous les membres ont une contribution non lue
+		if( $CONTRIBUTION_PANEL_UNREAD['r0'] > 0 )
+			$contribution_number = -1;
+		
+		//On regarde si ce membre en particulier en a une
+		if( $contribution_number == 0 )
+			if( !empty($CONTRIBUTION_PANEL_UNREAD['m' . $id_group]) && $CONTRIBUTION_PANEL_UNREAD['m' . $id_group] == 1 )
+				$contribution_number = -1;
+		
+		//On regarde dans ses groupes
+		if( $contribution_number == 0 )
+			foreach($Member->get_groups() as $id_group)
+				if( !empty($CONTRIBUTION_PANEL_UNREAD['g' . $id_group]) && $CONTRIBUTION_PANEL_UNREAD['g' . $id_group] == 1 )
+				{
+					$contribution_number = -1;
+					break;
+				}
+	}
 
 	$Template->Assign_vars(array(
 		'C_ADMIN_AUTH' => $Member->Check_level(ADMIN_LEVEL),
-		'C_MODO_AUTH' => $Member->Check_level(MODO_LEVEL),
+		'C_MODERATOR_AUTH' => $Member->Check_level(MODERATOR_LEVEL),
+		'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
+		'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
+		'NUM_UNREAD_CONTRIBUTIONS' => $contribution_number,
 		'IMG_PM' => $Member->Get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
 		'U_MEMBER_PM' => PATH_TO_ROOT . '/member/pm' . transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php'),
 		'U_MEMBER_ID' => transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', '-' . $Member->Get_attribute('user_id') . '.php?view=1'),
@@ -46,7 +79,8 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 		'L_ADMIN_PANEL' => $LANG['admin_panel'],
 		'L_MODO_PANEL' => $LANG['modo_panel'],
 		'L_PRIVATE_PROFIL' => $LANG['connect_private_profil'],
-		'L_DISCONNECT' => $LANG['disconnect']
+		'L_DISCONNECT' => $LANG['disconnect'],
+		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
 	));
 }
 else
