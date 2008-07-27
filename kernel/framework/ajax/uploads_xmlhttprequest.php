@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               member_xmlhttprequest.php
+ *                               uploads_xmlhttprequest.php
  *                            -------------------
  *   begin                : January, 25 2007
  *   copyright          : (C) 2007 Viarre Régis
@@ -41,7 +41,7 @@ if( !empty($_GET['new_folder']) ) //Ajout d'un dossier dans la gestion des fichi
 	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $Member->Get_attribute('user_id');
 	$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
 
-	if( $Member->Get_attribute('user_id') != $user_id )
+	if( !empty($user_id) && $Member->Get_attribute('user_id') != $user_id )
 	{	
 		if( $Member->Check_level(ADMIN_LEVEL) )
 			echo $Uploads->Add_folder($id_parent, $user_id, $name);

@@ -40,7 +40,7 @@ class Uploads
 	{
 		global $Sql;
 		
-		$check_folder = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."upload_cat WHERE name = '" . $name . "' AND id_parent = '" . $id_parent . "'", __LINE__, __FILE__);
+		$check_folder = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."upload_cat WHERE name = '" . $name . "' AND id_parent = '" . $id_parent . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		if( !empty($check_folder) || preg_match('`/|\.|\\\|"|<|>|\||\?`', stripslashes($name)) )
 			return 0;
 			
