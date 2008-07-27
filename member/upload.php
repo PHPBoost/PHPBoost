@@ -77,15 +77,15 @@ if( !$Member->Check_level(MEMBER_LEVEL) ) //Visiteurs interdits!
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 //Chargement de la configuration.
-$Cache->Load_file('files');
+$Cache->Load_file('uploads');
 
 //Droit d'accès?.
-if( !$Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES) )
+if( !$Member->Check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 //Initialisation  de la class de gestion des fichiers.
-include_once('../member/files.class.php');
-$Files = new Files; 
+include_once('../member/uploads.class.php');
+$Uploads = new Uploads; 
 
 $folder = retrieve(GET, 'f', 0);
 $parent_folder = retrieve(GET, 'fup', 0);
@@ -121,10 +121,10 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 {		
 	$error = '';
 	//Autorisation d'upload aux groupes.
-	$group_limit = $Member->Check_max_value(DATA_GROUP_LIMIT, $CONFIG_FILES['size_limit']);
+	$group_limit = $Member->Check_max_value(DATA_GROUP_LIMIT, $CONFIG_UPLOADS['size_limit']);
 	$unlimited_data = ($group_limit === -1) || $Member->Check_level(ADMIN_LEVEL);
 	
-	$member_memory_used = $Files->Member_memory_used($Member->Get_attribute('user_id'));
+	$member_memory_used = $Uploads->Member_memory_used($Member->Get_attribute('user_id'));
 	if( $member_memory_used >= $group_limit && !$unlimited_data )
 		$error = 'e_max_data_reach';	
 	else
@@ -141,7 +141,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 			$weight_max = $unlimited_data ? 100000000 : ($group_limit - $member_memory_used);
 			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
-			$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_FILES['auth_extensions'])) . ')+$`i', UNIQ_NAME, $weight_max);
+			$Upload->Upload_file('upload_file', '`([a-z0-9_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME, $weight_max);
 			
 			if( !empty($Upload->error) ) //Erreur, on arrête ici
 			{
@@ -164,13 +164,13 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 elseif( !empty($del_folder) ) //Supprime un dossier.
 {
 	if( $Member->Check_level(ADMIN_LEVEL) )
-		$Files->Del_folder($del_folder);
+		$Uploads->Del_folder($del_folder);
 	else
 	{
 		$check_user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $del_folder . "'", __LINE__, __FILE__);
 		//Suppression du dossier et de tout le contenu	
 		if( $check_user_id == $Member->Get_attribute('user_id') )	
-			$Files->Del_folder($del_folder);
+			$Uploads->Del_folder($del_folder);
 		else
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	}
@@ -180,17 +180,17 @@ elseif( !empty($del_folder) ) //Supprime un dossier.
 elseif( !empty($empty_folder) && $Member->Check_level(ADMIN_LEVEL) ) //Vide un dossier membre.
 {
 	//Suppression de tout les dossiers enfants.
-	$Files->Del_folder($empty_folder, EMPTY_FOLDER);
+	$Uploads->Del_folder($empty_folder, EMPTY_FOLDER);
 
 	redirect(HOST . DIR . '/member/upload.php?showm=1');
 }
 elseif( !empty($del_file) ) //Suppression d'un fichier
 {
 	if( $Member->Check_level(ADMIN_LEVEL) )
-		$Files->Del_file($del_file, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);
+		$Uploads->Del_file($del_file, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);
 	else
 	{
-		$error = $Files->Del_file($del_file, $Member->Get_attribute('user_id'));
+		$error = $Uploads->Del_file($del_file, $Member->Get_attribute('user_id'));
 		if( !empty($error) )
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	}
@@ -259,7 +259,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'URL'=> '' . trim($Files->Get_url($folder, '', '&amp;' . $popup), '/'),
+		'URL'=> '' . trim($Uploads->Get_url($folder, '', '&amp;' . $popup), '/'),
 		'L_FILES_MANAGEMENT' => $LANG['files_management'],
 		'L_MOVE_TO' => $LANG['moveto'],
 		'L_ROOT' => $LANG['root'],
@@ -295,7 +295,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 	else
 	{
 		$info_move = $Sql->Query_array("upload", "path", "name", "type", "size", "idcat", "WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
-		$get_img_mimetype = $Files->Get_img_mimetype($info_move['type']);
+		$get_img_mimetype = $Uploads->Get_img_mimetype($info_move['type']);
 		$size_img = '';
 		switch($info_move['type'])
 		{
@@ -357,7 +357,7 @@ else
 		'USER_ID' => $Member->Get_attribute('user_id'),
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'URL' => '' . trim($Files->Get_url($folder, '', '&amp;' . $popup), '/'),
+		'URL' => '' . trim($Uploads->Get_url($folder, '', '&amp;' . $popup), '/'),
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
 		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],
@@ -417,7 +417,7 @@ else
 	{
 		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
-		$get_img_mimetype = $Files->Get_img_mimetype($row['type']);
+		$get_img_mimetype = $Uploads->Get_img_mimetype($row['type']);
 		$size_img = '';
 		switch($row['type'])
 		{
@@ -469,10 +469,10 @@ else
 	$Sql->Close($result);		
 	
 	//Autorisation d'uploader sans limite aux groupes.
-	$group_limit = $Member->Check_max_value(DATA_GROUP_LIMIT, $CONFIG_FILES['size_limit']);
+	$group_limit = $Member->Check_max_value(DATA_GROUP_LIMIT, $CONFIG_UPLOADS['size_limit']);
 	$unlimited_data = ($group_limit === -1) || $Member->Check_level(ADMIN_LEVEL);
 	
-	$total_size = !empty($folder) ? $Files->Member_memory_used($Member->Get_attribute('user_id')) : $Sql->Query("SELECT SUM(size) FROM ".PREFIX."upload WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$total_size = !empty($folder) ? $Uploads->Member_memory_used($Member->Get_attribute('user_id')) : $Sql->Query("SELECT SUM(size) FROM ".PREFIX."upload WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 	$Template->Assign_vars(array(
 		'PERCENT' => !$unlimited_data ? '(' . number_round($total_size/$group_limit, 3) * 100 . '%)' : '',
 		'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? number_round($group_limit/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($group_limit, 0) . ' ' . $LANG['unit_kilobytes']) : $LANG['illimited'],

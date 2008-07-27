@@ -294,9 +294,9 @@ class Cache
 			$htaccess_rules .= "\n\n" . '# Error page #' . "\n" . 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';						
 
 			//Protection de la bande passante, interdiction d'accès aux fichiers du répertoire upload depuis un autre serveur.
-			global $CONFIG_FILES;
-			$this->load_file('files');
-			if( $CONFIG_FILES['bandwidth_protect'] )
+			global $CONFIG_UPLOADS;
+			$this->Load_file('uploads');
+			if( $CONFIG_UPLOADS['bandwidth_protect'] )
 			{
 				$htaccess_rules .= "\n\n# Bandwith protection #\nRewriteCond %{HTTP_REFERER} !^$\nRewriteCond %{HTTP_REFERER} !^" . HOST . "\nReWriteRule .*upload/.*$ - [F]";
 			}
@@ -426,24 +426,24 @@ class Cache
 		return	'global $_array_rank;' . "\n" . $stock_array_ranks;	
 	}
 	
-	//Fichiers.
-	function _get_files()
+	//Uploads des membres.
+	function _get_uploads()
 	{
 		global $Sql;
 		
-		$config_files = 'global $CONFIG_FILES;' . "\n";
+		$CONFIG_UPLOADS = 'global $CONFIG_UPLOADS;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_FILES = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'files'", __LINE__, __FILE__));
-		$CONFIG_FILES = is_array($CONFIG_FILES) ? $CONFIG_FILES : array();
-		foreach($CONFIG_FILES as $key => $value)
+		$CONFIG_UPLOADS = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'uploads'", __LINE__, __FILE__));
+		$CONFIG_UPLOADS = is_array($CONFIG_UPLOADS) ? $CONFIG_UPLOADS : array();
+		foreach($CONFIG_UPLOADS as $key => $value)
 		{	
 			if( $key == 'auth_files' )
-				$config_files .= '$CONFIG_FILES[\'auth_files\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
+				$CONFIG_UPLOADS .= '$CONFIG_UPLOADS[\'auth_files\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
 			else
-				$config_files .= '$CONFIG_FILES[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";		
+				$CONFIG_UPLOADS .= '$CONFIG_UPLOADS[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";		
 		}
-		return $config_files;
+		return $CONFIG_UPLOADS;
 	}
 	
 	//Commentaires.
@@ -505,7 +505,7 @@ class Cache
 	
 	## Private Attributes ##
 	//Tableau qui contient tous les fichiers supportés dans cette classe
-    var $files = array('config', 'modules', 'modules_mini', 'htaccess', 'themes', 'css', 'day', 'groups', 'member', 'files', 'com', 'ranks', 'smileys', 'stats');
+    var $files = array('config', 'modules', 'modules_mini', 'htaccess', 'themes', 'css', 'day', 'groups', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

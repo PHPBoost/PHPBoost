@@ -456,7 +456,7 @@
 			else
 			{
 				var xhr_object = null;
-				var filename = '../kernel/xmlhttprequest.php?stats_referer=1&id=' + divid;
+				var filename = '../kernel/framework/ajax/stats_xmlhttprequest.php?stats_referer=1&id=' + divid;
 				var data = null;
 				
 				if(window.XMLHttpRequest) // Firefox
@@ -553,7 +553,7 @@
 			else
 			{
 				document.getElementById('load' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-				var xhr_object = xmlhttprequest_init('../kernel/xmlhttprequest.php?stats_keyword=1&id=' + divid);
+				var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/stats_xmlhttprequest.php?stats_keyword=1&id=' + divid);
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )

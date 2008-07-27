@@ -608,10 +608,10 @@ if( !empty($id_get) ) //Espace membre
 		$msg_mbr = '<br />' . $msg_mbr . '<br />';
 	
 		//Chargement de la configuration.
-		$Cache->Load_file('files');
+		$Cache->Load_file('uploads');
 
 		//Droit d'accès?.
-		$is_auth_files = $Member->Check_auth($CONFIG_FILES['auth_files'], AUTH_FILES);
+		$is_auth_files = $Member->Check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES);
 	
 		$Template->Assign_vars(array(
 			'C_MEMBER_INDEX' => true,

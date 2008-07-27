@@ -40,7 +40,7 @@
 				contents = escape_xmlhttprequest(contents);
 				data = "contents=" + contents + "&ftags=" + forbidden_tags;			
 			  
-				var xhr_object = xmlhttprequest_init('../kernel/xmlhttprequest.php?preview=1');
+				var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/content_xmlhttprequest.php?preview=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 ) 

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             files.class.php
+ *                             uploads.class.php
  *                            -------------------
  *   begin                : April 18, 2007
  *   copyright          : (C) 2007 Viarre Régis
@@ -28,7 +28,7 @@
 define('EMPTY_FOLDER', true);
 define('ADMIN_NO_CHECK', true);
 
-class Files
+class Uploads
 {
 	## Public Attributes ##
 	var $error = ''; //Gestion des erreurs
