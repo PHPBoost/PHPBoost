@@ -26,10 +26,6 @@
 ------------------------------------- NOYAU ------------------------------------
 [-] Interface de contribution des news et des articles.
 [-] Régler l'affichage du mini-calendrier.
-[-] Déplacer note.class.php dans framework/content
-
-[-] Eclater xmlhttprequest.
-
 
 ------------------------------------ MODULES -----------------------------------
 [-] Module liens du site.
