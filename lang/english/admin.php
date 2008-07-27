@@ -698,4 +698,7 @@ $LANG['thursday'] = 'Thu';
 $LANG['friday'] = 'Fri';
 $LANG['saturday'] = 'Sat';
 $LANG['sunday']	= 'Sun';
+
+// Updates
+$LANG['L_WEBSITE_UPDATES'] = 'Updates';
 ?>

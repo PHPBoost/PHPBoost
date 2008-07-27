@@ -108,6 +108,9 @@
 						</td>					
 						
 						<td class="row2" style="width:20%;">
+							<a href="../admin/admin_updates.php"><img src="../templates/{THEME}/images/admin/com.png" /></a>		
+							<br />
+							<a href="../admin/admin_updates.php">{L_WEBSITE_UPDATES}</a>
 						</td>
 						<td class="row2" style="width:20%;">
 						</td>

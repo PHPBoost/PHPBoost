@@ -92,7 +92,8 @@ $Template->Assign_vars(array(
 	'L_SYNDICATION' => $LANG['syndication'],
 	'L_EXTEND_MENU' => $LANG['extend_menu'],
 	'L_CONTENT_CONFIG' => $LANG['content_config'],
-	'U_INDEX_SITE' => get_start_page()
+	'U_INDEX_SITE' => get_start_page(),
+    'L_WEBSITE_UPDATES' => $LANG['L_WEBSITE_UPDATES']
 ));
 
 //Listing des modules disponibles:

@@ -142,7 +142,8 @@ $Template->Assign_vars(array(
 	'L_TOTAL_USER' => $LANG['total_users'],
 	'L_USER_IP' => $LANG['user_ip'],
 	'L_LOCALISATION' => $LANG['localisation'],
-	'L_LAST_UPDATE' => $LANG['last_update']
+	'L_LAST_UPDATE' => $LANG['last_update'],
+    'L_WEBSITE_UPDATES' => $LANG['L_WEBSITE_UPDATES']
 ));
 
 //Liste des actions en attente.
