@@ -329,6 +329,8 @@ else
 		//On assigne les variables pour le POST en précisant l'idurl.
 		$Template->Assign_block_vars('list', array(
 			'I' => $i,
+			'ID_LEFT' => $row['id_left'],
+			'ID_RIGHT' => $row['id_right'],
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'DESC' => $row['subname'],
