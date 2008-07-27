@@ -32,20 +32,22 @@ define('CONTRIBUTION_STATUS_BEING_PROCESSED', 1);
 define('CONTRIBUTION_STATUS_PROCESSED', 2);
 define('CONTRIBUTION_AUTH_BIT', 1);
 
+//This is a static class, it must not be instantiated.
+
 class ContributionPanel
 {
-	function add_contribution(&$contribution)
+	/*static*/ function add_contribution(&$contribution)
 	{
 		$contribution->create_in_db();
 		return $contribution->get_id();
 	}
 	
-	function update_contribution(&$contribution)
+	/*static*/ function update_contribution(&$contribution)
 	{
 		$contribution->update_in_db();
 	}
 	
-	function delete_contribution(&$contribution)
+	/*static*/ function delete_contribution(&$contribution)
 	{
 		$contribution->delete_in_db();
 	}

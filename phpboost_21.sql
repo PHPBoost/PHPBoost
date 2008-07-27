@@ -222,8 +222,10 @@ CREATE TABLE `phpboost_contributions` (
   `poster_id` int(11) NOT NULL,
   `fixer_id` int(11) NOT NULL,
   `id_in_module` int(11) NOT NULL,
+  `nbr_com` int(10) unsigned NOT NULL,
+  `lock_com` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1
 
 
 -- --------------------------------------------------------

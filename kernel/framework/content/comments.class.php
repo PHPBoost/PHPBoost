@@ -27,16 +27,19 @@
 
 define('INTEGRATED_IN_ENVIRONMENT', true);
 define('POP_UP_WINDOW', false);
+define('KERNEL_SCRIPT', true);
 
 class Comments
 {
 	## Public Methods ##
 	//Constructeur.
 	//Script est le nom du module, idprov la clé primaire entière de l'item à commenter dans le script, vars est le lien avec %d réservé au module
-	function Comments($script, $idprov, $vars, $module_folder = '') 
+	function Comments($script, $idprov, $vars, $module_folder = '', $is_kernel_script = false) 
 	{
 		$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
 		list($this->script, $this->idprov, $this->vars, $this->path) = array(strprotect($script), numeric($idprov), $vars, PATH_TO_ROOT . '/' . $this->module_folder . '/');
+		
+		$this->is_kernel_script = $is_kernel_script;
 	}
 	
 	//Ajoute un commentaire et retourne l'identifiant inséré.
@@ -111,7 +114,13 @@ class Comments
 		if( !empty($path) )
 			$this->path = $path;
 		$this->idcom = (int)max($idcom, 0);
-		list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->_get_info_module();
+		
+		//Si c'est un module qui appelle
+		if( !$this->is_kernel_script )
+			list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->_get_info_module();
+		//Sinon c'est le noyau
+		else
+			list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->_get_info_kernel_script();
 	}
 	
 	//Accesseur
@@ -140,7 +149,7 @@ class Comments
 		
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0);
 		
-		if( !is_object($Template) || get_class($Template) != 'Template' )
+		if( !is_object($Template) || strtolower(get_class($Template)) != 'template' )
 			$Template = new Template('framework/content/com.tpl');
 		
 		//Commentaires chargés?
@@ -304,7 +313,7 @@ class Comments
 
 				//On crée une pagination si le nombre de commentaires est trop important.
 				require_once(PATH_TO_ROOT . '/kernel/framework/util/pagination.class.php');
-				$Pagination = new Pagination();
+				$pagination = new Pagination();
 
 				$Template->Assign_vars(array(
 					'CURRENT_PAGE_COM' => $integrated_in_environment,
@@ -384,7 +393,7 @@ class Comments
 				
 				$Template->Assign_vars(array(
 					'C_COM_DISPLAY' => $this->get_attribute('nbr_com') > 0 ? true : false,
-					'PAGINATION_COM' => $Pagination->Display_pagination($this->path . $vars_simple . '&amp;pc=%d#anchor_' . $this->script, $this->nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
+					'PAGINATION_COM' => $pagination->Display_pagination($this->path . $vars_simple . '&amp;pc=%d#anchor_' . $this->script, $this->nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
 					'LANG' => $CONFIG['lang'],
 					'IDCOM' => '',
 					'IDPROV' => $this->idprov,
@@ -406,7 +415,8 @@ class Comments
 					'L_QUOTE' => $LANG['quote'],
 					'L_RESET' => $LANG['reset'],
 					'L_PREVIEW' => $LANG['preview'],
-					'L_SUBMIT' => $LANG['submit']		
+					'L_SUBMIT' => $LANG['submit'],
+					'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . '&amp;updatecom=1'					
 				));
 				
 				//Création du tableau des rangs.
@@ -422,7 +432,7 @@ class Comments
 				WHERE c.script = '" . $this->script . "' AND c.idprov = '" . $this->idprov . "'
 				GROUP BY c.idcom
 				ORDER BY c.timestamp DESC 
-				" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
+				" . $Sql->Sql_limit($pagination->First_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
 				while ($row = $Sql->Sql_fetch_assoc($result))
 				{
 					$row['user_id'] = (int)$row['user_id'];
@@ -585,6 +595,16 @@ class Comments
 		return $check_script ? array(strprotect($info_module['com']), $info_sql_module['nbr_com'], (bool)$info_sql_module['lock_com']) : array('', 0, 0);
 	}
 	
+	//Initialisation des paramètres quand il s'agit du noyau qui appelle
+	function _get_info_kernel_script()
+	{
+		global $Sql, $CONFIG;
+		
+		$row_infos = $Sql->Query_array($this->script, "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+		
+		return array($this->script, $row_infos['nbr_com'], (bool)$row_infos['lock_com']);
+	}
+	
 	## Private attributes ##
 	var $script = '';
 	var $idprov = 0;
@@ -595,6 +615,7 @@ class Comments
 	var $sql_table = '';
 	var $nbr_com = 0;
 	var $lock_com = 0;
+	var $is_kernel_script = false;
 }
 
 ?>

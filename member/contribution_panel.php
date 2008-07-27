@@ -49,9 +49,13 @@ if( $contribution_id > 0 )
 	$contribution = new Contribution();
 	$contribution->load_from_db($contribution_id);
 	
+	include_once('../kernel/framework/content/comments.class.php'); 
+	$comments = new Comments('contributions', $contribution_id, transid('contribution_panel.php?id=' . $contribution_id . '&amp;com=%s'), 'member', KERNEL_SCRIPT);
+	
 	$template->assign_vars(array(
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => second_parse($contribution->get_description()),
+		'COMMENTS' => $comments->display()
 	));
 }
 else
