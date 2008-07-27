@@ -250,7 +250,7 @@ else
 			case 'e_success' :
 				$Errorh->Error_handler($DOWNLOAD_LANG['successful_operation'], E_USER_SUCCESS);
 				break;
-				case 'e_recount_success' :
+			case 'e_recount_success' :
 				$Errorh->Error_handler($DOWNLOAD_LANG['recount_success'], E_USER_SUCCESS);
 				break;
 		}
