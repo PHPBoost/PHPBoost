@@ -225,7 +225,7 @@ CREATE TABLE `phpboost_contributions` (
   `nbr_com` int(10) unsigned NOT NULL,
   `lock_com` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 
 
 -- --------------------------------------------------------
