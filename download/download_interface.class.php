@@ -267,14 +267,14 @@ class DownloadInterface extends ModuleInterface
 
         if( $id_cat == 0 )
         {
-            if( array_key_exists('r-1', $CONFIG_DOWNLOAD['global_auth']) && $CONFIG_DOWNLOAD['global_auth']['r-1'] & READ_CAT_DOWNLOAD )
+            if( Authorizations::check_some_body_auth(RANK_TYPE, GUEST_LEVEL, $CONFIG_DOWNLOAD['global_auth'], READ_CAT_DOWNLOAD) )
                 $list[] = 0;
             else
                 return;
         }
         else
         {
-            if( array_key_exists($id_cat, $DOWNLOAD_CATS) && (($DOWNLOAD_CATS[$id_cat]['auth'] === false) || (isset($DOWNLOAD_CATS[$id_cat]['auth']['r-1']) && ($DOWNLOAD_CATS[$id_cat]['auth']['r-1'] & READ_CAT_DOWNLOAD)) ) )
+            if( !empty($DOWNLOAD_CATS[$id_cat]) && Authorizations::check_some_body_auth(RANK_TYPE, GUEST_LEVEL, $DOWNLOAD_CATS[$id_cat]['auth'], READ_CAT_DOWNLOAD) )
                 $list[] = $id_cat;
             else
                 return;
@@ -291,7 +291,7 @@ class DownloadInterface extends ModuleInterface
             
             if( $properties['id_parent'] == $id_cat )
             {
-                $this_auth = is_array($properties['auth']) ? array_key_exists('r-1', $properties['auth']) && $properties['auth']['r-1'] & READ_CAT_DOWNLOAD : array_key_exists('r-1', $CONFIG_DOWNLOAD['global_auth']) && $CONFIG_DOWNLOAD['global_auth']['r-1'] & READ_CAT_DOWNLOAD;
+                $this_auth = is_array($properties['auth']) ? Authorizations::check_some_body_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_CAT_DOWNLOAD) :  Authorizations::check_some_body_auth(RANK_TYPE, GUEST_LEVEL, $CONFIG_DOWNLOAD['global_auth'], READ_CAT_DOWNLOAD);
                 
                 if( $this_auth )
                 {

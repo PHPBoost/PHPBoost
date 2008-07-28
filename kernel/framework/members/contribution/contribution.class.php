@@ -191,7 +191,13 @@ class Contribution
 		
 		$properties = $Sql->sql_fetch_assoc($result);
 		
-		$this->build_from_db($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['fixing_date']), $properties['auth'], $properties['poster_id'], $properties['fixer_id']);
+		if( (int)$properties['id'] > 0 )
+		{
+			$this->build_from_db($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['fixing_date']), unserialize($properties['auth']), $properties['poster_id'], $properties['fixer_id']);
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	//Construction of a contribution from database

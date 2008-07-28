@@ -259,6 +259,19 @@ class Authorizations
 			}
 		}
 	}
+	
+	 //Ajoute un droit à l'ensemble des autorisations.
+	/*static*/ function add_auth_group($auth_group, $add_auth)
+	{
+		return ((int)$auth_group | (int)$add_auth);
+	}
+	
+	//Retire un droit à l'ensemble des autorisations
+	/*static*/ function remove_auth_group($auth_group, $remove_auth)
+	{
+		$remove_auth = ~((int)$remove_auth);
+		return ((int)$auth_group & $remove_auth);
+	}
 }
 
 ?>

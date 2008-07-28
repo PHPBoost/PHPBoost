@@ -108,6 +108,7 @@ class BBCodeParser extends ContentParser
 			'swf' => '`\[swf=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\]((?:(\./|\.\./)|([\w]+://))+[^,\n\r\t\f]+)\[/swf\]`iU',
 			'movie' => '`\[movie=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\]([^\n\r\t\f]+)\[/movie\]`iU',
 			'sound' => '`\[sound\]((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_-]+\.mp3)\[/sound\]`iU',
+			'math' => '`\[math\](.+)\[/math\]`iU',
 			'url' => '`\[url\]((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)\[/url\]`isU',
 			'url2' => '`\[url\]((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)\[/url\]`isU',
 			'url3' => '`\[url=((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)\]([^\n\r\t\f]+)\[/url\]`isU',
@@ -168,6 +169,7 @@ class BBCodeParser extends ContentParser
 		<param name=\"wmode\" value=\"transparent\" />
 		<param name=\"bgcolor\" value=\"#FFFFFF\" />
 		</object>",
+			'math' => '[[MATH]]$1[[/MATH]]',
 			'url' => "<a href=\"$1\">$1</a>",
 			'url2' => "<a href=\"http://$1\">$1</a>",
 			'url3' => "<a href=\"$1\">$2</a>",
@@ -195,7 +197,7 @@ class BBCodeParser extends ContentParser
 			if( in_array('mail', $this->forbidden_tags) )
 				$this->forbidden_tags[] = 'mail2';
 			
-			$other_tags = array('table', 'code', 'math', 'quote', 'hide', 'indent', 'list'); 
+			$other_tags = array('table', 'quote', 'hide', 'indent', 'list'); 
 			foreach($this->forbidden_tags as $key => $tag)
 			{	
 				if( in_array($tag, $other_tags) )
@@ -255,7 +257,7 @@ class BBCodeParser extends ContentParser
 		}
 	}
 	
-		//On unparse le contenu xHTML => BBCode
+	//On unparse le contenu xHTML => BBCode
 	function unparse()
 	{
 		$this->parsed_content = $this->content;
@@ -417,7 +419,6 @@ class BBCodeParser extends ContentParser
 	function _parse_table()
 	{
 		//On supprime les éventuels quote qui ont été transformés en leur entité html
-		//$this->content = preg_replace_callback('`\[(?:table|col|row|head)(?: colspan=\\\&quot;[0-9]+\\\&quot;)?(?: rowspan=\\\&quot;[0-9]+\\\&quot;)?( style=\\\&quot;(?:[^&]+)\\\&quot;)?\]`U', create_function('$matches', 'return str_replace(\'\\\&quot;\', \'"\', $matches[0]);'), $this->content);
 		$this->_split_imbricated_tag($this->parsed_content, 'table', ' style="[^"]+"');
 		$this->_parse_imbricated_table($this->parsed_content);
 		//On remet les tableaux invalides tels qu'ils étaient avant
@@ -470,7 +471,6 @@ class BBCodeParser extends ContentParser
 	function _parse_list()
 	{
 		//On nettoie les guillemets échappés
-		//$this->content = preg_replace_callback('`\[list(?:=(?:un)?ordered)?( style=\\\&quot;[^&]+\\\&quot;)?\]`U', create_function('$matches', 'return str_replace(\'\\\&quot;\', \'"\', $matches[0]);'), $this->content);
 		//on travaille dessus
 		if( preg_match('`\[list(=(?:un)?ordered)?( style="[^"]+")?\](\s|<br />)*\[\*\].*\[/list\]`s', $this->parsed_content) )
 		{
