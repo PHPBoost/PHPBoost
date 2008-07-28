@@ -87,9 +87,9 @@ class ContentParser
 		return $this->forbidden_tags;
 	}
 	
-	//These methods should be abstract
-	//functionparse($forbidden_tags = array(), $html_protect = true)
-	//function unparse()
+	//These methods should be abstract	
+	/*abstract*/ function parse($forbidden_tags = array(), $html_protect = true) {}
+	/*abstract*/ function unparse() {}
 	
 	//Parse temps réel => détection des balisses [code]  et remplacement, coloration si contient du code php.
 	//This function exists whatever type of content you have because it's use to finish parsing of a recorded string
@@ -104,8 +104,8 @@ class ContentParser
 			$this->parsed_content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(,0|1)?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->parsed_content);
 		
 		//Balise latex.
-		if( strpos($this->parsed_content, '[math]') !== false )
-			$this->parsed_content = preg_replace_callback('`\[math\](.+)\[/math\]`isU', array(&$this, '_math_code'), $this->parsed_content);
+		if( strpos($this->parsed_content, '[[MATH]]') !== false )
+			$this->parsed_content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->parsed_content);
 	}
 	
 	####### Protected #######
@@ -326,6 +326,9 @@ class ContentParser
 						$this->array_tags['html_unparse'][] = $content_split[$i];
 					}
 				}
+				
+				//On protège le code HTML à l'affichage qui vient non protégé de la base de données
+				$this->array_tags['html_unparse'] = array_map(create_function('$var', 'return htmlspecialchars($var, ENT_NOQUOTES);'), $this->array_tags['html_unparse']);
 			}
 			return true;
 		}
@@ -375,9 +378,10 @@ class ContentParser
 					elseif( $i % 3 == 2 )
 					{
 						$this->array_tags['code_unparse'][] = '[code' . $content_split[$i - 1] . ']' . $content_split[$i] . '[/code]';
-						//$this->array_tags['code_unparse'][] = $content_split[$i];
 					}
 				}
+				//On protège le code HTML à l'affichage qui vient non protégé de la base de données
+				$this->array_tags['code_unparse'] = array_map(create_function('$var', 'return htmlspecialchars($var, ENT_NOQUOTES);'), $this->array_tags['code_unparse']);
 			}
 			return true;
 		}

@@ -47,7 +47,9 @@ if( $contribution_id > 0 )
 	));
 	
 	$contribution = new Contribution();
-	$contribution->load_from_db($contribution_id);
+	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
+	if( !$contribution->load_from_db($contribution_id) || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $Member->get_attribute('user_id')) )
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
 	include_once('../kernel/framework/content/comments.class.php'); 
 	$comments = new Comments('contributions', $contribution_id, transid('contribution_panel.php?id=' . $contribution_id . '&amp;com=%s'), 'member', KERNEL_SCRIPT);
@@ -92,7 +94,7 @@ else
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$this_contribution = new Contribution;
-		$this_contribution->build_from_db($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['fixing_date']), unserialize($row['auth']), $row['poster_id'], $row['fixer_id']);
+		$this_contribution->build_from_db($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['fixing_date']), $row['auth'], $row['poster_id'], $row['fixer_id']);
 		
 		//Obligé de faire une variable temp à cause de php4.
 		$creation_date = $this_contribution->get_creation_date();
@@ -121,6 +123,8 @@ else
 			$num_contributions++;
 		}
 	}
+	
+	$Sql->sql_free_result($result);
 	
 	if( $num_contributions > 0 )
 		$template->assign_vars(array(

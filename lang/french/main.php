@@ -548,8 +548,7 @@ S\'il s\'agit d\'une erreur veuillez contacter l\'administrateur du site.
 
 
 //Panneau de contribution
-$LANG['contribution_panel'] = 'Panneau de contributions';
-
+$LANG['contribution_panel'] = 'Panneau de contribution';
 $LANG['contribution_status_unread'] = 'Non traitée';
 $LANG['contribution_status_being_processed'] = 'En cours';
 $LANG['contribution_status_processed'] = 'Traitée';
