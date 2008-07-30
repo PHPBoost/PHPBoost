@@ -47,6 +47,7 @@ if( $contribution_id > 0 )
 	));
 	
 	$contribution = new Contribution();
+	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
 	if( !$contribution->load_from_db($contribution_id) || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $Member->get_attribute('user_id')) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
@@ -54,11 +55,30 @@ if( $contribution_id > 0 )
 	include_once('../kernel/framework/content/comments.class.php'); 
 	$comments = new Comments('contributions', $contribution_id, transid('contribution_panel.php?id=' . $contribution_id . '&amp;com=%s'), 'member', KERNEL_SCRIPT);
 	
+	//For PHP 4 :(
+	$contribution_creation_date = $contribution->get_creation_date();
+	$contribution_fixing_date = $contribution->get_fixing_date();
+	
 	$template->assign_vars(array(
+		'C_WRITE_AUTH' => $Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT),
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => second_parse($contribution->get_description()),
-		'COMMENTS' => $comments->display()
+		'STATUS' => $contribution->get_status_name(),
+		'CONTRIBUTER' => $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $contribution->get_poster_id() . "'", __LINE__, __FILE__),
+		'COMMENTS' => $comments->display(),
+		'CREATION_DATE' => $contribution_creation_date->format(DATE_FORMAT_SHORT),
+		'MODULE' => $contribution->get_module_name(),
+		'U_CONTRIBUTOR_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')		
 	));
+	
+	//If the contribution has been processed
+	if( $contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED )
+		$template->assign_vars(array(
+			'C_CONTRIBUTION_FIXED' => true,
+			'FIXER' => $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
+			'CREATION_DATE' => $contribution_fixing_date->format(DATE_FORMAT_SHORT),
+			'U_FIXER_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')
+		));
 }
 else
 {
@@ -117,14 +137,14 @@ else
 					'U_FIXER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $row['fixer_id'], 'member-' . $row['fixer_id'] . '.php'),
 					'U_POSTER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $row['poster_id'], 'member-' . $row['poster_id'] . '.php'),
 					'U_CONSULT' => PATH_TO_ROOT . '/member/' . transid('contribution_panel.php?id=' . $row['id']),
-					'C_FIXED' => $this_contribution->get_current_status() == CONTRIBUTION_STATUS_PROCESSED
+					'C_FIXED' => $this_contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED
 				));
 			
 			$num_contributions++;
 		}
 	}
 	
-	$Sql->sql_free_result($result);
+	$Sql->close($result);
 	
 	if( $num_contributions > 0 )
 		$template->assign_vars(array(

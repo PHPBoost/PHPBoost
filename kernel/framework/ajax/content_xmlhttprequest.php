@@ -31,15 +31,21 @@ define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
+$page_path_to_root = retrieve(GET, 'path_to_root', '');
+
 if( !empty($_GET['preview']) ) //Prévisualisation des messages.
 {
-	$contents = !empty($_POST['contents']) ? trim($_POST['contents']) : '';
-	$ftags = !empty($_POST['ftags']) ? trim($_POST['ftags']) : '';
+	$contents = retrieve(POST, 'contents', TSTRING_UNSECURE);;
+	$ftags = retrieve(POST, 'ftags', TSTRING_UNSECURE);
 	$contents = second_parse(stripslashes(strparse(utf8_decode($contents), explode(',', $ftags))));
+	
+	//Remplacement du path to root si ce n'est pas le même (cas fréquent)
+	if( preg_match('`[./]+`U', $page_path_to_root) )
+		$contents = str_replace(PATH_TO_ROOT, $page_path_to_root, $contents);
 
 	echo !empty($contents) ? $contents : '';	
 }
 
-$Sql->Sql_close(); //Fermeture de mysql*/
+include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 
 ?>
