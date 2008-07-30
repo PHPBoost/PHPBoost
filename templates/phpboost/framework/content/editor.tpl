@@ -18,7 +18,7 @@
 				contents = escape_xmlhttprequest(contents);
 				data = "contents=" + contents + "&ftags={FORBIDDEN_TAGS}";			
 			  
-				var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/content_xmlhttprequest.php?preview=1');
+				var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/content_xmlhttprequest.php?preview=1&path_to_root={PATH_TO_ROOT}');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 ) 

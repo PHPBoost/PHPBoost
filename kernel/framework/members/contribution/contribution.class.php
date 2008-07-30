@@ -124,7 +124,7 @@ class Contribution
 	function get_description() { return $this->description; }
 	function get_fixing_url() { return $this->fixing_url; }
 	function get_module() { return $this->module; }
-	function get_current_status() { return $this->current_status; }
+	function get_status() { return $this->current_status; }
 	function get_creation_date() { return $this->creation_date; }
 	function get_fixing_date() { return $this->fixing_date; }
 	function get_auth() { return $this->auth; }
@@ -193,7 +193,7 @@ class Contribution
 		
 		if( (int)$properties['id'] > 0 )
 		{
-			$this->build_from_db($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['fixing_date']), unserialize($properties['auth']), $properties['poster_id'], $properties['fixer_id']);
+			$this->build_from_db($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['fixing_date']), $properties['auth'], $properties['poster_id'], $properties['fixer_id']);
 			return true;
 		}
 		else
@@ -211,7 +211,7 @@ class Contribution
 		$this->current_status = $current_status;
 		$this->creation_date = $creation_date;
 		$this->fixing_date = $fixing_date;
-		$this->auth = $auth;
+		$this->auth = unserialize($auth);
 		$this->poster_id = $poster_id;
 		$this->fixer_id = $fixer_id;
 	}
