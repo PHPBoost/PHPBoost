@@ -26,9 +26,9 @@
 ###################################################*/
 
 define('MENU_MODULE', 0x01); //Menu de type module.
-define('MENU_LINKS', 0x02); //Menu de type module.
-define('MENU_PERSONNAL', 0x04); //Menu de type module.
-define('MENU_CONTENTS', 0x08); //Menu de type module.
+define('MENU_LINKS', 0x02); //Menu de type liens.
+define('MENU_PERSONNAL', 0x04); //Menu de type menu personnel.
+define('MENU_CONTENTS', 0x08); //Menu de type contenu.
 
 class Menu
 {
