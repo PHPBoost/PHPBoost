@@ -37,12 +37,13 @@ class Template
     // Constructeur
     function Template($tpl = '')
     {
-		global $CONFIG, $Member;
-        
-        $this->tpl = $this->check_file($tpl);
-        $this->files[$this->tpl] = $this->tpl;
-		if( !empty($tpl) )
+        if( !empty($tpl) )
 		{
+			global $CONFIG, $Member;
+			
+			$this->tpl = $this->check_file($tpl);
+			$this->files[$this->tpl] = $this->tpl;
+		
 			$member_connected = $Member->Check_level(MEMBER_LEVEL);
 			$this->Assign_vars(array(
 				'SID' => SID,
@@ -167,26 +168,28 @@ class Template
 		$filename = trim($filename, '/');
 		$i = strpos($filename, '/');
 		$module = substr($filename, 0, $i);
-        $file = trim(substr($filename, $i), '/');
-        $folder = trim(substr($file, 0, strpos($file, '/')), '/');
-        
-		if( empty($file) ) //Template du thème (noyau)
+		$file = trim(substr($filename, $i), '/');
+		$folder = trim(substr($file, 0, strpos($file, '/')), '/');
+		
+		if( empty($module) || $module == 'admin' ) //Template du thème (noyau)
 			return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
 		else //Module
 		{
+			if( ($module == 'framework') && file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/framework/' . $file) )
+				return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/framework/' . $file;
+				
 			//module data path
 			if( !isset($this->module_data_path[$module]) )
 			{
-				if( is_dir(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/images') )
-					$this->module_data_path[$module] = PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module;
+				if( is_dir(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/images') )
+					$this->module_data_path[$module] = PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module;
 				else
 					$this->module_data_path[$module] = PATH_TO_ROOT . '/' . $module . '/templates';
 			}
-			if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/' . $file) )
-                return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $module . '/' . $file;
-            elseif( ($folder == 'framework') && file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $file) )
-                return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $file;
-            else
+			
+			if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/' . $file) )
+				return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/' . $file;			
+			else
 				return PATH_TO_ROOT . '/' . $module . '/templates/' . $file;
 		}
 	}

@@ -175,6 +175,8 @@ class Cache
 	{
 		global $Sql;
 		
+		include_once(PATH_TO_ROOT . '/kernel/framework/content/menu.class.php');
+		
 		$modules_mini = array();
 		$result = $Sql->Query_while("SELECT name, contents, location, auth, added, use_tpl
 		FROM ".PREFIX."modules_mini 
@@ -195,53 +197,25 @@ class Cache
 			{
 				foreach($modules_mini[$location] as $location_key => $info)
 				{
-					if( $info['added'] == '0' )
+					if( $info['added'] == '0' ) //Modules mini.
 					{	
-						$code .= 'if( $Member->Check_auth(' . var_export(unserialize($info['auth']), true) . ', AUTH_MENUS) ){' . "\n"
-						. "\t" . 'include_once(PATH_TO_ROOT . \'/' . $info['name'] . '/' . $info['contents'] . "');\n"
-						. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $info['contents']) . '\', TEMPLATE_STRING_MODE);' 
-						. "\n" . '}' . "\n";
+						$Menu = new Menu(MENU_MODULE);
+						$code .= $Menu->code_format($info['name'], $info['contents'], $location, $info['auth']);
 					}
-					elseif( $info['added'] == '2' )
+					elseif( $info['added'] == '3' ) //Menu de liens.
 					{	
-						$code .= 'if( $Member->Check_auth(' . var_export(unserialize($info['auth']), true) . ', AUTH_MENUS) ){' . "\n"
-						. "\t" . 'include_once(\'PATH_TO_ROOT . \'/menus/' . $info['contents'] . "');\n"
-						. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $info['contents']) . '\', TEMPLATE_STRING_MODE);' 
-						. "\n" . '}' . "\n";
+						$Menu = new Menu(MENU_LINKS);
+						$code .= $Menu->code_format($info['name'], $info['contents'], $location, $info['auth']);
 					}
-					else
+					elseif( $info['added'] == '2' ) //Menus personnels.
+					{	
+						$Menu = new Menu(MENU_PERSONNAL);
+						$code .= $Menu->code_format($info['name'], $info['contents'], $location, $info['auth']);
+					}
+					else //Menu de contenu.
 					{
-						$code .= 'if( $Member->Check_auth(' . var_export(unserialize($info['auth']), true) . ', AUTH_MENUS) ){' . "\n";
-						
-						if( $info['use_tpl'] == '0' )
-							$code .= '$MODULES_MINI[\'' . $location . '\'] .= ' . var_export($info['contents'], true) . ';' . "\n";
-						else
-						{
-							switch($location)
-							{
-								case 'left':
-								case 'right':
-									$code .= "\$Template->Set_filenames(array('modules_mini' => 'modules_mini.tpl'));\n"
-									. "\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\n"
-									. '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'modules_mini\', TEMPLATE_STRING_MODE);';
-								break;
-								case 'header':
-								case 'subheader':
-								case 'topcentral':
-								case 'bottomcentral':
-								case 'topfooter':
-								case 'footer':
-									$code .= "\$Template->Set_filenames(array('modules_mini_horizontal' => 'modules_mini_horizontal.tpl'));"
-										. "\t\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($info['name'], true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($info['contents'], true) . "));\n"
-										. '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'modules_mini_horizontal\', TEMPLATE_STRING_MODE);';
-									
-								break;		
-							}	
-						}
-						
-						$code .=  "\n" 
-							. '}' 
-							. "\n";
+						$Menu = new Menu(MENU_CONTENTS);
+						$code .= $Menu->code_format($info['name'], $info['contents'], $location, $info['auth'], $info['use_tpl']);
 					}
 				}
 				$code .= "\n";
@@ -260,7 +234,6 @@ class Cache
 	
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
-		
 		foreach($CONFIG as $key => $value)
 			$config .= '$CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ";\n";
 
@@ -327,16 +300,12 @@ class Cache
 		$modules_config = array();
 		foreach($MODULES as $name => $array)
 		{	
-			$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', $CONFIG['lang']);
-			if( is_array($array_info) && $array['activ'] == '1' ) //module activé.
+			if( $array['activ'] == '1' ) //module activé.
 			{
-				if( $array_info['css'] == 2 || $array_info['css'] == 3 ) //mini css associé
-				{
-					if( file_exists(PATH_TO_ROOT . '/' . $name . '/templates/' . $name . '_mini.css') )
-						$css .= '$CSS[] = \'' . PATH_TO_ROOT . '/' . $name . '/templates/' . $name . "_mini.css';\n";
-					elseif( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $name . '/' . $name . '_mini.css') )
-						$css .= '$CSS[] = \'' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $name . '/' . $name . "_mini.css';\n";
-				}
+				if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $name . '/' . $name . '_mini.css') )
+					$css .= '$CSS[] = \'/templates/' . $CONFIG['theme'] . '/modules/' . $name . '/' . $name . "_mini.css';\n";
+				elseif( file_exists(PATH_TO_ROOT . '/' . $name . '/templates/' . $name . '_mini.css') )
+					$css .= '$CSS[] = \'/' . $name . '/templates/' . $name . "_mini.css';\n";
 			}
 		}
 	
