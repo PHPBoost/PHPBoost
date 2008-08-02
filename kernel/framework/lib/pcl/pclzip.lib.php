@@ -1178,7 +1178,7 @@ class PclZip
 		$this->privErrorReset();
 
 		// ----- Look if the $p_archive is a PclZip object
-		if( (is_object($p_archive)) && (get_class($p_archive) == 'pclzip') )
+		if( (is_object($p_archive)) && (strtolower(get_class($p_archive)) == 'pclzip') )
 		{
 			//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "The parameter is valid PclZip object '".$p_archive->zipname."'");
 
@@ -1247,7 +1247,7 @@ class PclZip
 		}
 
 		// ----- Look if the $p_archive_to_add is a PclZip object
-		if( (is_object($p_archive_to_add)) && (get_class($p_archive_to_add) == 'pclzip') )
+		if( (is_object($p_archive_to_add)) && (strtolower(get_class($p_archive_to_add)) == 'pclzip') )
 		{
 			//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "The parameter is valid PclZip object");
 

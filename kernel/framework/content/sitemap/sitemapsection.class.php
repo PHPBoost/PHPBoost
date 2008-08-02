@@ -73,7 +73,7 @@ class Sitemap_section
 				'SECTION_NAME' => $this->section_name,
 				'DEPTH' => $depth
 			));
-		elseif( is_object($this->section_name) && get_class($this->section_name) == 'Sitemap_link' )
+		elseif( is_object($this->section_name) && strtolower(get_class($this->section_name)) == 'sitemap_link' )
 			$template->Assign_vars(array(
 					'C_SECTION_NAME_IS_LINK' => true,
 					'LINK_CODE' => $this->section_name->Export($export_config),

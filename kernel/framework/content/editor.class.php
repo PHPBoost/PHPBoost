@@ -63,7 +63,7 @@ class ContentEditor
 	//Fonction qui renvoie le template courant
 	function get_template()
 	{
-		if( !is_object($this->template) || get_class($this->template) != 'Template' )
+		if( !is_object($this->template) || strtolower(get_class($this->template)) != 'template' )
 			return new template('framework/content/editor.tpl');
 		else
 			return $this->template;

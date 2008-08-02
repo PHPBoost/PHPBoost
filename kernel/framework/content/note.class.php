@@ -83,7 +83,7 @@ class Note
 		//Notes chargées?
 		if( $this->_note_loaded() ) //Utilisateur connecté.
 		{
-			if( !is_object($template) || get_class($template) != 'Template' )
+			if( !is_object($template) || strtolower(get_class($template)) != 'template' )
 			$template = new template('framework/note.tpl');
 			
 			###########################Insertion##############################

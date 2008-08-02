@@ -354,7 +354,7 @@ class CategoriesManagement
 	{
 		global $CONFIG, $LANG;
 		
-		if( is_null($category_template) || !is_object($category_template) || !get_class($category_template) == 'Template' )
+		if( is_null($category_template) || !is_object($category_template) || !strtolower(get_class($category_template)) == 'template' )
 			$category_template = new Template('framework/content/category.tpl');
 		
 		$template = new Template('framework/content/categories.tpl');
@@ -396,7 +396,7 @@ class CategoriesManagement
 		
 		$general_auth = false;
 		
-		if( is_null($template) || !is_object($template) || get_class($template) != 'Template' )
+		if( is_null($template) || !is_object($template) || strtolower(get_class($template)) != 'template' )
 			$template = new Template('framework/content/categories_select_form.tpl');
 		
 		if( $num_auth != 0 )
