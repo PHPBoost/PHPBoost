@@ -1,5 +1,10 @@
 		<link href="{MODULE_DATA_PATH}/news.css" rel="stylesheet" type="text/css" media="screen, handheld">
 
+		<script type="text/javascript">
+		<!--
+			var theme = '{THEME}';
+		-->
+		</script>
 		<script type="text/javascript" src="../kernel/framework/js/calendar.js"></script>
 		<script type="text/javascript">
 		<!--
@@ -126,21 +131,21 @@
 						<dd>
 							<label><input type="radio" value="2" name="visible" {VISIBLE_WAITING} /></label> 							
 							<input type="text" size="7" maxlength="8" id="start" name="start" value="{START}" class="text" /> 				
-							<a onClick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
+								<div id="start_date" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);"></div>
+							</div>
+							<a onClick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgstart_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+							
 							{L_AT}
 							<input type="text" size="1" maxlength="2" name="start_hour" value="{START_HOUR}" class="text" /> {L_UNIT_HOUR} <input type="text" size="1" maxlength="2" name="start_min" value="{START_MIN}" class="text" />
 							&nbsp;{L_UNTIL}&nbsp;
 							<input type="text" size="7" maxlength="8" id="end" name="end" value="{END}" class="text" /> 
-							<a onClick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+							<div style="position:relative;z-index:100;top:6px;margin-left:250px;float:left;display:none;" id="calendar2">
+								<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);"></div>
+							</div>
+							<a onClick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 							{L_AT}
 							<input type="text" size="1" maxlength="2" name="end_hour" value="{END_HOUR}" class="text" /> {L_UNIT_HOUR} <input type="text" size="1" maxlength="2" name="end_min" value="{END_MIN}" class="text" />
-							
-							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
-								<div id="start_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);"></div>
-							</div>
-							<div style="position:relative;z-index:100;top:6px;margin-left:250px;float:left;display:none;" id="calendar2">
-								<div id="end_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);"></div>
-							</div>
 							<br />
 							<label><input type="radio" value="1" name="visible" {VISIBLE_ENABLED} id="release_date" /> {L_IMMEDIATE}</label>
 							<br />
@@ -151,12 +156,12 @@
 						<dt><label for="current_date">* {L_NEWS_DATE}</label></dt>
 						<dd>
 							<input type="text" size="7" maxlength="8" id="current_date" name="current_date" value="{CURRENT_DATE}" class="text" />			
-							<a onClick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>							
+							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar3">
+								<div id="current" class="calendar_block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);"></div>
+							</div>
+							<a onClick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcurrent"  src="../templates/{THEME}/images/calendar.png" alt="" /></a>							
 							{L_AT}
 							<input type="text" size="1" maxlength="2" name="current_hour" value="{CURRENT_HOUR}" class="text" /> {L_UNIT_HOUR} <input type="text" size="1" maxlength="2" name="current_min" value="{CURRENT_MIN}" class="text" />							
-							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar3">
-								<div id="current" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);"></div>
-							</div>
 						</dd>
 					</dl>
 				</fieldset>	

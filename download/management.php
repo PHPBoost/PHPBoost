@@ -201,8 +201,9 @@ if( $edit_file_id > 0 )
 		$begining_calendar = new Mini_calendar('begining_date');
 		$begining_calendar->Set_date($begining_date);
 		$end_calendar = new Mini_calendar('end_date');
-		$end_calendar->Set_date($end_date);
-		
+		$end_calendar->Set_date($end_date);		
+		$end_calendar->Set_style('margin-left:150px;');
+
 		$Template->Set_filenames(array('download' => 'download/download.tpl'));
 		
 		if( $file_size > 1 )
@@ -290,7 +291,8 @@ if( $edit_file_id > 0 )
 		
 		
 		$begining_calendar = new Mini_calendar('begining_date');
-		$end_calendar = new Mini_calendar('end_date');
+		$end_calendar = new Mini_calendar('end_date');		
+		$end_calendar->Set_style('margin-left:150px;');
 		
 		if( !empty($file_infos['start']) && !empty($file_infos['end']) )
 		{
@@ -387,6 +389,7 @@ elseif( $add_file )
 		$begining_calendar->Set_date($begining_date);
 		$end_calendar = new Mini_calendar('end_date');
 		$end_calendar->Set_date($end_date);
+		$end_calendar->Set_style('margin-left:150px;');
 		
 		$Template->Set_filenames(array('download' => 'download/download.tpl'));
 		
@@ -475,6 +478,7 @@ elseif( $add_file )
 		
 		$begining_calendar = new Mini_calendar('begining_date');
 		$end_calendar = new Mini_calendar('end_date');
+		$end_calendar->Set_style('margin-left:150px;');
 		
 		$begining_calendar->Set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 		$end_calendar->Set_date(new Date(DATE_NOW, TIMEZONE_AUTO));

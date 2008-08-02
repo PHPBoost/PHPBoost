@@ -24,52 +24,45 @@
  *
 ###################################################*/
 
-var delay = 1000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
-var timeout;
-var calendars_num = 0;
-var displayed_calendars = new Array();
+var delay_calendar = 1000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
+var timeout_calendar;
+var displayed = false;
+var previous_calendar = '';
 var association_name_id = new Array();
 
 //Affiche le bloc.
-function display_calendar(id)
+function display_calendar(divID)
 {
-	for( var i = 1; i <=calendars_num; i++ )
+	if( timeout_calendar )
+		clearTimeout(timeout_calendar);
+	
+	var block = document.getElementById('calendar' + divID );
+	if( block.style.display == 'none' )
 	{
-		if( i != id )
-			hide_calendar(i, 2);
+		if( previous_calendar != '' && document.getElementById(previous_calendar) )
+			document.getElementById(previous_calendar).style.display = 'none';
+		block.style.display = 'block';
+		displayed = true;
+		previous_calendar = 'calendar' + divID;
 	}
-	
-	if( timeout )
-		clearTimeout(timeout);
-	
-	if( !displayed_calendars[id] )
+	else
 	{
-		document.getElementById('calendar' + id).style.display = 'block';
-		displayed_calendars[id] = true;
+		block.style.display = 'none';
+		displayed = false;
 	}
 }
 
 //Cache le bloc.
-//Mode : 
-// * 1 désarme le timeout
-// * 2 cache immédiatement le bloc
-// * Autrement on arme le timeout de fermeture
-function hide_calendar(id, mode)
+function hide_calendar(id, stop)
 {
-	if( mode == 1 && timeout )
+	if( stop && timeout_calendar )
 	{	
-		clearTimeout(timeout);
+		clearTimeout(timeout_calendar);
 	}
-	else if( mode == 2 && displayed_calendars[id] )
+	else if( displayed )
 	{
-		document.getElementById('calendar' + id).style.display = 'none';
-		displayed_calendars[id] = false;
-		if( timeout )
-			clearTimeout(timeout);
-	}
-	else if( displayed_calendars[id] )
-	{
-		timeout = setTimeout('hide_calendar(\'' + id + '\', 2)', delay);
+		clearTimeout(timeout_calendar);
+		timeout_calendar = setTimeout('display_calendar(\'' + id + '\')', delay_calendar);
 	}	
 }
 
@@ -87,6 +80,9 @@ function xmlhttprequest_calendar(field, vars)
 	var data = null;
 	var filename = PATH_TO_ROOT + '/kernel/framework/ajax/mini_calendar_xmlhttprequest.php' + vars;
 	
+	if( document.getElementById('img' + field) )
+		document.getElementById('img' + field).src = PATH_TO_ROOT + '/templates/' + theme + '/images/loading_mini.gif';
+
 	if(window.XMLHttpRequest) // Firefox
 	   xhr_object = new XMLHttpRequest();
 	else if(window.ActiveXObject) // Internet Explorer
@@ -101,6 +97,8 @@ function xmlhttprequest_calendar(field, vars)
 		{
 			document.getElementById(field).innerHTML = xhr_object.responseText;
 			show_div(field);
+			if( document.getElementById('img' + field) )
+				document.getElementById('img' + field).src = PATH_TO_ROOT + '/templates/' + theme + '/images/calendar.png';
 		}
 	}
 
