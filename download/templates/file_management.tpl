@@ -132,7 +132,7 @@
 							<input type="text" size="50" name="image" class="text" value="{FILE_IMAGE}" />
 						</dd>
 					</dl>
-					<dl>
+					<dl class="overflow_visible">
 						<dt><label for="creation">* {L_DOWNLOAD_DATE}</label></dt>
 						<dd>
 							{DATE_CALENDAR_CREATION}
@@ -146,7 +146,7 @@
 							<input type="checkbox" id="ignore_release_date" name="ignore_release_date" onclick="show_hide_release_date();" {IGNORE_RELEASE_DATE_CHECKED} />
 						</dd>
 					</dl>
-					<dl id="release_date_form" style="display:{STYLE_FIELD_RELEASE_DATE};">
+					<dl id="release_date_form" style="display:{STYLE_FIELD_RELEASE_DATE};" class="overflow_visible">
 						<dt><label for="release">* {L_RELEASE_DATE}</label></dt>
 						<dd>
 							{DATE_CALENDAR_RELEASE}

@@ -144,8 +144,13 @@
 			}
 			-->
 			</script>
+			<script type="text/javascript">
+			<!--
+				var theme = '{THEME}';
+			-->
+			</script>
 			<script type="text/javascript" src="../kernel/framework/js/calendar.js"></script>
-			
+				
 			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
 				<span id="errorh"></span>
@@ -314,10 +319,10 @@
 							<input size="10" maxlength="10" type="text" class="text" id="user_born" name="user_born" value="{BORN}" /> 
 
 							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
-								<div id="calendar" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
+								<div id="calendar" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 								</div>
 							</div>
-							<a onClick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={BORN_DAY}&amp;m={BORN_MONTH}&amp;y={BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+							<a onClick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={BORN_DAY}&amp;m={BORN_MONTH}&amp;y={BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcalendar" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 						</label></dd>
 					</dl>
 					<dl>

@@ -24,10 +24,10 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
+[-] Interface d'ajout de menu de liens. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
 [-] Interface de contribution des news et des articles.
 
 ------------------------------------ MODULES -----------------------------------
-[-] Module liens du site.
 
 #################################################################################
 

@@ -81,6 +81,7 @@
 [*] Gestion amélioré des entités html.
 [*] Récupération possible par les sessions des champs membres supplémentaires du site et des modules.
 [*] Déplacement du code de connexion utilisateur.
+[*] Regroupement des modules dans les templates.
 [*] Nouvelles images pour les rangs.
 [*] Conformation des requêtes au standard SQL.
 [*] Amélioration des taches crons.

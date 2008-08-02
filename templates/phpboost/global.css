@@ -55,6 +55,8 @@
 	background:#AFD2E8;
 	border:1px solid #2C5169;
 	bottom:28px; 
+	width:204px;
+	z-index:100;
 }
 /* Déplacement des fichiers*/
 .upload_selected_cat{

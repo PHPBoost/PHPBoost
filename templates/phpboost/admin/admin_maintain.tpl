@@ -1,3 +1,8 @@
+		<script type="text/javascript">
+		<!--
+			var theme = '{THEME}';
+		-->
+		</script>
 		<script type="text/javascript" src="../kernel/framework/js/calendar.js"></script>
 		
 		<div id="admin_quick_menu">
@@ -36,9 +41,9 @@
 								
 								<input type="text" size="8" maxlength="8" id="end" name="end" value="{DATE_UNTIL}" class="text" />
 								<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
-									<div id="end_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);"></div>
+									<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);"></div>
 								</div>
-								<a onClick="document.getElementById('maintain_check2').checked = 'checked';xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
+								<a onClick="document.getElementById('maintain_check2').checked = 'checked';xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
 							</label>
 						</dd>
 					</dl>

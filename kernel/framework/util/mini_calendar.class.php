@@ -48,6 +48,12 @@ class Mini_calendar
 		$this->date = $date;
 	}
 	
+	//Fonction d'assignation de style css au conteneur du calendrier.
+	function Set_style($style)
+	{
+		$this->style = $style;
+	}
+	
 	//Fonction de renvoi de la date
 	function Get_date()
 	{
@@ -67,13 +73,13 @@ class Mini_calendar
 		
 		$template->Assign_vars(array(
 			'DEFAULT_DATE' => $this->date->format(DATE_FORMAT_SHORT),
-			'THEME' => $CONFIG['theme'],
 			'CALENDAR_ID' => 'calendar_' . $this->num_instance,
 			'CALENDAR_NUMBER' => (string)$this->num_instance,
 			'DAY' => $this->date->Get_day(),
 			'MONTH' => $this->date->Get_month(),
 			'YEAR' => $this->date->Get_year(),
 			'FORM_NAME' => $this->form_name,
+			'CALENDAR_STYLE' => $this->style,
 			'C_INCLUDE_JS' => !$js_inclusion_already_done
 		));
 		
@@ -84,6 +90,7 @@ class Mini_calendar
 	
 	# Private #	
 	var $num_instance = 0;
+	var $style = '';
 	var $form_name = '';
 	var $date;
 }
