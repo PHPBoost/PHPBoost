@@ -152,7 +152,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             		load_module_lang('download');
                     global $DOWNLOAD_LANG;
                     $dw_langs = array('L_READ' => $DOWNLOAD_LANG['read_feed'], 'L_ON' => $LANG['on']);
-                    echo Feed::get_parsed('download', 0, $dw_langs, 5);
+                    echo Feed::get_parsed('download', 24, $dw_langs, 5);
                     // echo Feed::get_parsed('download', 24, false, 3);
                 ?>
             </div>
@@ -173,8 +173,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
             </div>
             <div class="news_content">
                 <?php
-                    echo Feed::get_parsed('download', 0, $dw_langs, 5);
-                    //echo Feed::get_parsed('download', 24, false, 3);
+					echo Feed::get_parsed('download', 23, $dw_langs, 5);
                 ?>
                 <div class="spacer"></div>
             </div>
