@@ -44,7 +44,7 @@ else
     $Feed = new ATOM('articles');
 }
 
-if ( $Feed->is_in_cache() )
+if( $Feed->is_in_cache() )
 {   // If the file exists, we print it
     echo $Feed->read();
 }

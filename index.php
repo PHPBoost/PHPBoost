@@ -69,7 +69,7 @@ global $LANG;
             <div class="news_content">
                 <?php
             		load_module_lang('articles');
-                    echo Feed::get_parsed('articles', 0, array('L_READ' => $LANG['read_feed'], 'L_POSTED_ON' => $LANG['posted_on']) , 3);
+                    echo Feed::get_parsed('articles', 0, array('L_READ' => $LANG['read_feed'], 'L_POSTED_ON' => $LANG['posted_on'], 'L_ON' => $LANG['on']) , 3);
                 ?>
                 <div style="text-align:right;"><a href="./articles/articles.php" class="small_link">Tous les Dossiers...</a></div>
                 <div class="spacer"></div>
@@ -151,7 +151,7 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
                 <?php
             		load_module_lang('download');
                     global $DOWNLOAD_LANG;
-                    $dw_langs = array('L_READ' => $DOWNLOAD_LANG['read_feed']);
+                    $dw_langs = array('L_READ' => $DOWNLOAD_LANG['read_feed'], 'L_ON' => $LANG['on']);
                     echo Feed::get_parsed('download', 0, $dw_langs, 5);
                     // echo Feed::get_parsed('download', 24, false, 3);
                 ?>
