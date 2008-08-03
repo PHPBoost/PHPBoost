@@ -125,13 +125,16 @@ class Feed
 
     /*static*/ function get_parsed($module_id, $idcat = 0, $tpl = array(), $number = 10, $begin_at = 0, $Template = false)
     {
-        // Choose the correct template
+        global $CONFIG;
+		
+		// Choose the correct template.
         if( is_object($Template) && strtolower(get_class($Template)) == 'template' )
             $template = $Template->copy(); //Copy the personal template.
-        else //Default template.
+        else 
         {
-            require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
-            $template = new Template('framework/content/syndication/feed.tpl');
+			require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
+			$template = new Template($module_id . '/framework/content/syndication/feed.tpl');
+				
             $template->Assign_vars($tpl);
         }
         

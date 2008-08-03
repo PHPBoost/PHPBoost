@@ -18,7 +18,7 @@
 					<span style="float:left;">
 						&bull; {U_FORUM_CAT}
 					</span>
-					<span style="float:right;">{PAGINATION}</span>&nbsp;
+					<span style="float:right;">{PAGINATION}</span>
 				</div>
 				<div class="module_contents forum_contents">
 					<div class="row2 text_small">{L_EXPLAIN_TRACK}</div>

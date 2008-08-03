@@ -40,7 +40,7 @@ class Template
         if( !empty($tpl) )
 		{
 			global $CONFIG, $Member;
-			
+
 			$this->tpl = $this->check_file($tpl);
 			$this->files[$this->tpl] = $this->tpl;
 		
@@ -175,8 +175,17 @@ class Template
 			return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
 		else //Module
 		{
-			if( ($module == 'framework') && file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/framework/' . $file) )
+			if( $module == 'framework' && file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/framework/' . $file) )
 				return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/framework/' . $file;
+			if( $folder == 'framework' )
+			{
+				if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/' . $file) )
+					return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/' . $file;	
+				elseif( file_exists(PATH_TO_ROOT . '/' . $module . '/templates/' . $file) )
+					return PATH_TO_ROOT . '/' . $module . '/templates/' . $file;
+				else
+					return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $file;		
+			}
 				
 			//module data path
 			if( !isset($this->module_data_path[$module]) )
@@ -186,7 +195,7 @@ class Template
 				else
 					$this->module_data_path[$module] = PATH_TO_ROOT . '/' . $module . '/templates';
 			}
-			
+
 			if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/' . $file) )
 				return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/' . $file;			
 			else

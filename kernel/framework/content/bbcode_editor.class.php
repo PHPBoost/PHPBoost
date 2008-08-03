@@ -40,7 +40,7 @@ class BBCodeEditor extends ContentEditor
 		global $CONFIG, $Sql, $LANG, $Cache, $Member, $CONFIG_UPLOADS, $_array_smiley_code;
 		
 		$template = $this->get_template();
-		
+
 		//Chargement de la configuration.
 		$Cache->Load_file('uploads');
 		$Cache->Load_file('smileys');
