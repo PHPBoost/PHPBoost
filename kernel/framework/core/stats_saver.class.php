@@ -136,7 +136,7 @@ class Stats_saver
 				break;
 			}
 		}		
-		_write_stats('browsers', $browser);
+		$this->_write_stats('browsers', $browser);
 		
 		########### Détection des systèmes d'exploitation ###########
 		$array_os = array(
@@ -170,7 +170,7 @@ class Stats_saver
 				break;
 			}
 		}		
-		_write_stats('os', $os);
+		$this->_write_stats('os', $os);
 		
 		########### Détection de la langue utilisateur ###########
 		if( !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
@@ -185,7 +185,7 @@ class Stats_saver
 			if( isset($stats_array_lang[$favorite_lang]) )
 				$lang = $favorite_lang;
 				
-			_write_stats('lang', $lang);
+			$this->_write_stats('lang', $lang);
 		}
 	}
 
