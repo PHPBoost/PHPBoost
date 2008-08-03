@@ -12,7 +12,7 @@
 [-] Panneau de modération (déplacer moderation_begin.php)
 
 ------------------------------------ MODULES -----------------------------------
-
+[-] Download, faire une option dans les catégories à l'édition pour désapprouver.
 
 ################################################################################
 
@@ -39,7 +39,6 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[-] Réhauser l'image des dossiers.
 [-] Faire les miniatures pour les thèmes.
 
 [-] Système de mise à jour du noyau et des modules:

@@ -200,6 +200,7 @@ class DownloadInterface extends ModuleInterface
     {
         require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
         global $Cache, $Sql, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
+		
         load_module_lang('download');
         $Cache->Load_file('download');
         
@@ -218,7 +219,7 @@ class DownloadInterface extends ModuleInterface
         $data->set_host(HOST);
         $data->set_desc($DOWNLOAD_LANG['xml_download_desc']);
         $data->set_lang($LANG['xml_lang']);
-        
+		
         // Last files
         if( count($visible_cats) )
         {
@@ -226,10 +227,7 @@ class DownloadInterface extends ModuleInterface
             FROM ".PREFIX."download
             WHERE visible = 1 AND idcat IN (" . implode($visible_cats, ', ') . ")
             ORDER BY timestamp DESC" . $Sql->Sql_limit(0, $CONFIG_DOWNLOAD['nbr_file_max']);
-            
             $result = $Sql->Query_while($req, __LINE__, __FILE__);
-        
-//             echo $req;
             // Generation of the feed's items
             while ($row = $Sql->Sql_fetch_assoc($result))
             {
@@ -274,9 +272,13 @@ class DownloadInterface extends ModuleInterface
         }
         else
         {
-            if( !empty($DOWNLOAD_CATS[$id_cat]) && Authorizations::check_some_body_auth(RANK_TYPE, GUEST_LEVEL, $DOWNLOAD_CATS[$id_cat]['auth'], READ_CAT_DOWNLOAD) )
-                $list[] = $id_cat;
-            else
+			if( !empty($DOWNLOAD_CATS[$id_cat]) )
+			{	
+				$auth = !empty($DOWNLOAD_CATS[$id_cat]['auth']) ? $DOWNLOAD_CATS[$id_cat]['auth'] : $CONFIG_DOWNLOAD['global_auth'];
+				if( Authorizations::check_some_body_auth(RANK_TYPE, GUEST_LEVEL, $auth, READ_CAT_DOWNLOAD) )
+					$list[] = $id_cat;
+            }
+			else
                 return;
         }
         
