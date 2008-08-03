@@ -416,7 +416,7 @@ class Comments
 					'L_RESET' => $LANG['reset'],
 					'L_PREVIEW' => $LANG['preview'],
 					'L_SUBMIT' => $LANG['submit'],
-					'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . '&amp;updatecom=1'					
+					'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom)					
 				));
 				
 				//Création du tableau des rangs.
