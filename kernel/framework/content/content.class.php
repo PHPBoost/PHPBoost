@@ -81,8 +81,6 @@ class Content
 	//Function which builds an object editor and returns it
 	function get_editor()
 	{
-		global $Member;
-		
 		switch($this->language_type)
 		{
 			case BBCODE_LANGUAGE:
