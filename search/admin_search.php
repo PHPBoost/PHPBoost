@@ -59,7 +59,6 @@ if( !empty($_POST['valid']) )
         // Enregistrement des modifications de la config
         $config_string = addslashes(serialize($CONFIG));
         $request = "UPDATE ".PREFIX."configs SET value = '".$config_string."' WHERE name = 'config'";
-        echo $request;
         $Sql->Query_inject($request, __LINE__, __FILE__);
         
         // Enregistrement des modifications de la config du module 'Search'
@@ -70,10 +69,7 @@ if( !empty($_POST['valid']) )
         // Génération des nouveaux fichiers de cache
         $Cache->Generate_file('config');
         $Cache->Generate_module_file('search');
-        
-        
-//        print_r($request);
-//        exit(0);
+		
         redirect(HOST . SCRIPT);
     }
     else

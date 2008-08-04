@@ -56,3 +56,8 @@
 ################################################################################
 
 
+######################################DOSSIERS##################################
+
+[-] Noix : Rédiger un dossier sur le panneau de modération
+[-] Loique : Rédiger un dossier sur la recherche
+[-] Croquette : Rédiger un dossier sur 
