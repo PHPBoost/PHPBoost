@@ -1090,7 +1090,7 @@ INSERT INTO `phpboost_modules` VALUES (30, 'download', '1.4', 'a:4:{s:3:"r-1";i:
 INSERT INTO `phpboost_modules` VALUES (5, 'forum', '2.0', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1);
 INSERT INTO `phpboost_modules` VALUES (6, 'gallery', '2.0', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1);
 INSERT INTO `phpboost_modules` VALUES (7, 'guestbook', '2.0', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1);
-INSERT INTO `phpboost_modules` VALUES (8, 'links', '1.5', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1);
+/* INSERT INTO `phpboost_modules` VALUES (8, 'links', '1.5', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1); */
 INSERT INTO `phpboost_modules` VALUES (9, 'news', '2.0', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1);
 INSERT INTO `phpboost_modules` VALUES (10, 'newsletter', '2.0', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1);
 INSERT INTO `phpboost_modules` VALUES (11, 'online', '2.0', 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}', 1);
