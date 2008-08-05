@@ -4,12 +4,10 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Nouvelles options d'installation (Communautaire, Vitrine, etc).
-[-] Remplacer les "." par des "_" dans le nom de la base de données. 
 [-] Supporter https dans l'installation et l'administration.
 [-] Finir le parseur BBCode (+Ajout des nouvelles balises).
 [-] Finir le parseur TinyMCE (gérer les balises interdites)
-[-] Intégrer une classe captcha au framework
-[-] Panneau de modération (déplacer moderation_begin.php)
+[-] Panneau de modération (+déplacer moderation_begin.php)
 
 ------------------------------------ MODULES -----------------------------------
 [-] Download, faire une option dans les catégories à l'édition pour désapprouver.
@@ -24,8 +22,11 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[-] Interface d'ajout de menu de liens. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
-[-] Interface de contribution des news et des articles.
+[+] Interface d'ajout de menu de liens. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
+[+] Interface de contribution des news et des articles.
+[-] Remplacer les "." par des "_" dans le nom de la base de données. 
+[-] Faire les miniatures pour les thèmes.
+[-] Intégrer une classe captcha au framework (reporté?)
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -39,18 +40,14 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[-] Faire les miniatures pour les thèmes.
-
 [-] Système de mise à jour du noyau et des modules:
-    - Langues ? (à priori non)
-    - Templates ? (à priori non aussi) (pb image avec langue)
+    - Langues ? (non pour l'instant mais le prévoir)
+    - Templates ? (non pour l'instant mais le prévoir)
     - Changelog des fichiers
-
 [-] Renommer les méthodes et classes (y compris CategoriesManagement)
 	(Pas important pour la béta, sera fait pendant)
 
 ------------------------------------ MODULES -----------------------------------
-
 [-] Implémenter la syndication dans la FAQ
 
 ################################################################################
@@ -60,4 +57,4 @@
 
 [-] Noix : Rédiger un dossier sur le panneau de modération
 [-] Loique : Rédiger un dossier sur la recherche
-[-] Croquette : Rédiger un dossier sur 
+[-] Croquette : Rédiger un dossier sur les nouveaux minis menus indépendants des modules
