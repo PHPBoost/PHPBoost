@@ -26,11 +26,8 @@
 ###################################################*/
 
 define('PATH_TO_ROOT', '../../..');
-
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
-
 define('TITLE', $LANG['title_com']);
-
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 if( !empty($_GET['com']) )

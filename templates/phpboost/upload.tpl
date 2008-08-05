@@ -281,7 +281,7 @@
 	-->
 	</script>
 	
-	<table class="module_table" style="width:auto;margin:8px;margin-bottom:0px;">
+	<table class="module_table" style="margin:8px;margin-bottom:0px;">
 		<tr> 
 			<th>
 				{L_FILES_ACTION}

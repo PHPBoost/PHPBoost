@@ -1600,8 +1600,8 @@ class GeSHi {
         $escaped_escape_char = GeSHi::hsc($this->language_data['ESCAPE_CHAR']);
 
         if (!$this->use_classes) {
-            $string_attributes = ' style="' . $this->language_data['STYLES']['STRINGS'][0] . '"';
-            $escape_char_attributes = ' style="' . $this->language_data['STYLES']['ESCAPE_CHAR'][0] . '"';
+            $string_attributes = isset($this->language_data['STYLES']['STRINGS'][0]) ? ' style="' . $this->language_data['STYLES']['STRINGS'][0] . '"' : '';
+            $escape_char_attributes = isset($this->language_data['STYLES']['ESCAPE_CHAR'][0]) ? ' style="' . $this->language_data['STYLES']['ESCAPE_CHAR'][0] . '"' : '';
         }
         else {
             $string_attributes = ' class="st0"';

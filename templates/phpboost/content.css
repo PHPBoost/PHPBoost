@@ -12,6 +12,7 @@ h2.title{
 h3.title{
 	font-size:12px;
 	font-weight:bold;
+	display:inline;
 }
 /* Sous-Titres */
 h5.sub_title{ /* Titre des menu */

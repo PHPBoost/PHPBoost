@@ -163,7 +163,7 @@ class BBCodeEditor extends ContentEditor
 				$height = $height_source;
 			}
 			
-			$img = '<img src="../images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />'; 
+			$img = '<img src="' . PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />'; 
 						
 			$template->Assign_block_vars('smiley', array(
 				'IMG' => $img,
