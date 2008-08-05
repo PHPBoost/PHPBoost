@@ -1,8 +1,8 @@
 <?php
 header('Content-type: text/html; charset=iso-8859-15');
 
+define('NO_SESSION_LOCATION', true); //Ne réactualise pas l'emplacement du visiteur/membre
 require_once('../kernel/begin.php');
-define('TITLE', 'Utilisation d\'AJAX');
 require_once('../kernel/header_no_display.php');
 
 $id_cat = retrieve(POST, 'id_cat', 0);
