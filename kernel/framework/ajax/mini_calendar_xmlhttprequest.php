@@ -26,6 +26,7 @@
 ###################################################*/
 
 define('PATH_TO_ROOT', '../../..');
+define('NO_SESSION_LOCATION', true); //Ne réactualise pas l'emplacement du visiteur/membre
 
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 define('TITLE', '');

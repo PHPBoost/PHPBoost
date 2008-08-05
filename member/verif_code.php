@@ -26,8 +26,8 @@
  *
 ###################################################*/
 
+define('NO_SESSION_LOCATION', true); //Ne réactualise pas l'emplacement du visiteur/membre
 require_once('../kernel/begin.php');
-define('TITLE', '');
 require_once('../kernel/header_no_display.php');
 header('Content-type: image/jpeg'); //Envoi du header.
 

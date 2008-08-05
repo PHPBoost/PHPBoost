@@ -26,6 +26,7 @@
 ###################################################*/
 
 define('PATH_TO_ROOT', '../../..');
+define('NO_SESSION_LOCATION', true); //Ne réactualise pas l'emplacement du visiteur/membre
 
 $get_brw = !empty($_GET['browsers']) ? true : false;
 $get_os = !empty($_GET['os']) ? true : false;

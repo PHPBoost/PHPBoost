@@ -30,6 +30,7 @@
 //Header's generation
 header("Content-Type: application/xml; charset=iso-8859-1");
 
+define('NO_SESSION_LOCATION', true); //Ne réactualise pas l'emplacement du visiteur/membre
 require_once('../kernel/begin.php');
 require_once('../kernel/header_no_display.php');
 
