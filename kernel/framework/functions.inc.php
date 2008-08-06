@@ -363,7 +363,7 @@ function com_display_link($nbr_com, $path, $idprov, $script, $options = 0)
 	$l_com = ($nbr_com > 1) ? $LANG['com_s'] : $LANG['com'];
 	$l_com = !empty($nbr_com) ? $l_com . ' (' . $nbr_com . ')' : $LANG['post_com'];
 	
-	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . transid('/kernel/framework/content/pop_up_comments.php?com=' . $idprov . $script) . "', '" . $script . "');";	
+	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . transid('/kernel/framework/ajax/pop_up_comments.php?com=' . $idprov . $script) . "&path_to_root=" . PATH_TO_ROOT . "', '" . $script . "');";	
 	$link_current = $path . '#anchor_' . $script;	
 	
 	$link .= '<a class="com" href="' . (($CONFIG['com_popup'] == '0') ? $link_current : $link_pop) . '">' . $l_com . '</a>';

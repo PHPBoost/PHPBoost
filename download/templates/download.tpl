@@ -108,7 +108,7 @@
 									<br />
 									{file.COUNT_DL}
 									<br />
-									{file.COMS}
+									{file.U_COM_LINK}
 									<br />
 									{L_NOTE}  {file.NOTE}
 								</div>

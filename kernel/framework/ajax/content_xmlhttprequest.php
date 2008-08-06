@@ -33,21 +33,16 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 $page_path_to_root = retrieve(GET, 'path_to_root', '');
 
-if( !empty($_GET['preview']) ) //Prévisualisation des messages.
-{
-	$contents = retrieve(POST, 'contents', TSTRING_UNSECURE);;
-	$ftags = retrieve(POST, 'ftags', TSTRING_UNSECURE);
-	$contents = second_parse(stripslashes(strparse(utf8_decode($contents), explode(',', $ftags))));
-	
-	//Remplacement du path to root si ce n'est pas le même (cas fréquent)
-	if( preg_match('`[./]+`U', $page_path_to_root) )
-	{
-		$contents = str_replace('"' . PATH_TO_ROOT, '"' . $page_path_to_root, $contents);
-		$contents = str_replace('"../', '"' . $page_path_to_root . '/', $contents);
-	}
+$contents = html_entity_decode(utf8_decode(retrieve(POST, 'contents', TSTRING_UNSECURE)));
 
-	echo !empty($contents) ? $contents : '';	
-}
+$ftags = retrieve(POST, 'ftags', TSTRING_UNSECURE);
+$contents = second_parse(stripslashes(strparse($contents, explode(',', $ftags))));
+
+//Remplacement du path to root si ce n'est pas le même (cas peu fréquent)
+if( preg_match('`^[./]+$`U', $page_path_to_root) && PATH_TO_ROOT != '..')
+	$contents = str_replace('"' . PATH_TO_ROOT . '/', '"' . $page_path_to_root . '/', $contents);
+
+echo !empty($contents) ? $contents : '';
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 

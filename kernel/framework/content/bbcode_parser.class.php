@@ -55,6 +55,8 @@ class BBCodeParser extends ContentParser
 		//Protection : suppression du code html
 		$this->parsed_content = htmlspecialchars($this->parsed_content, ENT_NOQUOTES);
 		$this->parsed_content = strip_tags($this->parsed_content);
+		
+		//Tant qu'on n'est pas en utf8 on représente les caractères par leur code HTML correspondant
 		$this->parsed_content = preg_replace('`&amp;((?:#[0-9]{2,4})|(?:[a-z0-9]{2,6}));`i', "&$1;", $this->parsed_content);
 		
 		//Smilies
@@ -235,12 +237,17 @@ class BBCodeParser extends ContentParser
 		if( strpos($this->parsed_content, '[list') !== false )
 			$this->_parse_list();
 		
-		##### //Fonction de parsage des balises imbriquées générique à faire #####
 		//Parsage des balises imbriquées.
 		$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->parsed_content);
 		$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->parsed_content);
 		$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->parsed_content);
 		$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->parsed_content);
+		
+		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
+		if( PATH_TO_ROOT != '..' )
+		{
+			$this->parsed_content = str_replace('"../', '"' . PATH_TO_ROOT . '/', $this->parsed_content);
+		}
 		
 		//On remet le code HTML mis de côté
 		if( $Member->Check_auth($this->html_auth, 1) && !empty($this->array_tags['html']) )
@@ -264,6 +271,12 @@ class BBCodeParser extends ContentParser
 		
 		$this->_unparse_html(PICK_UP);
 		$this->_unparse_code(PICK_UP);
+		
+		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
+		if( PATH_TO_ROOT != '..' )
+		{
+			$this->parsed_content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->parsed_content);
+		}
 
 		//Smiley.
 		@include(PATH_TO_ROOT . '/cache/smileys.php');

@@ -224,10 +224,9 @@ class Comments
 					}
 					elseif( $editcom > 0 ) //Edition du commentaire.
 					{
-						$block = ($CONFIG['com_popup'] == 0 && !$integrated_in_environment); 
 						$Template->Assign_vars(array(
-							'CURRENT_PAGE_COM' => !$block,
-							'POPUP_PAGE_COM' => $block,
+							'CURRENT_PAGE_COM' => $integrated_in_environment,
+							'POPUP_PAGE_COM' => !$integrated_in_environment,
 							'AUTH_POST_COM' => true
 						));
 						
