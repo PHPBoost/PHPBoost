@@ -69,9 +69,6 @@ div#admin_quick_menu li a.quick_link{
 	text-decoration:none;
 	line-height:2.2em;
 }
-#dynamic_menu li ul {
-	margin-top:1px;
-}
 
 /* Tableaux de l'administration */
 .module_table, .block_container{

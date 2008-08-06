@@ -43,7 +43,7 @@ class SearchInterface extends ModuleInterface
 		global $Sql;
 		    
 		//Configuration
-		$search_config = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'search'", __LINE__, __FILE__));
+		$search_config = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'search'", __LINE__, __FILE__));
 		
 		return 'global $SEARCH_CONFIG;' . "\n" . '$SEARCH_CONFIG = '.var_export($search_config, true).';';	
 	}

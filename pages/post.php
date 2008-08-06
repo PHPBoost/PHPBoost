@@ -91,7 +91,7 @@ if( !empty($contents) )
 			
 			//Autorisation particulière ?
 			$special_auth = !empty($page_infos['auth']);
-			$array_auth = unserialize($page_infos['auth']);
+			$array_auth = sunserialize($page_infos['auth']);
 			//Vérification de l'autorisation d'éditer la page
 			if( ($special_auth && !$Member->Check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 				redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
@@ -173,7 +173,7 @@ elseif( $del_article > 0 )
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = unserialize($page_infos['auth']);
+	$array_auth = sunserialize($page_infos['auth']);
 	if( ($special_auth && !$Member->Check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
 		
@@ -195,7 +195,7 @@ if( $id_edit > 0 )
 {
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = unserialize($page_infos['auth']);
+	$array_auth = sunserialize($page_infos['auth']);
 	//Vérification de l'autorisation d'éditer la page
 	if( ($special_auth && !$Member->Check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
@@ -270,7 +270,7 @@ else
 }
 
 if( !empty($page_infos['auth']) )
-	$array_auth = unserialize($page_infos['auth']);
+	$array_auth = sunserialize($page_infos['auth']);
 else
 	$array_auth = !empty($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
 

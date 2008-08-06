@@ -104,10 +104,17 @@ if( retrieve(POST, 'connect', false) && !empty($login) && !empty($password) )
 if( !$Member->Check_level(ADMIN_LEVEL) )
 {
 	$Template->Set_filenames(array(
-		'formulaire'=> 'admin/formulaire.tpl'
+		'admin_connect'=> 'admin/admin_connect.tpl'
 	));
 	
 	$Template->Assign_vars(array(
+		'L_XML_LANGUAGE' => $LANG['xml_lang'],
+		'SITE_NAME' => $CONFIG['site_name'],
+		'TITLE' => TITLE,
+		'PATH_TO_ROOT' => PATH_TO_ROOT,
+		'SID' => SID,
+		'LANG' => $CONFIG['lang'],
+		'THEME' => $CONFIG['theme'],
 		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 		'L_REQUIRE_PASSWORD' => $LANG['require_password'],
 		'L_CONNECT' => $LANG['connect'],
@@ -117,7 +124,7 @@ if( !$Member->Check_level(ADMIN_LEVEL) )
 		'L_AUTOCONNECT'	=> $LANG['autoconnect']	
 	));
 	
-	$Template->Pparse('formulaire'); 
+	$Template->Pparse('admin_connect'); 
 	exit;
 }
 elseif( isset($_GET['flood']) )
@@ -130,10 +137,17 @@ elseif( isset($_GET['flood']) )
 	}
 	
 	$Template->Set_filenames(array(
-		'formulaire'=> 'admin/formulaire.tpl'
+		'admin_connect'=> 'admin/admin_connect.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+		$Template->Assign_vars(array(
+		'L_XML_LANGUAGE' => $LANG['xml_lang'],
+		'SITE_NAME' => $CONFIG['site_name'],
+		'TITLE' => TITLE,
+		'PATH_TO_ROOT' => PATH_TO_ROOT,
+		'SID' => SID,
+		'LANG' => $CONFIG['lang'],
+		'THEME' => $CONFIG['theme'],
 		'ERROR' => (($flood > '0') ? sprintf($LANG['flood_block'], $flood) : $LANG['flood_max']),
 		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 		'L_REQUIRE_PASSWORD' => $LANG['require_password'],
@@ -145,7 +159,7 @@ elseif( isset($_GET['flood']) )
 		'L_AUTOCONNECT'	=> $LANG['autoconnect']	
 	));
 
-	$Template->Pparse('formulaire'); 
+	$Template->Pparse('admin_connect'); 
 	exit;
 }
 

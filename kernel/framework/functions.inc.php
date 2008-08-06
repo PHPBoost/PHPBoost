@@ -76,9 +76,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 		case TSTRING:
 			return strprotect($var); //Chaine protégée.
 		case TSTRING_UNSECURE:
-			if( MAGIC_QUOTES != false )
-				$var = stripslashes($var);
-			$var = trim($var);
+			$var = trim(stripslashes($var));
 			return (string)$var; //Chaine non protégée.
 		case TSTRING_PARSE:
 			return strparse($var); //Chaine parsée.
@@ -129,6 +127,12 @@ function numeric($var, $type = 'int')
     }
     else
         return 0;
+}
+
+//Unserialisation de chaînes.
+function sunserialize($string)
+{
+	return unserialize(stripslashes($string));
 }
 
 //Découpage avec retour à la ligne, d'une chaîne, en prenant compte les entités html.

@@ -230,7 +230,7 @@ elseif( !empty($id) )
 	
 	$is_root = ($forum_info['level'] > 0);
 
-	$array_auth = !empty($forum_info['auth']) ? unserialize($forum_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
+	$array_auth = !empty($forum_info['auth']) ? sunserialize($forum_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
 
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],

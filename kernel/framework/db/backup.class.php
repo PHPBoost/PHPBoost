@@ -77,9 +77,9 @@ class Backup
 				while($row = $Sql->Sql_fetch_row($result))
 					$this->save .=  $row[1] . ';' . "\n\n";
 				$Sql->Close($result);
-			}				
+			}		
 		}
-	}
+	}	
 	
 	//Requêtes d'insertion
 	function Insert_values($tables = array())
@@ -126,6 +126,45 @@ class Backup
 		}
 	}
 	
+	//Extraction de la structure de la table.
+	function extract_table_structure($tables = array())
+	{
+		$this->create_tables($tables);
+		
+		$structure = array();
+		$structure['fields'] = array();
+		$structure['index'] = array();
+		$struct = substr(strstr($this->save, '('), 1);
+		$struct = substr($struct, 0, strrpos($struct, ')'));
+		$array_struct = explode(",\n", $struct);
+		foreach($array_struct as $field)
+		{
+			
+			preg_match('!`([a-z_]+)`!i', $field, $match);
+			$name = isset($match[1]) ? $match[1] : '';
+			if( strpos($field, 'KEY') !== false )
+			{	
+				$type = trim(substr($field, 0, strpos($field, 'KEY') + 3));
+				preg_match('!\(([a-z_`,]+)\)!i', $field, $match);
+				$index_fields = isset($match[1]) ? str_replace('`', '', $match[1]) : '';
+				$structure['index'][] = array('name' => $name, 'fields' => $index_fields, 'type' => $type);
+			}
+			else
+			{
+				preg_match('!` ([a-z0-9()]+) !i', $field, $match);
+				$type = isset($match[1]) ? $match[1] : '';
+				$attribute = strpos($field, 'unsigned') !== false ? 'unsigned' : '';
+				$null = strpos($field, 'NOT NULL') !== false ? false : true;
+				preg_match('`default (.+)`i', $field, $match);
+				$default = isset($match[1]) ? str_replace("'", '', $match[1]) : '';
+				$extra = strpos($field, 'auto_increment') !== false ? 'auto_increment' : '';
+				$structure['fields'][] = array('name' => $name, 'type' => $type, 'attribute' => $attribute, 'null' => $null, 'default' => $default, 'extra' => $extra);
+			}
+		}
+			
+		return $structure;
+	}
+	
 	//Création du fichier
 	function Export_file($file_path)
 	{
@@ -133,8 +172,9 @@ class Backup
 		fwrite($file, $this->save); //On stocke le tableau dans le fichier de données
 		fclose($file);
 	}
-	
-	function Optimize_tables($table_array) //Optimisation des tables
+		
+	//Optimisation des tables
+	function Optimize_tables($table_array) 
 	{		
 		global $Sql;
 		
@@ -152,7 +192,6 @@ class Backup
 	}
 	
 	## Private Methods ##
-	
 	
 	## Private Attributes ##
 	var $values = array(); //tableau temporaire

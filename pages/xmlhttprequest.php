@@ -95,7 +95,7 @@ elseif( !empty($open_cat) || $root == 1 )
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if( ($special_auth && $Member->Check_auth(unserialize($row['auth']), READ_PAGE)) || (!$special_auth && $Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+		if( ($special_auth && $Member->Check_auth(sunserialize($row['auth']), READ_PAGE)) || (!$special_auth && $Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 		{
 			$return .= '<tr><td class="row2"><img src="' . $Template->Module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 		}

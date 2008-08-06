@@ -39,7 +39,7 @@ $valid = retrieve(POST, 'register_valid', false);
 if( $valid && !empty($user_mail) && check_mail($user_mail) )
 {
 	//Info de connexion
-	$login = strprotect(substr(retrieve(POST, 'log', '', TSTRING_UNSECURE), 0, 25));
+	$login = substr(retrieve(POST, 'log', ''), 0, 25);
 	$password = retrieve(POST, 'pass', '', TSTRING_UNSECURE);
 	$password_hash = strhash($password);
 	$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNSECURE);

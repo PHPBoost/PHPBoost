@@ -49,7 +49,7 @@ class ArticlesInterface extends ModuleInterface
 		$config_articles = 'global $CONFIG_ARTICLES;' . "\n";
 
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_ARTICLES = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'articles'", __LINE__, __FILE__));
+		$CONFIG_ARTICLES = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'articles'", __LINE__, __FILE__));
 		$CONFIG_ARTICLES = is_array($CONFIG_ARTICLES) ? $CONFIG_ARTICLES : array();
 
 		if(isset($CONFIG_ARTICLES['auth_root']))
@@ -71,7 +71,7 @@ class ArticlesInterface extends ModuleInterface
 			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'level\'] = ' . var_export($row['level'], true) . ';' . "\n";
 			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";
 			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
-			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
+			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(sunserialize($row['auth']), true) . ';' . "\n";
 		}
 		$Sql->Close($result);
 

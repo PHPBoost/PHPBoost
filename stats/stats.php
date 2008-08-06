@@ -1073,7 +1073,7 @@ elseif( $browser || $os || $user_lang ) //Graphiques camenbert.
 	//On lit le fichier
 	$file = @fopen('../cache/' . $stats_menu . '.txt', 'r');
 	$stats_array = @fgets($file);
-	$stats_array = !empty($stats_array) ? unserialize($stats_array) : array();
+	$stats_array = !empty($stats_array) ? sunserialize($stats_array) : array();
 	@fclose($file);
 	include_once('../kernel/framework/util/images_stats.class.php');
 	$Stats = new Stats();

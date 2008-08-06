@@ -50,7 +50,7 @@ $tables_backup = !empty($_POST['backup']) ? true : false;
 $action = retrieve(GET, 'action', '');
 
 $Template->Set_filenames(array(
-'admin_database_management'=> 'admin/admin_database_management.tpl'
+	'admin_database_management'=> 'admin/admin_database_management.tpl'
 ));
 
 //outils de sauvegarde de la base de données
@@ -457,10 +457,6 @@ else
 		));
 	}
 }
-
-$Template->Assign_vars(array(
-	'L_DATABASE_MANAGEMENT' => $LANG['database_management'],
-));
 
 $Template->Pparse('admin_database_management');
 

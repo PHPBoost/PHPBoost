@@ -211,7 +211,7 @@ class Contribution
 		$this->current_status = $current_status;
 		$this->creation_date = $creation_date;
 		$this->fixing_date = $fixing_date;
-		$this->auth = unserialize($auth);
+		$this->auth = sunserialize($auth);
 		$this->poster_id = $poster_id;
 		$this->fixer_id = $fixer_id;
 	}

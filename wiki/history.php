@@ -53,7 +53,7 @@ if( !empty($id_article) )
 	));
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	$restore_auth = (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_RESTORE_ARCHIVE)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_RESTORE_ARCHIVE)) ? true : false;
 	$delete_auth = (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
 	

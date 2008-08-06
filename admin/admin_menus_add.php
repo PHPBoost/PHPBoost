@@ -232,7 +232,7 @@ else
 			$menu['name'] = !empty($config['name']) ? $config['name'] : '';	
 		
 		//Récupération des tableaux des autorisations et des groupes.
-		$array_auth = !empty($menu['auth']) ? unserialize($menu['auth']) : array();
+		$array_auth = !empty($menu['auth']) ? sunserialize($menu['auth']) : array();
 
 		$Template->Assign_vars(array(
 			'C_EDIT_MENU' => true,

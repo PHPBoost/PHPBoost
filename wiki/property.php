@@ -56,7 +56,7 @@ elseif( $wiki_status > 0 )//On s'intéresse au statut de l'article
 	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = " . $wiki_status, __LINE__, __FILE__);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
 	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_STATUS))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -67,7 +67,7 @@ elseif( $move > 0 ) //Déplacement d'article
 	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = " . $move, __LINE__, __FILE__);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
 	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_MOVE))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -78,7 +78,7 @@ elseif( $rename > 0 ) //Renommer l'article
 	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = " . $rename, __LINE__, __FILE__);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
 	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_RENAME))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -92,7 +92,7 @@ elseif( $redirect > 0 || $create_redirection > 0 )//Redirection
 	define('TITLE', $LANG['wiki_redirections_management']);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
 	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_REDIRECT))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -102,7 +102,7 @@ elseif( isset($_GET['i']) && $idcom > 0 )
 	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = '" . $idcom . "'", __LINE__, __FILE__);	
 	define('TITLE', $LANG['wiki_article_com']);
 	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
 	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_COM))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -113,7 +113,7 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 	define('TITLE', $LANG['wiki_remove_cat']);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
+	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_DELETE))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
@@ -139,7 +139,7 @@ if( $random )//Recherche d'une page aléatoire
 }
 elseif( $id_auth > 0 ) //gestion du niveau d'autorisation
 {
-	$array_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : $_WIKI_CONFIG['auth']; //Récupération des tableaux des autorisations et des groupes.
+	$array_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : $_WIKI_CONFIG['auth']; //Récupération des tableaux des autorisations et des groupes.
 	
 	$Template->Assign_block_vars('auth', array(
 		'L_TITLE' => sprintf($LANG['wiki_auth_management_article'], $article_infos['title']),

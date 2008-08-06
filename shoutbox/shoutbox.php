@@ -37,7 +37,7 @@ if( $shoutbox && empty($shout_id) ) //Insertion
 	if( $Member->Get_attribute('user_readonly') > time() ) 
 		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
-	$shout_pseudo = strprotect(substr(retrieve(POST, 'shout_pseudo', $LANG['guest'], TSTRING_UNSECURE), 0, 25)); //Pseudo posté.
+	$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
 		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNSECURE);
 	if( !empty($shout_pseudo) && !empty($shout_contents) )
 	{		

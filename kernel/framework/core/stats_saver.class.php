@@ -203,7 +203,7 @@ class Stats_saver
 		if( is_file($file_path) && is_writable($file_path) )
 		{		
 			$line = file($file_path);
-			$stats_array = unserialize($line[0]);
+			$stats_array = sunserialize($line[0]);
 			if( isset($stats_array[strtolower($stats_item)]) )
 				$stats_array[strtolower($stats_item)]++;
 			else

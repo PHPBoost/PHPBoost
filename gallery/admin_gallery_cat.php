@@ -705,7 +705,7 @@ elseif( !empty($id) ) //Edition des catégories.
 	}
 	$Sql->Close($result);
 	
-	$array_auth = !empty($gallery_info['auth']) ? unserialize($gallery_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
+	$array_auth = !empty($gallery_info['auth']) ? sunserialize($gallery_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';

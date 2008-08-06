@@ -4,7 +4,7 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Nouvelles options d'installation (Communautaire, Vitrine, etc).
-[-] Supporter https dans l'installation et l'administration.
+[-] Supporter https et remplacer les "." par des "_" dans le nom de la base de données lors de l'installation.
 [-] Finir le parseur BBCode (+Ajout des nouvelles balises).
 [-] Finir le parseur TinyMCE (gérer les balises interdites)
 [-] Panneau de modération (+déplacer moderation_begin.php)
@@ -24,9 +24,7 @@
 ------------------------------------- NOYAU ------------------------------------
 [+] Interface d'ajout de menu de liens. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
 [+] Interface de contribution des news et des articles.
-[-] Remplacer les "." par des "_" dans le nom de la base de données. 
 [-] Faire les miniatures pour les thèmes.
-[-] Intégrer une classe captcha au framework (reporté?)
 
 ------------------------------------ MODULES -----------------------------------
 
