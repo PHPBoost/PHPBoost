@@ -597,6 +597,7 @@ $LANG['select_type_bbcode'] = 'BBCode';
 $LANG['select_type_html'] = 'HTML';
 
 //Module de gestion de la base de données
+$LANG['creation_date'] = 'Date de création';
 $LANG['database_management'] = 'Gestion base de données';
 $LANG['db_explain_actions'] = 'Ce panneau vous permet de gérer votre base de données. Vous pouvez y voir la liste des tables utilisées par PHPBoost, leurs propriétés. Aussi divers outils vous permettront de faire quelques opérations basiques sur certaines tables. Vous pouvez aussi effectuer une sauvegarde de votre base de données, ou de seulement quelques tables que vous sélectionnerez ici.
 <br /><br />
@@ -613,9 +614,17 @@ $LANG['db_restore'] = 'Restaurer';
 $LANG['db_table_list'] = 'Liste des tables';
 $LANG['db_table_name'] = 'Nom de la table';
 $LANG['db_table_rows'] = 'Enregistrements';
+$LANG['db_table_rows_format'] = 'Format';
 $LANG['db_table_engine'] = 'Type';
+$LANG['db_table_structure'] = 'Structure';
 $LANG['db_table_collation'] = 'Interclassement';
 $LANG['db_table_data'] = 'Taille';
+$LANG['db_table_index'] = 'Index';
+$LANG['db_table_field'] = 'Champ';
+$LANG['db_table_attribute'] = 'Attribut';
+$LANG['db_table_null'] = 'Null';
+$LANG['db_table_extra'] = 'Extra';
+$LANG['db_autoincrement'] = 'Suivant autoindex';
 $LANG['db_table_free'] = 'Perte';
 $LANG['db_selected_tables'] = 'Tables sélectionnées';
 $LANG['db_select_all'] = 'toutes';

@@ -217,7 +217,7 @@ $LANG['place'] = 'Lieu';
 $LANG['quote'] = 'Citer';
 $LANG['quotation'] = 'Citation';
 $LANG['hide'] = 'Caché';
-$LANG['default'] = 'Normal';
+$LANG['default'] = 'Défaut';
 $LANG['type'] = 'Type';
 $LANG['status'] = 'Statut';
 $LANG['url'] = 'Url';
@@ -384,6 +384,7 @@ $LANG['date_birth_format'] = 'JJ/MM/AAAA';
 $LANG['date_birth_parse'] = 'DD/MM/YYYY';
 $LANG['banned'] = 'Banni';
 $LANG['go_msg'] = 'Aller au message';
+$LANG['display'] = 'Afficher';
 
 //Register
 $LANG['pseudo_how'] = 'Longueur minimale du pseudo : 3 caractères';

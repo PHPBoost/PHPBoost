@@ -221,7 +221,7 @@ else
 		$info_module = $array_info_module[$array_config['name']];
 		
 		//Récupération des tableaux des autorisations et des groupes.
-		$array_auth = !empty($row['auth']) ? unserialize($row['auth']) : array();
+		$array_auth = !empty($row['auth']) ? sunserialize($row['auth']) : array();
 		
 		$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
 		$Template->Assign_block_vars('installed', array(

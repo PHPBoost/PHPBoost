@@ -59,7 +59,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 {
 	//Autorisation particulière ?
 	$special_auth = !empty($row['auth']);
-	$array_auth = unserialize($row['auth']);
+	$array_auth = sunserialize($row['auth']);
 	//Vérification de l'autorisation d'éditer la page
 	if( ($special_auth && $Member->Check_auth($array_auth, READ_PAGE)) || (!$special_auth && $Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 	{

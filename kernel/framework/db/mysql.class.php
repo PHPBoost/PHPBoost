@@ -253,14 +253,18 @@ class Sql
 		$result = $this->query_while("SHOW TABLE STATUS FROM `" . $sql_base . "` LIKE '" . PREFIX . "%'", __LINE__, __FILE__);
 		while( $row = mysql_fetch_row($result) )
 		{	
-			$array_tables[] = array(
+			$array_tables[$row[0]] = array(
 				'name' => $row[0], 
 				'engine' => $row[1], 
+				'row_format' => $row[3], 
 				'rows' => $row[4], 
 				'data_length' => $row[6],
 				'index_lenght' => $row[8],
 				'data_free' => $row[9],
-				'collation' => $row[14]
+				'collation' => $row[14],
+				'auto_increment' => $row[10],
+				'create_time' => $row[11],
+				'update_time' => $row[12]
 			);
 		}
 		return $array_tables;

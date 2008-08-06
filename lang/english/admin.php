@@ -597,6 +597,7 @@ $LANG['select_type_bbcode'] = 'BBCode';
 $LANG['select_type_html'] = 'HTML';
 
 //Sauvegarde/restauration base de données
+$LANG['creation_date'] = 'Creation date';
 $LANG['database_management'] = 'Database management';
 $LANG['db_explain_actions'] = 'This panel allow you to manage your database. You can see the list of tables used by PHPBoost, their properties. And some tools who allow you to do some basic operations in some tables. You can save your database too, or just save some tables that you want,which you\'ll select here.
 <br /><br />
@@ -613,9 +614,17 @@ $LANG['db_restore'] = 'Restore';
 $LANG['db_table_list'] = 'Tables\'s list';
 $LANG['db_table_name'] = 'Name of the table';
 $LANG['db_table_rows'] = 'Registrations';
+$LANG['db_table_rows_format'] = 'Format';
 $LANG['db_table_engine'] = 'Kind';
-$LANG['db_table_collation'] = 'interclassification';
+$LANG['db_table_structure'] = 'Structure';
+$LANG['db_table_collation'] = 'Interclassification';
 $LANG['db_table_data'] = 'Size';
+$LANG['db_table_index'] = 'Index';
+$LANG['db_table_field'] = 'Field';
+$LANG['db_table_attribute'] = 'Attribute';
+$LANG['db_table_null'] = 'Null';
+$LANG['db_table_extra'] = 'Extra';
+$LANG['db_autoincrement'] = 'Auto increment';
 $LANG['db_table_free'] = 'Losses';
 $LANG['db_selected_tables'] = 'Selectionned tables';
 $LANG['db_select_all'] = 'all';

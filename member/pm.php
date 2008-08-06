@@ -465,8 +465,8 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 					'L_RESET' => $LANG['reset']
 				));
 				
-				$contents = stripslashes(retrieve(POST, 'contents', '', TSTRING_UNSECURE));
-				$title = stripslashes(retrieve(POST, 'title', '', TSTRING_UNSECURE));
+				$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+				$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
 				
 				$Template->Assign_block_vars('edit_pm', array(
 					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : unparse($pm['contents']),

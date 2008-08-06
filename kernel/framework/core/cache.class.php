@@ -162,7 +162,7 @@ class Cache
 			$code .= '$MODULES[\'' . $row['name'] . '\'] = array(' . "\n"
 				. "'name' => " . var_export($row['name'], true) . ',' . "\n"
 				. "'activ' => " . var_export($row['activ'], true) . ',' . "\n"
-				. "'auth' => " . var_export(unserialize($row['auth']), true) . ',' . "\n"
+				. "'auth' => " . var_export(sunserialize($row['auth']), true) . ',' . "\n"
 				. ");\n";
 		}
 		$Sql->Close($result);
@@ -233,7 +233,7 @@ class Cache
 		$config = 'global $CONFIG;' . "\n" . '$CONFIG = array();' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
+		$CONFIG = sunserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
 		foreach($CONFIG as $key => $value)
 			$config .= '$CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ";\n";
 
@@ -348,7 +348,7 @@ class Cache
 		ORDER BY id", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
-			$code .= $row['id'] . ' => array(\'name\' => ' . var_export($row['name'], true) . ', \'img\' => ' . var_export($row['img'], true) . ', \'auth\' => ' . var_export(unserialize($row['auth']), true) . '),' . "\n";
+			$code .= $row['id'] . ' => array(\'name\' => ' . var_export($row['name'], true) . ', \'img\' => ' . var_export($row['img'], true) . ', \'auth\' => ' . var_export(sunserialize($row['auth']), true) . '),' . "\n";
 		}			
 		$Sql->Close($result);
 		$code .= ');';
@@ -364,7 +364,7 @@ class Cache
 		$config_member = 'global $CONFIG_MEMBER, $CONTRIBUTION_PANEL_UNREAD;' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_MEMBER = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
+		$CONFIG_MEMBER = sunserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
 		foreach($CONFIG_MEMBER as $key => $value)
 			$config_member .= '$CONFIG_MEMBER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 		
@@ -403,12 +403,12 @@ class Cache
 		$config_uploads = 'global $CONFIG_UPLOADS;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_UPLOADS = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'uploads'", __LINE__, __FILE__));
+		$CONFIG_UPLOADS = sunserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'uploads'", __LINE__, __FILE__));
 		$CONFIG_UPLOADS = is_array($CONFIG_UPLOADS) ? $CONFIG_UPLOADS : array();
 		foreach($CONFIG_UPLOADS as $key => $value)
 		{	
 			if( $key == 'auth_files' )
-				$config_uploads .= '$CONFIG_UPLOADS[\'auth_files\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
+				$config_uploads .= '$CONFIG_UPLOADS[\'auth_files\'] = ' . var_export(sunserialize($value), true) . ';' . "\n";
 			else
 				$config_uploads .= '$CONFIG_UPLOADS[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";		
 		}
@@ -423,7 +423,7 @@ class Cache
 		$com_config = 'global $CONFIG_COM;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_COM = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'com'", __LINE__, __FILE__));
+		$CONFIG_COM = sunserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'com'", __LINE__, __FILE__));
 		$CONFIG_COM = is_array($CONFIG_COM) ? $CONFIG_COM : array();
 		foreach($CONFIG_COM as $key => $value)
 			$com_config .= '$CONFIG_COM[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";

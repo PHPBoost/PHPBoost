@@ -384,6 +384,7 @@ $LANG['date_birth_format'] = 'MM/DD/YYYY';
 $LANG['date_birth_parse'] = 'MM/DD/YYYY';
 $LANG['banned'] = 'Banned';
 $LANG['go_msg'] = 'Go to message';
+$LANG['display'] = 'Afficher';
 
 //Register
 $LANG['pseudo_how'] = 'Minimal login\'s length: 3 characters';

@@ -734,7 +734,7 @@ elseif( !empty($id) ) //Edition des catégories.
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
-	$array_auth = !empty($articles_info['auth']) ? unserialize($articles_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
+	$array_auth = !empty($articles_info['auth']) ? sunserialize($articles_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
 		
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],

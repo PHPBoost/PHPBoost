@@ -56,7 +56,7 @@ class WikiInterface extends ModuleInterface
 
 		//Configuration du wiki
 		$code = 'global $_WIKI_CONFIG;' . "\n" . '$_WIKI_CONFIG = array();' . "\n";
-		$CONFIG_WIKI = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'wiki'", __LINE__, __FILE__));
+		$CONFIG_WIKI = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'wiki'", __LINE__, __FILE__));
 		$CONFIG_WIKI = is_array($CONFIG_WIKI) ? $CONFIG_WIKI : array();
 		$CONFIG_WIKI['auth'] = unserialize($CONFIG_WIKI['auth']);
 		

@@ -106,7 +106,7 @@ elseif( $get_pages_day )
 	$day = !empty($_GET['day']) ? numeric($_GET['day']) : '1';
 	
 	$array_stats = array();
-	$pages_details = unserialize((string)$Sql->Query("SELECT pages_detail FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'", __LINE__, __FILE__));
+	$pages_details = sunserialize((string)$Sql->Query("SELECT pages_detail FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'", __LINE__, __FILE__));
 	if( is_array($pages_details) )
 		foreach($pages_details as $hour => $pages)
 			$array_stats[$hour] = $pages;
@@ -179,7 +179,7 @@ elseif( $get_brw ) //Navigateurs.
 	//On lit le fichier
 	$file = @fopen(PATH_TO_ROOT . '/cache/browsers.txt', 'r');
 	$browsers_serial = @fgets($file);
-	$array_browsers = !empty($browsers_serial) ? unserialize($browsers_serial) : array();
+	$array_browsers = !empty($browsers_serial) ? sunserialize($browsers_serial) : array();
 	$array_stats = array();
 	$percent_other = 0;
 	foreach($array_browsers as $name => $value)
@@ -203,7 +203,7 @@ elseif( $get_os )
 	//On lit le fichier
 	$file = @fopen(PATH_TO_ROOT . '/cache/os.txt', 'r');
 	$os_serial = @fgets($file);
-	$array_os = !empty($os_serial) ? unserialize($os_serial) : array();
+	$array_os = !empty($os_serial) ? sunserialize($os_serial) : array();
 	$array_stats = array();
 	$percent_other = 0;
 	foreach($array_os as $name => $value)
@@ -312,7 +312,7 @@ elseif( $get_bot )
 	//On lit le fichier
 	$file = @fopen(PATH_TO_ROOT . '/cache/robots.txt', 'r');
 	$robot_serial = @fgets($file);	
-	$array_robot = !empty($robot_serial) ? unserialize($robot_serial) : array('other' => 0);
+	$array_robot = !empty($robot_serial) ? sunserialize($robot_serial) : array('other' => 0);
 	$array_stats = array();
 	if( is_array($array_robot) )
 	{

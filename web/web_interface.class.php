@@ -45,7 +45,7 @@ class WebInterface extends ModuleInterface
 		$code = 'global $CAT_WEB;' . "\n" . 'global $CONFIG_WEB;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_WEB = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'web'", __LINE__, __FILE__));
+		$CONFIG_WEB = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'web'", __LINE__, __FILE__));
 		$CONFIG_WEB = is_array($CONFIG_WEB) ? $CONFIG_WEB : array();
 		
 		$code .= '$CONFIG_WEB = ' . var_export($CONFIG_WEB, true) . ';' . "\n";

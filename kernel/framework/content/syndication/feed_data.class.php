@@ -35,7 +35,7 @@ class FeedData
 	{
 		if( $serialized_data != null )
 		{
-			$f_data = unserialize($serialized_data);
+			$f_data = sunserialize($serialized_data);
 			$this->title = $f_data->title;
 			$this->link = $f_data->link;
 			$this->date = $f_data->date;

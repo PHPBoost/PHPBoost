@@ -172,7 +172,7 @@ class Sessions
 			if( !empty($password) && (($password === $password_m) || (md5($pwd) === $password_m)) ) //Succès! => md5 gestion des vieux mdp
 			{
                 if( md5($pwd) === $password_m ) // Si le mot de passe est encore stocké en md5, on l'update
-                    $Sql->Query_inject("UPDATE ".PREFIX."member SET `password`='" . $password . "'WHERE `user_id`='" . $user_id . "';", __LINE__, __FILE__);
+                    $Sql->Query_inject("UPDATE ".PREFIX."member SET password = '" . $password . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				
 				$Sql->Query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '')", __LINE__, __FILE__);
 				$cookie_on = true; //Génération du cookie!
@@ -366,7 +366,7 @@ class Sessions
 				redirect(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : ''));				
 			}
 			
-			$session_data = unserialize(stripslashes($_COOKIE[$CONFIG['site_cookie'].'_data']));
+			$session_data = sunserialize($_COOKIE[$CONFIG['site_cookie'].'_data']);
 			
 			$this->data['session_id'] = isset($session_data['session_id']) ? strprotect($session_data['session_id']) : ''; //Validité du session id.
 			$this->data['user_id'] = isset($session_data['user_id']) ? numeric($session_data['user_id']) : ''; //Validité user id?
@@ -388,7 +388,7 @@ class Sessions
 		########Cookie Existe?########
 		if( isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) )
 		{
-			$session_autoconnect = isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) ? unserialize(stripslashes($_COOKIE[$CONFIG['site_cookie'].'_autoconnect'])) : array();
+			$session_autoconnect = isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) ? sunserialize($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) : array();
 			$session_autoconnect['user_id'] = !empty($session_autoconnect['user_id']) ? numeric($session_autoconnect['user_id']) : ''; //Validité user id?.
 			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? strprotect($session_autoconnect['pwd']) : ''; //Validité password.
 			$level = $Sql->Query("SELECT level FROM ".PREFIX."member WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'", __LINE__, __FILE__);
@@ -509,7 +509,7 @@ class Sessions
 					$time = gmdate_format('YmdHis', time(), TIMEZONE_SYSTEM); //Date et heure du dernier passage!
 					
 					$line = file($file_path);
-					$data = unserialize($line[0]); //Renvoi la première ligne du fichier (le array précédement crée).
+					$data = sunserialize($line[0]); //Renvoi la première ligne du fichier (le array précédement crée).
 					
 					if( !isset($data[$robot]) )
 						$data[$robot] = $robot . '/1/' . $time; //Création du array contenant les valeurs.

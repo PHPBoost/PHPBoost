@@ -58,11 +58,11 @@
 			<br />
 				
 			<form action="{TARGET}" method="post">
-				<table class="module_table">
+				<table class="module_table" id="tables">
 					<tr>
 						<th colspan="7" style="text-align:center;">
 							{L_TABLE_LIST}
-						</td>
+						</th>
 					</tr>
 					<tr style="text-align:center;">			
 						<td class="row3" style="width:140px;">
@@ -93,7 +93,7 @@
 							<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
 						</td>
 						<td class="row1">
-							<strong>{table_list.TABLE_NAME}</strong>
+							<a href="admin_database_tools.php?table={table_list.TABLE_NAME}">{table_list.TABLE_NAME}</a>
 						</td>			
 						<td class="row1" style="text-align:right;">
 							{table_list.TABLE_ROWS}
