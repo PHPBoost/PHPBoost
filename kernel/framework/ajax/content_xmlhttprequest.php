@@ -41,7 +41,10 @@ if( !empty($_GET['preview']) ) //Prévisualisation des messages.
 	
 	//Remplacement du path to root si ce n'est pas le même (cas fréquent)
 	if( preg_match('`[./]+`U', $page_path_to_root) )
-		$contents = str_replace(PATH_TO_ROOT, $page_path_to_root, $contents);
+	{
+		$contents = str_replace('"' . PATH_TO_ROOT, '"' . $page_path_to_root, $contents);
+		$contents = str_replace('"../', '"' . $page_path_to_root . '/', $contents);
+	}
 
 	echo !empty($contents) ? $contents : '';	
 }
