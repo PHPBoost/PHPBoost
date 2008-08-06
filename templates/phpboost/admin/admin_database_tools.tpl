@@ -1,3 +1,14 @@
+		<script type="text/javascript">
+		<!--
+		function Confirm_del_table() {
+			return confirm("{L_CONFIRM_DELETE_TABLE}");
+		}
+		function Confirm_truncate_table() {
+			return confirm("{L_CONFIRM_TRUNCATE_TABLE}");
+		}
+		-->	
+		</script>
+				
 		<div id="admin_quick_menu">
 				<ul>
 					<li class="title_menu">{L_DATABASE_MANAGEMENT}</li>
@@ -29,6 +40,15 @@
 						</li>
 						<li>
 							<h5 class="links"><img src="../templates/{THEME}/images/admin/database_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">SQL</a></h5>
+						</li>
+						<li>
+							<h5 class="links"><img src="../templates/{THEME}/images/admin/cache_mini.png" class="valign_middle" alt="" /> <a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">{L_BACKUP}</a></h5>
+						</li>
+						<li>
+							<h5 class="links"><img src="../templates/{THEME}/images/upload/trash_mini.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_truncate_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate">{L_TRUNCATE}</a></h5>
+						</li>
+						<li>
+							<h5 class="links"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_del_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop">{L_DELETE}</a></h5>
 						</li>
 					</ul>
 				</div>

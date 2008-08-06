@@ -170,9 +170,50 @@
 			</form>
 
 			# ENDIF #
-
+			
+			
 			# IF C_DATABASE_BACKUP #
-
+			# IF TABLE_NAME #
+			<script type="text/javascript">
+			<!--
+			function Confirm_del_table() {
+				return confirm("{L_CONFIRM_DELETE_TABLE}");
+			}
+			function Confirm_truncate_table() {
+				return confirm("{L_CONFIRM_TRUNCATE_TABLE}");
+			}
+			-->	
+			</script>
+			<div style="width:95%;margin:auto;">	
+				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px">
+					<img src="../templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small_link" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> <img src="../templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small_link" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
+				</div>
+				<div class="dynamic_menu" style="z-index:0;float:none">
+					<ul>
+						<li>
+							<h5 class="links" style=""><img src="../templates/{THEME}/images/admin/database_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{L_TABLE_STRUCTURE}</a></h5>
+						</li>
+						<li>
+							<h5 class="links"><img src="../templates/{THEME}/images/admin/themes_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">{L_TABLE_DISPLAY}</a></h5>
+						</li>
+						<li>
+							<h5 class="links"><img src="../templates/{THEME}/images/admin/database_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">SQL</a></h5>
+						</li>
+						<li>
+							<h5 class="links"><img src="../templates/{THEME}/images/admin/cache_mini.png" class="valign_middle" alt="" /> <a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">{L_BACKUP}</a></h5>
+						</li>
+						<li>
+							<h5 class="links"><img src="../templates/{THEME}/images/upload/trash_mini.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_truncate_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate">{L_TRUNCATE}</a></h5>
+						</li>
+						<li>
+							<h5 class="links"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_del_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop">{L_DELETE}</a></h5>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<br /><br />
+			# ENDIF #
+			
 			<form action="admin_database.php?action=backup" method="post" name="table_list">
 				<script type="text/javascript">
 					<!--
