@@ -130,7 +130,7 @@ class Comments
 	}
 	
 	//Méthode d'affichage
-	function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false)
+	function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false, $page_path_to_root = '')
 	{
 		global $Cache, $Member, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_MEMBER, $CONFIG_COM, $_array_rank, $_array_groups_auth;
 		
@@ -326,7 +326,7 @@ class Comments
 						'COM_LOCK' => true,
 						'IMG' => ($this->lock_com >= 1) ? 'unlock' : 'lock',
 						'L_LOCK' => ($this->lock_com >= 1) ? $LANG['unlock'] : $LANG['lock'],
-						'U_LOCK' => $this->path . (($this->lock_com >= 1) ? $vars_simple . '&amp;lock=0' : $vars_simple . '&amp;lock=1')
+						'U_LOCK' => $this->path . (($this->lock_com >= 1) ? $vars_simple . '&amp;lock=0' : $vars_simple . '&amp;lock=1') . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')
 					));
 				}
 				
