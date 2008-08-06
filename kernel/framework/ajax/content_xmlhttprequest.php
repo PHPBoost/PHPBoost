@@ -33,9 +33,10 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 $page_path_to_root = retrieve(GET, 'path_to_root', '');
 
-$contents = html_entity_decode(utf8_decode(retrieve(POST, 'contents', TSTRING_UNSECURE)));
+$contents = html_entity_decode(stripslashes(utf8_decode(retrieve(POST, 'contents', TSTRING_UNSECURE))));
 
 $ftags = retrieve(POST, 'ftags', TSTRING_UNSECURE);
+
 $contents = second_parse(stripslashes(strparse($contents, explode(',', $ftags))));
 
 //Remplacement du path to root si ce n'est pas le même (cas peu fréquent)

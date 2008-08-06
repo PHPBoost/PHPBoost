@@ -157,7 +157,7 @@
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
 	</head>
 
-	<body>		
+	<body>
 		<script type="text/javascript">
 		<!--
 		function check_form_com(){
