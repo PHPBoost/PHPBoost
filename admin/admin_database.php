@@ -47,7 +47,14 @@ require_once('../admin/admin_header.php');
 $repair = !empty($_POST['repair']) ? true : false;
 $optimize = !empty($_POST['optimize']) ? true : false;
 $tables_backup = !empty($_POST['backup']) ? true : false;
+$table = retrieve(GET, 'table', '');
 $action = retrieve(GET, 'action', '');
+
+if( $action == 'backup_table' && !empty($table) ) //Sauvegarde pour une table unique.
+{	
+	$tables_backup = true;
+	$_POST['table_' . $table] = 'on';
+}
 
 $Template->Set_filenames(array(
 	'admin_database_management'=> 'admin/admin_database_management.tpl'
@@ -58,8 +65,16 @@ include_once('../kernel/framework/db/backup.class.php');
 $Backup = new Backup($sql_base);
 
 $Template->Assign_vars(array(
+	'TABLE_NAME' => $table,
+	'L_CONFIRM_DELETE_TABLE' => $LANG['db_confirm_delete_table'],
+	'L_CONFIRM_TRUNCATE_TABLE' => $LANG['db_confirm_truncate_table'],
 	'L_DATABASE_MANAGEMENT' => $LANG['database_management'],
+	'L_TABLE_STRUCTURE' => $LANG['db_table_structure'],
+	'L_TABLE_DISPLAY' => $LANG['display'],
 	'L_QUERY' => $LANG['db_execute_query'],
+	'L_BACKUP' => $LANG['db_backup'],
+	'L_TRUNCATE' => $LANG['empty'],
+	'L_DELETE' => $LANG['delete'],
 	'L_DB_TOOLS' => $LANG['db_tools']
 ));
 
@@ -294,7 +309,7 @@ else
 			if( $backup_type != 2 )
 			{
 				//Suppression éventuelle des tables
-				$Backup->Drop_tables();
+				$Backup->drop_tables_exists();
 				$Backup->save .= "\n\n";
 				//Création de la structure des tables
 				$Backup->Create_tables();
@@ -313,7 +328,7 @@ else
 			if( $backup_type != 2 )
 			{
 				//Suppression éventuelle des tables
-				$Backup->Drop_tables($selected_tables);
+				$Backup->drop_tables_exists($selected_tables);
 				$Backup->save .= "\n\n";
 				//Création de la structure des tables
 				$Backup->Create_tables($selected_tables);

@@ -41,7 +41,7 @@ class Backup
 	}
 		
 	//On crée le tableau qui contient les tables
-	function List_table()
+	function list_table()
 	{
 		global $Sql;
 		
@@ -50,7 +50,7 @@ class Backup
 	}
 	
 	//Suppression  des tables
-	function Drop_tables($table_list = array())
+	function drop_tables_exists($table_list = array())
 	{
 		$selected_tables =  array();
 		$all_tables = count($table_list) == 0 ? true : false;
@@ -63,7 +63,7 @@ class Backup
 	}
 	
 	//Création des tables (structure)
-	function Create_tables($table_list = array())
+	function create_tables($table_list = array())
 	{
 		global $Sql;
 		
@@ -82,7 +82,7 @@ class Backup
 	}	
 	
 	//Requêtes d'insertion
-	function Insert_values($tables = array())
+	function insert_values($tables = array())
 	{
 		global $Sql;
 		
@@ -139,7 +139,6 @@ class Backup
 		$array_struct = explode(",\n", $struct);
 		foreach($array_struct as $field)
 		{
-			
 			preg_match('!`([a-z_]+)`!i', $field, $match);
 			$name = isset($match[1]) ? $match[1] : '';
 			if( strpos($field, 'KEY') !== false )
@@ -166,7 +165,7 @@ class Backup
 	}
 	
 	//Création du fichier
-	function Export_file($file_path)
+	function export_file($file_path)
 	{
 		$file = @fopen($file_path, 'w+');	
 		fwrite($file, $this->save); //On stocke le tableau dans le fichier de données
@@ -174,7 +173,7 @@ class Backup
 	}
 		
 	//Optimisation des tables
-	function Optimize_tables($table_array) 
+	function optimize_tables($table_array) 
 	{		
 		global $Sql;
 		
@@ -191,6 +190,23 @@ class Backup
 			$Sql->Query_inject("REPAIR TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
 	}
 	
+	//Vidage des tables
+	function truncate_tables($table_array)
+	{
+		global $Sql;
+		
+		if( count($table_array) != 0 )
+			$Sql->Query_inject("TRUNCATE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+	}
+	
+	//Suppression des tables
+	function drop_tables($table_array)
+	{
+		global $Sql;
+		
+		if( count($table_array) != 0 )
+			$Sql->Query_inject("DROP TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+	}
 	## Private Methods ##
 	
 	## Private Attributes ##

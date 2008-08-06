@@ -42,9 +42,14 @@ $Backup = new Backup($sql_base);
 
 $Template->Assign_vars(array(
 	'TABLE_NAME' => $table,
+	'L_CONFIRM_DELETE_TABLE' => $LANG['db_confirm_delete_table'],
+	'L_CONFIRM_TRUNCATE_TABLE' => $LANG['db_confirm_truncate_table'],
 	'L_DATABASE_MANAGEMENT' => $LANG['database_management'],
 	'L_TABLE_STRUCTURE' => $LANG['db_table_structure'],
 	'L_TABLE_DISPLAY' => $LANG['display'],
+	'L_BACKUP' => $LANG['db_backup'],
+	'L_TRUNCATE' => $LANG['empty'],
+	'L_DELETE' => $LANG['delete'],
 	'L_QUERY' => $LANG['db_execute_query'],
 	'L_DB_TOOLS' => $LANG['db_tools']
 ));
@@ -100,8 +105,17 @@ if( !empty($table) && $action == 'data' )
 }
 elseif( !empty($table) && $action == 'optimize' )
 {
-	$Backup->Optimize_tables(array($table));
-	
+	$Backup->Optimize_tables(array($table));	
+	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table);
+}
+elseif( !empty($table) && $action == 'truncate' )
+{
+	$Backup->truncate_tables(array($table));
+	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table);
+}
+elseif( !empty($table) && $action == 'drop' )
+{
+	$Backup->drop_tables(array($table));
 	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table);
 }
 elseif( !empty($table) && $action == 'query' )
@@ -170,11 +184,15 @@ elseif( !empty($table) && $action == 'query' )
 }
 elseif( !empty($table) )
 {
-	$table_structure = $Backup->extract_table_structure(array($table));
+	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
+	
+	if( !isset($Backup->tables[$table]) ) //Table non existante.
+		redirect(HOST . DIR . '/admin/admin_database.php');
+		
 	foreach($table_structure['fields'] as $fields_info)
 	{
 		$primary_key = false;
-		foreach($table_structure['index'] as $index_info)
+		foreach($table_structure['index'] as $index_info) //Détection de la clée primaire.
 		{
 			if( $index_info['type'] == 'PRIMARY KEY' && in_array($fields_info['name'], explode(',', $index_info['fields'])) )
 			{
@@ -183,6 +201,7 @@ elseif( !empty($table) )
 			}
 		}
 		
+		//Champs.
 		$Template->Assign_block_vars('field', array(
 			'FIELD_NAME' => ($primary_key) ? '<span style="text-decoration:underline">' . $fields_info['name'] . '<span>' : $fields_info['name'],
 			'FIELD_TYPE' => $fields_info['type'],
@@ -193,6 +212,7 @@ elseif( !empty($table) )
 		));
 	}
 	
+	//index
 	foreach($table_structure['index'] as $index_info)
 	{
 		$Template->Assign_block_vars('index', array(
@@ -202,6 +222,7 @@ elseif( !empty($table) )
 		));
 	}
 	
+	//Infos sur la table.
 	$free = number_round($Backup->tables[$table]['data_free']/1024, 1);
 	$data = number_round($Backup->tables[$table]['data_length']/1024, 1);
 	$index = number_round($Backup->tables[$table]['index_lenght']/1024, 1);
