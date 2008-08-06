@@ -99,7 +99,7 @@
 							<li><a href="../admin/admin_stats.php" style="background-image:url(../templates/{THEME}/images/admin/stats_mini.png);">{L_STATS}</a></li>
 							<li><a href="../admin/admin_errors.php" style="background-image:url(../templates/{THEME}/images/admin/errors_mini.png);">{L_ERRORS}</a></li>
 							<li class="extend" onmouseover="show_menu(33, 1);" onmouseout="hide_menu(1);">
-								<a href="../admin/admin_database.php" style="background-image:url(../templates/{THEME}/images/admin/server_mini.png);">{L_SERVER}</a>
+								<a href="../admin/admin_system_report.php" style="background-image:url(../templates/{THEME}/images/admin/server_mini.png);">{L_SERVER}</a>
 								<ul id="ssmenu33">
 									<li><a href="../admin/admin_phpinfo.php" style="background-image:url(../templates/{THEME}/images/admin/phpinfo_mini.png);">{L_PHPINFO}</a></li>
 									<li><a href="../admin/admin_system_report.php" style="background-image:url(../templates/{THEME}/images/admin/system_report_mini.png);">{L_SYSTEM_REPORT}</a></li>
