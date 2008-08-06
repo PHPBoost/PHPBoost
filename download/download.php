@@ -61,7 +61,6 @@ if( $file_id > 0 ) //Contenu
 		'SIZE' => $size_tpl,
 		'COUNT' => $download_info['count'],
 		'THEME' => $CONFIG['theme'],
-		'COM' => com_display_link($download_info['nbr_com'], '../download/download' . transid('.php?id=' . $file_id . '&amp;com=0', '-' . $category_id . '-' . $file_id . '.php?com=0'), $file_id, 'download'),
 		'KERNEL_NOTATION' => $Note->display_form(),
 		'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$download_info['count']),
 		'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], (int)$download_info['nbrnote']),
@@ -255,12 +254,12 @@ else
 				'COUNT_DL' => sprintf($DOWNLOAD_LANG['downloaded_n_times'], $row['count']),
 				'NOTE' => $row['nbrnote'] > 0 ? $Note->display_img((int)$row['note'], $CONFIG_DOWNLOAD['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
 				'SIZE' => ($row['size'] >= 1) ? number_round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : (number_round($row['size'], 1) * 1024) . ' ' . $LANG['unit_kilobytes'],
-				'COMS' => (int)$row['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_coms'], $row['nbr_com']) : sprintf($DOWNLOAD_LANG['num_com'], $row['nbr_com']),
 				'C_IMG' => !empty($row['image']),
 				'IMG' => $row['image'],
 				'U_DOWNLOAD_LINK' => transid('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
 				'U_ADMIN_EDIT_FILE' => transid('management.php?edit=' . $row['id']),
-				'U_ADMIN_DELETE_FILE' => transid('management.php?del=' . $row['id'])
+				'U_ADMIN_DELETE_FILE' => transid('management.php?del=' . $row['id']),
+				'U_COM_LINK' => com_display_link($row['nbr_com'], '../download/download' . transid('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'download')
 			));
 		}
 		$Sql->Close($result);

@@ -193,6 +193,12 @@ class TinyMCEParser extends ContentParser
 			$this->parsed_content = preg_replace($smiley_code, $smiley_img_url, $this->parsed_content);
 		}
 		
+		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
+		if( PATH_TO_ROOT != '..' )
+		{
+			$this->parsed_content = str_replace('"../', '"' . PATH_TO_ROOT . '/', $this->parsed_content);
+		}
+		
 		//On remet le code HTML mis de côté
 		if( $Member->Check_auth($this->html_auth, 1) && !empty($this->array_tags['html']) )
 		{
@@ -213,7 +219,13 @@ class TinyMCEParser extends ContentParser
 	{
 		$this->parsed_content = $this->content;
 		
-				//Smiley.
+		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
+		if( PATH_TO_ROOT != '..' )
+		{
+			$this->parsed_content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->parsed_content);
+		}
+		
+		//Smiley.
 		@include(PATH_TO_ROOT . '/cache/smileys.php');
 		if(!empty($_array_smiley_code) )
 		{
