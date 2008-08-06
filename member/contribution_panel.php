@@ -26,17 +26,33 @@
 ###################################################*/
 
 require_once('../kernel/begin.php');
-define('TITLE', $LANG['contribution_panel']);
-require_once('../kernel/header.php');
 
 if( !$Member->Check_level(MEMBER_LEVEL) ) //Si il n'est pas member (les invités n'ont rien à faire ici)
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
-	
+
 $contribution_id = retrieve(GET, 'id', 0);
-	
+
 require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_panel.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+
+if( $contribution_id > 0 )
+{
+	$contribution = new Contribution();
+	
+	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
+	if( !$contribution->load_from_db($contribution_id) || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $Member->get_attribute('user_id')) )
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	
+	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
+	$Bread_crumb->add_link($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
+	
+	define('TITLE', $LANG['contribution_panel'] . ' - ' . $contribution->get_entitled());
+}
+else
+	define('TITLE', $LANG['contribution_panel']);
+
+require_once('../kernel/header.php');
 
 $template = new Template('contribution_panel.tpl');
 
@@ -46,12 +62,6 @@ if( $contribution_id > 0 )
 		'C_CONSULT_CONTRIBUTION' => true
 	));
 	
-	$contribution = new Contribution();
-	
-	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if( !$contribution->load_from_db($contribution_id) || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $Member->get_attribute('user_id')) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
-	
 	include_once('../kernel/framework/content/comments.class.php'); 
 	$comments = new Comments('contributions', $contribution_id, transid('contribution_panel.php?id=' . $contribution_id . '&amp;com=%s'), 'member', KERNEL_SCRIPT);
 	
@@ -60,7 +70,7 @@ if( $contribution_id > 0 )
 	$contribution_fixing_date = $contribution->get_fixing_date();
 	
 	$template->assign_vars(array(
-		'C_WRITE_AUTH' => $Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT),
+		'C_WRITE_AUTH' => $Member->check_auth($contribution->get_auth(), CONTRIBUTION_AUTH_BIT),
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => second_parse($contribution->get_description()),
 		'STATUS' => $contribution->get_status_name(),
@@ -68,7 +78,7 @@ if( $contribution_id > 0 )
 		'COMMENTS' => $comments->display(),
 		'CREATION_DATE' => $contribution_creation_date->format(DATE_FORMAT_SHORT),
 		'MODULE' => $contribution->get_module_name(),
-		'U_CONTRIBUTOR_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')		
+		'U_CONTRIBUTOR_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')
 	));
 	
 	//If the contribution has been processed
