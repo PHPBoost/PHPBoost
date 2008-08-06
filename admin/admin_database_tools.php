@@ -44,6 +44,7 @@ $Template->Assign_vars(array(
 	'TABLE_NAME' => $table,
 	'L_CONFIRM_DELETE_TABLE' => $LANG['db_confirm_delete_table'],
 	'L_CONFIRM_TRUNCATE_TABLE' => $LANG['db_confirm_truncate_table'],
+	'L_CONFIRM_DELETE_ENTRY' => $LANG['db_confirm_delete_entry'],
 	'L_DATABASE_MANAGEMENT' => $LANG['database_management'],
 	'L_TABLE_STRUCTURE' => $LANG['db_table_structure'],
 	'L_TABLE_DISPLAY' => $LANG['display'],
@@ -60,6 +61,23 @@ if( !empty($table) && $action == 'data' )
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
+	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
+	
+	//Détection de la clée primaire.
+	$primary_key = '';
+	foreach($table_structure['fields'] as $fields_info)
+	{
+		$check_primary_key = false;
+		foreach($table_structure['index'] as $index_info) 
+		{
+			if( $index_info['type'] == 'PRIMARY KEY' && in_array($fields_info['name'], explode(',', $index_info['fields'])) )
+			{
+				$primary_key = $fields_info['name'];
+				break;
+			}
+		}
+	}
+
 	//On éxécute la requête
 	$nbr_lines = $Sql->query("SELECT COUNT(*) FROM ".$table, __LINE__, __FILE__);
 	$query = "SELECT * FROM ".$table.$Sql->Sql_limit($Pagination->First_msg(30, 'p'), 30);
@@ -71,20 +89,44 @@ if( !empty($table) && $action == 'data' )
 		//Premier passage: on liste le nom des champs sélectionnés
 		if( $i == 1 )
 		{
-			foreach( $row as $field_name => $field_value )
+			$Template->Assign_block_vars('line.field', array(
+				//'FIELD' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+				'FIELD' => '',
+				'CLASS' => 'row2',
+				'STYLE' => ''
+			));
+				
+			foreach($row as $field_name => $field_value)
+			{
 				$Template->Assign_block_vars('line.field', array(
 					'FIELD' => '<strong>' . $field_name . '</strong>',
 					'CLASS' => 'row3'
 				));
+			}
 			$Template->Assign_block_vars('line', array());
 		}
+		
 		//On parse les valeurs de sortie
-		foreach( $row as $field_name => $field_value )
-		$Template->Assign_block_vars('line.field', array(
-			'FIELD' => strprotect($field_value),
-			'CLASS' => 'row1',
-			'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
-		));
+		$j = 0;
+		foreach($row as $field_name => $field_value)
+		{
+			if( $j == 0 && !empty($primary_key) ) //Clée primaire détectée.
+			{
+				$Template->Assign_block_vars('line.field', array(
+					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete" onclick="javascript:return Confirm_del_entry()" title="' . $LANG['delete'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" alt="" /></a>',
+					//<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update" title="' . $LANG['update'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" alt="" /></a>',
+					'CLASS' => 'row2',
+					'STYLE' => ''
+				));
+			}
+			
+			$Template->Assign_block_vars('line.field', array(
+				'FIELD' => strprotect($field_value),
+				'CLASS' => 'row1',
+				'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
+			));
+			$j++;
+		}
 		$i++;
 	}
 	
@@ -102,6 +144,38 @@ if( !empty($table) && $action == 'data' )
 		'L_PAGE' => $LANG['page'],
 		'L_EXECUTED_QUERY' => $LANG['db_executed_query']
 	));
+}
+elseif( !empty($table) && $action == 'delete' )
+{
+	$field = retrieve(GET, 'field', '');
+	$value = retrieve(GET, 'value', '');
+	
+	if( !empty($value) && !empty($field) )
+		$Sql->query("DELETE FROM ".$table." WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
+	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table . '&action=data');
+}
+elseif( !empty($table) && $action == 'update' ) //En attente de dev.
+{
+	$value = retrieve(POST, 'value', '');
+	if( !empty($value) ) //On exécute une requête
+	{
+		//$Sql->query("UPDATE ".$table." SET " . $field . " = '" . $value . "' WHERE ", __LINE__, __FILE__);
+		redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table);
+	}
+	else
+	{
+		$Template->Assign_vars(array(
+			'C_DATABASE_UPDATE_FORM' => true,
+			/*'QUERY' => $Sql->Indent_query($query),
+			'QUERY_HIGHLIGHT' => $Sql->Highlight_query($query),
+			'L_REQUIRE' => $LANG['require'],
+			'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
+			'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],
+			'L_EXECUTE' => $LANG['db_submit_query'],
+			'L_RESULT' => $LANG['db_query_result'],
+			'L_EXECUTED_QUERY' => $LANG['db_executed_query']*/
+		));
+	}
 }
 elseif( !empty($table) && $action == 'optimize' )
 {

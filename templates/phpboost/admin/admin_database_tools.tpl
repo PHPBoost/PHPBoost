@@ -39,7 +39,7 @@
 							<h5 class="links"><img src="../templates/{THEME}/images/admin/themes_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">{L_TABLE_DISPLAY}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="../templates/{THEME}/images/admin/database_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">SQL</a></h5>
+							<h5 class="links"><img src="../templates/{THEME}/images/admin/tools_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">SQL</a></h5>
 						</li>
 						<li>
 							<h5 class="links"><img src="../templates/{THEME}/images/admin/cache_mini.png" class="valign_middle" alt="" /> <a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">{L_BACKUP}</a></h5>
@@ -264,6 +264,13 @@
 			
 			
 			# IF C_DATABASE_TABLE_DATA #
+			<script type="text/javascript">
+			<!--
+			function Confirm_del_entry() {
+				return confirm("{L_CONFIRM_DELETE_ENTRY}");
+			}
+			-->	
+			</script>
 			<div class="block_container" style="width:98%;" id="executed_query">
 				<div class="block_top">
 					{L_RESULT}
@@ -330,27 +337,27 @@
 			</script>
 			
 			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;action=query#executed_query" method="post" onsubmit="return check_form();">
-			<div class="block_container">
-				<div class="block_top">
-					{L_QUERY}
-				</div>
-				<div class="block_contents2">
-					<span id="errorh"></span>
-					<div class="warning">
-						<img src="../templates/{THEME}/images/warning.png" alt="" style="float:left;padding-right:6px;" /> {L_EXPLAIN_QUERY}
+				<div class="block_container">
+					<div class="block_top">
+						{L_QUERY}
 					</div>
+					<div class="block_contents2">
+						<span id="errorh"></span>
+						<div class="warning">
+							<img src="../templates/{THEME}/images/warning.png" alt="" style="float:left;padding-right:6px;" /> {L_EXPLAIN_QUERY}
+						</div>
+					</div>
+					<div class="block_top">
+						* {L_EXECUTED_QUERY}
+					</div>
+					<div class="block_contents2">
+						<textarea class="post" rows="12" id="query" name="query">{QUERY}</textarea>
+					</div>
+					<fieldset class="fieldset_submit" style="margin:0">
+						<legend>{L_EXECUTE}</legend>
+						<input type="submit" class="submit" value="{L_EXECUTE}" />
+					</fieldset>
 				</div>
-				<div class="block_top">
-					* {L_EXECUTED_QUERY}
-				</div>
-				<div class="block_contents2">
-					<textarea class="post" rows="12" id="query" name="query">{QUERY}</textarea>
-				</div>
-				<fieldset class="fieldset_submit" style="margin:0">
-					<legend>{L_EXECUTE}</legend>
-					<input type="submit" class="submit" value="{L_EXECUTE}" />		
-				</fieldset>
-			</div>
 			</form>
 			
 			# IF C_QUERY_RESULT #
@@ -380,6 +387,32 @@
 				</div>				
 			</div>
 			# ENDIF #			
+			# ENDIF #
+			
+			# IF C_DATABASE_UPDATE_FORM #
+			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;action=update#executed_query" method="post" onsubmit="return check_form();">
+				<div class="block_container">
+					<div class="block_top">
+						{L_QUERY}
+					</div>
+					<div class="block_contents2">
+						<span id="errorh"></span>
+						<div class="warning">
+							<img src="../templates/{THEME}/images/warning.png" alt="" style="float:left;padding-right:6px;" /> {L_EXPLAIN_QUERY}
+						</div>
+					</div>
+					<div class="block_top">
+						* {L_EXECUTED_QUERY}
+					</div>
+					<div class="block_contents2">
+						<textarea class="post" rows="12" id="query" name="query">{QUERY}</textarea>
+					</div>
+					<fieldset class="fieldset_submit" style="margin:0">
+						<legend>{L_EXECUTE}</legend>
+						<input type="submit" class="submit" value="{L_EXECUTE}" />
+					</fieldset>
+				</div>
+			</form>	
 			# ENDIF #
 		</div>
 		
