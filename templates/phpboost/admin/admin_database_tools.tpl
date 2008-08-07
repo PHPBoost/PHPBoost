@@ -390,28 +390,48 @@
 			# ENDIF #
 			
 			# IF C_DATABASE_UPDATE_FORM #
-			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;action=update#executed_query" method="post" onsubmit="return check_form();">
-				<div class="block_container">
-					<div class="block_top">
-						{L_QUERY}
-					</div>
-					<div class="block_contents2">
-						<span id="errorh"></span>
-						<div class="warning">
-							<img src="../templates/{THEME}/images/warning.png" alt="" style="float:left;padding-right:6px;" /> {L_EXPLAIN_QUERY}
-						</div>
-					</div>
-					<div class="block_top">
-						* {L_EXECUTED_QUERY}
-					</div>
-					<div class="block_contents2">
-						<textarea class="post" rows="12" id="query" name="query">{QUERY}</textarea>
-					</div>
-					<fieldset class="fieldset_submit" style="margin:0">
-						<legend>{L_EXECUTE}</legend>
-						<input type="submit" class="submit" value="{L_EXECUTE}" />
-					</fieldset>
-				</div>
+			<br />
+			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action=update#executed_query" method="post" onsubmit="return check_form();">
+				<table class="module_table">
+					<tr style="text-align:center;">			
+						<td class="row3 text_strong">
+							{L_FIELD_FIELD}
+						</td>
+						<td class="row3 text_strong">
+							{L_FIELD_TYPE}
+						</td>
+						<td class="row3 text_strong">
+							{L_FIELD_NULL}
+						</td>
+						<td class="row3 text_strong">
+							{L_FIELD_VALUE}
+						</td>
+					</tr>
+					# START fields #
+					<tr>
+						<td class="row1">
+							{fields.FIELD_NAME}
+						</td>
+						<td class="row1">
+							{fields.FIELD_TYPE}
+						</td>
+						<td class="row2">
+							{fields.FIELD_NULL}
+						</td>
+						<td class="row2">
+							# IF fields.C_FIELD_FORM_EXTEND #
+							<textarea type="text" class="post" rows="3" cols="37" name="{fields.FIELD_NAME}">{fields.FIELD_VALUE}</textarea>
+							# ELSE #
+							<input type="text" size="30" name="{fields.FIELD_NAME}" class="text" value="{fields.FIELD_VALUE}" />
+							# ENDIF #
+						</td>
+					</tr>
+					# END fields #
+				</table>
+				<fieldset class="fieldset_submit" style="margin:0">
+					<legend>{L_EXECUTE}</legend>
+					<input type="submit" class="submit" name="submit" value="{L_EXECUTE}" />
+				</fieldset>
 			</form>	
 			# ENDIF #
 		</div>

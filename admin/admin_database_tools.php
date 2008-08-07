@@ -90,8 +90,7 @@ if( !empty($table) && $action == 'data' )
 		if( $i == 1 )
 		{
 			$Template->Assign_block_vars('line.field', array(
-				//'FIELD' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-				'FIELD' => '',
+				'FIELD' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
 				'CLASS' => 'row2',
 				'STYLE' => ''
 			));
@@ -113,8 +112,7 @@ if( !empty($table) && $action == 'data' )
 			if( $j == 0 && !empty($primary_key) ) //Clée primaire détectée.
 			{
 				$Template->Assign_block_vars('line.field', array(
-					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete" onclick="javascript:return Confirm_del_entry()" title="' . $LANG['delete'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" alt="" /></a>',
-					//<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update" title="' . $LANG['update'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" alt="" /></a>',
+					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete" onclick="javascript:return Confirm_del_entry()" title="' . $LANG['delete'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" alt="" /></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update" title="' . $LANG['update'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" alt="" /></a>',
 					'CLASS' => 'row2',
 					'STYLE' => ''
 				));
@@ -154,27 +152,54 @@ elseif( !empty($table) && $action == 'delete' )
 		$Sql->query("DELETE FROM ".$table." WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
 	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table . '&action=data');
 }
-elseif( !empty($table) && $action == 'update' ) //En attente de dev.
+elseif( !empty($table) && $action == 'update' ) //Mise à jour.
 {
-	$value = retrieve(POST, 'value', '');
-	if( !empty($value) ) //On exécute une requête
+	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
+	
+	$value = retrieve(GET, 'value', '');
+	$field = retrieve(GET, 'field', '');
+	$submit = retrieve(POST, 'submit', '');
+	if( !empty($submit) ) //On exécute une requête
 	{
-		//$Sql->query("UPDATE ".$table." SET " . $field . " = '" . $value . "' WHERE ", __LINE__, __FILE__);
-		redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table);
+		$request = '';
+		foreach($table_structure['fields'] as $fields_info)
+		{
+			$field_value = retrieve(POST, $fields_info['name'], '');
+			$request .= $fields_info['name'] . " = '" . strprotect($field_value, HTML_NO_PROTECT) . "', ";
+		}
+		
+		$Sql->query("UPDATE ".$table." SET " . trim($request, ', ') . " WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
+		redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table . '&action=data');
 	}
-	else
+	elseif( !empty($field) && !empty($value) )
 	{
 		$Template->Assign_vars(array(
 			'C_DATABASE_UPDATE_FORM' => true,
-			/*'QUERY' => $Sql->Indent_query($query),
-			'QUERY_HIGHLIGHT' => $Sql->Highlight_query($query),
-			'L_REQUIRE' => $LANG['require'],
-			'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
-			'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],
+			'FIELD_NAME' => $field,
+			'FIELD_VALUE' => $value,
 			'L_EXECUTE' => $LANG['db_submit_query'],
-			'L_RESULT' => $LANG['db_query_result'],
-			'L_EXECUTED_QUERY' => $LANG['db_executed_query']*/
+			'L_FIELD_FIELD' => $LANG['db_table_field'],
+			'L_FIELD_TYPE' => $LANG['type'],
+			'L_FIELD_NULL' => $LANG['db_table_null'],
+			'L_FIELD_VALUE' => $LANG['db_table_value'],
+			'L_EXECUTE' => $LANG['db_submit_query']
 		));
+		
+		//On éxécute la requête
+		$row = $Sql->Query_array(str_replace(PREFIX, '', $table), '*', "WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
+		//On parse les valeurs de sortie
+		$i = 0;
+		foreach($row as $field_name => $field_value)
+		{
+			$Template->Assign_block_vars('fields', array(
+				'FIELD_NAME' => $field_name,
+				'FIELD_TYPE' => $table_structure['fields'][$i]['type'],
+				'FIELD_NULL' => $table_structure['fields'][$i]['null'] ? $LANG['yes'] : $LANG['no'],
+				'FIELD_VALUE' => strprotect($field_value),
+				'C_FIELD_FORM_EXTEND' => ($table_structure['fields'][$i]['type'] == 'text') ? true : false
+			));
+			$i++;
+		}
 	}
 }
 elseif( !empty($table) && $action == 'optimize' )
