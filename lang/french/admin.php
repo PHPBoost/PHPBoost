@@ -623,6 +623,7 @@ $LANG['db_table_index'] = 'Index';
 $LANG['db_table_field'] = 'Champ';
 $LANG['db_table_attribute'] = 'Attribut';
 $LANG['db_table_null'] = 'Null';
+$LANG['db_table_value'] = 'Valeur';
 $LANG['db_table_extra'] = 'Extra';
 $LANG['db_autoincrement'] = 'Suivant autoindex';
 $LANG['db_table_free'] = 'Perte';
