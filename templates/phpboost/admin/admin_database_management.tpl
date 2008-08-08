@@ -200,6 +200,9 @@
 							<h5 class="links"><img src="../templates/{THEME}/images/admin/tools_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">SQL</a></h5>
 						</li>
 						<li>
+							<h5 class="links"><img src="../templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert">{L_INSERT}</a></h5>
+						</li>
+						<li>
 							<h5 class="links"><img src="../templates/{THEME}/images/admin/cache_mini.png" class="valign_middle" alt="" /> <a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">{L_BACKUP}</a></h5>
 						</li>
 						<li>
