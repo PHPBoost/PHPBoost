@@ -632,6 +632,7 @@ $LANG['db_select_all'] = 'toutes';
 $LANG['db_for_selected_tables'] = 'Actions à réaliser sur la sélection de tables';
 $LANG['db_optimize'] = 'Optimiser';
 $LANG['db_repair'] = 'Réparer';
+$LANG['db_insert'] = 'Insérer';
 $LANG['db_backup'] = 'Sauvegarder';
 $LANG['db_succes_repair_tables'] = 'La sélection de tables (<em>%s</em>) a été réparée avec succès';
 $LANG['db_succes_optimize_tables'] = 'La sélection de tables (<em>%s</em>) a été optimisée avec succès';

@@ -48,6 +48,7 @@ $Template->Assign_vars(array(
 	'L_DATABASE_MANAGEMENT' => $LANG['database_management'],
 	'L_TABLE_STRUCTURE' => $LANG['db_table_structure'],
 	'L_TABLE_DISPLAY' => $LANG['display'],
+	'L_INSERT' => $LANG['db_insert'],
 	'L_BACKUP' => $LANG['db_backup'],
 	'L_TRUNCATE' => $LANG['empty'],
 	'L_DELETE' => $LANG['delete'],
@@ -177,6 +178,7 @@ elseif( !empty($table) && $action == 'update' ) //Mise à jour.
 			'C_DATABASE_UPDATE_FORM' => true,
 			'FIELD_NAME' => $field,
 			'FIELD_VALUE' => $value,
+			'ACTION' => 'update',
 			'L_EXECUTE' => $LANG['db_submit_query'],
 			'L_FIELD_FIELD' => $LANG['db_table_field'],
 			'L_FIELD_TYPE' => $LANG['type'],
@@ -199,6 +201,68 @@ elseif( !empty($table) && $action == 'update' ) //Mise à jour.
 				'C_FIELD_FORM_EXTEND' => ($table_structure['fields'][$i]['type'] == 'text') ? true : false
 			));
 			$i++;
+		}
+	}
+}
+elseif( !empty($table) && $action == 'insert' ) //Mise à jour.
+{
+	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
+	
+	$submit = retrieve(POST, 'submit', '');
+	if( !empty($submit) ) //On exécute une requête
+	{
+		//Détection de la clée primaire.
+		$primary_key = '';
+		foreach($table_structure['fields'] as $fields_info)
+		{
+			foreach($table_structure['index'] as $index_info) 
+			{
+				if( $index_info['type'] == 'PRIMARY KEY' && in_array($fields_info['name'], explode(',', $index_info['fields'])) )
+				{
+					$primary_key = $fields_info['name'];
+					break;
+				}
+			}
+		}
+			
+		$values = '';
+		$fields = '';
+		foreach($table_structure['fields'] as $fields_info)
+		{
+			$field_value = retrieve(POST, $fields_info['name'], '');
+			if( $fields_info['name'] == $primary_key  && empty($field_value) ) //Clée primaire vide => on ignore.
+				continue;
+			$values .= "'" . strprotect($field_value, HTML_NO_PROTECT) . "', ";
+			$fields .= $fields_info['name'] . ', ';
+		}
+		
+		$Sql->query("INSERT INTO ".$table." (" . trim($fields, ', ') . ") VALUES (" . trim($values, ', ') . ")", __LINE__, __FILE__);
+		redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table . '&action=data');
+	}
+	else
+	{
+		$Template->Assign_vars(array(
+			'C_DATABASE_UPDATE_FORM' => true,
+			'FIELD_NAME' => '',
+			'FIELD_VALUE' => '',
+			'ACTION' => 'insert',
+			'L_EXECUTE' => $LANG['db_submit_query'],
+			'L_FIELD_FIELD' => $LANG['db_table_field'],
+			'L_FIELD_TYPE' => $LANG['type'],
+			'L_FIELD_NULL' => $LANG['db_table_null'],
+			'L_FIELD_VALUE' => $LANG['db_table_value'],
+			'L_EXECUTE' => $LANG['db_submit_query']
+		));
+		
+		foreach($table_structure['fields'] as $fields_info)
+		{
+			$Template->Assign_block_vars('fields', array(
+				'FIELD_NAME' => $fields_info['name'],
+				'FIELD_TYPE' => $fields_info['type'],
+				'FIELD_NULL' => $fields_info['null'] ? $LANG['yes'] : $LANG['no'],
+				'FIELD_VALUE' => strprotect($fields_info['default']),
+				'C_FIELD_FORM_EXTEND' => ($fields_info['type'] == 'text') ? true : false
+			));
 		}
 	}
 }
