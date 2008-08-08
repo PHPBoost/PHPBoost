@@ -71,6 +71,7 @@ $Template->Assign_vars(array(
 	'L_DATABASE_MANAGEMENT' => $LANG['database_management'],
 	'L_TABLE_STRUCTURE' => $LANG['db_table_structure'],
 	'L_TABLE_DISPLAY' => $LANG['display'],
+	'L_INSERT' => $LANG['db_insert'],
 	'L_QUERY' => $LANG['db_execute_query'],
 	'L_BACKUP' => $LANG['db_backup'],
 	'L_TRUNCATE' => $LANG['empty'],
