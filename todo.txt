@@ -26,7 +26,6 @@
 [+] Interface d'ajout de menu de liens. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
 [+] Interface de contribution des news et des articles.
 [-] Faire les miniatures pour les thèmes.
-[-] Faire la classe captcha.
 
 ------------------------------------ MODULES -----------------------------------
 

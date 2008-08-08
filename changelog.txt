@@ -24,8 +24,9 @@
 [*] [color=red]Nouveauté:[/color] Gestionnaire de notation (Framework PHPBoost). 
 [*] [color=red]Nouveauté:[/color] Amélioration de l'approche de programmation orienté objet (Framework PHPBoost). 
 [*] [color=red]Nouveauté:[/color] Support des autorisations avancées pour les menus.
-[*] [color=red]Nouveauté:[/color] Nouveau gestionnaire avancé de base de données.
+[*] [color=red]Nouveauté:[/color] Nouveau gestionnaire avancé de base de données, nombreux outils d'administration.
 [*] [color=red]Nouveauté:[/color] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml.
+[*] [color=red]Nouveauté:[/color] Nouveau système de captcha (anti-spam), avec différents niveaux de difficulté.
 [*] Système de cache amélioré.
 [*] Système de cache, et de changement de jour pour les modules intégrés à l'interface de communication noyau/module.
 [*] Gestion des mots de passe avec l'algorithme de cryptage sha256 en lieu et place du md5

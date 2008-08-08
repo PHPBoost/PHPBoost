@@ -36,6 +36,7 @@ if( !empty($_POST['msg_mbr']) ) //Message aux membres.
 	$config_member['msg_register'] = $CONFIG_MEMBER['msg_register'];
 	$config_member['activ_mbr'] = retrieve(POST, 'activ_mbr', 0); //désactivé par defaut. 
 	$config_member['verif_code'] = (isset($_POST['verif_code']) && @extension_loaded('gd')) ? numeric($_POST['verif_code']) : 0; //désactivé par defaut. 
+	$config_member['verif_code_difficulty'] = retrieve(POST, 'verif_code_difficulty', 2);
 	$config_member['delay_unactiv_max'] = retrieve(POST, 'delay_unactiv_max', 0); 
 	$config_member['force_theme'] = retrieve(POST, 'force_theme', 0); //Désactivé par défaut.
 	$config_member['activ_up_avatar'] = retrieve(POST, 'activ_up_avatar', 0); //Désactivé par défaut.
@@ -65,6 +66,14 @@ else
 	{
 		$selected = ( $CONFIG_MEMBER['activ_mbr'] == $key ) ? 'selected="selected"' : '' ;		
 		$activ_mode_option .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+	}
+	
+	for($i = 0; $i < 5; $i++)
+	{
+		$Template->Assign_block_vars('difficulty', array(
+			'VALUE' => $i,
+			'SELECTED' => ($CONFIG_MEMBER['verif_code_difficulty'] == $i) ? 'selected="selected"' : ''
+		));
 	}
 	
 	$Template->Assign_vars(array(
@@ -104,6 +113,7 @@ else
 		'L_DAYS' => $LANG['days'],
 		'L_VERIF_CODE' => $LANG['verif_code'],
 		'L_VERIF_CODE_EXPLAIN' => $LANG['verif_code_explain'],
+		'L_CAPTCHA_DIFFICULTY' => $LANG['captcha_difficulty'],
 		'L_ALLOW_THEME_MBR' => $LANG['allow_theme_mbr'],
 		'L_AVATAR_MANAGEMENT' => $LANG['avatar_management'],
 		'L_ACTIV_UP_AVATAR' => $LANG['activ_up_avatar'],

@@ -22,6 +22,18 @@
 							<label><input type="radio" {CONTACT_VERIFCODE_DISABLED} name="contact_verifcode" value="0" /> {L_NO}</label>
 						</dd>
 					</dl>
+					<dl>
+						<dt><label for="contact_difficulty_verifcode">{L_CAPTCHA_DIFFICULTY}</label></dt>
+						<dd>
+							<label>
+								<select name="contact_difficulty_verifcode" id="contact_difficulty_verifcode">
+									# START difficulty #
+									<option value="{difficulty.VALUE}" {difficulty.SELECTED}>{difficulty.VALUE}</option>
+									# END difficulty #
+								</select>         
+							</label>
+						</dd>
+					</dl>
 				</fieldset>	
 				
 				<fieldset class="fieldset_submit">

@@ -35,6 +35,7 @@ if( !empty($_POST['valid'])  )
 {
 	$config_contact = array();
 	$config_contact['contact_verifcode'] = retrieve(POST, 'contact_verifcode', 1);
+	$config_contact['contact_difficulty_verifcode'] = retrieve(POST, 'contact_difficulty_verifcode', 2);
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_contact)) . "' WHERE name = 'contact'", __LINE__, __FILE__);
 	
@@ -53,6 +54,7 @@ else
 	$Cache->Load_file('contact');
 	
 	$CONFIG_CONTACT['contact_verifcode'] = isset($CONFIG_CONTACT['contact_verifcode']) ? $CONFIG_CONTACT['contact_verifcode'] : 0;
+	$CONFIG_CONTACT['contact_difficulty_verifcode'] = isset($CONFIG_CONTACT['contact_difficulty_verifcode']) ? $CONFIG_CONTACT['contact_difficulty_verifcode'] : 2;
 	
 	$Template->Assign_vars(array(
 		'CONTACT_VERIFCODE_ENABLED' => ($CONFIG_CONTACT['contact_verifcode'] == '1') ? 'checked="checked"' : '',
@@ -61,12 +63,21 @@ else
 		'L_CONTACT_CONFIG' => $LANG['contact_config'],
 		'L_CONTACT_VERIFCODE' => $LANG['verif_code'],
 		'L_CONTACT_VERIFCODE_EXPLAIN' => $LANG['verif_code_explain'],
+		'L_CAPTCHA_DIFFICULTY' => $LANG['captcha_difficulty'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
 	));
 	
+	for($i = 0; $i < 5; $i++)
+	{
+		$Template->Assign_block_vars('difficulty', array(
+			'VALUE' => $i,
+			'SELECTED' => ($CONFIG_CONTACT['contact_difficulty_verifcode'] == $i) ? 'selected="selected"' : ''
+		));
+	}
+
 	$Template->Pparse('admin_contact_config'); // traitement du modele	
 }
 

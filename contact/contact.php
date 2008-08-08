@@ -33,7 +33,6 @@ $mail_from = retrieve(POST, 'mail_email', '', TSTRING_UNSECURE);
 $mail_objet = retrieve(POST, 'mail_objet', '', TSTRING_UNSECURE);
 $mail_contents = retrieve(POST, 'mail_contents', '', TSTRING_UNSECURE);
 $mail_valid = retrieve(POST, 'mail_valid', '');
-$get_verif_code = retrieve(POST, 'verif_code', '', TSTRING_UNSECURE);
 
 ###########################Envoi##############################
 if( !empty($mail_valid) )
@@ -43,19 +42,10 @@ if( !empty($mail_valid) )
 	));	
 		
 	//Code de vérification si activé
-	$check_verif_code = true;
-	if( @extension_loaded('gd') && $CONFIG_CONTACT['contact_verifcode'] )
-	{
-		$user_id = substr(strhash(USER_IP), 0, 8);
-		$verif_code = $Sql->Query("SELECT code FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
-
-		if( empty($verif_code) || ($verif_code != $get_verif_code) )
-			$check_verif_code = false;
-		else //On efface le code qui a été utilisé.
-			$Sql->Query_inject("DELETE FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);			
-	}
+	include_once('../kernel/framework/util/captcha.class.php');
+	$Captcha = new Captcha();
 	
-	if( $check_verif_code || !$CONFIG_CONTACT['contact_verifcode'] ) //Code de vérification si activé
+	if( !$CONFIG_CONTACT['contact_verifcode'] || $Captcha->is_valid() ) //Code de vérification si activé
 	{
 		include_once('../kernel/framework/io/mail.class.php');
 		$Mail = new Mail();
@@ -89,18 +79,18 @@ else
 		$Errorh->Error_handler($LANG['error_mail'], E_USER_WARNING);
 		
 	//Code de vérification, anti-bots.
-	if( @extension_loaded('gd') && $CONFIG_CONTACT['contact_verifcode'] )
+	include_once('../kernel/framework/util/captcha.class.php');
+	$Captcha = new Captcha();
+	if( $Captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'] )
 	{
+		$Captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);
 		$Template->Assign_vars(array(
-			'L_REQUIRE_VERIF_CODE' => 'if(document.getElementById(\'verif_code\').value == "") {
-				alert("' . $LANG['require_verif_code'] . '");
-				return false;
-			}'
+			'C_VERIF_CODE' => true,
+			'VERIF_CODE' => $Captcha->display_form(),
+			'L_REQUIRE_VERIF_CODE' => $Captcha->js_require()
 		));		
-		$Template->Assign_block_vars('verif_code', array(
-		));
 	}
-		
+	
 	$Template->Assign_vars(array(
 		'MAIL' => $Member->Get_attribute('user_mail'),
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],

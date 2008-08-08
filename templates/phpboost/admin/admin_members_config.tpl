@@ -79,6 +79,18 @@
 						</dd>
 					</dl>
 					<dl>
+						<dt><label for="verif_code_difficulty">{L_CAPTCHA_DIFFICULTY}</label></dt>
+						<dd>
+							<label>
+								<select name="verif_code_difficulty" id="verif_code_difficulty">
+									# START difficulty #
+									<option value="{difficulty.VALUE}" {difficulty.SELECTED}>{difficulty.VALUE}</option>
+									# END difficulty #
+								</select>         
+							</label>
+						</dd>
+					</dl>
+					<dl>
 						<dt><label for="force_theme">{L_ALLOW_THEME_MBR}</label></dt>
 						<dd>
 							<label><input type="radio" {ALLOW_THEME_ENABLED} name="force_theme" id="force_theme" value="0" /> {L_YES}</label>

@@ -116,17 +116,16 @@ if( empty($key) )
 		}
 		
 		//Code de vérification, anti-bots.
-		if( $CONFIG_MEMBER['verif_code'] == '1' && @extension_loaded('gd') )
+		include_once('../kernel/framework/util/captcha.class.php');
+		$Captcha = new Captcha();
+		if( $Captcha->gd_loaded() && $CONFIG_MEMBER['verif_code'] == '1' )
 		{
+			$Captcha->set_difficulty($CONFIG_MEMBER['verif_code_difficulty']);
 			$Template->Assign_vars(array(
-				'L_REQUIRE_VERIF_CODE' => 'if(document.getElementById(\'verif_code\').value == "") {
-					alert("' . $LANG['require_verif_code'] . '");
-					return false;
-			    }'
-			));
-			
-			$Template->Assign_block_vars('register.verif_code', array(
-			));
+				'C_VERIF_CODE' => true,
+				'VERIF_CODE' => $Captcha->display_form(),
+				'L_REQUIRE_VERIF_CODE' => $Captcha->js_require()
+			));		
 		}
 		
 		//Autorisation d'uploader un avatar sur le serveur.
