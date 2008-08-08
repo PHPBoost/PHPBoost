@@ -227,9 +227,12 @@ else
 		}
 		
 		//Nom du menus.
-		$config = load_ini_file('../' . $menu['name'] . '/lang/', $CONFIG['lang']);
-		if( is_array($config) )
-			$menu['name'] = !empty($config['name']) ? $config['name'] : '';	
+		if( !empty($menu['name']) )
+		{
+			$config = load_ini_file('../' . $menu['name'] . '/lang/', $CONFIG['lang']);
+			if( is_array($config) )
+				$menu['name'] = !empty($config['name']) ? $config['name'] : $menu['name'];	
+		}
 		
 		//Récupération des tableaux des autorisations et des groupes.
 		$array_auth = !empty($menu['auth']) ? sunserialize($menu['auth']) : array();
