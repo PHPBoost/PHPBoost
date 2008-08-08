@@ -42,6 +42,9 @@
 							<h5 class="links"><img src="../templates/{THEME}/images/admin/tools_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">SQL</a></h5>
 						</li>
 						<li>
+							<h5 class="links"><img src="../templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert">{L_INSERT}</a></h5>
+						</li>
+						<li>
 							<h5 class="links"><img src="../templates/{THEME}/images/admin/cache_mini.png" class="valign_middle" alt="" /> <a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">{L_BACKUP}</a></h5>
 						</li>
 						<li>
@@ -391,7 +394,7 @@
 			
 			# IF C_DATABASE_UPDATE_FORM #
 			<br />
-			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action=update#executed_query" method="post" onsubmit="return check_form();">
+			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}#executed_query" method="post" onsubmit="return check_form();">
 				<table class="module_table">
 					<tr style="text-align:center;">			
 						<td class="row3 text_strong">
