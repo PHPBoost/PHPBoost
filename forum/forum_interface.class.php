@@ -364,32 +364,35 @@ class ForumInterface extends ModuleInterface
         
         $req_cats = (($idcat > 0) && isset($CAT_FORUM[$idcat])) ? " AND c.id_left >= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right <= '" . $CAT_FORUM[$idcat]['id_right'] . "' " : "";
         
-        $req = "SELECT t.id, t.title, t.last_timestamp, msg.id mid, msg.contents
-            FROM ".PREFIX."forum_topics t
-            LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
-            LEFT JOIN ".PREFIX."forum_msg msg ON msg.id = t.last_msg_id
-            WHERE (c.auth LIKE '%s:3:\"r-1\";i:1;%' OR c.auth LIKE '%s:3:\"r-1\";i:3;%') AND c.level != 0 AND c.aprob = 1 " . $req_cats . "
-            ORDER BY t.last_timestamp DESC
-            " . $Sql->Sql_limit(0, $CONFIG_FORUM['pagination_msg']);
-        
+        $req = "SELECT t.id, t.title, t.last_timestamp, t.last_msg_id, t.display_msg, t.nbr_msg AS t_nbr_msg, msg.id mid, msg.contents
+		FROM ".PREFIX."forum_topics t
+		LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
+		LEFT JOIN ".PREFIX."forum_msg msg ON msg.id = t.last_msg_id
+		WHERE (c.auth LIKE '%s:3:\"r-1\";i:1;%' OR c.auth LIKE '%s:3:\"r-1\";i:3;%') AND c.level != 0 AND c.aprob = 1 " . $req_cats . "
+		ORDER BY t.last_timestamp DESC
+		" . $Sql->Sql_limit(0, $CONFIG_FORUM['pagination_msg']);
         $result = $Sql->Query_while($req, __LINE__, __FILE__);
         // Generation of the feed's items
         while ($row = $Sql->Sql_fetch_assoc($result))
         {
             $item = new FeedItem();
-            // Rewriting
-            if ( $CONFIG['rewrite'] == 1 )
-                $rewrited_title = '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php';
-            else
-                $rewrited_title = '.php?id=' . $row['id'];
-            $link = HOST . DIR . '/forum/topic' . $rewrited_title;
+			
+			//Link
+			$last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
+			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
+			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';					
+				
+			$link = ($CONFIG['rewrite'] == 1) ? '-' . $row['id'] . $last_page_rewrite . '+' . url_encode_rewrite($row['title'])  . '.php' : '.php?' . $last_page .  'id=' . $row['id'];
+            $link = HOST . DIR . '/forum/topic' . $link . '#m' .  $row['last_msg_id'];
             
             // XML text's protection
             $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
             
             $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['last_timestamp']);
             
-            $item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
+			$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);
+			
+            $item->set_title(htmlspecialchars(html_entity_decode($last_topic_title)));
             $item->set_link($link);
             $item->set_guid($link);
             $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
