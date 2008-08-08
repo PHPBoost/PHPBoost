@@ -211,6 +211,7 @@ $LANG['max_link_explain'] = 'Mettre -1 pour illimité';
 $LANG['generate'] = 'Générer';
 $LANG['or_direct_path'] = 'Ou chemin direct';
 $LANG['unknow_bot'] = 'Bot inconnu';
+$LANG['captcha_difficulty'] = 'Difficulté du code de vérification';
 
 //Connexion
 $LANG['unlock_admin_panel'] = 'Déverrouillage de l\'administration';

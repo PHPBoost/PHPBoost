@@ -72,20 +72,10 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 	
 		
 	//Code de vérification si activé
-	$check_verif_code = true;
-	if( $CONFIG_MEMBER['verif_code'] == '1' && @extension_loaded('gd') )
-	{
-		$user_id = substr(strhash(USER_IP), 0, 8);
-		$verif_code = $Sql->Query("SELECT code FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
-		$get_verif_code = retrieve(POST, 'verif_code', '', TSTRING_UNSECURE);
-
-		if( empty($verif_code) || ($verif_code != $get_verif_code) )
-			$check_verif_code = false;
-		else //On efface le code qui a été utilisé.
-			$Sql->Query_inject("DELETE FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);			
-	}
+	include_once('../kernel/framework/util/captcha.class.php');
+	$Captcha = new Captcha();
 	
-	if( $check_verif_code ) //Code de vérification si activé
+	if( !($CONFIG_MEMBER['verif_code'] == '1') || $Captcha->is_valid() ) //Code de vérification si activé
 	{
 		if( strlen($login) >= 3 && strlen($password) >= 6 && strlen($password_bis) >= 6 )
 		{
@@ -263,7 +253,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					unset($password, $password_hash);
 					
 					//Affichage de la confirmation d'inscription.
-					redirect_confirm(get_start_page(), sprintf($l_register_confirm, stripslashes($login)), 7);
+					redirect_confirm(get_start_page(), sprintf($l_register_confirm, stripslashes($login)), 5);
 				}
 			}
 			elseif( !empty($_POST['register_valid']) && $password !== $password_bis )

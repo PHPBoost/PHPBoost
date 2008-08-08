@@ -211,6 +211,7 @@ $LANG['max_link_explain'] = 'Set to -1 for no limit';
 $LANG['generate'] = 'Generate';
 $LANG['or_direct_path'] = 'Or direct path';
 $LANG['unknow_bot'] = 'Unknow bot';
+$LANG['captcha_difficulty'] = 'Captcha difficulty';
 
 //Connexion
 $LANG['unlock_admin_panel'] = 'Unlock administration panel';

@@ -1796,7 +1796,7 @@ INSERT INTO `phpboost_upload_cat` VALUES (9, 5, 1, 'gfgd');
 
 CREATE TABLE `phpboost_verif_code` (
   `id` int(11) NOT NULL auto_increment,
-  `user_id` varchar(8) NOT NULL default '',
+  `user_id` varchar(15) NOT NULL default '',
   `code` varchar(20) NOT NULL default '',
   `timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)

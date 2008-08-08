@@ -27,7 +27,6 @@
 ###################################################*/
 
 //Classe gérant le multi-bench, permet de calculer très précisemment le temps d'execution d'un ou plusieurs morceau de code.
-
 class Bench
 {
 	## Public Methods ##
@@ -64,4 +63,5 @@ class Bench
 	var $bench_part = array(); //Array contenant les différentes parties du bench en cours.
 	var $number_format = 3; //Nombre de décimales après la virgule, affichées dans le résultat.
 }
+
 ?>

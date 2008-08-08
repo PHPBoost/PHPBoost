@@ -194,7 +194,7 @@ $LANG['image'] = 'Picture';
 $LANG['note'] = 'Note';
 $LANG['notes'] = 'Notes';
 $LANG['valid_note'] = 'Noter';
-$LANG['no_note'] = 'Aucune note';
+$LANG['no_note'] = 'No note';
 $LANG['previous'] = 'Previous';
 $LANG['next'] = 'Next';
 $LANG['mail'] = 'E-mail';
@@ -548,6 +548,12 @@ It may be an error, if you want you could contact the administrator of the web s
 
 %s';
 
+//Panneau de contribution
+$LANG['contribution_panel'] = 'Contribution pannel';
+$LANG['contribution_status_unread'] = 'Unsolved';
+$LANG['contribution_status_being_processed'] = 'In progress';
+$LANG['contribution_status_processed'] = 'Solved';
+
 //Loading bar.
 $LANG['query_loading'] = 'Sending of the query to server';
 $LANG['query_sent'] = 'Query loaded successful, waiting for the answer of your server';
@@ -565,4 +571,8 @@ $LANG['achieved'] = 'Achieved in';
 $LANG['syndication'] = 'Syndication';
 $LANG['rss'] = 'RSS';
 $LANG['atom'] = 'ATOM';
+
+//Dictionnaire pour le captcha.
+$LANG['_code_dictionnary'] = array('image', 'php', 'query', 'azerty', 'exit', 'verif', 'genre', 'search', 'design', 'exec', 'web', 'inter', 'extern', 'cache', 'media', 'cms', 'cesar', 'watt', 'data', 'site', 'mail', 'email', 'spam', 'index', 'rand', 'text', 'inner', 'over', 'under', 'users', 'visitor', 'member', 'home', 'date', 'today', 'month', 'year', 'name', 'picture', 'notes', 'next', 'subject', 'content', 'options', 'title', 'valid', 'list', 'place', 'quote', 'hide', 'default', 'type', 'status', 'replies', 'back', 'close', 'smiley', 'total', 'average', 'page', 'minute', 'week', 'group', 'size', 'theme', 'online', 'modules', 'result', 'during', 'until', 'lock', 'style', 'notice', 'warning', 'success', 'unknow', 'other', 'final', 'code');
+
 ?>

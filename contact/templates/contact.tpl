@@ -12,22 +12,6 @@
 			{L_REQUIRE_VERIF_CODE}
 			return true;
 		}
-		function refresh_img()
-		{
-			if ( typeof this.img_id == 'undefined' )
-				this.img_id = 0;
-			else
-				this.img_id++;
-			
-			var data = 'new=1';
-			var xhr_object = xmlhttprequest_init('../member/verif_code.php');
-			xhr_object.onreadystatechange = function() 
-			{
-				if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
-					document.getElementById('verif_code_img').src = '../member/verif_code.php?new=' + img_id;	
-			}
-			xmlhttprequest_sender(xhr_object, data);
-		}
 		-->
 		</script>
 
@@ -51,17 +35,16 @@
 					<dt><label for="mail_objet">{L_OBJET}</label></dt>
 					<dd><label><input type="text" size="30" name="mail_objet" id="mail_objet" class="text" /></label></dd>
 				</dl>
-				# START verif_code #
+				# IF C_VERIF_CODE #
 				<dl>
 					<dt><label for="verif_code">* {L_VERIF_CODE}</label></dt>
-					<dd><label>
-						<img src="../member/verif_code.php" id="verif_code_img" alt="" style="padding:2px;" />
-						<br />
-						<input size="30" type="text" class="text" name="verif_code" id="verif_code" />
-						<a href="javascript:refresh_img()"><img src="../templates/{THEME}/images/refresh.png" alt="" class="valign_middle" /></a>
-					</label></dd>			
+					<dd>
+						<label>
+							{VERIF_CODE}
+						</label>
+					</dd>			
 				</dl>
-				# END verif_code #
+				# ENDIF #
 				<label for="mail_contents">* {L_CONTENTS}</label>
 				<label><textarea rows="10" cols="47" id="mail_contents" name="mail_contents"></textarea></label>
 			</fieldset>
