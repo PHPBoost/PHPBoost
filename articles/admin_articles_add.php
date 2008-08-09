@@ -96,7 +96,10 @@ if( !empty($_POST['valid']) )
 		$clause_update = ($visible == 1) ? 'nbr_articles_visible = nbr_articles_visible + 1' : 'nbr_articles_unvisible = nbr_articles_unvisible + 1';
 		$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 		
-        // Feeds Regeneration
+        ###### Regénération du cache #######
+		$Cache->Generate_module_file('articles');
+		
+		// Feeds Regeneration
         require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
         Feed::clear_cache('articles');
 		
