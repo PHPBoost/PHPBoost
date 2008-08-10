@@ -253,7 +253,8 @@ class BBCodeParser extends ContentParser
 			
 			$other_tags = array('table', 'quote', 'hide', 'indent', 'list'); 
 			foreach($this->forbidden_tags as $key => $tag)
-			{	
+			{
+				//Balise interdite : on la supprime
 				if( in_array($tag, $other_tags) )
 				{
 					$array_preg[$tag] = '`\[' . $tag . '.*\](.+)\[/' . $tag . '\]`isU';

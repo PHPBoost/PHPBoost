@@ -45,7 +45,7 @@ class TinyMCEUnparser extends ContentUnparser
 			$this->parsed_content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->parsed_content);
 		}
 		
-		//Smiley.
+		//Smilies
 		@include(PATH_TO_ROOT . '/cache/smileys.php');
 		if(!empty($_array_smiley_code) )
 		{
