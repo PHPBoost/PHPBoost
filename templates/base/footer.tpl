@@ -38,5 +38,6 @@
 		# ENDIF #
 	</div>
 </div></div>
+		<span id="scroll_bottom_page"></span>
 	</body>
 </html>

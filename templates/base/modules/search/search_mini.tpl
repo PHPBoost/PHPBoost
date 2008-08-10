@@ -16,7 +16,7 @@
         }
         -->
         </script>
-        <div style="position:absolute;top:250px;margin-left:80px;">
+        <div style="position:absolute;top:220px;margin-left:80px;">
 			<form action="{U_FORM_VALID}" onsubmit="return check_search_mini_form_post();" method="post">
 				<input type="text" size="14" id="TxTMiniSearched" name="search" value="{TEXT_SEARCHED}" class="text" style="background:#FFFFFF url({PATH_TO_ROOT}/templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;height:14px" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" />
 				<input type="hidden" name="search_submit" id="search_submit" value="{SEARCH}" class="submit" />

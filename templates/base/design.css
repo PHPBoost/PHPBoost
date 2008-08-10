@@ -14,16 +14,16 @@ body{
 	font-size:12px;
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	color:#333333;
-	width:947px;
+	width:990px;
 	margin: auto;
-	background:#EAF4FB;
+	background:#1171A3;
 }
 
 /* Conteneurs 
 --------------------------------------*/
 /* ##### Conteneur global du site ###### */
 div#global{
-	width:947px;
+	width:990px;
 	margin:auto;
 	margin-bottom:25px;
 	background:url(images/bg.png) repeat-y;
@@ -31,7 +31,7 @@ div#global{
 /* ##### Entête de la page ###### */
 div#header, div#header_admin{
 	background:url(images/header.png) no-repeat;
-	height:175px;
+	height:139px;
 }
 /* #####  Conteneur en dessous de l'entête ###### */
 div#sub_header, div#sub_header_admin{
@@ -89,7 +89,7 @@ div#main2{
 	float:left;
 	width:65%;
 	padding-bottom:15px;
-	margin-left:45px;
+	margin-left:59px;
 }
 /* ##### Barre de lien rapide ###### */
 div#links{
@@ -157,4 +157,35 @@ div#newsletter{
 	float: right;
 	padding-top:8px;
 	padding-right:70px;
+}
+div#links_vertical {
+	display:block !important;
+	display:none;
+	position:fixed;
+	background:url(images/vertical_menu_repeat.png) repeat-y;
+	top:45%;
+	margin-left:940px;
+	width:27px;
+	text-align:center;
+	padding-left:2px;
+}
+div#links_vertical_top {
+	width:29px;
+	background:url(images/vertical_menu_top.png) no-repeat;
+	text-align:center;
+	margin-left:-2px;
+	padding-top:8px;
+}
+div#links_vertical_central {
+	width:27px;
+	text-align:center;
+	margin-left:-2px;
+	padding:8px 0px;
+}
+div#links_vertical_bottom {
+	width:29px;
+	background:url(images/vertical_menu_bottom.png) no-repeat;
+	text-align:center;
+	height:32px;
+	margin-left:-2px;
 }

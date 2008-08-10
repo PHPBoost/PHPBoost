@@ -82,12 +82,12 @@ release({L_RELEASE_FORMAT});
 -->
 </script>
 # ENDIF #
-
+<span id="scroll_top_page"></span>
 <div id="global">
 	<div id="header">
 		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
 		{MODULES_MINI_HEADER_CONTENT}
-		<div class="dynamic_menu" style="padding-left:138px;top:160px">
+		<div class="dynamic_menu" style="padding-left:138px;top:124px">
 			<ul>
 				<li>
 					<h5 class="links"><a href="{PATH_TO_ROOT}/index.php" title="Accueil"><img src="{PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> Accueil</a></h5>
@@ -129,7 +129,32 @@ release({L_RELEASE_FORMAT});
 	<div id="sub_header">
 		{MODULES_MINI_SUB_HEADER_CONTENT}
 	</div>
-	
+	    	<div style="clear:both;">
+	<div id="links_vertical">
+		<div id="links_vertical_top">
+			<p style="margin:0;"><img onclick="new Effect.ScrollTo('scroll_top_page',{duration:1.2}); return false;" style="cursor:pointer;" src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></p>
+			<hr style="width:50%;margin:auto;" />
+		</div>
+		<div id="links_vertical_central">
+			<p style="margin:0;"><a href="{PATH_TO_ROOT}/news/news.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png" alt="" /></a></p>
+	# IF C_MEMBER_CONNECTED #		
+			<p style="margin:0"><a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" class="small_link" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /></a>	</p>		
+			<p style="margin:0"><a href="{U_MEMBER_PM}" class="small_link" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /></a></p>			
+			# IF C_ADMIN_AUTH # 
+			<p style="margin:0"><a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link" title="{L_ADMIN_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /></a></p>
+			# ENDIF #
+			# IF C_MODO_AUTH # 
+			<p><a href="{PATH_TO_ROOT}/member/moderation_panel.php" class="small_link" title="{L_MODO_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /></a></p>
+			# ENDIF #
+	# END ENDIF #
+		</div>
+		
+		<div id="links_vertical_bottom">
+			<hr style="width:50%;margin:auto;" />
+			<p style="margin:0;margin-top:5px;"><img onclick="new Effect.ScrollTo('scroll_bottom_page',{duration:1.2}); return false;" style="cursor:pointer;" src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></p>
+			</div>
+		</div>
+	</div>
 	
 	# IF C_COMPTEUR #
 	<div id="compteur">					
