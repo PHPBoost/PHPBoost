@@ -394,7 +394,7 @@ function strparse(&$content, $forbidden_tags = array())
 function unparse(&$content)
 {
 	$content_manager = new Content();
-	$parser =& $content_manager->get_parser();
+	$parser =& $content_manager->get_unparser();
     $parser->set_content($content);
     $parser->unparse();
 	
@@ -407,7 +407,7 @@ function second_parse(&$content)
 	$content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $content);
 	
 	$content_manager = new Content();
-	$parser =& $content_manager->get_parser();
+	$parser =& $content_manager->get_second_parser();
     $parser->set_content($content);
     $parser->second_parse();
 	

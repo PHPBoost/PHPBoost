@@ -78,6 +78,39 @@ class Content
 		}
 	}
 	
+	//Function which builds an object unparser and returns it
+	function get_unparser()
+	{
+		global $CONFIG;
+		switch($this->language_type)
+		{
+			case BBCODE_LANGUAGE:
+				require_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode_unparser.class.php');
+				return new BBCodeUnparser();
+			case TINYMCE_LANGUAGE:
+				require_once(PATH_TO_ROOT . '/kernel/framework/content/tinymce_unparser.class.php');
+				return new TinyMCEUnparser();
+			default:
+				if( $this->get_user_editor() == TINYMCE_LANGUAGE )
+				{
+					require_once(PATH_TO_ROOT . '/kernel/framework/content/tinymce_unparser.class.php');
+					return new TinyMCEUnparser();
+				}
+				else
+				{
+					require_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode_unparser.class.php');
+					return new BBCodeUnparser();
+				}
+		}
+	}
+	
+	//Function which builds an object unparser and returns it
+	function get_second_parser()
+	{
+		require_once(PATH_TO_ROOT . '/kernel/framework/content/content_second_parser.class.php');
+		return new ContentSecondParser();
+	}
+	
 	//Function which builds an object editor and returns it
 	function get_editor()
 	{
