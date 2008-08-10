@@ -34,7 +34,7 @@ $cat_name = !empty($CAT_FORUM[$id_get]['name']) ? $CAT_FORUM[$id_get]['name'] : 
 $Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 $Bread_crumb->Add_link($cat_name, '');
 
-if( !empty($id_get) )
+if( !empty($id_get) && !empty($CAT_FORUM[$id_get]['name']) )
 	define('TITLE', $LANG['title_forum'] . ' - ' . addslashes($CAT_FORUM[$id_get]['name']));
 else
 	define('TITLE', $LANG['title_forum']);
