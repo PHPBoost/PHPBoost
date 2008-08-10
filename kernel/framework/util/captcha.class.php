@@ -26,6 +26,12 @@
  *
 ###################################################*/
 
+define('CAPTCHA_VERY_EASY', 0);
+define('CAPTCHA_EASY', 1);
+define('CAPTCHA_NORMAL', 2);
+define('CAPTCHA_HARD', 3);
+define('CAPTCHA_VERY_HARD', 4);
+
 class Captcha
 {
 	## Public Methods ##
