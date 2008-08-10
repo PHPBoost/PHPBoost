@@ -57,7 +57,7 @@ class TinyMCEParser extends ContentParser
 		
 		echo $this->parsed_content . '<hr />';
 		
-		//Modification de quelques tags HTML envoyés par YinyMCE
+		//Modification de quelques tags HTML envoyés par TinyMCE
 		$this->parsed_content = str_replace(array('&amp;nbsp;&amp;nbsp;&amp;nbsp;', '&amp;gt;', '&amp;lt;', '&lt;br /&gt;', '&lt;br&gt;', '&amp;nbsp;'), array("\t", '&gt;', '&lt;', "\r\n", "\r\n", ' '), $this->parsed_content);
 		
 		//Balise size
