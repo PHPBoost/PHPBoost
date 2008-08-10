@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/parser.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/content/content_parser.class.php');
 
 class BBCodeParser extends ContentParser
 {
@@ -93,44 +93,7 @@ class BBCodeParser extends ContentParser
 		}
 	}
 	
-	//On unparse le contenu xHTML => BBCode
-	function unparse()
-	{
-		$this->parsed_content = $this->content;
-		
-		$this->_unparse_html(PICK_UP);
-		$this->_unparse_code(PICK_UP);
-		
-		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
-		if( PATH_TO_ROOT != '..' )
-		{
-			$this->parsed_content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->parsed_content);
-		}
-		
-		//Smilies
-		$this->_unparse_smilies();
-			
-		//caractères html
-		$this->_unparse_html_characters();
-		
-		//Remplacement des balises simples
-		$this->_unparse_simple_tags();
-
-		//Unparsage de la balise table.
-		if( strpos($this->parsed_content, '<table') !== false )
-			$this->_unparse_table();
-
-		//Unparsage de la balise table.
-		if( strpos($this->parsed_content, '<li') !== false )
-			$this->_unparse_list();
-		
-		$this->_unparse_code(REIMPLANT);
-		$this->_unparse_html(REIMPLANT);
-	}
-	
 	## Private ##
-	
-	## Parser ##
 	//Fonction de protection du code HTML
 	function _protect_content()
 	{	
@@ -435,110 +398,6 @@ class BBCodeParser extends ContentParser
 			$this->_split_imbricated_tag($this->parsed_content, 'list', '(?:=ordered)?(?: style="[^"]+")?');
 			$this->_parse_imbricated_list($this->parsed_content);
 		}
-	}
-	
-	//Unparser
-	function _unparse_smilies()
-	{
-		//Smilies
-		@include(PATH_TO_ROOT . '/cache/smileys.php');
-		if(!empty($_array_smiley_code) )
-		{
-			//Création du tableau de remplacement
-			foreach($_array_smiley_code as $code => $img)
-			{	
-				$smiley_img_url[] = '`<img src="../images/smileys/' . preg_quote($img) . '(.*) />`sU';
-				$smiley_code[] = $code;
-			}	
-			$this->parsed_content = preg_replace($smiley_img_url, $smiley_code, $this->parsed_content);
-		}
-	}
-	
-	//Remplacement des balises simples
-	function _unparse_simple_tags()
-	{
-		$array_str = array( 
-			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<hr class="bb_hr" />'
-		);
-		$array_str_replace = array( 
-			'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[line]'
-		);
-		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
-
-		$array_preg = array( 
-			'`<img src="([^?\n\r\t].*)" alt="[^"]*"(?: class="[^"]+")? />`iU',
-			'`<span style="color:([^;]+);">(.*)</span>`isU',
-			'`<span style="background-color:([^;]+);">(.*)</span>`isU',
-			'`<span style="text-decoration: underline;">(.*)</span>`isU',
-			'`<sup>(.+)</sup>`isU',
-			'`<sub>(.+)</sub>`isU',
-			'`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU',
-			'`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU',
-			'`<pre>(.*)</pre>`isU',
-			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
-			'`<p class="float_(left|right)">(.*)</p>`isU',
-			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
-			'`<acronym title="([^"]+)" class="bb_acronym">(.*)</acronym>`isU',
-			'`<a href="mailto:(.*)">(.*)</a>`isU',
-			'`<a href="([^"]+)">(.*)</a>`isU',
-			'`<h3 class="title([1-2]+)">(.*)</h3>`isU',
-			'`<h4 class="stitle([1-2]+)">(.*)</h4>`isU',
-			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
-			'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
-			'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/movieplayer\.swf\?movie=(.*)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
-			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
-			'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isU'
-		);
-		
-		$array_preg_replace = array( 
-			"[img]$1[/img]",
-			"[color=$1]$2[/color]",
-			"[bgcolor=$1]$2[/bgcolor]",
-			"[u]$1[/u]",	
-			"[sup]$1[/sup]",
-			"[sub]$1[/sub]",
-			"[size=$1]$2[/size]",
-			"[font=$1]$2[/font]",
-			"[pre]$1[/pre]",
-			"[align=$1]$2[/align]",
-			"[float=$1]$2[/float]",
-			"[anchor=$1]$2[/anchor]",
-			"[acronym=$1]$2[/acronym]",
-			"$1",
-			"[url=$1]$2[/url]",
-			"[title=$1]$2[/title]",
-			"[stitle=$1]$2[/stitle]",
-			"[style=$1]$2[/style]",
-			"[sound]$1[/sound]",
-			"[movie=$2,$3]$1[/movie]",
-			"[swf=$2,$3]$1[/swf]",
-			"[html]$1[/html]"
-		);	
-		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);
-		
-		//Remplacement des balises imbriquées.	
-		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->parsed_content);
-		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->parsed_content);
-		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->parsed_content);
-	}
-	
-	//Traitement des caractères html
-	function _unparse_html_characters()
-	{
-		$array_str = array( 
-			'&#8364;', '&#8218;', '&#402;', '&#8222;',
-			'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
-			'&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;', '&#8211;', '&#8212;', '&#732;', '&#8482;',
-			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
-		);
-		
-		$array_str_replace = array( 
-			'€', '‚', 'ƒ',
-			'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', '',
-			'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
-			'›', 'œ', '', 'Ÿ'
-		);	
-		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
 	}
 }
 
