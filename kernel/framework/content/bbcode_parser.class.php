@@ -37,7 +37,7 @@ class BBCodeParser extends ContentParser
 	//On parse le contenu: bbcode => xhtml.
 	function parse()
 	{
-		global $LANG, $Member;
+		global $Member;
 		
 		$this->parsed_content = $this->content;
 		
@@ -51,26 +51,95 @@ class BBCodeParser extends ContentParser
 		
 		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé
 		$this->parsed_content = ' ' . $this->parsed_content . ' ';
+		
+		//Traitement du code HTML
+		$this->_protect_content();
+		
+		//Traitement des smilies
+		$this->_parse_smilies();
+		
+		// BBCode simple tags
+		$this->_parse_simple_tags();
+		
+		//Interprétation des sauts de ligne
+		$this->parsed_content = nl2br($this->parsed_content);
+		
+		//Tableaux
+		if( strpos($this->parsed_content, '[table') !== false )
+			$this->_parse_table();
+		
+		//Listes
+		if( strpos($this->parsed_content, '[list') !== false )
+			$this->_parse_list();
+		
+		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
+		if( PATH_TO_ROOT != '..' )
+		{
+			$this->parsed_content = str_replace('"../', '"' . PATH_TO_ROOT . '/', $this->parsed_content);
+		}
+		
+		//On remet le code HTML mis de côté
+		if( $Member->Check_auth($this->html_auth, 1) && !empty($this->array_tags['html']) )
+		{
+			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
+			$this->_reimplant_tag('html');
+		}
+		
+		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
+		if( !in_array('code', $this->forbidden_tags) && !empty($this->array_tags['code']) )
+		{
+			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
+			$this->_reimplant_tag('code');
+		}
+	}
+	
+	//On unparse le contenu xHTML => BBCode
+	function unparse()
+	{
+		$this->parsed_content = $this->content;
+		
+		$this->_unparse_html(PICK_UP);
+		$this->_unparse_code(PICK_UP);
+		
+		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
+		if( PATH_TO_ROOT != '..' )
+		{
+			$this->parsed_content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->parsed_content);
+		}
+		
+		//Smilies
+		$this->_unparse_smilies();
+			
+		//caractères html
+		$this->_unparse_html_characters();
+		
+		//Remplacement des balises simples
+		$this->_unparse_simple_tags();
 
+		//Unparsage de la balise table.
+		if( strpos($this->parsed_content, '<table') !== false )
+			$this->_unparse_table();
+
+		//Unparsage de la balise table.
+		if( strpos($this->parsed_content, '<li') !== false )
+			$this->_unparse_list();
+		
+		$this->_unparse_code(REIMPLANT);
+		$this->_unparse_html(REIMPLANT);
+	}
+	
+	## Private ##
+	
+	## Parser ##
+	//Fonction de protection du code HTML
+	function _protect_content()
+	{	
 		//Protection : suppression du code html
 		$this->parsed_content = htmlspecialchars($this->parsed_content, ENT_NOQUOTES);
 		$this->parsed_content = strip_tags($this->parsed_content);
 		
 		//Tant qu'on n'est pas en utf8 on représente les caractères par leur code HTML correspondant
 		$this->parsed_content = preg_replace('`&amp;((?:#[0-9]{2,4})|(?:[a-z0-9]{2,6}));`i', "&$1;", $this->parsed_content);
-		
-		//Smilies
-		@include(PATH_TO_ROOT . '/cache/smileys.php');
-		if( !empty($_array_smiley_code) )
-		{
-			//Création du tableau de remplacement.
-			foreach($_array_smiley_code as $code => $img)
-			{
-				$smiley_code[] = '`(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . preg_quote($code) . ')`';
-				$smiley_img_url[] = '<img src="../images/smileys/' . $img . '" alt="' . addslashes($code) . '" class="smiley" />';
-			}
-			$this->parsed_content = preg_replace($smiley_code, $smiley_img_url, $this->parsed_content);
-		}
 		
 		//Remplacement des caractères de word.
 		$array_str = array( 
@@ -85,8 +154,28 @@ class BBCodeParser extends ContentParser
 			'&#8211;', '&#8212;', '&#732;', '&#8482;', '&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
 		);		
 		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
-		
-		//Preg_replace.
+	}
+	
+	//Traitement des smilies
+	function _parse_smilies()
+	{
+		@include(PATH_TO_ROOT . '/cache/smileys.php');
+		if( !empty($_array_smiley_code) )
+		{
+			//Création du tableau de remplacement.
+			foreach($_array_smiley_code as $code => $img)
+			{
+				$smiley_code[] = '`(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . preg_quote($code) . ')`';
+				$smiley_img_url[] = '<img src="../images/smileys/' . $img . '" alt="' . addslashes($code) . '" class="smiley" />';
+			}
+			$this->parsed_content = preg_replace($smiley_code, $smiley_img_url, $this->parsed_content);
+		}
+	}
+	
+	//Interprétation des balises simples
+	function _parse_simple_tags()
+	{
+		global $LANG;
 		$array_preg = array( 
 			'b' => '`\[b\](.+)\[/b\]`isU',
 			'i' => '`\[i\](.+)\[/i\]`isU',
@@ -94,7 +183,7 @@ class BBCodeParser extends ContentParser
 			's' => '`\[s\](.+)\[/s\]`isU',
 			'sup' => '`\[sup\](.+)\[/sup\]`isU',
 			'sub' => '`\[sub\](.+)\[/sub\]`isU',
-			'img' => '`\[img(?:=(top|middle|bottom))?\]((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iU',
+			'img' => '`\[img(?:=(top|middle|bottom))?\]((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iU',
 			'color' => '`\[color=((?:white|black|red|green|blue|yellow|purple|orange|maroon|pink)|(?:#[0-9a-f]{6}))\](.+)\[/color\]`isU',
 			'bgcolor' => '`\[bgcolor=((?:white|black|red|green|blue|yellow|purple|orange|maroon|pink)|(?:#[0-9a-f]{6}))\](.+)\[/bgcolor\]`isU',
 			'size' => '`\[size=([1-9]|(?:[1-4][0-9]))\](.+)\[/size\]`isU',
@@ -107,16 +196,16 @@ class BBCodeParser extends ContentParser
 			'title' => '`\[title=([1-2])\](.+)\[/title\]`iU',
 			'stitle' => '`\[stitle=([1-2])\](.+)\[/stitle\]`iU',
 			'style' => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isU',
-			'swf' => '`\[swf=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\]((?:(\./|\.\./)|([\w]+://))+[^,\n\r\t\f]+)\[/swf\]`iU',
-			'movie' => '`\[movie=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\]([^\n\r\t\f]+)\[/movie\]`iU',
+			'swf' => '`\[swf=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\](((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/swf\]`iU',
+			'movie' => '`\[movie=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\](((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/movie\]`iU',
 			'sound' => '`\[sound\]((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_-]+\.mp3)\[/sound\]`iU',
 			'math' => '`\[math\](.+)\[/math\]`iU',
-			'url' => '`\[url\]((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)\[/url\]`isU',
-			'url2' => '`\[url\]((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)\[/url\]`isU',
+			'url' => '`\[url\]((?:(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)\[/url\]`isU',
+			'url2' => '`\[url\]((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)\[/url\]`isU',
 			'url3' => '`\[url=((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)\]([^\n\r\t\f]+)\[/url\]`isU',
-			'url4' => '`\[url=((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)\]([^\n\r\t\f]+)\[/url\]`iU',
-			'url5' => '`(\s+)((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)(\s+)`isU', 
-			'url6' => '`(\s+)((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)(\s+)`i',
+			'url4' => '`\[url=((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)\]([^\n\r\t\f]+)\[/url\]`iU',
+			'url5' => '`(\s+)((?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)(\s+)`isU', 
+			'url6' => '`(\s+)((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)(\s+)`i',
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`i',
 			'mail2' => '`\[mail=([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})\]([^\n\r\t\f]+)\[/mail\]`i'
 		);
@@ -225,158 +314,14 @@ class BBCodeParser extends ContentParser
 		//Line tag
 		if( $parse_line )
 			$this->parsed_content = str_replace('[line]', '<hr class="bb_hr" />', $this->parsed_content);
-		
-		//Interprétation des sauts de ligne
-		$this->parsed_content = nl2br($this->parsed_content);
-		
-		//Tableaux
-		if( strpos($this->parsed_content, '[table') !== false )
-			$this->_parse_table();
-		
-		//Listes
-		if( strpos($this->parsed_content, '[list') !== false )
-			$this->_parse_list();
-		
+			
 		//Parsage des balises imbriquées.
 		$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->parsed_content);
 		$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->parsed_content);
 		$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->parsed_content);
 		$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->parsed_content);
-		
-		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
-		if( PATH_TO_ROOT != '..' )
-		{
-			$this->parsed_content = str_replace('"../', '"' . PATH_TO_ROOT . '/', $this->parsed_content);
-		}
-		
-		//On remet le code HTML mis de côté
-		if( $Member->Check_auth($this->html_auth, 1) && !empty($this->array_tags['html']) )
-		{
-			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
-			$this->_reimplant_tag('html');
-		}
-		
-		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
-		if( !in_array('code', $this->forbidden_tags) && !empty($this->array_tags['code']) )
-		{
-			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
-			$this->_reimplant_tag('code');
-		}
 	}
 	
-	//On unparse le contenu xHTML => BBCode
-	function unparse()
-	{
-		$this->parsed_content = $this->content;
-		
-		$this->_unparse_html(PICK_UP);
-		$this->_unparse_code(PICK_UP);
-		
-		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
-		if( PATH_TO_ROOT != '..' )
-		{
-			$this->parsed_content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->parsed_content);
-		}
-
-		//Smiley.
-		@include(PATH_TO_ROOT . '/cache/smileys.php');
-		if(!empty($_array_smiley_code) )
-		{
-			//Création du tableau de remplacement
-			foreach($_array_smiley_code as $code => $img)
-			{	
-				$smiley_img_url[] = '`<img src="../images/smileys/' . preg_quote($img) . '(.*) />`sU';
-				$smiley_code[] = $code;
-			}	
-			$this->parsed_content = preg_replace($smiley_img_url, $smiley_code, $this->parsed_content);
-		}
-			
-		//Remplacement des balises imbriquées.	
-		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->parsed_content);
-		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->parsed_content);
-		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->parsed_content);
-			
-		//Str_replace.
-		$array_str = array( 
-			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<hr class="bb_hr" />', '&#8364;', '&#8218;', '&#402;', '&#8222;',
-			'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
-			'&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;', '&#8211;', '&#8212;', '&#732;', '&#8482;',
-			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
-		);
-		
-		$array_str_replace = array( 
-			'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[line]', '€', '‚', 'ƒ',
-			'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
-			'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
-			'›', 'œ', 'ž', 'Ÿ'
-		);	
-		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
-
-		//Preg_replace.
-		$array_preg = array( 
-			'`<img src="([^?\n\r\t].*)" alt="[^"]*"(?: class="[^"]+")? />`iU',
-			'`<span style="color:([^;]+);">(.*)</span>`isU',
-			'`<span style="background-color:([^;]+);">(.*)</span>`isU',
-			'`<span style="text-decoration: underline;">(.*)</span>`isU',
-			'`<sup>(.+)</sup>`isU',
-			'`<sub>(.+)</sub>`isU',
-			'`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU',
-			'`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU',
-			'`<pre>(.*)</pre>`isU',
-			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
-			'`<p class="float_(left|right)">(.*)</p>`isU',
-			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
-			'`<acronym title="([^"]+)" class="bb_acronym">(.*)</acronym>`isU',
-			'`<a href="mailto:(.*)">(.*)</a>`isU',
-			'`<a href="([^"]+)">(.*)</a>`isU',
-			'`<h3 class="title([1-2]+)">(.*)</h3>`isU',
-			'`<h4 class="stitle([1-2]+)">(.*)</h4>`isU',
-			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
-			'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
-			'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/movieplayer\.swf\?movie=(.*)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
-			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
-			'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isU'
-		);
-		
-		$array_preg_replace = array( 
-			"[img]$1[/img]",
-			"[color=$1]$2[/color]",
-			"[bgcolor=$1]$2[/bgcolor]",
-			"[u]$1[/u]",	
-			"[sup]$1[/sup]",
-			"[sub]$1[/sub]",
-			"[size=$1]$2[/size]",
-			"[font=$1]$2[/font]",
-			"[pre]$1[/pre]",
-			"[align=$1]$2[/align]",
-			"[float=$1]$2[/float]",
-			"[anchor=$1]$2[/anchor]",
-			"[acronym=$1]$2[/acronym]",
-			"$1",
-			"[url=$1]$2[/url]",
-			"[title=$1]$2[/title]",
-			"[stitle=$1]$2[/stitle]",
-			"[style=$1]$2[/style]",
-			"[sound]$1[/sound]",
-			"[movie=$2,$3]$1[/movie]",
-			"[swf=$2,$3]$1[/swf]",
-			"[html]$1[/html]"
-		);	
-		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);
-
-		//Unparsage de la balise table.
-		if( strpos($this->parsed_content, '<table') !== false )
-			$this->_unparse_table();
-
-		//Unparsage de la balise table.
-		if( strpos($this->parsed_content, '<li') !== false )
-			$this->_unparse_list();
-		
-		$this->_unparse_code(REIMPLANT);
-		$this->_unparse_html(REIMPLANT);
-	}
-	
-	## Private ##
 	//Fonction qui parse les tableaux dans l'ordre inverse à l'ordre hiérarchique
 	function _parse_imbricated_table(&$content)
 	{
@@ -490,6 +435,110 @@ class BBCodeParser extends ContentParser
 			$this->_split_imbricated_tag($this->parsed_content, 'list', '(?:=ordered)?(?: style="[^"]+")?');
 			$this->_parse_imbricated_list($this->parsed_content);
 		}
+	}
+	
+	//Unparser
+	function _unparse_smilies()
+	{
+		//Smilies
+		@include(PATH_TO_ROOT . '/cache/smileys.php');
+		if(!empty($_array_smiley_code) )
+		{
+			//Création du tableau de remplacement
+			foreach($_array_smiley_code as $code => $img)
+			{	
+				$smiley_img_url[] = '`<img src="../images/smileys/' . preg_quote($img) . '(.*) />`sU';
+				$smiley_code[] = $code;
+			}	
+			$this->parsed_content = preg_replace($smiley_img_url, $smiley_code, $this->parsed_content);
+		}
+	}
+	
+	//Remplacement des balises simples
+	function _unparse_simple_tags()
+	{
+		$array_str = array( 
+			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<hr class="bb_hr" />'
+		);
+		$array_str_replace = array( 
+			'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[line]'
+		);
+		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
+
+		$array_preg = array( 
+			'`<img src="([^?\n\r\t].*)" alt="[^"]*"(?: class="[^"]+")? />`iU',
+			'`<span style="color:([^;]+);">(.*)</span>`isU',
+			'`<span style="background-color:([^;]+);">(.*)</span>`isU',
+			'`<span style="text-decoration: underline;">(.*)</span>`isU',
+			'`<sup>(.+)</sup>`isU',
+			'`<sub>(.+)</sub>`isU',
+			'`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU',
+			'`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU',
+			'`<pre>(.*)</pre>`isU',
+			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
+			'`<p class="float_(left|right)">(.*)</p>`isU',
+			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
+			'`<acronym title="([^"]+)" class="bb_acronym">(.*)</acronym>`isU',
+			'`<a href="mailto:(.*)">(.*)</a>`isU',
+			'`<a href="([^"]+)">(.*)</a>`isU',
+			'`<h3 class="title([1-2]+)">(.*)</h3>`isU',
+			'`<h4 class="stitle([1-2]+)">(.*)</h4>`isU',
+			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
+			'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
+			'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/movieplayer\.swf\?movie=(.*)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
+			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
+			'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isU'
+		);
+		
+		$array_preg_replace = array( 
+			"[img]$1[/img]",
+			"[color=$1]$2[/color]",
+			"[bgcolor=$1]$2[/bgcolor]",
+			"[u]$1[/u]",	
+			"[sup]$1[/sup]",
+			"[sub]$1[/sub]",
+			"[size=$1]$2[/size]",
+			"[font=$1]$2[/font]",
+			"[pre]$1[/pre]",
+			"[align=$1]$2[/align]",
+			"[float=$1]$2[/float]",
+			"[anchor=$1]$2[/anchor]",
+			"[acronym=$1]$2[/acronym]",
+			"$1",
+			"[url=$1]$2[/url]",
+			"[title=$1]$2[/title]",
+			"[stitle=$1]$2[/stitle]",
+			"[style=$1]$2[/style]",
+			"[sound]$1[/sound]",
+			"[movie=$2,$3]$1[/movie]",
+			"[swf=$2,$3]$1[/swf]",
+			"[html]$1[/html]"
+		);	
+		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);
+		
+		//Remplacement des balises imbriquées.	
+		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->parsed_content);
+		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->parsed_content);
+		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->parsed_content);
+	}
+	
+	//Traitement des caractères html
+	function _unparse_html_characters()
+	{
+		$array_str = array( 
+			'&#8364;', '&#8218;', '&#402;', '&#8222;',
+			'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
+			'&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;', '&#8211;', '&#8212;', '&#732;', '&#8482;',
+			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
+		);
+		
+		$array_str_replace = array( 
+			'€', '‚', 'ƒ',
+			'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
+			'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
+			'›', 'œ', 'ž', 'Ÿ'
+		);	
+		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
 	}
 }
 
