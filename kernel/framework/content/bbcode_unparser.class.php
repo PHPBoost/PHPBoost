@@ -149,10 +149,22 @@ class BBCodeUnparser extends ContentUnparser
 		);	
 		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);
 		
-		//Remplacement des balises imbriquées.	
+		##Remplacement des balises imbriquées
+		//Citations
 		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->parsed_content);
+		
+		//Texte caché
 		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->parsed_content);
+		
+		//Indentation
 		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->parsed_content);
+		
+		//Bloc HTML
+		$this->_parse_imbricated('<div class="bb_block"', '`<div class="bb_block">(.+)</div>`sU', '[block]$1[/block]', $this->parsed_content);
+		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->parsed_content);
+		
+		//Bloc de formulaire
+		$this->_parse_imbricated('<fieldset class="bb_fieldset"', '`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', '[fieldset legend="$2" style="$1"]$3[/fieldset]', $this->parsed_content);
 	}
 	
 	//Traitement des caractères html

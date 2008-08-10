@@ -65,6 +65,7 @@ class TinyMCEUnparser extends ContentUnparser
 			'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
 			'›', 'œ', 'ž', 'Ÿ', '<li class="bb_li">', '</table>', '<tr class="bb_table_row">', '</th>'
 		);
+		
 		$array_str_replace = array( 
 			'&nbsp;&nbsp;&nbsp;', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '&#8364;', '&#8218;', '&#402;', '&#8222;',
 			'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
