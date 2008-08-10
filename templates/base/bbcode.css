@@ -171,6 +171,16 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 	cursor:help;
 }
 
+.bb_block{
+	margin:0 20px;
+	padding:5px;
+	border:1px solid #C4CED6;
+}
+
+.bb_fieldset{
+	margin:10px;
+}
+
 /* Prévisualisation AJAX. */
 .xmlhttprequest_preview{
 	overflow:auto;

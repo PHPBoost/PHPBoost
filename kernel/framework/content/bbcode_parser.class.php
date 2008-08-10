@@ -278,11 +278,23 @@ class BBCodeParser extends ContentParser
 		if( $parse_line )
 			$this->parsed_content = str_replace('[line]', '<hr class="bb_hr" />', $this->parsed_content);
 			
-		//Parsage des balises imbriquées.
+		##Parsage des balises imbriquées.
+		//Citations
 		$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->parsed_content);
 		$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->parsed_content);
+		
+		//Texte caché
 		$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->parsed_content);
+		
+		//Texte indenté
 		$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->parsed_content);
+		
+		//Bloc HTML
+		$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="bb_block">$1</div>', $this->parsed_content);
+		$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="bb_block" style="$1">$2</div>', $this->parsed_content);
+		
+		//Bloc de formulaire
+		$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->parsed_content);
 	}
 	
 	//Fonction qui parse les tableaux dans l'ordre inverse à l'ordre hiérarchique
