@@ -29,7 +29,9 @@ define('ERROR_REPORTING', E_ALL | E_NOTICE);
 define('UNAUTHORIZED_PROTOCOL', 'UNAUTHORIZED PROTOCOL');
 define('INVALID_URL', 'INVALID URL');
 
-require_once('functions.inc.php');
+define('PATH_TO_ROOT', '../../..');
+
+require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php');
 
 $url = retrieve(GET, 'url', '', TSTRING_UNSECURE);
 
