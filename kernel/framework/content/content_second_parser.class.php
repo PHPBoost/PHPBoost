@@ -87,7 +87,7 @@ class ContentSecondParser extends Parser
 		}
 		
 		return $contents ;
-	} 
+	}
 
 	//Fonction appliquée aux balises [code] temps réel.
 	function _callback_highlight_code($matches)
@@ -120,28 +120,29 @@ class ContentSecondParser extends Parser
 	/*static*/ function _highlight_bbcode($content)
 	{
 		//Protection of html code
-		$content = htmlentities($content);
+		$content = htmlspecialchars($content, ENT_NOQUOTES);
 		
 		//Line tag
 		$content = str_replace('[line]', '<span style="color:' . BBCODE_TAG_COLOR . ';">[line]</span>', $content);
 		$content = str_replace('[*]', '<span style="color:' . BBCODE_LIST_ITEM_COLOR . ';">[*]</span>', $content);
 		
 		//Simple tags (whitout parameter)
-		$simple_tags = array('b', 'i', 'u', 's', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'mail', 'code',  'tr', 'html');
+		$simple_tags = array('b', 'i', 'u', 's', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide');
 		
 		foreach($simple_tags as $tag)
 			$content = preg_replace('`\[' . $tag . '\](.+)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">[' . $tag . ']</span>$1<span style="color:' . BBCODE_TAG_COLOR . ';">[/' . $tag . ']</span>', $content);
 		
 		//Tags which take a parameter : [tag=parameter]content[/tag]
-		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote');
+		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'swf');
 		
 		foreach($tags_with_simple_property as $tag)
-			$content = preg_replace('`\[' . $tag . '=([^\]]+)\](.+)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">[' . $tag . '</span>=<span style="color:' . BBCODE_PARAM_COLOR . ';">$1</span>]</span>$2<span style="color:' . BBCODE_TAG_COLOR . ';">[/' . $tag . ']</span>', $content);
+			$content = preg_replace('`\[' . $tag . '=([^\]]+)\](.+)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">[' . $tag . '</span>=<span style="color:' . BBCODE_PARAM_COLOR . ';">$1</span><span style="color:' . BBCODE_TAG_COLOR . ';">]</span>$2<span style="color:' . BBCODE_TAG_COLOR . ';">[/' . $tag . ']</span>', $content);
 		
 		//Tags which take several parameters. The syntax is the same as XML parameters
-		$tags_with_many_parameters = array('table', 'col', 'list', 'fieldset', 'block');
+		$tags_with_many_parameters = array('table', 'col', 'head', 'list', 'fieldset', 'block');
+		
 		foreach($tags_with_many_parameters as $tag)
-			$content = preg_replace_callback('`\[(' . $tag . ')(?: ([a-z]+)="([^"]*)")*\](.+)\[/' . $tag . '\]`isU', array('ContentSecondParser', '_highlight_bbcode_tag_with_many_parameters'), $content);
+			$content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.+)\[/' . $tag . '\]`isU', array('ContentSecondParser', '_highlight_bbcode_tag_with_many_parameters'), $content);
 		
 		return '<pre>' . $content . '</pre>';
 	}
@@ -149,22 +150,12 @@ class ContentSecondParser extends Parser
 	//Function which highlights the parameters of a complex tag
 	/*static*/ function _highlight_bbcode_tag_with_many_parameters($matches)
 	{
-		$matches_size = count($matches);
-		$content = $matches[$matches_size - 1];
+		$content = $matches[3];
 		$tag_name = $matches[1];
 		
-		print_r($matches);
+		$matches[2] = preg_replace('`([a-z]+)="([^"]*)"`isU', '<span style="color:' . BBCODE_PARAM_NAME_COLOR . '">$1</span>=<span style="color:' . BBCODE_PARAM_COLOR . '">"$2"</span>', $matches[2]);
 		
-		$param_string = '';
-		
-		//We keep only those which we haven't already processed
-		for($i = 2; $i < $matches_size - 2; $i += 2)
-		{
-			if( !empty($matches[$i]) )
-				$param_string .= ' <span style="color:' . BBCODE_PARAM_NAME_COLOR . ';">' . $matches[$i] . '</span>=<span style="color:' . BBCODE_PARAM_COLOR . ';">' . $matches[$i + 1] . '</span>';
-		}
-		
-		return '<span style="color:' . BBCODE_TAG_COLOR . '">[' . $tag_name . '</span>' .$param_string . '<span style="color:' . BBCODE_TAG_COLOR . '">]</span>' . $content . '<span style="color:' . BBCODE_TAG_COLOR . '">[/' . $tag_name . ']</span>';
+		return '<span style="color:' . BBCODE_TAG_COLOR . '">[' . $tag_name . '</span>' .$matches[2] . '<span style="color:' . BBCODE_TAG_COLOR . '">]</span>' . $content . '<span style="color:' . BBCODE_TAG_COLOR . '">[/' . $tag_name . ']</span>';
 	}
 }
 ?>
