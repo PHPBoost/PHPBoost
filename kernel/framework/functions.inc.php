@@ -52,6 +52,12 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
             else
                 return $default_value;
             break;
+		case REQUEST:
+            if( isset($_REQUEST[$var_name]) )
+                $var = $_REQUEST[$var_name];
+            else
+                return $default_value;
+            break;
         case COOKIE:
             if( isset($_COOKIE[$var_name]) )
                 $var = $_COOKIE[$var_name];

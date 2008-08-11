@@ -70,8 +70,9 @@ define('DATA_GROUP_LIMIT', 'data_group_limit'); //Aucune limite de données uploa
 
 //Types des variables en request.
 define('GET', 1); 
-define('POST', 2); 
-define('COOKIE', 3); 
+define('POST', 2);
+define('REQUEST', 3);
+define('COOKIE', 4); 
 define('TBOOL', 'boolean'); 
 define('TINTEGER', 'integer'); 
 define('TDOUBLE', 'double'); 
