@@ -142,12 +142,13 @@ class Comments
 			
 		    $this->set_arg($idcom); //On met à jour les attributs de l'objet.			
 		}
+		
 	    $vars_simple = sprintf($this->vars, 0);
 		$delcom = retrieve(GET, 'delcom', 0);
 		$editcom = retrieve(GET, 'editcom', 0);
 		$updatecom = retrieve(GET, 'updatecom', false);		
 		
-		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0);
+		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&path_to_root=' . $page_path_to_root : '');
 		
 		if( !is_object($Template) || strtolower(get_class($Template)) != 'template' )
 			$Template = new Template('framework/content/com.tpl');
@@ -186,6 +187,11 @@ class Comments
 						}
 						
 						$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
+						
+						//Correction des chemins du BBCode
+						if( !$integrated_in_environment && !empty($page_path_to_root) )
+							$contents = str_replace('"' . PATH_TO_ROOT . '/', '"' . $page_path_to_root . '/', $contents);
+							
 						if( !check_nbr_links($login, 0) ) //Nombre de liens max dans le pseudo.
 							redirect($path_redirect . '&errorh=l_pseudo#errorh');
 						if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
@@ -261,7 +267,7 @@ class Comments
 							'L_PREVIEW' => $LANG['preview'],
 							'L_PREVIEW' => $LANG['preview'],
 							'L_SUBMIT' => $LANG['update'],
-							'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . '&amp;updatecom=1'
+							'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . '&updatecom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&path_to_root=' . $page_path_to_root : '')
 						));
 					}
 					elseif( $updatecom ) //Mise à jour du commentaire.
@@ -272,6 +278,11 @@ class Comments
 						if( !empty($contents) && !empty($login) )
 						{
 							$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
+							
+							//Correction des chemins du BBCode
+							if( !$integrated_in_environment && !empty($page_path_to_root) )
+								$contents = str_replace('"' . PATH_TO_ROOT . '/', '"' . $page_path_to_root . '/', $contents);
+							
 							if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
 								redirect($path_redirect . '&errorh=l_flood#errorh');
 
@@ -415,7 +426,7 @@ class Comments
 					'L_RESET' => $LANG['reset'],
 					'L_PREVIEW' => $LANG['preview'],
 					'L_SUBMIT' => $LANG['submit'],
-					'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom)					
+					'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&path_to_root=' . $page_path_to_root : '')					
 				));
 				
 				//Création du tableau des rangs.
@@ -444,15 +455,15 @@ class Comments
 					$readonly = '';
 					if( $is_modo && !$is_guest ) //Modération.
 					{
-						$warning = '&nbsp;<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . transid('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
-						$readonly = '<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . transid('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
+						$warning = '&nbsp;<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . transid('.php?action=warning&amp;id=' . $row['user_id'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')) . '" title="' . $LANG['warning_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
+						$readonly = '<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . transid('.php?action=punish&amp;id=' . $row['user_id'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')) . '" title="' . $LANG['punishment_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
 					}
 					
 					//Edition/suppression.
 					if( $is_modo || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1) )
 					{
-						$edit = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&editcom=1#anchor_' . $this->script . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&delcom=1#anchor_' . $this->script . '" onClick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+						$edit = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&editcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&delcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '" onClick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 					}
 					
 					//Pseudo.
@@ -534,9 +545,15 @@ class Comments
 					}
 					else $user_local = '';
 					
-					$Template->Assign_block_vars('com_list',array(
+					$contents = ucfirst(second_parse($row['contents']));
+					
+					//Correction des chemins du BBCode
+					if( !$integrated_in_environment && !empty($page_path_to_root) )
+						$contents = str_replace('"' . $page_path_to_root . '/', '"' . PATH_TO_ROOT . '/', $contents);
+					
+					$Template->Assign_block_vars('com_list', array(
 						'ID' => $row['idcom'],
-						'CONTENTS' => ucfirst(second_parse($row['contents'])),
+						'CONTENTS' => $contents,
 						'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
 						'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 						'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
@@ -559,8 +576,8 @@ class Comments
 						'DEL' => $del,
 						'EDIT' => $edit,
 						'U_MEMBER_PM' => '<a href="' . PATH_TO_ROOT . '/member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>',
-						'U_ANCHOR' => $this->path . $this->vars . '#m' . $row['idcom'],
-						'U_QUOTE' => $this->path . sprintf($this->vars, $row['idcom']) . '&amp;quote=' . $row['idcom'] . '#anchor_' . $this->script
+						'U_ANCHOR' => $this->path . $this->vars . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#m' . $row['idcom'],
+						'U_QUOTE' => $this->path . sprintf($this->vars, $row['idcom']) . '&amp;quote=' . $row['idcom'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script
 					));
 					$j++;
 				}

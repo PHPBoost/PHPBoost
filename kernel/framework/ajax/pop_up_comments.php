@@ -38,10 +38,10 @@ if( !empty($_GET['com']) )
 	
 	require_once(PATH_TO_ROOT . '/kernel/framework/content/comments.class.php');
 	$Comments = new Comments($array_get[2], $array_get[1], transid('?com=' . $array_get[1] . $array_get[2] . '%s', ''), $array_get[2]);
-	$Comments->set_arg($idcom, PATH_TO_ROOT . '/kernel/framework/content/pop_up_comments.php'); //On met à jour les attributs de l'objet.
+	$Comments->set_arg($idcom, PATH_TO_ROOT . '/kernel/framework/ajax/pop_up_comments.php'); //On met à jour les attributs de l'objet.
 	
 	//On affiche les commentaires
-	echo $Comments->Display(POP_UP_WINDOW, null, retrieve(GET, 'path_to_root', TSTRING_UNSECURE));
+	echo $Comments->Display(POP_UP_WINDOW, null, retrieve(REQUEST, 'path_to_root', TSTRING_UNSECURE));
 }
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
