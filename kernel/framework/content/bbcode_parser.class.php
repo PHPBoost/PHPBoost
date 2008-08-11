@@ -316,17 +316,17 @@ class BBCodeParser extends ContentParser
 					if( preg_match('`^(?:\s|<br />)*\[row\](?:\s|<br />)*\[(?:col|head)(?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?\].*\[/(?:col|head)\](?:\s|<br />)*\[/row\](?:\s|<br />)*$`sU', $content[$i]) )
 					{						
 						//On nettoie les caractères éventuels (espaces ou retours à la ligne) entre les différentes cellules du tableau pour éviter les erreurs xhtml
-						$content[$i] = preg_replace_callback('`^(\s|<br />)+\[row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
-						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+$`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
-						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+\[row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
-						$content[$i] = preg_replace_callback('`\[row\](\s|<br />)+\[col.*\]`Us', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
-						$content[$i] = preg_replace_callback('`\[row\](\s|<br />)+\[head[^]]*\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
-						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[col.*\]`Us', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
-						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[head[^]]*\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
-						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[col.*\]`Us', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
-						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[head[^]]*\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
-						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[/row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
-						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[/row\]`U', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`^(\s|<br />)+\[row\]`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+$`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+\[row\]`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[row\](\s|<br />)+\[col.*\]`Us', array('BBCodeParser', 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[row\](\s|<br />)+\[head[^]]*\]`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[col.*\]`Us', array('BBCodeParser', 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[head[^]]*\]`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[col.*\]`Us', array('BBCodeParser', 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[head[^]]*\]`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[/row\]`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[/row\]`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
 						//Parsage de row, col et head
 						$content[$i] = preg_replace('`\[row\](.*)\[/row\]`sU', '<tr class="bb_table_row">$1</tr>', $content[$i]);
 						$content[$i] = preg_replace('`\[col((?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/col\]`sU', '<td class="bb_table_col"$1>$2</td>', $content[$i]);
@@ -378,8 +378,8 @@ class BBCodeParser extends ContentParser
 					if( strpos($content[$i], '[*]') !== false ) //Si il contient au moins deux éléments
 					{				
 						//Nettoyage des listes (retours à la ligne)
-						$content[$i] = preg_replace_callback('`\[\*\]((?:\s|<br />)+)`', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
-						$content[$i] = preg_replace_callback('`((?:\s|<br />)+)\[\*\]`', create_function('$var', 'return str_replace("<br />", "", $var[0]);'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[\*\]((?:\s|<br />)+)`', array('BBCodeParser', 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`((?:\s|<br />)+)\[\*\]`', array('BBCodeParser', 'clear_html_br'), $content[$i]);
 						if( substr($content[$i - 1], 0, 8) == '=ordered' )
 						{
 							$list_tag = 'ol';
@@ -411,6 +411,12 @@ class BBCodeParser extends ContentParser
 			$this->_split_imbricated_tag($this->parsed_content, 'list', '(?:=ordered)?(?: style="[^"]+")?');
 			$this->_parse_imbricated_list($this->parsed_content);
 		}
+	}
+	
+	//Nettoie le code HTML (notamment les retours à la ligne)
+	function clear_html_br($var)
+	{
+		return str_replace("<br />", "", $var[0]);
 	}
 }
 
