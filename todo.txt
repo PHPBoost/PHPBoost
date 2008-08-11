@@ -6,7 +6,6 @@
 [-] Nouvelles options d'installation (Communautaire, Vitrine, etc).
 [-] Supporter https et remplacer les "." par des "_" dans le nom de la base de données lors de l'installation.
 [-] Finir le parseur TinyMCE (gérer les balises interdites)
-[-] Remplacer le chemin du PATH_TO_ROOT dans les commentaires qui sont postés en pop up
 [-] Panneau de modération (+déplacer moderation_begin.php)
 
 ------------------------------------ MODULES -----------------------------------
