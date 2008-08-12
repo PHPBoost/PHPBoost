@@ -4,10 +4,7 @@
 	</div>
 	<div id="top_footer">
 		{MODULES_MINI_TOP_FOOTER_CONTENT}
-		<div class="spacer"></div>
-	</div></div>
-    <div id="footer_img">
-     <div id="newsletter">
+             <div id="newsletter">
 			<form action="{PATH_TO_ROOT}/newsletter/newsletter.php{SID}" method="post">
 				<div class="newsletter_form">
 					<span class="newsletter_title">{L_NEWSLETTER}</span> 
@@ -19,6 +16,9 @@
 				</div>
 			</form>
 		</div>
+		<div class="spacer"></div>
+	</div></div>
+
         <div id="footer">
 		{MODULES_MINI_FOOTER_CONTENT}
 		<span>
@@ -32,12 +32,12 @@
 		# ENDIF #
 		# IF C_DISPLAY_AUTHOR_THEME #
 		<br />
-		<span>
+		<span style="float:left;margin-bottom:0px;">
 			{L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}" style="font-size:10px;">{L_THEME_AUTHOR}</a>
 		</span>
 		# ENDIF #
 	</div>
-</div></div>
+</div>
 		<span id="scroll_bottom_page"></span>
 	</body>
 </html>
