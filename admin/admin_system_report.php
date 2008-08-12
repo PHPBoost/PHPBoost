@@ -104,6 +104,8 @@ guest session length     : " . $CONFIG['site_session_invit'] . "
 DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 /cache                   : " . (int)is_writable('../cache') . "
+/cache/tpl               : " . (int)is_writable('../cache/tpl') . "
+/cache/backup            : " . (int)is_writable('../cache/backup') . "
 /upload                  : " . (int)is_writable('../upload') . "
 /kernel                  : " . (int)is_writable('../kernel') . "
 /kernel/auth             : " . (int)is_writable('../kernel/auth') . "
@@ -132,6 +134,8 @@ $template->assign_vars(array(
 	'SESSION_LENGTH' => $CONFIG['site_session'],
 	'SESSION_LENGTH_GUEST' => $CONFIG['site_session_invit'],
 	'C_AUTH_DIR_CACHE' => is_writable('../cache'),
+	'C_AUTH_DIR_CACHE_TPL' => is_writable('../cache/tpl'),
+	'C_AUTH_DIR_CACHE_BACKUP' => is_writable('../cache/backup'),
 	'C_AUTH_DIR_UPLOAD' => is_writable('../upload'),
 	'C_AUTH_DIR_KERNEL' => is_writable('../kernel'),
 	'C_AUTH_DIR_KERNEL_AUTH' => is_writable('../kernel/auth'),
