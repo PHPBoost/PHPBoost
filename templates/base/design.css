@@ -87,9 +87,9 @@ div#main{
 div#main2{
 	background: url(images/corps_04.png) repeat-x transparent;
 	float:left;
-	width:65%;
+	width:71%;
 	padding-bottom:15px;
-	margin-left:59px;
+	margin-left:4px;
 }
 /* ##### Barre de lien rapide ###### */
 div#links{
@@ -116,16 +116,12 @@ div#top_footer{
 	padding:0.75em;
 }
 /* ##### Pied de page ###### */
-div#footer_img{
-	height:48px;
+div#footer{
 	text-align:center;
 	background:url(images/footer.png) no-repeat;
+	height:48px;
 	padding:0.65em;
 	border-top:none;
-}
-div#footer{
-	float:left;
-	padding-left:60px;
 }
 div#footer span{
 	font-size:10px;
@@ -154,9 +150,7 @@ div#admin_footer span a{
 }
 
 div#newsletter{
-	float: right;
-	padding-top:8px;
-	padding-right:70px;
+	margin-right:30px;
 }
 div#links_vertical {
 	display:block !important;

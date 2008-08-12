@@ -430,20 +430,20 @@ a.msg_link_pseudo:hover {
 }
 .module_mini_top{
 	height:39px;
-	width:218px;
+	width:170px;
 	background:url(images/mini_module_top.png) no-repeat;
 	font-weight:bold;
 	text-align:center;
 }
 .module_mini_contents{
 	text-align:center;
+	width:170px;
 	background:url(images/mini_module.png) repeat-y;
-	width:210px;
 	padding-left:12px;
 }
 .module_mini_bottom{ /* Bordure inférieur des modules minis */ 
 	height:37px;
-	width:218px;
+	width:170px;
 	background:url(images/mini_module_bottom.png) no-repeat;
 }
 
