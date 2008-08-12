@@ -144,6 +144,26 @@
 						</dd>
 					</dl>
 					<dl>
+						<dt>cache/backup</dt>
+						<dd>
+							# IF C_AUTH_DIR_CACHE_BACKUP #
+							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
+							# ELSE #
+							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
+							# ENDIF #
+						</dd>
+					</dl>
+					<dl>
+						<dt>cache/tpl</dt>
+						<dd>
+							# IF C_AUTH_DIR_CACHE_TPL #
+							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
+							# ELSE #
+							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
+							# ENDIF #
+						</dd>
+					</dl>
+					<dl>
 						<dt>upload</dt>
 						<dd>
 							# IF C_AUTH_DIR_UPLOAD #
