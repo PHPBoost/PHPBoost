@@ -100,7 +100,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 			return $var > 0.0 ? $var : max(0.0, $default_value);
 		case TSTRING_HTML:
 			return strprotect($var, HTML_NO_PROTECT); //Chaine non protégée pour l'html.
-		case TSTRING_UNCHANGED:
+		case TSTRING_UNCHANGE:
 			return (string)$var;
 		case TARRAY:
 			return (array)$var;
