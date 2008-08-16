@@ -139,7 +139,6 @@ $Template->Assign_vars(array(
 	'L_MODULES_MANAGMENT' => $LANG['modules_managment'],
 	'L_STATS' => $LANG['stats'],
 	'L_USER_ONLINE' => $LANG['user_online'],
-	'L_TOTAL_USER' => $LANG['total_users'],
 	'L_USER_IP' => $LANG['user_ip'],
 	'L_LOCALISATION' => $LANG['localisation'],
 	'L_LAST_UPDATE' => $LANG['last_update'],

@@ -62,14 +62,10 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 	$user_sign = retrieve(POST, 'user_sign', '', TSTRING_PARSE);
 	$user_msn = retrieve(POST, 'user_msn', '');
 	$user_yahoo = retrieve(POST, 'user_yahoo', '');
+	$user_web = retrieve(POST, 'user_web', '');
 	
 	//Gestion de la date de naissance.
 	$user_born = strtodate(retrieve(POST, 'user_born', '0'), $LANG['date_birth_parse']);
-		
-	//Validité de l'adresse du site.
-	$user_web = retrieve(POST, 'user_web', '');
-	$user_web = preg_match('`^https?://(?:[a-z0-9_/-]+\.)*[a-z0-9-]+\.[a-z]{2,4}(?:.*)$`s', $user_web) ? $user_web : '';
-	
 		
 	//Code de vérification si activé
 	include_once('../kernel/framework/util/captcha.class.php');

@@ -28,7 +28,7 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 	
-$uninstall = isset($_GET['uninstall']) ? true : false;	
+$uninstall = retrieve(GET, 'uninstall', false);	
 $id = retrieve(GET, 'id', 0);
 $error = retrieve(GET, 'error', ''); 
 
@@ -75,9 +75,7 @@ elseif( $uninstall ) //Désinstallation.
 			$Sql->Query_inject("DELETE FROM ".PREFIX."lang WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
 		}
 		else
-		{
 			redirect(HOST . DIR . '/admin/admin_lang.php?error=incomplete#errorh');
-		}
 		
 		//Suppression des fichiers du module
 		if( $drop_files && !empty($previous_lang) )
@@ -101,12 +99,9 @@ elseif( $uninstall ) //Désinstallation.
 			'admin_lang_management'=> 'admin/admin_lang_management.tpl'
 		));
 		
-		$Template->Assign_block_vars('del', array(			
-			'IDLANG' => $idlang
-		));
-		
 		$Template->Assign_vars(array(
-			'THEME' => $CONFIG['theme'],
+			'C_DEL_LANG' => true,
+			'IDLANG' => $idlang,
 			'L_LANG_ADD' => $LANG['lang_add'],	
 			'L_LANG_MANAGEMENT' => $LANG['lang_management'],
 			'L_DEL_LANG' => $LANG['del_lang'],

@@ -128,16 +128,6 @@ if( is_file($file_path) && is_readable($file_path) ) //Fichier accessible en lec
 			'DATE' => ''
 		));
 	}
-}	
-else
-{
-	$Template->Assign_block_vars('errors', array(
-		'TYPE' => '&nbsp;',
-		'DESC' => '',
-		'FILE' => '',
-		'LINE' => '',
-		'DATE' => ''
-	));
 }
 
 $Template->Pparse('admin_errors_management');

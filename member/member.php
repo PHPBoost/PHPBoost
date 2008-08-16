@@ -424,9 +424,7 @@ if( !empty($id_get) ) //Espace membre
 			$user_sign = retrieve(POST, 'user_sign', '', TSTRING_PARSE);
 			$user_msn = retrieve(POST, 'user_msn', '');
 			$user_yahoo = retrieve(POST, 'user_yahoo', '');
-			
 			$user_web = retrieve(POST, 'user_web', '');
-			$user_web = ( !empty($user_web) && preg_match('`^https?://(?:[a-z0-9_/-]+\.)*[a-z0-9-]+\.[a-z]{2,4}(?:.*)$`s', $user_web) ) ? $user_web : '';
 			
 			//Gestion de la date de naissance.
 			$user_born = strtodate($_POST['user_born'], $LANG['date_birth_parse']);
