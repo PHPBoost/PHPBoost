@@ -97,7 +97,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			'forum_bottom'=> 'forum/forum_bottom.tpl'
 		));
 		
-		$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);	
+		$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);	
 		$post_update = retrieve(POST, 'p_update', '', TSTRING_UNSECURE);
 		
 		$update = !empty($post_update) ? $post_update : transid('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get);
@@ -151,7 +151,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			if( $is_modo ) 
 				$check_status = 1;
 			
-			$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE); 
+			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE); 
 			$title = retrieve(POST, 'title', ''); 
 			$subtitle = retrieve(POST, 'desc', ''); 
 		
@@ -214,7 +214,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			
 			$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
 			$subtitle = retrieve(POST, 'desc', '', TSTRING_UNSECURE);
-			$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 			$question = retrieve(POST, 'question', '', TSTRING_UNSECURE);
 			
 			$is_modo = $Member->Check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
@@ -406,7 +406,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				redirect( transid(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
 		}
 		
-		$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+		$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 		
 		//Si le topic n'est pas vérrouilé on ajoute le message.
 		if( $topic['status'] != 0 || $is_modo )
@@ -461,7 +461,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			{
 				$title = retrieve(POST, 'title', '');
 				$subtitle = retrieve(POST, 'desc', '');
-				$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				$type = $is_modo ? retrieve(POST, 'type', 0) : 0; 
 				
 				if( !empty($title) && !empty($contents) )
@@ -515,7 +515,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				
 				$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
 				$subtitle = retrieve(POST, 'desc', '', TSTRING_UNSECURE);
-				$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				$question = retrieve(POST, 'question', '', TSTRING_UNSECURE);
 				
 				$type = retrieve(POST, 'type', 0); 
@@ -755,7 +755,7 @@ if( $Member->Check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			
 			if( $update && retrieve(POST, 'edit_msg', false) )
 			{
-				$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				if( !empty($contents) )
 				{		
 					$nbr_msg_before = $Forumfct->Update_msg($idt_get, $id_m, $contents, $user_id_msg);

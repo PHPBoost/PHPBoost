@@ -33,7 +33,7 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 $page_path_to_root = retrieve(GET, 'path_to_root', '');
 
-$contents = utf8_decode(retrieve(POST, 'contents', '', TSTRING_UNCHANGED));
+$contents = utf8_decode(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
 
 $ftags = retrieve(POST, 'ftags', TSTRING_UNSECURE);
 
