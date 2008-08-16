@@ -81,6 +81,7 @@ define('TSTRING', 'string');
 define('TSTRING_PARSE', 'string_parse'); 
 define('TSTRING_UNSECURE', 'string_unsecure'); 
 define('TSTRING_HTML', 'string_html'); 
+define('TSTRING_UNCHANGED', 'string_unchanged'); 
 define('TARRAY', 'array'); 
 define('TUNSIGNED_INT', 'uint'); 
 define('TUNSIGNED_DOUBLE', 'udouble'); 

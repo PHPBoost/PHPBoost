@@ -27,6 +27,9 @@
 
 //Constantes utilisées
 define('DO_NOT_ADD_SLASHES', false);
+define('ADD_SLASHES', true);
+define('PARSER_DO_NOT_STRIP_SLASHES', false);
+define('PARSER_STRIP_SLASHES', true);
 define('PICK_UP', true);
 define('REIMPLANT', false);
 
@@ -45,7 +48,7 @@ class Parser
 	}
 
 	//Fonction qui renvoie le contenu traité
-	function get_content($addslashes = true)
+	function get_content($addslashes = ADD_SLASHES)
 	{
 		if( $addslashes )
 			return addslashes(trim($this->content));
@@ -54,9 +57,12 @@ class Parser
 	}
 	
 	//Fonction de chargement de texte
-	function set_content($content)
+	function set_content($content, $stripslashes = PARSER_DO_NOT_STRIP_SLASHES)
 	{
-		$this->content = trim(!MAGIC_QUOTES ? $content : stripslashes($content));
+		if( $stripslashes )
+			$this->content = stripslashes($content);
+		else
+			$this->content = $content;
 	}
 	
 	function set_html_auth($array_auth)

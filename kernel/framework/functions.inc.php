@@ -81,8 +81,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 	$force_type = !isset($force_type) ? gettype($default_value) : $force_type;
 	switch($force_type)
 	{
-		case TINTEGER:
-		
+		case TINTEGER:		
 			return (int)$var;
 		case TSTRING:
 			return strprotect($var); //Chaine protégée.
@@ -101,6 +100,8 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 			return $var > 0.0 ? $var : max(0.0, $default_value);
 		case TSTRING_HTML:
 			return strprotect($var, HTML_NO_PROTECT); //Chaine non protégée pour l'html.
+		case TSTRING_UNCHANGED:
+			return (string)$var;
 		case TARRAY:
 			return (array)$var;
 	    case TDOUBLE:
@@ -404,7 +405,7 @@ function strparse(&$content, $forbidden_tags = array())
 {
     $content_manager = new Content();
 	$parser =& $content_manager->get_parser();
-    $parser->set_content($content);
+    $parser->set_content($content, MAGIC_QUOTES);
 	if( !empty($forbidden_tags) )
 		$parser->set_forbidden_tags($forbidden_tags);
     $parser->parse();
@@ -417,7 +418,7 @@ function unparse(&$content)
 {
 	$content_manager = new Content();
 	$parser =& $content_manager->get_unparser();
-    $parser->set_content($content);
+    $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
     $parser->unparse();
 	
 	return $parser->get_parsed_content(DO_NOT_ADD_SLASHES);
@@ -430,7 +431,7 @@ function second_parse(&$content)
 	
 	$content_manager = new Content();
 	$parser =& $content_manager->get_second_parser();
-    $parser->set_content($content);
+    $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
     $parser->second_parse();
 	
     return $parser->get_parsed_content(DO_NOT_ADD_SLASHES);
