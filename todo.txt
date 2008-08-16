@@ -7,6 +7,7 @@
 [-] Supporter https et remplacer les "." par des "_" dans le nom de la base de données lors de l'installation.
 [-] Finir le parseur TinyMCE (gérer les balises interdites)
 [-] Panneau de modération (+déplacer moderation_begin.php)
+[-] Vérifier les stripslashes dans toutes les zones de texte
 
 ------------------------------------ MODULES -----------------------------------
 [-] Download, faire une option dans les catégories à l'édition pour désapprouver.

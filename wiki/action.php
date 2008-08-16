@@ -32,25 +32,25 @@ load_module_lang('wiki');
 
 require('../wiki/wiki_auth.php');
 
-$id_auth = retrieve(GET, 'id_auth', 0);
-$id_status = retrieve(GET, 'id_status', 0);
-$type_status = retrieve(GET, 'status', '');
-$id_change_status = retrieve(GET, 'id_change_status', 0);
-$contents = wiki_parse(retrieve(GET, 'contents', ''), TSTRING_UNSECURE);
-$move = retrieve(GET, 'id_to_move', 0);
-$new_cat = retrieve(GET, 'new_cat', 0);
-$id_to_rename = retrieve(GET, 'id_to_rename', 0);
-$new_title = retrieve(GET, 'new_title', '');
-$create_redirection_while_renaming = retrieve(GET, 'create_redirection_while_renaming', false);
-$create_redirection = retrieve(GET, 'create_redirection', 0);
-$redirection_title = retrieve(GET, 'redirection_title', '');
+$id_auth = retrieve(POST, 'id_auth', 0);
+$id_status = retrieve(POST, 'id_status', 0);
+$type_status = retrieve(POST, 'status', '');
+$id_change_status = retrieve(POST, 'id_change_status', 0);
+$contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
+$move = retrieve(POST, 'id_to_move', 0);
+$new_cat = retrieve(POST, 'new_cat', 0);
+$id_to_rename = retrieve(POST, 'id_to_rename', 0);
+$new_title = retrieve(POST, 'new_title', '');
+$create_redirection_while_renaming = retrieve(POST, 'create_redirection_while_renaming', false);
+$create_redirection = retrieve(POST, 'create_redirection', 0);
+$redirection_title = retrieve(POST, 'redirection_title', '');
 $del_redirection = retrieve(GET, 'del_redirection', 0);
 $restore = retrieve(GET, 'restore', 0);
 $del_archive = retrieve(GET, 'del_contents', 0);
 $del_article = retrieve(GET, 'del_article', 0);
-$del_to_remove = retrieve(GET, 'id_to_remove', 0);
-$report_cat = retrieve(GET, 'report_cat', 0);
-$remove_action = retrieve(GET, 'action', ''); //Action à faire lors de la suppression
+$del_to_remove = retrieve(POST, 'id_to_remove', 0);
+$report_cat = retrieve(POST, 'report_cat', 0);
+$remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppression
 
 if( $id_auth > 0 )
 {
@@ -71,7 +71,7 @@ if( $id_auth > 0 )
 	}
 
 	//Redirection vers l'article
-	redirect(HOST . DIR . transid('wiki.php?title=' . $encoded_title, $encoded_title, '&'));
+	redirect(HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $encoded_title, $encoded_title, '&'));
 }
 if( $id_change_status > 0 )
 {
@@ -101,7 +101,7 @@ if( $id_change_status > 0 )
 		//On met à jour dans la base de données
 		$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET defined_status = '" . $id_status . "', undefined_status = '" . $contents . "' WHERE id = '" . $id_change_status . "'", __LINE__, __FILE__);
 		//Redirection vers l'article
-		redirect(HOST . DIR . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
+		redirect(HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 }
 elseif( $move > 0 ) //Déplacement d'un article
