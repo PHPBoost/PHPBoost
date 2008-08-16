@@ -27,6 +27,10 @@
 ###################################################*/
 
 define('HTML_NO_PROTECT', false);
+define('HTML_PROTECT', true);
+define('ADDSLASHES_AUTO', 0);
+define('ADDSLASHES_ON', 1);
+define('ADDSLASHES_OFF', 2);
 define('MAGIC_QUOTES_UNACTIV', false);
 define('NO_UPDATE_PAGES', true);
 define('NO_FATAL_ERROR', false);
@@ -78,6 +82,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 	switch($force_type)
 	{
 		case TINTEGER:
+		
 			return (int)$var;
 		case TSTRING:
 			return strprotect($var); //Chaine protégée.
@@ -106,7 +111,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 }
 
 //Passe à la moulinette les entrées (chaînes) utilisateurs.
-function strprotect($var, $html_protect = true)
+function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES_AUTO)
 {
     $var = trim($var);
     
@@ -114,9 +119,20 @@ function strprotect($var, $html_protect = true)
     if( $html_protect )
         $var = htmlspecialchars($var, ENT_NOQUOTES);
     
-    //On échappe les ' si la fonction magic_quotes_gpc() n'est pas activée sur le serveur.
-    if( MAGIC_QUOTES == false )
-        $var = addslashes($var);
+	switch($addslashes)
+	{
+		case ADDSLASHES_ON:
+			$var = addslashes($var);
+			break;
+		case ADDSLASHES_OFF:
+			break;
+		//Mode automatique
+		case ADDSLASHES_AUTO:
+		default:
+			//On échappe les ' si la fonction magic_quotes_gpc() n'est pas activée sur le serveur.
+			if( MAGIC_QUOTES == false )
+				$var = addslashes($var);
+	}
 
     return (string)$var;
 }
