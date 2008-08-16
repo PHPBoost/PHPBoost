@@ -143,6 +143,14 @@ class Content
 		return $Member->Get_attribute('user_editor');
 	}
 	
+	//Returns the list of the available tags in the parser
+	/*static*/ function get_available_tags()
+	{
+		return array('b', 'i', 'u', 's', 'title', 'stitle', 'style', 'url', 
+	'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
+	'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym', 'block', 'fieldset');
+	}
+	
 	## Private ##
 	//Language type
 	var $language_type = DEFAULT_LANGUAGE;

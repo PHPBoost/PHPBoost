@@ -47,14 +47,9 @@ else
 {		
 	$template = new Template('admin/admin_content_config.tpl');
 	
-	//Balises interdites
-	$array_unauth_tags = array('b', 'i', 'u', 's',	'title', 'stitle', 'style', 'url', 
-	'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
-	'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym');
-	
 	$j = 0;
 	
-	foreach($array_unauth_tags as $name)
+	foreach(Content::get_available_tags() as $name)
 	{	
 		$template->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,
