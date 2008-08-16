@@ -79,14 +79,14 @@ class BBCodeParser extends ContentParser
 		}
 		
 		//On remet le code HTML mis de côté
-		if( $Member->Check_auth($this->html_auth, 1) && !empty($this->array_tags['html']) )
+		if( !empty($this->array_tags['html']) )
 		{
 			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
 			$this->_reimplant_tag('html');
 		}
 		
 		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
-		if( !in_array('code', $this->forbidden_tags) && !empty($this->array_tags['code']) )
+		if( !empty($this->array_tags['code']) )
 		{
 			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
 			$this->_reimplant_tag('code');
