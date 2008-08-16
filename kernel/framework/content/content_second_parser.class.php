@@ -127,13 +127,13 @@ class ContentSecondParser extends Parser
 		$content = str_replace('[*]', '<span style="color:' . BBCODE_LIST_ITEM_COLOR . ';">[*]</span>', $content);
 		
 		//Simple tags (whitout parameter)
-		$simple_tags = array('b', 'i', 'u', 's', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide');
+		$simple_tags = array('b', 'i', 'u', 's', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide', 'mail');
 		
 		foreach($simple_tags as $tag)
 			$content = preg_replace('`\[' . $tag . '\](.+)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">[' . $tag . ']</span>$1<span style="color:' . BBCODE_TAG_COLOR . ';">[/' . $tag . ']</span>', $content);
 		
 		//Tags which take a parameter : [tag=parameter]content[/tag]
-		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'swf');
+		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'swf', 'mail');
 		
 		foreach($tags_with_simple_property as $tag)
 			$content = preg_replace('`\[' . $tag . '=([^\]]+)\](.+)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">[' . $tag . '</span>=<span style="color:' . BBCODE_PARAM_COLOR . ';">$1</span><span style="color:' . BBCODE_TAG_COLOR . ';">]</span>$2<span style="color:' . BBCODE_TAG_COLOR . ';">[/' . $tag . ']</span>', $content);

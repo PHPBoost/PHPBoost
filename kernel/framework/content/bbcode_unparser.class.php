@@ -137,7 +137,7 @@ class BBCodeUnparser extends ContentUnparser
 			"[float=$1]$2[/float]",
 			"[anchor=$1]$2[/anchor]",
 			"[acronym=$1]$2[/acronym]",
-			"$1",
+			"[mail=$1]$2[/mail]",
 			"[url=$1]$2[/url]",
 			"[title=$1]$2[/title]",
 			"[stitle=$1]$2[/stitle]",
@@ -190,13 +190,13 @@ class BBCodeUnparser extends ContentUnparser
 	function _unparse_table()
 	{
 		//On boucle pour parcourir toutes les imbrications
-		while( strpos($this->parsed_content, '<table') !== false )
+		while( strpos($this->parsed_content, '<table class="bb_table"') !== false )
 			$this->parsed_content = preg_replace('`<table class="bb_table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->parsed_content);
-		while( strpos($this->parsed_content, '<tr') !== false )
+		while( strpos($this->parsed_content, '<tr class="bb_table_row"') !== false )
 			$this->parsed_content = preg_replace('`<tr class="bb_table_row">(.*)</tr>`sU', '[row]$1[/row]', $this->parsed_content);
-		while( strpos($this->parsed_content, '<th') !== false )
+		while( strpos($this->parsed_content, '<th class="bb_table_head"') !== false )
 			$this->parsed_content = preg_replace('`<th class="bb_table_head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->parsed_content);
-		while( strpos($this->parsed_content, '<td') !== false )
+		while( strpos($this->parsed_content, '<td class="bb_table_col"') !== false )
 			$this->parsed_content = preg_replace('`<td class="bb_table_col"([^>]*)>(.*)</td>`sU', '[col$1]$2[/col]', $this->parsed_content);
 	}
 
