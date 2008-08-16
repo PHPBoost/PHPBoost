@@ -151,7 +151,6 @@ $LANG['size'] = 'Size';
 $LANG['file'] = 'File';
 $LANG['download'] = 'Downloaded';
 $LANG['delete'] = 'Delete';
-$LANG['total_users'] = 'Registered user(s)';
 $LANG['user_ip'] = 'Ip adress';
 $LANG['localisation'] = 'Localisation';
 $LANG['activ'] = 'Activate';

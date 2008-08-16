@@ -94,10 +94,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			$user_timezone = retrieve(POST, 'user_timezone', 0);
 			
 			$user_local = retrieve(POST, 'user_local', '');
-			//Validité de l'adresse du site.
 			$user_web = retrieve(POST, 'user_web', '');
-			$user_web = (!empty($user_web) && preg_match('`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`', trim($_POST['user_web']))) ? $user_web : '';
-					
 			$user_occupation = retrieve(POST, 'user_occupation', '');
 			$user_hobbies = retrieve(POST, 'user_hobbies', '');
 			$user_desc = retrieve(POST, 'user_desc', '', TSTRING_PARSE);
