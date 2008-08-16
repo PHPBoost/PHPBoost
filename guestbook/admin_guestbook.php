@@ -54,26 +54,21 @@ else
 	
 	$Cache->Load_file('guestbook');
 	
-	//Balises interdites => valeur 1.
-	$array_tags = array('b' => 0, 'i' => 0, 'u' => 0, 's' => 0,	'title' => 0, 'stitle' => 0, 'style' => 0, 'url' => 0, 
-	'img' => 0, 'quote' => 0, 'hide' => 0, 'list' => 0, 'color' => 0, 'bgcolor' => 0, 'font' => 0, 'size' => 0, 'align' => 0, 'float' => 0, 'sup' => 0, 
-	'sub' => 0, 'indent' => 0, 'pre' => 0, 'table' => 0, 'swf' => 1, 'movie' => 1, 'sound' => 1, 'code' => 0, 'math' => 0, 'anchor' => 0, 'acronym' => 0);
-	
 	//Balises interdites
 	$i = 0;
 	$tags = '';
 	$CONFIG_GUESTBOOK['guestbook_forbidden_tags'] = isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']) ? $CONFIG_GUESTBOOK['guestbook_forbidden_tags'] : $array_tags;
-	foreach($array_tags as $name => $is_selected)
+	foreach(Content::get_available_tags() as $name)
 	{
 		$selected = '';
 		if( in_array($name, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']) )
 			$selected = 'selected="selected"';
-		$tags .= '<option id="tag' . $i++ . '" value="' . $name . '" ' . $selected . '>[' . $name . ']</option>';
+		$tags .= '<option id="tag' . $i++ . '" value="' . $name . '" ' . $selected . '>' . $name . '</option>';
 	}
 	
 	$Template->Assign_vars(array(
 		'TAGS' => $tags,
-		'NBR_TAGS' => count($array_tags),
+		'NBR_TAGS' => $i,
 		'MAX_LINK' => isset($CONFIG_GUESTBOOK['guestbook_max_link']) ? $CONFIG_GUESTBOOK['guestbook_max_link'] : '-1',
 		'L_REQUIRE' => $LANG['require'],	
 		'L_GUESTBOOK' => $LANG['title_guestbook'],
