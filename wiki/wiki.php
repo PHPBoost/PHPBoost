@@ -157,7 +157,7 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 	
 	$Template->Assign_vars(array(
 		'TITLE' => $article_infos['title'],
-		'CONTENTS' => second_parse(wiki_no_rewrite(stripslashes($article_infos['content']))),
+		'CONTENTS' => second_parse(wiki_no_rewrite($article_infos['content'])),
 		'HITS' => ($_WIKI_CONFIG['count_hits'] != 0 && $id_contents == 0) ? sprintf($LANG['wiki_article_hits'], (int)$article_infos['hits']) : '',
 		'L_SUB_CATS' => $LANG['wiki_subcats'],
 		'L_SUB_ARTICLES' => $LANG['wiki_subarticles'],
