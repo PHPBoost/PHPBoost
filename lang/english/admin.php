@@ -714,5 +714,8 @@ $LANG['saturday'] = 'Sat';
 $LANG['sunday']	= 'Sun';
 
 // Updates
-$LANG['L_WEBSITE_UPDATES'] = 'Updates';
+$LANG['website_updates'] = 'Updates';
+$LANG['kernel'] = 'Kernel';
+//$LANG['modules'] = 'Modules';
+$LANG['themes'] = 'Themes';
 ?>

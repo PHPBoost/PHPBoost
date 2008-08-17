@@ -87,13 +87,15 @@ $Template->Assign_vars(array(
 	'L_COMMENTS' => $LANG['comments'],
 	'L_SITE_DATABASE' => $LANG['database'],
 	'L_UPDATER' => $LANG['updater'],
+	'L_KERNEL' => $LANG['kernel'],
 	'L_MODULES' => $LANG['modules'],
+	'L_THEMES' => $LANG['themes'],
 	'L_CACHE' => $LANG['cache'],
 	'L_SYNDICATION' => $LANG['syndication'],
 	'L_EXTEND_MENU' => $LANG['extend_menu'],
 	'L_CONTENT_CONFIG' => $LANG['content_config'],
 	'U_INDEX_SITE' => get_start_page(),
-    'L_WEBSITE_UPDATES' => $LANG['L_WEBSITE_UPDATES']
+    'L_WEBSITE_UPDATES' => $LANG['website_updates']
 ));
 
 //Listing des modules disponibles:
