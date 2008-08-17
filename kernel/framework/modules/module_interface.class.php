@@ -46,13 +46,14 @@ class ModuleInterface
         $this->attributes =array();
         $this->infos = array();
         $this->functionnalities = array();
+        
+        // Get the config.ini informations
+        $this->infos = load_ini_file(PATH_TO_ROOT . '/' . $this->id . '/lang/', $CONFIG['lang']);
+        if ( isset($this->infos['name']) )
+            $this->name = $this->infos['name'];
+        
         if( $error == 0 )
-        {
-            // Get the config.ini informations
-            $this->infos = load_ini_file(PATH_TO_ROOT . '/'.$this->id.'/lang/', $CONFIG['lang']);
-            if ( isset($this->infos['name']) )
-                $this->name = $this->infos['name'];
-            
+        {            
             // Get modules methods
             $methods = get_class_methods(ucfirst($moduleId).'Interface'); // PHP4 returns it in lower case
             // generics module Methods from ModuleInterface
