@@ -38,11 +38,11 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 {
 	$tpl_news = new Template('news/news.tpl');
 
-	if( $CONFIG_NEWS['activ_edito'] == '1' ) //Affichage de l'édito
+	if( $CONFIG_NEWS['activ_edito'] == 1 ) //Affichage de l'édito
 	{
 		$tpl_news->Assign_vars( array(
 			'C_NEWS_EDITO' => true,
-			'CONTENTS' => second_parse(stripslashes($CONFIG_NEWS['edito'])),
+			'CONTENTS' => second_parse($CONFIG_NEWS['edito']),
 			'TITLE' => $CONFIG_NEWS['edito_title'],
 			'EDIT' => $is_admin ? '<a href="../news/admin_news_config.php" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>&nbsp;' : ''
 		));

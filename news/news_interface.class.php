@@ -47,7 +47,7 @@ class NewsInterface extends ModuleInterface
 		$news_config = 'global $CONFIG_NEWS;' . "\n";
 		
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_NEWS = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'news'", __LINE__, __FILE__));
+		$CONFIG_NEWS = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'news'", __LINE__, __FILE__));
 		
 		$news_config .= '$CONFIG_NEWS = ' . var_export($CONFIG_NEWS, true) . ';' . "\n";
 
