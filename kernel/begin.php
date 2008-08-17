@@ -120,9 +120,9 @@ if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
 
 //Autorisation sur le module chargé
 define('MODULE_NAME', get_module_name());
-if( isset($MODULES[MODULE_NAME]) && $MODULES[MODULE_NAME]['activ'] == 1 )
+if( isset($MODULES[MODULE_NAME])  )
 {
-	if( !$Member->Check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE) ) //Accès non autorisé !
+	if( $MODULES[MODULE_NAME]['activ'] == 0 || !$Member->Check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE) ) //Accès non autorisé !
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 
