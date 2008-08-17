@@ -307,7 +307,7 @@ $Template->Assign_vars(array(
 	'L_ROOT' => $LANG['pages_root'],
 	'L_PREVIEWING' => $LANG['pages_previewing'],
 	'L_CONTENTS_PART' => $LANG['pages_contents_part'],
-	'L_SUBMIT' => $LANG['submit'],
+	'L_SUBMIT' => $id_edit > 0 ? $LANG['update'] : $LANG['submit'],
 	'TARGET' => transid('post.php')
 ));
 

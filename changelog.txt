@@ -1,164 +1,164 @@
 [b]Structure et fonctionnement:[/b]
-[*] [color=red]NouveautÃ©:[/color] Nouveau moteur de templates, avec systÃ¨me de cache intÃ©grÃ© et nouvelles fonctionnalitÃ©s.
-[*] [color=red]NouveautÃ©:[/color] IntÃ©gration d'un Ã©diteur texte temps rÃ©el (wysiwyg) Tinymce, configurable dans le profil avec choix BBcode ou Tinymce.
-+ [color=red]NouveautÃ©:[/color] Panneau de modÃ©ration.
-+ [color=red]NouveautÃ©:[/color] Nouveau systÃ¨me de parsage des messages, support de l'html et des imbrications.
-[*] [color=red]NouveautÃ©:[/color] SystÃ¨me de communication entres les modules et le noyau (Framework PHPBoost).
-[*] [color=red]NouveautÃ©:[/color] Nouveaux outils standardisÃ©s communs aux modules (Recherche, dernier ajouts, etc) (Framework PHPBoost).
-[*] [color=red]NouveautÃ©:[/color] AmÃ©lioration du systÃ¨me d'autorisation, possibilitÃ© de gÃ©rer en plus des groupes mutliples chaque membre individuellement.
-[*] [color=red]NouveautÃ©:[/color] SystÃ¨me d'ajout de menus personnel automatisÃ©, crÃ©ation pour les dÃ©butants facilitÃ©.
-[*] [color=red]NouveautÃ©:[/color] DÃ©tection automatisÃ©e des menus non installÃ©s, possibilitÃ© d'associer plusieurs menus Ã  un module. 
-[*] [color=red]NouveautÃ©:[/color] Nouveau systÃ¨me de menu dynamique (dÃ©roulant), avec sous-menus infinis.
-[*] [color=red]NouveautÃ©:[/color] Nouvelle interface de dÃ©placement des menus.
-[*] [color=red]NouveautÃ©:[/color] Nouveau placement possible des menus (Haut/Centre haut/Centre bas).
-[*] [color=red]NouveautÃ©:[/color] IntÃ©gration d'un nouveau colorateur syntaxique (Geshi), support de nombreux languages.
-[*] Refonte totale des commentaires. IntÃ©gration simplifiÃ©e dans les modules.
-[*] [color=red]NouveautÃ©:[/color] Interface de visualisation/Ã©dition des commentaires du site.
-[*] [color=red]NouveautÃ©:[/color] Nouvelle gestion de l'Ã©diteur de contenu, dÃ©sactivation des balises amÃ©liorÃ©e.
-[*] [color=red]NouveautÃ©:[/color] Gestion du temps global (GMT), et du dÃ©calage horaire. 
-[*] [color=red]NouveautÃ©:[/color] Gestionnaire automatisÃ© des catÃ©gories infinies (Framework PHPBoost). 
-+ [color=red]NouveautÃ©:[/color] SystÃ¨me de gestion des mises Ã  jour du noyau et des modules avec gestion de diffÃ©rents dÃ©pÃ´ts.
-[*] [color=red]NouveautÃ©:[/color] Ajout d'un proxy web permettant d'effectuer des requÃªtes asynchrones sur des sites distants.
-+ [color=red]NouveautÃ©:[/color] Gestions des liens du site, duplication possible. Gestion des menus dynamiques (dÃ©roulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultÃ©e.
-[*] [color=red]NouveautÃ©:[/color] Gestionnaire de commentaires (Framework PHPBoost). 
-[*] [color=red]NouveautÃ©:[/color] Gestionnaire de notation (Framework PHPBoost). 
-[*] [color=red]NouveautÃ©:[/color] AmÃ©lioration de l'approche de programmation orientÃ© objet (Framework PHPBoost). 
-[*] [color=red]NouveautÃ©:[/color] Support des autorisations avancÃ©es pour les menus.
-[*] [color=red]NouveautÃ©:[/color] Nouveau gestionnaire avancÃ© de base de donnÃ©es, nombreux outils d'administration.
-[*] [color=red]NouveautÃ©:[/color] Enregistrement en xml des flux Rss/Atom, intÃ©gration d'un parseur xml.
-[*] [color=red]NouveautÃ©:[/color] Nouveau systÃ¨me de captcha (anti-spam), avec diffÃ©rents niveaux de difficultÃ©.
-[*] SystÃ¨me de cache amÃ©liorÃ©.
-[*] SystÃ¨me de cache, et de changement de jour pour les modules intÃ©grÃ©s Ã  l'interface de communication noyau/module.
+[*] [color=red]Nouveauté:[/color] Nouveau moteur de templates, avec système de cache intégré et nouvelles fonctionnalités.
+[*] [color=red]Nouveauté:[/color] Intégration d'un éditeur texte temps réel (wysiwyg) Tinymce, configurable dans le profil avec choix BBcode ou Tinymce.
++ [color=red]Nouveauté:[/color] Panneau de modération.
++ [color=red]Nouveauté:[/color] Nouveau système de parsage des messages, support de l'html et des imbrications.
+[*] [color=red]Nouveauté:[/color] Système de communication entres les modules et le noyau (Framework PHPBoost).
+[*] [color=red]Nouveauté:[/color] Nouveaux outils standardisés communs aux modules (Recherche, dernier ajouts, etc) (Framework PHPBoost).
+[*] [color=red]Nouveauté:[/color] Amélioration du système d'autorisation, possibilité de gérer en plus des groupes mutliples chaque membre individuellement.
+[*] [color=red]Nouveauté:[/color] Système d'ajout de menus personnel automatisé, création pour les débutants facilité.
+[*] [color=red]Nouveauté:[/color] Détection automatisée des menus non installés, possibilité d'associer plusieurs menus à un module. 
+[*] [color=red]Nouveauté:[/color] Nouveau système de menu dynamique (déroulant), avec sous-menus infinis.
+[*] [color=red]Nouveauté:[/color] Nouvelle interface de déplacement des menus.
+[*] [color=red]Nouveauté:[/color] Nouveau placement possible des menus (Haut/Centre haut/Centre bas).
+[*] [color=red]Nouveauté:[/color] Intégration d'un nouveau colorateur syntaxique (Geshi), support de nombreux languages.
+[*] Refonte totale des commentaires. Intégration simplifiée dans les modules.
+[*] [color=red]Nouveauté:[/color] Interface de visualisation/édition des commentaires du site.
+[*] [color=red]Nouveauté:[/color] Nouvelle gestion de l'éditeur de contenu, désactivation des balises améliorée.
+[*] [color=red]Nouveauté:[/color] Gestion du temps global (GMT), et du décalage horaire. 
+[*] [color=red]Nouveauté:[/color] Gestionnaire automatisé des catégories infinies (Framework PHPBoost). 
++ [color=red]Nouveauté:[/color] Système de gestion des mises à jour du noyau et des modules avec gestion de différents dépôts.
+[*] [color=red]Nouveauté:[/color] Ajout d'un proxy web permettant d'effectuer des requêtes asynchrones sur des sites distants.
++ [color=red]Nouveauté:[/color] Gestions des liens du site, duplication possible. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
+[*] [color=red]Nouveauté:[/color] Gestionnaire de commentaires (Framework PHPBoost). 
+[*] [color=red]Nouveauté:[/color] Gestionnaire de notation (Framework PHPBoost). 
+[*] [color=red]Nouveauté:[/color] Amélioration de l'approche de programmation orienté objet (Framework PHPBoost). 
+[*] [color=red]Nouveauté:[/color] Support des autorisations avancées pour les menus.
+[*] [color=red]Nouveauté:[/color] Nouveau gestionnaire avancé de base de données, nombreux outils d'administration.
+[*] [color=red]Nouveauté:[/color] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml.
+[*] [color=red]Nouveauté:[/color] Nouveau système de captcha (anti-spam), avec différents niveaux de difficulté.
+[*] Système de cache amélioré.
+[*] Système de cache, et de changement de jour pour les modules intégrés à l'interface de communication noyau/module.
 [*] Gestion des mots de passe avec l'algorithme de cryptage sha256 en lieu et place du md5
-[*] Ajout au framework des Ã©lÃ©ments nÃ©cessaires pour traiter Ã  l'avenir dans un nouveau module le plan du site. Ce module gÃ©nÃ¨rera aussi le fichier sitemap.xml qui permet d'affiner le rÃ©fÃ©rencement dans les moteurs de recherches.
-[*] RÃ©organisation du systÃ¨me d'autorisation. 
-[*] Valeurs par dÃ©faut dans les autorisations sur les groupes.
-[*] SystÃ¨me de visualisation des messages du membre, possibilitÃ© de communication avec les modules pour rÃ©cupÃ©rer les liens vers les messages.
-[*] PossibilitÃ© de dÃ©sactiver les colonnes droite/gauche du thÃ¨me.
-[*] PossibilitÃ© de choisir finement le temps de maintenance du site.
-[*] PossibilitÃ© de dÃ©finir une limite d'upload dans le gestionnaire de fichier en fonction des groupes.
-[*] PossibilitÃ© de dÃ©finir un nombre maximum de messages privÃ©s en fonction des groupes.
-[*] PossibilitÃ© de dÃ©finir les extensions autorisÃ©es (une par une ou par groupe) dans le gestionnaire de fichier.
+[*] Ajout au framework des éléments nécessaires pour traiter à l'avenir dans un nouveau module le plan du site. Ce module génèrera aussi le fichier sitemap.xml qui permet d'affiner le référencement dans les moteurs de recherches.
+[*] Réorganisation du système d'autorisation. 
+[*] Valeurs par défaut dans les autorisations sur les groupes.
+[*] Système de visualisation des messages du membre, possibilité de communication avec les modules pour récupérer les liens vers les messages.
+[*] Possibilité de désactiver les colonnes droite/gauche du thème.
+[*] Possibilité de choisir finement le temps de maintenance du site.
+[*] Possibilité de définir une limite d'upload dans le gestionnaire de fichier en fonction des groupes.
+[*] Possibilité de définir un nombre maximum de messages privés en fonction des groupes.
+[*] Possibilité de définir les extensions autorisées (une par une ou par groupe) dans le gestionnaire de fichier.
 - Support de https.
 [*] Editeur de .htaccess
 [*] Ajout du phpinfo dans l'administration.
-[*] PossibilitÃ© de se dÃ©connecter dans l'administration.
-[*] Page d'erreur 404 lorsqu'une page n'est pas trouvÃ©e.
-[*] Automatisation des configurations par dÃ©faut des modules.
-[*] Nouveau systÃ¨me de chargement des langues/thÃ¨mes, avec dÃ©clenchement d'erreur en cas d'Ã©chec.
-[*] RÃ©organisation du chargement de la tÃªte de page.
-[*] AmÃ©lioration de la gestion des groupes (ajout/edition/suppression). 
-[*] Nouveau systÃ¨me pour la barre d'arborescence (fil d'ariane).
-[*] PossibilitÃ© d'insÃ©rer plusieurs css pour les modules.
-[*] PossibilitÃ© de charger un css pour chaque mini-module.
-[*] Nom des fichiers uploadÃ©s conservÃ© (gestionnaire d'upload).
-[*] Ajout d'une interface affichant les informations sur le serveur et gÃ©nÃ©rant un rapport pour le support.
-[*] PossibilitÃ© de dÃ©sactiver les informations de temps de gÃ©nÃ©ration de page.
-[*] PossibilitÃ© de dÃ©sactiver les informations sur le thÃ¨me utilisÃ©.
+[*] Possibilité de se déconnecter dans l'administration.
+[*] Page d'erreur 404 lorsqu'une page n'est pas trouvée.
+[*] Automatisation des configurations par défaut des modules.
+[*] Nouveau système de chargement des langues/thèmes, avec déclenchement d'erreur en cas d'échec.
+[*] Réorganisation du chargement de la tête de page.
+[*] Amélioration de la gestion des groupes (ajout/edition/suppression). 
+[*] Nouveau système pour la barre d'arborescence (fil d'ariane).
+[*] Possibilité d'insérer plusieurs css pour les modules.
+[*] Possibilité de charger un css pour chaque mini-module.
+[*] Nom des fichiers uploadés conservé (gestionnaire d'upload).
+[*] Ajout d'une interface affichant les informations sur le serveur et générant un rapport pour le support.
+[*] Possibilité de désactiver les informations de temps de génération de page.
+[*] Possibilité de désactiver les informations sur le thème utilisé.
 [*] Message d'alerte lorsque le site est en maintenance, avec temps restant.
-[*] Sauvegarde automatique du statut de la barre bbcode (Ã©tendu ou non).
-[*] AmÃ©lioration de l'insertion des balises bbcode.
-[*] Message d'avertissement dans les commentaires si non autorisÃ© Ã  poster.
-[*] Couleur alternÃ©e dans les messages (configurable par le css).
-[*] Ajout d'une barre de progression ajax automatisÃ©e.
+[*] Sauvegarde automatique du statut de la barre bbcode (étendu ou non).
+[*] Amélioration de l'insertion des balises bbcode.
+[*] Message d'avertissement dans les commentaires si non autorisé à poster.
+[*] Couleur alternée dans les messages (configurable par le css).
+[*] Ajout d'une barre de progression ajax automatisée.
 [*] Ajout de la balise fieldset.
 [*] Ajout de la balise block.
-[*] Ajout de la balise font, permet de changer la police d'Ã©criture.
-[*] Ajout de la balise bgcolor, permet de dÃ©finir une couleur de fond.
+[*] Ajout de la balise font, permet de changer la police d'écriture.
+[*] Ajout de la balise bgcolor, permet de définir une couleur de fond.
 [*] Ajout de la balise pre.
 [*] Ajout de la balise acronym.
 [*] Ajout de la balise line.
 [*] Interface d'insertion (bbcode) pour la balise table.
 [*] Interface d'insertion (bbcode) pour la balise list.
 [*] Interface d'insertion (bbcode) pour la balise url.
-[*] PossibilitÃ© de saisir des dates avant 1970 dans le mini calendrier.
+[*] Possibilité de saisir des dates avant 1970 dans le mini calendrier.
 [*] Diminution de la taille du copyright dans le pied de page.
-[*] Changement du systÃ¨me de page de dÃ©marrage (plus fiable).
+[*] Changement du système de page de démarrage (plus fiable).
 [*] Capture de toutes les erreurs php par le gestionnaire, et archivage.
-[*] Pose de verroux lors de l'Ã©criture des fichiers de cache (plus sÃ»r).
+[*] Pose de verroux lors de l'écriture des fichiers de cache (plus sûr).
 [*] Nouvelle fonction de redirection.
-[*] AmÃ©lioration du chargement des fichiers de configuration.
-[*] AmÃ©lioration de la gestion des erreurs.
-[*] Avertissement lors de l'exÃ©cution de requÃªtes SQL risquÃ©es dans l'administration, amÃ©lioration de l'interface et de la coloration synthaxique.
-[*] Gestion amÃ©liorÃ© des entitÃ©s html.
-[*] RÃ©cupÃ©ration possible par les sessions des champs membres supplÃ©mentaires du site et des modules.
-[*] DÃ©placement du code de connexion utilisateur.
+[*] Amélioration du chargement des fichiers de configuration.
+[*] Amélioration de la gestion des erreurs.
+[*] Avertissement lors de l'exécution de requêtes SQL risquées dans l'administration, amélioration de l'interface et de la coloration synthaxique.
+[*] Gestion amélioré des entités html.
+[*] Récupération possible par les sessions des champs membres supplémentaires du site et des modules.
+[*] Déplacement du code de connexion utilisateur.
 [*] Regroupement des modules dans les templates.
 [*] Nouvelles images pour les rangs.
-[*] Conformation des requÃªtes au standard SQL.
-[*] AmÃ©lioration des taches crons.
+[*] Conformation des requêtes au standard SQL.
+[*] Amélioration des taches crons.
 [*] Correction du bug d'affichage des dossiers dans le gestionnaire de fichiers.
-[*] Correction des bugs dÃ» Ã  l'option register_globals.
+[*] Correction des bugs dû à l'option register_globals.
 
 [b]Forum[/b]
-[*] [color=red]NouveautÃ©:[/color] RÃ©organisation complÃ¨te du code.
-[*] [color=red]NouveautÃ©:[/color] Lien prÃ©cis vers l'action concernÃ©e dans l'historique du panneau de modÃ©ration.
-[*] [color=red]NouveautÃ©:[/color] Interface pour visualiser partout sur le forum et instantanemment les messages non lus.
-[*] [color=red]NouveautÃ©:[/color] Affichage du nombre de messages non lus.
-[*] [color=red]NouveautÃ©:[/color] PossibilitÃ© de se connecter/enregistrer Ã  partir du forum (dÃ©sactivable).
-[*] [color=red]NouveautÃ©:[/color] PossibilitÃ© de voir uniquement les nouveaux messages d'une catÃ©gorie.
-[*] [color=red]NouveautÃ©:[/color] Coloration des rÃ©sultats dans le moteur de recherche.
-[*] RÃ©paration des bugs sur l'arbre intervallaire gÃ©rant les catÃ©gories.
+[*] [color=red]Nouveauté:[/color] Réorganisation complète du code.
+[*] [color=red]Nouveauté:[/color] Lien précis vers l'action concernée dans l'historique du panneau de modération.
+[*] [color=red]Nouveauté:[/color] Interface pour visualiser partout sur le forum et instantanemment les messages non lus.
+[*] [color=red]Nouveauté:[/color] Affichage du nombre de messages non lus.
+[*] [color=red]Nouveauté:[/color] Possibilité de se connecter/enregistrer à partir du forum (désactivable).
+[*] [color=red]Nouveauté:[/color] Possibilité de voir uniquement les nouveaux messages d'une catégorie.
+[*] [color=red]Nouveauté:[/color] Coloration des résultats dans le moteur de recherche.
+[*] Réparation des bugs sur l'arbre intervallaire gérant les catégories.
 [*] Nouveau formulaire de recherche.
-[*] AmÃ©lioration de l'interface et du systÃ¨me de sondage.
+[*] Amélioration de l'interface et du système de sondage.
 [*] Alerte avant de marquer les sujets comme lus.
 [*] Action "suivre le sujet", "changement du statut du sujet" sans rechargement de page.
 [*] Option de recheche dans le titre et contenu des sujets.
-[*] AmÃ©lioration de l'interface d'alertes sur les sujets.
+[*] Amélioration de l'interface d'alertes sur les sujets.
 [*] Correction de la fonction de recomptage des sujets/messages.
 
 [b]Galerie:[/b]
-[*] Nom des images uploadÃ©es conservÃ©.
-[*] Nouveau systÃ¨me de notation.
+[*] Nom des images uploadées conservé.
+[*] Nouveau système de notation.
 
 [b]News[/b]
-- [color=red]NouveautÃ©:[/color] PossibilitÃ© aux membres de proposer des news.
-[*] [color=red]NouveautÃ©:[/color] PossibilitÃ© de publier automatiquement des news Ã  la minute prÃ¨s.
-[*] [color=red]NouveautÃ©:[/color] Lien vers la news prÃ©cÃ©dente/suivante.
-[*] PossibilitÃ© de masquer le nom du posteur de la news.
-[*] PossibilitÃ© de masquer la date de la news.
+- [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des news.
+[*] [color=red]Nouveauté:[/color] Possibilité de publier automatiquement des news à la minute près.
+[*] [color=red]Nouveauté:[/color] Lien vers la news précédente/suivante.
+[*] Possibilité de masquer le nom du posteur de la news.
+[*] Possibilité de masquer la date de la news.
 
 [b]Articles[/b]
-- [color=red]NouveautÃ©:[/color] PossibilitÃ© aux membres de proposer des articles.
-[*] [color=red]NouveautÃ©:[/color] CrÃ©ation d'une liste dÃ©roulante des pages consultables.
+- [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des articles.
+[*] [color=red]Nouveauté:[/color] Création d'une liste déroulante des pages consultables.
 [*] Ajout de la balise nouvelle page.
-[*] Nouveau systÃ¨me de notation.
+[*] Nouveau système de notation.
 
-[b]TÃ©lÃ©chargement[/b]
-[*] [color=red]NouveautÃ©:[/color] Nouveau systÃ¨me pour la gestion des catÃ©gories infinies (moins lourd et plus sÃ»r).
-- [color=red]NouveautÃ©:[/color] PossibilitÃ© aux membres de proposer des fichiers.
-[*] [color=red]NouveautÃ©:[/color] Nouvelle interface.
-[*] Nouveau systÃ¨me de notation.
+[b]Téléchargement[/b]
+[*] [color=red]Nouveauté:[/color] Nouveau système pour la gestion des catégories infinies (moins lourd et plus sûr).
+- [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des fichiers.
+[*] [color=red]Nouveauté:[/color] Nouvelle interface.
+[*] Nouveau système de notation.
 
 [b]Liens web[/b]
-- [color=red]NouveautÃ©:[/color] PossibilitÃ© aux membres de proposer des liens.
-[*] Nouveau systÃ¨me de notation.
+- [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des liens.
+[*] Nouveau système de notation.
 
 [b]Statistiques:[/b]
-[*] [color=red]NouveautÃ©:[/color] Graphiques en barre, et courbes.
+[*] [color=red]Nouveauté:[/color] Graphiques en barre, et courbes.
 [*] Ajout des pages vues par heures/jours/mois.
 [*] Ajout du site de provenance des visiteurs.
-[*] Ajout des mots clÃ©s qui ont amenÃ©s des visiteurs Ã  partir de moteurs de recherche.
+[*] Ajout des mots clés qui ont amenés des visiteurs à partir de moteurs de recherche.
 
 [b]Sondages:[/b]
-[*] PossibilitÃ© d'afficher les minis-sondages alÃ©atoirement.
-[*] ImpossibilitÃ© de revoter pour les membres lorsque le niveau d'autorisation est rÃ©glÃ© sur membre ou plus.
+[*] Possibilité d'afficher les minis-sondages aléatoirement.
+[*] Impossibilité de revoter pour les membres lorsque le niveau d'autorisation est réglé sur membre ou plus.
 
 [b]Discussion:[/b]
-[*] [color=red]NouveautÃ©:[/color] Ajout et suppression des messages en Ajax (sans rafraichissement de page).
-[*] [color=red]NouveautÃ©:[/color] PossibilitÃ© d'actualiser la shoutbox toutes les x minutes (configurable).
+[*] [color=red]Nouveauté:[/color] Ajout et suppression des messages en Ajax (sans rafraichissement de page).
+[*] [color=red]Nouveauté:[/color] Possibilité d'actualiser la shoutbox toutes les x minutes (configurable).
 [*] Coloration du pseudo en fonction du rang.
 
 [b]En ligne:[/b]
-[*] Ajout de la localisation du membre, et de la derniÃ¨re mise Ã  jour.
+[*] Ajout de la localisation du membre, et de la dernière mise à jour.
 [*] Correction du nombre de visiteurs en ligne.
 
 [b]Livre d'or:[/b]
-[*] [color=red]NouveautÃ©:[/color] Menu affichant alÃ©atoirements les derniers messages postÃ©s.
+[*] [color=red]Nouveauté:[/color] Menu affichant aléatoirements les derniers messages postés.
 
 [b]Nouveau module:[/b]
-[*] [color=red]NouveautÃ©:[/color] Module FAQ. Permet de gÃ©rer une liste de questions/rÃ©ponses.
+[*] [color=red]Nouveauté:[/color] Module FAQ. Permet de gérer une liste de questions/réponses.
 
 [b]Nouveau module:[/b]
-[*] [color=red]NouveautÃ©:[/color] Module Recherche. PossibilitÃ© de faire des recherches globales dans les modules (proposant la fonction) et coloration des rÃ©sultats.
+[*] [color=red]Nouveauté:[/color] Module Recherche. Possibilité de faire des recherches globales dans les modules (proposant la fonction) et coloration des résultats.
 
