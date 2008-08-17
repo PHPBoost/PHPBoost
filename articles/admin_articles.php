@@ -259,12 +259,12 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	
 	$Template->Assign_block_vars('articles', array(
 		'IDARTICLES' => $id_post,
-		'TITLE' => stripslashes($title),
+		'TITLE' => $title,
 		'CATEGORIES' => $categories,
 		'IMG_PATH' => $img_direct_path ? $icon : '',
 		'IMG_ICON' => !empty($icon) ? '<img src="' . $icon . '" alt="" class="valign_middle" />' : '',
 		'IMG_LIST' => $image_list,
-		'CONTENTS' => stripslashes($contents),
+		'CONTENTS' => $contents,
 		'USER_ID' => $user_id,
 		'CURRENT_DATE' => $current_date,
 		'START' => ((!empty($start) && $visible == 2) ? $start : ''),
@@ -288,7 +288,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$pseudo = $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 	$Template->Assign_block_vars('articles.preview', array(
 		'USER_ID' => $user_id,
-		'TITLE' => stripslashes($title),
+		'TITLE' => $title,
 		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
 		'PSEUDO' => $pseudo,
 		'DATE' => gmdate_format('date_format_short')

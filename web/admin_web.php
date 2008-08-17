@@ -123,9 +123,9 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$cat = $Sql->Query("SELECT name FROM ".PREFIX."web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	
 	$Template->Assign_block_vars('web', array(
-		'NAME' => stripslashes($title),
+		'NAME' => $title,
 		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
-		'URL' => stripslashes($url),
+		'URL' => $url,
 		'IDCAT' => $idcat,
 		'CAT' => $cat,
 		'COMPT' => $compt,
@@ -143,11 +143,11 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'IDWEB' => $id_post,
-		'TITLE' => stripslashes($title),
+		'TITLE' => $title,
 		'KERNEL_EDITOR' => display_editor(),		
-		'NAME' => stripslashes($title),
-		'CONTENTS' => stripslashes($contents),
-		'URL' => stripslashes($url),
+		'NAME' => $title,
+		'CONTENTS' => $contents,
+		'URL' => $url,
 		'IDWEB' => $row['id'],
 		'IDCAT' => $idcat,
 		'COMPT' => $compt,

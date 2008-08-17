@@ -44,7 +44,7 @@ if( !empty($_POST['valid']) )
 	
 	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_download)) . "' WHERE name = 'download'", __LINE__, __FILE__);
 	
-	if( $CONFIG_DOWNLOAD['note_max'] != $config_download['note_max'] )
+	if( !empty($CONFIG_DOWNLOAD['note_max']) && $CONFIG_DOWNLOAD['note_max'] != $config_download['note_max'] )
 		$Sql->Query_inject("UPDATE ".PREFIX."download SET note = note * " . ($config_download['note_max'] / $CONFIG_DOWNLOAD['note_max']), __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
