@@ -233,7 +233,7 @@ class Cache
 		$config = 'global $CONFIG;' . "\n" . '$CONFIG = array();' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG = sunserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
+		$CONFIG = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
 		foreach($CONFIG as $key => $value)
 			$config .= '$CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ";\n";
 
@@ -364,7 +364,7 @@ class Cache
 		$config_member = 'global $CONFIG_MEMBER, $CONTRIBUTION_PANEL_UNREAD;' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_MEMBER = sunserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
+		$CONFIG_MEMBER = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
 		foreach($CONFIG_MEMBER as $key => $value)
 			$config_member .= '$CONFIG_MEMBER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 		

@@ -48,8 +48,8 @@ $delete_file = retrieve(GET, 'del', 0);
 //Form variables
 $file_title = retrieve(POST, 'title', '');
 $file_image = retrieve(POST, 'image', '');
-$file_contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
-$file_short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNSECURE);
+$file_contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+$file_short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNCHANGE);
 $file_url = retrieve(POST, 'url', '');
 $file_timestamp = retrieve(POST, 'timestamp', 0);
 $file_size = retrieve(POST, 'size', 0.0, TUNSIGNED_FLOAT);

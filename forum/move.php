@@ -300,7 +300,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			{
 				$Template->Assign_block_vars('answers_poll', array(
 					'ID' => $i,
-					'ANSWER' => stripslashes($answer)
+					'ANSWER' => $answer
 				));
 				$nbr_poll_field++;
 			}	
@@ -317,10 +317,10 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		$poll_type = retrieve(POST, 'poll_type', 0);
 		
 		$Template->Assign_vars(array(	
-			'TITLE' => stripslashes($title),
-			'DESC' => stripslashes($subtitle),
-			'CONTENTS' => stripslashes($contents),
-			'QUESTION' => stripslashes($question),
+			'TITLE' => $title,
+			'DESC' => $subtitle,
+			'CONTENTS' => $contents,
+			'QUESTION' => $question,
 			'IDM' => $id_post_msg,			
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
 			'CONTENTS_PREVIEW' => second_parse(stripslashes(strparse($contents))),

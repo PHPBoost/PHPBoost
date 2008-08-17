@@ -81,7 +81,7 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 
 	$user_id = (int)$Sql->Query("SELECT user_id FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	
-	$guestbook_contents = retrieve(POST, 'guestbook_contents', '');
+	$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNCHANGE);
 	$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
 
 	//Pseudo du membre connecté.
@@ -105,7 +105,7 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 	$update = $update && !empty($id_get) ? '?update=1&amp;id=' . $id_get : '';
 	
 	$Template->Assign_vars(array(
-		'CONTENTS' => stripslashes($guestbook_contents),
+		'CONTENTS' => $guestbook_contents,
 		'PSEUDO' => stripslashes($guestbook_pseudo),
 		'DATE' => gmdate_format('date_format_short'),
 		'UPDATE' => transid($update),
