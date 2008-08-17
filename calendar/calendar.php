@@ -349,7 +349,7 @@ elseif( !empty($id) )
 				'HOUR' => !empty($row['timestamp']) ? gmdate_format('h', $row['timestamp']) : '',
 				'MIN' => !empty($row['timestamp']) ? gmdate_format('i', $row['timestamp']) : '',
 				'CONTENTS' => unparse($row['contents']),					
-				'TITLE'	 => stripslashes($row['title']),
+				'TITLE'	 => $row['title'],
 				'L_REQUIRE_TITLE' => $LANG['require_title'],
 				'L_REQUIRE_TEXT' => $LANG['require_text'],				
 				'L_EDIT_EVENT' => $LANG['edit_event'],

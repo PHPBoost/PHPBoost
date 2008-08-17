@@ -166,7 +166,7 @@ elseif( !empty($_POST['previs']) )
 	$pseudo = $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = " . $Member->Get_attribute('user_id'), __LINE__, __FILE__);
 	$Template->Assign_vars(array(
 		'C_ARTICLES_PREVIEW' => true,
-		'TITLE_PRW' => stripslashes($title),
+		'TITLE_PRW' => $title,
 		'DATE_PRW' => gmdate_format('date_format_short'),
 		'CONTENTS_PRW' => second_parse(stripslashes(strparse($contents))),
 		'PSEUDO_PRW' => $pseudo
@@ -211,9 +211,9 @@ elseif( !empty($_POST['previs']) )
 	
 	$Template->Assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
-		'TITLE' => stripslashes($title),
+		'TITLE' => $title,
 		'CATEGORIES' => $categories,
-		'CONTENTS' => stripslashes($contents),
+		'CONTENTS' => $contents,
 		'IMG_PATH' => $img_direct_path ? $icon : '',
 		'IMG_ICON' => !empty($icon) ? '<img src="' . $icon . '" alt="" class="valign_middle" />' : '',		
 		'IMG_LIST' => $image_list,

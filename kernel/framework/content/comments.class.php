@@ -167,7 +167,7 @@ class Comments
 					$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 				
 				$login = retrieve(POST, 'login', ''); //Pseudo posté.
-				$contents = trim(retrieve(POST, 'contents', '', TSTRING_UNSECURE));
+				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				
 				if( !empty($login) && !empty($contents) )
 				{

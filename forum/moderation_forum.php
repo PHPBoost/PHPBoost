@@ -233,7 +233,7 @@ if( $action == 'alert' ) //Gestion des alertes
 				'ID' => $id_get,
 				'TITLE' => $row['title'],
 				'TOPIC' => '<a href="topic' . transid('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . url_encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
-				'CONTENTS' => stripslashes($row['contents']),
+				'CONTENTS' => $row['contents'],
 				'STATUS' => $status,
 				'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
 				'TIME' => gmdate_format('date_format', $row['timestamp']),

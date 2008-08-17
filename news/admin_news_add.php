@@ -104,8 +104,8 @@ elseif( !empty($_POST['previs']) )
 
 	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
 	$idcat = retrieve(POST, 'idcat', '', TSTRING_UNSECURE);
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
-	$extend_contents = retrieve(POST, 'extend_contents', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	$extend_contents = retrieve(POST, 'extend_contents', '', TSTRING_UNCHANGE);
 	$img = retrieve(POST, 'img', '', TSTRING_UNSECURE);
 	$alt = retrieve(POST, 'alt', '', TSTRING_UNSECURE);
 
@@ -155,8 +155,8 @@ elseif( !empty($_POST['previs']) )
 	$Template->Assign_vars(array(
 		'MODULE_DATA_PATH' => $Template->Module_data_path('news'),
 		'TITLE' => stripslashes($title),
-		'CONTENTS' => stripslashes($contents),
-		'EXTEND_CONTENTS' => stripslashes($extend_contents),
+		'CONTENTS' => $contents,
+		'EXTEND_CONTENTS' => $extend_contents,
 		'IMG_PREVIEW' => !empty($img) ? '<img src="' . $img . '" alt="" />' : $LANG['no_img'],
 		'IMG' => $img,
 		'ALT' => stripslashes($alt),

@@ -51,18 +51,18 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 		$start_page = '';
 		
 	$config = $CONFIG;	 
-	$config['site_name'] = stripslashes(retrieve(POST, 'site_name', ''));	
-	$config['site_desc'] = stripslashes(retrieve(POST, 'site_desc', ''));
-	$config['site_keyword'] = stripslashes(retrieve(POST, 'site_keyword', ''));
-	$config['lang'] = stripslashes(retrieve(POST, 'lang', ''));
-	$config['theme'] = stripslashes(retrieve(POST, 'theme', 'main')); //main par defaut. 
+	$config['site_name'] = strprotect(retrieve(POST, 'site_name', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);	
+	$config['site_desc'] = strprotect(retrieve(POST, 'site_desc', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
+	$config['site_keyword'] = strprotect(retrieve(POST, 'site_keyword', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
+	$config['lang'] = strprotect(retrieve(POST, 'lang', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
+	$config['theme'] = strprotect(retrieve(POST, 'theme', 'main', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF); //main par defaut. 
 	$config['start_page'] = !empty($start_page) ? stripslashes($start_page) : '/member/member.php';
 	$config['compteur'] = retrieve(POST, 'compteur', 0);
 	$config['bench'] = retrieve(POST, 'bench', 0);
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
-	$config['mail'] = stripslashes(retrieve(POST, 'mail', ''));;  
+	$config['mail'] = strprotect(retrieve(POST, 'mail', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);  
 	$config['activ_mail'] = retrieve(POST, 'activ_mail', 1); //activé par defaut. 
-	$config['sign'] = stripslashes(retrieve(POST, 'sign', ''));;   
+	$config['sign'] = strprotect(retrieve(POST, 'sign', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);   
 	$config['anti_flood'] = retrieve(POST, 'anti_flood', 0);
 	$config['delay_flood'] = retrieve(POST, 'delay_flood', 0);
 	$config['pm_max'] = retrieve(POST, 'pm_max', 25);
@@ -167,14 +167,14 @@ elseif( $check_advanced && empty($_POST['advanced']) )
 elseif( !empty($_POST['advanced']) )
 {
 	$CONFIG['rewrite'] = 1;
-	$CONFIG['server_name'] = stripslashes(retrieve(POST, 'server_name', stripslashes(strprotect($server_name)) )); 
-	$CONFIG['server_path'] = stripslashes(retrieve(POST, 'server_path', stripslashes(strprotect($server_path)) ));  
+	$CONFIG['server_name'] = strprotect(retrieve(POST, 'server_name', $server_name, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF); 
+	$CONFIG['server_path'] = strprotect(retrieve(POST, 'server_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);  
 	$CONFIG['timezone'] = retrieve(POST, 'timezone', 0);  
 	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
-	$CONFIG['site_cookie'] = stripslashes(retrieve(POST, 'site_cookie', 'session')); //Session par defaut.
+	$CONFIG['site_cookie'] = strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF); //Session par defaut.
 	$CONFIG['site_session'] = retrieve(POST, 'site_session', 3600); //Valeur par defaut à 3600.					
 	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.
-	$CONFIG['htaccess_manual_content'] = retrieve(POST, 'htaccess_manual_content', '', TSTRING);
+	$CONFIG['htaccess_manual_content'] = strprotect(retrieve(POST, 'htaccess_manual_content', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
 	
 	if( !empty($CONFIG['server_name']) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit'])  ) //Nom de serveur obligatoire
 	{
