@@ -3,7 +3,7 @@
 			var path = '{PAGES_PATH}';
 			var selected_cat = {SELECTED_CAT};
 			function check_form_post(){
-				if(document.getElementById('title').value == "") {
+				if(document.getElementById('title') && document.getElementById('title').value == "") {
 					alert("{L_ALERT_TITLE}");
 					return false;
 				}
