@@ -5,9 +5,7 @@
 ------------------------------------- NOYAU ------------------------------------
 [-] Nouvelles options d'installation (Communautaire, Vitrine, etc).
 [-] Supporter https et remplacer les "." par des "_" dans le nom de la base de données lors de l'installation.
-[-] Finir le parseur TinyMCE (gérer les balises interdites)
-[-] Panneau de modération (+déplacer moderation_begin.php)
-[-] Vérifier les stripslashes dans toutes les zones de texte
+[-] Panneau de contribution (+déplacer moderation_begin.php)
 
 ------------------------------------ MODULES -----------------------------------
 [-] Download, faire une option dans les catégories à l'édition pour désapprouver.

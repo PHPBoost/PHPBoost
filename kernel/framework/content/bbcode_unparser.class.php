@@ -91,10 +91,11 @@ class BBCodeUnparser extends ContentUnparser
 	function _unparse_simple_tags()
 	{
 		$array_str = array( 
-			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<hr class="bb_hr" />'
+			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<hr class="bb_hr" />', '<sup>', '</sup>',
+			'<sub>', '</sub>', '<pre>', '</pre>'
 		);
 		$array_str_replace = array( 
-			'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[line]'
+			'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[line]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
 		);
 		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
 
@@ -103,11 +104,8 @@ class BBCodeUnparser extends ContentUnparser
 			'`<span style="color:([^;]+);">(.*)</span>`isU',
 			'`<span style="background-color:([^;]+);">(.*)</span>`isU',
 			'`<span style="text-decoration: underline;">(.*)</span>`isU',
-			'`<sup>(.+)</sup>`isU',
-			'`<sub>(.+)</sub>`isU',
 			'`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU',
 			'`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU',
-			'`<pre>(.*)</pre>`isU',
 			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
 			'`<p class="float_(left|right)">(.*)</p>`isU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
@@ -128,11 +126,8 @@ class BBCodeUnparser extends ContentUnparser
 			"[color=$1]$2[/color]",
 			"[bgcolor=$1]$2[/bgcolor]",
 			"[u]$1[/u]",	
-			"[sup]$1[/sup]",
-			"[sub]$1[/sub]",
 			"[size=$1]$2[/size]",
 			"[font=$1]$2[/font]",
-			"[pre]$1[/pre]",
 			"[align=$1]$2[/align]",
 			"[float=$1]$2[/float]",
 			"[anchor=$1]$2[/anchor]",

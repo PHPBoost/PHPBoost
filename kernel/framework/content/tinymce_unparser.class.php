@@ -3,7 +3,7 @@
 *                             tinymce_unparser.class.php
 *                            -------------------
 *   begin                : August 10, 2008
-*   copyright          : (C) 2008 Benoit Sautel
+*   copyright            : (C) 2008 Benoit Sautel
 *   email                : ben.popeye@phpboost.com
 *
 *   
@@ -29,6 +29,7 @@ require_once(PATH_TO_ROOT . '/kernel/framework/content/content_unparser.class.ph
 
 class TinyMCEUnparser extends ContentUnparser
 {
+	//Constructeur
 	function TinyMCEParser()
 	{
 		parent::ContentParser();
@@ -74,19 +75,18 @@ class TinyMCEUnparser extends ContentUnparser
 		
 		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
 		if( !empty($this->array_tags['html_unparse']) )
-			$this->array_tags['html_unparse'] = array_map(create_function('$var', 'return htmlspecialchars($var, ENT_NOQUOTES);'), $this->array_tags['html_unparse']);
+			$this->array_tags['html_unparse'] = array_map(array('TinyMCEUnparser', '_clear_html_and_code_tag'), $this->array_tags['html_unparse']);
 		if( !empty($this->array_tags['code_unparse']) )
-			$this->array_tags['code_unparse'] = array_map(create_function('$var', 'return htmlspecialchars($var, ENT_NOQUOTES);'), $this->array_tags['code_unparse']);
+			$this->array_tags['code_unparse'] = array_map(array('TinyMCEUnparser', '_clear_html_and_code_tag'), $this->array_tags['code_unparse']);
 		
 		//Unparsing tags supported by TinyMCE
-		$this->_unparse_tinymce_tags();
+		$this->_unparse_tinymce_formatting();
 		//Unparsing tags unsupported by TinyMCE, those are in BBCode
 		$this->_unparse_bbcode_tags();
 		
 		//Reimplanting html and code tags
 		$this->_unparse_code(REIMPLANT);
 		$this->_unparse_html(REIMPLANT);
-		echo $this->parsed_content;
 	}
 	
 	## Protected ##
@@ -106,8 +106,8 @@ class TinyMCEUnparser extends ContentUnparser
 		}
 	}
 	
-	//
-	function _unparse_tinymce_tags()
+	//Function which unparses only the tags supported by TinyMCE
+	function _unparse_tinymce_formatting()
 	{	
 		//Preg_replace.
 		$array_preg = array(
@@ -138,7 +138,7 @@ class TinyMCEUnparser extends ContentUnparser
 			"<span style=\"background-color: $1\">$2</font>",
 			"<u>$1</u>",	
 			"<font color=\"$1\">$2</font>",
-			"<p align=\"$1\">$2</p>",
+			"<div align=\"$1\">$2</div>",
 			"<a title=\"$1\" name=\"$1\">$2</a>",
 			"<ul$1>",
 			"<ol$1>",
@@ -160,34 +160,76 @@ class TinyMCEUnparser extends ContentUnparser
 	
 	//Function which manages the whole tags which doesn't not exist in TinyMCE
 	function _unparse_bbcode_tags()
-	{
-		//Quote
-		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->parsed_content);
-		//Hide
-		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->parsed_content);
-		
+	{		
 		$array_preg = array(
+			'`<img src="([^?\n\r\t].*)" alt="[^"]*"(?: class="[^"]+")? />`iU',
+			'`<span style="color:([^;]+);">(.*)</span>`isU',
+			'`<span style="background-color:([^;]+);">(.*)</span>`isU',
+			'`<span style="text-decoration: underline;">(.*)</span>`isU',
+			'`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU',
+			'`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU',
+			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
+			'`<p class="float_(left|right)">(.*)</p>`isU',
+			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
+			'`<acronym title="([^"]+)" class="bb_acronym">(.*)</acronym>`isU',
+			'`<a href="mailto:(.*)">(.*)</a>`isU',
+			'`<a href="([^"]+)">(.*)</a>`isU',
+			'`<h3 class="title([1-2]+)">(.*)</h3>`isU',
+			'`<h4 class="stitle([1-2]+)">(.*)</h4>`isU',
+			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
 			'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
 			'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/movieplayer\.swf\?movie=(.*)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
-			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
-			'`<acronym title="([^"]+)" class="bb_acronym">(.*)</acronym>`isU',
-			'`<p class="float_(left|right)">(.*)</p>`isU',
-			'`\[\[MATH\]\](.*)\[\[/MATH\]\]`isU',
-			'`\[\[CODE\]\](.*)\[\[/CODE\]\]`isU',
-			'`\[\[CODE=([^\]])\]\](.*)\[\[/CODE\]\]`isU',
+			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
+			'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isU'
 		);
-		$array_preg_replace = array(
+		
+		$array_preg_replace = array( 
+			"[img]$1[/img]",
+			"[color=$1]$2[/color]",
+			"[bgcolor=$1]$2[/bgcolor]",
+			"[u]$1[/u]",	
+			"[size=$1]$2[/size]",
+			"[font=$1]$2[/font]",
+			"[align=$1]$2[/align]",
+			"[float=$1]$2[/float]",
+			"[anchor=$1]$2[/anchor]",
+			"[acronym=$1]$2[/acronym]",
+			"[mail=$1]$2[/mail]",
+			"[url=$1]$2[/url]",
+			"[title=$1]$2[/title]",
+			"[stitle=$1]$2[/stitle]",
+			"[style=$1]$2[/style]",
 			"[sound]$1[/sound]",
 			"[movie=$2,$3]$1[/movie]",
-			"[style=$1]$2[/style]",
-			"[acronym=$1]$2[/acronym]",
-			"[float=$1]$2[/float]",
-			"[math]$1[/math]",
-			"[code]$1[/code]",
-			"[code=$1]$2[/code]",
+			"[swf=$2,$3]$1[/swf]",
+			"[html]$1[/html]"
 		);
 		
 		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);
+		
+		##Remplacement des balises imbriquées
+		//Citations
+		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->parsed_content);
+		
+		//Texte caché
+		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->parsed_content);
+		
+		//Indentation
+		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->parsed_content);
+		
+		//Bloc HTML
+		$this->_parse_imbricated('<div class="bb_block"', '`<div class="bb_block">(.+)</div>`sU', '[block]$1[/block]', $this->parsed_content);
+		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->parsed_content);
+		
+		//Bloc de formulaire
+		$this->_parse_imbricated('<fieldset class="bb_fieldset"', '`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', '[fieldset legend="$2" style="$1"]$3[/fieldset]', $this->parsed_content);
+	}
+	
+	//Handler which clears the HTML code which is in the code and HTML tags
+	/*static*/ function _clear_html_and_code_tag($var)
+	{
+		$var = str_replace("\n", '<br />', $var);
+		return htmlentities($var, ENT_NOQUOTES);
 	}
 }
 
