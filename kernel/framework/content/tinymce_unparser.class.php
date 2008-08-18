@@ -38,6 +38,10 @@ class TinyMCEUnparser extends ContentUnparser
 	function unparse()
 	{
 		$this->parsed_content = $this->content;
+
+		//Extracting HTML and code tags
+		$this->_unparse_html(PICK_UP);
+		$this->_unparse_code(PICK_UP);
 		
 		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
 		if( PATH_TO_ROOT != '..' )
@@ -53,14 +57,14 @@ class TinyMCEUnparser extends ContentUnparser
 			"\t", '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '€', '‚', 'ƒ',
 			'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
 			'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
-			'›', 'œ', 'ž', 'Ÿ', '<li class="bb_li">', '</table>', '<tr class="bb_table_row">', '</th>'
+			'›', 'œ', 'ž', 'Ÿ', '<li class="bb_li">', '</table>', '<tr class="bb_table_row">'
 		);
 		
 		$array_str_replace = array( 
 			'&nbsp;&nbsp;&nbsp;', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '&#8364;', '&#8218;', '&#402;', '&#8222;',
 			'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
 			'&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;', '&#8211;', '&#8212;', '&#732;', '&#8482;',
-			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;', '<li>', '</tbody></table>', '<tr>', '</caption>'
+			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;', '<li>', '</tbody></table>', '<tr>'
 		);
 		
 		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
@@ -68,10 +72,21 @@ class TinyMCEUnparser extends ContentUnparser
 		//Replacing <br /> by a paragraph
 		$this->parsed_content = str_replace('<br />', "</p>\n<p>", '<p>' . $this->parsed_content . '</p>');
 		
+		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
+		if( !empty($this->array_tags['html_unparse']) )
+			$this->array_tags['html_unparse'] = array_map(create_function('$var', 'return htmlspecialchars($var, ENT_NOQUOTES);'), $this->array_tags['html_unparse']);
+		if( !empty($this->array_tags['code_unparse']) )
+			$this->array_tags['code_unparse'] = array_map(create_function('$var', 'return htmlspecialchars($var, ENT_NOQUOTES);'), $this->array_tags['code_unparse']);
+		
 		//Unparsing tags supported by TinyMCE
 		$this->_unparse_tinymce_tags();
 		//Unparsing tags unsupported by TinyMCE, those are in BBCode
 		$this->_unparse_bbcode_tags();
+		
+		//Reimplanting html and code tags
+		$this->_unparse_code(REIMPLANT);
+		$this->_unparse_html(REIMPLANT);
+		echo $this->parsed_content;
 	}
 	
 	## Protected ##
@@ -79,7 +94,7 @@ class TinyMCEUnparser extends ContentUnparser
 	function _unparse_smilies()
 	{
 		@include(PATH_TO_ROOT . '/cache/smileys.php');
-		if(!empty($_array_smiley_code) )
+		if( !empty($_array_smiley_code) )
 		{
 			//Création du tableau de remplacement
 			foreach($_array_smiley_code as $code => $img)
@@ -99,7 +114,7 @@ class TinyMCEUnparser extends ContentUnparser
 			'`<img src="([^"]+)" alt="" class="valign_([^"]+)?" />`i',
 			'`<table class="bb_table"( style="([^"]+)")?>`i', 
 			'`<td class="bb_table_col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i',
-			'`<th class="bb_table_head"[^>]?>`i',
+			'`<th class="bb_table_col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i',
 			'`<span style="color:(.*);">(.*)</span>`isU',
 			'`<span style="background-color:(.*);">(.*)</span>`isU',
 			'`<span style="text-decoration: underline;">(.*)</span>`isU',
@@ -118,7 +133,7 @@ class TinyMCEUnparser extends ContentUnparser
 			"<img src=\"$1\" alt=\"\" align=\"$2\" />",
 			"<table border=\"0\"$1><tbody>",
 			"<td$1$2$3>", 
-			"<caption>", 
+			"<th$1$2$3>", 
 			"<font color=\"$1\">$2</font>",
 			"<span style=\"background-color: $1\">$2</font>",
 			"<u>$1</u>",	
