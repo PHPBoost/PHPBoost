@@ -3,7 +3,7 @@
 *                             tinymce_parser.class.php
 *                            -------------------
 *   begin                : July 3 2008
-*   copyright          : (C) 2008 Benoit Sautel
+*   copyright            : (C) 2008 Benoit Sautel
 *   email                :  ben.popeye@phpboost.com
 *
 *   
@@ -41,11 +41,6 @@ class TinyMCEParser extends ContentParser
 		
 		$this->parsed_content = $this->content;
 		
-		echo $this->parsed_content . '<hr />';
-		
-		//On enlève toutes les entités HTML rajoutées par TinyMCE
-		$this->parsed_content = html_entity_decode($this->parsed_content);
-		
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		if( !in_array('code', $this->forbidden_tags) )
 			$this->_pick_up_tag('code', '=[a-z0-9-]+(?:,(?:0|1)(?:,0|1)?)?');
@@ -54,6 +49,9 @@ class TinyMCEParser extends ContentParser
 		if( $Member->check_auth($this->html_auth, 1) )
 			$this->_pick_up_tag('html');
 		
+		//On enlève toutes les entités HTML rajoutées par TinyMCE
+		$this->parsed_content = html_entity_decode($this->parsed_content);
+			
 		//On casse toutes les balises HTML (sauf celles qui ont été prélevées dans le code et la balise HTML)
 		$this->parsed_content = htmlspecialchars($this->parsed_content, ENT_NOQUOTES);
 		
@@ -81,6 +79,10 @@ class TinyMCEParser extends ContentParser
 		if( !empty($this->array_tags['html']) )
 		{
 			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
+			
+			//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
+			$this->array_tags['html'] = array_map(array('TinyMCEParser', '_clear_html_and_code_tag'), $this->array_tags['html']);
+		
 			$this->_reimplant_tag('html');
 		}
 		
@@ -88,6 +90,10 @@ class TinyMCEParser extends ContentParser
 		if( !empty($this->array_tags['code']) )
 		{
 			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
+			
+			//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
+			$this->array_tags['code'] = array_map(array('TinyMCEParser', '_clear_html_and_code_tag'), $this->array_tags['code']);
+			
 			$this->_reimplant_tag('code');
 		}
 	}
@@ -191,18 +197,6 @@ class TinyMCEParser extends ContentParser
 	{
 		//Modification de quelques tags HTML envoyés par TinyMCE
 		$this->parsed_content = str_replace(array('&amp;nbsp;&amp;nbsp;&amp;nbsp;', '&amp;gt;', '&amp;lt;', '&lt;br /&gt;', '&lt;br&gt;', '&amp;nbsp;'), array("\t", '&gt;', '&lt;', "\r\n", "\r\n", ' '), $this->parsed_content);
-		
-		// size tag
-		if( !in_array('size', $this->forbidden_tags) )
-			$this->parsed_content = preg_replace_callback('`&lt;font size="([0-9]+)"&gt;(.+)&lt;/font&gt;`isU', create_function('$size', 'return \'<span style="font-size: \' . (8 + (3*$size[1])) . \'px;">\' . $size[2] . \'</span>\' . "\n<br />";'), $this->parsed_content);
-		
-		//image tag
-		if( !in_array('image', $this->forbidden_tags) )
-			$this->parsed_content = preg_replace_callback('`&lt;img src="([^"]+)"(?: border="[^"]*")? alt="[^"]*"(?: hspace="[^"]*")?(?: vspace="[^"]*")?(?: width="[^"]*")?(?: height="[^"]*")?(?: align="(top|middle|bottom)")? /&gt;`is', create_function('$img', '$align = \'\'; if( !empty($img[2]) ) $align = \'=\' . $img[2]; return \'<img src="\' . $img[1] . \'" alt="" class="valign_"\' . $align . \' />\';'), $this->parsed_content);
-		
-		//indent tag
-		if( !in_array('indent', $this->forbidden_tags) )
-			$this->_parse_imbricated('&lt;blockquote&gt;', '`&lt;blockquote&gt;(.+)&lt;/blockquote&gt;`isU', '<div class="indent">$1</div>');
 		
 		$array_preg = array(
 			'`&lt;div&gt;(.+)&lt;/div&gt;`isU',
@@ -312,8 +306,8 @@ class TinyMCEParser extends ContentParser
 		{
 			array_push($array_preg, '`&lt;ul&gt;(.+)&lt;/ul&gt;`isU');
 			array_push($array_preg_replace, '<ul class="bb_ul">' . "\n" .'$1</ul>');
-			array_push($array_preg, '`&lt;ul&gt;(.+)&lt;/ul&gt;`isU');
-			array_push($array_preg_replace, '`&lt;ol&gt;(.+)&lt;/ol&gt;`isU');
+			array_push($array_preg, '`&lt;ol&gt;(.+)&lt;/ol&gt;`isU');
+			array_push($array_preg_replace, '<ol class="bb_ol">' . "\n" .'$1</ul>');
 			array_push($array_preg, '`&lt;li&gt;(.*)&lt;/li&gt;`isU');
 			array_push($array_preg_replace, '<li class="bb_li">$1</li>' . "\n");
 		}
@@ -358,6 +352,19 @@ class TinyMCEParser extends ContentParser
 		);
 		
 		$this->parsed_content = str_replace($array_str, '', $this->parsed_content);
+		
+		//callback replacements
+		// size tag
+		if( !in_array('size', $this->forbidden_tags) )
+			$this->parsed_content = preg_replace_callback('`&lt;font size="([0-9]+)"&gt;(.+)&lt;/font&gt;`isU', create_function('$size', 'return \'<span style="font-size: \' . (8 + (3*$size[1])) . \'px;">\' . $size[2] . \'</span>\' . "\n<br />";'), $this->parsed_content);
+		
+		//image tag
+		if( !in_array('image', $this->forbidden_tags) )
+			$this->parsed_content = preg_replace_callback('`&lt;img src="([^"]+)"(?: border="[^"]*")? alt="[^"]*"(?: hspace="[^"]*")?(?: vspace="[^"]*")?(?: width="[^"]*")?(?: height="[^"]*")?(?: align="(top|middle|bottom)")? /&gt;`is', create_function('$img', '$align = \'\'; if( !empty($img[2]) ) $align = \'=\' . $img[2]; return \'<img src="\' . $img[1] . \'" alt="" class="valign_"\' . $align . \' />\';'), $this->parsed_content);
+		
+		//indent tag
+		if( !in_array('indent', $this->forbidden_tags) )
+			$this->_parse_imbricated('&lt;blockquote&gt;', '`&lt;blockquote&gt;(.+)&lt;/blockquote&gt;`isU', '<div class="indent">$1</div>');
 	}
 	
 	//Function which parses tables
@@ -507,6 +514,15 @@ class TinyMCEParser extends ContentParser
 		
 		//Bloc de formulaire
 		$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->parsed_content);
+	}
+	
+	//Handler which clears the HTML code which is in the code and HTML tags
+	/*static*/ function _clear_html_and_code_tag($var)
+	{
+		$var = preg_replace('`</p>\s*<p>`i', "\r\n", $var);
+		$var = str_replace('<br />', "\r\n", $var);
+		$var = html_entity_decode($var);
+		return $var;
 	}
 }
 
