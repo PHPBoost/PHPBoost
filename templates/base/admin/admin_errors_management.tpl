@@ -9,8 +9,15 @@
 			</ul>
 		</div>
 		
+		<script type="text/javascript">
+		<!--
+		function Confirm_del() {
+			return confirm("{L_ERASE_RAPPORT}");
+		}
+		-->	
+		</script>
 		<div id="admin_contents">
-			<form action="admin_errors.php" name="form" method="post" class="fieldset_content">
+			<form action="admin_errors.php" name="form" method="post" class="fieldset_content" onsubmit="javascript:return Confirm_del()">
 				<fieldset>
 					<legend>{L_ERASE}</legend>
 					<dl>

@@ -352,85 +352,84 @@
 		# START post_convers #		
 		<form action="pm{post_convers.U_ACTION_CONVERS}" method="post" onsubmit="return check_form_convers();">
 			<div class="module_position">					
-					<div class="module_top_l"></div>		
-					<div class="module_top_r"></div>
-					<div class="module_top">&bull; {post_convers.U_MEMBER_VIEW} &raquo; {post_convers.U_PM_BOX}</div>
-					<div class="module_contents">	
-						# IF C_ERROR_HANDLER #
-						<br />
-						<span id="errorh"></span>
-						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-							<br />	
-						</div>
-						<br />		
-						# ENDIF #
-						
-						# START post_convers.show_convers #		
-						<table class="module_table">
-							<tr>
-								<th>
-									<div style="float:left;">{L_PREVIEW}</div>
-									<div style="float:right;">{post_convers.show_convers.DATE}</div>		
-								</th>
-							</tr>
-							<tr>	
-								<td class="row2">														
-									{post_convers.show_convers.CONTENTS}
-									<br /><br /><br />
-									<hr /><img src="../templates/{THEME}/images/{LANG}/pm.png" />
-								</td>
-							</tr>	
-						</table>
-						# END post_convers.show_convers #	
-						
-						<div class="fieldset_content">
-							<fieldset>
-								<legend>{L_POST_NEW_CONVERS}</legend>
-								<p>{L_REQUIRE}</p>
-								# START post_convers.user_id_dest #
-								<dl>
-									<dt><label for="login">* {L_RECIPIENT}</label></dt>
-									<dd><label>
-										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}" class="text" />
-										<span id="search_img"></span> <input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" type="button" class="submit">
-										<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
-										# START post_convers.user_id_dest.search #
-											{search.RESULT}
-										# END post_convers.user_id_dest.search #
-									</label></dd>
-								</dl>		
-								# END post_convers.user_id_dest #
-								<dl>
-									<dt><label for="title">* {L_TITLE}</label></dt>
-									<dd><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{post_convers.TITLE}" class="text" /></label></dd>
-								</dl>
-								<br />
-								<label for="contents">* {L_MESSAGE}</label>
-								{KERNEL_EDITOR}
-								<textarea type="text" rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
-								<br />
-							</fieldset>
-							
-							<fieldset class="fieldset_submit">
-								<legend>{L_SUBMIT}</legend>
-								<input type="submit" name="convers" value="{L_SUBMIT}" class="submit" />
-									&nbsp;&nbsp; 
-									<script type="text/javascript">
-									<!--				
-									document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
-									-->
-									</script>
-									<noscript><input value="{L_PREVIEW}" type="submit" name="prw_convers" class="submit" /></noscript>
-									&nbsp;&nbsp; 
-									<input type="reset" value="{L_RESET}" class="reset" />
-							</fieldset>	
-						</div>
+				<div class="module_top_l"></div>		
+				<div class="module_top_r"></div>
+				<div class="module_top">&bull; {post_convers.U_MEMBER_VIEW} &raquo; {post_convers.U_PM_BOX}</div>
+				<div class="module_contents">	
+					# IF C_ERROR_HANDLER #
+					<br />
+					<span id="errorh"></span>
+					<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+						<br />	
 					</div>
-					<div class="module_bottom_l"></div>		
-					<div class="module_bottom_r"></div>
-					<div class="module_bottom">&bull; {post_convers.U_MEMBER_VIEW} &raquo; {post_convers.U_PM_BOX}</div>
+					<br />		
+					# ENDIF #
+					
+					# START post_convers.show_convers #		
+					<table class="module_table">
+						<tr>
+							<th>
+								<div style="float:left;">{L_PREVIEW}</div>
+								<div style="float:right;">{post_convers.show_convers.DATE}</div>		
+							</th>
+						</tr>
+						<tr>	
+							<td class="row2">														
+								{post_convers.show_convers.CONTENTS}
+								<br /><br /><br />
+								<hr /><img src="../templates/{THEME}/images/{LANG}/pm.png" />
+							</td>
+						</tr>	
+					</table>
+					# END post_convers.show_convers #	
+					
+					<div class="fieldset_content">
+						<fieldset>
+							<legend>{L_POST_NEW_CONVERS}</legend>
+							<p>{L_REQUIRE}</p>
+							# START post_convers.user_id_dest #
+							<dl>
+								<dt><label for="login">* {L_RECIPIENT}</label></dt>
+								<dd><label>
+									<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}" class="text" />
+									<span id="search_img"></span> <input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" type="button" class="submit">
+									<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
+									# START post_convers.user_id_dest.search #
+										{search.RESULT}
+									# END post_convers.user_id_dest.search #
+								</label></dd>
+							</dl>		
+							# END post_convers.user_id_dest #
+							<dl>
+								<dt><label for="title">* {L_TITLE}</label></dt>
+								<dd><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{post_convers.TITLE}" class="text" /></label></dd>
+							</dl>
+							<br />
+							<label for="contents">* {L_MESSAGE}</label>
+							{KERNEL_EDITOR}
+							<textarea type="text" rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
+							<br />
+						</fieldset>
+						
+						<fieldset class="fieldset_submit">
+							<legend>{L_SUBMIT}</legend>
+							<input type="submit" name="convers" value="{L_SUBMIT}" class="submit" />
+								&nbsp;&nbsp; 
+								<script type="text/javascript">
+								<!--				
+								document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+								-->
+								</script>
+								<noscript><input value="{L_PREVIEW}" type="submit" name="prw_convers" class="submit" /></noscript>
+								&nbsp;&nbsp; 
+								<input type="reset" value="{L_RESET}" class="reset" />
+						</fieldset>	
+					</div>
 				</div>
+				<div class="module_bottom_l"></div>		
+				<div class="module_bottom_r"></div>
+				<div class="module_bottom">&bull; {post_convers.U_MEMBER_VIEW} &raquo; {post_convers.U_PM_BOX}</div>
 			</div>
 		</form>
 		# END post_convers #
