@@ -33,6 +33,10 @@ define('ADD', true);
 define('READ_WRITE', 0x3);
 define('READ', 0x1);
 define('WRITE', 0x2);
+
+define('CLOSEFILE', 0x1);
+define('NOTCLOSEFILE', 0x2);
+
 // fonction de gestion des fichiers
 class File extends FileSystemElement
 {
@@ -40,6 +44,7 @@ class File extends FileSystemElement
 	var $lines = array();
 	var $contents;
 	var $mode;
+	var $fd;
 	
 	## Public Methods ##	
 	// Constructeur
@@ -112,30 +117,28 @@ class File extends FileSystemElement
 	}
 	
 	// écrit $data dans le fichier, soit en écrasant les données ( par défaut ), soit passant en troisième paramètre la constante ADD
-	function write($data, $what = ERASE)
+	function write($data, $what = ERASE, $mode = CLOSEFILE)
 	{
 		if($this->mode & WRITE)
 		{	
-			if( !($fp = @fopen($this->path, ( $what == ADD ) ? 'a' : 'w')) )
-				return false;
+			if( ( $mode == NOTCLOSEFILE && !is_ressource($this->fd) ) || $mode == CLOSEFILE )
+			{
+				if( !($this->fd = @fopen($this->path, ( $what == ADD ) ? 'a' : 'w')) )
+					return false;
+			}
 			
 			$bytes_to_write = strlen($data);
 			$bytes_written = 0;
 			while ( $bytes_written < $bytes_to_write )
 			{
 				// on écrit par bloc de 4Ko
-				$bytes = fwrite($fp, substr($data, $bytes_written, 4096));
+				$bytes = fwrite($this->fd, substr($data, $bytes_written, 4096));
 
 				if ( $bytes === false || $bytes == 0 )
 					break;
 
 				$bytes_written += $bytes;
-				
-				// on fait une petit pause pour ne pas consommer toute la CPU d'un centième de seconde
-				usleep(100);
 			}
-			
-			fclose($fp);
 			
 			parent::write();
 			
@@ -145,11 +148,21 @@ class File extends FileSystemElement
 			user_error('File '.$this->path.' is open in read only');
 	}
 	
+	// libération les ressources inutilisés
+	function close()
+	{
+		$this->contents = '';
+		$this->lines = array();
+		
+		if(is_ressource($this->fd))
+			fclose($this->fd);
+	}
+	
 	// supprime le fichier
 	function delete()
 	{
 		if( !@unlink($this->path) ) // Empty the file if it couldn't delete it
-            $this->write("");
+            $this->write('');
 	}
 	
 	## Private Methods ##	
