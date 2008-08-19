@@ -49,6 +49,7 @@ class TinyMCEEditor extends ContentEditor
 			'C_BBCODE_TINYMCE_MODE' => true,
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !defined('EDITOR_ALREADY_INCLUDED'),
 			'C_UPLOAD_MANAGEMENT' => $Member->Check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES),
+			'EDITOR_NAME' => 'tinymce',
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => implode(',', $this->forbidden_tags),
 			'TINYMCE_TRIGGER' => 'TinyMCE.prototype.triggerSave();',

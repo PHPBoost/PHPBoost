@@ -180,8 +180,7 @@ function substr_html(&$str, $start, $end = '')
 
 //Affichage de l'éditeur de contenu.
 function display_editor($field = 'contents', $forbidden_tags = array())
-{
-	include_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');	
+{	
 	$content_editor = new Content();
 	$editor =& $content_editor->get_editor();
 	if( !empty($forbidden_tags) )
@@ -407,13 +406,19 @@ function check_mail($mail)
 //Charge le parseur.
 function strparse(&$content, $forbidden_tags = array())
 {
+	//On utilise le gestionnaire de contenu
     $content_manager = new Content();
+    //On lui demande le parser adéquat
 	$parser =& $content_manager->get_parser();
+	//On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
     $parser->set_content($content, MAGIC_QUOTES);
+    //Si il y a des balises interdites, on lui signale
 	if( !empty($forbidden_tags) )
 		$parser->set_forbidden_tags($forbidden_tags);
+	//Au travail maintenant !
     $parser->parse();
 	
+    //Renvoie le résultat. Echappe par défaut les caractères critiques afin d'être envoyé en base de données
 	return $parser->get_parsed_content();
 }
 

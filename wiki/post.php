@@ -272,9 +272,14 @@ else
 	$l_action_submit = $LANG['submit'];
 }
 
+//On travaille uniquement en BBCode, on force le langage de l'éditeur
+$content_editor = new Content(BBCODE_LANGUAGE);
+$editor =& $content_editor->get_editor();
+$editor->set_identifier('contents');
+
 $Template->Assign_vars(array(
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], $article_infos['title'])) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], $article_infos['title'])),
-	'KERNEL_EDITOR' => display_editor(),
+	'KERNEL_EDITOR' => $editor->display(),
 	'ID_CAT' => $id_edit > 0 ? $article_infos['id_cat'] : '',
 	'CONTENTS' => !empty($contents_preview) ? $contents_preview : ($id_edit > 0 ? wiki_unparse(trim($contents)) : ''),
 	'ID_EDIT' => $id_edit,

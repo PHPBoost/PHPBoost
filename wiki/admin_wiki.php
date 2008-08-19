@@ -3,7 +3,7 @@
  *                               admin_wiki.php
  *                            -------------------
  *   begin                : November 11, 2006
- *   copyright          : (C) 2006 Sautel Benoit
+ *   copyright            : (C) 2006 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -60,8 +60,13 @@ $Template->Set_filenames(array(
 	'wiki_config'=> 'wiki/admin_wiki.tpl'
 ));
 
+//On travaille uniquement en BBCode, on force le langage de l'éditeur
+$content_editor = new Content(BBCODE_LANGUAGE);
+$editor =& $content_editor->get_editor();
+$editor->set_identifier('contents');
+
 $Template->Assign_vars(array(
-	'KERNEL_EDITOR' => display_editor(),
+	'KERNEL_EDITOR' => $editor->display(),
 	'HITS_SELECTED' => ($_WIKI_CONFIG['count_hits'] > 0) ? 'checked="checked"' : '',
 	'WIKI_NAME' => $_WIKI_CONFIG['wiki_name'],
 	'NOT_DISPLAY_CATS' => ( $_WIKI_CONFIG['display_cats'] == 0 ) ? 'checked="checked"' : '',
@@ -73,15 +78,16 @@ $Template->Assign_vars(array(
 	'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
 	'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
 	'L_CONFIG_WIKI' => $LANG['wiki_config'],
-	'L_WHOLE_WIKI' => 'Configuration générale',
-	'L_INDEX_WIKI' => 'Accueil du wiki',
-	'L_COUNT_HITS' => 'Compter le nombre de fois que sont vus les articles', 
-	'L_WIKI_NAME' => 'Nom du wiki',
-	'L_DISPLAY_CATS' => 'Afficher la liste des catégories principales sur l\'accueil',
-	'L_NOT_DISPLAY' => 'Ne pas afficher',
-	'L_DISPLAY' => 'Afficher',
-	'L_LAST_ARTICLES' => 'Nombre des derniers articles à afficher sur l\'accueil (0 pour désactiver)',
-	'L_DESCRIPTION' => 'Texte de l\'accueil'
+	'L_WHOLE_WIKI' => $LANG['wiki_config_whole'],
+	'L_INDEX_WIKI' => $LANG['wiki_index'],
+	'L_COUNT_HITS' => $LANG['wiki_count_hits'], 
+	'L_WIKI_NAME' => $LANG['wiki_name'],
+	'L_DISPLAY_CATS' => $LANG['wiki_display_cats'],
+	'L_NOT_DISPLAY' => $LANG['wiki_no_display'],
+	'L_DISPLAY' => $LANG['wiki_display'],
+	'L_LAST_ARTICLES' => $LANG['wiki_last_articles'],
+	'L_LAST_ARTICLES_EXPLAIN' => $LANG['wiki_last_articles_explain'],
+	'L_DESCRIPTION' => $LANG['wiki_desc']
 ));
 	
 $Template->Pparse('wiki_config');
