@@ -173,7 +173,7 @@ if( $num_rows > 0 )
 				'ID' => $row['id']
 			));
 			$Template->Assign_block_vars('questions_block.contents', array(
-				'ANSWER' => $row['answer'],
+				'ANSWER' => second_parse($row['answer']),
 				'QUESTION' => $row['question'],
 				'ID' => $row['id'],
 				'U_DEL' => transid('action.php?del=' . $row['id']),

@@ -526,7 +526,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
     return date($format, $timestamp);
 }
 
-//Converti une chaîne au format $LANG['date_format'] (ex:d/m/y) en timestamp, si la date saisie est valide sinon retourne 0.
+//Convertit une chaîne au format $LANG['date_format'] (ex:d/m/y) en timestamp, si la date saisie est valide sinon retourne 0.
 function strtotimestamp($str, $date_format)
 {
     global $CONFIG, $Member;
