@@ -103,6 +103,9 @@
 							</select>
 						</td>
 						<td class="row2" style="text-align:center;">
+							<a href="admin_themes.php?edit=1&amp;id={list.IDTHEME}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt /></a>
+						</td>
+						<td class="row2" style="text-align:center;">
 							<input type="submit" name="{list.IDTHEME}" value="{L_UNINSTALL}" class="submit" />
 						</td>
 						# ENDIF #

@@ -14,7 +14,7 @@ body{
 	font-size:12px;
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	color:#333333;
-	width:990px;
+	width:1000px;
 	margin: auto;
 	background:#1171A3;
 }
@@ -23,7 +23,7 @@ body{
 --------------------------------------*/
 /* ##### Conteneur global du site ###### */
 div#global{
-	width:990px;
+	width:1021px;
 	margin:auto;
 	margin-bottom:25px;
 	background:url(images/bg.png) repeat-y;
@@ -67,9 +67,9 @@ div#header .dynamic_menu h5 a
 }
 /* ##### Compteur de visites  ###### */
 div#compteur{
+	color:#1E88D2;
 	position:absolute;
-	top:20px;
-	right:10px;
+	top:55px;
 }
 /* ##### Menu de gauche ###### */
 div#left_menu{
@@ -87,9 +87,9 @@ div#main{
 div#main2{
 	background: url(images/corps_04.png) repeat-x transparent;
 	float:left;
-	width:71%;
+	width:732px;
 	padding-bottom:15px;
-	margin-left:4px;
+	margin-left:12px;
 }
 /* ##### Barre de lien rapide ###### */
 div#links{
@@ -158,7 +158,7 @@ div#links_vertical {
 	position:fixed;
 	background:url(images/vertical_menu_repeat.png) repeat-y;
 	top:45%;
-	margin-left:940px;
+	margin-left:970px;
 	width:27px;
 	text-align:center;
 	padding-left:2px;

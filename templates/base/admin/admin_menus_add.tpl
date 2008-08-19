@@ -23,9 +23,9 @@
 					<a href="admin_menus.php" class="quick_link">{L_MENUS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_menus_php"><img src="../templates/{THEME}/images/admin/menus.png" alt="" /></a>
+					<a href="admin_menus_add.php"><img src="../templates/{THEME}/images/admin/menus.png" alt="" /></a>
 					<br />
-					<a href="admin_menus_php" class="quick_link">{L_ADD_MENUS}</a>
+					<a href="admin_menus_add.php" class="quick_link">{L_ADD_MENUS}</a>
 				</li>
 			</ul>
 		</div>
