@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               content_xmlhttprequest.php
+ *                        content_xmlhttprequest.php
  *                            -------------------
  *   begin                : January, 25 2007
  *   copyright          : (C) 2007 Viarre Régis
@@ -33,11 +33,24 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 $page_path_to_root = retrieve(GET, 'path_to_root', '');
 
+//Quel éditeur utiliser ? Si ce n'est pas précisé on prend celui par défaut de l'utilisateur
+$editor = retrieve(GET, 'editor', $CONFIG['editor']);
+
 $contents = utf8_decode(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
 
 $ftags = retrieve(POST, 'ftags', TSTRING_UNSECURE);
 
-$contents = second_parse(stripslashes(strparse($contents, explode(',', $ftags))));
+//On prend le bon parseur avec la bonne configuration
+$content_manager = new Content($editor);
+$parser =& $content_manager->get_parser($editor);
+
+$parser->set_content($contents, MAGIC_QUOTES);
+if( !empty($forbidden_tags) )
+	$parser->set_forbidden_tags($forbidden_tags);
+$parser->parse();
+
+//On parse la deuxième couche (code, math etc) pour afficher
+$contents = second_parse(stripslashes($parser->get_parsed_content()));
 
 //Remplacement du path to root si ce n'est pas le même (cas peu fréquent)
 if( preg_match('`^[./]+$`U', $page_path_to_root) && PATH_TO_ROOT != '..')

@@ -28,19 +28,31 @@
 if( defined('PHPBOOST') !== true)	exit;
 
 //Interprétation du BBCode en ajoutant la balise [link]
-function wiki_parse($var)
+function wiki_parse(&$var)
 {
-	$var = strparse($var);
-	$var = preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="$1">$2</a>', $var);
-	return $var;
+	//On force le langage de formatage à BBCode
+	$content_manager = new Content(BBCODE_LANGUAGE);
+	$parser =& $content_manager->get_parser();
+    $parser->set_content($var, MAGIC_QUOTES);
+    $parser->parse();
+	
+    //Parse la balise link
+	return preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="$1">$2</a>', $parser->get_parsed_content());
 }
 
 //Retour au BBCode en tenant compte de [link]
 function wiki_unparse($var)
 {
+	//Unparse de la balise link
 	$var = preg_replace('`<a href="([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
-	$var = unparse($var);
-	return $var;
+	
+	//On force le langage de formatage à BBCode
+	$content_manager = new Content(BBCODE_LANGUAGE);
+	$parser =& $content_manager->get_unparser();
+    $parser->set_content($var, PARSER_DO_NOT_STRIP_SLASHES);
+    $parser->unparse();
+	
+	return $parser->get_parsed_content(DO_NOT_ADD_SLASHES);
 }
 
 //Fonction de correction dans le cas où il n'y a pas de rewriting (balise link considére par défaut le rewriting activé)

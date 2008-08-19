@@ -365,8 +365,13 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 else
 	redirect(HOST . DIR . '/wiki/' . transid('wiki.php'));
 
+//On travaille uniquement en BBCode, on force le langage de l'éditeur
+$content_editor = new Content(BBCODE_LANGUAGE);
+$editor =& $content_editor->get_editor();
+$editor->set_identifier('contents');
+	
 $Template->Assign_vars(array(
-	'KERNEL_EDITOR' => display_editor(),
+	'KERNEL_EDITOR' => $editor->display(),
 	'EXPLAIN_WIKI_GROUPS' => $LANG['explain_wiki_groups'],
 	'L_SUBMIT' => $LANG['submit'],
 	'L_RESET' => $LANG['reset'],
