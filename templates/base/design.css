@@ -69,7 +69,8 @@ div#header .dynamic_menu h5 a
 div#compteur{
 	color:#1E88D2;
 	position:absolute;
-	top:55px;
+	top:200px;
+	padding-left:820px;
 }
 /* ##### Menu de gauche ###### */
 div#left_menu{
