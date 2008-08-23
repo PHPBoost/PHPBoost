@@ -85,6 +85,13 @@ release({L_RELEASE_FORMAT});
 <span id="scroll_top_page"></span>
 <div id="global">
 	<div id="header">
+    # IF C_COMPTEUR #
+	<div id="compteur">					
+		<span class="text_strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}
+		<br />
+		<span class="text_strong">{L_TODAY}:</span> {COMPTEUR_DAY}
+	</div>
+	# ENDIF #
 		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
 		{MODULES_MINI_HEADER_CONTENT}
 		<div class="dynamic_menu" style="padding-left:175px;top:124px">
@@ -155,14 +162,6 @@ release({L_RELEASE_FORMAT});
 			</div>
 		</div>
 	</div>
-	
-	# IF C_COMPTEUR #
-	<div id="compteur">					
-		<span class="text_strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}
-		<br />
-		<span class="text_strong">{L_TODAY}:</span> {COMPTEUR_DAY}
-	</div>
-	# ENDIF #
 	# IF C_START_LEFT #
 	<div id="left_menu">	
 		{MODULES_MINI_LEFT_CONTENT}
