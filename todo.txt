@@ -37,8 +37,7 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Système de mise à jour du noyau et des modules:
-    - Langues ? (non pour l'instant mais le prévoir)
-    - Templates ? (non pour l'instant mais le prévoir)
+    - Templates
     - Changelog des fichiers
 [-] Renommer les méthodes et classes (y compris CategoriesManagement)
 	(Pas important pour la béta, sera fait pendant)
