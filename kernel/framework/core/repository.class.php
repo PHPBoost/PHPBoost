@@ -36,12 +36,25 @@ class Repository
     
     function check($app)
     {
-        $xpath_query = '//app[@id=\'' . $app->get_id() . '\' and @type=\'' .  $app->get_type() . '\' and @language=\'' . $app->get_language() . '\']/version[@num != \'' . $app->get_version() . '\']';
-        // ne gère pas le > sur une chaîne, à continuer...
-        echo $xpath_query . '<hr />';
+        $xpath_query = '//app[@id=\'' . $app->get_id() . '\' and @type=\'' .  $app->get_type() . '\']/version[@language=\'' . $app->get_language() . '\']';
+        // can't compare strings with XPath, so we check the version number with PHP.
         if( $this->xml != null)
-            return $this->xml->xpath($xpath_query);
-        return 'ERRORORRE';
+        {
+            $newerVersions = array();
+            $versions = $this->xml->xpath($xpath_query);
+            $nbVersions = $versions != false ? count($versions) : 0;
+            for( $i = 0; $i < $nbVersions; $i++ )
+            {
+                $attributes = $versions[$i]->attributes();
+                $version = $attributes['num'];
+                if( $version > $app->get_version() )
+                    $newerVersions[(string) $version] = $i;
+            }
+            $firstNewVersion = count($newerVersions) > 0 ? min(array_keys($newerVersions)) : '';
+            
+            return !empty($firstNewVersion) ? $versions[$newerVersions[$firstNewVersion]] : null;
+        }
+        return false;
     }
     
     function get_url() { return $this->url; }

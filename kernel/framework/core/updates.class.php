@@ -25,7 +25,9 @@
  *
 ###################################################*/
 
-define('PHPBOOST_OFFICIAL_REPOSITORY', '../../../tools/repository/repository.xml');
+define('PHPBOOST_OFFICIAL_REPOSITORY', '../../../tools/repository/repository.xml'); // Test repository
+//define('PHPBOOST_OFFICIAL_REPOSITORY', 'http://www.phpboost.com/repository/main.xml');    // Official repository
+
 require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/core/repository.class.php');
 
@@ -80,10 +82,11 @@ class Updates
     {
         foreach( $this->apps as $app )
         {
+            print_r($app);
             $result = $this->repositories[$app->get_repository()]->check($app);
             if( $result !== array() )
             {   // processing to the update notification
-                echo '<hr /><pre>'; print_r($result); echo '</pre><hr />';
+                echo '<hr /><pre>'; print_r($result); echo '</pre><br /><br /><hr /><br /><br />';
             }
         }
     }
