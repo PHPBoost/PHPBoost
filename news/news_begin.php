@@ -46,7 +46,7 @@ if( !empty($idnews) && empty($idcat) )
 }
 else
 {
-    if (!defined('TITLE'))
+    if( !defined('TITLE') )
         define('TITLE', $LANG['title_news']);
 }
 
