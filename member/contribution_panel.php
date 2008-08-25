@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               contribution_panel.php
+ *                           contribution_panel.php
  *                            -------------------
  *   begin                : July 21, 2008
- *   copyright          : (C) 2008 Benoît Sautel
+ *   copyright            : (C) 2008 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -31,10 +31,19 @@ if( !$Member->Check_level(MEMBER_LEVEL) ) //Si il n'est pas member (les invités 
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 $contribution_id = retrieve(GET, 'id', 0);
+$id_to_delete = retrieve(GET, 'del', 0);
+$id_to_update = retrieve(REQUEST, 'idedit', 0);
+$id_update = retrieve(GET, 'edit', 0);
 
 require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_panel.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+
+$contribution = new Contribution();
+$contribution->set_description('test');
+$contribution->set_entitled('test');
+$contribution->set_module('module');
+//$contribution->save();
 
 if( $contribution_id > 0 )
 {
@@ -48,6 +57,25 @@ if( $contribution_id > 0 )
 	$Bread_crumb->add_link($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
 	
 	define('TITLE', $LANG['contribution_panel'] . ' - ' . $contribution->get_entitled());
+}
+//Enregistrement de la modification d'une contribution
+elseif( $id_to_update > 0 )
+{
+	// TODO à faire
+	$contribution->load_from_db($id_to_update);
+}
+//Suppression d'une contribution
+elseif( $id_to_delete > 0 )
+{
+	$contribution = new Contribution();
+	
+	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
+	if( !$contribution->load_from_db($id_to_delete) || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT)) )
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	
+	$contribution->delete_in_db();
+	
+	redirect(HOST . DIR . "/member/contribution_panel.php");
 }
 else
 	define('TITLE', $LANG['contribution_panel']);
@@ -89,6 +117,13 @@ if( $contribution_id > 0 )
 			'CREATION_DATE' => $contribution_fixing_date->format(DATE_FORMAT_SHORT),
 			'U_FIXER_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')
 		));
+	
+	$template->Assign_vars(array(
+		'L_DELETE' => $LANG['delete'],
+		'L_UPDATE' => $LANG['update'],
+		'U_UPDATE' => transid('contribution_panel.php?edit=' . $contribution_id),
+		'U_DELETE' => transid('contribution_panel.php?del=' . $contribution_id)
+	));
 }
 else
 {

@@ -153,23 +153,22 @@ class Contribution
 		return $module_ini['name'];
 	}
 	
-	//Db creation
-	function create_in_db()
-	{
-		global $Sql;
-		$this->creation_date = new Date();
-		$Sql->Query_inject("INSERT INTO ".PREFIX."contributions (entitled, description, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id) VALUES ('" . $this->entitled . "', '" . $this->description . "', '" . $this->fixing_url . "', '" . $this->module . "', '" . $this->current_status . "', '" . $this->creation_date->get_timestamp() . "', 0, '" . (!empty($this->auth) ? addslashes(serialize($this->auth)) : '') . "', '" . $this->poster_id . "', '" . $this->fixer_id . "')", __LINE__, __FILE__);
-		$this->id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."contributions");
-	}
-	
-	function update_in_db()
+	//DB creation or updating
+	function save()
 	{
 		global $Sql;
 		// If it exists already in the data base
 		if( $this->id > 0 )
 			$Sql->Query_inject("UPDATE ".PREFIX."contributions SET entitled = '" . $this->entitled . "', description = '" . $this->description . "', fixing_url = '" . $this->fixing_url . "', module = '" . $this->module . "', current_status = '" . $this->current_status . "', creation_date = '" . $this->creation_date->to_timestamp() . "', fixing_date = '" . $this->fixing_date->get_timestamp() . "', auth = '" . addslashes(serialize($this->auth)) . "', poster_id = '" . $this->poster_id . "', fixer_id = '" . $this->fixer_id . "' WHERE id = '" . $this->id . "'", __LINE__, __FILE__);
+		else //We create it
+		{
+			$this->creation_date = new Date();
+			$Sql->Query_inject("INSERT INTO ".PREFIX."contributions (entitled, description, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id) VALUES ('" . $this->entitled . "', '" . $this->description . "', '" . $this->fixing_url . "', '" . $this->module . "', '" . $this->current_status . "', '" . $this->creation_date->get_timestamp() . "', 0, '" . (!empty($this->auth) ? addslashes(serialize($this->auth)) : '') . "', '" . $this->poster_id . "', '" . $this->fixer_id . "')", __LINE__, __FILE__);
+			$this->id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."contributions");	
+		}
 	}
 	
+	//Deleting a contribution in the database
 	function delete_in_db()
 	{
 		global $Sql;
@@ -178,6 +177,7 @@ class Contribution
 		$this->id = 0;
 	}
 	
+	//Loadind a contribution into the database
 	function load_from_db($id_contrib)
 	{
 		global $Sql;
