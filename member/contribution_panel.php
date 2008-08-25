@@ -39,12 +39,6 @@ require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution
 require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_panel.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 
-$contribution = new Contribution();
-$contribution->set_description('test');
-$contribution->set_entitled('test');
-$contribution->set_module('module');
-//$contribution->save();
-
 if( $contribution_id > 0 )
 {
 	$contribution = new Contribution();
