@@ -564,6 +564,8 @@ $LANG['contribution_fixer'] = 'Responsable';
 $LANG['contribution_fixing_date'] = 'Date de clôture';
 $LANG['contribution_module'] = 'Module';
 $LANG['process_contribution'] = 'Traiter la contribution';
+$LANG['confirm_delete_contribution'] = 'Etes-vous sûr de vouloir supprimer cette contribution ?';
+$LANG['no_contribution'] = 'Aucune contribution à afficher';
 
 //Barre de chargement.
 $LANG['query_loading'] = 'Chargement de la requête au serveur';
