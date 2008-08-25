@@ -110,7 +110,7 @@
 									<br />
 									{file.U_COM_LINK}
 									<br />
-									{L_NOTE}  {file.NOTE}
+									{L_NOTE} {file.NOTE}
 								</div>
 								<div class="spacer"></div>								
 							</div>
@@ -173,7 +173,7 @@
 					</tr>
 				</table>
 				<br />
-				<table style="width:400px;margin-right:0;" class="module_table text_small">
+				<table style="width:430px;margin-right:0;" class="module_table text_small">
 					<tr>
 						<th colspan="2">
 							{L_FILE_INFOS}
@@ -229,3 +229,4 @@
 		<br /><br />
 		{COMMENTS}
 		# ENDIF #
+		
