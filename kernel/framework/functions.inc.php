@@ -447,7 +447,7 @@ function second_parse(&$content)
 }
 
 //Transmet le session_id et le user_id à traver l'url pour les connexions sans cookies. Permet le support de l'url rewritting!
-function transid($url, $mod_rewrite = '', $esperluette = '&amp;')
+function transid($url, $mod_rewrite = '', $ampersand = '&amp;')
 {
     global $CONFIG, $Session;
     
@@ -464,7 +464,7 @@ function transid($url, $mod_rewrite = '', $esperluette = '&amp;')
             return $url;
     }
     elseif( $session_mod == 1 )
-        return $url . ((strpos($url, '?') === false) ? '?' : $esperluette) . 'sid=' . $Session->data['session_id'] . $esperluette . 'suid=' . $Session->data['user_id'];
+        return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $Session->data['session_id'] . $ampersand . 'suid=' . $Session->data['user_id'];
 }
 
 //Nettoie l'url de tous les caractères spéciaux, accents, etc....

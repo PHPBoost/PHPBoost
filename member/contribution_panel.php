@@ -178,6 +178,7 @@ if( $contribution_id > 0 )
 		'L_FIXING_DATE' => $LANG['contribution_fixing_date'],
 		'L_MODULE' => $LANG['contribution_module'],
 		'L_PROCESS_CONTRIBUTION' => $LANG['process_contribution'],
+		'L_CONFIRM_DELETE_CONTRIBUTION' => $LANG['confirm_delete_contribution'],
 		'L_DELETE' => $LANG['delete'],
 		'L_UPDATE' => $LANG['update'],
 		'U_UPDATE' => transid('contribution_panel.php?edit=' . $contribution_id),
@@ -224,12 +225,20 @@ else
 	$num_contributions = 1;
 	define('CONTRIBUTIONS_PER_PAGE', 20);
 	
+	//Gestion des critères de tri
+	$criteria = retrieve(GET, 'criteria', 'current_status');
+	$order = retrieve(GET, 'order', 'asc');
+
+	if( !in_array($criteria, array('entitled', 'module', 'status', 'creation_date', 'fixing_date', 'poster_id', 'fixer_id')) )
+		$criteria = 'current_status';
+	$order = $order == 'desc' ? 'desc' : 'asc';
+	
 	//On liste les contributions
 	$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, description
 	FROM ".PREFIX."contributions c
 	LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
 	LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
-	ORDER BY current_status ASC, creation_date DESC", __LINE__, __FILE__);
+	ORDER BY " . $criteria . " " . strtoupper($order), __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
 		$this_contribution = new Contribution;
@@ -267,12 +276,12 @@ else
 	
 	if( $num_contributions > 0 )
 		$template->assign_vars(array(
-			'PAGINATION' => $pagination->display_pagination('contribution_panel.php?p=%d', $num_contributions - 1, 'p', CONTRIBUTIONS_PER_PAGE, 3)
+			'PAGINATION' => $pagination->display_pagination('contribution_panel.php?p=%d&criteria=' . $criteria . '&order=' . $order, $num_contributions - 1, 'p', CONTRIBUTIONS_PER_PAGE, 3)
 		));
 	else
 		$template->assign_vars(array(
 			'C_NO_CONTRIBUTION' => true,
-			'L_NO_CONTRIBUTION_TO_DISPLAY' => 'aucune contribution à afficher'
+			'L_NO_CONTRIBUTION_TO_DISPLAY' => $LANG['no_contribution']
 		));
 	
 	$template->Assign_vars(array(
@@ -283,6 +292,38 @@ else
 		'L_FIXER' => $LANG['contribution_fixer'],
 		'L_FIXING_DATE' => $LANG['contribution_fixing_date'],
 		'L_MODULE' => $LANG['contribution_module'],
+	));
+	
+	//Gestion du tri
+	$template->Assign_vars(array(
+		'C_ORDER_ENTITLED_ASC' => $criteria == 'entitled' && $order == 'asc',
+		'U_ORDER_ENTITLED_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=entitled&order=asc'),
+		'C_ORDER_ENTITLED_DESC' => $criteria == 'entitled' && $order == 'desc',
+		'U_ORDER_ENTITLED_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=entitled&order=desc'),
+		'C_ORDER_MODULE_ASC' => $criteria == 'module' && $order == 'asc',
+		'U_ORDER_MODULE_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=module&order=asc'),
+		'C_ORDER_MODULE_DESC' => $criteria == 'module' && $order == 'desc',
+		'U_ORDER_MODULE_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=module&order=desc'),
+		'C_ORDER_STATUS_ASC' => $criteria == 'current_status' && $order == 'asc',
+		'U_ORDER_STATUS_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=current_status&order=asc'),
+		'C_ORDER_STATUS_DESC' => $criteria == 'current_status' && $order == 'desc',
+		'U_ORDER_STATUS_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=current_status&order=desc'),
+		'C_ORDER_CREATION_DATE_ASC' => $criteria == 'creation_date' && $order == 'asc',
+		'U_ORDER_CREATION_DATE_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=creation_date&order=asc'),
+		'C_ORDER_CREATION_DATE_DESC' => $criteria == 'creation_date' && $order == 'desc',
+		'U_ORDER_CREATION_DATE_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=creation_date&order=desc'),
+		'C_ORDER_FIXING_DATE_ASC' => $criteria == 'fixing_date' && $order == 'asc',
+		'U_ORDER_FIXING_DATE_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=fixing_date&order=asc'),
+		'C_ORDER_FIXING_DATE_DESC' => $criteria == 'fixing_date' && $order == 'desc',
+		'U_ORDER_FIXING_DATE_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=fixing_date&order=desc'),	
+		'C_ORDER_POSTER_ASC' => $criteria == 'poster_id' && $order == 'asc',
+		'U_ORDER_POSTER_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=poster_id&order=asc'),
+		'C_ORDER_POSTER_DESC' => $criteria == 'poster_id' && $order == 'desc',
+		'U_ORDER_POSTER_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=poster_id&order=desc'),
+		'C_ORDER_FIXER_ASC' => $criteria == 'fixer_id' && $order == 'asc',
+		'U_ORDER_FIXER_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=fixer_id&order=asc'),
+		'C_ORDER_FIXER_DESC' => $criteria == 'fixer_id' && $order == 'desc',
+		'U_ORDER_FIXER_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&criteria=fixer_id&order=desc')
 	));
 }
 

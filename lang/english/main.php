@@ -564,6 +564,8 @@ $LANG['contribution_fixer'] = 'Fixer';
 $LANG['contribution_fixing_date'] = 'Fixing date';
 $LANG['contribution_module'] = 'Module';
 $LANG['process_contribution'] = 'Process the contribution';
+$LANG['confirm_delete_contribution'] = 'Do you really want to delete this contribution?';
+$LANG['no_contribution'] = 'No contribution';
 
 //Loading bar.
 $LANG['query_loading'] = 'Sending of the query to server';
