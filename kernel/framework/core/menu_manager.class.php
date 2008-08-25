@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             menu.class.php
+ *                             menu_manager.class.php
  *                            -------------------
 *   begin                : July 08, 2008
  *   copyright          : (C) 2008 Viarre Régis
@@ -29,17 +29,19 @@ define('MENU_MODULE', 0x01); //Menu de type module.
 define('MENU_LINKS', 0x02); //Menu de type liens.
 define('MENU_PERSONNAL', 0x04); //Menu de type menu personnel.
 define('MENU_CONTENTS', 0x08); //Menu de type contenu.
+define('MENU_STRING_MODE', 0x01); //Menu de type contenu.
 
-class Menu
+class MenuManager
 {
 	## Public Methods ##
 	//Constructeur.
-	function Menu($type)
+	function MenuManager($type)
 	{
 		$this->type = $type;
 	}
 	
-	function code_format($name, $contents, $location, $auth, $use_tpl = '0')
+	//Retourne le code a mettre en cache.
+	function get_cache($name, $contents, $location, $auth, $use_tpl = '0')
 	{
 		switch($this->type)
 		{
@@ -50,6 +52,7 @@ class Menu
 				. "\n" . '}';
 			
 			case MENU_LINKS:
+				return var_export($this->display(MENU_STRING_MODE), true);
 				/*$Template->Set_filenames(array('links_menu' => 'links_menu.tpl'));
 				$links_list = array(
 					0 => array('Liens', '', 0, true, array('r-1' => 1,'r0' => 1,'r1' => 1,'r2' => 1)), 
@@ -81,7 +84,7 @@ class Menu
 				. "\t" . 'include_once(\'PATH_TO_ROOT . \'/menus/' . $contents . "');\n"
 				. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $contents) . '\', TEMPLATE_STRING_MODE);' 
 				. "\n" . '}';
-		
+				
 			case MENU_CONTENTS:
 				$code = 'if( $Member->Check_auth(' . var_export(sunserialize($auth), true) . ', AUTH_MENUS) ){' . "\n";
 				if( $use_tpl == '0' )
@@ -113,7 +116,6 @@ class Menu
 				. '}';
 				return $code;
 		}
-		
 	}
 	
 	## Private Methods ##
