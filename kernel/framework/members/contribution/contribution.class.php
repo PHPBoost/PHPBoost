@@ -67,16 +67,16 @@ class Contribution
 	// current_status setter
 	function set_current_status($new_current_status)
 	{
-		if( in_array($new_current_status, array(CONTRIBUTION_current_status_NOT_READ, CONTRIBUTION_current_status_PROCESSING, CONTRIBUTION_current_status_FIXED)) )
+		if( in_array($new_current_status, array(CONTRIBUTION_STATUS_UNREAD, CONTRIBUTION_STATUS_BEING_PROCESSED, CONTRIBUTION_STATUS_PROCESSED)) )
 		{
 			$this->current_status = $new_current_status;
 			//If we just come to fix it, we assign the fixing date
-			if( $new_current_status == CONTRIBUTION_current_status_FIXED )
+			if( $new_current_status == CONTRIBUTION_STATUS_PROCESSED )
 				$this->fixing_date = new Date();
 		}
 		//Default
 		else
-			$this->current_status = CONTRIBUTION_current_status_NOT_READ;
+			$this->current_status = CONTRIBUTION_STATUS_UNREAD;
 	}
 		
 	//Creation date setter
@@ -139,7 +139,7 @@ class Contribution
 		{
 			case CONTRIBUTION_STATUS_UNREAD:
 				return $LANG['contribution_status_unread'];
-			case CONTRIBUTION_STATUS_BEING_PROCESSING:
+			case CONTRIBUTION_STATUS_BEING_PROCESSED:
 				return $LANG['contribution_status_being_processed'];
 			case CONTRIBUTION_STATUS_PROCESSED:
 				return $LANG['contribution_status_processed'];
@@ -156,25 +156,37 @@ class Contribution
 	//DB creation or updating
 	function save()
 	{
-		global $Sql;
+		global $Sql, $Cache;
 		// If it exists already in the data base
 		if( $this->id > 0 )
-			$Sql->Query_inject("UPDATE ".PREFIX."contributions SET entitled = '" . $this->entitled . "', description = '" . $this->description . "', fixing_url = '" . $this->fixing_url . "', module = '" . $this->module . "', current_status = '" . $this->current_status . "', creation_date = '" . $this->creation_date->to_timestamp() . "', fixing_date = '" . $this->fixing_date->get_timestamp() . "', auth = '" . addslashes(serialize($this->auth)) . "', poster_id = '" . $this->poster_id . "', fixer_id = '" . $this->fixer_id . "' WHERE id = '" . $this->id . "'", __LINE__, __FILE__);
+		{
+			//Feinte PHP4
+			$creation_date = $this->creation_date;
+			$fixing_date = $this->fixing_date;
+			
+			$Sql->Query_inject("UPDATE ".PREFIX."contributions SET entitled = '" . $this->entitled . "', description = '" . $this->description . "', fixing_url = '" . $this->fixing_url . "', module = '" . $this->module . "', current_status = '" . $this->current_status . "', creation_date = '" . $creation_date->get_timestamp() . "', fixing_date = '" . $fixing_date->get_timestamp() . "', auth = '" . addslashes(serialize($this->auth)) . "', poster_id = '" . $this->poster_id . "', fixer_id = '" . $this->fixer_id . "' WHERE id = '" . $this->id . "'", __LINE__, __FILE__);
+		}
 		else //We create it
 		{
 			$this->creation_date = new Date();
 			$Sql->Query_inject("INSERT INTO ".PREFIX."contributions (entitled, description, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id) VALUES ('" . $this->entitled . "', '" . $this->description . "', '" . $this->fixing_url . "', '" . $this->module . "', '" . $this->current_status . "', '" . $this->creation_date->get_timestamp() . "', 0, '" . (!empty($this->auth) ? addslashes(serialize($this->auth)) : '') . "', '" . $this->poster_id . "', '" . $this->fixer_id . "')", __LINE__, __FILE__);
 			$this->id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."contributions");	
 		}
+		
+		//Regeneration of the member cache file
+		$Cache->generate_file('member');
 	}
 	
 	//Deleting a contribution in the database
 	function delete_in_db()
 	{
-		global $Sql;
+		global $Sql, $Cache;
 		$Sql->Query_inject("DELETE FROM ".PREFIX."contributions WHERE id = '" . $this->id . "'", __LINE__, __FILE__);
 		//We reset the id
 		$this->id = 0;
+		
+		//Regeneration of the member cache file
+		$Cache->generate_file('member');
 	}
 	
 	//Loadind a contribution into the database
@@ -217,17 +229,17 @@ class Contribution
 	}
 	
 	## Private ##
-	var $id;
-	var $entitled;
-	var $description;
-	var $fixing_url;
-	var $module;
+	var $id = 0;
+	var $entitled = '';
+	var $description = '';
+	var $fixing_url = '';
+	var $module = '';
 	var $current_status = CONTRIBUTION_STATUS_UNREAD;
 	var $creation_date;
 	var $fixing_date;
-	var $auth;
-	var $poster_id;
-	var $fixer_id;
+	var $auth = array();
+	var $poster_id = 0;
+	var $fixer_id = 0;
 }
 
 ?>
