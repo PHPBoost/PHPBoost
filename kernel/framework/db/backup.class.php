@@ -150,7 +150,7 @@ class Backup
 			}
 			else
 			{
-				preg_match('!` ([a-z0-9()]+) !i', $field, $match);
+				preg_match('!` ([a-z0-9()]+)!i', $field, $match);
 				$type = isset($match[1]) ? $match[1] : '';
 				$attribute = strpos($field, 'unsigned') !== false ? 'unsigned' : '';
 				$null = strpos($field, 'NOT NULL') !== false ? false : true;

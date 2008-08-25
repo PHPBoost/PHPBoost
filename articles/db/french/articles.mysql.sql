@@ -22,7 +22,7 @@ CREATE TABLE `phpboost_articles` (
 	`id` int(11) NOT NULL auto_increment,
 	`idcat` int(11) NOT NULL default '0',
 	`title` varchar(100) NOT NULL default '',
-	`contents` text NOT NULL,
+	`contents` mediumtext NOT NULL,
 	`icon` varchar(255) NOT NULL default '',
 	`timestamp` int(11) NOT NULL default '0',
 	`visible` tinyint(1) NOT NULL default '0',

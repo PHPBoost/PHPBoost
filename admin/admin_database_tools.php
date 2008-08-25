@@ -348,7 +348,6 @@ elseif( !empty($table) && $action == 'query' )
 elseif( !empty($table) )
 {
 	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
-	
 	if( !isset($Backup->tables[$table]) ) //Table non existante.
 		redirect(HOST . DIR . '/admin/admin_database.php');
 		
@@ -369,7 +368,7 @@ elseif( !empty($table) )
 			'FIELD_NAME' => ($primary_key) ? '<span style="text-decoration:underline">' . $fields_info['name'] . '<span>' : $fields_info['name'],
 			'FIELD_TYPE' => $fields_info['type'],
 			'FIELD_ATTRIBUTE' => $fields_info['attribute'],
-			'FIELD_NULL' => $fields_info['null'] ? $LANG['yes'] : $LANG['no'],
+			'FIELD_NULL' => $fields_info['null'] ? '<strong>' . $LANG['yes'] . '</strong>' : $LANG['no'],
 			'FIELD_DEFAULT' => $fields_info['default'],
 			'FIELD_EXTRA' => $fields_info['extra']
 		));
