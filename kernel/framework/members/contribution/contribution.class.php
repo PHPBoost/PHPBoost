@@ -3,7 +3,7 @@
  *                             contribution.class.php
  *                            -------------------
  *   begin                : July 21, 2008
- *   copyright          : (C) 2008 Benoît Sautel
+ *   copyright            : (C) 2008 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *   

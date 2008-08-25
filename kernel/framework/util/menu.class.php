@@ -3,8 +3,8 @@
  *                             menu.class.php
  *                            -------------------
 *   begin                : July 08, 2008
- *   copyright          : (C) 2008 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   copyright           : (C) 2008 Viarre Régis
+ *   email               : crowkait@phpboost.com
  *
  *
 ###################################################
@@ -86,7 +86,7 @@ class Menu extends MenuElement
 		foreach($this->elements as $element)
 		{
 			$template_string->Assign_vars(array(
-				'ELEMENT' => $element->display($template);
+				'ELEMENT' => $element->display($template)
 			));
 		}
 		

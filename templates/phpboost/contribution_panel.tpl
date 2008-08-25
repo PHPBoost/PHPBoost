@@ -73,9 +73,21 @@
 				<td class="row1" style="text-align:center;">
 					{contributions.MODULE}
 				</td>
-				<td class="row1" style="text-align:center;">
+				# IF contributions.C_FIXED #
+				<td class="row1" style="text-align:center; background-color:#7FFF9C;">
 					{contributions.STATUS}
 				</td>
+				# ELSE #
+					# IF contributions.C_PROCESSING #
+					<td class="row1" style="text-align:center; background-color:#FFD86F;">
+						{contributions.STATUS}
+					</td>
+					# ELSE #
+					<td class="row1" style="text-align:center; background-color:#FF796F;">
+						{contributions.STATUS}
+					</td>
+					# ENDIF #
+				# ENDIF #
 				<td class="row1" style="text-align:center;">
 					{contributions.CREATION_DATE}
 				</td>

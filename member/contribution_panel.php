@@ -265,7 +265,8 @@ else
 					'U_FIXER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $row['fixer_id'], 'member-' . $row['fixer_id'] . '.php'),
 					'U_POSTER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $row['poster_id'], 'member-' . $row['poster_id'] . '.php'),
 					'U_CONSULT' => PATH_TO_ROOT . '/member/' . transid('contribution_panel.php?id=' . $row['id']),
-					'C_FIXED' => $this_contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED
+					'C_FIXED' => $this_contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED,
+					'C_PROCESSING' => $this_contribution->get_status() == CONTRIBUTION_STATUS_BEING_PROCESSED
 				));
 			
 			$num_contributions++;
