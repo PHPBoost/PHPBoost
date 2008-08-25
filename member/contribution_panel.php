@@ -58,15 +58,64 @@ if( $contribution_id > 0 )
 	
 	define('TITLE', $LANG['contribution_panel'] . ' - ' . $contribution->get_entitled());
 }
+//Modification d'une contribution
+elseif( $id_update > 0 )
+{
+	$contribution = new Contribution();
+	
+	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
+	if( !$contribution->load_from_db($id_update) || !$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	
+	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
+	$Bread_crumb->add_link($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
+	$Bread_crumb->add_link($LANG['contribution_edition'], transid('contribution_panel.php?edit=' . $id_update));
+	
+	define('TITLE', $LANG['contribution_panel'] . ' - ' . $LANG['contribution_edition']);
+}
 //Enregistrement de la modification d'une contribution
 elseif( $id_to_update > 0 )
 {
-	// TODO à faire
-	$contribution->load_from_db($id_to_update);
+	global $Member;
+	
+	if( !$contribution->load_from_db($id_to_update) || !$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	
+	//Récupération des éléments de la contribution
+	$entitled = retrieve(POST, 'entitled', '', TSTRING);
+	$description = retrieve(POST, 'contents', '', TSTRING_PARSE);	
+	$status = retrieve(POST, 'status', CONTRIBUTION_STATUS_UNREAD);
+	
+	//Si le titre n'est pas vide
+	if( !empty($entitled) )
+	{
+		//Mise à jour de l'objet contribution
+		$contribution->set_entitled($entitled);
+		$contribution->set_description($description);
+		
+		//Changement de statut ? On regarde si la contribution a été réglée
+		if( $status == CONTRIBUTION_STATUS_PROCESSED && $contribution->get_status() != CONTRIBUTION_STATUS_PROCESSED )
+		{
+			$contribution->set_fixer_id($Member->Get_attribute('user_id'));
+			$contribution->set_fixing_date(new Date());
+		}
+		
+		$contribution->set_current_status($status);
+		
+		//Enregistrement en base de données
+		$contribution->save();
+		
+		redirect(HOST . DIR . '/member/contribution_panel.php?id=' . $contribution->get_id());
+	}
+	//Erreur
+	else
+		redirect(HOST . DIR . '/member/contribution_panel.php');
 }
 //Suppression d'une contribution
 elseif( $id_to_delete > 0 )
 {
+	global $Member;
+	
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
@@ -109,20 +158,55 @@ if( $contribution_id > 0 )
 		'U_CONTRIBUTOR_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')
 	));
 	
-	//If the contribution has been processed
+	//Si la contribution a été traitée
 	if( $contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED )
 		$template->assign_vars(array(
 			'C_CONTRIBUTION_FIXED' => true,
 			'FIXER' => $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
-			'CREATION_DATE' => $contribution_fixing_date->format(DATE_FORMAT_SHORT),
+			'FIXING_DATE' => $contribution_fixing_date->format(DATE_FORMAT_SHORT),
 			'U_FIXER_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')
 		));
 	
 	$template->Assign_vars(array(
+		'L_CONTRIBUTION' => $LANG['contribution'],
+		'L_ENTITLED' => $LANG['contribution_entitled'],
+		'L_DESCRIPTION' => $LANG['contribution_description'],
+		'L_STATUS' => $LANG['contribution_status'],
+		'L_CONTRIBUTOR' => $LANG['contributor'],
+		'L_CREATION_DATE' => $LANG['contribution_creation_date'],
+		'L_FIXER' => $LANG['contribution_fixer'],
+		'L_FIXING_DATE' => $LANG['contribution_fixing_date'],
+		'L_MODULE' => $LANG['contribution_module'],
+		'L_PROCESS_CONTRIBUTION' => $LANG['process_contribution'],
 		'L_DELETE' => $LANG['delete'],
 		'L_UPDATE' => $LANG['update'],
 		'U_UPDATE' => transid('contribution_panel.php?edit=' . $contribution_id),
 		'U_DELETE' => transid('contribution_panel.php?del=' . $contribution_id)
+	));
+}
+//Modification d'une contribution
+elseif( $id_update > 0 )
+{
+	$template->Assign_vars(array(
+		'C_EDIT_CONTRIBUTION' => true,
+		'EDITOR' => display_editor(),
+		'ENTITLED' => $contribution->get_entitled(),
+		'DESCRIPTION' => $contribution->get_description(),
+		'CONTRIBUTION_ID' => $contribution->get_id(),
+		'CONTRIBUTION_STATUS_UNREAD_SELECTED' => $contribution->get_status() == CONTRIBUTION_STATUS_UNREAD ? ' selected="selected"' : '',
+		'CONTRIBUTION_STATUS_BEING_PROCESSED_SELECTED' => $contribution->get_status() == CONTRIBUTION_STATUS_BEING_PROCESSED ? ' selected="selected"' : '',
+		'CONTRIBUTION_STATUS_PROCESSED_SELECTED' => $contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED ? ' selected="selected"' : '',
+		'L_CONTRIBUTION_STATUS_UNREAD' => $LANG['contribution_status_unread'],
+		'L_CONTRIBUTION_STATUS_BEING_PROCESSED' => $LANG['contribution_status_being_processed'],
+		'L_CONTRIBUTION_STATUS_PROCESSED' => $LANG['contribution_status_processed'],
+		'L_CONTRIBUTION' => $LANG['contribution'],
+		'L_DESCRIPTION' => $LANG['contribution_description'],
+		'L_STATUS' => $LANG['contribution_status'],
+		'L_ENTITLED' => $LANG['contribution_entitled'],
+		'L_SUBMIT' => $LANG['submit'],
+		'L_PREVIEW' => $LANG['preview'],
+		'L_RESET' => $LANG['reset'],
+		'U_TARGET' => transid('contribution_panel.php')
 	));
 }
 else
@@ -135,16 +219,6 @@ else
 	$template->assign_vars(array(
 		'C_CONTRIBUTION_LIST' => true
 	));
-
-	$contribution_panel = new ContributionPanel();
-
-	$contribution = new Contribution();
-	$contribution->set_entitled('Proposition de news');
-	$contribution->set_fixing_url('news/news.php');
-	$contribution->set_module('news');
-	$contribution->set_creation_date(new Date());
-	$contribution->set_poster_id(4);
-	//$contribution->create_in_db();
 	
 	//Nombre de contributions
 	$num_contributions = 1;
@@ -154,7 +228,7 @@ else
 	$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, description
 	FROM ".PREFIX."contributions c
 	LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
-	LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
+	LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
 	ORDER BY current_status ASC, creation_date DESC", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
@@ -193,13 +267,23 @@ else
 	
 	if( $num_contributions > 0 )
 		$template->assign_vars(array(
-			'PAGINATION' => $pagination->display_pagination('contribution_panel.php?p=%d', $num_contributions, 'p', CONTRIBUTIONS_PER_PAGE, 3)
+			'PAGINATION' => $pagination->display_pagination('contribution_panel.php?p=%d', $num_contributions - 1, 'p', CONTRIBUTIONS_PER_PAGE, 3)
 		));
 	else
 		$template->assign_vars(array(
 			'C_NO_CONTRIBUTION' => true,
 			'L_NO_CONTRIBUTION_TO_DISPLAY' => 'aucune contribution à afficher'
 		));
+	
+	$template->Assign_vars(array(
+		'L_ENTITLED' => $LANG['contribution_entitled'],
+		'L_STATUS' => $LANG['contribution_status'],
+		'L_POSTER' => $LANG['contributor'],
+		'L_CREATION_DATE' => $LANG['contribution_creation_date'],
+		'L_FIXER' => $LANG['contribution_fixer'],
+		'L_FIXING_DATE' => $LANG['contribution_fixing_date'],
+		'L_MODULE' => $LANG['contribution_module'],
+	));
 }
 
 $template->parse();

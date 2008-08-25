@@ -550,9 +550,20 @@ It may be an error, if you want you could contact the administrator of the web s
 
 //Panneau de contribution
 $LANG['contribution_panel'] = 'Contribution pannel';
+$LANG['contribution'] = 'Contribution';
 $LANG['contribution_status_unread'] = 'Unsolved';
 $LANG['contribution_status_being_processed'] = 'In progress';
 $LANG['contribution_status_processed'] = 'Solved';
+$LANG['contribution_entitled'] = 'Entitled';
+$LANG['contribution_description'] = 'Description';
+$LANG['contribution_edition'] = 'Editing a contribution';
+$LANG['contribution_status'] = 'Status';
+$LANG['contributor'] = 'Contributor';
+$LANG['contribution_creation_date'] = 'Creation date';
+$LANG['contribution_fixer'] = 'Fixer';
+$LANG['contribution_fixing_date'] = 'Fixing date';
+$LANG['contribution_module'] = 'Module';
+$LANG['process_contribution'] = 'Process the contribution';
 
 //Loading bar.
 $LANG['query_loading'] = 'Sending of the query to server';

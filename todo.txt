@@ -6,6 +6,7 @@
 [-] Nouvelles options d'installation (Communautaire, Vitrine, etc).
 [-] Supporter https et remplacer les "." par des "_" dans le nom de la base de données lors de l'installation.
 [-] Panneau de contribution (+déplacer moderation_begin.php)
+[-] Corriger le bug sur les URL qui ne sont pas prises en compte automatiquement dans le parser.
 
 ------------------------------------ MODULES -----------------------------------
 [-] Download, faire une option dans les catégories à l'édition pour désapprouver.

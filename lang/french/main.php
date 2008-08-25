@@ -550,9 +550,20 @@ S\'il s\'agit d\'une erreur veuillez contacter l\'administrateur du site.
 
 //Panneau de contribution
 $LANG['contribution_panel'] = 'Panneau de contribution';
+$LANG['contribution'] = 'Contribution';
 $LANG['contribution_status_unread'] = 'Non traitée';
 $LANG['contribution_status_being_processed'] = 'En cours';
 $LANG['contribution_status_processed'] = 'Traitée';
+$LANG['contribution_entitled'] = 'Intitulé';
+$LANG['contribution_description'] = 'Description';
+$LANG['contribution_edition'] = 'Edition d\'une contribution';
+$LANG['contribution_status'] = 'Statut';
+$LANG['contributor'] = 'Contributeur';
+$LANG['contribution_creation_date'] = 'Date de création';
+$LANG['contribution_fixer'] = 'Responsable';
+$LANG['contribution_fixing_date'] = 'Date de clôture';
+$LANG['contribution_module'] = 'Module';
+$LANG['process_contribution'] = 'Traiter la contribution';
 
 //Barre de chargement.
 $LANG['query_loading'] = 'Chargement de la requête au serveur';
