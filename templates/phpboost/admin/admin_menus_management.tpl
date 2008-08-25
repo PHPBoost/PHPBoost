@@ -48,9 +48,14 @@
 					<a href="admin_menus.php" class="quick_link">{L_MENUS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_menus_add.php"><img src="../templates/{THEME}/images/admin/menus.png" alt="" /></a>
+					<a href="admin_menus_add.php?type=1"><img src="../templates/{THEME}/images/admin/menus.png" alt="" /></a>
 					<br />
-					<a href="admin_menus_add.php" class="quick_link">{L_ADD_MENUS}</a>
+					<a href="admin_menus_add.php?type=1" class="quick_link">{L_ADD_CONTENT_MENUS}</a>
+				</li>
+				<li>
+					<a href="admin_menus_add.php?type=2"><img src="../templates/{THEME}/images/admin/menus.png" alt="" /></a>
+					<br />
+					<a href="admin_menus_add.php?type=2" class="quick_link">{L_ADD_LINKS_MENUS}</a>
 				</li>
 			</ul>
 		</div>

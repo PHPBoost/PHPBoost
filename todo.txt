@@ -50,6 +50,7 @@
 
 ######################################DOSSIERS##################################
 
-[-] Noix : Rédiger un dossier sur le panneau de modération et sur la mise en page du contenu
-[-] Loique : Rédiger un dossier sur la recherche
-[-] Croquette : Rédiger un dossier sur les nouveaux minis menus indépendants des modules
+[-] Noix : Panneau de modération et sur la mise en page du contenu.
+[-] Loique : Recherche.
+[-] Croquette : Nouveaux minis menus indépendants des modules.
+[-] Croquette : Nouveaux placement des menus.

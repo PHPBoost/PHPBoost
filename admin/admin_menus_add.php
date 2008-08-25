@@ -32,11 +32,12 @@ require_once('../admin/admin_header.php');
 
 $id = retrieve(GET, 'id', 0);
 $idmodule = retrieve(GET, 'idmodule', '', TSTRING_UNSECURE);
-$edit = !empty($_GET['edit']) ? true : false;
-$install = !empty($_GET['install']) ? true : false;
+$edit = retrieve(GET, 'edit', false);
+$del = retrieve(GET, 'del', false);
+$install = retrieve(GET, 'install', false);
+$type = retrieve(GET, 'type', 1);
 $id_post = retrieve(POST, 'id', 0);
 $action = retrieve(POST, 'action', '');
-$del = !empty($_GET['del']) ? true : false;
 
 //Si c'est confirmé on execute
 if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà existant.
@@ -179,7 +180,7 @@ else
 	$Template->Set_filenames(array(
 		'admin_menus_add'=> 'admin/admin_menus_add.tpl'
 	));
-	
+
 	$Template->Assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -195,7 +196,8 @@ else
 		'L_MODO' => $LANG['modo'],
 		'L_ADMIN' => $LANG['admin'],
 		'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
-		'L_ADD_MENUS' => $LANG['menus_add'],
+		'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
+		'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
 		'L_LOCATION' => $LANG['location'],
 		'L_USE_TPL' => $LANG['use_tpl'],
 		'L_HEADER' => $LANG['menu_header'],
@@ -206,8 +208,7 @@ else
 		'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
 		'L_TOP_FOOTER' => $LANG['menu_top_footer'],
 		'L_FOOTER' => $LANG['menu_footer'],
-		'L_EXPLAIN_MENUS' => $LANG['menus_explain'],
-		'L_ACTION_MENUS' => ($edit) ? $LANG['menus_edit'] : $LANG['menus_add'],
+		'L_ACTION_MENUS' => ($edit) ? $LANG['menus_edit'] : $LANG['add'],
 		'L_ACTION' => ($edit) ? $LANG['update'] : $LANG['submit'],
 		'L_RESET' => $LANG['reset']
 	));
@@ -285,10 +286,28 @@ else
 			'L_ACTION' => $LANG['install']
 		));
 	}
-	else
+	elseif( $type == 2 ) //Ajout d'un menu de lien.
 	{
 		$Template->Assign_vars(array(
 			'C_ADD_MENU' => true,
+			'C_ADD_MENU_LINKS' => true,
+			'C_MENUS_ADDED' => true,
+			'ACTION' => 'add',
+			'AUTH_MENUS' => Authorizations::Generate_select_auth(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
+			'L_TYPE' => $LANG['type'],
+			'L_ACTION' => $LANG['add'],
+			'L_VERTICAL_MENU' => $LANG['vertical_menu'],
+			'L_HORIZONTAL_MENU' => $LANG['horizontal_menu'],
+			'L_TREE_MENU' => $LANG['tree_menu'],
+			'L_VERTICAL_SCROLL_MENU' => $LANG['vertical_scrolling_menu'],
+			'L_HORIZONTAL_SCROLL_MENU' => $LANG['horizontal_scrolling_menu']
+		));		
+	}
+	else //Ajout d'un menu de contenu.
+	{
+		$Template->Assign_vars(array(
+			'C_ADD_MENU' => true,
+			'C_ADD_MENU_CONTENT' => true,
 			'C_MENUS_ADDED' => true,
 			'ACTION' => 'add',
 			'AUTH_MENUS' => Authorizations::Generate_select_auth(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
