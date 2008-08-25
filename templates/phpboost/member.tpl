@@ -177,11 +177,17 @@
 				</dl>
 				<dl>
 					<dt><label for="user_sign">{L_SIGN}</label><br /><span>{L_SIGN_WHERE}</span></dt>
-					<dd><label><textarea class="post" rows="4" cols="27" name="user_sign" id="user_sign">{USER_SIGN}</textarea></label></dd>
+					<dd>
+						{USER_SIGN_EDITOR}
+						<textarea class="post" rows="4" cols="27" name="user_sign" id="user_sign">{USER_SIGN}</textarea>
+					</dd>
 				</dl>
 				<dl>
 					<dt><label for="user_desc">{L_BIOGRAPHY}</label></dt>
-					<dd><label><textarea class="post" rows="6" cols="27" id="user_desc" name="user_desc">{USER_DESC}</textarea> </label></dd>
+					<dd>
+						{USER_DESC_EDITOR}
+						<textarea class="post" rows="6" cols="27" id="user_desc" name="user_desc">{USER_DESC}</textarea>
+					</dd>
 				</dl>
 			</fieldset>
 				

@@ -1,9 +1,9 @@
 <?php
 /*##################################################
-*                             bbcode_unparser.class.php
+*                         bbcode_unparser.class.php
 *                            -------------------
 *   begin                : July 3 2008
-*   copyright          : (C) 2008 Benoit Sautel
+*   copyright            : (C) 2008 Benoit Sautel
 *   email                :  ben.popeye@phpboost.com
 *
 *   
@@ -58,11 +58,11 @@ class BBCodeUnparser extends ContentUnparser
 		$this->_unparse_simple_tags();
 
 		//Unparsage de la balise table.
-		if( strpos($this->parsed_content, '<table') !== false )
+		if( strpos($this->parsed_content, '<table class="bb_table"') !== false )
 			$this->_unparse_table();
 
 		//Unparsage de la balise table.
-		if( strpos($this->parsed_content, '<li') !== false )
+		if( strpos($this->parsed_content, '<li class="bb_li"') !== false )
 			$this->_unparse_list();
 		
 		$this->_unparse_code(REIMPLANT);
@@ -154,12 +154,12 @@ class BBCodeUnparser extends ContentUnparser
 		//Indentation
 		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->parsed_content);
 		
-		//Bloc HTML
+		//Bloc
 		$this->_parse_imbricated('<div class="bb_block"', '`<div class="bb_block">(.+)</div>`sU', '[block]$1[/block]', $this->parsed_content);
 		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->parsed_content);
 		
 		//Bloc de formulaire
-		$this->_parse_imbricated('<fieldset class="bb_fieldset"', '`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', '[fieldset legend="$2" style="$1"]$3[/fieldset]', $this->parsed_content);
+		$this->parsed_content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array('BBCodeUnparser', '_unparse_fieldset'), $this->parsed_content);
 	}
 	
 	//Traitement des caractères html
@@ -205,6 +205,24 @@ class BBCodeUnparser extends ContentUnparser
 			$this->parsed_content = preg_replace('`<ol( style="[^"]+")? class="bb_ol">(.+)</ol>`sU', '[list=ordered$1]$2[/list]', $this->parsed_content);
 		while( strpos($this->parsed_content, '<li class="bb_li">') !== false )
 			$this->parsed_content = preg_replace('`<li class="bb_li">(.+)</li>`isU', '[*]$1', $this->parsed_content);
+	}
+	
+	//Fonction de retour de la balise liste
+	/*static*/ function _unparse_fieldset($matches)
+	{
+		$style = '';
+		$legend = '';
+		
+		if( !empty($matches[1]) )
+			$style = " style=" . $matches[1] . '"';
+		
+		if( !empty($matches[2]) )
+			$legend = ' legend="' . $matches[2] . '"';
+		
+		if( !empty($legend) || !empty($style) ) 
+			return '[fieldset' . $legend . $style . ']' . $matches[3] . '[/fieldset]';
+		else
+			return '[fieldset]' . $matches[3] . '[/fieldset]'; 
 	}
 }
 

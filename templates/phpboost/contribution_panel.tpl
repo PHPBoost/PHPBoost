@@ -73,11 +73,13 @@
 		<div class="module_top_l"></div>		
 		<div class="module_top_r"></div>
 		<div class="module_top">
-			{ENTITLED}
+			<span style="float:left;">
+				{ENTITLED}
+			</span>
 			# IF C_WRITE_AUTH #
 			<span style="float:right;">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="editer" />
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="editer" />
+				<a href="{U_UPDATE}" title="{L_UPDATE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" /></a>
+				<a href="{U_DELETE}" onclick="return confirm('{L_CONFIRM_DELETE_CONTRIBUTION}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
 			</span>
 			# ENDIF #
 		</div>
@@ -131,4 +133,61 @@
 	</div>
 		
 		{COMMENTS}
+	# ENDIF #
+	
+	# IF C_EDIT_CONTRIBUTION #
+	<div class="module_position">			
+		<div class="module_top_l"></div>		
+		<div class="module_top_r"></div>
+		<div class="module_top">
+			{ENTITLED}
+		</div>
+		<div class="module_contents">
+		
+			<fieldset>
+				<legend>Contribution</legend>
+				<dl>
+					<dt>
+						Intitulé
+					</dt>
+					<dd>
+						{ENTITLED}
+					</dd>
+				</dl>
+				<dl>
+					<dt>Description</dt>
+					<dd>{DESCRIPTION}</dd>
+				</dl>
+				<dl>
+					<dt>Statut</dt>
+					<dd>{STATUS}</dd>
+				</dl>
+				<dl>
+					<dt>Contributeur</dt>
+					<dd><a href="{U_CONTRIBUTOR_PROFILE}">{CONTRIBUTER}</a></dd>
+				</dl>
+				<dl>
+					<dt>Date de création</dt>
+					<dd>{CREATION_DATE}</dd>
+				</dl>
+				# IF C_CONTRIBUTION_FIXED #
+				<dl>
+					<dt>Responsable</dt>
+					<dd><a href="{U_FIXER_PROFILE}">{FIXER}</a></dd>
+				</dl>
+				<dl>
+					<dt>Date de clôture</dt>
+					<dd>{FIXING_DATE}</dd>
+				</dl>
+				# ENDIF #
+				<dl>
+					<dt>Module</dt>
+					<dd>{MODULE}</dd>
+				</dl>
+			</fieldset>
+		</div>
+		<div class="module_bottom_l"></div>		
+		<div class="module_bottom_r"></div>
+		<div class="module_bottom"></div>
+	</div>
 	# ENDIF #

@@ -67,7 +67,8 @@ class ContributionPanel
 		$result = $Sql->Query_while("SELECT auth FROM ".PREFIX."contributions WHERE current_status = '" . CONTRIBUTION_STATUS_UNREAD . "'", __LINE__, __FILE__);
 		while($row = $Sql->sql_fetch_assoc($result) )
 		{
-			$this_auth = sunserialize($row['auth']);
+			if( !($this_auth = @unserialize($row['auth'])) )
+				$this_auth = array();
 			
 			//We can count only for ranks. For groups and users we can't generalize because there can be intersection problems. Yet, we know the maximum number of contributions they can see, and we can be sure if they have at least 1.
 			
