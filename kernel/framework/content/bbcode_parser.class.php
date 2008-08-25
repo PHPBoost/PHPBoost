@@ -156,8 +156,6 @@ class BBCodeParser extends ContentParser
 			'float' => '`\[float=(left|right)\](.+)\[/float\]`isU',
 			'anchor' => '`\[anchor=([a-z_][a-z0-9_]*)\](.*)\[/anchor\]`isU',
 			'acronym' => '`\[acronym=([^\n[\]<]+)\](.*)\[/acronym\]`isU',
-			'title' => '`\[title=([1-2])\](.+)\[/title\]`iU',
-			'stitle' => '`\[stitle=([1-2])\](.+)\[/stitle\]`iU',
 			'style' => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isU',
 			'swf' => '`\[swf=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\](((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/swf\]`iU',
 			'movie' => '`\[movie=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\](((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/movie\]`iU',
@@ -190,8 +188,6 @@ class BBCodeParser extends ContentParser
 			'float' => "<p class=\"float_$1\">$2</p>",	
 			'anchor' => "<span id=\"$1\">$2</span>",
 			'acronym' => "<acronym title=\"$1\" class=\"bb_acronym\">$2</acronym>",
-			'title' => "<h3 class=\"title$1\">$2</h3>",
-			'stitle' => "<br /><h4 class=\"stitle$1\">$2</h4><br />",
 			'style' => "<span class=\"$1\">$2</span>",
 			'swf' => "<object type=\"application/x-shockwave-flash\" data=\"$3\" width=\"$1\" height=\"$2\">
 		<param name=\"allowScriptAccess\" value=\"never\" />
@@ -279,6 +275,9 @@ class BBCodeParser extends ContentParser
 		if( $parse_line )
 			$this->parsed_content = str_replace('[line]', '<hr class="bb_hr" />', $this->parsed_content);
 			
+		//Titres
+		$this->parsed_content = preg_replace_callback('`\[title=([1-4])\](.+)\[/title\]`iU', array('BBCodeParser', '_parse_title'), $this->parsed_content);
+		
 		##Parsage des balises imbriquées.
 		//Citations
 		$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->parsed_content);
@@ -411,6 +410,16 @@ class BBCodeParser extends ContentParser
 			$this->_split_imbricated_tag($this->parsed_content, 'list', '(?:=ordered)?(?: style="[^"]+")?');
 			$this->_parse_imbricated_list($this->parsed_content);
 		}
+	}
+	
+	//Interprète les titres
+	function _parse_title($matches)
+	{
+		$level = (int)$matches[1];
+		if( $level <= 2 )
+			return '<h3 class="title' . $level . '">' . $matches[2] . '</h3>';
+		else
+			return '<br /><h4 class="stitle' . ($level - 2) . '">' . $matches[2] . '</h4><br />';
 	}
 	
 	//Nettoie le code HTML (notamment les retours à la ligne)
