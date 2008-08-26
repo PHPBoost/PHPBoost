@@ -206,7 +206,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 		$previous_year = $visit_year - 1;
 
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-		$info = $Sql->Query_array('stats', 'MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $visit_year . "' GROUP BY stats_month", __LINE__, __FILE__);
+		$info = $Sql->Query_array('stats', 'MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $visit_year . "' GROUP BY stats_year", __LINE__, __FILE__);
 
 		$Template->Assign_vars(array(
 			'C_STATS_VISIT' => true,
