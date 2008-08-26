@@ -30,8 +30,6 @@ if( defined('PHPBOOST') !== true) exit;
 // Inclusion du fichier contenant la classe ModuleInterface
 require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
 
-define('ARTICLES_MAX_SEARCH_RESULTS', 100);
-
 // Classe ForumInterface qui hérite de la classe ModuleInterface
 class CalendarInterface extends ModuleInterface
 {

@@ -89,7 +89,7 @@ class Modules
             
             foreach(array_keys($MODULES) as $moduleId)
             {
-                $module = $this->get_module($moduleId);
+			   $module = $this->get_module($moduleId);
                 if( !$module->got_error() && $module->has_functionnality($functionnality) )
                     array_push($modules, $module);
             }
@@ -110,7 +110,7 @@ class Modules
      *  Instancie et renvoie le module demandé.
      */
     {
-        if( !isset($this->loaded_modules[$moduleId]) )
+		if( !isset($this->loaded_modules[$moduleId]) )
         {
             if( in_array($moduleId, $this->availables_modules) )
             {
@@ -125,9 +125,12 @@ class Modules
                     }
                     else $Module = new ModuleInterface($moduleId, MODULE_NOT_YET_IMPLEMENTED);
                 }
-                else $Module = new ModuleInterface($moduleId, ACCES_DENIED);
+                else 
+					$Module = new ModuleInterface($moduleId, ACCES_DENIED);
             }
-            else $Module = new ModuleInterface($moduleId, MODULE_NOT_AVAILABLE);
+            else 
+				$Module = new ModuleInterface($moduleId, MODULE_NOT_AVAILABLE);
+				
             $this->loaded_modules[$moduleId] = $Module;
         }
         return $this->loaded_modules[$moduleId];

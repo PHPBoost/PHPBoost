@@ -199,22 +199,22 @@ class Cache
 				{
 					if( $info['added'] == '0' ) //Modules mini.
 					{	
-						$Menu = new Menu(MENU_MODULE);
+						$Menu = new MenuManager(MENU_MODULE);
 						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth']);
 					}
 					elseif( $info['added'] == '3' ) //Menu de liens.
 					{	
-						$Menu = new Menu(MENU_LINKS);
+						$Menu = new MenuManager(MENU_LINKS);
 						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth']);
 					}
 					elseif( $info['added'] == '2' ) //Menus personnels.
 					{	
-						$Menu = new Menu(MENU_PERSONNAL);
+						$Menu = new MenuManager(MENU_PERSONNAL);
 						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth']);
 					}
 					else //Menu de contenu.
 					{
-						$Menu = new Menu(MENU_CONTENTS);
+						$Menu = new MenuManager(MENU_CONTENTS);
 						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth'], $info['use_tpl']);
 					}
 				}
