@@ -175,7 +175,7 @@ class Cache
 	{
 		global $Sql;
 		
-		include_once(PATH_TO_ROOT . '/kernel/framework/content/menu.class.php');
+		include_once(PATH_TO_ROOT . '/kernel/framework/core/menu_manager.class.php');
 		
 		$modules_mini = array();
 		$result = $Sql->Query_while("SELECT name, contents, location, auth, added, use_tpl
