@@ -12,9 +12,7 @@ CREATE TABLE `phpboost_articles_cats` (
 	`aprob` tinyint(1) NOT NULL default '0',
 	`auth` text NOT NULL,
 	PRIMARY KEY  (`id`),
-	KEY `id_left` (`id_left`),
-    FULLTEXT KEY `title` (`title`),
-    FULLTEXT KEY `contents` (`contents`)
+	KEY `id_left` (`id_left`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `phpboost_articles`;
@@ -36,5 +34,7 @@ CREATE TABLE `phpboost_articles` (
 	`nbr_com` int(11) unsigned NOT NULL default '0',
 	`lock_com` tinyint(1) NOT NULL default '0',
 	PRIMARY KEY  (`id`),
-	KEY `idcat` (`idcat`)
+	KEY `idcat` (`idcat`),
+    FULLTEXT KEY `title` (`title`),
+    FULLTEXT KEY `contents` (`contents`)
 ) ENGINE=MyISAM;
