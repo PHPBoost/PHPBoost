@@ -82,7 +82,6 @@ class Updates
     {
         foreach( $this->apps as $app )
         {
-            print_r($app);
             $result = $this->repositories[$app->get_repository()]->check($app);
             if( $result !== array() )
             {   // processing to the update notification
