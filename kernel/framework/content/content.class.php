@@ -146,9 +146,11 @@ class Content
 	//Returns the list of the available tags in the parser
 	/*static*/ function get_available_tags()
 	{
-		return array('b', 'i', 'u', 's', 'title', 'stitle', 'style', 'url', 
-	'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
-	'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym', 'block', 'fieldset', 'mail');
+		return array('b', 'i', 'u', 's', 'title', 'style', 'url', 
+				'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
+				'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym', 'block',
+				'fieldset', 'mail', 'line'
+				);
 	}
 	
 	## Private ##

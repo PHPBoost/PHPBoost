@@ -72,6 +72,8 @@ elseif( $id_to_update > 0 )
 {
 	global $Member;
 	
+	$contribution = new Contribution();
+	
 	if( !$contribution->load_from_db($id_to_update) || !$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	

@@ -184,7 +184,8 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$icon = retrieve(POST, 'icon', '', TSTRING_UNSECURE);
 	$icon_path = retrieve(POST, 'icon_path', '', TSTRING_UNSECURE);
 	$compt = retrieve(POST, 'views', 0);
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	$contents_preview = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
 	$user_id = retrieve(POST, 'user_id', 0);
 	$idcat = retrieve(POST, 'idcat', 0);
 	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
@@ -193,7 +194,6 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
 	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
 	$get_visible = retrieve(POST, 'visible', 0);
-
 	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 	$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
@@ -264,7 +264,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'IMG_PATH' => $img_direct_path ? $icon : '',
 		'IMG_ICON' => !empty($icon) ? '<img src="' . $icon . '" alt="" class="valign_middle" />' : '',
 		'IMG_LIST' => $image_list,
-		'CONTENTS' => $contents,
+		'CONTENTS' => $contents_preview,
 		'USER_ID' => $user_id,
 		'CURRENT_DATE' => $current_date,
 		'START' => ((!empty($start) && $visible == 2) ? $start : ''),

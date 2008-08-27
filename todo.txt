@@ -5,8 +5,7 @@
 ------------------------------------- NOYAU ------------------------------------
 [-] Nouvelles options d'installation (Communautaire, Vitrine, etc).
 [-] Supporter https et remplacer les "." par des "_" dans le nom de la base de données lors de l'installation.
-[-] Panneau de contribution (+déplacer moderation_begin.php)
-[-] Corriger le bug sur les URL qui ne sont pas prises en compte automatiquement dans le parser.
+[-] Alertes administrateur
 
 ------------------------------------ MODULES -----------------------------------
 [-] Download, faire une option dans les catégories à l'édition pour désapprouver.
@@ -24,6 +23,8 @@
 [+] Interface d'ajout de menu de liens. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
 [+] Interface de contribution des news et des articles.
 [-] Faire les miniatures pour les thèmes.
+[-] Implémenter les classes CSS bb_block et bb_fieldset
+[-] numérotation des lignes dans geshi
 
 ------------------------------------ MODULES -----------------------------------
 

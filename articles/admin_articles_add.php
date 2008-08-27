@@ -3,7 +3,7 @@
  *                               admin_articles_add.php
  *                            -------------------
  *   begin                : July 11, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *   
@@ -35,7 +35,7 @@ if( !empty($_POST['valid']) )
 {
 	$title = retrieve(POST, 'title', '');
 	$icon = retrieve(POST, 'icon', '');
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 	$idcat = retrieve(POST, 'idcat', 0);
 	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
 	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
@@ -89,7 +89,7 @@ if( !empty($_POST['valid']) )
 			$CAT_ARTICLES[0]['id_right'] = 0;
 		}
 			
-		$Sql->Query_inject("INSERT INTO ".PREFIX."articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . strparse(str_replace('[page][/page]', '', $contents)) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
+		$Sql->Query_inject("INSERT INTO ".PREFIX."articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . str_replace('[page][/page]', '', $contents) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
 		$last_articles_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."articles");
 		
 		//Mise à jours du nombre d'articles des parents.
@@ -117,7 +117,8 @@ elseif( !empty($_POST['previs']) )
 	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
 	$icon = retrieve(POST, 'icon', '', TSTRING_UNSECURE);
 	$icon_path = retrieve(POST, 'icon_path', '', TSTRING_UNSECURE);
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	$contents_preview = retrieve(POST, 'contents', '' , TSTRING_UNSECURE);
 	$idcat = retrieve(POST, 'idcat', 0);
 	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
 	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
@@ -213,7 +214,7 @@ elseif( !empty($_POST['previs']) )
 		'KERNEL_EDITOR' => display_editor(),
 		'TITLE' => $title,
 		'CATEGORIES' => $categories,
-		'CONTENTS' => $contents,
+		'CONTENTS' => $contents_preview,
 		'IMG_PATH' => $img_direct_path ? $icon : '',
 		'IMG_ICON' => !empty($icon) ? '<img src="' . $icon . '" alt="" class="valign_middle" />' : '',		
 		'IMG_LIST' => $image_list,
