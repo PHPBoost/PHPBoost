@@ -58,11 +58,11 @@ class BBCodeParser extends ContentParser
 		//Traitement des smilies
 		$this->_parse_smilies();
 		
-		// BBCode simple tags
-		$this->_parse_simple_tags();
-		
 		//Interprétation des sauts de ligne
 		$this->parsed_content = nl2br($this->parsed_content);
+		
+		// BBCode simple tags
+		$this->_parse_simple_tags();
 		
 		//Tableaux
 		if( strpos($this->parsed_content, '[table') !== false )
@@ -154,12 +154,12 @@ class BBCodeParser extends ContentParser
 			'pre' => '`\[pre\](.+)\[/pre\]`isU',
 			'align' => '`\[align=(left|center|right|justify)\](.+)\[/align\]`isU',
 			'float' => '`\[float=(left|right)\](.+)\[/float\]`isU',
-			'anchor' => '`\[anchor=([a-z_][a-z0-9_]*)\](.*)\[/anchor\]`isU',
+			'anchor' => '`\[anchor=([a-z_][a-z0-9_-]*)\](.*)\[/anchor\]`isU',
 			'acronym' => '`\[acronym=([^\n[\]<]+)\](.*)\[/acronym\]`isU',
 			'style' => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isU',
 			'swf' => '`\[swf=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\](((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/swf\]`iU',
 			'movie' => '`\[movie=([0-6][0-9]{0,2}),([0-6][0-9]{0,2})\](((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/movie\]`iU',
-			'sound' => '`\[sound\]((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_-]+\.mp3)\[/sound\]`iU',
+			'sound' => '`\[sound\]((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_%-]+\.mp3)\[/sound\]`iU',
 			'math' => '`\[math\](.+)\[/math\]`iU',
 			'url' => '`\[url\]((?:(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)\[/url\]`isU',
 			'url2' => '`\[url\]((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)\[/url\]`isU',

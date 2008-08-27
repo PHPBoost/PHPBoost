@@ -410,8 +410,10 @@ function strparse(&$content, $forbidden_tags = array())
     $content_manager = new Content();
     //On lui demande le parser adéquat
 	$parser =& $content_manager->get_parser();
+	
 	//On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
     $parser->set_content($content, MAGIC_QUOTES);
+    
     //Si il y a des balises interdites, on lui signale
 	if( !empty($forbidden_tags) )
 		$parser->set_forbidden_tags($forbidden_tags);
@@ -439,6 +441,7 @@ function second_parse(&$content)
 	$content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $content);
 	
 	$content_manager = new Content();
+	
 	$parser =& $content_manager->get_second_parser();
     $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
     $parser->second_parse();

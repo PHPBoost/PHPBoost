@@ -116,8 +116,8 @@ class BBCodeUnparser extends ContentUnparser
 			'`<h4 class="stitle1">(.*)</h4>`isU',
 			'`<h4 class="stitle2">(.*)</h4>`isU',
 			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
-			'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
-			'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/movieplayer\.swf\?movie=(.*)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
+			'`<object type="application/x-shockwave-flash" data="\.\./(?:kernel|includes)/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
+			'`<object type="application/x-shockwave-flash" data="\.\./(?:kernel|includes)/data/movieplayer\.swf\?movie=(.*)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
 			'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isU'
 		);
@@ -216,7 +216,7 @@ class BBCodeUnparser extends ContentUnparser
 		$legend = '';
 		
 		if( !empty($matches[1]) )
-			$style = " style=" . $matches[1] . '"';
+			$style = ' style="' . $matches[1] . '"';
 		
 		if( !empty($matches[2]) )
 			$legend = ' legend="' . $matches[2] . '"';

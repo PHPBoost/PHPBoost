@@ -160,7 +160,9 @@ class TinyMCEUnparser extends ContentUnparser
 	
 	//Function which manages the whole tags which doesn't not exist in TinyMCE
 	function _unparse_bbcode_tags()
-	{		
+	{
+		$this->parsed_content = str_replace('<hr class="bb_hr" />', '[line]', $this->parsed_content);
+		
 		$array_preg = array(
 			'`<img src="([^?\n\r\t].*)" alt="[^"]*"(?: class="[^"]+")? />`iU',
 			'`<span style="color:([^;]+);">(.*)</span>`isU',
@@ -222,7 +224,7 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->parsed_content);
 		
 		//Bloc de formulaire
-		$this->parsed_content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array('BBCodeUnparser', '_unparse_fieldset'), $this->parsed_content);
+		$this->parsed_content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array('TinyMCEUnparser', '_unparse_fieldset'), $this->parsed_content);
 	}
 	
 	//Handler which clears the HTML code which is in the code and HTML tags
