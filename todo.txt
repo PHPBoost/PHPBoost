@@ -6,6 +6,7 @@
 [-] Nouvelles options d'installation (Communautaire, Vitrine, etc).
 [-] Supporter https et remplacer les "." par des "_" dans le nom de la base de données lors de l'installation.
 [-] Alertes administrateur
+[-] Balise movie qui ne fonctionne pas
 
 ------------------------------------ MODULES -----------------------------------
 [-] Download, faire une option dans les catégories à l'édition pour désapprouver.

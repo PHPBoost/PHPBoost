@@ -29,7 +29,7 @@ require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 
 
-//Fonction d'importation/exportation de base de donnée.
+//Fonction d'importation/exportation de base de données.
 class Contribution
 {
 	## Public ##
@@ -118,6 +118,18 @@ class Contribution
 		$this->fixer_id = $fixer_id;
 	}
 	
+	//Id in module setter
+	function set_id_in_module($id)
+	{
+		$this->id_in_module = $id;
+	}
+	
+	//Identifier setter
+	function set_identifier($identifier)
+	{
+		$this->identifier = $identifier;
+	}
+	
 	// Getters
 	function get_id() { return $this->id; }
 	function get_entitled() { return $this->entitled; }
@@ -130,6 +142,8 @@ class Contribution
 	function get_auth() { return $this->auth; }
 	function get_poster_id() { return $this->poster_id; }
 	function get_fixer_id() { return $this->fixer_id; }
+	function get_id_in_module() { return $this->id_in_module; }
+	function get_identifier() { return $this->identifier; }
 	
 	function get_status_name()
 	{
@@ -164,12 +178,12 @@ class Contribution
 			$creation_date = $this->creation_date;
 			$fixing_date = $this->fixing_date;
 			
-			$Sql->Query_inject("UPDATE ".PREFIX."contributions SET entitled = '" . $this->entitled . "', description = '" . $this->description . "', fixing_url = '" . $this->fixing_url . "', module = '" . $this->module . "', current_status = '" . $this->current_status . "', creation_date = '" . $creation_date->get_timestamp() . "', fixing_date = '" . $fixing_date->get_timestamp() . "', auth = '" . addslashes(serialize($this->auth)) . "', poster_id = '" . $this->poster_id . "', fixer_id = '" . $this->fixer_id . "' WHERE id = '" . $this->id . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."contributions SET entitled = '" . addslashes($this->entitled) . "', description = '" . addslashes($this->description) . "', fixing_url = '" . addslashes($this->fixing_url) . "', module = '" . addslashes($this->module) . "', current_status = '" . $this->current_status . "', creation_date = '" . $creation_date->get_timestamp() . "', fixing_date = '" . $fixing_date->get_timestamp() . "', auth = '" . addslashes(serialize($this->auth)) . "', poster_id = '" . $this->poster_id . "', fixer_id = '" . $this->fixer_id . "', id_in_module = '" . $this->id_in_module . "', identifier = '" . $this->identifier . "' WHERE id = '" . $this->id . "'", __LINE__, __FILE__);
 		}
 		else //We create it
 		{
 			$this->creation_date = new Date();
-			$Sql->Query_inject("INSERT INTO ".PREFIX."contributions (entitled, description, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id) VALUES ('" . $this->entitled . "', '" . $this->description . "', '" . $this->fixing_url . "', '" . $this->module . "', '" . $this->current_status . "', '" . $this->creation_date->get_timestamp() . "', 0, '" . (!empty($this->auth) ? addslashes(serialize($this->auth)) : '') . "', '" . $this->poster_id . "', '" . $this->fixer_id . "')", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."contributions (entitled, description, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier) VALUES ('" . addslashes($this->entitled) . "', '" . addslashes($this->description) . "', '" . addslashes($this->fixing_url) . "', '" . addslashes($this->module) . "', '" . $this->current_status . "', '" . $this->creation_date->get_timestamp() . "', 0, '" . (!empty($this->auth) ? addslashes(serialize($this->auth)) : '') . "', '" . $this->poster_id . "', '" . $this->fixer_id . "', '" . $this->id_in_module . "', '" . $this->identifier . "')", __LINE__, __FILE__);
 			$this->id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."contributions");	
 		}
 		
@@ -194,7 +208,7 @@ class Contribution
 	{
 		global $Sql;
 		
-		$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, description
+		$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, poster_member.login poster_login, fixer_member.login fixer_login, description
 		FROM ".PREFIX."contributions c
 		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
 		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
@@ -205,7 +219,7 @@ class Contribution
 		
 		if( (int)$properties['id'] > 0 )
 		{
-			$this->build_from_db($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['fixing_date']), $properties['auth'], $properties['poster_id'], $properties['fixer_id']);
+			$this->build_from_db($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['fixing_date']), $properties['auth'], $properties['poster_id'], $properties['fixer_id'], $properties['id_in_module'], $properties['identifier']);
 			return true;
 		}
 		else
@@ -213,7 +227,7 @@ class Contribution
 	}
 	
 	//Construction of a contribution from database
-	function build_from_db($id, $entitled, $description, $fixing_url, $module, $current_status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id)
+	function build_from_db($id, $entitled, $description, $fixing_url, $module, $current_status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id, $id_in_module, $idenfitier)
 	{
 		$this->id = $id;
 		$this->entitled = $entitled;
@@ -226,6 +240,8 @@ class Contribution
 		$this->auth = sunserialize($auth);
 		$this->poster_id = $poster_id;
 		$this->fixer_id = $fixer_id;
+		$this->id_in_module = $id_in_module;
+		$this->identifier = $idenfitier;
 	}
 	
 	## Private ##
@@ -240,6 +256,8 @@ class Contribution
 	var $auth = array();
 	var $poster_id = 0;
 	var $fixer_id = 0;
+	var $id_in_module = 0;
+	var $identifier = '';
 }
 
 ?>
