@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               template.class.php
+ *                            template.class.php
  *                            -------------------
  *   begin                : Februar 12, 2006
  *   copyright            : (C) 2006 Régis Viarre, Loïc Rouchon
