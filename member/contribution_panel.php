@@ -36,7 +36,6 @@ $id_to_update = retrieve(REQUEST, 'idedit', 0);
 $id_update = retrieve(GET, 'edit', 0);
 
 require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_panel.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 
 if( $contribution_id > 0 )
@@ -230,15 +229,16 @@ else
 	$order = $order == 'desc' ? 'desc' : 'asc';
 	
 	//On liste les contributions
-	$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, description
+	$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, description
 	FROM ".PREFIX."contributions c
 	LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
 	LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
+	WHERE contribution_type = " . CONTRIBUTION_TYPE . "
 	ORDER BY " . $criteria . " " . strtoupper($order), __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
 	{
-		$this_contribution = new Contribution;
-		$this_contribution->build_from_db($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['fixing_date']), $row['auth'], $row['poster_id'], $row['fixer_id']);
+		$this_contribution = new Contribution();
+		$this_contribution->build_from_db($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['fixing_date']), $row['auth'], $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier']);
 		
 		//Obligé de faire une variable temp à cause de php4.
 		$creation_date = $this_contribution->get_creation_date();

@@ -55,12 +55,12 @@
 				# START alerts #
 				<tr> 
 					<td class="row1" style="text-align:center;">
-						{alerts.IMG} <a href="{alerts.URL}">{alerts.DETAILS}</a>
+						{alerts.IMG} <a href="{alerts.URL}">{alerts.NAME}</a>
 					</td>
 					<td class="row1" style="text-align:center;">
 						{alerts.DATE}
 					</td>
-					<td class="row1" style="text-align:center;{alerts.COLOR}">
+					<td class="row1" style="text-align:center;{alerts.STYLE}">
 						{alerts.PRIORITY} 
 					</td>					
 				</tr>

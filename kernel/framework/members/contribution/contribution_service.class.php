@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                             contribution_panel.class.php
+ *                         contribution_panel.class.php
  *                            -------------------
  *   begin                : July 21, 2008
- *   copyright          : (C) 2008 Benoît Sautel
+ *   copyright            : (C) 2008 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *   
@@ -27,14 +27,9 @@
 
 require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution.class.php');
 
-define('CONTRIBUTION_STATUS_UNREAD', 0);
-define('CONTRIBUTION_STATUS_BEING_PROCESSED', 1);
-define('CONTRIBUTION_STATUS_PROCESSED', 2);
-define('CONTRIBUTION_AUTH_BIT', 1);
-
 //This is a static class, it must not be instantiated.
 
-class ContributionPanel
+class ContributionService
 {
 	/*static*/ function add_contribution(&$contribution)
 	{
@@ -64,7 +59,7 @@ class ContributionPanel
 		
 		$array_result = array('r2' => 0, 'r1' => 0, 'r0' => 0);
 		
-		$result = $Sql->Query_while("SELECT auth FROM ".PREFIX."contributions WHERE current_status = '" . CONTRIBUTION_STATUS_UNREAD . "'", __LINE__, __FILE__);
+		$result = $Sql->Query_while("SELECT auth FROM ".PREFIX."contributions WHERE current_status = '" . CONTRIBUTION_STATUS_UNREAD . "' AND contribution_type = '" . CONTRIBUTION_TYPE . "'", __LINE__, __FILE__);
 		while($row = $Sql->sql_fetch_assoc($result) )
 		{
 			if( !($this_auth = @unserialize($row['auth'])) )
