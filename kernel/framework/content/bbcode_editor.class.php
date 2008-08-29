@@ -1,9 +1,9 @@
 <?php
 /*##################################################
-*                             bbcode_parser.class.php
+*                          bbcode_parser.class.php
 *                            -------------------
 *   begin                : July 5 2008
-*   copyright          : (C) 2008 Régis Viarre
+*   copyright            : (C) 2008 Régis Viarre
 *   email                :  crowkait@phpboost.com
 *
 *   

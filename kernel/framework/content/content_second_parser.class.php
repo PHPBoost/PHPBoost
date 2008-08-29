@@ -47,7 +47,7 @@ class ContentSecondParser extends Parser
 
 		//Balise code
 		if( strpos($this->parsed_content, '[[CODE') !== false )
-		$this->parsed_content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(,0|1)?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->parsed_content);
+		$this->parsed_content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->parsed_content);
 
 		//Balise latex.
 		if( strpos($this->parsed_content, '[[MATH]]') !== false )
@@ -57,7 +57,7 @@ class ContentSecondParser extends Parser
 	## Private ##
 
 	//Coloration syntaxique suivant le langage, tracé des lignes si demandé.
-	function _highlight_code($contents, $language, $line_number)
+	function _highlight_code($contents, $language, $line_number, $inline_code)
 	{
 		//BBCode PHPBoost
 		if( strtolower($language) == 'bbcode' )
@@ -65,7 +65,7 @@ class ContentSecondParser extends Parser
 			require_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode_highlighter.class.php');
 			$bbcode_highlighter = new BBCodeHighlighter();
 			$bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
-			$bbcode_highlighter->highlight();
+			$bbcode_highlighter->highlight($inline_code);
 			$contents = $bbcode_highlighter->get_parsed_content(DO_NOT_ADD_SLASHES);
 		}
 		//Templates PHPBoost
@@ -76,7 +76,7 @@ class ContentSecondParser extends Parser
 			
 			$template_highlighter = new TemplateHighlighter();
 			$template_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
-			$template_highlighter->highlight($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS);
+			$template_highlighter->highlight($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
 			$contents = $template_highlighter->get_parsed_content(DO_NOT_ADD_SLASHES);
 		}
 		elseif( $language != '' )
@@ -86,6 +86,10 @@ class ContentSecondParser extends Parser
 				
 			if( $line_number ) //Affichage des numéros de lignes.
 				$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+			
+			//No container if we are in an inline tag
+			if( $inline_code )
+				$Geshi->set_header_type(GESHI_HEADER_NONE);
 
 			$contents = $Geshi->parse_code();
 		}
@@ -105,13 +109,13 @@ class ContentSecondParser extends Parser
 		global $LANG;
 
 		$line_number = !empty($matches[2]);
-		$display_info_code = empty($matches[3]);
-		$contents = $this->_highlight_code($matches[4], $matches[1], $line_number);
+		$inline_code = !empty($matches[3]);
+		$contents = $this->_highlight_code($matches[4], $matches[1], $line_number, $inline_code);
 
-		if( $display_info_code && !empty($matches[1]) )
+		if( !$inline_code && !empty($matches[1]) )
 			$contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
 		else
-			$contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code" style="margin-top:3px;">'. $contents .'</div>';
+			$contents = $contents;
 			
 		return $contents;
 	}

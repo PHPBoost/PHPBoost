@@ -44,7 +44,7 @@ class BBCodeHighlighter extends Parser
 	}
 	
 	//Highlights the content of the parser
-	function highlight()
+	function highlight($inline_code = false)
 	{
 		$this->parsed_content = $this->content;
 		
@@ -73,7 +73,10 @@ class BBCodeHighlighter extends Parser
 		foreach($tags_with_many_parameters as $tag)
 			$this->parsed_content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.+)\[/' . $tag . '\]`isU', array('BBCodeHighlighter', '_highlight_bbcode_tag_with_many_parameters'), $this->parsed_content);
 		
-		$this->parsed_content = '<pre>' . $this->parsed_content . '</pre>';
+		if( !$inline_code )
+			$this->parsed_content = '<pre>' . $this->parsed_content . '</pre>';
+		else
+			$this->parsed_content = '<pre style="display:inline;">' . $this->parsed_content . '</pre>';
 	}
 
 	## Private ##

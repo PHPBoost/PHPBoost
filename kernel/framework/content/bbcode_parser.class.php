@@ -43,7 +43,7 @@ class BBCodeParser extends ContentParser
 		
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		if( !in_array('code', $this->forbidden_tags) )
-			$this->_pick_up_tag('code', '=[a-z0-9-]+(?:,(?:0|1)(?:,0|1)?)?');
+			$this->_pick_up_tag('code', '=[a-z0-9-]+(?:,[01]){0,2}');
 		
 		//On prélève tout le code HTML afin de ne pas l'altérer
 		if( $Member->check_auth($this->html_auth, 1) )

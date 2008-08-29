@@ -25,7 +25,7 @@
 [+] Interface de contribution des news et des articles.
 [-] Faire les miniatures pour les thèmes.
 [-] Implémenter les classes CSS bb_block et bb_fieldset
-[-] numérotation des lignes dans geshi
+[-] Supprimer stitle de l'éditeur de bbcode et l'ajouter à title
 
 ------------------------------------ MODULES -----------------------------------
 
