@@ -45,7 +45,7 @@ class TemplateHighlighter extends Parser
 	}
 
 	//Highlights the content of the parser
-	function highlight($line_number = GESHI_NO_LINE_NUMBERS)
+	function highlight($line_number = GESHI_NO_LINE_NUMBERS, $inline_code = false)
 	{
 		$this->parsed_content = $this->content;
 		
@@ -55,6 +55,10 @@ class TemplateHighlighter extends Parser
 				
 		if( $line_number ) //Affichage des numéros de lignes.
 			$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+		
+		//GeSHi must not put any div or pre tag before and after the content
+		if( $inline_code )
+			$Geshi->set_header_type(GESHI_HEADER_NONE);
 
 		$this->parsed_content = $Geshi->parse_code();
 		
@@ -77,7 +81,8 @@ class TemplateHighlighter extends Parser
 		//Loop variable
 		$this->parsed_content = preg_replace('`{((?:[\w]+\.)+)([\w]+)}`i', '<span style="' . TPL_BRACES_STYLE . '">{</span><span style="' . TPL_NESTED_VARIABLE_STYLE . '">$1</span><span style="' . TPL_VARIABLE_STYLE . '">$2</span><span style="' . TPL_BRACES_STYLE . '">}</span>', $this->parsed_content);
 		
-		$this->parsed_content = '<pre>' . $this->parsed_content . '</pre>';
+		if( $inline_code )
+			$this->parsed_content = '<pre style="display:inline; font-color:courier new;">' . $this->parsed_content . '</pre>';
 	}
 }
 ?>

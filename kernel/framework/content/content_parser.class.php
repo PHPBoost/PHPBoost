@@ -81,7 +81,7 @@ class ContentParser extends Parser
 			$mask = '`\[' . $tag . '(' . $attributes . ')?\](.+)\[/' . $tag . '\](.+)?`s';
 			$local_parsed = preg_split($mask, $sub_str, -1, PREG_SPLIT_DELIM_CAPTURE);
 	
-			if ( count($local_parsed) == 1 )
+			if( count($local_parsed) == 1 )
 			{
 				// Remplissage des résultats
 				$parsed[count($parsed) - 1] .= $local_parsed[0]; // Ce n'est pas un tag

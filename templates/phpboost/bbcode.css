@@ -192,3 +192,9 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 	margin-bottom:3px;			
 	padding:1px 2px;
 }
+
+/* Code avec numérotation des listes */
+.code ol{
+	margin-left:3em;
+}
+
