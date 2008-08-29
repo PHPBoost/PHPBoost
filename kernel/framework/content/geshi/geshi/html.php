@@ -191,11 +191,11 @@ $language_data = array (
 	'STYLES' => array(
 		'KEYWORDS' => array(
 			1 => 'color: #b1b100;',
-			2 => 'color: #000000; font-weight: bold;',
-			3 => 'color: #000066;'
+			2 => 'color: #0000ff; font-weight: bold;',
+			3 => 'color: #ff0000;'
 			),
 		'COMMENTS' => array(
-			'MULTI' => 'color: #808080; font-style: italic;'
+			'MULTI' => 'color: #008000; font-style: italic;'
 			),
 		'ESCAPE_CHAR' => array(
 			0 => 'color: #000099; font-weight: bold;'
@@ -204,7 +204,7 @@ $language_data = array (
 			0 => 'color: #66cc66;'
 			),
 		'STRINGS' => array(
-			0 => 'color: #ff0000;'
+			0 => 'color: #7B00FF;'
 			),
 		'NUMBERS' => array(
 			0 => 'color: #cc66cc;'
@@ -212,7 +212,7 @@ $language_data = array (
 		'METHODS' => array(
 			),
 		'SYMBOLS' => array(
-			0 => 'color: #66cc66;'
+			0 => 'color: #000066;'
 			),
 		'SCRIPT' => array(
 			0 => 'color: #00bbdd;',

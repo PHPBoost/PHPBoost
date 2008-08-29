@@ -27,12 +27,6 @@
 
 require_once(PATH_TO_ROOT . '/kernel/framework/content/parser.class.php');
 
-//Couleurs pour la coloration du BBCode
-define('BBCODE_TAG_COLOR', '#0000FF');
-define('BBCODE_PARAM_COLOR', '#7B00FF');
-define('BBCODE_PARAM_NAME_COLOR', '#FF0000');
-define('BBCODE_LIST_ITEM_COLOR', '#00AF07');
-
 //Classe de gestion du contenu
 class ContentSecondParser extends Parser
 {
@@ -65,9 +59,25 @@ class ContentSecondParser extends Parser
 	//Coloration syntaxique suivant le langage, tracé des lignes si demandé.
 	function _highlight_code($contents, $language, $line_number)
 	{
+		//BBCode PHPBoost
 		if( strtolower($language) == 'bbcode' )
 		{
-			$contents = ContentSecondParser::_highlight_bbcode($contents);
+			require_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode_highlighter.class.php');
+			$bbcode_highlighter = new BBCodeHighlighter();
+			$bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
+			$bbcode_highlighter->highlight();
+			$contents = $bbcode_highlighter->get_parsed_content(DO_NOT_ADD_SLASHES);
+		}
+		//Templates PHPBoost
+		elseif( strtolower($language) == 'tpl' )
+		{
+			require_once(PATH_TO_ROOT . '/kernel/framework/content/template_highlighter.class.php');
+			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
+			
+			$template_highlighter = new TemplateHighlighter();
+			$template_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
+			$template_highlighter->highlight($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS);
+			$contents = $template_highlighter->get_parsed_content(DO_NOT_ADD_SLASHES);
 		}
 		elseif( $language != '' )
 		{
@@ -86,7 +96,7 @@ class ContentSecondParser extends Parser
 			$contents = preg_replace('`color="(.*?)"`', 'style="color:$1"', $font_replace);
 		}
 
-		return $contents ;
+		return $contents;
 	}
 
 	//Fonction appliquée aux balises [code] temps réel.
@@ -99,9 +109,9 @@ class ContentSecondParser extends Parser
 		$contents = $this->_highlight_code($matches[4], $matches[1], $line_number);
 
 		if( $display_info_code && !empty($matches[1]) )
-		$contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
+			$contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
 		else
-		$contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code" style="margin-top:3px;">'. $contents .'</div>';
+			$contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code" style="margin-top:3px;">'. $contents .'</div>';
 			
 		return $contents;
 	}
@@ -113,48 +123,6 @@ class ContentSecondParser extends Parser
 		$matches = mathfilter(html_entity_decode($matches[1]), 12);
 
 		return $matches;
-	}
-
-	//Function which highlights the bbcode code
-	/*static*/ function _highlight_bbcode($content)
-	{
-		//Protection of html code
-		$content = htmlspecialchars($content, ENT_NOQUOTES);
-
-		//Line tag
-		$content = str_replace('[line]', '<span style="color:' . BBCODE_TAG_COLOR . ';">[line]</span>', $content);
-		$content = str_replace('[*]', '<span style="color:' . BBCODE_LIST_ITEM_COLOR . ';">[*]</span>', $content);
-
-		//Simple tags (whitout parameter)
-		$simple_tags = array('b', 'i', 'u', 's', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide', 'mail');
-
-		foreach($simple_tags as $tag)
-		$content = preg_replace('`\[' . $tag . '\](.+)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">[' . $tag . ']</span>$1<span style="color:' . BBCODE_TAG_COLOR . ';">[/' . $tag . ']</span>', $content);
-
-		//Tags which take a parameter : [tag=parameter]content[/tag]
-		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'swf', 'mail');
-
-		foreach($tags_with_simple_property as $tag)
-		$content = preg_replace('`\[' . $tag . '=([^\]]+)\](.+)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">[' . $tag . '</span>=<span style="color:' . BBCODE_PARAM_COLOR . ';">$1</span><span style="color:' . BBCODE_TAG_COLOR . ';">]</span>$2<span style="color:' . BBCODE_TAG_COLOR . ';">[/' . $tag . ']</span>', $content);
-
-		//Tags which take several parameters. The syntax is the same as XML parameters
-		$tags_with_many_parameters = array('table', 'col', 'head', 'list', 'fieldset', 'block');
-
-		foreach($tags_with_many_parameters as $tag)
-		$content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.+)\[/' . $tag . '\]`isU', array('ContentSecondParser', '_highlight_bbcode_tag_with_many_parameters'), $content);
-
-		return '<pre>' . $content . '</pre>';
-	}
-
-	//Function which highlights the parameters of a complex tag
-	/*static*/ function _highlight_bbcode_tag_with_many_parameters($matches)
-	{
-		$content = $matches[3];
-		$tag_name = $matches[1];
-
-		$matches[2] = preg_replace('`([a-z]+)="([^"]*)"`isU', '<span style="color:' . BBCODE_PARAM_NAME_COLOR . '">$1</span>=<span style="color:' . BBCODE_PARAM_COLOR . '">"$2"</span>', $matches[2]);
-
-		return '<span style="color:' . BBCODE_TAG_COLOR . '">[' . $tag_name . '</span>' .$matches[2] . '<span style="color:' . BBCODE_TAG_COLOR . '">]</span>' . $content . '<span style="color:' . BBCODE_TAG_COLOR . '">[/' . $tag_name . ']</span>';
 	}
 }
 ?>
