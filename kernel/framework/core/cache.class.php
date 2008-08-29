@@ -368,9 +368,9 @@ class Cache
 		foreach($CONFIG_MEMBER as $key => $value)
 			$config_member .= '$CONFIG_MEMBER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 		
-		require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_panel.class.php');
+		require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_service.class.php');
 		//Unread contributions for each profile
-		$config_member .= '$CONTRIBUTION_PANEL_UNREAD = ' . var_export(ContributionPanel::compute_number_contrib_for_each_profile(), true) . ';';
+		$config_member .= '$CONTRIBUTION_PANEL_UNREAD = ' . var_export(ContributionService::compute_number_contrib_for_each_profile(), true) . ';';
 
 		return $config_member;
 	}

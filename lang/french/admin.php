@@ -259,15 +259,6 @@ $LANG['default_field_possible_values'] = 'Oui|Non';
 $LANG['extend_field_edit'] = 'Editer le champs';
 
 //Index
-$LANG['admin_alerts'] = 'Alertes et actions en attente';
-$LANG['no_alert_or_action'] = 'Aucune alerte ou action en attente';
-$LANG['display_all_alerts'] = 'Voir toutes les alertes';
-$LANG['priority'] = 'Priorité';
-$LANG['flash'] = 'Immédiat';
-$LANG['urgent'] = 'Urgent';
-$LANG['hight'] = 'Haut';
-$LANG['normal'] = 'Normal';
-$LANG['low'] = 'Faible';
 $LANG['update_available'] = 'Mises à jour disponibles';
 $LANG['core_update_available'] = 'Nouvelle version <strong>%s</strong> du noyau disponible, pensez à mettre à jour PHPBoost! <a href="http://www.phpboost.com">Plus d\'informations</a>';
 $LANG['no_core_update_available'] = 'Aucune nouvelle version disponible, le système est à jour!';
@@ -280,6 +271,17 @@ $LANG['quick_links'] = 'Liens rapides';
 $LANG['members_managment'] = 'Gestion des membres';
 $LANG['menus_managment'] = 'Gestion des menus';
 $LANG['modules_managment'] = 'Gestion des modules';
+
+//Alertes administrateur
+$LANG['admin_alerts'] = 'Alertes et actions en attente';
+$LANG['no_alert_or_action'] = 'Aucune alerte ou action en attente';
+$LANG['display_all_alerts'] = 'Voir toutes les alertes';
+$LANG['priority'] = 'Priorité';
+$LANG['very_high_priority'] = 'Immédiat';
+$LANG['high_priority'] = 'Urgent';
+$LANG['medium_priority'] = 'Moyenne';
+$LANG['low_priority'] = 'Faible';
+$LANG['very_low_priority'] = 'Très faible';
 	
 //Config
 $LANG['config_main'] = 'Configuration générale';

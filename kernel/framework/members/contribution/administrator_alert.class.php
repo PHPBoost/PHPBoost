@@ -33,6 +33,7 @@ define('PRIORITY_MEDIUM', 3);
 define('PRIORITY_HIGH', 4);
 define('PRIORITY_VERY_HIGH', 5);
 
+define('ADMINISTRATOR_ALERT_TYPE', 1);
 
 //Fonction d'importation/exportation de base de données.
 class AdministratorAlert extends Contribution 
@@ -42,6 +43,7 @@ class AdministratorAlert extends Contribution
 	{
 		parent::Contribution();
 		$this->priority = PRIORITY_MEDIUM;
+		$this->module = 'kernel';
 	}
 	
 	//Loadind an alert into the database
@@ -96,6 +98,45 @@ class AdministratorAlert extends Contribution
 		
 		//Regeneration of the member cache file
 		$Cache->generate_file('member');
+	}
+	
+	function get_priority()
+	{
+		return $this->priority;
+	}
+	
+	function set_priority($priority)
+	{
+		$priority = intval($priority);
+		if( $priority >= PRIORITY_VERY_LOW && $priority <= PRIORITY_VERY_HIGH )
+			$this->priority = $priority;
+		else
+			$this->priority = PRIORITY_MEDIUM;
+	}
+	
+	function get_priority_name()
+	{
+		global $LANG;
+		switch($this->priority)
+		{
+			case PRIORITY_VERY_LOW:
+				return $LANG['very_low_priority'];
+				break;
+			case PRIORITY_LOW:
+				return $LANG['low_priority'];
+			break;
+			case PRIORITY_MEDIUM:
+				return $LANG['medium_priority'];
+				break;
+			case PRIORITY_HIGH:
+				return $LANG['high_priority'];
+			break;
+			case PRIORITY_VERY_HIGH:
+				return $LANG['very_high_priority'];
+			break;
+			default:
+				return $LANG['normal'];
+		}
 	}
 	
 	## Private ##

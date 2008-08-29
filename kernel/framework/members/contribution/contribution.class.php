@@ -25,9 +25,13 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_panel.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 
+define('CONTRIBUTION_TYPE', 0);
+define('CONTRIBUTION_STATUS_UNREAD', 0);
+define('CONTRIBUTION_STATUS_BEING_PROCESSED', 1);
+define('CONTRIBUTION_STATUS_PROCESSED', 2);
+define('CONTRIBUTION_AUTH_BIT', 1);
 
 //Fonction d'importation/exportation de base de données.
 class Contribution
@@ -227,7 +231,7 @@ class Contribution
 	}
 	
 	//Construction of a contribution from database
-	function build_from_db($id, $entitled, $description, $fixing_url, $module, $current_status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id, $id_in_module, $idenfitier)
+	function build_from_db($id, $entitled, $description, $fixing_url, $module, $current_status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id, $id_in_module, $identifier)
 	{
 		$this->id = $id;
 		$this->entitled = $entitled;
@@ -237,11 +241,13 @@ class Contribution
 		$this->current_status = $current_status;
 		$this->creation_date = $creation_date;
 		$this->fixing_date = $fixing_date;
-		$this->auth = sunserialize($auth);
+		$this->auth = @unserialize($auth);
+		if( $this->auth === false )
+			$this->auth = array();
 		$this->poster_id = $poster_id;
 		$this->fixer_id = $fixer_id;
 		$this->id_in_module = $id_in_module;
-		$this->identifier = $idenfitier;
+		$this->identifier = $identifier;
 	}
 	
 	## Private ##

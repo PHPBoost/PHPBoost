@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               admin_index.php
+ *                              admin_index.php
  *                            -------------------
  *   begin                : June 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *   
@@ -107,25 +107,12 @@ foreach($modules_update as $name => $version)
 }
 */
 
-$admin_alerts = array();
-/* Niveau de priorité
-	0 : Peu attendre
-	1 : A faire, peu pressé
-	2 : A faire
-	3 : A faire, rapidement
-	4 : A faire, très rapidement
-*/
-$admin_alerts = array(
-	0 => array('url' => 'admin_members.php?id=1', 'details' => 'Membre en attente de validation', 'priority' => 1, 'timestamp' => 1216623232),
-	1 => array('url' => 'http://www.phpboost.com', 'details' => 'Mise à jour du système', 'priority' => 2, 'timestamp' => 1216203232),
-	2 => array('url' => 'http://www.phpboost.com', 'details' => 'Un membre a été banni', 'priority' => 0, 'timestamp' => 1216203232),
-	3 => array('url' => 'http://www.phpboost.com', 'details' => 'Correctif de sécurité', 'priority' => 4, 'timestamp' => 1216003232),
-	4 => array('url' => '../news/admin_news.php?id=1', 'details' => 'News en attente de validation', 'priority' => 1, 'timestamp' => 1206203232),
-	5 => array('url' => '../news/admin_modules.php', 'details' => 'Mise à jour d\'un module', 'priority' => 3, 'timestamp' => 1236203232)
-);
+require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
+
+$alerts_list = AdministratorAlertService::get_all_alerts();
 
 $Template->Assign_vars(array(
-	'C_ALERT_OR_ACTION' => ((bool)count($admin_alerts)),
+	'C_ALERT_OR_ACTION' => ((bool)count($alerts_list)),
 	'L_INDEX_ADMIN' => $LANG['administration'],
 	'L_ADMIN_ALERTS' => $LANG['admin_alerts'],
 	'L_NO_ALERT_OR_ACTION' => $LANG['no_alert_or_action'],
@@ -146,45 +133,42 @@ $Template->Assign_vars(array(
 ));
 
 //Liste des actions en attente.
-foreach($admin_alerts as $key => $alert_infos)
+foreach(AdministratorAlertService::get_all_alerts() as $alert)
 {
 	$img_type = '';
-	switch($alert_infos['priority'])
+	
+	switch($alert->get_priority())
 	{
-		case 0:
+		case PRIORITY_VERY_LOW:
 		$color = 'FFFFFF';
-		$priority = $LANG['low'];
 		break;
-		case 1:
+		case PRIORITY_LOW:
 		$color = 'ECDBB7';
-		$priority = $LANG['normal'];
 		break;
-		case 2:
+		case PRIORITY_MEDIUM:
 		$color = 'F5D5C6';
-		$priority = $LANG['hight'];
 		break;
-		case 3:
+		case PRIORITY_HIGH:
 		$img_type = 'important.png';
 		$color = 'FFD5D1';
-		$priority = $LANG['urgent'];
 		break;
-		case 4:
+		case PRIORITY_VERY_HIGH:
 		$img_type = 'errors_mini.png';
 		$color = 'F3A29B';
-		$priority = $LANG['flash'];
 		break;
 		default:
 		$color = 'FFFFFF';
-		$priority = $LANG['low'];
 	}
 	
+	$creation_date = $alert->get_creation_date();
+	
 	$Template->Assign_block_vars('alerts', array(
-		'URL' => $alert_infos['url'],
-		'DETAILS' => $alert_infos['details'],
-		'PRIORITY' => $priority,
-		'COLOR' => 'background:#' . $color . ';',
+		'URL' => $alert->get_fixing_url(),
+		'NAME' => $alert->get_entitled(),
+		'PRIORITY' => $alert->get_priority_name(),
+		'STYLE' => 'background:#' . $color . ';',
 		'IMG' => !empty($img_type) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/admin/' . $img_type . '" alt="" class="valign_middle" />' : '',
-		'DATE' => gmdate_format('date_format', $alert_infos['timestamp'])
+		'DATE' => $creation_date->format(DATE_FORMAT)
 	));
 }
   
