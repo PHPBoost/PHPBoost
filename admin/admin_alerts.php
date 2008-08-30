@@ -49,8 +49,16 @@ $template->Assign_vars(array(
 
 define('NUM_ALERTS_PER_PAGE', 20);
 
+//Gestion des critères de tri
+$criteria = retrieve(GET, 'criteria', 'current_status');
+$order = retrieve(GET, 'order', 'asc');
+
+if( !in_array($criteria, array('entitled', 'status', 'creation_date', 'priority')) )
+	$criteria = 'current_status';
+$order = $order == 'desc' ? 'desc' : 'asc';
+
 //On va chercher la liste des alertes en attente, on afficher les 5 dernières
-foreach(AdministratorAlertService::get_all_alerts('creation_date', 'desc', 0, 5) as $alert)
+foreach(AdministratorAlertService::get_all_alerts($criteria, $order, 0, 5) as $alert)
 {
 	$img_type = '';
 	

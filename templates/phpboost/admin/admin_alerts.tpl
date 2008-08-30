@@ -84,7 +84,7 @@
 		<div id="admin_contents">
 			<table class="module_table">
 				<tr> 
-					<th colspan="5">
+					<th colspan="4">
 						{L_ADMIN_ALERTS}
 					</th>
 				</tr>	
@@ -105,7 +105,7 @@
 				</tr>
 				# ELSE #
 				<tr> 
-					<td class="row1" style="text-align:center;" colspan="5">
+					<td class="row1" style="text-align:center;" colspan="4">
 						{L_NO_ALERT}
 					</td>					
 				</tr>
@@ -133,14 +133,6 @@
 					</td>			
 				</tr>
 				# END alerts #
-				
-				# IF C_ALERT_OR_ACTION #
-				<tr> 
-					<td class="row2" style="text-align:center;" colspan="5">
-						<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
-					</td>
-				</tr>
-				# ENDIF #
 			</table>
 		</div>
 			
