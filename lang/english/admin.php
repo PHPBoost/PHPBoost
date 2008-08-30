@@ -3,7 +3,7 @@
  *                                admin.php
  *                            -------------------
  *   begin                : November 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -259,15 +259,6 @@ $LANG['default_field_possible_values'] = 'Yes|No';
 $LANG['extend_field_edit'] = 'Edit field';
 
 //Index
-$LANG['admin_alerts'] = 'Alert and waiting actions';
-$LANG['no_alert_or_action'] = 'No alert or waiting action';
-$LANG['display_all_alerts'] = 'Display all alerts';
-$LANG['priority'] = 'Priority';
-$LANG['flash'] = 'Flash';
-$LANG['urgent'] = 'Urgent';
-$LANG['hight'] = 'Hight';
-$LANG['normal'] = 'Normal';
-$LANG['low'] = 'Low';
 $LANG['update_available'] = 'Update available';
 $LANG['core_update_available'] = 'New core version available, please update PHPBoost ! <a href="http://www.phpboost.com">More informations</a>';
 $LANG['no_core_update_available'] = 'No newer version, system is up to date';
@@ -280,6 +271,22 @@ $LANG['quick_links'] = 'Quick links';
 $LANG['members_managment'] = 'Members managment';
 $LANG['menus_managment'] = 'Menus managment';
 $LANG['modules_managment'] = 'Mdules managment';
+
+//Alertes administrateur
+$LANG['administrator_alerts'] = 'Alerts';
+$LANG['administrator_alerts_list'] = 'Alerts list';
+$LANG['no_unread_alert'] = 'No unprocessed alert';
+$LANG['unread_alerts'] = 'There are some unprocessed alerts. You should go there to process them.';
+$LANG['no_administrator_alert'] = 'No existing alert';
+$LANG['display_all_alerts'] = 'See all alerts';
+$LANG['priority'] = 'Priority';
+$LANG['very_high_priority'] = 'Immediate';
+$LANG['high_priority'] = 'Urgent';
+$LANG['medium_priority'] = 'Medium';
+$LANG['low_priority'] = 'Low';
+$LANG['very_low_priority'] = 'Very low';
+$LANG['administrator_alerts_action'] = 'Actions';
+$LANG['confirm_delete_administrator_alert'] = 'Are you sure you want to delete this alert?';
 	
 //Config
 $LANG['config_main'] = 'Main configs';

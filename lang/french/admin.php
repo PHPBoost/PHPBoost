@@ -275,7 +275,9 @@ $LANG['modules_managment'] = 'Gestion des modules';
 //Alertes administrateur
 $LANG['administrator_alerts'] = 'Alertes';
 $LANG['administrator_alerts_list'] = 'Liste des alertes';
-$LANG['no_alert_or_action'] = 'Aucune alerte ou action en attente';
+$LANG['no_unread_alert'] = 'Aucune alerte en attente';
+$LANG['unread_alerts'] = 'Des alertes non traitées sont en attente.';
+$LANG['no_administrator_alert'] = 'Aucune alerte existante';
 $LANG['display_all_alerts'] = 'Voir toutes les alertes';
 $LANG['priority'] = 'Priorité';
 $LANG['very_high_priority'] = 'Immédiat';
@@ -283,6 +285,8 @@ $LANG['high_priority'] = 'Urgent';
 $LANG['medium_priority'] = 'Moyenne';
 $LANG['low_priority'] = 'Faible';
 $LANG['very_low_priority'] = 'Très faible';
+$LANG['administrator_alerts_action'] = 'Actions';
+$LANG['confirm_delete_administrator_alert'] = 'Etes-vous sûr de vouloir supprimer cette alerte ?';
 	
 //Config
 $LANG['config_main'] = 'Configuration générale';

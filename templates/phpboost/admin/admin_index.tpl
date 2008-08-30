@@ -25,56 +25,27 @@
 		</div>
 		
 		<div id="admin_contents">
-			<table class="module_table">
-				<tr> 
-					<th colspan="4">
-						{L_ADMIN_ALERTS}
-					</th>
-				</tr>	
-				# IF C_ALERT_OR_ACTION #
-				<tr> 
-					<td class="row2" style="text-align:center;">
-						{L_TYPE}
-					</td>
-					<td class="row2" style="text-align:center;">
-						{L_DATE}
-					</td>
-					<td class="row2" style="text-align:center;">
-						{L_PRIORITY}
-					</td>
-				</tr>
+			<fieldset style="width:90%; margin:auto;">
+				<legend>
+					{L_ADMIN_ALERTS}
+				</legend>
+				# IF C_UNREAD_ALERTS #
+					<div class="warning">
+						{L_UNREAD_ALERT}
+					</div>
 				# ELSE #
-				<tr> 
-					<td class="row1" style="text-align:center;">
-						{L_NO_ALERT_OR_ACTION}
-					</td>					
-				</tr>
+					<div class="success">
+						{L_NO_UNREAD_ALERT}
+					</div>
 				# ENDIF #
-				
-				
-				# START alerts #
-				<tr> 
-					<td class="row1" style="text-align:center;">
-						{alerts.IMG} <a href="{alerts.URL}">{alerts.NAME}</a>
-					</td>
-					<td class="row1" style="text-align:center;">
-						{alerts.DATE}
-					</td>
-					<td class="row1" style="text-align:center;{alerts.STYLE}">
-						{alerts.PRIORITY} 
-					</td>					
-				</tr>
-				# END alerts #
-				
-				# IF C_ALERT_OR_ACTION #
-				<tr> 
-					<td class="row2" style="text-align:center;" colspan="3">
-						<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
-					</td>
-				</tr>
-				# ENDIF #
-			</table>
-
+				<br />
+				<div style="text-align:center;">
+					<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
+				</div>
+			</fieldset>
+			
+			<br />
+			
 			<table class="module_table">
 				<tr> 
 					<th colspan="4">

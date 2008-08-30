@@ -112,13 +112,11 @@ require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrato
 $alerts_list = AdministratorAlertService::get_all_alerts();
 
 $Template->Assign_vars(array(
-	'C_ALERT_OR_ACTION' => ((bool)count($alerts_list)),
+	'C_UNREAD_ALERTS' => ((bool)count($UNREAD_ALERTS)),
 	'L_INDEX_ADMIN' => $LANG['administration'],
 	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
-	'L_NO_ALERT_OR_ACTION' => $LANG['no_alert_or_action'],
-	'L_TYPE' => $LANG['type'],
-	'L_DATE' => $LANG['date'],
-	'L_PRIORITY' => $LANG['priority'],
+	'L_NO_UNREAD_ALERT' => $LANG['no_unread_alert'],
+	'L_UNREAD_ALERT' => $LANG['unread_alerts'],
 	'L_DISPLAY_ALL_ALERTS' => $LANG['display_all_alerts'],
 	'L_QUICK_LINKS' => $LANG['quick_links'],
 	'L_MEMBERS_MANAGMENT' => $LANG['members_managment'],
@@ -132,45 +130,6 @@ $Template->Assign_vars(array(
     'L_WEBSITE_UPDATES' => $LANG['website_updates']
 ));
 
-//On va chercher la liste des alertes en attente, on afficher les 5 dernières
-foreach(AdministratorAlertService::get_all_alerts('creation_date', 'desc', 0, 5) as $alert)
-{
-	$img_type = '';
-	
-	switch($alert->get_priority())
-	{
-		case PRIORITY_VERY_LOW:
-			$color = 'FFFFFF';
-			break;
-		case PRIORITY_LOW:
-			$color = 'ECDBB7';
-			break;
-		case PRIORITY_MEDIUM:
-			$color = 'F5D5C6';
-			break;
-		case PRIORITY_HIGH:
-			$img_type = 'important.png';
-			$color = 'FFD5D1';
-			break;
-		case PRIORITY_VERY_HIGH:
-			$img_type = 'errors_mini.png';
-			$color = 'F3A29B';
-			break;
-		default:
-		$color = 'FFFFFF';
-	}
-	
-	$creation_date = $alert->get_creation_date();
-	
-	$Template->Assign_block_vars('alerts', array(
-		'URL' => $alert->get_fixing_url(),
-		'NAME' => $alert->get_entitled(),
-		'PRIORITY' => $alert->get_priority_name(),
-		'STYLE' => 'background:#' . $color . ';',
-		'IMG' => !empty($img_type) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/admin/' . $img_type . '" alt="" class="valign_middle" />' : '',
-		'DATE' => $creation_date->format(DATE_FORMAT)
-	));
-}
   
 $result = $Sql->Query_while("SELECT s.user_id, s.level, s.session_ip, s.session_time, s.session_script, s.session_script_get, 
 s.session_script_title, m.login 
