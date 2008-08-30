@@ -39,7 +39,11 @@
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_MEMBER_PM}" class="small_link">{L_NBR_PM}</a>&nbsp;
 			
 			# IF C_ADMIN_AUTH #
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link">{L_ADMIN_PANEL}</a>&nbsp; 
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link">{L_ADMIN_PANEL}
+				# IF C_UNREAD_ALERT #
+					({NUMBER_UNREAD_ALERTS})
+				# ENDIF #
+			</a>&nbsp; 
 			# ENDIF #
 			
 			# IF C_UNREAD_CONTRIBUTION #

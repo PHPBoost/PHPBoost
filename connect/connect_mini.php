@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               connect_mini.php
+ *                             connect_mini.php
  *                            -------------------
  *   begin                : December 10, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -37,6 +37,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 	//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions
 	//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
 	$contribution_number = 0;
+	
 	//Panneau de contributions, y-a-t'il des contributions que le membre peut lire ?
 	if( $Member->Check_level(ADMIN_LEVEL) )
 		$contribution_number = $CONTRIBUTION_PANEL_UNREAD['r2'];
@@ -73,7 +74,9 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 		'C_MODERATOR_AUTH' => $Member->Check_level(MODERATOR_LEVEL),
 		'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
 		'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
+		'C_UNREAD_ALERT' => (bool)$UNREAD_ALERTS,
 		'NUM_UNREAD_CONTRIBUTIONS' => $contribution_number,
+		'NUMBER_UNREAD_ALERTS' => $UNREAD_ALERTS,
 		'IMG_PM' => $Member->Get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
 		'U_MEMBER_PM' => PATH_TO_ROOT . '/member/pm' . transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php'),
 		'U_MEMBER_ID' => transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', '-' . $Member->Get_attribute('user_id') . '.php?view=1'),

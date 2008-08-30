@@ -69,7 +69,7 @@
 				# IF C_ALERT_OR_ACTION #
 				<tr> 
 					<td class="row2" style="text-align:center;" colspan="3">
-						<a href="">{L_DISPLAY_ALL_ALERTS}</a>
+						<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
 					</td>
 				</tr>
 				# ENDIF #

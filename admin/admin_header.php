@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               admin_header.php
+ *                             admin_header.php
  *                            -------------------
  *   begin                : June 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -79,6 +79,7 @@ $Template->Assign_vars(array(
 	'L_THEME' => $LANG['themes'],
 	'L_LANG' => $LANG['languages'],
 	'L_SMILEY' => $LANG['smile'],
+	'L_ADMINISTRATOR_ALERTS' => $LANG['administrator_alerts'],
 	'L_STATS' => $LANG['stats'],	
 	'L_ERRORS' => $LANG['errors'],
 	'L_SERVER' => $LANG['server'],
