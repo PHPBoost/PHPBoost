@@ -1,32 +1,32 @@
-[b]Structure et fonctionnement:[/b]
-[*] [color=red]Nouveauté:[/color] Nouveau moteur de templates, avec système de cache intégré et nouvelles fonctionnalités.
-[*] [color=red]Nouveauté:[/color] Intégration d'un éditeur texte temps réel (wysiwyg) Tinymce, configurable dans le profil avec choix BBcode ou Tinymce.
-+ [color=red]Nouveauté:[/color] Panneau de modération.
-+ [color=red]Nouveauté:[/color] Nouveau système de parsage des messages, support de l'html et des imbrications.
-[*] [color=red]Nouveauté:[/color] Système de communication entres les modules et le noyau (Framework PHPBoost).
-[*] [color=red]Nouveauté:[/color] Nouveaux outils standardisés communs aux modules (Recherche, dernier ajouts, etc) (Framework PHPBoost).
-[*] [color=red]Nouveauté:[/color] Amélioration du système d'autorisation, possibilité de gérer en plus des groupes mutliples chaque membre individuellement.
-[*] [color=red]Nouveauté:[/color] Système d'ajout de menus personnel automatisé, création pour les débutants facilité.
-[*] [color=red]Nouveauté:[/color] Détection automatisée des menus non installés, possibilité d'associer plusieurs menus à un module. 
-[*] [color=red]Nouveauté:[/color] Nouveau système de menu dynamique (déroulant), avec sous-menus infinis.
-[*] [color=red]Nouveauté:[/color] Nouvelle interface de déplacement des menus.
-[*] [color=red]Nouveauté:[/color] Nouveau placement possible des menus (Haut/Centre haut/Centre bas).
-[*] [color=red]Nouveauté:[/color] Intégration d'un nouveau colorateur syntaxique (Geshi), support de nombreux languages.
+[b]Structure et fonctionnement :[/b]
+[*] [color=red]Nouveauté :[/color] Nouveau moteur de templates, avec système de cache intégré et nouvelles fonctionnalités.
+[*] [color=red]Nouveauté :[/color] Intégration d'un éditeur texte temps réel (wysiwyg) Tinymce, configurable dans le profil avec choix BBcode ou Tinymce.
+[*] [color=red]Nouveauté :[/color] Panneau de contribution permettant de centraliser toutes les contributions de tous les modules.
+[*] [color=red]Nouveauté :[/color] Refonte totale du moteur d'interprétation du BBCode. Ajout de nouvelles balises parmi lesquelles block, fieldset, acronym, HTML qui permet d'insérer du code HTML (seulement pour les personnes autorisées). Colorateur de BBCode et Templates PHPBoost ajouté. Support de l'imbrication de toutes les balises.
+[*] [color=red]Nouveauté :[/color] Système de communication entres les modules et le noyau (Framework PHPBoost).
+[*] [color=red]Nouveauté :[/color] Nouveaux outils standardisés communs aux modules (Recherche, dernier ajouts, etc) (Framework PHPBoost).
+[*] [color=red]Nouveauté :[/color] Amélioration du système d'autorisation, possibilité de gérer en plus des groupes mutliples chaque membre individuellement.
+[*] [color=red]Nouveauté :[/color] Système d'ajout de menus personnel automatisé, création pour les débutants facilité.
+[*] [color=red]Nouveauté :[/color] Détection automatisée des menus non installés, possibilité d'associer plusieurs menus à un module. 
+[*] [color=red]Nouveauté :[/color] Nouveau système de menu dynamique (déroulant), avec sous-menus infinis.
+[*] [color=red]Nouveauté :[/color] Nouvelle interface de déplacement des menus.
+[*] [color=red]Nouveauté :[/color] Nouveau placement possible des menus (Haut/Centre haut/Centre bas).
+[*] [color=red]Nouveauté :[/color] Intégration d'un nouveau colorateur syntaxique (Geshi), support de nombreux languages.
 [*] Refonte totale des commentaires. Intégration simplifiée dans les modules.
-[*] [color=red]Nouveauté:[/color] Interface de visualisation/édition des commentaires du site.
-[*] [color=red]Nouveauté:[/color] Nouvelle gestion de l'éditeur de contenu, désactivation des balises améliorée.
-[*] [color=red]Nouveauté:[/color] Gestion du temps global (GMT), et du décalage horaire. 
-[*] [color=red]Nouveauté:[/color] Gestionnaire automatisé des catégories infinies (Framework PHPBoost). 
-+ [color=red]Nouveauté:[/color] Système de gestion des mises à jour du noyau et des modules avec gestion de différents dépôts.
-[*] [color=red]Nouveauté:[/color] Ajout d'un proxy web permettant d'effectuer des requêtes asynchrones sur des sites distants.
-+ [color=red]Nouveauté:[/color] Gestions des liens du site, duplication possible. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
-[*] [color=red]Nouveauté:[/color] Gestionnaire de commentaires (Framework PHPBoost). 
-[*] [color=red]Nouveauté:[/color] Gestionnaire de notation (Framework PHPBoost). 
-[*] [color=red]Nouveauté:[/color] Amélioration de l'approche de programmation orienté objet (Framework PHPBoost). 
-[*] [color=red]Nouveauté:[/color] Support des autorisations avancées pour les menus.
-[*] [color=red]Nouveauté:[/color] Nouveau gestionnaire avancé de base de données, nombreux outils d'administration.
-[*] [color=red]Nouveauté:[/color] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml.
-[*] [color=red]Nouveauté:[/color] Nouveau système de captcha (anti-spam), avec différents niveaux de difficulté.
+[*] [color=red]Nouveauté :[/color] Interface de visualisation/édition des commentaires du site.
+[*] [color=red]Nouveauté :[/color] Nouvelle gestion de l'éditeur de contenu, désactivation des balises améliorée.
+[*] [color=red]Nouveauté :[/color] Gestion du temps global (GMT), et du décalage horaire. 
+[*] [color=red]Nouveauté :[/color] Gestionnaire automatisé des catégories infinies (Framework PHPBoost). 
++ [color=red]Nouveauté :[/color] Système de gestion des mises à jour du noyau et des modules avec gestion de différents dépôts.
+[*] [color=red]Nouveauté :[/color] Ajout d'un proxy web permettant d'effectuer des requêtes asynchrones sur des sites distants.
++ [color=red]Nouveauté :[/color] Gestions des liens du site, duplication possible. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
+[*] [color=red]Nouveauté :[/color] Gestionnaire de commentaires (Framework PHPBoost). 
+[*] [color=red]Nouveauté :[/color] Gestionnaire de notation (Framework PHPBoost). 
+[*] [color=red]Nouveauté :[/color] Amélioration de l'approche de programmation orienté objet (Framework PHPBoost). 
+[*] [color=red]Nouveauté :[/color] Support des autorisations avancées pour les menus.
+[*] [color=red]Nouveauté :[/color] Nouveau gestionnaire avancé de base de données, nombreux outils d'administration.
+[*] [color=red]Nouveauté :[/color] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml.
+[*] [color=red]Nouveauté :[/color] Nouveau système de captcha (anti-spam), avec différents niveaux de difficulté.
 [*] Système de cache amélioré.
 [*] Système de cache, et de changement de jour pour les modules intégrés à l'interface de communication noyau/module.
 [*] Gestion des mots de passe avec l'algorithme de cryptage sha256 en lieu et place du md5
@@ -39,7 +39,7 @@
 [*] Possibilité de définir une limite d'upload dans le gestionnaire de fichier en fonction des groupes.
 [*] Possibilité de définir un nombre maximum de messages privés en fonction des groupes.
 [*] Possibilité de définir les extensions autorisées (une par une ou par groupe) dans le gestionnaire de fichier.
-- Support de https.
+- Support de https dans l'installation et l'administration.
 [*] Editeur de .htaccess
 [*] Ajout du phpinfo dans l'administration.
 [*] Possibilité de se déconnecter dans l'administration.
