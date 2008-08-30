@@ -361,7 +361,7 @@ class Cache
 	{
 		global $Sql;
 		
-		$config_member = 'global $CONFIG_MEMBER, $CONTRIBUTION_PANEL_UNREAD;' . "\n";
+		$config_member = 'global $CONFIG_MEMBER, $CONTRIBUTION_PANEL_UNREAD, $UNREAD_ALERTS;' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_MEMBER = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
@@ -371,7 +371,10 @@ class Cache
 		require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_service.class.php');
 		//Unread contributions for each profile
 		$config_member .= '$CONTRIBUTION_PANEL_UNREAD = ' . var_export(ContributionService::compute_number_contrib_for_each_profile(), true) . ';';
-
+		
+		require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
+		$config_member .= "\n" . '$UNREAD_ALERTS = ' . var_export(AdministratorAlertService::compute_number_unread_alerts(), true) . ';';
+		
 		return $config_member;
 	}
 

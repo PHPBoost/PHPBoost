@@ -75,6 +75,7 @@
 									<li><a href="../admin/admin_smileys_add.php" style="background-image:url(../templates/{THEME}/images/admin/smileys_mini.png);">{L_ADD}</a></li>
 								</ul>
 							</li>
+							<li><a href="../admin/admin_alerts.php" style="background-image:url(../templates/{THEME}/images/admin/administrator_alert_mini.png);">{L_ADMINISTRATOR_ALERTS}</a></li>
 						</ul>
 					</li>
 					<li onmouseover="show_menu(3, 0);" onmouseout="hide_menu(0);">

@@ -114,7 +114,7 @@ $alerts_list = AdministratorAlertService::get_all_alerts();
 $Template->Assign_vars(array(
 	'C_ALERT_OR_ACTION' => ((bool)count($alerts_list)),
 	'L_INDEX_ADMIN' => $LANG['administration'],
-	'L_ADMIN_ALERTS' => $LANG['admin_alerts'],
+	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
 	'L_NO_ALERT_OR_ACTION' => $LANG['no_alert_or_action'],
 	'L_TYPE' => $LANG['type'],
 	'L_DATE' => $LANG['date'],
@@ -132,30 +132,30 @@ $Template->Assign_vars(array(
     'L_WEBSITE_UPDATES' => $LANG['website_updates']
 ));
 
-//Liste des actions en attente.
-foreach(AdministratorAlertService::get_all_alerts() as $alert)
+//On va chercher la liste des alertes en attente, on afficher les 5 dernières
+foreach(AdministratorAlertService::get_all_alerts('creation_date', 'desc', 0, 5) as $alert)
 {
 	$img_type = '';
 	
 	switch($alert->get_priority())
 	{
 		case PRIORITY_VERY_LOW:
-		$color = 'FFFFFF';
-		break;
+			$color = 'FFFFFF';
+			break;
 		case PRIORITY_LOW:
-		$color = 'ECDBB7';
-		break;
+			$color = 'ECDBB7';
+			break;
 		case PRIORITY_MEDIUM:
-		$color = 'F5D5C6';
-		break;
+			$color = 'F5D5C6';
+			break;
 		case PRIORITY_HIGH:
-		$img_type = 'important.png';
-		$color = 'FFD5D1';
-		break;
+			$img_type = 'important.png';
+			$color = 'FFD5D1';
+			break;
 		case PRIORITY_VERY_HIGH:
-		$img_type = 'errors_mini.png';
-		$color = 'F3A29B';
-		break;
+			$img_type = 'errors_mini.png';
+			$color = 'F3A29B';
+			break;
 		default:
 		$color = 'FFFFFF';
 	}
@@ -185,15 +185,15 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
-		case 0:
+		case MEMBER_LEVEL:
 		$class = 'member';
 		break;
 		
-		case 1: 
+		case MODERATOR_LEVEL: 
 		$class = 'modo';
 		break;
 		
-		case 2: 
+		case ADMIN_LEVEL: 
 		$class = 'admin';
 		break;
 	} 

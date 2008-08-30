@@ -62,7 +62,11 @@
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_MEMBER_PM}" class="small_link">{L_NBR_PM}</a>&nbsp;</li>
 					
 					# IF C_ADMIN_AUTH # 
-					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link">{L_ADMIN_PANEL}</a></li> 
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link">{L_ADMIN_PANEL}
+						# IF C_UNREAD_ALERT #
+							({NUMBER_UNREAD_ALERTS})
+						# ENDIF #
+					</a></li> 
 					# ENDIF #
 					
 					# IF C_MODERATOR_AUTH # 

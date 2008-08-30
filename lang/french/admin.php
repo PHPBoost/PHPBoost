@@ -273,7 +273,8 @@ $LANG['menus_managment'] = 'Gestion des menus';
 $LANG['modules_managment'] = 'Gestion des modules';
 
 //Alertes administrateur
-$LANG['admin_alerts'] = 'Alertes et actions en attente';
+$LANG['administrator_alerts'] = 'Alertes';
+$LANG['administrator_alerts_list'] = 'Liste des alertes';
 $LANG['no_alert_or_action'] = 'Aucune alerte ou action en attente';
 $LANG['display_all_alerts'] = 'Voir toutes les alertes';
 $LANG['priority'] = 'Priorité';
