@@ -137,7 +137,13 @@
 			</span>
 			# ENDIF #
 		</div>
-		<div class="module_contents">
+		<div class="module_contents">	
+			<div style="text-align:center;">
+				<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}"><img src="../templates/{THEME}/images/process-contribution.png" alt="{L_PROCESS_CONTRIBUTION}" /></a>
+				<br />
+				<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
+			</div>
+			
 			<fieldset>
 				<legend>{L_CONTRIBUTION}</legend>
 				<dl>
@@ -179,12 +185,6 @@
 					<dd>{MODULE}</dd>
 				</dl>
 			</fieldset>
-			
-			<div style="text-align:center;">
-				<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}"><img src="../templates/{THEME}/images/process-contribution.png" alt="{L_PROCESS_CONTRIBUTION}" /></a>
-				<br />
-				<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
-			</div>
 			
 			{COMMENTS}
 		</div>

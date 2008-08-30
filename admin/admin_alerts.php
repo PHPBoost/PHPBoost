@@ -36,13 +36,15 @@ require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrato
 $alerts_list = AdministratorAlertService::get_all_alerts();
 
 $template->Assign_vars(array(
-	'C_ALERT_OR_ACTION' => ((bool)count($alerts_list)),
+	'C_EXISTING_ALERTS' => ((bool)count($alerts_list)),
 	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
 	'L_TYPE' => $LANG['type'],
-	'L_NO_ALERT_OR_ACTION' => $LANG['no_alert_or_action'],
 	'L_DATE' => $LANG['date'],
 	'L_PRIORITY' => $LANG['priority'],
-	'L_ADMINISTRATOR_ALERTS_LIST' => $LANG['administrator_alerts_list']
+	'L_ADMINISTRATOR_ALERTS_LIST' => $LANG['administrator_alerts_list'],
+	'L_ACTIONS' => $LANG['administrator_alerts_action'],
+	'L_NO_ALERT' => $LANG['no_administrator_alert'],
+	'L_CONFIRM_DELETE_ALERT' => $LANG['confirm_delete_administrator_alert']
 ));
 
 define('NUM_ALERTS_PER_PAGE', 20);
@@ -78,12 +80,15 @@ foreach(AdministratorAlertService::get_all_alerts('creation_date', 'desc', 0, 5)
 	$creation_date = $alert->get_creation_date();
 	
 	$template->Assign_block_vars('alerts', array(
+		'C_PROCESSED' => $alert->get_status() == CONTRIBUTION_STATUS_PROCESSED,
 		'URL' => $alert->get_fixing_url(),
 		'NAME' => $alert->get_entitled(),
 		'PRIORITY' => $alert->get_priority_name(),
 		'STYLE' => 'background:#' . $color . ';',
 		'IMG' => !empty($img_type) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/admin/' . $img_type . '" alt="" class="valign_middle" />' : '',
-		'DATE' => $creation_date->format(DATE_FORMAT)
+		'DATE' => $creation_date->format(DATE_FORMAT),
+		'ID' => $alert->get_id(),
+		'STATUS' => $alert->get_status()
 	));
 }
 	
