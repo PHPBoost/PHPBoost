@@ -1,6 +1,6 @@
 <?php
 /*##################################################
-*                             tinymce_parser.class.php
+*                           tinymce_parser.class.php
 *                            -------------------
 *   begin                : July 3 2008
 *   copyright            : (C) 2008 Benoit Sautel
@@ -100,7 +100,7 @@ class TinyMCEParser extends ContentParser
 	
 	## Protected ##
 	//Parse la balise table de tinymce pour le bbcode.
-	/*static*/ function _parse_table_tag($matches)
+	function _parse_table_tag($matches)
 	{
 		$table_properties = $matches[1];
 		$style_properties = '';
@@ -149,7 +149,7 @@ class TinyMCEParser extends ContentParser
 	}
 	
 	//Parse la balise table de tinymce pour le bbcode.
-	/*static*/ function _parse_col_tag($matches)
+	function _parse_col_tag($matches)
 	{
 		$tag = $matches[1] == 'th' ? 'th' : 'td';
 		$bbcode_tag = $tag == 'th' ? 'head' : 'col';
@@ -374,7 +374,7 @@ class TinyMCEParser extends ContentParser
 		$content_contains_table = false;
 		while( preg_match('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`is', $this->parsed_content) )
 		{
-			$this->parsed_content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`isU', array('TinyMCEParser', '_parse_table_tag'), $this->parsed_content);
+			$this->parsed_content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`isU', array(&$this, '_parse_table_tag'), $this->parsed_content);
 			$content_contains_table = true;
 		}
 		
@@ -385,8 +385,8 @@ class TinyMCEParser extends ContentParser
 			//Rows
 			while( preg_match('`&lt;td|h([^&]*)&gt;(.+)&lt;/td|h&gt;`is', $this->parsed_content) )
 			{
-				$this->parsed_content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)&lt;/td&gt;`isU', array('TinyMCEParser', '_parse_col_tag'), $this->parsed_content);
-				$this->parsed_content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)&lt;/th&gt;`isU', array('TinyMCEParser', '_parse_col_tag'), $this->parsed_content);
+				$this->parsed_content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)&lt;/td&gt;`isU', array(&$this, '_parse_col_tag'), $this->parsed_content);
+				$this->parsed_content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)&lt;/th&gt;`isU', array(&$this, '_parse_col_tag'), $this->parsed_content);
 				$content_contains_table = true;
 			}
 		}
@@ -517,7 +517,7 @@ class TinyMCEParser extends ContentParser
 	}
 	
 	//Handler which clears the HTML code which is in the code and HTML tags
-	/*static*/ function _clear_html_and_code_tag($var)
+	function _clear_html_and_code_tag($var)
 	{
 		$var = preg_replace('`</p>\s*<p>`i', "\r\n", $var);
 		$var = str_replace('<br />', "\r\n", $var);

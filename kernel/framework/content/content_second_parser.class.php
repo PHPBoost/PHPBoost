@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       content_second_parser.class.php
+ *                        content_second_parser.class.php
  *                            -------------------
  *   begin                : August 10, 2008
  *   copyright            : (C) 2008 Benoit Sautel

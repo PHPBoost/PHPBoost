@@ -1,6 +1,6 @@
 <?php
 /*##################################################
-*                             tinymce_unparser.class.php
+*                         tinymce_unparser.class.php
 *                            -------------------
 *   begin                : August 10, 2008
 *   copyright            : (C) 2008 Benoit Sautel
@@ -226,18 +226,18 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->parsed_content);
 		
 		//Bloc de formulaire
-		$this->parsed_content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array('TinyMCEUnparser', '_unparse_fieldset'), $this->parsed_content);
+		$this->parsed_content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array(&$this, '_unparse_fieldset'), $this->parsed_content);
 	}
 	
 	//Handler which clears the HTML code which is in the code and HTML tags
-	/*static*/ function _clear_html_and_code_tag($var)
+	function _clear_html_and_code_tag($var)
 	{
 		$var = str_replace("\n", '<br />', $var);
 		return htmlentities($var, ENT_NOQUOTES);
 	}
 	
 	//Fonction de retour de la balise liste
-	/*static*/ function _unparse_fieldset($matches)
+	function _unparse_fieldset($matches)
 	{
 		$style = '';
 		$legend = '';
