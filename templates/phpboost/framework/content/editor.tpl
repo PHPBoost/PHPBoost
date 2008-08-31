@@ -300,9 +300,12 @@
 											<option value="" selected="selected" disabled="disabled">{L_CODE}</option>
 											<optgroup label="{L_TEXT}">
 												<option value="text">Text</option>
-												<option value="bbcode">BBCode</option>
 												<option value="sql">Sql</option>
-												<option value="xml">Xml</option>												
+												<option value="xml">Xml</option>										
+											</optgroup>
+											<optgroup label="{L_PHPBOOST_LANGUAGES}">
+												<option value="bbcode">BBCode</option>
+												<option value="tpl">Template</option>
 											</optgroup>
 											<optgroup label="{L_SCRIPT}">
 												<option value="php">PHP</option>

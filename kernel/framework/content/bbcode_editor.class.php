@@ -1,10 +1,10 @@
 <?php
 /*##################################################
-*                          bbcode_parser.class.php
+*                          bbcode_editor.class.php
 *                            -------------------
 *   begin                : July 5 2008
 *   copyright            : (C) 2008 Régis Viarre
-*   email                :  crowkait@phpboost.com
+*   email                : crowkait@phpboost.com
 *
 *   
 ###################################################
@@ -108,7 +108,8 @@ class BBCodeEditor extends ContentEditor
 			'L_COLS' => $LANG['cols'],
 			'L_ORDERED_LIST' => $LANG['ordered_list'],
 			'L_INSERT_LIST' => $LANG['insert_list'],
-			'L_INSERT_TABLE' => $LANG['insert_table']
+			'L_INSERT_TABLE' => $LANG['insert_table'],
+			'L_PHPBOOST_LANGUAGES' => $LANG['phpboost_languages']
 		));
 		
 		foreach($this->forbidden_tags as $forbidden_tag) //Balises interdite.

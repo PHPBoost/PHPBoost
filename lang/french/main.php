@@ -155,6 +155,7 @@ $LANG['insert_table'] = 'Insérer le tableau';
 $LANG['ordered_list'] = 'Liste ordonnée';
 $LANG['insert_list'] = 'Insérer la liste';
 $LANG['forbidden_tags'] = 'Balises de formatage interdites';
+$LANG['phpboost_languages'] = 'PHPBoost';
 
 //Connexion
 $LANG['connect_private_message'] = 'Messagerie privée';

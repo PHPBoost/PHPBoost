@@ -3,7 +3,7 @@
 *                                main.php
 *                            -------------------
 *   begin                : November 20, 2005
-*   copyright          : (C) 2005 Viarre Régis
+*   copyright            : (C) 2005 Viarre Régis
 *   email                : mickaelhemri@gmail.com
 *
 *  
@@ -155,8 +155,9 @@ $LANG['insert_table'] = 'Insert table';
 $LANG['ordered_list'] = 'Ordered list';
 $LANG['insert_list'] = 'Insert list';
 $LANG['forbidden_tags'] = 'Forbidden formating tags';
+$LANG['phpboost_languages'] = 'PHPBoost';
 
-//Connexion
+//Connection
 $LANG['connect_private_message'] = 'Private message';
 $LANG['connect_private_profil'] = 'Personnal profile';
 
