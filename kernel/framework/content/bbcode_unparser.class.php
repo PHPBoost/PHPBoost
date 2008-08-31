@@ -163,7 +163,7 @@ class BBCodeUnparser extends ContentUnparser
 		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->parsed_content);
 		
 		//Bloc de formulaire
-		$this->parsed_content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array('BBCodeUnparser', '_unparse_fieldset'), $this->parsed_content);
+		$this->parsed_content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array($this, '_unparse_fieldset'), $this->parsed_content);
 	}
 	
 	//Traitement des caractères html
@@ -212,7 +212,7 @@ class BBCodeUnparser extends ContentUnparser
 	}
 	
 	//Fonction de retour de la balise liste
-	/*static*/ function _unparse_fieldset($matches)
+	function _unparse_fieldset($matches)
 	{
 		$style = '';
 		$legend = '';

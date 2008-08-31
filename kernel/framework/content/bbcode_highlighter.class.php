@@ -71,7 +71,7 @@ class BBCodeHighlighter extends Parser
 		$tags_with_many_parameters = array('table', 'col', 'head', 'list', 'fieldset', 'block');
 
 		foreach($tags_with_many_parameters as $tag)
-			$this->parsed_content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.+)\[/' . $tag . '\]`isU', array('BBCodeHighlighter', '_highlight_bbcode_tag_with_many_parameters'), $this->parsed_content);
+			$this->parsed_content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.+)\[/' . $tag . '\]`isU', array(&$this, '_highlight_bbcode_tag_with_many_parameters'), $this->parsed_content);
 		
 		if( !$inline_code )
 			$this->parsed_content = '<pre>' . $this->parsed_content . '</pre>';
@@ -81,7 +81,7 @@ class BBCodeHighlighter extends Parser
 
 	## Private ##
 	//Function which highlights the parameters of a complex tag
-	/*static*/ function _highlight_bbcode_tag_with_many_parameters($matches)
+	function _highlight_bbcode_tag_with_many_parameters($matches)
 	{
 		$content = $matches[3];
 		$tag_name = $matches[1];
