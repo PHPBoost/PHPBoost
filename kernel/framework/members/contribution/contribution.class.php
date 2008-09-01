@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             contribution.class.php
+ *                          contribution.class.php
  *                            -------------------
  *   begin                : July 21, 2008
  *   copyright            : (C) 2008 Benoît Sautel
@@ -69,7 +69,7 @@ class Contribution
 	}
 
 	// current_status setter
-	function set_current_status($new_current_status)
+	function set_status($new_current_status)
 	{
 		if( in_array($new_current_status, array(CONTRIBUTION_STATUS_UNREAD, CONTRIBUTION_STATUS_BEING_PROCESSED, CONTRIBUTION_STATUS_PROCESSED)) )
 		{
@@ -81,6 +81,8 @@ class Contribution
 		//Default
 		else
 			$this->current_status = CONTRIBUTION_STATUS_UNREAD;
+		
+		$this->must_regenerate_cache = true;
 	}
 		
 	//Creation date setter
@@ -192,11 +194,15 @@ class Contribution
 		}
 		
 		//Regeneration of the member cache file
-		$Cache->generate_file('member');
+		if( $this->must_regenerate_cache )
+		{
+			$Cache->generate_file('member');
+			$this->must_regenerate_cache = false;
+		}
 	}
 	
 	//Deleting a contribution in the database
-	function delete_in_db()
+	function delete()
 	{
 		global $Sql, $Cache;
 		$Sql->Query_inject("DELETE FROM ".PREFIX."contributions WHERE id = '" . $this->id . "'", __LINE__, __FILE__);
@@ -248,9 +254,10 @@ class Contribution
 		$this->fixer_id = $fixer_id;
 		$this->id_in_module = $id_in_module;
 		$this->identifier = $identifier;
+		$this->must_regenerate_cache = false;
 	}
 	
-	## Private ##
+	## Protected ##
 	var $id = 0;
 	var $entitled = '';
 	var $description = '';
@@ -264,6 +271,7 @@ class Contribution
 	var $fixer_id = 0;
 	var $id_in_module = 0;
 	var $identifier = '';
+	var $must_regenerate_cache = true;
 }
 
 ?>

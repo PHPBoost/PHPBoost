@@ -29,6 +29,8 @@ define('PATH_TO_ROOT', '../../..');
 
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
 
+define('NO_SESSION_LOCATION', true);
+
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 if( !$Member->Check_level(ADMIN_LEVEL) )
@@ -46,7 +48,7 @@ if( $change_status > 0 )
 	
 	$new_status = $alert->get_status() != CONTRIBUTION_STATUS_PROCESSED ? CONTRIBUTION_STATUS_PROCESSED : CONTRIBUTION_STATUS_UNREAD;
 	
-	$alert->set_current_status($new_status);
+	$alert->set_status($new_status);
 	
 	$alert->save();
 	
@@ -57,7 +59,7 @@ elseif( $delete > 0 )
 	$alert = new AdministratorAlert();
 	$alert->load_from_db($delete);
 	
-	$alert->delete_in_db();
+	$alert->delete();
 	
 	echo '1';
 }

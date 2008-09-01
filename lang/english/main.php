@@ -395,6 +395,7 @@ $LANG['register_terms'] = 'Registration Agreement Terms';
 $LANG['register_accept'] = 'I accept';
 $LANG['activ_mbr_mail'] = 'You will have to activate your account in the e-mail which will be sent to you before being able to connect!';
 $LANG['activ_mbr_admin'] = 'An administrator will have to activate your account before being able to connect you ';
+$LANG['member_registered_to_approbate'] = 'A new member has registered itself. Its account must be approved to be used.';
 $LANG['activ_mbr_mail_success'] = 'Your account is activated, you can now log in to your account!';
 $LANG['activ_mbr_mail_error'] = 'Account activation error';
 $LANG['weight_max'] = 'Weight max';

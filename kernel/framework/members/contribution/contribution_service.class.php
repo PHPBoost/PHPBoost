@@ -31,20 +31,23 @@ require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution
 
 class ContributionService
 {
-	/*static*/ function add_contribution(&$contribution)
+	/*static*/ function find_by_id($id)
 	{
-		$contribution->create_in_db();
-		return $contribution->get_id();
+		$contri = new AdministratorAlert();
+		if( $contri->load_from_db($id) )
+			return $contri;
+		else
+			return null;
 	}
 	
-	/*static*/ function update_contribution(&$contribution)
+	/*static*/ function save_contribution(&$contribution)
 	{
-		$contribution->update_in_db();
+		$contribution->save();
 	}
 	
 	/*static*/ function delete_contribution(&$contribution)
 	{
-		$contribution->delete_in_db();
+		$contribution->delete();
 	}
 	
 	/*static*/ function generate_cache()

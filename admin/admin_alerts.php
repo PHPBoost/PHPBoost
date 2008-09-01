@@ -35,30 +35,23 @@ require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrato
 
 $alerts_list = AdministratorAlertService::get_all_alerts();
 
-$template->Assign_vars(array(
-	'C_EXISTING_ALERTS' => ((bool)count($alerts_list)),
-	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
-	'L_TYPE' => $LANG['type'],
-	'L_DATE' => $LANG['date'],
-	'L_PRIORITY' => $LANG['priority'],
-	'L_ADMINISTRATOR_ALERTS_LIST' => $LANG['administrator_alerts_list'],
-	'L_ACTIONS' => $LANG['administrator_alerts_action'],
-	'L_NO_ALERT' => $LANG['no_administrator_alert'],
-	'L_CONFIRM_DELETE_ALERT' => $LANG['confirm_delete_administrator_alert']
-));
-
 define('NUM_ALERTS_PER_PAGE', 20);
+
+require_once(PATH_TO_ROOT . '/kernel/framework/util/pagination.class.php');
+
+$pagination = new Pagination();
+$pagination->set_var_name_current_page('p');
 
 //Gestion des critères de tri
 $criteria = retrieve(GET, 'criteria', 'current_status');
 $order = retrieve(GET, 'order', 'asc');
 
-if( !in_array($criteria, array('entitled', 'status', 'creation_date', 'priority')) )
+if( !in_array($criteria, array('entitled', 'current_status', 'creation_date', 'priority')) )
 	$criteria = 'current_status';
 $order = $order == 'desc' ? 'desc' : 'asc';
 
-//On va chercher la liste des alertes en attente, on afficher les 5 dernières
-foreach(AdministratorAlertService::get_all_alerts($criteria, $order, 0, 5) as $alert)
+//On va chercher la liste des alertes
+foreach(AdministratorAlertService::get_all_alerts($criteria, $order, ($pagination->get_var_page('p') - 1) * NUM_ALERTS_PER_PAGE, NUM_ALERTS_PER_PAGE) as $alert)
 {
 	$img_type = '';
 	
@@ -86,10 +79,9 @@ foreach(AdministratorAlertService::get_all_alerts($criteria, $order, 0, 5) as $a
 	}
 	
 	$creation_date = $alert->get_creation_date();
-	
 	$template->Assign_block_vars('alerts', array(
 		'C_PROCESSED' => $alert->get_status() == CONTRIBUTION_STATUS_PROCESSED,
-		'URL' => $alert->get_fixing_url(),
+		'FIXING_URL' => transid(PATH_TO_ROOT . '/' . $alert->get_fixing_url()),
 		'NAME' => $alert->get_entitled(),
 		'PRIORITY' => $alert->get_priority_name(),
 		'STYLE' => 'background:#' . $color . ';',
@@ -99,6 +91,37 @@ foreach(AdministratorAlertService::get_all_alerts($criteria, $order, 0, 5) as $a
 		'STATUS' => $alert->get_status()
 	));
 }
+
+$template->Assign_vars(array(
+	'C_EXISTING_ALERTS' => ((bool)count($alerts_list)),
+	'C_PAGINATION' => AdministratorAlertService::get_number_alerts() > NUM_ALERTS_PER_PAGE,
+	'PAGINATION' => $pagination->Display_pagination('admin_alerts.php?p=%d&criteria=' . $criteria . '&order=' . $order, AdministratorAlertService::get_number_alerts(), 'p', NUM_ALERTS_PER_PAGE, 3),	
+	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
+	'L_TYPE' => $LANG['type'],
+	'L_DATE' => $LANG['date'],
+	'L_PRIORITY' => $LANG['priority'],
+	'L_ADMINISTRATOR_ALERTS_LIST' => $LANG['administrator_alerts_list'],
+	'L_ACTIONS' => $LANG['administrator_alerts_action'],
+	'L_NO_ALERT' => $LANG['no_administrator_alert'],
+	'L_CONFIRM_DELETE_ALERT' => $LANG['confirm_delete_administrator_alert'],
+	'C_ORDER_ENTITLED_ASC' => $criteria == 'entitled' && $order == 'asc',
+	'U_ORDER_ENTITLED_ASC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=entitled&order=asc'),
+	'C_ORDER_ENTITLED_DESC' => $criteria == 'entitled' && $order == 'desc',
+	'U_ORDER_ENTITLED_DESC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=entitled&order=desc'),
+	'C_ORDER_CREATION_DATE_ASC' => $criteria == 'creation_date' && $order == 'asc',
+	'U_ORDER_CREATION_DATE_ASC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=creation_date&order=asc'),
+	'C_ORDER_CREATION_DATE_DESC' => $criteria == 'creation_date' && $order == 'desc',
+	'U_ORDER_CREATION_DATE_DESC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=creation_date&order=desc'),
+	'C_ORDER_PRIORITY_ASC' => $criteria == 'priority' && $order == 'asc',
+	'U_ORDER_PRIORITY_ASC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=priority&order=asc'),
+	'C_ORDER_PRIORITY_DESC' => $criteria == 'priority' && $order == 'desc',
+	'U_ORDER_PRIORITY_DESC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=priority&order=desc'),
+	'C_ORDER_STATUS_ASC' => $criteria == 'current_status' && $order == 'asc',
+	'U_ORDER_STATUS_ASC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=current_status&order=asc'),
+	'C_ORDER_STATUS_DESC' => $criteria == 'current_status' && $order == 'desc',
+	'U_ORDER_STATUS_DESC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=current_status&order=desc')
+
+));
 	
 $template->parse();
 

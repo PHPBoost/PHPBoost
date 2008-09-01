@@ -69,14 +69,16 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 		}
 	}
 
+	require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
+	
 	$Template->Assign_vars(array(
 		'C_ADMIN_AUTH' => $Member->Check_level(ADMIN_LEVEL),
 		'C_MODERATOR_AUTH' => $Member->Check_level(MODERATOR_LEVEL),
 		'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
 		'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
-		'C_UNREAD_ALERT' => (bool)$UNREAD_ALERTS,
+		'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 		'NUM_UNREAD_CONTRIBUTIONS' => $contribution_number,
-		'NUMBER_UNREAD_ALERTS' => $UNREAD_ALERTS,
+		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
 		'IMG_PM' => $Member->Get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
 		'U_MEMBER_PM' => PATH_TO_ROOT . '/member/pm' . transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php'),
 		'U_MEMBER_ID' => transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', '-' . $Member->Get_attribute('user_id') . '.php?view=1'),

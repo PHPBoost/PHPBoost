@@ -135,7 +135,25 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					$Sql->Query_inject("INSERT INTO ".PREFIX."member (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,user_editor,user_timezone,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
 					VALUES ('" . $login . "', '" . $password_hash . "', 0, '0', '" . $user_lang . "', '" . $user_theme . "', '" . $user_mail . "', '" . $user_show_mail . "', '" . $user_editor . "', '" . $user_timezone . "', '" . time() . "', '" . $user_avatar . "', 0, '" . $user_local . "', '" . $user_msn . "', '" . $user_yahoo . "', '" . $user_web . "', '" . $user_occupation . "', '" . $user_hobbies . "', '" . $user_desc . "', '" . $user_sex . "', '" . $user_born . "', '" . $user_sign . "', 0, 0, '" . time() . "', 0, '" . $activ_mbr . "', '', 0, '" . $user_aprob . "')", __LINE__, __FILE__); //Compte membre
 					
-					$last_mbr_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."member"); //Dernier message inseré, on met à jour le topic.
+					$last_mbr_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."member"); //Id du membre qu'on vient d'enregistrer
+					
+					//Si son inscription nécessite une approbation, on en avertit l'administration au biais d'une alerte
+					if( !$user_aprob )
+					{
+						require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
+						
+						$alert = new AdministratorAlert();
+						$alert->set_entitled($LANG['member_registered_to_approbate']);
+						$alert->set_fixing_url('admin/admin_members.php?id=' . $last_mbr_id);
+						//Priorité 4/5
+						$alert->set_priority(PRIORITY_HIGH);
+						//Code pour retrouver l'alerte
+						$alert->set_id_in_module($last_mbr_id);
+						$alert->set_identifier('member_account_to_approbate');
+						
+						//Enregistrement
+						AdministratorAlertService::save_alert($alert);
+					}
 						
 					//Champs supplémentaires.
 					$extend_field_exist = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
