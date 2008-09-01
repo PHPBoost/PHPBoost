@@ -117,7 +117,6 @@ $LANG['wiki_current_version'] = 'Version courante';
 //Statut de l'article
 $LANG['wiki_status_management'] = 'Gestion des statuts des articles';
 $LANG['wiki_status_management_article'] = 'Gestion des statuts de l\' article %s';
-$LANG['wiki_status_management_article'] = 'Gestion du statut de l\'article : <em>%s</em>';
 $LANG['wiki_defined_status'] = 'Statut préféfini';
 $LANG['wiki_undefined_status'] = 'Statut personnalisé';
 $LANG['wiki_no_status'] = 'Aucun statut';
@@ -174,6 +173,9 @@ $LANG['wiki_search_where_all'] = 'Titre &amp; contenu';
 //Discussion
 $LANG['wiki_article_com'] = 'Discussion sur l\'article';
 $LANG['wiki_article_com_article'] = 'Discussion';
+
+//Impression
+$LANG['wiki_printable_version'] = 'Version imprimable';
 
 //Suppression
 $LANG['wiki_confirm_delete_archive'] = 'Etes-vous sûr de vouloir supprimer cette version de l\'article?';

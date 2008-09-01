@@ -56,7 +56,8 @@ $action_pictures = array(
 	'follow-article' => 'follow-article.png',
 	'followed-articles' => 'followed-articles.png',
 	'rss' => 'rss.png',
-	'explorer' => 'explorer.png'
+	'explorer' => 'explorer.png',
+	'print' => 'print_mini.png'
 );
 	
 $confirm = array();
@@ -122,6 +123,12 @@ if( $page_type == 'article' || $page_type == 'cat' )
 	if( $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
 	{
 		$tools[$LANG['wiki_restriction_level']] = array(transid('property.php?auth=' . $article_infos['id']), 'restriction_level');
+	}
+	
+	//Niveau de restricton
+	if( $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
+	{
+		$tools[$LANG['wiki_printable_version']] = array(transid('print.php?id=' . $article_infos['id']), 'print');
 	}
 }
 //Accueil du wiki
