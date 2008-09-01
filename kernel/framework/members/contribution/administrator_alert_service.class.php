@@ -31,20 +31,23 @@ require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrato
 
 class AdministratorAlertService
 {
-	/*static*/ function add_alert(&$alert)
+	/*static*/ function find_by_id($id)
 	{
-		$alert->create_in_db();
-		return $alert->get_id();
+		$alert = new AdministratorAlert();
+		if( $alert->load_from_db($id) )
+			return $alert;
+		else
+			return null;
 	}
 	
 	/*static*/ function save_alert(&$alert)
 	{
-		$alert->update_in_db();
+		$alert->save();
 	}
 	
 	/*static*/ function delete_alert(&$alert)
 	{
-		$alert->delete_in_db();
+		$alert->delete();
 	}
 	
 	/*static*/ function get_all_alerts($criteria = 'creation_date', $order = 'desc', $begin = 0, $number = 20)
@@ -78,7 +81,23 @@ class AdministratorAlertService
 	{
 		global $Sql;
 		
-		return $Sql->Query("SELECT count(*) FROM ".PREFIX."contributions WHERE current_status = '" . CONTRIBUTION_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__);
+		return array('unread' => $Sql->Query("SELECT count(*) FROM ".PREFIX."contributions WHERE current_status = '" . CONTRIBUTION_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__),
+			'all' => $Sql->Query("SELECT count(*) FROM ".PREFIX."contributions WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__)
+			);
+	}
+	
+	//Returns the number of unread alerts
+	/*static*/ function get_number_unread_alerts()
+	{
+		global $ADMINISTRATOR_ALERTS;
+		return $ADMINISTRATOR_ALERTS['unread'];
+	}
+	
+	//Returns the number of alerts
+	/*static*/ function get_number_alerts()
+	{
+		global $ADMINISTRATOR_ALERTS;
+		return $ADMINISTRATOR_ALERTS['all'];
 	}
 }
 

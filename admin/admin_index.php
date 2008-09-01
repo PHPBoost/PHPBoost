@@ -112,7 +112,7 @@ require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrato
 $alerts_list = AdministratorAlertService::get_all_alerts();
 
 $Template->Assign_vars(array(
-	'C_UNREAD_ALERTS' => ((bool)count($UNREAD_ALERTS)),
+	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 	'L_INDEX_ADMIN' => $LANG['administration'],
 	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
 	'L_NO_UNREAD_ALERT' => $LANG['no_unread_alert'],

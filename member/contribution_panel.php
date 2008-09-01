@@ -95,10 +95,10 @@ elseif( $id_to_update > 0 )
 			$contribution->set_fixing_date(new Date());
 		}
 		
-		$contribution->set_current_status($status);
+		$contribution->set_status($status);
 		
 		//Enregistrement en base de données
-		$contribution->save();
+		ContributionService::save_contribution($contribution);
 		
 		redirect(HOST . DIR . '/member/contribution_panel.php?id=' . $contribution->get_id());
 	}
@@ -117,7 +117,7 @@ elseif( $id_to_delete > 0 )
 	if( !$contribution->load_from_db($id_to_delete) || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT)) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
-	$contribution->delete_in_db();
+	$contribution->delete();
 	
 	redirect(HOST . DIR . "/member/contribution_panel.php");
 }
@@ -150,7 +150,8 @@ if( $contribution_id > 0 )
 		'COMMENTS' => $comments->display(),
 		'CREATION_DATE' => $contribution_creation_date->format(DATE_FORMAT_SHORT),
 		'MODULE' => $contribution->get_module_name(),
-		'U_CONTRIBUTOR_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')
+		'U_CONTRIBUTOR_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php'),
+		'FIXING_URL' => transid(PATH_TO_ROOT . '/' . $contribution->get_fixing_url())
 	));
 	
 	//Si la contribution a été traitée

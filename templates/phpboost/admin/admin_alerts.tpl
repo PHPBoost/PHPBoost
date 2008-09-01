@@ -91,16 +91,40 @@
 				# IF C_EXISTING_ALERTS #
 				<tr> 
 					<td class="row2" style="text-align:center;">
+						# IF NOT C_ORDER_ENTITLED_ASC #
+							<a href="{U_ORDER_ENTITLED_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
 						{L_TYPE}
+						# IF NOT C_ORDER_ENTITLED_DESC #
+							<a href="{U_ORDER_ENTITLED_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
 					</td>
 					<td class="row2" style="text-align:center;">
+						# IF NOT C_ORDER_CREATION_DATE_ASC #
+							<a href="{U_ORDER_CREATION_DATE_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
 						{L_DATE}
+						# IF NOT C_ORDER_CREATION_DATE_DESC #
+							<a href="{U_ORDER_CREATION_DATE_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
 					</td>
 					<td class="row2" style="text-align:center;">
+						# IF NOT C_ORDER_PRIORITY_ASC #
+							<a href="{U_ORDER_PRIORITY_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
 						{L_PRIORITY}
+						# IF NOT C_ORDER_PRIORITY_DESC #
+							<a href="{U_ORDER_PRIORITY_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
 					</td>
 					<td class="row2" style="text-align:center;">
+						# IF NOT C_ORDER_STATUS_ASC #
+							<a href="{U_ORDER_STATUS_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
 						{L_ACTIONS}
+						# IF NOT C_ORDER_STATUS_DESC #
+							<a href="{U_ORDER_STATUS_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
 					</td>
 				</tr>
 				# ELSE #
@@ -114,7 +138,7 @@
 				# START alerts #
 				<tr id="delete_{alerts.ID}"> 
 					<td class="row1" style="text-align:center;">
-						{alerts.IMG} <a href="{alerts.URL}">{alerts.NAME}</a>
+						{alerts.IMG} <a href="{alerts.FIXING_URL}">{alerts.NAME}</a>
 					</td>
 					<td class="row1" style="text-align:center;">
 						{alerts.DATE}
@@ -133,6 +157,14 @@
 					</td>			
 				</tr>
 				# END alerts #
+				
+				# IF C_PAGINATION #
+				<tr> 
+					<td class="row1" style="text-align:center;" colspan="4">
+						{PAGINATION}
+					</td>					
+				</tr>
+				# ENDIF #
 			</table>
 		</div>
 			

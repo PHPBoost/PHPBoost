@@ -97,7 +97,11 @@ class AdministratorAlert extends Contribution
 		}
 		
 		//Regeneration of the member cache file
-		$Cache->generate_file('member');
+		if( $this->must_regenerate_cache )
+		{
+			$Cache->generate_file('member');
+			$this->must_regenerate_cache = false;
+		}
 	}
 	
 	function get_priority()
