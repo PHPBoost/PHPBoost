@@ -120,9 +120,7 @@ $LANG['wiki_status_management_article'] = 'Status management of the article <em>
 $LANG['wiki_defined_status'] = 'Defined status';
 $LANG['wiki_undefined_status'] = 'Personalized status';
 $LANG['wiki_no_status'] = 'No status';
-$LANG['wiki_status_explain'] = 'Here you can select the status of this article. Several different status permit you to order your articles and show a particular point of each article.
-<br />
-You can assign as well defined status to you articles than personalized one. To use a defined status let the personalized field empty.';
+$LANG['wiki_status_explain'] = 'Here you can select the status of this article. Several different status permit you to order your articles and show a particular point of each article.<br />You can assign as well defined status to you articles than personalized one. To use a defined status let the personalized field empty.';
 $LANG['wiki_current_status'] = 'Current status';
 
 $LANG['wiki_status_list'] = array(
@@ -175,6 +173,9 @@ $LANG['wiki_search_where_all'] = 'Title &amp; content';
 //Discussion
 $LANG['wiki_article_com'] = 'Discussion for this article';
 $LANG['wiki_article_com_article'] = 'Discussion';
+
+//Impression
+$LANG['wiki_printable_version'] = 'Version imprimable';
 
 //Suppression
 $LANG['wiki_confirm_delete_archive'] = 'Are you sure you want to delete this version of the article?';

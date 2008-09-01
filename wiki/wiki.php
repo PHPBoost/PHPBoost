@@ -1,9 +1,9 @@
 <?php
 /*##################################################
-*                               wiki.php
+*                                 wiki.php
 *                            -------------------
 *   begin                : October 09, 2006
-*   copyright          : (C) 2006 Sautel Benoit
+*   copyright            : (C) 2006 Sautel Benoit
 *   email                : ben.popeye@phpboost.com
 *
 *

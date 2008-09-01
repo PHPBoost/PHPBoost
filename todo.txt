@@ -10,6 +10,7 @@
 
 ------------------------------------ MODULES -----------------------------------
 [-] Download, faire une option dans les catégories à l'édition pour désapprouver.
+[-] Impression dans le wiki, les articles, les pages et les news éventuellement.
 
 ################################################################################
 
