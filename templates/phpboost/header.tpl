@@ -1,4 +1,4 @@
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{L_XML_LANGUAGE}" >
 	<head>
 		<title>{SITE_NAME} : {TITLE}</title>
@@ -28,20 +28,20 @@
 	<body>
 
 # IF C_ALERT_MAINTAIN #
-<div style="position:absolute;top:5px;width:99%;">					
-	<div style="position:relative;width:400px;margin:auto;" class="warning">		
+<div style="position:absolute;top:5px;width:99%;">
+	<div style="position:relative;width:400px;margin:auto;" class="warning">
 		{L_MAINTAIN_DELAY}
-		<br /><br />	
+		<br /><br />
 		<script type="text/javascript">
 			document.write('<div id="release">{L_LOADING}{PATH_TO_ROOT}.</div>');
 		</script>
-		<noscript>				
+		<noscript>
 			<strong>{DELAY}</strong>
 		</noscript>
 	</div>
 </div>
 <script type="text/javascript">
-<!--		
+<!--
 function release(year, month, day, hour, minute, second)
 {
 	if( document.getElementById('release') )
@@ -56,8 +56,8 @@ function release(year, month, day, hour, minute, second)
 		release_time = (end.getTime() - now.getTime())/1000;
 		if( release_time <= 0 )
 		{
-			document.location.reload();					
-			release_time = '0';					
+			document.location.reload();
+			release_time = '0';
 		}
 		else
 			timeout = setTimeout('release('+year+', '+month+', '+day+', '+hour+', '+minute+', '+second+')', 1000);
@@ -82,23 +82,26 @@ release({L_RELEASE_FORMAT});
 </script>
 # ENDIF #
 
-<span id="scroll_top_page"></span>
+<div id="scroll_top_page" />
 <div id="global">
 	<div id="header">
 		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
 		{MODULES_MINI_HEADER_CONTENT}
 		<div class="dynamic_menu" style="padding-left:190px;top:113px">
 			<ul>
-				<li>
-					<h5 class="links"><a href="{PATH_TO_ROOT}/index.php" title="Accueil"><img src="{PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> Accueil</a></h5>
+				<li onmouseover="show_menu('l0', 0);" onmouseout="hide_menu(0);">
+					<h5 class="links"><a href="{PATH_TO_ROOT}/index.php" title="PHPBoost"><img src="{PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" />PHPBoost</a></h5>
+                    <ul id="smenul0">
+                        <li><a href="{PATH_TO_ROOT}/index.php" title="Accueil" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png);">Accueil</a></li>
+                        <li><a href="http://demo.phpboost.com" title="Démonstration PHPBoost" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/com_mini.png);">Démonstration</a></li>
+                    </ul>
 				</li>
 				<li onmouseover="show_menu('l1', 0);" onmouseout="hide_menu(0);">
-					<h5 class="links"><a href="{PATH_TO_ROOT}/download/download-52+phpboost-2-0.php" title="PHPBoost"><img src="{PATH_TO_ROOT}/download/download_mini.png" class="valign_middle" alt="" /> PHPBoost</a></h5>
+					<h5 class="links"><a href="{PATH_TO_ROOT}/download/download-52+phpboost-2-0.php" title="Télécharger"><img src="{PATH_TO_ROOT}/download/download_mini.png" class="valign_middle" alt="" />Télécharger</a></h5>
 					<ul id="smenul1">
 						<li><a href="{PATH_TO_ROOT}/download/download-52+phpboost-2-0.php" style="background-image:url({PATH_TO_ROOT}/download/download_mini.png);">PHPBoost 2</a></li>
-						<li><a href="http://demo.phpboost.com" title="Démonstration PHPBoost" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/com_mini.png);">Démonstration</a></li>
+                        <li><a href="{PATH_TO_ROOT}/download/category-24+modules.php" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/modules_mini.png);">Modules</a></li>
 						<li><a href="http://themes.phpboost.com" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/themes_mini.png);">Thèmes</a></li>
-						<li><a href="{PATH_TO_ROOT}/download/category-24+modules.php" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/modules_mini.png);">Modules</a></li>
 					</ul>
 				</li>
 				<li onmouseover="show_menu('l2', 0);" onmouseout="hide_menu(0);">
@@ -118,9 +121,9 @@ release({L_RELEASE_FORMAT});
 				<li onmouseover="show_menu('l4', 0);" onmouseout="hide_menu(0);">
 					<h5 class="links"><a href="{PATH_TO_ROOT}/forum/index.php" title="Communauté"><img src="{PATH_TO_ROOT}/forum/forum_mini.png" class="valign_middle" alt="" /> Communauté</a></h5>
 					<ul id="smenul4">
-						<li><a href="{PATH_TO_ROOT}/forum/index.php" style="background-image:url({PATH_TO_ROOT}/forum/forum_mini.png);">Forum</a></li>						
-						<li><a href="{PATH_TO_ROOT}/shoutbox/shoutbox.php" style="background-image:url({PATH_TO_ROOT}/shoutbox/shoutbox_mini.png);">Discussion</a></li>						
-						<li><a href="{PATH_TO_ROOT}/newsletter/newsletter.php" style="background-image:url({PATH_TO_ROOT}/newsletter/newsletter_mini.png);">Newsletter</a></li>						
+						<li><a href="{PATH_TO_ROOT}/forum/index.php" style="background-image:url({PATH_TO_ROOT}/forum/forum_mini.png);">Forum</a></li>
+						<li><a href="{PATH_TO_ROOT}/shoutbox/shoutbox.php" style="background-image:url({PATH_TO_ROOT}/shoutbox/shoutbox_mini.png);">Discussion</a></li>
+						<li><a href="{PATH_TO_ROOT}/newsletter/newsletter.php" style="background-image:url({PATH_TO_ROOT}/newsletter/newsletter_mini.png);">Newsletter</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -137,13 +140,13 @@ release({L_RELEASE_FORMAT});
 		
 		<div id="links_vertical_central">
 			<p style="margin:0;margin-top:5px;"><a href="{PATH_TO_ROOT}/news/news.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png" alt="" /></a></p>
-	# IF C_MEMBER_CONNECTED #		
-			<p style="margin:0"><a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" class="small_link" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /></a>	</p>		
-			<p style="margin:0"><a href="{U_MEMBER_PM}" class="small_link" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /></a></p>			
-			# IF C_ADMIN_AUTH # 
+	# IF C_MEMBER_CONNECTED #
+			<p style="margin:0"><a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" class="small_link" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /></a></p>
+			<p style="margin:0"><a href="{U_MEMBER_PM}" class="small_link" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /></a></p>
+			# IF C_ADMIN_AUTH #
 			<p style="margin:0"><a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link" title="{L_ADMIN_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /></a></p>
 			# ENDIF #
-			# IF C_MODO_AUTH # 
+			# IF C_MODO_AUTH #
 			<p><a href="{PATH_TO_ROOT}/member/moderation_panel.php" class="small_link" title="{L_MODO_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /></a></p>
 			# ENDIF #
 	# END ENDIF #
@@ -157,7 +160,7 @@ release({L_RELEASE_FORMAT});
 	
 	
 	# IF C_COMPTEUR #
-	<div id="compteur">					
+	<div id="compteur">
 		<span class="text_strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}
 		<br />
 		<span class="text_strong">{L_TODAY}:</span> {COMPTEUR_DAY}
@@ -168,7 +171,7 @@ release({L_RELEASE_FORMAT});
 	<div id="left_menu">
 		<p class="text_center">
 			<a href="{PATH_TO_ROOT}/download/download-52+phpboost-2-0.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/theme/download_phpboost.png" id="download_phpboost" alt="" onmouseover="change_img_path('download_phpboost', '{PATH_TO_ROOT}/templates/{THEME}/images/theme/download_phpboost2.png')" onmouseout="change_img_path('download_phpboost', '{PATH_TO_ROOT}/templates/{THEME}/images/theme/download_phpboost.png')" /></a>
-		</p>		
+		</p>
 		{MODULES_MINI_LEFT_CONTENT}
 	</div>
 	# ENDIF #

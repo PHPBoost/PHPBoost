@@ -170,6 +170,8 @@ class Template
 		$module = substr($filename, 0, $i);
 		$file = trim(substr($filename, $i), '/');
 		$folder = trim(substr($file, 0, strpos($file, '/')), '/');
+
+        //echo $filename . ' - ' . $module . ' - ' . $file . ' - ' . $folder . '<hr />';
 		
 		if( empty($module) || $module == 'admin' ) //Template du thème (noyau)
 			return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
@@ -179,14 +181,14 @@ class Template
 				return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/framework/' . $file;
 			if( $folder == 'framework' )
 			{
-				if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/' . $file) )
-					return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/' . $file;	
-				elseif( file_exists(PATH_TO_ROOT . '/' . $module . '/templates/' . $file) )
-					return PATH_TO_ROOT . '/' . $module . '/templates/' . $file;
+				if( file_exists($file_path = (PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/' . $file)) )
+					return $file_path;
+				elseif( file_exists($file_path = (PATH_TO_ROOT . '/' . $module . '/templates/' . $file)) )
+					return $file_path;
 				else
-					return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $file;		
+					return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $file;
 			}
-				
+            
 			//module data path
 			if( !isset($this->module_data_path[$module]) )
 			{
@@ -197,7 +199,7 @@ class Template
 			}
 
 			if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/' . $file) )
-				return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/' . $file;			
+				return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $module . '/' . $file;
 			else
 				return PATH_TO_ROOT . '/' . $module . '/templates/' . $file;
 		}

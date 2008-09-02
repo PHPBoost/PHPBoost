@@ -24,6 +24,6 @@
 		# ENDIF #
 	</div>
 </div>
-		<span id="scroll_bottom_page"></span>
+		<div id="scroll_bottom_page" />
 	</body>
 </html>
