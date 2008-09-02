@@ -528,7 +528,7 @@ function ShowSyndication(element) {
     feed_menu_elt = null;
     elts = element.parentNode.getElementsByTagName('div');
     for( var i = 0; i < elts.length; i++ ) {
-        if( elts[i].id == 'syndication_choices') {
+        if( elts[i].title == 'L_SYNDICATION_CHOICES') {
             feed_menu_elt = elts[i];
             break;
         }
