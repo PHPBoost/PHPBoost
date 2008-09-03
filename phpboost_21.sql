@@ -213,22 +213,26 @@ DROP TABLE IF EXISTS `phpboost_contributions`;
 CREATE TABLE `phpboost_contributions` (
   `id` int(11) NOT NULL auto_increment,
   `entitled` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `description` text,
   `fixing_url` varchar(255) NOT NULL,
   `module` varchar(100) NOT NULL,
   `current_status` tinyint(3) NOT NULL default '0',
   `creation_date` int(11) NOT NULL,
-  `fixing_date` int(11) NOT NULL,
-  `auth` text NOT NULL,
+  `fixing_date` int(11) default NULL,
+  `auth` text,
   `poster_id` int(11) NOT NULL,
-  `fixer_id` int(11) NOT NULL,
-  `id_in_module` int(11) NOT NULL,
-  `identifier` varchar(255) NOT NULL,
-  `nbr_com` int(10) unsigned NOT NULL,
-  `lock_com` tinyint(1) unsigned NOT NULL,
+  `fixer_id` int(11) default NULL,
+  `id_in_module` int(11) default NULL,
+  `identifier` varchar(64) default NULL,
+  `nbr_com` int(10) unsigned default NULL,
+  `lock_com` tinyint(1) unsigned default NULL,
   `contribution_type` tinyint(1) unsigned NOT NULL default '1',
-  `priority` tinyint(3) unsigned NOT NULL default '3',
-  PRIMARY KEY  (`id`)
+  `priority` tinyint(3) unsigned default '3',
+  `type` varchar(45) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `type_index` (`type`),
+  KEY `identifier_index` (`identifier`),
+  KEY `module_index` (`module`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
