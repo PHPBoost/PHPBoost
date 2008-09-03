@@ -38,7 +38,29 @@ global $LANG;
             $tpl = new Template('news/framework/content/syndication/last_news.tpl');
             echo Feed::get_parsed('news', DEFAULT_FEED_NAME, 0, $tpl, 1);
         ?>
-        <div class="news_container" style="float:left;width:450px;margin-left:10px;">
+        <div class="news_container" style="float:right;width:365px;margin-left:10px;">
+            <div class="news_top_l"></div>
+            <div class="news_top_r"></div>
+            <div class="news_top">
+                <span id="articles_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)">
+                    <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
+                </span>&nbsp;
+                <?php echo get_feed_menu('/articles/syndication.php'); ?>
+                <h3 class="title valign_middle">Dossiers</h3>
+            </div>
+            <div class="news_content">
+                <?php
+                    load_module_lang('articles');
+                    echo Feed::get_parsed('articles', DEFAULT_FEED_NAME, 0, array('L_READ' => $LANG['read_feed'], 'L_POSTED_ON' => $LANG['posted_on'], 'L_ON' => $LANG['on']) , 3);
+                ?>
+                <div style="text-align:right;"><a href="./articles/articles.php" class="small_link">Tous les Dossiers...</a></div>
+                <div class="spacer"></div>
+            </div>
+            <div class="news_bottom_l"></div>
+            <div class="news_bottom_r"></div>
+            <div class="news_bottom"></div>
+        </div>
+        <div class="news_container" style="float:left;width:760px;margin-left:10px;">
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
@@ -70,7 +92,7 @@ global $LANG;
             <div class="news_bottom_r"></div>
             <div class="news_bottom"></div>
         </div>
-        <div class="news_container" style="float:left;width:300px;margin-left:10px;">
+        <!--<div class="news_container" style="float:left;width:300px;margin-left:10px;">
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
@@ -78,50 +100,27 @@ global $LANG;
                     <span id="news_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)">
                         <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
                     </span>&nbsp;
-                    <?php echo get_feed_menu('/news/syndication.php'); ?>
+                    <?php //echo get_feed_menu('/news/syndication.php'); ?>
                     <h3 class="title valign_middle">Dernières news</h3>
                 </div>
                 <div style="float:right"></div>
             </div>
             <div class="news_content">
-                <?php echo Feed::get_parsed('news'); ?>
+                <?php //echo Feed::get_parsed('news'); ?>
                 <div style="text-align:right;"><a href="./news/news.php" class="small_link">Plus de news...</a></div>
                 <div class="text_center"></div>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>
             <div class="news_bottom"></div>
-        </div>
-        <div class="news_container" style="float:left;width:300px;margin-left:10px;">
-            <div class="news_top_l"></div>
-            <div class="news_top_r"></div>
-            <div class="news_top">
-                <span id="articles_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)">
-                    <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
-                </span>&nbsp;
-                <?php echo get_feed_menu('/articles/syndication.php'); ?>
-                <h3 class="title valign_middle">Dossiers</h3>
-            </div>
-            <div class="news_content">
-                <?php
-                    load_module_lang('articles');
-                    echo Feed::get_parsed('articles', DEFAULT_FEED_NAME, 0, array('L_READ' => $LANG['read_feed'], 'L_POSTED_ON' => $LANG['posted_on'], 'L_ON' => $LANG['on']) , 3);
-                ?>
-                <div style="text-align:right;"><a href="./articles/articles.php" class="small_link">Tous les Dossiers...</a></div>
-                <div class="spacer"></div>
-            </div>
-            <div class="news_bottom_l"></div>
-            <div class="news_bottom_r"></div>
-            <div class="news_bottom"></div>
-        </div>
-        
+        </div>-->
         <div class="news_container" style="float:left;width:760px;margin-left:10px;">
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
                 <h3 class="title valign_middle">Le site du moment</h3>
             </div>
-            <div class="news_content">                
+            <div class="news_content">
                 <h3 class="sub_title">Le Lien Lacté</h3>
 				<br />
 				<p>
