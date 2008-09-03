@@ -137,10 +137,14 @@ class NewsInterface extends ModuleInterface
             
             $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
             
+            $maxlength = 300;
+            $length = strlen($contents) > $maxlength ?  $maxlength + strpos(substr($contents, $maxlength), ' ') : 0;
+            $length = $length > ($maxlength * 1.1) ? $maxlength : $length;
+            
             $item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
             $item->set_link($link);
             $item->set_guid($link);
-            $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
+            $item->set_desc($length > 0 ? substr($contents, 0, $length) . ' <a href="' . $link . '" title="' . $LANG['next'] . '">...</a>' : $contents);
             $item->set_date($date);
             $item->set_image_url($row['img']);
             
