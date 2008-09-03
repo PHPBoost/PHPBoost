@@ -109,8 +109,6 @@ foreach($modules_update as $name => $version)
 
 require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
 
-$alerts_list = AdministratorAlertService::get_all_alerts();
-
 $Template->Assign_vars(array(
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 	'L_INDEX_ADMIN' => $LANG['administration'],

@@ -31,6 +31,7 @@ require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrato
 
 class AdministratorAlertService
 {
+	//Function which builds an alert knowing its id. If it's not found, it returns null
 	/*static*/ function find_by_id($id)
 	{
 		$alert = new AdministratorAlert();
@@ -40,16 +41,19 @@ class AdministratorAlertService
 			return null;
 	}
 	
+	//Function which saves an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
 	/*static*/ function save_alert(&$alert)
 	{
 		$alert->save();
 	}
 	
+	//Function which deletes an alert
 	/*static*/ function delete_alert(&$alert)
 	{
 		$alert->delete();
 	}
 	
+	//Function which returns all the alerts of the table
 	/*static*/ function get_all_alerts($criteria = 'creation_date', $order = 'desc', $begin = 0, $number = 20)
 	{
 		global $Sql;
@@ -57,7 +61,7 @@ class AdministratorAlertService
 		$array_result = array();
 		
 		//On liste les contributions
-		$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, priority, description
+		$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, priority, description
 		FROM ".PREFIX."contributions c
 		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
 		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
@@ -67,7 +71,7 @@ class AdministratorAlertService
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			$alert = new AdministratorAlert();
-			$alert->build_from_db($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['fixing_date']), $row['auth'], $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['priority']);
+			$alert->build_from_db($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['fixing_date']), $row['auth'], $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
 			$array_result[] = $alert;
 		}
 		
