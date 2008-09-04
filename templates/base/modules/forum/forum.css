@@ -100,8 +100,8 @@ a.forum_link_pseudo:hover {
 .forum_action{
 	width:550px;
 	margin:auto;
-	background:#AFD2E8;
-	border:1px solid #71BAF1;
+	background:#C0DAE6;
+	border:1px solid #1171A3;
 	border-spacing:1px;
 	text-align:center;
 	-moz-border-radius:0.4em;
@@ -167,8 +167,8 @@ a.forum_link_cat{
 }
 .module_contents{ /* Contenu des modules */
 	background:#FFFFFF;
-	border-left:1px solid #71BAF1;	
-	border-right:1px solid #71BAF1;	
+	border-left:1px solid #1171A3;	
+	border-right:1px solid #1171A3;	
 	border-bottom:1px solid #FFFFFF;	
 	clear:both;
 }

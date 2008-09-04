@@ -85,9 +85,8 @@ div#main{
 	background:url(images/right_global.png) no-repeat right top;
 }
 div#main2{
-	background: url(images/corps_04.png) repeat-x transparent;
 	float:left;
-	width:732px;
+	width:700px;
 	padding-bottom:15px;
 	margin-left:12px;
 }
