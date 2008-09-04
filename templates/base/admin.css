@@ -11,21 +11,18 @@ div#sub_header_admin{
 }
 /* Lien du subheader */
 div#sub_header_admin .dynamic_menu{
-	margin-top:-20px;
-	margin-left:190px;
+	padding-top:12px;
+	margin-left:100px;
 }
 /* Conteneur principal */
 div#admin_main{
-	width:90%;
-	padding-left:40px;
-	border-left:1px solid #1C618C;	
-	border-right:1px solid #1C618C;	
+	width:925px;
+	padding-left:48px;
 }
 /* Conteneurs */
 div#admin_contents{
 	height:450px;
 	margin-left:170px;	
-	border-left:1px solid #1C618C;	
 }
 html>body div#admin_contents{
 	height:auto;
@@ -33,7 +30,7 @@ html>body div#admin_contents{
 }
 /* Menu déroulants verticaux */
 div#admin_quick_menu{
-	width:155px;
+	width:185px;
 	float:left;
 	text-align:center;
 	padding-top:5px;
