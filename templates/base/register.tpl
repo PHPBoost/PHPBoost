@@ -97,24 +97,7 @@
 					img_sex = 'woman.png';
 				document.getElementById('img_sex').innerHTML = (img_sex != '') ? '<img src="../templates/{THEME}/images/' + img_sex + '" alt="" />' : '';
 			}
-		}	
-		function refresh_img()
-		{
-			if ( typeof this.img_id == 'undefined' )
-				this.img_id = 0;
-			else
-				this.img_id++;
-
-			data = "new=1";
-			var xhr_object = xmlhttprequest_init('verif_code.php');			
-			xhr_object.onreadystatechange = function() 
-			{
-				if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
-					document.getElementById('verif_code_img').src = 'verif_code.php?new=' + img_id;	
-			}
-			xmlhttprequest_sender(xhr_object, data);
-		}	
-		
+		}
 		function change_img_theme(id, value)
 		{
 			if(document.images )
@@ -174,17 +157,16 @@
 					<dt><label for="pass_bis">* {L_CONFIRM_PASSWORD}</label></dt>
 					<dd><label><input size="30" type="password" class="text" name="pass_bis" id="pass_bis" maxlength="30" /></label></dd>			
 				</dl>
-				# START register.verif_code #
+				# IF C_VERIF_CODE #
 				<dl>
 					<dt><label for="verif_code">* {L_VERIF_CODE}</label><br /><span>{L_VERIF_CODE_EXPLAIN}</span></dt>
-					<dd><label>
-						<img src="verif_code.php" id="verif_code_img" alt="" style="padding:2px;" />
-						<br />
-						<input size="30" type="text" class="text" name="verif_code" id="verif_code" />
-						<a href="javascript:refresh_img()"><img src="../templates/{THEME}/images/refresh.png" alt="" class="valign_middle" /></a>
-					</label></dd>			
+					<dd>
+						<label>
+							{VERIF_CODE}
+						</label>
+					</dd>			
 				</dl>
-				# END register.verif_code #
+				# ENDIF #
 				<dl>
 					<dt><label for="user_lang">* {L_LANG_CHOOSE}</label></dt>
 					<dd>
