@@ -175,7 +175,6 @@ release({L_RELEASE_FORMAT});
 	# ENDIF #
 	<div id="main">
     <div id="main2">
-    <div style="clear:both"></div>
 		<div id="links">
 			&nbsp;&nbsp;<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
 			# START link_bread_crumb #

@@ -77,16 +77,17 @@ div#left_menu{
 	width:190px;
 	padding:0;
 	margin:0;
-	margin-left:35px;
+	margin-left:5px;
 	padding-top:10px;
 }
 /* #####  Contenu de la page ###### */
 div#main{
 	background:url(images/right_global.png) no-repeat right top;
+	margin-right:2px;
 }
 div#main2{
 	float:left;
-	width:700px;
+	width:760px;
 	padding-bottom:15px;
 	margin-left:12px;
 }
