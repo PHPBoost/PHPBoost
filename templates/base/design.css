@@ -25,7 +25,6 @@ body{
 div#global{
 	width:1021px;
 	margin:auto;
-	margin-bottom:25px;
 	background:url(images/bg.png) repeat-y;
 }
 /* ##### Entête de la page ###### */
@@ -122,6 +121,7 @@ div#footer{
 	background:url(images/footer.png) no-repeat;
 	height:48px;
 	padding:0.65em;
+	padding-left:50px;
 	border-top:none;
 }
 div#footer span{
@@ -134,12 +134,10 @@ div#footer span a{
 }
 /* ##### Pied de page Admin ###### */
 div#admin_footer{
-	height:25px;
+	height:35px;
 	text-align:center;
-	background:#526F8E url(images/footer.png) repeat-x top;
+	background:#526F8E url(images/footer.png) no-repeat;
 	padding:0.65em;
-	border:1px solid #3D425F;
-	border-top:none;
 }
 div#admin_footer span{
 	font-size:10px;
@@ -150,9 +148,6 @@ div#admin_footer span a{
 	color:#FFFFFF;
 }
 
-div#newsletter{
-	margin-right:30px;
-}
 div#links_vertical {
 	display:block !important;
 	display:none;

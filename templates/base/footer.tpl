@@ -4,21 +4,9 @@
 	</div>
 	<div id="top_footer">
 		{MODULES_MINI_TOP_FOOTER_CONTENT}
-             <div id="newsletter">
-			<form action="{PATH_TO_ROOT}/newsletter/newsletter.php{SID}" method="post">
-				<div class="newsletter_form">
-					<span class="newsletter_title">{L_NEWSLETTER}</span> 
-					<span style="float:right;">
-						<input type="text" name="mail_newsletter" maxlength="50" size="16" class="text newsletter_text" value="{USER_MAIL}" />
-						<input type="image" class="newsletter_img" value="1" src="{PATH_TO_ROOT}/templates/{THEME}/modules/newsletter/images/newsletter_submit.png" />
-						<input type="hidden" name="subscribe" value="subscribe" />
-					</span> 
-				</div>
-			</form>
-		</div>
+
 		<div class="spacer"></div>
 	</div></div>
-
         <div id="footer">
 		{MODULES_MINI_FOOTER_CONTENT}
 		<span>
