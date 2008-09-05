@@ -526,6 +526,7 @@ function ShowSyndication(element) {
     if( feed_menu_elt )
         feed_menu_elt.style.visibility = 'hidden';
     feed_menu_elt = null;
+    var elts = null;
     elts = element.parentNode.getElementsByTagName('div');
     for( var i = 0; i < elts.length; i++ ) {
         if( elts[i].title == 'L_SYNDICATION_CHOICES') {
@@ -540,8 +541,4 @@ function HideSyndication(element) {
     feed_menu_elt = element;
     feed_menu_timeout_out = setTimeout('feed_menu_elt.style.visibility = \'hidden\'', menu_delay);
     clearTimeout(feed_menu_timeout_in);
-}
-
-function ClearSyndicationTimeout() {
-    clearTimeout(feed_menu_timeout_out);
 }
