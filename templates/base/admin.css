@@ -11,13 +11,13 @@ div#sub_header_admin{
 }
 /* Lien du subheader */
 div#sub_header_admin .dynamic_menu{
-	padding-top:12px;
-	margin-left:100px;
+	padding-top:15px;
+	margin-left:60px;
 }
 /* Conteneur principal */
 div#admin_main{
-	width:925px;
-	padding-left:48px;
+	width:978px;
+	padding-left:5px;
 }
 /* Conteneurs */
 div#admin_contents{
@@ -94,6 +94,7 @@ a.admin_extend_link{
 	text-decoration:none;
 	color:#3465A4;
 }
+
 /* Coloration des moteur de recherche */
 .robot{
 	color:#FF6600; 
