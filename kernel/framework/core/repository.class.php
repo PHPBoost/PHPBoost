@@ -31,7 +31,9 @@ class Repository
     function Repository($url)
     {
         $this->url = $url;
-        $this->xml = simplexml_load_file($this->url);
+        $this->xml = @simplexml_load_file($this->url);
+        if( $this->xml == false )
+            $this->xml = null;
     }
     
     function check($app)
@@ -43,6 +45,7 @@ class Repository
             $newerVersions = array();
             $versions = $this->xml->xpath($xpath_query);
             $nbVersions = $versions != false ? count($versions) : 0;
+            // Retrieves all the available updates for the current application
             for( $i = 0; $i < $nbVersions; $i++ )
             {
                 $attributes = $versions[$i]->attributes();
@@ -50,11 +53,13 @@ class Repository
                 if( $version > $app->get_version() )
                     $newerVersions[(string) $version] = $i;
             }
-            $firstNewVersion = count($newerVersions) > 0 ? min(array_keys($newerVersions)) : '';
             
-            return !empty($firstNewVersion) ? $versions[$newerVersions[$firstNewVersion]] : null;
+            // Keep only the first applyable update
+            $firstNewVersion = count($newerVersions) > 0 ? min(array_keys($newerVersions)) : '';
+            if( !empty($firstNewVersion) )
+                return $versions[$newerVersions[$firstNewVersion]];
         }
-        return false;
+        return null;
     }
     
     function get_url() { return $this->url; }

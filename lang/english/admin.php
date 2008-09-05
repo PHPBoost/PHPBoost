@@ -730,4 +730,6 @@ $LANG['website_updates'] = 'Updates';
 $LANG['kernel'] = 'Kernel';
 //$LANG['modules'] = 'Modules';
 $LANG['themes'] = 'Themes';
+$LANG['update_available'] = 'The %0s %1s is available in its %2s version';
+$LANG['kernel_update_available'] = 'The kernel %s is available';
 ?>
