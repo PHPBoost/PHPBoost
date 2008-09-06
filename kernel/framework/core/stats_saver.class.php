@@ -95,14 +95,13 @@ class Stats_saver
 		$array_stats_img = array('browsers.png', 'os.png', 'lang.png');
 		foreach($array_stats_img as $key => $value)
 			@unlink(PATH_TO_ROOT . '/cache/' . $value);
-			
-		
 		
 		########### Détection des navigateurs ###########
 		$array_browser = array(
 			'opera' => 'opera',
 			'firefox' => 'firefox',
 			'MSIE|internet explorer' => 'internetexplorer',
+			'chrome' => 'Chrome', 
 			'safari' => 'safari',
 			'konqueror' => 'konqueror',
 			'netscape' => 'netscape',
@@ -135,7 +134,7 @@ class Stats_saver
 				$browser = $name;
 				break;
 			}
-		}		
+		}
 		Stats_saver::_write_stats('browsers', $browser);
 		
 		########### Détection des systèmes d'exploitation ###########

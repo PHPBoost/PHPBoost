@@ -85,6 +85,7 @@
 [*] Déplacement du code de connexion utilisateur.
 [*] Regroupement des modules dans les templates.
 [*] Nouvelles images pour les rangs.
+[*] Ajout de Google Chrome dans les stats des navigateurs.
 [*] Conformation des requêtes au standard SQL.
 [*] Amélioration des taches crons.
 [*] Correction du bug d'affichage des dossiers dans le gestionnaire de fichiers.
