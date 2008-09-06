@@ -34,11 +34,33 @@ require_once('./kernel/framework/content/syndication/feed.class.php');
 
 global $LANG;
 ?>
-        <?php
-            $tpl = new Template('news/framework/content/syndication/last_news.tpl');
-            echo Feed::get_parsed('news', DEFAULT_FEED_NAME, 0, $tpl, 1);
-        ?>
-        <div class="news_container" style="float:right;width:365px;margin-left:10px;">
+       <div class="news_container" style="float:left;width:365px;margin-left:10px;">
+            <div class="news_top_l"></div>
+            <div class="news_top_r"></div>
+            <div class="news_top">
+                <div style="float:left">
+                    <span id="news_feeds" style="float:left;padding-left:5px;" onmouseover="ShowSyndication(this)">
+                        <img class="valign_middle" src="./templates/<?php echo $CONFIG['theme']; ?>/images/rss.png" alt="Syndication" title="Syndication" />
+                    </span>&nbsp;
+                    <?php echo get_feed_menu('/news/syndication.php'); ?>
+                    <h3 class="title valign_middle">Dernières news</h3>
+                </div>
+                <div style="float:right"></div>
+            </div>
+            <div class="news_content">
+                <?php 
+				$tpl = new Template('news/framework/content/syndication/last_news.tpl');
+				echo Feed::get_parsed('news', DEFAULT_FEED_NAME, 0, $tpl, 1) . '<hr />';
+				
+				echo Feed::get_parsed('news', 0, array(), 14); ?>
+                <div style="text-align:right;"><a href="./news/news.php" class="small_link">Plus de news...</a></div>
+                <div class="text_center"></div>
+            </div>
+            <div class="news_bottom_l"></div>
+            <div class="news_bottom_r"></div>
+            <div class="news_bottom"></div>
+        </div>
+		<div class="news_container" style="float:right;width:365px;margin-left:10px;">
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
@@ -60,6 +82,7 @@ global $LANG;
             <div class="news_bottom_r"></div>
             <div class="news_bottom"></div>
         </div>
+		
         <div class="news_container" style="float:left;width:760px;margin-left:10px;">
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
