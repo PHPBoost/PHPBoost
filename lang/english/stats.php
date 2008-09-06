@@ -96,6 +96,7 @@ $stats_array_browsers = array(
        'opera' => array('Opera', 'opera.png'),
        'firefox' => array('Firefox', 'firefox.png'),
        'safari' => array('Safari', 'safari.png'),
+       'chrome' => array('Chrome', 'chrome.png'),
        'konqueror' => array('Konqueror', 'konqueror.png'),
        'netscape' => array('Netscape', 'netscape.png'),
        'mozilla firebird' => array('Mozilla Firebird', 'mozilla.png'),
