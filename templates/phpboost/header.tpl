@@ -90,14 +90,14 @@ release({L_RELEASE_FORMAT});
 		<div class="dynamic_menu" style="padding-left:190px;top:113px">
 			<ul>
 				<li onmouseover="show_menu('l0', 0);" onmouseout="hide_menu(0);">
-					<h5 class="links"><a href="{PATH_TO_ROOT}/index.php" title="PHPBoost"><img src="{PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" />PHPBoost</a></h5>
+					<h5 class="links"><a href="{PATH_TO_ROOT}/index.php" title="PHPBoost"><img src="{PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> PHPBoost</a></h5>
                     <ul id="smenul0">
                         <li><a href="{PATH_TO_ROOT}/index.php" title="Accueil" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png);">Accueil</a></li>
                         <li><a href="http://demo.phpboost.com" title="Démonstration PHPBoost" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/com_mini.png);">Démonstration</a></li>
                     </ul>
 				</li>
 				<li onmouseover="show_menu('l1', 0);" onmouseout="hide_menu(0);">
-					<h5 class="links"><a href="{PATH_TO_ROOT}/download/download-52+phpboost-2-0.php" title="Télécharger"><img src="{PATH_TO_ROOT}/download/download_mini.png" class="valign_middle" alt="" />Télécharger</a></h5>
+					<h5 class="links"><a href="{PATH_TO_ROOT}/download/download-52+phpboost-2-0.php" title="Télécharger"><img src="{PATH_TO_ROOT}/download/download_mini.png" class="valign_middle" alt="" /> Télécharger</a></h5>
 					<ul id="smenul1">
 						<li><a href="{PATH_TO_ROOT}/download/download-52+phpboost-2-0.php" style="background-image:url({PATH_TO_ROOT}/download/download_mini.png);">PHPBoost 2</a></li>
                         <li><a href="{PATH_TO_ROOT}/download/category-24+modules.php" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/modules_mini.png);">Modules</a></li>
@@ -115,8 +115,11 @@ release({L_RELEASE_FORMAT});
 						<li><a href="{PATH_TO_ROOT}/faq/faq.php" style="background-image:url({PATH_TO_ROOT}/faq/faq_mini.png);">FAQ</a></li>
 					</ul>
 				</li>
-				<li>
+				<li onmouseover="show_menu('l3', 0);" onmouseout="hide_menu(0);">
 					<h5 class="links"><a href="{PATH_TO_ROOT}/articles/articles.php" title="Dossiers"><img src="{PATH_TO_ROOT}/articles/articles_mini.png" class="valign_middle" alt="" /> Dossiers</a></h5>
+					<ul id="smenul3">
+						<li><a href="{PATH_TO_ROOT}/articles/articles-6+dossiers.php" style="background-image:url({PATH_TO_ROOT}/articles/articles_mini.png);">PHPBoost</a></li>
+					</ul>
 				</li>
 				<li onmouseover="show_menu('l4', 0);" onmouseout="hide_menu(0);">
 					<h5 class="links"><a href="{PATH_TO_ROOT}/forum/index.php" title="Communauté"><img src="{PATH_TO_ROOT}/forum/forum_mini.png" class="valign_middle" alt="" /> Communauté</a></h5>
