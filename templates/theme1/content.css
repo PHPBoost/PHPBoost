@@ -445,13 +445,13 @@ a.msg_link_pseudo:hover {
 .module_mini_container{ /*Placement des mini modules */
 	width:180px;
 	margin:auto;
-	margin-bottom:15px;
+	margin-bottom:2px;
 }
 .module_mini_top{
 	width:180px;
 	height:30px;
 	background:url(images/background.png) repeat;
-	border-bottom:1px solid #143B58;
+	border-bottom:1px solid #070E16;
 	font-weight:bold;
 	text-align:center;
 }
