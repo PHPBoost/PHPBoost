@@ -27,8 +27,11 @@
 [-] Faire les miniatures pour les thèmes.
 [-] Implémenter les classes CSS bb_block et bb_fieldset
 [-] Supprimer stitle de l'éditeur de bbcode et l'ajouter à title
+[-] Retirer déplacement menu gauche/droit suivant thème
 
 ------------------------------------ MODULES -----------------------------------
+[-] Forum option "Ajouter aux favoris" et "S'abonner (mail)"
+[-] Forum possibilité d'ajouter un forum de type lien internet.
 
 #################################################################################
 
