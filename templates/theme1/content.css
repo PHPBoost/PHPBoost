@@ -68,7 +68,7 @@ input, textarea, optgroup, select, .xmlhttprequest_preview{
 	border-top:1px solid #000000;
 	border-right:1px solid #000000;
 	border-bottom:1px solid #000000;
-	background-color:#DEF2FF;	
+	background-color:#C0C7CD;	
 	color:#101010;
 	padding:1px 2px;
 }
@@ -405,6 +405,7 @@ a.msg_link_pseudo:hover {
 	border-bottom:2px solid #2F577F;
 	padding-top:15px;
 	padding-left:6px;
+	font-weight:bold;
 }
 .module_top a{
 }
@@ -444,19 +445,18 @@ a.msg_link_pseudo:hover {
 .module_mini_container{ /*Placement des mini modules */
 	width:180px;
 	margin:auto;
-	margin-top:1px;
-	padding-top:5px;
-	margin-bottom:10px;
+	margin-bottom:15px;
 }
 .module_mini_top{
 	width:180px;
 	height:30px;
-	background:url("images/module_mini_top.png") repeat-x;
+	background:url(images/background.png) repeat;
+	border-bottom:1px solid #143B58;
 	font-weight:bold;
 	text-align:center;
 }
 .module_mini_contents{
-	background:#000000;
+	background:url(images/background.png) repeat;
 	border-top:none;
 	border-bottom:none;
 	text-align:center;
@@ -464,7 +464,7 @@ a.msg_link_pseudo:hover {
 }
 .module_mini_bottom{ /* Bordure inférieur des modules minis */ 
 	height:10px;
-	background: #000000;
+	background:url(images/background.png) repeat;
 }
 
 .label {

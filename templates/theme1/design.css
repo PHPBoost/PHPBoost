@@ -76,13 +76,16 @@ div#compteur{
 	margin-left:895px;
 }
 /* ##### Menu de gauche ###### */
-div#left_menu{
+div#left_menu{	
+	float:left;
+	width:190px;
+	padding:0;
+	margin-left:45px;
 }
 /* #####  Contenu de la page ###### */
 div#main{
 	float:left;
 	width:718px;
-	margin-left:50px;
 	background:url(images/background.png) repeat;
 }
 /* ##### Barre de lien rapide ###### */

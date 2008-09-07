@@ -101,6 +101,7 @@
 [*] [color=red]Nouveauté:[/color] Coloration des résultats dans le moteur de recherche.
 [*] Réparation des bugs sur l'arbre intervallaire gérant les catégories.
 [*] Nouveau formulaire de recherche.
+[*] Possibilité d'ajouter un forum de type lien internet.
 [*] Amélioration de l'interface et du système de sondage.
 [*] Alerte avant de marquer les sujets comme lus.
 [*] Action "suivre le sujet", "changement du statut du sujet" sans rechargement de page.
