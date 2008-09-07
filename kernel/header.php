@@ -180,27 +180,15 @@ if( $left_column ) //Gestion des blocs de gauche.
 {
 	$Template->Assign_vars(array(	
 		'C_START_LEFT' => true,
-		'MODULES_MINI_LEFT_CONTENT' => $MODULES_MINI['left']
+		'MODULES_MINI_LEFT_CONTENT' => $MODULES_MINI['left'] . (!$right_column ? $MODULES_MINI['right'] : '') //Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
 	));
-	if( !$right_column ) //Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
-	{
-		$Template->Assign_vars(array(
-			'MODULES_MINI_RIGHT_CONTENT' => $MODULES_MINI['right']
-		));
-	}
 }	
 if( $right_column )  //Gestion des blocs de droite.
 {
 	$Template->Assign_vars(array(
 		'C_START_RIGHT' => true,
-		'MODULES_MINI_RIGHT_CONTENT' => $MODULES_MINI['right']
+		'MODULES_MINI_RIGHT_CONTENT' => $MODULES_MINI['right'] . (!$right_column ? $MODULES_MINI['left'] : '') //Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
 	));
-	if( !$left_column ) //Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
-	{
-		$Template->Assign_vars(array(
-			'MODULES_MINI_LEFT_CONTENT' => $MODULES_MINI['left']
-		));
-	}
 }
 
 //Gestion du fil d'ariane, et des titres des pages dynamiques.
