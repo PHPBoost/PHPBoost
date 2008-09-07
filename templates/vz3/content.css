@@ -480,14 +480,11 @@ a.msg_link_pseudo:hover {
 	text-align:center;
 }
 .module_mini_contents{
-	width:190px;
 	background:url("images/mini_block.gif") repeat-y;
 	border-top:none;
 	border-bottom:none;
 	text-align:center; 
-	padding:4px;
-	padding-top:5px;
-	padding-bottom:0px;
+	padding:10px;
 }
 .module_mini_bottom{ /* Bordure inférieur des modules minis */ 
 	height:80px;
