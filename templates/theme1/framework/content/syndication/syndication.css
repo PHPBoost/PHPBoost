@@ -1,0 +1,24 @@
+div.syndication_choices {
+    position:absolute;
+    width:0px;
+    height:0px;
+    overflow:visible;
+    visibility:hidden;
+}
+
+div.syndication_choices ul {
+    width:90px;
+    padding-top:5px;
+    padding-bottom:1px;
+    background:#ffffff;
+    border:1px #ccccff solid;
+    list-style-type:none
+}
+
+ul.rss_feed {
+    margin-left:20px;
+}
+
+ul.rss_feed li {
+    list-style-image:url(../../../images/li.png);
+}
