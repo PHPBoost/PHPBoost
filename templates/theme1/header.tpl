@@ -93,10 +93,17 @@ release({L_RELEASE_FORMAT});
 			<div id="header">
 				<div class="dock" id="dock">
 					<div class="dock-container">
-						<a class="dock-item" href="{PATH_TO_ROOT}/forum/index.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/f1.png" alt="Forum" /><span>Forum</span></a> 
-						<a class="dock-item" href="{PATH_TO_ROOT}/contact/contact.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/c1.png" alt="contact" /><span>Contact</span></a> 
-						<a class="dock-item" href="{PATH_TO_ROOT}/articles/articles.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/a1.png" alt="article" /><span>Article</span></a> 
-						<a class="dock-item" href="{PATH_TO_ROOT}/download/download.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/t1.png" alt="telechargement," /><span>Telechargement</span></a> 
+						<a class="dock-item" href="{PATH_TO_ROOT}/news/news.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/f1.png" alt="Home" /></a>
+                        # IF C_MEMBER_CONNECTED #
+	<a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" class="dock-item" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/user.png" alt=""/><span>Profil</span></a>
+			<a href="{U_MEMBER_PM}" class="dock-item" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" alt="" /><span>Accueil</span></a>
+			# IF C_ADMIN_AUTH #
+			<a href="{PATH_TO_ROOT}/admin/admin_index.php" class="dock-item" title="{L_ADMIN_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/c1.png" alt="" /></a>
+			# ENDIF #
+			# IF C_MODO_AUTH #
+	<a href="{PATH_TO_ROOT}/member/moderation_panel.php" class="dock-item" title="{L_MODO_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/modo.png" alt=""></a>
+			# ENDIF #
+	# END ENDIF #
 					</div>
 				</div>
 				<script type="text/javascript">
