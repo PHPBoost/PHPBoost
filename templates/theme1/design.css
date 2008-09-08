@@ -26,7 +26,7 @@ div#global{
 	margin:auto;
 }
 div#conteneur{
-	background:url(images/bg.png) repeat-y;
+	background:url(images/bg.png) repeat-y transparent;
 	width:1004px;
 	margin:auto;
 }
