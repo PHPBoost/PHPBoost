@@ -17,13 +17,12 @@ div#sub_header_admin .dynamic_menu{
 /* Conteneur principal */
 div#admin_main{
 	padding:0px 6px;
-	border-left:1px solid #1C618C;	
-	border-right:1px solid #1C618C;	
+	padding-right:10px;
 }
 /* Conteneurs */
 div#admin_contents{
 	height:450px;
-	margin-left:170px;	
+	margin-left:198px;
 	border-left:1px solid #1C618C;	
 }
 html>body div#admin_contents{
@@ -36,6 +35,7 @@ div#admin_quick_menu{
 	float:left;
 	text-align:center;
 	padding-top:5px;
+	padding-left:30px;
 }
 div#admin_quick_menu ul{
 	list-style-type:none;
@@ -52,7 +52,7 @@ div#admin_quick_menu li.title_menu{
 	text-transform:uppercase;
 	font-weight:bold;
 	font-size:0.75em;
-	background:#3286C6;
+	background:#10263F;
 	border:1px solid #18415B;
 	color:#FFFFFF;	
 	padding:3px 0px;
@@ -63,7 +63,7 @@ div#admin_quick_menu li a.quick_link{
 	font-weight:bold;
 	font-size:0.75em;
 	color:#FFFFFF;	
-	background:#56A7E6;
+	background:#1D3D5F;
 	border:1px solid #18415B;
 	padding:3px 2px;
 	text-decoration:none;

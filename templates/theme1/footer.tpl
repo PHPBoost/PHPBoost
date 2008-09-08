@@ -7,8 +7,8 @@
 		<div class="spacer"></div>
 	</div>
     
-	<div id="footer" style="padding-right:38px;">
-    		<div style=" float:left; width:300px; padding-left:60px;">
+	<div id="footer" style="padding-right:55px;">
+    		<div style=" float:left; width:300px; padding-left:60px; padding-top:20px;">
 			<form action="{PATH_TO_ROOT}/newsletter/newsletter.php{SID}" method="post">
 				<div class="newsletter_form">
 					<span class="newsletter_title">{L_NEWSLETTER}</span> 
@@ -35,8 +35,9 @@
 			| {L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}" style="font-size:10px;">{L_THEME_AUTHOR}</a>
 		</span>
 		# ENDIF #
+		</div>
 	</div>
-</div></div>
+</div>
 		<span id="scroll_bottom_page"></span>
 	</body>
 </html>

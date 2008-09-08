@@ -43,8 +43,8 @@ a.forum_link_pseudo:hover {
 }
 /* Barre de liens du forum */
 .forum_links{
-	background:#0A131C url(images/forum_links.png) repeat-x transparent;
-	height:17px;
+	background:url(images/forum_links.png) repeat-x transparent;
+	height:19px;
 	padding:6px;
 	border-top:none;
 }
@@ -62,41 +62,41 @@ a.forum_link_pseudo:hover {
 }
 /* Case des liens sous-catégories */
 .forum_sous_cat{
-	background:#FFFFFF;
-	border-bottom:1px dotted #C4CED6;
-	border-right:1px dotted #C4CED6;
+	background:#050C11;
+	border-bottom:1px dotted #193855;
+	border-right:1px dotted #193855;
 	padding:6px;
 }
 .forum_sous_cat:hover{
-	background:#EEF4F9;
+	background:#12232F;
 }
 /* Case compteur message/topic */
 .forum_sous_cat_compteur{	
 	width:60px;
-	background:#E3EDF5;
-	border-bottom:1px dotted #C4CED6;
-	border-right:1px dotted #C4CED6;
-	color:#000000;
+	background:url(images/background.png) repeat transparent;
+	border-bottom:1px dotted #193855;
+	border-right:1px dotted #193855;
+	color: #FFFFFF;
 	text-align:center; 
 }
 /* Case compteur dernier topic/dernier message */
 .forum_sous_cat_last{
 	width:150px;
-	background:#FFFFFF;
-	border-bottom:1px dotted #C4CED6;
+	background:url(images/background.png) repeat transparent;
+	border-bottom:1px dotted #193855;
 	font-size:10px;
-	color:#000000;
+	color: #FFFFFF;
 	text-align:center; 
 }
 .forum_sous_cat_last:hover{
-	background:#EFFBFF;
+	background:url(images/background.png) repeat transparent;
 }
 /* Cadre des liens:alerter les modérateurs et suivre le sujet */
 .forum_action{
 	width:550px;
 	margin:auto;
-	background:#AFD2E8;
-	border:1px solid #71BAF1;
+	background:#274D74;
+	border:1px solid #174a84;
 	border-spacing:1px;
 	text-align:center;
 	-moz-border-radius:0.4em;
@@ -107,9 +107,9 @@ a.forum_link_cat{
 }
 /* Affichage des membres en ligne */
 .forum_online{
-	background:#FFFFFF;
-	border:2px solid #D1E3F6;
-	color:#000000;
+	background:#37536F;
+	border:;
+	color:#FFFFFF;
 	border-top:none;
 	padding:6px;
 	overflow:hidden !important;
@@ -162,7 +162,7 @@ a.forum_link_cat{
 	color:#FFFFFF;
 }
 .module_contents{ /* Contenu des modules */
-	background:#FFFFFF;	
+	background:url(images/background.png) repeat transparent;
 	clear:both;
 }
 .module_bottom_l{ /* Barre inférieure des modules */

@@ -86,8 +86,8 @@ div#left_menu{
 /* #####  Contenu de la page ###### */
 div#main{
 	float:left;
-	width:723px;
-	margin-left:2px;
+	width:738px;
+	margin-left:35px;
 	background:url(images/background.png) repeat;
 }
 /* ##### Barre de lien rapide ###### */
@@ -114,7 +114,7 @@ div#right_menu{
 	width:180px;
 	padding:0;
 	margin:0;
-	padding-right:40px;
+	padding-right:50px;
 }
 /* ##### Bloc au dessus du pied de page ###### */
 div#top_footer{
@@ -151,5 +151,5 @@ div#search{
 	padding-left:10px;
 	height:30px;
 	background:url(images/bgsearch.png) repeat-x;
-	margin-bottom:-5px;
+	margin-bottom:1px;
 }

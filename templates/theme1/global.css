@@ -8,7 +8,7 @@
 /* Case générale des tableaux du site*/
 .row1, .block_contents1{
 	background:#101010;
-	border:1px solid #40486D;
+	border:1px solid #063E59;
 	padding:6px;
 	margin-bottom:-1px;
 }
@@ -110,7 +110,7 @@ a.admin{
 	font-weight:bold;
 }
 a.modo{
-	color:#1E384F; 
+	color:#2569AE; 
 	font-size:11px;
 	font-weight:bold;
 }

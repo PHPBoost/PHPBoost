@@ -23,7 +23,8 @@
 		<script type="text/javascript" src="../kernel/framework/js/global.js"></script>	
 	</head>
 	<body>
-	<div id="global">
+	<div id="conteneur">
+		<div id="global">
 		<div id="header_admin"></div>
 		<div id="sub_header_admin">
 			<div class="dynamic_menu">
