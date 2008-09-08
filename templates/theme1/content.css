@@ -35,7 +35,6 @@ h6.sub_title2{ /* Sous titre dans les menu */
 	color:#FFFFFF;
 	background:#0A131C;
 	border:1px solid #063E59;
-	border-bottom:1px solid #063E59;
 	text-align:left;
 	font-size:0.75em;
 	font-weight:bold;
@@ -135,7 +134,7 @@ legend{
 	font-weight:bold;
 	color:#FFFFFF;
 	background-color:#0A131C;
-	border:1px solid #2C5169;
+	border:1px solid #063E59;
 	padding:2px 8px;
 	margin-top:-0.4em;
 	position:relative;
@@ -157,8 +156,8 @@ fieldset{
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	margin:20px 0;
 	padding:6px;
-	border:1px solid #40486D;
-	background-color:#101010;
+	border:1px solid #063E59;
+	background:url(images/background.png) repeat;
 	position:relative;
 }
 fieldset.fieldset_submit{
@@ -217,17 +216,17 @@ dd label{
 	white-space:nowrap;
 	margin:0 10px 0 0;
 	font-weight:normal;
-	color:#476A7F;
+	color: #FFFFFF;
 }
 dt span{
 	font-size:10px;
-	color:#476A7F;
+	color: #CCCCCC;
 }
 label img{
 	vertical-align:middle;
 }
 fieldset dl dd label:hover{
-	color:#214155;
+	color:#CCCCCC;
 }
 
 
@@ -245,10 +244,10 @@ a.msg_link_pseudo:hover {
 .msg_position{ /* Conteneur des messages */
 	width:98%;
 	margin:auto;
-	background:#E3EDF5 url(images/border.gif) repeat-y left;
+	background: #172E46 url(images/border.gif) repeat-y left;
 }
 .msg_container, .msg_container2{ /* Case contenant l'ensemble du message */
-	background:#FFFFFF url(images/border.gif) repeat-y right;
+	background:#29445F url(images/border.gif) repeat-y right;
 	margin-left:1px;
 	overflow:hidden !important;
 	height:auto !important;
@@ -257,7 +256,7 @@ a.msg_link_pseudo:hover {
 	clear:both;
 }
 .msg_container2{ /*  Case contenant l'ensemble du message => Couleur alternative */
-	background:#F4F9FA url(images/border.gif) repeat-y right;
+	background:#47637F url(images/border.gif) repeat-y right;
 }
 /* Barre supérieur des messages */
 .msg_top_l{
@@ -314,25 +313,25 @@ a.msg_link_pseudo:hover {
 	height:1%;
 }
 .msg_info_mbr{	/* Case des informations du membre */ 
-	background:#E3EDF5;
+	background:#172E46;
 	width:127px;
 	padding:4px;
 	float:left;
 	font-size:10px;
-	border-right:1px dotted #C4CED6;
+	border-right:1px solid #174a84;
 }
 .msg_contents_container{ /* Case contenant l'ensemble du message, infos membre + contenu */
 	margin-right:1px;
-	background:#E3EDF5;
+	background:#172E46;
 }
 .msg_contents, .msg_contents2{ /* Case du message */
 	margin-left:135px;
-	background:#FFFFFF;
+	background:#29445F;
 	padding:0px 5px;
-	border-left:1px dotted #C4CED6;
+	border-left:1px solid #174a84;
 }
 .msg_contents2{ /* Case du message => Couleur alternative */
-	background:#F4F9FA;
+	background:#47637F;
 }
 .msg_contents_overflow{	/* Case du contents du message, évite que les images trop grandes déforme */ 
 	width:99%;
@@ -342,14 +341,14 @@ a.msg_link_pseudo:hover {
 	padding:10px 0px;
 }
 .msg_sign, .msg_sign2{ /* Signature du membre */
-	background:#FFFFFF url(images/border.gif) repeat-y right;
+	background:#29445F url(images/border.gif) repeat-y right;
 	padding:4px;
 	font-size:11px;
 	margin-left:136px;
-	border-left:1px dotted #C4CED6;
+	border-left:1px solid #174a84;
 }
 .msg_sign2{ /* Signature du membre => Couleur alternative */
-	background:#F4F9FA url(images/border.gif) repeat-y right;
+	background:#47637F url(images/border.gif) repeat-y right;
 }
 .msg_sign_overflow{ /* Signature du membre, fixe la hauteur maximale */
 	height:auto !important;
@@ -449,5 +448,5 @@ a.msg_link_pseudo:hover {
 .label {
     font-weight:bold;
     font-size: 10px;
-    color: #476a7f;
+    color: #CCCCCC;
 }
