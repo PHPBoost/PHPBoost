@@ -1,4 +1,4 @@
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{L_XML_LANGUAGE}" >
 	<head>
 		<title>{SITE_NAME} : {TITLE}</title>
@@ -84,40 +84,44 @@ release({L_RELEASE_FORMAT});
 </script>
 # ENDIF #
 
-<span id="scroll_top_page"></span>
-    <div id="wrapper">
-	<div id="header">
-	<div class="dock" id="dock">
-  <div class="dock-container">
-  <a class="dock-item" href="{PATH_TO_ROOT}/forum/index.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/f1.png" alt="Forum" /><span>Forum</span></a> 
-  <a class="dock-item" href="{PATH_TO_ROOT}/contact/contact.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/c1.png" alt="contact" /><span>Contact</span></a> 
-  <a class="dock-item" href="{PATH_TO_ROOT}/articles/articles.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/a1.png" alt="article" /><span>Article</span></a> 
-  <a class="dock-item" href="{PATH_TO_ROOT}/download/download.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/t1.png" alt="telechargement," /><span>Telechargement</span></a> 
 
-</div>
-</div>
-<script type="text/javascript">
-	
-	$(document).ready(
-		function()
-		{
-			$('#dock').Fisheye(
-				{
-				maxWidth: 70,
-					items: 'a',
-					itemsText: 'span',
-					container: '.dock-container',
-					itemWidth: 60,
-					proximity: 90,
-					halign : 'center'
-				}
-			)
-		}
-	);
-
-</script>
-
+	<div id="conteneur">
+		<div id="global">
+		<span id="scroll_top_page"></span>
+		
+		<div id="wrapper">
+			<div id="header">
+				<div class="dock" id="dock">
+					<div class="dock-container">
+						<a class="dock-item" href="{PATH_TO_ROOT}/forum/index.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/f1.png" alt="Forum" /><span>Forum</span></a> 
+						<a class="dock-item" href="{PATH_TO_ROOT}/contact/contact.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/c1.png" alt="contact" /><span>Contact</span></a> 
+						<a class="dock-item" href="{PATH_TO_ROOT}/articles/articles.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/a1.png" alt="article" /><span>Article</span></a> 
+						<a class="dock-item" href="{PATH_TO_ROOT}/download/download.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/t1.png" alt="telechargement," /><span>Telechargement</span></a> 
+					</div>
+				</div>
+				<script type="text/javascript">
+				<!--	
+				$(document).ready(
+					function()
+					{
+						$('#dock').Fisheye(
+							{
+							maxWidth: 70,
+								items: 'a',
+								itemsText: 'span',
+								container: '.dock-container',
+								itemWidth: 60,
+								proximity: 90,
+								halign : 'center'
+							}
+						)
+					}
+				);
+				-->
+				</script>
+		</div>
 	</div>
+	
     <div id="sub_header">						
 		<div id="sub_header_left">
 			<a href="{PATH_TO_ROOT}/news/news.php" title="Accueil du site" class="button">Accueil</a><a href="{PATH_TO_ROOT}/forum/index.php" title="Forum" class="button">Forum</a><a href="{PATH_TO_ROOT}/articles/articles.php" title="Articles" class="button">Articles</a><a href="{PATH_TO_ROOT}/gallery/gallery.php" title="Galerie" class="button">Galerie</a><a href="{PATH_TO_ROOT}/download/download.php" title="Téléchargements" class="button" style="border-right:none;">Téléchargements</a>
@@ -125,9 +129,6 @@ release({L_RELEASE_FORMAT});
 		{MODULES_MINI_SUB_HEADER_CONTENT}
 	</div>
 
-    	<div id="conteneur">
-		<div id="global">
-	
 	# IF C_COMPTEUR #
 	<div id="compteur">					
 		<span class="text_strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}
