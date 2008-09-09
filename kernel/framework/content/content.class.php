@@ -149,7 +149,7 @@ class Content
 		return array('b', 'i', 'u', 's', 'title', 'style', 'url', 
 				'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
 				'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym', 'block',
-				'fieldset', 'mail', 'line'
+				'fieldset', 'mail', 'line', 'wikipedia'
 				);
 	}
 	

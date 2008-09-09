@@ -227,6 +227,9 @@ class TinyMCEUnparser extends ContentUnparser
 		
 		//Bloc de formulaire
 		$this->parsed_content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array(&$this, '_unparse_fieldset'), $this->parsed_content);
+
+		//Liens Wikipédia
+		$this->parsed_content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia_link">(.*)</a>`sU', array(&$this, '_unparse_wikipedia_link'), $this->parsed_content);
 	}
 	
 	//Handler which clears the HTML code which is in the code and HTML tags
@@ -252,6 +255,26 @@ class TinyMCEUnparser extends ContentUnparser
 			return '[fieldset' . $legend . $style . ']' . $matches[3] . '[/fieldset]';
 		else
 			return '[fieldset]' . $matches[3] . '[/fieldset]'; 
+	}
+	
+	//Function de retour des liens Wikipédia
+	function _unparse_wikipedia_link($matches)
+	{
+		global $LANG;
+		
+		//On est dans la langue par défaut
+		if( $matches[1] == $LANG['wikipedia_subdomain'] )
+			$lang = '';
+		else
+			$lang = $matches[1];
+			
+		//L'intitulé du lien est différent du nom de l'article
+		if( $matches[2] != $matches[3] )
+			$page_name = $matches[2];
+		else
+			$page_name = '';
+		
+		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
 	}
 }
 

@@ -278,6 +278,9 @@ class BBCodeParser extends ContentParser
 		//Titres
 		$this->parsed_content = preg_replace_callback('`\[title=([1-4])\](.+)\[/title\]`iU', array(&$this, '_parse_title'), $this->parsed_content);
 		
+		//Liens vers des articles de Wikipédia
+		$this->parsed_content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array(&$this, '_parse_wikipedia_links'), $this->parsed_content);
+		
 		##Parsage des balises imbriquées.
 		//Citations
 		$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->parsed_content);
@@ -420,6 +423,21 @@ class BBCodeParser extends ContentParser
 			return '<h3 class="title' . $level . '">' . $matches[2] . '</h3>';
 		else
 			return '<br /><h4 class="stitle' . ($level - 2) . '">' . $matches[2] . '</h4><br />';
+	}
+	
+	//Interprète les liens vers des pages de wikipédia
+	function _parse_wikipedia_links($matches)
+	{
+		global $LANG;
+		
+		//Langue
+		$lang = $LANG['wikipedia_subdomain'];
+		if( !empty($matches[2]))
+			$lang = $matches[2];
+		
+		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];
+		
+		return '<a href="http://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia_link">' . $matches[3] . '</a>';	
 	}
 	
 	//Nettoie le code HTML (notamment les retours à la ligne)
