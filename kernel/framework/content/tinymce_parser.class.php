@@ -514,6 +514,24 @@ class TinyMCEParser extends ContentParser
 		
 		//Bloc de formulaire
 		$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->parsed_content);
+
+		//Liens vers des articles de Wikipédia
+		$this->parsed_content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array(&$this, '_parse_wikipedia_links'), $this->parsed_content);
+	}
+	
+	//Interprète les liens vers des pages de wikipédia
+	function _parse_wikipedia_links($matches)
+	{
+		global $LANG;
+		
+		//Langue
+		$lang = $LANG['wikipedia_subdomain'];
+		if( !empty($matches[2]))
+			$lang = $matches[2];
+		
+		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];
+		
+		return '<a href="http://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia_link">' . $matches[3] . '</a>';	
 	}
 	
 	//Handler which clears the HTML code which is in the code and HTML tags
