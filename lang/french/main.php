@@ -156,6 +156,7 @@ $LANG['ordered_list'] = 'Liste ordonnée';
 $LANG['insert_list'] = 'Insérer la liste';
 $LANG['forbidden_tags'] = 'Balises de formatage interdites';
 $LANG['phpboost_languages'] = 'PHPBoost';
+$LANG['wikipedia_subdomain'] = 'fr'; //Sous domaine sur wikipédia (ex fr pour fr.wikipedia.org)
 
 //Connexion
 $LANG['connect_private_message'] = 'Messagerie privée';
