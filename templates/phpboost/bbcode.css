@@ -199,8 +199,12 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 }
 
 /*Lien vers Wikipédia*/
-a.wikipedia_link:before
-{
+a.wikipedia_link:before{
    content: url("images/wikipedia_icon.png");
+   vertical-align:middle;
+}
+
+a.wikipedia_link{
+	border-bottom: 1px dotted;
 }
 
