@@ -68,7 +68,7 @@ class BBCodeHighlighter extends Parser
 			$this->parsed_content = preg_replace('`\[' . $tag . '=([^\]]+)\](.+)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">[' . $tag . '</span>=<span style="color:' . BBCODE_PARAM_COLOR . ';">$1</span><span style="color:' . BBCODE_TAG_COLOR . ';">]</span>$2<span style="color:' . BBCODE_TAG_COLOR . ';">[/' . $tag . ']</span>', $this->parsed_content);
 
 		//Tags which take several parameters. The syntax is the same as XML parameters
-		$tags_with_many_parameters = array('table', 'col', 'head', 'list', 'fieldset', 'block');
+		$tags_with_many_parameters = array('table', 'col', 'head', 'list', 'fieldset', 'block', 'wikipedia');
 
 		foreach($tags_with_many_parameters as $tag)
 			$this->parsed_content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.+)\[/' . $tag . '\]`isU', array(&$this, '_highlight_bbcode_tag_with_many_parameters'), $this->parsed_content);
