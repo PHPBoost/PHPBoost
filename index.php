@@ -144,20 +144,23 @@ global $LANG;
                 <h3 class="title valign_middle">Le site du moment</h3>
             </div>
             <div class="news_content">
-                <h3 class="sub_title">Le Lien Lacté</h3>
+                <h3 class="sub_title">Anorcri</h3>
 				<br />
 				<p>
-					<a href="http://lelienlacte.com" title="Le lien lacté"><img src="./upload/lelienlacte.jpg" class="img_right" alt="" /></a>
-					Le Lien Lacté est un site d'information et de soutien à l'allaitement maternel créé par une maman en novembre 2002. Construit à l'origine avec un autre CMS, sa conceptrice a opté pour PHPBoost début 2008, séduite par ses possibilités aussi bien au niveau du contenu (en particulier le module de Wiki) qu'au niveau des possibilités de personnalisation grâce au système des templates.
+					<a href="http://www.anorcri.com" title="Anorcri"><img src="./upload/anorcri_capture.jpg" class="img_right" alt="" /></a>
+					Le site <strong>ANORCRI</strong> est un site associatif (association est régie par les articles 21 à 79-III du Code Civil Local maintenu en vigueur dans les départements du Bas-Rhin, Haut-Rhin et Moselle) mis en place en 2002 afin de donner la parole aux personnes adultes souffrant de troubles alimentaires (anorexie, boulimie, hyperphagie...).
 					<br />
+	On y trouve de nombreuses informations, des adresses de centres hospitaliers, des ouvrages, une liste d'associations, des témoignages, des vidéos dont celle de l'auteur du site (vidéo de 2003 qui avait énormément touché et choqué les téléspectateurs, l'anorexie étant encore trop souvent associée à l'adolescence).
 					<br />
-					Ce site est avant tout une communauté de mamans et leur propose une riche documentation sur l'allaitement maternel réunie dans le wiki rebaptisé "encyclo-lactée" (bibliographie, questions fréquentes, dossiers pratiques, témoignages, etc..) mais également une galerie de photos, un forum de discussion, des documents à télécharger au format pdf et un annuaire de liens très fourni.
-					<br />
-					<br />
-					Le thème graphique principal à l'origine créé par un membre de l'équipe du CMS GuppY a été adapté à PHPBoost par la "webcheftaine" du site.
-					<br /><br /><br />
-					Pour visiter le site: <a href="http://lelienlacte.com" title="Mussotrail">lelienlacte.com</a>
+					Le forum offre un espace d'écoute et de soutien mais c'est également un lieu de partage du quotidien.
+					<br /><br />
+					Depuis plus de deux ans maintenant, PHPBoost offre un support de qualité au site ANORCRI. L'équipe de PHPBoost a également réalisé différents thèmes graphiques pour le site.
+					<br /><br />
+					Pour visiter le site : <a href="http://www.anorcri.com" title="Anorcri">www.anorcri.com</a>
 				</p>
+				<div style="text-align:center;">
+					<a href="./pages/references">Voir les autres sites de référence</a>
+				</div>
             </div>
             <div class="news_bottom_l"></div>
             <div class="news_bottom_r"></div>
