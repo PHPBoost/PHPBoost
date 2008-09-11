@@ -223,35 +223,25 @@ a.membre{
 	top:-2px; 
 	left:100%;
 }
-/* Menu header */
-.dock {
-	position: relative; 
-	height: 7px; 
-	text-align: center;
-}
-.dock-container {
-	position: absolute;
-	height: 0px;
-	padding-left: 20px;
-}
-a.dock-item {
-	display: block;
-	width: 40px;
-	color: #000;
-	position: absolute;
-	top: 0px;
-	text-align: center;
-	text-decoration: none;
-	font: bold 12px Arial, Helvetica, sans-serif;
-}
 
-.dock-item img {
-	border: none; 
-	margin: 5px 10px 0px; 
-	width: 100%; 
+ul#dock {
+height:130px;
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin:0;
+padding:0;
+text-align:center;
+white-space:nowrap;
 }
-.dock-item span {
-	display: none; 
-	padding-left: 20px;
+ul#dock li {
+display:inline;
+margin:0;
+padding:0;
 }
-
+ul#dock li img {
+border:0 none;
+margin:0;
+padding:0;
+vertical-align:top;
+}

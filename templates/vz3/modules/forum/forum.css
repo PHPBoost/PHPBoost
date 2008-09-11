@@ -29,9 +29,7 @@ a.forum_link_pseudo:hover {
 .forum_links{
 	background:#0A131C;
 	border:2px solid #063E59;
-	border-bottom:1px solid #063E59;
 	padding:6px;
-	border-top:none;
 }
 .forum_links a{ /* Couleur des liens */
 	color:#FFFFFF;
@@ -99,7 +97,6 @@ a.forum_link_cat{
 	background:#0A131C;
 	color:#FFFFFF;
 	border:1px solid #063E59;
-	border-top:none;
 	padding:6px;
 	overflow:hidden !important;
 	height:auto !important;
