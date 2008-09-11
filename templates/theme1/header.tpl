@@ -24,8 +24,7 @@
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/global.js"></script>
-        <script type="text/javascript" src="{PATH_TO_ROOT}/templates/{THEME}/images/js/jquery.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/templates/{THEME}/images/js/interface.js"></script>
+        <script type="text/javascript" src="{PATH_TO_ROOT}/templates/{THEME}/images/js/dockdemo.js"></script>
 	</head>
 	<body>
 
@@ -89,45 +88,23 @@ release({L_RELEASE_FORMAT});
 		<div id="global">
 		<span id="scroll_top_page"></span>
 		
-		<div id="wrapper">
+
 			<div id="header">
-				<div class="dock" id="dock">
-					<div class="dock-container">
-						<a class="dock-item" href="{PATH_TO_ROOT}/news/news.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/f1.png" alt="Home" /></a>
+<ul id="dock">
+						<li><a href="{PATH_TO_ROOT}/news/news.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/f1.png" alt="Home"  onmouseover="enlarge(this)" onmouseout="reduce(this)"/></a></li>
                         # IF C_MEMBER_CONNECTED #
-	<a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" class="dock-item" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/user.png" alt=""/><span>Profil</span></a>
-			<a href="{U_MEMBER_PM}" class="dock-item" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" alt="" /><span>Accueil</span></a>
+	<li><a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/user.png" alt="" onmouseover="enlarge(this)" onmouseout="reduce(this)"/></a></li>
+			<li><a href="{U_MEMBER_PM}" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" alt="" onmouseover="enlarge(this)" onmouseout="reduce(this)"/></a></li>
 			# IF C_ADMIN_AUTH #
-			<a href="{PATH_TO_ROOT}/admin/admin_index.php" class="dock-item" title="{L_ADMIN_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/c1.png" alt="" /></a>
+			<li><a href="{PATH_TO_ROOT}/admin/admin_index.php" title="{L_ADMIN_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/c1.png" alt="" onmouseover="enlarge(this)" onmouseout="reduce(this)"/></a></li>
 			# ENDIF #
 			# IF C_MODO_AUTH #
-	<a href="{PATH_TO_ROOT}/member/moderation_panel.php" class="dock-item" title="{L_MODO_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/modo.png" alt=""></a>
+	<li><a href="{PATH_TO_ROOT}/member/moderation_panel.php" title="{L_MODO_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/modo.png" alt="" onmouseover="enlarge(this)" onmouseout="reduce(this)"></a></li>
 			# ENDIF #
 	# END ENDIF #
-					</div>
-				</div>
-				<script type="text/javascript">
-				<!--	
-				$(document).ready(
-					function()
-					{
-						$('#dock').Fisheye(
-							{
-							maxWidth: 70,
-								items: 'a',
-								itemsText: 'span',
-								container: '.dock-container',
-								itemWidth: 60,
-								proximity: 90,
-								halign : 'center'
-							}
-						)
-					}
-				);
-				-->
-				</script>
+</ul>
 		</div>
-	</div>
+
 	
     <div id="sub_header">						
 		<div id="sub_header_left">
