@@ -39,6 +39,7 @@ $Template->Set_filenames(array(
 //--------------------------------------------------------------------- Params
 // A protéger impérativement;
 $search = retrieve(POST, 'search', '');
+$unsecure_search = htmlentities($_POST['search']);
 $selectedModules = retrieve(POST, 'searched_modules', array());
 $searchIn = retrieve(POST, 'search_in', 'all');
 $simpleMode = ($searchIn == 'all') ? true : false;
@@ -48,11 +49,11 @@ $simpleMode = ($searchIn == 'all') ? true : false;
 define('TITLE', $LANG['title_search']);
 
 require_once('../kernel/header.php');
-
+echo $unsecure_search;
 $Template->Assign_vars(Array(
     'L_TITLE_SEARCH' => TITLE,
     'L_SEARCH' => $LANG['title_search'],
-    'TEXT_SEARCHED' => !empty($search) ? $search : $LANG['search'] . '...',
+    'TEXT_SEARCHED' => !empty($unsecure_search) ? $unsecure_search : $LANG['search'] . '...',
     'L_SEARCH_ALL' => $LANG['search_all'],
     'L_SEARCH_KEYWORDS' => $LANG['search_keywords'],
     'L_SEARCH_MIN_LENGTH' => $LANG['search_min_length'],

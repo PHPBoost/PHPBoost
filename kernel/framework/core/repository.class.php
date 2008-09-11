@@ -25,6 +25,7 @@
  *
 ###################################################*/
 
+require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
 
 class Repository
 {
@@ -57,7 +58,10 @@ class Repository
             // Keep only the first applyable update
             $firstNewVersion = count($newerVersions) > 0 ? min(array_keys($newerVersions)) : '';
             if( !empty($firstNewVersion) )
-                return $versions[$newerVersions[$firstNewVersion]];
+            {
+                $app->load($versions[$newerVersions[$firstNewVersion]]);
+                return $app;
+            }
         }
         return null;
     }
