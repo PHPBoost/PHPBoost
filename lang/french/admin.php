@@ -730,6 +730,6 @@ $LANG['website_updates'] = 'Mises à jour';
 $LANG['kernel'] = 'Noyau';
 //$LANG['modules'] = 'Modules';
 $LANG['themes'] = 'Thèmes';
-$LANG['update_available'] = 'Le %0s %1s est disponible dans sa version %2s';
+$LANG['update_available'] = 'Le %1$s %2$s est disponible dans sa version %3$s';
 $LANG['kernel_update_available'] = 'Le noyau est disponible dans sa nouvelle version %s';
 ?>

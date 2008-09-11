@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-// define('PHPBOOST_OFFICIAL_REPOSITORY', '../../../tools/repository/repository.xml'); // Test repository
-define('PHPBOOST_OFFICIAL_REPOSITORY', 'http://www.phpboost.com/repository/main.xml');    // Official repository
+define('PHPBOOST_OFFICIAL_REPOSITORY', '../../../tools/repository/main.xml'); // Test repository
+//define('PHPBOOST_OFFICIAL_REPOSITORY', 'http://www.phpboost.com/repository/main.xml');    // Official repository
 
 require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/core/repository.class.php');
@@ -85,47 +85,35 @@ class Updates
             if( $result !== null )
             {   // processing to the update notification
                 echo '<hr /><pre>'; print_r($result); echo '</pre>';
-                $this->_add_update_alert($app, $result);
+                $this->_add_update_alert($result);
             }
         }
     }
     
-    function _add_update_alert(&$app, &$app_xml_desc)
+    function _add_update_alert(&$app)
     {
-        $attributes = $app_xml_desc->attributes();
         require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
-        
-        $identifier = md5($app->get_type() . '_' . $app->get_id() . '_' . $attributes['num'] . '_' . $attributes['language']);
+        $identifier = $app->identifier();
         // We verify that the alert is not already registered
-        //if( AdministratorAlertService::find_alert_by_id($identifier, $module) === null )
+        //if( AdministratorAlertService::find_alert_by_identifier($identifier, 'kernel-updates') === null )
         {
             $alert = new AdministratorAlert();
+            global $LANG, $CONFIG;
+            require_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/admin.php');
             if( $app->get_type() == APPLICATION_TYPE__KERNEL )
-                $alert->set_entitled(sprintf($LANG['update_available'], $app->get_version()));
+                $alert->set_entitled(sprintf($LANG['kernel_update_available'], $app->get_version()));
             else
                 $alert->set_entitled(sprintf($LANG['update_available'], $app->get_type(), $app->get_id(), $app->get_version()));
             
-            $priority = 0;
-            switch($attributes['priority'])
-            {
-                case 'medium' :
-                    $priority = PRIORITY_MEDIUM;
-                    break;
-                case 'high' :
-                    $priority = PRIORITY_HIGH;
-                    break;
-                default:
-                    $priority = PRIORITY_LOW;
-                    break;
-            }
-            if( $attributes['security-update'] === 'true' ) $priority++;
-            
             $alert->set_fixing_url('admin/admin_updates.php');
-            $alert->set_priority($priority);
+            $alert->set_priority($app->get_priority());
+            $alert->set_description($app->serialize());
+            $alert->set_type('updates');
             $alert->set_identifier($identifier);
             
             //Save
             AdministratorAlertService::save_alert($alert);
+        }
     }
     
     var $repositories = array();
