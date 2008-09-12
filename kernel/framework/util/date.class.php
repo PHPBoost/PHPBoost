@@ -66,7 +66,7 @@ class Date
 			else
 				$referencial_timezone = TIMEZONE_USER;
 			
-			$time_difference = $this->compute_serveur_user_difference($referencial_timezone);
+			$time_difference = $this->_compute_server_user_difference($referencial_timezone);
 		}
 		
 		switch($format)
@@ -145,7 +145,7 @@ class Date
 	{
 		global $LANG, $CONFIG;
 		
-		$timestamp = $this->timestamp - $this->compute_serveur_user_difference($referencial_timezone) * 3600;
+		$timestamp = $this->timestamp + $this->_compute_server_user_difference($referencial_timezone) * 3600;
 		
 		switch($format)
 		{
@@ -184,43 +184,43 @@ class Date
 	//Renvoie le timestamp
 	function Get_timestamp()
 	{
-		return $this->timestamp - $this->compute_serveur_user_difference(TIMEZONE_USER) * 3600;
+		return $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600;
 	}
 	
 	// Renvoie l'année
 	function Get_year()
 	{
-		return date('Y', $this->timestamp - $this->compute_serveur_user_difference(TIMEZONE_USER) * 3600);
+		return date('Y', $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 
 	// Renvoie le mois
 	function Get_month()
 	{
-		return date('m', $this->timestamp - $this->compute_serveur_user_difference(TIMEZONE_USER) * 3600);
+		return date('m', $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	//Renvoie le jour
 	function Get_day()
 	{
-		return date('d', $this->timestamp - $this->compute_serveur_user_difference(TIMEZONE_USER) * 3600);
+		return date('d', $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	//Renvoie l'heure
 	function Get_hours()
 	{
-		return date('H', $this->timestamp - $this->compute_serveur_user_difference(TIMEZONE_USER) * 3600);
+		return date('H', $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	//Renvoie les minutes
 	function Get_minutes()
 	{
-		return date('i', $this->timestamp - $this->compute_serveur_user_difference(TIMEZONE_USER) * 3600);
+		return date('i', $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	//Renvoie les secondes
 	function Get_seconds()
 	{
-		return date('s', $this->timestamp - $this->compute_serveur_user_difference(TIMEZONE_USER) * 3600);
+		return date('s', $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	//Renvoie une chaine au format YYYY-mm-dd
@@ -239,7 +239,7 @@ class Date
 	## Private ##
 	//Renvoie le nombre d'heures de décalage par rapport à un certain référentiel
 	#This should be static#
-	function compute_serveur_user_difference($referencial_timezone = 0)
+	function _compute_server_user_difference($referencial_timezone = 0)
 	{
 		global $CONFIG, $Member;
 		

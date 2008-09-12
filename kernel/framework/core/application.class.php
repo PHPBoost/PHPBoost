@@ -44,7 +44,6 @@ class Application
     
     function load(&$xml_desc)
     {
-        //echo '<hr /><pre>'; print_r($xml_desc); echo '</pre>';
         $attributes = $xml_desc->attributes();
         
         $this->language = Application::_get_attribute($xml_desc, 'language');
@@ -81,7 +80,7 @@ class Application
         }
         
         $this->description = $xml_desc->xpath('description');
-        $this->description = (string) $this->description[0];
+        $this->description = utf8_decode((string) $this->description[0]);
         
         $this->new_features = array();
         $this->improvments = array();
@@ -92,7 +91,7 @@ class Application
         foreach( $novelties  as $novelty  )
         {
             $attributes = $novelty->attributes();
-            $type = isset($attributes['type']) ? $attributes['type'] : 'feature';
+            $type = isset($attributes['type']) ? utf8_decode($attributes['type']) : 'feature';
             switch( $type )
             {
                 case 'improvment':
@@ -114,7 +113,7 @@ class Application
         if( !empty($this->warning_level) )
         {
             $this->warning = $xml_desc->xpath('warning');
-            $this->warning = (string) $this->warning[0];
+            $this->warning = utf8_decode((string) $this->warning[0]);
         }
     }
     
@@ -193,7 +192,7 @@ class Application
         if( count($elements) > 0 )
         {
             $attributes = $elements[0]->attributes();
-            return (string) (isset($attributes[$attibute_name]) ? $attributes[$attibute_name] : null);
+            return isset($attributes[$attibute_name]) ? utf8_decode( (string) $attributes[$attibute_name]) : null;
         }
         return null;
     }

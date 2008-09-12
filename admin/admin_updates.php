@@ -35,6 +35,13 @@ if( $update_type != '' && $update_type != 'kernel' && $update_type != 'module' &
 
 $tpl = new Template('admin/admin_updates.tpl');
 
+$tpl->assign_vars(array(
+    'L_WEBSITE_UPDATES' => $LANG['website_updates'],
+    'L_KERNEL' => $LANG['kernel'],
+    'L_MODULES' => $LANG['modules'],
+    'L_THEMES' => $LANG['themes']
+));
+
 $tpl->parse();
 
 require_once('../admin/admin_footer.php');
