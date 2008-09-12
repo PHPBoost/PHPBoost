@@ -43,10 +43,13 @@ class AdministratorAlertService extends ContributionService
 	}
 	
 	//Function which builds a list of alerts corresponding to the required criteria(s)
-	/*static*/ function find_by_criteria($id_in_module = null, $type = null, $identifier = null)
+	/*static*/ function find_by_criteria($module = null, $id_in_module = null, $type = null, $identifier = null)
 	{
 		global $Sql;
 		$criterias = array();
+		
+		if( $module != null )
+			$criterias[] = "module = '" . strprotect($module) . "'";
 	
 		if( $id_in_module != null )
 			$criterias[] = "id_in_module = '" . intval($id_in_module) . "'";
