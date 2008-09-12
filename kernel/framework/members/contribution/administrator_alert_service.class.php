@@ -26,10 +26,11 @@
 ###################################################*/
 
 require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution_service.class.php');
 
 //This is a static class, it must not be instantiated.
 
-class AdministratorAlertService
+class AdministratorAlertService extends ContributionService
 {
 	//Function which builds an alert knowing its id. If it's not found, it returns null
 	/*static*/ function find_by_id($id)
