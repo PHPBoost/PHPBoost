@@ -4,22 +4,22 @@
         <li>
             <a href="admin_updates.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
             <br />
-            <a href="admin_updates.php" class="quick_link">Récapitulatif</a>
+            <a href="admin_updates.php" class="quick_link">{L_WEBSITE_UPDATES}</a>
         </li>
         <li>
-            <a href="admin_updates.php?type=kernel"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+            <a href="admin_updates_kernel.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
             <br />
-            <a href="admin_updates.php?type=kernel" class="quick_link">Noyau</a>
+            <a href="admin_updates_kernel.php" class="quick_link">{L_KERNEL}</a>
         </li>
         <li>
-            <a href="admin_updates.php?type=module"><img src="../templates/{THEME}/images/admin/menus.png" alt="" /></a>
+            <a href="admin_updates_modules.php"><img src="../templates/{THEME}/images/admin/menus.png" alt="" /></a>
             <br />
-            <a href="admin_updates.php?type=module" class="quick_link">Modules</a>
+            <a href="admin_updates_modules.php" class="quick_link">{L_MODULES}</a>
         </li>
         <li>
-            <a href="admin_updates.php?type=theme"><img src="../templates/{THEME}/images/admin/modules.png" alt="" /></a>
+            <a href="admin_updates_themes.php"><img src="../templates/{THEME}/images/admin/modules.png" alt="" /></a>
             <br />
-            <a href="admin_updates.php?type=theme" class="quick_link">Themes</a>
+            <a href="admin_updates_themes.php" class="quick_link">{L_THEMES}</a>
         </li>
     </ul>
 </div>
