@@ -45,7 +45,7 @@ if( $change_status > 0 )
 {
 	$alert = new AdministratorAlert();
 	$alert->load_from_db($change_status);
-	
+    
 	$new_status = $alert->get_status() != CONTRIBUTION_STATUS_PROCESSED ? CONTRIBUTION_STATUS_PROCESSED : CONTRIBUTION_STATUS_UNREAD;
 	
 	$alert->set_status($new_status);

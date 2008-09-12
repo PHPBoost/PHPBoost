@@ -244,7 +244,7 @@ class Contribution
 	}
 	
 	//Construction of a contribution from database
-	function build_from_db($id, $entitled, $description, $fixing_url, $module, $current_status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id, $id_in_module, $type, $identifier)
+	function build_from_db($id, $entitled, $description, $fixing_url, $module, $current_status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id, $id_in_module, $identifier, $type)
 	{
 		$this->id = $id;
 		$this->entitled = $entitled;

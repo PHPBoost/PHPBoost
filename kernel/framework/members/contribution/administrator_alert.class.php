@@ -59,7 +59,6 @@ class AdministratorAlert extends Contribution
 		ORDER BY creation_date DESC", __LINE__, __FILE__);
 		
 		$properties = $Sql->sql_fetch_assoc($result);
-		
 		if( (int)$properties['id'] > 0 )
 		{
 			$this->build_from_db($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['fixing_date']), $properties['auth'], $properties['poster_id'], $properties['fixer_id'], $properties['id_in_module'], $properties['identifier'], $properties['type'], $properties['priority']);

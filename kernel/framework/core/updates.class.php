@@ -84,7 +84,7 @@ class Updates
             $result = $this->repositories[$app->get_repository()]->check($app);
             if( $result !== null )
             {   // processing to the update notification
-                echo '<hr /><pre>'; print_r($result); echo '</pre>';
+                //echo '<hr /><pre>'; print_r($result); echo '</pre>';
                 $this->_add_update_alert($result);
             }
         }
@@ -95,7 +95,7 @@ class Updates
         require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
         $identifier = $app->identifier();
         // We verify that the alert is not already registered
-        //if( AdministratorAlertService::find_alert_by_identifier($identifier, 'kernel-updates') === null )
+        if( AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null )
         {
             $alert = new AdministratorAlert();
             global $LANG, $CONFIG;

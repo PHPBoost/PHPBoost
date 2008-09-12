@@ -39,6 +39,27 @@ class ContributionService
 		else
 			return null;
 	}
+    
+    /*static*/ function find_by_identifier($identifier, $type = '', $module = '')
+	{
+        global $Sql;
+		
+        $result = $Sql->Query_while(
+            "SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, type, poster_member.login poster_login, fixer_member.login fixer_login, description
+    		FROM ".PREFIX."contributions c
+    		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
+    		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
+    		WHERE identifier = '" . addslashes($identifier) . "'" . (!empty($type) ? " AND type = '" . addslashes($type) . "'" : '') . (!empty($module) ? " AND module = '" . addslashes($module) . "'" : '') . " ORDER BY creation_date DESC " . $Sql->Sql_limit(0, 1) . ";"
+            , __LINE__, __FILE__);
+		if( $row = $Sql->Sql_fetch_assoc($result) )
+		{
+            $contri = new Contribution();
+			$contri->build_from_db($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['fixing_date']), $row['auth'], $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type']);
+			return $contri;
+        }
+        $Sql->Close($result);
+        return null;
+	}
 	
 	/*static*/ function save_contribution(&$contribution)
 	{
