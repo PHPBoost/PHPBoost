@@ -29,9 +29,13 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$Tpl = new Template('admin/admin_updates.tpl');
+$update_type = retrieve(GET, 'type', '');
+if( $update_type != '' && $update_type != 'kernel' && $update_type != 'module' && $update_type != 'theme' )
+    $update_type = '';
 
-$Tpl->parse();
+$tpl = new Template('admin/admin_updates.tpl');
+
+$tpl->parse();
 
 require_once('../admin/admin_footer.php');
 
