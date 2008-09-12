@@ -7,7 +7,6 @@
 [-] Supporter https et remplacer les "." par des "_" dans le nom de la base de données lors de l'installation.
 [-] Alertes administrateur
 [-] Balise movie qui ne fonctionne pas
-[-] Code en ligne : mettre <pre>
 
 ------------------------------------ MODULES -----------------------------------
 [-] Download, faire une option dans les catégories à l'édition pour désapprouver.
