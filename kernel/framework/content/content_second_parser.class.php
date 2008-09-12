@@ -91,7 +91,7 @@ class ContentSecondParser extends Parser
 			if( $inline_code )
 				$Geshi->set_header_type(GESHI_HEADER_NONE);
 
-			$contents = $Geshi->parse_code();
+			$contents = '<pre style="display:inline;">' . $Geshi->parse_code() . '</pre>';
 		}
 		else
 		{

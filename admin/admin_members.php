@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               admin_members.php
+ *                             admin_members.php
  *                            -------------------
  *   begin                : August 01, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -75,7 +75,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 					if( strlen($password) >= 6 )
                     {
 						$Sql->Query_inject("UPDATE ".PREFIX."member SET password = '" . $password_hash . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-                        }
+                    }
 					else //Longueur minimale du password
 						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
 				}
@@ -185,10 +185,32 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 					@unlink('../cache/sex.png');
 				if( $info_mbr['user_theme'] != $user_theme )
 					@unlink('../cache/theme.png');
+				
+                //Si le membre n'était pas approuvé et qu'on l'approuve et qu'il existe une alerte, on la règle automatiquement
+                $member_infos = $Sql->Query_array("member", "user_aprob", "level", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+                
+				if( $member_infos['user_aprob'] != $user_aprob && $member_infos['user_aprob'] == 0 )
+				{
+					//On recherche l'alerte
+					require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
 					
-				$Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . $login . "', level = '" . $user_level . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-					
-				$Sql->Query_inject("UPDATE ".PREFIX."sessions SET level = '" . $user_level . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+					//Recherche de l'alerte correspondante
+					$matching_alerts = AdministratorAlertService::find_by_criteria($id_post, 'member_account_to_approbate');
+					//L'alerte a été trouvée
+					if( count($matching_alerts) == 1 )
+					{
+						$alert = $matching_alerts[0];
+						$alert->set_status(ADMIN_ALERT_PROCESSED);
+						AdministratorAlertService::save_alert($alert);
+					}
+				}
+				
+                $Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . $login . "', level = '" . $user_level . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				
+                //Mise à jour de la session si l'utilisateur change de niveau pour lui donner immédiatement les droits
+                if( $member_infos['level'] != $user_level )
+					$Sql->Query_inject("UPDATE ".PREFIX."sessions SET level = '" . $user_level . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				
 				if( $user_ban > 0 )	//Suppression de la session si le membre se fait bannir.
 				{	
 					$Sql->Query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);

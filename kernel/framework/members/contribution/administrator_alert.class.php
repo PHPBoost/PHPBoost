@@ -33,6 +33,9 @@ define('PRIORITY_MEDIUM', 3);
 define('PRIORITY_HIGH', 4);
 define('PRIORITY_VERY_HIGH', 5);
 
+define('ADMIN_ALERT_UNREAD', CONTRIBUTION_STATUS_UNREAD);
+define('ADMIN_ALERT_PROCESSED', CONTRIBUTION_STATUS_PROCESSED);
+
 define('ADMINISTRATOR_ALERT_TYPE', 1);
 
 //Fonction d'importation/exportation de base de données.

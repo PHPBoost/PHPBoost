@@ -94,6 +94,7 @@ release({L_RELEASE_FORMAT});
                     <ul id="smenul0">
                         <li><a href="{PATH_TO_ROOT}/index.php" title="Accueil" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png);">Accueil</a></li>
                         <li><a href="http://demo.phpboost.com" title="Démonstration PHPBoost" style="background-image:url({PATH_TO_ROOT}/templates/phpboost/images/admin/com_mini.png);">Démonstration</a></li>
+						<li><a href="{PATH_TO_ROOT}/pages/references" title="Références" style="background-image:url({PATH_TO_ROOT}/images/doc/presentation_mini.png);">Références</a></li>
                     </ul>
 				</li>
 				<li onmouseover="show_menu('l1', 0);" onmouseout="hide_menu(0);">

@@ -42,6 +42,49 @@ class AdministratorAlertService extends ContributionService
 			return null;
 	}
 	
+	//Function which builds a list of alerts corresponding to the required criteria(s)
+	/*static*/ function find_by_criteria($id_in_module = null, $type = null, $identifier = null)
+	{
+		global $Sql;
+		$criterias = array();
+	
+		if( $id_in_module != null )
+			$criterias[] = "id_in_module = '" . intval($id_in_module) . "'";
+		
+		if( $type != null)
+			$criterias[] = "type = '" . strprotect($type) . "'";
+			
+		if( $identifier != null )
+			$criterias[] = "identifier = '" . strprotect($identifier). "'";
+		
+		//Restrictive criteria
+		if( !empty($criterias) )
+		{
+			$array_result = array();
+			$where_clause = "contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . implode($criterias, " AND ");
+			$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, priority, description
+			FROM ".PREFIX."contributions c
+			LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
+			LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
+			WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . $where_clause, __LINE__, __FILE__);
+			echo "SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, priority, description
+			FROM ".PREFIX."contributions c
+			LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
+			LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
+			WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . $where_clause;
+			while($row = $Sql->Sql_fetch_assoc($result) )
+			{
+				$alert = new AdministratorAlert();
+				$alert->build_from_db($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['fixing_date']), $row['auth'], $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
+				$array_result[] = $alert;
+			}
+			
+			return $array_result;
+		}
+		else
+			return $this->get_all_alerts();
+	}
+	
 	//Function which saves an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
 	/*static*/ function save_alert(&$alert)
 	{
