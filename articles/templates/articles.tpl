@@ -8,6 +8,7 @@
 				</div>
 				<div style="float:right">
 					{COM} {EDIT} {DEL}
+					&nbsp;&nbsp;<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img src="../templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" /></a>
 				</div>
 			</div>
 			<div class="module_contents">

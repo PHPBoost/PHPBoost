@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                                artciles.php
+ *                               articles.php
  *                            -------------------
  *   begin                : July 17, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -92,11 +92,11 @@ if( !empty($idart) && isset($_GET['cat'])  )
 		}
 	}
 	
-	//Nombre de page.
+	//Nombre de pages
 	$nbr_page = count($array_page[1]);
 	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
 	
-	//Affichage notation.
+	//Affichage notation
 	include_once('../kernel/framework/content/note.class.php'); 
 	$Note = new Note('articles', $idart, transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
 	
@@ -121,7 +121,9 @@ if( !empty($idart) && isset($_GET['cat'])  )
 		'L_SUMMARY' => $LANG['summary'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_WRITTEN' =>  $LANG['written_by'],
-		'L_ON' => $LANG['on']	
+		'L_ON' => $LANG['on'],
+		'L_PRINTABLE_VERSION' => $LANG['printable_version'],
+		'U_PRINT_ARTICLE' => transid('print.php?id=' . $idart)
 	));
 
 	//Affichage commentaires.

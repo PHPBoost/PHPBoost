@@ -9,7 +9,6 @@
 
 ------------------------------------ MODULES -----------------------------------
 [-] Download, faire une option dans les catégories à l'édition pour désapprouver.
-[-] Impression dans le wiki, les articles, les pages et les news éventuellement.
 
 ################################################################################
 
@@ -56,7 +55,7 @@
 
 ######################################DOSSIERS##################################
 
-[-] Noix : Panneau de modération et sur la mise en page du contenu.
+[-] Noix : Panneau de modération.
 [-] Loique : Recherche.
 [-] Croquette : Nouveaux minis menus indépendants des modules.
 [-] Croquette : Nouveaux placement des menus.
