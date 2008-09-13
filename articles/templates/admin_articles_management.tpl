@@ -249,7 +249,7 @@
 							</div>
 							<a onClick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={articles.DAY_RELEASE_E}&amp;m={articles.MONTH_RELEASE_E}&amp;y={articles.YEAR_RELEASE_E}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
 							<br />
-							<label><input type="radio" id="release_date" value="1" name="visible" {articles.VISIBLE_ENABLED} /> {L_IMMEDIATE}</label></label>
+							<label><input type="radio" id="release_date" value="1" name="visible" {articles.VISIBLE_ENABLED} /> {L_IMMEDIATE}</label>
 							<br />
 							<label><input type="radio" value="0" name="visible" {articles.VISIBLE_UNAPROB} /> {L_UNAPROB}</label>
 						</dd>
