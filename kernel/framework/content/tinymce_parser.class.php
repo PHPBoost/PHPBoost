@@ -434,7 +434,8 @@ class TinyMCEParser extends ContentParser
 			'float' => "<p class=\"float_$1\">$2</p>",	
 			'acronym' => "<acronym title=\"$1\" class=\"bb_acronym\">$2</acronym>",
 			'style' => "<span class=\"$1\">$2</span>",
-			'movie' => "<object type=\"application/x-shockwave-flash\" data=\"../kernel/data/movieplayer.swf?movie=$3\" width=\"$1\" height=\"$2\">
+			'movie' => "<object type=\"application/x-shockwave-flash\" data=\"../kernel/data/movieplayer.swf\" width=\"$1\" height=\"$2\">
+		<param name=\"FlashVars\" value=\"flv=$3&width=$1&height=$2\" />
 		<param name=\"allowScriptAccess\" value=\"never\" />
 		<param name=\"play\" value=\"true\" />
 		<param name=\"movie\" value=\"$1\" />

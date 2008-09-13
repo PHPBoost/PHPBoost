@@ -117,7 +117,7 @@ class BBCodeUnparser extends ContentUnparser
 			'`<h4 class="stitle2">(.*)</h4>`isU',
 			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
 			'`<object type="application/x-shockwave-flash" data="\.\./(?:kernel|includes)/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
-			'`<object type="application/x-shockwave-flash" data="\.\./(?:kernel|includes)/data/movieplayer\.swf\?movie=(.*)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
+			'`<object type="application/x-shockwave-flash" data="\.\./(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
 			'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU'
@@ -141,7 +141,7 @@ class BBCodeUnparser extends ContentUnparser
 			"[title=4]$1[/title]",
 			"[style=$1]$2[/style]",
 			"[sound]$1[/sound]",
-			"[movie=$2,$3]$1[/movie]",
+			"[movie=$1,$2]$3[/movie]",
 			"[swf=$2,$3]$1[/swf]",
 			"[html]$1[/html]",
 			"[math]$1[/math]"
