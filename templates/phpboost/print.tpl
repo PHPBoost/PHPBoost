@@ -8,6 +8,6 @@
 	</head>
 	<body>
 	<h1>{TITLE}</h1>
-	{CONTENTS}
+	{CONTENT}
 	</body>
 </html>

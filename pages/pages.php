@@ -1,9 +1,9 @@
 <?php
 /*##################################################
-*                               pages.php
+*                                pages.php
 *                            -------------------
 *   begin                : August 07, 2007
-*   copyright          : (C) 2007 Sautel Benoit
+*   copyright            : (C) 2007 Sautel Benoit
 *   email                : ben.popeye@phpboost.com
 *
 *
@@ -118,14 +118,15 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	$links = array();
 	if( ($special_auth && $Member->Check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $Member->Check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 	{
-		$links[$LANG['pages_edit']] = array(transid('post.php?id=' . $page_infos['id']), 'edit.png');
-		$links[$LANG['pages_rename']] = array(transid('action.php?rename=' . $page_infos['id']), 'rename.png');
-		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(transid('action.php?del_cat=' . $page_infos['id']), 'delete.png') : array(transid('post.php?del=' . $page_infos['id']), 'delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
-		$links[$LANG['pages_redirections']] = array(transid('action.php?id=' . $page_infos['id']), 'redirect.png');
-		$links[$LANG['pages_create']] = array(transid('post.php'), 'create_page.png');
+		$links[$LANG['pages_edit']] = array(transid('post.php?id=' . $page_infos['id']), $pages_data_path . '/images/edit.png');
+		$links[$LANG['pages_rename']] = array(transid('action.php?rename=' . $page_infos['id']), $pages_data_path . '/images/rename.png');
+		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(transid('action.php?del_cat=' . $page_infos['id']), $pages_data_path . '/images/delete.png') : array(transid('post.php?del=' . $page_infos['id']), $pages_data_path . '/images/delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
+		$links[$LANG['pages_redirections']] = array(transid('action.php?id=' . $page_infos['id']), $pages_data_path . '/images/redirect.png');
+		$links[$LANG['pages_create']] = array(transid('post.php'), $pages_data_path . '/images/create_page.png');
+		$links[$LANG['printable_version']] = array(transid('print.php?title=' . $encoded_title), '../templates/' . $CONFIG['theme'] . '/images/print_mini.png');
 	}
 	if( $Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE) )
-		$links[$LANG['pages_explorer']] = array(transid('explorer.php'), 'explorer.png');
+		$links[$LANG['pages_explorer']] = array(transid('explorer.php'), $pages_data_path . '/images/explorer.png');
 		
 	$nbr_values = count($links);
 	$i = 1;
@@ -139,7 +140,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 			$Template->Assign_block_vars('link.separation', array());
 			
 		$Template->Assign_block_vars('links_list', array(
-			'DM_A_CLASS' => ' style="background-image:url(' . $pages_data_path . '/images/' . $value[1] . ');"',
+			'DM_A_CLASS' => ' style="background-image:url(' . $value[1] . ');"',
 			'U_ACTION' => $value[0],
 			'L_ACTION' => $key,
 			'ONCLICK' => array_key_exists(2, $value) ? $value[2] : ''
@@ -258,7 +259,7 @@ else
 	$tools = array(
 		$LANG['pages_create'] => transid('post.php'),
 		$LANG['pages_redirections'] => transid('action.php'),
-		$LANG['pages_explorer'] => transid('explorer.php')
+		$LANG['pages_explorer'] => transid('explorer.php'),
 	);
 	if( $Member->Check_level(ADMIN_LEVEL) )
 		$tools[$LANG['pages_config']] = transid('admin_pages.php');
