@@ -81,13 +81,13 @@ div#left_menu{
 	width:180px;
 	padding:0;
 	margin:0;
-	margin-left:48px;
+	margin-left:47px;
 }
 /* #####  Contenu de la page ###### */
 div#main{
 	float:left;
-	width:738px;
-	margin-left:35px;
+	width:725px;
+	margin-left:2px;
 	background:url(images/background.png) repeat;
 }
 /* ##### Barre de lien rapide ###### */
