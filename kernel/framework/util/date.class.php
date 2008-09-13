@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                                date.class.php
+ *                               date.class.php
  *                            -------------------
  *   begin                : June 1st, 2008
- *   copyright          : (C) 2008 Sautel Benoit
+ *   copyright            : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *   Date 1.0
@@ -182,56 +182,56 @@ class Date
 	}
 	
 	//Renvoie le timestamp
-	function Get_timestamp()
+	function get_timestamp()
 	{
-		return $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600;
+		return $this->timestamp;
 	}
 	
 	// Renvoie l'année
-	function Get_year()
+	function get_year()
 	{
-		return date('Y', $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('Y', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 
 	// Renvoie le mois
-	function Get_month()
+	function get_month()
 	{
-		return date('m', $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('m', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	//Renvoie le jour
-	function Get_day()
+	function get_day()
 	{
-		return date('d', $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('d', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	//Renvoie l'heure
-	function Get_hours()
+	function get_hours()
 	{
-		return date('H', $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('H', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	//Renvoie les minutes
-	function Get_minutes()
+	function get_minutes()
 	{
-		return date('i', $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('i', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	//Renvoie les secondes
-	function Get_seconds()
+	function get_seconds()
 	{
-		return date('s', $this->timestamp - $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('s', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	//Renvoie une chaine au format YYYY-mm-dd
-	function To_date()
+	function to_date()
 	{
 		return date('Y-m-d', $this->timestamp);
 	}
 	
 	# This should be static#
 	//Function which determines wether a date is correct
-	function Check_date($month, $day, $year)
+	function check_date($month, $day, $year)
 	{
 		return checkdate($month, $day, $year);
 	}
