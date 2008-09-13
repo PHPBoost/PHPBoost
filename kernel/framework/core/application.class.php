@@ -155,7 +155,7 @@ class Application
     function get_repository() { return $this->repository; }
     
     function get_version() { return $this->version; }
-    function get_pubdate() { return $this->pubdate->format(DATE_FORMAT_SHORT, TIMEZONE_USER); }
+    function get_pubdate() { return !empty($this->pubdate) && is_object($this->pubdate) ? $this->pubdate->format(DATE_FORMAT_SHORT, TIMEZONE_USER) : ''; }
     function get_priority() { return $this->priority; }
     function get_security_update() { return $this->security_update; }
     
