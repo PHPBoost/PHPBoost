@@ -58,6 +58,45 @@ hr {
 	margin:auto;
 	margin-top:20px;
 }
+
+div.block_title span{
+	text-transform:uppercase;
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-size:0.75em;
+	font-weight:bold;
+	color:#E53B00;
+	background:#FFFFFF;
+	border:1px solid #71BAF1;
+	padding:2px 8px;
+	padding:1px 0;
+    vertical-align:middle;
+	position:relative;
+	margin-top:-0.4em;
+    padding-left:10px;
+    padding-right:10px;
+	line-height:1.2em;
+}
+div.block_title {
+	position:relative;
+	top:-1.2em;
+}
+
+div.block_content{
+	width:95%;
+	margin:auto;
+	margin-top:20px;
+    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	margin:20px 0;
+	padding:6px;
+	border:1px solid #71BAF1;
+	background:#F1F4F6;
+	position:relative;
+}
+
+div.block_content ul {
+    padding-left:20px;
+}
+
 input, textarea, optgroup, select, .xmlhttprequest_preview{
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	font-size:11px;

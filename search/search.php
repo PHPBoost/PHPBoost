@@ -49,7 +49,6 @@ $simpleMode = ($searchIn == 'all') ? true : false;
 define('TITLE', $LANG['title_search']);
 
 require_once('../kernel/header.php');
-echo $unsecure_search;
 $Template->Assign_vars(Array(
     'L_TITLE_SEARCH' => TITLE,
     'L_SEARCH' => $LANG['title_search'],

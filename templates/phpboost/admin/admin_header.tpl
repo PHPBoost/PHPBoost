@@ -89,7 +89,6 @@
 									<li><a href="../admin/admin_database.php?query=1" style="background-image:url(../templates/{THEME}/images/admin/database_mini.png);">{L_DATABASE_QUERY}</a></li>
 								</ul>
 							</li>
-							<li>
 							<li class="extend" onmouseover="show_menu(32, 1);" onmouseout="hide_menu(1);">
 								<a href="../admin/admin_cache.php" style="background-image:url(../templates/{THEME}/images/admin/cache_mini.png);">{L_CACHE}</a>
 								<ul id="ssmenu32">

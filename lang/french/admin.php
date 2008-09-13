@@ -27,7 +27,7 @@
 
 
 ####################################################
-#                                                           French                                                                #
+#                    French                        #
 ####################################################
 
 $LANG['xml_lang'] = 'fr';
@@ -728,8 +728,18 @@ $LANG['sunday']	= 'Dim';
 // Updates
 $LANG['website_updates'] = 'Mises à jour';
 $LANG['kernel'] = 'Noyau';
-//$LANG['modules'] = 'Modules';
 $LANG['themes'] = 'Thèmes';
 $LANG['update_available'] = 'Le %1$s %2$s est disponible dans sa version %3$s';
-$LANG['kernel_update_available'] = 'Le noyau est disponible dans sa nouvelle version %s';
+$LANG['kernel_update_available'] = 'PHPBoost est disponible dans sa nouvelle version %s';
+$LANG['app_update__download'] = 'Téléchargement';
+$LANG['app_update__download_pack'] = 'Pack complet';
+$LANG['app_update__update_pack'] = 'Pack de mise à jour';
+$LANG['author'] = 'Auteur';
+$LANG['authors'] = 'Auteurs';
+$LANG['new_features'] = 'Nouvelles Fonctionnalités';
+$LANG['improvments'] = 'Améliorations';
+$LANG['fixed_bugs'] = 'Corrections de bugs';
+$LANG['security_improvments'] = 'Améliorations de sécurité';
+$LANG['unexisting_update'] = 'La mise à jour recherché n\'existe pas';
+
 ?>

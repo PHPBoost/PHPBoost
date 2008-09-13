@@ -103,7 +103,7 @@ class Updates
             if( $app->get_type() == APPLICATION_TYPE__KERNEL )
                 $alert->set_entitled(sprintf($LANG['kernel_update_available'], $app->get_version()));
             else
-                $alert->set_entitled(sprintf($LANG['update_available'], $app->get_type(), $app->get_id(), $app->get_version()));
+                $alert->set_entitled(sprintf($LANG['update_available'], $app->get_type(), $app->get_name(), $app->get_version()));
             
             $alert->set_fixing_url('admin/admin_update_detail.php?identifier=' . $identifier);
             $alert->set_priority($app->get_priority());
