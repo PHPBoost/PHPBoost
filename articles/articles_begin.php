@@ -42,6 +42,7 @@ if( isset($_GET['cat']) )
 	if( !empty($idart) )
 	{
 		$articles = $Sql->Query_array('articles', '*', "WHERE visible = 1 AND id = '" . $idart . "' AND idcat = " . $idartcat, __LINE__, __FILE__);
+		$idartcat = $articles['idcat'];
 		
 		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($articles['title']));
 		$Bread_crumb->Add_link($articles['title'], 'articles' . transid('.php?cat=' . $idartcat . '&amp;id=' . $idart, '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php'));

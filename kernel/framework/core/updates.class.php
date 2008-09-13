@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-define('PHPBOOST_OFFICIAL_REPOSITORY', '../../../tools/repository/main.xml'); // Test repository
-//define('PHPBOOST_OFFICIAL_REPOSITORY', 'http://www.phpboost.com/repository/main.xml');    // Official repository
+//define('PHPBOOST_OFFICIAL_REPOSITORY', '../../../tools/repository/main.xml'); // Test repository
+define('PHPBOOST_OFFICIAL_REPOSITORY', 'http://www.phpboost.com/repository/main.xml');    // Official repository
 
 require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/core/repository.class.php');

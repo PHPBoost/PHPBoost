@@ -57,7 +57,7 @@ if( !empty($encoded_title) ) //Si on connait son titre
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
-		//Si on a les droites de lecture sur la catégorie, on l'affiche	
+		//Si on a les droits de lecture sur la catégorie, on l'affiche	
 		if( empty($_PAGES_CATS[$id]['auth']) || $Member->Check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )
 			$Bread_crumb->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
@@ -108,7 +108,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = sunserialize($page_infos['auth']);
+	$array_auth = unserialize($page_infos['auth']);
 
 	//Vérification de l'autorisation de voir la page
 	if( ($special_auth && !$Member->Check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )

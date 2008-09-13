@@ -25,51 +25,41 @@
 *
 ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
+require_once('articles_constants.php'); 
 
-require_once('pages_defines.php');
+$Cache->load_file('articles');
 
 //Titre de l'article à afficher en version imprimable
-$encoded_title = retrieve(GET, 'title', '', TSTRING);
-
-$Cache->Load_file('pages');
-
-if( !empty($encoded_title) ) //Si on connait son titre
+$idart = retrieve(GET, 'id', '', TSTRING);
+if( $idart > 0 )
 {
-	$page_infos = $Sql->Query_array("pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+	$articles = $Sql->Query_array('articles', '*', "WHERE visible = 1 AND id = '" . $idart . "'", __LINE__, __FILE__);
 	
-	$num_rows =!empty($page_infos['title']) ? 1 : 0;
+	$idartcat = $articles['idcat'];
 	
-	if( $page_infos['redirect'] > 0 )
-	{
-		$redirect_title = $page_infos['title'];
-		$redirect_id = $page_infos['id'];
-		$page_infos = $Sql->Query_array("pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
-	}
-	else
-		$redirect_title = '';
-		
-	//Autorisation particulière ?
-	$special_auth = !empty($page_infos['auth']);
-	$array_auth = unserialize($page_infos['auth']);
-
-	//Vérification de l'autorisation de voir la page
-	if( ($special_auth && !$Member->Check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
-		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth'));
+	//Niveau d'autorisation de la catégorie
+	if( !isset($CAT_ARTICLES[$idartcat]) || !$Member->Check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
+		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	
+	if( empty($articles['id']) )
+		$Errorh->Error_handler('e_unexist_articles', E_USER_REDIRECT);
 }
 
-if( empty($page_infos['id']) )
+if( empty($articles['title']) )
 	exit;
 
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 $template = new Template('print.tpl');
 
+$contents = preg_replace('`\[page\](.*)\[/page\]`', '<h2>$1</h2>', $articles['contents']);
+
 $template->assign_vars(array(
-	'PAGE_TITLE' => $page_infos['title'] . ' - ' . $CONFIG['site_name'],
-	'TITLE' => $page_infos['title'],
+	'PAGE_TITLE' => $articles['title'] . ' - ' . $CONFIG['site_name'],
+	'TITLE' => $articles['title'],
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
-	'CONTENT' => second_parse($page_infos['contents'])
+	'CONTENT' => second_parse($contents)
 ));
 
 $template->parse();

@@ -43,6 +43,8 @@ class Application
         $this->repository = $repository;
         
         $this->version = $version;
+        
+        $this->pubdate = new Date();
     }
     
     function load(&$xml_desc)
