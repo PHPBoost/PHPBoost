@@ -5,7 +5,7 @@
 ------------------------------------- NOYAU ------------------------------------
 [-] Nouvelles options d'installation (Communautaire, Vitrine, etc).
 [-] Supporter https et remplacer les "." par des "_" dans le nom de la base de données lors de l'installation.
-[-] Balise movie qui ne fonctionne pas
+[-] Régler les bugs touchables de TinyMCE relevés par Ptithom.
 
 ------------------------------------ MODULES -----------------------------------
 [-] Download, faire une option dans les catégories à l'édition pour désapprouver.
