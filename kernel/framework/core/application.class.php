@@ -29,11 +29,14 @@ define('APPLICATION_TYPE__KERNEL', 'kernel');
 define('APPLICATION_TYPE__MODULE', 'module');
 define('APPLICATION_TYPE__TEMPLATE', 'template');
 
+require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+
 class Application
 {
     function Application($id, $language, $type = APPLICATION_TYPE__MODULE , $version = 0, $repository = '')
     {
         $this->id = $id;
+        $this->name = $id;
         $this->language = $language;
         $this->type = $type;
         
@@ -46,10 +49,22 @@ class Application
     {
         $attributes = $xml_desc->attributes();
         
+        $name = Application::_get_attribute($xml_desc, 'name');
+        $this->name = !empty($name) ? $name : $this->id;
+        
         $this->language = Application::_get_attribute($xml_desc, 'language');
         
+        $language = Application::_get_attribute($xml_desc, 'localized_language');
+        $this->localized_language = !empty($language) ? $language : $this->language;
+        
         $this->version = Application::_get_attribute($xml_desc, 'num');
-        $this->pubdate = Application::_get_attribute($xml_desc, 'pubdate');
+        
+        $pubdate = Application::_get_attribute($xml_desc, 'pubdate');
+        if( !empty($pubdate) )
+            $this->pubdate = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, $pubdate,'y/m/d');
+        else
+            $this->pubdate = new Date();
+        
         $this->security_update = Application::_get_attribute($xml_desc, 'security-update');
         $this->security_update = strtolower($this->security_update) == 'true' ? true : false;
         
@@ -129,44 +144,18 @@ class Application
         return serialize($this);
     }
     
-    function unserialize(&$serialized_application)
-    {
-        $this->id = $serialized_application->id;
-        $this->language = $serialized_application->language;
-        $this->type = $serialized_application->type;
-        
-        $this->repository = $serialized_application->repository;
-        
-        $this->version = $serialized_application->version;
-        $this->pubdate = $serialized_application->pubdate;
-        $this->priority = $serialized_application->priority;
-        $this->security_update = $serialized_application->security_update;
-        
-        $this->download_url = $serialized_application->download_url;
-        $this->update_url = $serialized_application->update_url;
-        
-        $this->authors = $serialized_application->authors;
-        
-        $this->description = $serialized_application->description;
-        $this->new_features = $serialized_application->new_features;
-        $this->improvments = $serialized_application->improvments;
-        $this->bug_corrections = $serialized_application->bug_corrections;
-        $this->security_improvments = $serialized_application->security_improvments;
-        
-        $this->warning_level = $serialized_application->warning_level;
-        $this->warning = $serialized_application->warning;
-    }
-    
     ## PUBLIC ACCESSORS ##
     
     function get_id() { return $this->id; }
+    function get_name() { return $this->name; }
     function get_language() { return $this->language; }
+    function get_localized_language() { return !empty($this->localized_language) ? $this->localized_language : $this->language; }
     function get_type() { return $this->type; }
     
     function get_repository() { return $this->repository; }
     
     function get_version() { return $this->version; }
-    function get_pubdate() { return $this->pubdate; }
+    function get_pubdate() { return $this->pubdate->format(DATE_FORMAT_SHORT, TIMEZONE_USER); }
     function get_priority() { return $this->priority; }
     function get_security_update() { return $this->security_update; }
     
@@ -201,7 +190,9 @@ class Application
     ## PRIVATE ATTRIBUTES ##
     
     var $id = '';
+    var $name = '';
     var $language = '';
+    var $localized_language = '';
     var $type = '';
     
     var $repository = '';

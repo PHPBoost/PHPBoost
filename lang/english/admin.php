@@ -27,7 +27,7 @@
 
 
 ####################################################
-#                                                           English                                                                 #
+#                     English                      #
 ####################################################
 
 $LANG['xml_lang'] = 'en';
@@ -728,8 +728,17 @@ $LANG['sunday']	= 'Sun';
 // Updates
 $LANG['website_updates'] = 'Updates';
 $LANG['kernel'] = 'Kernel';
-//$LANG['modules'] = 'Modules';
 $LANG['themes'] = 'Themes';
 $LANG['update_available'] = 'The %1$s %2$s is available in its %3$s version';
-$LANG['kernel_update_available'] = 'The kernel %s is available';
+$LANG['kernel_update_available'] = 'PHPBoost\'s kernel %s is available';
+$LANG['app_update__download'] = 'Download';
+$LANG['app_update__download_pack'] = 'Complete pack';
+$LANG['app_update__update_pack'] = 'Update pack';
+$LANG['author'] = 'Author';
+$LANG['authors'] = 'Authors';
+$LANG['new_features'] = 'New features';
+$LANG['improvments'] = 'Improvments';
+$LANG['fixed_bugs'] = 'Fixed bugs';
+$LANG['security_improvments'] = 'security improvments';
+$LANG['unexisting_update'] = 'This update does not exist';
 ?>
