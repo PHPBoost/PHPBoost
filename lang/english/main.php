@@ -158,6 +158,9 @@ $LANG['forbidden_tags'] = 'Forbidden formating tags';
 $LANG['phpboost_languages'] = 'PHPBoost';
 $LANG['wikipedia_subdomain'] = 'en'; //Sous domaine sur wikipédia (ex fr pour fr.wikipedia.org)
 
+//Impression
+$LANG['printable_version'] = 'Printable version';
+
 //Connection
 $LANG['connect_private_message'] = 'Private message';
 $LANG['connect_private_profil'] = 'Personnal profile';

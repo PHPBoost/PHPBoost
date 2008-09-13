@@ -1,9 +1,9 @@
 <?php
 /*##################################################
-*                                 wiki.php
+*                                 print.php
 *                            -------------------
-*   begin                : October 09, 2006
-*   copyright            : (C) 2006 Sautel Benoit
+*   begin                : September 02, 2008
+*   copyright            : (C) 2008 Sautel Benoit
 *   email                : ben.popeye@phpboost.com
 *
 *
@@ -72,7 +72,7 @@ $template->assign_vars(array(
 	'PAGE_TITLE' => $article_infos['title'] . (!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']),
 	'TITLE' => $article_infos['title'],
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
-	'CONTENTS' => second_parse($article_infos['content'])
+	'CONTENT' => second_parse($article_infos['content'])
 ));
 
 $template->parse();

@@ -174,9 +174,6 @@ $LANG['wiki_search_where_all'] = 'Titre &amp; contenu';
 $LANG['wiki_article_com'] = 'Discussion sur l\'article';
 $LANG['wiki_article_com_article'] = 'Discussion';
 
-//Impression
-$LANG['wiki_printable_version'] = 'Version imprimable';
-
 //Suppression
 $LANG['wiki_confirm_delete_archive'] = 'Etes-vous sûr de vouloir supprimer cette version de l\'article?';
 $LANG['wiki_remove_cat'] = 'Suppression d\'une catégorie';
