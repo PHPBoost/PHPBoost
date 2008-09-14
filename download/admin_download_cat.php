@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               admin_download_cat.php
+ *                           admin_download_cat.php
  *                            -------------------
  *   begin                : July 15, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -101,7 +101,7 @@ elseif( !empty($_POST['submit']) )
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
 		$icon = retrieve(POST, 'image', ''); 
 		$icon_path = retrieve(POST, 'alt_image', ''); 
-		$aprob = retrieve(POST, 'aprob', 0);
+		$visible = retrieve(POST, 'visible_cat', false);
 		$secure = retrieve(POST, 'secure', -1);
 
 		if( !empty($icon_path) )
@@ -120,9 +120,9 @@ elseif( !empty($_POST['submit']) )
 			redirect(transid(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 
 			if( $id_cat > 0 )
-			$error_string = $download_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $new_auth);
+			$error_string = $download_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $new_auth, $visible);
 		else
-			$error_string = $download_categories->Add_category($id_parent, $name, $description, $icon, $new_auth);
+			$error_string = $download_categories->Add_category($id_parent, $name, $description, $icon, $new_auth, $visible);
 	}
 
 	$Cache->Generate_module_file('download');
@@ -174,6 +174,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		'L_LOCATION' => $DOWNLOAD_LANG['category_location'],
 		'L_DESCRIPTION' => $DOWNLOAD_LANG['cat_description'],
 		'L_IMAGE' => $DOWNLOAD_LANG['icon_cat'],
+		'L_VISIBLE' => $LANG['visible'],
 		'L_EXPLAIN_IMAGE' => $DOWNLOAD_LANG['explain_icon_cat'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
@@ -193,6 +194,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'IMAGE' => $DOWNLOAD_CATS[$id_edit]['icon'],
 			'CATEGORIES_TREE' => $download_categories->Build_select_form($DOWNLOAD_CATS[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit,
+			'VISIBLE_CHECKED' => $DOWNLOAD_CATS[$id_edit]['visible'] ? 'checked="checked"' : '',
 			'IMG_ICON' => !empty($DOWNLOAD_CATS[$id_edit]['icon']) ? '<img src="' . $DOWNLOAD_CATS[$id_edit]['icon'] . '" alt="" class="valign_middle" />' : '',
 			'IMG_PATH' => !$in_dir_icon ? $DOWNLOAD_CATS[$id_edit]['icon'] : '',
 			'JS_SPECIAL_AUTH' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'true' : 'false',
@@ -211,6 +213,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'IMAGE' => '',
 			'CATEGORIES_TREE' => $download_categories->Build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit,
+			'VISIBLE_CHECKED' => 'checked="checked"',
 			'JS_SPECIAL_AUTH' => 'false',
 			'DISPLAY_SPECIAL_AUTH' => 'none',
 			'SPECIAL_CHECKED' => '',

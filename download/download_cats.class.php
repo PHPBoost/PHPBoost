@@ -85,13 +85,13 @@ class DownloadCats extends CategoriesManagement
 	}
 	
 	//Function which adds a category
-	function Add_category($id_parent, $name, $description, $image, $auth)
+	function Add_category($id_parent, $name, $description, $image, $auth, $visible)
 	{
 		global $Sql;
 		if( $id_parent == 0 || array_key_exists($id_parent, $this->cache_var) )
 		{
 			$new_id_cat = parent::Add_category($id_parent, $name);
-			$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET contents = '" . $description . "', icon = '" . $image . "', auth = '" . $auth . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET contents = '" . $description . "', icon = '" . $image . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
 			//We don't recount the number of questions because this category is empty
 			return 'e_success';
 		}
@@ -100,7 +100,7 @@ class DownloadCats extends CategoriesManagement
 	}
 	
 	//Function which updates a category
-	function Update_category($id_cat, $id_parent, $name, $description, $icon, $auth)
+	function Update_category($id_cat, $id_parent, $name, $description, $icon, $auth, $visible)
 	{
 		global $Sql, $Cache;
 		if( $id_cat == 0 || array_key_exists($id_cat, $this->cache_var) )
@@ -120,7 +120,7 @@ class DownloadCats extends CategoriesManagement
 					$this->Recount_sub_files(NOT_CACHE_GENERATION);
 				}
 			}
-			$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET name = '" . $name . "', icon = '" . $icon . "', contents = '" . $description . "', auth = '" . $auth . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+			$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET name = '" . $name . "', icon = '" . $icon . "', contents = '" . $description . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
 			$Cache->Generate_module_file('download');
 			
 			return 'e_success';
