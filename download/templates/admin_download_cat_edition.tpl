@@ -50,7 +50,7 @@
 					<dl>
 						<dt>
 							<label for="id_parent">
-								* {L_LOCATION}
+								{L_LOCATION}
 							</label>
 						</dt>
 						<dd>
@@ -71,6 +71,16 @@
 							</select>
 							<span id="icon_img">{IMG_ICON}</span>
 							<input type="text" class="text" style="margin-left:50px;" name="alt_image" value="{IMG_PATH}" onblur="if( this.value != '' )change_icon(this.value)" />
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="visible_cat">
+								{L_VISIBLE}
+							</label>
+						</dt>
+						<dd>
+							<input type="checkbox" name="visible_cat" id="visible_cat" {VISIBLE_CHECKED} />
 						</dd>
 					</dl>
 					<label for="contents">

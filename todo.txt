@@ -8,7 +8,6 @@
 [-] Régler les bugs touchables de TinyMCE relevés par Ptithom.
 
 ------------------------------------ MODULES -----------------------------------
-[-] Download, faire une option dans les catégories à l'édition pour désapprouver.
 
 ################################################################################
 
