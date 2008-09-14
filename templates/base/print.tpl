@@ -4,7 +4,10 @@
 		<title>{PAGE_TITLE}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/print.css" type="text/css" media="screen" />
-
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/content.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/bbcode.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/generic.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/global.css" type="text/css" media="screen" />
 	</head>
 	<body>
 	<h1>{TITLE}</h1>
