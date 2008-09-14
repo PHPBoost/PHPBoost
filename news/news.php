@@ -251,6 +251,7 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		'EDIT' => $admin,
 		'DEL' => $del,
 		'U_MEMBER_ID' => transid('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
+		'U_NEWS_LINK' => transid('.php?id=' . $news['id'], '-0-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'),
 	    'FEED_MENU' => get_feed_menu(FEED_URL)
 	));	
 }
