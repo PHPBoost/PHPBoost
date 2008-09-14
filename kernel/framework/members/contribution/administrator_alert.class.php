@@ -126,19 +126,19 @@ class AdministratorAlert extends Contribution
 		switch($this->priority)
 		{
 			case PRIORITY_VERY_LOW:
-				return $LANG['very_low_priority'];
+				return $LANG['priority_very_low'];
 				break;
 			case PRIORITY_LOW:
-				return $LANG['low_priority'];
+				return $LANG['priority_low'];
 			break;
 			case PRIORITY_MEDIUM:
-				return $LANG['medium_priority'];
+				return $LANG['priority_medium'];
 				break;
 			case PRIORITY_HIGH:
-				return $LANG['high_priority'];
+				return $LANG['priority_high'];
 			break;
 			case PRIORITY_VERY_HIGH:
-				return $LANG['very_high_priority'];
+				return $LANG['priority_very_high'];
 			break;
 			default:
 				return $LANG['normal'];

@@ -77,7 +77,7 @@ foreach( $updates as $update )
         'version' => $update->get_version(),
         'short_description' => ($length > 0 ? substr($short_description, 0, $length) . '...' : $short_description),
         'identifier' => $update->get_identifier(),
-        'L_PRIORITY' => $priority,
+        'L_PRIORITY' => $LANG[$priority],
         'priority_css_class' => 'row_' . $priority,
         'download_url' => $update->get_download_url(),
         'update_url' => $update->get_update_url()
