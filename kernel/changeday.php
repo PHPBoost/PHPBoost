@@ -70,7 +70,11 @@ if( empty($check_update) )
 		}
 	}	
 	@closedir($dh); //On ferme le dossier
-
+    
+    //Check for availables updates
+    require_once(PATH_TO_ROOT . '/kernel/framework/core/updates.class.php');
+    $updates = new Updates();
+    
 	//Parcours des modules afin d'executer les actions journalières.
 	require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
 	$modulesLoader = new Modules();

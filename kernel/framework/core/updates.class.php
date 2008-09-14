@@ -93,7 +93,7 @@ class Updates
     function _add_update_alert(&$app)
     {
         require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
-        $identifier = $app->identifier();
+        $identifier = $app->get_identifier();
         // We verify that the alert is not already registered
         if( AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null )
         {

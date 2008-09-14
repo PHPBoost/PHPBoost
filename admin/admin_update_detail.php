@@ -39,7 +39,6 @@ $tpl->assign_vars(array(
     'L_THEMES' => $LANG['themes']
 ));
 
-
 require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
 if( ($update = AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel')) !== null )
 {

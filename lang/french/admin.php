@@ -740,6 +740,12 @@ $LANG['new_features'] = 'Nouvelles Fonctionnalités';
 $LANG['improvments'] = 'Améliorations';
 $LANG['fixed_bugs'] = 'Corrections de bugs';
 $LANG['security_improvments'] = 'Améliorations de sécurité';
-$LANG['unexisting_update'] = 'La mise à jour recherché n\'existe pas';
-
+$LANG['unexisting_update'] = 'La mise à jour recherchée n\'existe pas';
+$LANG['updates_are_available'] = 'Des mises à jours sont disponibles.<br />Veuillez les effectuer au plus vite.';
+$LANG['availables_updates'] = 'Mises à jour disponibles';
+$LANG['details'] = 'Détails';
+$LANG['more_details'] = 'Plus de détails';
+$LANG['download_the_complete_pack'] = 'Téléchargez le pack complet';
+$LANG['download_the_update_pack'] = 'Téléchargez le pack de mise à jour';
+$LANG['no_availables_updates'] = 'Aucune mise à jour n\'est disponible pour l\'instant.';
 ?>

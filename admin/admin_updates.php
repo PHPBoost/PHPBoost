@@ -35,11 +35,87 @@ if( $update_type != '' && $update_type != 'kernel' && $update_type != 'module' &
 
 $tpl = new Template('admin/admin_updates.tpl');
 
+// Retrieves all the update alerts from the database
+require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
+$update_alerts = AdministratorAlertService::find_by_criteria('kernel', null, 'updates');
+$updates = array();
+foreach( $update_alerts as $update_alert )
+{
+    // Builds the asked updates (kernel updates, module updates, theme updates or all of them)
+    $update = unserialize($update_alert->get_description());
+    if( $update_type == '' || $update->get_type() == $update_type )
+        $updates[] = $update;
+}
+
+foreach( $updates as $update )
+{
+    switch( $update->get_priority() )
+    {
+        case PRIORITY_VERY_HIGH:
+            $priority = 'priority_very_high';
+            break;
+        case PRIORITY_HIGH:
+            $priority = 'priority_high';
+            break;
+        case PRIORITY_MEDIUM:
+            $priority = 'priority_medium';
+            break;
+        default:
+            $priority = 'priority_low';
+            break;
+    }
+    
+    $short_description = $update->get_description();
+    $maxlength = 300;
+    $length = strlen($short_description) > $maxlength ?  $maxlength + strpos(substr($short_description, $maxlength), ' ') : 0;
+    $length = $length > ($maxlength * 1.1) ? $maxlength : $length;
+    
+    $tpl->assign_block_vars('apps', array(
+        'type' => $update->get_type(),
+        'name' => $update->get_name(),
+        'version' => $update->get_version(),
+        'short_description' => ($length > 0 ? substr($short_description, 0, $length) . '...' : $short_description),
+        'identifier' => $update->get_identifier(),
+        'L_PRIORITY' => $priority,
+        'priority_css_class' => 'row_' . $priority,
+        'download_url' => $update->get_download_url(),
+        'update_url' => $update->get_update_url()
+    ));
+}  
+
+if( $updates_availables = (count($updates) > 0) )
+{
+    $tpl->assign_vars(array(
+        'L_UPDATES_ARE_AVAILABLE' => $LANG['updates_are_available'],
+        'L_AVAILABLES_UPDATES' => $LANG['availables_updates'],
+        'L_TYPE' => $LANG['type'],
+        'L_DESCRIPTION' => $LANG['description'],
+        'L_PRIORITY' => $LANG['priority'],
+        'L_UPDATE_DOWNLOAD' => $LANG['app_update__download'],
+        'L_NAME' => $LANG['name'],
+        'L_VERSION' => $LANG['version'],
+        'L_MORE_DETAILS' => $LANG['more_details'],
+        'L_DETAILS' => $LANG['details'],
+        'L_DOWNLOAD_PACK' => $LANG['app_update__download_pack'],
+        'L_DOWNLOAD_THE_COMPLETE_PACK' => $LANG['download_the_complete_pack'],
+        'L_UPDATE_PACK' => $LANG['app_update__update_pack'],
+        'L_DOWNLOAD_THE_UPDATE_PACK' => $LANG['download_the_update_pack'],
+        'C_ALL' => $update_type == ''
+    ));
+    
+}
+else
+{
+    $tpl->assign_vars(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_availables_updates']));
+}
+
 $tpl->assign_vars(array(
     'L_WEBSITE_UPDATES' => $LANG['website_updates'],
     'L_KERNEL' => $LANG['kernel'],
     'L_MODULES' => $LANG['modules'],
-    'L_THEMES' => $LANG['themes']
+    'L_THEMES' => $LANG['themes'],
+    'C_UPDATES' => $updates_availables
 ));
 
 $tpl->parse();

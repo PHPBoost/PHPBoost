@@ -134,7 +134,7 @@ class Application
         }
     }
     
-    function identifier()
+    function get_identifier()
     {
         return md5($this->type . '_' . $this->id . '_' . $this->version . '_' . $this->language);
     }
