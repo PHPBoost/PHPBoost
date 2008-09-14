@@ -280,11 +280,11 @@ $LANG['unread_alerts'] = 'There are some unprocessed alerts. You should go there
 $LANG['no_administrator_alert'] = 'No existing alert';
 $LANG['display_all_alerts'] = 'See all alerts';
 $LANG['priority'] = 'Priority';
-$LANG['very_high_priority'] = 'Immediate';
-$LANG['high_priority'] = 'Urgent';
-$LANG['medium_priority'] = 'Medium';
-$LANG['low_priority'] = 'Low';
-$LANG['very_low_priority'] = 'Very low';
+$LANG['priority_very_high'] = 'Immediate';
+$LANG['priority_high'] = 'Urgent';
+$LANG['priority_medium'] = 'Medium';
+$LANG['priority_low'] = 'Low';
+$LANG['priority_very_low'] = 'Very low';
 $LANG['administrator_alerts_action'] = 'Actions';
 $LANG['confirm_delete_administrator_alert'] = 'Are you sure you want to delete this alert?';
 	

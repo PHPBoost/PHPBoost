@@ -72,14 +72,11 @@ function get_search_results($searchTxt, &$searchModules, &$modulesArgs, &$result
     foreach($searchModules as $module)
     {
         array_push($modulesIds, $module->get_id());
-        // enleve la chaine search de la chaine options et la tronque a 255 caracteres
-        $modulesOptions[$module->get_id()] = md5(implode('|', $modulesArgs[$module->get_id()]));
     }
     
-    $Search = new Search($searchTxt, $modulesOptions);
+    $Search = new Search($searchTxt, $modulesArgs);
     execute_search($Search, $searchModules, $modulesArgs, $results);
     $idsSearch = $Search->get_ids();
-    
     if ( !$justInsert )
         return $Search->get_results($results, $modulesIds);
     else

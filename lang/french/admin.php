@@ -280,11 +280,11 @@ $LANG['unread_alerts'] = 'Des alertes non traitées sont en attente.';
 $LANG['no_administrator_alert'] = 'Aucune alerte existante';
 $LANG['display_all_alerts'] = 'Voir toutes les alertes';
 $LANG['priority'] = 'Priorité';
-$LANG['very_high_priority'] = 'Immédiat';
-$LANG['high_priority'] = 'Urgent';
-$LANG['medium_priority'] = 'Moyenne';
-$LANG['low_priority'] = 'Faible';
-$LANG['very_low_priority'] = 'Très faible';
+$LANG['priority_very_high'] = 'Immédiat';
+$LANG['priority_high'] = 'Urgent';
+$LANG['priority_medium'] = 'Moyenne';
+$LANG['priority_low'] = 'Faible';
+$LANG['priority_very_low'] = 'Très faible';
 $LANG['administrator_alerts_action'] = 'Actions';
 $LANG['confirm_delete_administrator_alert'] = 'Etes-vous sûr de vouloir supprimer cette alerte ?';
 	
