@@ -41,7 +41,7 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[-] Système de mise à jour du noyau et des modules:
+[+] Système de mise à jour du noyau et des modules:
     - Templates
     - Changelog des fichiers
 [-] Renommer les méthodes et classes (y compris CategoriesManagement)

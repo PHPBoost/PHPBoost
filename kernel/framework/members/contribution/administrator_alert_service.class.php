@@ -70,11 +70,7 @@ class AdministratorAlertService extends ContributionService
 			LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
 			LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
 			WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . $where_clause, __LINE__, __FILE__);
-			echo "SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, priority, description
-			FROM ".PREFIX."contributions c
-			LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
-			LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
-			WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . $where_clause;
+			
 			while($row = $Sql->Sql_fetch_assoc($result) )
 			{
 				$alert = new AdministratorAlert();

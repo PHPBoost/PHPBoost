@@ -741,4 +741,11 @@ $LANG['improvments'] = 'Improvments';
 $LANG['fixed_bugs'] = 'Fixed bugs';
 $LANG['security_improvments'] = 'security improvments';
 $LANG['unexisting_update'] = 'This update does not exist';
+$LANG['updates_are_available'] = 'Updates are availables<br />Please, update quickly';
+$LANG['availables_updates'] = 'Availables updates';
+$LANG['details'] = 'Details';
+$LANG['more_details'] = 'More details';
+$LANG['download_the_complete_pack'] = 'Download the complete pack';
+$LANG['download_the_update_pack'] = 'Download the update pack';
+$LANG['no_availables_updates'] = 'No updates is available for the moment.';
 ?>
