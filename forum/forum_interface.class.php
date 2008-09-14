@@ -332,7 +332,7 @@ class ForumInterface extends ModuleInterface
             'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . transid('.php?id=' . $result['topic_id'], '-' . $result['topic_id'] . $rewrited_title . '.php') . '#m' . $result['msg_id'],
             'TITLE' => ucfirst($result['title']),
             'DATE' => gmdate_format('d/m/y', $result['date']),
-            'CONTENTS' => $result['contents'],
+            'CONTENTS' => second_parse($result['contents']),
             'USER_AVATAR' => ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : ''
         ));
         
