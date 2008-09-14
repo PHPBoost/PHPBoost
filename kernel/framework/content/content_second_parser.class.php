@@ -114,8 +114,10 @@ class ContentSecondParser extends Parser
 
 		if( !$inline_code && !empty($matches[1]) )
 			$contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
-		else
+		elseif( $inline_code )
 			$contents = $contents;
+		else
+			$contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code">' . $contents . '</div>';
 			
 		return $contents;
 	}

@@ -173,7 +173,7 @@ class FaqInterface extends ModuleInterface
         $Tpl->Assign_vars(array(
             'U_QUESTION' => PATH_TO_ROOT . '/faq/faq.php?id=' . $result['idcat'] . '&amp;question=' . $result['id'] . '#q' . $result['id'],
             'QUESTION' => $result['question'],
-            'ANSWER' => $result['answer']
+            'ANSWER' => second_parse($result['answer'])
         ));
         
         $this->set_attribute('ResultsIndex', ++$resultsIndex);
