@@ -34,9 +34,16 @@ div#header, div#header_admin{
 }
 /* #####  Conteneur en dessous de l'entête ###### */
 div#sub_header, div#sub_header_admin{
-	height:47px;
-	padding-top:4px;
-	background:;
+	height:66px;
+}
+div#sub_header p a{
+	color:#FFFFFF;
+}
+div#sub_header_left{
+	height:46px;
+	padding-top:200px;
+	margin:auto;
+	width:680px;
 }
 div#sub_header p a{
 	color:#FFFFFF;

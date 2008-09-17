@@ -89,7 +89,9 @@ release({L_RELEASE_FORMAT});
 	<div id="header">
 		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
 		{MODULES_MINI_HEADER_CONTENT}
-		<div class="dynamic_menu" style="padding-left:260px;top:280px">
+            <div id="sub_header">						
+		<div id="sub_header_left">
+		<div class="dynamic_menu" style="top:30px">
 			<ul>
 				<li>
 					<h5 class="links"><a href="{PATH_TO_ROOT}/index.php" title="Accueil"><img src="{PATH_TO_ROOT}/templates/phpboost/images/admin/admin_mini.png" class="valign_middle" alt="" /> Accueil</a></h5>
@@ -128,7 +130,7 @@ release({L_RELEASE_FORMAT});
 			</ul>
 		</div>
 	</div>
-	<div id="sub_header">
+    </div>
 		{MODULES_MINI_SUB_HEADER_CONTENT}
 	</div>
 	

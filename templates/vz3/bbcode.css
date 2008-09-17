@@ -3,7 +3,7 @@
 .bbcode{
 	width:485px;
 	background:url(images/form/bb_form.png);
-	border:1px solid #71BAF1;
+	border:1px solid #063E59;
 	border-collapse:collapse;
 	border-spacing:0px;
 }
@@ -16,8 +16,8 @@
 	position:absolute;
 	text-align:center;
 	padding:6px 4px;
-	background:#ACD6F5;
-	border:1px solid #2C5169;
+	background:#063E59;
+	border:1px solid #063E59;
 	bottom:28px; 
 	z-index:100;
 }
@@ -36,17 +36,19 @@ h3.title1, h3.title2{
 }
 /* Titre 1 */
 h3.title1{
-	color:#E53B00;
-	border-bottom:2px solid #E53B00;
+	background:#40486D;	
+	border:1px solid #063E59;
+	border-left:3px solid #063E59;
+	border-right:3px solid #063E59;
 }
 /* Titre 2 */
 h3.title2{
 	background:#FFFFFF;	
 	color:#000000;
-	padding:2px 5px;
-	border:1px solid #E53B00;
-	border-left:3px solid #E53B00;
-	border-right:3px solid #E53B00;
+	border-top:4px double #063E59;
+	border-left:3px solid #063E59;
+	border-right:3px solid #063E59;
+	border-bottom:1px solid #063E59;
 }
 h4.stitle1, h4.stitle2{
 	display: inline;
@@ -61,14 +63,16 @@ h4.stitle1, h4.stitle2{
 }
 /* Sous titre 1 */
 h4.stitle1{
-	border:1px solid #0578CC;
-	border-left:3px solid #0578CC;
-	border-right:3px solid #0578CC;
+	background:#40486D;	
+	border:1px solid #063E59;
+	border-left:3px solid #063E59;
+	border-right:3px solid #063E59;
 }
 /* Sous titre 2 */
 h4.stitle2{
-	border:1px solid #0578CC;
-	border-top:3px solid #0578CC;
+	background:#5C78C2;	
+	border:1px solid #063E59;
+	border-top:3px solid #063E59;
 }
 .float_left
 {
@@ -82,7 +86,7 @@ h4.stitle2{
 }
 /* Tableaux */
 .bb_table{
-	border:1px solid #2C5169;
+	border:1px solid #063E59;
 	border-spacing:0px;
 	border-collapse:collapse;
 	margin:2px;
@@ -148,11 +152,11 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 .blockquote, .code, .hide {
 	overflow:auto;
 	max-height:500px;
-	background:#F8F8F8;
-	border:1px solid #2C5169;
-	border-left:5px solid #2C5169;
-	border-right:5px solid #2C5169;
-	color:#000000;
+	background:#1F303F;
+	border:1px solid #CCCCCC;
+	border-left:5px solid #FFFFFF;
+	border-right:5px solid #FFFFFF;
+	color: #FFFFFF;
 	padding:8px;
 	margin:0px 25px;
 }
