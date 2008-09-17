@@ -113,13 +113,7 @@ a.forum_link_cat{
 }
 /* Contenu */
 .forum_contents{
-	margin-left:28px;
+	margin-left:10px;
 	padding-right:28px; 
-	background:#0E1B24 url(images/sr.jpg) repeat-y right;
-	padding-top:0px;
-	overflow:hidden !important;
-	height:auto !important;
-	overflow:visible;
-	height:1%;
-	clear:both;
+	background:url(images/sr.jpg) repeat-y right;
 }
