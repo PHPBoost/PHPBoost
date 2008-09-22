@@ -20,11 +20,13 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [+] Interface d'ajout de menu de liens. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
-[+] Interface de contribution des news et des articles.
+[+] Interface de contribution des articles.
 [-] Faire les miniatures pour les thèmes.
 [-] Implémenter les classes CSS bb_block et bb_fieldset
 [-] Supprimer stitle de l'éditeur de bbcode et l'ajouter à title
 [-] Retirer déplacement menu gauche/droit suivant thème
+
+[-] Se bouger les fesses
 
 ------------------------------------ MODULES -----------------------------------
 [-] Forum option "Ajouter aux favoris" et "S'abonner (mail)"
@@ -43,6 +45,7 @@
 [+] Système de mise à jour du noyau et des modules:
     - Templates
     - Changelog des fichiers
+[-] Interface de contribution des news.
 [-] Renommer les méthodes et classes (y compris CategoriesManagement)
 	(Pas important pour la béta, sera fait pendant)
 
@@ -55,6 +58,6 @@
 ######################################DOSSIERS##################################
 
 [-] Noix : Panneau de modération.
-[-] Loique : Recherche.
+[-] Loic : Recherche.
 [-] Croquette : Nouveaux minis menus indépendants des modules.
 [-] Croquette : Nouveaux placement des menus.
