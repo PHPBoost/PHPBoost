@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                                errors.class.php
+ *                              errors.class.php
  *                            -------------------
  *   begin                : April 12, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  

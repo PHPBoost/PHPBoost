@@ -28,12 +28,9 @@
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 
 define('CONTRIBUTION_TYPE', 0);
-define('CONTRIBUTION_STATUS_UNREAD', 0);
-define('CONTRIBUTION_STATUS_BEING_PROCESSED', 1);
-define('CONTRIBUTION_STATUS_PROCESSED', 2);
 define('CONTRIBUTION_AUTH_BIT', 1);
 
-//Fonction d'importation/exportation de base de données.
+
 class Contribution
 {
 	## Public ##
