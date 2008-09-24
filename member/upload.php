@@ -431,22 +431,23 @@ else
 			$width_source = !empty($width_source) ? $width_source + 30 : 0;
 			$height_source = !empty($height_source) ? $height_source + 30 : 0;
 			$bbcode = '[img]../upload/' . $row['path'] . '[/img]';
-			$link = '<a class="com" href="javascript:popup_upload(\'' . $row['id'] . '\', ' . $width_source . ', ' . $height_source . ', \'yes\')">';
+			$link = '<a class="com" href="javascript:popup_upload(\'' . $row['id'] . '\', ' . $width_source . ', ' . $height_source . ', \'yes\')';
 			break;
 			//Image svg
 			case 'svg': 
 			$bbcode = '[img]../upload/' . $row['path'] . '[/img]';
-			$link = '<a class="com" href="javascript:popup_upload(\'' . $row['id'] . '\', 0, 0, \'no\')">';
+			$link = '<a class="com" href="javascript:popup_upload(\'' . $row['id'] . '\', 0, 0, \'no\')';
 			break;
 			//Sons
 			case 'mp3':
 			$bbcode = '[sound]../upload/' . $row['path'] . '[/sound]';
-			$link = '<a class="com" href="javascript:popup_upload(\'' . $row['id'] . '\', 220, 10, \'no\')">';
+			$link = '<a class="com" href="javascript:popup_upload(\'' . $row['id'] . '\', 220, 10, \'no\')';
 			break;
 			default:
-			$bbcode = '[url=../upload/' . $row['path'] . ']' . $row['name'] . '[/url]';				
-			$link = '<a class="com" href="../upload/' . $row['path'] . '">';
+			$bbcode = '[url=../upload/' . $row['path'] . ']' . $row['name'] . '[/url]';
+			$link = '<a class="com" href="../upload/' . $row['path'];
 		}
+        $link .= '" title="' . $row['name'] . '">"';
 		
 		$Template->Assign_block_vars('files', array(
 			'ID' => $row['id'],
