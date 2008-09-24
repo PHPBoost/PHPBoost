@@ -297,6 +297,7 @@ class ForumInterface extends ModuleInterface
                 msg.timestamp AS date,
                 t.title AS title,
                 m.login AS login,
+                m.user_avatar AS avatar,
                 s.user_id AS connect,
                 msg.contents AS contents
             FROM ".PREFIX."forum_msg msg
@@ -333,7 +334,7 @@ class ForumInterface extends ModuleInterface
             'TITLE' => ucfirst($result['title']),
             'DATE' => gmdate_format('d/m/y', $result['date']),
             'CONTENTS' => second_parse($result['contents']),
-            'USER_AVATAR' => '<img src="' . ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($session->data['user_avatar']) ? $session->data['user_avatar'] : PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url']) . '" alt="" />'
+            'USER_AVATAR' => '<img src="' . ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($result['avatar']) ? $result['avatar'] : PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url']) . '" alt="" />'
         ));
         
         $this->set_attribute('ResultsIndex', ++$resultsIndex);
