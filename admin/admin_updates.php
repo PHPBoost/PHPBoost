@@ -36,14 +36,14 @@ if( $update_type != '' && $update_type != 'kernel' && $update_type != 'module' &
 $tpl = new Template('admin/admin_updates.tpl');
 
 // Retrieves all the update alerts from the database
-require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
-$update_alerts = AdministratorAlertService::find_by_criteria('kernel', null, 'updates');
+$update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
 $updates = array();
 foreach( $update_alerts as $update_alert )
 {
     // Builds the asked updates (kernel updates, module updates, theme updates or all of them)
-    $update = unserialize($update_alert->get_description());
+    $update = unserialize($update_alert->get_properties());
     if( $update_type == '' || $update->get_type() == $update_type )
         $updates[] = $update;
 }
@@ -52,13 +52,13 @@ foreach( $updates as $update )
 {
     switch( $update->get_priority() )
     {
-        case PRIORITY_VERY_HIGH:
+        case ADMIN_ALERT_VERY_HIGH_PRIORITY:
             $priority = 'priority_very_high';
             break;
-        case PRIORITY_HIGH:
+        case ADMIN_ALERT_HIGH_PRIORITY:
             $priority = 'priority_high';
             break;
-        case PRIORITY_MEDIUM:
+        case ADMIN_ALERT_MEDIUM_PRIORITY:
             $priority = 'priority_medium';
             break;
         default:

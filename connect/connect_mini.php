@@ -69,7 +69,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 		}
 	}
 
-	require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
+	require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
 	
 	$Template->Assign_vars(array(
 		'C_ADMIN_AUTH' => $Member->Check_level(ADMIN_LEVEL),

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          admin_update_detail.php
+ *                           admin_update_detail.php
  *                            -------------------
  *   begin                  : July 27, 2008
  *   copyright              : (C) 2008 Loïc Rouchon
@@ -39,11 +39,11 @@ $tpl->assign_vars(array(
     'L_THEMES' => $LANG['themes']
 ));
 
-require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
 if( ($update = AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel')) !== null )
 {
     require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
-    $app = unserialize($update->get_description());
+    $app = unserialize($update->get_properties());
     
     $authors = $app->get_authors();
     $new_features = $app->get_new_features();
