@@ -280,9 +280,9 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'DAY_DATE' => !empty($current_date_timestamp) ? gmdate_format('d', $current_date_timestamp) : '',
 		'MONTH_DATE' => !empty($current_date_timestamp) ? gmdate_format('m', $current_date_timestamp) : '',
 		'YEAR_DATE' => !empty($current_date_timestamp) ? gmdate_format('Y', $current_date_timestamp) : '',
-		'VISIBLE_WAITING' => (($visible == 2) ? 'checked="checked"' : ''),
-		'VISIBLE_ENABLED' => (($visible == 1) ? 'checked="checked"' : ''),
-		'VISIBLE_UNAPROB' => (($visible == 0) ? 'checked="checked"' : '')
+		'VISIBLE_WAITING' => (($get_visible == 2) ? 'checked="checked"' : ''),
+		'VISIBLE_ENABLED' => (($get_visible == 1) ? 'checked="checked"' : ''),
+		'VISIBLE_UNAPROB' => (($get_visible == 0) ? 'checked="checked"' : '')
 	));
 	
 	$pseudo = $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
