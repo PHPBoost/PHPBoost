@@ -333,7 +333,7 @@ class ForumInterface extends ModuleInterface
             'TITLE' => ucfirst($result['title']),
             'DATE' => gmdate_format('d/m/y', $result['date']),
             'CONTENTS' => second_parse($result['contents']),
-            'USER_AVATAR' => ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : ''
+            'USER_AVATAR' => '<img src="' . ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($session->data['user_avatar']) ? $session->data['user_avatar'] : PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url']) . '" alt="" />'
         ));
         
         $this->set_attribute('ResultsIndex', ++$resultsIndex);
