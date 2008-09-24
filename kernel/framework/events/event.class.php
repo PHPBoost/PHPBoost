@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          event.class.php
+ *                              event.class.php
  *                            -------------------
  *   begin                : July 21, 2008
  *   copyright            : (C) 2008 Benoît Sautel
@@ -36,6 +36,9 @@ define('EVENT_STATUS_BEING_PROCESSED', 1);
 //Read and processed, it is normally not useful anymore 
 define('EVENT_STATUS_PROCESSED', 2);
 
+//Table name in database
+define('EVENTS_TABLE_NAME', "contributions");
+
 /* This class is abstract, it mustn't be instantiated and there is no matching service
 It's the common part between two types of event existing now in PHPBoost :
 	- User contribution managed into the contribution panel
@@ -49,6 +52,13 @@ It's the common part between two types of event existing now in PHPBoost :
 	{
 		$this->current_status = EVENT_STATUS_UNREAD;
 		$this->creation_date = new Date();
+	}
+	
+	//Id setter
+	function set_id($id)
+	{
+		if( is_int($id) && $id > 0 )
+			$this->id = $id;
 	}
 	
 	//Entitled setter
@@ -72,16 +82,13 @@ It's the common part between two types of event existing now in PHPBoost :
 	// current_status setter
 	function set_status($new_current_status)
 	{
-		if( in_array($new_current_status, array(CONTRIBUTION_STATUS_UNREAD, CONTRIBUTION_STATUS_BEING_PROCESSED, CONTRIBUTION_STATUS_PROCESSED)) )
+		if( in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED)) )
 		{
 			$this->current_status = $new_current_status;
-			//If we just come to fix it, we assign the fixing date
-			if( $new_current_status == CONTRIBUTION_STATUS_PROCESSED )
-				$this->fixing_date = new Date();
 		}
 		//Default
 		else
-			$this->current_status = CONTRIBUTION_STATUS_UNREAD;
+			$this->current_status = EVENT_STATUS_UNREAD;
 		
 		$this->must_regenerate_cache = true;
 	}
@@ -111,16 +118,23 @@ It's the common part between two types of event existing now in PHPBoost :
 		$this->type = $type;
 	}
 	
+	//Must we regenerate cache (do the changes we have done affect cache files?)
+	function set_must_regenerate_cache($must)
+	{
+		if( is_bool($must) )
+			$this->must_regenerate_cache = $must;
+	}
+	
 	// Getters
 	function get_id() { return $this->id; }
 	function get_entitled() { return $this->entitled; }
-	function get_description() { return $this->description; }
 	function get_fixing_url() { return $this->fixing_url; }
 	function get_status() { return $this->current_status; }
 	function get_creation_date() { return $this->creation_date; }
 	function get_id_in_module() { return $this->id_in_module; }
 	function get_identifier() { return $this->identifier; }
 	function get_type() { return $this->type; }
+	function get_must_regenerate_cache() { return $this->must_regenerate_cache; }
 	
 	function get_status_name()
 	{
@@ -138,11 +152,10 @@ It's the common part between two types of event existing now in PHPBoost :
 	}
 	
 	//Constructor
-	function build($id, $entitled, $description, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type)
+	function build($id, $entitled, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type)
 	{
 		$this->id = $id;
 		$this->entitled = $entitled;
-		$this->description = $description;
 		$this->fixing_url = $fixing_url;
 		$this->current_status = $current_status;
 		$this->creation_date = $creation_date;
@@ -157,8 +170,6 @@ It's the common part between two types of event existing now in PHPBoost :
 	var $id = 0;
 	//Entitled (title or name) of the event
 	var $entitled = '';
-	//Description (text) of the event
-	var $description = '';
 	//URL where you can process the event
 	var $fixing_url = '';
 	//Status

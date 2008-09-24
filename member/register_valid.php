@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                                register_valid.php
+ *                             register_valid.php
  *                            -------------------
  *   begin                : August 04 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *   
@@ -140,13 +140,13 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					//Si son inscription nécessite une approbation, on en avertit l'administration au biais d'une alerte
 					if( !$user_aprob )
 					{
-						require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
+						require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
 						
 						$alert = new AdministratorAlert();
 						$alert->set_entitled($LANG['member_registered_to_approbate']);
 						$alert->set_fixing_url('admin/admin_members.php?id=' . $last_mbr_id);
 						//Priorité 3/5
-						$alert->set_priority(PRIORITY_MEDIUM);
+						$alert->set_priority(ADMIN_ALERT_MEDIUM_PRIORITY);
 						//Code pour retrouver l'alerte
 						$alert->set_id_in_module($last_mbr_id);
 						$alert->set_type('member_account_to_approbate');

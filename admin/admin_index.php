@@ -107,7 +107,7 @@ foreach($modules_update as $name => $version)
 }
 */
 
-require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
 
 $Template->Assign_vars(array(
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),

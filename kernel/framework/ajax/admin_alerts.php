@@ -36,32 +36,42 @@ require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 if( !$Member->Check_level(ADMIN_LEVEL) )
 	die('');
 
-require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
 
 $change_status = retrieve(GET, 'change_status', 0);
-$delete = retrieve(GET, 'delete', 0);
+$id_to_delete = retrieve(GET, 'delete', 0);
 
 if( $change_status > 0 )
 {
 	$alert = new AdministratorAlert();
-	$alert->load_from_db($change_status);
-    
-	$new_status = $alert->get_status() != CONTRIBUTION_STATUS_PROCESSED ? CONTRIBUTION_STATUS_PROCESSED : CONTRIBUTION_STATUS_UNREAD;
 	
-	$alert->set_status($new_status);
-	
-	$alert->save();
-	
-	echo '1';
+	//If the loading has been successful
+	if( ($alert = AdministratorAlertService::find_by_id($change_status)) != null )
+	{
+		//We switch the status
+		$new_status = $alert->get_status() != EVENT_STATUS_PROCESSED ? EVENT_STATUS_PROCESSED : EVENT_STATUS_UNREAD;
+		
+		AdministratorAlertService::save_alert($alert);
+		
+		echo '1';
+	}
+	//Error
+	else
+		echo '0';
 }
-elseif( $delete > 0 )
+elseif( $id_to_delete > 0 )
 {
 	$alert = new AdministratorAlert();
-	$alert->load_from_db($delete);
-	
-	$alert->delete();
-	
-	echo '1';
+
+	//If the loading has been successful
+	if( ($alert = AdministratorAlertService::find_by_id($id_to_delete)) != null )
+	{
+		AdministratorAlertService::delete_alert($alert);
+		echo '1';
+	}
+	//Error
+	else
+		echo '0';
 }
 
 require_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');

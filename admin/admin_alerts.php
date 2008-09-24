@@ -31,7 +31,7 @@ require_once('../admin/admin_header.php');
 
 $template = new Template('admin/admin_alerts.tpl');
 
-require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/administrator_alert_service.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
 
 $alerts_list = AdministratorAlertService::get_all_alerts();
 
@@ -57,20 +57,20 @@ foreach(AdministratorAlertService::get_all_alerts($criteria, $order, ($paginatio
 	
 	switch($alert->get_priority())
 	{
-		case PRIORITY_VERY_LOW:
+		case ADMIN_ALERT_VERY_LOW_PRIORITY:
 			$color = 'FFFFFF';
 			break;
-		case PRIORITY_LOW:
+		case ADMIN_ALERT_LOW_PRIORITY:
 			$color = 'ECDBB7';
 			break;
-		case PRIORITY_MEDIUM:
+		case ADMIN_ALERT_MEDIUM_PRIORITY:
 			$color = 'F5D5C6';
 			break;
-		case PRIORITY_HIGH:
+		case ADMIN_ALERT_HIGH_PRIORITY:
 			$img_type = 'important.png';
 			$color = 'FFD5D1';
 			break;
-		case PRIORITY_VERY_HIGH:
+		case ADMIN_ALERT_VERY_HIGH_PRIORITY:
 			$img_type = 'errors_mini.png';
 			$color = 'F3A29B';
 			break;
@@ -79,8 +79,9 @@ foreach(AdministratorAlertService::get_all_alerts($criteria, $order, ($paginatio
 	}
 	
 	$creation_date = $alert->get_creation_date();
+	
 	$template->Assign_block_vars('alerts', array(
-		'C_PROCESSED' => $alert->get_status() == CONTRIBUTION_STATUS_PROCESSED,
+		'C_PROCESSED' => $alert->get_status() == ADMIN_ALERT_STATUS_PROCESSED,
 		'FIXING_URL' => transid(PATH_TO_ROOT . '/' . $alert->get_fixing_url()),
 		'NAME' => $alert->get_entitled(),
 		'PRIORITY' => $alert->get_priority_name(),
