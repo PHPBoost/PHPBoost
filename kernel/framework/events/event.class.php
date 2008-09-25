@@ -170,12 +170,15 @@ It's the common part between two types of event existing now in PHPBoost :
 	var $current_status = EVENT_STATUS_UNREAD;
 	//Creation date
 	var $creation_date;
+	
+	//The following attributes are used by the module developper to recognize his contributions
 	//Id corresponding to the alert in the module (optionnal)
 	var $id_in_module = 0;
 	//Identifier to recognize the entry (optionnal)
 	var $identifier = '';
 	//Event type (optionnal)
 	var $type = '';
+	
 	//To know if the modifications implies to regenerate the cache (for instance whether the status has been changed)
 	var $must_regenerate_cache = true;
 }

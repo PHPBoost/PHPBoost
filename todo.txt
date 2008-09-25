@@ -7,6 +7,7 @@
 [-] Supporter https et remplacer les "." par des "_" dans le nom de la base de données lors de l'installation.
 [-] Régler les bugs touchables de TinyMCE relevés par Ptithom.
 [-] Intégrer la gestion des contributions dans l'accueil de l'espace membre
+[-] Trouver une solution pour le login du poster et fixer dans la contribution. Tester les détails des contributions. Ajouter la méthode find_by_criteria
 
 ------------------------------------ MODULES -----------------------------------
 
