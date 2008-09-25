@@ -35,7 +35,7 @@ $id_to_delete = retrieve(GET, 'del', 0);
 $id_to_update = retrieve(REQUEST, 'idedit', 0);
 $id_update = retrieve(GET, 'edit', 0);
 
-require_once(PATH_TO_ROOT . '/kernel/framework/members/contribution/contribution.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/events/contribution_service.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 
 if( $contribution_id > 0 )
@@ -43,7 +43,7 @@ if( $contribution_id > 0 )
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if( !$contribution->load_from_db($contribution_id) || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $Member->get_attribute('user_id')) )
+	if( ($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $Member->get_attribute('user_id')) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
 	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
@@ -57,7 +57,7 @@ elseif( $id_update > 0 )
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if( !$contribution->load_from_db($id_update) || !$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
+	if( ($contribution = ContributionService::find_by_id($id_update)) == null || !$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
 	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
@@ -73,7 +73,7 @@ elseif( $id_to_update > 0 )
 	
 	$contribution = new Contribution();
 	
-	if( !$contribution->load_from_db($id_to_update) || !$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
+	if( ($contribution = ContributionService::find_by_id($id_to_update)) == null || !$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
 	//Récupération des éléments de la contribution
@@ -100,11 +100,11 @@ elseif( $id_to_update > 0 )
 		//Enregistrement en base de données
 		ContributionService::save_contribution($contribution);
 		
-		redirect(HOST . DIR . '/member/contribution_panel.php?id=' . $contribution->get_id());
+		redirect(HOST . DIR . transid('/member/contribution_panel.php?id=' . $contribution->get_id(), '', '&'));
 	}
 	//Erreur
 	else
-		redirect(HOST . DIR . '/member/contribution_panel.php');
+		redirect(HOST . DIR . transid('/member/contribution_panel.php', '', '&'));
 }
 //Suppression d'une contribution
 elseif( $id_to_delete > 0 )
@@ -114,12 +114,12 @@ elseif( $id_to_delete > 0 )
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if( !$contribution->load_from_db($id_to_delete) || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT)) )
+	if( ($contribution = ContributionService::find_by_id($id_to_delete)) == null || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT)) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
 	$contribution->delete();
 	
-	redirect(HOST . DIR . "/member/contribution_panel.php");
+	redirect(HOST . DIR . transid('/member/contribution_panel.php', '', '&'));
 }
 else
 	define('TITLE', $LANG['contribution_panel']);
@@ -151,7 +151,7 @@ if( $contribution_id > 0 )
 		'CREATION_DATE' => $contribution_creation_date->format(DATE_FORMAT_SHORT),
 		'MODULE' => $contribution->get_module_name(),
 		'U_CONTRIBUTOR_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php'),
-		'FIXING_URL' => transid(PATH_TO_ROOT . '/' . $contribution->get_fixing_url())
+		'FIXING_URL' => transid(PATH_TO_ROOT . $contribution->get_fixing_url())
 	));
 	
 	//Si la contribution a été traitée
@@ -230,17 +230,8 @@ else
 	$order = $order == 'desc' ? 'desc' : 'asc';
 	
 	//On liste les contributions
-	$result = $Sql->Query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, description
-	FROM ".PREFIX."contributions c
-	LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
-	LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
-	WHERE contribution_type = " . CONTRIBUTION_TYPE . "
-	ORDER BY " . $criteria . " " . strtoupper($order), __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
-	{
-		$this_contribution = new Contribution();
-		$this_contribution->build_from_db($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['fixing_date']), $row['auth'], $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type']);
-		
+	foreach(ContributionService::get_all_alerts($criteria, $order) as $this_contribution)
+	{		
 		//Obligé de faire une variable temp à cause de php4.
 		$creation_date = $this_contribution->get_creation_date();
 		$fixing_date = $this_contribution->get_fixing_date();
@@ -256,12 +247,12 @@ else
 					'STATUS' => $this_contribution->get_status_name(),
 					'CREATION_DATE' => $creation_date->format(DATE_FORMAT_SHORT),
 					'FIXING_DATE' => $fixing_date->format(DATE_FORMAT_SHORT),
-					'POSTER' => $row['poster_login'],
-					'FIXER' => $row['fixer_login'],
+					//'POSTER' => $row['poster_login'],
+					//'FIXER' => $row['fixer_login'],
 					'ACTIONS' => '',
-					'U_FIXER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $row['fixer_id'], 'member-' . $row['fixer_id'] . '.php'),
-					'U_POSTER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $row['poster_id'], 'member-' . $row['poster_id'] . '.php'),
-					'U_CONSULT' => PATH_TO_ROOT . '/member/' . transid('contribution_panel.php?id=' . $row['id']),
+					'U_FIXER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $this_contribution->get_fixer_id(), 'member-' . $this_contribution->get_fixer_id() . '.php'),
+					'U_POSTER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $this_contribution->get_poster_id(), 'member-' . $this_contribution->get_poster_id() . '.php'),
+					'U_CONSULT' => PATH_TO_ROOT . '/member/' . transid('contribution_panel.php?id=' . $this_contribution->get_id()),
 					'C_FIXED' => $this_contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED,
 					'C_PROCESSING' => $this_contribution->get_status() == CONTRIBUTION_STATUS_BEING_PROCESSED
 				));
@@ -269,8 +260,6 @@ else
 			$num_contributions++;
 		}
 	}
-	
-	$Sql->close($result);
 	
 	if( $num_contributions > 0 )
 		$template->assign_vars(array(

@@ -27,18 +27,26 @@
 
 require_once(PATH_TO_ROOT . '/kernel/framework/events/event.class.php');
 
+## Constants ##
+//Priority levels
+//High emergency, critical
 define('ADMIN_ALERT_VERY_LOW_PRIORITY', 1);
+//Emergency, important
 define('ADMIN_ALERT_LOW_PRIORITY', 2);
+//Medium
 define('ADMIN_ALERT_MEDIUM_PRIORITY', 3);
+//Low priority
 define('ADMIN_ALERT_HIGH_PRIORITY', 4);
+//Very low priority
 define('ADMIN_ALERT_VERY_HIGH_PRIORITY', 5);
 
+//Alert status (boolean)
+//Unread alert
 define('ADMIN_ALERT_STATUS_UNREAD', EVENT_STATUS_UNREAD);
+//Processed alert
 define('ADMIN_ALERT_STATUS_PROCESSED', EVENT_STATUS_PROCESSED);
 
-define('ADMINISTRATOR_ALERT_TYPE', 1);
-
-//Fonction d'importation/exportation de base de données.
+//Class administrator alert
 class AdministratorAlert extends Event 
 {
 	## Public ##

@@ -27,8 +27,10 @@
 
 require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert.class.php');
 
-//This is a static class, it must not be instantiated.
+//Flag which distinguishes an alert and a contribution in the database
+define('ADMINISTRATOR_ALERT_TYPE', 1);
 
+//This is a static class, it must not be instantiated.
 class AdministratorAlertService
 {
 	//Function which builds an alert knowing its id. If it's not found, it returns null
@@ -48,7 +50,7 @@ class AdministratorAlertService
 		{
 			//Creation of the object we are going to return
 			$alert = new AdministratorAlert();
-			$alert->build($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $properties['creation_date']), $properties['id_in_module'], $properties['identifier'], $properties['type'], $properties['priority']);
+			$alert->build($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']), $properties['id_in_module'], $properties['identifier'], $properties['type'], $properties['priority']);
 			return $alert;
 		}
 		else
@@ -82,7 +84,7 @@ class AdministratorAlertService
 			while($row = $Sql->Sql_fetch_assoc($result) )
 			{
 				$alert = new AdministratorAlert();
-				$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
+				$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
 				$array_result[] = $alert;
 			}
 			
@@ -106,13 +108,38 @@ class AdministratorAlertService
 		if( $row = $Sql->Sql_fetch_assoc($result) )
 		{
             $alert = new AdministratorAlert();
-			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
+			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
             
 			return $alert;
         }
         $Sql->Close($result);
         
         return null;
+	}
+	
+	//Function which returns all the alerts of the table
+	/*static*/ function get_all_alerts($criteria = 'creation_date', $order = 'desc', $begin = 0, $number = 20)
+	{
+		global $Sql;
+		
+		$array_result = array();
+		
+		//On liste les alertes
+		$result = $Sql->Query_while("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
+		FROM " . PREFIX . EVENTS_TABLE_NAME . "
+		WHERE contribution_type = " . ADMINISTRATOR_ALERT_TYPE . "
+		ORDER BY " . $criteria . " " . strtoupper($order) . " " . 
+		$Sql->Sql_limit($begin, $number), __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
+		{
+			$alert = new AdministratorAlert();
+			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
+			$array_result[] = $alert;
+		}
+		
+		$Sql->Close($result);
+		
+		return $array_result;
 	}
 	
 	//Function which saves an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
@@ -155,31 +182,6 @@ class AdministratorAlertService
 			$alert->set_id(0);
 		}
 		//Else it's not present in the database, we have nothing to delete
-	}
-	
-	//Function which returns all the alerts of the table
-	/*static*/ function get_all_alerts($criteria = 'creation_date', $order = 'desc', $begin = 0, $number = 20)
-	{
-		global $Sql;
-		
-		$array_result = array();
-		
-		//On liste les alertes
-		$result = $Sql->Query_while("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
-		FROM " . PREFIX . EVENTS_TABLE_NAME . "
-		WHERE contribution_type = " . ADMINISTRATOR_ALERT_TYPE . "
-		ORDER BY " . $criteria . " " . strtoupper($order) . " " . 
-		$Sql->Sql_limit($begin, $number), __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
-		{
-			$alert = new AdministratorAlert();
-			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
-			$array_result[] = $alert;
-		}
-		
-		$Sql->Close($result);
-		
-		return $array_result;
 	}
 	
 	//Counts the number of unread alerts
