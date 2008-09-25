@@ -30,6 +30,7 @@ define('APPLICATION_TYPE__MODULE', 'module');
 define('APPLICATION_TYPE__TEMPLATE', 'template');
 
 require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert.class.php');
 
 class Application
 {
@@ -74,13 +75,13 @@ class Application
         switch( $this->priority )
         {
             case 'high':
-                $this->priority = PRIORITY_HIGH;
+                $this->priority = ADMIN_ALERT_HIGH_PRIORITY;
                 break;
             case 'medium':
-                $this->priority = PRIORITY_MEDIUM;
+                $this->priority = ADMIN_ALERT_MEDIUM_PRIORITY;
                 break;
             default:
-                $this->priority = PRIORITY_LOW;
+                $this->priority = ADMIN_ALERT_LOW_PRIORITY;
                 break;
         }
         if( $this->security_update )

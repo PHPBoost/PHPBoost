@@ -40,7 +40,7 @@ $tpl->assign_vars(array(
 ));
 
 require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
-if( ($update = AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel')) !== null )
+if( ($update = AdministratorAlertService::find_by_identifier($identifier, 'updates')) !== null )
 {
     require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
     $app = unserialize($update->get_properties());

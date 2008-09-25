@@ -38,8 +38,8 @@ $Template->Set_filenames(array(
 
 //--------------------------------------------------------------------- Params
 // A protéger impérativement;
-$search = retrieve(POST, 'search', '');
-$unsecure_search = htmlentities($_POST['search']);
+$search = retrieve(REQUEST, 'q', '');
+$unsecure_search = htmlentities(retrieve(REQUEST, 'q', '', TSTRING_UNCHANGE));
 $selectedModules = retrieve(POST, 'searched_modules', array());
 $searchIn = retrieve(POST, 'search_in', 'all');
 $simpleMode = ($searchIn == 'all') ? true : false;
@@ -142,21 +142,21 @@ foreach( $searchModule as $module)
 }
 
 
-//foreach( $SEARCH_CONFIG['authorized_modules'] as $moduleId )
+//foreach( $search_config['authorized_modules'] as $moduleid )
 //{
-//    $module = $Modules->get_module($moduleId);
-//    if ( ($selectedModules === array()) || in_array($moduleId, $selectedModules) || ($searchIn === $moduleId) )
+//    $module = $modules->get_module($moduleid);
+//    if ( ($selectedmodules === array()) || in_array($moduleid, $selectedmodules) || ($searchin === $moduleid) )
 //    {
 //        $selected = ' selected="selected"';
-//        $usedModules[$moduleId] = $module; // Ajout du module à traiter
+//        $usedmodules[$moduleid] = $module; // ajout du module à traiter
 //    }
 //    else
 //        $selected = '';
 //    
-//    $Template->Assign_block_vars('searched_modules', array(
-//        'MODULE' => $moduleId,
-//        'L_MODULE_NAME' => ucfirst($module->get_name()),
-//        'SELECTED' => $selected
+//    $template->assign_block_vars('searched_modules', array(
+//        'module' => $moduleid,
+//        'l_module_name' => ucfirst($module->get_name()),
+//        'selected' => $selected
 //    ));
 //}
 

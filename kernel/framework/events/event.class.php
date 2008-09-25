@@ -67,12 +67,6 @@ It's the common part between two types of event existing now in PHPBoost :
 		$this->entitled = $entitled;
 	}
 	
-	//Description setter
-	function set_description($description)
-	{
-		$this->description = $description;
-	}
-	
 	//Sets a relative URL (from the root of the site)
 	function set_fixing_url($fixing_url)
 	{

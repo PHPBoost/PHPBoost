@@ -126,11 +126,7 @@ class NewsInterface extends ModuleInterface
         {
             $item = new FeedItem();
             // Rewriting
-            if ( $CONFIG['rewrite'] == 1 )
-                $rewrited_title = '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php';
-            else
-                $rewrited_title = '.php?id=' . $row['id'];
-            $link = HOST . DIR . '/news/news' . $rewrited_title;
+            $link = HOST . DIR . '/news/news' . transid('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php');
             
             // XML text's protection
             $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
