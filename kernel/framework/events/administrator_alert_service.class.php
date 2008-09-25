@@ -96,7 +96,7 @@ class AdministratorAlertService
  	/*static*/ function find_by_identifier($identifier, $type = '')
 	{
         global $Sql;
-		
+        
         $result = $Sql->Query_while(
             "SELECT id, entitled, fixing_url, current_status, creation_date, id_in_module, priority, identifier, type, description
     		FROM " . PREFIX . EVENTS_TABLE_NAME . "
@@ -107,6 +107,7 @@ class AdministratorAlertService
 		{
             $alert = new AdministratorAlert();
 			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_USER, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
+            
 			return $alert;
         }
         $Sql->Close($result);
