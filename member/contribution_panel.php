@@ -236,7 +236,7 @@ else
 		//Obligé de faire une variable temp à cause de php4.
 		$creation_date = $this_contribution->get_creation_date();
 		$fixing_date = $this_contribution->get_fixing_date();
-		continue;
+		
 		//Affichage des contributions du membre
 		if( $Member->check_auth($this_contribution->get_auth(), CONTRIBUTION_AUTH_BIT) || $Member->get_attribute('user_id') == $this_contribution->get_poster_id() )
 		{
