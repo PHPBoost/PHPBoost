@@ -143,6 +143,7 @@ if( $contribution_id > 0 )
 	
 	$template->assign_vars(array(
 		'C_WRITE_AUTH' => $Member->check_auth($contribution->get_auth(), CONTRIBUTION_AUTH_BIT),
+		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != CONTRIBUTION_STATUS_PROCESSED,
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => second_parse($contribution->get_description()),
 		'STATUS' => $contribution->get_status_name(),
@@ -235,7 +236,7 @@ else
 		//Obligé de faire une variable temp à cause de php4.
 		$creation_date = $this_contribution->get_creation_date();
 		$fixing_date = $this_contribution->get_fixing_date();
-		
+		continue;
 		//Affichage des contributions du membre
 		if( $Member->check_auth($this_contribution->get_auth(), CONTRIBUTION_AUTH_BIT) || $Member->get_attribute('user_id') == $this_contribution->get_poster_id() )
 		{
@@ -247,8 +248,8 @@ else
 					'STATUS' => $this_contribution->get_status_name(),
 					'CREATION_DATE' => $creation_date->format(DATE_FORMAT_SHORT),
 					'FIXING_DATE' => $fixing_date->format(DATE_FORMAT_SHORT),
-					//'POSTER' => $row['poster_login'],
-					//'FIXER' => $row['fixer_login'],
+					'POSTER' => $this_contribution->get_poster_login(),
+					'FIXER' => $this_contribution->get_fixer_login(),
 					'ACTIONS' => '',
 					'U_FIXER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $this_contribution->get_fixer_id(), 'member-' . $this_contribution->get_fixer_id() . '.php'),
 					'U_POSTER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $this_contribution->get_poster_id(), 'member-' . $this_contribution->get_poster_id() . '.php'),

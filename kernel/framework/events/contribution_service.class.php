@@ -42,7 +42,7 @@ class ContributionService
 		FROM " . PREFIX . EVENTS_TABLE_NAME . " c
 		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
 		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
-		WHERE id = '" . $id_contrib . "'
+		WHERE id = '" . $id_contrib . "' AND contribution_type = '" . CONTRIBUTION_TYPE . "'
 		ORDER BY creation_date DESC", __LINE__, __FILE__);
 		
 		$properties = $Sql->sql_fetch_assoc($result);
@@ -50,7 +50,7 @@ class ContributionService
 		if( (int)$properties['id'] > 0 )
 		{
 			$contribution = new Contribution();
-			$contribution->build($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['fixing_date']), $properties['auth'], $properties['poster_id'], $properties['fixer_id'], $properties['id_in_module'], $properties['identifier'], $properties['type']);
+			$contribution->build($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['fixing_date']), unserialize($properties['auth']), $properties['poster_id'], $properties['fixer_id'], $properties['id_in_module'], $properties['identifier'], $properties['type'], $properties['poster_login'], $properties['fixer_login']);
 			return $contribution;
 		}
 		else
@@ -65,14 +65,17 @@ class ContributionService
 		$array_result = array();
 		
 		//On liste les alertes
-		$result = $Sql->Query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, identifier, id_in_module, type, description
-		FROM " . PREFIX . EVENTS_TABLE_NAME . "
+		$result = $Sql->Query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, description
+		FROM " . PREFIX . EVENTS_TABLE_NAME . " c
+		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
+		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
 		WHERE contribution_type = " . CONTRIBUTION_TYPE . "
 		ORDER BY " . $criteria . " " . strtoupper($order), __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
 		{
 			$contri = new Contribution();
-			$contri->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['fixing_date']), unserialize($row['auth']), $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type']);
+			
+			$contri->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['fixing_date']), unserialize($row['auth']), $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type'], $row['poster_login'], $row['fixer_login']);
 			$array_result[] = $contri;
 		}
 		

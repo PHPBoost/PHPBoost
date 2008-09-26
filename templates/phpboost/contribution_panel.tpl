@@ -137,12 +137,16 @@
 			</span>
 			# ENDIF #
 		</div>
-		<div class="module_contents">	
-			<div style="text-align:center;">
-				<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}"><img src="../templates/{THEME}/images/process-contribution.png" alt="{L_PROCESS_CONTRIBUTION}" /></a>
-				<br />
-				<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
-			</div>
+		<div class="module_contents">
+			# IF C_WRITE_AUTH #
+				# IF C_UNPROCESSED_CONTRIBUTION #
+				<div style="text-align:center;">
+					<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}"><img src="../templates/{THEME}/images/process-contribution.png" alt="{L_PROCESS_CONTRIBUTION}" /></a>
+					<br />
+					<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
+				</div>
+				# ENDIF #
+			# ENDIF #
 			
 			<fieldset>
 				<legend>{L_CONTRIBUTION}</legend>

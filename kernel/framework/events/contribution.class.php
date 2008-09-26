@@ -50,7 +50,7 @@ class Contribution extends Event
 	}
 	
 	//Constructor with all parameters of a contribution
-	function build($id, $entitled, $description, $fixing_url, $module, $status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id, $id_in_module, $identifier, $type)
+	function build($id, $entitled, $description, $fixing_url, $module, $status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id, $id_in_module, $identifier, $type, $poster_login = '', $fixer_login = '')
 	{
 		//Building parent class
 		parent::build($id, $entitled, $fixing_url, $status, $creation_date, $id_in_module, $identifier, $type);
@@ -59,9 +59,11 @@ class Contribution extends Event
 		$this->description = $description;
 		$this->module = $module;
 		$this->fixing_date = $fixing_date;
-		$this->auth = @unserialize($auth);
+		$this->auth = $auth;
 		$this->poster_id = $poster_id;
 		$this->fixer_id = $fixer_id;
+		$this->poster_login = $poster_login;
+		$this->fixer_login = $fixer_login;
 		
 		//Setting the modification flag to false, it just comes to be loaded
 		$this->must_regenerate_cache = false;
@@ -90,13 +92,23 @@ class Contribution extends Event
 	//Poster id setter
 	function set_poster_id($poster_id)
 	{
-		$this->poster_id = $poster_id;
+		if( $poster_id  > 0)
+		{
+			$this->poster_id = $poster_id;
+			//Assigning also the associated login
+			$this->poster_login = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $poster_id . "'", __LINE__, __FILE__);
+		}
 	}
 
 	//Fixer id setter
 	function set_fixer_id($fixer_id)
 	{
-		$this->fixer_id = $fixer_id;
+		if( $fixer_id  > 0)
+		{
+			$this->fixer_id = $fixer_id;
+			//Assigning also the associated login
+			$this->fixer_login = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $fixer_id . "'", __LINE__, __FILE__);
+		}
 	}	
 	
 	//Description setter
@@ -113,6 +125,8 @@ class Contribution extends Event
 	function get_auth() { return $this->auth; }
 	function get_poster_id() { return $this->poster_id; }
 	function get_fixer_id() { return $this->fixer_id; }
+	function get_poster_login() { return $this->poster_login; }
+	function get_fixer_login() { return $this->fixer_login; }
 	
 	//Status name getter
 	function get_status_name()
@@ -151,6 +165,10 @@ class Contribution extends Event
 	var $poster_id = 0;
 	//Identifier of the member who has fixed the contribution
 	var $fixer_id = 0;
+	//Login of the member who has posted the contribution
+	var $poster_login = '';
+	//Login of the member who has fixed the contribution
+	var $fixer_login = '';
 }
 
 ?>
