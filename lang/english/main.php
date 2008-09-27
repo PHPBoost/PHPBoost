@@ -577,6 +577,8 @@ $LANG['no_contribution'] = 'No contribution';
 $LANG['contribution_list'] = 'Contribution list';
 $LANG['contribute'] = 'Contribute';
 $LANG['contribute_in_modules_explain'] = 'The modules above allow users to contribute. Click on one of them to go to its contribution interface.';
+$LANG['contribute_in_module_name'] = 'Contribute in %s';
+$LANG['no_module_to_contribute'] = 'No module in which you can contribute is installed.';
 
 //Loading bar.
 $LANG['query_loading'] = 'Sending of the query to server';
