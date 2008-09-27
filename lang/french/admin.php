@@ -3,7 +3,7 @@
  *                                admin.php
  *                            -------------------
  *   begin                : November 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -286,6 +286,8 @@ $LANG['priority_medium'] = 'Moyenne';
 $LANG['priority_low'] = 'Faible';
 $LANG['priority_very_low'] = 'Très faible';
 $LANG['administrator_alerts_action'] = 'Actions';
+$LANG['admin_alert_fix'] = 'Régler';
+$LANG['admin_alert_unfix'] = 'Passer l\'alerte en non réglée';
 $LANG['confirm_delete_administrator_alert'] = 'Etes-vous sûr de vouloir supprimer cette alerte ?';
 	
 //Config

@@ -232,7 +232,7 @@ else
 	
 	//On liste les contributions
 	foreach(ContributionService::get_all_alerts($criteria, $order) as $this_contribution)
-	{		
+	{
 		//Obligé de faire une variable temp à cause de php4.
 		$creation_date = $this_contribution->get_creation_date();
 		$fixing_date = $this_contribution->get_fixing_date();
@@ -262,7 +262,7 @@ else
 		}
 	}
 	
-	if( $num_contributions > 0 )
+	if( $num_contributions > 1 )
 		$template->assign_vars(array(
 			'PAGINATION' => $pagination->display_pagination('contribution_panel.php?p=%d&criteria=' . $criteria . '&order=' . $order, $num_contributions - 1, 'p', CONTRIBUTIONS_PER_PAGE, 3)
 		));
