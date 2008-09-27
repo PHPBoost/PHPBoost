@@ -79,7 +79,7 @@ class AdministratorAlertService
 			$where_clause = "contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . implode($criterias, " AND ");
 			$result = $Sql->Query_while("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
 			FROM " . PREFIX . EVENTS_TABLE_NAME . "
-			WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . $where_clause, __LINE__, __FILE__);
+			WHERE " . $where_clause, __LINE__, __FILE__);
 			
 			while($row = $Sql->Sql_fetch_assoc($result) )
 			{
@@ -92,7 +92,7 @@ class AdministratorAlertService
 		}
 		//There is no criteria, we return all alerts
 		else
-			return $this->get_all_alerts();
+			return AdministratorAlertService::get_all_alerts();
 	}
 	
  	/*static*/ function find_by_identifier($identifier, $type = '')

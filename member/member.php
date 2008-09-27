@@ -3,7 +3,7 @@
  *                                member.php
  *                            -------------------
  *   begin                : August 04 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *   
@@ -49,7 +49,7 @@ if( !empty($id_get) ) //Espace membre
 	$Template->Set_filenames(array(
 		'member'=> 'member.tpl'
 	));
-
+	
 	if( $edit_get && $Member->Get_attribute('user_id') === $id_get && ($Member->Check_level(MEMBER_LEVEL)) ) //Edition du profil
 	{
 		//Update profil
@@ -604,7 +604,7 @@ if( !empty($id_get) ) //Espace membre
 	elseif( !empty($view_get) && $Member->Get_attribute('user_id') === $id_get && ($Member->Check_level(MEMBER_LEVEL)) ) //Zone membre
 	{
 		//Info membre
-		$msg_mbr = !empty($CONFIG_MEMBER['msg_mbr']) ? $CONFIG_MEMBER['msg_mbr'] : ''; //On parse le message!
+		$msg_mbr = !empty($CONFIG_MEMBER['msg_mbr']) ? $CONFIG_MEMBER['msg_mbr'] : '';
 		$msg_mbr = '<br />' . $msg_mbr . '<br />';
 	
 		//Chargement de la configuration.
@@ -624,11 +624,13 @@ if( !empty($id_get) ) //Espace membre
 			'MSG_MBR' => $msg_mbr,
 			'U_MEMBER_ID' => transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;edit=true'),
 			'U_MEMBER_PM' => transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php'),
+			'U_CONTRIBUTION_PANEL' => transid('contribution_panel.php'),
 			'L_PROFIL' => $LANG['profil'],
 			'L_WELCOME' => $LANG['welcome'],
 			'L_PROFIL_EDIT' => $LANG['profil_edit'],
 			'L_FILES_MANAGEMENT' => $LANG['files_management'],
-			'L_PRIVATE_MESSAGE' =>  $LANG['private_message']
+			'L_PRIVATE_MESSAGE' => $LANG['private_message'],
+			'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
 		));
 		
 		//Affichage du lien vers l'interface des fichiers.

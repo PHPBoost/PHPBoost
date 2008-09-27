@@ -46,6 +46,7 @@ if( $contribution_id > 0 )
 	if( ($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $Member->get_attribute('user_id')) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
+	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
 	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
 	$Bread_crumb->add_link($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
 	
@@ -60,6 +61,7 @@ elseif( $id_update > 0 )
 	if( ($contribution = ContributionService::find_by_id($id_update)) == null || !$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
+	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
 	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
 	$Bread_crumb->add_link($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
 	$Bread_crumb->add_link($LANG['contribution_edition'], transid('contribution_panel.php?edit=' . $id_update));
@@ -122,7 +124,11 @@ elseif( $id_to_delete > 0 )
 	redirect(HOST . DIR . transid('/member/contribution_panel.php', '', '&'));
 }
 else
+{
+	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
 	define('TITLE', $LANG['contribution_panel']);
+}
 
 require_once('../kernel/header.php');
 
@@ -280,6 +286,10 @@ else
 		'L_FIXER' => $LANG['contribution_fixer'],
 		'L_FIXING_DATE' => $LANG['contribution_fixing_date'],
 		'L_MODULE' => $LANG['contribution_module'],
+		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel'],
+		'L_CONTRIBUTION_LIST' => $LANG['contribution_list'],
+		'L_CONTRIBUTE' => $LANG['contribute'],
+		'L_CONTRIBUTE_EXPLAIN' => $LANG['contribute_in_modules_explain']
 	));
 	
 	//Gestion du tri
