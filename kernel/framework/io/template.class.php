@@ -27,6 +27,8 @@
 ###################################################*/
 
 define('TEMPLATE_STRING_MODE', true);
+define('AUTO_LOAD_FREQUENT_VARS', true);
+define('DO_NOT_AUTO_LOAD_FREQUENT_VARS', FALSE);
 
 class Template
 {
@@ -35,7 +37,7 @@ class Template
 	var $_block = array(); //Tableau contenant les variables de remplacement des variables simples.
 
     // Constructeur
-    function Template($tpl = '')
+    function Template($tpl = '', $auto_load_vars = AUTO_LOAD_FREQUENT_VARS)
     {
         if( !empty($tpl) )
 		{
@@ -43,16 +45,19 @@ class Template
 
 			$this->tpl = $this->check_file($tpl);
 			$this->files[$this->tpl] = $this->tpl;
-		
-			$member_connected = $Member->Check_level(MEMBER_LEVEL);
-			$this->Assign_vars(array(
-				'SID' => SID,
-				'THEME' => $CONFIG['theme'],
-				'LANG' => $CONFIG['lang'],
-				'C_MEMBER_CONNECTED' => $member_connected,
-				'C_MEMBER_NOTCONNECTED' => !$member_connected,
-				'PATH_TO_ROOT' => PATH_TO_ROOT
-			));
+			
+			if( $auto_load_vars )
+			{
+				$member_connected = $Member->Check_level(MEMBER_LEVEL);
+				$this->assign_vars(array(
+					'SID' => SID,
+					'THEME' => $CONFIG['theme'],
+					'LANG' => $CONFIG['lang'],
+					'C_MEMBER_CONNECTED' => $member_connected,
+					'C_MEMBER_NOTCONNECTED' => !$member_connected,
+					'PATH_TO_ROOT' => PATH_TO_ROOT
+				));
+			}
 		}
     }
 	

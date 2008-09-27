@@ -137,12 +137,13 @@ $Template->Assign_vars(array(
 	'L_REQUIRE_PASSWORD' => $LANG['require_password']
 ));
 
-//Inclusion des modules
+//Inclusion des blocs
 if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
 {
+	//En cas d'échec, on régénère le cache
 	$Cache->Generate_file('modules_mini');
 	
-	//On inclue une nouvelle fois
+	//On inclut une nouvelle fois
 	if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
 		$Errorh->Error_handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 }
