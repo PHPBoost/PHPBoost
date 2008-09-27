@@ -37,7 +37,7 @@ define('EVENT_STATUS_BEING_PROCESSED', 1);
 define('EVENT_STATUS_PROCESSED', 2);
 
 //Table name in database
-define('EVENTS_TABLE_NAME', "contributions");
+define('EVENTS_TABLE_NAME', 'events');
 
 /* This class is abstract, it mustn't be instantiated and there is no matching service
 It's the common part between two types of event existing now in PHPBoost :

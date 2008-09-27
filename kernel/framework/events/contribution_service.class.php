@@ -149,7 +149,7 @@ class ContributionService
 			$contribution_auth = $contribution->get_auth();
 			$creation_date = $contribution->get_creation_date();
 			$Sql->Query_inject("INSERT INTO " . PREFIX . EVENTS_TABLE_NAME . " (entitled, description, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, type) VALUES ('" . addslashes($contribution->get_entitled()) . "', '" . addslashes($contribution->get_description()) . "', '" . addslashes($contribution->get_fixing_url()) . "', '" . addslashes($contribution->get_module()) . "', '" . $contribution->get_status() . "', '" . $creation_date->get_timestamp() . "', 0, '" . (!empty($contribution_auth) ? addslashes(serialize($contribution_auth)) : '') . "', '" . $contribution->get_poster_id() . "', '" . $contribution->get_fixer_id() . "', '" . $contribution->get_id_in_module() . "', '" . addslashes($contribution->get_identifier()) . "', '" . addslashes($contribution->get_type()) . "')", __LINE__, __FILE__);
-			$contribution->set_id($Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."contributions"));	
+			$contribution->set_id($Sql->Sql_insert_id("SELECT MAX(id) FROM " . PREFIX. EVENTS_TABLE_NAME));	
 		}
 		
 		//Regeneration of the member cache file

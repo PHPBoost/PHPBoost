@@ -37,7 +37,7 @@ CREATE TABLE `phpboost_articles` (
   KEY `idcat` (`idcat`),
   FULLTEXT KEY `title` (`title`),
   FULLTEXT KEY `contents` (`contents`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_articles`
@@ -66,7 +66,7 @@ CREATE TABLE `phpboost_articles_cats` (
   `auth` text NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `id_left` (`id_left`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_articles_cats`
@@ -91,7 +91,7 @@ CREATE TABLE `phpboost_calendar` (
   `nbr_com` int(11) unsigned NOT NULL default '0',
   `lock_com` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_calendar`
@@ -116,7 +116,7 @@ CREATE TABLE `phpboost_com` (
   `path` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`idcom`),
   KEY `idprov` (`idprov`,`script`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_com`
@@ -154,7 +154,7 @@ CREATE TABLE `phpboost_compteur` (
   `total` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `ip` (`ip`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=88 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_compteur`
@@ -175,7 +175,7 @@ CREATE TABLE `phpboost_configs` (
   `value` text NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_configs`
@@ -215,24 +215,25 @@ CREATE TABLE `phpboost_contributions` (
   `entitled` varchar(255) NOT NULL,
   `description` text,
   `fixing_url` varchar(255) NOT NULL,
-  `module` varchar(100) NOT NULL,
+  `module` varchar(100),
   `current_status` tinyint(3) NOT NULL default '0',
   `creation_date` int(11) NOT NULL,
   `fixing_date` int(11) default NULL,
   `auth` text,
-  `poster_id` int(11) NOT NULL,
-  `fixer_id` int(11) default NULL,
+  `poster_id` int(11),
+  `fixer_id` int(11),
   `id_in_module` int(11) default NULL,
   `identifier` varchar(64) default NULL,
+  `contribution_type` tinyint(1) unsigned NOT NULL default '1',
+  `type` varchar(64) default NULL,
+  `priority` tinyint(3) unsigned default '3',
   `nbr_com` int(10) unsigned default NULL,
   `lock_com` tinyint(1) unsigned default NULL,
-  `contribution_type` tinyint(1) unsigned NOT NULL default '1',
-  `priority` tinyint(3) unsigned default '3',
-  `type` varchar(45) default NULL,
   PRIMARY KEY  (`id`),
   KEY `type_index` (`type`),
   KEY `identifier_index` (`identifier`),
-  KEY `module_index` (`module`)
+  KEY `module_index` (`module`),
+  KEY `id_in_module_index` (`id_in_module`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
@@ -269,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `phpboost_download` (
   FULLTEXT KEY `short_contents` (`short_contents`),
   FULLTEXT KEY `contents` (`contents`),
   KEY `idcat` (`idcat`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `phpboost_download`
@@ -297,7 +298,7 @@ CREATE TABLE IF NOT EXISTS `phpboost_download_cat` (
   `num_files` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `class` (`c_order`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `phpboost_download_cat`
@@ -325,7 +326,7 @@ CREATE TABLE `phpboost_faq` (
   FULLTEXT KEY `question` (`question`),
   FULLTEXT KEY `answer` (`answer`),
   FULLTEXT KEY `question_2` (`question`,`answer`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_faq`
@@ -352,7 +353,7 @@ CREATE TABLE `phpboost_faq_cats` (
   `image` varchar(255) NOT NULL default '',
   `num_questions` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_faq_cats`
@@ -377,7 +378,7 @@ CREATE TABLE `phpboost_forum_alerts` (
   `timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `idtopic` (`idtopic`,`user_id`,`idmodo`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_forum_alerts`
@@ -409,7 +410,7 @@ CREATE TABLE `phpboost_forum_cats` (
   PRIMARY KEY  (`id`),
   KEY `last_topic_id` (`last_topic_id`),
   KEY `id_left` (`id_left`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=MyISAM DEFAULT ;
 
 -- 
 -- Contenu de la table `phpboost_forum_cats`
@@ -438,7 +439,7 @@ CREATE TABLE `phpboost_forum_history` (
   `timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_forum_history`
@@ -502,7 +503,7 @@ CREATE TABLE `phpboost_forum_msg` (
   PRIMARY KEY  (`id`),
   KEY `idtopic` (`idtopic`,`user_id`,`timestamp`),
   FULLTEXT KEY `contenu` (`contents`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=154 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_forum_msg`
@@ -620,7 +621,7 @@ CREATE TABLE `phpboost_forum_poll` (
   `type` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `idtopic` (`idtopic`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_forum_poll`
@@ -663,7 +664,7 @@ CREATE TABLE `phpboost_forum_topics` (
   PRIMARY KEY  (`id`),
   KEY `idcat` (`idcat`,`last_user_id`,`last_timestamp`,`type`),
   FULLTEXT KEY `title` (`title`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_forum_topics`
@@ -718,7 +719,7 @@ CREATE TABLE `phpboost_forum_track` (
   `mail` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `idtopic` (`idtopic`,`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_forum_track`
@@ -741,7 +742,7 @@ CREATE TABLE `phpboost_forum_view` (
   `timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `idv` (`idtopic`,`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=68 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_forum_view`
@@ -773,7 +774,7 @@ CREATE TABLE `phpboost_gallery` (
   `lock_com` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `idcat` (`idcat`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_gallery`
@@ -807,7 +808,7 @@ CREATE TABLE `phpboost_gallery_cats` (
   `auth` text NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `id_left` (`id_left`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_gallery_cats`
@@ -828,7 +829,7 @@ CREATE TABLE `phpboost_group` (
   `auth` varchar(255) NOT NULL default '0',
   `members` text NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_group`
@@ -851,7 +852,7 @@ CREATE TABLE `phpboost_guestbook` (
   `timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `timestamp` (`timestamp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=72 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 
 -- 
 -- Contenu de la table `phpboost_guestbook`
@@ -915,7 +916,7 @@ CREATE TABLE `phpboost_lang` (
   `activ` tinyint(1) NOT NULL default '0',
   `secure` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_lang`
@@ -940,7 +941,7 @@ CREATE TABLE `phpboost_links` (
   `added` tinyint(1) NOT NULL default '0',
   `sep` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_links`
@@ -1013,7 +1014,7 @@ CREATE TABLE `phpboost_member` (
   `user_aprob` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`user_id`),
   KEY `user_id` (`login`,`password`,`level`,`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_member`
@@ -1035,7 +1036,7 @@ CREATE TABLE `phpboost_member_extend` (
   `last_view_forum` int(11) NOT NULL default '0',
   `f_test` text NOT NULL,
   PRIMARY KEY  (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_member_extend`
@@ -1064,7 +1065,7 @@ CREATE TABLE `phpboost_member_extend_cat` (
   `display` tinyint(1) NOT NULL default '0',
   `regex` varchar(255) NOT NULL default '',
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_member_extend_cat`
@@ -1086,7 +1087,7 @@ CREATE TABLE `phpboost_modules` (
   `auth` text NOT NULL,
   `activ` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_modules`
@@ -1130,7 +1131,7 @@ CREATE TABLE `phpboost_modules_mini` (
   `added` tinyint(1) NOT NULL default '0',
   `use_tpl` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_modules_mini`
@@ -1173,7 +1174,7 @@ CREATE TABLE `phpboost_news` (
   FULLTEXT KEY `title` (`title`),
   FULLTEXT KEY `contents` (`contents`),
   FULLTEXT KEY `extend_contents` (`extend_contents`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_news`
@@ -1202,7 +1203,7 @@ CREATE TABLE `phpboost_news_cat` (
   `contents` text NOT NULL,
   `icon` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_news_cat`
@@ -1222,7 +1223,7 @@ CREATE TABLE `phpboost_newsletter` (
   `id` int(11) NOT NULL auto_increment,
   `mail` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_newsletter`
@@ -1243,7 +1244,7 @@ CREATE TABLE `phpboost_newsletter_arch` (
   `type` varchar(10) NOT NULL default '',
   `nbr` mediumint(9) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_newsletter_arch`
@@ -1277,7 +1278,7 @@ CREATE TABLE `phpboost_pages` (
   FULLTEXT KEY `title` (`title`),
   FULLTEXT KEY `contents` (`contents`),
   FULLTEXT KEY `all` (`title`,`contents`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_pages`
@@ -1297,7 +1298,7 @@ CREATE TABLE `phpboost_pages_cats` (
   `id_page` int(11) NOT NULL default '0',
   `id_parent` int(11) NOT NULL default '0',
   KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_pages_cats`
@@ -1319,7 +1320,7 @@ CREATE TABLE `phpboost_pm_msg` (
   `view_status` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `idconvers` (`idconvers`,`user_id`,`timestamp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_pm_msg`
@@ -1356,7 +1357,7 @@ CREATE TABLE `phpboost_pm_topic` (
   `last_timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `user_id` (`user_id`,`user_id_dest`,`user_convers_status`,`last_timestamp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_pm_topic`
@@ -1385,7 +1386,7 @@ CREATE TABLE `phpboost_poll` (
   `end` int(11) NOT NULL default '0',
   `user_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_poll`
@@ -1408,7 +1409,7 @@ CREATE TABLE `phpboost_poll_ip` (
   `idpoll` int(11) NOT NULL default '0',
   `timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_poll_ip`
@@ -1430,7 +1431,7 @@ CREATE TABLE `phpboost_ranks` (
   `icon` varchar(255) NOT NULL default '',
   `special` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_ranks`
@@ -1456,7 +1457,7 @@ CREATE TABLE `phpboost_search_index` (
   PRIMARY KEY  (`id_search`),
   UNIQUE KEY `id_user` (`id_user`,`module`,`search`,`options`),
   KEY `last_search_use` (`last_search_use`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_search_index`
@@ -1477,7 +1478,7 @@ CREATE TABLE `phpboost_search_results` (
   `link` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id_search`,`id_content`),
   KEY `relevance` (`relevance`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_search_results`
@@ -1525,7 +1526,7 @@ CREATE TABLE `phpboost_shoutbox` (
   `timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `timestamp` (`timestamp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_shoutbox`
@@ -1556,7 +1557,7 @@ CREATE TABLE `phpboost_smileys` (
   `code_smiley` varchar(50) NOT NULL default '',
   `url_smiley` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`idsmiley`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_smileys`
@@ -1607,7 +1608,7 @@ CREATE TABLE `phpboost_stats` (
   `pages_detail` text NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `stats_day` (`stats_day`,`stats_month`,`stats_year`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=84 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_stats`
@@ -1715,7 +1716,7 @@ CREATE TABLE `phpboost_stats_referer` (
   `type` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `url` (`url`,`relative_url`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_stats_referer`
@@ -1738,7 +1739,7 @@ CREATE TABLE `phpboost_themes` (
   `left_column` tinyint(1) NOT NULL default '0',
   `right_column` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_themes`
@@ -1762,7 +1763,7 @@ CREATE TABLE `phpboost_upload` (
   `type` varchar(10) NOT NULL default '',
   `timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_upload`
@@ -1782,7 +1783,7 @@ CREATE TABLE `phpboost_upload_cat` (
   `user_id` int(11) NOT NULL default '0',
   `name` varchar(150) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_upload_cat`
@@ -1809,7 +1810,7 @@ CREATE TABLE `phpboost_verif_code` (
   `code` varchar(20) NOT NULL default '',
   `timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_verif_code`
@@ -1838,7 +1839,7 @@ CREATE TABLE `phpboost_web` (
   `lock_com` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `idcat` (`idcat`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_web`
@@ -1863,7 +1864,7 @@ CREATE TABLE `phpboost_web_cat` (
   `secure` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `class` (`class`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_web_cat`
@@ -1895,7 +1896,7 @@ CREATE TABLE `phpboost_wiki_articles` (
   PRIMARY KEY  (`encoded_title`),
   KEY `id` (`id`),
   FULLTEXT KEY `title` (`title`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_wiki_articles`
@@ -1918,7 +1919,7 @@ CREATE TABLE `phpboost_wiki_cats` (
   `id_parent` int(11) NOT NULL default '0',
   `article_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_wiki_cats`
@@ -1944,7 +1945,7 @@ CREATE TABLE `phpboost_wiki_contents` (
   `timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id_contents`),
   FULLTEXT KEY `content` (`content`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_wiki_contents`
@@ -1968,7 +1969,7 @@ CREATE TABLE `phpboost_wiki_favorites` (
   `user_id` int(11) NOT NULL default '0',
   `id_article` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_wiki_favorites`
