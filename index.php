@@ -48,11 +48,10 @@ global $LANG;
                 <div style="float:right"></div>
             </div>
             <div class="news_content">
-                <?php 
-				$tpl = new Template('news/framework/content/syndication/last_news.tpl');
-				echo Feed::get_parsed('news', DEFAULT_FEED_NAME, 0, $tpl, 1) . '<hr />';
-				
-				echo Feed::get_parsed('news', 0, array(), 14); ?>
+                <?php
+                    $tpl = new Template('news/framework/content/syndication/last_news.tpl');
+                    echo Feed::get_parsed('news', DEFAULT_FEED_NAME, 0, $tpl, 1);
+                ?>
                 <div style="text-align:right;"><a href="./news/news.php" class="small_link">Plus de news...</a></div>
                 <div class="text_center"></div>
             </div>
@@ -60,7 +59,7 @@ global $LANG;
             <div class="news_bottom_r"></div>
             <div class="news_bottom"></div>
         </div>
-		<div class="news_container" style="float:right;width:365px;margin-left:10px;">
+        <div class="news_container" style="float:right;width:365px;margin-left:10px;">
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
