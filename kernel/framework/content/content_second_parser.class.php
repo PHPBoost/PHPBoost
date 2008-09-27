@@ -107,6 +107,9 @@ class ContentSecondParser extends Parser
 	function _callback_highlight_code($matches)
 	{
 		global $LANG;
+		
+		//Chargement de la librairie mathématique
+		require_once(PATH_TO_ROOT . '/kernel/framework/content/mathpublisher.php');
 
 		$line_number = !empty($matches[2]);
 		$inline_code = !empty($matches[3]);

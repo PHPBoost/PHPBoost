@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               admin_files_config.php
+ *                           admin_files_config.php
  *                            -------------------
  *   begin                : July 09, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  

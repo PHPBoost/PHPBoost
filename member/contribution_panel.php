@@ -141,7 +141,7 @@ if( $contribution_id > 0 )
 	));
 	
 	include_once('../kernel/framework/content/comments.class.php'); 
-	$comments = new Comments('contributions', $contribution_id, transid('contribution_panel.php?id=' . $contribution_id . '&amp;com=%s'), 'member', KERNEL_SCRIPT);
+	$comments = new Comments('events', $contribution_id, transid('contribution_panel.php?id=' . $contribution_id . '&amp;com=%s'), 'member', KERNEL_SCRIPT);
 	
 	//For PHP 4 :(
 	$contribution_creation_date = $contribution->get_creation_date();
