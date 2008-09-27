@@ -181,6 +181,8 @@
 											<option value="" selected="selected" disabled="disabled">{L_TITLE}</option>
 											<option value="1">{L_TITLE}1</option>
 											<option value="2">{L_TITLE}2</option>
+											<option value="3">{L_TITLE}3</option>
+											<option value="4">{L_TITLE}4</option>
 										</select>	
 									</div>
 								</div>
@@ -188,14 +190,14 @@
 								
 								<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block3{FIELD}">
 									<div style="margin-left:135px;" class="bbcode_block" onmouseover="bb_hide_block('3', '{FIELD}', 1);" onmouseout="bb_hide_block('3', '{FIELD}', 0);">
-										<select id="stitle{FIELD}" onchange="insertbbcode_select('stitle', '[/stitle]', '{FIELD}')">
-											<option value="" selected="selected" disabled="disabled">{L_SUBTITLE}</option>
-											<option value="1">{L_SUBTITLE}1</option>
-											<option value="2">{L_SUBTITLE}2</option>
+										<select id="blocks{FIELD}" onchange="insertbbcode_select2('blocks', '{FIELD}')">
+											<option value="" selected="selected" disabled="disabled">{L_CONTAINER}</option>
+											<option value="block">{L_BLOCK}</option>
+											<option value="fieldset">{L_FIELDSET}</option>
 										</select>	
 									</div>
 								</div>
-								<a href="javascript:{DISABLED_STITLE}bb_display_block('3', '{FIELD}');" onmouseout="{DISABLED_STITLE}bb_hide_block('3', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_SUBTITLE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/subtitle.png" {AUTH_STITLE} alt="{L_BB_SUBTITLE}" /></a>
+								<a href="javascript:{DISABLED_STITLE}bb_display_block('3', '{FIELD}');" onmouseout="{DISABLED_STITLE}bb_hide_block('3', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_SUBTITLE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/subtitle.png" {AUTH_STITLE} alt="{L_BB_CONTAINER}" /></a>
 								
 								<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block4{FIELD}">
 									<div style="margin-left:160px;" class="bbcode_block" onmouseover="bb_hide_block('4', '{FIELD}', 1);" onmouseout="bb_hide_block('4', '{FIELD}', 0);">

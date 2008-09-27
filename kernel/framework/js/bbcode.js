@@ -157,6 +157,20 @@ function insertbbcode_select(id_select, close_balise, field)
 	return;
 }	
 
+//Insertion dans le champs des codes de type select.
+function insertbbcode_select2(id_select, field)
+{			
+	var select = document.getElementById(id_select + field);
+	
+	if( select.value != '' )				
+		insertbbcode('[' + select.value + ']', '[/' + select.value + ']', field);
+	
+	//On remet la valeur par défaut.
+	select.options[0].selected = true;
+	
+	return;
+}
+
 //Envoi le cookie au client.
 function sendCookie(name, value)
 {

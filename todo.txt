@@ -23,12 +23,6 @@
 ------------------------------------- NOYAU ------------------------------------
 [+] Interface d'ajout de menu de liens. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
 [+] Interface de contribution des articles.
-[-] Faire les miniatures pour les thèmes.
-[-] Implémenter les classes CSS bb_block et bb_fieldset
-[-] Supprimer stitle de l'éditeur de bbcode et l'ajouter à title
-[-] Retirer déplacement menu gauche/droit suivant thème
-
-[-] Se bouger les fesses
 
 ------------------------------------ MODULES -----------------------------------
 [-] Forum option "Ajouter aux favoris" et "S'abonner (mail)"
