@@ -65,6 +65,7 @@ $Cache->Load_file('config'); //Requête des configuration générales, $CONFIG vari
 $Cache->Load_file('groups'); //Cache des groupes.
 $Cache->Load_file('member'); //Chargement de la configuration des membres.
 $Cache->Load_file('modules'); //Cache des autorisations des modules
+$Cache->load_file('themes'); //Récupération de la configuration des thèmes.
 
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
