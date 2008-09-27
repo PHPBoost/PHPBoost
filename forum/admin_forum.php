@@ -57,9 +57,13 @@ if( !empty($_POST['valid']) && !empty($id) )
 	}
 	elseif( $type == 2 )
 		$url = '';
-	elseif( empty($url) ) //Ne doit pas être vide dans tout les cas.
-		$url = $Sql->Query("SELECT url FROM ".PREFIX."forum_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		
+	elseif( $type == 3 )
+	{
+		$status = 1;
+		if( empty($url) ) //Ne doit pas être vide dans tout les cas.
+			$url = $Sql->Query("SELECT url FROM ".PREFIX."forum_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	}
+	
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::Return_array_auth(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 	if( !empty($name) )

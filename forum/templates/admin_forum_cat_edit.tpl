@@ -30,18 +30,21 @@
 				if( value == 3 ) //Lien
 				{					
 					document.getElementById('forum_url').style.display = 'block';
+					document.getElementById('forum_status').style.display = 'none';
 					document.getElementById('write_auth').style.display = 'none';
 					document.getElementById('edit_auth').style.display = 'none';
 				}
 				else if( value == 1 ) //Catégorie
 				{
 					document.getElementById('forum_url').style.display = 'none';
+					document.getElementById('forum_status').style.display = 'block';
 					document.getElementById('write_auth').style.display = 'none';
 					document.getElementById('edit_auth').style.display = 'none';
 				}
 				else //Forum
 				{					
 					document.getElementById('forum_url').style.display = 'none';
+					document.getElementById('forum_status').style.display = 'block';
 					document.getElementById('write_auth').style.display = 'block';
 					document.getElementById('edit_auth').style.display = 'block';
 				}
@@ -117,7 +120,7 @@
 							<label><input type="radio" name="aprob" {UNCHECKED_APROB} value="0" /> {L_NO}</label>
 						</dd>
 					</dl>
-					<dl>
+					<dl id="forum_status">
 						<dt><label for="status">{L_STATUS}</label></dt>
 						<dd>
 							<label><input type="radio" name="status" id="status" {CHECKED_STATUS} value="1" /> {L_UNLOCK}</label>

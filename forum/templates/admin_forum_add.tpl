@@ -7,6 +7,7 @@
 				{					
 					document.getElementById('forum_category').style.display = 'block';
 					document.getElementById('forum_url').style.display = 'block';
+					document.getElementById('forum_status').style.display = 'none';
 					document.getElementById('write_auth').style.display = 'none';
 					document.getElementById('edit_auth').style.display = 'none';
 				}
@@ -14,6 +15,7 @@
 				{
 					document.getElementById('forum_category').style.display = 'none';
 					document.getElementById('forum_url').style.display = 'none';
+					document.getElementById('forum_status').style.display = 'block';
 					document.getElementById('write_auth').style.display = 'none';
 					document.getElementById('edit_auth').style.display = 'none';
 				}
@@ -21,6 +23,7 @@
 				{					
 					document.getElementById('forum_category').style.display = 'block';
 					document.getElementById('forum_url').style.display = 'none';
+					document.getElementById('forum_status').style.display = 'block';
 					document.getElementById('write_auth').style.display = 'block';
 					document.getElementById('edit_auth').style.display = 'block';
 				}
@@ -106,7 +109,7 @@
 							<label><input type="radio" name="aprob" value="0" /> {L_NO}</label>
 						</dd>
 					</dl>
-					<dl>
+					<dl id="forum_status">
 						<dt><label for="status">{L_STATUS}</label></dt>
 						<dd>
 							<label><input type="radio" name="status" id="status" checked="checked" value="1" /> {L_UNLOCK}</label>
