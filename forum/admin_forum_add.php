@@ -57,6 +57,8 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 	}
 	elseif( $type == 2 )
 		$url = '';
+	else
+		$status = 1;
 	
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::Return_array_auth(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
