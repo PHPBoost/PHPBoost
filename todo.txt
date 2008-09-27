@@ -3,9 +3,10 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[-] Nouvelles options d'installation (Communautaire, Vitrine, etc).
+[+] Nouvelles options d'installation (Communautaire, Vitrine, etc).
 [-] Supporter https et remplacer les "." par des "_" dans le nom de la base de données lors de l'installation.
 [-] Régler les bugs touchables de TinyMCE relevés par Ptithom.
+[-] S'occuper du sort du panneau de modération.
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -50,7 +51,7 @@
 
 ######################################DOSSIERS##################################
 
-[-] Noix : Panneau de modération.
+[+] Noix : Panneau de modération.
 [-] Loic : Recherche.
 [-] Croquette : Nouveaux minis menus indépendants des modules.
 [-] Croquette : Nouveaux placement des menus.

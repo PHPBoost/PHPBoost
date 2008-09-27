@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               admin_config.php
+ *                             admin_config.php
  *                            -------------------
  *   begin                : June 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -39,7 +39,7 @@ if( !$server_path )
 $server_path = trim(str_replace('/admin', '', dirname($server_path)));
 $server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
 
-//Si c'est confirmé on execute
+//Si c'est confirmé on exécute
 if( !empty($_POST['valid']) && empty($_POST['cache']) )
 {
 	//Gestion de la page de démarrage.
@@ -167,8 +167,8 @@ elseif( $check_advanced && empty($_POST['advanced']) )
 elseif( !empty($_POST['advanced']) )
 {
 	$CONFIG['rewrite'] = 1;
-	$CONFIG['server_name'] = strprotect(retrieve(POST, 'server_name', $server_name, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF); 
-	$CONFIG['server_path'] = strprotect(retrieve(POST, 'server_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);  
+	$CONFIG['server_name'] = trim(strprotect(retrieve(POST, 'server_name', $server_name, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF), '/'); 
+	$CONFIG['server_path'] = '/' . trim(strprotect(retrieve(POST, 'server_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF), '/');  
 	$CONFIG['timezone'] = retrieve(POST, 'timezone', 0);  
 	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
 	$CONFIG['site_cookie'] = strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF); //Session par defaut.
