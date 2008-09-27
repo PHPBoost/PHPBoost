@@ -154,19 +154,22 @@ class AdministratorAlertService
 			$creation_date = $alert->get_creation_date();
 			
 			$Sql->Query_inject("UPDATE " . PREFIX . EVENTS_TABLE_NAME . " SET entitled = '" . addslashes($alert->get_entitled()) . "', description = '" . addslashes($alert->get_properties()) . "', fixing_url = '" . addslashes($alert->get_fixing_url()) . "', current_status = '" . $alert->get_status() . "', creation_date = '" . $creation_date->get_timestamp() . "', id_in_module = '" . $alert->get_id_in_module() . "', identifier = '" . addslashes($alert->get_identifier()) . "', type = '" . addslashes($alert->get_type()) . "', priority = '" . $alert->get_priority() . "' WHERE id = '" . $alert->get_id() . "'", __LINE__, __FILE__);
+			
+			//Regeneration of the member cache file
+			if( $alert->get_must_regenerate_cache() )
+			{
+				$Cache->generate_file('member');
+				$alert->set_must_regenerate_cache(false);
+			}
 		}
 		else //We create it
 		{
 			$creation_date = new Date();
 			$Sql->Query_inject("INSERT INTO " . PREFIX . EVENTS_TABLE_NAME . " (entitled, description, fixing_url, current_status, creation_date, id_in_module, identifier, type, priority) VALUES ('" . addslashes($alert->get_entitled()) . "', '" . addslashes($alert->get_properties()) . "', '" . addslashes($alert->get_fixing_url()) . "', '" . $alert->get_status() . "', '" . $creation_date->get_timestamp() . "', '" . $alert->get_id_in_module() . "', '" . addslashes($alert->get_identifier()) . "', '" . addslashes($alert->get_type()) . "', '" . $alert->get_priority() . "')", __LINE__, __FILE__);
-			$alert->set_id($Sql->Sql_insert_id("SELECT MAX(id) FROM " . PREFIX . EVENTS_TABLE_NAME));	
-		}
-		
-		//Regeneration of the member cache file
-		if( $alert->get_must_regenerate_cache() )
-		{
+			$alert->set_id($Sql->Sql_insert_id("SELECT MAX(id) FROM " . PREFIX . EVENTS_TABLE_NAME));
+
+			//Cache regeneration
 			$Cache->generate_file('member');
-			$alert->set_must_regenerate_cache(false);
 		}
 	}
 	
