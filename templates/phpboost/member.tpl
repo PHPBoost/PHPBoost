@@ -267,27 +267,33 @@
 				<p style="text-align:center;" class="text_strong">{L_WELCOME} {USER_NAME}</p>
 				<table class="module_table">
 					<tr>
-						<td class="row2" style="text-align:center;width:33%">
+						<td class="row2" style="text-align:center;">
 							<a href="member{U_MEMBER_ID}">{L_PROFIL_EDIT}</a>
 							<br /><br />
 							<a href="member{U_MEMBER_ID}" title="">
 								<img src="../templates/{THEME}/images/upload/member.png" alt="{L_PROFIL_EDIT}" title="{L_PROFIL_EDIT}" />
 							</a>
 						</td>
-						<td class="row2" style="text-align:center;width:34%">
+						<td class="row2" style="text-align:center;">
 							<a href="pm{U_MEMBER_PM}">{PM} {L_PRIVATE_MESSAGE}</a> <br /><br />
 							<a href="pm{U_MEMBER_PM}">
 								<img src="../templates/{THEME}/images/{IMG_PM}" alt="{L_PRIVATE_MESSAGE}" title="{L_PRIVATE_MESSAGE}" />
 							</a>
 						</td>
 						# IF C_MEMBER_AUTH_FILES #
-						<td class="row2" style="text-align:center;width:33%">
+						<td class="row2" style="text-align:center;">
 							<a href="upload.php{SID}">{L_FILES_MANAGEMENT}</a> <br /><br />
 							<a href="upload.php{SID}">
 								<img src="../templates/{THEME}/images/upload/files_add.png" alt="{L_FILES_MANAGEMENT}" title="{L_FILES_MANAGEMENT}" />
 							</a>
 						</td>				
 						# ENDIF #
+						<td class="row2" style="text-align:center;">
+							<a href="{U_CONTRIBUTION_PANEL}">{L_CONTRIBUTION_PANEL}</a> <br /><br />
+							<a href="{U_CONTRIBUTION_PANEL}">
+								<img src="../templates/{THEME}/images/contribution.png" alt="{L_PRIVATE_MESSAGE}" title="{L_CONTRIBUTION_PANEL}" />
+							</a>
+						</td>
 					</tr>
 				</table>
 				<br /><br />

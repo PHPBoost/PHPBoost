@@ -27,7 +27,7 @@
 
 
 ####################################################
-#                                                           French                                                                #
+#                      French                      #
 ####################################################
 
 // Dates
@@ -574,6 +574,9 @@ $LANG['contribution_module'] = 'Module';
 $LANG['process_contribution'] = 'Traiter la contribution';
 $LANG['confirm_delete_contribution'] = 'Etes-vous sûr de vouloir supprimer cette contribution ?';
 $LANG['no_contribution'] = 'Aucune contribution à afficher';
+$LANG['contribution_list'] = 'Liste des contributions';
+$LANG['contribute'] = 'Contribuer';
+$LANG['contribute_in_modules_explain'] = 'Les modules suivants permettent aux utilisateurs de contribuer. Cliquez sur un module pour vous rendre dans son interface de contribution.';
 
 //Barre de chargement.
 $LANG['query_loading'] = 'Chargement de la requête au serveur';

@@ -84,6 +84,52 @@ class ContributionService
 		return $array_result;
 	}
 	
+	//Function which builds a list of alerts matching the required criteria(s)
+	/*static*/ function find_by_criteria($module, $id_in_module = null, $type = null, $identifier = null, $poster_id = null, $fixer_id = null)
+	{
+		global $Sql;
+		$criterias = array();
+		
+		//The module parameter must be specified and of string type, otherwise we can't continue
+		if( empty($module) || !is_string($module) )
+			return array();
+		
+		$criterias[] = "module = '" . strprotect($module) . "'";
+		
+		if( $id_in_module != null )
+			$criterias[] = "id_in_module = '" . intval($id_in_module) . "'";
+		
+		if( $type != null)
+			$criterias[] = "type = '" . strprotect($type) . "'";
+			
+		if( $identifier != null )
+			$criterias[] = "identifier = '" . strprotect($identifier). "'";
+			
+		if( $poster_id != null )
+			$criterias[] = "poster_id = '" . intval($poster_id) . "'";
+			
+		if( $fixer_id != null )
+			$criterias[] = "fixer_id = '" . intval($fixer_id) . "'";
+		
+		$array_result = array();
+		$where_clause = "contribution_type = '" . CONTRIBUTION_TYPE . "' AND " . implode($criterias, " AND ");
+		
+		$result = $Sql->Query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, description
+		FROM " . PREFIX . EVENTS_TABLE_NAME . " c
+		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
+		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
+		WHERE " . $where_clause, __LINE__, __FILE__);
+		
+		while($row = $Sql->Sql_fetch_assoc($result) )
+		{
+			$contri = new Contribution();
+			$contri->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['fixing_date']), unserialize($row['auth']), $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type'], $row['poster_login'], $row['fixer_login']);
+			$array_result[] = $contri;
+		}
+		
+		return $array_result;
+	}
+	
 	//Creation or update of a contribution (in database)
 	/*static*/ function save_contribution(&$contribution)
 	{
