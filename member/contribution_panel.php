@@ -278,6 +278,31 @@ else
 			'L_NO_CONTRIBUTION_TO_DISPLAY' => $LANG['no_contribution']
 		));
 	
+	//Liste des modules proposant de contribuer
+	define('NUMBER_OF_MODULES_PER_LINE', 4);
+	$i_module = 0;
+	foreach($MODULES as $module_name => $module_infos)
+	{
+		$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $module_name . '/lang/', $CONFIG['lang']);
+		
+		//Si le module a une interface de contribution
+		if( !empty($module_ini['contribution_interface']) )
+		{
+			//Nouvelle ligne
+			if( $i_module % NUMBER_OF_MODULES_PER_LINE == 0 )
+				$template->assign_block_vars('row', array());
+			
+			$template->assign_block_vars('row.module', array(
+				'WIDTH' => (int)(100. / (NUMBER_OF_MODULES_PER_LINE)),
+				'U_MODULE_LINK' => PATH_TO_ROOT . '/' . $module_name . '/' . transid($module_ini['contribution_interface']),
+				'MODULE_ID' => $module_name,
+				'MODULE_NAME' => $module_ini['name'],
+				'LINK_TITLE' => sprintf($LANG['contribute_in_module_name'], $module_ini['name'])
+			));
+			$i_module++;
+		}
+	}
+		
 	$template->Assign_vars(array(
 		'L_ENTITLED' => $LANG['contribution_entitled'],
 		'L_STATUS' => $LANG['contribution_status'],
@@ -289,7 +314,9 @@ else
 		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel'],
 		'L_CONTRIBUTION_LIST' => $LANG['contribution_list'],
 		'L_CONTRIBUTE' => $LANG['contribute'],
-		'L_CONTRIBUTE_EXPLAIN' => $LANG['contribute_in_modules_explain']
+		'L_CONTRIBUTE_EXPLAIN' => $LANG['contribute_in_modules_explain'],
+		'L_NO_MODULE_IN_WHICH_CONTRIBUTE' => $LANG['no_module_to_contribute'],
+		'C_NO_MODULE_IN_WHICH_CONTRIBUTE' => $i_module == 0
 	));
 	
 	//Gestion du tri

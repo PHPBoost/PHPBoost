@@ -133,7 +133,23 @@
 				<hr style="margin:20px 0;" />
 				
 				<h1>{L_CONTRIBUTE}</h1>
-				<p>{L_CONTRIBUTE_EXPLAIN}</p>
+				<br />
+				# IF NOT C_NO_MODULE_IN_WHICH_CONTRIBUTE #
+					<p>{L_CONTRIBUTE_EXPLAIN}</p>
+					
+					# START row #
+						# START row.module #
+							<div style="float:left;width:{row.module.WIDTH}%;text-align:center;margin:20px 0px;">
+								<a href="{row.module.U_MODULE_LINK}" title="{row.module.LINK_TITLE}"><img src="{PATH_TO_ROOT}/{row.module.MODULE_ID}/{row.module.MODULE_ID}.png" alt="{row.module.LINK_TITLE}" /></a>
+								<br />							
+								<a href="{row.module.U_MODULE_LINK}" title="{row.module.LINK_TITLE}">{row.module.MODULE_NAME}</a>
+							</div>
+						# END row.module #
+						<div class="spacer">&nbsp;</div>
+					# END row #
+				# ELSE #
+					<div class="warning">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
+				# ENDIF #
 			</div>
 		<div class="module_bottom_l"></div>		
 		<div class="module_bottom_r"></div>
