@@ -1,74 +1,28 @@
 		<link href="{MODULE_DATA_PATH}/forum.css" rel="stylesheet" type="text/css" media="screen, handheld">
 		<script type="text/javascript">
 		<!--
-			function change_parent_cat(value)
+			function change_type(value)
 			{			
-				if( value > 0 )
-				{
-					disabled = 0;
-
-					var i;
-					for(id = 2; id <= 4; id++)
-					{
-						if( id == 3 )
-							id++;
-							
-						//Sélection des groupes.
-						var selectidgroups = document.getElementById('groups_auth' + id);
-						for(i = 0; i < selectidgroups.length; i++)
-						{	
-							if( selectidgroups[i] )
-								selectidgroups[i].disabled = '';
-						}
-						
-						//Sélection des membres.
-						var selectidmember = document.getElementById('members_auth' + id);
-						for(i = 0; i < selectidmember.length; i++)
-						{	
-							if( selectidmember[i] )
-								selectidmember[i].disabled = '';
-						}
-					}
-					document.getElementById('2r1').selected = true;
-					document.getElementById('2r2').selected = true;
-					document.getElementById('2r3').selected = true;
-					document.getElementById('4r2').selected = true;
-					document.getElementById('4r3').selected = true;
+				if( value == 3 ) //Lien
+				{					
+					document.getElementById('forum_category').style.display = 'block';
+					document.getElementById('forum_url').style.display = 'block';
+					document.getElementById('write_auth').style.display = 'none';
+					document.getElementById('edit_auth').style.display = 'none';
 				}
-				else
+				else if( value == 1 ) //Catégorie
 				{
-					document.getElementById('2r3').selected = false;
-					document.getElementById('4r3').selected = false;
-					disabled = 1;
-					var i;
-					
-					for(id = 2; id <= 4; id++)
-					{
-						if( id == 3 )
-							id++;
-							
-						//Sélection des groupes.
-						var selectidgroups = document.getElementById('groups_auth' + id);
-						for(i = 0; i < selectidgroups.length; i++)
-						{	
-							if( selectidgroups[i] )
-							{	
-								selectidgroups[i].disabled = 'disabled';
-								selectidgroups[i].selected = false;
-							}
-						}
-						
-						//Sélection des membres.
-						var selectidmember = document.getElementById('members_auth' + id);
-						for(i = 0; i < selectidmember.length; i++)
-						{	
-							if( selectidmember[i] )
-							{
-								selectidmember[i].disabled = 'disabled';
-								selectidmember[i].selected = false;
-							}
-						}
-					}
+					document.getElementById('forum_category').style.display = 'none';
+					document.getElementById('forum_url').style.display = 'none';
+					document.getElementById('write_auth').style.display = 'none';
+					document.getElementById('edit_auth').style.display = 'none';
+				}
+				else //Forum
+				{					
+					document.getElementById('forum_category').style.display = 'block';
+					document.getElementById('forum_url').style.display = 'none';
+					document.getElementById('write_auth').style.display = 'block';
+					document.getElementById('edit_auth').style.display = 'block';
 				}
 			}
 		-->
@@ -116,16 +70,30 @@
 					<legend>{L_ADD_CAT}</legend>
 					<p>{L_REQUIRE}</p>
 					<dl>
+						<dt><label for="type">* {L_TYPE}</label></dt>
+						<dd><label>
+							<select name="type" id="type" onchange="change_type(this.options[this.selectedIndex].value)">
+								<option value="1">{L_CATEGORY}</option>
+								<option value="2">{L_FORUM}</option>
+								<option value="3">{L_LINK}</option>
+							</select>
+						</label></dd>
+					</dl>
+					<dl>
 						<dt><label for="name">* {L_NAME}</label></dt>
 						<dd><label><input type="text" maxlength="100" size="35" id="name" name="name" class="text" /></label></dd>
 					</dl>
-					<dl>
+					<dl id="forum_category">
 						<dt><label for="category">* {L_PARENT_CATEGORY}</label></dt>
 						<dd><label>
-							<select name="category" id="category" onchange="change_parent_cat(this.options[this.selectedIndex].value)">
+							<select name="category" id="category">
 								{CATEGORIES}
 							</select>
 						</label></dd>
+					</dl>
+					<dl id="forum_url">
+						<dt><label for="desc">* {L_URL}</label><br /><span>{L_URL_EXPLAIN}</span></dt>
+						<dd><label><input type="text" maxlength="150" size="55" name="url" id="url" value="http://www.phpboost.com" class="text" /></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="desc">{L_DESC}</label></dt>
@@ -149,11 +117,11 @@
 						<dt><label>{L_AUTH_READ}</label></dt>
 						<dd><label>{AUTH_READ}</label></dd>
 					</dl>
-					<dl>
+					<dl id="write_auth">
 						<dt><label>{L_AUTH_WRITE}</label></dt>
 						<dd><label>{AUTH_WRITE}</label></dd>
 					</dl>
-					<dl>
+					<dl id="edit_auth">
 						<dt><label>{L_AUTH_EDIT}</label></dt>
 						<dd><label>{AUTH_EDIT}</label></dd>
 					</dl>
@@ -166,5 +134,10 @@
 					<input type="reset" value="{L_RESET}" class="reset" />
 				</fieldset>
 			</form>
+			<script type="text/javascript">
+			<!--
+				change_type(1);
+			-->
+			</script>
 		</div>
 			

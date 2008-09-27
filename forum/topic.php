@@ -64,7 +64,7 @@ if( !empty($_POST['change_cat']) )
 	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
 	
 //Autorisation en lecture.
-if( !$Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) )
+if( !$Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$topic['idcat']]['url']) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 
 $Template->Set_filenames(array(

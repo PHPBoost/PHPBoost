@@ -33,6 +33,7 @@
 //Admin
 $LANG['parent_category'] = 'Catégorie parente';
 $LANG['subcat'] = 'Sous-catégorie';
+$LANG['url_explain'] = 'Transforme le forum en lien internet (http://...)';
 $LANG['lock'] = 'Verrouillé';
 $LANG['unlock'] = 'Déverrouillé';
 $LANG['cat_edit'] = 'Editer une catégorie';

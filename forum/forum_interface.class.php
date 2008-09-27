@@ -56,7 +56,7 @@ class ForumInterface extends ModuleInterface
 		//Liste des catégories du forum
 		$i = 0;
 		$forum_cats = 'global $CAT_FORUM;' . "\n";
-		$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, status, aprob, auth, aprob
+		$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, url, status, aprob, auth, aprob
 		FROM ".PREFIX."forum_cats
 		ORDER BY id_left", __LINE__, __FILE__);
 		while( $row = $Sql->Sql_fetch_assoc($result) )
@@ -70,6 +70,7 @@ class ForumInterface extends ModuleInterface
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'status\'] = ' . var_export($row['status'], true) . ';' . "\n";
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
+			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'url\'] = ' . var_export($row['url'], true) . ';' . "\n";
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(sunserialize($row['auth']), true) . ';' . "\n";
 		}
 		$Sql->Close($result);		

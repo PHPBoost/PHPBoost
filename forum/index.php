@@ -77,7 +77,7 @@ $total_msg = 0;
 $cat_left = 0;
 $cat_right = 0;
 //On liste les catégories et sous-catégories.
-$result = $Sql->Query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid, 
+$result = $Sql->Query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.url, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid, 
 t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
 FROM ".PREFIX."forum_cats c
 LEFT JOIN ".PREFIX."forum_topics t ON t.id = c.last_topic_id
@@ -131,7 +131,7 @@ while ($row = $Sql->Sql_fetch_assoc($result))
 						{
 							if( $AUTH_READ_FORUM[$row['cid']] ) //Autorisation en lecture.
 							{
-								$link = '<a href="forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
+								$link = !empty($CAT_FORUM[$idcat]['url']) ? '<a href="' . $CAT_FORUM[$idcat]['url'] . '" class="small_link">' : '<a href="forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
 								$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';				
 							}	
 						}
@@ -189,6 +189,7 @@ while ($row = $Sql->Sql_fetch_assoc($result))
 			'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
 			'NBR_TOPIC' => $row['nbr_topic'],
 			'NBR_MSG' => $row['nbr_msg'],
+			'U_FORUM_URL' => $row['url'],
 			'U_FORUM_VARS' => transid('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . url_encode_rewrite($row['name']) . '.php'),
 			'U_LAST_TOPIC' => $last				
 		));
