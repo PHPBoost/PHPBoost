@@ -2,8 +2,8 @@
 /*##################################################
  *                                install.php
  *                            -------------------
- *   begin                : August 23, 2007
- *   copyright            : (C) 2007    SAUTEL Benoit
+ *   begin                : September 27, 2008
+ *   copyright            : (C) 2008    SAUTEL Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -25,45 +25,59 @@
  *
 ###################################################*/
 
+//A personnaliser
+define('UPDATE_VERSION', '2.1');
+define('DEFAULT_LANGUAGE', 'french');
+
 ob_start();
+
+define('PATH_TO_ROOT', '..');
+
+header('Content-type: text/html; charset=iso-8859-1');
+header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
+header('Pragma: no-cache');
+
+//Inclusion des fichiers
+require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
+require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
+require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
+
+
 define('ERROR_REPORTING', E_ALL | E_NOTICE);
 @error_reporting(ERROR_REPORTING);
 set_magic_quotes_runtime(0);
-$update_version = '2.0';
 
-define('MAGIC_QUOTES', get_magic_quotes_gpc()); //Rï¿½cupï¿½re la valeur du magic quotes
 define('HOST', 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST')));
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 define('FILE', $server_path);
 define('DIR', str_replace('/install/install.php', '', $server_path));
-define('PHPBOOST', true);
 
-//Thï¿½me par dï¿½faut.
+//Thème par défaut.
 define('DEFAULT_THEME', 'main');
 
-if( !@include_once('../kernel/framework/io/template.class.php') )
-	die('Votre dossier d\'installation n\'est pas placï¿½ oï¿½ il faut');
-include_once('../kernel/framework/functions.inc.php');
-
-$step = !empty($_GET['step']) ? numeric($_GET['step']) : 1;
+$step = retrieve(GET, 'step', 1, TUNSIGNED_INT);
 $step = $step > 9 ? 1 : $step;
 
-$lang = !empty($_GET['lang']) ? strprotect($_GET['lang']) : 'french';
+$lang = retrieve(GET, 'lang', DEFAULT_LANGUAGE);
+
 if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
-	include_once('lang/french/install_french.php');
+{
+	include_once('lang/' . DEFAULT_LANGUAGE . '/install_' . DEFAULT_LANGUAGE . '.php');
+	$lang = DEFAULT_LANGUAGE;
+}
 	
 if( !empty($_GET['restart']) )
 	redirect(HOST . add_lang(FILE, true));
 
-$Template = new Template; //!\\Initialisation des templates//!\\
+//Template d'installation
+$template = new Template('install/install.tpl', DO_NOT_AUTO_LOAD_FREQUENT_VARS);
 
-$Template->Set_filenames(array('install' => '../install/templates/install.tpl'));
 
-//Fonction pour gï¿½rer la langue
+//Fonction pour gérer la langue
 function add_lang($url, $header_location = false)
 {
 	global $lang;
-	if( $lang != 'french' )
+	if( $lang != DEFAULT_LANGUAGE )
 	{
 		$ampersand = $header_location ? '&' : '&amp;';
 		if( strpos($url, '?') !== false )
@@ -76,21 +90,22 @@ function add_lang($url, $header_location = false)
 }
 
 //Changement de langue
-if( !empty($_POST['new_language']) && is_file('lang/' . $_POST['new_language'] . '/install_' . $_POST['new_language'] . '.php') && $_POST['new_language'] != $lang)
+$new_language = retrieve(POST, 'new_language', '');
+if( !empty($new_language) && is_file('lang/' . $new_language . '/install_' . $new_language . '.php') && $new_language != $lang)
 {
-	$lang = $_POST['new_language'];
+	$lang = $new_language;
 	redirect(HOST . FILE . add_lang('?step=' . $step, true));
 }
 
-//Prï¿½ambule
+//Préambule
 if( $step == 1 )
 {
-	$Template->Assign_block_vars('intro', array());
-	$Template->Assign_vars(array(
+	$template->Assign_block_vars('intro', array());
+	$template->Assign_vars(array(
 		'L_INTRO_EXPLAIN' => $LANG['intro_explain'],
 		'L_NEXT_STEP' => add_lang('install.php?step=2')
 	));
-	$Template->Assign_vars(array(
+	$template->Assign_vars(array(
 		'L_START_INSTALL' => $LANG['start_install'],
 	));
 }
@@ -103,8 +118,8 @@ elseif( $step == 2 )
 	if( $submit && $license_agreement )
 		redirect(HOST . FILE . add_lang('?step=3', true));
 		
-	$Template->Assign_block_vars('license', array());
-	$Template->Assign_vars(array(
+	$template->Assign_block_vars('license', array());
+	$template->Assign_vars(array(
 		'TARGET' => add_lang('install.php?step=2'),
 		'U_PREVIOUS_PAGE' => add_lang('install.php?step=1'),
 		'L_REQUIRE_LICENSE_AGREEMENT' => ($submit && !$license_agreement) ? '<div class="warning">' . $LANG['require_license_agreement'] . '</div>' : $LANG['require_license_agreement'],
@@ -128,7 +143,7 @@ elseif( $step == 3 )
 	else
 		$check_rewrite = '<div class="unspecified_block">' . $LANG['unknown'] . '</div>';
 	
-	$Template->Assign_block_vars('config_server', array(
+	$template->Assign_block_vars('config_server', array(
 		'PHP_VERSION' => phpversion() >= '4.1.0' ? '<div class="success_block">' . $LANG['yes'] . '</div>' : '<div class="failure_block">' . $LANG['no'] . '</div>',
 		'GD' => ( @extension_loaded('gd') ) ? '<div class="success_block">' . $LANG['yes'] . '</div>' : '<div class="failure_block">' . $LANG['no'] . '</div>',
 		'URL_REWRITING' => $check_rewrite
@@ -154,14 +169,14 @@ elseif( $step == 3 )
 		$found = ($is_dir === true) ? '<div class="success_block">' . $LANG['existing'] . '</div>' : '<div class="failure_block">' . $LANG['unexisting'] . '</div>';
 		$writable = ($is_writable === true) ? '<div class="success_block">' . $LANG['writable'] . '</div>' : '<div class="failure_block">' . $LANG['unwritable'] . '</div>';
 			
-		$Template->Assign_block_vars('config_server.chmod', array(
+		$template->Assign_block_vars('config_server.chmod', array(
 			'TITLE'	=> str_replace('../' , '', $dir),
 			'FOUND' => $found,
 			'WRITABLE' => $writable			
 		));
 	}
 	
-	$Template->Assign_vars(array(
+	$template->Assign_vars(array(
 		'L_CONFIG_SERVER_EXPLAIN' => $LANG['config_server_explain'],
 		'L_PHP_VERSION' => $LANG['php_version'],
 		'L_CHECK_PHP_VERSION' => $LANG['check_php_version'],
@@ -293,7 +308,7 @@ else
 		}
 	}
     
-	$Template->Assign_block_vars('db', array(
+	$template->Assign_block_vars('db', array(
 		'DISPLAY_RESULT' => !empty($error) ? 'block' : 'none',
 		'ERROR' => !empty($error) ? $error : '',
 		'PROGRESS' => !empty($error) ? '100' : '0',
@@ -306,7 +321,7 @@ else
 	
 	foreach( $dbms as $name )
 	{
-		$Template->Assign_block_vars('db.dbms', array(
+		$template->Assign_block_vars('db.dbms', array(
 			'L_DBMS' => $name,
 			'DBMS' => strtolower($name),
 			'SELECTED' => $name == $default_dbms ? 'selected="selected"' : '',
@@ -314,7 +329,7 @@ else
 		));
 	}
 	
-	$Template->Assign_vars(array(
+	$template->Assign_vars(array(
 		'HOST_VALUE' => !empty($error) ? $host  : 'localhost',
 		'LOGIN_VALUE' => !empty($error) ? $login  : '',
 		'PASSWORD_VALUE' => !empty($error) ? $password  : '',
@@ -432,7 +447,7 @@ elseif( $step == 5 )
 	}
 		
 	//Interface configuration du site
-	$Template->Assign_block_vars('site_config', array(
+	$template->Assign_block_vars('site_config', array(
 		'SITE_URL' => $server_name,
 		'SITE_PATH' => $server_path
 	));
@@ -462,7 +477,7 @@ elseif( $step == 5 )
 						$selected = true;
 						$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
 					}					
-					$Template->Assign_block_vars('site_config.lang', array(
+					$template->Assign_block_vars('site_config.lang', array(
 						'LANG' => $file,
 						'LANG_NAME' => $lang_info['name'],
 						'SELECTED' => ($selected) ? 'selected="selected"' : ''
@@ -487,7 +502,7 @@ elseif( $step == 5 )
 				$theme_info = load_ini_file('../templates/' . $file . '/config/', $lang);
 				if( $theme_info )
 				{
-					$Template->Assign_block_vars('site_config.theme', array(
+					$template->Assign_block_vars('site_config.theme', array(
 						'THEME' => $file,
 						'THEME_NAME' => $theme_info['name'],
 						'SELECTED' => ($file == DEFAULT_THEME) ? 'selected="selected"' : ''
@@ -498,7 +513,7 @@ elseif( $step == 5 )
 		closedir($dh); //On ferme le dossier
 	}
 	
-	$Template->Assign_vars(array(
+	$template->Assign_vars(array(
 		'JS_LANG_IDENTIFIER' => $array_identifier,
 		'IMG_LANG_IDENTIFIER' => $lang_identifier,
 		'IMG_THEME' => DEFAULT_THEME,
@@ -527,7 +542,7 @@ elseif( $step == 5 )
 }
 elseif( $step == 6 )
 {
-	$Template->Assign_block_vars('admin', array());
+	$template->Assign_block_vars('admin', array());
 	//Validation de l'ï¿½tape
 	if( !empty($_POST['submit']) )
 	{
@@ -535,7 +550,7 @@ elseif( $step == 6 )
 		$password = !empty($_POST['password']) ? trim($_POST['password']) : '';
 		$password_repeat = !empty($_POST['password_repeat']) ? trim($_POST['password_repeat']) : '';
 		$user_mail = !empty($_POST['mail']) ? trim($_POST['mail']) : '';
-		$user_lang = !empty($_POST['lang']) ? trim($_POST['lang']) : 'french';
+		$user_lang = !empty($_POST['lang']) ? trim($_POST['lang']) : DEFAULT_LANGUAGE;
 		$create_session = !empty($_POST['create_session']) ? true : false;
 		$auto_connection = !empty($_POST['auto_connection']) ? 1 : 0;
 		function check_admin_account($login, $password, $password_repeat, $user_mail, $lang)
@@ -601,7 +616,7 @@ elseif( $step == 6 )
 			redirect(HOST . FILE . add_lang('?step=7', true));
 		}
 		else
-			$Template->Assign_block_vars('admin.error', array(
+			$template->Assign_block_vars('admin.error', array(
 				'ERROR' => '<div class="warning">' . $error . '</div>'
 			));
 	}
@@ -631,7 +646,7 @@ elseif( $step == 6 )
 						$selected = true;
 						$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
 					}					
-					$Template->Assign_block_vars('admin.lang', array(
+					$template->Assign_block_vars('admin.lang', array(
 						'LANG' => $file,
 						'LANG_NAME' => $lang_info['name'],
 						'SELECTED' => ($selected) ? 'selected="selected"' : ''
@@ -642,7 +657,7 @@ elseif( $step == 6 )
 		closedir($dh); //On ferme le dossier
 	}
 	
-	$Template->Assign_vars(array(
+	$template->Assign_vars(array(
 		'JS_LANG_IDENTIFIER' => $array_identifier,
 		'IMG_LANG_IDENTIFIER' => $lang_identifier,
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=5'),
@@ -923,20 +938,20 @@ elseif( $step == 7 )
 		redirect(HOST . FILE . add_lang('?step=8', true));
 	}
 	
-	$Template->Assign_block_vars('modules', array());
+	$template->Assign_block_vars('modules', array());
 	
 	foreach( $supported_modules as $module_name )
 	{
 		$module_info = load_ini_file('../' . $module_name . '/lang/', $lang);
 		if( $module_info != array() )
 		{
-			$Template->Assign_block_vars('modules.module_list', array(
+			$template->Assign_block_vars('modules.module_list', array(
 				'MODULE_NAME' => $module_info['name'],
 				'MODULE_DESC' => $module_info['info'],
 				'MODULE_FOLDER_NAME' => $module_name,
 				'SRC_IMAGE_MODULE' => '../' . $module_name . '/' . $module_name . '.png'
 			));
-			$Template->Assign_block_vars('modules.module_index_list', array(
+			$template->Assign_block_vars('modules.module_index_list', array(
 				'MODULE_NAME' => $module_info['name'],
 				'MODULE' => $module_name
 			));
@@ -947,7 +962,7 @@ elseif( $step == 7 )
 		else
 			$unexisting_modules[] = $module_name;
 	}
-	$Template->Assign_vars(array(
+	$template->Assign_vars(array(
 		'ARRAY_MODULE_LIST' => trim($modules_list, ', '),
 		'ARRAY_MODULE_INDEX_LIST' => trim($index_modules, ', '),
 		'L_EXPLAIN_MODULES' => $LANG['modules_explain'],
@@ -971,8 +986,8 @@ elseif( $step == 7 )
 }
 elseif( $step == 8 )
 {
-	$Template->Assign_block_vars('register_online', array());
-	$Template->Assign_vars(array(
+	$template->Assign_block_vars('register_online', array());
+	$template->Assign_vars(array(
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=7'),
 		'U_NEXT_STEP' => add_lang('install.php?step=9'),
 		'L_PREVIOUS_STEP' => $LANG['previous_step'],
@@ -1002,13 +1017,13 @@ elseif( $step == 9 )
 	else
 		$register_file = 'update.php?t=' . $CONFIG['site_name'] . '&amp;s=2&amp;v=' . $update_version . '&amp;u=' . $CONFIG['server_name'] . $CONFIG['server_path'];
 	
-	$Template->Assign_block_vars('end', array(
+	$template->Assign_block_vars('end', array(
 		'CONTENTS' => sprintf($LANG['end_installation']),
 		'REGISTER' => '<img src="http://www.phpboost.com/phpboost/' . str_replace('"', '\"', $register_file) . '" alt="" />',		
 		'U_INDEX' => '..' . $CONFIG['start_page']
 	));
 	
-	$Template->Assign_vars(array(
+	$template->Assign_vars(array(
 		'L_SITE_INDEX' => $LANG['site_index']
 	));
 }
@@ -1040,7 +1055,7 @@ if( is_dir($rep) ) //Si le dossier existe
 			$info_lang = load_ini_file('../lang/', $file);
 			if( !empty($info_lang['name']) )
 			{	
-				$Template->Assign_block_vars('lang', array(
+				$template->Assign_block_vars('lang', array(
 					'LANG' => $file,
 					'LANG_NAME' => $info_lang['name'],
 					'SELECTED' => $file == $lang ? 'selected="selected"' : ''
@@ -1048,7 +1063,7 @@ if( is_dir($rep) ) //Si le dossier existe
 				
 				if(	$file == $lang )
 				{
-					$Template->Assign_vars(array(
+					$template->Assign_vars(array(
 						'LANG_IDENTIFIER' => $info_lang['identifier']
 					));
 				}
@@ -1058,7 +1073,7 @@ if( is_dir($rep) ) //Si le dossier existe
 	closedir($dh); //On ferme le dossier
 }
 
-$Template->Assign_vars(array(
+$template->Assign_vars(array(
 	'LANG' => $lang,
 	'NUM_STEP' => $step,
 	'PROGRESS_BAR_PICS' => str_repeat('<img src="templates/images/loading.png" alt="" />', floor($steps[$step - 1][2] * 24 / 100)),
@@ -1068,7 +1083,7 @@ $Template->Assign_vars(array(
 	'L_STEPS_LIST' => $LANG['steps_list'],
 	'L_LICENSE' => $LANG['license'],
 	'L_INSTALL_PROGRESS' => $LANG['install_progress'],
-	'L_GENERATED_BY' => sprintf($LANG['generated_by'], '<a href="http://www.phpboost.com" style="color:#799cbb;">PHPBoost ' . $update_version . '</a>'),
+	'L_GENERATED_BY' => sprintf($LANG['generated_by'], '<a href="http://www.phpboost.com" style="color:#799cbb;">PHPBoost ' . UPDATE_VERSION . '</a>'),
 	'L_APPENDICES' => $LANG['appendices'],
 	'L_DOCUMENTATION' => $LANG['documentation'],
 	'U_DOCUMENTATION' => $LANG['documentation_link'],
@@ -1087,7 +1102,7 @@ for($i = 1; $i <= 9; $i++ )
 		$row = 'row_current';
 	else
 		$row = 'row_next';
-	$Template->Assign_block_vars('link_menu', array(
+	$template->Assign_block_vars('link_menu', array(
 		'ROW' => '<tr>
 				<td class="' . $row . '">
 					<img src="templates/images/' . $steps[$i - 1][1] . '" alt="' . $steps[$i - 1][0] . '" class=\"valign_middle\" />&nbsp;&nbsp;' . $steps[$i - 1][0] . '
@@ -1096,7 +1111,7 @@ for($i = 1; $i <= 9; $i++ )
 	));
 }
 
-$Template->Pparse('install');
+$template->parse();
 
 ob_end_flush();
 
