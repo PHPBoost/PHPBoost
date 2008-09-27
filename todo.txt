@@ -24,7 +24,6 @@
 
 ------------------------------------ MODULES -----------------------------------
 [-] Forum option "Ajouter aux favoris" et "S'abonner (mail)"
-[-] Forum possibilité d'ajouter un forum de type lien internet.
 
 #################################################################################
 

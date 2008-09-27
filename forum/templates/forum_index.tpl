@@ -32,6 +32,22 @@
 				<div class="module_contents forum_contents">
 					<table class="module_table" style="width:100%">
 						<tr>
+							# IF forums_list.subcats.U_FORUM_URL #
+							<td class="forum_sous_cat" style="width:25px;text-align:center;">
+								<img src="{MODULE_DATA_PATH}/images/weblink.png" alt="" />
+							</td>
+							<td class="forum_sous_cat" style="min-width:150px;border-right:none">
+								<a href="{forums_list.subcats.U_FORUM_URL}">{forums_list.subcats.NAME}</a>
+								<br />
+								<span class="text_small">{forums_list.subcats.DESC}</span>
+							</td>
+							<td class="forum_sous_cat" style="border-right:none">
+							</td>
+							<td class="forum_sous_cat" style="border-right:none">
+							</td>
+							<td class="forum_sous_cat" style="border-right:none">
+							</td>	
+							# ELSE #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
 								{forums_list.subcats.ANNOUNCE}
 							</td>
@@ -50,6 +66,7 @@
 							<td class="forum_sous_cat_last">
 								{forums_list.subcats.U_LAST_TOPIC}
 							</td>
+							# ENDIF #
 						</tr>	
 					</table>		
 				</div>

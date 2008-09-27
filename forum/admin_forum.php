@@ -44,27 +44,43 @@ if( !empty($_POST['valid']) && !empty($id) )
 	
 	$to = retrieve(POST, 'category', 0);
 	$name = retrieve(POST, 'name', '');
+	$url = retrieve(POST, 'url', '');
+	$type = retrieve(POST, 'type', '');
 	$subname = retrieve(POST, 'desc', '');
 	$status = retrieve(POST, 'status', 1);
 	$aprob = retrieve(POST, 'aprob', 0);  
 
+	if( $type == 1 )
+	{	
+		$url = '';
+		$parent_category = 0;
+	}
+	elseif( $type == 2 )
+		$url = '';
+	elseif( empty($url) ) //Ne doit pas être vide dans tout les cas.
+		$url = $Sql->Query("SELECT url FROM ".PREFIX."forum_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::Return_array_auth(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
-		
 	if( !empty($name) )
 	{
-		$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET name = '" . $name . "', subname = '" . $subname . "', status = '" . $status . "', aprob = '" . $aprob . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET name = '" . $name . "', subname = '" . $subname . "', url = '" . $url . "', status = '" . $status . "', aprob = '" . $aprob . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
-		//Empêche le déplacement dans une catégorie fille.
-		$to = $Sql->Query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'", __LINE__, __FILE__);
-		 
-		//Catégorie parente changée?
-		$change_cat = !empty($to) ? !($CAT_FORUM[$to]['id_left'] < $CAT_FORUM[$id]['id_left'] && $CAT_FORUM[$to]['id_right'] > $CAT_FORUM[$id]['id_right'] && ($CAT_FORUM[$id]['level'] - 1) == $CAT_FORUM[$to]['level']) : $CAT_FORUM[$id]['level'] > 0;		
-		if( $change_cat )
-		{	
-			require_once('../forum/admin_forum.class.php');
-			$admin_forum = new Admin_forum();
-			$admin_forum->move_cat($id, $to);
+		if( $type != 3 || !empty($to) )
+		{
+			//Empêche le déplacement dans une catégorie fille.
+			$to = $Sql->Query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'", __LINE__, __FILE__);
+			 
+			//Catégorie parente changée?
+			$change_cat = !empty($to) ? !($CAT_FORUM[$to]['id_left'] < $CAT_FORUM[$id]['id_left'] && $CAT_FORUM[$to]['id_right'] > $CAT_FORUM[$id]['id_right'] && ($CAT_FORUM[$id]['level'] - 1) == $CAT_FORUM[$to]['level']) : $CAT_FORUM[$id]['level'] > 0;		
+			if( $change_cat )
+			{	
+				require_once('../forum/admin_forum.class.php');
+				$admin_forum = new Admin_forum();
+				$admin_forum->move_cat($id, $to);
+			}
+			else
+				$Cache->Generate_module_file('forum'); //Régénération du cache.
 		}
 		else
 			$Cache->Generate_module_file('forum'); //Régénération du cache.
@@ -207,7 +223,7 @@ elseif( !empty($id) )
 		'admin_forum_cat_edit'=> 'forum/admin_forum_cat_edit.tpl'
 	));
 			
-	$forum_info = $Sql->Query_array("forum_cats", "id_left", "id_right", "level", "name", "subname", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$forum_info = $Sql->Query_array("forum_cats", "id_left", "id_right", "level", "name", "subname", "url", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$forums = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
@@ -231,13 +247,22 @@ elseif( !empty($id) )
 	$is_root = ($forum_info['level'] > 0);
 
 	$array_auth = !empty($forum_info['auth']) ? sunserialize($forum_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
-
+	
+	//Type de forum
+	$type = 2;
+	if( !empty($forum_info['url']) )
+		$type = 3;
+	elseif( $forum_info['level'] == 0 )
+		$type = 1;
+	
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
 		'ID' => $id,
+		'TYPE' => $type,
 		'CATEGORIES' => $forums,
 		'NAME' => $forum_info['name'],
+		'URL' => $forum_info['url'],
 		'DESC' => $forum_info['subname'],
 		'CHECKED_APROB' => ($forum_info['aprob'] == 1) ? 'checked="checked"' : '',
 		'UNCHECKED_APROB' => ($forum_info['aprob'] == 0) ? 'checked="checked"' : '',
@@ -261,6 +286,8 @@ elseif( !empty($id) )
 		'L_DELETE' => $LANG['delete'],
 		'L_PARENT_CATEGORY' => $LANG['parent_category'],
 		'L_NAME' => $LANG['name'],
+		'L_URL' => $LANG['url'],
+		'L_URL_EXPLAIN' => $LANG['url_explain'],
 		'L_DESC' => $LANG['description'],
 		'L_RESET' => $LANG['reset'],		
 		'L_YES' => $LANG['yes'],
@@ -321,7 +348,7 @@ else
 	$list_cats_js = '';
 	$array_js = '';	
 	$i = 0;
-	$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, subname, status
+	$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, subname, url, status
 	FROM ".PREFIX."forum_cats 
 	ORDER BY id_left", __LINE__, __FILE__);
 	while( $row = $Sql->Sql_fetch_assoc($result) )
@@ -334,7 +361,8 @@ else
 			'DESC' => $row['subname'],
 			'INDENT' => $row['level'] * 75, //Indentation des sous catégories.
 			'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="" title="' . $LANG['lock'] . '" />' : '',
-			'U_FORUM_VARS' => ($row['level'] > 0) ? 'forum' . transid('.php?id=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') : transid('index.php?id=' . $row['id'], 'cat-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
+			'URL' => !empty($row['url']) ? '<a href="' . $row['url'] . '"><img src="./forum_mini.png" alt="" class="valign_middle" /></a> ' : '',
+			'U_FORUM_VARS' => !empty($row['url']) ? $row['url'] : (($row['level'] > 0) ? 'forum' . transid('.php?id=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') : transid('index.php?id=' . $row['id'], 'cat-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php'))
 		));
 		
 		$list_cats_js .= $row['id'] . ', ';

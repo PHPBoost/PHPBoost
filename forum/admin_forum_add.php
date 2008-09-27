@@ -45,9 +45,19 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 	$parent_category = retrieve(POST, 'category', 0);
 	$name = retrieve(POST, 'name', '');
 	$subname = retrieve(POST, 'desc', '');
+	$url = retrieve(POST, 'url', '');
+	$type = retrieve(POST, 'type', '');
 	$aprob = retrieve(POST, 'aprob', 0);   
 	$status = retrieve(POST, 'status', 0);   
 
+	if( $type == 1 )
+	{	
+		$url = '';
+		$parent_category = 0;
+	}
+	elseif( $type == 2 )
+		$url = '';
+	
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::Return_array_auth(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 
@@ -85,7 +95,7 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 			$level = 0;
 		}
 		
-		$Sql->Query_inject("INSERT INTO ".PREFIX."forum_cats (id_left,id_right,level,name,subname,nbr_topic,nbr_msg,last_topic_id,status,aprob,auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . addslashes(serialize($array_auth_all)) . "')", __LINE__, __FILE__);	
+		$Sql->Query_inject("INSERT INTO ".PREFIX."forum_cats (id_left, id_right, level, name, subname, url, nbr_topic, nbr_msg, last_topic_id, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', '" . $url . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . addslashes(serialize($array_auth_all)) . "')", __LINE__, __FILE__);	
 
 		###### Regénération du cache des catégories (liste déroulante dans le forum) #######
 		$Cache->Generate_module_file('forum');
@@ -102,7 +112,7 @@ else
 	));
 			
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
-	$forums = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
+	$forums = '<option value="0" checked="checked" disabled="disabled">' . $LANG['root'] . '</option>';
 	$result = $Sql->Query_while("SELECT id, name, level
 	FROM ".PREFIX."forum_cats 
 	ORDER BY id_left", __LINE__, __FILE__);
@@ -137,8 +147,14 @@ else
 		'L_RANK' => $LANG['rank'],
 		'L_DELETE' => $LANG['delete'],
 		'L_PARENT_CATEGORY' => $LANG['parent_category'],
+		'L_TYPE' => $LANG['type'],
+		'L_CATEGORY' => $LANG['category'],
+		'L_FORUM' => $LANG['forum'],
+		'L_LINK' => $LANG['link'],
 		'L_NAME' => $LANG['name'],
 		'L_DESC' => $LANG['description'],
+		'L_URL' => $LANG['url'],
+		'L_URL_EXPLAIN' => $LANG['url_explain'],
 		'L_RESET' => $LANG['reset'],		
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],

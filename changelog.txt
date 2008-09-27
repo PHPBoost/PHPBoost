@@ -99,14 +99,15 @@
 [*] [color=red]Nouveauté:[/color] Possibilité de se connecter/enregistrer à partir du forum (désactivable).
 [*] [color=red]Nouveauté:[/color] Possibilité de voir uniquement les nouveaux messages d'une catégorie.
 [*] [color=red]Nouveauté:[/color] Coloration des résultats dans le moteur de recherche.
-[*] Réparation des bugs sur l'arbre intervallaire gérant les catégories.
 [*] Nouveau formulaire de recherche.
+[*] Amélioration de l'interface d'ajout de forums.
 [*] Possibilité d'ajouter un forum de type lien internet.
+[*] Amélioration de l'interface d'alertes sur les sujets.
 [*] Amélioration de l'interface et du système de sondage.
 [*] Alerte avant de marquer les sujets comme lus.
 [*] Action "suivre le sujet", "changement du statut du sujet" sans rechargement de page.
 [*] Option de recheche dans le titre et contenu des sujets.
-[*] Amélioration de l'interface d'alertes sur les sujets.
+[*] Réparation des bugs sur l'arbre intervallaire gérant les catégories.
 [*] Correction de la fonction de recomptage des sujets/messages.
 
 [b]Galerie:[/b]
