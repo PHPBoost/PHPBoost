@@ -51,6 +51,8 @@ if( $change_status > 0 )
 		//We switch the status
 		$new_status = $alert->get_status() != EVENT_STATUS_PROCESSED ? EVENT_STATUS_PROCESSED : EVENT_STATUS_UNREAD;
 		
+		$alert->set_status($new_status);
+		
 		AdministratorAlertService::save_alert($alert);
 		
 		echo '1';
