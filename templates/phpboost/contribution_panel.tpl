@@ -1,125 +1,125 @@
 	# IF C_CONTRIBUTION_LIST #
-		<table class="module_table">
-			<tr>
-				<th>
-					# IF NOT C_ORDER_ENTITLED_ASC #
-						<a href="{U_ORDER_ENTITLED_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-					{L_ENTITLED}
-					# IF NOT C_ORDER_ENTITLED_DESC #
-						<a href="{U_ORDER_ENTITLED_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-				</th>
-				<th>
-					# IF NOT C_ORDER_MODULE_ASC #
-						<a href="{U_ORDER_MODULE_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-					{L_MODULE}
-					# IF NOT C_ORDER_MODULE_DESC #
-						<a href="{U_ORDER_MODULE_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-				</th>
-				<th>
-					# IF NOT C_ORDER_STATUS_ASC #
-						<a href="{U_ORDER_STATUS_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-					{L_STATUS}
-					# IF NOT C_ORDER_STATUS_DESC #
-						<a href="{U_ORDER_STATUS_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-				</th>
-				<th>
-					# IF NOT C_ORDER_CREATION_DATE_ASC #
-						<a href="{U_ORDER_CREATION_DATE_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-					{L_CREATION_DATE}
-					# IF NOT C_ORDER_CREATION_DATE_DESC #
-						<a href="{U_ORDER_CREATION_DATE_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-				</th>
-				<th>
-					# IF NOT C_ORDER_FIXING_DATE_ASC #
-						<a href="{U_ORDER_FIXING_DATE_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-					{L_FIXING_DATE}
-					# IF NOT C_ORDER_FIXING_DATE_DESC #
-						<a href="{U_ORDER_FIXING_DATE_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-				</th>
-				<th>
-					# IF NOT C_ORDER_POSTER_ASC #
-						<a href="{U_ORDER_POSTER_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-					{L_POSTER}
-					# IF NOT C_ORDER_POSTER_DESC #
-						<a href="{U_ORDER_POSTER_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-				</th>
-				<th>
-					# IF NOT C_ORDER_FIXER_ASC #
-						<a href="{U_ORDER_FIXER_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-					{L_FIXER}
-					# IF NOT C_ORDER_FIXER_DESC #
-						<a href="{U_ORDER_FIXER_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-					# ENDIF #
-				</th>
-			</tr>
-			# START contributions #
-			<tr>
-				<td class="row1" style="text-align:center;">
-					<a href="{contributions.U_CONSULT}">{contributions.ENTITLED}</a>
-				</td>
-				<td class="row1" style="text-align:center;">
-					{contributions.MODULE}
-				</td>
-				# IF contributions.C_FIXED #
-				<td class="row1" style="text-align:center; background-color:#7FFF9C;">
-					{contributions.STATUS}
-				</td>
-				# ELSE #
-					# IF contributions.C_PROCESSING #
-					<td class="row1" style="text-align:center; background-color:#FFD86F;">
+		# IF C_NO_CONTRIBUTION #
+		<div class="warning">{L_NO_CONTRIBUTION_TO_DISPLAY}</div>
+		# ELSE #						
+			<table class="module_table">
+				<tr>
+					<th>
+						# IF NOT C_ORDER_ENTITLED_ASC #
+							<a href="{U_ORDER_ENTITLED_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+						{L_ENTITLED}
+						# IF NOT C_ORDER_ENTITLED_DESC #
+							<a href="{U_ORDER_ENTITLED_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+					</th>
+					<th>
+						# IF NOT C_ORDER_MODULE_ASC #
+							<a href="{U_ORDER_MODULE_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+						{L_MODULE}
+						# IF NOT C_ORDER_MODULE_DESC #
+							<a href="{U_ORDER_MODULE_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+					</th>
+					<th>
+						# IF NOT C_ORDER_STATUS_ASC #
+							<a href="{U_ORDER_STATUS_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+						{L_STATUS}
+						# IF NOT C_ORDER_STATUS_DESC #
+							<a href="{U_ORDER_STATUS_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+					</th>
+					<th>
+						# IF NOT C_ORDER_CREATION_DATE_ASC #
+							<a href="{U_ORDER_CREATION_DATE_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+						{L_CREATION_DATE}
+						# IF NOT C_ORDER_CREATION_DATE_DESC #
+							<a href="{U_ORDER_CREATION_DATE_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+					</th>
+					<th>
+						# IF NOT C_ORDER_FIXING_DATE_ASC #
+							<a href="{U_ORDER_FIXING_DATE_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+						{L_FIXING_DATE}
+						# IF NOT C_ORDER_FIXING_DATE_DESC #
+							<a href="{U_ORDER_FIXING_DATE_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+					</th>
+					<th>
+						# IF NOT C_ORDER_POSTER_ASC #
+							<a href="{U_ORDER_POSTER_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+						{L_POSTER}
+						# IF NOT C_ORDER_POSTER_DESC #
+							<a href="{U_ORDER_POSTER_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+					</th>
+					<th>
+						# IF NOT C_ORDER_FIXER_ASC #
+							<a href="{U_ORDER_FIXER_ASC}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+						{L_FIXER}
+						# IF NOT C_ORDER_FIXER_DESC #
+							<a href="{U_ORDER_FIXER_DESC}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						# ENDIF #
+					</th>
+				</tr>
+				# START contributions #
+				<tr>
+					<td class="row1" style="text-align:center;">
+						<a href="{contributions.U_CONSULT}">{contributions.ENTITLED}</a>
+					</td>
+					<td class="row1" style="text-align:center;">
+						{contributions.MODULE}
+					</td>
+					# IF contributions.C_FIXED #
+					<td class="row1" style="text-align:center; background-color:#7FFF9C;">
 						{contributions.STATUS}
 					</td>
 					# ELSE #
-					<td class="row1" style="text-align:center; background-color:#FF796F;">
-						{contributions.STATUS}
+						# IF contributions.C_PROCESSING #
+						<td class="row1" style="text-align:center; background-color:#FFD86F;">
+							{contributions.STATUS}
+						</td>
+						# ELSE #
+						<td class="row1" style="text-align:center; background-color:#FF796F;">
+							{contributions.STATUS}
+						</td>
+						# ENDIF #
+					# ENDIF #
+					<td class="row1" style="text-align:center;">
+						{contributions.CREATION_DATE}
 					</td>
-					# ENDIF #
-				# ENDIF #
-				<td class="row1" style="text-align:center;">
-					{contributions.CREATION_DATE}
-				</td>
-				<td class="row1" style="text-align:center;">
-					# IF contributions.C_FIXED #
-					{contributions.FIXING_DATE}
-					# ELSE #
-					-
-					# ENDIF #
-				</td>
-				<td class="row1" style="text-align:center;">
-					<a href="{contributions.U_POSTER_PROFILE}">{contributions.POSTER}</a>
-				</td>
-				<td class="row1" style="text-align:center;">
-					# IF contributions.C_FIXED #
-					<a href="{contributions.U_FIXER_PROFILE}">{contributions.FIXER}</a>
-					# ELSE #
-					-
-					# ENDIF #
-				</td>
-			</tr>	
-			# END contributions_list.item #
-			<tr>
-				<td class="row2" style="text-align:center;" colspan="7">
-					# IF C_NO_CONTRIBUTION #
-						{L_NO_CONTRIBUTION_TO_DISPLAY}
-					# ELSE #
+					<td class="row1" style="text-align:center;">
+						# IF contributions.C_FIXED #
+						{contributions.FIXING_DATE}
+						# ELSE #
+						-
+						# ENDIF #
+					</td>
+					<td class="row1" style="text-align:center;">
+						<a href="{contributions.U_POSTER_PROFILE}">{contributions.POSTER}</a>
+					</td>
+					<td class="row1" style="text-align:center;">
+						# IF contributions.C_FIXED #
+						<a href="{contributions.U_FIXER_PROFILE}">{contributions.FIXER}</a>
+						# ELSE #
+						-
+						# ENDIF #
+					</td>
+				</tr>	
+				# END contributions_list.item #
+				<tr>
+					<td class="row2" style="text-align:center;" colspan="7">
 						{PAGINATION}
-					# ENDIF #
+					</td>
 				</td>
-			</td>
-		</table>
+			</table>
+		# ENDIF #
 	# ENDIF #
 
 	# IF C_CONSULT_CONTRIBUTION #

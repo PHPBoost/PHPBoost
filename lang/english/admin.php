@@ -286,6 +286,8 @@ $LANG['priority_medium'] = 'Medium';
 $LANG['priority_low'] = 'Low';
 $LANG['priority_very_low'] = 'Very low';
 $LANG['administrator_alerts_action'] = 'Actions';
+$LANG['admin_alert_fix'] = 'Fix';
+$LANG['admin_alert_unfix'] = 'Consider the alert as not fixed';
 $LANG['confirm_delete_administrator_alert'] = 'Are you sure you want to delete this alert?';
 	
 //Config
