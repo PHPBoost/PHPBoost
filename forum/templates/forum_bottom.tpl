@@ -1,4 +1,4 @@
-		<div class="module_position" style="margin-top:15px;margin-bottom:26px;">
+		<div class="module_position" style="margin-top:15px;">
 			<div class="forum_links" style="border-bottom:none;">
 				<span style="float:left;">
 					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> 

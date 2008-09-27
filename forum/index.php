@@ -74,8 +74,7 @@ $max_time_msg = forum_limit_time_msg();
 $is_guest = ($Member->Get_attribute('user_id') !== -1) ? false : true;
 $total_topic = 0;
 $total_msg = 0;	
-$cat_left = 0;
-$cat_right = 0;
+$i = 0;
 //On liste les catégories et sous-catégories.
 $result = $Sql->Query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.url, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid, 
 t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
@@ -89,7 +88,13 @@ while ($row = $Sql->Sql_fetch_assoc($result))
 {	
 	$Template->Assign_block_vars('forums_list', array(
 	));	
-	
+		
+	if( $CAT_FORUM[$row['cid']]['level'] == 0 && $i++ > 0) //Fermeture de la catégorie racine.
+	{
+		$Template->Assign_block_vars('forums_list.endcats', array(
+		));	
+	}
+		
 	if( $row['level'] === '0' ) //Si c'est une catégorie
 	{
 		$Template->Assign_block_vars('forums_list.cats', array(
@@ -97,8 +102,6 @@ while ($row = $Sql->Sql_fetch_assoc($result))
 			'NAME' => $row['name'],
 			'U_FORUM_VARS' => transid('index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . url_encode_rewrite($row['name']) . '.php')
 		));
-		$cat_left = $CAT_FORUM[$row['cid']]['id_left'];
-		$cat_right = $CAT_FORUM[$row['cid']]['id_right'];			
 	}
 	else //On liste les sous-catégories
 	{
@@ -110,8 +113,6 @@ while ($row = $Sql->Sql_fetch_assoc($result))
 				'NAME' => $CAT_FORUM[$id_get]['name'],
 				'U_FORUM_VARS' => transid('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
 			));
-			$cat_left = $CAT_FORUM[$id_get]['id_left'];
-			$cat_right = $CAT_FORUM[$id_get]['id_right'];
 			$id_get = '';
 		}
 		else //Vérirication de l'existance de sous forums.
@@ -194,15 +195,16 @@ while ($row = $Sql->Sql_fetch_assoc($result))
 			'U_LAST_TOPIC' => $last				
 		));
 	}
-	
-	if( $cat_right - $cat_left == 1 || ($CAT_FORUM[$row['cid']]['id_right'] + 1) == $cat_right ) //Fermeture de la catégorie racine.
-	{
-		$Template->Assign_block_vars('forums_list.endcats', array(
-		));	
-	}
 }
 $Sql->Close($result);
-
+if( $i > 0) //Fermeture de la catégorie racine.
+{
+	$Template->Assign_block_vars('forums_list', array(
+	));
+	$Template->Assign_block_vars('forums_list.endcats', array(
+	));	
+}
+	
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
 $result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 

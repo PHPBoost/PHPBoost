@@ -179,7 +179,7 @@ if( !empty($id_get) )
 				'U_LAST_TOPIC' => $last					
 			));
 		}
-		$Sql->Close($result);	
+		$Sql->Close($result);
 	}
 		
 	//On vérifie si l'utilisateur a les droits d'écritures.

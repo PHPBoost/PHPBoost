@@ -83,24 +83,23 @@ class Forum
 			$Mail = new Mail();				
 			include_once('../kernel/framework/members/pm.class.php');
 			$Privatemsg = new Privatemsg();
-			
+		
 			//Récupération des membres suivant le sujet.
 			$max_time = time() - $CONFIG['site_session_invit'];
-			$result = $Sql->Query_while("SELECT m.user_id, m.user_mail, tr.pm, tr.mail, v.last_view_id, s.session_time 
+			$result = $Sql->Query_while("SELECT m.user_id, m.user_mail, tr.pm, tr.mail, v.last_view_id
 			FROM ".PREFIX."forum_track tr
 			LEFT JOIN ".PREFIX."member m ON m.user_id = tr.user_id
 			LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = '" . $idtopic . "' AND v.user_id = tr.user_id
-			LEFT JOIN ".PREFIX."sessions s ON s.user_id = tr.user_id
 			WHERE tr.idtopic = '" . $idtopic . "' AND v.last_view_id IS NOT NULL AND m.user_id != '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 			while($row = $Sql->Sql_fetch_assoc($result) )
 			{
-				//Envoi un Mail à ceux dont le last_view_id est le message précedent, et qui ne sont pas connectés sur le site.
-				if( $row['last_view_id'] == $previous_msg_id && $row['mail'] == '1' && $row['session_time'] < $max_time ) 
-					$Mail->Send_mail($row['user_mail'], $LANG['forum_mail_title_new_post'], sprintf($LANG['forum_mail_new_post'], $title_subject, $pseudo, $preview_contents, $title_subject_mail), $CONFIG['mail']);
-
+				//Envoi un Mail à ceux dont le last_view_id est le message précedent.
+				if( $row['last_view_id'] == $previous_msg_id && $row['mail'] == '1' ) 
+					$Mail->Send_mail($row['user_mail'], $LANG['forum_mail_title_new_post'], sprintf($LANG['forum_mail_new_post'], $title_subject, $pseudo, $preview_contents, $title_subject_mail, $idtopic), $CONFIG['mail']);
+					
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if( $row['last_view_id'] == $previous_msg_id && $row['pm'] == '1' ) 
-					$Privatemsg->Send_pm($row['user_id'], addslashes($LANG['forum_mail_title_new_post']), sprintf(addslashes($LANG['forum_mail_new_post']), addslashes($title_subject_pm), addslashes($pseudo_pm), $preview_contents, addslashes($next_pm)), '-1', SYSTEM_PM);
+					$Privatemsg->Send_pm($row['user_id'], addslashes($LANG['forum_mail_title_new_post']), sprintf($LANG['forum_mail_new_post'], $title_subject_pm, $pseudo_pm, $preview_contents, $next_pm, $idtopic), '-1', SYSTEM_PM);
 			}
 			
 			forum_generate_feeds(); //Regénération du flux rss.
@@ -261,7 +260,7 @@ class Forum
 		
 		$exist = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."forum_track WHERE user_id = '" . $Member->Get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);	
 		if( $exist == 0 )
-			$Sql->Query_inject("INSERT INTO ".PREFIX."forum_track (idtopic, user_id, pm, mail) VALUES('" . $idtopic . "', '" . $Member->Get_attribute('user_id') . "', 0, 0)", __LINE__, __FILE__);
+			$Sql->Query_inject("INSERT INTO ".PREFIX."forum_track (idtopic, user_id, pm, mail) VALUES('" . $idtopic . "', '" . $Member->Get_attribute('user_id') . "', 0, 1)", __LINE__, __FILE__);
 		
 		//Limite de sujets suivis?
 		if( !$Member->Check_auth($CONFIG_FORUM['auth'], TRACK_TOPIC_FORUM) )

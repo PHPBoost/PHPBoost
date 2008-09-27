@@ -1,7 +1,16 @@
 		# INCLUDE forum_top #
 			
-	# START forums_list #				
-			# START forums_list.cats #		
+	# START forums_list #	
+		# START forums_list.endcats #
+		<div class="module_position">
+			<div class="module_bottom_l"></div>		
+			<div class="module_bottom_r"></div>
+			<div class="module_bottom"></div>
+		</div>
+	</div>	
+		# END forums_list.endcats #	
+			
+		# START forums_list.cats #		
 		<div style="margin-top:20px;">
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
@@ -65,15 +74,7 @@
 					</table>		
 				</div>
 			</div>
-			# END forums_list.subcats #				
-			# START forums_list.endcats #
-			<div class="module_position">
-				<div class="module_bottom_l"></div>		
-				<div class="module_bottom_r"></div>
-				<div class="module_bottom"></div>
-			</div>
-		</div>	
-			# END forums_list.endcats #		
+			# END forums_list.subcats #			
 	# END forums_list #
 		
 		# INCLUDE forum_bottom #

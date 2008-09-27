@@ -238,7 +238,11 @@ You asked a notify in case of answer on it.
 %s has reply: 
 %s... %s
 
-If you do not wish any more to be informed answers of this subject, click on the unsubscribed link (in bottom of the subject). If you do not want to be informed any more of the answers of the subjects which you subscribed, deactivate it in topics track page.
+
+
+
+If you do not wish any more to be informed answers of this subject, click on the link below:
+' . HOST . DIR . '/forum/action.php?ut=%d
 
 ' . $CONFIG['sign'];
 

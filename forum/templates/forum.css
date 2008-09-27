@@ -80,13 +80,8 @@ a.forum_link_pseudo:hover {
 }
 /* Cadre des liens:alerter les modérateurs et suivre le sujet */
 .forum_action{
-	width:550px;
-	margin:auto;
-	background:#AFD2E8;
-	border:1px solid #295F8D;
-	border-spacing:1px;
-	text-align:center;
-	-moz-border-radius:0.4em;
+	float:left;
+	margin-top:10px;
 }
 /* Liens des catégories de niveau 0 */
 a.forum_link_cat{
