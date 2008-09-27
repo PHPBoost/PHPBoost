@@ -72,7 +72,7 @@ elseif( !empty($_FILES['upload_lang']['name']) ) //Upload et décompression de l'
 		{
 			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
-			if( $Upload->Upload_file('upload_lang', '`([a-z0-9_-])+\.(gzip|zip)+$`i') )
+			if( $Upload->Upload_file('upload_lang', '`([a-z0-9()_-])+\.(gzip|zip)+$`i') )
 			{					
 				$archive_path = '../lang/' . $Upload->filename['upload_lang'];
 				//Place à la décompression.

@@ -51,7 +51,7 @@ if( isset($_FILES['gallery']) && isset($_POST['idcat_post']) ) //Upload
 	{
 		if( $_FILES['gallery']['size'] > 0 )
 		{
-			$Upload->Upload_file('gallery', '`([a-z0-9])+\.(jpg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
+			$Upload->Upload_file('gallery', '`([a-z0-9()_-])+\.(jpg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 			if( !empty($Upload->error) ) //Erreur, on arrête ici
 				redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Upload->error . '#errorh');
 			else

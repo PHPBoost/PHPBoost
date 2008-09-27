@@ -98,9 +98,7 @@ if( !empty($id_get) ) //Espace membre
 			'BORN_YEAR' => $born_year,
 			'USER_SEX' => !empty($user_sex) ? '<img src="' . $user_sex . '" alt="" />' : '',
 			'USER_SIGN' => unparse($row['user_sign']),
-			'USER_SIGN_EDITOR' => display_editor('user_sign'),
 			'USER_DESC' => unparse($row['user_desc']),
-			'USER_DESC_EDITOR' => display_editor('user_desc'),
 			'USER_MSN' => $row['user_msn'],
 			'USER_YAHOO' => $row['user_yahoo'],
 			'U_MEMBER_ACTION_UPDATE' => transid('.php?id=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php'),
@@ -467,7 +465,7 @@ if( !empty($id_get) ) //Espace membre
 						{
 							//Suppression de l'ancien avatar (sur le serveur) si il existe!
 							$user_avatar_path = $Sql->Query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
-							if( !empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match) )
+							if( !empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match) )
 							{
 								if( is_file($user_avatar_path) && isset($match[1]) )
 									@unlink('../images/avatars/' . $match[1]);
@@ -688,11 +686,13 @@ if( !empty($id_get) ) //Espace membre
 		//Liste des groupes du membre.		
 		$user_group_list = '';
 		$user_groups = explode('|', $row['user_groups']);
+		$i = 0;
 		foreach($user_groups as $key => $group_id)
 		{
 			$group = $Sql->Query_array('group', 'id', 'name', 'img', "WHERE id = '" . numeric($group_id) . "'", __LINE__, __FILE__);
 			if( !empty($group['id']) )
 				$user_group_list .= ($i != 0 ? '<br /><br />' : '') . '<a href="member' . transid('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . (!empty($group['img']) ? '<img src="../images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />'  : '') . '</a> <a href="member' . transid('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . $group['name'] . '</a>';
+			$i++;
 		}
 		$user_group_list = !empty($user_group_list) ? $user_group_list : $LANG['member'];
 		
