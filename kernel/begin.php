@@ -38,7 +38,6 @@ $Bench = new Bench; //Début du benchmark
 $Bench->Start_bench('site');
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
-require_once(PATH_TO_ROOT . '/kernel/framework/content/mathpublisher.php'); //Gestion des formules mathématiques.
 require_once(PATH_TO_ROOT . '/kernel/framework/core/errors.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/db/' . DBTYPE . '.class.php');
