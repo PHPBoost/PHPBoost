@@ -23,9 +23,6 @@
 [+] Interface d'ajout de menu de liens. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
 [+] Interface de contribution des articles.
 
------------------------------------- MODULES -----------------------------------
-[-] Forum option "Ajouter aux favoris" et "S'abonner (mail)"
-
 #################################################################################
 
 

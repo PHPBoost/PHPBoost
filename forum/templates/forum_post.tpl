@@ -218,6 +218,19 @@
 							</script>
 							&nbsp;&nbsp;
 							<input type="reset" value="{L_RESET}" class="reset" />				
+						
+							# IF C_DISPLAY_MSG #
+							<br /><br /><br />
+							<span id="forum_change_statut">
+								<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
+							</span>
+							<script type="text/javascript">
+							<!--				
+							document.getElementById('forum_change_statut').style.display = 'none';
+							document.write('<a href="javascript:XMLHttpRequest_change_statut()">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
+							-->
+							</script>
+							# ENDIF #
 						</fieldset>
 					</div>
 				</form>
@@ -228,19 +241,3 @@
 		</div>
 		
 		# INCLUDE forum_bottom #
-		
-		# IF C_DISPLAY_MSG #
-		<br /><br />
-		<div class="forum_action" style="padding:5px;">
-			<span id="forum_change_statut">
-				<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
-			</span>
-			<script type="text/javascript">
-			<!--				
-			document.getElementById('forum_change_statut').style.display = 'none';
-			document.write('<a href="javascript:XMLHttpRequest_change_statut()">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
-			-->
-			</script>
-		</div>		
-		# ENDIF #	
-		

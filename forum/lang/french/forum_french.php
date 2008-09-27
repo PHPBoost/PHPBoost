@@ -238,7 +238,11 @@ Vous avez demandé à être averti lors d\'une réponse à celui-ci.
 %s a répondu sur le sujet: 
 %s... %s
 
-Si vous ne désirez plus être averti des réponses de ce sujet, il suffit de cliquer sur l\'option de suivi (en bas du sujet). Si vous ne voulez plus être averti par mail/message privé des réponses des sujets que vous suivez, alors désactivez les dans les sujets suivis.
+
+
+
+Si vous ne désirez plus être averti des réponses de ce sujet, cliquez sur le lien ci-dessous. 
+' . HOST . DIR . '/forum/action.php?ut=%d
 
 ' . $CONFIG['sign'];
 

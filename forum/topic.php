@@ -146,11 +146,13 @@ $Template->Assign_vars(array(
 	'ID' => $topic['idcat'],
 	'IDTOPIC' => $id_get,
 	'PAGE' => $page,
+	'TITLE_T' => ucfirst($topic['title']),
+	'DISPLAY_MSG' => (($CONFIG_FORUM['activ_display_msg'] && $topic['display_msg']) ? $CONFIG_FORUM['display_msg'] . ' ' : '') ,
 	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1&amp;f=' . $topic['idcat'], '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'U_CHANGE_CAT'=> 'topic' . transid('.php?id=' . $id_get, '-' . $id_get . $rewrited_cat_title . '.php'),
 	'U_ONCHANGE' => "'forum" . transid(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",		
 	'U_FORUM_CAT' => !empty($forum_cats) ? $forum_cats . ' &raquo;' : '',
-	'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php') . '">' . (($CONFIG_FORUM['activ_display_msg'] && $topic['display_msg']) ? $CONFIG_FORUM['display_msg'] . ' ' : '') . ucfirst($topic['title']) . '</a>',
+	'U_TITLE_T' => 'topic' . transid('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
 	'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 	'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
 	'L_FORUM_INDEX' => $LANG['forum_index'],
@@ -481,7 +483,7 @@ elseif( !$Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORU
 }
 else
 {
-	$img_favorite_display = $track ? 'unfavorite.png' : 'favorite.png';
+	$img_favorite_display = $track ? 'unfavorite_mini.png' : 'favorite_mini.png';
 	$Template->Assign_vars(array(
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
@@ -494,11 +496,12 @@ else
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
 	if( $CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $Member->Get_attribute('user_id') == $topic['user_id']) )
 	{
-		$img_msg_display = $topic['display_msg'] ? 'msg_display2.png' : 'msg_display.png';
+		$img_msg_display = $topic['display_msg'] ? 'msg_display2_mini.png' : 'msg_display_mini.png';
 		$Template->Assign_vars(array(
 			'C_DISPLAY_MSG' => true,
 			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_msg_display . '" alt="" class="valign_middle"  />' : '',
 			'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_msg_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
+			'L_DISPLAY_MSG' => $CONFIG_FORUM['display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG_BIS' => $CONFIG_FORUM['explain_display_msg_bis'],
