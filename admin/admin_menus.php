@@ -257,7 +257,7 @@ else
 		while( !is_bool($file = readdir($dh)) )
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( preg_match('`[a-z0-9_-]\.php`i', $file) && $file != 'index.php' && !in_array(str_replace('.php', '', $file), $installed_menus_perso) )
+			if( preg_match('`[a-z0-9()_-]\.php`i', $file) && $file != 'index.php' && !in_array(str_replace('.php', '', $file), $installed_menus_perso) )
 				$file_array[] = $file; //On crée un array, avec les different dossiers.
 		}	
 		closedir($dh); //On ferme le dossier

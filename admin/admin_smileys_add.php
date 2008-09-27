@@ -68,7 +68,7 @@ elseif( !empty($_FILES['upload_smiley']['name']) ) //Upload et décompression de 
 	{
 		include_once('../kernel/framework/io/upload.class.php');
 		$Upload = new Upload($dir);
-		if( !$Upload->Upload_file('upload_smiley', '`([a-z0-9_-])+\.(jpg|gif|png|bmp)+$`i') )
+		if( !$Upload->Upload_file('upload_smiley', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i') )
 			$error = $Upload->error;
 	}
 	else

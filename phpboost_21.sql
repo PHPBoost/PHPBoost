@@ -399,6 +399,7 @@ CREATE TABLE `phpboost_forum_cats` (
   `level` int(11) NOT NULL default '0',
   `name` varchar(100) NOT NULL default '',
   `subname` varchar(150) NOT NULL default '',
+  `url` varchar(255) NOT NULL default '',
   `nbr_topic` mediumint(9) NOT NULL default '0',
   `nbr_msg` mediumint(9) NOT NULL default '0',
   `last_topic_id` int(11) NOT NULL default '0',
@@ -414,13 +415,13 @@ CREATE TABLE `phpboost_forum_cats` (
 -- Contenu de la table `phpboost_forum_cats`
 -- 
 
-INSERT INTO `phpboost_forum_cats` VALUES (1, 1, 10, 0, 'Cat&eacute;gorie de test', 'Cat&eacute;gorie de test', 18, 80, 43, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:7;}');
-INSERT INTO `phpboost_forum_cats` VALUES (2, 2, 9, 1, 'Forum de test', 'Forum de test', 20, 80, 43, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;s:2:"r2";i:7;}');
-INSERT INTO `phpboost_forum_cats` VALUES (6, 3, 4, 2, 'test', 'test', 2, 18, 14, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;s:2:"r2";i:7;}');
-INSERT INTO `phpboost_forum_cats` VALUES (5, 5, 8, 2, 'hgf', 'hgf', 5, 21, 29, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;s:2:"r2";i:7;}');
-INSERT INTO `phpboost_forum_cats` VALUES (12, 11, 14, 0, 'cat2', '', 14, 14, 44, 1, 1, 'a:3:{s:2:"r1";i:2;s:2:"r2";i:7;i:3;i:1;}');
-INSERT INTO `phpboost_forum_cats` VALUES (11, 6, 7, 3, 'level3', 'gfd', 1, 7, 15, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;s:2:"r2";i:7;}');
-INSERT INTO `phpboost_forum_cats` VALUES (13, 12, 13, 1, 'subcat2', '', 14, 14, 46, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;s:2:"r2";i:7;}');
+INSERT INTO `phpboost_forum_cats` VALUES (1, 1, 10, 0, 'Cat&eacute;gorie de test', 'Cat&eacute;gorie de test', '', 18, 80, 43, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:7;}');
+INSERT INTO `phpboost_forum_cats` VALUES (2, 2, 9, 1, 'Forum de test', 'Forum de test', '', 20, 80, 43, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;s:2:"r2";i:7;}');
+INSERT INTO `phpboost_forum_cats` VALUES (6, 3, 4, 2, 'test', 'test', '', 2, 18, 14, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;s:2:"r2";i:7;}');
+INSERT INTO `phpboost_forum_cats` VALUES (5, 5, 8, 2, 'hgf', 'hgf', '', 5, 21, 29, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;s:2:"r2";i:7;}');
+INSERT INTO `phpboost_forum_cats` VALUES (12, 11, 14, 0, 'cat2', '', '', 14, 14, 44, 1, 1, 'a:3:{s:2:"r1";i:2;s:2:"r2";i:7;i:3;i:1;}');
+INSERT INTO `phpboost_forum_cats` VALUES (11, 6, 7, 3, 'level3', 'gfd', '', 1, 7, 15, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;s:2:"r2";i:7;}');
+INSERT INTO `phpboost_forum_cats` VALUES (13, 12, 13, 1, 'subcat2', '', '', 14, 14, 46, 1, 1, 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;s:2:"r2";i:7;}');
 
 -- --------------------------------------------------------
 
