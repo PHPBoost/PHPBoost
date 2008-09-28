@@ -28,6 +28,7 @@
 //A personnaliser
 define('UPDATE_VERSION', '2.1');
 define('DEFAULT_LANGUAGE', 'french');
+define('STEPS_NUMBER', 9);
 
 ob_start();
 
@@ -56,7 +57,7 @@ define('DIR', str_replace('/install/install.php', '', $server_path));
 define('DEFAULT_THEME', 'main');
 
 $step = retrieve(GET, 'step', 1, TUNSIGNED_INT);
-$step = $step > 9 ? 1 : $step;
+$step = $step > STEPS_NUMBER ? 1 : $step;
 
 $lang = retrieve(GET, 'lang', DEFAULT_LANGUAGE);
 
@@ -79,9 +80,11 @@ function add_lang($url, $header_location = false)
 	global $lang;
 	if( $lang != DEFAULT_LANGUAGE )
 	{
-		$ampersand = $header_location ? '&' : '&amp;';
 		if( strpos($url, '?') !== false )
+		{
+			$ampersand = $header_location ? '&' : '&amp;';
 			return $url . $ampersand . 'lang=' . $lang;
+		}
 		else
 			return $url . '?' . 'lang=' . $lang;		
 	}
@@ -102,6 +105,7 @@ if( $step == 1 )
 {
 	$template->Assign_block_vars('intro', array());
 	$template->Assign_vars(array(
+		'L_INTRO_TITLE' => $LANG['intro_title'],
 		'L_INTRO_EXPLAIN' => $LANG['intro_explain'],
 		'L_NEXT_STEP' => add_lang('install.php?step=2')
 	));
@@ -124,6 +128,7 @@ elseif( $step == 2 )
 		'U_PREVIOUS_PAGE' => add_lang('install.php?step=1'),
 		'L_REQUIRE_LICENSE_AGREEMENT' => ($submit && !$license_agreement) ? '<div class="warning">' . $LANG['require_license_agreement'] . '</div>' : $LANG['require_license_agreement'],
 		'L_ALERT_PLEASE_AGREE_LICENSE' => $LANG['alert_agree_license'],
+		'L_QUERY_TERMS' => $LANG['license_terms'],
 		'L_REQUIRE_LICENSE' => $LANG['license_agreement'],
 		'L_PLEASE_AGREE' => $LANG['please_agree_license'],
 		'L_NEXT_STEP' => $LANG['next_step'],
@@ -138,45 +143,46 @@ elseif( $step == 3 )
 	if( function_exists('apache_get_modules') )
 	{	
 		$get_rewrite = apache_get_modules();
-		$check_rewrite = (!empty($get_rewrite[5])) ? '<div class="success_block">' . $LANG['yes'] . '</div>' : '<div class="failure_block">' . $LANG['no'] . '</div>';
+		$check_rewrite = (!empty($get_rewrite[5])) ? 1 : 0;
 	}
 	else
-		$check_rewrite = '<div class="unspecified_block">' . $LANG['unknown'] . '</div>';
+		$check_rewrite = -1;
 	
 	$template->Assign_block_vars('config_server', array(
-		'PHP_VERSION' => phpversion() >= '4.1.0' ? '<div class="success_block">' . $LANG['yes'] . '</div>' : '<div class="failure_block">' . $LANG['no'] . '</div>',
-		'GD' => ( @extension_loaded('gd') ) ? '<div class="success_block">' . $LANG['yes'] . '</div>' : '<div class="failure_block">' . $LANG['no'] . '</div>',
-		'URL_REWRITING' => $check_rewrite
+		'C_PHP_VERSION_OK' => phpversion() >= '4.1.0',
+		'C_GD_LIBRAIRY_ENABLED' => @extension_loaded('gd'),
+		'C_URL_REWRITING_KNOWN' => $check_rewrite != -1,
+		'C_URL_REWRITING_ENABLED' => $check_rewrite == 1
 	));
 	
-	//Mise ï¿½ jour du cache.
+	//Mise à jour du cache.
 	@clearstatcache();
 	
 	$chmod_dir = array('../cache', '../cache/backup', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/auth', '../lang', '../templates', '../upload');
 	
-	//Vï¿½rifications et le cas ï¿½chï¿½ants changements des autorisations en ï¿½criture.
+	//Vérifications et le cas échéant tentative de changement des autorisations en écriture.
 	foreach($chmod_dir as $dir)
 	{
 		$is_writable = $is_dir = true;
+		//If the file exists and is a directory
 		if( file_exists($dir) && is_dir($dir) )
 		{
+			//Si il n'est pas inscriptible, on demande à Apache de le rendre inscriptible en espérant qu'il soit configurer pour accepter de telles requêtes
 			if( !is_writable($dir) )
 				$is_writable = (@chmod($dir, 0777)) ? true : false;			
 		}
 		else
 			$is_dir = $is_writable = ($fp = @mkdir($dir, 0777)) ? true : false;
-
-		$found = ($is_dir === true) ? '<div class="success_block">' . $LANG['existing'] . '</div>' : '<div class="failure_block">' . $LANG['unexisting'] . '</div>';
-		$writable = ($is_writable === true) ? '<div class="success_block">' . $LANG['writable'] . '</div>' : '<div class="failure_block">' . $LANG['unwritable'] . '</div>';
 			
 		$template->Assign_block_vars('config_server.chmod', array(
-			'TITLE'	=> str_replace('../' , '', $dir),
-			'FOUND' => $found,
-			'WRITABLE' => $writable			
+			'TITLE'	=> str_replace('..' , '', $dir),
+			'C_EXISTING_DIR' => $is_dir,
+			'C_WRITIBLE_DIR' => $is_writable			
 		));
 	}
 	
 	$template->Assign_vars(array(
+		'L_CONFIG_SERVER_TITLE' => $LANG['config_server_title'],
 		'L_CONFIG_SERVER_EXPLAIN' => $LANG['config_server_explain'],
 		'L_PHP_VERSION' => $LANG['php_version'],
 		'L_CHECK_PHP_VERSION' => $LANG['check_php_version'],
@@ -189,6 +195,10 @@ elseif( $step == 3 )
 		'L_URL_REWRITING_EXPLAIN' => $LANG['url_rewriting_explain'],
 		'L_AUTH_DIR' => $LANG['auth_dir'],
 		'L_CHECK_AUTH_DIR' => $LANG['check_auth_dir'],
+		'L_EXISTING' => $LANG['existing'],
+		'L_NOT_EXISTING' => $LANG['unexisting'],
+		'L_WRITABLE' => $LANG['writable'],
+		'L_NOT_WRITABLE' => $LANG['unwritable'],
 		'L_REFRESH' => $LANG['refresh_chmod'],
 		'L_RESULT' => $LANG['result'],
 		'L_QUERY_LOADING' => $LANG['query_loading'],
@@ -1076,7 +1086,6 @@ if( is_dir($rep) ) //Si le dossier existe
 $template->Assign_vars(array(
 	'LANG' => $lang,
 	'NUM_STEP' => $step,
-	'PROGRESS_BAR_PICS' => str_repeat('<img src="templates/images/loading.png" alt="" />', floor($steps[$step - 1][2] * 24 / 100)),
 	'PROGRESS_LEVEL' => $steps[$step - 1][2],
 	'L_TITLE' => $LANG['page_title'] . ' - ' . $step_name,
 	'L_STEP' => $step_name,
@@ -1091,23 +1100,30 @@ $template->Assign_vars(array(
 	'L_CONFIRM_RESTART' => $LANG['confirm_restart_installation'],
 	'L_LANG' => $LANG['change_lang'],
 	'L_CHANGE' => $LANG['change'],
+	'L_YES' => $LANG['yes'],
+	'L_NO' => $LANG['no'],
+	'L_UNKNOWN' => $LANG['unknown'], 
 	'U_RESTART' => add_lang('install.php')
 ));
 
-for($i = 1; $i <= 9; $i++ )
+//Images de la barre de progression
+for($i = 1; $i <= floor($steps[$step - 1][2] * 24 / 100); $i++)
+	$template->Assign_block_vars('progress_bar', array());
+
+//Etapes de l'installation
+for($i = 1; $i <= STEPS_NUMBER; $i++ )
 {
 	if( $i < $step )
-		$row = 'row_success';
+		$row_class = 'row_success';
 	elseif( $i == $step )
-		$row = 'row_current';
+		$row_class = 'row_current';
 	else
-		$row = 'row_next';
+		$row_class = 'row_next';
+	
 	$template->Assign_block_vars('link_menu', array(
-		'ROW' => '<tr>
-				<td class="' . $row . '">
-					<img src="templates/images/' . $steps[$i - 1][1] . '" alt="' . $steps[$i - 1][0] . '" class=\"valign_middle\" />&nbsp;&nbsp;' . $steps[$i - 1][0] . '
-				</td>				
-			</tr>'
+		'CLASS' => $row_class,
+		'STEP_IMG' => $steps[$i - 1][1],
+		'STEP_NAME' => $steps[$i - 1][0]
 	));
 }
 
