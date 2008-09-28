@@ -325,19 +325,6 @@ else
 		'PROGRESS_STATUS' => !empty($error) ? $LANG['query_success'] : '',
 		'PROGRESS_BAR' => !empty($error) ? str_repeat('<img src="templates/images/loading.png" alt="">', 56) : ''
 	));
-	$dbms = array('MySQL', 'SQLite', 'PostgreSQL');
-	$default_dbms = 'MySQL';
-	$supported_dbms = array('MySQL','SQLite');
-	
-	foreach( $dbms as $name )
-	{
-		$template->Assign_block_vars('db.dbms', array(
-			'L_DBMS' => $name,
-			'DBMS' => strtolower($name),
-			'SELECTED' => $name == $default_dbms ? 'selected="selected"' : '',
-			'DISABLED' => in_array($name, $supported_dbms) ? '' : 'disabled="disabled"'
-		));
-	}
 	
 	$template->Assign_vars(array(
 		'HOST_VALUE' => !empty($error) ? $host  : 'localhost',
@@ -348,21 +335,19 @@ else
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=3'),
 		'U_CURRENT_STEP' => add_lang('install.php?step=4'),
 		'L_DB_EXPLAIN' => $LANG['db_explain'],
-		'L_DBMS' => $LANG['dbms'],
 		'L_DB_TITLE' => $LANG['db_title'],
-		'L_CHOOSE_DBMS' => $LANG['choose_dbms'],
-		'L_CHOOSE_DBMS_EXPLAIN' => $LANG['choose_dbms_explain'],
-		'L_INFORMATIONS' => $LANG['db_informations'],
+		'L_SGBD_PARAMETERS' => $LANG['dbms_paramters'],
+		'L_DB_PARAMETERS' => $LANG['db_properties'],
 		'L_HOST' => $LANG['db_host_name'],
-		'L_HOST_EXPLAIN' => $LANG['db_host_name'],
+		'L_HOST_EXPLAIN' => $LANG['db_host_name_explain'],
 		'L_LOGIN' => $LANG['db_login'],
-		'L_LOGIN_EXPLAIN' => $LANG['db_login'],
+		'L_LOGIN_EXPLAIN' => $LANG['db_login_explain'],
 		'L_PASSWORD' => $LANG['db_password'],
-		'L_PASSWORD_EXPLAIN' => $LANG['db_password'],
+		'L_PASSWORD_EXPLAIN' => $LANG['db_password_explain'],
 		'L_DB_NAME' => $LANG['db_name'],
-		'L_DB_NAME_EXPLAIN' => $LANG['db_name'],
+		'L_DB_NAME_EXPLAIN' => $LANG['db_name_explain'],
 		'L_DB_PREFIX' => $LANG['db_prefix'],
-		'L_DB_PREFIX_EXPLAIN' => $LANG['db_prefix'],
+		'L_DB_PREFIX_EXPLAIN' => $LANG['db_prefix_explain'],
 		'L_TEST_DB_CONFIG' => $LANG['test_db_config'],
 		'L_PREVIOUS_STEP' => $LANG['previous_step'],
 		'L_NEXT_STEP' => $LANG['next_step'],
