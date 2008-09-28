@@ -4,12 +4,12 @@
 		<title>{SITE_NAME} :: {TITLE}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
-		<link rel="stylesheet" href="../templates/{THEME}/design.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="../templates/{THEME}/global.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="../templates/{THEME}/content.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="../templates/{THEME}/generic.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="../templates/{THEME}/bbcode.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="../templates/{THEME}/admin.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="../templates/{THEME}/theme/design.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="../templates/{THEME}/theme/global.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="../templates/{THEME}/theme/content.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="../templates/{THEME}/theme/generic.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="../templates/{THEME}/theme/bbcode.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="../templates/{THEME}/theme/admin.css" type="text/css" media="screen" />
 		<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
 		
 		<script type="text/javascript">

@@ -136,7 +136,7 @@ input.submit{
 	padding:1px;
 	font-weight:bold;
 	font-size:10px;
-	background:#A9CEE9 url(images/form/form.png) repeat-x;
+	background:#A9CEE9 url(images/form.png) repeat-x;
 }
 input.reset{
 	border:1px solid #B0C1CB;	
@@ -146,7 +146,7 @@ input.reset{
 	font-weight:bold;
 	font-size:10px;
 	padding:1px;
-	background:#FFFFFF url(images/form/form.png) repeat-x;
+	background:#FFFFFF url(images/form.png) repeat-x;
 }
 input.reset:hover, input.submit:hover{
 	border:1px solid #0578CC;
