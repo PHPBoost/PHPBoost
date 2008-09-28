@@ -2,8 +2,8 @@
 /*##################################################
  *                                install.php
  *                            -------------------
- *   begin                : August 23, 2007
- *   copyright          : (C) 2007 	SAUTEL Benoit
+ *   begin                : September 28, 2008
+ *   copyright            : (C) 2008 	Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -27,7 +27,7 @@
 
 
 ####################################################
-#                                                           English                                                                               #
+#                      English                     #
 ####################################################
 
 $LANG = array();
@@ -38,41 +38,48 @@ $LANG['config_server'] = 'Server configuration';
 $LANG['database_config'] = 'Database configuration';
 $LANG['advanced_config'] = 'Website configuration';
 $LANG['administrator_account_creation'] = 'Administrator\'s account';
-$LANG['modules_installation'] = 'Installation of modules';
+$LANG['modules_installation'] = 'Modules installation';
 $LANG['end'] = 'End of installation';
-$LANG['install_progress'] = 'Progression of installation';
+$LANG['install_progress'] = 'Installation progression';
 $LANG['generated_by'] = 'Powered by %s';
 $LANG['previous_step'] = 'Previous step';
 $LANG['next_step'] = 'Next step';
+$LANG['query_loading'] = 'Sending query to the server';
+$LANG['query_sent'] = 'Query sent, waiting for the response';
+$LANG['query_processing'] = 'Query processing';
+$LANG['query_success'] = 'The process has been done successfully';
+$LANG['query_failure'] = 'An error occured during query processing';
 
 //Introduction
-$LANG['intro_explain'] = 'Thank you to have trusted PHPBoost to build your website.<br /><br />
-To install PHPBoost you need to have some informations about your hosting which would be provided by your hoster. The installation is absolutely automatic, il should take only a few minutes. Click on the right arrow to start install to processing. Cliquez sur la flêche ci-dessous pour démarrer le processus d\'installation.<br /><br />
-Cordially, the PHPBoost Team.';
+$LANG['intro_title'] = 'Welcome in PHPBoost install wizard';
+$LANG['intro_explain'] = '<p>Thank you to have trusted PHPBoost to build your website.</p>
+<p>To install PHPBoost you need to have some informations about your hosting which must be provided by your hoster. The installation is absolutely automatic, il should take only a few minutes. Click on the right arrow above to start the installation process.</p>
+<p>Cordially, the PHPBoost Team.</p>';
 $LANG['start_install'] = 'Start installation';
 
 //licence
 $LANG['license'] = 'License';
-$LANG['require_license_agreement'] = 'You must accept GPL license terms to install PHPBoost.';
+$LANG['require_license_agreement'] = 'You must accept GNU/GPL license terms to install PHPBoost.';
 $LANG['license_agreement'] = 'End-user license agreement';
+$LANG['license_terms'] = 'License terms';
 $LANG['please_agree_license'] = 'I agree to and will be bound by the terms and conditions set forth in this end-user license agreement.';
-$LANG['alert_agree_license'] = 'You have to agree to end-user license by notching the form !';
+$LANG['alert_agree_license'] = 'You have to agree to end-user license by notching the form!';
 
 //Configuration du serveur
-$LANG['config_server_explain'] = 'Checking server configuration<br />
-Before to start installations stages, the configuration of your server is going to be checked to etablish its compatibility with PHPBoost. Please check that every compulsary condition is good.<br />
-If you have problems, ask your questions on <a href="http://www.phpboost.com/forum/index.php">PHPBoost\'s forum</a>.';
+$LANG['config_server_title'] = 'Checking server configuration';
+$LANG['config_server_explain'] = '<p>Before to start installations stages, the configuration of your server is going to be checked to etablish its compatibility with PHPBoost. Please check that every required condition is ok.</p>
+<p>If you have problems, ask your questions in the <a href="http://www.phpboost.net/forum/index.php">support forum</a>.</p>';
 $LANG['php_version'] = 'PHP version';
 $LANG['check_php_version'] = 'PHP upper than 4.1.0';
-$LANG['check_php_version_explain'] = '<span style="font-weight:bold;color:red;">Compulsary :</span> To power PHPBoost correctly, your server must have a PHP version more recent than PHP 4.1.0. Enough that you will have problems with some modules, please contact your hoster or move to a more recent server.';
+$LANG['check_php_version_explain'] = '<span style="font-weight:bold;color:red;">Compulsory:</span> To run PHPBoost correctly, your server must have a PHP version younger than PHP 4.1.0. Enough that, you might have problems with some modules. We advise you to contact your hoster or migrate to a younger server.';
 $LANG['extensions'] = 'Extensions';
-$LANG['check_extensions'] = 'Optional : If those extensions are enabled, you will manage to benefit from additionnal functions but they are nott compulsary.';
+$LANG['check_extensions'] = 'Optional: If those extensions are enabled, you will benefit from additionnal features.';
 $LANG['gd_library'] = 'GD library';
-$LANG['gd_library_explain'] = 'Checking code to refuse bots and other instances of pictures processing';
+$LANG['gd_library_explain'] = 'Librairy used to generate pictures (for instance for robot protection)';
 $LANG['url_rewriting'] = 'URL Rewriting';
-$LANG['url_rewriting_explain'] = 'URL rewriting to have more clearness';
+$LANG['url_rewriting_explain'] = 'URL rewriting allow to have nicer URLs and more research robots friendly';
 $LANG['auth_dir'] = 'Directories permissions';
-$LANG['check_auth_dir'] = '<span style="font-weight:bold;color:red;">Compulsary :</span> PHPBoost requires that several directories would allow writing in themselves, if your server can do it, those permissions will be set automatically. However if your server hasn\'t done it your must do it yourself. You can find help in <a href="http://www.phpboost.com/wiki/changer-le-chmod-d-un-dossier" title="PHPBoost documentation : chmod">PHPBoost documentation</a> or on your hoster\'s website.';
+$LANG['check_auth_dir'] = '<span style="font-weight:bold;color:red;">Compulsory :</span> PHPBoost requires that several directories would be writable. If your server allows it, those permissions will be set automatically. However if your server hasn\'t done it lonely, your must do it yourself. You can find help in <a href="http://www.phpboost.net/wiki/change-the-chmod-of-a-directory" title="PHPBoost documentation: chmod">PHPBoost documentation</a> or on your hoster\'s website.';
 $LANG['refresh_chmod'] = 'Check again directories permissions';
 $LANG['existing'] = 'Existing';
 $LANG['unexisting'] = 'Unexisting';
@@ -158,7 +165,7 @@ $LANG['admin_error'] = 'Error';
 $LANG['admin_mail_object'] = 'PHPBoost : message to be preserved';
 $LANG['admin_mail_unlock_code'] = 'Dear %s,
 
-First of all, thank you to have powered your website with PHPBoost software, we wish you will be satisfied. For any problem ask your question on PHPBoost official forum : http://www.phpboost.com/forum/index.php
+First of all, thank you to have powered your website with PHPBoost software, we wish you will be satisfied. For any problem ask your question on PHPBoost official forum : http://www.phpboost.net/forum/index.php
 
 Here your login and password (don\'t loose then you will need them to configurate your website) : 
 
@@ -196,8 +203,8 @@ $LANG['end_installation'] = '<fieldset>
 							<p>On administration panel index you will find news of official website, look at them and don\'t forget to update your software when a new realise of PHPBoost kernel or modules is available, it\'s important for security corrections and new functionalities.</p>
 							<p class="warning">
 								For security reasons we advice you to delete installation folder and all its contents, hackers could manage to run installation script and destroy your datas !</p>
-							<p>Don\'t forget the <a href="http://www.phpboost.com/wiki/index.php">documentation</a> which will help you for using PHPBoost.</p>
-							<p>If you have any problem please go to support of PHPBoost : <a href="http://www.phpboost.com/forum/index.php">forum PHPBoost</a>.</p>
+							<p>Don\'t forget the <a href="http://www.phpboost.net/wiki/">documentation</a> which will help you for using PHPBoost.</p>
+							<p>If you have any problem please go to support of PHPBoost : <a href="http://www.phpboost.net/forum/index.php">forum PHPBoost</a>.</p>
 						</fieldset>
 						<fieldset>
 							<legend>Thanks</legend>
@@ -232,7 +239,7 @@ $LANG['site_index'] = 'Go to my website';
 $LANG['register_online'] = 'Online registering';
 $LANG['register_online_explain'] = 'You can automatically register your website online. It will permit your website to appear on a list of websites powered by PHPBoost (<a href="http://www.phpboost.com/phpboost/list.php">current list</a>).
 <br />
-It\'s not compulsary to register your website, we just want to help you to have links to your website. If you install PHPBoost only for tests, a local working or a private using you shouldn\'t register it.
+It\'s not compulsory to register your website, we just want to help you to have links to your website. If you install PHPBoost only for tests, a local working or a private using you shouldn\'t register it.
 <br />
 <div class="notice">Warning : you must be connected on Internet to register your website.</div>';
 $LANG['register'] = 'Register my website.';
@@ -243,7 +250,7 @@ $LANG['yes'] = 'Yes';
 $LANG['no'] = 'No';
 $LANG['appendices'] = 'Appendices';
 $LANG['documentation'] = 'Documentation';
-$LANG['documentation_link'] = 'http://www.phpboost.com/wiki/installer-phpboost';
+$LANG['documentation_link'] = 'http://www.phpboost.net/wiki/install-phpboost';
 $LANG['restart_installation'] = 'Restart the installation';
 $LANG['confirm_restart_installation'] = addslashes('Are you sure you want to restart the installation ?');
 $LANG['change_lang'] = 'Change language';

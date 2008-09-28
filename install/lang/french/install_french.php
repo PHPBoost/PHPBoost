@@ -2,8 +2,8 @@
 /*##################################################
  *                                install.php
  *                            -------------------
- *   begin                : August 23, 2007
- *   copyright          : (C) 2007 	SAUTEL Benoit
+ *   begin                : September 28, 2008
+ *   copyright            : (C) 2008 	Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -51,33 +51,35 @@ $LANG['query_success'] = 'Traitement terminé';
 $LANG['query_failure'] = 'Traitement échoué';
 
 //Introduction
-$LANG['intro_explain'] = 'Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.<br /><br />
-Pour installer PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.<br /><br />
-Cordialement l\'équipe PHPBoost';
+$LANG['intro_title'] = 'Bienvenue dans l\'assistant d\'installation de PHPBoost';
+$LANG['intro_explain'] = '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
+<p>Pour installer PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
+<p>Cordialement l\'équipe PHPBoost</p>';
 $LANG['start_install'] = 'Commencer l\'installation';
 
 //licence
 $LANG['license'] = 'Licence';
-$LANG['require_license_agreement'] = 'Vous devez accepter les termes de la licence GPL pour installer PHPBoost.';
+$LANG['require_license_agreement'] = 'Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.';
 $LANG['license_agreement'] = 'Acceptation des termes de la licence';
+$LANG['license_terms'] = 'Termes de la licence';
 $LANG['please_agree_license'] = 'J\'ai pris connaissance et j\'accepte les termes de la licence.';
 $LANG['alert_agree_license'] = 'Vous devez accepter la licence en cochant le formulaire associé pour pouvoir continuer !';
 
 //Configuration du serveur
-$LANG['config_server_explain'] = 'Vérification du serveur<br />
-Avant de commencer les étapes d\'installation de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost. Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous ne pourrez pas installer PHPBoost.<br />
-En cas de problème n\'hésitez pas à poser vos questions sur le forum <a href="http://www.phpboost.com/forum/index.php">PHPBoost</a>.';
+$LANG['config_server_title'] = 'Vérification de la configuration du serveur';
+$LANG['config_server_explain'] = '<p>Avant de commencer les étapes d\'installation de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost. Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</p>
+<p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="http://www.phpboost.com/forum/index.php">forum de support</a>.</p>';
 $LANG['php_version'] = 'Version de PHP';
 $LANG['check_php_version'] = 'PHP supérieur à 4.1.0';
 $LANG['check_php_version_explain'] = '<span style="font-weight:bold;color:red;">Obligatoire :</span> Pour faire fonctionner PHPBoost, votre serveur doit être équipé d\'une version supérieure ou égale à PHP 4.1.0. Sans cela il vous sera impossible de le faire fonctionner correctement, contactez votre hébergeur ou migrez vers un serveur plus récent.';
 $LANG['extensions'] = 'Extensions';
 $LANG['check_extensions'] = 'Optionnel : L\'activation de ces extensions permet d\'apporter des fonctionnalités supplémentaires mais n\'est en aucun cas indispensable.';
 $LANG['gd_library'] = 'Librairie GD';
-$LANG['gd_library_explain'] = 'Code de vérification et certains modules concernant les images';
+$LANG['gd_library_explain'] = 'Librairie utilisée pour générer des images. Utile par exemple pour la protection anti robots';
 $LANG['url_rewriting'] = 'URL Rewriting';
-$LANG['url_rewriting_explain'] = 'Réécriture des adresses des pages';
+$LANG['url_rewriting_explain'] = 'Réécriture des adresses des pages qui les rend plus lisibles et plus propices au référencement sur les moteurs de recherche';
 $LANG['auth_dir'] = 'Autorisations des dossiers';
-$LANG['check_auth_dir'] = '<span style="font-weight:bold;color:red;">Obligatoire :</span> PHPBoost nécessite que certains dossiers soient autorisés en écriture, si votre serveur le permet, leurs autorisations sont changées de façon automatique. Cependant certains serveurs empêchent la modification automatique des autorisations, il faut donc faire la manipulation manuellement, pour cela voir la <a href="http://www.phpboost.com/wiki/changer-le-chmod-d-un-dossier" title="Documentation PHPBoost : Changer le chmod">documentation PHPBoost</a> ou contactez votre hébégeur.';
+$LANG['check_auth_dir'] = '<span style="font-weight:bold;color:red;">Obligatoire :</span> PHPBoost nécessite que certains dossiers soient inscriptibles. Si votre serveur le permet, leurs autorisations sont changées de façon automatique. Cependant certains serveurs empêchent la modification automatique des autorisations, il faut donc faire la manipulation manuellement, pour cela voir la <a href="http://www.phpboost.com/wiki/changer-le-chmod-d-un-dossier" title="Documentation PHPBoost : Changer le chmod">documentation PHPBoost</a> ou contactez votre hébégeur.';
 $LANG['refresh_chmod'] = 'Revérifier les dossiers';
 $LANG['existing'] = 'Existant';
 $LANG['unexisting'] = 'Inexistant';

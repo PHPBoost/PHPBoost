@@ -58,7 +58,11 @@
 					</td>
 				</tr>
 				# START link_menu #
-					{link_menu.ROW}
+					<tr>
+						<td class="{link_menu.CLASS}">
+							<img src="templates/images/{link_menu.STEP_IMG}" alt="" class="valign_middle" />&nbsp;&nbsp;{link_menu.STEP_NAME}
+						</td>				
+					</tr>
 				# END link_menu #
 			</table>
 			
@@ -75,7 +79,7 @@
 						<div style="margin:auto;width:235px">
 							<div style="text-align:center;">{L_STEP}</div>
 							<div style="float:left;height:12px;border:1px solid black;background:white;width:192px;padding:2px;padding-left:3px;padding-right:1px;">
-								{PROGRESS_BAR_PICS}
+								# START progress_bar #<img src="templates/images/progress.png" alt="" /># END progress_bar #
 							</div>&nbsp;{PROGRESS_LEVEL}%
 						</div>
 					</td>
@@ -121,16 +125,21 @@
 						<span style="float:left;padding:8px;padding-top:0px">
 							<img src="templates/images/phpboost.png" alt="Logo PHPBoost" />
 						</span>
+						<h1>{L_INTRO_TITLE}</h1>
 						{L_INTRO_EXPLAIN}
+						
+						<div style="margin-bottom:150px;">&nbsp;</div>
+						
 						<fieldset class="submit_case">
 							<a href="{L_NEXT_STEP}" title="{L_START_INSTALL}" ><img src="templates/images/right.png" alt="{L_START_INSTALL}" /></a>
-						</fieldset>		
+						</fieldset>						
 					</td>
 					# END intro #
 					
 					
 					# START license #
 					<td class="row_contents">
+						<h1>{L_REQUIRE_LICENSE}</h1>
 						<script type="text/javascript">
 						<!--
 							function check_license_agreement()
@@ -148,7 +157,7 @@
 						<form action="{TARGET}" method="post" onsubmit="return check_license_agreement();" class="fieldset_content">
 							<fieldset>
 								<legend>
-									{L_REQUIRE_LICENSE}
+									{L_QUERY_TERMS}
 								</legend>
 								{L_REQUIRE_LICENSE_AGREEMENT}
 								<br />
@@ -215,14 +224,21 @@
 						</script>
 						
 						<div class="fieldset_content">
-							<p>{L_CONFIG_SERVER_EXPLAIN}</p>
-													
+							<h1>{L_CONFIG_SERVER_TITLE}</h1>
+							{L_CONFIG_SERVER_EXPLAIN}
+							
 							<fieldset>
 								<legend>{L_PHP_VERSION}</legend>
 								<p>{L_CHECK_PHP_VERSION_EXPLAIN}</p>
 								<dl>
 									<dt><label>{L_CHECK_PHP_VERSION}</label></dt>
-									<dd><label>{config_server.PHP_VERSION}</label></dd>								
+									<dd>
+									# IF config_server.C_PHP_VERSION_OK #
+										<img src="templates/images/success.png" alt="{L_YES}" />
+									# ELSE #
+										<img src="templates/images/stop.png" alt="{L_NO}" />
+									# ENDIF #
+									</dd>								
 								</dl>
 							</fieldset>
 							
@@ -231,11 +247,27 @@
 								<p>{L_CHECK_EXTENSIONS}</p>
 								<dl>
 									<dt><label>{L_GD_LIBRARY}</label><br /><span>{L_GD_LIBRARY_EXPLAIN}</span></dt>
-									<dd>{config_server.GD}</dd>								
+									<dd>
+									# IF config_server.C_GD_LIBRAIRY_ENABLED #
+										<img src="templates/images/success.png" alt="{L_YES}" />
+									# ELSE #
+										<img src="templates/images/stop.png" alt="{L_NO}" />
+									# ENDIF #
+									</dd>								
 								</dl>
 								<dl>
 									<dt><label>{L_URL_REWRITING}</label><br /><span>{L_URL_REWRITING_EXPLAIN}</span></dt>
-									<dd>{config_server.URL_REWRITING}</dd>								
+									<dd>
+									# IF config_server.C_URL_REWRITING_KNOWN #
+										# IF config_server.C_URL_REWRITING_ENABLED #
+										<img src="templates/images/success.png" alt="{L_YES}" />
+										# ELSE #
+										<img src="templates/images/stop.png" alt="{L_NO}" />
+										# ENDIF #
+									# ELSE #
+									<img src="templates/images/question.png" alt="{L_UNKNOWN}" />
+									# ENDIF #
+									</dd>								
 								</dl>
 							</fieldset>
 							
@@ -247,8 +279,16 @@
 									<dl>
 										<dt><label>{config_server.chmod.TITLE}</label></dt>
 										<dd>
-											{config_server.chmod.FOUND}
-											{config_server.chmod.WRITABLE}
+											# IF config_server.chmod.C_EXISTING_DIR #
+												<div class="success_block">{L_EXISTING}</div>
+											# ELSE #
+												<div class="failure_block">{L_NOT_EXISTING}</div>
+											# ENDIF #
+											# IF config_server.chmod.C_WRITIBLE_DIR #
+												<div class="success_block">{L_WRITABLE}</div>
+											# ELSE #
+												<div class="failure_block">{L_NOT_WRITABLE}</div>
+											# ENDIF #
 										</dd>								
 									</dl>
 									# END config_server.chmod #
