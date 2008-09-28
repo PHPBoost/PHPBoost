@@ -31,7 +31,7 @@
 ####################################################
 
 $LANG = array();
-$LANG['page_title'] = 'Installation of PHPBoost';
+$LANG['page_title'] = 'PHPBoost installation';
 $LANG['steps_list'] = 'Steps list';
 $LANG['introduction'] = 'Preamble';
 $LANG['config_server'] = 'Server configuration';
@@ -88,22 +88,20 @@ $LANG['unwritable'] = 'Not writable';
 $LANG['unknown'] = 'Unknown';
 
 //Base de données
-$LANG['db_title'] = 'Database connexion parameters';
+$LANG['db_title'] = 'Database connection parameters';
 $LANG['db_explain'] = '<p>This stage will generate the configuration file which will contain the database login and password. If your don\'t know your database informations please ask them to your hoster. In this step database tables will be created.';
-$LANG['dbms'] = 'Database managing system';
-$LANG['choose_dbms'] = 'Select system';
-$LANG['choose_dbms_explain'] = 'Most of servers use MySQL';
-$LANG['db_informations'] = 'Database parameters';
+$LANG['dbms_paramters'] = 'DBMS connection parameters';
 $LANG['db_host_name'] = 'Host name';
-$LANG['db_host_name_explain'] = 'Address of the database managing system.';
+$LANG['db_host_name_explain'] = 'Database managing system server URL, often <em>localhost</em>';
 $LANG['db_login'] = 'Login';
 $LANG['db_login_explain'] = 'Provided by hoster';
 $LANG['db_password'] = 'Password';
 $LANG['db_password_explain'] = 'Provided by hoster';
+$LANG['db_properties'] = 'Database properties';
 $LANG['db_name'] = 'Database name';
-$LANG['db_name_explain'] = 'Provided by hoster';
+$LANG['db_name_explain'] = 'Provided by hoster. If that database doesn\'t exist, PHPBoost will try to create it.';
 $LANG['db_prefix'] = 'Tables prefix';
-$LANG['db_prefix_explain'] = 'Default value is <em>phpboost_</em>';
+$LANG['db_prefix_explain'] = 'Default value is <em>phpboost_</em>. This value is to change if you want to install several times PHPBoost in the same database.';
 $LANG['test_db_config'] = 'Try it';
 $LANG['result'] = 'Results';
 $LANG['empty_field'] = '%s field is empty';

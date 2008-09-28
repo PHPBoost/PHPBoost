@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                                mysql.class.php
+ *                              mysql.class.php
  *                            -------------------
  *   begin                : March 13, 2006
- *   copyright          : (C) 2005 Régis Viarre, Loïc Rouchon
+ *   copyright            : (C) 2005 Régis Viarre, Loïc Rouchon
  *   email                : crowkait@phpboost.com, horn@phpboost.com
  *
  *
@@ -360,9 +360,23 @@ class Sql
 		return trim($query);
 	}
 	
+	//Version du SGBD
 	function get_dbms_version()
 	{
 		return 'MySQL ' . mysql_get_server_info();
+	}
+	
+	//Listage des base de données présentes sur le SGBD courant
+	function list_databases()
+	{
+		$db_list = mysql_list_dbs($this->link);
+		
+		$result = array();
+		
+		while( $row = mysql_fetch_assoc($db_list) )
+			$result[] = $row['Database'];
+		
+		return $result;
 	}
 	
 	## Private Methods ##

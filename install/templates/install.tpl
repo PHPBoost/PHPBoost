@@ -77,7 +77,7 @@
 				<tr>
 					<td class="row_next">
 						<div style="margin:auto;width:235px">
-							<div style="text-align:center;">{L_STEP}</div>
+							<div style="text-align:center;margin-bottom:5px;">{L_STEP}</div>
 							<div style="float:left;height:12px;border:1px solid black;background:white;width:192px;padding:2px;padding-left:3px;padding-right:1px;">
 								# START progress_bar #<img src="templates/images/progress.png" alt="" /># END progress_bar #
 							</div>&nbsp;{PROGRESS_LEVEL}%
@@ -383,24 +383,11 @@
 							<img src="templates/images/mysql.png" alt="MySQL" style="float:right; margin-bottom:5px; margin-left:5px;"/>
 						</a>
 						{L_DB_EXPLAIN}
+						<div style="clear:both;"></div>
 						
 						<form action="{U_CURRENT_STEP}" method="post" onsubmit="return check_form_db();" class="fieldset_content">
 							<fieldset>
-								<legend>{L_DBMS}</legend>
-								<dl>
-									<dt><label for="dbms">{L_CHOOSE_DBMS}</label><br /><span>{L_CHOOSE_DBMS_EXPLAIN}</span></dt>
-									<dd><label>
-										<select name="dbms" id="dbms">
-											# START db.dbms #
-											<option value="{db.dbms.DBMS}" {db.dbms.SELECTED} {db.dbms.DISABLED}>{db.dbms.L_DBMS}</option>
-											# END db.dbms #
-										</select>
-									</label></dd>								
-								</dl>
-							</fieldset>
-							
-							<fieldset>
-								<legend>{L_INFORMATIONS}</legend>
+								<legend>{L_SGBD_PARAMETERS}</legend>
 								<dl>
 									<dt><label for="host">* {L_HOST}</label><br /><span>{L_HOST_EXPLAIN}</span></dt>
 									<dd><label><input type="text" maxlength="150" size="25" id="host" name="host" value="{HOST_VALUE}" class="text" /></label></dd>
@@ -413,6 +400,10 @@
 									<dt><label for="password">{L_PASSWORD}</label><br /><span>{L_PASSWORD_EXPLAIN}</span></dt>
 									<dd><label><input type="password" maxlength="25" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="text" /></label></dd>
 								</dl>
+							</fieldset>	
+							
+							<fieldset>
+								<legend>{L_DB_PARAMETERS}</legend>
 								<dl>
 									<dt><label for="database">* {L_DB_NAME}</label><br /><span>{L_DB_NAME_EXPLAIN}</span></dt>
 									<dd><label><input type="text" maxlength="150" size="25" id="database" name="database" value="{DB_NAME_VALUE}" class="text" /></label></dd>
@@ -421,7 +412,7 @@
 									<dt><label for="tableprefix">{L_DB_PREFIX}</label><br /><span>{L_DB_PREFIX_EXPLAIN}</span></dt>
 									<dd><label><input type="text" maxlength="20" size="25" name="tableprefix" id="tableprefix" value="phpboost_" class="text" /></label></dd>
 								</dl>
-							</fieldset>		
+							</fieldset>
 							
 							<fieldset style="display:{db.DISPLAY_RESULT};" id="result_box">
 								<legend>
