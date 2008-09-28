@@ -480,7 +480,7 @@
 							function change_img_theme(id, value)
 							{
 								if(document.images )
-									document.images[id].src = "../templates/" + value + "/images/theme.jpg";
+									document.images[id].src = "../templates/" + value + "/theme/images/theme.jpg";
 							}
 							
 							var array_identifier = new Array();
@@ -524,7 +524,7 @@
 												<option value="{site_config.theme.THEME}" {site_config.theme.SELECTED}>{site_config.theme.THEME_NAME}</option>
 											# END site_config.theme # 				
 										</select>
-										<img id="img_theme" src="../templates/{IMG_THEME}/images/theme.jpg" alt="" style="vertical-align:top" />
+										<img id="img_theme" src="../templates/{IMG_THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
 									</label></dd>								
 								</dl>
 								<dl>
@@ -600,7 +600,7 @@
 							function change_img_theme(id, value)
 							{
 								if(document.images )
-									document.images[id].src = "../templates/" + value + "/images/theme.jpg";
+									document.images[id].src = "../templates/" + value + "/theme/images/theme.jpg";
 							}
 							
 							var array_identifier = new Array();
