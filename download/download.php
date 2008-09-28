@@ -40,7 +40,7 @@ if( $file_id > 0 ) //Contenu
 	else
 		$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 	
-	include('../kernel/framework/util/date.class.php');
+	include_once('../kernel/framework/util/date.class.php');
  	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['timestamp']);
  	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['release_timestamp']);
 	
@@ -153,7 +153,6 @@ else
 	
 	//Contenu de la catégorie	
 	$nbr_files = (int)$Sql->Query("SELECT COUNT(*) FROM ".PREFIX."download WHERE visible = 1 AND idcat = '" . $category_id . "'", __LINE__, __FILE__);
-	
 	if( $nbr_files > 0 )
 	{
 		$get_sort = retrieve(GET, 'sort', '');	

@@ -45,7 +45,6 @@ class Template
 
 			$this->tpl = $this->check_file($tpl);
 			$this->files[$this->tpl] = $this->tpl;
-			
 			if( $auto_load_vars )
 			{
 				$member_connected = $Member->Check_level(MEMBER_LEVEL);
@@ -176,8 +175,6 @@ class Template
 		$file = trim(substr($filename, $i), '/');
 		$folder = trim(substr($file, 0, strpos($file, '/')), '/');
 
-        //echo $filename . ' - ' . $module . ' - ' . $file . ' - ' . $folder . '<hr />';
-		
 		if( empty($module) || $module == 'admin' ) //Template du thème (noyau)
 			return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
 		else //Module
