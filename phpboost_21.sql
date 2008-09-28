@@ -410,7 +410,7 @@ CREATE TABLE `phpboost_forum_cats` (
   PRIMARY KEY  (`id`),
   KEY `last_topic_id` (`last_topic_id`),
   KEY `id_left` (`id_left`)
-) ENGINE=MyISAM DEFAULT ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Contenu de la table `phpboost_forum_cats`
