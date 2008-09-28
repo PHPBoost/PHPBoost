@@ -6,7 +6,7 @@
 		<meta name="description" content="PHPBoost" />
 		<link type="text/css" href="templates/install.css" title="phpboost" rel="stylesheet" />
 		<script type="text/javascript" src="templates/global.js"></script>
-		<link rel="shortcut" href="../favicon.ico" />
+		<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
 	</head>
 	<body>
 		<script type="text/javascript">
@@ -225,6 +225,9 @@
 						
 						<div class="fieldset_content">
 							<h1>{L_CONFIG_SERVER_TITLE}</h1>
+							<a href="http://www.php.net/">
+								<img src="templates/images/php.png" alt="PHP" style="float:right; margin-bottom:5px; margin-left:5px;"/>
+							</a>
 							{L_CONFIG_SERVER_EXPLAIN}
 							
 							<fieldset>
@@ -375,7 +378,11 @@
 						}
 						-->
 						</script>
-						<p>{L_DB_EXPLAIN}</p>
+						<h1>{L_DB_TITLE}</h1>
+						<a href="http://www.mysql.com/">
+							<img src="templates/images/mysql.png" alt="MySQL" style="float:right; margin-bottom:5px; margin-left:5px;"/>
+						</a>
+						{L_DB_EXPLAIN}
 						
 						<form action="{U_CURRENT_STEP}" method="post" onsubmit="return check_form_db();" class="fieldset_content">
 							<fieldset>
