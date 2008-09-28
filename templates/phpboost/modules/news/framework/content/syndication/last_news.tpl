@@ -1,4 +1,5 @@
 # START item #
+<!-- ITEM -->
     <div class="news_container" style="float:left;width:365px;margin-left:10px;">
         <div class="news_top_l"></div>
         <div class="news_top_r"></div>
@@ -9,9 +10,9 @@
         </div>
         <div class="news_content">
             # IF item.C_IMG #
-                    <div style="float:right;margin-left:10px;margin-bottom:5px;margin-right:0px;">
-                        <img src="{item.U_IMG}" title="{item.TITLE}" style="max-width:150px;max-height:150px;"/>
-                    </div>
+				<div style="float:right;margin-left:10px;margin-bottom:5px;margin-right:0px;">
+					<img src="{item.U_IMG}" title="{item.TITLE}" style="max-width:150px;max-height:150px;"/>
+				</div>
             # END IF #
             {item.DESC}
             <div style="text-align:right;"><a href="./news/news.php" class="small_link">Plus de news...</a></div>
@@ -20,4 +21,5 @@
         <div class="news_bottom_r"></div>
         <div class="news_bottom"></div>
     </div>
+<!-- END ITEM -->
 # END item #
