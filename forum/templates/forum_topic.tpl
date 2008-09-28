@@ -49,7 +49,7 @@
 					document.getElementById('display_msg_title').innerHTML = xhr_object.responseText == '1' ? "{L_DISPLAY_MSG}" + ' ' : '';
 					document.getElementById('display_msg_title2').innerHTML = xhr_object.responseText == '1' ? "{L_DISPLAY_MSG}" + ' ' : '';
 					if( document.getElementById('forum_change_img') )
-						document.getElementById('forum_change_img').src = xhr_object.responseText == '1' ? '{MODULE_DATA_PATH}/images/msg_display2_mini.png' : '{MODULE_DATA_PATH}/images/msg_display_mini.png';
+						document.getElementById('forum_change_img').src = xhr_object.responseText == '1' ? '../templates/{THEME}/images/not_processed_mini.png' : '../templates/{THEME}/images/processed_mini.png';
 					if( document.getElementById('forum_change_msg') )
 						document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
 				}

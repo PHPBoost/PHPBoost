@@ -79,12 +79,12 @@
 					<dl>
 						<dt><label for="default_theme">* {L_DEFAULT_THEME}</label></dt>
 						<dd><label>
-							<select name="theme" id="default_theme" onchange="change_img_path('img_theme', '../templates/' + this.options[selectedIndex].value + '/images/theme.jpg');">
+							<select name="theme" id="default_theme" onchange="change_img_path('img_theme', '../templates/' + this.options[selectedIndex].value + '/theme/images/theme.jpg');">
 							# START select #				
 								{select.THEME}				
 							# END select #				
 							</select>
-							<img id="img_theme" src="../templates/{THEME}/images/theme.jpg" alt="" style="vertical-align:top" />
+							<img id="img_theme" src="../templates/{THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
 						</label></dd>
 					</dl>
 					<dl>

@@ -346,7 +346,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 {
 	global $LANG;
 	
-	$template = new Template('confirm.tpl');
+	$template = new Template('framework/confirm.tpl');
 	
 	$template->Assign_vars(array(
 		'URL_ERROR' => !empty($url_error) ? $url_error : get_start_page(),

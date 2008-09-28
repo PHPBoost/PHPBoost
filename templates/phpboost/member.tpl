@@ -22,7 +22,7 @@
 		function change_img_theme(id, value)
 		{
 			if(document.images )
-				document.images[id].src = "../templates/" + value + "/images/theme.jpg";
+				document.images[id].src = "../templates/" + value + "/theme/images/theme.jpg";
 		}
 		
 		var array_identifier = new Array();
@@ -100,7 +100,7 @@
 								{select_theme.THEME}
 								# END select_theme #
 							</select>
-							<img id="img_theme" src="../templates/{USER_THEME}/images/theme.jpg" alt="" style="vertical-align:top" />
+							<img id="img_theme" src="../templates/{USER_THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
 						</label>
 					</dd>
 				</dl>
