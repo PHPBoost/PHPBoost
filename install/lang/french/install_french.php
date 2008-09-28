@@ -88,7 +88,8 @@ $LANG['unwritable'] = 'Non inscriptible';
 $LANG['unknown'] = 'Indéterminable';
 
 //Base de données
-$LANG['db_explain'] = 'Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Les tables permettant de faire fonctionner PHPBoost seront automatiquement créées lors de cette étape. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébérgeur qui vous les transmettra.';
+$LANG['db_title'] = 'Paramètres de connexion à la base de données';
+$LANG['db_explain'] = '<p>Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Les tables permettant de faire fonctionner PHPBoost seront automatiquement créées lors de cette étape. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébérgeur qui vous les transmettra</a>.';
 $LANG['dbms'] = 'Système de gestion de base de données';
 $LANG['choose_dbms'] = 'Choisir le système';
 $LANG['choose_dbms_explain'] = 'MySQL par défaut sur la plupart des serveurs';

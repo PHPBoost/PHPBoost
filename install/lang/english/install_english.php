@@ -51,7 +51,7 @@ $LANG['query_success'] = 'The process has been done successfully';
 $LANG['query_failure'] = 'An error occured during query processing';
 
 //Introduction
-$LANG['intro_title'] = 'Welcome in PHPBoost install wizard';
+$LANG['intro_title'] = 'Welcome in PHPBoost installation wizard';
 $LANG['intro_explain'] = '<p>Thank you to have trusted PHPBoost to build your website.</p>
 <p>To install PHPBoost you need to have some informations about your hosting which must be provided by your hoster. The installation is absolutely automatic, il should take only a few minutes. Click on the right arrow above to start the installation process.</p>
 <p>Cordially, the PHPBoost Team.</p>';
@@ -67,7 +67,7 @@ $LANG['alert_agree_license'] = 'You have to agree to end-user license by notchin
 
 //Configuration du serveur
 $LANG['config_server_title'] = 'Checking server configuration';
-$LANG['config_server_explain'] = '<p>Before to start installations stages, the configuration of your server is going to be checked to etablish its compatibility with PHPBoost. Please check that every required condition is ok.</p>
+$LANG['config_server_explain'] = '<p>Before to start installation stages, the configuration of your server is going to be checked to etablish its compatibility with PHPBoost. Please check that every required condition is ok.</p>
 <p>If you have problems, ask your questions in the <a href="http://www.phpboost.net/forum/index.php">support forum</a>.</p>';
 $LANG['php_version'] = 'PHP version';
 $LANG['check_php_version'] = 'PHP upper than 4.1.0';
@@ -88,7 +88,8 @@ $LANG['unwritable'] = 'Not writable';
 $LANG['unknown'] = 'Unknown';
 
 //Base de données
-$LANG['db_explain'] = 'This stage permits you to generate config file which will contain database login and password. If your don\'t know your database informations please ask it to your hoster. In this step database tables will be created.';
+$LANG['db_title'] = 'Database connexion parameters';
+$LANG['db_explain'] = '<p>This stage will generate the configuration file which will contain the database login and password. If your don\'t know your database informations please ask them to your hoster. In this step database tables will be created.';
 $LANG['dbms'] = 'Database managing system';
 $LANG['choose_dbms'] = 'Select system';
 $LANG['choose_dbms_explain'] = 'Most of servers use MySQL';

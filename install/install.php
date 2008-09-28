@@ -213,14 +213,14 @@ elseif( $step == 3 )
 		'U_NEXT_STEP' => add_lang('install.php?step=4')
 	));	
 }
-//Mise en place de la base de donnï¿½es
+//Mise en place de la base de données
 elseif( $step == 4 )
 {
 	if( !empty($_POST['submit']) )
 	{
-		//Prï¿½fixe des tables
+		//Préfixe des tables
 		$tableprefix = !empty($_POST['tableprefix']) ? strprotect($_POST['tableprefix']) : 'phpboost_';
-			
+		
 		function test_db_config()
 		{
 			global $LANG, $dbms, $host, $login, $password, $database, $tableprefix;
@@ -246,11 +246,11 @@ elseif( $step == 4 )
 			if( !@$Sql->Sql_connect($host, $login, $password) )
 				return '<div class="error">' . $LANG['db_error_connexion'] . '</div>';
             
-			//Sï¿½lection de la base de donnï¿½es
+			//Sélection de la base de données
 			if( !@$Sql->Sql_select_db($database, $result) )
 				return '<div class="warning">' . $LANG['db_error_selection'] . '</div>';
 				
-			//Dï¿½connexion
+			//Déconnexion
 			$Sql->Sql_close();
 			return '';
 		}
@@ -277,9 +277,9 @@ if( !defined(\'DBSECURE\') )
     $sql_host = "' . $host . '"; //Adresse serveur mysql.
     $sql_login = "' . $login . '"; //Login
     $sql_pass = "' . $password . '"; //Mot de passe
-    $sql_base = "' . $database . '"; //Nom de la base de donnï¿½es.
-    $table_prefix = "' . $tableprefix . '"; //Prï¿½fixe des tables
-    $dbtype = "' . $dbms .'"; //Systï¿½me de gestion de base de donnï¿½es
+    $sql_base = "' . $database . '"; //Nom de la base de données.
+    $table_prefix = "' . $tableprefix . '"; //Préfixe des tables
+    $dbtype = "' . $dbms .'"; //Système de gestion de base de données
     define(\'DBSECURE\', true);
     define(\'PHPBOOST_INSTALLED\', true);
 }   
@@ -349,6 +349,7 @@ else
 		'U_CURRENT_STEP' => add_lang('install.php?step=4'),
 		'L_DB_EXPLAIN' => $LANG['db_explain'],
 		'L_DBMS' => $LANG['dbms'],
+		'L_DB_TITLE' => $LANG['db_title'],
 		'L_CHOOSE_DBMS' => $LANG['choose_dbms'],
 		'L_CHOOSE_DBMS_EXPLAIN' => $LANG['choose_dbms_explain'],
 		'L_INFORMATIONS' => $LANG['db_informations'],
