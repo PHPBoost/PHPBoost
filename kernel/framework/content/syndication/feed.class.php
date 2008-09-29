@@ -132,23 +132,19 @@ class Feed
         $file->write($data->serialize());
     }
 
-    /*static*/ function get_parsed($module_id, $name = DEFAULT_FEED_NAME, $idcat = 0, $assign_tpl = false, $number = 10, $begin_at = 0, $tpl = false)
+    /*static*/ function get_parsed($module_id, $name = DEFAULT_FEED_NAME, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
     {
-		// Choose the correct template
+        // Choose the correct template
         if( is_object($tpl) and strtolower(get_class($tpl)) == 'template' )
-        {    
-			$template = $tpl->copy();
-			if( gettype($assign_tpl) == 'array' )
-                $template->Assign_vars($assign_tpl);
-		}
+            $template = $tpl->copy();
         else
         {
             require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
             $template = new Template($module_id . '/framework/content/syndication/feed.tpl');
-            if( gettype($assign_tpl) == 'array' )
-                $template->Assign_vars($assign_tpl);
+            if( gettype($tpl) == 'array' )
+                $template->Assign_vars($tpl);
         }
-		
+        
         // Get the cache content or recreate it if not existing
         $iteration = 0;
         $feed_data = '';
