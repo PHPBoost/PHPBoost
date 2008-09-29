@@ -263,7 +263,7 @@ elseif( $step == 4 )
 			$Sql = new Sql(false);
             //Connexion
 			$result = $Sql->Sql_connect($host, $login, $password);
-			//Sï¿½lection de la base de donnï¿½es
+			//Sélection de la base de données
 			$Sql->Sql_select_db($database, $result);
 						
 			//Crï¿½ation du fichier de configuration.
