@@ -38,7 +38,7 @@ define('CONNECTED_TO_DATABASE', 3);
 class Sql
 {
 	## Public Methods ##
-	//Constructeurc de la classe Sql. Il prend en paramètre les paramètres de connexion à la base de données. Par défaut la classe Sql gère de façon autonome les erreurs de connexion, mais on peut demander à les gérer manuellement
+	//Constructeur de la classe Sql. Il prend en paramètre les paramètres de connexion à la base de données. Par défaut la classe Sql gère de façon autonome les erreurs de connexion, mais on peut demander à les gérer manuellement
 	function Sql($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = AUTO_ERRORS_MANAGEMENT)
 	{
 		return $this->Sql_connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management);
