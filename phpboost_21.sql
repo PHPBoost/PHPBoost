@@ -206,11 +206,11 @@ INSERT INTO `phpboost_configs` VALUES (29, 'download', 'a:6:{s:12:"nbr_file_max"
 -- --------------------------------------------------------
 
 --
--- Structure de la table `phpboost_contributions`
+-- Structure de la table `phpboost_events`
 --
 
-DROP TABLE IF EXISTS `phpboost_contributions`;
-CREATE TABLE `phpboost_contributions` (
+DROP TABLE IF EXISTS `phpboost_events`;
+CREATE TABLE `phpboost_events` (
   `id` int(11) NOT NULL auto_increment,
   `entitled` varchar(255) NOT NULL,
   `description` text,
