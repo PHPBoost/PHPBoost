@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -39,7 +39,7 @@ class Feed
     {
         $this->module_id = $module_id;
         $this->name = $name;
-        $this->id_cat = $is_cat
+        $this->id_cat = $id_cat;
     }
 
     function load_data($data) { $this->data = $data; }
@@ -52,7 +52,7 @@ class Feed
             $tpl = $this->tpl->copy();
         else
             $tpl = $template->copy();
-        
+       
         if( !empty($this->data) )
         {
             $tpl->Assign_vars(array(
@@ -98,9 +98,9 @@ class Feed
     }
 
     function is_in_cache() { return file_exists(FEEDS_PATH . $this->name); }
-    
+   
     function get_cache_file_name() { return FEEDS_PATH . $this->module_id . '_' . $this->name . '_' . $this->id_cat . '.php'; }
-    
+   
     ## Private Methods ##
     ## Private attributes ##
     var $module_id = '';        // Module ID
@@ -117,13 +117,13 @@ class Feed
     {
         require_once(PATH_TO_ROOT . '/kernel/framework/io/folder.class.php');
         $folder = new Folder(FEEDS_PATH, OPEN_NOW);
-        
+       
         $files = null;
         if( $module_id !== false )  // Clear only this module cache
             $files = $folder->get_files('`.+/' . $module_id . '_.*`');
         else                        // Clear the whole cache
             $files = $folder->get_files();
-        
+       
         foreach( $files as $file )
             $file->delete();
     }
@@ -147,7 +147,7 @@ class Feed
             if( gettype($tpl) == 'array' )
                 $template->Assign_vars($tpl);
         }
-        
+       
         // Get the cache content or recreate it if not existing
         $iteration = 0;
         $feed_data = '';
@@ -158,15 +158,15 @@ class Feed
             $module = $modules->get_module($module_id);
             $data = $module->syndication_data($idcat);
             Feed::update_cache($module_id, $name, $data, $idcat);
-            
+           
             if( $iteration++ > 1 )
                 user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
         }
-        
+       
         //$feed = new Feed($module_id, $name);
         //$data = new FeedData($feed_data);
         //$feed->load_data($data->subitems($number, $begin_at));
-        
+       
         return $feed->export($template);
     }
 }

@@ -33,7 +33,7 @@ class FeedData
     ## Public Methods ##
     function FeedData($serialized_data = null)
 	{
-		if( $serialized_data != null )
+		if( $serialized_data != null && is_string($serialized_data) )
 		{
 			$f_data = unserialize($serialized_data);
 			$this->title = $f_data->title;
