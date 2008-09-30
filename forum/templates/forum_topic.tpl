@@ -235,7 +235,6 @@
 			document.write('<a href="javascript:XMLHttpRequest_change_statut()" class="small_link">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()" class="small_link"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
 			-->
 			</script>
-			<br />		
 			# ENDIF #	
 			<span id="forum_favorite">
 				<a href="action{U_SUSCRIBE}#go_bottom">{ICON_FAVORITE}</a> <a href="action{U_SUSCRIBE}#go_bottom" class="small_link">{L_SUSCRIBE_DEFAULT}</a>
@@ -246,13 +245,11 @@
 			document.write('<a href="javascript:XMLHttpRequest_favorite()" class="small_link">{ICON_FAVORITE2}</a> <a href="javascript:XMLHttpRequest_favorite()" class="small_link"><span id="forum_favorite_msg">{L_SUSCRIBE_DEFAULT}</span></a>');
 			-->
 			</script>
-			<br />
 			<a href="alert{U_ALERT}#go_bottom"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/important_mini.png" alt="" /> <a href="alert{U_ALERT}#go_bottom" class="small_link">{L_ALERT}</a>
 		</div>
 		
-		<div class="spacer"></div>
-		<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto;" id="go_bottom">		
-			<div style="font-size:11px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
+		<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto;margin-top:15px;" id="go_bottom">		
+			<div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
 			{KERNEL_EDITOR}
 			<label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 			<fieldset class="fieldset_submit" style="padding-top:17px;">

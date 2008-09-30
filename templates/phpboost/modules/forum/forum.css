@@ -99,8 +99,8 @@ a.forum_link_pseudo:hover {
 }
 /* Cadre des liens:alerter les modérateurs et suivre le sujet */
 .forum_action{
-	float:left;
-	margin-top:10px;
+	text-align:center;
+	margin-top:15px;
 }
 /* Les des catégories de niveau 0 */
 a.forum_link_cat{
