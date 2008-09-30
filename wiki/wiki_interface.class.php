@@ -160,8 +160,8 @@ class WikiInterface extends ModuleInterface
         
         if( ($idcat > 0) && array_key_exists($idcat, $_WIKI_CATS) )//Catégorie
         {
-            $desc = sprintf($LANG['wiki_rss_cat'], html_entity_decode($_WIKI_CATS[$cat]['name']));
-            $where = "AND a.id_cat = '" . $cat . "'";
+            $desc = sprintf($LANG['wiki_rss_cat'], html_entity_decode($_WIKI_CATS[$idcat]['name']));
+            $where = "AND a.id_cat = '" . $idcat . "'";
         }
         else //Sinon derniers messages
         {
