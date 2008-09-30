@@ -27,8 +27,8 @@
 
 define('LOW_PRIORITY', 'LOW_PRIORITY');
 define('DB_NO_CONNECT', false);
-define('AUTO_ERRORS_MANAGEMENT', false);
-define('MANUAL_ERRORS_MANAGEMENT', false);
+define('ERRORS_MANAGEMENT_BY_RETURN', false);
+define('EXPLICIT_ERRORS_MANAGEMENT', true);
 
 //Errors
 define('CONNECTION_FAILED', 1);
@@ -39,13 +39,13 @@ class Sql
 {
 	## Public Methods ##
 	//Constructeur de la classe Sql. Il prend en paramètre les paramètres de connexion à la base de données. Par défaut la classe Sql gère de façon autonome les erreurs de connexion, mais on peut demander à les gérer manuellement
-	function Sql($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = AUTO_ERRORS_MANAGEMENT)
+	function Sql($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = EXPLICIT_ERRORS_MANAGEMENT)
 	{
-		return $this->Sql_connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management);
+		$this->Sql_connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management);
 	}
 	
 	//Connexion
-	function Sql_connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = AUTO_ERRORS_MANAGEMENT)
+	function Sql_connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = EXPLICIT_ERRORS_MANAGEMENT)
 	{
 		//Identification sur le serveur
 		if( $this->link = @mysql_connect($sql_host, $sql_login, $sql_pass) )
@@ -377,6 +377,12 @@ class Sql
 			$result[] = $row['Database'];
 		
 		return $result;
+	}
+
+	//Création d'une base de données
+	function create_database($db_name)
+	{
+		return @$this->query_inject("CREATE DATABASE '" . url_encode_rewrite($db_name) . "'", __LINE__, __FILE__);
 	}
 	
 	## Private Methods ##

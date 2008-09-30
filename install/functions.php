@@ -44,6 +44,18 @@ function check_database_config($host, $login, $password, $database_name, $tables
 	//Lancement de la classe d'erreur (nécessaire pour lancer la gestion de base de données)
 	$Errorh = new Errors;
 	$Sql = new Sql(false);
+	
+	//Tentative de connexion à la base de données
+	switch($Sql->Sql_connect($host, $login, $password, $database_name, ERRORS_MANAGEMENT_BY_RETURN))
+	{
+		//La connexion a échoué, l'hôte ou les identifiants sont erronés
+		case CONNECTION_FAILED:
+			return DB_CONFIG_ERROR_CONNECTION_TO_DBMS;
+		//La base de données n'existe pas
+		case UNEXISTING_DATABASE:
+			//Tentative de création de la base de données
+			$Sql->create_database();
+	}
 }
 
 ?>
