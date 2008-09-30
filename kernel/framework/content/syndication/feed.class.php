@@ -35,10 +35,11 @@ require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.cla
 class Feed
 {
     ## Public Methods ##
-    function Feed($module_id, $name = DEFAULT_FEED_NAME)
+    function Feed($module_id, $name = DEFAULT_FEED_NAME, $id_cat = 0)
     {
         $this->module_id = $module_id;
         $this->name = $name;
+        $this->id_cat = $is_cat
     }
 
     function load_data($data) { $this->data = $data; }
@@ -88,20 +89,22 @@ class Feed
 
     function cache()
     {
-        if( empty($this->str) )
-            $this->str = $this->export();
-        $file = fopen($this->get_cache_file_name(), 'w+');
-        fputs($file, $this->str);
-        fclose($file);
+        FEED::update_cache($this->module_id, $this->name, $this->data, $this->id_cat);
+//         if( empty($this->str) )
+//             $this->str = $this->export();
+//         $file = fopen($this->get_cache_file_name(), 'w+');
+//         fputs($file, $this->str);
+//         fclose($file);
     }
 
     function is_in_cache() { return file_exists(FEEDS_PATH . $this->name); }
     
-    function get_cache_file_name() { return FEEDS_PATH . $this->module_id . '_' . $this->name; }
+    function get_cache_file_name() { return FEEDS_PATH . $this->module_id . '_' . $this->name . '_' . $this->id_cat . '.php'; }
     
     ## Private Methods ##
     ## Private attributes ##
     var $module_id = '';        // Module ID
+    var $id_cat = 0;        // ID cat
     var $name = '';             // Feed Name
     var $str = '';              // The feed as a string
     var $tpl = null;            // The feed Template to use
@@ -128,8 +131,8 @@ class Feed
     /*static*/ function update_cache($module_id, $name, &$data, $idcat = 0)
     {
         require_once(PATH_TO_ROOT . '/kernel/framework/io/file.class.php');
-        $file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat, WRITE);
-        $file->write($data->serialize());
+        $file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php', WRITE);
+        $file->write('<?php $feed_object = unserialize(\'' . var_export($data->serialize(), true) . '\'); ?>');
     }
 
     /*static*/ function get_parsed($module_id, $name = DEFAULT_FEED_NAME, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
@@ -148,7 +151,7 @@ class Feed
         // Get the cache content or recreate it if not existing
         $iteration = 0;
         $feed_data = '';
-        while( ($feed_data = @file_get_contents_emulate(PATH_TO_ROOT . '/cache/syndication/' . $module_id . '_' . $name . '_' . $idcat)) === false || $feed_data === '')
+        while( ($feed_data = @include_once(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php')) === false || $feed_data === '')
         {
             require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
             $modules = new Modules();
@@ -160,9 +163,9 @@ class Feed
                 user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
         }
         
-        $feed = new Feed($module_id, $name);
-        $data = new FeedData($feed_data);
-        $feed->load_data($data->subitems($number, $begin_at));
+        //$feed = new Feed($module_id, $name);
+        //$data = new FeedData($feed_data);
+        //$feed->load_data($data->subitems($number, $begin_at));
         
         return $feed->export($template);
     }
