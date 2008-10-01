@@ -37,6 +37,7 @@ class FeedItem
     function set_date($value) { $this->date = $value; }
     function set_desc($value) { $this->desc = $value; }
     function set_image_url($value) { $this->image_url = $value; }
+    function set_auth($auth) { $this->auth = $auth; }
     
     ## Getters ##
     function get_title() { return $this->title; }
@@ -47,6 +48,7 @@ class FeedItem
     function get_date_rfc3339() { return $this->date->format(DATE_RFC3339_F, TIMEZONE_USER); }
     function get_desc() { return $this->desc; }
     function get_image_url() { return $this->image_url; }
+    function get_auth() { return $this->auth; }
     
     ## Private Methods ##
     ## Private attributes ##
@@ -56,6 +58,7 @@ class FeedItem
     var $desc = '';         // Item Description
     var $guid = '';         // Item GUID
     var $image_url = '';        // Item Image
+    var $auth = null;       // Authorizations
 }
 
 ?>
