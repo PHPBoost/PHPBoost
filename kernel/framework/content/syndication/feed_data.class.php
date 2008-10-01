@@ -31,18 +31,17 @@ require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 class FeedData
 {
     ## Public Methods ##
-    function FeedData($serialized_data = null)
+    function FeedData($data = null)
 	{
-		if( $serialized_data != null && is_string($serialized_data) )
+		if( $data != null && strtolower(get_class($data)) == 'feeddata' )
 		{
-			$f_data = unserialize($serialized_data);
-			$this->title = $f_data->title;
-			$this->link = $f_data->link;
-			$this->date = $f_data->date;
-			$this->desc = $f_data->desc;
-			$this->lang = $f_data->lang ;
-			$this->host = $f_data->host;
-			$this->items = $f_data->items;
+			$this->title = $data->title;
+			$this->link = $data->link;
+			$this->date = $data->date;
+			$this->desc = $data->desc;
+			$this->lang = $data->lang ;
+			$this->host = $data->host;
+			$this->items = $data->items;
 		}
 	}
     
@@ -53,6 +52,7 @@ class FeedData
     function set_desc($value) { $this->desc = $value; }
     function set_lang($value) { $this->lang = $value; }
     function set_host($value) { $this->host = $value; }
+    function set_auth_bit($value) { $this->auth_bit = $value; }
     
     function add_item($item) { array_push($this->items, $item); }
     
@@ -66,26 +66,36 @@ class FeedData
     function get_lang() { return $this->lang; }
     function get_host() { return $this->host; }
     
-    function get_items() { return $this->items; }
+    function get_items()
+    {
+        global $Member;
+        $items = array();
+        foreach( $this->items as $item )
+        {
+            if( ($item->get_auth() === null || $this->auth_bit == 0) || $Member->check_auth($item->get_auth(), $this->auth_bit) )
+                $items[] =& $item;
+        }
+        
+        return $items;
+    }
 	
 	function serialize()
 	{
 		return serialize($this);
 	}
 	
-    // Returns a new FeedData object with only $number items from the $begin_at one
+    // Returns a items list containing $number items starting from the $begin_at one
     function subitems($number = 10, $begin_at = 0)
     {
-        $f_data = new FeedData($this->serialize());
+        $secured_items = $this->get_items();
+        $nb_items = count($secured_items);
         
-        $f_data_length = count($f_data->items);
-        for($i = $begin_at + $number; $i < $f_data_length; $i++)
-            unset($f_data->items[$i]);
+        $items = array();
+        $end_at = $begin_at + $number;
+        for($i = $begin_at; ($i < $nb_items) && ($i < $end_at) ; $i++)
+            $items[] =& $secured_items[$i];
         
-        for($i = 0; $i < $begin_at; $i++)
-            unset($f_data->items[$i]);
-        
-        return $f_data;
+        return $items;
     }
     
     ## Private Methods ##
@@ -98,6 +108,7 @@ class FeedData
     var $lang = '';         // Feed Language
     var $host = '';         // Feed Host
     var $items = array();   // Items
+    var $auth_bit = 0;      // Auth bit
 }
 
 ?>

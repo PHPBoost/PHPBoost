@@ -46,7 +46,7 @@ class Feed
     function load_file($url) { }
 
     // Export the feed as a string parsed by the <$tpl> template
-    function export($template = false)
+    function export($template = false, $number = 10, $begin_at = 0)
     {
         if( $template === false )    // A specific template is used
             $tpl = $this->tpl->copy();
@@ -66,8 +66,8 @@ class Feed
                 'LANG' => $this->data->get_lang()
             ));
 
-            $item = null;
-            foreach( $this->data->get_items() as $item )
+            $items = $this->data->subitems($number, $begin_at);
+            foreach( $items as $item )
             {
                 $tpl->Assign_block_vars('item', array(
                     'TITLE' => $item->get_title(),
@@ -132,7 +132,7 @@ class Feed
     {
         require_once(PATH_TO_ROOT . '/kernel/framework/io/file.class.php');
         $file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php', WRITE);
-        $file->write('<?php $feed_object = unserialize(\'' . var_export($data->serialize(), true) . '\'); ?>');
+        $file->write('<?php $feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
     }
 
     /*static*/ function get_parsed($module_id, $name = DEFAULT_FEED_NAME, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
@@ -150,8 +150,7 @@ class Feed
        
         // Get the cache content or recreate it if not existing
         $iteration = 0;
-        $feed_data = '';
-        while( ($feed_data = @include_once(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php')) === false || $feed_data === '')
+        while( ($result = @include(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php')) === false )
         {
             require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
             $modules = new Modules();
@@ -163,11 +162,9 @@ class Feed
                 user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
         }
        
-        //$feed = new Feed($module_id, $name);
-        //$data = new FeedData($feed_data);
-        //$feed->load_data($data->subitems($number, $begin_at));
-       
-        return $feed->export($template);
+        $feed = new Feed($module_id, $name);
+        $feed->load_data($feed_object);
+        return $feed->export($template, $number, $begin_at);
     }
 }
 ?>
