@@ -119,7 +119,7 @@ class NewsInterface extends ModuleInterface
             FROM ".PREFIX."news
             WHERE visible = 1
             ORDER BY timestamp DESC
-        " . $Sql->Sql_limit(0, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
+        " . $Sql->Sql_limit(0, 2 * $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
         
         // Generation of the feed's items
         while ($row = $Sql->Sql_fetch_assoc($result))

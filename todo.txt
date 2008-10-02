@@ -34,14 +34,12 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [+] Système de mise à jour du noyau et des modules:
-    - Templates
-    - Changelog des fichiers
 [-] Interface de contribution des news.
 [-] Renommer les méthodes et classes (y compris CategoriesManagement)
 	(Pas important pour la béta, sera fait pendant)
 
 ------------------------------------ MODULES -----------------------------------
-[-] Implémenter la syndication dans la FAQ
+[+] Implémenter la syndication dans la FAQ et les autorisations dans Faq, Forum, Download
 
 ################################################################################
 

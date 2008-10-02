@@ -193,7 +193,7 @@ class WikiInterface extends ModuleInterface
             LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id_contents
             WHERE a.redirect = 0 " . $where . "
             ORDER BY c.timestamp DESC
-            " . $Sql->Sql_limit(0, 10), __LINE__, __FILE__);
+            " . $Sql->Sql_limit(0, 2 * 10), __LINE__, __FILE__);
         
         // Generation of the feed's items
         while ($row = $Sql->Sql_fetch_assoc($result))
