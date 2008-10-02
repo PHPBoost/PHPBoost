@@ -25,7 +25,6 @@
  *
 ###################################################*/
 
-define('RSS_EXTENSION', '.rss');
 define('DEFAULT_RSS_TEMPLATE', 'framework/content/syndication/rss.tpl');
 
 require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
@@ -36,7 +35,7 @@ class RSS extends Feed
     ## Public Methods ##
     function RSS($feedName)
     {
-        parent::Feed($feedName . RSS_EXTENSION);
+        parent::Feed($feedName);
         $this->tpl = new Template(DEFAULT_RSS_TEMPLATE);
     }
 

@@ -27,7 +27,6 @@
 
 
 
-define('ATOM_EXTENSION', '.atom');
 define('DEFAULT_ATOM_TEMPLATE', 'framework/content/syndication/atom.tpl');
 
 require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
@@ -38,7 +37,7 @@ class ATOM extends Feed
     ## Public Methods ##
     function ATOM($feedName)
     {
-        parent::Feed($feedName . ATOM_EXTENSION);
+        parent::Feed($feedName);
         $this->tpl = new Template(DEFAULT_ATOM_TEMPLATE);
     }
 
