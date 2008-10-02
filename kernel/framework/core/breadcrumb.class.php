@@ -3,7 +3,7 @@
  *                                bread_crumb.class.php
  *                            -------------------
  *   begin                : February 16, 2007
- *   copyright          : (C) 2007 Sautel Benoit
+ *   copyright            : (C) 2007 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *   Bread_crumb 2.0
@@ -26,7 +26,7 @@
  *
 ###################################################*/
 
-class Bread_crumb
+class BreadCrumb
 {
 	##  Méthodes publiques  ##
 	//Ajout d'un lien

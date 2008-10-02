@@ -30,10 +30,14 @@
 define('DB_CONFIG_SUCCESS', 0);
 //Hôte introuvable ou login/mot de passe incorrect(s)
 define('DB_CONFIG_ERROR_CONNECTION_TO_DBMS', 1);
+//Base non trouvée mais créée
+define('DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED', 2);
 //Base non trouvée et impossible à créer
-define('DB_CONFIG_ERROR_DATABASE_NOT_FOUND', 2);
+define('DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED', 3);
 //Une installation avec ce préfixe existe déjà
-define('DB_CONFIG_ERROR_TABLES_ALREADY_EXIST', 3);
+define('DB_CONFIG_ERROR_TABLES_ALREADY_EXIST', 4);
+//Erreur inconnue
+define('DB_UNKNOW_ERROR', -1);
 
 //Function which returns a result code
 function check_database_config($host, $login, $password, $database_name, $tables_prefix)
@@ -43,7 +47,9 @@ function check_database_config($host, $login, $password, $database_name, $tables
 	
 	//Lancement de la classe d'erreur (nécessaire pour lancer la gestion de base de données)
 	$Errorh = new Errors;
-	$Sql = new Sql(false);
+	$Sql = new Sql;
+	
+	$status = CONNECTION_FAILED;
 	
 	//Tentative de connexion à la base de données
 	switch($Sql->Sql_connect($host, $login, $password, $database_name, ERRORS_MANAGEMENT_BY_RETURN))
@@ -54,7 +60,20 @@ function check_database_config($host, $login, $password, $database_name, $tables
 		//La base de données n'existe pas
 		case UNEXISTING_DATABASE:
 			//Tentative de création de la base de données
-			$Sql->create_database();
+			$Sql->create_database($database_name);
+			
+			//On regarde si elle a pu être traitée
+			$table_list = $Sql->list_databases();
+			$Sql->Sql_close();
+			
+			if( in_array($database_name, $table_list))
+				return DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED;
+			else
+				return DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED;
+		//Connexion réussie
+		case CONNECTED_TO_DATABASE:
+			$Sql->Sql_close();
+			return DB_CONFIG_SUCCESS;
 	}
 }
 

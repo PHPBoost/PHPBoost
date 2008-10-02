@@ -103,14 +103,12 @@ if( !empty($new_language) && is_file('lang/' . $new_language . '/install_' . $ne
 //Préambule
 if( $step == 1 )
 {
-	$template->Assign_block_vars('intro', array());
-	$template->Assign_vars(array(
+	$template->assign_vars(array(
+		'C_INTRO' => true,
 		'L_INTRO_TITLE' => $LANG['intro_title'],
 		'L_INTRO_EXPLAIN' => $LANG['intro_explain'],
-		'L_NEXT_STEP' => add_lang('install.php?step=2')
-	));
-	$template->Assign_vars(array(
-		'L_START_INSTALL' => $LANG['start_install'],
+		'L_NEXT_STEP' => add_lang('install.php?step=2'),
+		'L_START_INSTALL' => $LANG['start_install']
 	));
 }
 //Licence
@@ -118,12 +116,12 @@ elseif( $step == 2 )
 {
 	$submit = !empty($_POST['submit']) ? true : false;
 	$license_agreement = !empty($_POST['license_agreement']) ? true : false;
-	//On vï¿½rifie l'ï¿½tape et si elle est validï¿½e on passe ï¿½ la suivante
+	//On vérifie l'étape et si elle est validée on passe à la suivante
 	if( $submit && $license_agreement )
 		redirect(HOST . FILE . add_lang('?step=3', true));
 		
-	$template->Assign_block_vars('license', array());
-	$template->Assign_vars(array(
+	$template->assign_vars(array(
+		'C_LICENSE' => true,
 		'TARGET' => add_lang('install.php?step=2'),
 		'U_PREVIOUS_PAGE' => add_lang('install.php?step=1'),
 		'L_REQUIRE_LICENSE_AGREEMENT' => ($submit && !$license_agreement) ? '<div class="warning">' . $LANG['require_license_agreement'] . '</div>' : $LANG['require_license_agreement'],
@@ -148,14 +146,15 @@ elseif( $step == 3 )
 	else
 		$check_rewrite = -1;
 	
-	$template->Assign_block_vars('config_server', array(
+	$template->assign_vars(array(
+		'C_SERVER_CONFIG' => true,
 		'C_PHP_VERSION_OK' => phpversion() >= '4.1.0',
 		'C_GD_LIBRAIRY_ENABLED' => @extension_loaded('gd'),
 		'C_URL_REWRITING_KNOWN' => $check_rewrite != -1,
 		'C_URL_REWRITING_ENABLED' => $check_rewrite == 1
 	));
 	
-	//Mise à jour du cache.
+	//Mise à jour du cache de Apache à propos du système de fichiers
 	@clearstatcache();
 	
 	$chmod_dir = array('../cache', '../cache/backup', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/auth', '../lang', '../templates', '../upload');
@@ -174,7 +173,7 @@ elseif( $step == 3 )
 		else
 			$is_dir = $is_writable = ($fp = @mkdir($dir, 0777)) ? true : false;
 			
-		$template->Assign_block_vars('config_server.chmod', array(
+		$template->assign_block_vars('chmod', array(
 			'TITLE'	=> str_replace('..' , '', $dir),
 			'C_EXISTING_DIR' => $is_dir,
 			'C_WRITIBLE_DIR' => $is_writable			
@@ -216,7 +215,9 @@ elseif( $step == 3 )
 //Mise en place de la base de données
 elseif( $step == 4 )
 {
-	if( !empty($_POST['submit']) )
+	require_once('functions.php');
+	
+	if( retrieve(POST, 'submit', false) )
 	{
 		//Préfixe des tables
 		$tableprefix = !empty($_POST['tableprefix']) ? strprotect($_POST['tableprefix']) : 'phpboost_';
@@ -297,9 +298,9 @@ if( !defined(\'DBSECURE\') )
     $sql_host = "../kernel/framework/db/' . $host . '.sqlite"; //Adresse serveur mysql.
     $sql_login = "' . $login . '"; //Login
     $sql_pass = "' . $password . '"; //Mot de passe
-    $sql_base = "../kernel/framework/db/' . $database . '.sqlite"; //Nom de la base de donnï¿½es (url du fichier SQLite).
-    $table_prefix = "' . $tableprefix . '"; //Prï¿½fixe des tables
-    $dbtype = "' . $dbms .'"; //Systï¿½me de gestion de base de donnï¿½es
+    $sql_base = "../kernel/framework/db/' . $database . '.sqlite"; //Nom de la base de données
+    $table_prefix = "' . $tableprefix . '"; //Préfixe des tables
+    $dbtype = "' . $dbms .'"; //Système de gestion de base de données
     define(\'DBSECURE\', true);
     define(\'PHPBOOST_INSTALLED\', true);
 }
@@ -310,7 +311,7 @@ else
 ?>');
             }
 			@fclose($file);
-			//On crï¿½e la structure de la base de donnï¿½es et on y insï¿½re la configuration de base
+			//On crée la structure de la base de données et on y insère la configuration de base
             
 			$Sql->Sql_parse('db/' . $dbms . '.sql', $tableprefix);
 			$Sql->Close();
@@ -318,15 +319,13 @@ else
 		}
 	}
     
-	$template->Assign_block_vars('db', array(
+	$template->assign_vars(array(
+		'C_DATABASE_CONFIG' => true,
 		'DISPLAY_RESULT' => !empty($error) ? 'block' : 'none',
 		'ERROR' => !empty($error) ? $error : '',
 		'PROGRESS' => !empty($error) ? '100' : '0',
 		'PROGRESS_STATUS' => !empty($error) ? $LANG['query_success'] : '',
-		'PROGRESS_BAR' => !empty($error) ? str_repeat('<img src="templates/images/loading.png" alt="">', 56) : ''
-	));
-	
-	$template->Assign_vars(array(
+		'PROGRESS_BAR' => !empty($error) ? str_repeat('<img src="templates/images/loading.png" alt="">', 56) : '',
 		'HOST_VALUE' => !empty($error) ? $host  : 'localhost',
 		'LOGIN_VALUE' => !empty($error) ? $login  : '',
 		'PASSWORD_VALUE' => !empty($error) ? $password  : '',
@@ -334,6 +333,16 @@ else
 		'PREFIX_VALUE' => !empty($error) ? $tableprefix  : 'phpboost_',
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=3'),
 		'U_CURRENT_STEP' => add_lang('install.php?step=4'),
+		'DB_CONFIG_SUCCESS' => DB_CONFIG_SUCCESS,
+		'DB_CONFIG_ERROR_CONNECTION_TO_DBMS' => DB_CONFIG_ERROR_CONNECTION_TO_DBMS,
+		'DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED' => DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED,
+		'DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED' => DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED,
+		'DB_CONFIG_ERROR_TABLES_ALREADY_EXIST' => DB_CONFIG_ERROR_TABLES_ALREADY_EXIST,
+		'DB_UNKNOW_ERROR' => DB_UNKNOW_ERROR,
+		'L_DB_CONFIG_SUCESS' => addslashes($LANG['db_success']),
+		'L_DB_CONFIG_ERROR_CONNECTION_TO_DBMS' => addslashes($LANG['db_error_connexion']),
+		'L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED' => addslashes($LANG['db_error_selection_but_created']),
+		'L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED' => addslashes($LANG['db_error_selection_not_creable']),
 		'L_DB_EXPLAIN' => $LANG['db_explain'],
 		'L_DB_TITLE' => $LANG['db_title'],
 		'L_SGBD_PARAMETERS' => $LANG['dbms_paramters'],
@@ -1070,6 +1079,7 @@ if( is_dir($rep) ) //Si le dossier existe
 }
 
 $template->Assign_vars(array(
+	'PATH_TO_ROOT' => PATH_TO_ROOT,
 	'LANG' => $lang,
 	'NUM_STEP' => $step,
 	'PROGRESS_LEVEL' => $steps[$step - 1][2],

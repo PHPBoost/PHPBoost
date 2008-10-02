@@ -39,9 +39,8 @@ class Sql
 {
 	## Public Methods ##
 	//Constructeur de la classe Sql. Il prend en paramètre les paramètres de connexion à la base de données. Par défaut la classe Sql gère de façon autonome les erreurs de connexion, mais on peut demander à les gérer manuellement
-	function Sql($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = EXPLICIT_ERRORS_MANAGEMENT)
+	function Sql()
 	{
-		$this->Sql_connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management);
 	}
 	
 	//Connexion
@@ -62,7 +61,7 @@ class Sql
 				if( $errors_management )
 					$this->sql_error('', 'Selection de la base de donnée impossible!', __LINE__, __FILE__);
 				else
-					return UNEXISTING_DATA_BASE;
+					return UNEXISTING_DATABASE;
 			}
 		}
 		//La connexion a échoué
@@ -382,7 +381,7 @@ class Sql
 	//Création d'une base de données
 	function create_database($db_name)
 	{
-		return @$this->query_inject("CREATE DATABASE '" . url_encode_rewrite($db_name) . "'", __LINE__, __FILE__);
+		return @mysql_query("CREATE DATABASE '" . url_encode_rewrite($db_name) . "'");
 	}
 	
 	## Private Methods ##

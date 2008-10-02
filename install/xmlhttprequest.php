@@ -1,14 +1,19 @@
 <?php
 header('Content-type: text/html; charset=iso-8859-15');
 
+define('PATH_TO_ROOT', '..');
+
+require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
+require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
+
 define('ERROR_REPORTING', E_ALL | E_NOTICE);
 @error_reporting(ERROR_REPORTING);
 
 $lang = !empty($_GET['lang']) ? trim($_GET['lang']) : 'french';
 if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
 	include_once('lang/french/install.php');
-$chmod = !empty($_GET['chmod']) ? true : false;
-$db = !empty($_GET['db']) ? true : false;
+$chmod = retrieve(GET, 'chmod', false);
+$db = retrieve(GET, 'db', false);
 
 if( $chmod )
 {
@@ -44,28 +49,18 @@ if( $chmod )
 elseif( $db )
 {
 	//Assignation des variables et erreurs
-	$array_fields = array('dbms', 'host', 'login', 'password', 'database');
-	foreach( $array_fields as $field_name )
-	{
-		if( !empty($_POST[$field_name]) || $field_name == 'password' )
-			$$field_name = trim($_POST[$field_name]);
-		else
-			die('<div class="warning">' . sprintf($LANG['empty_field'], $LANG['field_' . $field_name]) . '</div>');
-	}
-	//Tentative de connexion
-	if( !@include_once('../kernel/framework/db/' . $dbms . '.class.php') )
-		die('<div class="error">' . $LANG['db_error_dbms'] . '</div>');
-	$Sql = new Sql(false);
-	//Connexion
-	$result = @$Sql->Sql_connect($host, $login, $password);
-	if( !$result )
-		die('<div class="error">' . $LANG['db_error_connexion'] . '</div>');
-	//Sélection de la base de données
-	if( !@$Sql->Sql_select_db($database, $result) )
-		die('<div class="warning">' . $LANG['db_error_selection'] . '</div>');
-	//Déconnexion
-	$Sql->Sql_close();
-	echo '<div class="success">' . $LANG['db_success'] . '</div>';
+	$host = retrieve(POST, 'host', 'localhost');
+	$login = retrieve(POST, 'login', '');
+	$password = retrieve(POST, 'password', '');
+	$database = retrieve(POST, 'database', '');
+	$tables_prefix = retrieve(POST, 'prefix', 'phpboost_');
+	
+	include_once('functions.php');
+	
+	if( !empty($host) && !empty($login) && !empty($database) )
+		echo check_database_config($host, $login, $password, $database, $tables_prefix);
+	else
+		echo DB_UNKNOW_ERROR;
 }
 
 ?>

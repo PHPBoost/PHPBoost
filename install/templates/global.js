@@ -2,7 +2,7 @@
  *                                global.js
  *                            -------------------
  *   begin                : March 15 2008
- *   copyright          : (C) 2008 Viarre Régis
+ *   copyright            : (C) 2008 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -84,9 +84,7 @@ function progress_bar(percent_progress, info_progress)
 			}
 			document.getElementById('progress_info' + progressbar_id).innerHTML = info_progress_tmp;
 		}
-		//Message de fin
-		if( this.percent_begin == progressbar_size && result_id != "" && result_msg != "" )
-			document.getElementById(result_id).innerHTML = result_msg;
+		
 		timeout_progress_bar = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")', progressbar_speed);
 	}
 	else

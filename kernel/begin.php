@@ -3,7 +3,7 @@
  *                               begin.php
  *                            -------------------
  *   begin                : Februar 08, 2006
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -52,11 +52,13 @@ require_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
 //Instanciation des objets indispensables au noyau.
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
 $Template = new Template; //!\\Initialisation des templates//!\\
-$Sql = new Sql($sql_host, $sql_login, $sql_pass, $sql_base); //!\\Initialisation  de la class sql//!\\
+//Création de l'objet qui gère les requêtes SQL
+$Sql = new Sql();
+$Sql->Sql_connect($sql_host, $sql_login, $sql_pass, $sql_base); //!\\Initialisation  de la class sql//!\\
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
 
 $Cache = new Cache; //!\\Initialisation  de la class de gestion du cache//!\\
-$Bread_crumb = new Bread_crumb; //!\\Initialisation  de la class de la speed bar//!\\
+$Bread_crumb = new BreadCrumb; //!\\Initialisation  de la class de la speed bar//!\\
 
 //Chargement ddes fichiers cache, indispensables au noyau.
 $CONFIG = array();
