@@ -5,6 +5,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta name="description" content="PHPBoost" />
 		<link type="text/css" href="templates/install.css" title="phpboost" rel="stylesheet" />
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="templates/global.js"></script>
 		<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
 	</head>
@@ -120,7 +122,7 @@
 				</tr>
 				
 				<tr> 					
-					# START intro #
+					# IF C_INTRO #
 					<td class="row_contents">						
 						<span style="float:left;padding:8px;padding-top:0px">
 							<img src="templates/images/phpboost.png" alt="Logo PHPBoost" />
@@ -134,10 +136,10 @@
 							<a href="{L_NEXT_STEP}" title="{L_START_INSTALL}" ><img src="templates/images/right.png" alt="{L_START_INSTALL}" /></a>
 						</fieldset>						
 					</td>
-					# END intro #
+					# ENDIF #
 					
 					
-					# START license #
+					# IF C_LICENSE #
 					<td class="row_contents">
 						<h1>{L_REQUIRE_LICENSE}</h1>
 						<script type="text/javascript">
@@ -183,10 +185,10 @@
 							</fieldset>		
 						</form>
 					</td>
-					# END license #
+					# ENDIF #
 					
 					
-					# START config_server #
+					# IF C_SERVER_CONFIG #
 					<td class="row_contents">
 						<script type="text/javascript">
 						<!--
@@ -195,7 +197,7 @@
 						{
 							load_progress_bar(20, '');
 							if( !display_result )
-								document.getElementById('result_box').style.display = 'block';
+								Effect.Appear('result_box');
 							
 							data = null;
 							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?lang={LANG}&chmod=1');
@@ -236,7 +238,7 @@
 								<dl>
 									<dt><label>{L_CHECK_PHP_VERSION}</label></dt>
 									<dd>
-									# IF config_server.C_PHP_VERSION_OK #
+									# IF C_PHP_VERSION_OK #
 										<img src="templates/images/success.png" alt="{L_YES}" />
 									# ELSE #
 										<img src="templates/images/stop.png" alt="{L_NO}" />
@@ -251,7 +253,7 @@
 								<dl>
 									<dt><label>{L_GD_LIBRARY}</label><br /><span>{L_GD_LIBRARY_EXPLAIN}</span></dt>
 									<dd>
-									# IF config_server.C_GD_LIBRAIRY_ENABLED #
+									# IF C_GD_LIBRAIRY_ENABLED #
 										<img src="templates/images/success.png" alt="{L_YES}" />
 									# ELSE #
 										<img src="templates/images/stop.png" alt="{L_NO}" />
@@ -261,8 +263,8 @@
 								<dl>
 									<dt><label>{L_URL_REWRITING}</label><br /><span>{L_URL_REWRITING_EXPLAIN}</span></dt>
 									<dd>
-									# IF config_server.C_URL_REWRITING_KNOWN #
-										# IF config_server.C_URL_REWRITING_ENABLED #
+									# IF C_URL_REWRITING_KNOWN #
+										# IF C_URL_REWRITING_ENABLED #
 										<img src="templates/images/success.png" alt="{L_YES}" />
 										# ELSE #
 										<img src="templates/images/stop.png" alt="{L_NO}" />
@@ -278,23 +280,23 @@
 								<legend>{L_AUTH_DIR}</legend>
 								<p>{L_CHECK_AUTH_DIR}</p>
 								<div id="chmod">
-									# START config_server.chmod #							
+									# START chmod #							
 									<dl>
-										<dt><label>{config_server.chmod.TITLE}</label></dt>
+										<dt><label>{chmod.TITLE}</label></dt>
 										<dd>
-											# IF config_server.chmod.C_EXISTING_DIR #
+											# IF chmod.C_EXISTING_DIR #
 												<div class="success_block">{L_EXISTING}</div>
 											# ELSE #
 												<div class="failure_block">{L_NOT_EXISTING}</div>
 											# ENDIF #
-											# IF config_server.chmod.C_WRITIBLE_DIR #
+											# IF chmod.C_WRITIBLE_DIR #
 												<div class="success_block">{L_WRITABLE}</div>
 											# ELSE #
 												<div class="failure_block">{L_NOT_WRITABLE}</div>
 											# ENDIF #
 										</dd>								
 									</dl>
-									# END config_server.chmod #
+									# END chmod #
 								</div>
 							</fieldset>	
 							
@@ -323,53 +325,91 @@
 							</fieldset>
 						</div>
 					</td>
-					# END config_server #
+					# ENDIF #
 
 					
-					# START db #
+					# IF C_DATABASE_CONFIG #
 					<td class="row_contents">
 						<script type="text/javascript">
 						<!--
+						
+						function display_result_text(return_code)
+						{
+							switch(return_code)
+							{
+								case '{DB_CONFIG_SUCCESS}':
+									document.getElementById("db_result").innerHTML = '<div class="success">' + '{L_DB_CONFIG_SUCESS}' + '</div>';
+									break;
+								case '{DB_CONFIG_ERROR_CONNECTION_TO_DBMS}':
+									document.getElementById("db_result").innerHTML = '<div class="error">' + '{L_DB_CONFIG_ERROR_CONNECTION_TO_DBMS}' + '</div>';
+									break;
+								case '{DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED}':
+									document.getElementById("db_result").innerHTML = '<div class="error">' + '{L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED}' + '</div>';
+									break;
+								case '{DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED}':
+									document.getElementById("db_result").innerHTML = '<div class="error">' + '{L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED}' + '</div>';
+									break;
+								case '{DB_CONFIG_ERROR_TABLES_ALREADY_EXIST}':
+									document.getElementById("db_result").innerHTML = '<div class="error">' + '{L_DB_CONFIG_ERROR_TABLES_ALREADY_EXIST}' + '</div>';
+									break;
+								default:
+									alert(return_code);
+							}
+						}
+						
 						display_result = false;
+						
 						function send_infos()
 						{
 							load_progress_bar(20, '');
-							data = "dbms=" + document.getElementById("dbms").value + "&host=" + document.getElementById("host").value + "&login=" + document.getElementById("login").value + "&password=" + document.getElementById("password").value + "&database=" + document.getElementById("database").value;
+							data = "host=" + document.getElementById("host").value + "&login=" + document.getElementById("login").value + "&password=" + document.getElementById("password").value + "&database=" + document.getElementById("database").value;
 
 							if( !display_result )
-								document.getElementById('result_box').style.display = 'block';
+								Effect.Appear('result_box');
 								
 							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?lang={LANG}&db=1');
 							xhr_object.onreadystatechange = function() 
 							{
-								if( xhr_object.readyState == 1 )
-									progress_bar(25, "{L_QUERY_LOADING}");
-								else if( xhr_object.readyState == 2 )
-									progress_bar(50, "{L_QUERY_SENT}");
-								else if( xhr_object.readyState == 3 )
-									progress_bar(75, "{L_QUERY_PROCESSING}");
-								else if( xhr_object.readyState == 4 )
+								switch(xhr_object.readyState)
 								{
-									if( xhr_object.status == 200 )
-										progress_bar(100, "{L_QUERY_SUCCESS}", "db_result", xhr_object.responseText);
-									else
-										progress_bar(99, "{L_QUERY_FAILURE}");
-								}									
+									case 1:
+										progress_bar(25, "{L_QUERY_LOADING}");
+										break;
+									case 2:
+										progress_bar(50, "{L_QUERY_SENT}");
+										break;
+									case 3:
+										progress_bar(75, "{L_QUERY_PROCESSING}");
+										break;
+									case 4:
+										if( xhr_object.status == 200 )
+										{
+											progress_bar(100, "{L_QUERY_SUCCESS}");
+											display_result_text(xhr_object.responseText);
+										}
+										else
+											progress_bar(99, "{L_QUERY_FAILURE}");
+										break;
+								}
 							}
 							xmlhttprequest_sender(xhr_object, data);
 						}
+						
 						function check_form_db()
 						{
-							if(document.getElementById('host').value == "") {
+							if(document.getElementById('host').value == "")
+							{
 								alert("{L_REQUIRE_HOSTNAME}");
 								return false;
 							}
 
-							if(document.getElementById('login').value == "") {
+							if(document.getElementById('login').value == "")
+							{
 								alert("{L_REQUIRE_LOGIN}");
 								return false;
 							}
-							if(document.getElementById('database').value == "") {
+							if(document.getElementById('database').value == "")
+							{
 								alert("{L_REQUIRE_DATABASE_NAME}");
 								return false;
 							}
@@ -414,21 +454,21 @@
 								</dl>
 							</fieldset>
 							
-							<fieldset style="display:{db.DISPLAY_RESULT};" id="result_box">
+							<fieldset style="display:{DISPLAY_RESULT};" id="result_box">
 								<legend>
 									{L_RESULT}
 								</legend>
 								<div style="margin:auto;width:500px;">
 									<div id="db_result">
-										{db.ERROR}
+										{ERROR}
 									</div>
 									<div id="progress_info" style="text-align:center;">
-										{db.PROGRESS_STATUS}
+										{PROGRESS_STATUS}
 									</div>
 									<div style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;" id="progress_bar">
-										{db.PROGRESS_BAR}
+										{PROGRESS_BAR}
 									</div>
-									&nbsp;<span id="progress_percent">{db.PROGRESS}</span>%
+									&nbsp;<span id="progress_percent">{PROGRESS}</span>%
 								</div>
 							</fieldset>
 							
@@ -444,7 +484,7 @@
 							</fieldset>
 						</form>
 					</td>
-					# END db #
+					# ENDIF #
 					
 					
 					# START site_config #
