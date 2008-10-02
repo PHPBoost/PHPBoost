@@ -52,52 +52,62 @@ class Feed
             $tpl = $this->tpl->copy();
         else
             $tpl = $template->copy();
-       
-        if( !empty($this->data) )
+        
+        global $Member, $MODULES;
+        if( $Member->check_auth($MODULES[$this->module_id]['auth'], ACCESS_MODULE) )
         {
-            $tpl->Assign_vars(array(
-                'DATE' => $this->data->get_date(),
-                'DATE_RFC822' => $this->data->get_date_rfc822(),
-                'DATE_RFC3339' => $this->data->get_date_rfc3339(),
-                'TITLE' => $this->data->get_title(),
-                'U_LINK' => $this->data->get_link(),
-                'HOST' => $this->data->get_host(),
-                'DESC' => $this->data->get_desc(),
-                'LANG' => $this->data->get_lang()
-            ));
-
-            $items = $this->data->subitems($number, $begin_at);
-            foreach( $items as $item )
+            if( !empty($this->data) )
             {
-                $tpl->Assign_block_vars('item', array(
-                    'TITLE' => $item->get_title(),
-                    'U_LINK' => $item->get_link(),
-                    'U_GUID' => $item->get_guid(),
-                    'DESC' => $item->get_desc(),
-                    'DATE' => $item->get_date(),
-                    'DATE_RFC822' => $item->get_date_rfc822(),
-                    'DATE_RFC3339' => $item->get_date_rfc3339(),
-                    'C_IMG' => ($item->get_image_url() != '') ? true : false,
-                    'U_IMG' => $item->get_image_url()
+                $tpl->Assign_vars(array(
+                    'DATE' => $this->data->get_date(),
+                    'DATE_RFC822' => $this->data->get_date_rfc822(),
+                    'DATE_RFC3339' => $this->data->get_date_rfc3339(),
+                    'TITLE' => $this->data->get_title(),
+                    'U_LINK' => $this->data->get_link(),
+                    'HOST' => $this->data->get_host(),
+                    'DESC' => $this->data->get_desc(),
+                    'LANG' => $this->data->get_lang()
                 ));
+
+                $items = $this->data->subitems($number, $begin_at);
+                foreach( $items as $item )
+                {
+                    $tpl->Assign_block_vars('item', array(
+                        'TITLE' => $item->get_title(),
+                        'U_LINK' => $item->get_link(),
+                        'U_GUID' => $item->get_guid(),
+                        'DESC' => $item->get_desc(),
+                        'DATE' => $item->get_date(),
+                        'DATE_RFC822' => $item->get_date_rfc822(),
+                        'DATE_RFC3339' => $item->get_date_rfc3339(),
+                        'C_IMG' => ($item->get_image_url() != '') ? true : false,
+                        'U_IMG' => $item->get_image_url()
+                    ));
+                }
             }
         }
         return $tpl->parse(TEMPLATE_STRING_MODE);
     }
 
-    function read() { return file_get_contents_emulate($this->get_cache_file_name()); }
+    function read()
+    {
+        if( $this->is_in_cache() )
+        {
+            if( @include($this->get_cache_file_name()) )
+            {
+                $this->data = $feed_object;
+                return $this->export();
+            }
+        }
+        return '';
+    }
 
     function cache()
     {
         FEED::update_cache($this->module_id, $this->name, $this->data, $this->id_cat);
-//         if( empty($this->str) )
-//             $this->str = $this->export();
-//         $file = fopen($this->get_cache_file_name(), 'w+');
-//         fputs($file, $this->str);
-//         fclose($file);
     }
 
-    function is_in_cache() { return file_exists(FEEDS_PATH . $this->name); }
+    function is_in_cache() { return file_exists($this->get_cache_file_name()); }
    
     function get_cache_file_name() { return FEEDS_PATH . $this->module_id . '_' . $this->name . '_' . $this->id_cat . '.php'; }
    

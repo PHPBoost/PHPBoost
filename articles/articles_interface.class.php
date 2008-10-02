@@ -101,7 +101,7 @@ class ArticlesInterface extends ModuleInterface
 		global $Sql, $Cache, $CONFIG_ARTICLES, $CAT_ARTICLES, $Member, $LANG;
 		$Cache->load_file('articles');
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
-
+        
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         
 		//Catégories non autorisées.
@@ -139,75 +139,59 @@ class ArticlesInterface extends ModuleInterface
 
 	function syndication_data($idcat = 0)
 	{
-		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_ARTICLES, $CAT_ARTICLES, $Member;
+		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_ARTICLES, $CAT_ARTICLES;
 		$Cache->load_file('articles');
 
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
 		require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
 		$data = new FeedData();
 
-		if( $Member->Check_auth($CONFIG_ARTICLES['auth_root'], READ_CAT_ARTICLES) )
-		{
-			require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
-			$date = new Date();
-
-			$data->set_title($LANG['xml_articles_desc']);
-			$data->set_date($date);
-			$data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'articles/syndication.php?idcat=' . $idcat);
-			$data->set_host(HOST);
-			$data->set_desc($LANG['xml_articles_desc']);
-			$data->set_lang($LANG['xml_lang']);
-
-			//Catégories non autorisées.
-			$unauth_cats_sql = array();
-			foreach($CAT_ARTICLES as $idcat => $key)
-			{
-				if( $CAT_ARTICLES[$idcat]['aprob'] == 1 )
-				{
-					if( !$Member->Check_auth($CAT_ARTICLES[$idcat]['auth'], READ_CAT_ARTICLES) )
-					{
-						$clause_level = !empty($g_idcat) ? ($CAT_ARTICLES[$idcat]['level'] == ($CAT_ARTICLES[$g_idcat]['level'] + 1)) : ($CAT_ARTICLES[$idcat]['level'] == 0);
-						if( $clause_level )
-						$unauth_cats_sql[] = $idcat;
-					}
-				}
-			}
-			$clause_unauth_cats = (count($unauth_cats_sql) > 0) ? " AND gc.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
-
-			$result = $Sql->Query_while("SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon
-            FROM ".PREFIX."articles a
-            LEFT JOIN ".PREFIX."articles_cats ac ON ac.id = a.idcat
-            WHERE a.visible = 1 AND ((ac.aprob = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
-            ORDER BY a.timestamp DESC
-            " . $Sql->Sql_limit(0, $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
-
-			// Generation of the feed's items
-			while ($row = $Sql->Sql_fetch_assoc($result))
-			{
-				$item = new FeedItem();
-				// Rewriting
-				if ( $CONFIG['rewrite'] == 1 )
-				$rewrited_title = '-' . $row['idcat'] . '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php';
-				else
-				$rewrited_title = '.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'];
-				$link = HOST . DIR . '/articles/articles' . $rewrited_title;
-
-				// XML text's protection
-				$contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
-
-				$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
-
-				$item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
-				$item->set_link($link);
-				$item->set_guid($link);
-				$item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
-				$item->set_date($date);
-				$item->set_image_url($row['icon']);
-
-				$data->add_item($item);
-			}
-			$Sql->Close($result);
-		}
+		require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+        $date = new Date();
+        
+        $data->set_title($LANG['xml_articles_desc']);
+        $data->set_date($date);
+        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'articles/syndication.php?idcat=' . $idcat);
+        $data->set_host(HOST);
+        $data->set_desc($LANG['xml_articles_desc']);
+        $data->set_lang($LANG['xml_lang']);
+        $data->set_auth_bit(READ_CAT_ARTICLES);
+        
+        $result = $Sql->Query_while("SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon, ac.auth
+        FROM ".PREFIX."articles a
+        LEFT JOIN ".PREFIX."articles_cats ac ON ac.id = a.idcat
+        WHERE a.visible = 1 AND (ac.aprob = 1 OR a.idcat = 0)
+        ORDER BY a.timestamp DESC
+        " . $Sql->Sql_limit(0, 2 * $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
+        
+        // Generation of the feed's items
+        while ($row = $Sql->Sql_fetch_assoc($result))
+        {
+            $item = new FeedItem();
+            // Rewriting
+            if ( $CONFIG['rewrite'] == 1 )
+            $rewrited_title = '-' . $row['idcat'] . '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php';
+            else
+            $rewrited_title = '.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'];
+            $link = HOST . DIR . '/articles/articles' . $rewrited_title;
+            
+            // XML text's protection
+            $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
+            
+            $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
+            
+            $item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
+            $item->set_link($link);
+            $item->set_guid($link);
+            $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
+            $item->set_date($date);
+            $item->set_image_url($row['icon']);
+            $item->set_auth($row['idcat'] == 0 ? $CONFIG_ARTICLES['auth_root'] : unserialize($row['auth']));
+            
+            $data->add_item($item);
+        }
+        $Sql->Close($result);
+		
 		return $data;
 	}
 }

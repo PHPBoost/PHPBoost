@@ -72,7 +72,7 @@ class FeedData
         $items = array();
         foreach( $this->items as $item )
         {
-            if( ($item->get_auth() === null || $this->auth_bit == 0) || $Member->check_auth($item->get_auth(), $this->auth_bit) )
+            if( (gettype($item->get_auth()) != 'array' || $this->auth_bit == 0) || $Member->check_auth($item->get_auth(), $this->auth_bit) )
                 $items[] =& $item;
         }
         

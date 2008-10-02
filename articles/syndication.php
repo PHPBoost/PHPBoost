@@ -53,9 +53,9 @@ else
 {   // Otherwise, we regenerate it before printing it
     // Feeds Regeneration
     require_once('articles_interface.class.php');
-    $Articles = new ArticlesInterface();
+    $articles = new ArticlesInterface();
     
-    $Feed->load_data($Articles->syndication_data());
+    $Feed->load_data($articles->syndication_data());
     $Feed->cache();
     
     echo $Feed->export();                    // Print the feed
