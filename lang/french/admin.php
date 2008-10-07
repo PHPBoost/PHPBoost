@@ -750,4 +750,5 @@ $LANG['more_details'] = 'Plus de détails';
 $LANG['download_the_complete_pack'] = 'Téléchargez le pack complet';
 $LANG['download_the_update_pack'] = 'Téléchargez le pack de mise à jour';
 $LANG['no_availables_updates'] = 'Aucune mise à jour n\'est disponible pour l\'instant.';
+$LANG['incompatible_php_version'] = 'Version de PHP incompatible, Veuillez utiliser la version %s ou ultérieure';
 ?>

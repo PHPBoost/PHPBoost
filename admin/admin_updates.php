@@ -29,85 +29,98 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
+require_once('../kernel/framework/core/updates.class.php');
+
 $update_type = retrieve(GET, 'type', '');
 if( $update_type != '' && $update_type != 'kernel' && $update_type != 'module' && $update_type != 'theme' )
     $update_type = '';
 
 $tpl = new Template('admin/admin_updates.tpl');
+$updates_availables = 0;
 
-// Retrieves all the update alerts from the database
-require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
-$update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
-$updates = array();
-foreach( $update_alerts as $update_alert )
+if( phpversion() > PHP_MIN_VERSION_UPDATES )
 {
-    // Builds the asked updates (kernel updates, module updates, theme updates or all of them)
-    $update = unserialize($update_alert->get_properties());
-    if( $update_type == '' || $update->get_type() == $update_type )
-        $updates[] = $update;
-}
-
-foreach( $updates as $update )
-{
-    switch( $update->get_priority() )
+    // Retrieves all the update alerts from the database
+    require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
+    require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
+    $update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
+    $updates = array();
+    foreach( $update_alerts as $update_alert )
     {
-        case ADMIN_ALERT_VERY_HIGH_PRIORITY:
-            $priority = 'priority_very_high';
-            break;
-        case ADMIN_ALERT_HIGH_PRIORITY:
-            $priority = 'priority_high';
-            break;
-        case ADMIN_ALERT_MEDIUM_PRIORITY:
-            $priority = 'priority_medium';
-            break;
-        default:
-            $priority = 'priority_low';
-            break;
+        // Builds the asked updates (kernel updates, module updates, theme updates or all of them)
+        $update = unserialize($update_alert->get_properties());
+        if( $update_type == '' || $update->get_type() == $update_type )
+            $updates[] = $update;
     }
-    
-    $short_description = $update->get_description();
-    $maxlength = 300;
-    $length = strlen($short_description) > $maxlength ?  $maxlength + strpos(substr($short_description, $maxlength), ' ') : 0;
-    $length = $length > ($maxlength * 1.1) ? $maxlength : $length;
-    
-    $tpl->assign_block_vars('apps', array(
-        'type' => $update->get_type(),
-        'name' => $update->get_name(),
-        'version' => $update->get_version(),
-        'short_description' => ($length > 0 ? substr($short_description, 0, $length) . '...' : $short_description),
-        'identifier' => $update->get_identifier(),
-        'L_PRIORITY' => $LANG[$priority],
-        'priority_css_class' => 'row_' . $priority,
-        'download_url' => $update->get_download_url(),
-        'update_url' => $update->get_update_url()
-    ));
-}  
 
-if( $updates_availables = (count($updates) > 0) )
-{
-    $tpl->assign_vars(array(
-        'L_UPDATES_ARE_AVAILABLE' => $LANG['updates_are_available'],
-        'L_AVAILABLES_UPDATES' => $LANG['availables_updates'],
-        'L_TYPE' => $LANG['type'],
-        'L_DESCRIPTION' => $LANG['description'],
-        'L_PRIORITY' => $LANG['priority'],
-        'L_UPDATE_DOWNLOAD' => $LANG['app_update__download'],
-        'L_NAME' => $LANG['name'],
-        'L_VERSION' => $LANG['version'],
-        'L_MORE_DETAILS' => $LANG['more_details'],
-        'L_DETAILS' => $LANG['details'],
-        'L_DOWNLOAD_PACK' => $LANG['app_update__download_pack'],
-        'L_DOWNLOAD_THE_COMPLETE_PACK' => $LANG['download_the_complete_pack'],
-        'L_UPDATE_PACK' => $LANG['app_update__update_pack'],
-        'L_DOWNLOAD_THE_UPDATE_PACK' => $LANG['download_the_update_pack'],
-        'C_ALL' => $update_type == ''
-    ));
-    
+    foreach( $updates as $update )
+    {
+        switch( $update->get_priority() )
+        {
+            case ADMIN_ALERT_VERY_HIGH_PRIORITY:
+                $priority = 'priority_very_high';
+                break;
+            case ADMIN_ALERT_HIGH_PRIORITY:
+                $priority = 'priority_high';
+                break;
+            case ADMIN_ALERT_MEDIUM_PRIORITY:
+                $priority = 'priority_medium';
+                break;
+            default:
+                $priority = 'priority_low';
+                break;
+        }
+        
+        $short_description = $update->get_description();
+        $maxlength = 300;
+        $length = strlen($short_description) > $maxlength ?  $maxlength + strpos(substr($short_description, $maxlength), ' ') : 0;
+        $length = $length > ($maxlength * 1.1) ? $maxlength : $length;
+        
+        $tpl->assign_block_vars('apps', array(
+            'type' => $update->get_type(),
+            'name' => $update->get_name(),
+            'version' => $update->get_version(),
+            'short_description' => ($length > 0 ? substr($short_description, 0, $length) . '...' : $short_description),
+            'identifier' => $update->get_identifier(),
+            'L_PRIORITY' => $LANG[$priority],
+            'priority_css_class' => 'row_' . $priority,
+            'download_url' => $update->get_download_url(),
+            'update_url' => $update->get_update_url()
+        ));
+    }  
+
+    if( $updates_availables = (count($updates) > 0) )
+    {
+        $tpl->assign_vars(array(
+            'L_UPDATES_ARE_AVAILABLE' => $LANG['updates_are_available'],
+            'L_AVAILABLES_UPDATES' => $LANG['availables_updates'],
+            'L_TYPE' => $LANG['type'],
+            'L_DESCRIPTION' => $LANG['description'],
+            'L_PRIORITY' => $LANG['priority'],
+            'L_UPDATE_DOWNLOAD' => $LANG['app_update__download'],
+            'L_NAME' => $LANG['name'],
+            'L_VERSION' => $LANG['version'],
+            'L_MORE_DETAILS' => $LANG['more_details'],
+            'L_DETAILS' => $LANG['details'],
+            'L_DOWNLOAD_PACK' => $LANG['app_update__download_pack'],
+            'L_DOWNLOAD_THE_COMPLETE_PACK' => $LANG['download_the_complete_pack'],
+            'L_UPDATE_PACK' => $LANG['app_update__update_pack'],
+            'L_DOWNLOAD_THE_UPDATE_PACK' => $LANG['download_the_update_pack'],
+            'C_ALL' => $update_type == ''
+        ));
+        
+    }
+    else
+    {
+        $tpl->assign_vars(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_availables_updates']));
+    }
 }
 else
 {
-    $tpl->assign_vars(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_availables_updates']));
+    $tpl->assign_vars(array(
+        'L_INCOMPATIBLE_PHP_VERSION' => sprintf($LANG['incompatible_php_version'], PHP_MIN_VERSION_UPDATES),
+        'C_INCOMPATIBLE_PHP_VERSION' => true,
+    ));
 }
 
 $tpl->assign_vars(array(
