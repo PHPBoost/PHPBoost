@@ -101,6 +101,7 @@ $Template->Assign_vars(array(
 
 //Listing des modules disponibles:
 $modules_config = array();
+
 foreach($MODULES as $name => $array)
 {	
 	$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', $CONFIG['lang']);

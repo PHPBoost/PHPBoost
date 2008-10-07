@@ -27,64 +27,88 @@
 
 //define('PHPBOOST_OFFICIAL_REPOSITORY', '../../../tools/repository/main.xml'); // Test repository
 define('PHPBOOST_OFFICIAL_REPOSITORY', 'http://www.phpboost.com/repository/main.xml');    // Official repository
+define('PHP_MIN_VERSION_UPDATES', '5.2.6');
+
+define('CHECK_KERNEL', 0X01);
+define('CHECK_MODULES', 0X02);
+define('CHECK_THEMES', 0X04);
 
 require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/core/repository.class.php');
 
+
 class Updates
-{
-    function Updates()
+{    
+    function Updates($checks = CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES)
     {
-        $this->_load_apps();
+        $this->_load_apps($checks);
         $this->_load_repositories();
         $this->_check_repositories();
     }
     
-    function _load_apps()
+    function _load_apps($checks = CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES)
     {
-        global $CONFIG;
-        // Add the kernel to the check list
-        $this->apps[] = new Application('kernel', $CONFIG['lang'], APPLICATION_TYPE__KERNEL, $CONFIG['version'], PHPBOOST_OFFICIAL_REPOSITORY);
-        
-        global $MODULES;
-        // Add Modules
-        $kModules = array_keys($MODULES);
-        foreach( $kModules as $module )
+        if( phpversion() > PHP_MIN_VERSION_UPDATES )
         {
-            $infos = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', $CONFIG['lang']);
-            if( !empty($infos['repository']) )
-                $this->apps[] = new Application($module, $CONFIG['lang'], APPLICATION_TYPE__MODULE, $infos['version'], $infos['repository']);
-        }
-        
-        global $THEME_CONFIG;
-        // Add Themes
-        $kThemes = array_keys($THEME_CONFIG);
-        foreach( $kThemes as $theme )
-        {
-            $infos = load_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/', $CONFIG['lang']);
-            if( !empty($infos['repository']) )
-                $this->apps[] = new Application($theme, $CONFIG['lang'], APPLICATION_TYPE__TEMPLATE, $infos['css_version'], $infos['repository']);
+            global $CONFIG;
+            
+            if( $checks & CHECK_KERNEL )
+            {   // Add the kernel to the check list
+                $this->apps[] = new Application('kernel', $CONFIG['lang'], APPLICATION_TYPE__KERNEL, $CONFIG['version'], PHPBOOST_OFFICIAL_REPOSITORY);
+            }
+            
+            if( $checks & CHECK_KERNEL )
+            {
+                global $MODULES;
+                // Add Modules
+                $kModules = array_keys($MODULES);
+                foreach( $kModules as $module )
+                {
+                    $infos = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', $CONFIG['lang']);
+                    if( !empty($infos['repository']) )
+                        $this->apps[] = new Application($module, $CONFIG['lang'], APPLICATION_TYPE__MODULE, $infos['version'], $infos['repository']);
+                }
+            }
+            
+            if( $checks & CHECK_THEMES )
+            {   
+                global $THEME_CONFIG;
+                // Add Themes
+                $kThemes = array_keys($THEME_CONFIG);
+                foreach( $kThemes as $theme )
+                {
+                    $infos = load_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/', $CONFIG['lang']);
+                    if( !empty($infos['repository']) )
+                        $this->apps[] = new Application($theme, $CONFIG['lang'], APPLICATION_TYPE__TEMPLATE, $infos['css_version'], $infos['repository']);
+                }
+            }
         }
     }
     
     function _load_repositories()
     {
-        foreach( $this->apps as $app )
+        if( phpversion() > PHP_MIN_VERSION_UPDATES )
         {
-            $rep = $app->get_repository();
-            if( !empty($rep) && !isset($this->repositories[$rep]) )
-                $this->repositories[$rep] = new Repository($rep);
+            foreach( $this->apps as $app )
+            {
+                $rep = $app->get_repository();
+                if( !empty($rep) && !isset($this->repositories[$rep]) )
+                    $this->repositories[$rep] = new Repository($rep);
+            }
         }
     }
     
     function _check_repositories()
     {
-        foreach( $this->apps as $app )
+        if( phpversion() > PHP_MIN_VERSION_UPDATES )
         {
-            $result = $this->repositories[$app->get_repository()]->check($app);
-            if( $result !== null )
-            {   // processing to the update notification
-                $this->_add_update_alert($result);
+            foreach( $this->apps as $app )
+            {
+                $result = $this->repositories[$app->get_repository()]->check($app);
+                if( $result !== null )
+                {   // processing to the update notification
+                    $this->_add_update_alert($result);
+                }
             }
         }
     }
