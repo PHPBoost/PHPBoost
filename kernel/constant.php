@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                                constant.php
+ *                               constant.php
  *                            -------------------
  *   begin                : June 13, 2005
  *   copyright            : (C) 2005 Viarre Régis
@@ -26,15 +26,6 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/auth/config.php'); //Fichier de configuration.
-
-//PHPBoost installé? Si non redirection manuelle, car chemin non connu.
-if( !defined('PHPBOOST_INSTALLED') )
-{
-    require_once(PATH_TO_ROOT . '/kernel/framework/unusual_functions.php');
-    redirect(get_server_url_page('install/install.php'));
-}
-
 set_magic_quotes_runtime(0); //Désactivation du magic_quotes_runtime (échappe les guillemets des sources externes).
 //Si register_globals activé, suppression des variables qui trainent.
 if( @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on' )
@@ -49,12 +40,10 @@ define('MEMBER_LEVEL', 0); //Niveau Membre.
 define('MODO_LEVEL', 1); //Niveau Modo.
 define('MODERATOR_LEVEL', 1); //Niveau Modo.
 define('ADMIN_LEVEL', 2); //Niveau Admin.
-define('DBTYPE', $dbtype); ///Type de base de données utilisée.
 define('SCRIPT', $_SERVER['PHP_SELF']); //Adresse relative à la racine du script.
 define('QUERY_STRING', addslashes($_SERVER['QUERY_STRING'])); //Récupère la chaine de variables $_GET.
 define('MAGIC_QUOTES', get_magic_quotes_gpc()); //Récupère la valeur du magic quotes.
 define('PHPBOOST', true); //Permet de s'assurer des inclusions.
-define('PREFIX', $table_prefix); //Prefix des tables SQL.
 define('ERROR_REPORTING', E_ALL | E_NOTICE);
 define('E_USER_REDIRECT', -1); //Erreur avec redirection
 define('E_USER_SUCCESS', -2); //Succès.
@@ -86,7 +75,7 @@ define('TARRAY', 'array');
 define('TUNSIGNED_INT', 'uint'); 
 define('TUNSIGNED_DOUBLE', 'udouble'); 
 define('TUNSIGNED_FLOAT', 'udouble'); 
-       
+
 //Récupération de l'ip, essaye de récupérer la véritable ip avec un proxy.
 if( $_SERVER )  
 {

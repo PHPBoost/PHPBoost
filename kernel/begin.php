@@ -36,11 +36,12 @@ header('Pragma: no-cache');
 require_once(PATH_TO_ROOT . '/kernel/framework/util/bench.class.php');
 $Bench = new Bench; //Début du benchmark
 $Bench->Start_bench('site');
+
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
 require_once(PATH_TO_ROOT . '/kernel/framework/core/errors.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/db/' . DBTYPE . '.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/db/mysql.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/core/cache.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/members/sessions.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/members/member.class.php');
@@ -52,10 +53,11 @@ require_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
 //Instanciation des objets indispensables au noyau.
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
 $Template = new Template; //!\\Initialisation des templates//!\\
+
 //Création de l'objet qui gère les requêtes SQL
 $Sql = new Sql();
-$Sql->Sql_connect($sql_host, $sql_login, $sql_pass, $sql_base); //!\\Initialisation  de la class sql//!\\
-unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd.
+//Autoconnexion (lecture du fichier de connexion et ouverture de connexion avec le serveur)
+$Sql->auto_connect();
 
 $Cache = new Cache; //!\\Initialisation  de la class de gestion du cache//!\\
 $Bread_crumb = new BreadCrumb; //!\\Initialisation  de la class de la speed bar//!\\
