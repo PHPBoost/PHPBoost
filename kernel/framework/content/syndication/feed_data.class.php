@@ -32,7 +32,7 @@ class FeedData
 {
     ## Public Methods ##
     function FeedData($data = null)
-	{
+    {
 		if( $data != null && strtolower(get_class($data)) == 'feeddata' )
 		{
 			$this->title = $data->title;
@@ -73,17 +73,17 @@ class FeedData
         foreach( $this->items as $item )
         {
             if( (gettype($item->get_auth()) != 'array' || $this->auth_bit == 0) || $Member->check_auth($item->get_auth(), $this->auth_bit) )
-                $items[] =& $item;
+                $items[] = $item;
         }
         
         return $items;
     }
-	
-	function serialize()
-	{
-		return serialize($this);
-	}
-	
+    
+    function serialize()
+    {
+        return serialize($this);
+    }
+    
     // Returns a items list containing $number items starting from the $begin_at one
     function subitems($number = 10, $begin_at = 0)
     {

@@ -1,4 +1,5 @@
-		<div id="bottom_contents">
+		</div>
+        <div id="bottom_contents">
 			{MODULES_MINI_BOTTOMCENTRAL_CONTENT}
 		</div>
 	</div>

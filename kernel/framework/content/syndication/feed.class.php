@@ -143,6 +143,7 @@ class Feed
         require_once(PATH_TO_ROOT . '/kernel/framework/io/file.class.php');
         $file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php', WRITE);
         $file->write('<?php $feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
+        $file->close();
     }
 
     /*static*/ function get_parsed($module_id, $name = DEFAULT_FEED_NAME, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
@@ -167,7 +168,7 @@ class Feed
             $module = $modules->get_module($module_id);
             $data = $module->syndication_data($idcat);
             Feed::update_cache($module_id, $name, $data, $idcat);
-           
+            
             if( $iteration++ > 1 )
                 user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
         }

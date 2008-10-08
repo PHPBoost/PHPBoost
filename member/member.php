@@ -691,10 +691,9 @@ if( !empty($id_get) ) //Espace membre
 		{
 			$group = $Sql->Query_array('group', 'id', 'name', 'img', "WHERE id = '" . numeric($group_id) . "'", __LINE__, __FILE__);
 			if( !empty($group['id']) )
-				$user_group_list .= ($i != 0 ? '<br /><br />' : '') . '<a href="member' . transid('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . (!empty($group['img']) ? '<img src="../images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />'  : '') . '</a> <a href="member' . transid('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . $group['name'] . '</a>';
-			$i++;
+				$user_group_list .= '<li><a href="member' . transid('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . (!empty($group['img']) ? '<img src="../images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />'  : $group['name']) . '</a></li>';
 		}
-		$user_group_list = !empty($user_group_list) ? $user_group_list : $LANG['member'];
+		$user_group_list = !empty($user_group_list) ? '<ul style="list-style-type:none;">' . $user_group_list . '</ul>' : $LANG['member'];
 		
 		//Droit d'édition du profil, au membre en question et à l'admin uniquement	.
 		$Template->Assign_vars(array(

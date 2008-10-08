@@ -161,6 +161,7 @@ class File extends FileSystemElement
 	// supprime le fichier
 	function delete()
 	{
+        $this->close();
 		if( !@unlink($this->path) ) // Empty the file if it couldn't delete it
             $this->write('');
 	}
