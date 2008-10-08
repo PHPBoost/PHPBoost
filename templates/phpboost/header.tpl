@@ -196,3 +196,4 @@ release({L_RELEASE_FORMAT});
 		<div id="top_contents">
 			{MODULES_MINI_TOPCENTRAL_CONTENT}
 		</div>
+        <div id="main_content">&nbsp;
