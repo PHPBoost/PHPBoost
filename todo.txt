@@ -3,8 +3,12 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[+] Nouvelles options d'installation (Communautaire, Vitrine, etc).
-[-] Supporter https et remplacer les "." par des "_" dans le nom de la base de données lors de l'installation.
+[+] Installateur
+	- Distributions (présélections de modules)
+	- Modifier le moteur de template pour ne pas mettre en cache (avant l'installation on ne sait pas si c'est inscriptible)
+	- Etablir une configuration par défaut passe partout
+[-] Modifier légèrement l'implémentation de la classe cache en utilisant la partie io du framework
+[-] Supporter https dans l'installation
 [-] Régler les bugs touchables de TinyMCE relevés par Ptithom.
 [-] S'occuper du sort du panneau de modération.
 

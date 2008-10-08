@@ -33,8 +33,6 @@ $template = new Template('admin/admin_alerts.tpl');
 
 require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
 
-$alerts_list = AdministratorAlertService::get_all_alerts();
-
 define('NUM_ALERTS_PER_PAGE', 20);
 
 require_once(PATH_TO_ROOT . '/kernel/framework/util/pagination.class.php');
@@ -51,7 +49,8 @@ if( !in_array($criteria, array('entitled', 'current_status', 'creation_date', 'p
 $order = $order == 'desc' ? 'desc' : 'asc';
 
 //On va chercher la liste des alertes
-foreach(AdministratorAlertService::get_all_alerts($criteria, $order, ($pagination->get_var_page('p') - 1) * NUM_ALERTS_PER_PAGE, NUM_ALERTS_PER_PAGE) as $alert)
+$alerts_list = AdministratorAlertService::get_all_alerts($criteria, $order, ($pagination->get_var_page('p') - 1) * NUM_ALERTS_PER_PAGE, NUM_ALERTS_PER_PAGE);
+foreach($alerts_list as $alert)
 {
 	$img_type = '';
 	

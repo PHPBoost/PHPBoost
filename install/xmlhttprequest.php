@@ -53,7 +53,7 @@ elseif( $db )
 	$login = retrieve(POST, 'login', '');
 	$password = retrieve(POST, 'password', '');
 	$database = retrieve(POST, 'database', '');
-	$tables_prefix = retrieve(POST, 'prefix', 'phpboost_');
+	$tables_prefix = str_replace('.', '_', retrieve(POST, 'prefix', 'phpboost_'));
 	
 	include_once('functions.php');
 	
