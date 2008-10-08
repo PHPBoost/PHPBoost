@@ -25,7 +25,7 @@
 				{TITLE}
 				# IF C_ADMIN #
 				<a href="{U_ADMIN_CAT}">
-					<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+					<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
 				</a>
 				# END IF #
 			</div>
@@ -48,7 +48,7 @@
 								
 								# IF C_ADMIN #
 								<a href="{row.list_cats.U_ADMIN_CAT}">
-									<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+									<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
 								</a>
 								# ENDIF #
 								<div class="text_small">

@@ -109,21 +109,21 @@ $template->Assign_vars(array(
 	'L_FIX' => $LANG['admin_alert_fix'],
 	'L_UNFIX' => $LANG['admin_alert_unfix'],
 	'C_ORDER_ENTITLED_ASC' => $criteria == 'entitled' && $order == 'asc',
-	'U_ORDER_ENTITLED_ASC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=entitled&order=asc'),
+	'U_ORDER_ENTITLED_ASC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=entitled&amp;order=asc'),
 	'C_ORDER_ENTITLED_DESC' => $criteria == 'entitled' && $order == 'desc',
-	'U_ORDER_ENTITLED_DESC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=entitled&order=desc'),
+	'U_ORDER_ENTITLED_DESC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=entitled&amp;order=desc'),
 	'C_ORDER_CREATION_DATE_ASC' => $criteria == 'creation_date' && $order == 'asc',
-	'U_ORDER_CREATION_DATE_ASC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=creation_date&order=asc'),
+	'U_ORDER_CREATION_DATE_ASC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=creation_date&amp;order=asc'),
 	'C_ORDER_CREATION_DATE_DESC' => $criteria == 'creation_date' && $order == 'desc',
-	'U_ORDER_CREATION_DATE_DESC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=creation_date&order=desc'),
+	'U_ORDER_CREATION_DATE_DESC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=creation_date&amp;order=desc'),
 	'C_ORDER_PRIORITY_ASC' => $criteria == 'priority' && $order == 'asc',
-	'U_ORDER_PRIORITY_ASC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=priority&order=asc'),
+	'U_ORDER_PRIORITY_ASC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=priority&amp;order=asc'),
 	'C_ORDER_PRIORITY_DESC' => $criteria == 'priority' && $order == 'desc',
-	'U_ORDER_PRIORITY_DESC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=priority&order=desc'),
+	'U_ORDER_PRIORITY_DESC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=priority&amp;order=desc'),
 	'C_ORDER_STATUS_ASC' => $criteria == 'current_status' && $order == 'asc',
-	'U_ORDER_STATUS_ASC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=current_status&order=asc'),
+	'U_ORDER_STATUS_ASC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=current_status&amp;order=asc'),
 	'C_ORDER_STATUS_DESC' => $criteria == 'current_status' && $order == 'desc',
-	'U_ORDER_STATUS_DESC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&criteria=current_status&order=desc')
+	'U_ORDER_STATUS_DESC' => transid('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=current_status&amp;order=desc')
 
 ));
 	
