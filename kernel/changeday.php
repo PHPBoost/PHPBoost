@@ -103,6 +103,11 @@ if( empty($check_update) )
 	if( $CONFIG_MEMBER['verif_code'] == '1' )
 		$Sql->Query_inject("DELETE FROM ".PREFIX."verif_code WHERE timestamp < '" . (time() - (3600 * 24)) . "'", __LINE__, __FILE__);
 
+    
+    // Check kernel's, modules' or themes' availability
+    require_once(PATH_TO_ROOT . '/kernel/framework/core/updates.class.php');
+    new Updates();
+
     //Optimisations des tables
     $array_tables = $Sql->Sql_list_tables();
     foreach($array_tables as $key => $table)

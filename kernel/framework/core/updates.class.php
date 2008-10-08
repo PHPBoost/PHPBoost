@@ -32,6 +32,7 @@ define('PHP_MIN_VERSION_UPDATES', '5.2.6');
 define('CHECK_KERNEL', 0X01);
 define('CHECK_MODULES', 0X02);
 define('CHECK_THEMES', 0X04);
+define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
 
 require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/core/repository.class.php');
@@ -39,14 +40,14 @@ require_once(PATH_TO_ROOT . '/kernel/framework/core/repository.class.php');
 
 class Updates
 {    
-    function Updates($checks = CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES)
+    function Updates($checks = CHECK_ALL_UPDATES)
     {
         $this->_load_apps($checks);
         $this->_load_repositories();
         $this->_check_repositories();
     }
     
-    function _load_apps($checks = CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES)
+    function _load_apps($checks = CHECK_ALL_UPDATES)
     {
         if( phpversion() > PHP_MIN_VERSION_UPDATES )
         {
