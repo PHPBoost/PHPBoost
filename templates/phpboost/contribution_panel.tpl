@@ -126,7 +126,7 @@
 						<td class="row2" style="text-align:center;" colspan="7">
 							{PAGINATION}
 						</td>
-					</td>
+					</tr>
 				</table>
 			# ENDIF #
 			
