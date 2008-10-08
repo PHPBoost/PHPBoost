@@ -219,68 +219,40 @@ elseif( $step == 4 )
 	
 	if( retrieve(POST, 'submit', false) )
 	{
-		//Préfixe des tables
-		$tableprefix = !empty($_POST['tableprefix']) ? strprotect($_POST['tableprefix']) : 'phpboost_';
+		//Récupération de la configuration de connexion
+		$host = retrieve(POST, 'host', 'localhost');
+		$login = retrieve(POST, 'login', '');
+		$password = retrieve(POST, 'password', '');
+		$database = retrieve(POST, 'database', '');
+		$tables_prefix = retrieve(POST, 'tableprefix', 'phpboost_');
 		
-		function test_db_config()
-		{
-			global $LANG, $dbms, $host, $login, $password, $database, $tableprefix;
-			//Assignation des variables et erreurs
-			$array_fields = array('dbms', 'host', 'login', 'password', 'database');
-			foreach( $array_fields as $field_name )
-			{
-				if( !empty($_POST[$field_name]) || $field_name == 'password' )
-					$$field_name = trim($_POST[$field_name]);
-				else
-					return '<div class="warning">' . sprintf($LANG['empty_field'], $LANG['field_' . $field_name]) . '</div>';
-			}
-			
-			//Tentative de connexion
-			if( !@include_once('../kernel/framework/db/' . $dbms . '.class.php') )
-				return '<div class="error">' . $LANG['db_error_dbms'] . '</div>';
-				
-			require_once('../kernel/framework/core/errors.class.php');
-			$Errorh = new Errors;
-			$Sql = new Sql(false);
+		include_once('functions.php');
+		if( !empty($host) && !empty($login) && !empty($database) )
+			$error = check_database_config($host, $login, $password, $database, $tables_prefix);
+		else
+			$error = DB_UNKNOW_ERROR;
 
-			//Connexion
-			if( !@$Sql->Sql_connect($host, $login, $password) )
-				return '<div class="error">' . $LANG['db_error_connexion'] . '</div>';
-            
-			//Sélection de la base de données
-			if( !@$Sql->Sql_select_db($database, $result) )
-				return '<div class="warning">' . $LANG['db_error_selection'] . '</div>';
-				
-			//Déconnexion
-			$Sql->Sql_close();
-			return '';
-		}
-		$error = test_db_config();
-
-		if( empty($error) )
+		if( $error == DB_CONFIG_SUCCESS || $error == DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED )
 		{
 			require_once('../kernel/framework/core/errors.class.php');
 			$Errorh = new Errors;
-			$Sql = new Sql(false);
+			$Sql = new Sql();
             //Connexion
-			$result = $Sql->Sql_connect($host, $login, $password);
-			//Sélection de la base de données
-			$Sql->Sql_select_db($database, $result);
+			$Sql->Sql_connect($host, $login, $password, $database, ERRORS_MANAGEMENT_BY_RETURN);
 						
-			//Crï¿½ation du fichier de configuration.
+			//Création du fichier de configuration
+			require_once('../kernel/framework/io/file.class.php');
+			
 			$file_path = '../kernel/auth/config.php';
-			$file = @fopen($file_path, 'w+'); //On ouvre le fichier, si il n'existe pas on le crï¿½e.
-            if ( $dbms != 'SQLite' )
-            {
-                @fputs($file, '<?php
+			
+			$db_config_content = '<?php
 if( !defined(\'DBSECURE\') )
 {
-    $sql_host = "' . $host . '"; //Adresse serveur mysql.
+    $sql_host = "' . $host . '"; //Adresse serveur MySQL - MySQL server address
     $sql_login = "' . $login . '"; //Login
-    $sql_pass = "' . $password . '"; //Mot de passe
-    $sql_base = "' . $database . '"; //Nom de la base de données.
-    $table_prefix = "' . $tableprefix . '"; //Préfixe des tables
-    $dbtype = "' . $dbms .'"; //Système de gestion de base de données
+    $sql_pass = "' . $password . '"; //Mot de passe - Password
+    $sql_base = "' . $database . '"; //Nom de la base de données - Database name
+    $table_prefix = "' . $tables_prefix . '"; //Préfixe des tables - Tables prefix
     define(\'DBSECURE\', true);
     define(\'PHPBOOST_INSTALLED\', true);
 }   
@@ -288,32 +260,17 @@ else
 {
     exit;
 }
-?>');
-            }
-            else // SQLite
-            {
-                @fputs($file, '<?php
-if( !defined(\'DBSECURE\') )
-{
-    $sql_host = "../kernel/framework/db/' . $host . '.sqlite"; //Adresse serveur mysql.
-    $sql_login = "' . $login . '"; //Login
-    $sql_pass = "' . $password . '"; //Mot de passe
-    $sql_base = "../kernel/framework/db/' . $database . '.sqlite"; //Nom de la base de données
-    $table_prefix = "' . $tableprefix . '"; //Préfixe des tables
-    $dbtype = "' . $dbms .'"; //Système de gestion de base de données
-    define(\'DBSECURE\', true);
-    define(\'PHPBOOST_INSTALLED\', true);
-}
-else
-{
-    exit;
-}
-?>');
-            }
-			@fclose($file);
+?>';
+			
+			//Ouverture du fichier kernel/auth/config.php
+			$db_config_file = new File($file_path);
+			//Ecriture de son contenu (les variables de configuration)
+			$db_config_file->write($db_config_content);
+			//Fermeture du fichier dont on n'a plus besoin
+			$db_config_file->close();
+
 			//On crée la structure de la base de données et on y insère la configuration de base
-            
-			$Sql->Sql_parse('db/' . $dbms . '.sql', $tableprefix);
+			$Sql->Sql_parse('db/mysql.sql', $tables_prefix);
 			$Sql->Close();
 			redirect(HOST . FILE . add_lang('?step=5', true));
 		}
@@ -343,6 +300,7 @@ else
 		'L_DB_CONFIG_ERROR_CONNECTION_TO_DBMS' => addslashes($LANG['db_error_connexion']),
 		'L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED' => addslashes($LANG['db_error_selection_but_created']),
 		'L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED' => addslashes($LANG['db_error_selection_not_creable']),
+		'L_UNKNOWN_ERROR' => $LANG['db_unknown_error'],
 		'L_DB_EXPLAIN' => $LANG['db_explain'],
 		'L_DB_TITLE' => $LANG['db_title'],
 		'L_SGBD_PARAMETERS' => $LANG['dbms_paramters'],

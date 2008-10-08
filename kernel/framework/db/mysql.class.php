@@ -73,6 +73,25 @@ class Sql
 				return CONNECTION_FAILED;
 		}
 	}
+	
+	//Autoconnexion (lecture du fichier de configuration)
+	function auto_connect()
+	{
+		//Lecture du fichier de configuration.
+		@require_once(PATH_TO_ROOT . '/kernel/auth/config.php');
+		
+		//Si PHPBoost n'est pas installé, redirection manuelle car chemin non connu.
+		if( !defined('PHPBOOST_INSTALLED') )
+		{
+		    require_once(PATH_TO_ROOT . '/kernel/framework/unusual_functions.php');
+		    redirect(get_server_url_page('install/install.php'));
+		}
+
+		//Connexion à la base de données
+		$result =  $this->Sql_connect($sql_host, $sql_login, $sql_pass, $sql_base);
+		define('PREFIX', $table_prefix); //Préfixe des tables de la base de données
+		return $result;
+	}
 
 	//Requête simple
 	function Query($query, $errline, $errfile) 

@@ -114,9 +114,10 @@ $LANG['db_error_connexion'] = 'Impossible to connect to database server. Please 
 $LANG['db_error_selection_not_creable'] = 'The database you typed doesn\'t exist and the system couldn\'t create it.';
 $LANG['db_error_selection_but_created'] = 'The database you typed doesn\'t exist but the system could create it.';
 $LANG['db_success'] = 'The connection to your database server has been etablished successful. You can continue installation.';
-$LANG['require_hostname'] = 'You must enter database hostname !';
-$LANG['require_login'] = 'You must enter database login !';
-$LANG['require_db_name'] = 'You must enter database name !';
+$LANG['db_unknown_error'] = 'An unknown error has occured.';
+$LANG['require_hostname'] = 'You must enter database hostname!';
+$LANG['require_login'] = 'You must enter database login!';
+$LANG['require_db_name'] = 'You must enter database name!';
 $LANG['db_result'] = 'Test results';
 
 //configuraton du site

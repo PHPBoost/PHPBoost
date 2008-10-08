@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                             file.class.php
+ *                               file.class.php
  *                            -------------------
  *   begin                : July 06, 2008
- *   copyright          : (C) 2008 Nicolas Duhamel
+ *   copyright            : (C) 2008 Nicolas Duhamel
  *   email                : akhenathon2@gmail.com
  *
  *   
@@ -73,7 +73,7 @@ class File extends FileSystemElement
 	{
 		parent::open();
 		
-		if($this->mode & READ)
+		if( $this->mode & READ )
 		{
 			$this->contents = file_get_contents($this->path);
 			$this->lines = explode("\n", $this->contents);
@@ -95,7 +95,7 @@ class File extends FileSystemElement
 				return substr($this->contents, $start, $len);
 		}
 		else
-			user_error('File '.$this->path.' is open in read only');
+			user_error('File ' . $this->path . ' is open in read only');
 	}
 	
 	// renvoie le contenu du fichier sous forme de tableau
@@ -113,7 +113,7 @@ class File extends FileSystemElement
 				return array_slice($this->lines, $start, $n);
 		}
 		else
-			user_error('File '.$this->path.' is open in read only');
+			user_error('File ' . $this->path . ' is open in read only');
 	}
 	
 	// écrit $data dans le fichier, soit en écrasant les données ( par défaut ), soit passant en troisième paramètre la constante ADD
@@ -121,7 +121,7 @@ class File extends FileSystemElement
 	{
 		if($this->mode & WRITE)
 		{	
-			if( ( $mode == NOTCLOSEFILE && !is_ressource($this->fd) ) || $mode == CLOSEFILE )
+			if( ($mode == NOTCLOSEFILE && !is_ressource($this->fd)) || $mode == CLOSEFILE )
 			{
 				if( !($this->fd = @fopen($this->path, ( $what == ADD ) ? 'a' : 'w')) )
 					return false;
@@ -129,12 +129,12 @@ class File extends FileSystemElement
 			
 			$bytes_to_write = strlen($data);
 			$bytes_written = 0;
-			while ( $bytes_written < $bytes_to_write )
+			while( $bytes_written < $bytes_to_write )
 			{
 				// on écrit par bloc de 4Ko
 				$bytes = fwrite($this->fd, substr($data, $bytes_written, 4096));
 
-				if ( $bytes === false || $bytes == 0 )
+				if( $bytes === false || $bytes == 0 )
 					break;
 
 				$bytes_written += $bytes;
@@ -142,10 +142,10 @@ class File extends FileSystemElement
 			
 			parent::write();
 			
-			return ( $bytes_written == $bytes_to_write ) ? true : false;
+			return $bytes_written == $bytes_to_write;
 		}
 		else
-			user_error('File '.$this->path.' is open in read only');
+			user_error('File ' . $this->path . ' is open in read only mode');
 	}
 	
 	// libération les ressources inutilisés
@@ -154,7 +154,7 @@ class File extends FileSystemElement
 		$this->contents = '';
 		$this->lines = array();
 		
-		if(is_ressource($this->fd))
+		if( is_resource($this->fd) )
 			fclose($this->fd);
 	}
 	

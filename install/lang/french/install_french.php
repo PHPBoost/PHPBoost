@@ -114,6 +114,7 @@ $LANG['db_error_connexion'] = 'Impossible de se connecter à la base de données. 
 $LANG['db_error_selection_not_creable'] = 'La base de données que vous avez indiquée n\'existe pas et le système n\'a pas l\'autorisation de la créer.';
 $LANG['db_error_selection_but_created'] = 'La base de données que vous avez indiquée n\'existe pas mais a pu être créée par le système.';
 $LANG['db_success'] = 'La connexion à la base de données a été effectuée avec succès. Vous pouvez poursuivre l\'installation';
+$LANG['db_unknown_error'] = 'Une erreur inconnue a été rencontrée.';
 $LANG['require_hostname'] = 'Vous devez renseigner le nom de l\'hôte !';
 $LANG['require_login'] = 'Vous devez renseigner l\'identifiant de connexion !';
 $LANG['require_db_name'] = 'Vous devez renseigner le nom de la base de données !';

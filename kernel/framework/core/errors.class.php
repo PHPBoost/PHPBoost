@@ -168,6 +168,7 @@ class Errors
 				case E_ERROR:
 				//Enregistrement de l'erreur fatale dans tout les cas.
 				$error_id = $this->error_log($errfile, $errline, $errno, $errstr, true);
+				
 				if( !empty($Session) && is_object($Session) )
 					redirect($this->redirect . '/member/fatal' . transid('.php?error=' . $error_id, '', '&'));
 				else

@@ -353,7 +353,7 @@
 									document.getElementById("db_result").innerHTML = '<div class="error">' + '{L_DB_CONFIG_ERROR_TABLES_ALREADY_EXIST}' + '</div>';
 									break;
 								default:
-									alert(return_code);
+									document.getElementById("db_result").innerHTML = '<div class="error">' + '{L_UNKNOWN_ERROR}' + '</div>';
 							}
 						}
 						
@@ -361,6 +361,9 @@
 						
 						function send_infos()
 						{
+							if( !check_form_db() )
+								return;
+							
 							load_progress_bar(20, '');
 							data = "host=" + document.getElementById("host").value + "&login=" + document.getElementById("login").value + "&password=" + document.getElementById("password").value + "&database=" + document.getElementById("database").value;
 
