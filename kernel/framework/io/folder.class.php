@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                             folder.class.php
+ *                              folder.class.php
  *                            -------------------
  *   begin                : July 06, 2008
- *   copyright          : (C) 2008 Nicolas Duhamel
+ *   copyright            : (C) 2008 Nicolas Duhamel
  *   email                : akhenathon2@gmail.com
  *
  *   
@@ -28,7 +28,7 @@
 require_once(PATH_TO_ROOT . '/kernel/framework/io/fse.class.php');
 require_once(PATH_TO_ROOT . '/kernel/framework/io/file.class.php');
 
-// gestion des dossiers
+//Dossier
 class Folder extends FileSystemElement
 {
 	## Private Attributes ##
@@ -39,7 +39,7 @@ class Folder extends FileSystemElement
 	//Constructeur
 	function Folder($path, $whenopen = OPEN_AFTER)
 	{
-		parent::FileSystemElement($path);
+		parent::FileSystemElement(rtrim($path, '/'));
 		
 		if( @file_exists($this->path) )
 		{
@@ -107,7 +107,7 @@ class Folder extends FileSystemElement
 		{
 			$ret = array();
 			foreach( $this->folders as $folder )
-				$ret[] = $folder->path;
+				$ret[] = $folder;
 			return $ret;
 		}
 		else
@@ -115,7 +115,7 @@ class Folder extends FileSystemElement
 			$ret = array();
 			foreach( $this->folders as $folder )
 				if( preg_match($regex, $folder->path) )
-					$ret[] = $folder->path;
+					$ret[] = $folder;
 			return $ret;
 		}
 	}
@@ -126,7 +126,7 @@ class Folder extends FileSystemElement
 		parent::get();
 		
 		if( isset($this->folders[0]) )
-			return $this->folders[0]->path;
+			return $this->folders[0];
 		else
 			return false;
 	}

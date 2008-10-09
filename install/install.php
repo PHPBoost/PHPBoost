@@ -228,66 +228,81 @@ elseif( $step == 4 )
 		
 		include_once('functions.php');
 		if( !empty($host) && !empty($login) && !empty($database) )
-			$error = check_database_config($host, $login, $password, $database, $tables_prefix);
+			$result = check_database_config($host, $login, $password, $database, $tables_prefix);
 		else
-			$error = DB_UNKNOW_ERROR;
-
-		if( $error == DB_CONFIG_SUCCESS || $error == DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED || $error == DB_CONFIG_ERROR_TABLES_ALREADY_EXIST )
+			$result = DB_UNKNOW_ERROR;
+		
+		switch($result)
 		{
-			require_once('../kernel/framework/core/errors.class.php');
-			$Errorh = new Errors;
-			$Sql = new Sql();
-            //Connexion
-			$Sql->Sql_connect($host, $login, $password, $database, ERRORS_MANAGEMENT_BY_RETURN);
-						
-			//Création du fichier de configuration
-			require_once('../kernel/framework/io/file.class.php');
-			
-			$file_path = '../kernel/auth/config.php';
-			
-			$db_config_content = '<?php
-if( !defined(\'DBSECURE\') )
-{
-    $sql_host = "' . $host . '"; //Adresse serveur MySQL - MySQL server address
-    $sql_login = "' . $login . '"; //Login
-    $sql_pass = "' . $password . '"; //Mot de passe - Password
-    $sql_base = "' . $database . '"; //Nom de la base de données - Database name
-    $table_prefix = "' . $tables_prefix . '"; //Préfixe des tables - Tables prefix
-    define(\'DBSECURE\', true);
-    define(\'PHPBOOST_INSTALLED\', true);
-}   
-else
-{
-    exit;
-}
-?>';
-			
-			//Ouverture du fichier kernel/auth/config.php
-			$db_config_file = new File($file_path);
-			//Ecriture de son contenu (les variables de configuration)
-			$db_config_file->write($db_config_content);
-			//Fermeture du fichier dont on n'a plus besoin
-			$db_config_file->close();
-
-			//On crée la structure de la base de données et on y insère la configuration de base
-			$Sql->Sql_parse('db/mysql.sql', $tables_prefix);
-			$Sql->Close();
-			redirect(HOST . FILE . add_lang('?step=5', true));
+			case DB_CONFIG_SUCCESS:
+			case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED:
+			case DB_CONFIG_ERROR_TABLES_ALREADY_EXIST:
+				require_once('../kernel/framework/core/errors.class.php');
+				$Errorh = new Errors;
+				$Sql = new Sql();
+	            //Connexion
+				$Sql->Sql_connect($host, $login, $password, $database, ERRORS_MANAGEMENT_BY_RETURN);
+							
+				//Création du fichier de configuration
+				require_once('../kernel/framework/io/file.class.php');
+				
+				$file_path = '../kernel/auth/config.php';
+				
+				$db_config_content = '<?php
+	if( !defined(\'DBSECURE\') )
+	{
+	    $sql_host = "' . $host . '"; //Adresse serveur MySQL - MySQL server address
+	    $sql_login = "' . $login . '"; //Login
+	    $sql_pass = "' . $password . '"; //Mot de passe - Password
+	    $sql_base = "' . $database . '"; //Nom de la base de données - Database name
+	    $table_prefix = "' . $tables_prefix . '"; //Préfixe des tables - Tables prefix
+	    define(\'DBSECURE\', true);
+	    define(\'PHPBOOST_INSTALLED\', true);
+	}   
+	else
+	{
+	    exit;
+	}
+	?>';
+				
+				//Ouverture du fichier kernel/auth/config.php
+				$db_config_file = new File($file_path);
+				//Ecriture de son contenu (les variables de configuration)
+				$db_config_file->write($db_config_content);
+				//Fermeture du fichier dont on n'a plus besoin
+				$db_config_file->close();
+	
+				//On crée la structure de la base de données et on y insère la configuration de base
+				$Sql->Sql_parse('db/mysql.sql', $tables_prefix);
+				//Insertion des données variables selon la langue
+				$Sql->Sql_parse('lang/' . $lang . '/mysql_install_' . $lang . '.sql', $tables_prefix);
+				
+				$Sql->Close();
+				redirect(HOST . FILE . add_lang('?step=5', true));
+				break;
+			case DB_CONFIG_ERROR_CONNECTION_TO_DBMS:
+				$error = '<div class="error">' . $LANG['db_error_connexion'] . '</div>';
+				break;
+			case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED:
+				$error = '<div class="error">' . $LANG['db_error_selection_not_creable'] . '</div>';
+			case DB_UNKNOW_ERROR:
+			default:
+				$error = '<div class="error">' . $LANG['db_unknown_error'] . '</div>'; 
 		}
 	}
     
 	$template->assign_vars(array(
 		'C_DATABASE_CONFIG' => true,
-		'DISPLAY_RESULT' => !empty($error) ? 'block' : 'none',
+		'C_DISPLAY_RESULT' => !empty($error),
 		'ERROR' => !empty($error) ? $error : '',
 		'PROGRESS' => !empty($error) ? '100' : '0',
 		'PROGRESS_STATUS' => !empty($error) ? $LANG['query_success'] : '',
-		'PROGRESS_BAR' => !empty($error) ? str_repeat('<img src="templates/images/loading.png" alt="">', 56) : '',
+		'PROGRESS_BAR' => !empty($error) ? str_repeat('<img src="templates/images/progress.png" alt="">', 56) : '',
 		'HOST_VALUE' => !empty($error) ? $host  : 'localhost',
 		'LOGIN_VALUE' => !empty($error) ? $login  : '',
 		'PASSWORD_VALUE' => !empty($error) ? $password  : '',
 		'DB_NAME_VALUE' => !empty($error) ? $database  : '',
-		'PREFIX_VALUE' => !empty($error) ? $tableprefix  : 'phpboost_',
+		'PREFIX_VALUE' => !empty($error) ? $tables_prefix  : 'phpboost_',
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=3'),
 		'U_CURRENT_STEP' => add_lang('install.php?step=4'),
 		'DB_CONFIG_SUCCESS' => DB_CONFIG_SUCCESS,
@@ -341,24 +356,31 @@ elseif( $step == 5 )
 	$server_path = ($server_path == '/') ? '' : $server_path;
 	$server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
 	
-	if( !empty($_POST['submit']) )
+	//Enregistrement de la réponse
+	if( retrieve(POST, 'submit', false) )
 	{
-		$server_url = !empty($_POST['site_url']) ? strprotect($_POST['site_url']) : $server_name;
-		$server_path = !empty($_POST['site_path']) ? strprotect($_POST['site_path']) : $server_path;
-		$site_name = !empty($_POST['site_name']) ? stripslashes(strprotect($_POST['site_name'])) : '';
-		$site_desc = !empty($_POST['site_desc']) ? stripslashes(strprotect($_POST['site_desc'])) : '';
-		$site_keyword = !empty($_POST['site_keyword']) ? stripslashes(strprotect($_POST['site_keyword'])) : '';
-		$site_lang = !empty($_POST['lang']) ? stripslashes(strprotect($_POST['lang'])) : $lang;
-		$site_theme = !empty($_POST['theme']) ? stripslashes(strprotect($_POST['theme'])) : DEFAULT_THEME;
+		$server_url = strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
+		$server_path = strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
+		$site_name = stripslashes(retrieve(POST, 'site_name', ''));
+		$site_desc = stripslashes(retrieve(POST, 'site_desc', ''));
+		$site_keyword = stripslashes(retrieve(POST, 'site_keyword', ''));
+		$site_lang = stripslashes(retrieve(POST, 'lang', $lang));
+		$site_theme = stripslashes(retrieve(POST, 'theme', DEFAULT_THEME));
         
 		$CONFIG = array();
 		$CONFIG['server_name'] = $server_url;
 		$CONFIG['server_path'] = ($server_path == '/') ? '' : $server_path;
+		//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
+		if( $server_path != '' )
+			  $CONFIG['server_path'] = '/' . $server_path;
+		else
+			$CONFIG['server_path'] = $server_path;
+		
 		$CONFIG['site_name'] = $site_name;
 		$CONFIG['site_desc'] = $site_desc;
 		$CONFIG['site_keyword'] = $site_keyword;
 		$CONFIG['start'] = time();
-		$CONFIG['version'] = $update_version;
+		$CONFIG['version'] = UPDATE_VERSION;
 		$CONFIG['lang'] = $site_lang;
 		$CONFIG['theme'] = $site_theme;
 		$CONFIG['rewrite'] = '0';
@@ -382,120 +404,104 @@ elseif( $step == 5 )
         $CONFIG['search_cache_time'] = '20';
         $CONFIG['search_max_use'] = '200';
 		
-		$config_string = serialize($CONFIG);
-		require_once('../kernel/framework/core/errors.class.php');
-		$Errorh = new Errors;
-		include_once('../kernel/auth/config.php');
-		define('PREFIX', $table_prefix);
-		include_once('../kernel/framework/db/' . $dbtype . '.class.php');
-		$Sql = new Sql;
-		//On insï¿½re dans la base de donnï¿½es
-        
-		echo $Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes($config_string) . "' WHERE name = 'config'", __LINE__, __FILE__);
-        
-		//On insï¿½re la langue dans la bdd.
-		$check_lang = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . strprotect($CONFIG['lang']) . "'", __LINE__, __FILE__);
-		if( $check_lang == 0 )	
-			$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES ('" . strprotect($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
+        //Connexion à la base de données
+        require_once('functions.php');
+		load_db_connection();
 		
-		//On insï¿½re le thï¿½me dans la bdd.
-		$check_theme = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."themes WHERE theme = '" . strprotect($CONFIG['theme']) . "'", __LINE__, __FILE__);
-		if( $check_theme == 0 )	
-			$Sql->Query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
+		//On insère dans la base de données
+        $Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+        
+		//On installe la langue
+		$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES ('" . strprotect($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
 		
-		//On gï¿½nï¿½re le cache
+		//On installe le thème
+		$Sql->Query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
+		
+		//On génère le cache
 		include('../kernel/framework/core/cache.class.php');
 		$Cache = new Cache;
 		$Cache->Generate_all_files();
+		
+		$Sql->Sql_close();
+		
 		redirect(HOST . FILE . add_lang('?step=6', true));
 	}
 		
 	//Interface configuration du site
-	$template->Assign_block_vars('site_config', array(
+	$template->Assign_vars(array(
+		'C_SITE_CONFIG' => true,
 		'SITE_URL' => $server_name,
 		'SITE_PATH' => $server_path
 	));
 	
-	//Gestion langue par dï¿½faut.
+	//Classe de lecture de répertoire
+	require_once('../kernel/framework/io/folder.class.php');
+	
+	//Gestion langue par défaut
 	$array_identifier = '';
 	$lang_identifier = '../images/stats/other.png';
-	$rep = '../lang/';
-	if( is_dir($rep) ) //Si le dossier existe
+	
+	$lang_dir = new Folder('../lang');
+	
+	foreach($lang_dir->get_folders('`[a-z_-]`i') as $folder)
 	{
-		$file_array = array();
-		$dh = @opendir( $rep);
-		while( !is_bool($file = readdir($dh)) )
-		{	
-			//Si c'est un rï¿½pertoire un regarde si c'est effectivement un dossier de langues
-			if( !preg_match('`\.`', $file) )
+		$lang_info = load_ini_file('../lang/', $folder->get_name());
+		
+		if( !empty($lang_info) )
+		{
+			$array_identifier .= 'array_identifier[\'' . $folder->get_name() . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
+			$selected = false;
+			
+			if( $folder->get_name() == $lang )
 			{
-				$lang_info = load_ini_file('../lang/', $file);
-				$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $lang;
-				
-				if( $lang_info )
-				{
-					$array_identifier .= 'array_identifier[\'' . $file . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
-					$selected = false;
-					if( $file == $lang )
-					{
-						$selected = true;
-						$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
-					}					
-					$template->Assign_block_vars('site_config.lang', array(
-						'LANG' => $file,
-						'LANG_NAME' => $lang_info['name'],
-						'SELECTED' => ($selected) ? 'selected="selected"' : ''
-					));
-				}
-			}
-		}	
-		closedir($dh); //On ferme le dossier
+				$selected = true;
+				$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
+			}					
+			$template->Assign_block_vars('available_langs', array(
+				'LANG' => $folder->get_name(),
+				'LANG_NAME' => $lang_info['name'],
+				'SELECTED' => ($selected) ? 'selected="selected"' : ''
+			));
+		}
 	}
 
-	//Gestion thï¿½me par dï¿½faut.
-	$rep = '../templates/';
-	if( is_dir($rep) ) //Si le dossier existe
-	{
-		$file_array = array();
-		$dh = @opendir( $rep);
-		while( !is_bool($file = readdir($dh)) )
-		{	
-			//Si c'est un rï¿½pertoire un regarde si c'est effectivement un dossier de langues
-			if( !preg_match('`\.`', $file) )
-			{
-				$theme_info = load_ini_file('../templates/' . $file . '/config/', $lang);
-				if( $theme_info )
-				{
-					$template->Assign_block_vars('site_config.theme', array(
-						'THEME' => $file,
-						'THEME_NAME' => $theme_info['name'],
-						'SELECTED' => ($file == DEFAULT_THEME) ? 'selected="selected"' : ''
-					));
-				}
-			}
-		}	
-		closedir($dh); //On ferme le dossier
-	}
+	//Gestion thème par défaut.
+	$themes_dir = new Folder('../templates');
 	
+	foreach($themes_dir->get_folders('`[a-z_-]`i') as $folder)
+	{
+		$theme_info = load_ini_file('../templates/' . $folder->get_name() . '/config/', $lang);
+		
+		if( !empty($theme_info) )
+		{
+			$template->Assign_block_vars('theme', array(
+				'THEME' => $folder->get_name(),
+				'THEME_NAME' => $theme_info['name'],
+				'SELECTED' => ($folder->get_name() == DEFAULT_THEME) ? 'selected="selected"' : ''
+			));
+		}
+	}
+		
 	$template->Assign_vars(array(
 		'JS_LANG_IDENTIFIER' => $array_identifier,
 		'IMG_LANG_IDENTIFIER' => $lang_identifier,
 		'IMG_THEME' => DEFAULT_THEME,
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=4'),
 		'U_CURRENT_STEP' => add_lang('install.php?step=5'),
-		'L_CONFIG_SITE_EXPLAIN' => $LANG['config_site_explain'],
+		'L_SITE_CONFIG' => $LANG['site_config_title'],
+		'L_SITE_CONFIG_EXPLAIN' => $LANG['site_config_explain'],
 		'L_YOUR_SITE' => $LANG['your_site'],
 		'L_SITE_URL' => $LANG['site_url'],
-		'L_SITE_URL_EXPLAIN' => $LANG['site_url'],
+		'L_SITE_URL_EXPLAIN' => $LANG['site_url_explain'],
 		'L_SITE_PATH' => $LANG['site_path'],
-		'L_SITE_PATH_EXPLAIN' => $LANG['site_path'],
+		'L_SITE_PATH_EXPLAIN' => $LANG['site_path_explain'],
 		'L_DEFAULT_LANGUAGE' => $LANG['default_language'],
 		'L_DEFAULT_THEME' => $LANG['default_theme'],
 		'L_SITE_NAME' => $LANG['site_name'],
 		'L_SITE_DESCRIPTION' => $LANG['site_description'],
-		'L_SITE_DESCRIPTION_EXPLAIN' => $LANG['site_description'],
+		'L_SITE_DESCRIPTION_EXPLAIN' => $LANG['site_description_explain'],
 		'L_SITE_KEYWORDS' => $LANG['site_keywords'],
-		'L_SITE_KEYWORDS_EXPLAIN' => $LANG['site_keywords'],
+		'L_SITE_KEYWORDS_EXPLAIN' => $LANG['site_keywords_explain'],
 		'L_PREVIOUS_STEP' => $LANG['previous_step'],
 		'L_NEXT_STEP' => $LANG['next_step'],
 		'L_REQUIRE_SITE_URL' => $LANG['require_site_url'],
@@ -507,7 +513,7 @@ elseif( $step == 5 )
 elseif( $step == 6 )
 {
 	$template->Assign_block_vars('admin', array());
-	//Validation de l'ï¿½tape
+	//Validation de l'étape
 	if( !empty($_POST['submit']) )
 	{
 		$login = !empty($_POST['login']) ? trim($_POST['login']) : '';
@@ -1006,35 +1012,29 @@ $steps = array(
 
 $step_name = $steps[$step - 1][0];
 
-$rep = '../lang/';
-if( is_dir($rep) ) //Si le dossier existe
+
+require_once('../kernel/framework/io/folder.class.php');
+
+$lang_dir = new Folder('../lang');
+
+foreach($lang_dir->get_folders('`[a-z_-]`i') as $folder)
 {
-	$file_array = array();
-	$dh = @opendir( $rep);
-	while( !is_bool($file = readdir($dh)) )
+	$info_lang = load_ini_file('../lang/', $folder->get_name());
+	if( !empty($info_lang['name']) )
 	{	
-		//Si c'est un rï¿½pertoire un regarde si c'est effectivement un dossier de langues
-		if( !preg_match('`\.`', $file) )
+		$template->Assign_block_vars('lang', array(
+			'LANG' => $folder->get_name(),
+			'LANG_NAME' => $info_lang['name'],
+			'SELECTED' => $folder->get_name() == $lang ? 'selected="selected"' : ''
+		));
+		
+		if(	$folder->get_name() == $lang )
 		{
-			$info_lang = load_ini_file('../lang/', $file);
-			if( !empty($info_lang['name']) )
-			{	
-				$template->Assign_block_vars('lang', array(
-					'LANG' => $file,
-					'LANG_NAME' => $info_lang['name'],
-					'SELECTED' => $file == $lang ? 'selected="selected"' : ''
-				));
-				
-				if(	$file == $lang )
-				{
-					$template->Assign_vars(array(
-						'LANG_IDENTIFIER' => $info_lang['identifier']
-					));
-				}
-			}
+			$template->Assign_vars(array(
+				'LANG_IDENTIFIER' => $info_lang['identifier']
+			));
 		}
-	}	
-	closedir($dh); //On ferme le dossier
+	}
 }
 
 $template->Assign_vars(array(

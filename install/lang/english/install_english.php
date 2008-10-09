@@ -122,13 +122,13 @@ $LANG['require_db_name'] = 'You must enter database name!';
 $LANG['db_result'] = 'Test results';
 
 //configuraton du site
-$LANG['config_site_explain'] = 'Website configuration<br />
-The basic configuration is going to be created into this step to permit PHPBoost to run. However you must know that datas you are going to enter will be editable later into administration panel, in website configuration tab. In this panel you also will manage to edit advanced configuration.';
+$LANG['site_config_title'] = 'Website configuration';
+$LANG['site_config_explain'] = '<p>The basic configuration is going to be created into this step to permit PHPBoost to run. However you must know that datas you are going to enter will be editable later into administration panel, in website configuration tab. In this panel you also will manage to edit advanced configuration.</p>';
 $LANG['your_site'] = 'Your website';
 $LANG['site_url'] = 'Website url :';
-$LANG['site_url_explain'] = 'For instance http://www.google.com';
+$LANG['site_url_explain'] = 'For instance http://www.phpboost.net';
 $LANG['site_path'] = 'PHPBoost path :';
-$LANG['site_path_explain'] = 'Empty if your website is at the server root, else for instance /directory.';
+$LANG['site_path_explain'] = 'Empty whether your website is at the root of the server, otherwise the directory path, for instance /directory.';
 $LANG['default_language'] = 'Default language';
 $LANG['default_theme'] = 'Default theme';
 $LANG['site_name'] = 'Website name';

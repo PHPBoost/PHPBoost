@@ -167,8 +167,13 @@ elseif( $check_advanced && empty($_POST['advanced']) )
 elseif( !empty($_POST['advanced']) )
 {
 	$CONFIG['rewrite'] = 1;
-	$CONFIG['server_name'] = trim(strprotect(retrieve(POST, 'server_name', $server_name, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF), '/'); 
-	$CONFIG['server_path'] = '/' . trim(strprotect(retrieve(POST, 'server_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF), '/');  
+	$CONFIG['server_name'] = trim(strprotect(retrieve(POST, 'server_name', $server_name, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF), '/');
+	 
+	$CONFIG['server_path'] = trim(strprotect(retrieve(POST, 'server_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF), '/');
+	//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
+	if( $CONFIG['server_path'] != '' )
+		  $CONFIG['server_path'] = '/' . $CONFIG['server_path'];
+		  
 	$CONFIG['timezone'] = retrieve(POST, 'timezone', 0);  
 	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
 	$CONFIG['site_cookie'] = strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF); //Session par defaut.

@@ -66,6 +66,16 @@ class FileSystemElement
 		$this->open();
 	}
 	
+	// renvoie le nom de l'élément
+	function get_name()
+	{
+		$path = trim($this->path, '/');
+		
+		$parts = explode('/', $path);
+		
+		return $parts[count($parts) - 1];
+	}
+	
 	// fonction virtuelle
 	function delete() { }
 }

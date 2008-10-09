@@ -89,7 +89,7 @@ $LANG['unknown'] = 'Indéterminable';
 
 //Base de données
 $LANG['db_title'] = 'Paramètres de connexion à la base de données';
-$LANG['db_explain'] = '<p>Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Les tables permettant de faire fonctionner PHPBoost seront automatiquement créées lors de cette étape. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébérgeur qui vous les transmettra</a>.';
+$LANG['db_explain'] = '<p>Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Les tables permettant de faire fonctionner PHPBoost seront automatiquement créées lors de cette étape. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébérgeur qui vous les transmettra.</p>';
 $LANG['dbms_paramters'] = 'Paramètres d\'accès au SGBD';
 $LANG['db_host_name'] = 'Nom de l\'hôte';
 $LANG['db_host_name_explain'] = 'URL du serveur qui gère la base de données, <em>localhost</em> la plupart du temps.';
@@ -122,11 +122,11 @@ $LANG['require_db_name'] = 'Vous devez renseigner le nom de la base de données !
 $LANG['db_result'] = 'Résultats du test';
 
 //configuraton du site
-$LANG['config_site_explain'] = 'Configuration du site<br />
-La configuration de base du site va être créée dans cette étape afin de permettre à PHPBoost de fonctionner. Sachez cependant que toutes les données que vous allez rentrer seront ultérieurement modifiables dans le panneau d\'administration dans la rubrique configuration du site. Vous pourrez dans ce même panneau renseigner davantage d\'informations facultatives à propos de votre site.';
+$LANG['site_config_title'] = 'Configuration du site';
+$LANG['site_config_explain'] = '<p>La configuration de base du site va être créée dans cette étape afin de permettre à PHPBoost de fonctionner. Sachez cependant que toutes les données que vous allez rentrer seront ultérieurement modifiables dans le panneau d\'administration dans la rubrique configuration du site. Vous pourrez dans ce même panneau renseigner davantage d\'informations facultatives à propos de votre site.</p>';
 $LANG['your_site'] = 'Votre site';
 $LANG['site_url'] = 'Adresse du site :';
-$LANG['site_url_explain'] = 'De la forme http://www.google.fr';
+$LANG['site_url_explain'] = 'De la forme http://www.phpboost.com';
 $LANG['site_path'] = 'Chemin de PHPBoost :';
 $LANG['site_path_explain'] = 'Vide si votre site est à la racine du serveur, de la forme /dossier sinon';
 $LANG['default_language'] = 'Langue du site par défaut';
