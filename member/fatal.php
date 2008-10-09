@@ -33,11 +33,11 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 <head>
 	<title>' . $LANG['error'] . '</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<link href="../templates/' . $CONFIG['theme'] . '/design.css" rel="stylesheet" type="text/css" media="screen" />
-	<link href="../templates/' . $CONFIG['theme'] . '/global.css" rel="stylesheet" type="text/css" media="screen" />
-	<link href="../templates/' . $CONFIG['theme'] . '/generic.css" rel="stylesheet" type="text/css" media="screen" />
-	<link href="../templates/' . $CONFIG['theme'] . '/bbcode.css" rel="stylesheet" type="text/css" media="screen" />
-	<link href="../templates/' . $CONFIG['theme'] . '/content.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="../templates/' . $CONFIG['theme'] . '/theme/design.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="../templates/' . $CONFIG['theme'] . '/theme/global.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="../templates/' . $CONFIG['theme'] . '/theme/generic.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="../templates/' . $CONFIG['theme'] . '/theme/bbcode.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="../templates/' . $CONFIG['theme'] . '/theme/content.css" rel="stylesheet" type="text/css" media="screen" />
 	<link rel="shortcut" href="../favicon.ico" />
 </head>
 <body><br /><br /><br />';
