@@ -113,6 +113,7 @@ $LANG['field_database'] = 'nom de la base de données';
 $LANG['db_error_connexion'] = 'Impossible de se connecter à la base de données. Merci de vérifier vos paramètres.';
 $LANG['db_error_selection_not_creable'] = 'La base de données que vous avez indiquée n\'existe pas et le système n\'a pas l\'autorisation de la créer.';
 $LANG['db_error_selection_but_created'] = 'La base de données que vous avez indiquée n\'existe pas mais a pu être créée par le système.';
+$LANG['db_error_tables_already_exist'] = 'Il existe déjà une installation de PHPBoost sur cette base de données avec ce préfixe. Si vous continuez, ces tables seront supprimées et vous perdrez certainement des données.';
 $LANG['db_success'] = 'La connexion à la base de données a été effectuée avec succès. Vous pouvez poursuivre l\'installation';
 $LANG['db_unknown_error'] = 'Une erreur inconnue a été rencontrée.';
 $LANG['require_hostname'] = 'Vous devez renseigner le nom de l\'hôte !';

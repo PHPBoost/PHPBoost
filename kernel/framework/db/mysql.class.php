@@ -53,6 +53,7 @@ class Sql
 			if( @mysql_select_db($sql_base, $this->link) )
 			{
 				$this->connected = true;
+				$this->sql_base = $sql_base;
 				return CONNECTED_TO_DATABASE;
 			}
 			else
@@ -134,7 +135,9 @@ class Sql
 		$error_file = func_get_arg($nbr_arg - 1);
 		$this->result = mysql_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req, $this->link) or $this->sql_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Requête multiple invalide', $error_line, $error_file);
 		$this->result = mysql_fetch_assoc($this->result);
-		$this->close($this->result); //Déchargement mémoire.
+		
+		//Fermeture de la ressource
+		$this->close($this->result);
 		$this->req++;		
 		
 		return $this->result;

@@ -114,6 +114,7 @@ $LANG['db_error_connexion'] = 'Impossible to connect to database server. Please 
 $LANG['db_error_selection_not_creable'] = 'The database you typed doesn\'t exist and the system couldn\'t create it.';
 $LANG['db_error_selection_but_created'] = 'The database you typed doesn\'t exist but the system could create it.';
 $LANG['db_success'] = 'The connection to your database server has been etablished successful. You can continue installation.';
+$LANG['db_error_tables_already_exist'] = 'A PHPBoost instance already exists on this database with this prefix. If you continue, these tables will be deleted and the data that they contain will be lost.';
 $LANG['db_unknown_error'] = 'An unknown error has occured.';
 $LANG['require_hostname'] = 'You must enter database hostname!';
 $LANG['require_login'] = 'You must enter database login!';
