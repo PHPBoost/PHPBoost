@@ -232,7 +232,7 @@ elseif( $step == 4 )
 		else
 			$error = DB_UNKNOW_ERROR;
 
-		if( $error == DB_CONFIG_SUCCESS || $error == DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED )
+		if( $error == DB_CONFIG_SUCCESS || $error == DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED || $error == DB_CONFIG_ERROR_TABLES_ALREADY_EXIST )
 		{
 			require_once('../kernel/framework/core/errors.class.php');
 			$Errorh = new Errors;
@@ -300,6 +300,7 @@ else
 		'L_DB_CONFIG_ERROR_CONNECTION_TO_DBMS' => addslashes($LANG['db_error_connexion']),
 		'L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED' => addslashes($LANG['db_error_selection_but_created']),
 		'L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED' => addslashes($LANG['db_error_selection_not_creable']),
+		'L_DB_CONFIG_ERROR_TABLES_ALREADY_EXIST' => $LANG['db_error_tables_already_exist'],
 		'L_UNKNOWN_ERROR' => $LANG['db_unknown_error'],
 		'L_DB_EXPLAIN' => $LANG['db_explain'],
 		'L_DB_TITLE' => $LANG['db_title'],

@@ -338,22 +338,22 @@
 							switch(return_code)
 							{
 								case '{DB_CONFIG_SUCCESS}':
-									document.getElementById("db_result").innerHTML = '<div class="success">' + '{L_DB_CONFIG_SUCESS}' + '</div>';
+									document.getElementById("db_result").innerHTML = '<div class="success">{L_DB_CONFIG_SUCESS}</div>';
 									break;
 								case '{DB_CONFIG_ERROR_CONNECTION_TO_DBMS}':
-									document.getElementById("db_result").innerHTML = '<div class="error">' + '{L_DB_CONFIG_ERROR_CONNECTION_TO_DBMS}' + '</div>';
+									document.getElementById("db_result").innerHTML = '<div class="error">{L_DB_CONFIG_ERROR_CONNECTION_TO_DBMS}</div>';
 									break;
 								case '{DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED}':
-									document.getElementById("db_result").innerHTML = '<div class="error">' + '{L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED}' + '</div>';
+									document.getElementById("db_result").innerHTML = '<div class="error">{L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED}</div>';
 									break;
 								case '{DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED}':
-									document.getElementById("db_result").innerHTML = '<div class="error">' + '{L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED}' + '</div>';
+									document.getElementById("db_result").innerHTML = '<div class="error">{L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED}</div>';
 									break;
 								case '{DB_CONFIG_ERROR_TABLES_ALREADY_EXIST}':
-									document.getElementById("db_result").innerHTML = '<div class="error">' + '{L_DB_CONFIG_ERROR_TABLES_ALREADY_EXIST}' + '</div>';
+									document.getElementById("db_result").innerHTML = '<div class="notice">{L_DB_CONFIG_ERROR_TABLES_ALREADY_EXIST}</div>';
 									break;
 								default:
-									document.getElementById("db_result").innerHTML = '<div class="error">' + '{L_UNKNOWN_ERROR}' + '</div>';
+									document.getElementById("db_result").innerHTML = '<div class="error">{L_UNKNOWN_ERROR}</div>';
 							}
 						}
 						
