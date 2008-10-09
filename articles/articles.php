@@ -242,7 +242,7 @@ else
 	$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
 	##### Catégories disponibles #####	
-	if( $total_cat > 0 && $nbr_unauth_cats < $total_cat )
+	if( $total_cat > 0 )
 	{
 		$Template->Assign_vars(array(			
 			'C_ARTICLES_CAT' => true,
