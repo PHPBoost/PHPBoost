@@ -87,4 +87,15 @@ function check_database_config($host, $login, $password, $database_name, $tables
 	}
 }
 
+function load_db_connection()
+{
+	global $Sql, $Errorh;
+	
+	require_once('../kernel/framework/core/errors.class.php');
+	$Errorh = new Errors;
+	include_once('../kernel/framework/db/mysql.class.php');
+	$Sql = new Sql;
+	$Sql->auto_connect();
+}
+
 ?>

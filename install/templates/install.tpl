@@ -36,16 +36,22 @@
 				<tr>
 					<td class="row_next" style="text-align:center;">
 						<form action="{U_CHANGE_LANG}" method="post">
-							<select name="new_language" id="change_lang" onchange="document.location = 'install.php?step=' + step + '&lang=' + document.getElementById('change_lang').value;">
-								# START lang #
-								<option value="{lang.LANG}" {lang.SELECTED}>{lang.LANG_NAME}</option>
-								# END lang #
-							</select>
-							<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" class="valign_middle" />
-							<noscript>
-								<br /><br />
+							<p>
+								<select name="new_language" id="change_lang" onchange="document.location = 'install.php?step=' + step + '&amp;lang=' + document.getElementById('change_lang').value;">
+									# START lang #
+									<option value="{lang.LANG}" {lang.SELECTED}>{lang.LANG_NAME}</option>
+									# END lang #
+								</select>
+								<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" class="valign_middle" />
+							</p>
+							<p id="button_change_lang">
 								<input type="submit" class="submit" value="{L_CHANGE}" />
-							</noscript>
+							</p>
+							<script type="text/javascript">
+							<!--
+								document.getElementById('button_change_lang').style.display = 'none';
+							-->
+							</script>
 						</form>
 					</td>
 				</tr>
@@ -426,7 +432,6 @@
 							<img src="templates/images/mysql.png" alt="MySQL" style="float:right; margin-bottom:5px; margin-left:5px;"/>
 						</a>
 						{L_DB_EXPLAIN}
-						<div style="clear:both;"></div>
 						
 						<form action="{U_CURRENT_STEP}" method="post" onsubmit="return check_form_db();" class="fieldset_content">
 							<fieldset>
@@ -457,7 +462,7 @@
 								</dl>
 							</fieldset>
 							
-							<fieldset style="display:{DISPLAY_RESULT};" id="result_box">
+							<fieldset id="result_box">
 								<legend>
 									{L_RESULT}
 								</legend>
@@ -475,6 +480,14 @@
 								</div>
 							</fieldset>
 							
+							# IF NOT C_DISPLAY_RESULT #
+							<script type="text/javascript">
+							<!--
+								document.getElementById("result_box").style.display = 'none';
+							-->
+							</script>
+							# ENDIF #
+							
 							<fieldset class="submit_case">
 								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
 								<script type="text/javascript">
@@ -490,12 +503,12 @@
 					# ENDIF #
 					
 					
-					# START site_config #
+					# IF C_SITE_CONFIG #
 					<td class="row_contents">
 						<script type="text/javascript">
 						<!--
-							var site_url = "{site_config.SITE_URL}";
-							var site_path = "{site_config.SITE_PATH}";
+							var site_url = "{SITE_URL}";
+							var site_path = "{SITE_PATH}";
 							function check_form_site_config()
 							{
 								if( document.getElementById('site_url').value == "" )
@@ -533,7 +546,8 @@
 							}
 						-->
 						</script>
-						<p>{L_CONFIG_SITE_EXPLAIN}</p>
+						<h1>{L_SITE_CONFIG}</h1>
+						{L_SITE_CONFIG_EXPLAIN}
 						
 						<form action="{U_CURRENT_STEP}" method="post" onsubmit="return check_form_site_config();" class="fieldset_content">
 							<fieldset>
@@ -541,32 +555,33 @@
 								<p>{L_CHECK_EXTENSIONS}</p>
 								<dl>
 									<dt><label for="site_url">* {L_SITE_URL}</label><br /><span>{L_SITE_URL_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="150" size="25" id="site_url" name="site_url" value="{site_config.SITE_URL}" class="text" /></label></dd>	
+									<dd><input type="text" maxlength="150" size="25" id="site_url" name="site_url" value="{SITE_URL}" class="text" /></dd>	
 								</dl>
 								<dl>
 									<dt><label for="site_path">* {L_SITE_PATH}</label><br /><span>{L_SITE_PATH_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="255" size="25" id="site_path" name="site_path" value="{site_config.SITE_PATH}" class="text" /></label></dd>
+									<dd><input type="text" maxlength="255" size="25" id="site_path" name="site_path" value="{SITE_PATH}" class="text" /></dd>
 								</dl>
 								<dl>
 									<dt><label for="lang">* {L_DEFAULT_LANGUAGE}</label></dt>
-									<dd><label>
+									<dd>
 										<select id="lang" name="lang" onchange="change_img_lang('img_lang', this.options[this.selectedIndex].value)">
-											# START site_config.lang #
-											<option value="{site_config.lang.LANG}" {site_config.lang.SELECTED}>{site_config.lang.LANG_NAME}</option>
-											# END site_config.lang #
-										</select> <img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
-									</label></dd>
+											# START available_langs #
+											<option value="{available_langs.LANG}" {available_langs.SELECTED}>{available_langs.LANG_NAME}</option>
+											# END available_langs #
+										</select>
+										<img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
+									</dd>
 								</dl>
 								<dl>
 									<dt><label for="theme">* {L_DEFAULT_THEME}</label></dt>
-									<dd><label>
+									<dd>
 										<select id="theme" name="theme" onchange="change_img_theme('img_theme', this.options[selectedIndex].value)">
-											# START site_config.theme #
-												<option value="{site_config.theme.THEME}" {site_config.theme.SELECTED}>{site_config.theme.THEME_NAME}</option>
-											# END site_config.theme # 				
+											# START theme #
+												<option value="{theme.THEME}" {theme.SELECTED}>{theme.THEME_NAME}</option>
+											# END theme # 				
 										</select>
 										<img id="img_theme" src="../templates/{IMG_THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
-									</label></dd>								
+									</dd>								
 								</dl>
 								<dl>
 									<dt><label for="site_name">* {L_SITE_NAME}</label></dt>
@@ -584,13 +599,12 @@
 							
 							<fieldset class="submit_case">
 								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
-								<input title="{L_NEXT_STEP}" class="img_submit" src="templates/images/right.png" type="image" class="img_submit" />
+								<input title="{L_NEXT_STEP}" class="img_submit" src="templates/images/right.png" type="image" />
 								<input type="hidden" name="submit" value="submit" />
 							</fieldset>
 						</form>
 					</td>
-					# END site_config #
-					
+					# ENDIF #
 					
 					# START admin #
 					<td class="row_contents">
@@ -963,7 +977,6 @@
 						</fieldset>
 					</td>
 					# END end #
-										
 				</tr>
 			</table>		
 		</div>
