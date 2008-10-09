@@ -51,7 +51,7 @@
 								<ul id="ssmenu22">
 									<li><a href="../admin/admin_modules.php" style="background-image:url(../templates/{THEME}/images/admin/modules_mini.png);">{L_MANAGEMENT}</a></li>
 									<li><a href="../admin/admin_modules_add.php" style="background-image:url(../templates/{THEME}/images/admin/modules_mini.png);">{L_ADD}</a></li>
-									<li><a href="../admin/admin_config_update.php" style="background-image:url(../templates/{THEME}/images/admin/modules_mini.png);">{L_UPDATE_MODULES}</a></li>
+									<li><a href="../admin/admin_modules_update.php" style="background-image:url(../templates/{THEME}/images/admin/modules_mini.png);">{L_UPDATE_MODULES}</a></li>
 								</ul>
 							</li>
 							<li class="extend" onmouseover="show_menu(23, 1);" onmouseout="hide_menu(1);">
