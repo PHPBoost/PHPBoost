@@ -51,6 +51,6 @@
 ######################################DOSSIERS##################################
 
 [+] Noix : Panneau de modération.
-[-] Loic : Recherche.
+[+] Loic : Recherche.
 [-] Croquette : Nouveaux minis menus indépendants des modules.
 [-] Croquette : Nouveaux placement des menus.

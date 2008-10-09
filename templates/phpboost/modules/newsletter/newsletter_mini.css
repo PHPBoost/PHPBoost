@@ -1,5 +1,5 @@
 .newsletter_form{
-    width: 240px;
+    width: 250px;
     height: 20px;
     color: #ffffff;
     background-color: transparent;
@@ -13,6 +13,7 @@
     text-indent:10px;
     font-size:11px;
     margin:0;
+    margin-right:5px;
     margin-top:3px;
     float:left;
 }
