@@ -90,6 +90,8 @@ class Sql
 		//Connexion à la base de données
 		$result =  $this->Sql_connect($sql_host, $sql_login, $sql_pass, $sql_base);
 		define('PREFIX', $table_prefix); //Préfixe des tables de la base de données
+		$this->sql_base = $sql_base;
+		
 		return $result;
 	}
 
@@ -247,12 +249,10 @@ class Sql
 	//Liste les champs d'une table.
 	function Sql_list_fields($table)
 	{
-		global $sql_base;
-		
 		if( !empty($table) )
 		{
 			$array_fields_name = array();
-			$result = $this->query_while("SHOW COLUMNS FROM " . $table . " FROM `" . $sql_base . "`", __LINE__, __FILE__);
+			$result = $this->query_while("SHOW COLUMNS FROM " . $table . " FROM `" . $this->sql_base . "`", __LINE__, __FILE__);
 			while( $row = mysql_fetch_row($result) ) 
 				$array_fields_name[] = $row[0];
 			return $array_fields_name;
@@ -264,11 +264,9 @@ class Sql
 	//Liste les tables + infos.
 	function Sql_list_tables()
 	{
-		global $sql_base;
-		
 		$array_tables = array();
 		
-		$result = $this->query_while("SHOW TABLE STATUS FROM `" . $sql_base . "` LIKE '" . PREFIX . "%'", __LINE__, __FILE__);
+		$result = $this->query_while("SHOW TABLE STATUS FROM `" . $this->sql_base . "` LIKE '" . PREFIX . "%'", __LINE__, __FILE__);
 		while( $row = mysql_fetch_row($result) )
 		{	
 			$array_tables[$row[0]] = array(
@@ -419,5 +417,6 @@ class Sql
 	var $result = array(); //Resultat de la requête.
 	var $req = 0; //Nombre de requêtes.
 	var $connected = false;
+	var $sql_base = '';
 }		
 ?>
