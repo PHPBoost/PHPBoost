@@ -612,7 +612,7 @@
 						<!--
 							function check_form_admin()
 							{
-								regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$/;
+								regex = new ExpReg("^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$", "gi");
 								if( document.getElementById("login").value == "" )
 								{
 									alert("{L_REQUIRE_LOGIN}");
@@ -633,6 +633,11 @@
 									alert("{L_REQUIRE_PASSWORD_REPEAT}");
 									return false;
 								}
+								else if( document.getElementById("password").value.length < 6 )
+								{
+									alert("{L_PASSWORD_TOO_SHORT}");
+									return false;
+								}
 								else if( document.getElementById("mail").value == "" )
 								{
 									alert("{L_REQUIRE_MAIL}");
@@ -643,7 +648,7 @@
 									alert("{L_PASSWORDS_ERROR}");
 									return false;
 								}
-								else if( regex.exec(document.getElementById("mail")) != null  )
+								else if( !regex.exec(document.getElementById("mail")) != null  )
 								{
 									alert("{L_EMAIL_ERROR}");
 									return false;
@@ -715,258 +720,31 @@
 					</td>
 					# ENDIF #
 					
-					
-					# START modules #
+					# IF C_END #
 					<td class="row_contents">
-						<script type="text/javascript">
-						<!--
-							var current_preselection = 'all';
-							
-							var module_list = new Array({ARRAY_MODULE_LIST});
-							var num_modules = module_list.length;
-							
-							var module_index_list = new Array({ARRAY_MODULE_INDEX_LIST});
-							
-							var preselections_configs = new Array();
-							preselections_configs['community'] = Array('articles', 'gallery', 'news', 'forum', 'contact', 'newsletter', 'online', 'poll', 'calendar', 'shoutbox', 'stats', 'wiki', 'web', 'links', 'download', 'guestbook');
-							preselections_configs['publication'] = Array('pages', 'contact', 'articles', 'web', 'stats', 'links', 'news');
-							preselections_configs['all'] = module_list;
-							preselections_configs['no_one'] = Array();
-							
-							var member_accounts = 1;
-							member_accounts_configs = Array();
-							member_accounts_configs['all'] = 1;
-							member_accounts_configs['community'] = 1;
-							member_accounts_configs['publication'] = 0;
-							member_accounts_configs['no_one'] = 1;
-							
-							var module_index = new Array();
-							module_index['all'] = 'news';
-							module_index['community'] = 'news';
-							module_index['publication'] = 'news';
-							module_index['no_one'] = 'default';
-							
-							var selected_modules = new Array();
-							function activ_preselection(preselection)
-							{
-								if( preselection == current_preselection )
-									return;
-									
-								document.getElementById("preselection_" + preselection).className = "preselection_selected";
-								document.getElementById("preselection_" + current_preselection).className = "preselection_unselected";
-								document.getElementById("preselection_name").value = preselection;
-								if( preselection != 'perso' )
-									switch_to_selection(preselection);
-								current_preselection = preselection;								
-							}
-							function select_module(module_name)
-							{
-								if( current_preselection != 'perso' )
-									activ_preselection('perso');
-								if( typeof selected_modules[module_name] == 'undefined' || selected_modules[module_name] == 0 )
-								{
-									document.getElementById("module_" + module_name).className = "selected_module";
-									document.getElementById("install_" + module_name).checked = "checked";
-									document.getElementById("index_module_" + module_name).disabled = "";
-									selected_modules[module_name] = 1;
-								}
-								else
-								{
-									document.getElementById("module_" + module_name).className = "unselected_module";
-									document.getElementById("install_" + module_name).checked = "";
-									document.getElementById("index_module_" + module_name).disabled = "disabled";
-									selected_modules[module_name] = 0;
-								}
-								if( document.getElementById("index_module").value == module_name )
-									document.getElementById("index_module").value = "default";
-							}
-							function switch_to_selection(preselection)
-							{
-								array_preselection = preselections_configs[preselection];
-								for(i = 0; i < num_modules; i++)
-								{
-									module_name = module_list[i];
-									if( in_array(module_name, array_preselection) )
-									{
-										document.getElementById("module_" + module_name).className = "selected_module";
-										document.getElementById("install_" + module_name).checked = "checked";
-										if( in_array(module_name, module_index_list) )
-											document.getElementById("index_module_" + module_name).disabled = "";
-										selected_modules[module_name] = 1;
-									}
-									else
-									{
-										document.getElementById("module_" + module_name).className = "unselected_module";
-										document.getElementById("install_" + module_name).checked = "";
-										document.getElementById("index_module_" + module_name).disabled = "disabled";
-										selected_modules[module_name] = 0;
-									}
-								}
-								if( member_accounts_configs[preselection] == 1 )
-								{
-									document.getElementById("activ_member_block").className = "selected_module";
-									document.getElementById("activ_member").checked = "checked";
-									member_accounts = 1;
-								}
-								else
-								{
-									document.getElementById("activ_member_block").className = "unselected_module";
-									document.getElementById("activ_member").checked = "";
-									member_accounts = 0;
-								}
-								document.getElementById("index_module").value = module_index[preselection];
-							}
-							function activ_member()
-							{
-								if( current_preselection != 'perso' )
-									activ_preselection('perso');
-								if( member_accounts == 0 )
-								{
-									document.getElementById("activ_member_block").className = "selected_module";
-									document.getElementById("activ_member").checked = "checked";
-									member_accounts = 1;
-								}
-								else
-								{
-									document.getElementById("activ_member_block").className = "unselected_module";
-									document.getElementById("activ_member").checked = "";
-									member_accounts = 0;
-								}
-							}
-							function in_array(string, array)
-							{
-								array_length = array.length;
-								for(var i = 0; i < array_length; i++)
-									if( array[i] == string )
-										return true;
-								return false;
-							}
-						-->
-						</script>
-						<p>{L_EXPLAIN_MODULES}</p>
-						
-						<form action="{U_CURRENT_STEP}" method="post" class="fieldset_content">
-							<fieldset>
-								<legend>{L_PRESELECTIONS}</legend>
-								<input type="hidden" name="preselection_name" id="preselection_name" value="all" />
-								<noscript>
-									<div class="notice">{L_REQUIRE_JAVASCRIPT}</div>
-								</noscript>
-								<table style="width:100%;">
-									<tr>								
-										<td style="text-align:center;width:20%;height:100px;">
-											<div class="preselection_selected" id="preselection_all">
-												<a href="javascript:activ_preselection('all');"><img src="templates/images/all.png" alt="{L_ALL}" /></a>
-												<br />
-												<a href="javascript:activ_preselection('all');">{L_ALL}</a>
-											</div>
-										</td>
-										<td style="text-align:center;width:20%;">
-											<div class="preselection_unselected" id="preselection_community">
-												<a href="javascript:activ_preselection('community');"><img src="templates/images/community.png" alt="{L_COMMUNITY}" /></a>
-												<br />
-												<a href="javascript:activ_preselection('community');">{L_COMMUNITY}</a>
-											</div>
-										</td>
-										<td style="text-align:center;width:20%;">
-											<div class="preselection_unselected" id="preselection_publication">
-												<a href="javascript:activ_preselection('publication');"><img src="templates/images/publication.png" alt="{L_PUBLICATION}" /></a>
-												<br />
-												<a href="javascript:activ_preselection('publication');">{L_PUBLICATION}</a>
-											</div>
-										</td>
-										<td style="text-align:center;width:20%;">
-											<div class="preselection_unselected" id="preselection_perso">
-												<a href="javascript:activ_preselection('perso');"><img src="templates/images/perso.png" alt="{L_PERSO}" /></a>
-												<br />
-												<a href="javascript:activ_preselection('perso');">{L_PERSO}</a>
-											</div>
-										</td>										
-										<td style="text-align:center;width:20%;">
-											<div class="preselection_unselected" id="preselection_no_one">
-												<a href="javascript:activ_preselection('no_one');"><img src="templates/images/no_module.png" alt="{L_NO_MODULE}" /></a>
-												<br />
-												<a href="javascript:activ_preselection('no_one');">{L_NO_MODULE}</a>
-											</div>
-										</td>
-									</tr>
-								</table>
-							</fieldset>
-							
-							<fieldset>
-								<legend>{L_MODULE_LIST}</legend>
-								# START modules.module_list #
-									<div class="selected_module" id="module_{modules.module_list.MODULE_FOLDER_NAME}" onclick="select_module('{modules.module_list.MODULE_FOLDER_NAME}');" style="cursor:pointer;">
-										<input type="checkbox" name="install_{modules.module_list.MODULE_FOLDER_NAME}" id="install_{modules.module_list.MODULE_FOLDER_NAME}" class="valign_middle" checked="checked" />
-										<img src="{modules.module_list.SRC_IMAGE_MODULE}" alt="{modules.module_list.MODULE_NAME}" class="valign_middle" />
-										<strong>{modules.module_list.MODULE_NAME}</strong>
-										<span class="text_small">{modules.module_list.MODULE_DESC}</span>
-									</div>
-								# END modules.module_list #
-							</fieldset>
-							
-							<fieldset>
-								<legend>{L_OTHER_OPTIONS}</legend>
-								<div class="selected_module" id="activ_member_block" onclick="activ_member();" style="cursor:pointer;">
-									<input type="checkbox" name="activ_member" id="activ_member" class="valign_middle" checked="checked" />
-									<img src="templates/images/member_accounts.png" alt="{L_ACTIV_MEMBER_ACCOUNTS}" class="valign_middle" />
-									{L_ACTIV_MEMBER_ACCOUNTS}
-								</div>
-								<div class="unselected_module" style="padding-left:27px;">
-									<img src="templates/images/index_module.png" alt="{L_INDEX_MODULE}" class="valign_middle" />
-									{L_INDEX_MODULE}
-									<select name="index_module" id="index_module">
-										<option selected="selected" value="default">{L_DEFAULT_INDEX}</option>
-										# START modules.module_index_list #
-										<option value="{modules.module_index_list.MODULE}" id="index_module_{modules.module_index_list.MODULE}">{modules.module_index_list.MODULE_NAME}</option>
-										# END modules.module_index_list #
-									</select>
-								</div>
-							</fieldset>
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" class="valign_middle" alt="{L_PREVIOUS_STEP}" /></a>
-								&nbsp;
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
-								<input type="hidden" name="submit" value="submit" />
-							</fieldset>
-						</form>
-					</td>
-					# END modules #
-					
-					
-					# START register_online #
-					<td class="row_contents">
-						<p>{L_REGISTER_EXPLAIN}</p>
-						<form action="{U_NEXT_STEP}" method="post" class="fieldset_content">
-							<fieldset>
-								<legend>{L_REGISTER}</legend>
-								<dl>
-									<dt><label for="register">{L_I_WANT_TO_REGISTER}</label></dt>
-									<dd><label><input type="checkbox" name="register" id="register" checked="checked" /></label></dd>								
-								</dl><label>
-							</fieldset>
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>
-								<input title="{L_NEXT_STEP}" src="templates/images/right.png" type="image" class="img_submit" />
-								<input type="hidden" name="submit" value="submit" />
-							</fieldset>
-						</form>
-					</td>
-					# END register_online #
-					# START end #
-					<td class="row_contents">
-						{end.CONTENTS}
-						{end.REGISTER}
-						
+						{CONTENTS}						
 						<fieldset class="submit_case">
-							<p style="text-align:center;">
-								<a href="{end.U_INDEX}"><img src="templates/images/go-home.png" alt="{L_SITE_INDEX}" /></a>
-								<br />
-								<a href="{end.U_INDEX}">{L_SITE_INDEX}</a>
-							</p>
+							<table style="margin:auto;">
+								<tr>
+									<td>
+										<a href="{U_INDEX}"><img src="templates/images/go-home.png" alt="{L_SITE_INDEX}" /></a>
+									</td>
+									<td style="padding: 0 20px;">
+										<a href="{U_ADMIN_INDEX}"><img src="templates/images/admin_panel.png" alt="{L_ADMIN_INDEX}" /></a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<a href="{U_INDEX}">{L_SITE_INDEX}</a>
+									</td>
+									<td style="padding:0 20px;">
+										<a href="{U_ADMIN_INDEX}">{L_ADMIN_INDEX}</a>
+									</td>
+								</tr>
+							</table>
 						</fieldset>
 					</td>
-					# END end #
+					# ENDIF #
 				</tr>
 			</table>		
 		</div>
