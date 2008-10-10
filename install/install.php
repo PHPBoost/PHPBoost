@@ -553,7 +553,7 @@ elseif( $step == 6 )
 			define('PREFIX', $table_prefix);
 			include_once('../kernel/framework/db/' . $dbtype . '.class.php');
 			$Sql = new Sql;
-			//On crï¿½e le code de dï¿½verrouillage
+			//On crée le code de déverrouillage
 			include_once('../kernel/framework/core/cache.class.php');
 			$Cache = new Cache;
 			$Cache->Load_file('config');
@@ -572,7 +572,7 @@ elseif( $step == 6 )
 			$Mail = new Mail();
 			$Mail->Send_mail($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail']);
 			
-			//On connecte directement l'administrateur si il l'a demandï¿½
+			//On connecte directement l'administrateur si il l'a demandé
 			if( $create_session )
 			{
 				include('../kernel/constant.php');
@@ -582,7 +582,7 @@ elseif( $step == 6 )
 				$Session->session_begin(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); //On lance la session.
 			}
 			
-			//On redirige vers l'ï¿½tape suivante
+			//On redirige vers l'étape suivante
 			redirect(HOST . FILE . add_lang('?step=7', true));
 		}
 		else
@@ -590,49 +590,13 @@ elseif( $step == 6 )
 				'ERROR' => '<div class="warning">' . $error . '</div>'
 			));
 	}
-
-	//Gestion langue par dï¿½faut.
-	$array_identifier = '';
-	$lang_identifier = '../images/stats/other.png';
-	$rep = '../lang/';
-	if( is_dir($rep) ) //Si le dossier existe
-	{
-		$file_array = array();
-		$dh = @opendir( $rep);
-		while( !is_bool($file = readdir($dh)) )
-		{	
-			//Si c'est un rï¿½pertoire un regarde si c'est effectivement un dossier de langues
-			if( !preg_match('`\.`', $file) )
-			{
-				$lang_info = load_ini_file('../lang/', $file);
-				$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $lang;
-				
-				if( $lang_info )
-				{
-					$array_identifier .= 'array_identifier[\'' . $file . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
-					$selected = false;
-					if( $file == $lang )
-					{
-						$selected = true;
-						$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
-					}					
-					$template->Assign_block_vars('admin.lang', array(
-						'LANG' => $file,
-						'LANG_NAME' => $lang_info['name'],
-						'SELECTED' => ($selected) ? 'selected="selected"' : ''
-					));
-				}
-			}
-		}	
-		closedir($dh); //On ferme le dossier
-	}
 	
 	$template->Assign_vars(array(
-		'JS_LANG_IDENTIFIER' => $array_identifier,
-		'IMG_LANG_IDENTIFIER' => $lang_identifier,
+		'C_ADMIN_ACCOUNT' => true,
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=5'),
 		'U_CURRENT_STEP' => add_lang('install.php?step=6'),
-		'L_EXPLAIN_ADMIN_ACCOUNT' => $LANG['admin_account_creation_explain'],
+		'L_ADMIN_ACCOUNT_CREATION' => $LANG['admin_account_creation'],
+		'L_EXPLAIN_ADMIN_ACCOUNT_CREATION' => $LANG['admin_account_creation_explain'],
 		'L_ADMIN_ACCOUNT' => $LANG['admin_account'],
 		'L_PSEUDO' => $LANG['admin_pseudo'],
 		'L_PSEUDO_EXPLAIN' => $LANG['admin_pseudo_explain'],
@@ -641,7 +605,6 @@ elseif( $step == 6 )
 		'L_PASSWORD_REPEAT' => $LANG['admin_password_repeat'],
 		'L_MAIL' => $LANG['admin_mail'],
 		'L_MAIL_EXPLAIN' => $LANG['admin_mail_explain'],
-		'L_LANG' => $LANG['admin_lang'],
 		'L_PREVIOUS_STEP' => $LANG['previous_step'],
 		'L_NEXT_STEP' => $LANG['next_step'],
 		'L_ERROR' => $LANG['admin_error'],
