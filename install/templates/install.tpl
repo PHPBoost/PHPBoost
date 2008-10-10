@@ -606,7 +606,7 @@
 					</td>
 					# ENDIF #
 					
-					# START admin #
+					# IF C_ADMIN_ACCOUNT #
 					<td class="row_contents">
 						<script type="text/javascript">
 						<!--
@@ -667,14 +667,15 @@
 							}
 						-->
 						</script>
-						<p>{L_EXPLAIN_ADMIN_ACCOUNT}</p>
+						<h1>{L_ADMIN_ACCOUNT_CREATION}</h1>
+						{L_EXPLAIN_ADMIN_ACCOUNT_CREATION}
 						<form action="{U_CURRENT_STEP}" method="post" onsubmit="return check_form_admin();" class="fieldset_content">
-							# START admin.error #
+							# START error #
 							<fieldset>
 								<legend>{L_ERROR}</legend>
-								{admin.error.ERROR}
+								{error.ERROR}
 							</fieldset>
-							# END admin.error #
+							# END error #
 							<fieldset>
 								<legend>{L_ADMIN_ACCOUNT}</legend>	
 								<p>{L_CHECK_EXTENSIONS}</p>
@@ -695,17 +696,6 @@
 									<dd><label><input type="text" size="25" maxlength="40" id="mail" name="mail" value="{MAIL_VALUE}" class="text" /></label></dd>								
 								</dl>
 								<dl>
-									<dt><label for="lang">* {L_LANG}</label></dt>
-									<dd><label>
-										<select id="lang" name="lang" onchange="change_img_lang('img_lang', this.options[this.selectedIndex].value)">
-											# START admin.lang #
-												<option value="{admin.lang.LANG}" {admin.lang.SELECTED}>{admin.lang.LANG_NAME}</option>
-											# END admin.lang #								
-										</select>
-										<img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
-									</label></dd>								
-								</dl>
-								<dl>
 									<dt><label for="create_session">{L_CREATE_SESSION}</label></dt>
 									<dd><label><input type="checkbox" name="create_session" id="create_session" {CHECKED_AUTO_CONNECTION} /></label></dd>								
 								</dl>
@@ -723,7 +713,7 @@
 							</fieldset>
 						</form>
 					</td>
-					# END admin #
+					# ENDIF #
 					
 					
 					# START modules #

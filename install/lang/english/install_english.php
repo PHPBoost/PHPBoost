@@ -142,8 +142,9 @@ $LANG['confirm_site_url'] = 'The website address you entered doesn\'t correspond
 $LANG['confirm_site_path'] = 'The website path you entered doesn\'t correspond to path powered by the server, are you sure you want to keep the path you entered ?';
 
 //administration
-$LANG['admin_account_creation_explain'] = 'Creation of administrator\'s account
-<br />This account gives you access to administration panel in which you can configure your website. You will manage to edit those information by editing your profile.';
+$LANG['admin_account_creation'] = 'Administrator account creation';
+$LANG['admin_account_creation_explain'] = '<p>This account gives you access to administration panel in which you can configure your website. You will manage to edit those information by editing your profile.</p>
+<p>You will be able to grant other people administrator rights later. Here you just create the first administrator account, without which you couldn\'t manage your website.</p>';
 $LANG['admin_account'] = 'Administrator account';
 $LANG['admin_pseudo'] = 'Login';
 $LANG['admin_pseudo_explain'] = 'Minimum 3 characters';
@@ -152,7 +153,6 @@ $LANG['admin_password_explain'] = 'Minimum 6 characters';
 $LANG['admin_password_repeat'] = 'Repeat password';
 $LANG['admin_mail'] = 'Email address';
 $LANG['admin_mail_explain'] = 'Must exist to receive unlocking administration code.';
-$LANG['admin_lang'] = 'Language';
 $LANG['admin_require_login'] = 'You must enter a login !';
 $LANG['admin_login_too_short'] = 'Your login is too short (3 characters minimum)';
 $LANG['admin_require_password'] = ' You must enter a password !';

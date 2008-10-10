@@ -131,6 +131,12 @@ class Folder extends FileSystemElement
 			return false;
 	}
 	
+	// Renvoie le contenu du dossier
+	function get_all_content()
+	{
+		return array_merge($this->get_files(), $this->get_folders());
+	}
+	
 	// supprime le dossier récursivement
 	function delete()
 	{

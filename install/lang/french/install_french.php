@@ -142,8 +142,9 @@ $LANG['confirm_site_url'] = 'L\'adresse du site que vous avez rentrée ne corresp
 $LANG['confirm_site_path'] = 'Le chemin du site sur le serveur que vous avez rentrée ne correspond pas à celle détectée par le serveur. Souhaitez vous vraiment choisir ce chemin ?';
 
 //administration
-$LANG['admin_account_creation_explain'] = 'Création du compte administrateur
-<br />Ce compte donne accès au panneau d\'administration par lequel vous configurerez votre site. Vous pourrez modifier les informations concernant ce compte par la suite en consultant votre profil.';
+$LANG['admin_account_creation'] = 'Création du compte administrateur';
+$LANG['admin_account_creation_explain'] = '<p>Ce compte donne accès au panneau d\'administration par lequel vous configurerez votre site. Vous pourrez modifier les informations concernant ce compte par la suite en consultant votre profil.</p>
+<p>Par la suite, il sera possible de donner à plusieurs personnes le statut d\'administrateur, ce compte est celui du premier administrateur, sans lequel vous ne pourriez pas gérer le site.</p>';
 $LANG['admin_account'] = 'Compte administrateur';
 $LANG['admin_pseudo'] = 'Pseudo';
 $LANG['admin_pseudo_explain'] = 'Minimum 3 caractères';
@@ -152,7 +153,6 @@ $LANG['admin_password_explain'] = 'Minimum 6 caractères';
 $LANG['admin_password_repeat'] = 'Répéter le mot de passe';
 $LANG['admin_mail'] = 'Courrier électronique';
 $LANG['admin_mail_explain'] = 'Doit être valide pour recevoir le code de déverrouillage';
-$LANG['admin_lang'] = 'Langue';
 $LANG['admin_require_login'] = 'Vous devez entrer un pseudo';
 $LANG['admin_login_too_short'] = 'Votre pseudo est trop court (3 caractères minimum)';
 $LANG['admin_require_password'] = 'Vous devez entrer un mot de passe';
