@@ -117,7 +117,7 @@ class Errors
 	}
 	
 	//Gestionnaire d'erreurs controlées par le développeur.
-	function Error_handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false)
+	function Error_handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false, $stop = true)
 	{
 		global $LANG, $Template;
 		
@@ -169,11 +169,14 @@ class Errors
 				//Enregistrement de l'erreur fatale dans tout les cas.
 				$error_id = $this->error_log($errfile, $errline, $errno, $errstr, true);
 				
-				if( !empty($Session) && is_object($Session) )
-					redirect($this->redirect . '/member/fatal' . transid('.php?error=' . $error_id, '', '&'));
-				else
-					redirect($this->redirect . '/member/fatal.php?error=' . $error_id);
-				exit;
+                if( $stop )
+                {
+                    if( !empty($Session) && is_object($Session) )
+                        redirect($this->redirect . '/member/fatal' . transid('.php?error=' . $error_id, '', '&'));
+                    else
+                        redirect($this->redirect . '/member/fatal.php?error=' . $error_id);
+                    exit;
+                }
 			}
 		
 			//Enregistrement de l'erreur si demandé.			
