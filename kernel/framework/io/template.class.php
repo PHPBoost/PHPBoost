@@ -168,17 +168,27 @@ class Template
 	function check_file($filename)
 	{
 		global $CONFIG;
-		
+        
 		$filename = trim($filename, '/');
 		$i = strpos($filename, '/');
 		$module = substr($filename, 0, $i);
+        $file_name = substr($filename, strrpos($filename, '/') + 1);
 		$file = trim(substr($filename, $i), '/');
 		$folder = trim(substr($file, 0, strpos($file, '/')), '/');
 
-		if( empty($module) || $module == 'admin' ) //Template du thème (noyau)
-			return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
-		else //Module
-		{
+		if( empty($module) )
+        {   // Template du thème (noyau)
+            return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
+        }
+        elseif( $module == 'admin' )
+        {   // Admin
+            $file_path = PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/' . $filename;
+            if( file_exists($file_path) )
+                return $file_path;
+            return PATH_TO_ROOT . '/admin/templates/' . $file_name;
+        }
+		else
+		{   // Module
 			if( $module == 'framework' && file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/framework/' . $file) )
 				return PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/framework/' . $file;
 			if( $folder == 'framework' )
