@@ -7,6 +7,8 @@
 	- Distributions (présélections de modules)
 	- Modifier le moteur de template pour ne pas mettre en cache (avant l'installation on ne sait pas si c'est inscriptible)
 	- Etablir une configuration par défaut passe partout
+	- config par défaut des membres => mettre autoriser le choix du thème à faux
+	- cache le mail des utilisateurs par défaut
 [-] Modifier légèrement l'implémentation de la classe cache en utilisant la partie io du framework
 [-] Supporter https dans l'installation
 [-] Régler les bugs touchables de TinyMCE relevés par Ptithom.

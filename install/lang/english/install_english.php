@@ -154,7 +154,8 @@ $LANG['admin_password_repeat'] = 'Repeat password';
 $LANG['admin_mail'] = 'Email address';
 $LANG['admin_mail_explain'] = 'Must exist to receive unlocking administration code.';
 $LANG['admin_require_login'] = 'You must enter a login !';
-$LANG['admin_login_too_short'] = 'Your login is too short (3 characters minimum)';
+$LANG['admin_login_too_short'] = 'Your login is too short (at least 3 characters)';
+$LANG['admin_password_too_short'] = 'Your password is too short (at least 3 characters)';
 $LANG['admin_require_password'] = ' You must enter a password !';
 $LANG['admin_require_password_repeat'] = 'You must confirm your password !';
 $LANG['admin_require_mail'] = 'You must enter an emain address !';
@@ -179,73 +180,42 @@ This code permits you to unlock administration panel if your website undergoes a
 
 Cordialy, the PHPBoost Team.';
 
-//Installation des modules
-$LANG['modules_explain'] = 'Installation of modules
-<br />As of now you can install the modules which will permit you to elaborate a personalized website. We purpose you several preselections to simplify the installation of PHPBoost, but you can design your own selection. It\'s important to note that you will be able to install and unistall any module, this steps only permites you te begin your website with an adapted configuration.';
-$LANG['modules_list'] = 'Availabe modules list';
-$LANG['modules_preselections'] = 'Available preselections';
-$LANG['modules_no_module'] = 'No module';
-$LANG['modules_all'] = 'All available modules';
-$LANG['modules_community'] = 'Community gate';
-$LANG['modules_publication'] = 'Publication website';
-$LANG['modules_perso'] = 'Personalized';
-$LANG['modules_other_options'] = 'Other options';
-$LANG['modules_activ_member_accounts'] = 'Enable member\'s registering';
-$LANG['modules_index_module'] = 'Starting module : ';
-$LANG['modules_default_index'] = 'Default page';
-$LANG['modules_require_javascript'] = 'You have to enable javascript execution to benefit from all automatical preselections.';
-
 //Fin de l'installation
 $LANG['end_installation'] = '<fieldset>
 							<legend>PHPBoost is now installed and ready to run !</legend>
-							<p class="success">
-								The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you to have trusted it and is proud to count you among its users.
-							</p>
-							<p>On administration panel index you will find news of official website, look at them and don\'t forget to update your software when a new realise of PHPBoost kernel or modules is available, it\'s important for security corrections and new functionalities.</p>
-							<p class="warning">
-								For security reasons we advice you to delete installation folder and all its contents, hackers could manage to run installation script and destroy your datas !</p>
-							<p>Don\'t forget the <a href="http://www.phpboost.net/wiki/">documentation</a> which will help you for using PHPBoost.</p>
-							<p>If you have any problem please go to support of PHPBoost : <a href="http://www.phpboost.net/forum/index.php">forum PHPBoost</a>.</p>
+							<p class="success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you to have trusted it and is proud to count you among its users.</p>
+							<p>We advise you keep yourself informed about the evolution of PHPBoost thanks to the english community website, <a href="http://www.phpboost.net">www.phpboost.net</a>. You will be warned in the administration panel when some updates will be available. It\'s important to keep your site up to date, you can take advantage of the new features and known bugs or error are corrected.</p>
+							<p class="warning">For security reasons we advice you to delete the installation folder and all its contents, hackers could manage to run installation script and you could loose some data !</p>
+							<p>Don\'t forget the <a href="http://www.phpboost.net/wiki/wiki.php">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.net/faq/faq.php"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
+							<p>If you have any problem please go to the <a href="http://www.phpboost.net/forum/index.php">support of PHPBoost</a>.</p>
 						</fieldset>
 						<fieldset>
 							<legend>Thanks</legend>
-							Members
-							<br />
-							<ul>
-								<li>Thanks to every members who encouraged us and helped us to find bugs, which will permit to PHPBoost to be a stable software.</li>
-								<li>Thanks to members of modules developpement team (Florent), graphics team (KONA, tonyck), translate team (Forensic) and redaction team (Ptithom, Mat)</li>
-							</ul>
-							<br />
-							Other projects
-							<br />
+							<h2>Members</h2>
+							<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 2.1.</p>
+							<p>Thanks to the members of our teams and particulary to <strong>Ptithom</strong> for the documentation writing, <strong>KONA</strong> for the graphics and <strong>Gsgsd</strong> and <strong>akhenathon</strong> for the modules development.
+							<h2>Other projects</h2>
+							<p>PHPBoost uses differents tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
 							<ul>
 								<li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Very powerfull text editor used for the whole development, thanks a lot !</li>
 								<li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Icon set used in the whole interface.</li>
 								<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a> : PHP library which manage work with zip files.</li>
 								<li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
+								<li><a href="http://tinymce.moxiecode.com/">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
+								<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
 							</ul>
-							<p style="text-align:center"><img src="images/npp_logo.gif" alt="" /></p>
 						</fieldset>
 						<fieldset>
 							<legend>Credits</legend>
 							<ul>
-								<li>Régis VIARRE <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer</li>
-								<li>Benoît SAUTEL <em>(alias ben.popeye)</em>, developer</li>
-								<li>Loïc ROUCHON <em>(alias horn)</em>, developer</li>
+								<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer</li>
+								<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer</li>
+								<li><strong>Loïc ROUCHON</strong> <em>(alias horn)</em>, developer</li>
 							</ul>
 						</fieldset>';
-$LANG['site_index'] = 'Go to my website';
-						
-//Enregistrement en ligne
-$LANG['register_online'] = 'Online registering';
-$LANG['register_online_explain'] = 'You can automatically register your website online. It will permit your website to appear on a list of websites powered by PHPBoost (<a href="http://www.phpboost.com/phpboost/list.php">current list</a>).
-<br />
-It\'s not compulsory to register your website, we just want to help you to have links to your website. If you install PHPBoost only for tests, a local working or a private using you shouldn\'t register it.
-<br />
-<div class="notice">Warning : you must be connected on Internet to register your website.</div>';
-$LANG['register'] = 'Register my website.';
-$LANG['register_i_want_to'] = 'I wish register my website and appear on list.';
-
+$LANG['site_index'] = 'Go to the website';
+$LANG['admin_index'] = 'Go to the administration panel';
+				
 //Divers
 $LANG['yes'] = 'Yes';
 $LANG['no'] = 'No';

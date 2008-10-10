@@ -155,11 +155,12 @@ $LANG['admin_mail'] = 'Courrier électronique';
 $LANG['admin_mail_explain'] = 'Doit être valide pour recevoir le code de déverrouillage';
 $LANG['admin_require_login'] = 'Vous devez entrer un pseudo';
 $LANG['admin_login_too_short'] = 'Votre pseudo est trop court (3 caractères minimum)';
+$LANG['admin_password_too_short'] = 'Votre mot de passe est trop court (3 caractères minimum)';
 $LANG['admin_require_password'] = 'Vous devez entrer un mot de passe';
 $LANG['admin_require_password_repeat'] = 'Vous devez confirmer votre mot de passe';
-$LANG['admin_require_mail'] = 'Vous devez entrer une adresse email';
+$LANG['admin_require_mail'] = 'Vous devez entrer une adresse de courier électronique';
 $LANG['admin_passwords_error'] = 'Les deux mots de passe que vous avez entrés ne correspondent pas';
-$LANG['admin_email_error'] = 'L\'adresse email que vous avez fournie n\'a pas une forme correcte';
+$LANG['admin_email_error'] = 'L\'adresse de courier électronique que vous avez entrée n\'a pas une forme correcte';
 $LANG['admin_create_session'] = 'Me connecter à la fin de l\'installation';
 $LANG['admin_auto_connection'] = 'Rester connecté systématiquement à chacune de mes visites';
 $LANG['admin_error'] = 'Erreur';
@@ -179,72 +180,41 @@ Ce code permet le déverrouillage de l\'administration en cas de tentative d\'int
 
 Cordialement l\'équipe PHPBoost.';
 
-//Installation des modules
-$LANG['modules_explain'] = 'Installation des modules
-<br />Vous pouvez dès maintenant installer des modules qui vous permettront d\'élaborer à votre convenance votre site. Nous vous proposons quelques préselections afin de faciliter l\'installation mais vous pouvez composer votre propre sélection. A noter que vous pourrez par la suite installer et désinstaller n\'importe quel module, cette étape ne vous engage à rien mais vous permet de partir sur une configuration adaptée à vos besoins.';
-$LANG['modules_list'] = 'Liste des modules disponibles';
-$LANG['modules_preselections'] = 'Présélections de modules proposées';
-$LANG['modules_no_module'] = 'Aucun module';
-$LANG['modules_all'] = 'Tous les modules disponibles';
-$LANG['modules_community'] = 'Portail communautaire';
-$LANG['modules_publication'] = 'Site de publication';
-$LANG['modules_perso'] = 'Personnalisé';
-$LANG['modules_other_options'] = 'Autres options';
-$LANG['modules_activ_member_accounts'] = 'Activer l\'inscription des membres';
-$LANG['modules_index_module'] = 'Module de démarrage : ';
-$LANG['modules_default_index'] = 'Page par défaut';
-$LANG['modules_require_javascript'] = 'Vous devez activer le javascript pour pouvoir profiter pleinement des préselections et de la page de démarrage';
-
 //Fin de l'installation
 $LANG['end_installation'] = '<fieldset>
 							<legend>PHPBoost est désormais installé !</legend>
-							<p class="success">
-								L\'installation de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.
-							</p>
-							<p>Sur l\'accueil de l\'administration, vous retrouverez les news du site officiel de PHPBoost en temps réel, pensez à y jeter un coup de d\'oeil de temps en temps pour être au courant des nouveautés. Sur cette même page vous serez aussi averti des mises à jour disponibles concernant le noyau ou un de vos modules. Nous vous conseillons de tenir votre version de PHPBoost à jour afin de profiter des dernières fonctionnalités ainsi que de corriger les éventuelles failles ou erreurs.</p>
-							<p class="warning">
-								Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier install et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !</p>
-							<p>N\'oubliez pas la <a href="http://www.phpboost.com/wiki/index.php">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost.</p>
-							<p>En cas de problème, rendez-vous sur le forum du support de PHPBoost : <a href="http://www.phpboost.com/forum/index.php">forum PHPBoost</a>.</p>
+							<p class="success">L\'installation de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
+							<p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
+							<p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier install et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !</p>
+							<p>N\'oubliez pas la <a href="http://www.phpboost.com/wiki/wiki.php">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/faq.php"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
+							<p>En cas de problème, rendez-vous sur le <a href="http://www.phpboost.com/forum/index.php">forum du support de PHPBoost</a>.</p>
 						</fieldset>
 						<fieldset>
 							<legend>Remerciements</legend>
-							Membres
-							<br />
+							<h2>Membres de la communauté</h2>
+							<p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à une version 2.1 stable et efficace.</p>
+							<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>Ptithom</strong> de l\'équipe rédaction pour la documentation, <strong>KONA</strong> pour les graphismes et <strong>Gsgsd</strong> et <strong>akhenathon</strong> de l\'équipe de développement de modules.
+							<h2>Projets</h2>
+							<p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
 							<ul>
-								<li>Merci à tous les membres qui nous ont encouragé et qui nous ont signalé tous les bugs qu\'ils ont pu rencontrer, ce qui aura permis à PHPBoost 2.1 d\'être stable.</li>
-								<li>Merci aux membres de l\'équipe de développement de modules (Florent), de l\'équipe graphique (KONA, tonyck), de l\'équipe de traduction (Forensic) et de l\'équipe de rédaction (Ptithom, Mat)</li>
-							</ul>
-							<br />
-							Projets
-							<br />
-							<ul>
-								<li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Editeur texte surpuissant utilisé pour la totalité du développement, un immense merci!</li>
+								<li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Editeur texte puissant très utilisé pour le développement de PHPBoost, un immense merci !</li>
 								<li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Ensemble d\'icônes diverses utilisées sur l\'ensemble de PHPBoost.</li>
 								<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP par PHPConcept</a> : Librairie permettant de travailler sur des archives au format Zip.</li>
 								<li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Ensemble de fonctions permettant de mettre en forme des formules mathématiques à partir d\'une syntaxe proche de celle du <a href="http://fr.wikipedia.org/wiki/LaTeX">LaTeX</a>.</li>
+								<li><a href="http://tinymce.moxiecode.com/">TinyMCE</a> : TinyMCE est un éditeur <acronym title="What You See Is What You Get">WYSIWYG</acronym> permettant la mise en page à la volée.</li>
+								<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Colorateur de code source dans de nombreux langages informatiques.</li>
 							</ul>
-							<p style="text-align:center"><img src="images/npp_logo.gif" alt="" /></p>
 						</fieldset>
 						<fieldset>
 							<legend>Crédits</legend>
 							<ul>
-								<li>Régis VIARRE <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur</li>
-								<li>Benoît SAUTEL <em>(alias ben.popeye)</em>, développeur</li>
-								<li>Loïc ROUCHON <em>(alias horn)</em>, développeur</li>
+								<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur</li>
+								<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur</li>
+								<li><strong>Loïc ROUCHON</strong> <em>(alias horn)</em>, développeur</li>
 							</ul>
 						</fieldset>';
 $LANG['site_index'] = 'Aller à l\'accueil du site';
-						
-//Enregistrement en ligne
-$LANG['register_online'] = 'Enregistrement en ligne';
-$LANG['register_online_explain'] = 'Il est possible de vous enregistrer automatiquement en ligne. L\'enregistrement en ligne permettra à votre site d\'apparaître automatiquement sur la liste des portails PHPBoost installés du site officiel de PHPBoost (<a href="http://www.phpboost.com/phpboost/list.php">liste des portails installés</a>).
-<br />
-Vous n\'êtes pas obligé de vous enregistrer, nous vous proposons simplement ce service afin de vous aider à faire connaître votre site.  Si vous installez PHPBoost pour le tester en local ou en ligne ou que vous souhaitez que votre site ne soit pas connu du public vous ne devez pas l\'enregistrer.
-<br />
-<div class="notice">Attention : vous devez être connecté à Internet pour pouvoir enregistrer votre site en ligne.</div>';
-$LANG['register'] = 'M\'enregistrer';
-$LANG['register_i_want_to'] = 'Je souhaite m\'enregistrer en ligne et ainsi apparaître sur le site officiel de PHPBoost.';
+$LANG['admin_index'] = 'Aller dans le panneau d\'administration';
 
 //Divers
 $LANG['yes'] = 'Oui';

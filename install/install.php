@@ -28,7 +28,7 @@
 //A personnaliser
 define('UPDATE_VERSION', '2.1');
 define('DEFAULT_LANGUAGE', 'french');
-define('STEPS_NUMBER', 9);
+define('STEPS_NUMBER', 7);
 
 ob_start();
 
@@ -514,15 +514,15 @@ elseif( $step == 6 )
 {
 	$template->Assign_block_vars('admin', array());
 	//Validation de l'étape
-	if( !empty($_POST['submit']) )
+	if( retrieve(POST, 'submit', false) )
 	{
-		$login = !empty($_POST['login']) ? trim($_POST['login']) : '';
-		$password = !empty($_POST['password']) ? trim($_POST['password']) : '';
-		$password_repeat = !empty($_POST['password_repeat']) ? trim($_POST['password_repeat']) : '';
-		$user_mail = !empty($_POST['mail']) ? trim($_POST['mail']) : '';
-		$user_lang = !empty($_POST['lang']) ? trim($_POST['lang']) : DEFAULT_LANGUAGE;
-		$create_session = !empty($_POST['create_session']) ? true : false;
-		$auto_connection = !empty($_POST['auto_connection']) ? 1 : 0;
+		$login = retrieve(POST, 'login', '', TSTRING_UNCHANGE);
+		$password = retrieve(POST, 'password', '', TSTRING_UNCHANGE);
+		$password_repeat = retrieve(POST, 'password_repeat', '', TSTRING_UNCHANGE);
+		$user_mail = retrieve(POST, 'mail', '', TSTRING_UNCHANGE);
+		$create_session = retrieve(POST, 'create_session', false);
+		$auto_connection = retrieve(POST, 'auto_connection', false);
+		
 		function check_admin_account($login, $password, $password_repeat, $user_mail, $lang)
 		{
 			global $LANG;
@@ -534,6 +534,8 @@ elseif( $step == 6 )
 				return $LANG['admin_require_password'];
 			elseif( empty($password_repeat) )
 				return $LANG['admin_require_password_repeat'];
+			elseif( strlen($password) < 6 )
+				return $LANG['admin_password_too_short'];
 			elseif( empty($user_mail) )
 				return $LANG['admin_require_mail'];
 			elseif( $password != $password_repeat )
@@ -544,29 +546,31 @@ elseif( $step == 6 )
 				return '';
 		}
 		$error = check_admin_account($login, $password, $password_repeat, $user_mail, $user_lang);
+
 		//Si il n'y a pas d'erreur on enregistre dans la table
 		if( empty($error) )
 		{
-			require_once('../kernel/framework/core/errors.class.php');
-			$Errorh = new Errors;
-			require_once('../kernel/auth/config.php');
-			define('PREFIX', $table_prefix);
-			include_once('../kernel/framework/db/' . $dbtype . '.class.php');
-			$Sql = new Sql;
+			require_once('functions.php');
+			load_db_connection();
+			
 			//On crée le code de déverrouillage
 			include_once('../kernel/framework/core/cache.class.php');
 			$Cache = new Cache;
 			$Cache->Load_file('config');
 			
-			//On enregistre le membre
-			$Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $user_lang . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
+			//On enregistre le membre (l'entrée était au préalable créée)
+			$Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
 			
-			$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12); //Gï¿½nï¿½ration de la clï¿½e d'activation, en cas de verrouillage de l'administration.;
+			//Génération de la clé d'activation, en cas de verrouillage de l'administration
+			$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
 			$CONFIG['unlock_admin'] = strhash($unlock_admin);
 			$CONFIG['mail'] = $user_mail;
+			
 			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+			
 			$Cache->Generate_file('config');
-			//On envoie un mail ï¿½ l'administrateur
+			
+			//On envoie un mail à l'administrateur
 			$LANG['admin'] = '';
 			include_once('../kernel/framework/io/mail.class.php');
 			$Mail = new Mail();
@@ -578,15 +582,18 @@ elseif( $step == 6 )
 				include('../kernel/constant.php');
 				include('../kernel/framework/members/sessions.class.php');
 				$Session = new Sessions;
-				$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__); //Remise ï¿½ zï¿½ro du compteur d'essais.
-				$Session->session_begin(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); //On lance la session.
+				
+				//Remise à zéro du compteur d'essais.
+				$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__);
+				//Lancement de la session (avec ou sans autoconnexion selon la demande de l'utilisateur)
+				$Session->session_begin(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); 
 			}
 			
 			//On redirige vers l'étape suivante
 			redirect(HOST . FILE . add_lang('?step=7', true));
 		}
 		else
-			$template->Assign_block_vars('admin.error', array(
+			$template->Assign_block_vars('error', array(
 				'ERROR' => '<div class="warning">' . $error . '</div>'
 			));
 	}
@@ -610,6 +617,7 @@ elseif( $step == 6 )
 		'L_ERROR' => $LANG['admin_error'],
 		'L_REQUIRE_LOGIN' => $LANG['admin_require_login'],
 		'L_LOGIN_TOO_SHORT' => $LANG['admin_login_too_short'],
+		'L_PASSWORD_TOO_SHORT' => $LANG['admin_password_too_short'],
 		'L_REQUIRE_PASSWORD' => $LANG['admin_require_password'],
 		'L_REQUIRE_PASSWORD_REPEAT' => $LANG['admin_require_password_repeat'],
 		'L_REQUIRE_MAIL' => $LANG['admin_require_mail'],
@@ -626,350 +634,30 @@ elseif( $step == 6 )
 }
 elseif( $step == 7 )
 {
-	//Liste des modules supportï¿½s par l'installateur
-	$supported_modules = array('articles', 'calendar', 'contact', 'download', 'forum', 'gallery', 'guestbook', 'links', 'news', 'newsletter', 'online', 'pages', 'poll', 'shoutbox', 'stats', 'web', 'wiki');
-	//Tableau contenant les modules inexistants sur le serveur
-	$unexisting_modules = array();
-	$modules_list = '';
-	$index_modules = '';
+	require_once('functions.php');
+	load_db_connection();
 	
-	//Validation : installation des modules demandï¿½s
-	if( !empty($_POST['submit']) )
-	{
-		foreach( $supported_modules as $module_name )
-		{
-			$lang_info = load_ini_file('../' . $module_name . '/lang/', $lang);
-			if( $lang_info == array() )
-				$unexisting_modules[] = $module_name;
-		}
-		
-		$preselection = !empty($_POST['preselection_name']) ? strprotect($_POST['preselection_name']) : 'perso';
-		$index_module = !empty($_POST['index_module']) ? strprotect($_POST['index_module']) : 'default';
-		$index_module_url = '';
-		$activ_member = !empty($_POST['activ_member']) ? true : false;
-		
-		require_once('../kernel/framework/core/errors.class.php');
-		$Errorh = new Errors;
-		include_once('../kernel/auth/config.php');
-		define('PREFIX', $table_prefix);
-		define('DBTYPE', $dbtype);
-		include_once('../kernel/framework/db/' . $dbtype . '.class.php');
-		$Sql = new Sql;
-		//On gï¿½nï¿½re le cache
-		include('../kernel/framework/core/cache.class.php');
-		$Cache = new Cache;
-		
-		$link_installed = false; //Module de lien installï¿½?
-		
-		//L'utilisateur a choisi une prï¿½selection
-		if( in_array($preselection, array('no_one', 'all', 'community', 'publication')) )
-		{
-			//Configuration des prï¿½selections
-			$preselections_configs = array(
-				'no_one' => array('default', array(), 1),
-				'community' => array('news', array('articles', 'gallery', 'news', 'forum', 'contact', 'newsletter', 'online', 'poll', 'calendar', 'shoutbox', 'stats', 'wiki', 'web', 'links', 'download', 'guestbook'), 1),
-				'publication' => array('news', array('pages', 'contact', 'articles', 'web', 'stats', 'links', 'news'), 0),
-				'all' => array('news', $supported_modules, 1)
-			);
-			
-			//On enregistre le membre
-			foreach( $preselections_configs[$preselection][1] as $module_name )
-			{
-				if( !in_array($module_name, $unexisting_modules) )
-				{
-					//Rï¿½cupï¿½ration des infos de config.
-					$info_module = load_ini_file('../' . $module_name . '/lang/', $lang);
-					
-					//Si le dossier de base de donnï¿½es de la langue n'existe pas on prend le suivant exisant.
-					$dir_db_module = $lang;
-					$dir = '../' . $module_name . '/db';
-					if( !is_dir($dir . '/' . $dir_db_module) )
-					{	
-						$dh = @opendir($dir);
-						while( !is_bool($dir_db = @readdir($dh)) )
-						{	
-							if( !preg_match('`\.`', $dir_db) )
-							{
-								$dir_db_module = $dir_db;
-								break;
-							}
-						}	
-						@closedir($dh);
-					}
-						
-					//Parsage du fichier sql si le module utilise la bdd
-					if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql') )
-						$Sql->Sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
-
-					//Insertion du modules dans la bdd => module installï¿½.
-					$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . strprotect($module_name) . "', '" . strprotect($info_module['version']) . "', '" . addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1))) . "', '1')", __LINE__, __FILE__);
-					
-					if( $module_name == 'links' )
-						$link_installed = true;
-				}
-			}
-			$Cache->Load_file('config');
-			
-			//Page de dï¿½marrage
-			$module_infos = load_ini_file('../' . $preselections_configs[$preselection][0] . '/lang/', $lang);
-			if( $preselections_configs[$preselection][0] != 'member' && $module_infos != array() )
-			{
-				if( !empty($module_infos['starteable_page']) )
-					$start_page = $preselections_configs[$preselection][0] . '/' . $module_infos['starteable_page'];
-				else
-					$start_page = 'member/member.php';
-				
-			}
-			else
-				$start_page = 'member/member.php';
-			$CONFIG['start_page'] = '/' . $start_page;
-
-			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-			
-			//Ecriture du fichier de redirection
-			$file_path = '../index.php';
-			delete_file($file_path); //Rippe le fichier
-			
-			$start_page =  HOST . DIR . $CONFIG['start_page'];
-			
-			$file = @fopen($file_path, 'w+'); //On crï¿½e le fichier avec droit d'ï¿½criture et lecture.
-			@fwrite($file, '<?php header(\'location: ' . $start_page . '\'); ?>');
-			@fclose($file);
-			
-			$Cache->Load_file('member');
-			$CONFIG_MEMBER['activ_mbr'] = $preselections_configs[$preselection][2];
-			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_MEMBER)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ
-		}
-		//Sinon combinaison personnalisï¿½e
-		else
-		{
-			foreach($supported_modules as $module_name )
-			{
-				if( !in_array($module_name, $unexisting_modules) )
-				{
-					//Si le module est demandï¿½
-					if( !empty($_POST['install_' . $module_name]) )
-					{
-						//Rï¿½cupï¿½ration des infos de config.
-						$info_module = load_ini_file('../' . $module_name . '/lang/', $lang);
-
-						//Si le dossier de base de donnï¿½es de la langue n'existe pas on prend le suivant exisant.
-						$dir_db_module = $lang;
-						$dir = '../' . $module_name . '/db';
-						if( !is_dir($dir . '/' . $dir_db_module) )
-						{	
-							$dh = @opendir($dir);
-							while( !is_bool($dir_db = @readdir($dh)) )
-							{	
-								if( !preg_match('`\.`', $dir_db) )
-								{
-									$dir_db_module = $dir_db;
-									break;
-								}
-							}	
-							@closedir($dh);
-						}
-		
-						//Parsage du fichier sql.
-						if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql') )
-							$Sql->Sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
-
-						//Insertion du modules dans la bdd => module installï¿½.
-						$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . strprotect($module_name) . "', '" . strprotect($info_module['version']) . "', '" . addslashes(serialize(array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 1))) . "', '1')", __LINE__, __FILE__);
-						
-						if( $module_name == 'links' )
-							$link_installed = true;
-					}
-				}
-			}
-			//Dï¿½sactivation de l'espace membre dans le cas oï¿½ c'est demandï¿½
-			if( !$activ_member )
-			{
-				$Cache->Load_file('member');
-				$CONFIG_MEMBER['activ_mbr'] = 0;
-				$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_MEMBER)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ
-			}
-			//Traitement de la page de dï¿½marrage
-			if( !empty($_POST['install_' . $index_module]) && in_array($index_module, $supported_modules) )
-			{
-				$info_module = load_ini_file('../' . $index_module . '/lang/', $lang);
-				if( !empty($info_module['starteable_page']) )
-					$index_module_url = '/' . $index_module . '/' . $info_module['starteable_page'];
-				else
-					$index_module_url = '/member/member.php';
-			}
-			else
-				$index_module_url = '/member/member.php';
-				
-			$Cache->Load_file('config');
-			$CONFIG['start_page'] = $index_module_url;
-			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-			
-			//Ecriture du fichier de redirection
-			$file_path = '../index.php';
-			delete_file($file_path); //Rippe le fichier
-			
-			$start_page =  HOST . DIR . $CONFIG['start_page'];
-			
-			$file = @fopen($file_path, 'w+'); //On crï¿½e le fichier avec droit d'ï¿½criture et lecture.
-			@fwrite($file, '<?php header(\'location: ' . $start_page . '\'); ?>');
-			@fclose($file);
-		}
-		
-		//On rï¿½assigne le class des modules minis
-		$i = 0;
-		$result = $Sql->Query_while("SELECT id
-		FROM ".PREFIX."modules_mini 
-		ORDER BY side, name", __LINE__, __FILE__);
-		while($row = $Sql->Sql_fetch_assoc($result) )
-		{
-			$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . $i . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-			$i++;
-		}
-		$Sql->Close($result);		
-		
-		//On insï¿½re les liens dans le module de liens, s'il est installï¿½.
-		if( $link_installed )
-		{
-			$i = 6;
-			$result = $Sql->Query_while("SELECT name
-			FROM ".PREFIX."modules 
-			WHERE activ = 1
-			ORDER BY name", __LINE__, __FILE__);
-			while($row = $Sql->Sql_fetch_assoc($result) )
-			{
-				$info_module = load_ini_file('../' . $row['name'] . '/lang/', $lang);
-				if( !empty($info_module['name']) && !empty($info_module['starteable_page']) )
-					$Sql->Query_inject("INSERT INTO ".PREFIX."links (class, name, url, activ, secure, added, sep) VALUES ('" . $i . "', '" . addslashes($info_module['name']) . "', '../" . $row['name'] . "/" . addslashes($info_module['starteable_page']) . "', 1, '-1', 0, 0)", __LINE__, __FILE__);
-				$i++;
-			}
-			$Sql->Close($result);
-		}
-		
-		$i = 1;		
-		$side = true;
-		$result = $Sql->Query_while("SELECT id, side
-		FROM ".PREFIX."modules_mini 
-		ORDER BY side, name", __LINE__, __FILE__);
-		while($row = $Sql->Sql_fetch_assoc($result) )
-		{
-			if( $row['side'] == 1 && $side )
-			{
-				$i = 1;
-				$side = false;
-			}
-			$Sql->Query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . $i . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-			$i++;
-		}
-		$Sql->Close($result);
-		
-		//Rï¿½gï¿½nï¿½ration du cache
-		$Cache->Generate_file('htaccess'); //RÃ©gÃ©nÃ©ration du htaccess.	
-		$Cache->Generate_all_files();		
-		
-		//On redirige vers l'ï¿½tape suivante
-		redirect(HOST . FILE . add_lang('?step=8', true));
-	}
-	
-	$template->Assign_block_vars('modules', array());
-	
-	foreach( $supported_modules as $module_name )
-	{
-		$module_info = load_ini_file('../' . $module_name . '/lang/', $lang);
-		if( $module_info != array() )
-		{
-			$template->Assign_block_vars('modules.module_list', array(
-				'MODULE_NAME' => $module_info['name'],
-				'MODULE_DESC' => $module_info['info'],
-				'MODULE_FOLDER_NAME' => $module_name,
-				'SRC_IMAGE_MODULE' => '../' . $module_name . '/' . $module_name . '.png'
-			));
-			$template->Assign_block_vars('modules.module_index_list', array(
-				'MODULE_NAME' => $module_info['name'],
-				'MODULE' => $module_name
-			));
-			if( !empty($module_info['starteable_page']) )
-				$index_modules .= '\'' . $module_name . '\', ';
-			$modules_list .= '\'' . $module_name . '\', ';
-		}
-		else
-			$unexisting_modules[] = $module_name;
-	}
-	$template->Assign_vars(array(
-		'ARRAY_MODULE_LIST' => trim($modules_list, ', '),
-		'ARRAY_MODULE_INDEX_LIST' => trim($index_modules, ', '),
-		'L_EXPLAIN_MODULES' => $LANG['modules_explain'],
-		'L_MODULE_LIST' => $LANG['modules_list'],
-		'L_PRESELECTIONS' => $LANG['modules_preselections'],
-		'L_NO_MODULE' => $LANG['modules_no_module'],
-		'L_ALL' => $LANG['modules_all'],
-		'L_COMMUNITY' => $LANG['modules_community'],
-		'L_PUBLICATION' => $LANG['modules_publication'],
-		'L_PERSO' => $LANG['modules_perso'],
-		'L_OTHER_OPTIONS' => $LANG['modules_other_options'],
-		'L_ACTIV_MEMBER_ACCOUNTS' => $LANG['modules_activ_member_accounts'],
-		'L_INDEX_MODULE' => $LANG['modules_index_module'],
-		'L_REQUIRE_JAVASCRIPT' => $LANG['modules_require_javascript'],
-		'L_DEFAULT_INDEX' => $LANG['modules_default_index'],
-		'L_PREVIOUS_STEP' => $LANG['previous_step'],
-		'L_NEXT_STEP' => $LANG['next_step'],
-		'U_PREVIOUS_STEP' => add_lang('install.php?step=6'),
-		'U_CURRENT_STEP' => add_lang('install.php?step=7')
-	));
-}
-elseif( $step == 8 )
-{
-	$template->Assign_block_vars('register_online', array());
-	$template->Assign_vars(array(
-		'U_PREVIOUS_STEP' => add_lang('install.php?step=7'),
-		'U_NEXT_STEP' => add_lang('install.php?step=9'),
-		'L_PREVIOUS_STEP' => $LANG['previous_step'],
-		'L_NEXT_STEP' => $LANG['next_step'],
-		'L_REGISTER_EXPLAIN' => $LANG['register_online_explain'],
-		'L_REGISTER' => $LANG['register'],
-		'L_I_WANT_TO_REGISTER' => $LANG['register_i_want_to']
-	));
-}
-elseif( $step == 9 )
-{
-	require_once('../kernel/framework/core/errors.class.php');
-	$Errorh = new Errors;
-	include_once('../kernel/auth/config.php');
-	define('PREFIX', $table_prefix);
-	define('DBTYPE', $dbtype);
-	include_once('../kernel/framework/db/' . $dbtype . '.class.php');
-	$Sql = new Sql;
-	//On gï¿½nï¿½re le cache
-	include('../kernel/framework/core/cache.class.php');
+	require_once('../kernel/framework/core/cache.class.php');
 	$Cache = new Cache;
 	$Cache->Load_file('config');
 	
-	//Enregistrement en ligne
-	if( !empty($_POST['register']) )
-		$register_file = 'update.php?t=' . $CONFIG['site_name'] . '&amp;s=-1&amp;v=' . $update_version . '&amp;u=' . $CONFIG['server_name'] . $CONFIG['server_path'];
-	else
-		$register_file = 'update.php?t=' . $CONFIG['site_name'] . '&amp;s=2&amp;v=' . $update_version . '&amp;u=' . $CONFIG['server_name'] . $CONFIG['server_path'];
-	
-	$template->Assign_block_vars('end', array(
-		'CONTENTS' => sprintf($LANG['end_installation']),
-		'REGISTER' => '<img src="http://www.phpboost.com/phpboost/' . str_replace('"', '\"', $register_file) . '" alt="" />',		
-		'U_INDEX' => '..' . $CONFIG['start_page']
-	));
-	
 	$template->Assign_vars(array(
-		'L_SITE_INDEX' => $LANG['site_index']
+		'C_END' => true,
+		'CONTENTS' => sprintf($LANG['end_installation']),	
+		'L_ADMIN_INDEX' => $LANG['admin_index'],
+		'L_SITE_INDEX' => $LANG['site_index'],
+		'U_ADMIN_INDEX' => '../admin/admin_index.php',
+		'U_INDEX' => '..' . $CONFIG['start_page']
 	));
 }
 
 $steps = array(
 	array($LANG['introduction'], 'intro.png', 0),
 	array($LANG['license'], 'license.png', 10),
-	array($LANG['config_server'], 'config.png', 20),
-	array($LANG['database_config'], 'database.png', 30),
-	array($LANG['advanced_config'], 'advanced_config.png', 40),
-	array($LANG['administrator_account_creation'], 'admin.png', 60),
-	array($LANG['modules_installation'], 'modules.png', 70),
-	array($LANG['register_online'], 'register_online.png', 80),
+	array($LANG['config_server'], 'config.png', 30),
+	array($LANG['database_config'], 'database.png', 70),
+	array($LANG['advanced_config'], 'advanced_config.png', 80),
+	array($LANG['administrator_account_creation'], 'admin.png', 90),
 	array($LANG['end'], 'end.png', 100)
 );
 
