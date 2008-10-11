@@ -249,21 +249,21 @@ elseif( $step == 4 )
 				$file_path = '../kernel/auth/config.php';
 				
 				$db_config_content = '<?php
-	if( !defined(\'DBSECURE\') )
-	{
-	    $sql_host = "' . $host . '"; //Adresse serveur MySQL - MySQL server address
-	    $sql_login = "' . $login . '"; //Login
-	    $sql_pass = "' . $password . '"; //Mot de passe - Password
-	    $sql_base = "' . $database . '"; //Nom de la base de données - Database name
-	    $table_prefix = "' . $tables_prefix . '"; //Préfixe des tables - Tables prefix
-	    define(\'DBSECURE\', true);
-	    define(\'PHPBOOST_INSTALLED\', true);
-	}   
-	else
-	{
-	    exit;
-	}
-	?>';
+if( !defined(\'DBSECURE\') )
+{
+    $sql_host = "' . $host . '"; //Adresse serveur MySQL - MySQL server address
+    $sql_login = "' . $login . '"; //Login
+    $sql_pass = "' . $password . '"; //Mot de passe - Password
+    $sql_base = "' . $database . '"; //Nom de la base de données - Database name
+    $table_prefix = "' . $tables_prefix . '"; //Préfixe des tables - Tables prefix
+    define(\'DBSECURE\', true);
+    define(\'PHPBOOST_INSTALLED\', true);
+}   
+else
+{
+    exit;
+}
+?>';
 				
 				//Ouverture du fichier kernel/auth/config.php
 				$db_config_file = new File($file_path);
