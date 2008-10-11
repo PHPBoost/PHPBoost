@@ -129,9 +129,9 @@ $LANG['site_url'] = 'Website url :';
 $LANG['site_url_explain'] = 'For instance http://www.phpboost.net';
 $LANG['site_path'] = 'PHPBoost path :';
 $LANG['site_path_explain'] = 'Empty whether your website is at the root of the server, otherwise the directory path, for instance /directory.';
-$LANG['default_language'] = 'Default language';
-$LANG['default_theme'] = 'Default theme';
 $LANG['site_name'] = 'Website name';
+$LANG['site_timezone'] = 'Site timezone';
+$LANG['site_timezone_explain'] = 'The default value is the server one. You will be able to change this value later in the administration panel.';
 $LANG['site_description'] = 'Website description';
 $LANG['site_description_explain'] = '(Optional) Useful for search engine optimization';
 $LANG['site_keywords'] = 'Website keywords';
@@ -193,7 +193,7 @@ $LANG['end_installation'] = '<fieldset>
 							<legend>Thanks</legend>
 							<h2>Members</h2>
 							<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 2.1.</p>
-							<p>Thanks to the members of our teams and particulary to <strong>Ptithom</strong> for the documentation writing, <strong>KONA</strong> for the graphics and <strong>Gsgsd</strong> and <strong>akhenathon</strong> for the modules development.
+							<p>Thanks to the members of our teams and particulary to <strong>Ptithom</strong> for the documentation writing, <strong>KONA</strong> for the graphics and <strong>Gsgsd</strong> and <strong>akhenathon</strong> for the modules development.</p>
 							<h2>Other projects</h2>
 							<p>PHPBoost uses differents tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
 							<ul>

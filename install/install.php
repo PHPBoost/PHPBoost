@@ -364,8 +364,7 @@ elseif( $step == 5 )
 		$site_name = stripslashes(retrieve(POST, 'site_name', ''));
 		$site_desc = stripslashes(retrieve(POST, 'site_desc', ''));
 		$site_keyword = stripslashes(retrieve(POST, 'site_keyword', ''));
-		$site_lang = stripslashes(retrieve(POST, 'lang', $lang));
-		$site_theme = stripslashes(retrieve(POST, 'theme', DEFAULT_THEME));
+		$site_timezone = retrieve(POST, 'site_timezone', (int)date('I'));
         
 		$CONFIG = array();
 		$CONFIG['server_name'] = $server_url;
@@ -381,8 +380,8 @@ elseif( $step == 5 )
 		$CONFIG['site_keyword'] = $site_keyword;
 		$CONFIG['start'] = time();
 		$CONFIG['version'] = UPDATE_VERSION;
-		$CONFIG['lang'] = $site_lang;
-		$CONFIG['theme'] = $site_theme;
+		$CONFIG['lang'] = $lang;
+		$CONFIG['theme'] = DEFAULT_THEME;
 		$CONFIG['rewrite'] = '0';
 		$CONFIG['com_popup'] = '0';
 		$CONFIG['start_page'] = 'member/member.php';
@@ -403,6 +402,7 @@ elseif( $step == 5 )
         $CONFIG['pm_max'] = '5';
         $CONFIG['search_cache_time'] = '20';
         $CONFIG['search_max_use'] = '200';
+        $CONFIG['timezone'] = $site_timezone;
 		
         //Connexion à la base de données
         require_once('functions.php');
@@ -433,58 +433,27 @@ elseif( $step == 5 )
 		'SITE_URL' => $server_name,
 		'SITE_PATH' => $server_path
 	));
-	
-	//Classe de lecture de répertoire
-	require_once('../kernel/framework/io/folder.class.php');
-	
-	//Gestion langue par défaut
-	$array_identifier = '';
-	$lang_identifier = '../images/stats/other.png';
-	
-	$lang_dir = new Folder('../lang');
-	
-	foreach($lang_dir->get_folders('`[a-z_-]`i') as $folder)
-	{
-		$lang_info = load_ini_file('../lang/', $folder->get_name());
-		
-		if( !empty($lang_info) )
-		{
-			$array_identifier .= 'array_identifier[\'' . $folder->get_name() . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
-			$selected = false;
-			
-			if( $folder->get_name() == $lang )
-			{
-				$selected = true;
-				$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
-			}					
-			$template->Assign_block_vars('available_langs', array(
-				'LANG' => $folder->get_name(),
-				'LANG_NAME' => $lang_info['name'],
-				'SELECTED' => ($selected) ? 'selected="selected"' : ''
-			));
-		}
-	}
 
-	//Gestion thème par défaut.
-	$themes_dir = new Folder('../templates');
-	
-	foreach($themes_dir->get_folders('`[a-z_-]`i') as $folder)
+	//Balayage des fuseaux horaires
+	$site_timezone = (int)date('I');
+	for($i = -12; $i <= 14; $i++)
 	{
-		$theme_info = load_ini_file('../templates/' . $folder->get_name() . '/config/', $lang);
+		$timezone_name = '';
+		if( $i === 0 )
+			$timezone_name = 'GMT';
+		elseif( $i > 0 )
+			$timezone_name = 'GMT + ' . $i;
+		else
+			$timezone_name = 'GMT - ' . (-$i);
 		
-		if( !empty($theme_info) )
-		{
-			$template->Assign_block_vars('theme', array(
-				'THEME' => $folder->get_name(),
-				'THEME_NAME' => $theme_info['name'],
-				'SELECTED' => ($folder->get_name() == DEFAULT_THEME) ? 'selected="selected"' : ''
-			));
-		}
+		$template->assign_block_vars('timezone', array(
+			'NAME' => $timezone_name,
+			'VALUE' => $i,
+			'SELECTED' => $i === $site_timezone ? 'selected="selected"' : ''
+		));
 	}
 		
-	$template->Assign_vars(array(
-		'JS_LANG_IDENTIFIER' => $array_identifier,
-		'IMG_LANG_IDENTIFIER' => $lang_identifier,
+	$template->assign_vars(array(
 		'IMG_THEME' => DEFAULT_THEME,
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=4'),
 		'U_CURRENT_STEP' => add_lang('install.php?step=5'),
@@ -495,9 +464,9 @@ elseif( $step == 5 )
 		'L_SITE_URL_EXPLAIN' => $LANG['site_url_explain'],
 		'L_SITE_PATH' => $LANG['site_path'],
 		'L_SITE_PATH_EXPLAIN' => $LANG['site_path_explain'],
-		'L_DEFAULT_LANGUAGE' => $LANG['default_language'],
-		'L_DEFAULT_THEME' => $LANG['default_theme'],
 		'L_SITE_NAME' => $LANG['site_name'],
+		'L_SITE_TIMEZONE' => $LANG['site_timezone'],
+		'L_SITE_TIMEZONE_EXPLAIN' => $LANG['site_timezone_explain'],
 		'L_SITE_DESCRIPTION' => $LANG['site_description'],
 		'L_SITE_DESCRIPTION_EXPLAIN' => $LANG['site_description_explain'],
 		'L_SITE_KEYWORDS' => $LANG['site_keywords'],
