@@ -133,86 +133,18 @@
 				</fieldset>
 				<fieldset>
 					<legend>{L_DIRECTORIES_AUTH}</legend>
+					# START directories #
 					<dl>
-						<dt>cache</dt>
+						<dt>{directories.NAME}</dt>
 						<dd>
-							# IF C_AUTH_DIR_CACHE #
+							# IF directories.C_AUTH_DIR #
 							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
 							# ELSE #
 							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
 							# ENDIF #
 						</dd>
 					</dl>
-					<dl>
-						<dt>cache/backup</dt>
-						<dd>
-							# IF C_AUTH_DIR_CACHE_BACKUP #
-							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
-							# ELSE #
-							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
-							# ENDIF #
-						</dd>
-					</dl>
-					<dl>
-						<dt>cache/tpl</dt>
-						<dd>
-							# IF C_AUTH_DIR_CACHE_TPL #
-							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
-							# ELSE #
-							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
-							# ENDIF #
-						</dd>
-					</dl>
-					<dl>
-						<dt>upload</dt>
-						<dd>
-							# IF C_AUTH_DIR_UPLOAD #
-							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
-							# ELSE #
-							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
-							# ENDIF #
-						</dd>
-					</dl>
-					<dl>
-						<dt>kernel</dt>
-						<dd>
-							# IF C_AUTH_DIR_KERNEL #
-							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
-							# ELSE #
-							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
-							# ENDIF #
-						</dd>
-					</dl>
-					<dl>
-						<dt>kernel/auth</dt>
-						<dd>
-							# IF C_AUTH_DIR_KERNEL_AUTH #
-							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
-							# ELSE #
-							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
-							# ENDIF #
-						</dd>
-					</dl>
-					<dl>
-						<dt>menus</dt>
-						<dd>
-							# IF C_AUTH_DIR_MENUS #
-							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
-							# ELSE #
-							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
-							# ENDIF #
-						</dd>
-					</dl>
-					<dl>
-						<dt>{L_ROOT}</dt>
-						<dd>
-							# IF C_AUTH_DIR_ROOT #
-							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
-							# ELSE #
-							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
-							# ENDIF #
-						</dd>
-					</dl>
+					# END directories #
 				</fieldset>
 				<fieldset>
 					<legend>{L_SUMMERIZATION}</legend>
