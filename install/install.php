@@ -503,7 +503,7 @@ elseif( $step == 6 )
 		$create_session = retrieve(POST, 'create_session', false);
 		$auto_connection = retrieve(POST, 'auto_connection', false);
 		
-		function check_admin_account($login, $password, $password_repeat, $user_mail, $lang)
+		function check_admin_account($login, $password, $password_repeat, $user_mail)
 		{
 			global $LANG;
 			if( empty($login) )
@@ -525,7 +525,7 @@ elseif( $step == 6 )
 			else
 				return '';
 		}
-		$error = check_admin_account($login, $password, $password_repeat, $user_mail, $user_lang);
+		$error = check_admin_account($login, $password, $password_repeat, $user_mail);
 
 		//Si il n'y a pas d'erreur on enregistre dans la table
 		if( empty($error) )
