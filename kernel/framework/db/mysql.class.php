@@ -35,6 +35,8 @@ define('CONNECTION_FAILED', 1);
 define('UNEXISTING_DATABASE', 2);
 define('CONNECTED_TO_DATABASE', 3);
 
+define('DBTYPE', 'mysql');
+
 class Sql
 {
 	## Public Methods ##
