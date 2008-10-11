@@ -31,6 +31,13 @@
 ####################################################
 
 $LANG = array();
+
+//Erreur générée par le moteur de template
+$LANG['cache_tpl_must_exist_and_be_writable'] = '<h1>Installation de PHPBoost</h1>
+<p><strong>Attention</strong> : le dossier cache/tpl n\'existe pas ou n\'est pas inscriptible. Veuillez le créer et/ou changer son CHMOD (mettre 777) pour pouvoir lancer l\'installation.</p>
+<p>Une fois ceci fait, actualisez la page pour continuer ou cliquez <a href="">ici</a>.</p>';
+
+//Variables générales
 $LANG['page_title'] = 'Installation de PHPBoost';
 $LANG['steps_list'] = 'Liste des étapes';
 $LANG['introduction'] = 'Préambule';
@@ -38,7 +45,6 @@ $LANG['config_server'] = 'Configuration du serveur';
 $LANG['database_config'] = 'Configuration de la base de données';
 $LANG['advanced_config'] = 'Configuration du site';
 $LANG['administrator_account_creation'] = 'Compte administrateur';
-$LANG['modules_installation'] = 'Installation des modules';
 $LANG['end'] = 'Fin de l\'installation';
 $LANG['install_progress'] = 'Progression de l\'installation';
 $LANG['generated_by'] = 'Généré par %s';
@@ -193,7 +199,7 @@ $LANG['end_installation'] = '<fieldset>
 							<legend>Remerciements</legend>
 							<h2>Membres de la communauté</h2>
 							<p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à une version 2.1 stable et efficace.</p>
-							<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>Ptithom</strong> de l\'équipe rédaction pour la documentation, <strong>KONA</strong> pour les graphismes et <strong>Gsgsd</strong> et <strong>akhenathon</strong> de l\'équipe de développement de modules.
+							<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>Ptithom</strong> de l\'équipe rédaction pour la documentation, <strong>KONA</strong> pour les graphismes et <strong>Gsgsd</strong> et <strong>akhenathon</strong> de l\'équipe de développement de modules.</p>
 							<h2>Projets</h2>
 							<p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
 							<ul>

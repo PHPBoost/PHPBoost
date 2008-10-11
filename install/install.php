@@ -61,13 +61,18 @@ $step = $step > STEPS_NUMBER ? 1 : $step;
 
 $lang = retrieve(GET, 'lang', DEFAULT_LANGUAGE);
 
+//Inclusion du fichier langue
 if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
 {
 	include_once('lang/' . DEFAULT_LANGUAGE . '/install_' . DEFAULT_LANGUAGE . '.php');
 	$lang = DEFAULT_LANGUAGE;
 }
+
+//On vérifie que le dossier cache/tpl existe et est inscriptible, sans quoi on ne peut pas mettre en cache les fichiers et donc afficher l'installateur
+if( !is_dir('../cache') || !is_dir('../cache/tpl') || !is_writable('../') )
+	die($LANG['cache_tpl_must_exist_and_be_writable']);
 	
-if( !empty($_GET['restart']) )
+if( retrieve(GET, 'restart', false) )
 	redirect(HOST . add_lang(FILE, true));
 
 //Template d'installation

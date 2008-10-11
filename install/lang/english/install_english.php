@@ -31,6 +31,13 @@
 ####################################################
 
 $LANG = array();
+
+//Erreur générée par le moteur de template
+$LANG['cache_tpl_must_exist_and_be_writable'] = '<h1>PHPBoost installation</h1>
+<p><strong>Warning</strong> : the folder cache/tpl must exist and be writable. Please create and/or give it the good CHMOD (777) to be able to continue the installation.</p>
+<p>Once it is done, please refresh the page to continue or click <a href="">here</a>.</p>';
+
+//Variables générales
 $LANG['page_title'] = 'PHPBoost installation';
 $LANG['steps_list'] = 'Steps list';
 $LANG['introduction'] = 'Preamble';
@@ -38,7 +45,6 @@ $LANG['config_server'] = 'Server configuration';
 $LANG['database_config'] = 'Database configuration';
 $LANG['advanced_config'] = 'Website configuration';
 $LANG['administrator_account_creation'] = 'Administrator account';
-$LANG['modules_installation'] = 'Modules installation';
 $LANG['end'] = 'End of installation';
 $LANG['install_progress'] = 'Installation progression';
 $LANG['generated_by'] = 'Powered by %s';
