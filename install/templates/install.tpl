@@ -530,20 +530,6 @@
 									return confirm("{L_CONFIRM_SITE_PATH}");
 								}
 							}
-							
-							function change_img_theme(id, value)
-							{
-								if(document.images )
-									document.images[id].src = "../templates/" + value + "/theme/images/theme.jpg";
-							}
-							
-							var array_identifier = new Array();
-							{JS_LANG_IDENTIFIER}
-							function change_img_lang(id, lang)
-							{
-								if( array_identifier[lang] && document.getElementById(id) ) 
-									document.getElementById(id).src = '../images/stats/countries/' + array_identifier[lang] + '.png';
-							}
 						-->
 						</script>
 						<h1>{L_SITE_CONFIG}</h1>
@@ -562,38 +548,26 @@
 									<dd><input type="text" maxlength="255" size="25" id="site_path" name="site_path" value="{SITE_PATH}" class="text" /></dd>
 								</dl>
 								<dl>
-									<dt><label for="lang">* {L_DEFAULT_LANGUAGE}</label></dt>
-									<dd>
-										<select id="lang" name="lang" onchange="change_img_lang('img_lang', this.options[this.selectedIndex].value)">
-											# START available_langs #
-											<option value="{available_langs.LANG}" {available_langs.SELECTED}>{available_langs.LANG_NAME}</option>
-											# END available_langs #
-										</select>
-										<img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
-									</dd>
-								</dl>
-								<dl>
-									<dt><label for="theme">* {L_DEFAULT_THEME}</label></dt>
-									<dd>
-										<select id="theme" name="theme" onchange="change_img_theme('img_theme', this.options[selectedIndex].value)">
-											# START theme #
-												<option value="{theme.THEME}" {theme.SELECTED}>{theme.THEME_NAME}</option>
-											# END theme # 				
-										</select>
-										<img id="img_theme" src="../templates/{IMG_THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
-									</dd>								
-								</dl>
-								<dl>
 									<dt><label for="site_name">* {L_SITE_NAME}</label></dt>
-									<dd><label><input type="text" size="25" maxlength="100" id="site_name" name="site_name" class="text" /></label></dd>								
+									<dd><input type="text" size="25" maxlength="100" id="site_name" name="site_name" class="text" /></dd>								
 								</dl>
 								<dl>
 									<dt><label for="site_desc">{L_SITE_DESCRIPTION}</label><br /><span>{L_SITE_DESCRIPTION_EXPLAIN}</span></dt>
-									<dd><label><textarea rows="3" cols="23" name="site_desc" id="site_desc"></textarea></label></dd>								
+									<dd><textarea rows="3" cols="23" name="site_desc" id="site_desc"></textarea></dd>								
 								</dl>
 								<dl>
 									<dt><label for="site_keyword">{L_SITE_KEYWORDS}</label><br /><span>{L_SITE_KEYWORDS_EXPLAIN}</span></dt>
-									<dd><label><textarea rows="3" cols="23" name="site_keyword" id="site_keyword"></textarea></label></dd>								
+									<dd><textarea rows="3" cols="23" name="site_keyword" id="site_keyword"></textarea></dd>								
+								</dl>
+								<dl>
+									<dt><label for="site_timezone">{L_SITE_TIMEZONE}</label><br /><span>{L_SITE_TIMEZONE_EXPLAIN}</span></dt>
+									<dd>
+										<select name="site_timezone" id="site_timezone">
+											# START timezone #
+											<option value="{timezone.VALUE}" {timezone.SELECTED}>{timezone.NAME}</option>
+											# END timezone #
+										</select>
+									</dd>								
 								</dl>
 							</fieldset>
 							
