@@ -146,6 +146,12 @@ $LANG['require_site_url'] = 'You must enter your website\'s url !';
 $LANG['require_site_name'] = 'You must enter your website\'s name !';
 $LANG['confirm_site_url'] = 'The website address you entered doesn\'t correspond to address powered by the server, are you sure you want to keep the address you entered ?';
 $LANG['confirm_site_path'] = 'The website path you entered doesn\'t correspond to path powered by the server, are you sure you want to keep the path you entered ?';
+$LANG['site_config_maintain_text'] = 'The site is currently under maintenance.';
+$LANG['site_config_mail_signature'] = 'King regards, the site team.';
+$LANG['site_config_msg_mbr'] = 'Welcome in the website. You are member of the site, you can access to all spaces requiring a member accoun of the site, edit your profile and consult your contributions.';
+$LANG['site_config_msg_register'] = 'You are just going to register yourself on the site. We ask you yo be polite and respectful in your interventions.<br />
+<br />
+Thanks, the site team.';
 
 //administration
 $LANG['admin_account_creation'] = 'Administrator account creation';
