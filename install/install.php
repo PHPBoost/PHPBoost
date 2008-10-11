@@ -53,8 +53,9 @@ $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP
 define('FILE', $server_path);
 define('DIR', str_replace('/install/install.php', '', $server_path));
 
-//Thème par défaut.
+//Valeurs par défaut
 define('DEFAULT_THEME', 'main');
+define('START_PAGE', '/member/member.php');
 
 $step = retrieve(GET, 'step', 1, TUNSIGNED_INT);
 $step = $step > STEPS_NUMBER ? 1 : $step;
@@ -365,7 +366,7 @@ elseif( $step == 5 )
 	if( retrieve(POST, 'submit', false) )
 	{
 		$server_url = strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
-		$server_path = strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
+		$server_path = trim(strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF), '/');
 		$site_name = stripslashes(retrieve(POST, 'site_name', ''));
 		$site_desc = stripslashes(retrieve(POST, 'site_desc', ''));
 		$site_keyword = stripslashes(retrieve(POST, 'site_keyword', ''));
@@ -373,13 +374,11 @@ elseif( $step == 5 )
         
 		$CONFIG = array();
 		$CONFIG['server_name'] = $server_url;
-		$CONFIG['server_path'] = ($server_path == '/') ? '' : $server_path;
 		//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
 		if( $server_path != '' )
 			  $CONFIG['server_path'] = '/' . $server_path;
 		else
-			$CONFIG['server_path'] = $server_path;
-		
+			$CONFIG['server_path'] = $server_path;		
 		$CONFIG['site_name'] = $site_name;
 		$CONFIG['site_desc'] = $site_desc;
 		$CONFIG['site_keyword'] = $site_keyword;
@@ -387,27 +386,34 @@ elseif( $step == 5 )
 		$CONFIG['version'] = UPDATE_VERSION;
 		$CONFIG['lang'] = $lang;
 		$CONFIG['theme'] = DEFAULT_THEME;
-		$CONFIG['rewrite'] = '0';
-		$CONFIG['com_popup'] = '0';
-		$CONFIG['start_page'] = 'member/member.php';
-		$CONFIG['maintain'] = '0';
-		$CONFIG['maintain_delay'] = '';
-		$CONFIG['maintain_text'] = '';
-		$CONFIG['compteur'] = '0';
-		$CONFIG['ob_gzhandler'] = '0';
+		$CONFIG['editor'] = 'bbcode';
+		$CONFIG['timezone'] = $site_timezone;
+		$CONFIG['start_page'] = START_PAGE;
+		$CONFIG['maintain'] = 0;
+		$CONFIG['maintain_delay'] = 1;
+		$CONFIG['maintain_display_admin'] = 1;
+		$CONFIG['maintain_text'] = $LANG['site_config_maintain_text'];
+		$CONFIG['htaccess_manual_content'] = '';
+		$CONFIG['rewrite'] = 0;
+		$CONFIG['com_popup'] = 0;
+		$CONFIG['compteur'] = 0;
+		$CONFIG['bench'] = 1;
+		$CONFIG['theme_author'] = 0;
+		$CONFIG['ob_gzhandler'] = 0;
 		$CONFIG['site_cookie'] = 'session';
-		$CONFIG['site_session'] = '3600';
-		$CONFIG['site_session_invit'] = '300';
+		$CONFIG['site_session'] = 3600;
+		$CONFIG['site_session_invit'] = 300;
 		$CONFIG['mail'] = '';
-		$CONFIG['activ_mail'] = '0';
-		$CONFIG['sign'] = '';
-		$CONFIG['anti_flood'] = '1';
-		$CONFIG['delay_flood'] = '7';
-        $CONFIG['unlock_admin'] = '';
-        $CONFIG['pm_max'] = '5';
-        $CONFIG['search_cache_time'] = '20';
-        $CONFIG['search_max_use'] = '200';
-        $CONFIG['timezone'] = $site_timezone;
+		$CONFIG['activ_mail'] = 0;
+		$CONFIG['sign'] = $LANG['site_config_mail_signature'];
+		$CONFIG['anti_flood'] = 0;
+		$CONFIG['delay_flood'] = 7;
+		$CONFIG['unlock_admin'] = '';
+		$CONFIG['pm_max'] = 50;
+		$CONFIG['search_cache_time'] = 30;
+		$CONFIG['search_max_use'] = 100;
+		$CONFIG['html_auth'] = array ('r2' => 1);
+		$CONFIG['forbidden_tags'] = array ();
 		
         //Connexion à la base de données
         require_once('functions.php');
@@ -543,6 +549,16 @@ elseif( $step == 6 )
 			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 			
 			$Cache->Generate_file('config');
+			
+			//Configuration des membres
+			$Cache->load_file('member');
+			
+			$CONFIG_MEMBER['msg_mbr'] = $LANG['site_config_msg_mbr'];
+			$CONFIG_MEMBER['msg_register'] = $LANG['site_config_msg_register'];
+			
+			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_MEMBER)) . "' WHERE name = 'member'", __LINE__, __FILE__);
+			
+			$Cache->generate_file('member');
 			
 			//On envoie un mail à l'administrateur
 			$LANG['admin'] = '';
