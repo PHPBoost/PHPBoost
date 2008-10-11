@@ -15,21 +15,22 @@ CREATE TABLE `phpboost_forum_alerts` (
 
 DROP TABLE IF EXISTS `phpboost_forum_cats`;
 CREATE TABLE `phpboost_forum_cats` (
-	`id` int(11) NOT NULL auto_increment,
-	`id_left` int(11) NOT NULL default '0',
-	`id_right` int(11) NOT NULL default '0',
-	`level` int(11) NOT NULL default '0',
-	`name` varchar(100) NOT NULL default '',
-	`subname` varchar(150) NOT NULL default '',
-	`nbr_topic` mediumint(9) NOT NULL default '0',
-	`nbr_msg` mediumint(9) NOT NULL default '0',
-	`last_topic_id` int(11) NOT NULL default '0',
-	`status` tinyint(1) NOT NULL default '1',
-	`aprob` tinyint(1) NOT NULL default '0',
-	`auth` text NOT NULL,
-	PRIMARY KEY	(`id`),
-	KEY `last_topic_id` (`last_topic_id`),
-	KEY `id_left` (`id_left`)
+  `id` int(11) NOT NULL auto_increment,
+  `id_left` int(11) NOT NULL default '0',
+  `id_right` int(11) NOT NULL default '0',
+  `level` int(11) NOT NULL default '0',
+  `name` varchar(100) NOT NULL default '',
+  `subname` varchar(150) NOT NULL default '',
+  `nbr_topic` mediumint(9) NOT NULL default '0',
+  `nbr_msg` mediumint(9) NOT NULL default '0',
+  `last_topic_id` int(11) NOT NULL default '0',
+  `status` tinyint(1) NOT NULL default '1',
+  `aprob` tinyint(1) NOT NULL default '0',
+  `auth` text NOT NULL,
+  `url` varchar(255) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `last_topic_id` (`last_topic_id`),
+  KEY `id_left` (`id_left`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `phpboost_forum_history`;
