@@ -56,7 +56,6 @@ $template->assign_vars(array(
 	'L_SESSION_LENGTH' => $LANG['session_time'],
 	'L_SESSION_GUEST_LENGTH' => $LANG['session invit'],
 	'L_DIRECTORIES_AUTH' => $LANG['directories_auth'],
-	'L_ROOT' => $LANG['root'],
 	'L_SUMMERIZATION' => $LANG['system_report_summerization'],
 	'L_SUMMERIZATION_EXPLAIN' => $LANG['system_report_summerization_explain']
 ));
@@ -72,6 +71,18 @@ $server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'
 $lang_ini_file = load_ini_file('../lang/', $CONFIG['lang']);
 $template_ini_file = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
 
+$directories_summerization = '';
+$directories_list = array('/', '/cache', '/cache/backup', '/cache/tpl', '/images/avatar', '/images/group', '/image/maths', '/image/smileys', '/lang', '/menus', '/templates', '/uploads');
+foreach($directories_list as $dir)
+{
+	$dir_status = is_dir('..' . $dir) && is_writable('..' . $dir);
+	$template->Assign_block_vars('directories', array(
+		'NAME' => $dir,
+		'C_AUTH_DIR' => $dir_status
+	));
+	$directories_summerization .= $dir . str_repeat(' ', 25 - strlen($dir)) . ": " . (int)$dir_status . "
+";
+}
 
 $summerization = 
 "---------------------------------System report---------------------------------
@@ -103,14 +114,7 @@ guest session length     : " . $CONFIG['site_session_invit'] . "
 
 DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
-/cache                   : " . (int)is_writable('../cache') . "
-/cache/tpl               : " . (int)is_writable('../cache/tpl') . "
-/cache/backup            : " . (int)is_writable('../cache/backup') . "
-/upload                  : " . (int)is_writable('../upload') . "
-/kernel                  : " . (int)is_writable('../kernel') . "
-/kernel/auth             : " . (int)is_writable('../kernel/auth') . "
-/menus                   : " . (int)is_writable('../menus') . "
-/                        : " . (int)is_writable('../');
+" . $directories_summerization;
 
 $template->assign_vars(array(
 	'PHP_VERSION' => phpversion(),
@@ -133,14 +137,6 @@ $template->assign_vars(array(
 	'COOKIE_NAME' => $CONFIG['site_cookie'],
 	'SESSION_LENGTH' => $CONFIG['site_session'],
 	'SESSION_LENGTH_GUEST' => $CONFIG['site_session_invit'],
-	'C_AUTH_DIR_CACHE' => is_writable('../cache'),
-	'C_AUTH_DIR_CACHE_TPL' => is_writable('../cache/tpl'),
-	'C_AUTH_DIR_CACHE_BACKUP' => is_writable('../cache/backup'),
-	'C_AUTH_DIR_UPLOAD' => is_writable('../upload'),
-	'C_AUTH_DIR_KERNEL' => is_writable('../kernel'),
-	'C_AUTH_DIR_KERNEL_AUTH' => is_writable('../kernel/auth'),
-	'C_AUTH_DIR_MENUS' => is_writable('../menus'),
-	'C_AUTH_DIR_ROOT' => is_writable('../'),
 	'SUMMERIZATION' => $summerization
 ));
 
