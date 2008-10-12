@@ -60,7 +60,7 @@ if( !empty($idm_get) && $del ) //Suppression d'un message/topic.
 	//Si on veut supprimer le premier message, alors son rippe le topic entier (admin et modo seulement).
 	if( !empty($msg['idtopic']) && $topic['first_msg_id'] == $idm_get )
 	{
-		if( !empty($msg['idtopic']) && ($Member->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $Member->get_attribute('user_id') == $topic['user_id']) ) //Autorisé à supprimer?
+		if( !empty($msg['idtopic']) && ($User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $User->get_attribute('user_id') == $topic['user_id']) ) //Autorisé à supprimer?
 			$Forumfct->Del_topic($msg['idtopic']); //Suppresion du topic.
 		else
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -69,7 +69,7 @@ if( !empty($idm_get) && $del ) //Suppression d'un message/topic.
 	}
 	elseif( !empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get ) //Suppression d'un message.
 	{	
-		if( !empty($topic['idcat']) && ($Member->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $Member->get_attribute('user_id') == $msg['user_id']) ) //Autorisé à supprimer?
+		if( !empty($topic['idcat']) && ($User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $User->get_attribute('user_id') == $msg['user_id']) ) //Autorisé à supprimer?
 			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['idcat'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']);
 		else
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -92,7 +92,7 @@ elseif( !empty($idt_get) )
 	//On va chercher les infos sur le topic	
 	$topic = $Sql->query_array('forum_topics', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 
-	if( !$Member->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) )
+	if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 	$rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : '';
@@ -104,7 +104,7 @@ elseif( !empty($idt_get) )
 	{
 		//Vérification de l'appartenance du sujet au membres, ou modo.
 		$check_mbr = $Sql->query("SELECT user_id FROM ".PREFIX."forum_topics WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
-		if( (!empty($check_mbr) && $Member->get_attribute('user_id') == $check_mbr) || $Member->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) )
+		if( (!empty($check_mbr) && $User->get_attribute('user_id') == $check_mbr) || $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) )
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 			
@@ -113,14 +113,14 @@ elseif( !empty($idt_get) )
 		else
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	}	
-	elseif( $poll && $Member->get_attribute('user_id') !== -1 ) //Enregistrement vote du sondage
+	elseif( $poll && $User->get_attribute('user_id') !== -1 ) //Enregistrement vote du sondage
 	{
 		$info_poll = $Sql->query_array('forum_poll', 'voter_id', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 		//Si l'utilisateur n'est pas dans le champ on prend en compte le vote.
-		if( !in_array($Member->get_attribute('user_id'), explode('|', $info_poll['voter_id'])) )
+		if( !in_array($User->get_attribute('user_id'), explode('|', $info_poll['voter_id'])) )
 		{		
 			//On concatène avec les votans existants.
-			$add_voter_id = "voter_id = CONCAT(voter_id, '|" . $Member->get_attribute('user_id') . "'),"; 
+			$add_voter_id = "voter_id = CONCAT(voter_id, '|" . $User->get_attribute('user_id') . "'),"; 
 			$array_votes = explode('|', $info_poll['votes']);
 				
 			if( $info_poll['type'] == 0 ) //Réponse simple.
@@ -148,7 +148,7 @@ elseif( !empty($idt_get) )
 	elseif( !empty($lock_get) )
 	{
 		//Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.
-		if( $Member->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) )
+		if( $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) )
 		{
 			if( $lock_get === 'true' ) //Verrouillage du topic.
 			{
@@ -177,13 +177,13 @@ elseif( !empty($idt_get) )
 	else
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( !empty($track) && $Member->check_level(MEMBER_LEVEL) ) //Ajout du sujet aux sujets suivis.
+elseif( !empty($track) && $User->check_level(MEMBER_LEVEL) ) //Ajout du sujet aux sujets suivis.
 {
 	$Forumfct->Track_topic($track); //Ajout du sujet aux sujets suivis.
 	
 	redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $track, '-' . $track . '.php', '&') . '#go_bottom');
 }
-elseif( !empty($untrack) && $Member->check_level(MEMBER_LEVEL) ) //Retrait du sujet, aux sujets suivis.
+elseif( !empty($untrack) && $User->check_level(MEMBER_LEVEL) ) //Retrait du sujet, aux sujets suivis.
 {
 	$Forumfct->Untrack_topic($untrack); //Retrait du sujet aux sujets suivis.
 	
@@ -191,17 +191,17 @@ elseif( !empty($untrack) && $Member->check_level(MEMBER_LEVEL) ) //Retrait du su
 }
 elseif( $read ) //Marquer comme lu.
 {
-	if( !$Member->check_level(MEMBER_LEVEL) ) //Réservé aux membres.
+	if( !$User->check_level(MEMBER_LEVEL) ) //Réservé aux membres.
 		redirect(HOST . DIR . '/member/error.php'); 
 			
 	//Calcul du temps de péremption, ou de dernière vue des messages.
-	$check_last_view_forum = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$check_last_view_forum = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 
 	//Modification du last_view_forum, si le membre est déjà dans la table
 	if( !empty($check_last_view_forum) )
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."member_extend SET last_view_forum = '" .  time(). "' WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__); 	
+		$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."member_extend SET last_view_forum = '" .  time(). "' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__); 	
 	else
-		$Sql->query_inject("INSERT INTO ".PREFIX."member_extend (user_id,last_view_forum) VALUES ('" . $Member->get_attribute('user_id') . "', '" .  time(). "')", __LINE__, __FILE__); 	
+		$Sql->query_inject("INSERT INTO ".PREFIX."member_extend (user_id,last_view_forum) VALUES ('" . $User->get_attribute('user_id') . "', '" .  time(). "')", __LINE__, __FILE__); 	
 
 	redirect(HOST . DIR . '/forum/index.php' . SID2);
 }

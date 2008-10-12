@@ -60,7 +60,7 @@ if( $id_edit > 0 )
 		$Bread_crumb->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
-	if( $Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
+	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
 		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
 	$Bread_crumb->Reverse_links();
 }
@@ -93,7 +93,7 @@ if( !empty($contents) )
 			$special_auth = !empty($page_infos['auth']);
 			$array_auth = sunserialize($page_infos['auth']);
 			//Vérification de l'autorisation d'éditer la page
-			if( ($special_auth && !$Member->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+			if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 				redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
 			
 			//on vérifie que la catégorie ne s'insère pas dans un de ses filles
@@ -133,7 +133,7 @@ if( !empty($contents) )
 		//Création d'une page
 		elseif( !empty($title) )
 		{
-			if( !$Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
+			if( !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
 				redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
 			
 			$encoded_title = url_encode_rewrite($title);
@@ -142,7 +142,7 @@ if( !empty($contents) )
 			//Si l'article n'existe pas déjà, on enregistre
 			if( $is_already_page == 0 )
 			{
-				$Sql->query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . $Member->get_attribute('user_id') . "', '" . $count_hits . "', '" . $enable_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . $User->get_attribute('user_id') . "', '" . $count_hits . "', '" . $enable_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "')", __LINE__, __FILE__);
 				//Si c'est une catégorie
 				if( $is_cat > 0 )
 				{
@@ -174,7 +174,7 @@ elseif( $del_article > 0 )
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = sunserialize($page_infos['auth']);
-	if( ($special_auth && !$Member->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
 		
 	//la page existe bien, on supprime
@@ -197,7 +197,7 @@ if( $id_edit > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = sunserialize($page_infos['auth']);
 	//Vérification de l'autorisation d'éditer la page
-	if( ($special_auth && !$Member->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
 	
 	//Erreur d'enregistrement ?
@@ -232,7 +232,7 @@ if( $id_edit > 0 )
 else
 {
 	//Autorisations
-	if( !$Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
+	if( !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 		
 	//La page existe déjà !

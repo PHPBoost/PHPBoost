@@ -150,15 +150,15 @@ class FaqCats extends CategoriesManagement
 	//Method which determines if a category is writable by the current user
 	function check_auth($id)
 	{
-		global $Member, $FAQ_CATS, $FAQ_CONFIG;
-		$auth_read = $Member->check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
+		global $User, $FAQ_CATS, $FAQ_CONFIG;
+		$auth_read = $User->check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
 		$id_cat = $id;
 
 		//We read the categories recursively
 		while( $id_cat > 0 )
 		{
 			if( !empty($FAQ_CONFIG[$id_cat]['auth']) )
-				$auth_read  = $auth_read && $Member->check_auth($FAQ_CATS[$id_cat]['auth'], AUTH_READ);
+				$auth_read  = $auth_read && $User->check_auth($FAQ_CATS[$id_cat]['auth'], AUTH_READ);
 			
 			$id_cat = (int)$FAQ_CATS[$id_cat]['id_parent'];
 		}

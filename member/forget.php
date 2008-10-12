@@ -34,7 +34,7 @@ $activ_get = retrieve(GET, 'activ', '');
 $user_get = retrieve(GET, 'u', 0);
 $forget = retrieve(POST, 'forget', '');
 
-if( !$Member->check_level(MEMBER_LEVEL) )
+if( !$User->check_level(MEMBER_LEVEL) )
 {
 	if( !$activ_confirm )
 	{	

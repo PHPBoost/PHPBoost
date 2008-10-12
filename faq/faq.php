@@ -93,7 +93,7 @@ if( $num_subcats > 0 )
 	foreach( $FAQ_CATS as $id => $value )
 	{
 		//List of children categories
-		if( $id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || $Member->check_auth($value['auth'], AUTH_READ)) )
+		if( $id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || $User->check_auth($value['auth'], AUTH_READ)) )
 		{
 			if ( $i % $FAQ_CONFIG['num_cols'] == 1 )
 				$Template->Assign_block_vars('row', array());
@@ -207,7 +207,7 @@ $Template->Assign_vars(array(
 	'L_QUESTION_URL' => 'URL de la question',
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
-	'C_ADMIN' => $Member->check_level(ADMIN_LEVEL),
+	'C_ADMIN' => $User->check_level(ADMIN_LEVEL),
 	'U_MANAGEMENT' => transid('management.php?faq=' . $id_faq),
 	'U_ADMIN_CAT' => $id_faq > 0 ? transid('admin_faq_cats.php?edit=' . $id_faq) : transid('admin_faq_cats.php')
 ));

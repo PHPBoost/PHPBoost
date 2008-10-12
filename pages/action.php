@@ -55,7 +55,7 @@ if( !empty($new_title) && $id_rename_post > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = sunserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if( ($special_auth && !$Member->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$encoded_title = url_encode_rewrite($new_title);
@@ -93,7 +93,7 @@ elseif( !empty($redirection_name) && $id_new_post > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = sunserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if( ($special_auth && !$Member->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$encoded_title = url_encode_rewrite($redirection_name);
@@ -117,7 +117,7 @@ elseif( $del_redirection > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = sunserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if( ($special_auth && !$Member->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 		
 	//On supprime la redirection
@@ -134,7 +134,7 @@ elseif( $del_cat_post > 0 && $report_cat >= 0 )
 	
 	$general_auth = empty($page_infos['auth']) ? true : false;
 	$array_auth = !empty($page_infos['auth']) ? sunserialize($page_infos['auth']) : array();
-	if( !((!$general_auth || $Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) && ($general_auth || $Member->check_auth($array_auth , EDIT_PAGE))) )
+	if( !((!$general_auth || $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) && ($general_auth || $User->check_auth($array_auth , EDIT_PAGE))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 	$sub_cats = array();
@@ -195,7 +195,7 @@ if( $id_page > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = sunserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if( ($special_auth && !$Member->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	if($id_redirection > 0 )
@@ -210,11 +210,11 @@ if( $id_page > 0 )
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
-	if( empty($_PAGES_CATS[$id]['auth']) || $Member->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )	
+	if( empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )	
 		$Bread_crumb->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
-	if( $Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
+	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
 		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
 	$Bread_crumb->Reverse_links();
 }
@@ -233,7 +233,7 @@ if( $del_cat > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = sunserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if( ($special_auth && !$Member->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$cats = array();
@@ -357,7 +357,7 @@ elseif( $id_redirection > 0 )
 //Liste des redirections
 else
 {
-	if( !$Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
+	if( !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 
 	$Template->Assign_block_vars('redirections', array());
@@ -377,7 +377,7 @@ else
 		$Template->Assign_block_vars('redirections.list', array(
 			'REDIRECTION_TITLE' => '<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a>',
 			'REDIRECTION_TARGET' => '<a href="' . transid('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',
-			'ACTIONS' => ( ($special_auth && $Member->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $Member->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) ) ? '<a href="action.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->Module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>&nbsp;&bull;&nbsp;<a href="action.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '"><img src="' . $Template->Module_data_path('pages') . '/images/redirect.png" alt="' . $LANG['pages_manage_redirection'] . '" /></a>' : ''
+			'ACTIONS' => ( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) ) ? '<a href="action.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->Module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>&nbsp;&bull;&nbsp;<a href="action.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '"><img src="' . $Template->Module_data_path('pages') . '/images/redirect.png" alt="' . $LANG['pages_manage_redirection'] . '" /></a>' : ''
 		));
 	}
 	

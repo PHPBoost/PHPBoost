@@ -51,7 +51,7 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 	$break = 0;
 	foreach($_array_random_pics as $key => $array_pics_info)
 	{
-		if( $Member->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY) )
+		if( $User->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY) )
 		{	
 			$gallery_mini[] = $array_pics_info;
 			$break++;
@@ -75,7 +75,7 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 		$break = 0;
 		foreach($_array_random_pics as $key => $array_pics_info)
 		{
-			if( $Member->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY) )
+			if( $User->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY) )
 			{	
 				$gallery_mini[] = $array_pics_info;
 				$break++;

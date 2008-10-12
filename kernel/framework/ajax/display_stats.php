@@ -70,9 +70,9 @@ if( $get_visit_month )
 		if( !isset($array_stats[$i]) )
 			$array_stats[$i] = 0;
 	}
-	$Stats->Load_statsdata($array_stats, 'histogram', 5);
+	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->Draw_histogram(440, 250, '', array($LANG['days'], $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array($LANG['days'], $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif( $get_visit_year )
 {
@@ -95,9 +95,9 @@ elseif( $get_visit_year )
 		if( !isset($array_stats[$i]) )
 			$array_stats[$i] = 0;
 	}
-	$Stats->Load_statsdata($array_stats, 'histogram', 5);
+	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->Draw_histogram(440, 250, '', array($LANG['month'], $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array($LANG['month'], $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif( $get_pages_day )
 {
@@ -117,9 +117,9 @@ elseif( $get_pages_day )
 		if( !isset($array_stats[$i]) )
 			$array_stats[$i] = 0;
 	}
-	$Stats->Load_statsdata($array_stats, 'histogram', 5);
+	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->Draw_histogram(440, 250, '', array($LANG['hours'], $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array($LANG['hours'], $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif( $get_pages_month )
 {
@@ -145,9 +145,9 @@ elseif( $get_pages_month )
 		if( !isset($array_stats[$i]) )
 			$array_stats[$i] = 0;
 	}
-	$Stats->Load_statsdata($array_stats, 'histogram', 5);
+	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->Draw_histogram(440, 250, '', array($LANG['days'], $LANG['page_s']), NO_DRAW_LEGEND, NO_DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array($LANG['days'], $LANG['page_s']), NO_DRAW_LEGEND, NO_DRAW_VALUES, 8);
 }
 elseif( $get_pages_year )
 {
@@ -170,9 +170,9 @@ elseif( $get_pages_year )
 		if( !isset($array_stats[$i]) )
 			$array_stats[$i] = 0;
 	}
-	$Stats->Load_statsdata($array_stats, 'histogram', 5);
+	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
-	$Stats->Draw_histogram(440, 250, '', array($LANG['month'], $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+	$Stats->draw_histogram(440, 250, '', array($LANG['month'], $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif( $get_brw ) //Navigateurs.
 {
@@ -194,9 +194,9 @@ elseif( $get_brw ) //Navigateurs.
 		
 	@fclose($file);
 	
-	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
+	$Stats->load_data($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
-	$Stats->Draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/browsers.png');
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/browsers.png');
 }
 elseif( $get_os )
 {
@@ -217,9 +217,9 @@ elseif( $get_os )
 		$array_stats[$stats_array_os['other'][0]] = $percent_other;
 	@fclose($file);
 	
-	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
+	$Stats->load_data($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
-	$Stats->Draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/os.png');
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/os.png');
 }	
 elseif( $get_lang )
 {
@@ -248,9 +248,9 @@ elseif( $get_lang )
 
 	@fclose($file);
 	
-	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
+	$Stats->load_data($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
-	$Stats->Draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/lang.png');
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/lang.png');
 }
 elseif( $get_theme )
 {
@@ -270,9 +270,9 @@ elseif( $get_theme )
 	}	
 	$Sql->query_close($result);
 	
-	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
+	$Stats->load_data($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
-	$Stats->Draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/theme.png');
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/theme.png');
 }
 elseif( $get_sex )
 {
@@ -303,9 +303,9 @@ elseif( $get_sex )
 	}	
 	$Sql->query_close($result);
 	
-	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
+	$Stats->load_data($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
-	$Stats->Draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/sex.png');
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/sex.png');
 }
 elseif( $get_bot )
 {
@@ -325,9 +325,9 @@ elseif( $get_bot )
 	}
 	@fclose($file);
 	
-	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
+	$Stats->load_data($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
-	$Stats->Draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/bot.png');
+	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/bot.png');
 }
 
 ?>

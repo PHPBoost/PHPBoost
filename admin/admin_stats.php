@@ -102,10 +102,10 @@ if( !empty($members) )
 	include_once('../kernel/framework/util/images_stats.class.php');
 	$Stats = new Stats();
 		
-	$Stats->Load_statsdata($stats_array, 'ellipse');
+	$Stats->load_data($stats_array, 'ellipse');
 	foreach($Stats->data_stats as $name => $angle_value)
 	{
-		$array_color = $Stats->array_allocated_color[$Stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+		$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 		$Template->Assign_block_vars('templates', array(
 			'NBR_THEME' => number_round(($angle_value*$Stats->nbr_entry)/360, 0),
 			'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
@@ -138,10 +138,10 @@ if( !empty($members) )
 	$Sql->query_close($result);
 	
 	$Stats->color_index = 0;	
-	$Stats->Load_statsdata($stats_array, 'ellipse');
+	$Stats->load_data($stats_array, 'ellipse');
 	foreach($Stats->data_stats as $name => $angle_value)
 	{
-		$array_color = $Stats->array_allocated_color[$Stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+		$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 		$Template->Assign_block_vars('sex', array(
 			'NBR_MBR' => number_round(($angle_value*$Stats->nbr_entry)/360, 0),
 			'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
@@ -1083,7 +1083,7 @@ elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques cam
 	include_once('../kernel/framework/util/images_stats.class.php');
 	$Stats = new Stats();
 		
-	$Stats->Load_statsdata($stats_array, 'ellipse', 5);
+	$Stats->load_data($stats_array, 'ellipse', 5);
 	
 	//Tri décroissant.
 	arsort($Stats->data_stats);
@@ -1110,7 +1110,7 @@ elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques cam
 		
 		if( !isset($array_order[$value_name]) )
 		{
-			$array_color = $Stats->array_allocated_color[$Stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+			$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 			$array_stats_tmp[$value_name] = array($name_stats, $array_color, $stats_img);
 			$array_order[$value_name] = $angle_value;
 		}
@@ -1160,7 +1160,7 @@ elseif( $bot )
 	include_once('../kernel/framework/util/images_stats.class.php');
 	$Stats = new Stats();
 		
-	$Stats->Load_statsdata($stats_array, 'ellipse');
+	$Stats->load_data($stats_array, 'ellipse');
 
 	$stats_info = array('Google bot' => 'google.gif', 'Yahoo Slurp' => 'yahoo.gif', 'Msn bot' => 'msn.gif', 'Voila' => 'voila.gif', 'Gigablast' => 'gigablast.gif', 'Ia archiver' => 'ia_archiver.gif', 'Exalead' => 'exalead.gif');
 
@@ -1168,7 +1168,7 @@ elseif( $bot )
 	{
 		if( isset($stats_info[$key]) )
 		{ 
-			$array_color = $Stats->array_allocated_color[$Stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+			$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 			$name = ucfirst(str_replace(array('_', '.gif'), array(' ', ' '), $stats_info[$key]));
 			$Template->Assign_block_vars('list', array(
 				'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',

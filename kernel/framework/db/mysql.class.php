@@ -41,9 +41,7 @@ class Sql
 {
 	## Public Methods ##
 	//Constructeur de la classe Sql. Il prend en paramètre les paramètres de connexion à la base de données. Par défaut la classe Sql gère de façon autonome les erreurs de connexion, mais on peut demander à les gérer manuellement
-	function Sql()
-	{
-	}
+	function Sql() { }
 	
 	//Connexion
 	function connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = EXPLICIT_ERRORS_MANAGEMENT)
@@ -100,13 +98,13 @@ class Sql
 
 	//Requête simple
 	function query($query, $errline, $errfile) 
-	{		
-		$this->result = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);		
-		$this->result = @mysql_fetch_row($this->result);
-		$this->close($this->result); //Déchargement mémoire.	
-		$this->req++;			
+	{
+		$result = mysql_query($query, $this->link);// or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
+		$result = mysql_fetch_row($result);
+		$this->query_close($result); //Déchargement mémoire.
+		$this->req++;
 
-		return $this->result[0];
+		return $result[0];
 	}
 
 	//Requête multiple.
@@ -135,14 +133,14 @@ class Sql
 		
 		$error_line = func_get_arg($nbr_arg - 2);
 		$error_file = func_get_arg($nbr_arg - 1);
-		$this->result = mysql_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req, $this->link) or $this->_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Invalid SQL request', $error_line, $error_file);
-		$this->result = mysql_fetch_assoc($this->result);
+		$result = mysql_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req, $this->link) or $this->_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Invalid SQL request', $error_line, $error_file);
+		$result = mysql_fetch_assoc($result);
 		
 		//Fermeture de la ressource
-		$this->close($this->result);
+		$this->query_close($result);
 		$this->req++;		
 		
-		return $this->result;
+		return $result;
 	}
 
 	//Requete d'injection (insert, update, et requêtes complexes..)
@@ -157,21 +155,21 @@ class Sql
 	//Requête de boucle.
 	function query_while($query, $errline, $errfile) 
 	{
-		$this->result = mysql_query($query, $this->link) or $this->_error($query, 'invalid while request', $errline, $errfile);
+		$result = mysql_query($query, $this->link) or $this->_error($query, 'invalid while request', $errline, $errfile);
 		$this->req++;
 
-		return $this->result;
+		return $result;
 	}
 	
 	//Nombre d'entrées dans la table.
 	function count_table($table, $errline, $errfile)
 	{ 
-		$this->result = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, $this->link) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Invalid count request', $errline, $errfile);
-		$this->result = mysql_fetch_assoc($this->result);
-		$this->close($this->result); //Déchargement mémoire.		
+		$result = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, $this->link) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Invalid count request', $errline, $errfile);
+		$result = mysql_fetch_assoc($result);
+		$this->query_close($result); //Déchargement mémoire.		
 		$this->req++;
 		
-		return $this->result['total'];
+		return $result['total'];
 	}
 
 	//Limite des résultats de la requete sql.
@@ -238,7 +236,7 @@ class Sql
 	function query_close($result)
 	{
 		if( is_resource($result) )
-			return mysql_free_result($result);		
+			return mysql_free_result($result);
 	}
 
 	//Fermeture de la connexion mysql ouverte.
@@ -421,7 +419,6 @@ class Sql
 	
 	## Private attributes ##
 	var $link; //Lien avec la base de donnée.
-	var $result = array(); //Resultat de la requête.
 	var $req = 0; //Nombre de requêtes.
 	var $connected = false;
 	var $sql_base = '';

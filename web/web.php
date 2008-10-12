@@ -33,12 +33,12 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 {
 	$Template->Set_filenames(array('web'=> 'web/web.tpl'));
 	
-	if( !$Member->check_level($CAT_WEB[$idcat]['secure']) )
+	if( !$User->check_level($CAT_WEB[$idcat]['secure']) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	if( empty($web['id']) )
 		$Errorh->Error_handler('e_unexist_link_web', E_USER_REDIRECT);
 		
-	if( $Member->check_level(ADMIN_LEVEL) )
+	if( $User->check_level(ADMIN_LEVEL) )
 	{
 		$java = "<script language='JavaScript' type='text/javascript'>
 		<!--
@@ -104,7 +104,7 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 {
 	$Template->Set_filenames(array('web'=> 'web/web.tpl'));
 	
-	if( !$Member->check_level($CAT_WEB[$idcat]['secure']) )
+	if( !$User->check_level($CAT_WEB[$idcat]['secure']) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	$nbr_web = $Sql->query("SELECT COUNT(*) as compt 
@@ -199,11 +199,11 @@ else
 	
 	$total_link = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."web_cat wc
 	LEFT JOIN ".PREFIX."web w ON w.idcat = wc.id
-	WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $Member->get_attribute('level') . "'", __LINE__, __FILE__);
-	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."web_cat WHERE aprob = 1 AND secure <= '" . $Member->get_attribute('level') . "'", __LINE__, __FILE__);
+	WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
+	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 	
 	$edit = '';
-	if( $Member->check_level(ADMIN_LEVEL) )
+	if( $User->check_level(ADMIN_LEVEL) )
 		$edit = '&nbsp;&nbsp;<a href="admin_web_cat.php' .  SID . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
 
 	//On crée une pagination si le nombre de catégories est trop important.
@@ -230,7 +230,7 @@ else
 	"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count
 	FROM ".PREFIX."web_cat aw
 	LEFT JOIN ".PREFIX."web w ON w.idcat = aw.id AND w.aprob = 1
-	WHERE aw.aprob = 1 AND aw.secure <= '" . $Member->get_attribute('level') . "'
+	WHERE aw.aprob = 1 AND aw.secure <= '" . $User->get_attribute('level') . "'
 	GROUP BY aw.id
 	ORDER BY aw.class
 	" . $Sql->limit($Pagination->First_msg($CONFIG_WEB['nbr_cat_max'], 'p'), $CONFIG_WEB['nbr_cat_max']), __LINE__, __FILE__);

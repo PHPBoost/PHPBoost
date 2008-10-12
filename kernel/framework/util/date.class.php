@@ -241,7 +241,7 @@ class Date
 	#This should be static#
 	function _compute_server_user_difference($referencial_timezone = 0)
 	{
-		global $CONFIG, $Member;
+		global $CONFIG, $User;
 		
 		// Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été
 	    $server_hour = number_round(date('Z')/3600, 0) - date('I');
@@ -259,7 +259,7 @@ class Date
 				break;
 				
 			case TIMEZONE_USER:
-				$timezone = $Member->get_attribute('user_timezone') - $server_hour;
+				$timezone = $User->get_attribute('user_timezone') - $server_hour;
 				break;
 			
 			default:

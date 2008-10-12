@@ -115,7 +115,7 @@ class ForumInterface extends ModuleInterface
      *  Renvoie le formulaire de recherche du forum
      */
     {
-        global $Member, $MODULES, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG, $Sql;
+        global $User, $MODULES, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG, $Sql;
         
         require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
         $Tpl = new Template('forum/forum_search_form.tpl');
@@ -123,7 +123,7 @@ class ForumInterface extends ModuleInterface
         //Autorisation sur le module.
         if( isset($MODULES['forum']) && $MODULES['forum']['activ'] == 1 )
         {
-            if( !$Member->check_auth($MODULES['forum']['auth'], ACCESS_MODULE) ) //Accès non autorisé!
+            if( !$User->check_auth($MODULES['forum']['auth'], ACCESS_MODULE) ) //Accès non autorisé!
                 $Errorh->Error_handler('e_auth', E_USER_REDIRECT);
         }
         
@@ -168,7 +168,7 @@ class ForumInterface extends ModuleInterface
         {
             foreach($CAT_FORUM as $id => $key)
             {
-                if( $Member->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
+                if( $User->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
                 {
                     $Tpl->Assign_block_vars('cats', array(
                         'MARGIN' => ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----',
@@ -195,7 +195,7 @@ class ForumInterface extends ModuleInterface
      *  Renvoie la requête de recherche dans le forum
      */
     {
-        global $CONFIG, $CAT_FORUM, $Member, $Cache, $Sql;
+        global $CONFIG, $CAT_FORUM, $User, $Cache, $Sql;
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         $Cache->Load_file('forum');
         
@@ -211,7 +211,7 @@ class ForumInterface extends ModuleInterface
         {
             foreach($CAT_FORUM as $id => $key)
             {
-                if( !$Member->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
+                if( !$User->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
                     $auth_cats .= $id.',';
             }
         }
@@ -223,7 +223,7 @@ class ForumInterface extends ModuleInterface
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
                 MAX(( 2 * MATCH(t.title) AGAINST('".$search."') + MATCH(msg.contents) AGAINST('".$search."') ) / 3) * " . $weight . " AS `relevance`,
-                ".$Sql->Concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                ".$Sql->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
@@ -238,7 +238,7 @@ class ForumInterface extends ModuleInterface
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
                 MAX(MATCH(msg.contents) AGAINST('".$search."')) * " . $weight . " AS `relevance`,
-                ".$Sql->Concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                ".$Sql->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
@@ -252,7 +252,7 @@ class ForumInterface extends ModuleInterface
                 msg.id AS `id_content`,
                 t.title AS `title`,
                 MATCH(t.title) AGAINST('".$search."') * " . $weight . " AS `relevance`,
-                ".$Sql->Concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                ".$Sql->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
@@ -345,7 +345,7 @@ class ForumInterface extends ModuleInterface
     
     function syndication_data($idcat = 0)
     {
-        global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_FORUM, $CAT_FORUM, $Member;
+        global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_FORUM, $CAT_FORUM, $User;
 		
         $_idcat = $idcat;
         require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');

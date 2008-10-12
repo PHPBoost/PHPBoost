@@ -126,7 +126,7 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 			));
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			
-			if( ((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $Member->check_auth($article_auth , WIKI_REDIRECT))) )
+			if( ((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))) )
 			{
 				$Template->Assign_block_vars('redirect.remove_redirection', array(
 					'L_REMOVE_REDIRECTION' => $LANG['wiki_remove_redirection'],

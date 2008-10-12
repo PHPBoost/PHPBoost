@@ -114,9 +114,9 @@ class Modules
         {
             if( in_array($moduleId, $this->availables_modules) )
             {
-                global $Member, $MODULES;
+                global $User, $MODULES;
                 
-                if( $Member->check_auth($MODULES[$moduleId]['auth'], ACCESS_MODULE) )
+                if( $User->check_auth($MODULES[$moduleId]['auth'], ACCESS_MODULE) )
                 {
                     if( @include_once(PATH_TO_ROOT . '/'.$moduleId.'/'.$moduleId.'_interface.class.php') )
                     {

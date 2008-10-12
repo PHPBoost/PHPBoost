@@ -54,7 +54,7 @@ $remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppr
 
 if( $id_auth > 0 )
 {
-	if( !$Member->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
+	if( !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 	$encoded_title = $Sql->query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE id = '" . $id_auth . "'", __LINE__, __FILE__);
@@ -93,7 +93,7 @@ if( $id_change_status > 0 )
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
-	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $Member->check_auth($article_auth , WIKI_STATUS))) )
+	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 	if( !empty($article_infos['encoded_title']) )//Si l'article existe
@@ -113,7 +113,7 @@ elseif( $move > 0 ) //Déplacement d'un article
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
-	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $Member->check_auth($article_auth , WIKI_MOVE))) )
+	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	if( $article_infos['is_cat'] == 0 )//Article: il ne peut pas y avoir de problème
@@ -152,7 +152,7 @@ elseif( $id_to_rename > 0 && !empty($new_title) ) //Renommer un article
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 
-	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $Member->check_auth($article_auth , WIKI_RENAME))) )
+	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	$already_exists = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title = '" . url_encode_rewrite($new_title) . "'", __LINE__, __FILE__);
@@ -205,7 +205,7 @@ elseif( $del_redirection > 0 )//Supprimer une redirection
 		$general_auth = empty($article_infos['auth']) ? true : false;
 		$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
-		if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $Member->check_auth($article_auth , WIKI_REDIRECT))) )
+		if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))) )
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 		
 		$Sql->query_inject("DELETE FROM ".PREFIX."wiki_articles WHERE id = '" . $del_redirection . "'", __LINE__, __FILE__);
@@ -219,7 +219,7 @@ elseif( $create_redirection > 0 && !empty($redirection_title) )
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 
-	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $Member->check_auth($article_auth , WIKI_REDIRECT))) )
+	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	$num_title = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title =  '" . url_encode_rewrite($redirection_title) . "'", __LINE__, __FILE__);
@@ -248,7 +248,7 @@ elseif( !empty($restore) ) //on restaure un ancien article
 		$general_auth = empty($article_infos['auth']) ? true : false;
 		$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
-		if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $Member->check_auth($article_auth , WIKI_DELETE_ARCHIVE))) )
+		if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE_ARCHIVE))) )
 			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 		
 		//On met à jour la table articles avec le nouvel id
@@ -270,7 +270,7 @@ elseif( $del_archive > 0 )
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 
-	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $Member->check_auth($article_auth , WIKI_DELETE_ARCHIVE))) )
+	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE_ARCHIVE))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	if( $is_activ == 0 ) //C'est une archive -> on peut supprimer
@@ -285,7 +285,7 @@ elseif( $del_article > 0 ) //Suppression d'un article
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 
-	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $Member->check_auth($article_auth , WIKI_DELETE))) )
+	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	//On rippe l'article
@@ -307,7 +307,7 @@ elseif( $del_to_remove > 0 && $report_cat >= 0 ) //Suppression d'une catégorie
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 
-	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $Member->check_auth($article_auth , WIKI_DELETE))) )
+	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	$sub_cats = array();

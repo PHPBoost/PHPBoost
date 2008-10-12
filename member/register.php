@@ -40,7 +40,7 @@ $get_erroru = retrieve(GET, 'erroru', '');
 
 if( empty($key) )
 {
-	if( !$Member->check_level(MEMBER_LEVEL) && !empty($CONFIG_MEMBER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru) )
+	if( !$User->check_level(MEMBER_LEVEL) && !empty($CONFIG_MEMBER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru) )
 	{
 		$Template->Set_filenames(array(
 			'register'=> 'register.tpl'
@@ -59,7 +59,7 @@ if( empty($key) )
 		
 		$Template->Pparse('register');
 	}
-	elseif( $Member->check_level(MEMBER_LEVEL) !== true && (!empty($_POST['confirm']) || empty($CONFIG_MEMBER['msg_register']) || !empty($get_error) || !empty($get_erroru)) )
+	elseif( $User->check_level(MEMBER_LEVEL) !== true && (!empty($_POST['confirm']) || empty($CONFIG_MEMBER['msg_register']) || !empty($get_error) || !empty($get_erroru)) )
 	{
 		$Template->Set_filenames(array(
 			'register'=> 'register.tpl'
@@ -359,7 +359,7 @@ if( empty($key) )
 	else
 		redirect(get_start_page());
 }
-elseif( !empty($key) && $Member->check_level(MEMBER_LEVEL) !== true ) //Activation du compte membre
+elseif( !empty($key) && $User->check_level(MEMBER_LEVEL) !== true ) //Activation du compte membre
 {
 	$Template->Set_filenames(array(
 		'register'=> 'register.tpl'

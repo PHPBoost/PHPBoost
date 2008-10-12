@@ -45,9 +45,9 @@ class Comments
 	//Ajoute un commentaire et retourne l'identifiant inséré.
 	function add($contents, $login)
 	{
-		global $Sql, $Member;
+		global $Sql, $User;
 		
-		$Sql->query_inject("INSERT INTO ".PREFIX."com (idprov, login, user_id, contents, timestamp, script, path) VALUES('" . $this->idprov . "', '" . $login . "', '" . $Member->get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '.." . strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."com (idprov, login, user_id, contents, timestamp, script, path) VALUES('" . $this->idprov . "', '" . $login . "', '" . $User->get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '.." . strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "')", __LINE__, __FILE__);
 		$idcom = $Sql->insert_id("SELECT MAX(idcom) FROM ".PREFIX."com");
 		
 		//Incrémente le nombre de commentaire dans la table du script concerné.
@@ -132,7 +132,7 @@ class Comments
 	//Méthode d'affichage
 	function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false, $page_path_to_root = '')
 	{
-		global $Cache, $Member, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_MEMBER, $CONFIG_COM, $_array_rank, $_array_groups_auth;
+		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_MEMBER, $CONFIG_COM, $_array_rank, $_array_groups_auth;
 		
 		if( $integrated_in_environment )
 		{
@@ -163,7 +163,7 @@ class Comments
 			if( !empty($_POST['valid_com']) && !$updatecom )
 			{
 				//Membre en lecture seule?
-				if( $Member->get_attribute('user_readonly') > time() ) 
+				if( $User->get_attribute('user_readonly') > time() ) 
 					$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 				
 				$login = retrieve(POST, 'login', ''); //Pseudo posté.
@@ -172,15 +172,15 @@ class Comments
 				if( !empty($login) && !empty($contents) )
 				{
 					//Status des commentaires, verrouillé/déverrouillé?
-					if( $this->lock_com >= 1 && !$Member->check_level(MODO_LEVEL) )
+					if( $this->lock_com >= 1 && !$User->check_level(MODO_LEVEL) )
 						redirect($path_redirect);
 					
 					//Autorisation de poster des commentaires? 
-					if( $Member->check_level($CONFIG_COM['com_auth']) )
+					if( $User->check_level($CONFIG_COM['com_auth']) )
 					{
 						//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-						$check_time = ($Member->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."com WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
-						if( !empty($check_time) && !$Member->check_max_value(AUTH_FLOOD) )
+						$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."com WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+						if( !empty($check_time) && !$User->check_max_value(AUTH_FLOOD) )
 						{				
 							if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcule la fin du delai.	
 								redirect($path_redirect . '&errorh=flood#errorh');
@@ -212,13 +212,13 @@ class Comments
 			elseif( $updatecom || $delcom > 0 || $editcom > 0 ) //Modération des commentaires.
 			{
 				//Membre en lecture seule?
-				if( $Member->get_attribute('user_readonly') > time() ) 
+				if( $User->get_attribute('user_readonly') > time() ) 
 					$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 				
 				$row = $Sql->query_array('com', '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 				$row['user_id'] = (int)$row['user_id'];
 				
-				if( $this->idcom != 0 && ($Member->check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1)) ) //Modération des commentaires.
+				if( $this->idcom != 0 && ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1)) ) //Modération des commentaires.
 				{
 					if( $delcom > 0) //Suppression du commentaire.
 					{
@@ -240,7 +240,7 @@ class Comments
 						if( $row['user_id'] !== -1 )
 							$Template->Assign_vars(array(
 								'C_HIDDEN_COM' => true,
-								'LOGIN' => $Member->get_attribute('login')
+								'LOGIN' => $User->get_attribute('login')
 							));
 						else
 							$Template->Assign_vars(array(
@@ -300,9 +300,9 @@ class Comments
 				else
 					$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 			}
-			elseif( isset($_GET['lock']) && $Member->check_level(MODO_LEVEL) ) //Verrouillage des commentaires.
+			elseif( isset($_GET['lock']) && $User->check_level(MODO_LEVEL) ) //Verrouillage des commentaires.
 			{
-				if( $Member->check_level(MODO_LEVEL) )
+				if( $User->check_level(MODO_LEVEL) )
 				{
 					$lock = retrieve(GET, 'lock', 0);
 					$this->lock($lock);
@@ -331,7 +331,7 @@ class Comments
 				));
 				
 				//Affichage du lien de verrouillage/déverrouillage.
-				if( $Member->check_level(MODO_LEVEL) )
+				if( $User->check_level(MODO_LEVEL) )
 				{
 					$Template->Assign_vars(array(
 						'COM_LOCK' => true,
@@ -370,9 +370,9 @@ class Comments
 					$Errorh->Error_handler($errstr, E_USER_NOTICE);
 				
 				//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
-				if( !$this->lock_com || $Member->check_level(MODO_LEVEL) )
+				if( !$this->lock_com || $User->check_level(MODO_LEVEL) )
 				{
-					if( $Member->check_level($CONFIG_COM['com_auth']) )
+					if( $User->check_level($CONFIG_COM['com_auth']) )
 						$Template->Assign_vars(array(
 							'AUTH_POST_COM' => true
 						));
@@ -380,10 +380,10 @@ class Comments
 						$Errorh->Error_handler($LANG['e_unauthorized'], E_USER_NOTICE);
 					
 					//Pseudo du membre connecté.
-					if( $Member->get_attribute('user_id') !== -1 )
+					if( $User->get_attribute('user_id') !== -1 )
 						$Template->Assign_vars(array(
 							'C_HIDDEN_COM' => true,
-							'LOGIN' => $Member->get_attribute('login')
+							'LOGIN' => $User->get_attribute('login')
 						));
 					else
 						$Template->Assign_vars(array(
@@ -450,7 +450,7 @@ class Comments
 					$del = '';
 					
 					$is_guest = ($row['user_id'] === -1);
-					$is_modo = $Member->check_level(MODO_LEVEL);
+					$is_modo = $User->check_level(MODO_LEVEL);
 					$warning = '';
 					$readonly = '';
 					if( $is_modo && !$is_guest ) //Modération.
@@ -460,7 +460,7 @@ class Comments
 					}
 					
 					//Edition/suppression.
-					if( $is_modo || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1) )
+					if( $is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1) )
 					{
 						$edit = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&editcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
 						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&delcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '" onClick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';

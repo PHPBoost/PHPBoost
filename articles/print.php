@@ -39,7 +39,7 @@ if( $idart > 0 )
 	$idartcat = $articles['idcat'];
 	
 	//Niveau d'autorisation de la catégorie
-	if( !isset($CAT_ARTICLES[$idartcat]) || !$Member->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
+	if( !isset($CAT_ARTICLES[$idartcat]) || !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
 	if( empty($articles['id']) )

@@ -40,7 +40,7 @@ $Template->Set_filenames(array(
 //Gestion de la maintenance du site.
 if( $CONFIG['maintain'] > time() )
 {	
-	if( !$Member->check_level(ADMIN_LEVEL) ) //Non admin.
+	if( !$User->check_level(ADMIN_LEVEL) ) //Non admin.
 	{
 		if( SCRIPT !== (DIR . '/member/maintain.php') ) //Evite de créer une boucle infine.
 			redirect(HOST . DIR . '/member/maintain.php');
@@ -116,7 +116,7 @@ foreach($CSS as $css_mini_module)
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
 $THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
 
-$member_connected = $Member->check_level(MEMBER_LEVEL);
+$member_connected = $User->check_level(MEMBER_LEVEL);
 $Template->Assign_vars(array(
 	'SID' => SID,
 	'SERVER_NAME' => $CONFIG['site_name'],

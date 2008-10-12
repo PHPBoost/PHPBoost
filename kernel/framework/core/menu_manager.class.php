@@ -46,7 +46,7 @@ class MenuManager
 		switch($this->type)
 		{
 			case MENU_MODULE:
-				return 'if( $Member->check_auth(' . var_export(sunserialize($auth), true) . ', AUTH_MENUS) ){' . "\n"
+				return 'if( $User->check_auth(' . var_export(sunserialize($auth), true) . ', AUTH_MENUS) ){' . "\n"
 				. "\t" . 'include_once(PATH_TO_ROOT . \'/' . $name . '/' . $contents . "');\n"
 				. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $contents) . '\', TEMPLATE_STRING_MODE);' 
 				. "\n" . '}';
@@ -80,13 +80,13 @@ class MenuManager
 				return '';
 			
 			case MENU_PERSONNAL:
-				return 'if( $Member->check_auth(' . var_export(sunserialize($auth), true) . ', AUTH_MENUS) ){' . "\n"
+				return 'if( $User->check_auth(' . var_export(sunserialize($auth), true) . ', AUTH_MENUS) ){' . "\n"
 				. "\t" . 'include_once(\'PATH_TO_ROOT . \'/menus/' . $contents . "');\n"
 				. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $contents) . '\', TEMPLATE_STRING_MODE);' 
 				. "\n" . '}';
 				
 			case MENU_CONTENTS:
-				$code = 'if( $Member->check_auth(' . var_export(sunserialize($auth), true) . ', AUTH_MENUS) ){' . "\n";
+				$code = 'if( $User->check_auth(' . var_export(sunserialize($auth), true) . ', AUTH_MENUS) ){' . "\n";
 				if( $use_tpl == '0' )
 					$code .= '$MODULES_MINI[\'' . $location . '\'] .= ' . var_export($contents, true) . ';' . "\n";
 				else

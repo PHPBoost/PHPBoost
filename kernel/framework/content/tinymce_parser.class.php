@@ -37,7 +37,7 @@ class TinyMCEParser extends ContentParser
 	//Fonction qui parse le contenu
 	function parse()
 	{
-		global $Member;
+		global $User;
 		
 		$this->parsed_content = $this->content;
 		
@@ -46,7 +46,7 @@ class TinyMCEParser extends ContentParser
 			$this->_pick_up_tag('code', '=[a-z0-9-]+(?:,(?:0|1)(?:,0|1)?)?');
 		
 		//On prélève tout le code HTML afin de ne pas l'altérer
-		if( $Member->check_auth($this->html_auth, 1) )
+		if( $User->check_auth($this->html_auth, 1) )
 			$this->_pick_up_tag('html');
 		
 		//On enlève toutes les entités HTML rajoutées par TinyMCE

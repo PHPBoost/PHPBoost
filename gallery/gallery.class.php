@@ -68,7 +68,7 @@ class Gallery
 			if( !$source )
 			{
 				$path_mini = str_replace('pics', 'pics/thumbnails', $path);
-				$this->create_pics_error($path_mini, $width, $height);	
+				$this->_create_pics_error($path_mini, $width, $height);	
 				$this->error = 'e_unabled_create_pics';
 			}
 			else
@@ -107,7 +107,7 @@ class Gallery
 		else
 		{
 			$path_mini = str_replace('pics', 'pics/thumbnails', $path);
-			$this->create_pics_error($path_mini, $width_max, $height_max);	
+			$this->_create_pics_error($path_mini, $width_max, $height_max);	
 			$this->error = 'e_unabled_create_pics';
 		}
 	}
@@ -175,7 +175,7 @@ class Gallery
 				{
 					$path_mini = str_replace('pics', 'pics/thumbnails', $path);
 					list($width_mini, $height_mini, $weight_mini, $ext_mini) = $this->Arg_pics($path_mini);
-					$this->create_pics_error($path_mini, $width_mini, $height_mini);	
+					$this->_create_pics_error($path_mini, $width_mini, $height_mini);	
 					$this->error = 'e_unabled_create_pics';
 				}
 				else
@@ -594,7 +594,7 @@ class Gallery
 	
 	## Private Methods ##
 	//Création de l'image d'erreur
-	function create_pics_error($path, $width, $height)
+	function _create_pics_error($path, $width, $height)
 	{
 		global $CONFIG_GALLERY, $LANG; 
 		

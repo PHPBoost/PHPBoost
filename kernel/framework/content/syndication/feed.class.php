@@ -53,8 +53,8 @@ class Feed
         else
             $tpl = $template->copy();
         
-        global $Member, $MODULES;
-        if( $Member->check_auth($MODULES[$this->module_id]['auth'], ACCESS_MODULE) )
+        global $User, $MODULES;
+        if( $User->check_auth($MODULES[$this->module_id]['auth'], ACCESS_MODULE) )
         {
             if( !empty($this->data) )
             {

@@ -97,18 +97,18 @@ class PagesInterface extends ModuleInterface
         $search = $args['search'];
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         
-        global $_PAGES_CATS, $CONFIG_PAGES, $Member, $Cache, $Sql;
+        global $_PAGES_CATS, $CONFIG_PAGES, $User, $Cache, $Sql;
         require_once(PATH_TO_ROOT . '/pages/pages_defines.php');
         $Cache->Load_file('pages');
         
         $auth_cats = '';
         if( is_array($_PAGES_CATS) )
         {
-            if( isset($_PAGES_CATS['auth']) && !$Member->check_auth($_PAGES_CATS['auth'], READ_PAGE) )
+            if( isset($_PAGES_CATS['auth']) && !$User->check_auth($_PAGES_CATS['auth'], READ_PAGE) )
                 $auth_cats .= '0,';
             foreach($_PAGES_CATS as $id => $key)
             {
-                if( !$Member->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )
+                if( !$User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )
                     $auth_cats .= $id.',';
             }
         }
@@ -132,7 +132,7 @@ class PagesInterface extends ModuleInterface
             if ( !empty($row['auth']) )
             {
                 $auth = sunserialize($row['auth']);
-                if ( !$Member->check_auth($auth, READ_PAGE) )
+                if ( !$User->check_auth($auth, READ_PAGE) )
                 {
                     unset($row['auth']);
                     array_push($results, $row);

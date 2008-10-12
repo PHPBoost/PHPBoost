@@ -37,7 +37,7 @@ class TinyMCEEditor extends ContentEditor
 	//Affiche le formulaire
 	function display()
 	{
-		global $CONFIG, $Sql, $LANG, $Cache, $Member, $CONFIG_UPLOADS;
+		global $CONFIG, $Sql, $LANG, $Cache, $User, $CONFIG_UPLOADS;
 		
 		$template = $this->get_template();
 		
@@ -48,7 +48,7 @@ class TinyMCEEditor extends ContentEditor
 			'C_BBCODE_NORMAL_MODE' => false,
 			'C_BBCODE_TINYMCE_MODE' => true,
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !defined('EDITOR_ALREADY_INCLUDED'),
-			'C_UPLOAD_MANAGEMENT' => $Member->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES),
+			'C_UPLOAD_MANAGEMENT' => $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES),
 			'EDITOR_NAME' => 'tinymce',
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => implode(',', $this->forbidden_tags),
