@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 
-if( !$Member->check_level(MEMBER_LEVEL) ) //Si il n'est pas member (les invités n'ont rien à faire ici)
+if( !$User->check_level(MEMBER_LEVEL) ) //Si il n'est pas member (les invités n'ont rien à faire ici)
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 $contribution_id = retrieve(GET, 'id', 0);
@@ -43,10 +43,10 @@ if( $contribution_id > 0 )
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if( ($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $Member->get_attribute('user_id')) )
+	if( ($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $User->get_attribute('user_id')) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
-	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $Member->get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
 	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
 	$Bread_crumb->add_link($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
 	
@@ -58,10 +58,10 @@ elseif( $id_update > 0 )
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if( ($contribution = ContributionService::find_by_id($id_update)) == null || !$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
+	if( ($contribution = ContributionService::find_by_id($id_update)) == null || !$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
-	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $Member->get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
 	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
 	$Bread_crumb->add_link($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
 	$Bread_crumb->add_link($LANG['contribution_edition'], transid('contribution_panel.php?edit=' . $id_update));
@@ -71,11 +71,11 @@ elseif( $id_update > 0 )
 //Enregistrement de la modification d'une contribution
 elseif( $id_to_update > 0 )
 {
-	global $Member;
+	global $User;
 	
 	$contribution = new Contribution();
 	
-	if( ($contribution = ContributionService::find_by_id($id_to_update)) == null || !$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
+	if( ($contribution = ContributionService::find_by_id($id_to_update)) == null || !$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
 	//Récupération des éléments de la contribution
@@ -93,7 +93,7 @@ elseif( $id_to_update > 0 )
 		//Changement de statut ? On regarde si la contribution a été réglée
 		if( $status == CONTRIBUTION_STATUS_PROCESSED && $contribution->get_status() != CONTRIBUTION_STATUS_PROCESSED )
 		{
-			$contribution->set_fixer_id($Member->get_attribute('user_id'));
+			$contribution->set_fixer_id($User->get_attribute('user_id'));
 			$contribution->set_fixing_date(new Date());
 		}
 		
@@ -111,12 +111,12 @@ elseif( $id_to_update > 0 )
 //Suppression d'une contribution
 elseif( $id_to_delete > 0 )
 {
-	global $Member;
+	global $User;
 	
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if( ($contribution = ContributionService::find_by_id($id_to_delete)) == null || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT)) )
+	if( ($contribution = ContributionService::find_by_id($id_to_delete)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT)) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
 	$contribution->delete();
@@ -125,7 +125,7 @@ elseif( $id_to_delete > 0 )
 }
 else
 {
-	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $Member->get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
 	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
 	define('TITLE', $LANG['contribution_panel']);
 }
@@ -148,7 +148,7 @@ if( $contribution_id > 0 )
 	$contribution_fixing_date = $contribution->get_fixing_date();
 	
 	$template->assign_vars(array(
-		'C_WRITE_AUTH' => $Member->check_auth($contribution->get_auth(), CONTRIBUTION_AUTH_BIT),
+		'C_WRITE_AUTH' => $User->check_auth($contribution->get_auth(), CONTRIBUTION_AUTH_BIT),
 		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != CONTRIBUTION_STATUS_PROCESSED,
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => second_parse($contribution->get_description()),
@@ -244,7 +244,7 @@ else
 		$fixing_date = $this_contribution->get_fixing_date();
 		
 		//Affichage des contributions du membre
-		if( $Member->check_auth($this_contribution->get_auth(), CONTRIBUTION_AUTH_BIT) || $Member->get_attribute('user_id') == $this_contribution->get_poster_id() )
+		if( $User->check_auth($this_contribution->get_auth(), CONTRIBUTION_AUTH_BIT) || $User->get_attribute('user_id') == $this_contribution->get_poster_id() )
 		{
 			//On affiche seulement si on est dans le bon cadre d'affichage
 			if( $num_contributions > CONTRIBUTIONS_PER_PAGE * ($pagination->get_current_page() - 1) && $num_contributions <= CONTRIBUTIONS_PER_PAGE * $pagination->get_current_page() )

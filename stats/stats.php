@@ -91,10 +91,10 @@ if( $members )
 	include_once('../kernel/framework/util/images_stats.class.php');
 	$Stats = new Stats();
 		
-	$Stats->Load_statsdata($stats_array, 'ellipse');
+	$Stats->load_data($stats_array, 'ellipse');
 	foreach($Stats->data_stats as $name => $angle_value)
 	{
-		$array_color = $Stats->array_allocated_color[$Stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+		$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 		$Template->Assign_block_vars('templates', array(
 			'NBR_THEME' => number_round(($angle_value*$Stats->nbr_entry)/360, 0),
 			'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
@@ -127,10 +127,10 @@ if( $members )
 	$Sql->query_close($result);
 	
 	$Stats->color_index = 0;	
-	$Stats->Load_statsdata($stats_array, 'ellipse');
+	$Stats->load_data($stats_array, 'ellipse');
 	foreach($Stats->data_stats as $name => $angle_value)
 	{
-		$array_color = $Stats->array_allocated_color[$Stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+		$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 		$Template->Assign_block_vars('sex', array(
 			'NBR_MBR' => number_round(($angle_value*$Stats->nbr_entry)/360, 0),
 			'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
@@ -1078,7 +1078,7 @@ elseif( $browser || $os || $user_lang ) //Graphiques camenbert.
 	include_once('../kernel/framework/util/images_stats.class.php');
 	$Stats = new Stats();
 		
-	$Stats->Load_statsdata($stats_array, 'ellipse', 5);
+	$Stats->load_data($stats_array, 'ellipse', 5);
 	
 	//Tri décroissant.
 	arsort($Stats->data_stats);
@@ -1105,7 +1105,7 @@ elseif( $browser || $os || $user_lang ) //Graphiques camenbert.
 		
 		if( !isset($array_order[$value_name]) )
 		{
-			$array_color = $Stats->array_allocated_color[$Stats->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+			$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 			$array_stats_tmp[$value_name] = array($name_stats, $array_color, $stats_img);
 			$array_order[$value_name] = $angle_value;
 		}

@@ -43,7 +43,7 @@ class Stats
 	}
 	
 	//Chargement des données.
-	function Load_statsdata($array_stats, $draw_type = 'ellipse', $decimal = 1)
+	function load_data($array_stats, $draw_type = 'ellipse', $decimal = 1)
 	{
 		global $LANG;
 		
@@ -73,7 +73,7 @@ class Stats
 	}		
 	
 	//Graphique camenbert en ellipse.
-	function Draw_ellipse($w_arc, $h_arc, $img_cache = '', $height_3d = 20, $draw_percent = true, $draw_legend = true, $font_size = 10, $font = FRANKLINBC_TTF)
+	function draw_ellipse($w_arc, $h_arc, $img_cache = '', $height_3d = 20, $draw_percent = true, $draw_legend = true, $font_size = 10, $font = FRANKLINBC_TTF)
 	{
 		if( @extension_loaded('gd') && version_compare(phpversion(), '4.0.6', '>=') )
 		{			
@@ -110,7 +110,7 @@ class Stats
 				$this->color_index = 0;
 				foreach($this->data_stats as $name_value => $angle_value)
 				{					
-					$get_color = $this->array_allocated_color[$this->imagecolorallocatedark($image) . 'dark'];
+					$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark($image) . 'dark'];
 					if( $angle_value > 5 )
 						imagefilledarc($image, $w_ellipse + $x_ellipse, $i + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_color, IMG_ARC_NOFILL);
 					$angle += $angle_value;
@@ -125,9 +125,9 @@ class Stats
 			{					
 				if( $angle_value > 5 && $draw_percent )
 				{
-					$get_color = $this->array_allocated_color[$this->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+					$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 					$this->color_index--;
-					$get_shadow_color = $this->array_allocated_color[$this->imagecolorallocatedark(false, NO_ALLOCATE_COLOR) . 'dark'];
+					$get_shadow_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR) . 'dark'];
 					imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_color, IMG_ARC_PIE);
 					imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_shadow_color, IMG_ARC_NOFILL);
 					
@@ -138,7 +138,7 @@ class Stats
 					$y_string = ($h_ellipse * 1.2) * sin($angle_string) + $h_ellipse + $y_ellipse;				
 					
 					//Texte
-					$text = ($angle_value != 360) ? $this->number_round(($angle_value/3.6), 1) . '%' : '100%';
+					$text = ($angle_value != 360) ? $this->_number_round(($angle_value/3.6), 1) . '%' : '100%';
 					
 					//Centrage du texte.	
 					$array_size_ttf = imagettfbbox($font_size, 0, $font, $text);
@@ -157,9 +157,9 @@ class Stats
 			
 			if( !empty($angle_other) )
 			{
-				$get_color = $this->array_allocated_color[$this->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+				$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 				$this->color_index--;
-				$get_shadow_color = $this->array_allocated_color[$this->imagecolorallocatedark(false, NO_ALLOCATE_COLOR) . 'dark'];
+				$get_shadow_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR) . 'dark'];
 				imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_other), $get_color, IMG_ARC_PIE);
 				imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_other), $get_shadow_color, IMG_ARC_NOFILL);
 			}
@@ -181,7 +181,7 @@ class Stats
 				$i = 0;
 				foreach($this->data_stats as $name_value => $angle_value)
 				{					
-					$get_color = $this->array_allocated_color[$this->imagecolorallocatedark(false, NO_ALLOCATE_COLOR)];
+					$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 					if( $i < 8 )
 					{					
 						//Carré de couleur.
@@ -189,7 +189,7 @@ class Stats
 						imagefilledrectangle($image, $x_legend_extend + 7, $y_legend_extend + (16*$i) + 8, $x_legend_extend + 17, $y_legend_extend + (16*$i) + 18, $get_color);
 						
 						//Texte
-						$text = ucfirst(substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? $this->number_round(($angle_value/3.6), 1) . '%' : '100%') . ')';
+						$text = ucfirst(substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? $this->_number_round(($angle_value/3.6), 1) . '%' : '100%') . ')';
 						
 						imagettftext($image, $font_size, 0, $x_legend_extend + 24, $y_legend_extend + (16*$i) + 17, $black, $font, $text);
 						$i++;
@@ -210,13 +210,13 @@ class Stats
 		}
 		else
 		{	
-			$this->create_pics_error($w_arc, $h_arc, $font_size, $font);
+			$this->_create_pics_error($w_arc, $h_arc, $font_size, $font);
 			return false;
 		}
 	}
 	
 	//Graphique en baton.
-	function Draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = FRANKLINBC_TTF)
+	function draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = FRANKLINBC_TTF)
 	{
 		if( @extension_loaded('gd') )
 		{					
@@ -254,7 +254,7 @@ class Stats
 				$i = 0;
 				foreach($this->data_stats as $name_value => $value)
 				{					
-					$get_color = $this->array_allocated_color[$this->imagecolorallocatedark($image)];
+					$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark($image)];
 					if( $i < 8 )
 					{					
 						//Carré de couleur.
@@ -287,9 +287,9 @@ class Stats
 
 			//Echelle verticale de l'histogramme.
 			$array_scale = array();
-			$this->generate_scale($array_scale, $max_element);
+			$this->_generate_scale($array_scale, $max_element);
 			$scale_pos = $margin;
-			$scale_iteration = number_round(($h_histo_content+1)/15, 2);
+			$scale_iteration = _number_round(($h_histo_content+1)/15, 2);
 			$j = 0;
 			for($i = 0; $i < 16; $i++)
 			{
@@ -323,7 +323,7 @@ class Stats
 			$this->color_index = 5;
 			$color_bar = imagecolorallocate($image, 68, 113, 165);
 			$color_bar_dark = imagecolorallocate($image, 99, 136, 177);
-			$space_bar = number_round(($w_histo_content - 4)/count($this->data_stats), 0);
+			$space_bar = _number_round(($w_histo_content - 4)/count($this->data_stats), 0);
 			$margin_bar = $space_bar*18/100;
 			$width_bar = $space_bar - (2*$margin_bar);
 			$max_height = ($h_histo_content * 80)/100;
@@ -410,13 +410,13 @@ class Stats
 		}
 		else
 		{	
-			$this->create_pics_error($w_histo, $h_histo, $font_size, $font);
+			$this->_create_pics_error($w_histo, $h_histo, $font_size, $font);
 			return false;
 		}
 	}
 	
 	//Courbe cassées.
-	function Draw_graph()
+	function draw_graph()
 	{
 	
 	
@@ -425,13 +425,13 @@ class Stats
 	
 	## Private Methods ##
 	//Conversion valeur vers angle.
-	function value_to_angle($value)
+	function _value_to_angle($value)
 	{
-		return $this->number_round(($value * 360)/$this->nbr_entry, $this->decimal);
+		return $this->_number_round(($value * 360)/$this->nbr_entry, $this->decimal);
 	}
 		
 	//Allocation de la couleur et calcul de la version sombre. Paramètres couleur de l'effet 3D, mask_color: 0 pour sombre, 255 pour lumineux; similar_color: entre 0.40 (très différents et 0.99 très proche.
-	function imagecolorallocatedark($image, $allocate = true, $mask_color = 0, $similar_color = 0.50)
+	function _image_color_allocate_dark($image, $allocate = true, $mask_color = 0, $similar_color = 0.50)
 	{
 		if( $this->color_index == $this->nbr_color )
 			$this->color_index = 0;
@@ -452,7 +452,7 @@ class Stats
 	}
 	
 	//Génère une echelle.
-	function generate_scale(&$array_scale, $max_element)
+	function _generate_scale(&$array_scale, $max_element)
 	{
 		$max_element += ($max_element * 20/100);
 		while( ($max_element%3) != 0 )
@@ -462,16 +462,16 @@ class Stats
 		$scale_iteration = $max_element/3;
 		for($i = 0; $i < 4; $i++)
 		{	
-			$array_scale[$i] = number_round(abs($scale), 0);
+			$array_scale[$i] = _number_round(abs($scale), 0);
 			$scale -= $scale_iteration;
 		}
 	}
 	
 	//Arrondi à la (demie?) dizaine prêt.
-	function number_round_dozen($number, $demi_dozen = true)
+	function _number_round_dozen($number, $demi_dozen = true)
 	{
 		$unit = $number % 10;
-		$number = number_round($number, 1) * 10;
+		$number = _number_round($number, 1) * 10;
 		$decimal = $unit + ($number % 10)/10;
 		$number /= 10;
 
@@ -492,11 +492,11 @@ class Stats
 				$number = $number - $decimal + 10;
 		}
 		
-		return number_round($number, 0);
+		return _number_round($number, 0);
 	}
 	
 	//Création de l'image d'erreur
-	function create_pics_error($width, $height, $font_size, $font)
+	function _create_pics_error($width, $height, $font_size, $font)
 	{
 		$thumbtail = @imagecreate($width, $height);
 		$background = @imagecolorallocate($thumbtail, 255, 255, 255);
@@ -519,7 +519,7 @@ class Stats
 	}
 	
 	//Arrondi au nbr de décimales voulu.
-	function number_round($nombre, $dec)
+	function _number_round($nombre, $dec)
 	{
 		return trim(number_format($nombre, $dec, '.', ''));
 	}

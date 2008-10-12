@@ -81,11 +81,11 @@ elseif( isset($_FILES['gallery']) ) //Upload
 		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
 		
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if( !$Member->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$Member->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) )
+	if( !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if( !$Gallery->auth_upload_pics($Member->get_attribute('user_id'), $Member->get_attribute('level')) )
+	if( !$Gallery->auth_upload_pics($User->get_attribute('user_id'), $User->get_attribute('level')) )
 		redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#errorh');
 	
 	$dir = 'pics/';
@@ -116,7 +116,7 @@ elseif( isset($_FILES['gallery']) ) //Upload
 					if( !empty($Gallery->error) )
 						redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->error, '-' . $g_idcat . '.php?add=1&error=' . $Upload->error, '&') . '#errorh');
 					
-					$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->filename['gallery'], $Member->get_attribute('user_id'));
+					$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->filename['gallery'], $User->get_attribute('user_id'));
 					if( !empty($Gallery->error) )
 						redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->error, '-' . $g_idcat . '.php?add=1&error=' . $Upload->error, '&') . '#errorh');
 					
@@ -159,7 +159,7 @@ elseif( $g_add )
 	}
 	
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if( !$Member->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$Member->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) )
+	if( !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	$auth_cats = '<option value="0">' . $LANG['root'] . '</option>';
@@ -167,7 +167,7 @@ elseif( $g_add )
 	{
 		if( $idcat != 0  && $CAT_GALLERY[$idcat]['aprob'] == 1 )
 		{		
-			if( $Member->check_auth($CAT_GALLERY[$idcat]['auth'], READ_CAT_GALLERY) && $Member->check_auth($CAT_GALLERY[$idcat]['auth'], WRITE_CAT_GALLERY) )
+			if( $User->check_auth($CAT_GALLERY[$idcat]['auth'], READ_CAT_GALLERY) && $User->check_auth($CAT_GALLERY[$idcat]['auth'], WRITE_CAT_GALLERY) )
 			{	
 				$margin = ($CAT_GALLERY[$idcat]['level'] > 0) ? str_repeat('--------', $CAT_GALLERY[$idcat]['level']) : '--';
 				$selected = ($idcat == $g_idcat) ? ' selected="selected"' : '';
@@ -203,7 +203,7 @@ elseif( $g_add )
 	$quota = isset($CAT_GALLERY[$g_idcat]['auth']['r-1']) ? ($CAT_GALLERY[$g_idcat]['auth']['r-1'] != '3') : true;
 	if( $quota )
 	{
-		switch( $Member->get_attribute('level') )
+		switch( $User->get_attribute('level') )
 		{
 			case 2:
 			$l_pics_quota = $LANG['illimited'];
@@ -214,7 +214,7 @@ elseif( $g_add )
 			default:
 			$l_pics_quota = $CONFIG_GALLERY['limit_member'];
 		}
-		$nbr_upload_pics = $Gallery->Get_nbr_upload_pics($Member->get_attribute('user_id'));
+		$nbr_upload_pics = $Gallery->Get_nbr_upload_pics($User->get_attribute('user_id'));
 		
 		$Template->Assign_block_vars('image_quota', array(
 			'L_IMAGE_QUOTA' => sprintf($LANG['image_quota'], $nbr_upload_pics, $l_pics_quota)
@@ -231,7 +231,7 @@ elseif( $g_add )
 		'WIDTH_MAX' => $CONFIG_GALLERY['width_max'],
 		'HEIGHT_MAX' => $CONFIG_GALLERY['height_max'],
 		'WEIGHT_MAX' => $CONFIG_GALLERY['weight_max'],
-		'ADD_PICS' => $Member->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="gallery' . transid('.php?add=1&amp;cat=' . $g_idcat) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
+		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="gallery' . transid('.php?add=1&amp;cat=' . $g_idcat) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'IMG_FORMAT' => 'JPG, PNG, GIF',
 		'L_IMG_FORMAT' => $LANG['img_format'],
 		'L_WIDTH_MAX' => $LANG['width_max'],
@@ -285,7 +285,7 @@ else
 	}
 	
 	//Niveau d'autorisation de la catégorie
-	if( !$Member->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) )
+	if( !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."gallery WHERE idcat = '" . $g_idcat . "' AND aprob = 1", __LINE__, __FILE__);
@@ -310,8 +310,8 @@ else
 	$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 	$column_width_pics = floor(100/$nbr_column_pics);
 	
-	$is_admin = $Member->check_level(ADMIN_LEVEL) ? true : false;
-	$is_modo = ($Member->check_auth($CAT_GALLERY[$g_idcat]['auth'], EDIT_CAT_GALLERY)) ? true : false;
+	$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;
+	$is_modo = ($User->check_auth($CAT_GALLERY[$g_idcat]['auth'], EDIT_CAT_GALLERY)) ? true : false;
 	
 	$module_data_path = $Template->Module_data_path('gallery');
 	$rewrite_title = url_encode_rewrite($CAT_GALLERY[$g_idcat]['name']);
@@ -342,7 +342,7 @@ else
 		'HEIGHT_MAX' => $CONFIG_GALLERY['height'],
 		'WIDTH_MAX' => $column_width_pics,
 		'MODULE_DATA_PATH' => $module_data_path,
-		'ADD_PICS' => $Member->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="gallery' . transid('.php?add=1&amp;cat=' . $g_idcat) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
+		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="gallery' . transid('.php?add=1&amp;cat=' . $g_idcat) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],
 		'L_TOTAL_IMG' => sprintf($LANG['total_img_cat'], $nbr_pics),		
@@ -373,7 +373,7 @@ else
 	{
 		if( $idcat > 0 && $CAT_GALLERY[$idcat]['aprob'] == 1 )
 		{
-			if( !$Member->check_auth($CAT_GALLERY[$idcat]['auth'], READ_CAT_GALLERY) )
+			if( !$User->check_auth($CAT_GALLERY[$idcat]['auth'], READ_CAT_GALLERY) )
 			{
 				$clause_level = !empty($g_idcat) ? ($CAT_GALLERY[$idcat]['level'] == ($CAT_GALLERY[$g_idcat]['level'] + 1)) : ($CAT_GALLERY[$idcat]['level'] == 0);
 				if( $clause_level )
@@ -488,7 +488,7 @@ else
 			if( !in_array($row['id'], $unauth_cats) )
 			{
 				$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
-				$array_cat_list[$row['id']] = $Member->check_auth($CAT_GALLERY[$row['id']]['auth'], EDIT_CAT_GALLERY) ? '<option value="' . $row['id'] . '" %s>' . $margin . ' ' . $row['name'] . '</option>' : '';
+				$array_cat_list[$row['id']] = $User->check_auth($CAT_GALLERY[$row['id']]['auth'], EDIT_CAT_GALLERY) ? '<option value="' . $row['id'] . '" %s>' . $margin . ' ' . $row['name'] . '</option>' : '';
 			}
 		}
 		$Sql->query_close($result);
@@ -558,7 +558,7 @@ else
 				foreach($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $info_pics['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 				
-				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $Member->check_level(MEMBER_LEVEL) );
+				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $User->check_level(MEMBER_LEVEL) );
 				if( $activ_note )
 				{
 					//Affichage notation.
@@ -651,7 +651,7 @@ else
 			));
 			
 			include_once('../kernel/framework/content/note.class.php'); 
-			$is_connected = $Member->check_level(MEMBER_LEVEL);
+			$is_connected = $User->check_level(MEMBER_LEVEL);
 			$j = 0;
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
 			FROM ".PREFIX."gallery g

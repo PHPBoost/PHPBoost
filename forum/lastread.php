@@ -39,10 +39,10 @@ require_once('../kernel/header.php');
 $change_cat = retrieve(POST, 'change_cat', '');
 if( !empty($change_cat) )
 	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
-if( !$Member->check_level(MEMBER_LEVEL) ) //Réservé aux membres.
+if( !$User->check_level(MEMBER_LEVEL) ) //Réservé aux membres.
 	redirect(HOST . DIR . '/member/error.php'); 
 
-if( $Member->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
+if( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
 {
 	$Template->Set_filenames(array(
 		'forum_topics'=> 'forum/forum_forum.tpl',
@@ -62,10 +62,10 @@ if( $Member->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 	LEFT JOIN ".PREFIX."forum_topics t ON t.id = v.idtopic
 	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat 
 	LEFT JOIN ".PREFIX."forum_poll p ON p.idtopic = t.id
-	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $Member->get_attribute('user_id') . "'
+	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $User->get_attribute('user_id') . "'
 	LEFT JOIN ".PREFIX."member m1 ON m1.user_id = t.user_id
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = t.last_user_id
-	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . $Member->get_attribute('user_id') . "'
+	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . $User->get_attribute('user_id') . "'
 	ORDER BY t.last_timestamp DESC
 	" . $Sql->limit($Pagination->First_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -132,7 +132,7 @@ if( $Member->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 	$nbr_topics = $Sql->query("SELECT COUNT(*)
 	FROM ".PREFIX."forum_view v
 	LEFT JOIN ".PREFIX."forum_topics t ON t.id = v.idtopic
-	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
 	//Le membre a déjà lu tous les messages.
 	if( $nbr_topics == 0 )

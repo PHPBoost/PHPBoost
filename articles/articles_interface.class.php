@@ -98,7 +98,7 @@ class ArticlesInterface extends ModuleInterface
 
 	function get_search_request($args = null)
 	{
-		global $Sql, $Cache, $CONFIG_ARTICLES, $CAT_ARTICLES, $Member, $LANG;
+		global $Sql, $Cache, $CONFIG_ARTICLES, $CAT_ARTICLES, $User, $LANG;
 		$Cache->load_file('articles');
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
         
@@ -110,7 +110,7 @@ class ArticlesInterface extends ModuleInterface
 		{
 			if( $CAT_ARTICLES[$idcat]['aprob'] == 1 )
 			{
-				if( !$Member->check_auth($CAT_ARTICLES[$idcat]['auth'], READ_CAT_ARTICLES) )
+				if( !$User->check_auth($CAT_ARTICLES[$idcat]['auth'], READ_CAT_ARTICLES) )
 				{
 					$clause_level = !empty($g_idcat) ? ($CAT_ARTICLES[$idcat]['level'] == ($CAT_ARTICLES[$g_idcat]['level'] + 1)) : ($CAT_ARTICLES[$idcat]['level'] == 0);
 					if( $clause_level )
@@ -125,7 +125,7 @@ class ArticlesInterface extends ModuleInterface
 	             a.id AS `id_content`,
 	             a.title AS `title`,
 	             ( 2 * MATCH(a.title) AGAINST('" . $args['search'] . "') + MATCH(a.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS `relevance`, "
-	             . $Sql->Concat("'" . PATH_TO_ROOT . "/articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS `link`
+	             . $Sql->concat("'" . PATH_TO_ROOT . "/articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS `link`
             FROM " . PREFIX . "articles a
             LEFT JOIN ".PREFIX."articles_cats ac ON ac.id = a.idcat
             WHERE

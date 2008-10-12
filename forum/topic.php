@@ -64,7 +64,7 @@ if( !empty($_POST['change_cat']) )
 	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
 	
 //Autorisation en lecture.
-if( !$Member->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$topic['idcat']]['url']) )
+if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$topic['idcat']]['url']) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 
 $Template->Set_filenames(array(
@@ -76,7 +76,7 @@ $Template->Set_filenames(array(
 $module_data_path = $Template->Module_data_path('forum');
 
 //Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.	
-$check_group_edit_auth = $Member->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM);
+$check_group_edit_auth = $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM);
 if( $check_group_edit_auth )
 {
 	$lock_status = '';
@@ -178,7 +178,7 @@ FROM ".PREFIX."forum_msg msg
 LEFT JOIN ".PREFIX."forum_poll p ON p.idtopic = '" . $id_get . "'
 LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
 LEFT JOIN ".PREFIX."member m2 ON m2.user_id = msg.user_id_edit
-LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = '" . $id_get . "' AND tr.user_id = '" . $Member->get_attribute('user_id') . "'
+LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = '" . $id_get . "' AND tr.user_id = '" . $User->get_attribute('user_id') . "'
 LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 WHERE msg.idtopic = '" . $id_get . "'	
 ORDER BY msg.timestamp 
@@ -194,7 +194,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	list($edit, $del, $cut, $warning, $readonly) = array('', '', '', '', '');
 	$first_message = ($row['id'] == $topic['first_msg_id']) ? true : false;
 	//Gestion du niveau d'autorisation.
-	if( $check_group_edit_auth || ($Member->get_attribute('user_id') === $row['user_id'] && !$is_guest && !$first_message) )
+	if( $check_group_edit_auth || ($User->get_attribute('user_id') === $row['user_id'] && !$is_guest && !$first_message) )
 	{
 		$valid = ($first_message) ? 'topic' : 'msg';
 		$edit = '&nbsp;&nbsp;<a href="post' . transid('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" /></a>';
@@ -211,7 +211,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 			$readonly = !$is_guest ? '<a href="moderation_forum' . transid('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>' : ''; 
 		}
 	}
-	elseif( $Member->get_attribute('user_id') === $row['user_id'] && !$is_guest && $first_message ) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
+	elseif( $User->get_attribute('user_id') === $row['user_id'] && !$is_guest && $first_message ) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
 		$edit = '&nbsp;&nbsp;<a href="post' . transid('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="'. $LANG['edit'] . '" /></a>';
 			
 	//Gestion des sondages => executé une seule fois.
@@ -228,7 +228,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		));
 		
 		$array_voter = explode('|', $row['voter_id']);			
-		if( in_array($Member->get_attribute('user_id'), $array_voter) || !empty($_GET['r']) || $Member->get_attribute('user_id') === -1 ) //Déjà voté.
+		if( in_array($User->get_attribute('user_id'), $array_voter) || !empty($_GET['r']) || $User->get_attribute('user_id') === -1 ) //Déjà voté.
 		{
 			$array_answer = explode('|', $row['answers']);
 			$array_vote = explode('|', $row['votes']);
@@ -474,7 +474,7 @@ if( $topic['status'] == '0' && !$check_group_edit_auth )
 		'L_ERROR_AUTH_WRITE' => $LANG['e_topic_lock_forum']
 	));
 }	
-elseif( !$Member->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM) ) //On vérifie si l'utilisateur a les droits d'écritures.
+elseif( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM) ) //On vérifie si l'utilisateur a les droits d'écritures.
 {
 	$Template->Assign_vars(array(
 		'C_ERROR_AUTH_WRITE' => true,
@@ -494,7 +494,7 @@ else
 	));
 
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
-	if( $CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $Member->get_attribute('user_id') == $topic['user_id']) )
+	if( $CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $User->get_attribute('user_id') == $topic['user_id']) )
 	{
 		$img_msg_display = $topic['display_msg'] ? 'not_processed_mini.png' : 'processed_mini.png';
 		$Template->Assign_vars(array(

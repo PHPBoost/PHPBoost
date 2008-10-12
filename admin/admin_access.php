@@ -101,7 +101,7 @@ if( retrieve(POST, 'connect', false) && !empty($login) && !empty($password) )
 	redirect(HOST . SCRIPT);
 }
 
-if( !$Member->check_level(ADMIN_LEVEL) )
+if( !$User->check_level(ADMIN_LEVEL) )
 {
 	$Template->Set_filenames(array(
 		'admin_connect'=> 'admin/admin_connect.tpl'

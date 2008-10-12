@@ -32,8 +32,8 @@ $edit_get = retrieve(GET, 'edit', false);
 $id_get = retrieve(GET, 'id', 0, TUNSIGNED_INT);
 
 $title_mbr = !empty($id_get) ? (!empty($edit_get) ? $LANG['profil_edit'] : $LANG['member']) : $LANG['member_s'];
-if( $Member->check_level(MEMBER_LEVEL) )
-	$Bread_crumb->Add_link($LANG['member_area'], transid('member.php?id=' . $Member->get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->get_attribute('user_id') . '.php?view=1'));
+if( $User->check_level(MEMBER_LEVEL) )
+	$Bread_crumb->Add_link($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
 $Bread_crumb->Add_link($title_mbr, '');
 
 require_once('../kernel/header.php'); 
@@ -50,10 +50,10 @@ if( !empty($id_get) ) //Espace membre
 		'member'=> 'member.tpl'
 	));
 	
-	if( $edit_get && $Member->get_attribute('user_id') === $id_get && ($Member->check_level(MEMBER_LEVEL)) ) //Edition du profil
+	if( $edit_get && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL)) ) //Edition du profil
 	{
 		//Update profil
-		$row = $Sql->query_array('member', 'user_lang', 'user_theme', 'user_mail', 'user_local', 'user_web', 'user_occupation', 'user_hobbies', 'user_avatar', 'user_show_mail', 'user_editor', 'user_timezone', 'user_sex', 'user_born', 'user_sign', 'user_desc', 'user_msn', 'user_yahoo', "WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		$row = $Sql->query_array('member', 'user_lang', 'user_theme', 'user_mail', 'user_local', 'user_web', 'user_occupation', 'user_hobbies', 'user_avatar', 'user_show_mail', 'user_editor', 'user_timezone', 'user_sex', 'user_born', 'user_sign', 'user_desc', 'user_msn', 'user_yahoo', "WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		
 		$user_born = '';
 		$array_user_born = explode('-', $row['user_born']);
@@ -101,7 +101,7 @@ if( !empty($id_get) ) //Espace membre
 			'USER_DESC' => unparse($row['user_desc']),
 			'USER_MSN' => $row['user_msn'],
 			'USER_YAHOO' => $row['user_yahoo'],
-			'U_MEMBER_ACTION_UPDATE' => transid('.php?id=' . $Member->get_attribute('user_id'), '-' . $Member->get_attribute('user_id') . '.php'),
+			'U_MEMBER_ACTION_UPDATE' => transid('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
 			'L_REQUIRE_MAIL' => $LANG['require_mail'],
 			'L_MEMBER_AREA' => $LANG['member_area'],
 			'L_PROFIL_EDIT' => $LANG['profil_edit'],
@@ -153,7 +153,7 @@ if( !empty($id_get) ) //Espace membre
 		$lang_identifier = '../images/stats/other.png';
 		$result = $Sql->query_while("SELECT lang 
 		FROM ".PREFIX."lang
-		WHERE activ = 1 AND secure <= '" . $Member->get_attribute('level') . "'", __LINE__, __FILE__);
+		WHERE activ = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 		while( $row2 = $Sql->fetch_assoc($result) )
 		{	
 			$lang_info = load_ini_file('../lang/', $row2['lang']);
@@ -184,7 +184,7 @@ if( !empty($id_get) ) //Espace membre
 		{
 			$result = $Sql->query_while("SELECT theme 
 			FROM ".PREFIX."themes
-			WHERE activ = 1 AND secure <= '" . $Member->get_attribute('level') . "'", __LINE__, __FILE__);
+			WHERE activ = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 			while( $row2 = $Sql->fetch_assoc($result) )
 			{	
 				$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', $CONFIG['lang']);
@@ -367,7 +367,7 @@ if( !empty($id_get) ) //Espace membre
 		if( isset($LANG[$get_l_error]) )
 			$Errorh->Error_handler($LANG[$get_l_error], E_USER_WARNING);
 	}
-	elseif( !empty($_POST['valid']) && ($Member->get_attribute('user_id') === $id_get) && ($Member->check_level(MEMBER_LEVEL)) ) //Update du profil
+	elseif( !empty($_POST['valid']) && ($User->get_attribute('user_id') === $id_get) && ($User->check_level(MEMBER_LEVEL)) ) //Update du profil
 	{
 		$check_pass = !empty($_POST['pass']) ? true : false;
 		$check_pass_bis = !empty($_POST['pass_bis']) ? true : false;
@@ -380,7 +380,7 @@ if( !empty($id_get) ) //Espace membre
 			$password_hash = !empty($password) ? strhash($password) : '';
 			$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNSECURE);
 			$password_bis_hash = !empty($password_bis) ? strhash($password_bis) : '';
-			$password_old_bdd = $Sql->query("SELECT password FROM ".PREFIX."member WHERE user_id = '" . $Member->get_attribute('user_id') . "'",  __LINE__, __FILE__);
+			$password_old_bdd = $Sql->query("SELECT password FROM ".PREFIX."member WHERE user_id = '" . $User->get_attribute('user_id') . "'",  __LINE__, __FILE__);
 			
 			if( !empty($password_old_hash) && !empty($password_hash) && !empty($password_bis_hash) )
 			{
@@ -400,7 +400,7 @@ if( !empty($id_get) ) //Espace membre
 		
 		if( !empty($_POST['del_member']) ) //Suppression du compte
 		{
-			$Sql->query_inject("DELETE FROM ".PREFIX."member WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."member WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			
 			//On régénère le cache
 			$Cache->Generate_file('stats');
@@ -432,14 +432,14 @@ if( !empty($id_get) ) //Espace membre
 			//Gestion de la suppression de l'avatar.
 			if( !empty($_POST['delete_avatar']) )
 			{
-				$user_avatar_path = $Sql->query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$user_avatar_path = $Sql->query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 				if( !empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match) )
 				{
 					if( is_file($user_avatar_path) && isset($match[1]) )
 						@unlink('../images/avatars/' . $match[1]);
 				}	
 				
-				$Sql->query_inject("UPDATE ".PREFIX."member SET user_avatar = '' WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."member SET user_avatar = '' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			}
 
 			//Gestion upload d'avatar.					
@@ -464,7 +464,7 @@ if( !empty($id_get) ) //Espace membre
 						else
 						{
 							//Suppression de l'ancien avatar (sur le serveur) si il existe!
-							$user_avatar_path = $Sql->query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__);
+							$user_avatar_path = $Sql->query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 							if( !empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match) )
 							{
 								if( is_file($user_avatar_path) && isset($match[1]) )
@@ -489,13 +489,13 @@ if( !empty($id_get) ) //Espace membre
 			
 			if( !empty($user_mail) )
 			{
-				$check_mail = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login <> '" . addslashes($Member->get_attribute('login')) . "'", __LINE__, __FILE__);		
+				$check_mail = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login <> '" . addslashes($User->get_attribute('login')) . "'", __LINE__, __FILE__);		
 				$user_mail = "user_mail = '" . $user_mail . "', ";				
 				if( $check_mail >= 1 ) //Autre utilisateur avec le même mail!
 					redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#errorh');
 				
 				//Suppression des images des stats concernant les membres, si l'info à été modifiée.
-				$info_mbr = $Sql->query_array("member", "user_theme", "user_sex", "WHERE user_id = '" . numeric($Member->get_attribute('user_id')) . "'", __LINE__, __FILE__);
+				$info_mbr = $Sql->query_array("member", "user_theme", "user_sex", "WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 				if( $info_mbr['user_sex'] != $user_sex )
 					@unlink('../cache/sex.png');
 				if( $info_mbr['user_theme'] != $user_theme )
@@ -506,7 +506,7 @@ if( !empty($id_get) ) //Espace membre
 				" . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "',	
 				user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', 
 				user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', 
-				user_sign = '" . $user_sign . "' WHERE user_id = '" . numeric($Member->get_attribute('user_id')) . "'", __LINE__, __FILE__); 
+				user_sign = '" . $user_sign . "' WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__); 
 				
 				//Champs supplémentaires.
 				$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
@@ -578,20 +578,20 @@ if( !empty($id_get) ) //Espace membre
 					}
 					$Sql->query_close($result);	
 					
-					$check_member = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . numeric($Member->get_attribute('user_id')) . "'", __LINE__, __FILE__);
+					$check_member = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 					if( $check_member )
 					{	
 						if( !empty($req_update) )
-							$Sql->query_inject("UPDATE ".PREFIX."member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . numeric($Member->get_attribute('user_id')) . "'", __LINE__, __FILE__); 
+							$Sql->query_inject("UPDATE ".PREFIX."member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__); 
 					}
 					else
 					{	
 						if( !empty($req_insert) )
-							$Sql->query_inject("INSERT INTO ".PREFIX."member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . numeric($Member->get_attribute('user_id')) . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
+							$Sql->query_inject("INSERT INTO ".PREFIX."member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . numeric($User->get_attribute('user_id')) . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
 				}
 				
-				redirect(HOST . DIR . '/member/member' . transid('.php?id=' . $Member->get_attribute('user_id'), '-' . $Member->get_attribute('user_id') . '.php', '&'));
+				redirect(HOST . DIR . '/member/member' . transid('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
 			}
 			else
 				redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
@@ -599,7 +599,7 @@ if( !empty($id_get) ) //Espace membre
 		else
 			redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#errorh');
 	}	
-	elseif( !empty($view_get) && $Member->get_attribute('user_id') === $id_get && ($Member->check_level(MEMBER_LEVEL)) ) //Zone membre
+	elseif( !empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL)) ) //Zone membre
 	{
 		//Info membre
 		$msg_mbr = !empty($CONFIG_MEMBER['msg_mbr']) ? $CONFIG_MEMBER['msg_mbr'] : '';
@@ -609,19 +609,19 @@ if( !empty($id_get) ) //Espace membre
 		$Cache->Load_file('uploads');
 
 		//Droit d'accès?.
-		$is_auth_files = $Member->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES);
+		$is_auth_files = $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES);
 	
 		$Template->Assign_vars(array(
 			'C_MEMBER_INDEX' => true,
 			'SID' => SID,
 			'LANG' => $CONFIG['lang'],
 			'COLSPAN' => $is_auth_files ? 3 : 2,
-			'USER_NAME' => $Member->get_attribute('login'),
-			'PM' => $Member->get_attribute('user_pm'),
-			'IMG_PM' => ($Member->get_attribute('user_pm') > 0) ? 'new_pm.gif' : 'pm.png',
+			'USER_NAME' => $User->get_attribute('login'),
+			'PM' => $User->get_attribute('user_pm'),
+			'IMG_PM' => ($User->get_attribute('user_pm') > 0) ? 'new_pm.gif' : 'pm.png',
 			'MSG_MBR' => $msg_mbr,
-			'U_MEMBER_ID' => transid('.php?id=' . $Member->get_attribute('user_id') . '&amp;edit=true'),
-			'U_MEMBER_PM' => transid('.php?pm=' . $Member->get_attribute('user_id'), '-' . $Member->get_attribute('user_id') . '.php'),
+			'U_MEMBER_ID' => transid('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=true'),
+			'U_MEMBER_PM' => transid('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
 			'U_CONTRIBUTION_PANEL' => transid('contribution_panel.php'),
 			'L_PROFIL' => $LANG['profil'],
 			'L_WELCOME' => $LANG['welcome'],
@@ -697,7 +697,7 @@ if( !empty($id_get) ) //Espace membre
 		
 		//Droit d'édition du profil, au membre en question et à l'admin uniquement	.
 		$Template->Assign_vars(array(
-			'C_MEMBER_PROFIL_EDIT' => ($Member->get_attribute('user_id') === $id_get || $Member->check_level(ADMIN_LEVEL)) ? true : false,
+			'C_MEMBER_PROFIL_EDIT' => ($User->get_attribute('user_id') === $id_get || $User->check_level(ADMIN_LEVEL)) ? true : false,
 			'C_PROFIL_MEMBER_VIEW' => true,
 			'SID' => SID,
 			'LANG' => $CONFIG['lang'],
@@ -738,7 +738,7 @@ if( !empty($id_get) ) //Espace membre
 			'L_CONTACT' => $LANG['contact'],
 			'L_MAIL' => $LANG['mail'],
 			'L_PRIVATE_MESSAGE' => $LANG['private_message'],
-			'U_MEMBER_SCRIPT' => ($Member->get_attribute('user_id') === $id_get) ? ('../member/member' . transid('.php?id=' . $Member->get_attribute('user_id') . '&amp;edit=1')) : ('../admin/admin_members.php?id=' . $id_get . '&amp;edit=1'),
+			'U_MEMBER_SCRIPT' => ($User->get_attribute('user_id') === $id_get) ? ('../member/member' . transid('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=1')) : ('../admin/admin_members.php?id=' . $id_get . '&amp;edit=1'),
 			'U_MEMBER_MSG' => transid('.php?id=' . $id_get),
 			'U_MEMBER_PM' => transid('.php?pm=' . $id_get, '-' . $id_get . '.php')
 		));
@@ -811,7 +811,7 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 	$Template->Assign_vars(array(
 		'SID' => SID,
 		'C_GROUP_LIST' => true,
-		'ADMIN_GROUPS' => ($Member->check_level(ADMIN_LEVEL)) ? '<a href="../admin/admin_groups.php?id=' . $user_group . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" class="valign_middle" /></a>' : '',
+		'ADMIN_GROUPS' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="../admin/admin_groups.php?id=' . $user_group . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" class="valign_middle" /></a>' : '',
 		'GROUP_NAME' => $group['name'],
 		'L_BACK' => $LANG['back'],
 		'L_SELECT_GROUP' => $LANG['select_group'],

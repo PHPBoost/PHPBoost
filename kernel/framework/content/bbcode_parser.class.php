@@ -37,7 +37,7 @@ class BBCodeParser extends ContentParser
 	//On parse le contenu: bbcode => xhtml.
 	function parse()
 	{
-		global $Member;
+		global $User;
 		
 		$this->parsed_content = $this->content;
 		
@@ -46,7 +46,7 @@ class BBCodeParser extends ContentParser
 			$this->_pick_up_tag('code', '=[a-z0-9-]+(?:,[01]){0,2}');
 		
 		//On prélève tout le code HTML afin de ne pas l'altérer
-		if( $Member->check_auth($this->html_auth, 1) )
+		if( $User->check_auth($this->html_auth, 1) )
 			$this->_pick_up_tag('html');
 		
 		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé

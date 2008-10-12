@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                                member.class.php
+ *                                user.class.php
  *                            -------------------
  *   begin                : February 18, 2008
  *   copyright          : (C) 2008 Viarre Régis
@@ -29,14 +29,14 @@ define('RANK_TYPE', 1);
 define('GROUP_TYPE', 2);
 define('USER_TYPE', 3);
 
-class Member
+class User
 {
 	## Public methods ##
 	
 	//Constructeur: Retourne les autorisations globales données par l'ensemble des groupes dont le membre fait partie.
-	function Member($session_data, &$groups_info)
+	function User($session_data, &$groups_info)
 	{
-		$this->member_data = $session_data; //Informations sur le membre.
+		$this->user_data = $session_data; //Informations sur le membre.
 		
 		//Autorisations des groupes disponibles.
 		$groups_auth = array();
@@ -52,13 +52,13 @@ class Member
 	
 	function get_attribute($attribute)
 	{
-		return isset($this->member_data[$attribute]) ? $this->member_data[$attribute] : '';
+		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
 	}
 			
 	//Vérifie le niveau d'autorisation.
 	function check_level($secure)
 	{
-		if( isset($this->member_data['level']) && $this->member_data['level'] >= $secure ) 
+		if( isset($this->user_data['level']) && $this->user_data['level'] >= $secure ) 
 			return true;
 		return false;
 	}
@@ -109,7 +109,7 @@ class Member
 	//Calcul de l'intersection des groupes du membre avec les groupes du tableau en argument.
 	function _array_group_intersect($array_auth_groups)
 	{		
-		global $Member;
+		global $User;
 		
 		$array_user_auth_groups = array();
 		foreach($array_auth_groups as $idgroup => $auth_group)
@@ -121,12 +121,12 @@ class Member
 			}
 			elseif( substr($idgroup, 0, 1) == 'r' ) //Rang
 			{
-				if( $Member->get_attribute('level') >= (int)str_replace('r', '', $idgroup) )
+				if( $User->get_attribute('level') >= (int)str_replace('r', '', $idgroup) )
 					$array_user_auth_groups[$idgroup] = $auth_group;
 			}
 			else //Membre
 			{
-				if( $Member->get_attribute('user_id') == (int)str_replace('m', '', $idgroup) )
+				if( $User->get_attribute('user_id') == (int)str_replace('m', '', $idgroup) )
 					$array_user_auth_groups[$idgroup] = $auth_group;
 			}
 		}
@@ -141,7 +141,7 @@ class Member
 	}
 		
 	## Private attributes ##
-	var $member_data; //Données du membres, obtenues à partir de la class de session.
+	var $user_data; //Données du membres, obtenues à partir de la class de session.
 	var $groups_auth; //Tableau contenant le nom des groupes disponibles.
 	var $user_groups; //Groupes du membre.
 }

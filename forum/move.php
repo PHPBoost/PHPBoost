@@ -50,7 +50,7 @@ if( !empty($id_get) ) //Déplacement du sujet.
 	));
 
 	$topic = $Sql->query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
-	if( !$Member->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
+	if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 	$cat = $Sql->query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
@@ -60,7 +60,7 @@ if( !empty($id_get) ) //Déplacement du sujet.
 	{
 		foreach($CAT_FORUM as $idcat => $key)
 		{
-			if( !$Member->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+			if( !$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? "WHERE id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -150,7 +150,7 @@ if( !empty($id_get) ) //Déplacement du sujet.
 elseif( !empty($id_post) ) //Déplacement du topic
 {
 	$idcat = $Sql->query("SELECT idcat FROM ".PREFIX."forum_topics WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
-	if( $Member->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
+	if( $User->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
 	{		
 		$to = retrieve(POST, 'to', $idcat); //Catégorie cible.
 		$level = $Sql->query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
@@ -182,7 +182,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	$msg =  $Sql->query_array('forum_msg', 'idtopic', 'contents', "WHERE id = '" . $idm . "'", __LINE__, __FILE__);
 	$topic = $Sql->query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	
-	if( !$Member->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
+	if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 	$id_first = $Sql->query("SELECT MIN(id) as id FROM ".PREFIX."forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
@@ -198,7 +198,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	{	
 		foreach($CAT_FORUM as $idcat => $key)
 		{
-			if( !$Member->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+			if( !$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? "WHERE id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -400,7 +400,7 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 	$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	$to = retrieve(POST, 'to', 0); //Catégorie cible.
 	
-	if( !$Member->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
+	if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	$id_first = $Sql->query("SELECT MIN(id) FROM ".PREFIX."forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);

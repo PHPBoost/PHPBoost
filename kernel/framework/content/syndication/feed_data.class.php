@@ -68,11 +68,11 @@ class FeedData
     
     function get_items()
     {
-        global $Member;
+        global $User;
         $items = array();
         foreach( $this->items as $item )
         {
-            if( (gettype($item->get_auth()) != 'array' || $this->auth_bit == 0) || $Member->check_auth($item->get_auth(), $this->auth_bit) )
+            if( (gettype($item->get_auth()) != 'array' || $this->auth_bit == 0) || $User->check_auth($item->get_auth(), $this->auth_bit) )
                 $items[] = $item;
         }
         

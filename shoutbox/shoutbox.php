@@ -34,7 +34,7 @@ $shoutbox = retrieve(POST, 'shoutbox', false);
 if( $shoutbox && empty($shout_id) ) //Insertion
 {		
 	//Membre en lecture seule?
-	if( $Member->get_attribute('user_readonly') > time() ) 
+	if( $User->get_attribute('user_readonly') > time() ) 
 		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
 	$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
@@ -42,11 +42,11 @@ if( $shoutbox && empty($shout_id) ) //Insertion
 	if( !empty($shout_pseudo) && !empty($shout_contents) )
 	{		
 		//Accès pour poster.		
-		if( $Member->check_level($CONFIG_SHOUTBOX['shoutbox_auth']) )
+		if( $User->check_level($CONFIG_SHOUTBOX['shoutbox_auth']) )
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-			$check_time = ($Member->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
-			if( !empty($check_time) && !$Member->check_max_value(AUTH_FLOOD) )
+			$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+			if( !empty($check_time) && !$User->check_max_value(AUTH_FLOOD) )
 			{
 				if( $check_time >= (time() - $CONFIG['delay_flood']) )
 					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=flood', '', '&') . '#errorh');
@@ -59,7 +59,7 @@ if( $shoutbox && empty($shout_id) ) //Insertion
 			if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
 				redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
-			$Sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $Member->get_attribute('user_id') . "', '" . $Member->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
 			redirect(HOST . transid(SCRIPT . '?' . QUERY_STRING, '', '&'));
 		}
@@ -72,7 +72,7 @@ if( $shoutbox && empty($shout_id) ) //Insertion
 elseif( !empty($shout_id) ) //Edition + suppression!
 {
 	//Membre en lecture seule?
-	if( $Member->get_attribute('user_readonly') > time() ) 
+	if( $User->get_attribute('user_readonly') > time() ) 
 		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
 	$del_message = retrieve(GET, 'del', false);
@@ -82,7 +82,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 	$row = $Sql->query_array('shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
-	if( $Member->check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1) )
+	if( $User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1) )
 	{
 		if( $del_message )
 		{
@@ -97,7 +97,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 			));
 			
 			//Pseudo du membre connecté.
-			if( $Member->get_attribute('user_id') !== -1 )
+			if( $User->get_attribute('user_id') !== -1 )
 				$Template->Assign_vars(array(
 					'SHOUTBOX_PSEUDO' => $row['login'],
 					'C_HIDDEN_SHOUT' => true
@@ -160,9 +160,9 @@ else //Affichage.
 	));
 	
 	//Pseudo du membre connecté.
-	if( $Member->get_attribute('user_id') !== -1 )
+	if( $User->get_attribute('user_id') !== -1 )
 		$Template->Assign_vars(array(
-			'SHOUTBOX_PSEUDO' => $Member->get_attribute('login'),
+			'SHOUTBOX_PSEUDO' => $User->get_attribute('login'),
 			'C_HIDDEN_SHOUT' => true
 		));
 	else
@@ -240,7 +240,7 @@ else //Affichage.
 		$del_message = '';
 		
 		$is_guest = ($row['user_id'] === -1);
-		$is_modo = $Member->check_level(MODO_LEVEL);
+		$is_modo = $User->check_level(MODO_LEVEL);
 		$warning = '';
 		$readonly = '';
 		if( $is_modo && !$is_guest ) //Modération.
@@ -250,7 +250,7 @@ else //Affichage.
 		}
 		
 		//Edition/suppression.
-		if( $is_modo || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1) )
+		if( $is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1) )
 		{
 			$edit_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
 			$del_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?del=1&id=' . $row['id']) . '" onClick="javascript:return Confirm_shout();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';

@@ -82,7 +82,7 @@ if( is_array($CAT_FORUM) )
 {
 	foreach($CAT_FORUM as $idcat => $key)
 	{
-		if( !$Member->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+		if( !$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
 			$auth_cats .= $idcat . ',';
 	}
 	$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';

@@ -84,7 +84,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 		else //Insertion dans la bdd
 		{
 			$check_user_folder = $Sql->query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $folder . "'", __LINE__, __FILE__);
-			$user_id = ($check_user_folder <= 0) ? -1 : $Member->get_attribute('user_id');
+			$user_id = ($check_user_folder <= 0) ? -1 : $User->get_attribute('user_id');
 			$user_id = max($user_id, $folder_member);
 			
 			$Sql->query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $user_id . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
@@ -121,7 +121,7 @@ elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 	$move_list_parent = array();
 	$result = $Sql->query_while("SELECT id, id_parent, name
 	FROM ".PREFIX."upload_cat
-	WHERE user_id = '" . $Member->get_attribute('user_id') . "'
+	WHERE user_id = '" . $User->get_attribute('user_id') . "'
 	ORDER BY id", __LINE__, __FILE__);
 	
 	while( $row = $Sql->fetch_assoc($result) )
@@ -132,13 +132,13 @@ elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 	$array_child_folder = array();
 	$Uploads->Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
 	if( !in_array($to, $array_child_folder) ) //Dossier de destination non sous-dossier du dossier source.
-		$Uploads->Move_folder($move_folder, $to, $Member->get_attribute('user_id'), ADMIN_NO_CHECK);
+		$Uploads->Move_folder($move_folder, $to, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
 	
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $to);
 }
 elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
 {
-	$Uploads->Move_file($move_file, $to, $Member->get_attribute('user_id'), ADMIN_NO_CHECK);
+	$Uploads->Move_file($move_file, $to, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
 	
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $to);
 }

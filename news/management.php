@@ -97,7 +97,7 @@ elseif( $edit_news_id > 0 )
 	define('TITLE', $NEWS_LANG['news_management']);
 	
 	//Barre d'arborescence
-	$auth_write = $Member->check_auth($CONFIG_NEWS['global_auth'], WRITE_CAT_NEWS);
+	$auth_write = $User->check_auth($CONFIG_NEWS['global_auth'], WRITE_CAT_NEWS);
 	
 	$Bread_crumb->Add_link($NEWS_LANG['news_management'], transid('management.php?edit=' . $edit_news_id));
 	
@@ -111,7 +111,7 @@ elseif( $edit_news_id > 0 )
 		$Bread_crumb->Add_link($NEWS_CATS[$id_cat]['name'], transid('news.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($NEWS_CATS[$id_cat]['name']) . '.php'));
 		
 		if( !empty($NEWS_CATS[$id_cat]['auth']) )
-			$auth_write = $Member->check_auth($NEWS_CATS[$id_cat]['auth'], WRITE_CAT_NEWS);
+			$auth_write = $User->check_auth($NEWS_CATS[$id_cat]['auth'], WRITE_CAT_NEWS);
 		
 		$id_cat = (int)$NEWS_CATS[$id_cat]['id_parent'];
 	}

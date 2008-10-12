@@ -30,7 +30,7 @@ $Bread_crumb->Add_link($LANG['moderation_panel'], transid('moderation_panel.php'
 define('TITLE', $LANG['moderation_panel']);
 require_once('../kernel/header.php');
 
-if( !$Member->check_level(MODO_LEVEL) ) //Si il n'est pas modérateur
+if( !$User->check_level(MODO_LEVEL) ) //Si il n'est pas modérateur
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 include('../member/moderation_panel_begin.php');	
@@ -66,12 +66,12 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		$info_mbr = $Sql->query_array('member', 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->check_level(ADMIN_LEVEL)) )
+		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)) )
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."member SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-			if( $info_mbr['user_id'] != $Member->get_attribute('user_id') )
+			if( $info_mbr['user_id'] != $User->get_attribute('user_id') )
 			{
 				if( !empty($readonly_contents) && !empty($readonly) )
 				{					
@@ -223,14 +223,14 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		$info_mbr = $Sql->query_array('member', 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->check_level(ADMIN_LEVEL)) )
+		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)) )
 		{
 			if( $new_warning_level < 100 ) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
 				$Sql->query_inject("UPDATE ".PREFIX."member SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if( $info_mbr['user_id'] != $Member->get_attribute('user_id') )
+				if( $info_mbr['user_id'] != $User->get_attribute('user_id') )
 				{					
 					if( !empty($warning_contents) )
 					{					
@@ -356,7 +356,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 	{
 		$info_mbr = $Sql->query_array('member', 'user_id', 'level', 'user_warning', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->check_level(ADMIN_LEVEL)) )
+		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)) )
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."member SET user_ban = '" . $user_ban . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);			
 			

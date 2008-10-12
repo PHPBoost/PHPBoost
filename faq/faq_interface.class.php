@@ -117,7 +117,7 @@ class FaqInterface extends ModuleInterface
             f.id AS `id_content`,
             f.question AS `title`,
             ( 2 * MATCH(f.question) AGAINST('" . $args['search'] . "') + MATCH(f.answer) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS `relevance`, "
-            . $Sql->Concat("'../faq/faq.php?id='","f.idcat","'&amp;question='","f.id","'#q'","f.id") . " AS `link`
+            . $Sql->concat("'../faq/faq.php?id='","f.idcat","'&amp;question='","f.id","'#q'","f.id") . " AS `link`
             FROM " . PREFIX . "faq f
             WHERE ( MATCH(f.question) AGAINST('" . $args['search'] . "') OR MATCH(f.answer) AGAINST('" . $args['search'] . "') )" . $auth_cats
             . " ORDER BY `relevance` " . $Sql->limit(0, FAQ_MAX_SEARCH_RESULTS);
@@ -199,7 +199,7 @@ class FaqInterface extends ModuleInterface
 	#Private#
 	function _create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $FAQ_CATS, $FAQ_LANG, $LANG, $Member, $FAQ_CONFIG;
+		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG;
 		
 		if( $id_cat > 0 )
 			$this_category = new Sitemap_link($FAQ_CATS[$id_cat]['name'], HOST . DIR . '/faq/' . transid('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
@@ -223,7 +223,7 @@ class FaqInterface extends ModuleInterface
 			}
 			else
 			{
-				$this_auth = is_array($properties['auth']) ? $Member->check_auth($properties['auth'], AUTH_READ) : $Member->check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
+				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_READ) : $User->check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
 			}
 			if( $this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat )
 			{

@@ -36,7 +36,7 @@ if( empty($id_get) || !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'
 	$Errorh->Error_handler('e_unexist_cat_forum', E_USER_REDIRECT);
 	
 //Vérification des autorisations d'accès.
-if( !$Member->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$id_get]['url']) )
+if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$id_get]['url']) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 
 //Récupération de la barre d'arborescence.
@@ -71,7 +71,7 @@ if( !empty($id_get) )
 	));
 	
 	//Invité?	
-	$is_guest = ($Member->get_attribute('user_id') !== -1) ? false : true;
+	$is_guest = ($User->get_attribute('user_id') !== -1) ? false : true;
 	$module_data_path = $Template->Module_data_path('forum');
 	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
@@ -101,7 +101,7 @@ if( !empty($id_get) )
 		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
 		FROM ".PREFIX."forum_cats c
 		LEFT JOIN ".PREFIX."forum_topics t ON t.id = c.last_topic_id
-		LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $Member->get_attribute('user_id') . "' AND v.idtopic = t.id
+		LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
 		LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
 		WHERE c.aprob = 1 AND c.id_left > '" . $CAT_FORUM[$id_get]['id_left'] . "' AND c.id_right < '" . $CAT_FORUM[$id_get]['id_right'] . "' AND c.level = '" . $CAT_FORUM[$id_get]['level'] . "' + 1  " . $unauth_cats . "
 		ORDER BY c.id_left ASC", __LINE__, __FILE__);
@@ -183,8 +183,8 @@ if( !empty($id_get) )
 	}
 		
 	//On vérifie si l'utilisateur a les droits d'écritures.
-	$check_group_write_auth = $Member->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM);
-	$locked_cat = ($CAT_FORUM[$id_get]['status'] == 1 || $Member->check_level(ADMIN_LEVEL)) ? false : true;
+	$check_group_write_auth = $User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM);
+	$locked_cat = ($CAT_FORUM[$id_get]['status'] == 1 || $User->check_level(ADMIN_LEVEL)) ? false : true;
 	if( !$check_group_write_auth )
 	{
 		$Template->Assign_block_vars('error_auth_write', array(
@@ -216,7 +216,7 @@ if( !empty($id_get) )
 	}
 	
 	//Si l'utilisateur a les droits d'édition.	
-	$check_group_edit_auth = $Member->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
+	$check_group_edit_auth = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 
 	$nbr_topic = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_topics WHERE idcat = '" . $id_get . "'", __LINE__, __FILE__);
 	$Template->Assign_vars(array(
@@ -255,11 +255,11 @@ if( !empty($id_get) )
 	$nbr_topics_display = 0;
 	$result = $Sql->query_while("SELECT m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 	FROM ".PREFIX."forum_topics t
-	LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $Member->get_attribute('user_id') . "' AND v.idtopic = t.id
+	LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
 	LEFT JOIN ".PREFIX."member m1 ON m1.user_id = t.user_id
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = t.last_user_id
 	LEFT JOIN ".PREFIX."forum_poll p ON p.idtopic = t.id
-	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $Member->get_attribute('user_id') . "'
+	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $User->get_attribute('user_id') . "'
 	WHERE t.idcat = '" . $id_get . "'
 	ORDER BY t.type DESC , t.last_timestamp DESC
 	" . $Sql->limit($Pagination->First_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);	

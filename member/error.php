@@ -34,7 +34,7 @@ $id_error = retrieve(GET, 'e', '');
 $array_error = array('e_member_ban', 'e_member_ban_w', 'e_unexist_member', 'e_unactiv_member', 'e_member_flood');	
 if( in_array($id_error, $array_error) )
 {
-	if( $Member->get_attribute('user_id') === -1 )
+	if( $User->get_attribute('user_id') === -1 )
 	{
 		$Template->Set_filenames(array(
 			'error'=> 'error.tpl'
@@ -145,7 +145,7 @@ elseif( !empty($id_error) )
 	
 	$Template->Pparse('error');
 }
-elseif( $Member->get_attribute('user_id') === -1 )
+elseif( $User->get_attribute('user_id') === -1 )
 {
 	$Template->Set_filenames(array(
 		'error'=> 'error.tpl'

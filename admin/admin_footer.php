@@ -55,10 +55,10 @@ $Template->Assign_vars(array(
 
 if( $CONFIG['bench'] )
 {
-	$Bench->End_bench('site'); //On arrête le bench.
+	$Bench->stop('site'); //On arrête le bench.
 	$Template->Assign_vars(array(
 		'C_DISPLAY_BENCH' => true,
-		'BENCH' => $Bench->Display_bench('site'), //Fin du benchmark
+		'BENCH' => $Bench->display('site'), //Fin du benchmark
 		'REQ' => $Sql->display_request(),
 		'L_UNIT_SECOND' => HOST,
 		'L_REQ' => $LANG['sql_req'],

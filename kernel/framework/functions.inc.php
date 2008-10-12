@@ -487,7 +487,7 @@ function url_encode_rewrite($string)
 //Formate la date au format GMT, suivant la configuration du fuseau horaire du serveur.
 function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 {
-    global $Member, $CONFIG, $LANG;
+    global $User, $CONFIG, $LANG;
     
     if( strpos($format, 'date_format') !== false ) //Inutile de tout tester si ce n'est pas un formatage prédéfini.
     {
@@ -520,7 +520,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
     elseif( $timezone_system == 2 ) //Timestamp du serveur, non dépendant de l'utilisateur et du fuseau par défaut du site.
         $timezone = 0;
     else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
-        $timezone = $Member->get_attribute('user_timezone') - $serveur_hour;
+        $timezone = $User->get_attribute('user_timezone') - $serveur_hour;
 
     if( $timezone != 0 )
         $timestamp += $timezone * 3600;
@@ -534,7 +534,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 //Convertit une chaîne au format $LANG['date_format'] (ex:d/m/y) en timestamp, si la date saisie est valide sinon retourne 0.
 function strtotimestamp($str, $date_format)
 {
-    global $CONFIG, $Member;
+    global $CONFIG, $User;
     
     list($month, $day, $year) = array(0, 0, 0);
     $array_timestamp = explode('/', $str);
@@ -562,7 +562,7 @@ function strtotimestamp($str, $date_format)
         $timestamp = time();
 	
     $serveur_hour = number_round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
-    $timezone = $Member->get_attribute('user_timezone') - $serveur_hour;
+    $timezone = $User->get_attribute('user_timezone') - $serveur_hour;
     if( $timezone != 0 )
         $timestamp -= $timezone * 3600; 
         

@@ -105,7 +105,7 @@ elseif( $edit_file_id > 0 )
 	define('TITLE', $DOWNLOAD_LANG['file_management']);
 	
 	//Barre d'arborescence
-	$auth_write = $Member->check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOWNLOAD);
+	$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOWNLOAD);
 	
 	$Bread_crumb->Add_link($DOWNLOAD_LANG['file_management'], transid('management.php?edit=' . $edit_file_id));
 	
@@ -119,7 +119,7 @@ elseif( $edit_file_id > 0 )
 		$Bread_crumb->Add_link($DOWNLOAD_CATS[$id_cat]['name'], transid('download.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php'));
 		
 		if( !empty($DOWNLOAD_CATS[$id_cat]['auth']) )
-			$auth_write = $Member->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], WRITE_CAT_DOWNLOAD);
+			$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], WRITE_CAT_DOWNLOAD);
 		
 		$id_cat = (int)$DOWNLOAD_CATS[$id_cat]['id_parent'];
 	}

@@ -43,7 +43,7 @@ class Search
      *  avec k nombre de module n'ayant pas de cache de recherche
      */
     {
-        global $Sql, $Member;
+        global $Sql, $User;
         
         $this->errors = 0;
         $this->search = md5($search); // Identifiant de la chaîne recherchée;
@@ -51,7 +51,7 @@ class Search
         $this->id_search = array();
         $this->cache = array();
         
-        $this->id_user = $Member->get_attribute('user_id');
+        $this->id_user = $User->get_attribute('user_id');
         $this->modules_conditions = $this->_get_modules_conditions($this->modules);
         
         // Suppression des vieux résultats du cache
