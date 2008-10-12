@@ -29,11 +29,11 @@ if( defined('PHPBOOST') !== true) exit;
 
 $Sql->close(); //Fermeture de mysql
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'footer'=> 'footer.tpl'
 ));
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'HOST' => HOST,
 	'DIR' => DIR,
 	'THEME' => $CONFIG['theme'],
@@ -56,7 +56,7 @@ pages_displayed();
 if( $CONFIG['bench'] )
 {
 	$Bench->stop('site'); //On arrête le bench.
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_DISPLAY_BENCH' => true,
 		'BENCH' => $Bench->display('site'), //Fin du benchmark
 		'REQ' => $Sql->display_request(),
@@ -66,7 +66,7 @@ if( $CONFIG['bench'] )
 	));
 }
 
-$Template->Pparse('footer');				
+$Template->pparse('footer');				
 
 ob_end_flush();
 

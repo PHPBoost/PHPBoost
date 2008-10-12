@@ -148,7 +148,7 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 		{
 			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
-			if( $Upload->Upload_file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i') )
+			if( $Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i') )
 			{					
 				$archive_path = '../' . $Upload->filename['upload_module'];
 				//Place à la décompression.
@@ -186,11 +186,11 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 }
 else
 {			
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_modules_add'=> 'admin/admin_modules_add.tpl'
 	));
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
@@ -256,7 +256,7 @@ else
 					if( is_array($info_module) )
 					{
 						$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
-						$Template->Assign_block_vars('available', array(
+						$Template->assign_block_vars('available', array(
 							'ID' => $dir,
 							'NAME' => ucfirst($info_module['name']),
 							'ICON' => $dir,
@@ -282,15 +282,15 @@ else
 	}
 	
 	if( $i == 0 )
-		$Template->Assign_vars( array(
+		$Template->assign_vars( array(
 			'C_NO_MODULE' => true,
 		));
 	else
-		$Template->Assign_vars( array(
+		$Template->assign_vars( array(
 			'C_MODULES_AVAILABLE' => true,
 		));
 	
-	$Template->Pparse('admin_modules_add'); 
+	$Template->pparse('admin_modules_add'); 
 }
 
 require_once('../admin/admin_footer.php');

@@ -33,7 +33,7 @@ $mail_newsletter = retrieve(POST, 'mail_newsletter', '');
 $subscribe = retrieve(POST, 'subscribe', 'subscribe');
 $id = retrieve(GET, 'id', 0);
 	
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'newsletter'=> 'newsletter/newsletter.tpl'
 ));	
 
@@ -84,7 +84,7 @@ elseif( $id > 0 )
 //Affichage des archives
 else
 {
-	$Template->Assign_block_vars('arch_title', array());
+	$Template->assign_block_vars('arch_title', array());
 	
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
@@ -93,11 +93,11 @@ else
 	$result = $Sql->query_while("SELECT id, title, message, timestamp, type, nbr
 	FROM ".PREFIX."newsletter_arch 
 	ORDER BY id DESC 
-	" . $Sql->limit($Pagination->First_msg(5, 'p'), 5), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->get_first_msg(5, 'p'), 5), __LINE__, __FILE__);
 	
 	while($row = $Sql->fetch_assoc($result))
 	{
-		$Template->Assign_block_vars('arch', array(
+		$Template->assign_block_vars('arch', array(
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'TITLE' => stripslashes($row['title']),
 			'MESSAGE' => ($row['type'] === 'bbcode' || $row['type'] === 'html') ? '<div style="text-align:center;"><a class="com" href="#" onclick="popup(\'' . HOST . DIR . transid('/newsletter/newsletter_arch.php?id=' . $row['id'], '', '') . '\', \'' . $row['title'] . '\');">' . $LANG['newsletter_msg_html'] . '</a></div>' : nl2br($row['message']), 
@@ -112,21 +112,21 @@ else
 	if( $total_msg == 0 )
 		$Errorh->Error_handler($LANG['newsletter_no_archives'], E_USER_NOTICE);
 	
-	$Template->Assign_vars(array(
-		'PAGINATION' => $Pagination->Display_pagination('newsletter.php?p=%d', $total_msg, 'p', 5, 3),
+	$Template->assign_vars(array(
+		'PAGINATION' => $Pagination->display('newsletter.php?p=%d', $total_msg, 'p', 5, 3),
 		'L_NEWSLETTER_ARCHIVES' => $LANG['newsletter_archives'],
 		'L_NEWSLETTER_ARCHIVES_EXPLAIN' => $LANG['newsletter_archives_explain']
 		));
 	
 	if( $i === 0 )
 	{	
-		$Template->Assign_block_vars('mail', array(
+		$Template->assign_block_vars('mail', array(
 			'MSG' => 'Il n\'y a pas d\'archives pour le moment.'
 		));
 	}
 }
 
-$Template->Pparse('newsletter');
+$Template->pparse('newsletter');
 
 require_once('../kernel/footer.php');
 

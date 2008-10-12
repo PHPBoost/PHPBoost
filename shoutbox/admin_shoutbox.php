@@ -50,7 +50,7 @@ if( !empty($_POST['valid'])  )
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_shoutbox_config'=> 'shoutbox/admin_shoutbox_config.tpl'
 	));
 	
@@ -71,7 +71,7 @@ else
 		$ranks .= '<option value="' . $rank . '"' . $selected . '>' . $name . '</option>';
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'NBR_TAGS' => count($array_tags),
 		'SHOUTBOX_MAX_MSG' => !empty($CONFIG_SHOUTBOX['shoutbox_max_msg']) ? $CONFIG_SHOUTBOX['shoutbox_max_msg'] : '100',
 		'SHOUTBOX_AUTH' => $ranks,
@@ -108,13 +108,13 @@ else
 		else
 			$selected = ($is_selected) ? 'selected="selected"' : '';	
 			
-		$Template->Assign_block_vars('forbidden_tags', array(
+		$Template->assign_block_vars('forbidden_tags', array(
 			'TAGS' => '<option id="tag' . $i . '" value="' . $name . '" ' . $selected . '>[' . $name . ']</option>'
 		));
 		$i++;
 	}	
 	
-	$Template->Pparse('admin_shoutbox_config'); // traitement du modele	
+	$Template->pparse('admin_shoutbox_config'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

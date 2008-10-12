@@ -83,7 +83,7 @@ if( !empty($_POST['valid']) ) //Insertion du nouveau champs.
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_extend_field_add'=> 'admin/admin_extend_field_add.tpl'
 	));
 	
@@ -94,7 +94,7 @@ else
 	elseif( $get_error == 'exist_field' )
 		$Errorh->Error_handler($LANG['e_exist_field'], E_USER_NOTICE);
 		
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_DEFAULT_FIELD_VALUE' => $LANG['default_field_possible_values'],
 		'L_EXTEND_FIELD_MANAGEMENT' => $LANG['extend_field_management'],
@@ -127,7 +127,7 @@ else
 		'L_SUBMIT' => $LANG['submit'],
 	));
 	
-	$Template->Pparse('admin_extend_field_add');		
+	$Template->pparse('admin_extend_field_add');		
 }
 
 require_once('../admin/admin_footer.php');

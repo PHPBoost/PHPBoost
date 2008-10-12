@@ -47,7 +47,7 @@ if( !empty($_POST['valid'])  )
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_contact_config'=> 'contact/admin_contact_config.tpl'
 	));
 	
@@ -56,7 +56,7 @@ else
 	$CONFIG_CONTACT['contact_verifcode'] = isset($CONFIG_CONTACT['contact_verifcode']) ? $CONFIG_CONTACT['contact_verifcode'] : 0;
 	$CONFIG_CONTACT['contact_difficulty_verifcode'] = isset($CONFIG_CONTACT['contact_difficulty_verifcode']) ? $CONFIG_CONTACT['contact_difficulty_verifcode'] : 2;
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'CONTACT_VERIFCODE_ENABLED' => ($CONFIG_CONTACT['contact_verifcode'] == '1') ? 'checked="checked"' : '',
 		'CONTACT_VERIFCODE_DISABLED' => ($CONFIG_CONTACT['contact_verifcode'] == '0') ? 'checked="checked"' : '',
 		'L_CONTACT' => $LANG['title_contact'],
@@ -72,13 +72,13 @@ else
 	
 	for($i = 0; $i < 5; $i++)
 	{
-		$Template->Assign_block_vars('difficulty', array(
+		$Template->assign_block_vars('difficulty', array(
 			'VALUE' => $i,
 			'SELECTED' => ($CONFIG_CONTACT['contact_difficulty_verifcode'] == $i) ? 'selected="selected"' : ''
 		));
 	}
 
-	$Template->Pparse('admin_contact_config'); // traitement du modele	
+	$Template->pparse('admin_contact_config'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

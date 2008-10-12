@@ -29,11 +29,11 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'admin_members_punishment'=> 'admin/admin_members_punishment.tpl')
 );
 	
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'SID' => SID,
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
@@ -79,7 +79,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=punish');
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['punishment_management'],
 		'U_XMLHTTPREQUEST' => 'punish_user',
@@ -98,7 +98,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=punish');
 		}	
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_punish_until'],
@@ -116,7 +116,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		ORDER BY user_readonly DESC", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$Template->Assign_block_vars('list', array(
+			$Template->assign_block_vars('list', array(
 				'LOGIN' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
 				'U_PROFILE' => '../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
@@ -129,7 +129,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		
 		if( $i === 0 )
 		{
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'C_NO_USER' => true,
 				'L_NO_USER' => $LANG['no_ban'],
 			));
@@ -167,7 +167,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 			$select .= '<option value="' . $time . '" ' . $selected . '>' . strtolower($array_sanction[$key]) . '</option>';
 		}	
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_USER_INFO' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
@@ -239,14 +239,14 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				//Envoi du mail
 				include_once('../kernel/framework/io/mail.class.php');
 				$Mail = new Mail();
-				$Mail->Send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
+				$Mail->send($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 			}	
 		}
 		
 		redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=warning');
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['warning_management'],
 		'U_XMLHTTPREQUEST' => 'warning_user',		
@@ -265,7 +265,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=warning');
 		}		
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_warning_level'],
@@ -283,7 +283,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		ORDER BY user_warning", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$Template->Assign_block_vars('list', array(
+			$Template->assign_block_vars('list', array(
 				'LOGIN' => $row['login'],
 				'INFO' => $row['user_warning'] . '%',
 				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="" /></a>',
@@ -296,7 +296,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		
 		if( $i === 0 )
 		{
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'C_NO_USER' => true,
 				'L_NO_USER' => $LANG['no_ban'],
 			));
@@ -317,7 +317,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 		}
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_USER_INFO' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
@@ -355,13 +355,13 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 			{
 				include_once('../kernel/framework/io/mail.class.php');
 				$Mail = new Mail();
-				$Mail->Send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
+				$Mail->send($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 			}				
 		}		
 		redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=ban');
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['ban_management'],
 		'U_XMLHTTPREQUEST' => 'ban_user',
@@ -380,7 +380,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=ban');
 		}	
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_ban_until'],
@@ -398,7 +398,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		ORDER BY user_ban", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$Template->Assign_block_vars('list', array(
+			$Template->assign_block_vars('list', array(
 				'LOGIN' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 				'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
 				'U_PROFILE' => '../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
@@ -411,7 +411,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		
 		if( $i === 0 )
 		{
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'C_NO_USER' => true,
 				'L_NO_USER' => $LANG['no_ban'],
 			));
@@ -451,7 +451,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 			$ban_options .= '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>';
 		}
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_USER_BAN' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'BAN_OPTIONS' => $ban_options,
@@ -466,7 +466,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 	}
 }
 
-$Template->Pparse('admin_members_punishment');
+$Template->pparse('admin_members_punishment');
 	
 require_once('../admin/admin_footer.php');
 

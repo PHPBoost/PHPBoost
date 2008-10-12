@@ -50,7 +50,7 @@ if( !empty($_POST['valid']) )
 }
 elseif( !empty($_POST['previs']) )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_web_add'=> 'web/admin_web_add.tpl'
 	));
 
@@ -66,7 +66,7 @@ elseif( !empty($_POST['previs']) )
 
 	$cat = $Sql->query("SELECT name FROM ".PREFIX."web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	
-	$Template->Assign_block_vars('web', array(
+	$Template->assign_block_vars('web', array(
 		'NAME' => $title,
 		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
 		'URL' => $url,
@@ -82,7 +82,7 @@ elseif( !empty($_POST['previs']) )
 		'L_CAT' => $LANG['categorie'],
 	));
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'NAME' => $title,
@@ -123,7 +123,7 @@ elseif( !empty($_POST['previs']) )
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
-		$Template->Assign_block_vars('select', array(
+		$Template->assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '"' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
@@ -133,15 +133,15 @@ elseif( !empty($_POST['previs']) )
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
-	$Template->Pparse('admin_web_add'); 
+	$Template->pparse('admin_web_add'); 
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_web_add'=> 'web/admin_web_add.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'COMPT' => '0',
 		'CHECK_ENABLED' => 'checked="ckecked"',
 		'CHECK_DISABLED' => '',
@@ -174,7 +174,7 @@ else
 	ORDER BY class", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('select', array(
+		$Template->assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '">' . $row['name'] . '</option>'
 		));
 		$i++;
@@ -188,7 +188,7 @@ else
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
-	$Template->Pparse('admin_web_add'); 
+	$Template->pparse('admin_web_add'); 
 }
 
 require_once('../admin/admin_footer.php');

@@ -31,20 +31,22 @@ define('LINK_START_PAGE', false); //Lien sur la première page.
 class Pagination
 {
 	## Public Methods ##
+    function Pagination() { }
+    
 	//Renvoie la chaîne de liens formatée.
-	function Display_pagination($path, $total_msg, $var_page, $nbr_msg_page, $nbr_max_link, $font_size = 11, $previous_next = true, $link_start_page = true)
+	function display($path, $total_msg, $var_page, $nbr_msg_page, $nbr_max_link, $font_size = 11, $previous_next = true, $link_start_page = true)
 	{
 		if( $total_msg > $nbr_msg_page )
 		{
 			//Initialisations.
 			$links = ''; //Chaîne à retourner.
 
-			$this->page = $this->get_var_page($var_page);
+			$this->page = $this->_get_var_page($var_page);
 			$nbr_page = ceil($total_msg / $nbr_msg_page); //Calcul du nombre page.
 			if( $nbr_page == 1 )
 				return '';
 				
-			$this->page = $this->check_page($nbr_page); //Page valide.
+			$this->page = $this->_check_page($nbr_page); //Page valide.
 			
 			//Affichage lien suivant « (si activé !)	
 			if( $this->page != 1 && $nbr_page > 1 && $previous_next === true) //Plus qu'une page, et page différente de celle par défaut => affichage du lien.
@@ -86,7 +88,7 @@ class Pagination
 	}
 	
 	//Calcule le numéro du premier message de la page actuelle.
-	function First_msg($nbr_msg_page, $var_page)
+	function get_first_msg($nbr_msg_page, $var_page)
 	{
 		$page = !empty($_GET[$var_page]) ? numeric($_GET[$var_page]) : 1;	
 		$page = $page > 0 ? $page : 1;	
@@ -96,7 +98,7 @@ class Pagination
 	//Fonction qui renvoie la page courante
 	function get_current_page()
 	{
-		return $this->get_var_page($this->var_page);
+		return $this->_get_var_page($this->var_page);
 	}
 	
 	//Fonction qui renvoie la page courante
@@ -108,7 +110,7 @@ class Pagination
 	
 	## Private Methods ##
 	//Récupère la valeur de la page courante.
-	function get_var_page($var_page)
+	function _get_var_page($var_page)
 	{
 		$_GET[$var_page] = isset($_GET[$var_page]) ? numeric($_GET[$var_page]) : 0;
 		if( !empty($_GET[$var_page]) )
@@ -118,7 +120,7 @@ class Pagination
 	}
 		
 	//Vérifie si la page sur laquelle on se trouve est valide, sinon renvoi sur une page d'erreur.
-	function check_page($nbr_page)
+	function _check_page($nbr_page)
 	{		
 		global $Errorh;
 		

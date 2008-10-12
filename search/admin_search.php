@@ -101,7 +101,7 @@ else
     
     require_once('../kernel/framework/modules/modules.class.php');
     
-    $Tpl->Assign_vars(array(
+    $Tpl->assign_vars(array(
         'THEME' => $CONFIG['theme'],
         'L_SEARCH_MANAGEMENT' => $LANG['search_management'],
         'L_SEARCH_CONFIG' => $LANG['search_config'],
@@ -118,7 +118,7 @@ else
         $SEARCH_CONFIG['nb_results_per_page'] = isset($SEARCH_CONFIG['nb_results_per_page']) ? $SEARCH_CONFIG['nb_results_per_page'] : 15;
         $SEARCH_CONFIG['authorized_modules'] = isset($SEARCH_CONFIG['authorized_modules']) && is_array($SEARCH_CONFIG['authorized_modules']) ? $SEARCH_CONFIG['authorized_modules'] : array();
         
-        $Modules = new Modules();
+        $Modules = new ModulesDiscoveryService();
         $searchModules = $Modules->get_available_modules('get_search_request');
         
         foreach( $searchModules as $module )
@@ -128,14 +128,14 @@ else
             else
                 $selected = '';
 
-            $Tpl->Assign_block_vars('authorized_modules', array(
+            $Tpl->assign_block_vars('authorized_modules', array(
                 'MODULE' => $module->get_id(),
                 'SELECTED' => $selected,
                 'L_MODULE_NAME' => ucfirst($module->get_name())
             ));
         }
         
-        $Tpl->Assign_vars(array(
+        $Tpl->assign_vars(array(
             'L_CACHE_TIME' => $LANG['cache_time'],
             'L_CACHE_TIME_EXPLAIN' => $LANG['cache_time_explain'],
             'L_NB_RESULTS_P' => $LANG['nb_results_per_page'],
@@ -152,13 +152,13 @@ else
     }
     else
     {
-        $Modules = new Modules();
+        $Modules = new ModulesDiscoveryService();
         foreach( $SEARCH_CONFIG['authorized_modules'] as $module_id )
         {
             $module = $Modules->get_module($module_id);
             if( !$module->got_error() )
             {
-                $Tpl->Assign_block_vars('weights', array(
+                $Tpl->assign_block_vars('weights', array(
                     'MODULE' => $module->get_id(),
                     'L_MODULE_NAME' => ucfirst($module->get_name()),
                     'WEIGHT' => (!empty($SEARCH_CONFIG['modules_weighting']) && !empty($SEARCH_CONFIG['modules_weighting'][$module->get_id()])) ? $SEARCH_CONFIG['modules_weighting'][$module->get_id()] : 1
@@ -166,7 +166,7 @@ else
             }
         }
         
-        $Tpl->Assign_vars(array(
+        $Tpl->assign_vars(array(
             'L_MODULES' => $LANG['modules'],
             'L_WEIGHTS' => $LANG['search_weights'],
             'L_SEARCH_CONFIG_WEIGHTING_EXPLAIN' => $LANG['search_config_weighting_explain']

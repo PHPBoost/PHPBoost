@@ -57,18 +57,18 @@ if( !empty($_POST['msg_register']) ) //Message à l'inscription.
 }
 else
 {			
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_terms'=> 'admin/admin_terms.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_TERMS' => $LANG['register_terms'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 	));
 	
 	$msg_register = $Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__); //Message à l'inscription.
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'CONTENTS' => unparse($CONFIG_MEMBER['msg_register']),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_TERMS' => $LANG['register_terms'],
@@ -79,7 +79,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));		
 	
-	$Template->Pparse('admin_terms'); 
+	$Template->pparse('admin_terms'); 
 }
 
 require_once('../admin/admin_footer.php');

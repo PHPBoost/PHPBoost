@@ -43,7 +43,7 @@ $preview_topic = retrieve(POST, 'prw_t', ''); //Prévisualisation du topic scindé
 
 if( !empty($id_get) ) //Déplacement du sujet.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'forum_move'=> 'forum/forum_move.tpl',
 		'forum_top'=> 'forum/forum_top.tpl',
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -79,9 +79,9 @@ if( !empty($id_get) ) //Déplacement du sujet.
 	}
 	$Sql->query_close($result);
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'SID' => SID,
-		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['move_topic'],
 		'ID' => $id_get,
 		'TITLE' => $topic['title'],
@@ -129,7 +129,7 @@ if( !empty($id_get) ) //Déplacement du sujet.
 	$Sql->query_close($result);
 
 	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -145,7 +145,7 @@ if( !empty($id_get) ) //Déplacement du sujet.
 		'L_ONLINE' => strtolower($LANG['online']),
 	));
 	
-	$Template->Pparse('forum_move');
+	$Template->pparse('forum_move');
 }
 elseif( !empty($id_post) ) //Déplacement du topic
 {
@@ -172,7 +172,7 @@ elseif( !empty($id_post) ) //Déplacement du topic
 }
 elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //Choix de la nouvelle catégorie, titre, sous-titre du topic à scinder.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'forum_move'=> 'forum/forum_post.tpl',
 		'forum_top'=> 'forum/forum_top.tpl',
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -216,13 +216,13 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	}
 	$Sql->query_close($result);
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_FORUM_CUT_CAT' => true,
 		'CATEGORIES' => $cat_forum,
 		'KERNEL_EDITOR' => display_editor(),
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['cut_topic'],
 		'SID' => SID,			
 		'IDTOPIC' => 0,
@@ -256,13 +256,13 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		$nbr_poll_field = 0;
 		for($i = 0; $i < 5; $i++)
 		{	
-			$Template->Assign_block_vars('answers_poll', array(
+			$Template->assign_block_vars('answers_poll', array(
 				'ID' => $i,
 				'ANSWER' => ''
 			));
 		}
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'TITLE' => '',
 			'DESC' => '',
 			'CONTENTS' => unparse($msg['contents']),
@@ -298,7 +298,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			$answer = retrieve(POST, 'a'.$i, '', TSTRING_UNSECURE);
 			if( !empty($answer) )
 			{
-				$Template->Assign_block_vars('answers_poll', array(
+				$Template->assign_block_vars('answers_poll', array(
 					'ID' => $i,
 					'ANSWER' => $answer
 				));
@@ -306,7 +306,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			}	
 			elseif( $i <= 5 ) //On complète s'il y a moins de 5 réponses.
 			{
-				$Template->Assign_block_vars('answers_poll', array(
+				$Template->assign_block_vars('answers_poll', array(
 					'ID' => $i,
 					'ANSWER' => ''
 				));
@@ -316,7 +316,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		//Type de réponses du sondage.
 		$poll_type = retrieve(POST, 'poll_type', 0);
 		
-		$Template->Assign_vars(array(	
+		$Template->assign_vars(array(	
 			'TITLE' => $title,
 			'DESC' => $subtitle,
 			'CONTENTS' => $contents,
@@ -376,7 +376,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	$Sql->query_close($result);
 
 	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -392,7 +392,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		'L_ONLINE' => strtolower($LANG['online'])
 	));	
 	
-	$Template->Pparse('forum_move');
+	$Template->pparse('forum_move');
 }
 elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 {

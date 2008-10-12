@@ -98,7 +98,7 @@ if( !empty($_POST['valid']) )
 }
 elseif( !empty($_POST['previs']) )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_news_add'=> 'news/admin_news_add.tpl'
 	));
 
@@ -127,7 +127,7 @@ elseif( !empty($_POST['previs']) )
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 	$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 
-	$Template->Assign_block_vars('news', array(
+	$Template->assign_block_vars('news', array(
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
 		'EXTEND_CONTENTS' => second_parse(stripslashes(strparse($extend_contents))) . '<br /><br />',
@@ -142,7 +142,7 @@ elseif( !empty($_POST['previs']) )
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('select', array(
+		$Template->assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
@@ -152,8 +152,8 @@ elseif( !empty($_POST['previs']) )
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
-	$Template->Assign_vars(array(
-		'MODULE_DATA_PATH' => $Template->Module_data_path('news'),
+	$Template->assign_vars(array(
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('news'),
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => $contents,
 		'EXTEND_CONTENTS' => $extend_contents,
@@ -216,15 +216,15 @@ elseif( !empty($_POST['previs']) )
 		'L_RESET' => $LANG['reset']
 	));	
 	
-	$Template->Pparse('admin_news_add');    
+	$Template->pparse('admin_news_add');    
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_news_add'=> 'news/admin_news_add.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'TITLE' => '',
 		'THEME' => $CONFIG['theme'],
 		'VISIBLE_ENABLED' => 'checked="checked"',
@@ -269,7 +269,7 @@ else
 	FROM ".PREFIX."news_cat", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('select', array(
+		$Template->assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '">' . $row['name'] . '</option>'
 		));
 		$i++;
@@ -283,7 +283,7 @@ else
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
-	$Template->Pparse('admin_news_add'); 
+	$Template->pparse('admin_news_add'); 
 }
 
 require_once('../admin/admin_footer.php');

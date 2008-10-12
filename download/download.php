@@ -31,7 +31,7 @@ require_once('../kernel/header.php');
 
 if( $file_id > 0 ) //Contenu
 {
-	$Template->Set_filenames(array('download'=> 'download/download.tpl'));
+	$Template->set_filenames(array('download'=> 'download/download.tpl'));
 	
 	if( $download_info['size'] > 1 )
 		$size_tpl = $download_info['size'] . ' ' . $LANG['unit_megabytes'];
@@ -48,11 +48,11 @@ if( $file_id > 0 ) //Contenu
 	include_once('../kernel/framework/content/note.class.php'); 
 	$Note = new Note('download', $file_id, transid('download.php?id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_DISPLAY_DOWNLOAD' => true,
 		'C_IMG' => !empty($download_info['image']),
 		'C_EDIT_AUTH' => $auth_write,
-		'MODULE_DATA_PATH' => $Template->Module_data_path('download'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('download'),
 		'ID_FILE' => $file_id,
 		'NAME' => $download_info['title'],
 		'CONTENTS' => second_parse($download_info['contents']),
@@ -87,18 +87,18 @@ if( $file_id > 0 ) //Contenu
 	//Affichage commentaires.
 	if( isset($_GET['com']) )
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'COMMENTS' => display_comments('download', $file_id, transid('download.php?id=' . $file_id . '&amp;com=%s', 'download-' . $file_id . '.php?com=%s'))
 		));
 	}
 	
-	$Template->Pparse('download');
+	$Template->pparse('download');
 }
 else
 {
-	$Template->Set_filenames(array('download'=> 'download/download.tpl'));
+	$Template->set_filenames(array('download'=> 'download/download.tpl'));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_ADMIN' => $auth_write,
 		'U_ADMIN_CAT' => $category_id > 0 ? transid('admin_download_cat.php?edit=' . $category_id) : transid('admin_download_cat.php'),
 		'C_DOWNLOAD_CAT' => true,
@@ -121,7 +121,7 @@ else
 	//listing of subcategories
 	if( $num_subcats > 0 )
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_SUB_CATS' => true
 		));	
 		
@@ -133,8 +133,8 @@ else
 			if( $id != 0 && $value['visible'] && $value['id_parent'] == $category_id && (empty($value['auth']) || $User->check_auth($value['auth'], READ_CAT_DOWNLOAD)) )
 			{
 				if ( $i % $CONFIG_DOWNLOAD['nbr_column'] == 1 )
-					$Template->Assign_block_vars('row', array());
-				$Template->Assign_block_vars('row.list_cats', array(
+					$Template->assign_block_vars('row', array());
+				$Template->assign_block_vars('row.list_cats', array(
 					'ID' => $id,
 					'NAME' => $value['name'],
 					'WIDTH' => floor(100 / (float)$CONFIG_DOWNLOAD['nbr_column']),
@@ -202,7 +202,7 @@ else
 		
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'L_FILE' => $DOWNLOAD_LANG['file'],
 			'L_ALPHA' => $DOWNLOAD_LANG['sort_alpha'],
 			'L_SIZE' => $LANG['size'],
@@ -231,8 +231,8 @@ else
 		include_once('../kernel/framework/content/note.class.php');
 		$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
 		
-		$Template->Assign_vars(array(
-			'PAGINATION' => $Pagination->Display_pagination(transid('download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
+		$Template->assign_vars(array(
+			'PAGINATION' => $Pagination->display(transid('download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
 			'C_FILES' => true,
 			'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
 			));
@@ -241,10 +241,10 @@ else
 		FROM ".PREFIX."download
 		WHERE visible = 1 AND idcat = '" . $category_id . "'
 		ORDER BY " . $sort . " " . $mode . 
-		$Sql->limit($Pagination->First_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
+		$Sql->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$Template->Assign_block_vars('file', array(			
+			$Template->assign_block_vars('file', array(			
 				'NAME' => $row['title'],
 				'IMG_NAME' => str_replace('"', '\"', $row['title']),
 				'C_DESCRIPTION' => !empty($row['short_contents']),
@@ -265,13 +265,13 @@ else
 	}
 	else
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'L_NO_FILE_THIS_CATEGORY' => $DOWNLOAD_LANG['none_download'],
 			'C_NO_FILE' => true
 		));
 	}
 		
-	$Template->Pparse('download');
+	$Template->pparse('download');
 }
 	
 require_once('../kernel/footer.php'); 

@@ -41,7 +41,7 @@ class MenuLink extends MenuElement
 	{
 		$template_string = $template->copy();		
 		
-		$template_string->Assign_vars(array(
+		$template_string->assign_vars(array(
 			'C_LINK' => true,
 			'TITLE' => $this->title,
 			'IMAGE' => $this->image,

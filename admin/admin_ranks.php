@@ -67,11 +67,11 @@ elseif( !empty($_GET['del']) && !empty($get_id) ) //Suppression du rang.
 }
 else //Sinon on rempli le formulaire	 
 {	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_ranks'=> 'admin/admin_ranks.tpl'
 	));
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
@@ -120,7 +120,7 @@ else //Sinon on rempli le formulaire
 			$rank_options .= '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>';
 		}
 		
-		$Template->Assign_block_vars('rank', array(
+		$Template->assign_block_vars('rank', array(
 			'ID' => $row['id'],
 			'RANK' => $row['name'],
 			'MSG' => ($row['special'] == 0) ? '<input type="text" maxlength="6" size="6" name="' . $row['id'] . 'msg" id="vmsg" value="' . $row['msg'] . '" class="text" />' : $LANG['special_rank'],
@@ -131,7 +131,7 @@ else //Sinon on rempli le formulaire
 	}
 	$Sql->query_close($result);
 	
-	$Template->Pparse('admin_ranks');
+	$Template->pparse('admin_ranks');
 }
 
 require_once('../admin/admin_footer.php');

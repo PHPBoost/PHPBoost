@@ -131,13 +131,13 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 }
 elseif( !empty($id) ) //Vue de la news
 {			
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_news_management'=> 'news/admin_news_management.tpl'
 	));
 
 	$row = $Sql->query_array('news', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
-	$Template->Assign_block_vars('news', array(
+	$Template->assign_block_vars('news', array(
 		'TITLE' => $row['title'],
 		'IDNEWS' => $row['id'],
 		'CONTENTS' => unparse($row['contents']),
@@ -170,7 +170,7 @@ elseif( !empty($id) ) //Vue de la news
 		'ALT' => $row['alt']
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
 		'L_UNTIL' => $LANG['until'],
@@ -213,7 +213,7 @@ elseif( !empty($id) ) //Vue de la news
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('news.select', array(
+		$Template->assign_block_vars('news.select', array(
 			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
@@ -227,11 +227,11 @@ elseif( !empty($id) ) //Vue de la news
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
         $Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 	
-	$Template->Pparse('admin_news_management');
+	$Template->pparse('admin_news_management');
 }
 elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la news.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_news_management'=> 'news/admin_news_management.tpl'
 	));
 
@@ -261,9 +261,9 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 	$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 	
-	$Template->Assign_block_vars('news', array(
+	$Template->assign_block_vars('news', array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $Template->Module_data_path('news'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('news'),
 		'IDNEWS' => $id_post,
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => stripslashes($contents),
@@ -301,7 +301,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('news.select', array(
+		$Template->assign_block_vars('news.select', array(
 			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
@@ -311,7 +311,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 		
-	$Template->Assign_block_vars('news.preview', array(
+	$Template->assign_block_vars('news.preview', array(
 		'THEME' => $CONFIG['theme'],
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
@@ -323,7 +323,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 		'DATE' => gmdate_format('date_format_short')
 	));
 
-	$Template->Assign_vars(array(		
+	$Template->assign_vars(array(		
 		'KERNEL_EDITOR' => display_editor(),
 		'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
 		'L_UNTIL' => $LANG['until'],
@@ -360,11 +360,11 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 		'L_RESET' => $LANG['reset']
 	));	
 	
-	$Template->Pparse('admin_news_management');    
+	$Template->pparse('admin_news_management');    
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_news_management'=> 'news/admin_news_management.tpl'
 	));
 	
@@ -373,8 +373,8 @@ else
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
-	$Template->Assign_vars(array(
-		'PAGINATION' => $Pagination->Display_pagination('admin_news.php?p=%d', $nbr_news, 'p', 25, 3),
+	$Template->assign_vars(array(
+		'PAGINATION' => $Pagination->display('admin_news.php?p=%d', $nbr_news, 'p', 25, 3),
 		'LANG' => $CONFIG['lang'],
 		'THEME' => $CONFIG['theme'],
 		'L_CONFIRM_DEL_NEWS' => $LANG['confirm_del_news'],
@@ -391,7 +391,7 @@ else
 		'L_DELETE' => $LANG['delete']
 	));
 
-	$Template->Assign_block_vars('list', array(
+	$Template->assign_block_vars('list', array(
 	));
 	
 	$result = $Sql->query_while("SELECT nc.name, n.id, n.title, n.timestamp, n.visible, n.start, n.end, m.login 
@@ -399,7 +399,7 @@ else
 	LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 	LEFT JOIN ".PREFIX."member m ON m.user_id = n.user_id
 	ORDER BY n.timestamp DESC 
-	" . $Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		if( $row['visible'] && $row['start'] > time() )
@@ -421,7 +421,7 @@ else
 		elseif( $row['end'] > 0 )
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format', $row['end']);
 
-		$Template->Assign_block_vars('list.news', array(
+		$Template->assign_block_vars('list.news', array(
 			'TITLE' => $title,
 			'PSEUDO' => !empty($row['login']) ? $row['login'] : $LANG['guest'],		
 			'IDNEWS' => $row['id'],
@@ -433,7 +433,7 @@ else
 	}
 	$Sql->query_close($result);
 	
-	$Template->Pparse('admin_news_management');
+	$Template->pparse('admin_news_management');
 }
 
 require_once('../admin/admin_footer.php');

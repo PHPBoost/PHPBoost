@@ -88,14 +88,14 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 				{
 					if( $_FILES['avatars']['size'] > 0 )
 					{
-						$Upload->Upload_file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
+						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 						
 						if( !empty($Upload->error) ) //Erreur, on arrête ici
 							redirect(HOST . DIR . '/member/register' . transid('.php?erroru=' . $Upload->error) . '#errorh');
 						else
 						{
 							$path = $dir . $Upload->filename['avatars'];
-							$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
+							$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 							if( !empty($error) ) //Erreur, on arrête ici
 								redirect(HOST . DIR . '/member/register' . transid('.php?erroru=' . $error) . '#errorh');
 							else
@@ -107,7 +107,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 				$path = retrieve(POST, 'avatar', '');
 				if( !empty($path) )
 				{
-					$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
+					$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 					if( !empty($error) ) //Erreur, on arrête ici
 						redirect(HOST . DIR . '/member/register' . transid('.php?erroru=' . $error) . '#errorh');
 					else
@@ -256,7 +256,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					include_once('../kernel/framework/io/mail.class.php');
 					$Mail = new Mail();
 					
-					$Mail->Send_mail($user_mail, sprintf(addslashes($LANG['register_title_mail']), $CONFIG['site_name']), sprintf(addslashes($LANG['register_mail']), $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail']);
+					$Mail->send($user_mail, sprintf(addslashes($LANG['register_title_mail']), $CONFIG['site_name']), sprintf(addslashes($LANG['register_mail']), $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail']);
 					
 					//On connecte le membre directement si aucune activation demandée.
 					if( $CONFIG_MEMBER['activ_mbr'] == 0 )

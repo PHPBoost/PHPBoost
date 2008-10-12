@@ -34,7 +34,7 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 	load_module_lang('poll');
 	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage aléatoire.
 	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'poll_mini'=> 'poll/poll_mini.tpl'
 	));
 		
@@ -43,21 +43,21 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
 	if( in_array($poll_mini['id'], $array_cookie) )
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'THEME' => $CONFIG['theme'],
-			'MODULE_DATA_PATH' => $Template->Module_data_path('poll'),
+			'MODULE_DATA_PATH' => $Template->get_module_data_path('poll'),
 			'L_MINI_POLL' => $LANG['mini_poll'],
 			'L_VOTE' => ($poll_mini['total'] > 1) ? $LANG['poll_vote_s'] : $LANG['poll_vote']
 		));
 		
-		$Template->Assign_block_vars('result', array(
+		$Template->assign_block_vars('result', array(
 			'QUESTION' => $poll_mini['question'],
 			'VOTES' => $poll_mini['total'],
 		));
 		
 		foreach($poll_mini['votes'] as $answer => $width)
 		{
-			$Template->Assign_block_vars('result.answers', array(
+			$Template->assign_block_vars('result.answers', array(
 				'ANSWERS' => $answer,
 				'WIDTH' => number_round($width, 0), 
 				'PERCENT' => $width
@@ -67,14 +67,14 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 	else
 	{
 		#####################Questions######################
-		$Template->Assign_vars(array(			
+		$Template->assign_vars(array(			
 			'L_MINI_POLL' => $LANG['mini_poll'],
 			'L_VOTE' => $LANG['poll_vote'],
 			'L_POLL_RESULT' => $LANG['poll_result'],
 			'U_POLL_RESULT' => transid('.php?id=' . $poll_mini['id'] . '&amp;r=1', '-' . $poll_mini['id'] . '-1.php')
 		));	
 		
-		$Template->Assign_block_vars('question', array(
+		$Template->assign_block_vars('question', array(
 			'ID' => transid('.php?id=' . $poll_mini['id'], '-' . $poll_mini['id'] . '.php'),
 			'QUESTION' => $poll_mini['question']			
 		));		
@@ -84,7 +84,7 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 		{			
 			foreach($poll_mini['votes'] as $answer => $width)
 			{						
-				$Template->Assign_block_vars('question.radio', array(
+				$Template->assign_block_vars('question.radio', array(
 					'NAME' => $z,
 					'TYPE' => 'radio',
 					'ANSWERS' => $answer
@@ -96,7 +96,7 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 		{
 			foreach($poll_mini['votes'] as $answer => $width)
 			{						
-				$Template->Assign_block_vars('question.checkbox', array(
+				$Template->assign_block_vars('question.checkbox', array(
 					'NAME' => $z,
 					'TYPE' => 'checkbox',
 					'ANSWERS' => $answer

@@ -122,7 +122,7 @@ elseif( ($top || $bottom) && !empty($id) ) //Monter/descendre.
 }
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_menus_management'=> 'admin/admin_menus_management.tpl'
 	));
 	
@@ -192,7 +192,7 @@ else
 		if( $row['activ'] == 1 && !empty($block_position) )
 		{
 			//Affichage réduit des différents modules.
-			$Template->Assign_block_vars('mod_' . $block_position, array(
+			$Template->assign_block_vars('mod_' . $block_position, array(
 				'IDMENU' => $row['id'],
 				'NAME' => ucfirst($row['name']),
 				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>',
@@ -207,7 +207,7 @@ else
 		}	
 		else //Affichage des menus désactivés
 		{
-			$Template->Assign_block_vars('mod_main', array(
+			$Template->assign_block_vars('mod_main', array(
 				'IDMENU' => $row['id'],
 				'NAME' => ucfirst($row['name']),
 				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>',
@@ -240,7 +240,7 @@ else
 			if( file_exists('../' . $name . '/' . $path) ) //Fichier présent.
 			{
 				$idmodule = $name . '+' . $i++;
-				$Template->Assign_block_vars('mod_main_uninstalled', array(
+				$Template->assign_block_vars('mod_main_uninstalled', array(
 					'NAME' => ucfirst($modules_config[$name]['name']),
 					'U_INSTALL' => "admin_menus_add.php?idmodule=" . $idmodule . "&amp;install=1"
 				));
@@ -264,7 +264,7 @@ else
 
 		foreach($file_array as $name)
 		{
-			$Template->Assign_block_vars('mod_main_uninstalled', array(
+			$Template->assign_block_vars('mod_main_uninstalled', array(
 				'NAME' => ucfirst(str_replace('.php', '', $name)),
 				'U_INSTALL' => "admin_menus_add.php?idmodule=" . $name . "+0&amp;install=1"
 			));
@@ -275,7 +275,7 @@ else
 	$colspan += (int)$THEME_CONFIG[$CONFIG['theme']]['right_column'];
 	$colspan += (int)$THEME_CONFIG[$CONFIG['theme']]['left_column'];
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'COLSPAN' => $colspan,
 		'LEFT_COLUMN' => $THEME_CONFIG[$CONFIG['theme']]['left_column'],
 		'RIGHT_COLUMN' => $THEME_CONFIG[$CONFIG['theme']]['right_column'],
@@ -306,7 +306,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$Template->Pparse('admin_menus_management');
+	$Template->pparse('admin_menus_management');
 }
 
 require_once('../admin/admin_footer.php');

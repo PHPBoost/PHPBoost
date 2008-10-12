@@ -31,7 +31,7 @@ if( defined('PHPBOOST') !== true)
 //$Cache->Load_file('forum');
 
 ############### Header du panneau de modo ################
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'moderation_panel_top'=> 'moderation_panel_top.tpl',
 	'moderation_panel_bottom'=> 'moderation_panel_bottom.tpl'
 ));
@@ -49,7 +49,7 @@ while( $row = $Sql->fetch_assoc($result) )
 	{	
 		if( isset($config['moderation_panel']) && $config['moderation_panel'] == 1 )
 		{
-			$Template->Assign_block_vars('list_modules', array(
+			$Template->assign_block_vars('list_modules', array(
 				'DM_A_CLASS' => ' style="background-image:url(../' . $row['name'] . '/' . $row['name'] . '_mini.png);"',
 				'NAME' => $config['name'],
 				'MOD_NAME' => !empty($row['name']) ? $row['name'] : '',
@@ -61,7 +61,7 @@ while( $row = $Sql->fetch_assoc($result) )
 }
 $Sql->query_close($result);
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 	'L_MEMBERS' => $LANG['member_s'],
 	'L_MODULES' => $LANG['modules']

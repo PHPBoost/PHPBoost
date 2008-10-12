@@ -30,7 +30,7 @@ require_once('../kernel/begin.php');
 load_module_lang('search');
 define('ALTERNATIVE_CSS', 'search');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
     'search_mini_form' => 'search/search_mini_form.tpl',
     'search_forms' => 'search/search_forms.tpl',
     'search_results' => 'search/search_results.tpl'
@@ -49,7 +49,7 @@ $simpleMode = ($searchIn == 'all') ? true : false;
 define('TITLE', $LANG['title_search']);
 
 require_once('../kernel/header.php');
-$Template->Assign_vars(Array(
+$Template->assign_vars(Array(
     'L_TITLE_SEARCH' => TITLE,
     'L_SEARCH' => $LANG['title_search'],
     'TEXT_SEARCHED' => !empty($unsecure_search) ? $unsecure_search : $LANG['search'] . '...',
@@ -75,7 +75,7 @@ require_once('../search/search.inc.php');
 
 //----------------------------------------------------------------------- Main
 
-$Modules = new Modules();
+$Modules = new ModulesDiscoveryService();
 $modulesArgs = array();
 $usedModules = array();
 
@@ -106,7 +106,7 @@ foreach( $searchModule as $module)
 	            }
 	        }
 	        
-	        $Template->Assign_block_vars('forms', array(
+	        $Template->assign_block_vars('forms', array(
 	            'MODULE_NAME' => $module->get_id(),
 	            'L_MODULE_NAME' => ucfirst($module->get_name()),
 	            'C_SEARCH_FORM' => true,
@@ -115,7 +115,7 @@ foreach( $searchModule as $module)
 	    }
 	    else
 	    {
-	        $Template->Assign_block_vars('forms', array(
+	        $Template->assign_block_vars('forms', array(
 	            'MODULE_NAME' => $module->get_id(),
 	            'L_MODULE_NAME' => ucfirst($module->get_name()),
 	            'C_SEARCH_FORM' => false,
@@ -132,7 +132,7 @@ foreach( $searchModule as $module)
 	    }
 	    else $selected = '';
 	    
-	    $Template->Assign_block_vars('searched_modules', array(
+	    $Template->assign_block_vars('searched_modules', array(
 	        'MODULE' => $module->get_id(),
 	        'L_MODULE_NAME' => ucfirst($module->get_name()),
 	        'SELECTED' => $selected
@@ -161,7 +161,7 @@ foreach( $searchModule as $module)
 //}
 
 // parsage des formulaires de recherches
-$Template->Pparse('search_forms');
+$Template->pparse('search_forms');
 
 if( !empty($search) )
 {
@@ -179,7 +179,7 @@ if( !empty($search) )
     
     foreach( $usedModules as $module)
     {
-        $Template->Assign_block_vars('results', array(
+        $Template->assign_block_vars('results', array(
             'MODULE_NAME' => $module->get_id(),
             'L_MODULE_NAME' => ucfirst($module->get_name()),
             'ID_SEARCH' => $idsSearch[$module->get_id()]
@@ -190,7 +190,7 @@ if( !empty($search) )
     if ( $nbResults > 0 )
         get_html_results($results, $allhtmlResult, $Modules, $searchIn);
     
-    $Template->Assign_vars(Array(
+    $Template->assign_vars(Array(
         'NB_RESULTS_PER_PAGE' => NB_RESULTS_PER_PAGE,
         'L_TITLE_ALL_RESULTS' => $LANG['title_all_results'],
         'L_RESULTS' => $LANG['results'],
@@ -205,7 +205,7 @@ if( !empty($search) )
     ));
     
     // parsage des résultats de la recherche
-    $Template->Pparse('search_results');
+    $Template->pparse('search_results');
 }
 
 //--------------------------------------------------------------------- Footer

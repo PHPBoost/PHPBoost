@@ -52,7 +52,7 @@ if( !empty($_POST['submit']) )
 //Questions list
 if( $page > 0 )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_faq_questions'=> 'faq/admin_faq_questions.tpl'
 	));
 	
@@ -63,13 +63,13 @@ if( $page > 0 )
 	FROM ".PREFIX."faq q
 	LEFT JOIN ".PREFIX."faq_cats c ON c.id = q.idcat
 	ORDER BY q.timestamp DESC
-	" . $Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	
 	$nbr_questions = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."faq", __LINE__, __FILE__);
 	
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('question', array(
+		$Template->assign_block_vars('question', array(
 			'QUESTION' => $row['question'],
 			'CATEGORY' => !empty($row['idcat']) ? $row['name'] : $LANG['root'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
@@ -78,8 +78,8 @@ if( $page > 0 )
 		));
 	}
 	
-	$Template->Assign_vars(array(
-		'PAGINATION' => $Pagination->Display_pagination('admin_faq.php?p=%d', $nbr_questions, 'p', 25, 3),
+	$Template->assign_vars(array(
+		'PAGINATION' => $Pagination->display('admin_faq.php?p=%d', $nbr_questions, 'p', 25, 3),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_CATEGORY' => $FAQ_LANG['category'],
 		'L_DATE' => $LANG['date'],
@@ -90,11 +90,11 @@ if( $page > 0 )
 		'L_ADD_CAT' => $FAQ_LANG['add_cat'],
 	));
 	
-	$Template->Pparse('admin_faq_questions');
+	$Template->pparse('admin_faq_questions');
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_faq'=> 'faq/admin_faq.tpl'
 	));
 
@@ -103,7 +103,7 @@ else
 	$FAQ_CONFIG['num_cols'] = isset($FAQ_CONFIG['num_cols']) ? $FAQ_CONFIG['num_cols'] : 4;
 	$FAQ_CONFIG['display_block'] = isset($FAQ_CONFIG['display_block']) ? $FAQ_CONFIG['display_block'] : true;
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
 		'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
 		'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],
@@ -130,7 +130,7 @@ else
 		'SELECTED_INLINE' => !$FAQ_CONFIG['display_block'] ? ' selected="selected"' : ''
 	));
 
-	$Template->Pparse('admin_faq');
+	$Template->pparse('admin_faq');
 
 }
 

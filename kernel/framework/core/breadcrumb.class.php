@@ -61,14 +61,14 @@ class BreadCrumb
 		if( empty($this->array_links) )
 			$this->Add_link(stripslashes(TITLE), HOST . SCRIPT . SID);
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'START_PAGE' => get_start_page(),
 			'L_INDEX' => $LANG['index']	
 		));
 		
 		foreach($this->array_links as $key => $array)
 		{
-			$Template->Assign_block_vars('link_bread_crumb', array(
+			$Template->assign_block_vars('link_bread_crumb', array(
 				'URL' => $array[1],
 				'TITLE' => $array[0]
 			));	

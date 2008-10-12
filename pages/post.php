@@ -189,7 +189,7 @@ elseif( $del_article > 0 )
 		redirect(HOST . DIR . transid('/pages/pages.php?error=delete_failure', '', '&'));
 }
 
-$Template->Set_filenames(array('post'=> 'pages/post.tpl'));
+$Template->set_filenames(array('post'=> 'pages/post.tpl'));
 
 if( $id_edit > 0 )
 {
@@ -206,7 +206,7 @@ if( $id_edit > 0 )
 	elseif( $error == 'preview' )
 	{
 		$Errorh->Error_handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
-		$Template->Assign_block_vars('previewing', array(
+		$Template->assign_block_vars('previewing', array(
 			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
 			'TITLE' => stripslashes($title)
 		));
@@ -218,7 +218,7 @@ if( $id_edit > 0 )
 	$id_cat_display = $page_infos['is_cat'] == 1 ? $_PAGES_CATS[$page_infos['id_cat']]['id_parent'] : $page_infos['id_cat'];
 	$cat_list = display_cat_explorer($id_cat_display, $cats, 1);
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'CONTENTS' => !empty($error) ? stripslashes($contents) : pages_unparse($page_infos['contents']),
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($page_infos['count_hits'] == 1 ? 'checked="checked"' : ''),
 		'ACTIV_COM_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') : ($page_infos['activ_com'] == 1 ? 'checked="checked"' : ''),
@@ -241,25 +241,25 @@ else
 	elseif( $error == 'preview' )
 	{
 		$Errorh->Error_handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
-		$Template->Assign_block_vars('previewing', array(
+		$Template->assign_block_vars('previewing', array(
 			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
 			'TITLE' => stripslashes($title)
 		));
 	}
 	if( !empty($error) )
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'CONTENTS' => stripslashes($contents),
 			'PAGE_TITLE' => stripslashes($title)
 		));
 	
-	$Template->Assign_block_vars('create', array());
+	$Template->assign_block_vars('create', array());
 	
 	//Génération de l'arborescence des catégories
 	$cats = array();
 	$cat_list = display_cat_explorer(0, $cats, 1);
 	$current_cat = $LANG['pages_root'];
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : ''),
 		'ACTIV_COM_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') :($_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : ''),
 		'OWN_AUTH_CHECKED' => '',
@@ -274,14 +274,14 @@ if( !empty($page_infos['auth']) )
 else
 	$array_auth = !empty($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'ID_EDIT' => $id_edit,
 	'SELECT_READ_PAGE' => Authorizations::generate_select(READ_PAGE, $array_auth),
 	'SELECT_EDIT_PAGE' => Authorizations::generate_select(EDIT_PAGE, $array_auth),
 	'SELECT_READ_COM' => Authorizations::generate_select(READ_COM, $array_auth),
 	'OWN_AUTH_DISABLED' => !empty($page_infos['auth']) ? 'false' : 'true',
 	'DISPLAY' => empty($page_infos['auth']) ? 'display:none;' : '',
-	'PAGES_PATH' => $Template->Module_data_path('pages'),
+	'PAGES_PATH' => $Template->get_module_data_path('pages'),
 	'CAT_LIST' => $cat_list,
 	'KERNEL_EDITOR' => display_editor(),
 	'L_AUTH' => $LANG['pages_auth'],
@@ -311,7 +311,7 @@ $Template->Assign_vars(array(
 	'TARGET' => transid('post.php')
 ));
 
-$Template->Pparse('post');
+$Template->pparse('post');
 
 require_once('../kernel/footer.php'); 
 

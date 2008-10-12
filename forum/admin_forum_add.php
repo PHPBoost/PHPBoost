@@ -109,7 +109,7 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 }
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_forum_add'=> 'forum/admin_forum_add.tpl'
 	));
 			
@@ -130,9 +130,9 @@ else
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'CATEGORIES' => $forums,
 		'AUTH_READ' => Authorizations::generate_select(READ_CAT_FORUM, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_FORUM, array(), array(0 => true, 1 => true, 2 => true)),
@@ -172,7 +172,7 @@ else
 		'L_AUTH_EDIT' => $LANG['auth_edit']
 	));
 	
-	$Template->Pparse('admin_forum_add'); // traitement du modele	
+	$Template->pparse('admin_forum_add'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

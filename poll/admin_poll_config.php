@@ -46,7 +46,7 @@ if( !empty($_POST['valid']))
 }
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 	'admin_poll_config'=> 'poll/admin_poll_config.tpl'
 	));
 
@@ -66,7 +66,7 @@ else
 	}
 	$Sql->query_close($result); 
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'COOKIE_NAME' => !empty($CONFIG_POLL['poll_cookie']) ? $CONFIG_POLL['poll_cookie'] : 'poll',
 		'COOKIE_LENGHT' => !empty($CONFIG_POLL['poll_cookie_lenght']) ? number_format($CONFIG_POLL['poll_cookie_lenght']/86400, 0) : 500,		
 		'MINI_POLL_LIST' => $mini_poll_list,		
@@ -109,12 +109,12 @@ else
 			default: -1;
 		} 
 		$selected = ($CONFIG_POLL['poll_auth'] == $i) ? 'selected="selected"' : '' ;
-		$Template->Assign_block_vars('select_auth', array(
+		$Template->assign_block_vars('select_auth', array(
 			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 		));
 	} 
 	 
-	$Template->Pparse('admin_poll_config');	
+	$Template->pparse('admin_poll_config');	
 }
 
 require_once('../admin/admin_footer.php');

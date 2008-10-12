@@ -170,7 +170,7 @@ if( $contribution_id > 0 )
 			'U_FIXER_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')
 		));
 	
-	$template->Assign_vars(array(
+	$template->assign_vars(array(
 		'L_CONTRIBUTION' => $LANG['contribution'],
 		'L_ENTITLED' => $LANG['contribution_entitled'],
 		'L_DESCRIPTION' => $LANG['contribution_description'],
@@ -191,7 +191,7 @@ if( $contribution_id > 0 )
 //Modification d'une contribution
 elseif( $id_update > 0 )
 {
-	$template->Assign_vars(array(
+	$template->assign_vars(array(
 		'C_EDIT_CONTRIBUTION' => true,
 		'EDITOR' => display_editor(),
 		'ENTITLED' => $contribution->get_entitled(),
@@ -303,7 +303,7 @@ else
 		}
 	}
 		
-	$template->Assign_vars(array(
+	$template->assign_vars(array(
 		'L_ENTITLED' => $LANG['contribution_entitled'],
 		'L_STATUS' => $LANG['contribution_status'],
 		'L_POSTER' => $LANG['contributor'],
@@ -320,35 +320,35 @@ else
 	));
 	
 	//Gestion du tri
-	$template->Assign_vars(array(
+	$template->assign_vars(array(
 		'C_ORDER_ENTITLED_ASC' => $criteria == 'entitled' && $order == 'asc',
-		'U_ORDER_ENTITLED_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=entitled&amp;order=asc'),
+		'U_ORDER_ENTITLED_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=entitled&amp;order=asc'),
 		'C_ORDER_ENTITLED_DESC' => $criteria == 'entitled' && $order == 'desc',
-		'U_ORDER_ENTITLED_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=entitled&amp;order=desc'),
+		'U_ORDER_ENTITLED_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=entitled&amp;order=desc'),
 		'C_ORDER_MODULE_ASC' => $criteria == 'module' && $order == 'asc',
-		'U_ORDER_MODULE_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=module&amp;order=asc'),
+		'U_ORDER_MODULE_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=module&amp;order=asc'),
 		'C_ORDER_MODULE_DESC' => $criteria == 'module' && $order == 'desc',
-		'U_ORDER_MODULE_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=module&amp;order=desc'),
+		'U_ORDER_MODULE_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=module&amp;order=desc'),
 		'C_ORDER_STATUS_ASC' => $criteria == 'current_status' && $order == 'asc',
-		'U_ORDER_STATUS_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=current_status&amp;order=asc'),
+		'U_ORDER_STATUS_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=current_status&amp;order=asc'),
 		'C_ORDER_STATUS_DESC' => $criteria == 'current_status' && $order == 'desc',
-		'U_ORDER_STATUS_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=current_status&amp;order=desc'),
+		'U_ORDER_STATUS_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=current_status&amp;order=desc'),
 		'C_ORDER_CREATION_DATE_ASC' => $criteria == 'creation_date' && $order == 'asc',
-		'U_ORDER_CREATION_DATE_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=creation_date&amp;order=asc'),
+		'U_ORDER_CREATION_DATE_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=creation_date&amp;order=asc'),
 		'C_ORDER_CREATION_DATE_DESC' => $criteria == 'creation_date' && $order == 'desc',
-		'U_ORDER_CREATION_DATE_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=creation_date&amp;order=desc'),
+		'U_ORDER_CREATION_DATE_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=creation_date&amp;order=desc'),
 		'C_ORDER_FIXING_DATE_ASC' => $criteria == 'fixing_date' && $order == 'asc',
-		'U_ORDER_FIXING_DATE_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=fixing_date&amp;order=asc'),
+		'U_ORDER_FIXING_DATE_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=fixing_date&amp;order=asc'),
 		'C_ORDER_FIXING_DATE_DESC' => $criteria == 'fixing_date' && $order == 'desc',
-		'U_ORDER_FIXING_DATE_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=fixing_date&amp;order=desc'),	
+		'U_ORDER_FIXING_DATE_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=fixing_date&amp;order=desc'),	
 		'C_ORDER_POSTER_ASC' => $criteria == 'poster_id' && $order == 'asc',
-		'U_ORDER_POSTER_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=poster_id&amp;order=asc'),
+		'U_ORDER_POSTER_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=poster_id&amp;order=asc'),
 		'C_ORDER_POSTER_DESC' => $criteria == 'poster_id' && $order == 'desc',
-		'U_ORDER_POSTER_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=poster_id&amp;order=desc'),
+		'U_ORDER_POSTER_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=poster_id&amp;order=desc'),
 		'C_ORDER_FIXER_ASC' => $criteria == 'fixer_id' && $order == 'asc',
-		'U_ORDER_FIXER_ASC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=fixer_id&amp;order=asc'),
+		'U_ORDER_FIXER_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=fixer_id&amp;order=asc'),
 		'C_ORDER_FIXER_DESC' => $criteria == 'fixer_id' && $order == 'desc',
-		'U_ORDER_FIXER_DESC' => transid('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=fixer_id&amp;order=desc')
+		'U_ORDER_FIXER_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=fixer_id&amp;order=desc')
 	));
 }
 

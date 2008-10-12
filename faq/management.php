@@ -90,19 +90,19 @@ else
 	
 include_once('../kernel/header.php');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'faq'=> 'faq/management.tpl'
 ));
 
 if( $edit_question > 0 )
 {
-	$Template->Assign_block_vars('edit_question', array(
+	$Template->assign_block_vars('edit_question', array(
 		'ENTITLED' => $question_infos['question'],
 		'ANSWER' => unparse($question_infos['answer']),
 		'TARGET' => transid('action.php'),
 		'ID_QUESTION' => $edit_question
 	));
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_ENTITLED' => $FAQ_LANG['entitled'],
@@ -113,14 +113,14 @@ if( $edit_question > 0 )
 }
 elseif( $cat_of_new_question >= 0 && $new )
 {
-	$Template->Assign_block_vars('edit_question', array(
+	$Template->assign_block_vars('edit_question', array(
 		'ENTITLED' => '',
 		'ANSWER' => '',
 		'TARGET' => transid('action.php'),
 		'ID_AFTER' => $new_after_id,
 		'ID_CAT' => $cat_of_new_question
 	));
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_ENTITLED' => $FAQ_LANG['entitled'],
@@ -134,11 +134,11 @@ elseif( $id_move > 0 )
 	include_once('faq_cats.class.php');
 	$faq_cats = new Faqcats();
 	
-	$Template->Assign_block_vars('move_question', array(
+	$Template->assign_block_vars('move_question', array(
 		'CATEGORIES_TREE' => $faq_cats->Build_select_form(0, 'target', 'target', 0, AUTH_WRITE, $FAQ_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 		'ID_QUESTION' => $id_move
 	));
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_TARGET' => $FAQ_LANG['target_category'],
 		'L_MOVE' => $FAQ_LANG['move'],
 		'ID_QUESTION' => $id_move,
@@ -147,7 +147,7 @@ elseif( $id_move > 0 )
 }
 else
 {
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'TARGET' => transid('action.php?idcat=' . $id_faq . '&amp;cat_properties=1'),
 		'AUTO_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 0 ? 'selected="selected"' : '',
@@ -184,7 +184,7 @@ else
 	//Special authorization
 	if( !empty($FAQ_CATS[$id_faq]['auth']) )
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'GLOBAL_CHECKED' => 'checked="checked"',
 			'DISPLAY_GLOBAL' => 'block',
 			'JS_GLOBAL' => 'true'
@@ -192,7 +192,7 @@ else
 	}
 	else
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'GLOBAL_CHECKED' => '',
 			'DISPLAY_GLOBAL' => 'none',
 			'JS_GLOBAL' => 'false'
@@ -200,7 +200,7 @@ else
 	}
 
 	//Category properties
-	$Template->Assign_block_vars('category', array(
+	$Template->assign_block_vars('category', array(
 		'READ_AUTH' => 	Authorizations::generate_select(AUTH_READ, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth']),
 		'WRITE_AUTH' => Authorizations::generate_select(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth']),
 		'U_CREATE_BEFORE' => transid('management.php?new=1&amp;idcat=' . $id_faq . '&amp;after=0'),
@@ -209,10 +209,10 @@ else
 	
 	if( $id_faq > 0 )
 	{
-		$Template->Assign_block_vars('category.not_root_name', array(
+		$Template->assign_block_vars('category.not_root_name', array(
 			'CAT_TITLE' => $FAQ_CATS[$id_faq]['name'],
 		));
-		$Template->Assign_block_vars('category.not_root_auth', array(
+		$Template->assign_block_vars('category.not_root_auth', array(
 			'WRITE_AUTH' => Authorizations::generate_select(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth'])
 		));
 	}
@@ -228,7 +228,7 @@ else
 	
 	if( $num_rows > 0 || $id_faq == 0 )
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_DISPLAY_ANSWERS' => true,
 			'NUM_QUESTIONS' => $num_rows,
 			'L_HIDE_ANSWERS' => addslashes($FAQ_LANG['hide_all_answers']),
@@ -237,7 +237,7 @@ else
 		
 		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$Template->Assign_block_vars('category.questions', array(
+			$Template->assign_block_vars('category.questions', array(
 				'QUESTION' => $row['question'],
 				'ID' => $row['q_order'],
 				'U_DEL' => transid('action.php?del=' . $row['id']),
@@ -249,16 +249,16 @@ else
 				'ANSWER' => $row['answer']
 			));
 			if( $row['q_order'] > 1 )
-				$Template->Assign_block_vars('category.questions.up', array());
+				$Template->assign_block_vars('category.questions.up', array());
 			if( $row['q_order'] < $num_rows )
-				$Template->Assign_block_vars('category.questions.down', array());
+				$Template->assign_block_vars('category.questions.down', array());
 		}
 	}
 }
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'THEME' => $CONFIG['theme'],
-	'MODULE_DATA_PATH' => $Template->Module_data_path('faq'),
+	'MODULE_DATA_PATH' => $Template->get_module_data_path('faq'),
 	'L_SUBMIT' => $edit_question > 0 ? $LANG['update'] : $LANG['submit'],
 	'L_PREVIEW' => $LANG['preview'],
 	'L_RESET' => $LANG['reset'],
@@ -267,7 +267,7 @@ $Template->Assign_vars(array(
 ));
 
 
-$Template->Pparse('faq');
+$Template->pparse('faq');
 
 include_once('../kernel/footer.php'); 
 

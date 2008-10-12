@@ -73,7 +73,7 @@ class Menu extends MenuElement
 		else
 			$template_string = $template->copy();
 			
-		$template_string->Assign_vars(array(
+		$template_string->assign_vars(array(
 			'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
 			'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
 			'ID_SUB_MENU' => $this->id_sub_menu,
@@ -85,7 +85,7 @@ class Menu extends MenuElement
 		
 		foreach($this->elements as $element)
 		{
-			$template_string->Assign_vars(array(
+			$template_string->assign_vars(array(
 				'ELEMENT' => $element->display($template)
 			));
 		}

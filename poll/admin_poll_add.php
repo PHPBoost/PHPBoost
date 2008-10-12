@@ -101,11 +101,11 @@ if( !empty($_POST['valid']) )
 }
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_poll_add'=> 'poll/admin_poll_add.tpl'
 	));
 	 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'VISIBLE_ENABLED' => 'checked="checked"',
 		'L_REQUIRE_QUESTION' => $LANG['require_question'],
 		'L_REQUIRE_ANSWER' => $LANG['require_answer'],
@@ -137,7 +137,7 @@ else
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['incomplete'], E_USER_NOTICE);
 		
-	$Template->Pparse('admin_poll_add'); 
+	$Template->pparse('admin_poll_add'); 
 }
 
 require_once('../admin/admin_footer.php');

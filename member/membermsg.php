@@ -36,17 +36,17 @@ $script = retrieve(GET, 'script', '');
 
 if( !empty($memberId) ) //Affichage de tous les messages du membre
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'membermsg'=> 'membermsg.tpl',
 	));
 	
 	require_once('../kernel/framework/modules/modules.class.php');
-	$modulesLoader = new Modules();
+	$modulesLoader = new ModulesDiscoveryService();
 	$modules = $modulesLoader->get_available_modules('get_member_msg_link');
 	foreach($modules as $module)
 	{
 		$img = $module->functionnality('get_member_msg_img');
-		$Template->Assign_block_vars('available_modules_msg', array(
+		$Template->assign_block_vars('available_modules_msg', array(
 			'NAME_MEMBER_MSG' => $module->functionnality('get_member_msg_name'),
 			'IMG_MEMBER_MSG' => $img,
 			'C_IMG_MEMBER_MSG' => !empty($img) ? true : false,
@@ -54,7 +54,7 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 		));
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_MEMBER_MSG' => $LANG['member_msg'],
 		'L_MEMBER_MSG_DISPLAY' => $LANG['member_msg_display'],
 		'L_COMMENTS' => $LANG['com_s'],
@@ -71,9 +71,9 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 		$Pagination = new Pagination();
 
 		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."com WHERE user_id = '" . $memberId . "'", __LINE__, __FILE__);
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_START_MSG' => true,
-			'PAGINATION' => $Pagination->Display_pagination('membermsg.php?pmsg=%d', $nbr_msg, 'pmsg', 25, 3),
+			'PAGINATION' => $Pagination->display('membermsg.php?pmsg=%d', $nbr_msg, 'pmsg', 25, 3),
 			'L_GO_MSG' => $LANG['go_msg'],
 			'L_ON' => $LANG['on']
 		));
@@ -84,11 +84,11 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 		LEFT JOIN ".PREFIX."sessions s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 		WHERE m.user_id = '" . $memberId . "'
 		ORDER BY c.timestamp DESC 
-		" . $Sql->limit($Pagination->First_msg(25, 'pmsg'), 25), __LINE__, __FILE__);
+		" . $Sql->limit($Pagination->get_first_msg(25, 'pmsg'), 25), __LINE__, __FILE__);
 		$row = $Sql->fetch_assoc($result);
 		while($row = $Sql->fetch_assoc($result) )
 		{
-			$Template->Assign_block_vars('msg_list', array(
+			$Template->assign_block_vars('msg_list', array(
 				'USER_PSEUDO' => '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $memberId, '-' . $memberId . '.php') . '"><span class="text_strong">' . wordwrap_html($row['login'], 13) . '</span></a>',
 				'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . (!empty($row['connect']) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
@@ -98,7 +98,7 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 		}
 	}
 	
-	$Template->Pparse('membermsg');
+	$Template->pparse('membermsg');
 }
 else
 	redirect(HOST . DIR . '/member/member.php');

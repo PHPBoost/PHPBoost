@@ -46,7 +46,7 @@ $get_l_error = retrieve(GET, 'erroru', '');
 
 if( !empty($id_get) ) //Espace membre
 {	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'member'=> 'member.tpl'
 	));
 	
@@ -82,7 +82,7 @@ if( !empty($id_get) ) //Espace membre
 		if( !empty($row['user_sex']) )
 			$user_sex = ($row['user_sex'] == 1) ? '/images/man.png' : '/images/woman.png';
 	
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_MEMBER_UPDATE_PROFIL' => true,
 			'USER_THEME' => $row['user_theme'],
 			'MAIL' => $row['user_mail'],
@@ -167,14 +167,14 @@ if( !empty($id_get) ) //Espace membre
 					$selected = 'selected="selected"';
 					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
 				}			
-				$Template->Assign_block_vars('select_lang', array(
+				$Template->assign_block_vars('select_lang', array(
 					'LANG' => '<option value="' . $row2['lang'] . '" ' . $selected . '>' . $lang_name . '</option>'
 				));
 			}
 		}
 		$Sql->query_close($result);
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'JS_LANG_IDENTIFIER' => $array_identifier,
 			'IMG_LANG_IDENTIFIER' => $lang_identifier
 		));
@@ -192,7 +192,7 @@ if( !empty($id_get) ) //Espace membre
 				{
 					$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];
 					$selected = ($row2['theme'] == $row['user_theme']) ? 'selected="selected"' : '';
-					$Template->Assign_block_vars('select_theme', array(
+					$Template->assign_block_vars('select_theme', array(
 						'THEME' => '<option value="' . $row2['theme'] . '" ' . $selected . '>' . $theme_name . '</option>'
 					));
 				}
@@ -203,7 +203,7 @@ if( !empty($id_get) ) //Espace membre
 		{
 			$theme_info = load_ini_file('/config/', $CONFIG['lang']);
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'];
-			$Template->Assign_block_vars('select_theme', array(
+			$Template->assign_block_vars('select_theme', array(
 				'THEME' => '<option value="' . $CONFIG['theme'] . '" selected="selected">' . $theme_name . '</option>'
 			));
 		}
@@ -216,7 +216,7 @@ if( !empty($id_get) ) //Espace membre
 			$selected = ($code == $row['user_editor']) ? 'selected="selected"' : '';
 			$select_editors .= '<option value="' . $code . '" ' . $selected . '>' . $name . '</option>';
 		}
-		$Template->Assign_block_vars('select_editor', array(
+		$Template->assign_block_vars('select_editor', array(
 			'SELECT_EDITORS' => $select_editors
 		));
 		
@@ -228,7 +228,7 @@ if( !empty($id_get) ) //Espace membre
 			$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
 			$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 		}
-		$Template->Assign_block_vars('select_timezone', array(
+		$Template->assign_block_vars('select_timezone', array(
 			'SELECT_TIMEZONE' => $select_timezone
 		));
 					
@@ -239,7 +239,7 @@ if( !empty($id_get) ) //Espace membre
 		{		
 			$selected = ($i == $row['user_sex']) ? 'selected="selected"' : '';
 
-			$Template->Assign_block_vars('select_sex', array(
+			$Template->assign_block_vars('select_sex', array(
 				'SEX' => '<option value="' . $i . '" ' . $selected . '>' . $value_sex . '</option>'
 			));
 			
@@ -249,7 +249,7 @@ if( !empty($id_get) ) //Espace membre
 		//Autorisation d'uploader un avatar sur le serveur.
 		if( $CONFIG_MEMBER['activ_up_avatar'] == 1 )
 		{
-			$Template->Assign_vars(array(			
+			$Template->assign_vars(array(			
 				'C_UPLOAD_AVATAR' => true,
 				'WEIGHT_MAX' => $CONFIG_MEMBER['weight_max'],
 				'HEIGHT_MAX' => $CONFIG_MEMBER['height_max'],
@@ -261,7 +261,7 @@ if( !empty($id_get) ) //Espace membre
 		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 		if( $extend_field_exist > 0 )
 		{
-			$Template->Assign_vars(array(			
+			$Template->assign_vars(array(			
 				'C_PROFIL_MISCELLANEOUS' => true,
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
 			));
@@ -330,7 +330,7 @@ if( !empty($id_get) ) //Espace membre
 					break;
 				}				
 				
-				$Template->Assign_block_vars('miscellaneous_list', array(
+				$Template->assign_block_vars('miscellaneous_list', array(
 					'NAME' => $row['require'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 					'ID' => $row['field_name'],
 					'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
@@ -452,13 +452,13 @@ if( !empty($id_get) ) //Espace membre
 			{
 				if( $_FILES['avatars']['size'] > 0 )
 				{
-					$Upload->Upload_file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
+					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 					if( !empty($Upload->error) ) //Erreur, on arrête ici
 						redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->error) . '#errorh');
 					else
 					{
 						$path = $dir . $Upload->filename['avatars'];
-						$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
+						$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 						if( !empty($error) ) //Erreur, on arrête ici
 							redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 						else
@@ -479,7 +479,7 @@ if( !empty($id_get) ) //Espace membre
 			if( !empty($_POST['avatar']) )
 			{
 				$path = strprotect($_POST['avatar']);
-				$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
+				$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
 					redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 				else
@@ -611,7 +611,7 @@ if( !empty($id_get) ) //Espace membre
 		//Droit d'accès?.
 		$is_auth_files = $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES);
 	
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_MEMBER_INDEX' => true,
 			'SID' => SID,
 			'LANG' => $CONFIG['lang'],
@@ -634,7 +634,7 @@ if( !empty($id_get) ) //Espace membre
 		//Affichage du lien vers l'interface des fichiers.
 		if( $is_auth_files )
 		{
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'C_MEMBER_AUTH_FILES' => true
 			));
 		}
@@ -696,7 +696,7 @@ if( !empty($id_get) ) //Espace membre
 		$user_group_list = !empty($user_group_list) ? '<ul style="list-style-type:none;">' . $user_group_list . '</ul>' : $LANG['member'];
 		
 		//Droit d'édition du profil, au membre en question et à l'admin uniquement	.
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_MEMBER_PROFIL_EDIT' => ($User->get_attribute('user_id') === $id_get || $User->check_level(ADMIN_LEVEL)) ? true : false,
 			'C_PROFIL_MEMBER_VIEW' => true,
 			'SID' => SID,
@@ -747,7 +747,7 @@ if( !empty($id_get) ) //Espace membre
 		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 		if( $extend_field_exist > 0 )
 		{
-			$Template->Assign_vars(array(			
+			$Template->assign_vars(array(			
 				'C_PROFIL_MISCELLANEOUS' => true,
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
 			));
@@ -784,7 +784,7 @@ if( !empty($id_get) ) //Espace membre
 					break;
 				}				
 				
-				$Template->Assign_block_vars('miscellaneous_list', array(
+				$Template->assign_block_vars('miscellaneous_list', array(
 					'NAME' => ucfirst($row['name']),
 					'DESC' => !empty($row['contents']) ? $row['contents'] : '',
 					'FIELD' => $field
@@ -794,13 +794,13 @@ if( !empty($id_get) ) //Espace membre
 		}
 	}
 
-	$Template->Pparse('member');
+	$Template->pparse('member');
 }
 elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 {
 	$user_group = !empty($show_group) ? $show_group : $post_group;
 	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'member'=> 'member.tpl'
 	));
 	
@@ -808,7 +808,7 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 	if( empty($group['id']) ) //Groupe inexistant.
 		redirect(HOST . DIR . '/member/member.php');
 		
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'SID' => SID,
 		'C_GROUP_LIST' => true,
 		'ADMIN_GROUPS' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="../admin/admin_groups.php?id=' . $user_group . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" class="valign_middle" /></a>' : '',
@@ -828,7 +828,7 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 	FROM ".PREFIX."group", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('group_select', array(
+		$Template->assign_block_vars('group_select', array(
 			'OPTION' => '<option value="' . $row['id'] .'">' . $row['name'] . '</option>'
 		));
 	}
@@ -861,7 +861,7 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 			if( empty($row['user_avatar']) && $CONFIG_MEMBER['activ_avatar'] == '1') 
 				$user_avatar = '<img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />';
 			
-			$Template->Assign_block_vars('group_list', array(
+			$Template->assign_block_vars('group_list', array(
 				'USER_AVATAR' => $user_avatar,
 				'USER_RANK' => ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned'],
 				'U_MEMBER' => '<a href="member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>'
@@ -869,11 +869,11 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 		}
 	}
 	
-	$Template->Pparse('member');	
+	$Template->pparse('member');	
 }
 else //Show all member!
 {
-  	$Template->Set_filenames(array(
+  	$Template->set_filenames(array(
 		'member'=> 'member.tpl'
 	));
 	
@@ -889,7 +889,7 @@ else //Show all member!
 			$login = $LANG['no_result'];
 	}
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_MEMBER_LIST' => true,
 		'SID' => SID,
 		'LANG' => $CONFIG['lang'],
@@ -923,7 +923,7 @@ else //Show all member!
 	$result = $Sql->query_while("SELECT id, name 
 	FROM ".PREFIX."group", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
-		$Template->Assign_block_vars('group_select', array(
+		$Template->assign_block_vars('group_select', array(
 			'OPTION' => '<option value="' . $row['id'] .'">' . $row['name'] . '</option>'
 		));
 	
@@ -956,15 +956,15 @@ else //Show all member!
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
-	$Template->Assign_vars(array(
-		'PAGINATION' => '&nbsp;<strong>' . $LANG['page'] . ' :</strong> ' . $Pagination->Display_pagination('member' . transid('.php' . (!empty($unget) ? '&amp;' : '?') . 'p=%d', '-0-%d.php' . $unget), $nbr_member, 'p', 25, 3)
+	$Template->assign_vars(array(
+		'PAGINATION' => '&nbsp;<strong>' . $LANG['page'] . ' :</strong> ' . $Pagination->display('member' . transid('.php' . (!empty($unget) ? '&amp;' : '?') . 'p=%d', '-0-%d.php' . $unget), $nbr_member, 'p', 25, 3)
 	));
 
 	$result = $Sql->query_while("SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, user_local, user_web, last_connect 
 	FROM ".PREFIX."member
 	WHERE user_aprob = 1
 	ORDER BY " . $sort . " " . $mode . 
-	$Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	$Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '&nbsp;';
@@ -974,7 +974,7 @@ else //Show all member!
 		
 		$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
 		
-		$Template->Assign_block_vars('member_list', array(
+		$Template->assign_block_vars('member_list', array(
 			'PSEUDO' => $row['login'],
 			'MAIL' => $user_mail,
 			'MSG' => $user_msg,
@@ -988,7 +988,7 @@ else //Show all member!
 	}
 	$Sql->query_close($result);
 	
-	$Template->Pparse('member');
+	$Template->pparse('member');
 } 
 
 require_once('../kernel/footer.php'); 

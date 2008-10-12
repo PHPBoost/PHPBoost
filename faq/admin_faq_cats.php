@@ -44,11 +44,11 @@ $id_edit = retrieve(GET, 'edit', 0);
 $new_cat = retrieve(GET, 'new', false);
 $error = retrieve(GET, 'error', '');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'admin_faq_cat'=> 'faq/admin_faq_cats.tpl'
 ));
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
 	'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
 	'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],
@@ -78,14 +78,14 @@ elseif( $id_hide > 0 )
 }
 elseif( $cat_to_del > 0 )
 {
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_REMOVING_CATEGORY' => $FAQ_LANG['removing_category'],
 		'L_EXPLAIN_REMOVING' => $FAQ_LANG['explain_removing_category'],
 		'L_DELETE_CATEGORY_AND_CONTENT' => $FAQ_LANG['delete_category_and_its_content'],
 		'L_MOVE_CONTENT' => $FAQ_LANG['move_category_content'],
 		'L_SUBMIT' => $LANG['delete']
 	));
-	$Template->Assign_block_vars('removing_interface', array(
+	$Template->assign_block_vars('removing_interface', array(
 		'CATEGORY_TREE' => $faq_categories->Build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
 		'IDCAT' => $cat_to_del,
 	));
@@ -137,7 +137,7 @@ elseif( !empty($_GET['recount']) )
 }
 elseif( $new_cat XOR $id_edit > 0 )
 {
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'L_CATEGORY' => $FAQ_LANG['category'],
 		'L_REQUIRED_FIELDS' => $FAQ_LANG['required_fields'],
@@ -152,7 +152,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 	));
 		
 	if( $id_edit > 0 && array_key_exists($id_edit, $FAQ_CATS) )	
-		$Template->Assign_block_vars('edition_interface', array(
+		$Template->assign_block_vars('edition_interface', array(
 			'NAME' => $FAQ_CATS[$id_edit]['name'],
 			'DESCRIPTION' => unparse($FAQ_CATS[$id_edit]['description']),
 			'IMAGE' => $FAQ_CATS[$id_edit]['image'],
@@ -162,7 +162,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 	else
 	{
 		$id_edit = 0;
-		$Template->Assign_block_vars('edition_interface', array(
+		$Template->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
 			'IMAGE' => '',
@@ -208,17 +208,17 @@ else
 		
 	$faq_categories->Set_displaying_configuration($cat_config);
 	
-	$Template->Assign_block_vars('categories_management', array(
+	$Template->assign_block_vars('categories_management', array(
 		'CATEGORIES' => $faq_categories->Build_categories_administration_interface()
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_RECOUNT_QUESTIONS' => $FAQ_LANG['recount_questions_number'],
 		'THEME' => $CONFIG['theme']
 	));
 }
 
-$Template->Pparse('admin_faq_cat');
+$Template->pparse('admin_faq_cat');
 
 require_once('../admin/admin_footer.php');
 

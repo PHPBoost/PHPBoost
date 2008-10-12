@@ -138,7 +138,7 @@ class ForumInterface extends ModuleInterface
         $where = !empty($args['ForumWhere']) ? strprotect($args['ForumWhere']) : 'title';
         $colorate_result = !empty($args['ForumColorate_result']) ? true : false;
         
-        $Tpl->Assign_vars(Array(
+        $Tpl->assign_vars(Array(
             'L_DATE' => $LANG['date'],
             'L_DAY' => $LANG['day'],
             'L_DAYS' => $LANG['day_s'],
@@ -170,7 +170,7 @@ class ForumInterface extends ModuleInterface
             {
                 if( $User->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
                 {
-                    $Tpl->Assign_block_vars('cats', array(
+                    $Tpl->assign_block_vars('cats', array(
                         'MARGIN' => ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----',
                         'ID' => $id,
                         'L_NAME' => $key['name'],
@@ -274,7 +274,7 @@ class ForumInterface extends ModuleInterface
         
         $Tpl = new Template('forum/forum_generic_results.tpl');
 
-        $Tpl->Assign_vars(Array(
+        $Tpl->assign_vars(Array(
             'L_ON' => $LANG['on'],
             'L_TOPIC' => $LANG['topic']
         ));
@@ -327,7 +327,7 @@ class ForumInterface extends ModuleInterface
         $result =& $results[$indexes[$resultsIndex]];
         
         $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($result['title']) : '';
-        $Tpl->Assign_vars(array(
+        $Tpl->assign_vars(array(
             'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/' . ((!empty($result['connect']) && $result['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
             'U_USER_PROFILE' => !empty($result['user_id']) ? PATH_TO_ROOT . '/member/member'.transid('.php?id='.$result['user_id'],'-'.$result['user_id'].'.php') : '',
             'USER_PSEUDO' => !empty($result['login']) ? wordwrap_html($result['login'], 13) : $LANG['guest'],

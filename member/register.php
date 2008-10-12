@@ -42,14 +42,14 @@ if( empty($key) )
 {
 	if( !$User->check_level(MEMBER_LEVEL) && !empty($CONFIG_MEMBER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru) )
 	{
-		$Template->Set_filenames(array(
+		$Template->set_filenames(array(
 			'register'=> 'register.tpl'
 		));
 		
-		$Template->Assign_block_vars('confirm', array(
+		$Template->assign_block_vars('confirm', array(
 		));
 				
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'MSG_REGISTER' => $CONFIG_MEMBER['msg_register'],
 			'L_REGISTER' => $LANG['register'],
 			'L_REGISTRATION_TERMS' => $LANG['register_terms'],
@@ -57,15 +57,15 @@ if( empty($key) )
 			'L_SUBMIT' => $LANG['submit']			
 		));	
 		
-		$Template->Pparse('register');
+		$Template->pparse('register');
 	}
 	elseif( $User->check_level(MEMBER_LEVEL) !== true && (!empty($_POST['confirm']) || empty($CONFIG_MEMBER['msg_register']) || !empty($get_error) || !empty($get_erroru)) )
 	{
-		$Template->Set_filenames(array(
+		$Template->set_filenames(array(
 			'register'=> 'register.tpl'
 		));
 		
-		$Template->Assign_block_vars('register', array(
+		$Template->assign_block_vars('register', array(
 		));
 		
 		//Gestion des erreurs.
@@ -104,13 +104,13 @@ if( empty($key) )
 		//Mode d'activation du membre.
 		if( $CONFIG_MEMBER['activ_mbr'] == '1' )
 		{
-			$Template->Assign_block_vars('register.activ_mbr', array(
+			$Template->assign_block_vars('register.activ_mbr', array(
 				'L_ACTIV_MBR' => $LANG['activ_mbr_mail']
 			));
 		}
 		elseif( $CONFIG_MEMBER['activ_mbr'] == '2' )
 		{
-			$Template->Assign_block_vars('register.activ_mbr', array(
+			$Template->assign_block_vars('register.activ_mbr', array(
 				'L_ACTIV_MBR' => $LANG['activ_mbr_admin']
 			));
 		}
@@ -121,7 +121,7 @@ if( empty($key) )
 		if( $Captcha->gd_loaded() && $CONFIG_MEMBER['verif_code'] == '1' )
 		{
 			$Captcha->set_difficulty($CONFIG_MEMBER['verif_code_difficulty']);
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'C_VERIF_CODE' => true,
 				'VERIF_CODE' => $Captcha->display_form(),
 				'L_REQUIRE_VERIF_CODE' => $Captcha->js_require()
@@ -131,7 +131,7 @@ if( empty($key) )
 		//Autorisation d'uploader un avatar sur le serveur.
 		if( $CONFIG_MEMBER['activ_up_avatar'] == 1 )
 		{
-			$Template->Assign_block_vars('register.upload_avatar', array(
+			$Template->assign_block_vars('register.upload_avatar', array(
 				'WEIGHT_MAX' => $CONFIG_MEMBER['weight_max'],
 				'HEIGHT_MAX' => $CONFIG_MEMBER['height_max'],
 				'WIDTH_MAX' => $CONFIG_MEMBER['width_max']
@@ -157,7 +157,7 @@ if( empty($key) )
 					$selected = 'selected="selected"';
 					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
 				}			
-				$Template->Assign_block_vars('register.select', array(
+				$Template->assign_block_vars('register.select', array(
 					'LANG' => '<option value="' . $row['lang'] . '" ' . $selected . '>' . $lang_name . '</option>'
 				));
 			}
@@ -182,7 +182,7 @@ if( empty($key) )
 			$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 		}
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'JS_LANG_IDENTIFIER' => $array_identifier,
 			'IMG_LANG_IDENTIFIER' => $lang_identifier,
 			'SELECT_EDITORS' => $select_editors,
@@ -257,7 +257,7 @@ if( empty($key) )
 				{
 					$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row['theme'];
 					$selected = ($row['theme'] == $CONFIG['theme']) ? 'selected="selected"' : '';
-					$Template->Assign_block_vars('register.select_theme', array(
+					$Template->assign_block_vars('register.select_theme', array(
 						'THEME' => '<option value="' . $row['theme'] . '" ' . $selected . '>' . $theme_name . '</option>'
 					));
 				}
@@ -268,7 +268,7 @@ if( empty($key) )
 		{
 			$theme_info = load_ini_file('/config/', $CONFIG['lang']);
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'];
-			$Template->Assign_block_vars('register.select_theme', array(
+			$Template->assign_block_vars('register.select_theme', array(
 				'THEME' => '<option value="' . $CONFIG['theme'] . '" selected="selected">' . $theme_name . '</option>'
 			));
 		}
@@ -277,10 +277,10 @@ if( empty($key) )
 		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 		if( $extend_field_exist > 0 )
 		{
-			$Template->Assign_vars(array(			
+			$Template->assign_vars(array(			
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
 			));
-			$Template->Assign_block_vars('register.miscellaneous', array(			
+			$Template->assign_block_vars('register.miscellaneous', array(			
 			));
 			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values
 			FROM ".PREFIX."member_extend_cat AS exc
@@ -344,7 +344,7 @@ if( empty($key) )
 					break;
 				}				
 				
-				$Template->Assign_block_vars('register.miscellaneous.list', array(
+				$Template->assign_block_vars('register.miscellaneous.list', array(
 					'NAME' => $row['require'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 					'ID' => $row['field_name'],
 					'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
@@ -354,18 +354,18 @@ if( empty($key) )
 			$Sql->query_close($result);	
 		}
 		
-		$Template->Pparse('register');
+		$Template->pparse('register');
 	}
 	else
 		redirect(get_start_page());
 }
 elseif( !empty($key) && $User->check_level(MEMBER_LEVEL) !== true ) //Activation du compte membre
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'register'=> 'register.tpl'
 	));
 	
-	$Template->Assign_block_vars('activ', array(
+	$Template->assign_block_vars('activ', array(
 	));	
 	
 	$check_mbr = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
@@ -373,20 +373,20 @@ elseif( !empty($key) && $User->check_level(MEMBER_LEVEL) !== true ) //Activation
 	{
 		$Sql->query_inject("UPDATE ".PREFIX."member SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'L_REGISTER' => $LANG['register'],
 			'L_ACTIVATION_REPORT' => $LANG['activ_mbr_mail_success']
 		));	
 	}
 	else
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'L_REGISTER' => $LANG['register'],
 			'L_ACTIVATION_REPORT' => $LANG['activ_mbr_mail_error']
 		));	
 	}
 	
-	$Template->Pparse('register');
+	$Template->pparse('register');
 }
 else
 	redirect(get_start_page());

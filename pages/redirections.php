@@ -154,11 +154,11 @@ else
 
 require_once('../kernel/header.php');
 
-$Template->Set_filenames(array('pages_redirections'=> 'pages/redirections.tpl'));
+$Template->set_filenames(array('pages_redirections'=> 'pages/redirections.tpl'));
 
 if( $id_rename > 0 )
 {
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'ID_RENAME' => $id_rename,
 		'TARGET' => transid('redirections.php'),
 		'L_TITLE' => sprintf($LANG['pages_rename_page'], $page_infos['title']),
@@ -166,7 +166,7 @@ if( $id_rename > 0 )
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
 		'L_EXPLAIN_RENAME' => $LANG['pages_explain_rename']
 	));
-	$Template->Assign_block_vars('rename', array());
+	$Template->assign_block_vars('rename', array());
 	
 	//Erreur : la page existe déjà
 	if( $error == 'title_already_exists' )
@@ -177,14 +177,14 @@ if( $id_rename > 0 )
 //Création d'une redirection
 elseif( $id_new > 0 )
 {
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'ID_NEW' => $id_new,
 		'TARGET' => transid('redirections.php'),
 		'L_TITLE' => sprintf($LANG['pages_creation_redirection_title'], $page_infos['title']),
 		'L_REDIRECTION_NAME' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection']
 	));
-	$Template->Assign_block_vars('new', array());
+	$Template->assign_block_vars('new', array());
 	//Erreur : la page existe déjà
 	if( $error == 'title_already_exists' )
 	{
@@ -194,7 +194,7 @@ elseif( $id_new > 0 )
 //Liste des redirections vers cette page
 elseif( $id_redirection > 0 )
 {
-	$Template->Assign_block_vars('redirection', array());
+	$Template->assign_block_vars('redirection', array());
 	
 	$result = $Sql->query_while("SELECT id, title, auth AS auth
 	FROM ".PREFIX."pages
@@ -203,17 +203,17 @@ elseif( $id_redirection > 0 )
 	$nbr_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."pages WHERE redirect = '" . $id_redirection . "'", __LINE__, __FILE__);
 	
 	while( $row = $Sql->fetch_assoc($result) )
-		$Template->Assign_block_vars('redirection.list', array(
+		$Template->assign_block_vars('redirection.list', array(
 			'REDIRECTION_TITLE' => $row['title'],
-			'ACTIONS' => '<a href="redirections.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->Module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>'
+			'ACTIONS' => '<a href="redirections.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>'
 		));
 
 		if( $nbr_rows == 0 )
-		$Template->Assign_block_vars('redirection.no_redirection', array(
+		$Template->assign_block_vars('redirection.no_redirection', array(
 			'MESSAGE' => $LANG['pages_no_redirection']
 		));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'U_CREATE_REDIRECTION' => transid('redirections.php?new=' . $id_redirection),
 		'L_REDIRECTIONS' => $LANG['pages_redirections'],
 		'L_REDIRECTION_TITLE' => $LANG['pages_redirection_title'],
@@ -227,7 +227,7 @@ else
 	if( !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 
-	$Template->Assign_block_vars('redirections', array());
+	$Template->assign_block_vars('redirections', array());
 	
 	$result = $Sql->query_while("SELECT r.title, r.encoded_title AS encoded_title, r.id, p.id AS page_id, p.title AS page_title, p.encoded_title AS page_encoded_title, p.auth AS auth
 	FROM ".PREFIX."pages r
@@ -241,19 +241,19 @@ else
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
 		$array_auth = sunserialize($row['auth']);
-		$Template->Assign_block_vars('redirections.list', array(
+		$Template->assign_block_vars('redirections.list', array(
 			'REDIRECTION_TITLE' => '<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a>',
 			'REDIRECTION_TARGET' => '<a href="' . transid('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',
-			'ACTIONS' => ( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) ) ? '<a href="redirections.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->Module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>&nbsp;&bull;&nbsp;<a href="redirections.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '"><img src="' . $Template->Module_data_path('pages') . '/images/redirect.png" alt="' . $LANG['pages_manage_redirection'] . '" /></a>' : ''
+			'ACTIONS' => ( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) ) ? '<a href="redirections.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>&nbsp;&bull;&nbsp;<a href="redirections.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/redirect.png" alt="' . $LANG['pages_manage_redirection'] . '" /></a>' : ''
 		));
 	}
 	
 	if( $nbr_rows == 0 )
-		$Template->Assign_block_vars('redirections.no_redirection', array(
+		$Template->assign_block_vars('redirections.no_redirection', array(
 			'MESSAGE' => $LANG['pages_no_redirection']
 		));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_REDIRECTIONS' => $LANG['pages_redirections'],
 		'L_REDIRECTION_TITLE' => $LANG['pages_redirection_title'],
 		'L_REDIRECTION_TARGET' => $LANG['pages_redirection_target'],
@@ -267,7 +267,7 @@ else
 //Contenu de la racine:
 $Cache->Load_file('pages');
 
-$Template->Pparse('pages_redirections');
+$Template->pparse('pages_redirections');
 
 
 require_once('../kernel/footer.php');

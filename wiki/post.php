@@ -80,12 +80,12 @@ if( !empty($contents) ) //On enregistre un article
 
 	if( $preview )//Prévisualisation
 	{
-		$Template->Assign_block_vars('preview', array(
+		$Template->assign_block_vars('preview', array(
 			'CONTENTS' => second_parse(wiki_no_rewrite(stripslashes($contents))),
 			'TITLE' => stripslashes($title)
 		));
 		if( !empty($menu) )
-			$Template->Assign_block_vars('preview.menu', array(
+			$Template->assign_block_vars('preview.menu', array(
 				'MENU' => stripslashes($menu)
 			));
 	}
@@ -167,9 +167,9 @@ if( !empty($contents) ) //On enregistre un article
 }
 
 //On propose le formulaire
-$Template->Set_filenames(array('wiki_edit'=> 'wiki/post.tpl'));
-$Template->Assign_vars(array(
-	'WIKI_PATH' => $Template->Module_data_path('wiki'),
+$Template->set_filenames(array('wiki_edit'=> 'wiki/post.tpl'));
+$Template->assign_vars(array(
+	'WIKI_PATH' => $Template->get_module_data_path('wiki'),
 ));
 if( $id_edit > 0 )//On édite
 {
@@ -196,7 +196,7 @@ if( $id_edit > 0 )//On édite
 	
 	$l_action_submit = $LANG['update'];
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'SELECTED_CAT' => $id_edit,
 	));
 }
@@ -213,7 +213,7 @@ else
 	
 	if( $id_cat > 0 && array_key_exists($id_cat, $_WIKI_CATS) ) //Catégorie préselectionnée
 	{
-		$Template->Assign_block_vars('create', array());
+		$Template->assign_block_vars('create', array());
 		$cats = array();
 		$cat_list = display_cat_explorer($id_cat, $cats, 1);
 		$cats = array_reverse($cats);
@@ -228,7 +228,7 @@ else
 			$i++;
 		}
 		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $_WIKI_CATS[$id_cat]['name'];
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'SELECTED_CAT' => $id_cat,
 			'CAT_0' => '',
 			'CAT_LIST' => $cat_list,
@@ -237,7 +237,7 @@ else
 	}
 	else //Si il n'a pas de catégorie parente
 	{
-		$Template->Assign_block_vars('create', array());
+		$Template->assign_block_vars('create', array());
 		$contents = '';
 		$result = $Sql->query_while("SELECT c.id, a.title, a.encoded_title
 		FROM ".PREFIX."wiki_cats c
@@ -249,20 +249,20 @@ else
 			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if( $sub_cats_number > 0 )
 			{	
-				$Template->Assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $Template->Module_data_path('wiki') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
-					<a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $Template->Module_data_path('wiki') . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+				$Template->assign_block_vars('create.list', array(
+					'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $Template->get_module_data_path('wiki') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
+					<a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $Template->get_module_data_path('wiki') . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 			else
 			{
-				$Template->Assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $Template->Module_data_path('wiki') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+				$Template->assign_block_vars('create.list', array(
+					'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $Template->get_module_data_path('wiki') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 		}
 		$Sql->query_close($result);
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'SELECTED_CAT' => 0,
 			'CAT_0' => 'wiki_selected_cat',
 			'CAT_LIST' => '',
@@ -277,7 +277,7 @@ $content_editor = new Content(BBCODE_LANGUAGE);
 $editor =& $content_editor->get_editor();
 $editor->set_identifier('contents');
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], $article_infos['title'])) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], $article_infos['title'])),
 	'KERNEL_EDITOR' => $editor->display(),
 	'ID_CAT' => $id_edit > 0 ? $article_infos['id_cat'] : '',
@@ -307,7 +307,7 @@ include_once('../wiki/post_js_tools.php');
 if( !empty($errstr) )
 	$Errorh->Error_handler($errstr, E_USER_WARNING);
 
-$Template->Pparse('wiki_edit');
+$Template->pparse('wiki_edit');
 
 
 require_once('../kernel/footer.php');

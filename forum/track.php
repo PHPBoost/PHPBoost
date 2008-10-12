@@ -69,7 +69,7 @@ if( !empty($_POST['valid']) )
 }
 elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'forum_track'=> 'forum/forum_track.tpl',
 		'forum_top'=> 'forum/forum_top.tpl',
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -93,7 +93,7 @@ elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) 
 	LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $User->get_attribute('user_id') . "'
 	WHERE tr.user_id = '" . $User->get_attribute('user_id') . "'
 	ORDER BY t.last_timestamp DESC
-	" . $Sql->limit($Pagination->First_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->get_first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On définit un array pour l'appellation correspondant au type de champ
@@ -138,21 +138,21 @@ elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) 
 		//Ancre ajoutée aux messages non lus.	
 		$new_ancre = ($new_msg === true && $User->get_attribute('user_id') !== -1) ? '<a href="topic' . transid('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a>' : '';
 		
-		$Template->Assign_block_vars('topics', array(
+		$Template->assign_block_vars('topics', array(
 			'ID' => $row['id'],
 			'INCR' => $nbr_topics_compt,
 			'CHECKED_PM' => ($row['pm'] == 1) ? 'checked="checked"' : '',
 			'CHECKED_MAIL' => ($row['mail'] == 1) ? 'checked="checked"' : '',
 			'ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
-			'POLL' => !empty($row['question']) ? '<img src="' . $Template->Module_data_path('forum') . '/images/poll_mini.png" class="valign_middle" alt="" />' : '',
-			'TRACK' => '<img src="' . $Template->Module_data_path('forum') . '/images/favorite_mini.png" class="valign_middle" alt="" />',
-			'DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']) ? '<img src="' . $Template->Module_data_path('forum') . '/images/msg_display_mini.png" alt="" style="vertical-align:middle;" />' : '',
+			'POLL' => !empty($row['question']) ? '<img src="' . $Template->get_module_data_path('forum') . '/images/poll_mini.png" class="valign_middle" alt="" />' : '',
+			'TRACK' => '<img src="' . $Template->get_module_data_path('forum') . '/images/favorite_mini.png" class="valign_middle" alt="" />',
+			'DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']) ? '<img src="' . $Template->get_module_data_path('forum') . '/images/msg_display_mini.png" alt="" style="vertical-align:middle;" />' : '',
 			'TYPE' => $type[$row['type']],
 			'TITLE' => ucfirst($row['title']),			
 			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
 			'DESC' => $row['subtitle'],
-			'PAGINATION_TOPICS' => $Pagination->Display_pagination('topic' . transid('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d.php'), $row['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 2, 10, false),
+			'PAGINATION_TOPICS' => $Pagination->display('topic' . transid('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d.php'), $row['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 2, 10, false),
 			'MSG' => ($row['nbr_msg'] - 1),
 			'VUS' => $row['nbr_views'],
 			'U_TOPIC_VARS' => transid('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
@@ -170,7 +170,7 @@ elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) 
 	//Le membre a déjà lu tous les messages.
 	if( $nbr_topics == 0 )
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_NO_TRACKED_TOPICS' => true,
 			'L_NO_TRACKED_TOPICS' => '0 ' . $LANG['show_topic_track']
 		));
@@ -178,12 +178,12 @@ elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) 
 
 	$l_topic = ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'];
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'NBR_TOPICS' => $nbr_topics,
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 		'SID' => SID,
-		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
-		'PAGINATION' => $Pagination->Display_pagination('track' . transid('.php?p=%d'), $nbr_topics, 'p', $CONFIG_FORUM['pagination_topic'], 3),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
+		'PAGINATION' => $Pagination->display('track' . transid('.php?p=%d'), $nbr_topics, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 		'LANG' => $CONFIG['lang'],
 		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1&amp;favorite=1', '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 		'U_CHANGE_CAT'=> 'track.php' . SID,
@@ -239,7 +239,7 @@ elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) 
 	$Sql->query_close($result);
 
 	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -256,7 +256,7 @@ elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) 
 		'L_ONLINE' => strtolower($LANG['online'])
 	));
 	
-	$Template->Pparse('forum_track');
+	$Template->pparse('forum_track');
 }
 else
 	redirect(HOST . DIR . '/forum/index.php' . SID2);

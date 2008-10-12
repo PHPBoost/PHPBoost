@@ -107,7 +107,7 @@ elseif( $del_mbr && !empty($user_id) && !empty($idgroup) ) //Suppression du memb
 }
 elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_groups_management2'=> 'admin/admin_groups_management2.tpl'
 	));
 	
@@ -151,11 +151,11 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 		}
 		
 		$array_group = sunserialize($group['auth']);
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'NAME' => $group['name'],
 			'IMG' => $group['img'],
 			'GROUP_ID' => $idgroup,
-			'PAGINATION' => $Pagination->Display_pagination('admin_groups.php?id=' . $idgroup . '&amp;p=%d', $nbr_member_group, 'p', 25, 3),
+			'PAGINATION' => $Pagination->display('admin_groups.php?id=' . $idgroup . '&amp;p=%d', $nbr_member_group, 'p', 25, 3),
 			'THEME' => $CONFIG['theme'],
 			'LANG' => $CONFIG['lang'],	
 			'IMG_GROUPS' => $img_groups,	
@@ -199,7 +199,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 			$login = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
 			if( !empty($login) )
 			{	
-				$Template->Assign_block_vars('member', array(
+				$Template->assign_block_vars('member', array(
 					'USER_ID' => $user_id,
 					'LOGIN' => $login,
 					'U_USER_ID' => transid('.php?id=' . $user_id, '-' . $user_id . '.php')
@@ -210,11 +210,11 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 	else
 		redirect(HOST . SCRIPT);
 	
-	$Template->Pparse('admin_groups_management2');
+	$Template->pparse('admin_groups_management2');
 }
 elseif( $add ) //Interface d'ajout du groupe.
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 	'admin_groups_management2'=> 'admin/admin_groups_management2.tpl'
 	));
 	
@@ -239,7 +239,7 @@ elseif( $add ) //Interface d'ajout du groupe.
 		}
 	}
 		
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],	
 		'IMG_GROUPS' => $img_groups,
@@ -264,11 +264,11 @@ elseif( $add ) //Interface d'ajout du groupe.
 		'L_ADD' => $LANG['add']
 	));		
 	
-	$Template->Pparse('admin_groups_management2');
+	$Template->pparse('admin_groups_management2');
 }
 else //Liste des groupes.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_groups_management'=> 'admin/admin_groups_management.tpl'
 	 ));
 	 
@@ -277,8 +277,8 @@ else //Liste des groupes.
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
-	$Template->Assign_vars(array(
-		'PAGINATION' => $Pagination->Display_pagination('admin_groups', $nbr_group, 'p', 25, 3),	
+	$Template->assign_vars(array(
+		'PAGINATION' => $Pagination->display('admin_groups', $nbr_group, 'p', 25, 3),	
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'KERNEL_EDITOR' => display_editor(),
@@ -294,10 +294,10 @@ else //Liste des groupes.
 	$result = $Sql->query_while("SELECT id, name, img
 	FROM ".PREFIX."group 
 	ORDER BY name
-	" . $Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('group', array(
+		$Template->assign_block_vars('group', array(
 			'LINK' => transid('.php?g=' . $row['id'], '-0.php?g=' . $row['id']),
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
@@ -306,7 +306,7 @@ else //Liste des groupes.
 	}
 	$Sql->query_close($result);
 	
-	$Template->Pparse('admin_groups_management'); 
+	$Template->pparse('admin_groups_management'); 
 }
 
 require_once('../admin/admin_footer.php');

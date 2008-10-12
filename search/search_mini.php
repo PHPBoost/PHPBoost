@@ -30,7 +30,7 @@ if( defined('PHPBOOST') !== true ) exit;
 //------------------------------------------------------------------- Language
 load_module_lang('search');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'search_mini' => 'search/search_mini.tpl',
 ));
 
@@ -40,7 +40,7 @@ $search = retrieve(REQUEST, 'q', '');
 
 //--------------------------------------------------------------------- Header
 
-$Template->Assign_vars(Array(
+$Template->assign_vars(Array(
     'TITLE_SEARCH' => TITLE,
     'SEARCH' => $LANG['title_search'],
     'TEXT_SEARCHED' => !empty($search) ? htmlentities(retrieve(REQUEST, 'q', '', TSTRING_UNCHANGE)) : $LANG['search'] . '...',

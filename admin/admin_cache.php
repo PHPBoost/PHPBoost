@@ -42,7 +42,7 @@ if( empty($cache_mode) )    // Génération du cache de la configuration
     }
     else //Sinon on rempli le formulaire
     {
-        $Template->Set_filenames(array(
+        $Template->set_filenames(array(
             'admin_cache'=> 'admin/admin_cache.tpl'
         ));
         
@@ -51,14 +51,14 @@ if( empty($cache_mode) )    // Génération du cache de la configuration
         if( $get_error == 1 )
             $Errorh->Error_handler($LANG['cache_success'], E_USER_SUCCESS);
         
-        $Template->Assign_vars(array(
+        $Template->assign_vars(array(
             'L_CACHE' => $LANG['cache'],
             'L_SYNDICATION' => $LANG['syndication'],
             'L_EXPLAIN_SITE_CACHE' => $LANG['explain_site_cache'],
             'L_GENERATE' => $LANG['generate']
         ));
         
-        $Template->Pparse('admin_cache');
+        $Template->pparse('admin_cache');
     }
 }
 else    // Génération du cache des rss
@@ -73,7 +73,7 @@ else    // Génération du cache des rss
     }
     else //Sinon on rempli le formulaire
     {
-        $Template->Set_filenames(array(
+        $Template->set_filenames(array(
             'admin_cache_syndication'=> 'admin/admin_cache_syndication.tpl'
         ));
         
@@ -82,14 +82,14 @@ else    // Génération du cache des rss
         if( $get_error == 1 )
             $Errorh->Error_handler($LANG['cache_success'], E_USER_SUCCESS);
         
-        $Template->Assign_vars(array(
+        $Template->assign_vars(array(
             'L_CACHE' => $LANG['cache'],
             'L_SYNDICATION' => $LANG['syndication'],
             'L_EXPLAIN_SITE_CACHE' => $LANG['explain_site_cache_syndication'],
             'L_GENERATE' => $LANG['generate']
         ));
         
-        $Template->Pparse('admin_cache_syndication');
+        $Template->pparse('admin_cache_syndication');
     }
 }
 

@@ -95,11 +95,11 @@ elseif( $uninstall ) //Désinstallation.
 			if( $value == $LANG['uninstall'] )
 				$idlang = $key;
 				
-		$Template->Set_filenames(array(
+		$Template->set_filenames(array(
 			'admin_lang_management'=> 'admin/admin_lang_management.tpl'
 		));
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_DEL_LANG' => true,
 			'IDLANG' => $idlang,
 			'L_LANG_ADD' => $LANG['lang_add'],	
@@ -112,16 +112,16 @@ elseif( $uninstall ) //Désinstallation.
 			'L_DELETE' => $LANG['delete']
 		));
 
-		$Template->Pparse('admin_lang_management'); 
+		$Template->pparse('admin_lang_management'); 
 	}
 }		
 else
 {			
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_lang_management'=> 'admin/admin_lang_management.tpl'
 	));
 	 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_LANG_MAIN' => true,
 		'THEME' => $CONFIG['theme'],		
 		'L_LANG_ADD' => $LANG['lang_add'],	
@@ -189,7 +189,7 @@ else
 			}
 			
 			$default_lang = ($lang['name'] == $CONFIG['lang']);
-			$Template->Assign_block_vars('list', array(
+			$Template->assign_block_vars('list', array(
 				'C_LANG_DEFAULT' => $default_lang ? true : false,
 				'C_LANG_NOT_DEFAULT' => !$default_lang ? true : false,
 				'IDLANG' =>  $lang['id'],		
@@ -207,15 +207,15 @@ else
 	}	
 	
 	if( $z != 0 )
-		$Template->Assign_vars(array(		
+		$Template->assign_vars(array(		
 			'C_LANG_PRESENT' => true
 		));
 	else
-		$Template->Assign_vars(array(		
+		$Template->assign_vars(array(		
 			'C_NO_LANG_PRESENT' => true
 		));
 		
-	$Template->Pparse('admin_lang_management'); 
+	$Template->pparse('admin_lang_management'); 
 }
 
 require_once('../admin/admin_footer.php');

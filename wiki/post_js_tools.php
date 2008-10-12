@@ -28,9 +28,9 @@
 if( defined('PHPBOOST') !== true) exit;
 
 //On charge le template associé
-$Template->Set_filenames(array('post_js_tools'=> 'wiki/wiki_js_tools.tpl'));
+$Template->set_filenames(array('post_js_tools'=> 'wiki/wiki_js_tools.tpl'));
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'L_PLEASE_ENTER_A_TITLE' => $LANG['wiki_please_enter_a_link_name'],
 	'L_INSERT_LINK' => $LANG['wiki_insert_a_link'],
 	'L_INSERT' => $LANG['wiki_insert_link'],
@@ -44,7 +44,7 @@ $Template->Assign_vars(array(
 	'L_HELP_WIKI_TAGS' => $LANG['wiki_help_tags'],
 	'L_PARAGRAPH_NAME' => $LANG['wiki_paragraph_name'],
 	'PARAGRAPH_NAME' => $LANG['wiki_paragraph_name_example'],
-	'WIKI_PATH' => $Template->Module_data_path('wiki')
+	'WIKI_PATH' => $Template->get_module_data_path('wiki')
 ));
 
 

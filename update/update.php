@@ -82,7 +82,7 @@ else
 	@error_reporting(ERROR_REPORTING);
 }
 
-$Template->Set_filenames(array('update' => '../update/templates/update.tpl'));
+$Template->set_filenames(array('update' => '../update/templates/update.tpl'));
 
 //Fonction pour gérer la langue
 function add_lang($url, $header_location = false)
@@ -132,8 +132,8 @@ else
 		@fclose($file);
 	}
 	
-	$Template->Assign_block_vars('intro', array());
-	$Template->Assign_vars(array(
+	$Template->assign_block_vars('intro', array());
+	$Template->assign_vars(array(
 		'L_NEXT_STEP' => add_lang('update.php?step=2')
 	));
 }
@@ -537,7 +537,7 @@ elseif( $step == 2 )
 		redirect(HOST . FILE . add_lang('?step=3', true));
 	}
 	
-	$Template->Assign_block_vars('kernel_update', array());
+	$Template->assign_block_vars('kernel_update', array());
 	
 	if( !is_dir('../cache/backup') )
 	{	
@@ -547,12 +547,12 @@ elseif( $step == 2 )
 		
 	if( !is_dir('../cache/backup') )
 	{
-		$Template->Assign_block_vars('kernel_update.error', array(
+		$Template->assign_block_vars('kernel_update.error', array(
 			'ERROR' => 'Il manque le dossier backup dans le dossier cache du site (cache/backup). Vous devez le créer manuellement!'
 		));
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'U_PREVIOUS_PAGE' => add_lang('update.php?step=1'),
 		'TARGET' => add_lang('update.php?step=2'),
 		'U_NEXT_PAGE' => add_lang('update.php?step=3'),
@@ -609,8 +609,8 @@ elseif( $step == 3 )
 
 		redirect(HOST . FILE . add_lang('?step=4', true));
 	}
-	$Template->Assign_block_vars('articles_update', array());
-	$Template->Assign_vars(array(
+	$Template->assign_block_vars('articles_update', array());
+	$Template->assign_vars(array(
 		'TARGET' => add_lang('update.php?step=3'),
 		'U_PREVIOUS_PAGE' => add_lang('update.php?step=2'),
 		'U_NEXT_PAGE' => add_lang('update.php?step=4'),
@@ -630,8 +630,8 @@ elseif( $step == 4 )
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "calendar` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__); 
 		redirect(HOST . FILE . add_lang('?step=5', true));
 	}
-	$Template->Assign_block_vars('calendar_update', array());
-	$Template->Assign_vars(array(
+	$Template->assign_block_vars('calendar_update', array());
+	$Template->assign_vars(array(
 		'TARGET' => add_lang('update.php?step=4'),
 		'U_PREVIOUS_PAGE' => add_lang('update.php?step=3'),
 		'U_NEXT_PAGE' => add_lang('update.php?step=5'),
@@ -717,8 +717,8 @@ elseif( $step == 5 )
 		
 		redirect(HOST . FILE . add_lang('?step=6', true));
 	}
-	$Template->Assign_block_vars('forum_update', array());
-	$Template->Assign_vars(array(
+	$Template->assign_block_vars('forum_update', array());
+	$Template->assign_vars(array(
 		'TARGET' => add_lang('update.php?step=5'),
 		'U_PREVIOUS_PAGE' => add_lang('update.php?step=4'),
 		'U_NEXT_PAGE' => add_lang('update.php?step=6'),
@@ -794,8 +794,8 @@ elseif( $step == 6 )
 
 		redirect(HOST . FILE . add_lang('?step=7', true));
 	}
-	$Template->Assign_block_vars('gallery_update', array());
-	$Template->Assign_vars(array(
+	$Template->assign_block_vars('gallery_update', array());
+	$Template->assign_vars(array(
 		'TARGET' => add_lang('update.php?step=6'),
 		'U_PREVIOUS_PAGE' => add_lang('update.php?step=5'),
 		'U_NEXT_PAGE' => add_lang('update.php?step=7'),
@@ -805,13 +805,13 @@ elseif( $step == 6 )
 	));
 	if( !@rename('../album/mini', '../album/thumbnails') )
 	{
-		$Template->Assign_block_vars('gallery_update.error', array(
+		$Template->assign_block_vars('gallery_update.error', array(
 			'ERROR' => 'Veuillez renommer manuellement le dossier album/mini en album/thumbnails par l\'intermédiaire de votre client ftp'
 		));
 	}
 	if( !@rename('../album', '../gallery/pics') )
 	{
-		$Template->Assign_block_vars('gallery_update.error', array(
+		$Template->assign_block_vars('gallery_update.error', array(
 			'ERROR' => 'Veuillez déplacer manuellement le dossier album dans le dossier gallery par l\'intermédiaire de votre client ftp'
 		));
 	}
@@ -826,8 +826,8 @@ elseif( $step == 7 )
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "livreor` RENAME `" . PREFIX . "guestbook`", __LINE__, __FILE__); 
 		redirect(HOST . FILE . add_lang('?step=8', true));
 	}
-	$Template->Assign_block_vars('guestbook_update', array());
-	$Template->Assign_vars(array(
+	$Template->assign_block_vars('guestbook_update', array());
+	$Template->assign_vars(array(
 		'TARGET' => add_lang('update.php?step=7'),
 		'U_PREVIOUS_PAGE' => add_lang('update.php?step=6'),
 		'U_NEXT_PAGE' => add_lang('update.php?step=8'),
@@ -868,8 +868,8 @@ elseif( $step == 8 )
 
 		redirect(HOST . FILE . add_lang('?step=9', true));
 	}
-	$Template->Assign_block_vars('news_update', array());
-	$Template->Assign_vars(array(
+	$Template->assign_block_vars('news_update', array());
+	$Template->assign_vars(array(
 		'TARGET' => add_lang('update.php?step=8'),
 		'U_PREVIOUS_PAGE' => add_lang('update.php?step=7'),
 		'U_NEXT_PAGE' => add_lang('update.php?step=9'),
@@ -907,8 +907,8 @@ elseif( $step == 9 )
 		}
 		redirect(HOST . FILE . add_lang('?step=10', true));
 	}
-	$Template->Assign_block_vars('pages_update', array());
-	$Template->Assign_vars(array(
+	$Template->assign_block_vars('pages_update', array());
+	$Template->assign_vars(array(
 		'TARGET' => add_lang('update.php?step=9'),
 		'U_PREVIOUS_PAGE' => add_lang('update.php?step=8'),
 		'U_NEXT_PAGE' => add_lang('update.php?step=10'),
@@ -926,8 +926,8 @@ elseif( $step == 10 )
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "shoutbox` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
 		redirect(HOST . FILE . add_lang('?step=11', true));
 	}
-	$Template->Assign_block_vars('shoutbox_update', array());
-	$Template->Assign_vars(array(
+	$Template->assign_block_vars('shoutbox_update', array());
+	$Template->assign_vars(array(
 		'TARGET' => add_lang('update.php?step=10'),
 		'U_PREVIOUS_PAGE' => add_lang('update.php?step=9'),
 		'U_NEXT_PAGE' => add_lang('update.php?step=11'),
@@ -961,8 +961,8 @@ elseif( $step == 11 )
 
 		redirect(HOST . FILE . add_lang('?step=12', true));
 	}
-	$Template->Assign_block_vars('web_update', array());
-	$Template->Assign_vars(array(
+	$Template->assign_block_vars('web_update', array());
+	$Template->assign_vars(array(
 		'TARGET' => add_lang('update.php?step=11'),
 		'U_PREVIOUS_PAGE' => add_lang('update.php?step=10'),
 		'U_NEXT_PAGE' => add_lang('update.php?step=12'),
@@ -1002,8 +1002,8 @@ elseif( $step == 12 )
 		
 		redirect(HOST . FILE . add_lang('?step=13', true));
 	}
-	$Template->Assign_block_vars('download_update', array());
-	$Template->Assign_vars(array(
+	$Template->assign_block_vars('download_update', array());
+	$Template->assign_vars(array(
 		'TARGET' => add_lang('update.php?step=12'),
 		'U_PREVIOUS_PAGE' => add_lang('update.php?step=11'),
 		'U_NEXT_PAGE' => add_lang('update.php?step=13'),
@@ -1024,8 +1024,8 @@ elseif( $step == 13 )
 		$Cache->Generate_all_files();
 		redirect(HOST . FILE . add_lang('?step=14', true));
 	}
-	$Template->Assign_block_vars('cache', array());
-	$Template->Assign_vars(array(
+	$Template->assign_block_vars('cache', array());
+	$Template->assign_vars(array(
 		'TARGET' => add_lang('update.php?step=13'),
 		'U_PREVIOUS_PAGE' => add_lang('update.php?step=12'),
 		'U_NEXT_PAGE' => add_lang('update.php?step=14'),
@@ -1037,8 +1037,8 @@ elseif( $step == 13 )
 //Fin
 elseif( $step == 14 )
 {
-	$Template->Assign_block_vars('end', array());
-	$Template->Assign_vars(array());
+	$Template->assign_block_vars('end', array());
+	$Template->assign_vars(array());
 }
 
 $steps = array(
@@ -1060,7 +1060,7 @@ $steps = array(
 
 $step_name = $steps[$step - 1][0];
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'LANG' => $lang,
 	'NUM_STEP' => $step,
 	'PROGRESS_BAR_PICS' => str_repeat('<img src="templates/images/loading.png" alt="" />', floor($steps[$step - 1][1] * 24 / 100)),
@@ -1089,7 +1089,7 @@ for($i = 1; $i <= 14; $i++ )
 		$row = 'row_current';
 	else
 		$row = 'row_next';
-	$Template->Assign_block_vars('link_menu', array(
+	$Template->assign_block_vars('link_menu', array(
 		'ROW' => '<tr>
 				<td class="' . $row . '">
 					' . $steps[$i - 1][0] . '
@@ -1098,7 +1098,7 @@ for($i = 1; $i <= 14; $i++ )
 	));
 }
 
-$Template->Pparse('update');
+$Template->pparse('update');
 
 ob_end_flush();
 

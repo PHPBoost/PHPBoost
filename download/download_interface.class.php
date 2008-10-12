@@ -178,7 +178,7 @@ class DownloadInterface extends ModuleInterface
         $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result['timestamp']);
         require_once(PATH_TO_ROOT . '/kernel/framework/content/note.class.php');
         $Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
-        $Tpl->Assign_vars(array(
+        $Tpl->assign_vars(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
             'U_LINK' => transid(PATH_TO_ROOT . '/download/download.php?id=' . $result['id']),
             'U_IMG' => $result['image'],

@@ -95,7 +95,7 @@ class Forum
 			{
 				//Envoi un Mail à ceux dont le last_view_id est le message précedent.
 				if( $row['last_view_id'] == $previous_msg_id && $row['mail'] == '1' ) 
-					$Mail->Send_mail($row['user_mail'], $LANG['forum_mail_title_new_post'], sprintf($LANG['forum_mail_new_post'], $title_subject, $pseudo, $preview_contents, $title_subject_mail, $idtopic), $CONFIG['mail']);
+					$Mail->send($row['user_mail'], $LANG['forum_mail_title_new_post'], sprintf($LANG['forum_mail_new_post'], $title_subject, $pseudo, $preview_contents, $title_subject_mail, $idtopic), $CONFIG['mail']);
 					
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if( $row['last_view_id'] == $previous_msg_id && $row['pm'] == '1' ) 

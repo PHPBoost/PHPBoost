@@ -47,13 +47,13 @@ if( !empty($_POST['valid']) )
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_online'=> 'online/admin_online.tpl'
 	));
 	
 	$Cache->Load_file('online');
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'NBR_ONLINE_DISPLAYED' => !empty($CONFIG_ONLINE['online_displayed']) ? $CONFIG_ONLINE['online_displayed'] : 4,
 		'L_ONLINE_CONFIG' => $LANG['online_config'],
 		'L_NBR_ONLINE_DISPLAYED' => $LANG['nbr_online_displayed'],
@@ -70,12 +70,12 @@ else
 	foreach($array_order_online as $key => $value)
 	{
 		$selected = ($CONFIG_ONLINE['display_order_online'] == $key) ? 'selected="selected"' : '' ;
-		$Template->Assign_block_vars('display_order', array(
+		$Template->assign_block_vars('display_order', array(
 			'ORDER' => '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>'
 		));
 	}
 
-	$Template->Pparse('admin_online'); // traitement du modele	
+	$Template->pparse('admin_online'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

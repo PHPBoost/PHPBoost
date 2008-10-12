@@ -85,19 +85,19 @@ if( ($update = AdministratorAlertService::find_by_identifier($identifier, 'updat
     ));
     
     foreach( $authors as $author )
-        $tpl->Assign_block_vars('authors', array('name' => $author['name'], 'email' => $author['email']));
+        $tpl->assign_block_vars('authors', array('name' => $author['name'], 'email' => $author['email']));
     
     foreach( $new_features as $new_feature )
-        $tpl->Assign_block_vars('new_features', array('description' => $new_feature));
+        $tpl->assign_block_vars('new_features', array('description' => $new_feature));
         
     foreach( $improvments as $improvment )
-        $tpl->Assign_block_vars('improvments', array('description' => $improvment));
+        $tpl->assign_block_vars('improvments', array('description' => $improvment));
     
     foreach( $bug_corrections as $bug_correction )
-        $tpl->Assign_block_vars('bugs', array('description' => $bug_correction));
+        $tpl->assign_block_vars('bugs', array('description' => $bug_correction));
     
     foreach( $security_improvments as $security_improvment )
-        $tpl->Assign_block_vars('security', array('description' => $security_improvment));
+        $tpl->assign_block_vars('security', array('description' => $security_improvment));
 }
 else $tpl->assign_vars((array('C_UNEXISTING_UPDATE' => true, 'L_UNEXISTING_UPDATE' => $LANG['unexisting_update'])));
     

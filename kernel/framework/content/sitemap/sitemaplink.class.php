@@ -113,13 +113,13 @@ class Sitemap_link
 	}
 	
 	//Date getter
-	function Get_date()
+	function get_date()
 	{
 		return $this->last_modification_date;
 	}
 	
 	//Date setter
-	function Set_date($date)
+	function set_date($date)
 	{
 		$this->last_modification_date = $date;
 	}
@@ -132,7 +132,7 @@ class Sitemap_link
 		//We get the stream in which we are going to write
 		$template = $export_config->Get_link_stream();
 		
-		$template->Assign_vars(array(
+		$template->assign_vars(array(
 			'LOC' => htmlspecialchars($this->link, ENT_QUOTES),
 			'TEXT' => htmlspecialchars($this->text, ENT_QUOTES),
 			'C_DISPLAY_DATE' => $display_date,

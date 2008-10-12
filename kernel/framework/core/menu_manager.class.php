@@ -48,12 +48,12 @@ class MenuManager
 			case MENU_MODULE:
 				return 'if( $User->check_auth(' . var_export(sunserialize($auth), true) . ', AUTH_MENUS) ){' . "\n"
 				. "\t" . 'include_once(PATH_TO_ROOT . \'/' . $name . '/' . $contents . "');\n"
-				. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $contents) . '\', TEMPLATE_STRING_MODE);' 
+				. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->pparse(\'' . str_replace('.php', '', $contents) . '\', TEMPLATE_STRING_MODE);' 
 				. "\n" . '}';
 			
 			case MENU_LINKS:
 				return var_export($this->display(MENU_STRING_MODE), true);
-				/*$Template->Set_filenames(array('links_menu' => 'links_menu.tpl'));
+				/*$Template->set_filenames(array('links_menu' => 'links_menu.tpl'));
 				$links_list = array(
 					0 => array('Liens', '', 0, true, array('r-1' => 1,'r0' => 1,'r1' => 1,'r2' => 1)), 
 					1 => array('Accueil', 'index.php', 1, false, array('r-1' => 1,'r0' => 1,'r1' => 1,'r2' => 1)), 
@@ -63,26 +63,26 @@ class MenuManager
 				{
 					if( $links_info[3] )
 					{
-						$Template->Assign_block_vars('title', array(
+						$Template->assign_block_vars('title', array(
 							'NAME' => $links_info[0],
 							'URL' => $links_info[1]
 						));
 					}
 					else
 					{
-						$Template->Assign_block_vars('links', array(
+						$Template->assign_block_vars('links', array(
 							'NAME' => $links_info[0],
 							'URL' => $links_info[1]
 						));
 					}
 				}
-				$MODULES_MINI['left'] .= $Template->Pparse('links_menu', TEMPLATE_STRING_MODE);*/
+				$MODULES_MINI['left'] .= $Template->pparse('links_menu', TEMPLATE_STRING_MODE);*/
 				return '';
 			
 			case MENU_PERSONNAL:
 				return 'if( $User->check_auth(' . var_export(sunserialize($auth), true) . ', AUTH_MENUS) ){' . "\n"
 				. "\t" . 'include_once(\'PATH_TO_ROOT . \'/menus/' . $contents . "');\n"
-				. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'' . str_replace('.php', '', $contents) . '\', TEMPLATE_STRING_MODE);' 
+				. "\t" . '$MODULES_MINI[\'' . $location . '\'] .= $Template->pparse(\'' . str_replace('.php', '', $contents) . '\', TEMPLATE_STRING_MODE);' 
 				. "\n" . '}';
 				
 			case MENU_CONTENTS:
@@ -95,9 +95,9 @@ class MenuManager
 					{
 						case 'left':
 						case 'right':
-							$code .= "\$Template->Set_filenames(array('modules_mini' => 'modules_mini.tpl'));\n"
-							. "\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($name, true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($contents, true) . "));\n"
-							. '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'modules_mini\', TEMPLATE_STRING_MODE);';
+							$code .= "\$Template->set_filenames(array('modules_mini' => 'modules_mini.tpl'));\n"
+							. "\$Template->assign_vars(array('MODULE_MINI_NAME' => " . var_export($name, true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($contents, true) . "));\n"
+							. '$MODULES_MINI[\'' . $location . '\'] .= $Template->pparse(\'modules_mini\', TEMPLATE_STRING_MODE);';
 						break;
 						case 'header':
 						case 'subheader':
@@ -105,9 +105,9 @@ class MenuManager
 						case 'bottomcentral':
 						case 'topfooter':
 						case 'footer':
-							$code .= "\$Template->Set_filenames(array('modules_mini_horizontal' => 'modules_mini_horizontal.tpl'));"
-							. "\t\$Template->Assign_vars(array('MODULE_MINI_NAME' => " . var_export($name, true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($contents, true) . "));\n"
-							. '$MODULES_MINI[\'' . $location . '\'] .= $Template->Pparse(\'modules_mini_horizontal\', TEMPLATE_STRING_MODE);';
+							$code .= "\$Template->set_filenames(array('modules_mini_horizontal' => 'modules_mini_horizontal.tpl'));"
+							. "\t\$Template->assign_vars(array('MODULE_MINI_NAME' => " . var_export($name, true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($contents, true) . "));\n"
+							. '$MODULES_MINI[\'' . $location . '\'] .= $Template->pparse(\'modules_mini_horizontal\', TEMPLATE_STRING_MODE);';
 							
 						break;		
 					}	

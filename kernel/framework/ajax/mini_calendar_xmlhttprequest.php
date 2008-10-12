@@ -38,7 +38,7 @@ $field = !empty($_GET['field']) ? trim($_GET['field']) : 'calendar';
 $input_field = !empty($_GET['input_field']) ? trim($_GET['input_field']) : '';
 $lyear = !empty($_GET['lyear']) ? '&amp;lyear=1' : '';
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
     'calendar' => 'framework/mini_calendar_response.tpl'
 ));
 
@@ -61,7 +61,7 @@ if( $calendar_type == 'date' )
         $LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
         $month_day = $array_month[$month - 1];
                 
-        $Template->Assign_vars(array(
+        $Template->assign_vars(array(
                 'FIELD' => $field,
                 'INPUT_FIELD' => $input_field,
                 'LYEAR' => $lyear,
@@ -75,14 +75,14 @@ if( $calendar_type == 'date' )
         for($i = 1; $i <= 12; $i++)
         {
                 $selected = ($month == $i) ? 'selected="selected"' : '';
-                $Template->Assign_block_vars('month', array(
+                $Template->assign_block_vars('month', array(
                         'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . htmlentities($array_l_month[$i - 1]) . '</option>'
                 ));
         }                       
         for($i = 1900; $i <= 2037; $i++)
         {
                 $selected = ($year == $i) ? 'selected="selected"' : '';
-                $Template->Assign_block_vars('year', array(
+                $Template->assign_block_vars('year', array(
                         'YEAR' => '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>'
                 ));
         }
@@ -92,7 +92,7 @@ if( $calendar_type == 'date' )
         $LANG['sunday']);
         foreach($array_l_days as $l_day)
         {
-                $Template->Assign_block_vars('day', array(
+                $Template->assign_block_vars('day', array(
                         'L_DAY' => '<td style="width:25px;border-top:1px solid black;border-bottom:1px solid black"><span class="text_small">' . $l_day . '</span></td>'
                 ));
         }       
@@ -141,7 +141,7 @@ if( $calendar_type == 'date' )
                 else
                         $contents = '<td style="padding:0px;height:21px;" class="row3">&nbsp;</td>';
 
-                $Template->Assign_block_vars('calendar', array(
+                $Template->assign_block_vars('calendar', array(
                         'DAY' => $contents,
                         'TR' => (($i % 7) == 0 && $i != 42) ? '</tr><tr style="text-align:center;">' : ''
                 ));
@@ -152,7 +152,7 @@ else
         //Non supporté
 }
 
-$Template->Pparse('calendar');  
+$Template->pparse('calendar');  
         
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>

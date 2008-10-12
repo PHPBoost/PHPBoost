@@ -102,13 +102,13 @@ elseif( !empty($_POST['articles_count']) ) //Recompte le nombre d'articles de ch
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_articles_config'=> 'articles/admin_articles_config.tpl'
 	));
 	
 	$Cache->Load_file('articles');
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_ARTICLES['nbr_cat_max']) ? $CONFIG_ARTICLES['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : '2',
@@ -129,7 +129,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 		
-	$Template->Pparse('admin_articles_config'); // traitement du modele	
+	$Template->pparse('admin_articles_config'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

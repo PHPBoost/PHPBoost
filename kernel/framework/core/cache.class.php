@@ -84,7 +84,7 @@ class Cache
 		global $Errorh;
 		
 		include_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
-		$modulesLoader = new Modules();
+		$modulesLoader = new ModulesDiscoveryService();
 		$module = $modulesLoader->get_module($module_name);
 		if( $module->has_functionnality('get_cache') ) //Le module implémente bien la fonction.
 			$this->_write_cache($module_name, $module->functionnality('get_cache'));
@@ -108,7 +108,7 @@ class Cache
 		global $MODULES;
 		
 		require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
-		$modulesLoader = new Modules();
+		$modulesLoader = new ModulesDiscoveryService();
 		$modules = $modulesLoader->get_available_modules('get_cache');
 		foreach($modules as $module)
 		{

@@ -100,13 +100,13 @@ elseif( isset($_FILES['gallery']) ) //Upload
 	{
 		if( $_FILES['gallery']['size'] > 0 )
 		{
-			$Upload->Upload_file('gallery', '`([a-z0-9()_-])+\.(jpg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
+			$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 			if( !empty($Upload->error) ) //Erreur, on arrête ici
 				redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->error, '-' . $g_idcat . '.php?add=1&error=' . $Upload->error, '&') . '#errorh');
 			else
 			{
 				$path = $dir . $Upload->filename['gallery'];
-				$error = $Upload->Validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
+				$error = $Upload->validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
 					redirect(HOST . DIR . '/gallery/gallery' . transid('.php?add=1&cat=' . $g_idcat . '&error=' . $error, '-' . $g_idcat . '.php?add=1&error=' . $error, '&') . '#errorh');
 				else
@@ -131,7 +131,7 @@ elseif( isset($_FILES['gallery']) ) //Upload
 }
 elseif( $g_add )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'gallery_add'=> 'gallery/gallery_add.tpl'
 	));
 	
@@ -184,14 +184,14 @@ elseif( $g_add )
 	elseif( $get_error == 'unexist_cat' )
 		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
 		
-	$module_data_path = $Template->Module_data_path('gallery');
+	$module_data_path = $Template->get_module_data_path('gallery');
 	$path_pics = $Sql->query("SELECT path FROM ".PREFIX."gallery WHERE id = '" . $g_idpics . "'", __LINE__, __FILE__);
 	
 	//Aficchage de la photo uploadée.
 	if( !empty($g_idpics) )
 	{	
 		$imageup = $Sql->query_array("gallery", "idcat", "name", "path", "WHERE id = '" . $g_idpics . "'", __LINE__, __FILE__);
-		$Template->Assign_block_vars('image_up', array(
+		$Template->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $g_idpics . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
@@ -216,12 +216,12 @@ elseif( $g_add )
 		}
 		$nbr_upload_pics = $Gallery->Get_nbr_upload_pics($User->get_attribute('user_id'));
 		
-		$Template->Assign_block_vars('image_quota', array(
+		$Template->assign_block_vars('image_quota', array(
 			'L_IMAGE_QUOTA' => sprintf($LANG['image_quota'], $nbr_upload_pics, $l_pics_quota)
 		));	
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'SID' => SID,
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
@@ -250,11 +250,11 @@ elseif( $g_add )
 		'U_INDEX' => transid('.php')
 	));
 		
-	$Template->Pparse('gallery_add'); 
+	$Template->pparse('gallery_add'); 
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'gallery'=> 'gallery/gallery.tpl'
 	));
 	
@@ -313,19 +313,19 @@ else
 	$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;
 	$is_modo = ($User->check_auth($CAT_GALLERY[$g_idcat]['auth'], EDIT_CAT_GALLERY)) ? true : false;
 	
-	$module_data_path = $Template->Module_data_path('gallery');
+	$module_data_path = $Template->get_module_data_path('gallery');
 	$rewrite_title = url_encode_rewrite($CAT_GALLERY[$g_idcat]['name']);
 	
 	//Ordonnement.
 	$array_order = array('name' => $LANG['name'], 'date' => $LANG['date'], 'views' => $LANG['views'], 'notes' => $LANG['notes'], 'com' => $LANG['com_s']);
 	foreach($array_order as $type => $name)
 	{
-		$Template->Assign_block_vars('order', array(
+		$Template->assign_block_vars('order', array(
 			'ORDER_BY' => '<a href="gallery' . transid('.php?sort=' . $type . '_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=' . $type . '_desc') . '" style="background-image:url(' . $module_data_path . '/images/' . $type . '.png);">' . $name . '</a>'
 		));
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'ARRAY_JS' => '',
 		'NBR_PICS' => 0,
 		'MAX_START' => 0,
@@ -334,7 +334,7 @@ else
 		'SID' => SID,
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'PAGINATION' => $Pagination->Display_pagination('gallery' . transid('.php?p=%d&amp;cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;' . $g_sort, '-' . $g_idcat . '-' . $g_idpics . '-%d.php?&' . $g_sort), $total_cat, 'p', $CONFIG_GALLERY['nbr_pics_max'], 3),	
+		'PAGINATION' => $Pagination->display('gallery' . transid('.php?p=%d&amp;cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;' . $g_sort, '-' . $g_idcat . '-' . $g_idpics . '-%d.php?&' . $g_sort), $total_cat, 'p', $CONFIG_GALLERY['nbr_pics_max'], 3),	
 		'COLUMN_WIDTH_CATS' => $column_width_cats,
 		'COLUMN_WIDTH_PICS' => $column_width_pics,
 		'CAT_ID' => $g_idcat,
@@ -388,7 +388,7 @@ else
 	##### Catégorie disponibles #####	
 	if( $total_cat > 0 && $nbr_unauth_cats < $total_cat && empty($g_idpics) )
 	{
-		$Template->Assign_vars(array(			
+		$Template->assign_vars(array(			
 			'C_GALLERY_CATS' => true,
 			'EDIT_CAT' => $is_admin ? '<a href="admin_gallery_cat.php"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));
@@ -400,14 +400,14 @@ else
 		" . $clause_cat . $clause_unauth_cats . "
 		GROUP BY gc.id
 		ORDER BY gc.id_left
-		" . $Sql->limit($Pagination->First_msg($CONFIG_GALLERY['nbr_pics_max'], 'p'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
+		" . $Sql->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'p'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
 			//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 			if( !file_exists('pics/thumbnails/' . $row['path']) )
 				$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
-			$Template->Assign_block_vars('cat_list', array(
+			$Template->assign_block_vars('cat_list', array(
 				'IDCAT' => $row['id'],
 				'CAT' => $row['name'],
 				'DESC' => $row['contents'],
@@ -425,7 +425,7 @@ else
 		//Création des cellules du tableau si besoin est.
 		while( !is_int($j/$nbr_column_cats) )
 		{		
-			$Template->Assign_block_vars('end_table_cats', array(
+			$Template->assign_block_vars('end_table_cats', array(
 				'TD_END' => '<td style="margin:15px 0px;width:' . $nbr_column_cats . '%">&nbsp;</td>',
 				'TR_END' => (is_int(++$j/$nbr_column_cats)) ? '</tr>' : ''			
 			));	
@@ -472,7 +472,7 @@ else
 		elseif( $g_notes )
 			$g_sql_sort = ' ORDER BY g.note DESC';	
 
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_GALLERY_PICS' => true,
 			'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));	
@@ -572,7 +572,7 @@ else
 					$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;	
 					
 				//Affichage de l'image et de ses informations.
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'C_GALLERY_PICS_MAX' => true,
 					'C_GALLERY_PICS_MODO' => $is_modo ? true : false,
 					'ID' => $info_pics['id'],
@@ -622,7 +622,7 @@ else
 				{
 					if( $i >= ($pos_pics - $start_thumbnails) && $i <= ($pos_pics + $end_thumbnails) )
 					{
-						$Template->Assign_block_vars('list_preview_pics', array(
+						$Template->assign_block_vars('list_preview_pics', array(
 							'PICS' => $pics
 						));
 					}
@@ -632,7 +632,7 @@ else
 				//Commentaires
 				if( isset($_GET['com']) )
 				{
-					$Template->Assign_vars(array(
+					$Template->assign_vars(array(
 						'COMMENTS' => display_comments('gallery', $g_idpics, transid('gallery.php?cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;com=%s', 'gallery-' . $g_idcat . '-' . $g_idpics . '.php?com=%s'))
 					));
 				}
@@ -644,9 +644,9 @@ else
 			include_once('../kernel/framework/util/pagination.class.php');
 			$Pagination = new Pagination();
 			
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'C_GALLERY_MODO' => $is_modo ? true : false,
-				'PAGINATION_PICS' => $Pagination->Display_pagination('gallery' . transid('.php?pp=%d&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $CONFIG_GALLERY['nbr_pics_max'], 3),
+				'PAGINATION_PICS' => $Pagination->display('gallery' . transid('.php?pp=%d&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $CONFIG_GALLERY['nbr_pics_max'], 3),
 				'L_EDIT' => $LANG['edit']
 			));
 			
@@ -658,7 +658,7 @@ else
 			LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id		
 			WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
 			" . $g_sql_sort . "
-			" . $Sql->limit($Pagination->First_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
+			" . $Sql->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
 			while( $row = $Sql->fetch_assoc($result) )
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
@@ -684,7 +684,7 @@ else
 				if( $activ_note ) //Affichage notation.		
 					$Note = new Note('gallery', $row['id'], transid('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_NODISPLAY_NBRNOTES | NOTE_DISPLAY_BLOCK);
 				
-				$Template->Assign_block_vars('pics_list', array(
+				$Template->assign_block_vars('pics_list', array(
 					'ID' => $row['id'],
 					'APROB' => $row['aprob'],
 					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['name'] . '" class="gallery_image" />',
@@ -711,7 +711,7 @@ else
 			//Création des cellules du tableau si besoin est.
 			while( !is_int($j/$nbr_column_pics) )
 			{		
-				$Template->Assign_block_vars('end_table', array(
+				$Template->assign_block_vars('end_table', array(
 					'TD_END' => '<td style="margin:15px 0px;width:' . $column_width_pics . '%">&nbsp;</td>',
 					'TR_END' => (is_int(++$j/$nbr_column_pics)) ? '</tr>' : ''			
 				));	
@@ -719,7 +719,7 @@ else
 		}
 	}	
 
-	$Template->Pparse('gallery'); 
+	$Template->pparse('gallery'); 
 }
 
 require_once('../kernel/footer.php');

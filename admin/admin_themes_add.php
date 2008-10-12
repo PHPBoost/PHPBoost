@@ -78,7 +78,7 @@ elseif( !empty($_FILES['upload_theme']['name']) ) //Upload et décompression de l
 		{
 			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
-			if( $Upload->Upload_file('upload_theme', '`([a-z0-9()_-])+\.(gzip|zip)+$`i') )
+			if( $Upload->file('upload_theme', '`([a-z0-9()_-])+\.(gzip|zip)+$`i') )
 			{					
 				$archive_path = '../templates/' . $Upload->filename['upload_theme'];
 				//Place à la décompression.
@@ -116,11 +116,11 @@ elseif( !empty($_FILES['upload_theme']['name']) ) //Upload et décompression de l
 }
 else  
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_themes_add'=> 'admin/admin_themes_add.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],		
 		'LANG' => $CONFIG['lang'],
 		'L_THEME_ADD' => $LANG['theme_add'],	
@@ -190,7 +190,7 @@ else
 				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 			}
 			
-			$Template->Assign_block_vars('list', array(
+			$Template->assign_block_vars('list', array(
 				'IDTHEME' =>  $value_array,		
 				'THEME' =>  $info_theme['name'],			
 				'ICON' => $value_array,
@@ -211,15 +211,15 @@ else
 	}	
 
 	if( $z != 0 )
-		$Template->Assign_vars(array(		
+		$Template->assign_vars(array(		
 			'C_THEME_PRESENT' => true
 		));
 	else
-		$Template->Assign_vars(array(		
+		$Template->assign_vars(array(		
 			'C_NO_THEME_PRESENT' => true
 		));
 	
-	$Template->Pparse('admin_themes_add'); 
+	$Template->pparse('admin_themes_add'); 
 }
 
 require_once('../admin/admin_footer.php');

@@ -40,7 +40,7 @@ else
 	define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php'); 
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'forum_index'=> 'forum/forum_index.tpl'
 ));
 
@@ -54,7 +54,7 @@ if( !empty($id_get) )
    AND c.level = \'' . $intervall['level'] . '\' + 1';
 }
 
-$module_data_path = $Template->Module_data_path('forum');
+$module_data_path = $Template->get_module_data_path('forum');
 
 //Vérification des autorisations.
 $unauth_cats = '';
@@ -86,18 +86,18 @@ WHERE c.aprob = 1 " . $display_sub_cat . " " . $unauth_cats . "
 ORDER BY c.id_left", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {	
-	$Template->Assign_block_vars('forums_list', array(
+	$Template->assign_block_vars('forums_list', array(
 	));	
 		
 	if( $CAT_FORUM[$row['cid']]['level'] == 0 && $i++ > 0) //Fermeture de la catégorie racine.
 	{
-		$Template->Assign_block_vars('forums_list.endcats', array(
+		$Template->assign_block_vars('forums_list.endcats', array(
 		));	
 	}
 		
 	if( $row['level'] === '0' ) //Si c'est une catégorie
 	{
-		$Template->Assign_block_vars('forums_list.cats', array(
+		$Template->assign_block_vars('forums_list.cats', array(
 			'IDCAT' => $row['cid'],
 			'NAME' => $row['name'],
 			'U_FORUM_VARS' => transid('index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . url_encode_rewrite($row['name']) . '.php')
@@ -108,7 +108,7 @@ while ($row = $Sql->fetch_assoc($result))
 		$subforums = '';
 		if( !empty($id_get) )
 		{
-			$Template->Assign_block_vars('forums_list.cats', array(
+			$Template->assign_block_vars('forums_list.cats', array(
 				'IDCAT' => $id_get,
 				'NAME' => $CAT_FORUM[$id_get]['name'],
 				'U_FORUM_VARS' => transid('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
@@ -117,7 +117,7 @@ while ($row = $Sql->fetch_assoc($result))
 		}
 		else //Vérirication de l'existance de sous forums.
 		{
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'C_FORUM_ROOT_CAT' => false,
 				'C_FORUM_CHILD_CAT' => true,
 				'C_END_S_CATS' => false
@@ -183,7 +183,7 @@ while ($row = $Sql->fetch_assoc($result))
 		
 		$total_topic += $row['nbr_topic'];
 		$total_msg += $row['nbr_msg'];
-		$Template->Assign_block_vars('forums_list.subcats', array(
+		$Template->assign_block_vars('forums_list.subcats', array(
 			'ANNOUNCE' => '<img src="' . $module_data_path . '/images/' . $img_announce . '.gif" alt="" />',
 			'NAME' => $row['name'],
 			'DESC' => $row['subname'],
@@ -199,9 +199,9 @@ while ($row = $Sql->fetch_assoc($result))
 $Sql->query_close($result);
 if( $i > 0) //Fermeture de la catégorie racine.
 {
-	$Template->Assign_block_vars('forums_list', array(
+	$Template->assign_block_vars('forums_list', array(
 	));
-	$Template->Assign_block_vars('forums_list.endcats', array(
+	$Template->assign_block_vars('forums_list.endcats', array(
 	));	
 }
 	
@@ -239,7 +239,7 @@ while( $row = $Sql->fetch_assoc($result) )
 $Sql->query_close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'NBR_MSG' => $total_msg,
 	'NBR_TOPIC' => $total_topic,
@@ -274,7 +274,7 @@ $Template->Assign_vars(array(
 	'L_ONLINE' => strtolower($LANG['online'])
 ));
 
-$Template->Pparse('forum_index');	
+$Template->pparse('forum_index');	
 
 include('../kernel/footer.php');
 

@@ -44,7 +44,7 @@ class AdministratorAlertService
 		WHERE id = '" . $alert_id . "'
 		ORDER BY creation_date DESC", __LINE__, __FILE__);
 		
-		$properties = $Sql->sql_fetch_assoc($result);
+		$properties = $Sql->fetch_assoc($result);
 		
 		if( (int)$properties['id'] > 0 )
 		{

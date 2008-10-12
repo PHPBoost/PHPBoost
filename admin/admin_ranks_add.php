@@ -65,7 +65,7 @@ elseif( !empty($_FILES['upload_ranks']['name']) ) //Upload et décompression de l
 	{
 		include_once('../kernel/framework/io/upload.class.php');
 		$Upload = new Upload($dir);
-		if( !$Upload->Upload_file('upload_ranks', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i') )
+		if( !$Upload->file('upload_ranks', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i') )
 			$error = $Upload->error;
 	}
 	else
@@ -76,7 +76,7 @@ elseif( !empty($_FILES['upload_ranks']['name']) ) //Upload et décompression de l
 }
 else //Sinon on rempli le formulaire	 
 {	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_ranks_add'=> 'admin/admin_ranks_add.tpl'
 	));
 
@@ -107,7 +107,7 @@ else //Sinon on rempli le formulaire
 		closedir($dh); //On ferme le dossier
 	}	
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'RANK_OPTIONS' => $rank_options,
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
@@ -126,7 +126,7 @@ else //Sinon on rempli le formulaire
 		'L_ADD' => $LANG['add']
 	));
 
-	$Template->Pparse('admin_ranks_add');
+	$Template->pparse('admin_ranks_add');
 }
 
 require_once('../admin/admin_footer.php');

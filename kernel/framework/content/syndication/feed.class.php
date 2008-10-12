@@ -58,7 +58,7 @@ class Feed
         {
             if( !empty($this->data) )
             {
-                $tpl->Assign_vars(array(
+                $tpl->assign_vars(array(
                     'DATE' => $this->data->get_date(),
                     'DATE_RFC822' => $this->data->get_date_rfc822(),
                     'DATE_RFC3339' => $this->data->get_date_rfc3339(),
@@ -72,7 +72,7 @@ class Feed
                 $items = $this->data->subitems($number, $begin_at);
                 foreach( $items as $item )
                 {
-                    $tpl->Assign_block_vars('item', array(
+                    $tpl->assign_block_vars('item', array(
                         'TITLE' => $item->get_title(),
                         'U_LINK' => $item->get_link(),
                         'U_GUID' => $item->get_guid(),
@@ -156,7 +156,7 @@ class Feed
             require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
             $template = new Template($module_id . '/framework/content/syndication/feed.tpl');
             if( gettype($tpl) == 'array' )
-                $template->Assign_vars($tpl);
+                $template->assign_vars($tpl);
         }
        
         // Get the cache content or recreate it if not existing
@@ -164,7 +164,7 @@ class Feed
         while( ($result = @include(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php')) === false )
         {
             require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
-            $modules = new Modules();
+            $modules = new ModulesDiscoveryService();
             $module = $modules->get_module($module_id);
             $data = $module->syndication_data($idcat);
             Feed::update_cache($module_id, $name, $data, $idcat);

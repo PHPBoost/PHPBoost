@@ -72,7 +72,7 @@ elseif( !empty($_FILES['upload_lang']['name']) ) //Upload et décompression de l'
 		{
 			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
-			if( $Upload->Upload_file('upload_lang', '`([a-z0-9()_-])+\.(gzip|zip)+$`i') )
+			if( $Upload->file('upload_lang', '`([a-z0-9()_-])+\.(gzip|zip)+$`i') )
 			{					
 				$archive_path = '../lang/' . $Upload->filename['upload_lang'];
 				//Place à la décompression.
@@ -110,11 +110,11 @@ elseif( !empty($_FILES['upload_lang']['name']) ) //Upload et décompression de l'
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_lang_add'=> 'admin/admin_lang_add.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],		
 		'LANG' => $CONFIG['lang'],
 		'L_LANG_ADD' => $LANG['lang_add'],	
@@ -177,7 +177,7 @@ else
 			}
 			
 			$info_lang = load_ini_file('../lang/', $value_array);
-			$Template->Assign_block_vars('list', array(
+			$Template->assign_block_vars('list', array(
 				'IDLANG' =>  $value_array,		
 				'LANG' =>  $info_lang['name'],	
 				'IDENTIFIER' =>  $info_lang['identifier'],
@@ -191,15 +191,15 @@ else
 	}	
 
 	if( $z != 0 )
-		$Template->Assign_vars(array(		
+		$Template->assign_vars(array(		
 			'C_LANG_PRESENT' => true
 		));
 	else
-		$Template->Assign_vars(array(		
+		$Template->assign_vars(array(		
 			'C_NO_LANG_PRESENT' => true
 		));
 	
-	$Template->Pparse('admin_lang_add'); 
+	$Template->pparse('admin_lang_add'); 
 }
 
 require_once('../admin/admin_footer.php');

@@ -36,7 +36,7 @@ require_once('../kernel/header.php');
 $view_msg = retrieve(GET, 'id', 0);
 if( !empty($view_msg) ) //Affichage de tous les messages du membre
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'membermsg'=> 'forum/forum_membermsg.tpl',
 		'forum_top'=> 'forum/forum_top.tpl',
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -59,13 +59,13 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 	JOIN ".PREFIX."forum_cats c ON t.idcat = c.id AND c.aprob = 1" . $auth_cats . "
 	WHERE msg.user_id = '" . $view_msg . "'", __LINE__, __FILE__);
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'SID' => SID,
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['show_member_msg'],
-		'PAGINATION' => $Pagination->Display_pagination('membermsg' . transid('.php?id=' . $view_msg . '&amp;p=%d'), $nbr_msg, 'p', 10, 3),
+		'PAGINATION' => $Pagination->display('membermsg' . transid('.php?id=' . $view_msg . '&amp;p=%d'), $nbr_msg, 'p', 10, 3),
 		'L_BACK' => $LANG['back'],
 		'L_VIEW_MSG_MEMBER' => $LANG['show_member_msg'],
 		'L_FORUM_INDEX' => $LANG['forum_index'],
@@ -80,7 +80,7 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 	LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 	WHERE msg.user_id = '" . $view_msg . "'" . $auth_cats . "
 	ORDER BY msg.id DESC
-	" . $Sql->limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		//Membre en ligne?
@@ -94,7 +94,7 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 		//Ajout du marqueur d'édition si activé.
 	$edit_mark = ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '0') ? '<br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' <a class="edit_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id_edit'], '-' . $row['user_id_edit'] . '.php') . '">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span><br />' : '';
 		
-		$Template->Assign_block_vars('list', array(
+		$Template->assign_block_vars('list', array(
 			'CONTENTS' => second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'ID' => $row['id'],
@@ -143,7 +143,7 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 	$Sql->query_close($result);
 
 	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -159,7 +159,7 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 		'L_ONLINE' => strtolower($LANG['online'])
 	));
 		
-	$Template->Pparse('membermsg');
+	$Template->pparse('membermsg');
 }
 else
 	redirect(HOST . DIR . '/forum/index.php');

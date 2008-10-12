@@ -64,13 +64,13 @@ if( $del && !empty($id) ) //Suppresion de l'article.
 }	
 elseif( !empty($id) )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
 
 	$articles = $Sql->query_array('articles', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
-	$Template->Assign_vars(array(	
+	$Template->assign_vars(array(	
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -137,7 +137,7 @@ elseif( !empty($id) )
 		}
 	}
 
-	$Template->Assign_block_vars('articles', array(
+	$Template->assign_block_vars('articles', array(
 		'TITLE' => $articles['title'],
 		'IMG_ICON' => !empty($articles['icon']) ? '<img src="' . $articles['icon'] . '" alt="" class="valign_middle" />' : '',
 		'IMG_LIST' => $image_list,
@@ -172,11 +172,11 @@ elseif( !empty($id) )
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
-	$Template->Pparse('admin_articles_management'); 
+	$Template->pparse('admin_articles_management'); 
 }	
 elseif( !empty($_POST['previs']) && !empty($id_post) )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
 
@@ -259,7 +259,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		}
 	}
 	
-	$Template->Assign_block_vars('articles', array(
+	$Template->assign_block_vars('articles', array(
 		'IDARTICLES' => $id_post,
 		'TITLE' => $title,
 		'CATEGORIES' => $categories,
@@ -288,7 +288,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	));
 	
 	$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-	$Template->Assign_block_vars('articles.preview', array(
+	$Template->assign_block_vars('articles.preview', array(
 		'USER_ID' => $user_id,
 		'TITLE' => $title,
 		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
@@ -296,7 +296,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'DATE' => gmdate_format('date_format_short')
 	));
 	
-	$Template->Assign_vars(array(	
+	$Template->assign_vars(array(	
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -331,7 +331,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$Template->Pparse('admin_articles_management'); 
+	$Template->pparse('admin_articles_management'); 
 }
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
@@ -417,7 +417,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 }		
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
 	
@@ -427,10 +427,10 @@ else
 	include_once('../kernel/framework/util/pagination.class.php');
 	$Pagination = new Pagination();
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'PAGINATION' => $Pagination->Display_pagination('admin_articles.php?p=%d', $nbr_articles, 'p', 25, 3),
+		'PAGINATION' => $Pagination->display('admin_articles.php?p=%d', $nbr_articles, 'p', 25, 3),
 		'CHEMIN' => SCRIPT,
 		'L_CONFIRM_DEL_ARTICLE' => $LANG['confirm_del_article'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
@@ -449,7 +449,7 @@ else
 		'L_SHOW' => $LANG['show']
 	));
 
-	$Template->Assign_block_vars('list', array(
+	$Template->assign_block_vars('list', array(
 	));
 	
 	$result = $Sql->query_while("SELECT a.id, a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login 
@@ -457,7 +457,7 @@ else
 	LEFT JOIN ".PREFIX."articles_cats ac ON ac.id = a.idcat
 	LEFT JOIN ".PREFIX."member m ON a.user_id = m.user_id
 	ORDER BY a.timestamp DESC " .
-	$Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	$Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		if( $row['visible'] == 2 )
@@ -478,7 +478,7 @@ else
 		elseif( $row['end'] > 0 )
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 		
-		$Template->Assign_block_vars('list.articles', array(
+		$Template->assign_block_vars('list.articles', array(
 			'TITLE' => $title,
 			'IDCAT' => $row['idcat'],
 			'ID' => $row['id'],
@@ -491,7 +491,7 @@ else
 	}
 	$Sql->query_close($result);
 	
-	$Template->Pparse('admin_articles_management');
+	$Template->pparse('admin_articles_management');
 }
 
 require_once('../admin/admin_footer.php');

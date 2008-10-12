@@ -38,7 +38,7 @@ if( !$User->check_level(MEMBER_LEVEL) )
 {
 	if( !$activ_confirm )
 	{	
-		$Template->Set_filenames(array(
+		$Template->set_filenames(array(
 			'forget'=> 'forget.tpl'
 		));
 			
@@ -59,7 +59,7 @@ if( !$User->check_level(MEMBER_LEVEL) )
 					
 					include_once('../kernel/framework/io/mail.class.php');
 					$Mail = new Mail();
-					$Mail->Send_mail($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass, $CONFIG['sign']), $CONFIG['mail']);
+					$Mail->send($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass, $CONFIG['sign']), $CONFIG['mail']);
 
 					//Affichage de la confirmation.
 					redirect(HOST . DIR . '/member/forget.php?error=forget_mail_send');
@@ -91,7 +91,7 @@ if( !$User->check_level(MEMBER_LEVEL) )
 		if( !empty($errstr) )
 			$Errorh->Error_handler($errstr, $errno);			
 	
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 			'L_REQUIRE_MAIL' => $LANG['require_mail'],
 			'L_REQUIRE' => $LANG['require'],
@@ -102,7 +102,7 @@ if( !$User->check_level(MEMBER_LEVEL) )
 			'L_SUBMIT' => $LANG['submit']
 		));
 		
-		$Template->Pparse('forget');
+		$Template->pparse('forget');
 	}
 	elseif( !empty($activ_get) && !empty($user_get) && $activ_confirm )
 	{

@@ -92,23 +92,23 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 		}
 		elseif( $edit_message )
 		{
-			$Template->Set_filenames(array(
+			$Template->set_filenames(array(
 				'shoutbox'=> 'shoutbox/shoutbox.tpl'
 			));
 			
 			//Pseudo du membre connecté.
 			if( $User->get_attribute('user_id') !== -1 )
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'SHOUTBOX_PSEUDO' => $row['login'],
 					'C_HIDDEN_SHOUT' => true
 				));
 			else
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'SHOUTBOX_PSEUDO' => $LANG['guest'],
 					'C_VISIBLE_SHOUT' => true
 				));
 			
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'UPDATE' => transid('?update=1&amp;id=' . $row['id']),
 				'SID' => '',
 				'CONTENTS' => unparse($row['contents']),
@@ -125,7 +125,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 				'L_RESET' => $LANG['reset']
 			));
 			
-			$Template->Pparse('shoutbox'); 
+			$Template->pparse('shoutbox'); 
 		}
 		elseif( $update )
 		{
@@ -155,18 +155,18 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 }
 else //Affichage.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'shoutbox'=> 'shoutbox/shoutbox.tpl'
 	));
 	
 	//Pseudo du membre connecté.
 	if( $User->get_attribute('user_id') !== -1 )
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'SHOUTBOX_PSEUDO' => $User->get_attribute('login'),
 			'C_HIDDEN_SHOUT' => true
 		));
 	else
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'SHOUTBOX_PSEUDO' => $LANG['guest'],
 			'C_VISIBLE_SHOUT' => true
 		));
@@ -196,7 +196,7 @@ else //Affichage.
 	if( !empty($errstr) )
 		$Errorh->Error_handler($errstr, E_USER_NOTICE);
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor('shout_contents', $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']),
 		'L_ON' => $LANG['on'],
 		'L_ALERT_TEXT' => $LANG['require_text'],
@@ -216,8 +216,8 @@ else //Affichage.
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
-	$Template->Assign_vars(array(
-		'PAGINATION' => $Pagination->Display_pagination('shoutbox' . transid('.php?p=%d'), $nbr_shout, 'p', 10, 3)
+	$Template->assign_vars(array(
+		'PAGINATION' => $Pagination->display('shoutbox' . transid('.php?p=%d'), $nbr_shout, 'p', 10, 3)
 	));
 	
 	//Création du tableau des rangs.
@@ -232,7 +232,7 @@ else //Affichage.
 	LEFT JOIN ".PREFIX."sessions se ON se.user_id = s.user_id AND se.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 	GROUP BY s.id
 	ORDER BY s.timestamp DESC 
-	" . $Sql->limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);	
+	" . $Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);	
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
@@ -335,7 +335,7 @@ else //Affichage.
 		}
 		else $user_local = '';
 		
-		$Template->Assign_block_vars('shoutbox',array(
+		$Template->assign_block_vars('shoutbox',array(
 			'ID' => $row['id'],
 			'CONTENTS' => ucfirst(second_parse($row['contents'])),
 			'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
@@ -366,7 +366,7 @@ else //Affichage.
 	}
 	$Sql->query_close($result);
 	
-	$Template->Pparse('shoutbox'); 
+	$Template->pparse('shoutbox'); 
 }
 
 require_once('../kernel/footer.php'); 

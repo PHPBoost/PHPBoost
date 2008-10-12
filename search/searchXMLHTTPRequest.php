@@ -43,7 +43,7 @@ require_once('../search/search.inc.php');
 
 //----------------------------------------------------------------------- Main
 
-$Modules = new Modules();
+$Modules = new ModulesDiscoveryService();
 $modulesArgs = array();
 
 if( ($idSearch >= 0) && ($MODULE_NAME != '') )

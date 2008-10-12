@@ -49,15 +49,15 @@ if( !empty($_POST['valid']) )
 }
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_wiki_groups'=> 'wiki/admin_wiki_groups.tpl'
 	));
 	
 	$array_auth = isset($_WIKI_CONFIG['auth']) ? $_WIKI_CONFIG['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $Template->Module_data_path('wiki'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('wiki'),
 		'SELECT_CREATE_ARTICLE' => Authorizations::generate_select(WIKI_CREATE_ARTICLE, $array_auth),
 		'SELECT_CREATE_CAT' => Authorizations::generate_select(WIKI_CREATE_CAT, $array_auth),
 		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $array_auth),
@@ -90,7 +90,7 @@ else
 		'L_RESTRICTION' => $LANG['wiki_auth_restriction'],
 	));
 
-	$Template->Pparse('admin_wiki_groups'); // traitement du modele	
+	$Template->pparse('admin_wiki_groups'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

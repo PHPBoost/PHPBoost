@@ -35,7 +35,7 @@ if( $CONFIG['maintain'] <= time() )
 	exit;
 }
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'maintain'=> 'maintain.tpl')
 );
 
@@ -70,7 +70,7 @@ else //Délai indéterminé.
 	$array_release = array('', '', '', '', '', '');
 }
 
-$Template->Assign_vars(array(	
+$Template->assign_vars(array(	
 	'SITE_NAME' => $CONFIG['site_name'],
 	'VERSION' => $CONFIG['version'],
 	'THEME' => $CONFIG['theme'],
@@ -90,13 +90,13 @@ $Template->Assign_vars(array(
 
 if( $CONFIG['maintain_delay'] == 1 && $CONFIG['maintain'] != -1 )
 {
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_DISPLAY_DELAY' => true,
 		'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
 		'L_MAINTAIN_DELAY' => $LANG['maintain_delay']
 	));
 }
 
-$Template->Pparse('maintain');
+$Template->pparse('maintain');
 
 ?>

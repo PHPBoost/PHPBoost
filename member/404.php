@@ -31,11 +31,11 @@ require_once('../kernel/begin.php');
 define('TITLE', $LANG['title_error'] . ' 404');
 require_once('../kernel/header.php'); 
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'error'=> 'error.tpl'
 ));
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'C_ERRORH' => true,
 	'ERRORH_IMG' => 'important',
 	'ERRORH_CLASS' => 'error_warning',
@@ -44,7 +44,7 @@ $Template->Assign_vars(array(
 	'U_BACK' => !empty($_SERVER['HTTP_REFERER']) ? '<a href="' . transid($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : '<a href="javascript:history.back(1)">' . $LANG['back'] . '</a>',
 ));
 
-$Template->Pparse('error');
+$Template->pparse('error');
 
 require_once('../kernel/footer.php'); 
 

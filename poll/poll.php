@@ -142,7 +142,7 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives )
 }
 elseif( !empty($poll['id']) && !$archives )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'poll'=> 'poll/poll.tpl'
 	));
 	list($java, $edit, $del) = array('','','');	
@@ -205,7 +205,7 @@ elseif( !empty($poll['id']) && !$archives )
 		$sum_vote = array_sum($array_vote);
 		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_POLL_VIEW' => true,
 			'JAVA' => $java,
 			'EDIT' => $edit,
@@ -213,7 +213,7 @@ elseif( !empty($poll['id']) && !$archives )
 			'QUESTION' => $poll['question'],
 			'DATE' => gmdate_format('date_format_short', $poll['timestamp']),
 			'VOTES' => $sum_vote,
-			'MODULE_DATA_PATH' => $Template->Module_data_path('poll'),
+			'MODULE_DATA_PATH' => $Template->get_module_data_path('poll'),
 			'L_POLL' => $LANG['poll'],
 			'L_BACK_POLL' => $LANG['poll_back'],
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote']),
@@ -223,7 +223,7 @@ elseif( !empty($poll['id']) && !$archives )
 		$array_poll = array_combine($array_answer, $array_vote);
 		foreach($array_poll as $answer => $nbrvote)
 		{
-			$Template->Assign_block_vars('result', array(
+			$Template->assign_block_vars('result', array(
 				'ANSWERS' => $answer, 
 				'NBRVOTE' => (int)$nbrvote,
 				'WIDTH' => number_round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
@@ -231,11 +231,11 @@ elseif( !empty($poll['id']) && !$archives )
 			));
 		}
 
-		$Template->Pparse('poll');
+		$Template->pparse('poll');
 	}
 	else //Questions.
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_POLL_VIEW' => true,
 			'C_POLL_QUESTION' => true,
 			'QUESTION' => $poll['question'],
@@ -262,7 +262,7 @@ elseif( !empty($poll['id']) && !$archives )
 		{
 			foreach($array_answer as $answer)
 			{						
-				$Template->Assign_block_vars('radio', array(
+				$Template->assign_block_vars('radio', array(
 					'NAME' => $z,
 					'TYPE' => 'radio',
 					'ANSWERS' => $answer
@@ -275,7 +275,7 @@ elseif( !empty($poll['id']) && !$archives )
 			
 			foreach($array_answer as $answer)
 			{						
-				$Template->Assign_block_vars('checkbox', array(
+				$Template->assign_block_vars('checkbox', array(
 					'NAME' => $z,
 					'TYPE' => 'checkbox',
 					'ANSWERS' => $answer
@@ -283,12 +283,12 @@ elseif( !empty($poll['id']) && !$archives )
 				$z++;	
 			}
 		}		
-		$Template->Pparse('poll');
+		$Template->pparse('poll');
 	}
 }
 elseif( !$archives ) //Menu principal.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'poll'=> 'poll/poll.tpl'
 	));
 
@@ -299,7 +299,7 @@ elseif( !$archives ) //Menu principal.
 	if( $User->check_level(ADMIN_LEVEL) )
 		$edit = '<a href="../poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_POLL_MAIN' => true,
 		'EDIT' => $edit,
 		'U_ARCHIVE' => $show_archives,
@@ -313,18 +313,18 @@ elseif( !$archives ) //Menu principal.
 	ORDER BY id DESC", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('list', array(
+		$Template->assign_block_vars('list', array(
 			'U_POLL_ID' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 			'QUESTION' => $row['question']
 		));
 	}
 	$Sql->query_close($result);
 	
-	$Template->Pparse('poll');	
+	$Template->pparse('poll');	
 }
 elseif( $archives ) //Archives.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'poll'=> 'poll/poll.tpl'
 	));
 		
@@ -333,12 +333,12 @@ elseif( $archives ) //Archives.
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_POLL_ARCHIVES' => true,
 		'SID' => SID,
 		'THEME' => $CONFIG['theme'],		
-		'PAGINATION' => $Pagination->Display_pagination('poll' . transid('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),
-		'MODULE_DATA_PATH' => $Template->Module_data_path('poll'),
+		'PAGINATION' => $Pagination->display('poll' . transid('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('poll'),
 		'L_ALERT_DELETE_POLL' => $LANG['alert_delete_poll'],
 		'L_ARCHIVE' => $LANG['archives'],
 		'L_BACK_POLL' => $LANG['poll_back'],		
@@ -350,7 +350,7 @@ elseif( $archives ) //Archives.
 	FROM ".PREFIX."poll
 	WHERE archive = 1 AND visible = 1
 	ORDER BY timestamp DESC
-	" . $Sql->limit($Pagination->First_msg(10, 'archives'), 10), __LINE__, __FILE__); 
+	" . $Sql->limit($Pagination->get_first_msg(10, 'archives'), 10), __LINE__, __FILE__); 
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$array_answer = explode('|', $row['answers']);
@@ -359,7 +359,7 @@ elseif( $archives ) //Archives.
 		$sum_vote = array_sum($array_vote);
 		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 
-		$Template->Assign_block_vars('list', array(
+		$Template->assign_block_vars('list', array(
 			'QUESTION' => $row['question'],
 			'EDIT' => '<a href="../poll/admin_poll' . transid('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>',
 			'DEL' => '&nbsp;&nbsp;<a href="../poll/admin_poll' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>',
@@ -371,7 +371,7 @@ elseif( $archives ) //Archives.
 		$array_poll = array_combine($array_answer, $array_vote);
 		foreach($array_poll as $answer => $nbrvote)
 		{
-			$Template->Assign_block_vars('list.result', array(
+			$Template->assign_block_vars('list.result', array(
 				'ANSWERS' => $answer, 
 				'NBRVOTE' => $nbrvote,
 				'WIDTH' => number_round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
@@ -382,7 +382,7 @@ elseif( $archives ) //Archives.
 	}
 	$Sql->query_close($result);
 
-	$Template->Pparse('poll');
+	$Template->pparse('poll');
 }
 else
 	$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT); 

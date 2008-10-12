@@ -64,7 +64,7 @@ if( !empty($_POST['valid']) )
 }
 else //Sinon on rempli le formulaire	 
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_maintain'=> 'admin/admin_maintain.tpl'
 	));
 	
@@ -101,7 +101,7 @@ else //Sinon on rempli le formulaire
 	$CONFIG['maintain_display_admin'] = isset($CONFIG['maintain_display_admin']) ? $CONFIG['maintain_display_admin'] : 1;
 
 	$check_until = ($CONFIG['maintain'] > (time() + 86400));
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'DELAY_MAINTAIN_OPTION' => $delay_maintain_option,
 		'MAINTAIN_CONTENTS' => !empty($CONFIG['maintain_text']) ? unparse($CONFIG['maintain_text']) : '',
@@ -127,7 +127,7 @@ else //Sinon on rempli le formulaire
 		'L_RESET' => $LANG['reset']		
 	));
 	
-	$Template->Pparse('admin_maintain');
+	$Template->pparse('admin_maintain');
 }
 
 require_once('../admin/admin_footer.php');

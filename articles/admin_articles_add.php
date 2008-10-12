@@ -110,7 +110,7 @@ if( !empty($_POST['valid']) )
 }
 elseif( !empty($_POST['previs']) )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_articles_add'=> 'articles/admin_articles_add.tpl'
 	));
 
@@ -165,7 +165,7 @@ elseif( !empty($_POST['previs']) )
 	}	
 	
 	$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = " . $User->get_attribute('user_id'), __LINE__, __FILE__);
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_ARTICLES_PREVIEW' => true,
 		'TITLE_PRW' => $title,
 		'DATE_PRW' => gmdate_format('date_format_short'),
@@ -210,7 +210,7 @@ elseif( !empty($_POST['previs']) )
 		}
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'TITLE' => $title,
 		'CATEGORIES' => $categories,
@@ -263,11 +263,11 @@ elseif( !empty($_POST['previs']) )
 		'L_RESET' => $LANG['reset']
 	));	
 	
-	$Template->Pparse('admin_articles_add'); 
+	$Template->pparse('admin_articles_add'); 
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_articles_add'=> 'articles/admin_articles_add.tpl'
 	));
 	
@@ -305,7 +305,7 @@ else
 			$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'TITLE' => '',
 		'IMG_PATH' => '',
@@ -344,7 +344,7 @@ else
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
-	$Template->Pparse('admin_articles_add'); 
+	$Template->pparse('admin_articles_add'); 
 }
 require_once('../admin/admin_footer.php');
 

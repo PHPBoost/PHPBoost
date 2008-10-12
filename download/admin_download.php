@@ -32,7 +32,7 @@ require_once('../admin/admin_header.php');
 
 $Cache->Load_file('download');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'admin_download_management'=> 'download/admin_download_management.tpl'
  ));
 
@@ -42,10 +42,10 @@ $nbr_dl = $Sql->count_table('download', __LINE__, __FILE__);
 include_once('../kernel/framework/util/pagination.class.php');
 $Pagination = new Pagination();
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'THEME' => $CONFIG['theme'],
 	'LANG' => $CONFIG['lang'],
-	'PAGINATION' => $Pagination->Display_pagination('admin_download.php?p=%d', $nbr_dl, 'p', 25, 3),
+	'PAGINATION' => $Pagination->display('admin_download.php?p=%d', $nbr_dl, 'p', 25, 3),
 	'L_DEL_ENTRY' => $LANG['del_entry'],
 	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
 	'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
@@ -64,7 +64,7 @@ $Template->Assign_vars(array(
 $result = $Sql->query_while("SELECT id, idcat, title, timestamp, visible, start, end, size
 FROM ".PREFIX."download
 ORDER BY timestamp DESC 
-" . $Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 
 while( $row = $Sql->fetch_assoc($result) )
 {
@@ -77,7 +77,7 @@ while( $row = $Sql->fetch_assoc($result) )
 	$title =& $row['title'];
 	$title = strlen($title) > 45 ? substr($title, 0, 45) . '...' : $title;
 	
-	$Template->Assign_block_vars('list', array(
+	$Template->assign_block_vars('list', array(
 		'TITLE' => $title,
 		'IDCAT' => $row['idcat'],
 		'CAT' => $row['idcat'] > 0 ? $DOWNLOAD_CATS[$row['idcat']]['name'] : $LANG['root'],
@@ -95,7 +95,7 @@ $Sql->query_close($result);
 
 include_once('admin_download_menu.php');
 
-$Template->Pparse('admin_download_management'); 
+$Template->pparse('admin_download_management'); 
 
 
 require_once('../admin/admin_footer.php');

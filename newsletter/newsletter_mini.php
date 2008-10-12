@@ -30,11 +30,11 @@ if( defined('PHPBOOST') !== true)	exit;
 //Chargement de la langue du module.
 load_module_lang('newsletter');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'newsletter_mini'=> 'newsletter/newsletter_mini.tpl'
 ));
 
-$Template->Assign_vars(array(	
+$Template->assign_vars(array(	
 	'SUBSCRIBE' => $LANG['subscribe'],
 	'UNSUBSCRIBE' => $LANG['unsubscribe'],
 	'USER_MAIL' => ($User->get_attribute('user_mail') != '') ? $User->get_attribute('user_mail') : '',

@@ -29,7 +29,7 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'admin_index'=> 'admin/admin_index.tpl'
 ));
 
@@ -86,7 +86,7 @@ else
 	$l_core_update = $LANG['unknow_update'];
 	$l_modules_update = $LANG['unknow_update'];
 }
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'VERSION' => $CONFIG['version'],
 	'WARNING_CORE' => ($check_core_update) ? ' error_warning' : '',
 	'WARNING_MODULES' => ($check_modules_update) ? ' error_warning' : '',
@@ -99,7 +99,7 @@ $Template->Assign_vars(array(
 //Listing des modules mis à jour.
 foreach($modules_update as $name => $version)
 {
-	$Template->Assign_block_vars('modules_available', array(
+	$Template->assign_block_vars('modules_available', array(
 		'ID' => $name,
 		'NAME' => $modules_config[$name]['name'],
 		'VERSION' => $version
@@ -109,7 +109,7 @@ foreach($modules_update as $name => $version)
 
 require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 	'L_INDEX_ADMIN' => $LANG['administration'],
 	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
@@ -162,7 +162,7 @@ while( $row = $Sql->fetch_assoc($result) )
 	
 	$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 	
-	$Template->Assign_block_vars('user', array(
+	$Template->assign_block_vars('user', array(
 		'USER' => !empty($login) ? $login : $LANG['guest'],
 		'USER_IP' => $row['session_ip'],
 		'WHERE' => '<a href="' . HOST . DIR . $row['session_script'] . $row['session_script_get'] . '">' . stripslashes($row['session_script_title']) . '</a>',
@@ -171,7 +171,7 @@ while( $row = $Sql->fetch_assoc($result) )
 }
 $Sql->query_close($result);
 	
-$Template->Pparse('admin_index'); // traitement du modele
+$Template->pparse('admin_index'); // traitement du modele
 
 require_once('../admin/admin_footer.php');
 

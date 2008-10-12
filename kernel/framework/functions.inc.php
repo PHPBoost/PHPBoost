@@ -350,7 +350,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 	
 	$template = new Template('framework/confirm.tpl');
 	
-	$template->Assign_vars(array(
+	$template->assign_vars(array(
 		'URL_ERROR' => !empty($url_error) ? $url_error : get_start_page(),
 		'DELAY_REDIRECT' => $delay_redirect,
 		'L_ERROR' => $l_error,
@@ -815,7 +815,7 @@ function get_feed_menu($feed_url)
     global $LANG, $CONFIG;
     require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
     $feedMenu = new Template('framework/content/syndication/menu.tpl');
-    $feedMenu->Assign_vars(array(
+    $feedMenu->assign_vars(array(
         'PATH_TO_ROOT' => PATH_TO_ROOT,
         'THEME' => $CONFIG['theme'],
         'U_FEED' => trim($CONFIG['server_name'], '/') . '/' . (!empty($CONFIG['server_path']) ? trim($CONFIG['server_path'], '/') . '/' : '') . trim($feed_url, '/'),

@@ -34,7 +34,7 @@ $Bread_crumb->Add_link($LANG['stats'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['stats']);
 require_once('../kernel/header.php'); 
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'forum_stats'=> 'forum/forum_stats.tpl',
 	'forum_top'=> 'forum/forum_top.tpl',
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -53,10 +53,10 @@ JOIN ".PREFIX."forum_msg m ON m.id = t.first_msg_id
 WHERE m.timestamp > '" . $timestamp_today . "'", __LINE__, __FILE__);
 $nbr_msg_today = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_msg WHERE timestamp > '" . $timestamp_today . "'", __LINE__, __FILE__);
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'SID' => SID,
-	'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 	'NBR_TOPICS' => $sum['total_topics'],
 	'NBR_MSG' => $sum['total_msg'],
 	'NBR_TOPICS_DAY' => $nbr_topics_day,
@@ -97,7 +97,7 @@ ORDER BY t.last_timestamp DESC
 " . $Sql->limit(0, 10), __LINE__, __FILE__);
 while($row = $Sql->fetch_assoc($result))
 {
-	$Template->Assign_block_vars('last_msg', array(
+	$Template->assign_block_vars('last_msg', array(
 		'U_TOPIC_ID' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
@@ -113,7 +113,7 @@ ORDER BY t.nbr_views DESC
 " . $Sql->limit(0, 10), __LINE__, __FILE__);
 while($row = $Sql->fetch_assoc($result))
 {
-	$Template->Assign_block_vars('popular', array(
+	$Template->assign_block_vars('popular', array(
 		'U_TOPIC_ID' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
@@ -129,7 +129,7 @@ ORDER BY t.nbr_msg DESC
 " . $Sql->limit(0, 10), __LINE__, __FILE__);
 while($row = $Sql->fetch_assoc($result))
 {
-	$Template->Assign_block_vars('answers', array(
+	$Template->assign_block_vars('answers', array(
 		'U_TOPIC_ID' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
@@ -170,7 +170,7 @@ while( $row = $Sql->fetch_assoc($result) )
 $Sql->query_close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,
@@ -186,7 +186,7 @@ $Template->Assign_vars(array(
 	'L_ONLINE' => strtolower($LANG['online'])
 ));
 
-$Template->Pparse('forum_stats');	
+$Template->pparse('forum_stats');	
 
 include('../kernel/footer.php');
 

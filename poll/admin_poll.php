@@ -139,13 +139,13 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 }	
 elseif( !empty($id) )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_poll_management2'=> 'poll/admin_poll_management2.tpl'
 	));
 
 	$row = $Sql->query_array('poll', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'IDPOLL' => $row['id'],
 		'QUESTIONS' => $row['question'],	
 		'TYPE_UNIQUE' => ($row['type'] == '1') ? 'checked="checked"' : '',
@@ -214,11 +214,11 @@ elseif( !empty($id) )
 	foreach($array_poll as $answer => $nbrvote)
 	{
 		$percent = number_round(($nbrvote * 100 / $sum_vote), 1);
-		$Template->Assign_block_vars('answers', array(
+		$Template->assign_block_vars('answers', array(
 			'ID' => $i,
 			'ANSWER' => !empty($answer) ? $answer : ''
 		));
-		$Template->Assign_block_vars('votes', array(
+		$Template->assign_block_vars('votes', array(
 			'ID' => $i,
 			'VOTES' => isset($nbrvote) ? $nbrvote : '',
 			'PERCENT' => isset($percent) ? $percent . '%' : ''
@@ -226,15 +226,15 @@ elseif( !empty($id) )
 		$i++;
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'MAX_ID' => $i
 	));
 	
-	$Template->Pparse('admin_poll_management2'); 
+	$Template->pparse('admin_poll_management2'); 
 }			
 else
 {			
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_poll_management'=> 'poll/admin_poll_management.tpl'
 	));
 	 
@@ -243,8 +243,8 @@ else
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
-	$Template->Assign_vars(array(
-		'PAGINATION' => $Pagination->Display_pagination('admin_poll.php?p=%d', $nbr_poll, 'p', 20, 3),
+	$Template->assign_vars(array(
+		'PAGINATION' => $Pagination->display('admin_poll.php?p=%d', $nbr_poll, 'p', 20, 3),
 		'LANG' => $CONFIG['lang'],
 		'L_CONFIRM_ERASE_POOL' => $LANG['confirm_del_poll'],
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
@@ -266,7 +266,7 @@ else
 	FROM ".PREFIX."poll p
 	LEFT JOIN ".PREFIX."member m ON p.user_id = m.user_id	
 	ORDER BY p.timestamp DESC 
-	" . $Sql->limit($Pagination->First_msg(20, 'p'), 20), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->get_first_msg(20, 'p'), 20), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		if( $row['visible'] == 2 )
@@ -289,7 +289,7 @@ else
 		elseif( $row['end'] > 0 )
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 		
-		$Template->Assign_block_vars('questions', array(
+		$Template->assign_block_vars('questions', array(
 			'QUESTIONS' => $question,
 			'IDPOLL' => $row['id'],
 			'PSEUDO' => !empty($row['login']) ? $row['login'] : $LANG['guest'],			
@@ -301,7 +301,7 @@ else
 	}
 	$Sql->query_close($result);	
 	
-	$Template->Pparse('admin_poll_management'); 
+	$Template->pparse('admin_poll_management'); 
 }
 
 require_once('../admin/admin_footer.php');

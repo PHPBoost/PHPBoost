@@ -38,11 +38,11 @@ $Session->check(TITLE); //Vérification de la session.
 require_once(PATH_TO_ROOT . '/admin/admin_access.php');
 
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'admin_header'=> 'admin/admin_header.tpl'
 ));
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'SITE_NAME' => $CONFIG['site_name'],
 	'TITLE' => TITLE,
@@ -137,7 +137,7 @@ foreach($modules_config as $module_name => $auth)
 						$links .= '<li><a href="../' . $name . '/' . $value . '" style="background-image:url(../' . $name . '/' . $name . '_mini.png);">' . $key . '</a></li>';
 				}
 				
-				$Template->Assign_block_vars('modules', array(
+				$Template->assign_block_vars('modules', array(
 					'C_ADVANCED_LINK' => true,
 					'C_DEFAULT_LINK' => false,
 					'ID' => $name,
@@ -149,7 +149,7 @@ foreach($modules_config as $module_name => $auth)
 			}
 			else
 			{
-				$Template->Assign_block_vars('modules', array(
+				$Template->assign_block_vars('modules', array(
 					'C_DEFAULT_LINK' => true,
 					'C_ADVANCED_LINK' => false,
 					'DM_A_STYLE' => ' style="background-image:url(../' . $name . '/' . $name . '_mini.png);"',
@@ -161,6 +161,6 @@ foreach($modules_config as $module_name => $auth)
 	}
 }
 
-$Template->Pparse('admin_header'); 
+$Template->pparse('admin_header'); 
 
 ?>

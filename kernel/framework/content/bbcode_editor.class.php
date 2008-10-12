@@ -45,7 +45,7 @@ class BBCodeEditor extends ContentEditor
 		$Cache->Load_file('uploads');
 		$Cache->Load_file('smileys');
 		
-		$template->Assign_vars(array(
+		$template->assign_vars(array(
 			'C_BBCODE_TINYMCE_MODE' => false,
 			'C_BBCODE_NORMAL_MODE' => true,
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !defined('EDITOR_ALREADY_INCLUDED'),
@@ -116,7 +116,7 @@ class BBCodeEditor extends ContentEditor
 		
 		foreach($this->forbidden_tags as $forbidden_tag) //Balises interdite.
 		{		
-			$template->Assign_vars(array( 
+			$template->assign_vars(array( 
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
 				'DISABLED_' . strtoupper($forbidden_tag) => 'if( false ) '
 			));
@@ -169,7 +169,7 @@ class BBCodeEditor extends ContentEditor
 			
 			$img = '<img src="' . PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />'; 
 						
-			$template->Assign_block_vars('smiley', array(
+			$template->assign_block_vars('smiley', array(
 				'IMG' => $img,
 				'CODE' => addslashes($code_smile),
 				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
@@ -181,7 +181,7 @@ class BBCodeEditor extends ContentEditor
 
 		if( $z > $smile_max ) //Lien vers tous les smiley!
 		{		
-			$template->Assign_vars(array(
+			$template->assign_vars(array(
 				'C_BBCODE_SMILEY_MORE' => true,
 				'L_ALL_SMILEY' => $LANG['all_smiley'],
 				'L_SMILEY' => $LANG['smiley']

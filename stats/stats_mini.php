@@ -32,14 +32,14 @@ if( defined('PHPBOOST') !== true) exit;
 load_module_lang('stats');
 
 #########################Stats.tpl###########################
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'stats_mini'=> 'stats/stats_mini.tpl'
 ));
 
 $Cache->Load_file('stats');
 $l_member_registered = ($nbr_members > 1) ? $LANG['member_registered_s'] : $LANG['member_registered'];
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'SID' => SID,
 	'L_STATS' => $LANG['stats'],
 	'L_MORE_STAT' => $LANG['more_stats'],

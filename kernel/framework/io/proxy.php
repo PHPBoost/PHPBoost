@@ -51,7 +51,6 @@ if( !empty($url) )
             echo @file_get_contents_emulate($url);
             exit(0);
         }
-        die(UNAUTHORIZED_PROTOCOL);
     }
     die(UNAUTHORIZED_PROTOCOL);
 }
