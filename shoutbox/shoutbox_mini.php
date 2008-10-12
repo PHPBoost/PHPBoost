@@ -39,7 +39,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	{		
 		//Membre en lecture seule?
 		if( $User->get_attribute('user_readonly') > time() ) 
-			$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
+			$Errorh->handler('e_readonly', E_USER_REDIRECT); 
 			
 		$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
 		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNSECURE);	

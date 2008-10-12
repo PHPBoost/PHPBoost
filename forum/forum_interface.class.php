@@ -124,7 +124,7 @@ class ForumInterface extends ModuleInterface
         if( isset($MODULES['forum']) && $MODULES['forum']['activ'] == 1 )
         {
             if( !$User->check_auth($MODULES['forum']['auth'], ACCESS_MODULE) ) //Accès non autorisé!
-                $Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+                $Errorh->handler('e_auth', E_USER_REDIRECT);
         }
         
         require_once(PATH_TO_ROOT . '/forum/forum_functions.php');

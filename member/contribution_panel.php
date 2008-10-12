@@ -28,7 +28,7 @@
 require_once('../kernel/begin.php');
 
 if( !$User->check_level(MEMBER_LEVEL) ) //Si il n'est pas member (les invités n'ont rien à faire ici)
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 $contribution_id = retrieve(GET, 'id', 0);
 $id_to_delete = retrieve(GET, 'del', 0);
@@ -44,7 +44,7 @@ if( $contribution_id > 0 )
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
 	if( ($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $User->get_attribute('user_id')) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
 	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
@@ -59,7 +59,7 @@ elseif( $id_update > 0 )
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
 	if( ($contribution = ContributionService::find_by_id($id_update)) == null || !$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
 	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
@@ -76,7 +76,7 @@ elseif( $id_to_update > 0 )
 	$contribution = new Contribution();
 	
 	if( ($contribution = ContributionService::find_by_id($id_to_update)) == null || !$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	//Récupération des éléments de la contribution
 	$entitled = retrieve(POST, 'entitled', '', TSTRING_UNSECURE);
@@ -117,7 +117,7 @@ elseif( $id_to_delete > 0 )
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
 	if( ($contribution = ContributionService::find_by_id($id_to_delete)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT)) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	$contribution->delete();
 	

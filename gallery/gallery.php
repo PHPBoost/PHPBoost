@@ -82,7 +82,7 @@ elseif( isset($_FILES['gallery']) ) //Upload
 		
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if( !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if( !$Gallery->auth_upload_pics($User->get_attribute('user_id'), $User->get_attribute('level')) )
@@ -160,7 +160,7 @@ elseif( $g_add )
 	
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if( !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	$auth_cats = '<option value="0">' . $LANG['root'] . '</option>';
 	foreach($CAT_GALLERY as $idcat => $key)
@@ -180,9 +180,9 @@ elseif( $g_add )
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
 	if( in_array($get_error, $array_error) )
-		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
+		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	elseif( $get_error == 'unexist_cat' )
-		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
+		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
 		
 	$module_data_path = $Template->get_module_data_path('gallery');
 	$path_pics = $Sql->query("SELECT path FROM ".PREFIX."gallery WHERE id = '" . $g_idpics . "'", __LINE__, __FILE__);
@@ -286,7 +286,7 @@ else
 	
 	//Niveau d'autorisation de la catégorie
 	if( !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."gallery WHERE idcat = '" . $g_idcat . "' AND aprob = 1", __LINE__, __FILE__);
 	$total_cat = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
@@ -294,7 +294,7 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'unexist_cat' )
-		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
+		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
 		
 	//On crée une pagination si le nombre de catégories est trop important.
 	include_once('../kernel/framework/util/pagination.class.php');

@@ -35,7 +35,7 @@ if( $shoutbox && empty($shout_id) ) //Insertion
 {		
 	//Membre en lecture seule?
 	if( $User->get_attribute('user_readonly') > time() ) 
-		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
+		$Errorh->handler('e_readonly', E_USER_REDIRECT); 
 	
 	$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
 		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNSECURE);
@@ -73,7 +73,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 {
 	//Membre en lecture seule?
 	if( $User->get_attribute('user_readonly') > time() ) 
-		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
+		$Errorh->handler('e_readonly', E_USER_REDIRECT); 
 	
 	$del_message = retrieve(GET, 'del', false);
 	$edit_message = retrieve(GET, 'edit', false);
@@ -194,7 +194,7 @@ else //Affichage.
 		$errstr = '';
 	}	
 	if( !empty($errstr) )
-		$Errorh->Error_handler($errstr, E_USER_NOTICE);
+		$Errorh->handler($errstr, E_USER_NOTICE);
 	
 	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor('shout_contents', $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']),

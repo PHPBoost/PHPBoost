@@ -70,13 +70,13 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $get_error == 'verif' )
-		$Errorh->Error_handler($LANG['e_incorrect_verif_code'], E_USER_WARNING);
+		$Errorh->handler($LANG['e_incorrect_verif_code'], E_USER_WARNING);
 	elseif( $get_error == 'success' )//Message de succès.
-		$Errorh->Error_handler($LANG['success_mail'], E_USER_SUCCESS);
+		$Errorh->handler($LANG['success_mail'], E_USER_SUCCESS);
 	elseif( $get_error == 'error' )//Message de succès.
-		$Errorh->Error_handler($LANG['error_mail'], E_USER_WARNING);
+		$Errorh->handler($LANG['error_mail'], E_USER_WARNING);
 		
 	//Code de vérification, anti-bots.
 	include_once('../kernel/framework/util/captcha.class.php');

@@ -67,7 +67,7 @@ $Cache->Load_file('config'); //Requête des configuration générales, $CONFIG vari
 $Cache->Load_file('groups'); //Cache des groupes.
 $Cache->Load_file('member'); //Chargement de la configuration des membres.
 $Cache->Load_file('modules'); //Cache des autorisations des modules
-$Cache->load_file('themes'); //Récupération de la configuration des thèmes.
+$Cache->load('themes'); //Récupération de la configuration des thèmes.
 
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
@@ -126,7 +126,7 @@ define('MODULE_NAME', get_module_name());
 if( isset($MODULES[MODULE_NAME])  )
 {
 	if( $MODULES[MODULE_NAME]['activ'] == 0 || !$User->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE) ) //Accès non autorisé !
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 
 ?>

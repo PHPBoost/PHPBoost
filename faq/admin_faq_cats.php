@@ -178,22 +178,22 @@ else
 		switch($error)
 		{
 			case 'e_required_fields_empty' :
-				$Errorh->Error_handler($FAQ_LANG['required_fields_empty'], E_USER_WARNING);
+				$Errorh->handler($FAQ_LANG['required_fields_empty'], E_USER_WARNING);
 				break;
 			case 'e_unexisting_category' :
-				$Errorh->Error_handler($FAQ_LANG['unexisting_category'], E_USER_WARNING);
+				$Errorh->handler($FAQ_LANG['unexisting_category'], E_USER_WARNING);
 				break;
 			case 'e_new_cat_does_not_exist' :
-				$Errorh->Error_handler($FAQ_LANG['new_cat_does_not_exist'], E_USER_WARNING);
+				$Errorh->handler($FAQ_LANG['new_cat_does_not_exist'], E_USER_WARNING);
 				break;
 				case 'e_infinite_loop' :
-				$Errorh->Error_handler($FAQ_LANG['infinite_loop'], E_USER_WARNING);
+				$Errorh->handler($FAQ_LANG['infinite_loop'], E_USER_WARNING);
 				break;
 			case 'e_success' :
-				$Errorh->Error_handler($FAQ_LANG['successful_operation'], E_USER_SUCCESS);
+				$Errorh->handler($FAQ_LANG['successful_operation'], E_USER_SUCCESS);
 				break;
 				case 'e_recount_success' :
-				$Errorh->Error_handler($FAQ_LANG['recount_success'], E_USER_SUCCESS);
+				$Errorh->handler($FAQ_LANG['recount_success'], E_USER_SUCCESS);
 				break;
 		}
 	}

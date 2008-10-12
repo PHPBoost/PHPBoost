@@ -36,9 +36,9 @@ if( !empty($idart) && isset($_GET['cat'])  )
 {
 	//Niveau d'autorisation de la catégorie
 	if( !isset($CAT_ARTICLES[$idartcat]) || !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	if( empty($articles['id']) )
-		$Errorh->Error_handler('e_unexist_articles', E_USER_REDIRECT); 
+		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT); 
 	
 	$Template->set_filenames(array('articles'=> 'articles/articles.tpl'));		
 	
@@ -145,7 +145,7 @@ else
 	if( $idartcat > 0 )
 	{
 		if( !isset($CAT_ARTICLES[$idartcat]) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 		$cat_links = '';
 		foreach($CAT_ARTICLES as $id => $array_info_cat)
@@ -163,7 +163,7 @@ else
 
 	//Niveau d'autorisation de la catégorie
 	if( !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) ) 
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."articles WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);	
 	$total_cat = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."articles_cats ac " . $clause_cat, __LINE__, __FILE__);	

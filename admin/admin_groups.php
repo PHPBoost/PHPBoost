@@ -117,9 +117,9 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 		//Gestion erreur.
 		$get_error = retrieve(GET, 'error', '');
 		if( $get_error == 'incomplete' )
-			$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+			$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		elseif( $get_error == 'already_group' )
-			$Errorh->Error_handler($LANG['e_already_group'], E_USER_NOTICE);
+			$Errorh->handler($LANG['e_already_group'], E_USER_NOTICE);
 		
 		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
 		//On crée une pagination si le nombre de membre est trop important.

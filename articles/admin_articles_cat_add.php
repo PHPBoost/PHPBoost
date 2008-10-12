@@ -133,7 +133,7 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
 		
 	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],

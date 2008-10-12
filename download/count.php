@@ -35,7 +35,7 @@ if( !empty($idurl) )
 	$info_file = $Sql->query_array("download", "url", "size", "WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
 	
 	if(empty($info_file['url']))
-		$Errorh->Error_handler('e_unexist_file_download', E_USER_REDIRECT);
+		$Errorh->handler('e_unexist_file_download', E_USER_REDIRECT);
 	
 	//Redirection vers le fichier demandé!
 	$filesize = @filesize(str_replace(HOST . DIR . '/', '../', $info_file['url']));
@@ -51,5 +51,5 @@ if( !empty($idurl) )
 		redirect($info_file['url']);
 }
 else
-	$Errorh->Error_handler('e_unexist_file_download', E_USER_REDIRECT);
+	$Errorh->handler('e_unexist_file_download', E_USER_REDIRECT);
 ?>

@@ -470,7 +470,7 @@ elseif( $step == 5 )
 		//Installation des modules de la distribution
 		foreach($DISTRIBUTION_MODULES as $module_name)
 		{
-			$Cache->load_file('modules');
+			$Cache->load('modules');
 			PackagesManager::install_module($module_name, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
 		}
 		
@@ -594,7 +594,7 @@ elseif( $step == 6 )
 			$Cache->Generate_file('config');
 			
 			//Configuration des membres
-			$Cache->load_file('member');
+			$Cache->load('member');
 			
 			$CONFIG_MEMBER['activ_mbr'] = (int)DISTRIBUTION_ENABLE_MEMBER;
 			$CONFIG_MEMBER['msg_mbr'] = $LANG['site_config_msg_mbr'];

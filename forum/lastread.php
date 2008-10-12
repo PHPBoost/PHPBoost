@@ -29,8 +29,8 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
-$Bread_crumb->Add_link($LANG['show_last_read'], '');
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($LANG['show_last_read'], '');
 
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_last_read']);
 require_once('../kernel/header.php'); 

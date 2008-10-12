@@ -368,7 +368,7 @@ elseif( $add )
 		$errstr = '';
 	}
 	if( !empty($errstr) )
-		$Errorh->Error_handler($errstr, E_USER_NOTICE);  
+		$Errorh->handler($errstr, E_USER_NOTICE);  
 		
 	$Template->assign_vars(array(
 		'C_MEMBERS_ADD' => true,
@@ -446,10 +446,10 @@ elseif( !empty($id) )
 		$errstr = '';
 	}
 	if( !empty($errstr) )
-		$Errorh->Error_handler($errstr, E_USER_NOTICE);  
+		$Errorh->handler($errstr, E_USER_NOTICE);  
 
 	if( isset($LANG[$get_l_error]) )
-		$Errorh->Error_handler($errstr, E_USER_WARNING);   
+		$Errorh->handler($errstr, E_USER_WARNING);   
 
 	$user_sex = '';
 	if( !empty($mbr['user_sex']) )

@@ -65,10 +65,10 @@ if( !$User->check_level(MEMBER_LEVEL) )
 					redirect(HOST . DIR . '/member/forget.php?error=forget_mail_send');
 				}
 				else
-					$Errorh->Error_handler($LANG['e_mail_forget'], E_USER_NOTICE);
+					$Errorh->handler($LANG['e_mail_forget'], E_USER_NOTICE);
 			}
 			else
-				$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+				$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		}
 		
 		$get_error = retrieve(GET, 'error', '', TSTRING_UNSECURE);			
@@ -89,7 +89,7 @@ if( !$User->check_level(MEMBER_LEVEL) )
 			$errstr = '';
 		}	
 		if( !empty($errstr) )
-			$Errorh->Error_handler($errstr, $errno);			
+			$Errorh->handler($errstr, $errno);			
 	
 		$Template->assign_vars(array(
 			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],

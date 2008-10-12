@@ -31,8 +31,8 @@ require_once('../forum/forum_tools.php');
 
 $id_get = retrieve(GET, 'id', 0);
 $cat_name = !empty($CAT_FORUM[$id_get]['name']) ? $CAT_FORUM[$id_get]['name'] : '';
-$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
-$Bread_crumb->Add_link($cat_name, '');
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($cat_name, '');
 
 if( !empty($id_get) && !empty($CAT_FORUM[$id_get]['name']) )
 	define('TITLE', $LANG['title_forum'] . ' - ' . addslashes($CAT_FORUM[$id_get]['name']));

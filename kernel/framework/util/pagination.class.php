@@ -125,9 +125,9 @@ class Pagination
 		global $Errorh;
 		
 		if( $this->page < 0 ) //Erreur => redirection! 
-			$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT);
+			$Errorh->handler('e_unexist_page', E_USER_REDIRECT);
 		elseif( $this->page > $nbr_page ) //Erreur => redirection! 
-			$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT); 
+			$Errorh->handler('e_unexist_page', E_USER_REDIRECT); 
 
 		return $this->page;
 	}

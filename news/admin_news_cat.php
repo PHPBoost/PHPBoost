@@ -130,7 +130,7 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
 	$result = $Sql->query_while("SELECT a.id, a.name, a.contents, a.icon
 	FROM ".PREFIX."news_cat a", __LINE__, __FILE__);

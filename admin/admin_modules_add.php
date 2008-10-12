@@ -221,9 +221,9 @@ else
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_config_conflict');
 	if( in_array($get_error, $array_error) )
-		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
+		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
 	//Modules installé
 	$i = 0;

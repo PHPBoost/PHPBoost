@@ -445,7 +445,7 @@ class Gallery
 		
 		//Vérification du chargement de la librairie GD.
 		if( !@extension_loaded('gd') ) 
-			$Errorh->Error_handler($LANG['e_no_gd'], E_USER_ERROR, __LINE__, __FILE__);
+			$Errorh->handler($LANG['e_no_gd'], E_USER_ERROR, __LINE__, __FILE__);
 		
 		if( function_exists('getimagesize') ) 
 		{
@@ -461,7 +461,7 @@ class Gallery
 				$this->error = 'e_unsupported_format';
 		}
 		else
-			$Errorh->Error_handler($LANG['e_no_getimagesize'], E_USER_ERROR, __LINE__, __FILE__);
+			$Errorh->handler($LANG['e_no_getimagesize'], E_USER_ERROR, __LINE__, __FILE__);
 	}
 		
 	//Compte le nombre d'images uploadée par un membre.

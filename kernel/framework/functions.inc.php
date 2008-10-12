@@ -212,7 +212,7 @@ function load_module_lang($module_name)
             global $Errorh;
             
             //Déclenchement d'une erreur fatale.
-            $Errorh->Error_handler(sprintf('Unable to load lang file \'%s\'!', PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__);
+            $Errorh->handler(sprintf('Unable to load lang file \'%s\'!', PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__);
             exit;
         }
     }
@@ -317,7 +317,7 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
         global $Errorh;
     
         //Déclenchement d'une erreur fatale.
-        $Errorh->Error_handler(sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir), E_USER_ERROR, __LINE__, __FILE__); 
+        $Errorh->handler(sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir), E_USER_ERROR, __LINE__, __FILE__); 
         exit;
     }
 }

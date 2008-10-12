@@ -27,7 +27,7 @@
 
 include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php');
 
-class Stats_saver
+class StatsSaver
 {
 	## Public Methods ##
 	//Sites référents.
@@ -135,7 +135,7 @@ class Stats_saver
 				break;
 			}
 		}
-		Stats_saver::_write_stats('browsers', $browser);
+		StatsSaver::_write_stats('browsers', $browser);
 		
 		########### Détection des systèmes d'exploitation ###########
 		$array_os = array(
@@ -169,7 +169,7 @@ class Stats_saver
 				break;
 			}
 		}		
-		Stats_saver::_write_stats('os', $os);
+		StatsSaver::_write_stats('os', $os);
 		
 		########### Détection de la langue utilisateur ###########
 		if( !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
@@ -184,7 +184,7 @@ class Stats_saver
 			if( isset($stats_array_lang[$favorite_lang]) )
 				$lang = $favorite_lang;
 				
-			Stats_saver::_write_stats('lang', $lang);
+			StatsSaver::_write_stats('lang', $lang);
 		}
 	}
 

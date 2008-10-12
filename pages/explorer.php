@@ -29,8 +29,8 @@ require_once('../kernel/begin.php');
 require_once('../pages/pages_begin.php'); 
 define('TITLE', $LANG['pages'] . ' : ' . $LANG['pages_explorer']);
 $cat = retrieve(GET, 'cat', 0);
-$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
-$Bread_crumb->Add_link($LANG['pages_explorer'], transid('explorer.php'));
+$Bread_crumb->add($LANG['pages'], transid('pages.php'));
+$Bread_crumb->add($LANG['pages_explorer'], transid('explorer.php'));
 require_once('../kernel/header.php');
 
 $Template->set_filenames(array('pages_explorer'=> 'pages/explorer.tpl'));

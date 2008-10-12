@@ -63,29 +63,29 @@ include_once('faq_bread_crumb.php');
 //checking authorization
 if( !$auth_write )
 {
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	$Errorh->handler('e_auth', E_USER_REDIRECT);
 	exit;
 }
 
 if( $edit_question > 0 )
 {
-	$Bread_crumb->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $question_infos['idcat'])); 
-	$Bread_crumb->Add_link($FAQ_LANG['question_edition'], transid('management.php?edit=' . $edit_question)); 
+	$Bread_crumb->add($FAQ_LANG['category_management'], transid('management.php?faq=' . $question_infos['idcat'])); 
+	$Bread_crumb->add($FAQ_LANG['question_edition'], transid('management.php?edit=' . $edit_question)); 
 }
 elseif( $cat_of_new_question >= 0 && $new )
 {
-	$Bread_crumb->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $cat_of_new_question)); 
-	$Bread_crumb->Add_link($FAQ_LANG['question_creation'], transid('management.php?new=1&amp;idcat=' . $cat_of_new_question . '&amp;after=' . $new_after_id)); 
+	$Bread_crumb->add($FAQ_LANG['category_management'], transid('management.php?faq=' . $cat_of_new_question)); 
+	$Bread_crumb->add($FAQ_LANG['question_creation'], transid('management.php?new=1&amp;idcat=' . $cat_of_new_question . '&amp;after=' . $new_after_id)); 
 }
 //Moving interface
 elseif( $id_move > 0 )
 {
-	$Bread_crumb->Add_link($FAQ_LANG['category_management'], transid('management.php?faq=' . $cat_of_new_question)); 
-	$Bread_crumb->Add_link($FAQ_LANG['moving_a_question'], transid('management.php?move=' . $id_move)); 
+	$Bread_crumb->add($FAQ_LANG['category_management'], transid('management.php?faq=' . $cat_of_new_question)); 
+	$Bread_crumb->add($FAQ_LANG['moving_a_question'], transid('management.php?move=' . $id_move)); 
 }
 else
 {
-	$Bread_crumb->Add_link($FAQ_LANG['category_management'], transid('management.php' . ($id_faq > 0 ? '?faq=' . $id_faq : ''))); 
+	$Bread_crumb->add($FAQ_LANG['category_management'], transid('management.php' . ($id_faq > 0 ? '?faq=' . $id_faq : ''))); 
 }
 	
 include_once('../kernel/header.php');

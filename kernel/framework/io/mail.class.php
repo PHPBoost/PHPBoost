@@ -79,7 +79,7 @@ class Mail
         
         if( !preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $this->from) )
         {
-            $Errorh->Error_handler('e_mail_format', E_USER_REDIRECT);
+            $Errorh->handler('e_mail_format', E_USER_REDIRECT);
             return false;
         }
         else

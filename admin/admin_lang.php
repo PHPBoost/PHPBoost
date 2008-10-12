@@ -144,9 +144,9 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG[$get_error], E_USER_NOTICE);
+		$Errorh->handler($LANG[$get_error], E_USER_NOTICE);
 	elseif( !empty($get_error) && isset($LANG[$get_error]) )
-		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
+		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	 
 	
 	//On recupère les dossier des thèmes contenu dans le dossier templates	

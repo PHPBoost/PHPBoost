@@ -49,7 +49,7 @@ if( empty($cache_mode) )    // Génération du cache de la configuration
         //Gestion erreur.
         $get_error = retrieve(GET, 's', 0);
         if( $get_error == 1 )
-            $Errorh->Error_handler($LANG['cache_success'], E_USER_SUCCESS);
+            $Errorh->handler($LANG['cache_success'], E_USER_SUCCESS);
         
         $Template->assign_vars(array(
             'L_CACHE' => $LANG['cache'],
@@ -80,7 +80,7 @@ else    // Génération du cache des rss
         //Gestion erreur.
         $get_error = retrieve(GET, 's', 0);
         if( $get_error == 1 )
-            $Errorh->Error_handler($LANG['cache_success'], E_USER_SUCCESS);
+            $Errorh->handler($LANG['cache_success'], E_USER_SUCCESS);
         
         $Template->assign_vars(array(
             'L_CACHE' => $LANG['cache'],

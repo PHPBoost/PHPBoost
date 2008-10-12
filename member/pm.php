@@ -27,13 +27,13 @@
 
 require_once('../kernel/begin.php'); 
 define('TITLE', $LANG['title_pm']);
-$Bread_crumb->Add_link($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
-$Bread_crumb->Add_link($LANG['title_pm'], transid('pm.php'));
+$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+$Bread_crumb->add($LANG['title_pm'], transid('pm.php'));
 require_once('../kernel/header.php'); 
 
 //Interdit aux non membres.
 if( !$User->check_level(MEMBER_LEVEL) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 include_once('../kernel/framework/members/pm.class.php');
 $Privatemsg = new PrivateMsg();
@@ -146,7 +146,7 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
 	$nbr_pm = $Privatemsg->count_conversations($User->get_attribute('user_id'));
 	if( !$User->check_level(MODO_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group ) 
-		$Errorh->Error_handler($LANG['e_pm_full_post'], E_USER_WARNING);
+		$Errorh->handler($LANG['e_pm_full_post'], E_USER_WARNING);
 	else
 	{
 		//Gestion des erreurs
@@ -169,7 +169,7 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 				$errstr = '';
 		}
 		if( !empty($errstr) )
-			$Errorh->Error_handler($errstr, $type);
+			$Errorh->handler($errstr, $type);
 	}
 	
 	$Template->assign_block_vars('post_convers.user_id_dest', array(
@@ -392,13 +392,13 @@ elseif( !empty($pm_del) ) //Suppression du message privé, si le destinataire ne 
 				}					
 			}
 			else //Le membre a déjà lu le message on ne peux plus le supprimer.
-				$Errorh->Error_handler('e_pm_nodel', E_USER_REDIRECT);
+				$Errorh->handler('e_pm_nodel', E_USER_REDIRECT);
 		}
 		else //Echec.
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	}
 	else //Echec.
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la pas encore lu.
 {		
@@ -427,7 +427,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 					if( $pm_edit > $id_first ) //Maj du message.
 						$Sql->query_inject("UPDATE ".PREFIX."pm_msg SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
 					else //Echec.
-						$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+						$Errorh->handler('e_auth', E_USER_REDIRECT); 
 				}
 				elseif( !empty($_POST['convers']) && !empty($title) ) //Maj de la conversation, si il s'agit du premier message.
 				{
@@ -437,10 +437,10 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 						$Sql->query_inject("UPDATE ".PREFIX."pm_msg SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
 					}
 					else //Echec.
-						$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+						$Errorh->handler('e_auth', E_USER_REDIRECT); 
 				}						
 				else //Champs manquants.
-					$Errorh->Error_handler('e_incomplete', E_USER_REDIRECT);
+					$Errorh->handler('e_incomplete', E_USER_REDIRECT);
 				
 				//Succès redirection vers la conversation.
 				redirect(HOST . DIR . '/member/pm' . transid('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_edit);
@@ -503,10 +503,10 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 			}
 		}
 		else //Le membre a déjà lu le message on ne peux plus éditer.
-			$Errorh->Error_handler('e_pm_noedit', E_USER_REDIRECT); 
+			$Errorh->handler('e_pm_noedit', E_USER_REDIRECT); 
 	}
 	else //Echec.
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 {
@@ -523,7 +523,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 
 	//Vérification des autorisations.
 	if( empty($convers['id']) || ($convers['user_id'] != $User->get_attribute('user_id') && $convers['user_id_dest'] != $User->get_attribute('user_id')) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	if( $convers['user_view_pm'] > 0 && $convers['last_user_id'] != $User->get_attribute('user_id') ) //Membre n'ayant pas encore lu la conversation.
 	{
@@ -741,7 +741,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 				$errstr = '';
 		}
 		if( !empty($errstr) )
-			$Errorh->Error_handler($errstr, $type);
+			$Errorh->handler($errstr, $type);
 	}
 	
 	$Template->pparse('pm');
@@ -789,7 +789,7 @@ else //Liste des conversation, dans la boite du membre.
 		$nbr_waiting_pm = $nbr_pm - $limit_group; //Nombre de messages privés non visibles.
 		//Gestion erreur.
 		if( $nbr_waiting_pm > 0 )
-			$Errorh->Error_handler(sprintf($LANG['e_pm_full'], $nbr_waiting_pm), E_USER_WARNING);
+			$Errorh->handler(sprintf($LANG['e_pm_full'], $nbr_waiting_pm), E_USER_WARNING);
 	}
 	
 	$Template->assign_vars(array(

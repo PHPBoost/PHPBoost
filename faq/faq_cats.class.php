@@ -38,7 +38,7 @@ class FaqCats extends CategoriesManagement
 	{
 		global $Cache, $FAQ_CATS;
 		if( !isset($FAQ_CATS) )
-			$Cache->load_file('faq');
+			$Cache->load('faq');
 		
 		parent::CategoriesManagement('faq_cats', 'faq', $FAQ_CATS);
 	}

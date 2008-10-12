@@ -28,7 +28,7 @@
 require_once('../kernel/begin.php');
 require_once('articles_constants.php'); 
 
-$Cache->load_file('articles');
+$Cache->load('articles');
 
 //Titre de l'article à afficher en version imprimable
 $idart = retrieve(GET, 'id', '', TSTRING);
@@ -40,10 +40,10 @@ if( $idart > 0 )
 	
 	//Niveau d'autorisation de la catégorie
 	if( !isset($CAT_ARTICLES[$idartcat]) || !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	if( empty($articles['id']) )
-		$Errorh->Error_handler('e_unexist_articles', E_USER_REDIRECT);
+		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
 }
 
 if( empty($articles['title']) )

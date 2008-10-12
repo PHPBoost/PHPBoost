@@ -99,7 +99,7 @@ class ArticlesInterface extends ModuleInterface
 	function get_search_request($args = null)
 	{
 		global $Sql, $Cache, $CONFIG_ARTICLES, $CAT_ARTICLES, $User, $LANG;
-		$Cache->load_file('articles');
+		$Cache->load('articles');
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
         
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
@@ -140,7 +140,7 @@ class ArticlesInterface extends ModuleInterface
 	function syndication_data($idcat = 0)
 	{
 		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_ARTICLES, $CAT_ARTICLES;
-		$Cache->load_file('articles');
+		$Cache->load('articles');
 
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
 		require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');

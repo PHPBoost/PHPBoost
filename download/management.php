@@ -95,7 +95,7 @@ if( $delete_file > 0 )
         Feed::clear_cache('download');
 	}
 	else
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 elseif( $edit_file_id > 0 )
 {
@@ -107,16 +107,16 @@ elseif( $edit_file_id > 0 )
 	//Barre d'arborescence
 	$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOWNLOAD);
 	
-	$Bread_crumb->Add_link($DOWNLOAD_LANG['file_management'], transid('management.php?edit=' . $edit_file_id));
+	$Bread_crumb->add($DOWNLOAD_LANG['file_management'], transid('management.php?edit=' . $edit_file_id));
 	
-	$Bread_crumb->Add_link($file_infos['title'], transid('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_infos['title']) . '.php'));
+	$Bread_crumb->add($file_infos['title'], transid('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_infos['title']) . '.php'));
 	
 	$id_cat = $file_infos['idcat'];
 
 	//Bread_crumb : we read categories list recursively
 	while( $id_cat > 0 )
 	{
-		$Bread_crumb->Add_link($DOWNLOAD_CATS[$id_cat]['name'], transid('download.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php'));
+		$Bread_crumb->add($DOWNLOAD_CATS[$id_cat]['name'], transid('download.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php'));
 		
 		if( !empty($DOWNLOAD_CATS[$id_cat]['auth']) )
 			$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], WRITE_CAT_DOWNLOAD);
@@ -125,18 +125,18 @@ elseif( $edit_file_id > 0 )
 	}
 	
 	if( !$auth_write )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 else
 {
-	$Bread_crumb->Add_link($DOWNLOAD_LANG['file_addition'], transid('management.php?new=1'));
+	$Bread_crumb->add($DOWNLOAD_LANG['file_addition'], transid('management.php?new=1'));
 	define('TITLE', $DOWNLOAD_LANG['file_addition']);
 }
 
 
-$Bread_crumb->Add_link($DOWNLOAD_LANG['download'], transid('download.php'));
+$Bread_crumb->add($DOWNLOAD_LANG['download'], transid('download.php'));
 
-$Bread_crumb->Reverse_links();
+$Bread_crumb->reverse();
 	
 
 require_once('../kernel/header.php');

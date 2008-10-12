@@ -29,8 +29,8 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
-$Bread_crumb->Add_link($LANG['stats'], '');
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($LANG['stats'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['stats']);
 require_once('../kernel/header.php'); 
 

@@ -150,7 +150,7 @@ elseif( !empty($_POST['previs']) )
 	$Sql->query_close($result);
 	
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
-		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
+		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);
 	
 	$Template->assign_vars(array(
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('news'),
@@ -279,9 +279,9 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
-		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
+		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);
 	
 	$Template->pparse('admin_news_add'); 
 }

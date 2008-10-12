@@ -73,7 +73,7 @@ elseif( !empty($id) && $edit ) //Edition.
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
 	$smiley_options = '';
 	$result = $Sql->query_while("SELECT url_smiley 

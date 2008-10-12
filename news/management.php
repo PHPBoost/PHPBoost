@@ -87,7 +87,7 @@ if( $delete_news > 0 )
         Feed::clear_cache('news');
 	}
 	else
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 elseif( $edit_news_id > 0 )
 {
@@ -99,16 +99,16 @@ elseif( $edit_news_id > 0 )
 	//Barre d'arborescence
 	$auth_write = $User->check_auth($CONFIG_NEWS['global_auth'], WRITE_CAT_NEWS);
 	
-	$Bread_crumb->Add_link($NEWS_LANG['news_management'], transid('management.php?edit=' . $edit_news_id));
+	$Bread_crumb->add($NEWS_LANG['news_management'], transid('management.php?edit=' . $edit_news_id));
 	
-	$Bread_crumb->Add_link($news_infos['title'], transid('news.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_infos['title']) . '.php'));
+	$Bread_crumb->add($news_infos['title'], transid('news.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_infos['title']) . '.php'));
 	
 	$id_cat = $news_infos['idcat'];
 
 	//Bread_crumb : we read categories list recursively
 	while( $id_cat > 0 )
 	{
-		$Bread_crumb->Add_link($NEWS_CATS[$id_cat]['name'], transid('news.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($NEWS_CATS[$id_cat]['name']) . '.php'));
+		$Bread_crumb->add($NEWS_CATS[$id_cat]['name'], transid('news.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($NEWS_CATS[$id_cat]['name']) . '.php'));
 		
 		if( !empty($NEWS_CATS[$id_cat]['auth']) )
 			$auth_write = $User->check_auth($NEWS_CATS[$id_cat]['auth'], WRITE_CAT_NEWS);
@@ -117,18 +117,18 @@ elseif( $edit_news_id > 0 )
 	}
 	
 	if( !$auth_write )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 else
 {
-	$Bread_crumb->Add_link($NEWS_LANG['news_addition'], transid('management.php?new=1'));
+	$Bread_crumb->add($NEWS_LANG['news_addition'], transid('management.php?new=1'));
 	define('TITLE', $NEWS_LANG['news_addition']);
 }
 
 
-$Bread_crumb->Add_link($NEWS_LANG['news'], transid('news.php'));
+$Bread_crumb->add($NEWS_LANG['news'], transid('news.php'));
 
-$Bread_crumb->Reverse_links();
+$Bread_crumb->reverse();
 	
 
 require_once('../kernel/header.php');

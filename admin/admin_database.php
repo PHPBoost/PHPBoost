@@ -229,25 +229,25 @@ elseif( $action == 'restore' )
 		switch($_GET['error'])
 		{
 			case 'success' :
-				$Errorh->Error_handler($LANG['db_restore_success'], E_USER_NOTICE);
+				$Errorh->handler($LANG['db_restore_success'], E_USER_NOTICE);
 				break;
 			case 'failure' :
-				$Errorh->Error_handler($LANG['db_restore_failure'], E_USER_ERROR);
+				$Errorh->handler($LANG['db_restore_failure'], E_USER_ERROR);
 				break;
 			case 'upload_failure' :
-				$Errorh->Error_handler($LANG['db_upload_failure'], E_USER_ERROR);
+				$Errorh->handler($LANG['db_upload_failure'], E_USER_ERROR);
 				break;
 			case 'file_already_exists' :
-				$Errorh->Error_handler($LANG['db_file_already_exists'], E_USER_WARNING);
+				$Errorh->handler($LANG['db_file_already_exists'], E_USER_WARNING);
 				break;
 			case 'unlink_success' :
-				$Errorh->Error_handler($LANG['db_unlink_success'], E_USER_NOTICE);
+				$Errorh->handler($LANG['db_unlink_success'], E_USER_NOTICE);
 				break;
 			case 'unlink_failure' :
-				$Errorh->Error_handler($LANG['db_unlink_failure'], E_USER_ERROR);
+				$Errorh->handler($LANG['db_unlink_failure'], E_USER_ERROR);
 				break;
 			case 'file_does_not_exist':
-				$Errorh->Error_handler($LANG['db_file_does_not_exist'], E_USER_WARNING);
+				$Errorh->handler($LANG['db_file_does_not_exist'], E_USER_WARNING);
 				break;
 		}
 	}
@@ -397,19 +397,19 @@ else
 			if( $repair )
 			{
 				$Backup->Repair_tables($selected_tables);
-				$Errorh->Error_handler(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), E_USER_NOTICE);
+				$Errorh->handler(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), E_USER_NOTICE);
 			}
 			else
 			{
 				$Backup->Optimize_tables($selected_tables);
-				$Errorh->Error_handler(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), E_USER_NOTICE);
+				$Errorh->handler(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), E_USER_NOTICE);
 			}	
 		}
 		
 		if( !empty($_GET['error']) )
 		{
 			if( trim($_GET['error']) == 'backup_success' && !empty($_GET['file']) )
-				$Errorh->Error_handler(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), E_USER_NOTICE);
+				$Errorh->handler(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), E_USER_NOTICE);
 		}
 		
 		//liste des tables

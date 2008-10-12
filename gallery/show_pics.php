@@ -47,7 +47,7 @@ if( !empty($g_idpics) )
 	}
 	//Niveau d'autorisation de la catégorie
 	if( !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	//Mise à jour du nombre de vues.
 	$Sql->query_inject("UPDATE LOW_PRIORITY ".PREFIX."gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'", __LINE__, __FILE__);
@@ -55,7 +55,7 @@ if( !empty($g_idpics) )
 	$clause_admin = $User->check_level(ADMIN_LEVEL) ? '' : ' AND aprob = 1';
 	$path = $Sql->query("SELECT path FROM ".PREFIX."gallery WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'" . $clause_admin, __LINE__, __FILE__);
 	if( empty($path) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 	include_once('../gallery/gallery.class.php');
 	$Gallery = new Gallery;

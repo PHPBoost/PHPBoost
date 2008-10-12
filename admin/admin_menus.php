@@ -126,7 +126,7 @@ else
 		'admin_menus_management'=> 'admin/admin_menus_management.tpl'
 	));
 	
-	$Cache->load_file('themes'); //Récupération de la configuration des thèmes.	
+	$Cache->load('themes'); //Récupération de la configuration des thèmes.	
 
 	//Récupération du class le plus grand pour chaque positionnement possible.
 	$array_max = array();

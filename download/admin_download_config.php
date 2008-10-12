@@ -28,7 +28,7 @@
 
 require_once('../admin/admin_begin.php');
 load_module_lang('download'); //Chargement de la langue du module.
-$Cache->load_file('download');
+$Cache->load('download');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
