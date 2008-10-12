@@ -187,7 +187,7 @@ class Admin_forum
 			$Sql->query_inject("DELETE FROM ".PREFIX."forum_topics WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);	
 				
 			$Cache->Generate_module_file('forum'); //Regénération du cache
-			$Cache->Load_file('forum', RELOAD_CACHE); //Rechargement du cache
+			$Cache->load('forum', RELOAD_CACHE); //Rechargement du cache
 			
 			$this->update_last_topic_id($first_parent); //On met à jour l'id du dernier topic.
 		}
@@ -310,7 +310,7 @@ class Admin_forum
 			}
 			
 			$Cache->Generate_module_file('forum'); //Regénération du cache
-			$Cache->Load_file('forum', RELOAD_CACHE); //Rechargement du cache
+			$Cache->load('forum', RELOAD_CACHE); //Rechargement du cache
 			
 			$this->update_last_topic_id($idcat); //On met à jour l'id du dernier topic.
 			$this->update_last_topic_id($f_to); //On met à jour l'id du dernier topic.
@@ -377,7 +377,7 @@ class Admin_forum
 			
 			//On recharge le cache
 			$Cache->Generate_module_file('forum');
-			$Cache->Load_file('forum', RELOAD_CACHE); //Rechargement du cache
+			$Cache->load('forum', RELOAD_CACHE); //Rechargement du cache
 			
 			$list_parent_cats_to = $this->get_parent_list($to, FORUM_CAT_INCLUDED); //Forums parents du forum cible.
 			if( empty($list_parent_cats_to) )
@@ -392,7 +392,7 @@ class Admin_forum
 			$Sql->query_inject("UPDATE ".PREFIX."forum_cats SET level = level - '" . (($CAT_FORUM[$id]['level'] - $CAT_FORUM[$to]['level']) - 1) . "' WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);
 			
 			$Cache->Generate_module_file('forum');
-			$Cache->Load_file('forum', RELOAD_CACHE); //Rechargement du cache
+			$Cache->load('forum', RELOAD_CACHE); //Rechargement du cache
 			
 			$this->update_last_topic_id($id); //On met à jour l'id du dernier topic.
 			$this->update_last_topic_id($to); //On met à jour l'id du dernier topic.

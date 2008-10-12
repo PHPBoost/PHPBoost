@@ -99,7 +99,7 @@ class PagesInterface extends ModuleInterface
         
         global $_PAGES_CATS, $CONFIG_PAGES, $User, $Cache, $Sql;
         require_once(PATH_TO_ROOT . '/pages/pages_defines.php');
-        $Cache->Load_file('pages');
+        $Cache->load('pages');
         
         $auth_cats = '';
         if( is_array($_PAGES_CATS) )

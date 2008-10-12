@@ -53,7 +53,7 @@ class Errors
 		$this->redirect = 'http://' . $_SERVER['HTTP_HOST'] . $server_path;
 		
 		//On utilise notre propre handler pour la gestion des erreurs php
-		set_error_handler(array($this, 'Error_handler_php'));
+		set_error_handler(array($this, 'handler_php'));
 	}	
 	
 	//Gestionnaire d'erreur.

@@ -34,7 +34,7 @@ define('EDIT_CAT_GALLERY', 0x04);
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) && !empty($id) )
 {
-	$Cache->Load_file('gallery');
+	$Cache->load('gallery');
 	
 	$to = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
 	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
@@ -186,7 +186,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 }
 elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la racine.
 {
-	$Cache->Load_file('gallery');
+	$Cache->load('gallery');
 	
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::auth_array(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
@@ -199,7 +199,7 @@ elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la ra
 }
 elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 {
-	$Cache->Load_file('gallery');
+	$Cache->load('gallery');
 	
 	$confirm_delete = false;	
 	
@@ -513,7 +513,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 }
 elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 {
-	$Cache->Load_file('gallery');
+	$Cache->load('gallery');
 	
 	//Catégorie existe?
 	if( !isset($CAT_GALLERY[$id]) )
@@ -680,7 +680,7 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 }
 elseif( !empty($id) ) //Edition des catégories.
 {
-	$Cache->Load_file('gallery');
+	$Cache->load('gallery');
 	
 	$Template->set_filenames(array(
 		'admin_gallery_cat_edit'=> 'gallery/admin_gallery_cat_edit.tpl'
@@ -763,7 +763,7 @@ elseif( !empty($id) ) //Edition des catégories.
 }
 elseif( !empty($root) ) //Edition de la racine.
 {
-	$Cache->Load_file('gallery');
+	$Cache->load('gallery');
 	
 	$Template->set_filenames(array(
 		'admin_gallery_cat_edit2'=> 'gallery/admin_gallery_cat_edit2.tpl'

@@ -109,7 +109,7 @@ if( defined('ALTERNATIVE_CSS') )
 }
 
 //On ajoute les css associés aux mini-modules.
-$Cache->Load_file('css');
+$Cache->load('css');
 foreach($CSS as $css_mini_module)
 	$alternative_css .= "\t\t" . '<link rel="stylesheet" href="' . PATH_TO_ROOT . $css_mini_module . '" type="text/css" media="screen, handheld" />' . "\n";
 

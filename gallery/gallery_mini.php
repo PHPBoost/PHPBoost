@@ -33,7 +33,7 @@ $Template->set_filenames(array(
 
 //Chargement de la langue du module.
 load_module_lang('gallery');
-$Cache->Load_file('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
+$Cache->load('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
 
 $array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
 list($nbr_pics, $sum_height, $sum_width, $scoll_mode, $height_max, $width_max) = array(0, 0, 0, 0, 142, 142);

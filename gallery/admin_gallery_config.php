@@ -34,7 +34,7 @@ require_once('../admin/admin_header.php');
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {
-	$Cache->Load_file('gallery');
+	$Cache->load('gallery');
 	
 	$config_gallery = array();
 	$config_gallery['width'] = isset($_POST['width']) ? numeric($_POST['width']) : '150';  
@@ -80,7 +80,7 @@ elseif( !empty($_POST['gallery_cache']) ) //Suppression des miniatures.
 	include_once('../gallery/gallery.class.php'); 
 	$Gallery = new Gallery;
 	
-	$Cache->Load_file('gallery');
+	$Cache->load('gallery');
 	
 	$Gallery->Clear_cache(); //Recréaction miniatures, et inscrustation du logo sur image.
 	$Gallery->Count_cat_pics(); //Recompte le nombre d'images de chaque catégories
@@ -95,7 +95,7 @@ else
 		'admin_gallery_config'=> 'gallery/admin_gallery_config.tpl'
 	));
 	
-	$Cache->Load_file('gallery');
+	$Cache->load('gallery');
 
 	$CONFIG_GALLERY['activ_pop'] = !isset($CONFIG_GALLERY['activ_pop']) ? 0 : $CONFIG_GALLERY['activ_pop'];
 	$CONFIG_GALLERY['activ_title'] = !isset($CONFIG_GALLERY['activ_title']) ? 1 : $CONFIG_GALLERY['activ_title'];

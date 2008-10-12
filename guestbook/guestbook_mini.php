@@ -31,7 +31,7 @@ if( defined('PHPBOOST') !== true ) exit;
 if( strpos(SCRIPT, '/guestbook/guestbook.php') === false )
 {
 	load_module_lang('guestbook');
-	$Cache->Load_file('guestbook'); //Chargement du cache
+	$Cache->load('guestbook'); //Chargement du cache
 	
 	###########################Affichage##############################
 	$Template->set_filenames(array(

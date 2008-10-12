@@ -73,7 +73,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
 		//Chargement de la configuration.
-		$Cache->Load_file('uploads');
+		$Cache->load('uploads');
 		
 		include_once('../kernel/framework/io/upload.class.php');
 		$Upload = new Upload($dir);

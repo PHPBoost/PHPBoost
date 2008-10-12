@@ -39,7 +39,7 @@ $move = !empty($_GET['move']) ? numeric($_GET['move']) : 0;
 include_once('../gallery/gallery.class.php');
 $Gallery = new Gallery;
 	
-$Cache->Load_file('gallery');
+$Cache->load('gallery');
 
 if( !empty($idpics) && isset($_GET['move']) ) //Déplacement d'une image.
 {

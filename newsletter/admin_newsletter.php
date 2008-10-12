@@ -51,7 +51,7 @@ $Template->assign_vars(array(
 	'L_MEMBER_LIST' => $LANG['newsletter_member_list']
 ));
 
-$Cache->Load_file('newsletter');
+$Cache->load('newsletter');
 include('newsletter.class.php');
 $newsletter_sender = new Newsletter_sender;
 

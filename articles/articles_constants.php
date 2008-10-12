@@ -32,7 +32,7 @@ define('READ_CAT_ARTICLES', 0x01);
 define('WRITE_CAT_ARTICLES', 0x02);
 define('EDIT_CAT_ARTICLES', 0x04);
 
-$Cache->Load_file('articles');
+$Cache->load('articles');
 load_module_lang('articles'); //Chargement de la langue du module.
 
 $idartcat = retrieve(GET, 'cat', 0);

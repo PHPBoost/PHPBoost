@@ -69,7 +69,7 @@ else
 		'admin_files_config'=> 'admin/admin_files_config.tpl'
 	));
 	
-	$Cache->Load_file('uploads');
+	$Cache->load('uploads');
 	
 	$CONFIG_UPLOADS['auth_extensions'] = is_array($CONFIG_UPLOADS['auth_extensions']) ? $CONFIG_UPLOADS['auth_extensions'] : array();
 	$array_ext_sup = $CONFIG_UPLOADS['auth_extensions'];

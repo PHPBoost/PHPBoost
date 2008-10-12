@@ -31,7 +31,7 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 {
 	//Chargement de la langue du module.
 	load_module_lang('online');
-	$Cache->Load_file('online');
+	$Cache->load('online');
 	
 	$Template->set_filenames(array(
 		'online_mini'=> 'online/online_mini.tpl'

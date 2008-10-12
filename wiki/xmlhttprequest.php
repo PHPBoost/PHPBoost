@@ -66,7 +66,7 @@ elseif( $select_cat && empty($open_cat) && $root == 0 )
 	if( $selected_cat > 0)
 	{
 		$localisation = array();
-		$Cache->Load_file('wiki');
+		$Cache->load('wiki');
 		$id = $selected_cat; //Permier id
 		do
 		{
@@ -88,7 +88,7 @@ elseif( !empty($open_cat) || $root == 1 )
 	$open_cat = $root == 1 ? 0 : $open_cat;
 	$return = '<table style="width:100%;">';
 	//Liste des catégories dans cette catégorie
-	$Cache->Load_file('wiki');
+	$Cache->load('wiki');
 	foreach( $_WIKI_CATS as $key => $value )
 	{
 		if( $value['id_parent'] == $open_cat )

@@ -28,7 +28,7 @@
 if( defined('PHPBOOST') !== true)	
 	exit;
 
-$Cache->Load_file('faq');
+$Cache->load('faq');
 load_module_lang('faq'); //Chargement de la langue du module.
 
 define('AUTH_READ', 0x01);

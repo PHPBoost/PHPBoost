@@ -31,7 +31,7 @@ load_module_lang('web'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$Cache->Load_file('web');
+$Cache->load('web');
 
 if( !empty($_POST['valid']) )
 {

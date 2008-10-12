@@ -62,7 +62,7 @@ else
 		'admin_news_config'=> 'news/admin_news_config.tpl'
 	));
 	
-	$Cache->Load_file('news');
+	$Cache->load('news');
 	
 	$CONFIG_NEWS['pagination_news'] = isset($CONFIG_NEWS['pagination_news']) ? $CONFIG_NEWS['pagination_news'] : 6;
 	$CONFIG_NEWS['pagination_arch'] = isset($CONFIG_NEWS['pagination_arch']) ? $CONFIG_NEWS['pagination_arch'] : 15;

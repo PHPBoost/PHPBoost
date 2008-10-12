@@ -39,7 +39,7 @@ require_once('../admin/admin_header.php');
 $clearOutCache = !empty($_GET['clear']) ? true : false;
 $weighting = retrieve(GET, 'weighting', false);
 
-$Cache->Load_file('search');
+$Cache->load('search');
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )

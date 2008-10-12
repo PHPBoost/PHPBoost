@@ -54,7 +54,7 @@ else
 		'admin_shoutbox_config'=> 'shoutbox/admin_shoutbox_config.tpl'
 	));
 	
-	$Cache->Load_file('shoutbox');
+	$Cache->load('shoutbox');
 	
 	//Balises interdites => valeur 1.
 	$array_tags = array('b' => 0, 'i' => 0, 'u' => 0, 's' => 0,	'title' => 1, 'stitle' => 1, 'style' => 1, 'url' => 0, 

@@ -32,7 +32,7 @@ require_once('../kernel/header.php');
 $id_get = retrieve(GET, 'id', 0);
 $guestbook = retrieve(POST, 'guestbook', false);
 //Chargement du cache
-$Cache->Load_file('guestbook');
+$Cache->load('guestbook');
 		
 if( $guestbook && empty($id_get) ) //Enregistrement
 {
@@ -274,7 +274,7 @@ else //Affichage.
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	
 	//Gestion des rangs.	
-	$Cache->Load_file('ranks');
+	$Cache->load('ranks');
 	$j = 0;
 	$result = $Sql->query_while("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, g.contents
 	FROM ".PREFIX."guestbook g

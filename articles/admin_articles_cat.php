@@ -42,7 +42,7 @@ define('EDIT_CAT_ARTICLES', 0x04);
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) && !empty($id) )
 {
-	$Cache->Load_file('articles');
+	$Cache->load('articles');
 	
 	$to = retrieve(POST, 'category', 0);
 	$name = retrieve(POST, 'name', '');
@@ -198,7 +198,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 }
 elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la racine.
 {
-	$Cache->Load_file('articles');
+	$Cache->load('articles');
 	
 	$array_auth_all = Authorizations::auth_array(READ_CAT_ARTICLES);
 	$CONFIG_ARTICLES['auth_root'] = serialize($array_auth_all);
@@ -213,7 +213,7 @@ elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la ra
 }
 elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 {
-	$Cache->Load_file('articles');
+	$Cache->load('articles');
 	
 	$confirm_delete = false;	
 	
@@ -524,7 +524,7 @@ elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 }
 elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 {
-	$Cache->Load_file('articles');
+	$Cache->load('articles');
 	
 	//Catégorie existe?
 	if( !isset($CAT_ARTICLES[$id]) )
@@ -690,7 +690,7 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 }
 elseif( !empty($id) ) //Edition des catégories.
 {
-	$Cache->Load_file('articles');
+	$Cache->load('articles');
 	
 	$Template->set_filenames(array(
 		'admin_articles_cat_edit'=> 'articles/admin_articles_cat_edit.tpl'
@@ -790,7 +790,7 @@ elseif( !empty($id) ) //Edition des catégories.
 }
 elseif( !empty($root) ) //Edition de la racine.
 {
-	$Cache->Load_file('articles');
+	$Cache->load('articles');
 	
 	$Template->set_filenames(array(
 		'admin_articles_cat_edit2'=> 'articles/admin_articles_cat_edit2.tpl'

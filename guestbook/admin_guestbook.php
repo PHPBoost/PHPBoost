@@ -52,7 +52,7 @@ else
 		'admin_guestbook_config'=> 'guestbook/admin_guestbook_config.tpl'
 	));
 	
-	$Cache->Load_file('guestbook');
+	$Cache->load('guestbook');
 	
 	//Balises interdites
 	$i = 0;

@@ -224,7 +224,7 @@ else //Affichage.
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 
 	//Gestion des rangs.	
-	$Cache->Load_file('ranks');
+	$Cache->load('ranks');
 	$j = 0;
 	$result = $Sql->query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, s.contents
 	FROM ".PREFIX."shoutbox s

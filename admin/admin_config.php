@@ -207,7 +207,7 @@ else //Sinon on rempli le formulaire
 	
 	$theme_tmp = $CONFIG['theme'];
 	//On recupère toute les informations supplementaires.
-	$Cache->Load_file('config', RELOAD_CACHE);
+	$Cache->load('config', RELOAD_CACHE);
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');

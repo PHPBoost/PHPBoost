@@ -35,7 +35,7 @@ $Template->set_filenames(array(
 	'admin_newsletter'=> 'newsletter/admin_newsletter.tpl'
 ));	
 
-$Cache->Load_file('newsletter');
+$Cache->load('newsletter');
 
 $sender_mail = retrieve(POST, 'sender_mail', '', TSTRING_UNSECURE);
 $newsletter_name = retrieve(POST, 'newsletter_name', '', TSTRING_HTML);

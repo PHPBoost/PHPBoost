@@ -35,7 +35,7 @@ $get_id = retrieve(GET, 'id', 0);
 $id_post = retrieve(POST, 'idc', 0);  
 $update_cached = !empty($_GET['upd']) ? true : false;	
 
-$Cache->Load_file('forum');
+$Cache->load('forum');
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
@@ -99,7 +99,7 @@ else
 		'admin_forum_config'=> 'forum/admin_forum_config.tpl'
 	));
 
-	$Cache->Load_file('forum');
+	$Cache->load('forum');
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');

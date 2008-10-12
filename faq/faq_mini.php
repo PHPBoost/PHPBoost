@@ -28,7 +28,7 @@
 if( defined('PHPBOOST') !== true ) exit;
 
 load_module_lang('faq');
-$Cache->Load_file('faq'); //Chargement du cache
+$Cache->load('faq'); //Chargement du cache
 include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 include_once(PATH_TO_ROOT . '/faq/faq_cats.class.php');
 

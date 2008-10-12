@@ -64,7 +64,7 @@ if( $User->check_level(ADMIN_LEVEL) ) //Admin
 		
 		$download_categories->Set_displaying_configuration($cat_config);
 		
-		$Cache->Load_file('download', RELOAD_CACHE);
+		$Cache->load('download', RELOAD_CACHE);
 	
 		echo $download_categories->Build_categories_administration_interface(AJAX_MODE);
 	}

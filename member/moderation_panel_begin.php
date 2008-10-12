@@ -28,7 +28,7 @@
 if( defined('PHPBOOST') !== true)	
 	exit;
 	
-//$Cache->Load_file('forum');
+//$Cache->load('forum');
 
 ############### Header du panneau de modo ################
 $Template->set_filenames(array(

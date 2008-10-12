@@ -31,7 +31,7 @@ load_module_lang('gallery'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$Cache->Load_file('gallery');
+$Cache->load('gallery');
 include_once('../gallery/gallery.class.php');
 $Gallery = new Gallery;
 

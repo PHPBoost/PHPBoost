@@ -84,7 +84,7 @@ class ForumInterface extends ModuleInterface
 		global $Sql, $Cache, $CONFIG_FORUM;
 		
 		//Suppression des marqueurs de vue du forum trop anciens.
-		$Cache->Load_file('forum'); //Requête des configuration générales (forum), $CONFIG_FORUM variable globale.
+		$Cache->load('forum'); //Requête des configuration générales (forum), $CONFIG_FORUM variable globale.
 		$Sql->query_inject("DELETE FROM ".PREFIX."forum_view WHERE timestamp < '" . (time() - $CONFIG_FORUM['view_time']) . "'", __LINE__, __FILE__);
 	}	
 	
@@ -130,7 +130,7 @@ class ForumInterface extends ModuleInterface
         require_once(PATH_TO_ROOT . '/forum/forum_functions.php');
         require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
         load_module_lang('forum'); //Chargement de la langue du module.
-        $Cache->Load_file('forum');
+        $Cache->load('forum');
         
         $search = $args['search'];
         $idcat = !empty($args['ForumIdcat']) ? numeric($args['ForumIdcat']) : -1;
@@ -197,7 +197,7 @@ class ForumInterface extends ModuleInterface
     {
         global $CONFIG, $CAT_FORUM, $User, $Cache, $Sql;
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-        $Cache->Load_file('forum');
+        $Cache->load('forum');
         
         $search = $args['search'];
         $idcat = !empty($args['ForumIdcat']) ? numeric($args['ForumIdcat']) : -1;

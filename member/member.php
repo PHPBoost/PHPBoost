@@ -606,7 +606,7 @@ if( !empty($id_get) ) //Espace membre
 		$msg_mbr = '<br />' . $msg_mbr . '<br />';
 	
 		//Chargement de la configuration.
-		$Cache->Load_file('uploads');
+		$Cache->load('uploads');
 
 		//Droit d'accès?.
 		$is_auth_files = $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES);

@@ -29,7 +29,7 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$Cache->Load_file('member');
+$Cache->load('member');
 
 if( !empty($_POST['msg_register']) ) //Message à l'inscription.
 {

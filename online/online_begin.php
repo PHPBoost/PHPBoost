@@ -32,6 +32,6 @@ load_module_lang('online'); //Chargement de la langue du module.
 define('TITLE', $LANG['online']);
 
 //Chargement du cache
-$Cache->Load_file('online');
+$Cache->load('online');
 
 ?>

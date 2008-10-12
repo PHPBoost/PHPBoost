@@ -36,7 +36,7 @@ $del = !empty($_GET['delete']) ? true : false;
 
 if( $del && !empty($id) ) //Suppresion poll
 {
-	$Cache->Load_file('poll');
+	$Cache->load('poll');
 	
 	//On supprime des tables config et reponses des polls.
 	$Sql->query_inject("DELETE FROM ".PREFIX."poll WHERE id = '" . $id . "'", __LINE__, __FILE__);	
@@ -52,7 +52,7 @@ if( $del && !empty($id) ) //Suppresion poll
 }
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
-	$Cache->Load_file('poll');
+	$Cache->load('poll');
 	
 	$question = retrieve(POST, 'question', '');
 	$type = retrieve(POST, 'type', 0);

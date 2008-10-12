@@ -51,7 +51,7 @@ elseif( $select_cat && empty($open_cat) && $root == 0 )
 	if( $selected_cat > 0)
 	{
 		$localisation = array();
-		$Cache->Load_file('pages');
+		$Cache->load('pages');
 		$id = $selected_cat; //Premier id
 		do
 		{

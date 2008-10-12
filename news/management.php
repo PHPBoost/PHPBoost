@@ -28,7 +28,7 @@
 require_once('../kernel/begin.php');
 
 load_module_lang('news'); //Chargement de la langue du module.
-$Cache->Load_file('news');
+$Cache->load('news');
 
 include_once('../kernel/framework/util/date.class.php');
 include_once('../kernel/framework/util/mini_calendar.class.php');

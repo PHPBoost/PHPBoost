@@ -156,7 +156,7 @@ class WikiInterface extends ModuleInterface
         global $Cache, $Sql, $LANG, $CONFIG, $_WIKI_CATS, $_WIKI_CONFIG;
         
         load_module_lang('wiki');
-        $Cache->Load_file('wiki');
+        $Cache->load('wiki');
         
         if( ($idcat > 0) && array_key_exists($idcat, $_WIKI_CATS) )//Catégorie
         {
@@ -185,7 +185,7 @@ class WikiInterface extends ModuleInterface
         $data->set_lang($LANG['xml_lang']);
         
         // Load the new's config
-        $Cache->Load_file('wiki');
+        $Cache->load('wiki');
         
         // Last news
         $result = $Sql->query_while("SELECT a.title, a.encoded_title, c.content, c.timestamp 

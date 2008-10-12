@@ -77,7 +77,7 @@ if( !$User->check_level(MEMBER_LEVEL) ) //Visiteurs interdits!
 	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 //Chargement de la configuration.
-$Cache->Load_file('uploads');
+$Cache->load('uploads');
 
 //Droit d'accès?.
 if( !$User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES) )

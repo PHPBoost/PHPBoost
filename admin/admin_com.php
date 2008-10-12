@@ -40,7 +40,7 @@ $Template->set_filenames(array(
 ));
 
 //Chargement du cache
-$Cache->Load_file('com');
+$Cache->load('com');
 
 //On récupère le nombre de commentaires dans chaque modules.
 $array_com = array();
@@ -101,7 +101,7 @@ if( is_dir($root) ) //Si le dossier existe
 }
 
 //Gestion des rangs.	
-$Cache->Load_file('ranks');
+$Cache->load('ranks');
 
 $cond = !empty($module) ? "WHERE script = '" . $module . "'" : '';
 $result = $Sql->query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, c.script, c.path, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents

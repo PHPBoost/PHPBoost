@@ -42,8 +42,8 @@ class BBCodeEditor extends ContentEditor
 		$template = $this->get_template();
 
 		//Chargement de la configuration.
-		$Cache->Load_file('uploads');
-		$Cache->Load_file('smileys');
+		$Cache->load('uploads');
+		$Cache->load('smileys');
 		
 		$template->assign_vars(array(
 			'C_BBCODE_TINYMCE_MODE' => false,
@@ -123,7 +123,7 @@ class BBCodeEditor extends ContentEditor
 		}
 		
 		//Inclusion du cache des smileys pour éviter une requête inutile.
-		$Cache->Load_file('smileys');
+		$Cache->load('smileys');
 		
 		$smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
 		$smile_by_line = 5; //Smiley par ligne.

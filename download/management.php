@@ -28,7 +28,7 @@
 require_once('../kernel/begin.php');
 
 load_module_lang('download'); //Chargement de la langue du module.
-$Cache->Load_file('download');
+$Cache->load('download');
 
 include_once('download_auth.php');
 

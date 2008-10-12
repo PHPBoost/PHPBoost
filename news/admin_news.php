@@ -98,7 +98,7 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
         Feed::clear_cache('news');
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
-		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
+		$Cache->load('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
 		$CONFIG_NEWS['nbr_news'] = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
 		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 				
@@ -123,7 +123,7 @@ elseif( $del && !empty($id) ) //Suppression de la news.
     Feed::clear_cache('news');
 	
 	//Mise à jour du nombre de news dans le cache de la configuration.
-	$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
+	$Cache->load('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
 	$CONFIG_NEWS['nbr_news'] = $Sql->query("SELECT COUNT(*) AS nbr_news FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 		

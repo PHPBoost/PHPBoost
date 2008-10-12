@@ -31,7 +31,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 include_once('download_auth.php');
-$Cache->Load_file('download');
+$Cache->load('download');
 include_once('download_cats.class.php');
 $download_categories = new DownloadCats();
 

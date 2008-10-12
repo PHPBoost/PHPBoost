@@ -58,7 +58,7 @@ else
 		'admin_com_config'=> 'admin/admin_com_config.tpl'
 	));
 	
-	$Cache->Load_file('com');
+	$Cache->load('com');
 	
 	$CONFIG['com_popup'] = isset($CONFIG['com_popup']) ? $CONFIG['com_popup'] : 0; //Affichage des commentaires
 	
