@@ -143,22 +143,22 @@ elseif( $step == 2 )
 	if( $go_to_next_step )
 	{		
 		###########################Suppression###########################
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_album`", __LINE__, __FILE__);		
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_membre`", __LINE__, __FILE__);
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_module`", __LINE__, __FILE__);
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_theme`", __LINE__, __FILE__);
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_news`", __LINE__, __FILE__);
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "config_lien`", __LINE__, __FILE__);
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "group`", __LINE__, __FILE__);
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "mp_convers`", __LINE__, __FILE__);
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "mp_msg`", __LINE__, __FILE__);
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "sondageconfig`", __LINE__, __FILE__); 	
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "sondageip`", __LINE__, __FILE__); 
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "sondagereponses`", __LINE__, __FILE__);
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "modules_mini'`", __LINE__, __FILE__);
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_album`", __LINE__, __FILE__);		
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_membre`", __LINE__, __FILE__);
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_module`", __LINE__, __FILE__);
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_theme`", __LINE__, __FILE__);
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_news`", __LINE__, __FILE__);
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "config_lien`", __LINE__, __FILE__);
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "group`", __LINE__, __FILE__);
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "mp_convers`", __LINE__, __FILE__);
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "mp_msg`", __LINE__, __FILE__);
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "sondageconfig`", __LINE__, __FILE__); 	
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "sondageip`", __LINE__, __FILE__); 
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "sondagereponses`", __LINE__, __FILE__);
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "modules_mini'`", __LINE__, __FILE__);
 				
 		###########################Création de table.###########################
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "configs` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "configs` (
 		`id` int(11) NOT NULL auto_increment,
 		`name` varchar(150) NOT NULL default '',
 		`value` text NOT NULL,
@@ -166,30 +166,30 @@ elseif( $step == 2 )
 		UNIQUE KEY `name` (`name`)
 		) ENGINE=MyISAM", __LINE__, __FILE__); 
 			
-		$config_info = $Sql->Query_array("config", "*", __LINE__, __FILE__);		
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "config`", __LINE__, __FILE__);
+		$config_info = $Sql->query_array("config", "*", __LINE__, __FILE__);		
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "config`", __LINE__, __FILE__);
 		
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` (`id`, `name`, `value`) VALUES 
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` (`id`, `name`, `value`) VALUES 
 (1, 'config', 'a:27:{s:11:\"server_name\";s:" . strlen(HOST) . ":\"" . HOST . "\";s:11:\"server_path\";s:" . strlen(DIR) . ":\"" . DIR . "\";s:9:\"site_name\";s:" . strlen($config_info['site_name']) . ":\"" . str_replace('\'', '\\\'', $config_info['site_name']) . "\";s:9:\"site_desc\";s:" . strlen($config_info['site_desc']) . ":\"" . str_replace('\'', '\\\'', $config_info['site_desc']) . "\";s:12:\"site_keyword\";s:" . strlen($config_info['site_keyword']) . ":\"" . str_replace('\'', '\\\'', $config_info['site_keyword']) . "\";s:5:\"start\";i:" . $config_info['start'] . ";s:7:\"version\";s:3:\"2.0\";s:4:\"lang\";s:6:\"french\";s:5:\"theme\";s:4:\"main\";s:10:\"start_page\";s:14:\"/news/news.php\";s:8:\"maintain\";s:1:\"0\";s:14:\"maintain_delay\";s:1:\"1\";s:13:\"maintain_text\";s:0:\"\";s:7:\"rewrite\";i:" . $config_info['rewrite'] . ";s:9:\"com_popup\";s:1:\"0\";s:8:\"compteur\";s:1:\"0\";s:12:\"ob_gzhandler\";i:0;s:11:\"site_cookie\";s:7:\"session\";s:12:\"site_session\";i:3600;s:18:\"site_session_invit\";i:300;s:4:\"mail\";s:0:\"\";s:10:\"activ_mail\";s:1:\"0\";s:4:\"sign\";s:0:\"\";s:10:\"anti_flood\";s:1:\"1\";s:11:\"delay_flood\";s:1:\"7\";s:12:\"unlock_admin\";s:0:\"\";s:6:\"pm_max\";s:2:\"50\";}'),
 (2, 'member', 'a:13:{s:14:\"activ_register\";i:1;s:7:\"msg_mbr\";s:0:\"\";s:12:\"msg_register\";s:0:\"\";s:9:\"activ_mbr\";i:0;s:10:\"verif_code\";i:1;s:17:\"delay_unactiv_max\";i:30;s:11:\"force_theme\";i:0;s:15:\"activ_up_avatar\";i:1;s:9:\"width_max\";i:120;s:10:\"height_max\";i:120;s:10:\"weight_max\";i:20;s:12:\"activ_avatar\";i:1;s:10:\"avatar_url\";s:13:\"no_avatar.jpg\";}'),
 (3, 'files', 'a:3:{s:10:\"size_limit\";d:512;s:17:\"bandwidth_protect\";s:1:\"1\";s:10:\"auth_files\";s:45:\"a:3:{s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}\";}'),
 (4, 'com', 'a:4:{s:8:\"com_auth\";i:-1;s:7:\"com_max\";i:10;s:14:\"forbidden_tags\";s:99:\"a:6:{i:0;s:3:\"swf\";i:1;s:5:\"movie\";i:2;s:5:\"sound\";i:3;s:4:\"code\";i:4;s:4:\"math\";i:5;s:6:\"anchor\";}\";s:8:\"max_link\";i:2;}')", __LINE__, __FILE__); 
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (5, 'articles', 'a:5:{s:16:\"nbr_articles_max\";i:10;s:11:\"nbr_cat_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:10;s:9:\"auth_root\";s:59:\"a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}\";}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (6, 'calendar', 'a:1:{s:13:\"calendar_auth\";i:2;}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (7, 'download', 'a:4:{s:12:\"nbr_file_max\";i:10;s:11:\"nbr_cat_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:10;}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (8, 'forum', 'a:13:{s:10:\"forum_name\";s:14:\"PHPBoost forum\";s:16:\"pagination_topic\";i:20;s:14:\"pagination_msg\";i:15;s:9:\"view_time\";i:2592000;s:11:\"topic_track\";i:40;s:9:\"edit_mark\";i:1;s:14:\"no_left_column\";i:0;s:15:\"no_right_column\";i:0;s:17:\"activ_display_msg\";i:1;s:11:\"display_msg\";s:21:\"[R&eacute;gl&eacute;]\";s:19:\"explain_display_msg\";s:26:\"Sujet r&eacute;gl&eacute;?\";s:23:\"explain_display_msg_bis\";s:30:\"Sujet non r&eacute;gl&eacute;?\";s:22:\"icon_activ_display_msg\";i:1;}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (9, 'gallery', 'a:27:{s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"width_max\";i:800;s:10:\"height_max\";i:600;s:10:\"weight_max\";i:1024;s:7:\"quality\";i:80;s:5:\"trans\";i:60;s:4:\"logo\";s:8:\"logo.jpg\";s:10:\"activ_logo\";i:1;s:7:\"d_width\";i:5;s:8:\"d_height\";i:5;s:10:\"nbr_column\";i:4;s:12:\"nbr_pics_max\";i:16;s:8:\"note_max\";i:5;s:11:\"activ_title\";i:1;s:9:\"activ_com\";i:1;s:10:\"activ_note\";i:1;s:15:\"display_nbrnote\";i:1;s:10:\"activ_view\";i:1;s:10:\"activ_user\";i:1;s:12:\"limit_member\";i:10;s:10:\"limit_modo\";i:25;s:12:\"display_pics\";i:3;s:11:\"scroll_type\";i:1;s:13:\"nbr_pics_mini\";i:2;s:15:\"speed_mini_pics\";i:6;s:9:\"auth_root\";s:59:\"a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:3;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}\";}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (10, 'guestbook', 'a:3:{s:14:\"guestbook_auth\";i:-1;s:24:\"guestbook_forbidden_tags\";s:52:\"a:3:{i:0;s:3:\"swf\";i:1;s:5:\"movie\";i:2;s:5:\"sound\";}\";s:18:\"guestbook_max_link\";i:2;}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (11, 'news', 'a:11:{s:4:\"type\";i:1;s:11:\"activ_pagin\";i:1;s:11:\"activ_edito\";i:1;s:15:\"pagination_news\";i:5;s:15:\"pagination_arch\";i:10;s:9:\"activ_com\";i:1;s:10:\"activ_icon\";i:1;s:8:\"nbr_news\";s:1:\"0\";s:10:\"nbr_column\";i:1;s:5:\"edito\";s:22:\"Bienvenue sur le site!\";s:11:\"edito_title\";s:22:\"Bienvenue sur le site!\";}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (12, 'newsletter', 'a:2:{s:11:\"sender_mail\";s:0:\"\";s:15:\"newsletter_name\";s:0:\"\";}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (13, 'online', 'a:2:{s:16:\"online_displayed\";i:4;s:20:\"display_order_online\";s:28:\"s.level, s.session_time DESC\";}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (14, 'pages', 'a:3:{s:10:\"count_hits\";i:1;s:9:\"activ_com\";i:1;s:4:\"auth\";s:59:\"a:4:{s:3:\"r-1\";i:5;s:2:\"r0\";i:7;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}\";}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (15, 'poll', 'a:4:{s:9:\"poll_auth\";i:-1;s:9:\"poll_mini\";i:-1;s:11:\"poll_cookie\";s:4:\"poll\";s:18:\"poll_cookie_lenght\";i:1800000;}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (16, 'shoutbox', 'a:4:{s:16:\"shoutbox_max_msg\";i:100;s:13:\"shoutbox_auth\";i:-1;s:23:\"shoutbox_forbidden_tags\";s:359:\"a:22:{i:0;s:5:\"title\";i:1;s:6:\"stitle\";i:2;s:5:\"style\";i:3;s:3:\"url\";i:4;s:3:\"img\";i:5;s:5:\"quote\";i:6;s:4:\"hide\";i:7;s:4:\"list\";i:8;s:5:\"color\";i:9;s:4:\"size\";i:10;s:5:\"align\";i:11;s:5:\"float\";i:12;s:3:\"sup\";i:13;s:3:\"sub\";i:14;s:6:\"indent\";i:15;s:5:\"table\";i:16;s:3:\"swf\";i:17;s:5:\"movie\";i:18;s:5:\"sound\";i:19;s:4:\"code\";i:20;s:4:\"math\";i:21;s:6:\"anchor\";}\";s:17:\"shoutbox_max_link\";i:2;}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (17, 'web', 'a:4:{s:11:\"nbr_web_max\";i:10;s:11:\"nbr_cat_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:10;}')", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (18, 'wiki', 'a:6:{s:9:\"wiki_name\";s:4:\"Wiki\";s:13:\"last_articles\";i:10;s:12:\"display_cats\";i:0;s:10:\"index_text\";s:0:\"\";s:10:\"count_hits\";i:1;s:4:\"auth\";s:71:\"a:4:{s:3:\"r-1\";i:1041;s:2:\"r0\";i:1495;s:2:\"r1\";i:4095;s:2:\"r2\";i:4095;}\";}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (5, 'articles', 'a:5:{s:16:\"nbr_articles_max\";i:10;s:11:\"nbr_cat_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:10;s:9:\"auth_root\";s:59:\"a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}\";}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (6, 'calendar', 'a:1:{s:13:\"calendar_auth\";i:2;}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (7, 'download', 'a:4:{s:12:\"nbr_file_max\";i:10;s:11:\"nbr_cat_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:10;}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (8, 'forum', 'a:13:{s:10:\"forum_name\";s:14:\"PHPBoost forum\";s:16:\"pagination_topic\";i:20;s:14:\"pagination_msg\";i:15;s:9:\"view_time\";i:2592000;s:11:\"topic_track\";i:40;s:9:\"edit_mark\";i:1;s:14:\"no_left_column\";i:0;s:15:\"no_right_column\";i:0;s:17:\"activ_display_msg\";i:1;s:11:\"display_msg\";s:21:\"[R&eacute;gl&eacute;]\";s:19:\"explain_display_msg\";s:26:\"Sujet r&eacute;gl&eacute;?\";s:23:\"explain_display_msg_bis\";s:30:\"Sujet non r&eacute;gl&eacute;?\";s:22:\"icon_activ_display_msg\";i:1;}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (9, 'gallery', 'a:27:{s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"width_max\";i:800;s:10:\"height_max\";i:600;s:10:\"weight_max\";i:1024;s:7:\"quality\";i:80;s:5:\"trans\";i:60;s:4:\"logo\";s:8:\"logo.jpg\";s:10:\"activ_logo\";i:1;s:7:\"d_width\";i:5;s:8:\"d_height\";i:5;s:10:\"nbr_column\";i:4;s:12:\"nbr_pics_max\";i:16;s:8:\"note_max\";i:5;s:11:\"activ_title\";i:1;s:9:\"activ_com\";i:1;s:10:\"activ_note\";i:1;s:15:\"display_nbrnote\";i:1;s:10:\"activ_view\";i:1;s:10:\"activ_user\";i:1;s:12:\"limit_member\";i:10;s:10:\"limit_modo\";i:25;s:12:\"display_pics\";i:3;s:11:\"scroll_type\";i:1;s:13:\"nbr_pics_mini\";i:2;s:15:\"speed_mini_pics\";i:6;s:9:\"auth_root\";s:59:\"a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:3;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}\";}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (10, 'guestbook', 'a:3:{s:14:\"guestbook_auth\";i:-1;s:24:\"guestbook_forbidden_tags\";s:52:\"a:3:{i:0;s:3:\"swf\";i:1;s:5:\"movie\";i:2;s:5:\"sound\";}\";s:18:\"guestbook_max_link\";i:2;}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (11, 'news', 'a:11:{s:4:\"type\";i:1;s:11:\"activ_pagin\";i:1;s:11:\"activ_edito\";i:1;s:15:\"pagination_news\";i:5;s:15:\"pagination_arch\";i:10;s:9:\"activ_com\";i:1;s:10:\"activ_icon\";i:1;s:8:\"nbr_news\";s:1:\"0\";s:10:\"nbr_column\";i:1;s:5:\"edito\";s:22:\"Bienvenue sur le site!\";s:11:\"edito_title\";s:22:\"Bienvenue sur le site!\";}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (12, 'newsletter', 'a:2:{s:11:\"sender_mail\";s:0:\"\";s:15:\"newsletter_name\";s:0:\"\";}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (13, 'online', 'a:2:{s:16:\"online_displayed\";i:4;s:20:\"display_order_online\";s:28:\"s.level, s.session_time DESC\";}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (14, 'pages', 'a:3:{s:10:\"count_hits\";i:1;s:9:\"activ_com\";i:1;s:4:\"auth\";s:59:\"a:4:{s:3:\"r-1\";i:5;s:2:\"r0\";i:7;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}\";}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (15, 'poll', 'a:4:{s:9:\"poll_auth\";i:-1;s:9:\"poll_mini\";i:-1;s:11:\"poll_cookie\";s:4:\"poll\";s:18:\"poll_cookie_lenght\";i:1800000;}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (16, 'shoutbox', 'a:4:{s:16:\"shoutbox_max_msg\";i:100;s:13:\"shoutbox_auth\";i:-1;s:23:\"shoutbox_forbidden_tags\";s:359:\"a:22:{i:0;s:5:\"title\";i:1;s:6:\"stitle\";i:2;s:5:\"style\";i:3;s:3:\"url\";i:4;s:3:\"img\";i:5;s:5:\"quote\";i:6;s:4:\"hide\";i:7;s:4:\"list\";i:8;s:5:\"color\";i:9;s:4:\"size\";i:10;s:5:\"align\";i:11;s:5:\"float\";i:12;s:3:\"sup\";i:13;s:3:\"sub\";i:14;s:6:\"indent\";i:15;s:5:\"table\";i:16;s:3:\"swf\";i:17;s:5:\"movie\";i:18;s:5:\"sound\";i:19;s:4:\"code\";i:20;s:4:\"math\";i:21;s:6:\"anchor\";}\";s:17:\"shoutbox_max_link\";i:2;}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (17, 'web', 'a:4:{s:11:\"nbr_web_max\";i:10;s:11:\"nbr_cat_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:10;}')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` VALUES (18, 'wiki', 'a:6:{s:9:\"wiki_name\";s:4:\"Wiki\";s:13:\"last_articles\";i:10;s:12:\"display_cats\";i:0;s:10:\"index_text\";s:0:\"\";s:10:\"count_hits\";i:1;s:4:\"auth\";s:71:\"a:4:{s:3:\"r-1\";i:1041;s:2:\"r0\";i:1495;s:2:\"r1\";i:4095;s:2:\"r2\";i:4095;}\";}')", __LINE__, __FILE__);
 		      	  
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "group` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "group` (
 			`id` int(11) NOT NULL auto_increment,
 			`name` varchar(100) NOT NULL default '',
 			`img` varchar(255) NOT NULL default '',
@@ -198,22 +198,22 @@ elseif( $step == 2 )
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 		
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "lang` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "lang` (
 			`id` int(11) NOT NULL auto_increment,
 			`lang` varchar(150) NOT NULL default '',
 			`activ` tinyint(1) NOT NULL default '0',
 			`secure` tinyint(1) NOT NULL default '0',
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "lang` ( `id` , `lang` , `activ` , `secure` ) VALUES ('', 'french', '1', '-1')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "lang` ( `id` , `lang` , `activ` , `secure` ) VALUES ('', 'french', '1', '-1')", __LINE__, __FILE__);
 
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "member_extend` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "member_extend` (
 		  `user_id` int(11) NOT NULL auto_increment,
 		  `last_view_forum` int(11) NOT NULL default '0',
 		  PRIMARY KEY  (`user_id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "member_extend_cat` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "member_extend_cat` (
 			`id` int(11) NOT NULL auto_increment,
 			`class` int(11) NOT NULL default '0',
 			`name` varchar(255) NOT NULL default '',
@@ -229,7 +229,7 @@ elseif( $step == 2 )
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 
 		//Modules
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "modules` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "modules` (
 		  `id` int(11) NOT NULL auto_increment,
 		  `name` varchar(150) NOT NULL default '',
 		  `version` varchar(15) NOT NULL default '',
@@ -237,26 +237,26 @@ elseif( $step == 2 )
 		  `activ` tinyint(1) NOT NULL default '0',
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (1, 'articles', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (2, 'calendar', '1.2', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (3, 'contact', '1.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (4, 'download', '1.4', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (5, 'forum', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (6, 'gallery', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (7, 'guestbook', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (8, 'links', '1.5', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (9, 'news', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (10, 'newsletter', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (11, 'online', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (12, 'pages', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (13, 'poll', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (14, 'shoutbox', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (15, 'stats', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (16, 'web', '1.4', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (17, 'wiki', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (1, 'articles', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (2, 'calendar', '1.2', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (3, 'contact', '1.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (4, 'download', '1.4', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (5, 'forum', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (6, 'gallery', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (7, 'guestbook', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (8, 'links', '1.5', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (9, 'news', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (10, 'newsletter', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (11, 'online', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (12, 'pages', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (13, 'poll', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (14, 'shoutbox', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (15, 'stats', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (16, 'web', '1.4', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (17, 'wiki', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
 		
 		//Modules mini
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "modules_mini` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "modules_mini` (
 			`id` int(11) NOT NULL auto_increment,
 			`class` int(11) NOT NULL default '0',
 			`name` varchar(150) NOT NULL default '',
@@ -268,16 +268,16 @@ elseif( $step == 2 )
 			`added` tinyint(1) NOT NULL default '0',
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (1, 1, 'connexion', 'if( SCRIPT != DIR . ''/membre/error.php'')include_once(''../kernel/connect.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (2, 1, 'gallery', 'include_once(''../gallery/gallery_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (3, 2, 'links', 'include_once(''../links/links_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (4, 3, 'newsletter', 'include_once(''../newsletter/newsletter_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (5, 2, 'online', 'include_once(''../online/online_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (6, 3, 'poll', 'include_once(''../poll/poll_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (7, 4, 'shoutbox', 'include_once(''../shoutbox/shoutbox_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (8, 4, 'stats', 'include_once(''../stats/stats_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (1, 1, 'connexion', 'if( SCRIPT != DIR . ''/membre/error.php'')include_once(''../kernel/connect.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (2, 1, 'gallery', 'include_once(''../gallery/gallery_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (3, 2, 'links', 'include_once(''../links/links_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (4, 3, 'newsletter', 'include_once(''../newsletter/newsletter_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (5, 2, 'online', 'include_once(''../online/online_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (6, 3, 'poll', 'include_once(''../poll/poll_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (7, 4, 'shoutbox', 'include_once(''../shoutbox/shoutbox_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (8, 4, 'stats', 'include_once(''../stats/stats_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
 	
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "pm_msg` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "pm_msg` (
 			`id` int(11) NOT NULL auto_increment,
 			`idconvers` int(11) NOT NULL default '0',
 			`user_id` int(11) NOT NULL default '0',
@@ -288,7 +288,7 @@ elseif( $step == 2 )
 			KEY `idconvers` (`idconvers`,`user_id`,`timestamp`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "pm_topic` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "pm_topic` (
 			`id` int(11) NOT NULL auto_increment,
 			`title` varchar(150) NOT NULL default '',
 			`user_id` int(11) NOT NULL default '0',
@@ -304,7 +304,7 @@ elseif( $step == 2 )
 			KEY `user_id` (`user_id`,`user_id_dest`,`user_convers_status`,`last_timestamp`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "ranks` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "ranks` (
 			`id` int(11) NOT NULL auto_increment,
 			`name` varchar(150) NOT NULL default '',
 			`msg` int(11) NOT NULL default '0',
@@ -313,19 +313,19 @@ elseif( $step == 2 )
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "ranks` VALUES (1, 'Administrateur', -2, 'rank_admin.gif', 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "ranks` VALUES (2, 'Mod&eacute;rateur', -1, 'rank_modo.gif', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "ranks` VALUES (1, 'Administrateur', -2, 'rank_admin.gif', 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "ranks` VALUES (2, 'Mod&eacute;rateur', -1, 'rank_modo.gif', 1)", __LINE__, __FILE__);
 
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "themes` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "themes` (
 			`id` int(11) NOT NULL auto_increment,
 			`theme` varchar(50) NOT NULL default '',
 			`activ` tinyint(1) NOT NULL default '0',
 			`secure` tinyint(1) NOT NULL default '0',
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "themes` ( `id` , `theme` , `activ` , `secure` ) VALUES ('', 'main', '1', '-1')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "themes` ( `id` , `theme` , `activ` , `secure` ) VALUES ('', 'main', '1', '-1')", __LINE__, __FILE__);
 		
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "upload` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "upload` (
 			`id` int(11) NOT NULL auto_increment,
 			`idcat` int(11) NOT NULL default '0',
 			`name` varchar(150) NOT NULL default '',
@@ -337,7 +337,7 @@ elseif( $step == 2 )
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "upload_cat` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "upload_cat` (
 			`id` int(11) NOT NULL auto_increment,
 			`id_parent` int(11) NOT NULL default '0',
 			`user_id` int(11) NOT NULL default '0',
@@ -345,7 +345,7 @@ elseif( $step == 2 )
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "verif_code` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "verif_code` (
 			`id` int(11) NOT NULL auto_increment,
 			`user_id` varchar(8) NOT NULL default '',
 			`code` varchar(20) NOT NULL default '',
@@ -356,59 +356,59 @@ elseif( $step == 2 )
 		
 		###########################Mises à jour###########################
 		//Com
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "com` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "com` CHANGE `login` `login` VARCHAR( 255 ) NOT NULL", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "com` CHANGE `idcom` `idcom` INT NOT NULL AUTO_INCREMENT", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "com` CHANGE `idprov` `idprov` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "com` CHANGE `user_id` `user_id` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "com` DROP INDEX `idcom`, ADD INDEX `idprov` ( `idprov` , `script` )", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "com` ADD PRIMARY KEY ( `idcom` )", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "com` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "com` CHANGE `login` `login` VARCHAR( 255 ) NOT NULL", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "com` CHANGE `idcom` `idcom` INT NOT NULL AUTO_INCREMENT", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "com` CHANGE `idprov` `idprov` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "com` CHANGE `user_id` `user_id` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "com` DROP INDEX `idcom`, ADD INDEX `idprov` ( `idprov` , `script` )", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "com` ADD PRIMARY KEY ( `idcom` )", __LINE__, __FILE__);
 
 		//Compteur
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "compteur` CHANGE `count_ip` `total` INT( 11 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "compteur` CHANGE `time` `time` DATE NOT NULL", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "compteur` CHANGE `count_ip` `total` INT( 11 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "compteur` CHANGE `time` `time` DATE NOT NULL", __LINE__, __FILE__);
 		
 		//Membre
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "membre` CHANGE `login` `login` VARCHAR( 255 ) NOT NULL", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "membre` CHANGE `user_group` `user_groups` TEXT NOT NULL", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "membre` CHANGE `user_age` `user_born` DATE NOT NULL", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "membre` CHANGE `user_mp` `user_pm` SMALLINT( 6 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "membre` ADD `user_readonly` INT NOT NULL AFTER `user_warning`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "membre` DROP `last_view_forum`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "membre` DROP `topic_track`", __LINE__, __FILE__);
-		$Sql->Query_inject("UPDATE `" . PREFIX . "membre` SET user_lang = 'french', user_theme = 'main'", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "membre` RENAME `" . PREFIX . "member`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "membre` CHANGE `login` `login` VARCHAR( 255 ) NOT NULL", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "membre` CHANGE `user_group` `user_groups` TEXT NOT NULL", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "membre` CHANGE `user_age` `user_born` DATE NOT NULL", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "membre` CHANGE `user_mp` `user_pm` SMALLINT( 6 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "membre` ADD `user_readonly` INT NOT NULL AFTER `user_warning`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "membre` DROP `last_view_forum`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "membre` DROP `topic_track`", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE `" . PREFIX . "membre` SET user_lang = 'french', user_theme = 'main'", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "membre` RENAME `" . PREFIX . "member`", __LINE__, __FILE__);
 		
 		//Sessions
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "sessions` CHANGE `level` `level` TINYINT( 1 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "sessions` CHANGE `session_script_name` `session_script_title` VARCHAR( 255 ) NOT NULL ", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "sessions` CHANGE `level` `level` TINYINT( 1 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "sessions` CHANGE `session_script_name` `session_script_title` VARCHAR( 255 ) NOT NULL ", __LINE__, __FILE__); 
 		
 		//Smileys
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_smilies` CHANGE `idsmile` `idsmiley` INT( 11 ) NOT NULL AUTO_INCREMENT", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_smilies` CHANGE `code_smile` `code_smiley` VARCHAR( 50 ) NOT NULL", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_smilies` CHANGE `url_smile` `url_smiley` VARCHAR( 50 ) NOT NULL", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_smilies` RENAME `" . PREFIX . "smileys`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_smilies` CHANGE `idsmile` `idsmiley` INT( 11 ) NOT NULL AUTO_INCREMENT", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_smilies` CHANGE `code_smile` `code_smiley` VARCHAR( 50 ) NOT NULL", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_smilies` CHANGE `url_smile` `url_smiley` VARCHAR( 50 ) NOT NULL", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_smilies` RENAME `" . PREFIX . "smileys`", __LINE__, __FILE__);
 				
 		//Stats		
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "stats` CHANGE `year` `stats_year` SMALLINT( 6 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "stats` CHANGE `month` `stats_month` TINYINT( 4 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "stats` CHANGE `day` `stats_day` TINYINT( 4 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
-		$result = $Sql->Query_while("SELECT s1.id
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "stats` CHANGE `year` `stats_year` SMALLINT( 6 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "stats` CHANGE `month` `stats_month` TINYINT( 4 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "stats` CHANGE `day` `stats_day` TINYINT( 4 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
+		$result = $Sql->query_while("SELECT s1.id
 		FROM `" . PREFIX . "stats` AS s1
 		JOIN " . PREFIX . "stats AS s2
 		WHERE s1.stats_day = s2.stats_day AND s1.stats_month = s2.stats_month AND s1.stats_year = s2.stats_year AND s1.id != s2.id
 		GROUP BY s2.stats_day", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$Sql->Query_inject("DELETE FROM " . PREFIX . "stats WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__); //Suppression des doublons.
+			$Sql->query_inject("DELETE FROM " . PREFIX . "stats WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__); //Suppression des doublons.
 		}
-		$Sql->Close($result);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "stats` ADD PRIMARY KEY ( `id` )", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "stats` DROP INDEX `id`", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "stats` ADD UNIQUE `stats_day` ( `stats_year` , `stats_month` , `stats_day` )", __LINE__, __FILE__);  
+		$Sql->query_close($result);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "stats` ADD PRIMARY KEY ( `id` )", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "stats` DROP INDEX `id`", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "stats` ADD UNIQUE `stats_day` ( `stats_year` , `stats_month` , `stats_day` )", __LINE__, __FILE__);  
 				
 		//Liens
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "links` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "links` (
 		  `id` int(11) NOT NULL auto_increment,
 		  `class` int(11) NOT NULL default '0',
 		  `name` varchar(50) NOT NULL default '',
@@ -419,22 +419,22 @@ elseif( $step == 2 )
 		  `sep` tinyint(1) NOT NULL default '1',
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (1, 1, 'Membres', '', 1, '-1', 0, 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (2, 2, 'Membres', '../member/member.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (3, 3, 'Menu', '', 1, '-1', 0, 1)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (4, 6, 'Articles', '../articles/articles.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (5, 7, 'Calendrier', '../calendar/calendar.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (6, 8, 'Contact', '../contact/contact.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (7, 9, 'Téléchargements', '../download/download.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (8, 10, 'Forum', '../forum/index.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (9, 11, 'Galerie', '../gallery/gallery.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (10, 12, 'Livre d''or', '../guestbook/guestbook.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (11, 14, 'News', '../news/news.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (12, 18, 'Sondages', '../poll/poll.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (13, 21, 'Liens web', '../web/web.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "links` VALUES (14, 22, 'Wiki', '../wiki/wiki.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (1, 1, 'Membres', '', 1, '-1', 0, 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (2, 2, 'Membres', '../member/member.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (3, 3, 'Menu', '', 1, '-1', 0, 1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (4, 6, 'Articles', '../articles/articles.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (5, 7, 'Calendrier', '../calendar/calendar.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (6, 8, 'Contact', '../contact/contact.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (7, 9, 'Téléchargements', '../download/download.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (8, 10, 'Forum', '../forum/index.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (9, 11, 'Galerie', '../gallery/gallery.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (10, 12, 'Livre d''or', '../guestbook/guestbook.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (11, 14, 'News', '../news/news.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (12, 18, 'Sondages', '../poll/poll.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (13, 21, 'Liens web', '../web/web.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "links` VALUES (14, 22, 'Wiki', '../wiki/wiki.php', 1, '-1', 0, 0)", __LINE__, __FILE__);
 		
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "poll` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "poll` (
 			`id` int(11) NOT NULL auto_increment,
 			`question` varchar(255) NOT NULL default '',
 			`answers` text NOT NULL,
@@ -449,7 +449,7 @@ elseif( $step == 2 )
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__); 
 
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "poll_ip` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "poll_ip` (
 			`id` int(11) NOT NULL auto_increment,
 			`ip` varchar(50) NOT NULL default '',
 			`idpoll` int(11) NOT NULL default '0',
@@ -460,7 +460,7 @@ elseif( $step == 2 )
 		
 		###########################Insertions###########################
 		//Wiki
-		$Sql->Query_inject("CREATE TABLE `phpboost_wiki_articles` (
+		$Sql->query_inject("CREATE TABLE `phpboost_wiki_articles` (
 			`id` int(11) NOT NULL auto_increment,
 			`id_contents` int(11) NOT NULL default '0',
 			`title` varchar(250) NOT NULL default '',
@@ -479,14 +479,14 @@ elseif( $step == 2 )
 			FULLTEXT KEY `title` (`title`)
 		) ENGINE=MyISAM", __LINE__, __FILE__); 
 
-		$Sql->Query_inject("CREATE TABLE `phpboost_wiki_cats` (
+		$Sql->query_inject("CREATE TABLE `phpboost_wiki_cats` (
 			`id` int(11) NOT NULL auto_increment,
 			`id_parent` int(11) NOT NULL default '0',
 			`article_id` int(11) NOT NULL default '0',
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__); 
 
-		$Sql->Query_inject("CREATE TABLE `phpboost_wiki_contents` (
+		$Sql->query_inject("CREATE TABLE `phpboost_wiki_contents` (
 			`id_contents` int(11) NOT NULL auto_increment,
 			`id_article` int(11) NOT NULL default '0',
 			`menu` text NOT NULL,
@@ -499,7 +499,7 @@ elseif( $step == 2 )
 			FULLTEXT KEY `content` (`content`)
 		) ENGINE=MyISAM", __LINE__, __FILE__); 
 
-		$Sql->Query_inject("CREATE TABLE `phpboost_wiki_favorites` (
+		$Sql->query_inject("CREATE TABLE `phpboost_wiki_favorites` (
 			`id` int(11) NOT NULL auto_increment,
 			`user_id` int(11) NOT NULL default '0',
 			`id_article` int(11) NOT NULL default '0',
@@ -507,7 +507,7 @@ elseif( $step == 2 )
 		) ENGINE=MyISAM", __LINE__, __FILE__); 
 
 		//Pages
-		$Sql->Query_inject("CREATE TABLE `phpboost_pages` (
+		$Sql->query_inject("CREATE TABLE `phpboost_pages` (
 		  `id` int(11) NOT NULL auto_increment,
 		  `title` varchar(255) NOT NULL default '',
 		  `encoded_title` varchar(255) NOT NULL default '',
@@ -527,7 +527,7 @@ elseif( $step == 2 )
 		  KEY `id` (`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__); 
 
-		$Sql->Query_inject("CREATE TABLE `phpboost_pages_cats` (
+		$Sql->query_inject("CREATE TABLE `phpboost_pages_cats` (
 		  `id` int(11) NOT NULL auto_increment,
 		  `id_page` int(11) NOT NULL default '0',
 		  `id_parent` int(11) NOT NULL default '0',
@@ -565,20 +565,20 @@ elseif( $step == 3 )
 {
 	if( $go_to_next_step )
 	{
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "articles` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "articles` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "articles` CHANGE `nbr_com` `nbr_com` INT( 11 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "articles` CHANGE `timestamp` `timestamp` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "articles` ADD `visible` TINYINT( 1 ) NOT NULL AFTER `timestamp`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "articles` ADD `start` INT NOT NULL AFTER `visible`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "articles` ADD `end` INT NOT NULL AFTER `start`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "articles` DROP `aprob`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "articles` ADD `icon` VARCHAR( 255 ) NOT NULL AFTER `contents`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "articles` CHANGE `compt` `views` MEDIUMINT( 9 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "articles` CHANGE `votes` `users_note` TEXT NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "articles` DROP INDEX `id`, ADD INDEX `idcat` ( `idcat` )", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` CHANGE `nbr_com` `nbr_com` INT( 11 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` CHANGE `timestamp` `timestamp` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` ADD `visible` TINYINT( 1 ) NOT NULL AFTER `timestamp`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` ADD `start` INT NOT NULL AFTER `visible`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` ADD `end` INT NOT NULL AFTER `start`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` DROP `aprob`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` ADD `icon` VARCHAR( 255 ) NOT NULL AFTER `contents`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` CHANGE `compt` `views` MEDIUMINT( 9 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` CHANGE `votes` `users_note` TEXT NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` DROP INDEX `id`, ADD INDEX `idcat` ( `idcat` )", __LINE__, __FILE__);
 		
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "articles_cats` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "articles_cats` (
 			`id` int(11) NOT NULL auto_increment,
 			`id_left` int(11) NOT NULL default '0',
 			`id_right` int(11) NOT NULL default '0',
@@ -596,16 +596,16 @@ elseif( $step == 3 )
 
 		$i = 1;
 		$j = 2;
-		$result = $Sql->Query_while("SELECT * FROM ".PREFIX."admin_articles", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		$result = $Sql->query_while("SELECT * FROM ".PREFIX."admin_articles", __LINE__, __FILE__);
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$aprob = ($row['aprob'] == 1) ? 0 : 1;
 			
-			$Sql->Query_inject("INSERT INTO ".PREFIX."articles_cats (id, id_left, id_right, level, name, contents, nbr_articles_visible, nbr_articles_unvisible, icon, aprob, auth) VALUES ('" . $row['idcat'] . "', '" . $i . "', '" . $j . "', '0', '" . addslashes($row['cat']) . "', '" . addslashes($row['contenu']) . "', '0', '0', '', '" . $aprob . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:3;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."articles_cats (id, id_left, id_right, level, name, contents, nbr_articles_visible, nbr_articles_unvisible, icon, aprob, auth) VALUES ('" . $row['idcat'] . "', '" . $i . "', '" . $j . "', '0', '" . addslashes($row['cat']) . "', '" . addslashes($row['contenu']) . "', '0', '0', '', '" . $aprob . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:3;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}')", __LINE__, __FILE__);
 			$i += 2;
 			$j += 2;
 		}
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_articles`", __LINE__, __FILE__);
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_articles`", __LINE__, __FILE__);
 
 		redirect(HOST . FILE . add_lang('?step=4', true));
 	}
@@ -625,9 +625,9 @@ elseif( $step == 4 )
 	if( $go_to_next_step )
 	{
 		//Calendrier.
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "calendar` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "calendar` CHANGE `nbr_com` `nbr_com` INT( 11 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "calendar` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "calendar` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "calendar` CHANGE `nbr_com` `nbr_com` INT( 11 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "calendar` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__); 
 		redirect(HOST . FILE . add_lang('?step=5', true));
 	}
 	$Template->Assign_block_vars('calendar_update', array());
@@ -645,34 +645,34 @@ elseif( $step == 5 )
 {
 	if( $go_to_next_step )
 	{
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "forum_config`", __LINE__, __FILE__); 
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "forum_alerts` ", __LINE__, __FILE__); 		
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "history` DROP `script`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "history` CHANGE `type` `action` SMALLINT( 6 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "history` DROP INDEX `user_id`, ADD INDEX `user_id` ( `user_id` )", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "history` RENAME `" . PREFIX . "forum_history`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_track` ADD `pm` TINYINT( 1 ) NOT NULL AFTER `user_id`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_track` ADD `mail` TINYINT( 1 ) NOT NULL AFTER `pm`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_track` DROP INDEX `idtopic`, ADD UNIQUE `idtopic` ( `idtopic` , `user_id` )", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_poll` DROP INDEX `idtopic`, ADD UNIQUE `idtopic` ( `idtopic` )", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_topics` CHANGE `nbr_vus` `nbr_views` MEDIUMINT( 9 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_topics` ADD `display_msg` TINYINT( 1 ) UNSIGNED NOT NULL AFTER `aprob`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_msg` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_msg` ADD `user_ip` VARCHAR( 50 ) NOT NULL AFTER `user_id_edit`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_cats` ADD `id_left` INT NOT NULL AFTER `id`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_cats` ADD `id_right` INT NOT NULL AFTER `id_left`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_cats` ADD `level` INT NOT NULL AFTER `id_right`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_cats` CHANGE `status` `status` TINYINT( 1 ) DEFAULT '1' NOT NULL ", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_cats` CHANGE `secure` `auth` TEXT NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_cats` ADD INDEX `id_left` ( `id_left` )", __LINE__, __FILE__); 
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "forum_config`", __LINE__, __FILE__); 
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "forum_alerts` ", __LINE__, __FILE__); 		
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "history` DROP `script`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "history` CHANGE `type` `action` SMALLINT( 6 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "history` DROP INDEX `user_id`, ADD INDEX `user_id` ( `user_id` )", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "history` RENAME `" . PREFIX . "forum_history`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_track` ADD `pm` TINYINT( 1 ) NOT NULL AFTER `user_id`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_track` ADD `mail` TINYINT( 1 ) NOT NULL AFTER `pm`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_track` DROP INDEX `idtopic`, ADD UNIQUE `idtopic` ( `idtopic` , `user_id` )", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_poll` DROP INDEX `idtopic`, ADD UNIQUE `idtopic` ( `idtopic` )", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_topics` CHANGE `nbr_vus` `nbr_views` MEDIUMINT( 9 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_topics` ADD `display_msg` TINYINT( 1 ) UNSIGNED NOT NULL AFTER `aprob`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_msg` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_msg` ADD `user_ip` VARCHAR( 50 ) NOT NULL AFTER `user_id_edit`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_cats` ADD `id_left` INT NOT NULL AFTER `id`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_cats` ADD `id_right` INT NOT NULL AFTER `id_left`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_cats` ADD `level` INT NOT NULL AFTER `id_right`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_cats` CHANGE `status` `status` TINYINT( 1 ) DEFAULT '1' NOT NULL ", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_cats` CHANGE `secure` `auth` TEXT NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_cats` ADD INDEX `id_left` ( `id_left` )", __LINE__, __FILE__); 
 		
 		$i = 1;
 		$j = 2;
 		$start = false;
 		$right = array();
 		$current_cat = 0;
-		$result = $Sql->Query_while("SELECT * FROM ".PREFIX."forum_cats ORDER BY `class`", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		$result = $Sql->query_while("SELECT * FROM ".PREFIX."forum_cats ORDER BY `class`", __LINE__, __FILE__);
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			if( $row['type'] == 0 && $start )
 			{	
@@ -680,7 +680,7 @@ elseif( $step == 5 )
 				$j += 1;
 			}
 			$aprob = ($row['aprob'] == 1) ? 0 : 1;
-			$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_left = '" . $i . "', id_right = '" . $j . "', level = '" . $row['type'] . "', aprob = '" . $aprob . "', auth = 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:7;}' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."forum_cats SET id_left = '" . $i . "', id_right = '" . $j . "', level = '" . $row['type'] . "', aprob = '" . $aprob . "', auth = 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:7;}' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			$i += 2;			
 			$j += 2;
 				
@@ -696,12 +696,12 @@ elseif( $step == 5 )
 				$right[$current_cat] += 2;
 		}
 		foreach($right as $idcat => $right_edge)
-			$Sql->Query_inject("UPDATE ".PREFIX."forum_cats SET id_right = '" . $right_edge . "' WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."forum_cats SET id_right = '" . $right_edge . "' WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_cats` DROP `class`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "forum_cats` DROP `type`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_cats` DROP `class`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_cats` DROP `type`", __LINE__, __FILE__); 
 				
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "forum_alerts` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "forum_alerts` (
 		`id` mediumint(11) NOT NULL auto_increment,
 		`idcat` int(11) NOT NULL default '0',
 		`idtopic` int(11) NOT NULL default '0',
@@ -732,7 +732,7 @@ elseif( $step == 6 )
 {
 	if( $go_to_next_step )
 	{
-		$Sql->Query_inject("CREATE TABLE `phpboost_gallery` (
+		$Sql->query_inject("CREATE TABLE `phpboost_gallery` (
 		`id` int(11) NOT NULL auto_increment,
 		`idcat` int(11) NOT NULL default '0',
 		`name` varchar(255) NOT NULL default '',
@@ -753,7 +753,7 @@ elseif( $step == 6 )
 		KEY `idcat` (`idcat`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 
-		$Sql->Query_inject("CREATE TABLE `phpboost_gallery_cats` (
+		$Sql->query_inject("CREATE TABLE `phpboost_gallery_cats` (
 		`id` int(11) NOT NULL auto_increment,
 		`id_left` int(11) NOT NULL default '0',
 		`id_right` int(11) NOT NULL default '0',
@@ -769,28 +769,28 @@ elseif( $step == 6 )
 		KEY `id_left` (`id_left`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 
-		$result = $Sql->Query_while("SELECT * FROM ".PREFIX."album", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		$result = $Sql->query_while("SELECT * FROM ".PREFIX."album", __LINE__, __FILE__);
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$image_name = explode('/', $row['large']);
 			$image_infos = getimagesize('../album/' . $image_name[1]);
 			
 			$aprob = ($row['aprob'] == 1) ? 0 : 1;
 			
-			$Sql->Query_inject("INSERT INTO ".PREFIX."gallery (id, idcat, name, path, width, height, weight, user_id, aprob, views, timestamp, users_note, nbrnote, note, nbr_com, lock_com) VALUES ('" . $row['idphoto'] . "', '" . $row['cat'] . "', '" . addslashes($row['name']) . "', '" . addslashes($image_name[1]) . "', '" . $image_infos[0] . "', '" . $image_infos[1] . "' , '" . filesize('../album/' . $image_name[1]) . "', '" . $row['user'] . "', '" . $aprob . "', '" . $row['compt'] . "', '" . $row['timestamp'] . "', '" . $row['user_id'] . "', '" . $row['nbrnote'] . "', '" . $row['note'] . "', '" . $row['nbr_com'] . "', '0')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."gallery (id, idcat, name, path, width, height, weight, user_id, aprob, views, timestamp, users_note, nbrnote, note, nbr_com, lock_com) VALUES ('" . $row['idphoto'] . "', '" . $row['cat'] . "', '" . addslashes($row['name']) . "', '" . addslashes($image_name[1]) . "', '" . $image_infos[0] . "', '" . $image_infos[1] . "' , '" . filesize('../album/' . $image_name[1]) . "', '" . $row['user'] . "', '" . $aprob . "', '" . $row['compt'] . "', '" . $row['timestamp'] . "', '" . $row['user_id'] . "', '" . $row['nbrnote'] . "', '" . $row['note'] . "', '" . $row['nbr_com'] . "', '0')", __LINE__, __FILE__);
 		}
 
 		$i = 1;
 		$j = 2;
-		$result = $Sql->Query_while("SELECT * FROM ".PREFIX."admin_albumcat", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		$result = $Sql->query_while("SELECT * FROM ".PREFIX."admin_albumcat", __LINE__, __FILE__);
+		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$Sql->Query_inject("INSERT INTO ".PREFIX."gallery_cats (id, id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES ('" . $row['idcat'] . "', '" . $i . "', '" . $j . "', '0', '" . addslashes($row['cat']) . "', '', '0', '0', '1', '1', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:3;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."gallery_cats (id, id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES ('" . $row['idcat'] . "', '" . $i . "', '" . $j . "', '0', '" . addslashes($row['cat']) . "', '', '0', '0', '1', '1', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:3;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}')", __LINE__, __FILE__);
 			$i += 2;
 			$j += 2;
 		}
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "album`", __LINE__, __FILE__); 
-		$Sql->Query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_albumcat`", __LINE__, __FILE__); 
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "album`", __LINE__, __FILE__); 
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_albumcat`", __LINE__, __FILE__); 
 
 		redirect(HOST . FILE . add_lang('?step=7', true));
 	}
@@ -821,9 +821,9 @@ elseif( $step == 7 )
 {
 	if( $go_to_next_step )
 	{
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "livreor` CHANGE `login` `login` VARCHAR( 255 ) DEFAULT '' NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "livreor` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "livreor` RENAME `" . PREFIX . "guestbook`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "livreor` CHANGE `login` `login` VARCHAR( 255 ) DEFAULT '' NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "livreor` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "livreor` RENAME `" . PREFIX . "guestbook`", __LINE__, __FILE__); 
 		redirect(HOST . FILE . add_lang('?step=8', true));
 	}
 	$Template->Assign_block_vars('guestbook_update', array());
@@ -841,30 +841,30 @@ elseif( $step == 8 )
 {
 	if( $go_to_next_step )
 	{
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` ADD PRIMARY KEY ( `id` ) ", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` DROP INDEX `id`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` ADD `idcat` INT NOT NULL AFTER `id`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` ADD INDEX `idcat` ( `idcat` )", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` ADD `extend_contents` TEXT NOT NULL AFTER `contents`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` ADD `archive` TINYINT( 1 ) NOT NULL AFTER `extend_contents`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` CHANGE `timestamp` `timestamp` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` ADD `visible` TINYINT( 1 ) NOT NULL AFTER `timestamp`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` ADD `start` INT NOT NULL AFTER `visible`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` ADD `end` INT NOT NULL AFTER `start`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` DROP `aprob`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` CHANGE `photos` `img` VARCHAR( 250 ) NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "news` CHANGE `nbr_com` `nbr_com` INT( 11 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("UPDATE `" . PREFIX . "news` SET visible = 1", __LINE__, __FILE__); 
-		$Sql->Query_inject("CREATE TABLE `" . PREFIX . "news_cat` (
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` ADD PRIMARY KEY ( `id` ) ", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` DROP INDEX `id`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` ADD `idcat` INT NOT NULL AFTER `id`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` ADD INDEX `idcat` ( `idcat` )", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` ADD `extend_contents` TEXT NOT NULL AFTER `contents`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` ADD `archive` TINYINT( 1 ) NOT NULL AFTER `extend_contents`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` CHANGE `timestamp` `timestamp` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` ADD `visible` TINYINT( 1 ) NOT NULL AFTER `timestamp`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` ADD `start` INT NOT NULL AFTER `visible`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` ADD `end` INT NOT NULL AFTER `start`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` DROP `aprob`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` CHANGE `photos` `img` VARCHAR( 250 ) NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` CHANGE `nbr_com` `nbr_com` INT( 11 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("UPDATE `" . PREFIX . "news` SET visible = 1", __LINE__, __FILE__); 
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "news_cat` (
 			`id` int(11) NOT NULL auto_increment,
 			`name` varchar(150) NOT NULL default '',
 			`contents` text NOT NULL,
 			`icon` varchar(255) NOT NULL default '',
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__); 
-		$Sql->Query_inject("INSERT INTO `" . PREFIX . "news_cat` (`id`, `name`, `contents`, `icon`) VALUES (1, 'Test', 'Cat&eacute;gorie de test', 'news.png')", __LINE__, __FILE__);  
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "news_cat` (`id`, `name`, `contents`, `icon`) VALUES (1, 'Test', 'Cat&eacute;gorie de test', 'news.png')", __LINE__, __FILE__);  
 
 		redirect(HOST . FILE . add_lang('?step=9', true));
 	}
@@ -900,7 +900,7 @@ elseif( $step == 9 )
 						$contents = preg_replace('`<\?php .* include_once\(\'../kernel/footer.php\'\); \?>`isU', '', $contents);
 						$contents = preg_replace('`<!-- START -->(.*)<!-- END -->`is', '$1', $contents);
 						$contents = trim($contents);
-						$Sql->Query_inject("INSERT INTO ".PREFIX."pages ('title', 'encoded_title', 'contents', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'user_id', 'timestamp', 'activ_com', 'nbr_com', 'lock_com', 'redirect') VALUES ('" . $title . "', '" . str_replace('.php', '', $file) . "', '" . $contents . "', '', '0', '0', '0', '1', '1', '" . time() . "' . '1', '0', '0', '0')", __LINE__, __FILE__);
+						$Sql->query_inject("INSERT INTO ".PREFIX."pages ('title', 'encoded_title', 'contents', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'user_id', 'timestamp', 'activ_com', 'nbr_com', 'lock_com', 'redirect') VALUES ('" . $title . "', '" . str_replace('.php', '', $file) . "', '" . $contents . "', '', '0', '0', '0', '1', '1', '" . time() . "' . '1', '0', '0', '0')", __LINE__, __FILE__);
 					}
 				}
 			}
@@ -922,8 +922,8 @@ elseif( $step == 10 )
 {
 	if( $go_to_next_step )
 	{
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "shoutbox` CHANGE `user_id` `user_id` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "shoutbox` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "shoutbox` CHANGE `user_id` `user_id` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "shoutbox` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
 		redirect(HOST . FILE . add_lang('?step=11', true));
 	}
 	$Template->Assign_block_vars('shoutbox_update', array());
@@ -941,23 +941,23 @@ elseif( $step == 11 )
 {
 	if( $go_to_next_step )
 	{
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "web` CHANGE `idcat` `idcat_tmp` INT( 11 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "web` ADD `idcat` INT NOT NULL AFTER `id`", __LINE__, __FILE__); 
-		$Sql->Query_inject("UPDATE `" . PREFIX . "web` SET idcat = idcat_tmp", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "web` DROP `idcat_tmp`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "web` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "web` CHANGE `user_id` `users_note` TEXT NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "web` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "web` CHANGE `nbr_com` `nbr_com` INT( 11 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "web` DROP INDEX `idcat`, ADD INDEX `idcat` ( `idcat` )", __LINE__, __FILE__);  
-		$Sql->Query_inject("UPDATE `" . PREFIX . "admin_web` SET id = idcat", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_web` DROP `idcat`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_web` CHANGE `cat` `name` VARCHAR( 150 ) NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_web` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_web` ADD `icon` VARCHAR( 255 ) NOT NULL AFTER `contents`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_web` ADD `secure` TINYINT( 1 ) NOT NULL AFTER `aprob`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_web` DROP INDEX `idcat` , ADD INDEX `class` ( `class` ) ", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_web` RENAME `" . PREFIX . "web_cat`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "web` CHANGE `idcat` `idcat_tmp` INT( 11 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "web` ADD `idcat` INT NOT NULL AFTER `id`", __LINE__, __FILE__); 
+		$Sql->query_inject("UPDATE `" . PREFIX . "web` SET idcat = idcat_tmp", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "web` DROP `idcat_tmp`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "web` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "web` CHANGE `user_id` `users_note` TEXT NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "web` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "web` CHANGE `nbr_com` `nbr_com` INT( 11 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "web` DROP INDEX `idcat`, ADD INDEX `idcat` ( `idcat` )", __LINE__, __FILE__);  
+		$Sql->query_inject("UPDATE `" . PREFIX . "admin_web` SET id = idcat", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_web` DROP `idcat`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_web` CHANGE `cat` `name` VARCHAR( 150 ) NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_web` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_web` ADD `icon` VARCHAR( 255 ) NOT NULL AFTER `contents`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_web` ADD `secure` TINYINT( 1 ) NOT NULL AFTER `aprob`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_web` DROP INDEX `idcat` , ADD INDEX `class` ( `class` ) ", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_web` RENAME `" . PREFIX . "web_cat`", __LINE__, __FILE__); 
 
 		redirect(HOST . FILE . add_lang('?step=12', true));
 	}
@@ -976,29 +976,29 @@ elseif( $step == 12 )
 {
 	if( $go_to_next_step )
 	{
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` CHANGE `idcat` `idcat_tmp` INT( 11 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` ADD `idcat` INT NOT NULL AFTER `id`", __LINE__, __FILE__); 
-		$Sql->Query_inject("UPDATE `" . PREFIX . "download` SET idcat = idcat_tmp", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` DROP `idcat_tmp`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` CHANGE `user_id` `users_note` TEXT NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` CHANGE `timestamp` `timestamp` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` ADD `visible` TINYINT( 1 ) NOT NULL AFTER `timestamp`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` ADD `start` INT NOT NULL AFTER `visible`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` ADD `end` INT NOT NULL AFTER `start`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` ADD `user_id` INT NOT NULL AFTER `end`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` DROP `aprob`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` CHANGE `nbr_com` `nbr_com` INT( 11 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "download` DROP INDEX `idcat` , ADD INDEX `idcat` ( `idcat` )", __LINE__, __FILE__);
-		$Sql->Query_inject("UPDATE `" . PREFIX . "admin_download` SET id = idcat", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_download` DROP `idcat`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_download` CHANGE `cat` `name` VARCHAR( 150 ) NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_download` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_download` ADD `icon` VARCHAR( 255 ) NOT NULL AFTER `contents`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_download` ADD `secure` TINYINT( 1 ) NOT NULL AFTER `aprob`", __LINE__, __FILE__); 
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_download` DROP INDEX `idcat` , ADD INDEX `class` ( `class` ) ", __LINE__, __FILE__);
-		$Sql->Query_inject("ALTER TABLE `" . PREFIX . "admin_download` RENAME `" . PREFIX . "download_cat`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` CHANGE `idcat` `idcat_tmp` INT( 11 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` ADD `idcat` INT NOT NULL AFTER `id`", __LINE__, __FILE__); 
+		$Sql->query_inject("UPDATE `" . PREFIX . "download` SET idcat = idcat_tmp", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` DROP `idcat_tmp`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` CHANGE `user_id` `users_note` TEXT NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` CHANGE `timestamp` `timestamp` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` ADD `visible` TINYINT( 1 ) NOT NULL AFTER `timestamp`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` ADD `start` INT NOT NULL AFTER `visible`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` ADD `end` INT NOT NULL AFTER `start`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` ADD `user_id` INT NOT NULL AFTER `end`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` DROP `aprob`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` CHANGE `nbr_com` `nbr_com` INT( 11 ) UNSIGNED DEFAULT '0' NOT NULL", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` DROP INDEX `idcat` , ADD INDEX `idcat` ( `idcat` )", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE `" . PREFIX . "admin_download` SET id = idcat", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_download` DROP `idcat`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_download` CHANGE `cat` `name` VARCHAR( 150 ) NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_download` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_download` ADD `icon` VARCHAR( 255 ) NOT NULL AFTER `contents`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_download` ADD `secure` TINYINT( 1 ) NOT NULL AFTER `aprob`", __LINE__, __FILE__); 
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_download` DROP INDEX `idcat` , ADD INDEX `class` ( `class` ) ", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE `" . PREFIX . "admin_download` RENAME `" . PREFIX . "download_cat`", __LINE__, __FILE__); 
 		
 		redirect(HOST . FILE . add_lang('?step=13', true));
 	}

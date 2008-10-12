@@ -47,23 +47,23 @@ if( !empty($_POST['valid']) )
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
-	$result = $Sql->Query_while("SELECT t.id, tr.pm, tr.mail
+	$result = $Sql->query_while("SELECT t.id, tr.pm, tr.mail
 	FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id
 	WHERE tr.user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
-	while ($row = $Sql->Sql_fetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$pm = (isset($_POST['p' . $row['id']]) && $_POST['p' . $row['id']] == 'on') ? 1 : 0;
 		if( $row['pm'] != $pm )
-			$Sql->Query_inject("UPDATE ".PREFIX."forum_track SET pm = '" . $pm . "' WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."forum_track SET pm = '" . $pm . "' WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);
 		$mail = (isset($_POST['m' . $row['id']]) && $_POST['m' . $row['id']] == 'on') ? 1 : 0;
 		if( $row['mail'] != $mail )
-			$Sql->Query_inject("UPDATE ".PREFIX."forum_track SET mail = '" . $mail . "' WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);	
+			$Sql->query_inject("UPDATE ".PREFIX."forum_track SET mail = '" . $mail . "' WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);	
 		$del = (isset($_POST['d' . $row['id']]) && $_POST['d' . $row['id']] == 'on') ? true : false;
 		if( $del )
-			$Sql->Query_inject("DELETE FROM ".PREFIX."forum_track WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);	
+			$Sql->query_inject("DELETE FROM ".PREFIX."forum_track WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);	
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	redirect(HOST . DIR . '/forum/track.php' . SID2);
 }
@@ -83,7 +83,7 @@ elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s
 	$max_time_msg = forum_limit_time_msg();
 	
 	$nbr_topics_compt = 0;
-	$result = $Sql->Query_while("SELECT m1.login AS login , m2.login AS last_login , t.id , t.title , t.subtitle , t.user_id , t.nbr_msg , t.nbr_views , t.last_user_id , t.last_msg_id , t.last_timestamp , t.type , t.status, t.display_msg, v.last_view_id, p.question, me.last_view_forum, tr.pm, tr.mail, me.last_view_forum
+	$result = $Sql->query_while("SELECT m1.login AS login , m2.login AS last_login , t.id , t.title , t.subtitle , t.user_id , t.nbr_msg , t.nbr_views , t.last_user_id , t.last_msg_id , t.last_timestamp , t.type , t.status, t.display_msg, v.last_view_id, p.question, me.last_view_forum, tr.pm, tr.mail, me.last_view_forum
 	FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $Member->Get_attribute('user_id') . "' AND v.idtopic = t.id
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id
@@ -93,8 +93,8 @@ elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s
 	LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $Member->Get_attribute('user_id') . "'
 	WHERE tr.user_id = '" . $Member->Get_attribute('user_id') . "'
 	ORDER BY t.last_timestamp DESC
-	" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
-	while ($row = $Sql->Sql_fetch_assoc($result))
+	" . $Sql->limit($Pagination->First_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On définit un array pour l'appellation correspondant au type de champ
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
@@ -161,9 +161,9 @@ elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s
 		));
 		$nbr_topics_compt++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
-	$nbr_topics = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."forum_topics t
+	$nbr_topics = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id
 	WHERE tr.user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
@@ -207,12 +207,12 @@ elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s
 	
 	//Listes les utilisateurs en lignes.
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
+	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
 	FROM ".PREFIX."sessions s 
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/track.php'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
@@ -236,7 +236,7 @@ elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 
 	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
 	$Template->Assign_vars(array(

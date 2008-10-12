@@ -46,7 +46,7 @@ if( !empty($_POST['msg_mbr']) ) //Message aux membres.
 	$config_member['activ_avatar'] = retrieve(POST, 'activ_avatar', 0);
 	$config_member['avatar_url'] = retrieve(POST, 'avatar_url', '');
 	
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
 	
 	###### Régénération du cache $CONFIG_MEMBER #######
 	$Cache->Generate_file('member');

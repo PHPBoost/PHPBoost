@@ -49,13 +49,13 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 
 			if( !empty($user_mail) && check_mail($user_mail) )
 			{	
-				$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login = '" . $login . "'", __LINE__, __FILE__);
+				$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login = '" . $login . "'", __LINE__, __FILE__);
 				if( !empty($user_id) ) //Succés mail trouvé, en crée un nouveau mdp, et la clée d'activ et on l'envoi au membre
 				{
 					$new_pass = substr(strhash(uniqid(rand(), true)), 0, 6); //Génération du nouveau mot de pass unique!
 					$activ_pass =  substr(strhash(uniqid(rand(), true)), 0, 30); //Génération de la clée d'activation!
 					
-					$Sql->Query_inject("UPDATE ".PREFIX."member SET activ_pass = '" . $activ_pass . "', new_pass = '" . strhash($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clée d'activation dans la bdd.
+					$Sql->query_inject("UPDATE ".PREFIX."member SET activ_pass = '" . $activ_pass . "', new_pass = '" . strhash($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clée d'activation dans la bdd.
 					
 					include_once('../kernel/framework/io/mail.class.php');
 					$Mail = new Mail();
@@ -106,14 +106,14 @@ if( !$Member->Check_level(MEMBER_LEVEL) )
 	}
 	elseif( !empty($activ_get) && !empty($user_get) && $activ_confirm )
 	{
-		$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE user_id = '" . $user_get . "' AND activ_pass = '" . $activ_get . "'", __LINE__, __FILE__);
+		$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE user_id = '" . $user_get . "' AND activ_pass = '" . $activ_get . "'", __LINE__, __FILE__);
 		if( !empty($user_id) )
 		{
 			//Mise é jour du nouveau password
-			$Sql->Query_inject("UPDATE ".PREFIX."member SET password = new_pass WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."member SET password = new_pass WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 			//Effacement des clées d'activations.
-			$Sql->Query_inject("UPDATE ".PREFIX."member SET activ_pass = '', new_pass = '' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."member SET activ_pass = '', new_pass = '' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 			//Affichage de l'echec
 			redirect(HOST . DIR . '/member/forget.php?error=forget_confirm_change');

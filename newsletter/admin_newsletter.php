@@ -62,17 +62,17 @@ if( $member_list )
 	
 	if( $del_member > 0 )
 	{
-		$member_mail = $Sql->Query("SELECT mail FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
+		$member_mail = $Sql->query("SELECT mail FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
 		if( !empty($member_mail) )
 		{
-			$Sql->Query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
 			$Errorh->Error_handler(sprintf($LANG['newsletter_del_member_success'], $member_mail), E_USER_NOTICE);
 		}
 		else
 			$Errorh->Error_handler($LANG['newsletter_member_does_not_exists'], E_USER_WARNING);
 	}
-	$result = $Sql->Query_while("SELECT id, mail FROM ".PREFIX."newsletter ORDER by id", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	$result = $Sql->query_while("SELECT id, mail FROM ".PREFIX."newsletter ORDER by id", __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 		$Template->Assign_block_vars('member_list.line', array(
 			'MAIL' => $row['mail'],
 			'U_DELETE' => transid('admin_newsletter.php?member_list=1&amp;del_member=' . $row['id'])
@@ -81,7 +81,7 @@ if( $member_list )
 //Si on envoie avec un certain type
 elseif( !empty($type) && $send && !$send_test && !empty($mail_object) && !empty($mail_contents) )
 {
-	$nbr = $Sql->Count_table('newsletter', __LINE__, __FILE__);
+	$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
 	
 	switch($type)
 	{
@@ -122,7 +122,7 @@ elseif( !empty($type) ) //Rédaction
 		$type = ($type == 'html') ? 'html' : 'text';
 	}
 	
-	$nbr = $Sql->Count_table("newsletter", __LINE__, __FILE__);	
+	$nbr = $Sql->count_table("newsletter", __LINE__, __FILE__);	
 		
 	$Template->Assign_block_vars('write', array(
 		'TYPE' => $type,

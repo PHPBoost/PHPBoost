@@ -47,7 +47,7 @@ class GuestbookInterface extends ModuleInterface
 		$guestbook_code = 'global $CONFIG_GUESTBOOK;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_GUESTBOOK = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'guestbook'", __LINE__, __FILE__));
+		$CONFIG_GUESTBOOK = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'guestbook'", __LINE__, __FILE__));
 		$CONFIG_GUESTBOOK = is_array($CONFIG_GUESTBOOK) ? $CONFIG_GUESTBOOK : array();
 		
 		if(isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']))
@@ -57,16 +57,16 @@ class GuestbookInterface extends ModuleInterface
 		
 		$guestbook_code .= "\n\n" . 'global $_guestbook_rand_msg;' . "\n";
 		$guestbook_code .= "\n" . '$_guestbook_rand_msg = array();' . "\n";
-		$result = $Sql->Query_while("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, g.contents
+		$result = $Sql->query_while("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, g.contents
 		FROM ".PREFIX."guestbook g
 		LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id
 		ORDER BY g.timestamp DESC 
-		" . $Sql->Sql_limit(0, 10), __LINE__, __FILE__);	
-		while ($row = $Sql->Sql_fetch_assoc($result))
+		" . $Sql->limit(0, 10), __LINE__, __FILE__);	
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$guestbook_code .= '$_guestbook_rand_msg[] = array(\'id\' => ' . var_export($row['id'], true) . ', \'contents\' => ' . var_export(substr_html(strip_tags($row['contents']), 0, 150), true) . ', \'user_id\' => ' . var_export($row['user_id'], true) . ', \'login\' => ' . var_export($row['login'], true) . ');' . "\n";
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		
 		return $guestbook_code;
 	}

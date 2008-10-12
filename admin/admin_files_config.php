@@ -52,7 +52,7 @@ if( !empty($_POST['valid'])  )
 	$array_auth_all = Authorizations::Return_array_auth(AUTH_FILES);
 	$CONFIG_UPLOADS['auth_files'] = serialize($array_auth_all);
 	
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_UPLOADS)) . "' WHERE name = 'uploads'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_UPLOADS)) . "' WHERE name = 'uploads'", __LINE__, __FILE__);
 	
 	###### Régénération du cache dela configuration #######
 	$Cache->Generate_file('uploads');

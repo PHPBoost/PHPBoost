@@ -31,8 +31,8 @@ $idurl = retrieve(GET, 'id', 0);
 
 if( !empty($idurl) )
 {
-	$Sql->Query_inject("UPDATE ".PREFIX."download SET count = count + 1 WHERE id = '" . $idurl . "'", __LINE__, __FILE__); //MAJ du counteur.
-	$info_file = $Sql->Query_array("download", "url", "size", "WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."download SET count = count + 1 WHERE id = '" . $idurl . "'", __LINE__, __FILE__); //MAJ du counteur.
+	$info_file = $Sql->query_array("download", "url", "size", "WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
 	
 	if(empty($info_file['url']))
 		$Errorh->Error_handler('e_unexist_file_download', E_USER_REDIRECT);

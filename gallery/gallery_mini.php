@@ -63,13 +63,13 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 	//Aucune photo ne correspond, on fait une requête pour vérifier.
 	if( count($gallery_mini) == 0 ) 
 	{
-		$result = $Sql->Query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth 
+		$result = $Sql->query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth 
 		FROM ".PREFIX."gallery g
 		LEFT JOIN ".PREFIX."gallery_cats gc on gc.id = g.idcat
 		WHERE g.aprob = 1 AND gc.aprob = 1
 		ORDER BY RAND() 
-		" . $Sql->Sql_limit(0, $CONFIG_GALLERY['nbr_pics_mini']), __LINE__, __FILE__);
-		$_array_random_pics = $Sql->Sql_fetch_assoc($result);
+		" . $Sql->limit(0, $CONFIG_GALLERY['nbr_pics_mini']), __LINE__, __FILE__);
+		$_array_random_pics = $Sql->fetch_assoc($result);
 		
 		//Vérification des autorisations.
 		$break = 0;

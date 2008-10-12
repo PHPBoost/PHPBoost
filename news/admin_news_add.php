@@ -79,7 +79,7 @@ if( !empty($_POST['valid']) )
 		else //Ajout des heures et minutes
 			$timestamp = time();
 		
-		$Sql->Query_inject("INSERT INTO ".PREFIX."news (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com) 
+		$Sql->query_inject("INSERT INTO ".PREFIX."news (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com) 
 		VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
 		
         // Feeds Regeneration
@@ -88,8 +88,8 @@ if( !empty($_POST['valid']) )
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
-		$CONFIG_NEWS['nbr_news'] = $Sql->Query("SELECT COUNT(*) AS nbr_news FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
-		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
+		$CONFIG_NEWS['nbr_news'] = $Sql->query("SELECT COUNT(*) AS nbr_news FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 			
 		redirect(HOST . DIR . '/news/admin_news.php');
 	}
@@ -138,8 +138,8 @@ elseif( !empty($_POST['previs']) )
 
 	//Catégories.	
 	$i = 0;
-	$result = $Sql->Query_while("SELECT id, name FROM ".PREFIX."news_cat", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	$result = $Sql->query_while("SELECT id, name FROM ".PREFIX."news_cat", __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
 		$Template->Assign_block_vars('select', array(
@@ -147,7 +147,7 @@ elseif( !empty($_POST['previs']) )
 		));
 		$i++;
 	}	
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
@@ -265,16 +265,16 @@ else
 	
 	//Catégories.	
 	$i = 0;
-	$result = $Sql->Query_while("SELECT id, name 
+	$result = $Sql->query_while("SELECT id, name 
 	FROM ".PREFIX."news_cat", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$Template->Assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '">' . $row['name'] . '</option>'
 		));
 		$i++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');

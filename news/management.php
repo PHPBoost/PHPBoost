@@ -65,13 +65,13 @@ $end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date',
 //Deleting a news
 if( $delete_news > 0 )
 {
-	$news_infos = $Sql->Query_array('news', '*', "WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);	
+	$news_infos = $Sql->query_array('news', '*', "WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);	
 	if( empty($news_infos['title']) )
 		redirect(HOST. DIR . transid('/news/news.php'));
 	
 	if( $news_categories->Check_auth($news_infos['idcat']) )
 	{
-		$Sql->Query_inject("DELETE FROM ".PREFIX."news WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."news WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);
 		//Deleting comments if the news has
 		if( $news_infos['nbr_com'] > 0 )
 		{
@@ -91,7 +91,7 @@ if( $delete_news > 0 )
 }
 elseif( $edit_news_id > 0 )
 {
-	$news_infos = $Sql->Query_array('news', '*', "WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);	
+	$news_infos = $Sql->query_array('news', '*', "WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);	
 	if( empty($news_infos['title']) )
 		redirect(HOST. DIR . transid('/news/news.php'));
 	define('TITLE', $NEWS_LANG['news_management']);
@@ -167,7 +167,7 @@ if( $edit_news_id > 0 )
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->Query_inject("UPDATE ".PREFIX."news SET title = '" . $news_title . "', idcat = '" . $news_cat_id . "', url = '" . $news_url . "', size = '" . $news_size . "', count = '" . $news_hits . "', contents = '" . strparse($news_contents) . "', short_contents = '" . strparse($news_short_contents) . "', image = '" . $news_image . "', timestamp = '" . $news_creation_date->Get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $news_release_date->Get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."news SET title = '" . $news_title . "', idcat = '" . $news_cat_id . "', url = '" . $news_url . "', size = '" . $news_size . "', count = '" . $news_hits . "', contents = '" . strparse($news_contents) . "', short_contents = '" . strparse($news_short_contents) . "', image = '" . $news_image . "', timestamp = '" . $news_creation_date->Get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $news_release_date->Get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);
 			
 			//Updating the number of subnewss in each category
 			if( $news_cat_id != $news_infos['idcat'] )
@@ -352,9 +352,9 @@ elseif( $add_news )
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->Query_inject("INSERT INTO ".PREFIX."news (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $news_title . "', '" . $news_cat_id . "', '" . $news_url . "', '" . $news_size . "', '" . $news_hits . "', '" . strparse($news_contents) . "', '" . strparse($news_short_contents) . "', '" . $news_image . "', '" . $news_creation_date->Get_timestamp() . "', '" . ($ignore_release_date ? 0 : $news_release_date->Get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."news (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $news_title . "', '" . $news_cat_id . "', '" . $news_url . "', '" . $news_size . "', '" . $news_hits . "', '" . strparse($news_contents) . "', '" . strparse($news_short_contents) . "', '" . $news_image . "', '" . $news_creation_date->Get_timestamp() . "', '" . ($ignore_release_date ? 0 : $news_release_date->Get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
 			
-			$new_id_news = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."news");
+			$new_id_news = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."news");
 			
 			//Updating the number of subnewss in each category
 			if( $news_cat_id != $news_infos['idcat'] )

@@ -49,7 +49,7 @@ if( $guestbook && empty($id_get) ) //Enregistrement
 		if( $Member->Check_level($CONFIG_GUESTBOOK['guestbook_auth']) )
 		{
 			//Mod anti-flood
-			$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->Query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."guestbook WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+			$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."guestbook WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
 			if( !empty($check_time) )
 			{			
 				if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcul la fin du delai.	
@@ -62,8 +62,8 @@ if( $guestbook && empty($id_get) ) //Enregistrement
 			if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
 				redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
-			$Sql->Query_inject("INSERT INTO ".PREFIX."guestbook (contents,login,user_id,timestamp) VALUES('" . $guestbook_contents . "', '" . $guestbook_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
-			$last_msg_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."guestbook"); //Dernier message inséré.
+			$Sql->query_inject("INSERT INTO ".PREFIX."guestbook (contents,login,user_id,timestamp) VALUES('" . $guestbook_contents . "', '" . $guestbook_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
+			$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."guestbook"); //Dernier message inséré.
 			
 			redirect(HOST . SCRIPT . SID2 . '#m' . $last_msg_id);
 		}
@@ -79,7 +79,7 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 		'guestbook'=> 'guestbook/guestbook.tpl'
 	));
 
-	$user_id = (int)$Sql->Query("SELECT user_id FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+	$user_id = (int)$Sql->query("SELECT user_id FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	
 	$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNCHANGE);
 	$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
@@ -130,15 +130,15 @@ elseif( !empty($id_get) ) //Edition + suppression!
 	$edit = retrieve(GET, 'edit', false);
 	$update = retrieve(GET, 'update', false);
 	
-	$row = $Sql->Query_array('guestbook', '*', 'WHERE id="' . $id_get . '"', __LINE__, __FILE__);
+	$row = $Sql->query_array('guestbook', '*', 'WHERE id="' . $id_get . '"', __LINE__, __FILE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
 	if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 	{
 		if( $del ) //Suppression.
 		{
-			$Sql->Query_inject("DELETE FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
-			$previous_id = $Sql->Query("SELECT MAX(id) FROM ".PREFIX."guestbook", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+			$previous_id = $Sql->query("SELECT MAX(id) FROM ".PREFIX."guestbook", __LINE__, __FILE__);
 			
 			$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
 			
@@ -191,7 +191,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 				if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
 					redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
-				$Sql->Query_inject("UPDATE ".PREFIX."guestbook SET contents = '" . $guestbook_contents . "', login = '" . $guestbook_pseudo . "' WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."guestbook SET contents = '" . $guestbook_contents . "', login = '" . $guestbook_pseudo . "' WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 				
 				$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
 			
@@ -249,7 +249,7 @@ else //Affichage.
 	if( !empty($errstr) )
 		$Errorh->Error_handler($errstr, E_USER_NOTICE);
 	
-	$nbr_guestbook = $Sql->Count_table('guestbook', __LINE__, __FILE__);
+	$nbr_guestbook = $Sql->count_table('guestbook', __LINE__, __FILE__);
 	//On crée une pagination si le nombre de msg est trop important.
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
@@ -276,14 +276,14 @@ else //Affichage.
 	//Gestion des rangs.	
 	$Cache->Load_file('ranks');
 	$j = 0;
-	$result = $Sql->Query_while("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, g.contents
+	$result = $Sql->query_while("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, g.contents
 	FROM ".PREFIX."guestbook g
 	LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id
 	LEFT JOIN ".PREFIX."sessions s ON s.user_id = g.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 	GROUP BY g.id
 	ORDER BY g.timestamp DESC 
-	" . $Sql->Sql_limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);	
-	while ($row = $Sql->Sql_fetch_assoc($result))
+	" . $Sql->limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);	
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
 		$edit = '';
@@ -414,7 +414,7 @@ else //Affichage.
 		));
 		$j++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 		
 	$Template->Pparse('guestbook'); 
 }

@@ -39,7 +39,7 @@ class AdministratorAlertService
 		global $Sql;
 		
 		//Selection query
-		$result = $Sql->Query_while("SELECT id, entitled, fixing_url, current_status, id_in_module, identifier, type, priority, creation_date, description
+		$result = $Sql->query_while("SELECT id, entitled, fixing_url, current_status, id_in_module, identifier, type, priority, creation_date, description
 		FROM " . PREFIX . EVENTS_TABLE_NAME . "
 		WHERE id = '" . $alert_id . "'
 		ORDER BY creation_date DESC", __LINE__, __FILE__);
@@ -77,11 +77,11 @@ class AdministratorAlertService
 		{
 			$array_result = array();
 			$where_clause = "contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . implode($criterias, " AND ");
-			$result = $Sql->Query_while("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
+			$result = $Sql->query_while("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
 			FROM " . PREFIX . EVENTS_TABLE_NAME . "
 			WHERE " . $where_clause, __LINE__, __FILE__);
 			
-			while($row = $Sql->Sql_fetch_assoc($result) )
+			while($row = $Sql->fetch_assoc($result) )
 			{
 				$alert = new AdministratorAlert();
 				$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
@@ -99,20 +99,20 @@ class AdministratorAlertService
 	{
         global $Sql;
         
-        $result = $Sql->Query_while(
+        $result = $Sql->query_while(
             "SELECT id, entitled, fixing_url, current_status, creation_date, id_in_module, priority, identifier, type, description
     		FROM " . PREFIX . EVENTS_TABLE_NAME . "
-    		WHERE identifier = '" . addslashes($identifier) . "'" . (!empty($type) ? " AND type = '" . addslashes($type) . "'" : '') . " ORDER BY creation_date DESC " . $Sql->Sql_limit(0, 1) . ";"
+    		WHERE identifier = '" . addslashes($identifier) . "'" . (!empty($type) ? " AND type = '" . addslashes($type) . "'" : '') . " ORDER BY creation_date DESC " . $Sql->limit(0, 1) . ";"
             , __LINE__, __FILE__);
             
-		if( $row = $Sql->Sql_fetch_assoc($result) )
+		if( $row = $Sql->fetch_assoc($result) )
 		{
             $alert = new AdministratorAlert();
 			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
             
 			return $alert;
         }
-        $Sql->Close($result);
+        $Sql->query_close($result);
         
         return null;
 	}
@@ -125,19 +125,19 @@ class AdministratorAlertService
 		$array_result = array();
 		
 		//On liste les alertes
-		$result = $Sql->Query_while("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
+		$result = $Sql->query_while("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
 		FROM " . PREFIX . EVENTS_TABLE_NAME . "
 		WHERE contribution_type = " . ADMINISTRATOR_ALERT_TYPE . "
 		ORDER BY " . $criteria . " " . strtoupper($order) . " " . 
-		$Sql->Sql_limit($begin, $number), __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		$Sql->limit($begin, $number), __LINE__, __FILE__);
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$alert = new AdministratorAlert();
 			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
 			$array_result[] = $alert;
 		}
 		
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		
 		return $array_result;
 	}
@@ -153,7 +153,7 @@ class AdministratorAlertService
 			//This line exists only to be compatible with PHP 4 (we cannot use $var->get_var()->method(), whe have to use a temp var)
 			$creation_date = $alert->get_creation_date();
 			
-			$Sql->Query_inject("UPDATE " . PREFIX . EVENTS_TABLE_NAME . " SET entitled = '" . addslashes($alert->get_entitled()) . "', description = '" . addslashes($alert->get_properties()) . "', fixing_url = '" . addslashes($alert->get_fixing_url()) . "', current_status = '" . $alert->get_status() . "', creation_date = '" . $creation_date->get_timestamp() . "', id_in_module = '" . $alert->get_id_in_module() . "', identifier = '" . addslashes($alert->get_identifier()) . "', type = '" . addslashes($alert->get_type()) . "', priority = '" . $alert->get_priority() . "' WHERE id = '" . $alert->get_id() . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . EVENTS_TABLE_NAME . " SET entitled = '" . addslashes($alert->get_entitled()) . "', description = '" . addslashes($alert->get_properties()) . "', fixing_url = '" . addslashes($alert->get_fixing_url()) . "', current_status = '" . $alert->get_status() . "', creation_date = '" . $creation_date->get_timestamp() . "', id_in_module = '" . $alert->get_id_in_module() . "', identifier = '" . addslashes($alert->get_identifier()) . "', type = '" . addslashes($alert->get_type()) . "', priority = '" . $alert->get_priority() . "' WHERE id = '" . $alert->get_id() . "'", __LINE__, __FILE__);
 			
 			//Regeneration of the member cache file
 			if( $alert->get_must_regenerate_cache() )
@@ -165,8 +165,8 @@ class AdministratorAlertService
 		else //We create it
 		{
 			$creation_date = new Date();
-			$Sql->Query_inject("INSERT INTO " . PREFIX . EVENTS_TABLE_NAME . " (entitled, description, fixing_url, current_status, creation_date, id_in_module, identifier, type, priority) VALUES ('" . addslashes($alert->get_entitled()) . "', '" . addslashes($alert->get_properties()) . "', '" . addslashes($alert->get_fixing_url()) . "', '" . $alert->get_status() . "', '" . $creation_date->get_timestamp() . "', '" . $alert->get_id_in_module() . "', '" . addslashes($alert->get_identifier()) . "', '" . addslashes($alert->get_type()) . "', '" . $alert->get_priority() . "')", __LINE__, __FILE__);
-			$alert->set_id($Sql->Sql_insert_id("SELECT MAX(id) FROM " . PREFIX . EVENTS_TABLE_NAME));
+			$Sql->query_inject("INSERT INTO " . PREFIX . EVENTS_TABLE_NAME . " (entitled, description, fixing_url, current_status, creation_date, id_in_module, identifier, type, priority) VALUES ('" . addslashes($alert->get_entitled()) . "', '" . addslashes($alert->get_properties()) . "', '" . addslashes($alert->get_fixing_url()) . "', '" . $alert->get_status() . "', '" . $creation_date->get_timestamp() . "', '" . $alert->get_id_in_module() . "', '" . addslashes($alert->get_identifier()) . "', '" . addslashes($alert->get_type()) . "', '" . $alert->get_priority() . "')", __LINE__, __FILE__);
+			$alert->set_id($Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . EVENTS_TABLE_NAME));
 
 			//Cache regeneration
 			$Cache->generate_file('member');
@@ -181,7 +181,7 @@ class AdministratorAlertService
 		// If it exists in the data base
 		if( $alert->get_id() > 0 )
 		{			
-			$Sql->Query_inject("DELETE FROM " . PREFIX . EVENTS_TABLE_NAME . " WHERE id = '" . $alert->get_id() . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . EVENTS_TABLE_NAME . " WHERE id = '" . $alert->get_id() . "'", __LINE__, __FILE__);
 			$alert->set_id(0);
 		}
 		//Else it's not present in the database, we have nothing to delete
@@ -192,8 +192,8 @@ class AdministratorAlertService
 	{
 		global $Sql;
 		
-		return array('unread' => $Sql->Query("SELECT count(*) FROM ".PREFIX . EVENTS_TABLE_NAME . " WHERE current_status = '" . ADMIN_ALERT_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__),
-			'all' => $Sql->Query("SELECT count(*) FROM ".PREFIX.EVENTS_TABLE_NAME . " WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__)
+		return array('unread' => $Sql->query("SELECT count(*) FROM ".PREFIX . EVENTS_TABLE_NAME . " WHERE current_status = '" . ADMIN_ALERT_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__),
+			'all' => $Sql->query("SELECT count(*) FROM ".PREFIX.EVENTS_TABLE_NAME . " WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__)
 			);
 	}
 	

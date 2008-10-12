@@ -70,7 +70,7 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 		include_once('../kernel/framework/util/pagination.class.php'); 
 		$Pagination = new Pagination();
 
-		$nbr_msg = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."com WHERE user_id = '" . $memberId . "'", __LINE__, __FILE__);
+		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."com WHERE user_id = '" . $memberId . "'", __LINE__, __FILE__);
 		$Template->Assign_vars(array(
 			'C_START_MSG' => true,
 			'PAGINATION' => $Pagination->Display_pagination('membermsg.php?pmsg=%d', $nbr_msg, 'pmsg', 25, 3),
@@ -78,15 +78,15 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 			'L_ON' => $LANG['on']
 		));
 
-		$result = $Sql->Query_while("SELECT c.timestamp, c.script, c.path, m.login, s.user_id AS connect, c.contents
+		$result = $Sql->query_while("SELECT c.timestamp, c.script, c.path, m.login, s.user_id AS connect, c.contents
 		FROM ".PREFIX."com c
 		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
 		LEFT JOIN ".PREFIX."sessions s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 		WHERE m.user_id = '" . $memberId . "'
 		ORDER BY c.timestamp DESC 
-		" . $Sql->Sql_limit($Pagination->First_msg(25, 'pmsg'), 25), __LINE__, __FILE__);
-		$row = $Sql->Sql_fetch_assoc($result);
-		while($row = $Sql->Sql_fetch_assoc($result) )
+		" . $Sql->limit($Pagination->First_msg(25, 'pmsg'), 25), __LINE__, __FILE__);
+		$row = $Sql->fetch_assoc($result);
+		while($row = $Sql->fetch_assoc($result) )
 		{
 			$Template->Assign_block_vars('msg_list', array(
 				'USER_PSEUDO' => '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $memberId, '-' . $memberId . '.php') . '"><span class="text_strong">' . wordwrap_html($row['login'], 13) . '</span></a>',

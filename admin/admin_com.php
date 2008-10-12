@@ -44,20 +44,20 @@ $Cache->Load_file('com');
 
 //On récupère le nombre de commentaires dans chaque modules.
 $array_com = array();
-$result = $Sql->Query_while("SELECT script, COUNT(*) as total
+$result = $Sql->query_while("SELECT script, COUNT(*) as total
 FROM ".PREFIX."com 
 GROUP BY script", __LINE__, __FILE__);
 
-while($row = $Sql->Sql_fetch_assoc($result) )
+while($row = $Sql->fetch_assoc($result) )
 	$array_com[$row['script']] = $row['total'];
 
-$Sql->Close($result);
+$Sql->query_close($result);
 
 //On crée une pagination si le nombre de commentaires est trop important.
 include_once('../kernel/framework/util/pagination.class.php'); 
 $Pagination = new Pagination();
 
-$nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->Count_table('com', __LINE__, __FILE__);
+$nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->count_table('com', __LINE__, __FILE__);
 $Template->Assign_vars(array(
 	'THEME' => $CONFIG['theme'],
 	'LANG' => $CONFIG['lang'],
@@ -104,15 +104,15 @@ if( is_dir($root) ) //Si le dossier existe
 $Cache->Load_file('ranks');
 
 $cond = !empty($module) ? "WHERE script = '" . $module . "'" : '';
-$result = $Sql->Query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, c.script, c.path, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents
+$result = $Sql->query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, c.script, c.path, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents
 FROM ".PREFIX."com c
 LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
 LEFT JOIN ".PREFIX."sessions s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 " . $cond . "
 GROUP BY c.idcom
 ORDER BY c.timestamp DESC
-" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
-while($row = $Sql->Sql_fetch_assoc($result) )
+" . $Sql->limit($Pagination->First_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
+while($row = $Sql->fetch_assoc($result) )
 {
 	$row['user_id'] = (int)$row['user_id'];
 	$is_guest = ($row['user_id'] === -1);

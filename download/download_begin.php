@@ -40,7 +40,7 @@ $id_cat_for_download = 0;
 
 if( !empty($file_id) )
 {
-	$download_info = $Sql->Query_array('download', '*', "WHERE visible = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
+	$download_info = $Sql->query_array('download', '*', "WHERE visible = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
 	if( empty($download_info['id']) )
 		$Errorh->Error_handler('e_unexist_file_download', E_USER_REDIRECT);
 	$Bread_crumb->Add_link($download_info['title'], transid('download.php?id=' . $file_id, 'download-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php'));

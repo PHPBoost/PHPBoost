@@ -107,7 +107,7 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 	if( !$Member->Check_level($CAT_WEB[$idcat]['secure']) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
-	$nbr_web = $Sql->Query("SELECT COUNT(*) as compt 
+	$nbr_web = $Sql->query("SELECT COUNT(*) as compt 
 	FROM ".PREFIX."web 
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 	
@@ -169,12 +169,12 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 
 	include_once('../kernel/framework/content/note.class.php');
 	$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
-	$result = $Sql->Query_while("SELECT id, title, timestamp, compt, note, nbrnote, nbr_com
+	$result = $Sql->query_while("SELECT id, title, timestamp, compt, note, nbrnote, nbr_com
 	FROM ".PREFIX."web
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
 	ORDER BY " . $sort . " " . $mode . 
-	$Sql->Sql_limit($Pagination->First_msg($CONFIG_WEB['nbr_web_max'], 'p'), $CONFIG_WEB['nbr_web_max']), __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	$Sql->limit($Pagination->First_msg($CONFIG_WEB['nbr_web_max'], 'p'), $CONFIG_WEB['nbr_web_max']), __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		//On reccourci le lien si il est trop long.
 		$row['title'] = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
@@ -189,7 +189,7 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 			'U_WEB_LINK' => transid('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Template->Pparse('web');
 }
@@ -197,10 +197,10 @@ else
 {
 	$Template->Set_filenames(array('web'=> 'web/web.tpl'));
 	
-	$total_link = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."web_cat wc
+	$total_link = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."web_cat wc
 	LEFT JOIN ".PREFIX."web w ON w.idcat = wc.id
 	WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $Member->Get_attribute('level') . "'", __LINE__, __FILE__);
-	$total_cat = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."web_cat WHERE aprob = 1 AND secure <= '" . $Member->Get_attribute('level') . "'", __LINE__, __FILE__);
+	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."web_cat WHERE aprob = 1 AND secure <= '" . $Member->Get_attribute('level') . "'", __LINE__, __FILE__);
 	
 	$edit = '';
 	if( $Member->Check_level(ADMIN_LEVEL) )
@@ -226,15 +226,15 @@ else
 	
 	//Catégorie disponibles	
 	$column_width = floor(100/$CONFIG_WEB['nbr_column']);
-	$result = $Sql->Query_while(
+	$result = $Sql->query_while(
 	"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count
 	FROM ".PREFIX."web_cat aw
 	LEFT JOIN ".PREFIX."web w ON w.idcat = aw.id AND w.aprob = 1
 	WHERE aw.aprob = 1 AND aw.secure <= '" . $Member->Get_attribute('level') . "'
 	GROUP BY aw.id
 	ORDER BY aw.class
-	" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_WEB['nbr_cat_max'], 'p'), $CONFIG_WEB['nbr_cat_max']), __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	" . $Sql->limit($Pagination->First_msg($CONFIG_WEB['nbr_cat_max'], 'p'), $CONFIG_WEB['nbr_cat_max']), __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$Template->Assign_block_vars('cat_list', array(
 			'WIDTH' => $column_width,
@@ -245,7 +245,7 @@ else
 			'U_WEB_CAT' => transid('.php?cat=' . $row['id'], '-' . $row['id'] . '.php')
 		));
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Template->Pparse('web');
 }

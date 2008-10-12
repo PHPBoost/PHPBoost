@@ -38,7 +38,7 @@ $id_move = retrieve(GET, 'move', 0);
 if( $edit_question > 0 )
 {
 	define('TITLE', $FAQ_LANG['question_edition']);
-	$question_infos = $Sql->Query_array("faq", "*", "WHERE id = '" . $edit_question . "'", __LINE__, __FILE__);
+	$question_infos = $Sql->query_array("faq", "*", "WHERE id = '" . $edit_question . "'", __LINE__, __FILE__);
 	$id_cat_for_bread_crumb = $question_infos['idcat'];
 }
 elseif( $cat_of_new_question >= 0 && $new )
@@ -49,7 +49,7 @@ elseif( $cat_of_new_question >= 0 && $new )
 elseif( $id_move > 0 )
 {
 	define('TITLE', $FAQ_LANG['moving_a_question']);
-	$question_infos = $Sql->Query_array("faq", "*", "WHERE id = '" . $id_move . "'", __LINE__, __FILE__);
+	$question_infos = $Sql->query_array("faq", "*", "WHERE id = '" . $id_move . "'", __LINE__, __FILE__);
 	$id_cat_for_bread_crumb = $question_infos['idcat'];
 }
 else
@@ -218,13 +218,13 @@ else
 	}
 	
 	//Questions management
-	$result = $Sql->Query_while("SELECT id, q_order, question, answer
+	$result = $Sql->query_while("SELECT id, q_order, question, answer
 	FROM ".PREFIX."faq
 	WHERE idcat = '" . $id_faq . "' 
 	ORDER BY q_order",
 	__LINE__, __FILE__);
 	
-	$num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
+	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
 	
 	if( $num_rows > 0 || $id_faq == 0 )
 	{
@@ -235,7 +235,7 @@ else
 			'L_DISPLAY_ANSWERS' => addslashes($FAQ_LANG['show_all_answers'])
 		));
 		
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$Template->Assign_block_vars('category.questions', array(
 				'QUESTION' => $row['question'],

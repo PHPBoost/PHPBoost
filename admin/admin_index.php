@@ -129,13 +129,13 @@ $Template->Assign_vars(array(
 ));
 
   
-$result = $Sql->Query_while("SELECT s.user_id, s.level, s.session_ip, s.session_time, s.session_script, s.session_script_get, 
+$result = $Sql->query_while("SELECT s.user_id, s.level, s.session_ip, s.session_time, s.session_script, s.session_script_get, 
 s.session_script_title, m.login 
 FROM ".PREFIX."sessions s
 LEFT JOIN ".PREFIX."member m ON s.user_id = m.user_id
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $Sql->Sql_fetch_assoc($result) )
+while( $row = $Sql->fetch_assoc($result) )
 {
 	//On vérifie que la session ne correspond pas à un robot.
 	$robot = $Session->check_robot($row['session_ip']);
@@ -169,7 +169,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 		'TIME' => gmdate_format('date_format_long', $row['session_time'])
 	));	
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 	
 $Template->Pparse('admin_index'); // traitement du modele
 

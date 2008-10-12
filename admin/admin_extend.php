@@ -64,11 +64,11 @@ $Template->Assign_vars(array(
 
 //Listing des modules disponibles:
 $i = 1;
-$result = $Sql->Query_while("SELECT name 
+$result = $Sql->query_while("SELECT name 
 FROM ".PREFIX."modules
 WHERE activ = 1", __LINE__, __FILE__);
-$nbr_modules = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."modules WHERE activ = 1 AND admin = 1");
-while( $row = $Sql->Sql_fetch_assoc($result) )
+$nbr_modules = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."modules WHERE activ = 1 AND admin = 1");
+while( $row = $Sql->fetch_assoc($result) )
 {
 	$config = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
 	if( is_array($config) )
@@ -86,7 +86,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 		}
 	}
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 //Complétion éventuelle des cases du tableaux.
 if( $i != 0 )

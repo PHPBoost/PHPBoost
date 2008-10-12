@@ -41,7 +41,7 @@ if( $install ) //Installation du module
 	$activ_module = retrieve(POST, $module_name . 'activ', 0);
 	
 	//Vérification de l'unicité du module
-	$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
+	$ckeck_module = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
 	
 	//Installation du module
 	if( !empty($module_name) && empty($ckeck_module) )
@@ -72,16 +72,16 @@ if( $install ) //Installation du module
 		{	
 			$config = trim(str_replace('config=', '', $config), '"');
 			
-			$check_config = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."configs WHERE name = '" . $module_name . "'", __LINE__, __FILE__);
+			$check_config = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."configs WHERE name = '" . $module_name . "'", __LINE__, __FILE__);
 			if( empty($check_config) )
-				$Sql->Query_inject("INSERT INTO ".PREFIX."configs (name, value) VALUES ('" . $module_name . "', '" . addslashes($config) . "');", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."configs (name, value) VALUES ('" . $module_name . "', '" . addslashes($config) . "');", __LINE__, __FILE__);
 			else
 				redirect(HOST . DIR . '/admin/admin_modules_add.php?error=e_config_conflict#errorh');
 		}
 		
 		//Parsage du fichier sql.
 		if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql') )
-			$Sql->Sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
+			$Sql->parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
 		
 		//Parsage du fichier php.
 		if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.php') )
@@ -103,14 +103,14 @@ if( $install ) //Installation du module
 				if( file_exists($module_mini_path) )
 				{
 					$location = addslashes($location);
-					$class = $Sql->Query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-					$Sql->Query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . $module_name . "', '" . $path . "', '" . $location . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1, 0, 0)", __LINE__, __FILE__);
+					$class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
+					$Sql->query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . $module_name . "', '" . $path . "', '" . $location . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1, 0, 0)", __LINE__, __FILE__);
 				}
 			}
 		}
 
 		//Insertion du modules dans la bdd => module installé.
-		$Sql->Query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . $module_name . "', '" . addslashes($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . $activ_module . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . $module_name . "', '" . addslashes($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . $activ_module . "')", __LINE__, __FILE__);
 		
 		//Génération du cache des modules
 		$Cache->Generate_file('modules');
@@ -143,7 +143,7 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 	$error = '';
 	if( is_writable($dir) && is_writable($dir . $module_name) ) //Dossier en écriture, upload possible
 	{
-		$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
+		$ckeck_module = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 		if( empty($ckeck_module) && !is_dir('../' . $module_name) )
 		{
 			include_once('../kernel/framework/io/upload.class.php');
@@ -228,14 +228,14 @@ else
 	//Modules installé
 	$i = 0;
 	$installed_modules = array();
-	$result = $Sql->Query_while("SELECT id, name
+	$result = $Sql->query_while("SELECT id, name
 	FROM ".PREFIX."modules
 	WHERE activ = 1", __LINE__, __FILE__);
 	
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 		$installed_modules[] = $row['name'];
 	
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Modules disponibles
 	$root = '../';

@@ -58,14 +58,14 @@ if( retrieve(GET, 'refresh_unread', false) ) //Suppression d'un message.
 		$contents = '';			
 		//Requête pour compter le nombre de messages non lus.
 		$nbr_msg_not_read = 0;
-		$result = $Sql->Query_while("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
+		$result = $Sql->query_while("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
 		FROM ".PREFIX."forum_topics t
 		LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
 		LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id AND v.user_id = '" . $Member->Get_attribute('user_id') . "'
 		LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
 		WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $unauth_cats . "
 		ORDER BY t.last_timestamp DESC", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 			if( !empty($row['last_view_id']) ) //Calcul de la page du last_view_id réalisé dans topic.php
@@ -90,7 +90,7 @@ if( retrieve(GET, 'refresh_unread', false) ) //Suppression d'un message.
 			$contents .= '<tr><td class="forum_notread" style="width:100%"><a href="topic' . transid('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . addslashes(url_encode_rewrite($row['title']))  . '.php') . '#m' .  $last_msg_id . '"><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a> <a href="topic' . transid('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . addslashes(url_encode_rewrite($row['title']))  . '.php') . '" class="small_link">' . $last_topic_title . '</a></td><td class="forum_notread" style="white-space:nowrap">' . ($row['last_user_id'] != '-1' ? '<a href="../member/member' . transid('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '" class="small_link">' . addslashes($row['login']) . '</a>' : '<em>' . addslashes($LANG['guest']) . '</em>') . '</td><td class="forum_notread" style="white-space:nowrap">' . gmdate_format('date_format', $row['last_timestamp']) . '</td></tr>';
 			$nbr_msg_not_read++;
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 
 		$max_visible_topics = 10;
 		$height_visible_topics = ($nbr_msg_not_read < $max_visible_topics) ? (23 * $nbr_msg_not_read) : 23 * $max_visible_topics;
@@ -110,9 +110,9 @@ elseif( retrieve(GET, 'del', false) ) //Suppression d'un message.
 
 	$idm_get = retrieve(GET, 'idm', '');	
 	//Info sur le message.	
-	$msg = $Sql->Query_array('forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'", __LINE__, __FILE__);	
+	$msg = $Sql->query_array('forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'", __LINE__, __FILE__);	
 	//On va chercher les infos sur le topic	
-	$topic = $Sql->Query_array('forum_topics', 'id', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$topic = $Sql->query_array('forum_topics', 'id', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	if( !empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get ) //Suppression d'un message.
 	{	
 		if( !empty($topic['idcat']) && ($Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $Member->Get_attribute('user_id') == $msg['user_id']) ) //Autorisé à supprimer?
@@ -150,10 +150,10 @@ elseif( !empty($untrack) && $Member->Check_level(MEMBER_LEVEL) ) //Retrait du su
 elseif( !empty($msg_d) )
 {
 	//Vérification de l'appartenance du sujet au membres, ou modo.
-	$topic = $Sql->Query_array("forum_topics", "idcat", "user_id", "display_msg", "WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
+	$topic = $Sql->query_array("forum_topics", "idcat", "user_id", "display_msg", "WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
 	if( (!empty($topic['user_id']) && $Member->Get_attribute('user_id') == $topic['user_id']) || $Member->Check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) )
 	{
-		$Sql->Query_inject("UPDATE ".PREFIX."forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
 		echo ($topic['display_msg']) ? 2 : 1;
 	}	
 }
@@ -164,8 +164,8 @@ elseif( retrieve(GET, 'warning_moderation_panel', false) || retrieve(GET, 'punis
 	if( !empty($login) )
 	{
 		$i = 0;
-		$result = $Sql->Query_while("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		$result = $Sql->query_while("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			if( retrieve(GET, 'warning_moderation_panel', false) )
 				echo '<a href="moderation_forum.php?action=warning&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />';
@@ -181,7 +181,7 @@ elseif( retrieve(GET, 'warning_moderation_panel', false) || retrieve(GET, 'punis
 	else
 		echo $LANG['no_result'];
 	
-	$Sql->Sql_close(); //Fermeture de mysql
+	$Sql->close(); //Fermeture de mysql
 }
 
 ?>

@@ -117,7 +117,7 @@ if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
     $Cache->Generate_file('day');
     
     //Vérification pour empêcher une double mise à jour.
-    $check_update = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."stats WHERE stats_year = '" . gmdate_format('Y', time(), TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m', time(), TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format('d', time(), TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__);
+    $check_update = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."stats WHERE stats_year = '" . gmdate_format('Y', time(), TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m', time(), TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format('d', time(), TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__);
     
     require_once(PATH_TO_ROOT . '/kernel/changeday.php');
 }

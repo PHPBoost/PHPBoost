@@ -38,7 +38,7 @@ if( !empty($_POST['valid'])  )
 	$config_guestbook['guestbook_forbidden_tags'] = isset($_POST['guestbook_forbidden_tags']) ? serialize($_POST['guestbook_forbidden_tags']) : serialize(array());
 	$config_guestbook['guestbook_max_link'] = retrieve(POST, 'guestbook_max_link', -1);
 		
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_guestbook)) . "' WHERE name = 'guestbook'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_guestbook)) . "' WHERE name = 'guestbook'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('guestbook');

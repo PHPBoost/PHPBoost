@@ -51,16 +51,16 @@ foreach( $_WIKI_CATS as $key => $value )
 	if( $value['id_parent'] == 0 )
 		$root .= '<tr><td class="row2"><img src="' . $Template->Module_data_path('wiki') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 }
-$result = $Sql->Query_while("SELECT title, id, encoded_title
+$result = $Sql->query_while("SELECT title, id, encoded_title
 	FROM ".PREFIX."wiki_articles a
 	WHERE id_cat = 0
 	AND a.redirect = 0
 	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
-while( $row = $Sql->Sql_fetch_assoc($result) )
+while( $row = $Sql->fetch_assoc($result) )
 {
 	$root .= '<tr><td class="row2"><img src="' . $Template->Module_data_path('wiki') . '/images/article.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . transid('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 
 $Template->Assign_vars(array(
@@ -73,14 +73,14 @@ $Template->Assign_vars(array(
 ));
 
 $contents = '';
-$result = $Sql->Query_while("SELECT c.id, a.title, a.encoded_title
+$result = $Sql->query_while("SELECT c.id, a.title, a.encoded_title
 FROM ".PREFIX."wiki_cats c
 LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.article_id
 WHERE c.id_parent = 0
 ORDER BY title ASC", __LINE__, __FILE__);
-while( $row = $Sql->Sql_fetch_assoc($result) )
+while( $row = $Sql->fetch_assoc($result) )
 {
-	$sub_cats_number = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 	if( $sub_cats_number > 0 )
 	{	
 		$Template->Assign_block_vars('list', array(
@@ -95,7 +95,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 		));
 	}
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 $Template->Assign_vars(array(
 	'SELECTED_CAT' => 0,
 	'CAT_0' => 'wiki_selected_cat',

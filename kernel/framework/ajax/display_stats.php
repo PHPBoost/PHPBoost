@@ -52,14 +52,14 @@ if( $get_visit_month )
 	$month = !empty($_GET['month']) ? numeric($_GET['month']) : '1';
 	
 	$array_stats = array();
-	$result = $Sql->Query_while("SELECT nbr, stats_day 
+	$result = $Sql->query_while("SELECT nbr, stats_day 
 	FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 	ORDER BY stats_day", __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result))
+	while($row = $Sql->fetch_assoc($result))
 	{
 		$array_stats[$row['stats_day']] = $row['nbr'];
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Nombre de jours pour chaque mois (gestion des années bissextiles)
 	$bissextile = (($year % 4) == 0) ? 29 : 28;
@@ -79,15 +79,15 @@ elseif( $get_visit_year )
 	$year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
 	
 	$array_stats = array();
-	$result = $Sql->Query_while("SELECT SUM(nbr) as total, stats_month
+	$result = $Sql->query_while("SELECT SUM(nbr) as total, stats_month
 	FROM ".PREFIX."stats WHERE stats_year = '" . $year . "'
 	GROUP BY stats_month
 	ORDER BY stats_month", __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result))
+	while($row = $Sql->fetch_assoc($result))
 	{
 		$array_stats[$row['stats_month']] = $row['total'];
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Complément des mois manquant
 	for($i = 1; $i <= 12; $i++)
@@ -106,7 +106,7 @@ elseif( $get_pages_day )
 	$day = !empty($_GET['day']) ? numeric($_GET['day']) : '1';
 	
 	$array_stats = array();
-	$pages_details = sunserialize((string)$Sql->Query("SELECT pages_detail FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'", __LINE__, __FILE__));
+	$pages_details = sunserialize((string)$Sql->query("SELECT pages_detail FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'", __LINE__, __FILE__));
 	if( is_array($pages_details) )
 		foreach($pages_details as $hour => $pages)
 			$array_stats[$hour] = $pages;
@@ -127,14 +127,14 @@ elseif( $get_pages_month )
 	$month = !empty($_GET['month']) ? numeric($_GET['month']) : '1';
 	
 	$array_stats = array();
-	$result = $Sql->Query_while("SELECT pages, stats_day 
+	$result = $Sql->query_while("SELECT pages, stats_day 
 	FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 	ORDER BY stats_day", __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result))
+	while($row = $Sql->fetch_assoc($result))
 	{
 		$array_stats[$row['stats_day']] = $row['pages'];
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Nombre de jours pour chaque mois (gestion des années bissextiles)
 	$bissextile = (($year % 4) == 0) ? 29 : 28;
@@ -154,15 +154,15 @@ elseif( $get_pages_year )
 	$year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
 	
 	$array_stats = array();
-	$result = $Sql->Query_while("SELECT SUM(pages) as total, stats_month
+	$result = $Sql->query_while("SELECT SUM(pages) as total, stats_month
 	FROM ".PREFIX."stats WHERE stats_year = '" . $year . "'
 	GROUP BY stats_month
 	ORDER BY stats_month", __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result))
+	while($row = $Sql->fetch_assoc($result))
 	{
 		$array_stats[$row['stats_month']] = $row['total'];
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Complément des mois manquant
 	for($i = 1; $i <= 12; $i++)
@@ -259,16 +259,16 @@ elseif( $get_theme )
 	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 	
 	$array_stats = array();
-	$result = $Sql->Query_while("SELECT at.theme, COUNT(m.user_theme) AS compt
+	$result = $Sql->query_while("SELECT at.theme, COUNT(m.user_theme) AS compt
 	FROM ".PREFIX."themes at
 	LEFT JOIN ".PREFIX."member m ON m.user_theme = at.theme
 	GROUP BY at.theme", __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result))
+	while($row = $Sql->fetch_assoc($result))
 	{
 		$name = isset($info_theme['name']) ? $info_theme['name'] : $row['theme'];
 		$array_stats[$name] = $row['compt'];
 	}	
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.
@@ -281,11 +281,11 @@ elseif( $get_sex )
 	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 	
 	$array_stats = array();
-	$result = $Sql->Query_while("SELECT count(user_sex) as compt, user_sex
+	$result = $Sql->query_while("SELECT count(user_sex) as compt, user_sex
 	FROM ".PREFIX."member
 	GROUP BY user_sex
 	ORDER BY compt", __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result))
+	while($row = $Sql->fetch_assoc($result))
 	{
 		switch($row['user_sex'])
 		{
@@ -301,7 +301,7 @@ elseif( $get_sex )
 		}
 		$array_stats[$name] = $row['compt'];
 	}	
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Stats->Load_statsdata($array_stats, 'ellipse', 5);
 	//Tracé de l'ellipse.

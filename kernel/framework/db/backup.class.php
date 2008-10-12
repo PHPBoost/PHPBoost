@@ -46,7 +46,7 @@ class Backup
 		global $Sql;
 		
 		if( $this->tables === array() )
-			$this->tables = $Sql->Sql_list_tables();
+			$this->tables = $Sql->list_tables();
 	}
 	
 	//Suppression  des tables
@@ -73,10 +73,10 @@ class Backup
 		{
 			if( in_array($properties['name'], $table_list) || $all_tables )
 			{
-				$result = $Sql->Query_while('SHOW CREATE TABLE ' . $properties['name'], __LINE__, __FILE__);
-				while($row = $Sql->Sql_fetch_row($result))
+				$result = $Sql->query_while('SHOW CREATE TABLE ' . $properties['name'], __LINE__, __FILE__);
+				while($row = $Sql->fetch_row($result))
 					$this->save .=  $row[1] . ';' . "\n\n";
-				$Sql->Close($result);
+				$Sql->query_close($result);
 			}		
 		}
 	}	
@@ -92,17 +92,17 @@ class Backup
 		{
 			if( $all_tables || in_array($table_info['name'], $tables) ) //Table demandée
 			{
-				$rows_number = $Sql->Query("SELECT COUNT(*) FROM " . $table_info['name'], __LINE__, __FILE__);
+				$rows_number = $Sql->query("SELECT COUNT(*) FROM " . $table_info['name'], __LINE__, __FILE__);
 				if( $rows_number > 0 )
 				{
 					$this->save .= "INSERT INTO " . $table_info['name'] . " (`";
-					$this->save .= implode('`, `', $Sql->Sql_list_fields($table_info['name']));
+					$this->save .= implode('`, `', $Sql->list_fields($table_info['name']));
 					$this->save .= "`) VALUES ";
 					
 					$i = 1;
-					$list_fields = $Sql->Sql_list_fields($table_info['name']);
-					$result = $Sql->Query_while('SELECT * FROM ' . $table_info['name'], __LINE__, __FILE__);			
-					while($row = $Sql->Sql_fetch_row($result))
+					$list_fields = $Sql->list_fields($table_info['name']);
+					$result = $Sql->query_while('SELECT * FROM ' . $table_info['name'], __LINE__, __FILE__);			
+					while($row = $Sql->fetch_row($result))
 					{
 						if( $i % 10 == 0 ) //Toutes les 10 entrées on reforme une requête
 						{
@@ -120,7 +120,7 @@ class Backup
 						$i++;
 					}
 					$this->save .= ";\n";
-					$Sql->Close($result);
+					$Sql->query_close($result);
 				}
 			}
 		}
@@ -178,7 +178,7 @@ class Backup
 		global $Sql;
 		
 		if( count($table_array) != 0 )
-			$Sql->Query_inject("OPTIMIZE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+			$Sql->query_inject("OPTIMIZE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
 	}
 	
 	//Réparation des tables
@@ -187,7 +187,7 @@ class Backup
 		global $Sql;
 		
 		if( count($table_array) != 0 )
-			$Sql->Query_inject("REPAIR TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+			$Sql->query_inject("REPAIR TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
 	}
 	
 	//Vidage des tables
@@ -196,7 +196,7 @@ class Backup
 		global $Sql;
 		
 		if( count($table_array) != 0 )
-			$Sql->Query_inject("TRUNCATE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+			$Sql->query_inject("TRUNCATE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
 	}
 	
 	//Suppression des tables
@@ -205,7 +205,7 @@ class Backup
 		global $Sql;
 		
 		if( count($table_array) != 0 )
-			$Sql->Query_inject("DROP TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+			$Sql->query_inject("DROP TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
 	}
 	## Private Methods ##
 	

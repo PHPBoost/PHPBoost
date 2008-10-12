@@ -154,10 +154,10 @@ class Cache
 		
 		$code = 'global $MODULES;' . "\n";
 		$code .= '$MODULES = array();' . "\n\n";
-		$result = $Sql->Query_while("SELECT name, auth, activ
+		$result = $Sql->query_while("SELECT name, auth, activ
 		FROM ".PREFIX."modules
 		ORDER BY name", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{	
 			$code .= '$MODULES[\'' . $row['name'] . '\'] = array(' . "\n"
 				. "'name' => " . var_export($row['name'], true) . ',' . "\n"
@@ -165,7 +165,7 @@ class Cache
 				. "'auth' => " . var_export(sunserialize($row['auth']), true) . ',' . "\n"
 				. ");\n";
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 
 		return $code;
 	}
@@ -178,15 +178,15 @@ class Cache
 		include_once(PATH_TO_ROOT . '/kernel/framework/core/menu_manager.class.php');
 		
 		$modules_mini = array();
-		$result = $Sql->Query_while("SELECT name, contents, location, auth, added, use_tpl
+		$result = $Sql->query_while("SELECT name, contents, location, auth, added, use_tpl
 		FROM ".PREFIX."modules_mini 
 		WHERE activ = 1
 		ORDER BY location, class", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$modules_mini[$row['location']][] = array('name' => $row['name'], 'contents' => $row['contents'], 'auth' => $row['auth'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 
 		$code = '';
 		$array_seek = array('header', 'subheader', 'left', 'right', 'topcentral', 'bottomcentral', 'topfooter', 'footer');
@@ -233,7 +233,7 @@ class Cache
 		$config = 'global $CONFIG;' . "\n" . '$CONFIG = array();' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
+		$CONFIG = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
 		foreach($CONFIG as $key => $value)
 			$config .= '$CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ";\n";
 
@@ -248,10 +248,10 @@ class Cache
 		if( $CONFIG['rewrite'] )
 		{
 			$htaccess_rules = 'Options +FollowSymlinks' . "\n" . 'RewriteEngine on' . "\n";
-			$result = $Sql->Query_while("SELECT name
+			$result = $Sql->query_while("SELECT name
 			FROM ".PREFIX."modules
 			WHERE activ = 1", __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
+			while( $row = $Sql->fetch_assoc($result) )
 			{
 				//Récupération des infos de config.
 				$get_info_modules = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', $CONFIG['lang']);
@@ -318,15 +318,15 @@ class Cache
 		global $Sql;
 		
 		$code = 'global $THEME_CONFIG;' . "\n";
-		$result = $Sql->Query_while("SELECT theme, left_column, right_column
+		$result = $Sql->query_while("SELECT theme, left_column, right_column
 		FROM ".PREFIX."themes	
 		WHERE activ = 1", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'left_column\'] = ' . var_export((bool)$row['left_column'], true) . ';' . "\n";
 			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'right_column\'] = ' . var_export((bool)$row['right_column'], true) . ';' . "\n\n";
 		}			
-		$Sql->Close($result);
+		$Sql->query_close($result);
 
 		return $code;
 	}
@@ -343,14 +343,14 @@ class Cache
 		global $Sql;
 		
 		$code = 'global $_array_groups_auth;' . "\n" . '$_array_groups_auth = array(' . "\n";
-		$result = $Sql->Query_while("SELECT id, name, img, auth
+		$result = $Sql->query_while("SELECT id, name, img, auth
 		FROM ".PREFIX."group	
 		ORDER BY id", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$code .= $row['id'] . ' => array(\'name\' => ' . var_export($row['name'], true) . ', \'img\' => ' . var_export($row['img'], true) . ', \'auth\' => ' . var_export(sunserialize($row['auth']), true) . '),' . "\n";
 		}			
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		$code .= ');';
 		
 		return $code;
@@ -364,7 +364,7 @@ class Cache
 		$config_member = 'global $CONFIG_MEMBER, $CONTRIBUTION_PANEL_UNREAD, $ADMINISTRATOR_ALERTS;' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_MEMBER = unserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
+		$CONFIG_MEMBER = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
 		foreach($CONFIG_MEMBER as $key => $value)
 			$config_member .= '$CONFIG_MEMBER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 		
@@ -384,14 +384,14 @@ class Cache
 		global $Sql;
 		
 		$stock_array_ranks = '$_array_rank = array(';	
-		$result = $Sql->Query_while("SELECT name, msg, icon
+		$result = $Sql->query_while("SELECT name, msg, icon
 		FROM ".PREFIX."ranks 
 		ORDER BY msg DESC", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$stock_array_ranks .= "\n" . var_export($row['msg'], true) . ' => array(' . var_export($row['name'], true) . ', ' . var_export($row['icon'], true) . '),';
 		}	
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		
 		$stock_array_ranks = trim($stock_array_ranks, ',');
 		$stock_array_ranks .= ');';	
@@ -406,7 +406,7 @@ class Cache
 		$config_uploads = 'global $CONFIG_UPLOADS;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_UPLOADS = sunserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'uploads'", __LINE__, __FILE__));
+		$CONFIG_UPLOADS = sunserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'uploads'", __LINE__, __FILE__));
 		$CONFIG_UPLOADS = is_array($CONFIG_UPLOADS) ? $CONFIG_UPLOADS : array();
 		foreach($CONFIG_UPLOADS as $key => $value)
 		{	
@@ -426,7 +426,7 @@ class Cache
 		$com_config = 'global $CONFIG_COM;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_COM = sunserialize((string)$Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'com'", __LINE__, __FILE__));
+		$CONFIG_COM = sunserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'com'", __LINE__, __FILE__));
 		$CONFIG_COM = is_array($CONFIG_COM) ? $CONFIG_COM : array();
 		foreach($CONFIG_COM as $key => $value)
 			$com_config .= '$CONFIG_COM[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
@@ -441,15 +441,15 @@ class Cache
 		
 		$i = 0;
 		$stock_smiley_code = '$_array_smiley_code = array(';
-		$result = $Sql->Query_while("SELECT code_smiley, url_smiley 
+		$result = $Sql->query_while("SELECT code_smiley, url_smiley 
 		FROM ".PREFIX."smileys", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$coma = ($i != 0) ? ',' : '';
 			$stock_smiley_code .=  $coma . "\n" . '' . var_export($row['code_smiley'], true) . ' => ' . var_export($row['url_smiley'], true);
 			$i++;
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		$stock_smiley_code .= "\n" . ');';
 		
 		return 'global $_array_smiley_code;' . "\n" . $stock_smiley_code;
@@ -461,8 +461,8 @@ class Cache
 		global $Sql;
 		
 		$code = 'global $nbr_members, $last_member_login, $last_member_id;' . "\n";
-		$nbr_members = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_aprob = 1", __LINE__, __FILE__);
-		$last_member = $Sql->Query_array('member', 'user_id', 'login', "WHERE user_aprob = 1 ORDER BY timestamp DESC " . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
+		$nbr_members = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_aprob = 1", __LINE__, __FILE__);
+		$last_member = $Sql->query_array('member', 'user_id', 'login', "WHERE user_aprob = 1 ORDER BY timestamp DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
 
 		$code .= '$nbr_members = ' . var_export($nbr_members, true) . ';' . "\n";
 		$code .= '$last_member_login = ' . var_export($last_member['login'], true) . ';' . "\n";

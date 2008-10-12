@@ -97,7 +97,7 @@ if( !empty($id_get) )
 		}
 		
 		//On liste les sous-catégories.
-		$result = $Sql->Query_while("SELECT c.id AS cid, c.name, c.subname, c.url, c.nbr_topic, c.nbr_msg, c.status, t.id AS tid, 
+		$result = $Sql->query_while("SELECT c.id AS cid, c.name, c.subname, c.url, c.nbr_topic, c.nbr_msg, c.status, t.id AS tid, 
 		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
 		FROM ".PREFIX."forum_cats c
 		LEFT JOIN ".PREFIX."forum_topics t ON t.id = c.last_topic_id
@@ -105,7 +105,7 @@ if( !empty($id_get) )
 		LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
 		WHERE c.aprob = 1 AND c.id_left > '" . $CAT_FORUM[$id_get]['id_left'] . "' AND c.id_right < '" . $CAT_FORUM[$id_get]['id_right'] . "' AND c.level = '" . $CAT_FORUM[$id_get]['level'] . "' + 1  " . $unauth_cats . "
 		ORDER BY c.id_left ASC", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{	
 			if( $row['nbr_msg'] !== '0' )
 			{
@@ -179,7 +179,7 @@ if( !empty($id_get) )
 				'U_LAST_TOPIC' => $last					
 			));
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 	}
 		
 	//On vérifie si l'utilisateur a les droits d'écritures.
@@ -218,7 +218,7 @@ if( !empty($id_get) )
 	//Si l'utilisateur a les droits d'édition.	
 	$check_group_edit_auth = $Member->Check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 
-	$nbr_topic = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."forum_topics WHERE idcat = '" . $id_get . "'", __LINE__, __FILE__);
+	$nbr_topic = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_topics WHERE idcat = '" . $id_get . "'", __LINE__, __FILE__);
 	$Template->Assign_vars(array(
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 		'SID' => SID,		
@@ -253,7 +253,7 @@ if( !empty($id_get) )
 	));		
 
 	$nbr_topics_display = 0;
-	$result = $Sql->Query_while("SELECT m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
+	$result = $Sql->query_while("SELECT m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 	FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $Member->Get_attribute('user_id') . "' AND v.idtopic = t.id
 	LEFT JOIN ".PREFIX."member m1 ON m1.user_id = t.user_id
@@ -262,8 +262,8 @@ if( !empty($id_get) )
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $Member->Get_attribute('user_id') . "'
 	WHERE t.idcat = '" . $id_get . "'
 	ORDER BY t.type DESC , t.last_timestamp DESC
-	" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);	
-	while ( $row = $Sql->Sql_fetch_assoc($result) )
+	" . $Sql->limit($Pagination->First_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);	
+	while ( $row = $Sql->fetch_assoc($result) )
 	{
 		//On définit un array pour l'appellation correspondant au type de champ
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
@@ -330,7 +330,7 @@ if( !empty($id_get) )
 		));
 		$nbr_topics_display++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 		
 	//Affichage message aucun topics.
 	if( $nbr_topics_display == 0 )
@@ -343,12 +343,12 @@ if( !empty($id_get) )
 		
 	//Listes les utilisateurs en lignes.
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
+	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
 	FROM ".PREFIX."sessions s 
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/forum.php' AND s.session_script_get LIKE '%id=" . $id_get . "%'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
@@ -372,7 +372,7 @@ if( !empty($id_get) )
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 
 	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
 	$Template->Assign_vars(array(

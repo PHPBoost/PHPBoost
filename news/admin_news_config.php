@@ -43,12 +43,12 @@ if( !empty($_POST['valid']) )
 	$config_news['activ_icon'] = retrieve(POST, 'activ_icon', 0);  
 	$config_news['display_author'] = retrieve(POST, 'display_author', 0);  
 	$config_news['display_date'] = retrieve(POST, 'display_date', 0);  
-	$config_news['nbr_news'] = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
+	$config_news['nbr_news'] = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
 	$config_news['nbr_column'] = retrieve(POST, 'nbr_column', 1);
 	$config_news['edito'] = stripslashes(retrieve(POST, 'edito', '', TSTRING_PARSE));
 	$config_news['edito_title'] = stripslashes(retrieve(POST, 'edito_title', ''));
 		
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_news)) . "' WHERE name = 'news'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_news)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('news');

@@ -47,19 +47,19 @@ class Newsletter_sender
 		
 		if( $email_test == '' ) // envoi définitif
 		{
-			$nbr = $Sql->Count_table('newsletter', __LINE__, __FILE__);
+			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "','" . $message . "', '" . time() . "', 'html', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "','" . $message . "', '" . time() . "', 'html', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
-			$result = $Sql->Query_while("SELECT id, mail 
+			$result = $Sql->query_while("SELECT id, mail 
 			FROM ".PREFIX."newsletter 
 			ORDER BY id", __LINE__, __FILE__);			
-			while( $row = $Sql->Sql_fetch_assoc($result) )
+			while( $row = $Sql->fetch_assoc($result) )
 			{
 				$mailing_list[] = array($row['id'], $row['mail']);
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 			 
 			foreach($mailing_list as $array_mail)
 			{
@@ -96,19 +96,19 @@ class Newsletter_sender
 		
 		if( $email_test == '' ) // envoi définitif
 		{
-			$nbr = $Sql->Count_table('newsletter', __LINE__, __FILE__);
+			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . $message . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . $message . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
-			$result = $Sql->Query_while("SELECT id, mail 
+			$result = $Sql->query_while("SELECT id, mail 
 			FROM ".PREFIX."newsletter 
 			ORDER BY id", __LINE__, __FILE__);			
-			while( $row = $Sql->Sql_fetch_assoc($result) )
+			while( $row = $Sql->fetch_assoc($result) )
 			{
 				$mailing_list[] = array($row['id'], $row['mail']);
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 			 
 			foreach($mailing_list as $array_mail)
 			{
@@ -137,19 +137,19 @@ class Newsletter_sender
 		
 		if( $email_test == '' ) // envoi définitif
 		{
-			$nbr = $Sql->Count_table('newsletter', __LINE__, __FILE__);
+			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . $message . "', '" . time() . "', 'text', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . $message . "', '" . time() . "', 'text', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
-			$result = $Sql->Query_while("SELECT id, mail 
+			$result = $Sql->query_while("SELECT id, mail 
 			FROM ".PREFIX."newsletter 
 			ORDER BY id", __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
+			while( $row = $Sql->fetch_assoc($result) )
 			{
 				$mailing_list[] = array($row['id'], $row['mail']);
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 			 
 			foreach($mailing_list as $array_mail)
 			{

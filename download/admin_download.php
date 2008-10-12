@@ -36,7 +36,7 @@ $Template->Set_filenames(array(
 	'admin_download_management'=> 'download/admin_download_management.tpl'
  ));
 
-$nbr_dl = $Sql->Count_table('download', __LINE__, __FILE__);
+$nbr_dl = $Sql->count_table('download', __LINE__, __FILE__);
 
 //On crée une pagination si le nombre de fichier est trop important.
 include_once('../kernel/framework/util/pagination.class.php');
@@ -61,12 +61,12 @@ $Template->Assign_vars(array(
 	'L_CONFIRM_DELETE' => str_replace('\'', '\\\'', $DOWNLOAD_LANG['confirm_delete_file'])
 ));
 
-$result = $Sql->Query_while("SELECT id, idcat, title, timestamp, visible, start, end, size
+$result = $Sql->query_while("SELECT id, idcat, title, timestamp, visible, start, end, size
 FROM ".PREFIX."download
 ORDER BY timestamp DESC 
-" . $Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+" . $Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
 
-while( $row = $Sql->Sql_fetch_assoc($result) )
+while( $row = $Sql->fetch_assoc($result) )
 {
 	if( $row['visible'] == 1 )
 		$aprob = $LANG['yes'];
@@ -91,7 +91,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 		'U_DEL_FILE' => transid('management.php?del=' . $row['id']),
 	));
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 include_once('admin_download_menu.php');
 

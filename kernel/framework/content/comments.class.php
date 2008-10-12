@@ -47,11 +47,11 @@ class Comments
 	{
 		global $Sql, $Member;
 		
-		$Sql->Query_inject("INSERT INTO ".PREFIX."com (idprov, login, user_id, contents, timestamp, script, path) VALUES('" . $this->idprov . "', '" . $login . "', '" . $Member->get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '.." . strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "')", __LINE__, __FILE__);
-		$idcom = $Sql->Sql_insert_id("SELECT MAX(idcom) FROM ".PREFIX."com");
+		$Sql->query_inject("INSERT INTO ".PREFIX."com (idprov, login, user_id, contents, timestamp, script, path) VALUES('" . $this->idprov . "', '" . $login . "', '" . $Member->get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '.." . strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "')", __LINE__, __FILE__);
+		$idcom = $Sql->insert_id("SELECT MAX(idcom) FROM ".PREFIX."com");
 		
 		//Incrémente le nombre de commentaire dans la table du script concerné.
-		$Sql->Query_inject("UPDATE ".PREFIX.$this->sql_table." SET nbr_com = nbr_com + 1 WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX.$this->sql_table." SET nbr_com = nbr_com + 1 WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 		
 		return $idcom;
 	}
@@ -61,7 +61,7 @@ class Comments
 	{
 		global $Sql;
 		
-		$Sql->Query_inject("UPDATE ".PREFIX."com SET contents = '" . $contents . "', login = '" . $login . "' WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."com SET contents = '" . $contents . "', login = '" . $login . "' WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 	}
 	
 	//Suppression d'un commentaire
@@ -70,14 +70,14 @@ class Comments
 		global $Sql;
 		
 		//Sélectionne le message précédent à celui qui va être supprimé.
-		$lastid_com = $Sql->Query("SELECT idcom 
+		$lastid_com = $Sql->query("SELECT idcom 
 		FROM ".PREFIX."com 
 		WHERE idcom < '" . $this->idcom . "' AND script = '" . $this->script . "' AND idprov = '" . $this->idprov . "' 
 		ORDER BY idcom DESC 
-		" . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
+		" . $Sql->limit(0, 1), __LINE__, __FILE__);
 		
-		$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idcom = '" . $this->idcom . "' AND script = '" . $this->script . "' AND idprov = '" . $this->idprov . "'", __LINE__, __FILE__);				
-		$Sql->Query_inject("UPDATE ".PREFIX.$this->sql_table." SET nbr_com= nbr_com - 1 WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE idcom = '" . $this->idcom . "' AND script = '" . $this->script . "' AND idprov = '" . $this->idprov . "'", __LINE__, __FILE__);				
+		$Sql->query_inject("UPDATE ".PREFIX.$this->sql_table." SET nbr_com= nbr_com - 1 WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 		
 		return $lastid_com;
 	}
@@ -86,7 +86,7 @@ class Comments
 	function delete_all($idprov)
 	{
 		global $Sql;
-		$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 	}
 	
 	//Verrouille les commentaires
@@ -94,7 +94,7 @@ class Comments
 	{
 		global $Sql;
 		
-		$Sql->Query_inject("UPDATE ".PREFIX.$this->sql_table." SET lock_com = '" . $lock . "' WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX.$this->sql_table." SET lock_com = '" . $lock . "' WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 	}
 	
 	//Vérifie que le système de commentaires est bien chargé.
@@ -179,7 +179,7 @@ class Comments
 					if( $Member->Check_level($CONFIG_COM['com_auth']) )
 					{
 						//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-						$check_time = ($Member->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->Query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."com WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+						$check_time = ($Member->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."com WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
 						if( !empty($check_time) && !$Member->Check_max_value(AUTH_FLOOD) )
 						{				
 							if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcule la fin du delai.	
@@ -215,7 +215,7 @@ class Comments
 				if( $Member->get_attribute('user_readonly') > time() ) 
 					$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 				
-				$row = $Sql->Query_array('com', '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
+				$row = $Sql->query_array('com', '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 				$row['user_id'] = (int)$row['user_id'];
 				
 				if( $this->idcom != 0 && ($Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1)) ) //Modération des commentaires.
@@ -317,7 +317,7 @@ class Comments
 				
 				if( $get_quote > 0 )
 				{
-					$info_com = $Sql->Query_array('com', 'login', 'contents', "WHERE script = '" . $this->script . "' AND idprov = '" . $this->idprov . "' AND idcom = '" . $get_quote . "'", __LINE__, __FILE__);
+					$info_com = $Sql->query_array('com', 'login', 'contents', "WHERE script = '" . $this->script . "' AND idprov = '" . $this->idprov . "' AND idcom = '" . $get_quote . "'", __LINE__, __FILE__);
 					$contents = '[quote=' . $info_com['login'] . ']' . $info_com['contents'] . '[/quote]';
 				}
 
@@ -435,15 +435,15 @@ class Comments
 				//Gestion des rangs.	
 				$Cache->Load_file('ranks');
 				$j = 0;
-				$result = $Sql->Query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents
+				$result = $Sql->query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents
 				FROM ".PREFIX."com c
 				LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
 				LEFT JOIN ".PREFIX."sessions s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 				WHERE c.script = '" . $this->script . "' AND c.idprov = '" . $this->idprov . "'
 				GROUP BY c.idcom
 				ORDER BY c.timestamp DESC 
-				" . $Sql->Sql_limit($pagination->First_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
-				while ($row = $Sql->Sql_fetch_assoc($result))
+				" . $Sql->limit($pagination->First_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
+				while ($row = $Sql->fetch_assoc($result))
 				{
 					$row['user_id'] = (int)$row['user_id'];
 					$edit = '';
@@ -581,7 +581,7 @@ class Comments
 					));
 					$j++;
 				}
-				$Sql->Close($result);
+				$Sql->query_close($result);
 			}
 			return $Template->parse(TEMPLATE_STRING_MODE);
 		}
@@ -603,7 +603,7 @@ class Comments
 		{
 			if( $info_module['com'] == $this->script )
 			{
-				$info_sql_module = $Sql->Query_array(strprotect($info_module['com']), "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+				$info_sql_module = $Sql->query_array(strprotect($info_module['com']), "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 				if( $info_sql_module['id'] == $this->idprov )
 					$check_script = true;
 			}
@@ -616,7 +616,7 @@ class Comments
 	{
 		global $Sql, $CONFIG;
 		
-		$row_infos = $Sql->Query_array($this->script, "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+		$row_infos = $Sql->query_array($this->script, "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 		
 		return array($this->script, $row_infos['nbr_com'], (bool)$row_infos['lock_com']);
 	}

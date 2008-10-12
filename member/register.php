@@ -141,10 +141,10 @@ if( empty($key) )
 		//Gestion langue par défaut.
 		$array_identifier = '';
 		$lang_identifier = '../images/stats/other.png';
-		$result = $Sql->Query_while("SELECT lang 
+		$result = $Sql->query_while("SELECT lang 
 		FROM ".PREFIX."lang
 		WHERE activ = 1 AND secure = -1", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{	
 			$lang_info = load_ini_file('../lang/', $row['lang']);
 			if( $lang_info )
@@ -162,7 +162,7 @@ if( empty($key) )
 				));
 			}
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		
 		//Gestion éditeur par défaut.
 		$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
@@ -247,10 +247,10 @@ if( empty($key) )
 		//Gestion thème par défaut.
 		if( $CONFIG_MEMBER['force_theme'] == 0 ) //Thèmes aux membres autorisés.
 		{
-			$result = $Sql->Query_while("SELECT theme 
+			$result = $Sql->query_while("SELECT theme 
 			FROM ".PREFIX."themes
 			WHERE activ = 1 AND secure = -1", __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
+			while( $row = $Sql->fetch_assoc($result) )
 			{	
 				$theme_info = load_ini_file('../templates/' . $row['theme'] . '/config/', $CONFIG['lang']);
 				if( $theme_info )
@@ -262,7 +262,7 @@ if( empty($key) )
 					));
 				}
 			}
-			$Sql->Close($result);	
+			$Sql->query_close($result);	
 		}
 		else //Thème par défaut forcé.
 		{
@@ -274,7 +274,7 @@ if( empty($key) )
 		}
 
 		//Champs supplémentaires.
-		$extend_field_exist = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 		if( $extend_field_exist > 0 )
 		{
 			$Template->Assign_vars(array(			
@@ -282,11 +282,11 @@ if( empty($key) )
 			));
 			$Template->Assign_block_vars('register.miscellaneous', array(			
 			));
-			$result = $Sql->Query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values
+			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values
 			FROM ".PREFIX."member_extend_cat AS exc
 			WHERE exc.display = 1
 			ORDER BY exc.class", __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
+			while( $row = $Sql->fetch_assoc($result) )
 			{	
 				// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 				$field = '';
@@ -351,7 +351,7 @@ if( empty($key) )
 					'FIELD' => $field
 				));
 			}
-			$Sql->Close($result);	
+			$Sql->query_close($result);	
 		}
 		
 		$Template->Pparse('register');
@@ -368,10 +368,10 @@ elseif( !empty($key) && $Member->Check_level(MEMBER_LEVEL) !== true ) //Activati
 	$Template->Assign_block_vars('activ', array(
 	));	
 	
-	$check_mbr = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
+	$check_mbr = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 	if( $check_mbr == '1' ) //Activation du compte.
 	{
-		$Sql->Query_inject("UPDATE ".PREFIX."member SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."member SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 		
 		$Template->Assign_vars(array(
 			'L_REGISTER' => $LANG['register'],

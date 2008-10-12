@@ -45,7 +45,7 @@ class FaqInterface extends ModuleInterface
 		global $Sql;
 	
 		//Configuration
-		$config = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'faq'", __LINE__, __FILE__));
+		$config = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'faq'", __LINE__, __FILE__));
 		$root_config = $config['root'];
 		$root_config['auth'] = $config['global_auth'];
 		unset($config['root']);
@@ -55,11 +55,11 @@ class FaqInterface extends ModuleInterface
 		//List of categories and their own properties
 		$string .= '$FAQ_CATS = array();' . "\n\n";
 		$string .= '$FAQ_CATS[0] = ' . var_export($root_config, true) . ';' . "\n";
-		$result = $Sql->Query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, num_questions, description
+		$result = $Sql->query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, num_questions, description
 		FROM ".PREFIX."faq_cats
 		ORDER BY id_parent, c_order", __LINE__, __FILE__);
 		
-		while ($row = $Sql->Sql_fetch_assoc($result))
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$string .= '$FAQ_CATS[' . $row['id'] . '] = ' . 
 				var_export(array(
@@ -79,9 +79,9 @@ class FaqInterface extends ModuleInterface
 		}
 		
 		//Random questions
-		$query = $Sql->Query_while("SELECT id, question, idcat FROM ".PREFIX."faq LIMIT 0, 20", __LINE__, __FILE__);
+		$query = $Sql->query_while("SELECT id, question, idcat FROM ".PREFIX."faq LIMIT 0, 20", __LINE__, __FILE__);
 		$questions = array();
-		while($row = $Sql->Sql_fetch_assoc($query) )
+		while($row = $Sql->fetch_assoc($query) )
 			$questions[] = array('id' => $row['id'], 'question' => $row['question'], 'idcat' => $row['idcat']);
 		
 		$string .= "\n" . '$RANDOM_QUESTIONS = ' . var_export($questions, true) . ';';
@@ -117,10 +117,10 @@ class FaqInterface extends ModuleInterface
             f.id AS `id_content`,
             f.question AS `title`,
             ( 2 * MATCH(f.question) AGAINST('" . $args['search'] . "') + MATCH(f.answer) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS `relevance`, "
-            . $Sql->Sql_concat("'../faq/faq.php?id='","f.idcat","'&amp;question='","f.id","'#q'","f.id") . " AS `link`
+            . $Sql->Concat("'../faq/faq.php?id='","f.idcat","'&amp;question='","f.id","'#q'","f.id") . " AS `link`
             FROM " . PREFIX . "faq f
             WHERE ( MATCH(f.question) AGAINST('" . $args['search'] . "') OR MATCH(f.answer) AGAINST('" . $args['search'] . "') )" . $auth_cats
-            . " ORDER BY `relevance` " . $Sql->Sql_limit(0, FAQ_MAX_SEARCH_RESULTS);
+            . " ORDER BY `relevance` " . $Sql->limit(0, FAQ_MAX_SEARCH_RESULTS);
         
         return $request;
     }
@@ -150,12 +150,12 @@ class FaqInterface extends ModuleInterface
             $request = "SELECT `idcat`,`id`,`question`,`answer`
             FROM " . PREFIX . "faq
             WHERE `id` IN (" . implode(',', array_keys($results)) . ")";
-            $requestResults = $Sql->Query_while($request, __LINE__, __FILE__);
-            while( $row = $Sql->Sql_fetch_assoc($requestResults) )
+            $requestResults = $Sql->query_while($request, __LINE__, __FILE__);
+            while( $row = $Sql->fetch_assoc($requestResults) )
             {
                 $results[$row['id']] = $row;
             }
-            $Sql->Close($requestResults);
+            $Sql->query_close($requestResults);
             
             $this->set_attribute('ResultsReqExecuted', true);
             $this->set_attribute('Results', $results);

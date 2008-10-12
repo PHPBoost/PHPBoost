@@ -37,13 +37,13 @@ include_once('pages_functions.php');
 //Requêtes préliminaires utiles par la suite
 if( !empty($encoded_title) ) //Si on connait son titre
 {
-	$page_infos = $Sql->Query_array("pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array("pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
 	if( $page_infos['redirect'] > 0 )
 	{
 		$redirect_title = $page_infos['title'];
 		$redirect_id = $page_infos['id'];
-		$page_infos = $Sql->Query_array("pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
+		$page_infos = $Sql->query_array("pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
 	}
 	else
 		$redirect_title = '';
@@ -69,13 +69,13 @@ if( !empty($encoded_title) ) //Si on connait son titre
 }
 elseif( $id_com > 0 )
 {
-	$result = $Sql->Query_while("SELECT id, title, encoded_title, auth, is_cat, id_cat, hits, count_hits, activ_com, nbr_com, contents
+	$result = $Sql->query_while("SELECT id, title, encoded_title, auth, is_cat, id_cat, hits, count_hits, activ_com, nbr_com, contents
 		FROM ".PREFIX."pages
 		WHERE id = '" . $id_com . "'"
 	, __LINE__, __FILE__);
-	$num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."pages WHERE id = '" . $id_com . "'");
-	$page_infos = $Sql->Sql_fetch_assoc($result);
-	$Sql->Close($result);
+	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."pages WHERE id = '" . $id_com . "'");
+	$page_infos = $Sql->fetch_assoc($result);
+	$Sql->query_close($result);
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
 	$Bread_crumb->Add_link($LANG['pages_com'], transid('pages.php?id=' . $id_com . '&amp;com=0'));
 	$Bread_crumb->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
@@ -169,7 +169,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	
 	//On compte le nombre de vus
 	if( $page_infos['count_hits'] == 1 )
-		$Sql->Query_inject("UPDATE ".PREFIX."pages SET hits = hits + 1 WHERE id = '" . $page_infos['id'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."pages SET hits = hits + 1 WHERE id = '" . $page_infos['id'] . "'", __LINE__, __FILE__);
 	
 	$Template->Assign_vars(array(
 		'TITLE' => $page_infos['title'],
@@ -244,8 +244,8 @@ else
 {
 	$Template->Set_filenames(array('index'=> 'pages/index.tpl'));
 	
-	$num_pages = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."pages WHERE redirect = '0'", __LINE__, __FILE__);
-	$num_coms = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."com WHERE script = 'pages'", __LINE__, __FILE__);
+	$num_pages = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."pages WHERE redirect = '0'", __LINE__, __FILE__);
+	$num_coms = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."com WHERE script = 'pages'", __LINE__, __FILE__);
 	
 	$Template->Assign_vars(array(
 		'PAGES_PATH' => $Template->Module_data_path('pages'),
@@ -286,11 +286,11 @@ else
 		}
 	}
 	//Liste des fichiers de la racine
-	$result = $Sql->Query_while("SELECT title, id, encoded_title, auth
+	$result = $Sql->query_while("SELECT title, id, encoded_title, auth
 		FROM ".PREFIX."pages
 		WHERE id_cat = 0 AND is_cat = 0
 		ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
@@ -301,7 +301,7 @@ else
 			$root .= '<tr><td class="row2"><img src="' . $Template->Module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 		}
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 
 	$Template->Assign_vars(array(
 		'PAGES_PATH' => $Template->Module_data_path('pages'),
@@ -316,14 +316,14 @@ else
 	));
 
 	$contents = '';
-	$result = $Sql->Query_while("SELECT c.id, p.title, p.encoded_title
+	$result = $Sql->query_while("SELECT c.id, p.title, p.encoded_title
 	FROM ".PREFIX."pages_cats c
 	LEFT JOIN ".PREFIX."pages p ON p.id = c.id_page
 	WHERE c.id_parent = 0
 	ORDER BY p.title ASC", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$sub_cats_number = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 		if( $sub_cats_number > 0 )
 		{	
 			$Template->Assign_block_vars('list', array(
@@ -338,7 +338,7 @@ else
 			));
 		}
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Template->Pparse('index');
 }

@@ -44,7 +44,7 @@ class NewsletterInterface extends ModuleInterface
 		
 		//Configuration de la newsletter
 		$code = 'global $_NEWSLETTER_CONFIG;' . "\n" . '$_NEWSLETTER_CONFIG = array();' . "\n";
-		$NEWSLETTER_CONFIG = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'newsletter'", __LINE__, __FILE__));
+		$NEWSLETTER_CONFIG = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'newsletter'", __LINE__, __FILE__));
 		if( is_array($NEWSLETTER_CONFIG) )
 		{
 			$mails = explode(';', $CONFIG['mail']);

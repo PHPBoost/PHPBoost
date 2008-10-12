@@ -43,10 +43,10 @@ if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
 	$config_articles['note_max'] = max(1, retrieve(POST, 'note_max', 5));
 	$config_articles['auth_root'] = isset($CONFIG_ARTICLES['auth_root']) ? serialize($CONFIG_ARTICLES['auth_root']) : serialize(array());
 		
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 	
 	if( $CONFIG_ARTICLES['note_max'] != $config_articles['note_max'] )
-		$Sql->Query_inject("UPDATE ".PREFIX."articles SET note = note * '" . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."articles SET note = note * '" . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']) . "'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('articles');
@@ -58,28 +58,28 @@ elseif( !empty($_POST['articles_count']) ) //Recompte le nombre d'articles de ch
 	$Cache->Load_file('articles');
 	
 	$info_cat = array();
-	$result = $Sql->Query_while("SELECT idcat, COUNT(*) as nbr_articles_visible 
+	$result = $Sql->query_while("SELECT idcat, COUNT(*) as nbr_articles_visible 
 	FROM ".PREFIX."articles 
 	WHERE visible = 1 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
 	
-	while($row = $Sql->Sql_fetch_assoc($result) )
+	while($row = $Sql->fetch_assoc($result) )
 		$info_cat[$row['idcat']]['visible'] = $row['nbr_articles_visible'];
 		
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
-	$result = $Sql->Query_while("SELECT idcat, COUNT(*) as nbr_articles_unvisible 
+	$result = $Sql->query_while("SELECT idcat, COUNT(*) as nbr_articles_unvisible 
 	FROM ".PREFIX."articles 
 	WHERE visible = 0 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result) )
+	while($row = $Sql->fetch_assoc($result) )
 		$info_cat[$row['idcat']]['unvisible'] = $row['nbr_articles_unvisible'];
 		
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
-	$result = $Sql->Query_while("SELECT id, id_left, id_right
+	$result = $Sql->query_while("SELECT id, id_left, id_right
 	FROM ".PREFIX."articles_cats", __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result) )
+	while($row = $Sql->fetch_assoc($result) )
 	{			
 		$nbr_articles_visible = 0;
 		$nbr_articles_unvisible = 0;
@@ -91,9 +91,9 @@ elseif( !empty($_POST['articles_count']) ) //Recompte le nombre d'articles de ch
 				$nbr_articles_unvisible += isset($info_cat[$key]['unvisible']) ? $info_cat[$key]['unvisible'] : 0; 
 			}
 		}
-		$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET nbr_articles_visible = '" . $nbr_articles_visible . "', nbr_articles_unvisible = '" . $nbr_articles_unvisible . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);	
+		$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET nbr_articles_visible = '" . $nbr_articles_visible . "', nbr_articles_unvisible = '" . $nbr_articles_unvisible . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);	
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Cache->Generate_module_file('articles');
 	

@@ -38,13 +38,13 @@ if( !empty($_POST['valid'])  )
 	$config_com['forbidden_tags'] = isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array();
 	$config_com['max_link'] = retrieve(POST, 'max_link', -1);
 	
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_com)) . "' WHERE name = 'com'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_com)) . "' WHERE name = 'com'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_file('com');
 		
 	$CONFIG['com_popup'] = retrieve(POST, 'com_popup', 0);
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 	
 	###### Régénération du cache dela configuration #######
 	$Cache->Generate_file('config');

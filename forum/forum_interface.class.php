@@ -48,7 +48,7 @@ class ForumInterface extends ModuleInterface
 		$forum_config = 'global $CONFIG_FORUM;' . "\n";
 		
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_FORUM = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'forum'", __LINE__, __FILE__));
+		$CONFIG_FORUM = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'forum'", __LINE__, __FILE__));
 		$CONFIG_FORUM['auth'] = unserialize($CONFIG_FORUM['auth']);
 			
 		$forum_config .= '$CONFIG_FORUM = ' . var_export($CONFIG_FORUM, true) . ';' . "\n";
@@ -56,10 +56,10 @@ class ForumInterface extends ModuleInterface
 		//Liste des catégories du forum
 		$i = 0;
 		$forum_cats = 'global $CAT_FORUM;' . "\n";
-		$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, url, status, aprob, auth, aprob
+		$result = $Sql->query_while("SELECT id, id_left, id_right, level, name, url, status, aprob, auth, aprob
 		FROM ".PREFIX."forum_cats
 		ORDER BY id_left", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{	
 			if( empty($row['auth']) )
 				$row['auth'] = serialize(array());
@@ -73,7 +73,7 @@ class ForumInterface extends ModuleInterface
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'url\'] = ' . var_export($row['url'], true) . ';' . "\n";
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(sunserialize($row['auth']), true) . ';' . "\n";
 		}
-		$Sql->Close($result);		
+		$Sql->query_close($result);		
 		
 		return $forum_config . "\n" . $forum_cats;
 	}
@@ -85,7 +85,7 @@ class ForumInterface extends ModuleInterface
 		
 		//Suppression des marqueurs de vue du forum trop anciens.
 		$Cache->Load_file('forum'); //Requête des configuration générales (forum), $CONFIG_FORUM variable globale.
-		$Sql->Query_inject("DELETE FROM ".PREFIX."forum_view WHERE timestamp < '" . (time() - $CONFIG_FORUM['view_time']) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."forum_view WHERE timestamp < '" . (time() - $CONFIG_FORUM['view_time']) . "'", __LINE__, __FILE__);
 	}	
 	
 	//Récupère le lien vers la listes des messages du membre.
@@ -223,14 +223,14 @@ class ForumInterface extends ModuleInterface
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
                 MAX(( 2 * MATCH(t.title) AGAINST('".$search."') + MATCH(msg.contents) AGAINST('".$search."') ) / 3) * " . $weight . " AS `relevance`,
-                ".$Sql->Sql_concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                ".$Sql->Concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
             WHERE ( MATCH(t.title) AGAINST('".$search."') OR MATCH(msg.contents) AGAINST('".$search."') )
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." ".$auth_cats."
             GROUP BY t.id
-            ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
+            ORDER BY relevance DESC".$Sql->limit(0, FORUM_MAX_SEARCH_RESULTS);
         
         if( $where == 'contents' )    // Contents
             return "SELECT ".
@@ -238,28 +238,28 @@ class ForumInterface extends ModuleInterface
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
                 MAX(MATCH(msg.contents) AGAINST('".$search."')) * " . $weight . " AS `relevance`,
-                ".$Sql->Sql_concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                ".$Sql->Concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
             WHERE MATCH(msg.contents) AGAINST('".$search."')
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." ".$auth_cats."
             GROUP BY t.id
-            ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
+            ORDER BY relevance DESC".$Sql->limit(0, FORUM_MAX_SEARCH_RESULTS);
         else                                         // Title only
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
                 msg.id AS `id_content`,
                 t.title AS `title`,
                 MATCH(t.title) AGAINST('".$search."') * " . $weight . " AS `relevance`,
-                ".$Sql->Sql_concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                ".$Sql->Concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
             WHERE MATCH(t.title) AGAINST('".$search."')
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." ".$auth_cats."
             GROUP BY t.id
-            ORDER BY relevance DESC".$Sql->Sql_limit(0, FORUM_MAX_SEARCH_RESULTS);
+            ORDER BY relevance DESC".$Sql->limit(0, FORUM_MAX_SEARCH_RESULTS);
     }
     
     function parse_search_results(&$args)
@@ -307,12 +307,12 @@ class ForumInterface extends ModuleInterface
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             WHERE msg.id IN (".implode(',', array_keys($results)).")
             GROUP BY t.id";
-            $requestResults = $Sql->Query_while($request, __LINE__, __FILE__);
-            while( $row = $Sql->Sql_fetch_assoc($requestResults) )
+            $requestResults = $Sql->query_while($request, __LINE__, __FILE__);
+            while( $row = $Sql->fetch_assoc($requestResults) )
             {
                 $results[$row['msg_id']] = $row;
             }
-            $Sql->Close($requestResults);
+            $Sql->query_close($requestResults);
             
             $this->set_attribute('ResultsReqExecuted', true);
             $this->set_attribute('Results', $results);
@@ -372,10 +372,10 @@ class ForumInterface extends ModuleInterface
 		LEFT JOIN ".PREFIX."forum_msg msg ON msg.id = t.last_msg_id
 		WHERE (c.auth LIKE '%s:3:\"r-1\";i:1;%' OR c.auth LIKE '%s:3:\"r-1\";i:3;%') AND c.level != 0 AND c.aprob = 1 " . $req_cats . "
 		ORDER BY t.last_timestamp DESC
-		" . $Sql->Sql_limit(0, $CONFIG_FORUM['pagination_msg']);
-        $result = $Sql->Query_while($req, __LINE__, __FILE__);
+		" . $Sql->limit(0, $CONFIG_FORUM['pagination_msg']);
+        $result = $Sql->query_while($req, __LINE__, __FILE__);
         // Generation of the feed's items
-        while ($row = $Sql->Sql_fetch_assoc($result))
+        while ($row = $Sql->fetch_assoc($result))
         {
             $item = new FeedItem();
 			
@@ -402,7 +402,7 @@ class ForumInterface extends ModuleInterface
             
             $data->add_item($item);
         }
-        $Sql->Close($result);
+        $Sql->query_close($result);
         
         return $data;
     }

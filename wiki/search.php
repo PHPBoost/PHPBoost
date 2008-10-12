@@ -79,9 +79,9 @@ if( !empty($search_string) ) //recherche
 		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
 		WHERE MATCH(c.content) AGAINST('" . $search_string . "')";
 	
-	$result = $Sql->Query_while($query, __LINE__, __FILE__);
+	$result = $Sql->query_while($query, __LINE__, __FILE__);
 	
-	$num_rows = $Sql->Sql_num_rows($result, $query_rows, __LINE__, __FILE__);
+	$num_rows = $Sql->num_rows($result, $query_rows, __LINE__, __FILE__);
 	
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
@@ -95,7 +95,7 @@ if( !empty($search_string) ) //recherche
 		$Errorh->Error_handler($LANG['wiki_empty_search'], E_NOTICE);
 	
 	$i = 1; //On �mule le "limit" 10 r�sultats par page
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		if( $i > ($page - 1) * 10 && $i <= $page * 10 ) //On affiche
 			$Template->Assign_block_vars('search_result.item', array(

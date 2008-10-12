@@ -51,7 +51,7 @@ else
 	
 if( $id_edit > 0 )
 {
-	$page_infos = $Sql->Query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 	$Bread_crumb->Add_link(TITLE, transid('post.php?id=' . $id_edit));
 	$Bread_crumb->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
@@ -87,7 +87,7 @@ if( !empty($contents) )
 		//Edition d'une page
 		if( $id_edit > 0 )
 		{
-			$page_infos = $Sql->Query_array('pages', 'id', 'title', 'contents', 'auth', 'encoded_title', 'is_cat', 'id_cat', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+			$page_infos = $Sql->query_array('pages', 'id', 'title', 'contents', 'auth', 'encoded_title', 'is_cat', 'id_cat', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 			
 			//Autorisation particulière ?
 			$special_auth = !empty($page_infos['auth']);
@@ -110,7 +110,7 @@ if( !empty($contents) )
 			if( $page_infos['is_cat'] == 0 )
 			{		
 				//On met à jour la table
-				$Sql->Query_inject("UPDATE ".PREFIX."pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "', id_cat = '" . $id_cat . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "', id_cat = '" . $id_cat . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 				//On redirige vers la page mise à jour
 				redirect(HOST . DIR . '/pages/' . transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
@@ -120,10 +120,10 @@ if( !empty($contents) )
 				//Changement de catégorie mère ? => on met à jour la table catégories
 				if( $id_cat != $page_infos['id_cat'] )
 				{
-					$Sql->Query_inject("UPDATE ".PREFIX."pages_cats SET id_parent = '" . $id_cat . "' WHERE id = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE ".PREFIX."pages_cats SET id_parent = '" . $id_cat . "' WHERE id = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
 				}
 				//On met à jour la table
-				$Sql->Query_inject("UPDATE ".PREFIX."pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 				//Régénération du cache
 				$Cache->Generate_module_file('pages');
 				//On redirige vers la page mise à jour
@@ -137,19 +137,19 @@ if( !empty($contents) )
 				redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
 			
 			$encoded_title = url_encode_rewrite($title);
-			$is_already_page = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+			$is_already_page = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 			
 			//Si l'article n'existe pas déjà, on enregistre
 			if( $is_already_page == 0 )
 			{
-				$Sql->Query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . $Member->Get_attribute('user_id') . "', '" . $count_hits . "', '" . $enable_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . $Member->Get_attribute('user_id') . "', '" . $count_hits . "', '" . $enable_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "')", __LINE__, __FILE__);
 				//Si c'est une catégorie
 				if( $is_cat > 0 )
 				{
-					$last_id_page = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."pages");  
-					$Sql->Query_inject("INSERT INTO ".PREFIX."pages_cats (id_parent, id_page) VALUES ('" . $id_cat . "', '" . $last_id_page . "')", __LINE__, __FILE__);
-					$last_id_pages_cat = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."pages_cats");
-					$Sql->Query_inject("UPDATE ".PREFIX."pages SET id_cat = '" . $last_id_pages_cat . "' WHERE id = '" . $last_id_page . "'", __LINE__, __FILE__);
+					$last_id_page = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."pages");  
+					$Sql->query_inject("INSERT INTO ".PREFIX."pages_cats (id_parent, id_page) VALUES ('" . $id_cat . "', '" . $last_id_page . "')", __LINE__, __FILE__);
+					$last_id_pages_cat = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."pages_cats");
+					$Sql->query_inject("UPDATE ".PREFIX."pages SET id_cat = '" . $last_id_pages_cat . "' WHERE id = '" . $last_id_page . "'", __LINE__, __FILE__);
 					//Régénération du cache
 					$Cache->Generate_module_file('pages');
 				}
@@ -169,7 +169,7 @@ if( !empty($contents) )
 //Suppression d'une page
 elseif( $del_article > 0 )
 {
-	$page_infos = $Sql->Query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -180,9 +180,9 @@ elseif( $del_article > 0 )
 	//la page existe bien, on supprime
 	if( !empty($page_infos['title']) )
 	{
-		$Sql->Query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
-		$Sql->Query_inject("DELETE FROM ".PREFIX."pages WHERE redirect = '" . $del_article . "'", __LINE__, __FILE__);
-		$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE script = 'pages' AND idprov = '" . $del_article . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."pages WHERE redirect = '" . $del_article . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE script = 'pages' AND idprov = '" . $del_article . "'", __LINE__, __FILE__);
 		redirect(HOST . DIR . transid('/pages/pages.php?error=delete_success', '', '&'));
 	}
 	else

@@ -40,7 +40,7 @@ $del = !empty($_GET['delete']) ? true : false;
 if( $del && !empty($id) ) //Suppresion de l'article.
 {
 	//On supprime dans la bdd.
-	$Sql->Query_inject("DELETE FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
 	
 	$Cache->Load_file('articles');
 	if( empty($idcat) )//Racine.
@@ -49,12 +49,12 @@ if( $del && !empty($id) ) //Suppresion de l'article.
 		$CAT_ARTICLES[0]['id_right'] = 0;
 	}
 	//Mise à jours du nombre d'articles des parents.
-	$visible = $Sql->Query("SELECT visible FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
+	$visible = $Sql->query("SELECT visible FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
 	$clause_update = ($visible == 1) ? 'nbr_articles_visible = nbr_articles_visible - 1' : 'nbr_articles_unvisible = nbr_articles_unvisible - 1';
-	$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 	
 	//On supprimes les éventuels commentaires associés.
-	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = " . $id . " AND script = 'articles'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = " . $id . " AND script = 'articles'", __LINE__, __FILE__);
 	
 	// Feeds Regeneration
     require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
@@ -68,7 +68,7 @@ elseif( !empty($id) )
 		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
 
-	$articles = $Sql->Query_array('articles', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$articles = $Sql->query_array('articles', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
 	$Template->Assign_vars(array(	
 		'KERNEL_EDITOR' => display_editor(),
@@ -104,16 +104,16 @@ elseif( !empty($id) )
 		
 	//Catégories.
 	$categories = '<option value="0">' . $LANG['root'] . '</option>';
-	$result = $Sql->Query_while("SELECT id, level, name 
+	$result = $Sql->query_while("SELECT id, level, name 
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $articles['idcat']) ? 'selected="selected"' : '';
 		$categories .= '<option value="' . $row['id'] . '" ' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Images disponibles
 	$img_direct_path = (strpos($articles['icon'], '/') !== false);
@@ -225,17 +225,17 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	//Catégories.	
 	$i = 0;	
 	$categories = '<option value="0">' . $LANG['root'] . '</option>';
-	$result = $Sql->Query_while("SELECT id, level, name 
+	$result = $Sql->query_while("SELECT id, level, name 
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
 		$categories .= '<option value="' . $row['id'] . '" ' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 		$i++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Images disponibles
 	$img_direct_path = (strpos($icon, '/') !== false);
@@ -287,7 +287,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'VISIBLE_UNAPROB' => (($visible == 0) ? 'checked="checked"' : '')
 	));
 	
-	$pseudo = $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+	$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 	$Template->Assign_block_vars('articles.preview', array(
 		'USER_ID' => $user_id,
 		'TITLE' => $title,
@@ -392,19 +392,19 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		
 		$cat_clause = ' ';
 		//Changement de catégorie parente?
-		$articles_info = $Sql->Query_array("articles", "id", "idcat", "visible", "WHERE id = '" . $id_post . "'", __LINE__, __FILE__);		
+		$articles_info = $Sql->query_array("articles", "id", "idcat", "visible", "WHERE id = '" . $id_post . "'", __LINE__, __FILE__);		
 		if( $articles_info['idcat'] != $idcat && !empty($articles_info['id']) )
 		{
 			if( $articles_info['visible'] == 1 )
 				$is_visible = 'nbr_articles_visible';
 			else
 				$is_visible = 'nbr_articles_unvisible';
-			$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " - 1 WHERE id = '" . $articles_info['idcat'] . "'", __LINE__, __FILE__);
-			$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " + 1 WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " - 1 WHERE id = '" . $articles_info['idcat'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " + 1 WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 			$cat_clause = " idcat = '" . $idcat . "', ";
 		}
 		
-		$Sql->Query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 		
 		// Feeds Regeneration
         require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
@@ -421,7 +421,7 @@ else
 		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
 	
-	$nbr_articles = $Sql->Count_table('articles', __LINE__, __FILE__);
+	$nbr_articles = $Sql->count_table('articles', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre d'articles est trop important.
 	include_once('../kernel/framework/util/pagination.class.php');
@@ -452,13 +452,13 @@ else
 	$Template->Assign_block_vars('list', array(
 	));
 	
-	$result = $Sql->Query_while("SELECT a.id, a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login 
+	$result = $Sql->query_while("SELECT a.id, a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login 
 	FROM ".PREFIX."articles a
 	LEFT JOIN ".PREFIX."articles_cats ac ON ac.id = a.idcat
 	LEFT JOIN ".PREFIX."member m ON a.user_id = m.user_id
 	ORDER BY a.timestamp DESC " .
-	$Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	$Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		if( $row['visible'] == 2 )
 			$aprob = $LANG['waiting'];
@@ -489,7 +489,7 @@ else
 			'U_CAT' => '<a href="../articles/articles' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '">' . (!empty($row['idcat']) ? $row['name'] : '<em>' . $LANG['root'] . '</em>') . '</a>'
 		));
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Template->Pparse('admin_articles_management');
 }

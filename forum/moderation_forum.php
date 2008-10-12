@@ -83,7 +83,7 @@ $id_topic_get = retrieve(POST, 'change_cat', '');
 if( !empty($id_topic_get) )
 {	
 	//On va chercher les infos sur le topic	
-	$topic = !empty($id_topic_get) ? $Sql->Query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $id_topic_get . "'", __LINE__, __FILE__) : '';
+	$topic = !empty($id_topic_get) ? $Sql->query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $id_topic_get . "'", __LINE__, __FILE__) : '';
 
 	//Informations sur la catégorie du topic, en cache $CAT_FORUM variable globale.
 	$CAT_FORUM[$topic['idcat']]['secure'] = '2';
@@ -165,7 +165,7 @@ if( $action == 'alert' ) //Gestion des alertes
 		$auth_cats = !empty($auth_cats) ? " WHERE c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 			
 		$i = 0;		
-		$result = $Sql->Query_while("SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.login AS login_modo, m.login, t.title AS topic_title, c.id AS cid
+		$result = $Sql->query_while("SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.login AS login_modo, m.login, t.title AS topic_title, c.id AS cid
 		FROM ".PREFIX."forum_alerts ta
 		LEFT JOIN ".PREFIX."forum_topics t ON t.id = ta.idtopic
 		LEFT JOIN ".PREFIX."member m ON m.user_id = ta.user_id
@@ -173,7 +173,7 @@ if( $action == 'alert' ) //Gestion des alertes
 		LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
 		" . $auth_cats . "
 		ORDER BY ta.status ASC, ta.timestamp DESC", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			if( $row['status'] == 0 )
 				$status = $LANG['alert_not_solved'];
@@ -213,7 +213,7 @@ if( $action == 'alert' ) //Gestion des alertes
 		}
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 		
-		$result = $Sql->Query_while("
+		$result = $Sql->query_while("
 		SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.login AS login_modo, m.login, t.title AS topic_title, t.idcat, c.id AS cid, ta.contents
 		FROM ".PREFIX."forum_alerts ta
 		LEFT JOIN ".PREFIX."forum_topics t ON t.id = ta.idtopic
@@ -221,7 +221,7 @@ if( $action == 'alert' ) //Gestion des alertes
 		LEFT JOIN ".PREFIX."member m2 ON m2.user_id = ta.idmodo
 		LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
 		WHERE ta.id = '" . $id_get . "'" . $auth_cats, __LINE__, __FILE__);			
-		$row = $Sql->Sql_fetch_assoc($result);
+		$row = $Sql->fetch_assoc($result);
 		if( !empty($row) )
 		{
 			if( $row['status'] == 0 )
@@ -267,12 +267,12 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
 	if( !empty($id_get) && retrieve(POST, 'valid_user', false) ) //On met à  jour le niveau d'avertissement
 	{
-		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$info_mbr = $Sql->query_array('member', 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Check_level(ADMIN_LEVEL)) )
 		{
-			$Sql->Query_inject("UPDATE ".PREFIX."member SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."member SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 			if( $info_mbr['user_id'] != $Member->Get_attribute('user_id') )
@@ -311,7 +311,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 		if( retrieve(POST, 'search_member', false) )
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+			$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=punish&id=' . $user_id, '', '&'));
 			else
@@ -331,11 +331,11 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 		));	
 			
 		$i = 0;
-		$result = $Sql->Query_while("SELECT user_id, login, user_readonly
+		$result = $Sql->query_while("SELECT user_id, login, user_readonly
 		FROM ".PREFIX."member
 		WHERE user_readonly > " . time() . "
 		ORDER BY user_readonly", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$Template->Assign_block_vars('user_list', array(
 				'LOGIN' => '<a href="moderation_forum.php' . transid('?action=punish&amp;id=' . $row['user_id']) . '">' . $row['login'] . '</a>',
@@ -358,7 +358,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->Query_array('member', 'login', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->query_array('member', 'login', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 
 		//Durée de la sanction.
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000); 	
@@ -432,14 +432,14 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
 	if( $new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && retrieve(POST, 'valid_user', false) ) //On met à  jour le niveau d'avertissement
 	{
-		$info_mbr = $Sql->Query_array('member', 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$info_mbr = $Sql->query_array('member', 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Check_level(ADMIN_LEVEL)) )
 		{
 			if( $new_warning_level < 100 ) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
-				$Sql->Query_inject("UPDATE ".PREFIX."member SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."member SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 				if( $info_mbr['user_id'] != $Member->Get_attribute('user_id') )
@@ -459,8 +459,8 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			}
 			elseif( $new_warning_level == 100 ) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
 			{
-				$Sql->Query_inject("UPDATE ".PREFIX."member SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-				$Sql->Query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."member SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 				//Insertion de l'action dans l'historique.
 				forum_history_collector(H_BAN_USER, $info_mbr['user_id'], 'moderation_forum.php?action=warning&id=' . $info_mbr['user_id']);
@@ -492,7 +492,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		if( retrieve(POST, 'search_member', false) )
 		{
 			$login = retrieve(POST, 'login_member', '');
-			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+			$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if( !empty($user_id) && !empty($login) )
 				redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=warning&id=' . $user_id, '', '&'));
 			else
@@ -511,11 +511,11 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		));
 		
 		$i = 0;
-		$result = $Sql->Query_while("SELECT user_id, login, user_warning
+		$result = $Sql->query_while("SELECT user_id, login, user_warning
 		FROM ".PREFIX."member
 		WHERE user_warning > 0
 		ORDER BY user_warning", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$Template->Assign_block_vars('user_list', array(
 				'LOGIN' => $row['login'],
@@ -538,7 +538,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->Query_array('member', 'login', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->query_array('member', 'login', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		$select = '';
 		$j = 0;
@@ -572,7 +572,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 }
 elseif( retrieve(GET, 'del_h', false) && $Member->Check_level(ADMIN_LEVEL) ) //Suppression de l'historique.
 {
-	$Sql->Query_inject("DELETE FROM ".PREFIX."forum_history");
+	$Sql->query_inject("DELETE FROM ".PREFIX."forum_history");
 	
 	redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php', '', '&'));
 }
@@ -617,13 +617,13 @@ else //Panneau de modération
 	$end = !empty($get_more) ? $get_more : 15; //Limit.
 	$i = 0;
 	
-	$result = $Sql->Query_while("SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.login, m2.login as member
+	$result = $Sql->query_while("SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.login, m2.login as member
 	FROM ".PREFIX."forum_history h 
 	LEFT JOIN ".PREFIX."member m ON m.user_id = h.user_id 
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = h.user_id_action 
 	ORDER BY h.timestamp DESC
-	" . $Sql->Sql_limit(0, $end), __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	" . $Sql->limit(0, $end), __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$Template->Assign_block_vars('action_list', array(
 			'LOGIN' => !empty($row['login']) ? $row['login'] : $LANG['guest'],
@@ -635,7 +635,7 @@ else //Panneau de modération
 		
 		$i++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	if( $i == 0 )
 	{
@@ -648,12 +648,12 @@ else //Panneau de modération
 
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
+$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
 FROM ".PREFIX."sessions s 
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/moderation_forum.php'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $Sql->Sql_fetch_assoc($result) )
+while( $row = $Sql->fetch_assoc($result) )
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
@@ -677,7 +677,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
 $Template->Assign_vars(array(

@@ -45,7 +45,7 @@ class ShoutboxInterface extends ModuleInterface
 		$shoutbox_config = 'global $CONFIG_SHOUTBOX;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_SHOUTBOX = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'shoutbox'", __LINE__, __FILE__));
+		$CONFIG_SHOUTBOX = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'shoutbox'", __LINE__, __FILE__));
 		$CONFIG_SHOUTBOX = is_array($CONFIG_SHOUTBOX) ? $CONFIG_SHOUTBOX : array();
 		
 		if(isset($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
@@ -66,11 +66,11 @@ class ShoutboxInterface extends ModuleInterface
 		if( $CONFIG_SHOUTBOX['shoutbox_max_msg'] != -1 )
 		{
 			//Suppression des messages en surplus dans la shoutbox.
-			$Sql->Query_inject("SELECT @compt := id AS compt
+			$Sql->query_inject("SELECT @compt := id AS compt
 			FROM ".PREFIX."shoutbox
 			ORDER BY id DESC
-			" . $Sql->Sql_limit(0, $CONFIG_SHOUTBOX['shoutbox_max_msg']), __LINE__, __FILE__);
-			$Sql->Query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id < @compt", __LINE__, __FILE__);
+			" . $Sql->limit(0, $CONFIG_SHOUTBOX['shoutbox_max_msg']), __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id < @compt", __LINE__, __FILE__);
 		}
 	}
 }

@@ -34,7 +34,7 @@ $id_get = retrieve(GET, 'id', 0);
 $quote_get = retrieve(GET, 'quote', 0);	
 
 //On va chercher les infos sur le topic	
-$topic = !empty($id_get) ? $Sql->Query_array('forum_topics', 'id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__) : '';
+$topic = !empty($id_get) ? $Sql->query_array('forum_topics', 'id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__) : '';
 //Existance du topic.
 if( empty($topic['id']) )
 	$Errorh->Error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
@@ -104,7 +104,7 @@ $idm = retrieve(GET, 'idm', 0);
 if( !empty($idm) )
 {
 	//Calcul de la page sur laquelle se situe le message.
-	$nbr_msg_before = $Sql->Query("SELECT COUNT(*) as nbr_msg_before FROM ".PREFIX."forum_msg WHERE idtopic = " . $id_get . " AND id < '" . $idm . "'", __LINE__, __FILE__); //Nombre de message avant le message de destination.
+	$nbr_msg_before = $Sql->query("SELECT COUNT(*) as nbr_msg_before FROM ".PREFIX."forum_msg WHERE idtopic = " . $id_get . " AND id < '" . $idm . "'", __LINE__, __FILE__); //Nombre de message avant le message de destination.
 	
 	//Dernier message de la page? Redirection vers la page suivante pour prendre en compte la reprise du message précédent.
 	if( is_int(($nbr_msg_before + 1) / $CONFIG_FORUM['pagination_msg']) ) 
@@ -173,7 +173,7 @@ $page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;	
 $j = 0;	
-$result = $Sql->Query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_readonly, m.user_ban, m2.login as login_edit, s.user_id AS connect, tr.id AS track, msg.contents
+$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_readonly, m.user_ban, m2.login as login_edit, s.user_id AS connect, tr.id AS track, msg.contents
 FROM ".PREFIX."forum_msg msg
 LEFT JOIN ".PREFIX."forum_poll p ON p.idtopic = '" . $id_get . "'
 LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
@@ -182,8 +182,8 @@ LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = '" . $id_get . "' AND tr.user
 LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 WHERE msg.idtopic = '" . $id_get . "'	
 ORDER BY msg.timestamp 
-" . $Sql->Sql_limit(($Pagination->First_msg($CONFIG_FORUM['pagination_msg'], 'pt') - $quote_last_msg), ($CONFIG_FORUM['pagination_msg'] + $quote_last_msg)), __LINE__, __FILE__);
-while ( $row = $Sql->Sql_fetch_assoc($result) )
+" . $Sql->limit(($Pagination->First_msg($CONFIG_FORUM['pagination_msg'], 'pt') - $quote_last_msg), ($CONFIG_FORUM['pagination_msg'] + $quote_last_msg)), __LINE__, __FILE__);
+while ( $row = $Sql->fetch_assoc($result) )
 {
 	$row['user_id'] = (int)$row['user_id'];
 	//Invité?
@@ -396,16 +396,16 @@ while ( $row = $Sql->Sql_fetch_assoc($result) )
 		$track = true;
 	$j++;
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
+$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
 FROM ".PREFIX."sessions s 
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/topic.php' AND s.session_script_get LIKE '%id=" . $id_get . "%'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $Sql->Sql_fetch_assoc($result) )
+while( $row = $Sql->fetch_assoc($result) )
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
@@ -429,7 +429,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
 $Template->Assign_vars(array(
@@ -461,8 +461,8 @@ $Template->Assign_vars(array(
 $contents = '';
 if( !empty($quote_get) )
 {	
-	$quote_msg = $Sql->Query_array('forum_msg', 'user_id', 'contents', "WHERE id = '" . $quote_get . "'", __LINE__, __FILE__);
-	$pseudo = $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $quote_msg['user_id'] . "'", __LINE__, __FILE__);	
+	$quote_msg = $Sql->query_array('forum_msg', 'user_id', 'contents', "WHERE id = '" . $quote_get . "'", __LINE__, __FILE__);
+	$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $quote_msg['user_id'] . "'", __LINE__, __FILE__);	
 	$contents = '[quote=' . $pseudo . ']' . unparse($quote_msg['contents']) . '[/quote]';
 }
 

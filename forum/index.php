@@ -48,7 +48,7 @@ $Template->Set_filenames(array(
 $display_sub_cat = ' AND c.level BETWEEN 0 AND 1';
 if( !empty($id_get) )
 {
-	$intervall = $Sql->Query_array("forum_cats", "id_left", "id_right", "level", "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+	$intervall = $Sql->query_array("forum_cats", "id_left", "id_right", "level", "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	$display_sub_cat = ' AND c.id_left > \'' . $intervall['id_left'] . '\'
    AND c.id_right < \'' . $intervall['id_right'] . '\'
    AND c.level = \'' . $intervall['level'] . '\' + 1';
@@ -76,7 +76,7 @@ $total_topic = 0;
 $total_msg = 0;	
 $i = 0;
 //On liste les catégories et sous-catégories.
-$result = $Sql->Query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.url, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid, 
+$result = $Sql->query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.url, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid, 
 t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
 FROM ".PREFIX."forum_cats c
 LEFT JOIN ".PREFIX."forum_topics t ON t.id = c.last_topic_id
@@ -84,7 +84,7 @@ LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $Member->Get_attribute('use
 LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
 WHERE c.aprob = 1 " . $display_sub_cat . " " . $unauth_cats . "
 ORDER BY c.id_left", __LINE__, __FILE__);
-while ($row = $Sql->Sql_fetch_assoc($result))
+while ($row = $Sql->fetch_assoc($result))
 {	
 	$Template->Assign_block_vars('forums_list', array(
 	));	
@@ -196,7 +196,7 @@ while ($row = $Sql->Sql_fetch_assoc($result))
 		));
 	}
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 if( $i > 0) //Fermeture de la catégorie racine.
 {
 	$Template->Assign_block_vars('forums_list', array(
@@ -207,12 +207,12 @@ if( $i > 0) //Fermeture de la catégorie racine.
 	
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
+$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
 FROM ".PREFIX."sessions s 
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $Sql->Sql_fetch_assoc($result) )
+while( $row = $Sql->fetch_assoc($result) )
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
@@ -236,7 +236,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
 $Template->Assign_vars(array(

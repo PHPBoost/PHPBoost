@@ -45,7 +45,7 @@ if( $shoutbox && empty($shout_id) ) //Insertion
 		if( $Member->Check_level($CONFIG_SHOUTBOX['shoutbox_auth']) )
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-			$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->Query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+			$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
 			if( !empty($check_time) && !$Member->Check_max_value(AUTH_FLOOD) )
 			{
 				if( $check_time >= (time() - $CONFIG['delay_flood']) )
@@ -59,7 +59,7 @@ if( $shoutbox && empty($shout_id) ) //Insertion
 			if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
 				redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
-			$Sql->Query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . $Member->Get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . $Member->Get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
 			redirect(HOST . transid(SCRIPT . '?' . QUERY_STRING, '', '&'));
 		}
@@ -79,14 +79,14 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 	$edit_message = retrieve(GET, 'edit', false);
 	$update = retrieve(GET, 'update', false);
 	
-	$row = $Sql->Query_array('shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
+	$row = $Sql->query_array('shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
 	if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
 	{
 		if( $del_message )
 		{
-			$Sql->Query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
 			redirect(HOST . SCRIPT . SID2);
 		}
@@ -140,7 +140,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 				if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
 					redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
-				$Sql->Query_inject("UPDATE ".PREFIX."shoutbox SET contents = '" . $shout_contents . "', login = '" . $shout_pseudo . "' WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."shoutbox SET contents = '" . $shout_contents . "', login = '" . $shout_pseudo . "' WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
 				redirect(HOST . SCRIPT. SID2);
 			}
@@ -210,7 +210,7 @@ else //Affichage.
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$nbr_shout = $Sql->Count_table('shoutbox', __LINE__, __FILE__);
+	$nbr_shout = $Sql->count_table('shoutbox', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de messages est trop important.
 	include_once('../kernel/framework/util/pagination.class.php'); 
@@ -226,14 +226,14 @@ else //Affichage.
 	//Gestion des rangs.	
 	$Cache->Load_file('ranks');
 	$j = 0;
-	$result = $Sql->Query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, s.contents
+	$result = $Sql->query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, s.contents
 	FROM ".PREFIX."shoutbox s
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id
 	LEFT JOIN ".PREFIX."sessions se ON se.user_id = s.user_id AND se.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 	GROUP BY s.id
 	ORDER BY s.timestamp DESC 
-	" . $Sql->Sql_limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);	
-	while ($row = $Sql->Sql_fetch_assoc($result))
+	" . $Sql->limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);	
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
 		$edit_message = '';
@@ -364,7 +364,7 @@ else //Affichage.
 		));
 		$j++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Template->Pparse('shoutbox'); 
 }

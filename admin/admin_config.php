@@ -69,7 +69,7 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 
 	if( !empty($config['theme']) && !empty($CONFIG['lang']) ) //Nom de serveur obligatoire
 	{
-		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		$Cache->Generate_file('config');
 		
 		redirect(HOST . SCRIPT);
@@ -187,7 +187,7 @@ elseif( !empty($_POST['advanced']) )
 		if( empty($_POST['rewrite_engine']) || strpos($_SERVER['SERVER_NAME'], 'free.fr') ) //Désactivation de l'url rewriting.
 			$CONFIG['rewrite'] = 0;
 			
-		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		###### Régénération du cache $CONFIG #######
 		$Cache->generate_file('config');
 		
@@ -325,15 +325,15 @@ else //Sinon on rempli le formulaire
 		closedir($dh); //On ferme le dossier
 		
 		$lang_array_bdd = array();
-		$result = $Sql->Query_while("SELECT lang 
+		$result = $Sql->query_while("SELECT lang 
 		FROM ".PREFIX."lang", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
 			if( array_search($row['lang'], $lang_array) !== false)
 				$lang_array_bdd[] = $row['lang']; //On insère ces clées dans le tableau.
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		
 		$array_identifier = '';
 		$lang_identifier = '../images/stats/other.png';
@@ -377,15 +377,15 @@ else //Sinon on rempli le formulaire
 		closedir($dh); //On ferme le dossier
 		
 		$theme_array_bdd = array();
-		$result = $Sql->Query_while("SELECT theme 
+		$result = $Sql->query_while("SELECT theme 
 		FROM ".PREFIX."themes", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
 			if( array_search($row['theme'], $fichier_array) !== false)
 				$theme_array_bdd[] = $row['theme']; //On insère ces clées dans le tableau.
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		
 		foreach($theme_array_bdd as $theme_array => $theme_value) //On effectue la recherche dans le tableau.
 		{
@@ -416,7 +416,7 @@ if( !empty($_GET['unlock']) )
 	$unlock_admin = strhash($unlock_admin_clean);
 	
 	$CONFIG['unlock_admin'] = $unlock_admin;
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 	
 	###### Régénération du cache $CONFIG #######
 	$Cache->Generate_file('config');

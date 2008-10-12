@@ -45,10 +45,10 @@ if( $install )
 	$secure = retrieve(POST, $lang . 'secure', -1);
 	$activ = retrieve(POST, $lang . 'activ', 0);
 		
-	$check_lang = $Sql->Query("SELECT lang FROM ".PREFIX."lang WHERE lang = '" . $lang . "'", __LINE__, __FILE__);	
+	$check_lang = $Sql->query("SELECT lang FROM ".PREFIX."lang WHERE lang = '" . $lang . "'", __LINE__, __FILE__);	
 	if( empty($check_lang) && !empty($lang) )
 	{
-		$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES('" . $lang . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES('" . $lang . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
 		
 		redirect(HOST . SCRIPT); 
 	}
@@ -67,7 +67,7 @@ elseif( !empty($_FILES['upload_lang']['name']) ) //Upload et décompression de l'
 	$error = '';
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
-		$check_lang = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . strprotect($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
+		$check_lang = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . strprotect($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
 		if( empty($check_lang) )
 		{
 			include_once('../kernel/framework/io/upload.class.php');
@@ -155,16 +155,16 @@ else
 		}	
 		closedir($dh); //On ferme le dossier
 	
-		$result = $Sql->Query_while("SELECT lang 
+		$result = $Sql->query_while("SELECT lang 
 		FROM ".PREFIX."lang", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
 			$key = array_search($row['lang'], $array_file);
 			if( $key !== false)
 				unset($array_file[$key]); //On supprime ces clées du tableau.
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		
 		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 		foreach($array_file as $lang_array => $value_array) //On effectue la recherche dans le tableau.

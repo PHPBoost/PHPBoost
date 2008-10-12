@@ -34,7 +34,7 @@ $Template->Set_filenames(array(
 ));
 	
 //Membre connectés..
-$nbr_member = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."sessions WHERE level <> -1 AND session_time > '" . (time() - $CONFIG['site_session_invit']) . "'", __LINE__, __FILE__);
+$nbr_member = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."sessions WHERE level <> -1 AND session_time > '" . (time() - $CONFIG['site_session_invit']) . "'", __LINE__, __FILE__);
 include_once('../kernel/framework/util/pagination.class.php'); 
 $Pagination = new Pagination();
 	
@@ -46,14 +46,14 @@ $Template->Assign_vars(array(
 	'L_ONLINE' => $LANG['online']
 ));
 
-$result = $Sql->Query_while("SELECT s.user_id, s.level, s.session_time, s.session_script, s.session_script_get, 
+$result = $Sql->query_while("SELECT s.user_id, s.level, s.session_time, s.session_script, s.session_script_get, 
 s.session_script_title, m.login
 FROM ".PREFIX."sessions s
 JOIN ".PREFIX."member m ON (m.user_id = s.user_id)
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 ORDER BY " . $CONFIG_ONLINE['display_order_online'] . "
-" . $Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__); //Membres enregistrés.
-while( $row = $Sql->Sql_fetch_assoc($result) )
+" . $Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__); //Membres enregistrés.
+while( $row = $Sql->fetch_assoc($result) )
 {
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
@@ -80,7 +80,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 		'LAST_UPDATE' => gmdate_format('date_format_long', $row['session_time'])
 	));	
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 $Template->Pparse('online'); 
 

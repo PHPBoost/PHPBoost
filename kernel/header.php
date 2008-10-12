@@ -155,7 +155,7 @@ $Template->Assign_vars(array(
 //Si le compteur de visites est activé, on affiche le tout.
 if( $CONFIG['compteur'] == 1 )
 {
-	$compteur = $Sql->Query_array('compteur', 'ip AS nbr_ip', 'total', 'WHERE id = "1"', __LINE__, __FILE__);
+	$compteur = $Sql->query_array('compteur', 'ip AS nbr_ip', 'total', 'WHERE id = "1"', __LINE__, __FILE__);
 	$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 	$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 	

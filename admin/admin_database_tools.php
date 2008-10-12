@@ -81,10 +81,10 @@ if( !empty($table) && $action == 'data' )
 
 	//On éxécute la requête
 	$nbr_lines = $Sql->query("SELECT COUNT(*) FROM ".$table, __LINE__, __FILE__);
-	$query = "SELECT * FROM ".$table.$Sql->Sql_limit($Pagination->First_msg(30, 'p'), 30);
-	$result = $Sql->Query_while($query, __LINE__, __FILE__);			
+	$query = "SELECT * FROM ".$table.$Sql->limit($Pagination->First_msg(30, 'p'), 30);
+	$result = $Sql->query_while($query, __LINE__, __FILE__);			
 	$i = 1;
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$Template->Assign_block_vars('line', array());
 		//Premier passage: on liste le nom des champs sélectionnés
@@ -132,8 +132,8 @@ if( !empty($table) && $action == 'data' )
 	$Template->Assign_vars(array(
 		'C_DATABASE_TABLE_DATA' => true,
 		'C_DATABASE_TABLE_STRUCTURE' => false,
-		'QUERY' => $Sql->Indent_query($query),
-		'QUERY_HIGHLIGHT' => $Sql->Highlight_query($query),
+		'QUERY' => $Sql->indent_query($query),
+		'QUERY_HIGHLIGHT' => $Sql->highlight_query($query),
 		'PAGINATION' => $Pagination->Display_pagination('admin_database_tools.php?table=' . $table . '&amp;action=data&amp;p=%d', $nbr_lines, 'p', 30, 3),
 		'L_REQUIRE' => $LANG['require'],
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
@@ -188,7 +188,7 @@ elseif( !empty($table) && $action == 'update' ) //Mise à jour.
 		));
 		
 		//On éxécute la requête
-		$row = $Sql->Query_array(str_replace(PREFIX, '', $table), '*', "WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
+		$row = $Sql->query_array(str_replace(PREFIX, '', $table), '*', "WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
 		//On parse les valeurs de sortie
 		$i = 0;
 		foreach($row as $field_name => $field_value)
@@ -299,9 +299,9 @@ elseif( !empty($table) && $action == 'query' )
 		if( strtolower(substr($query, 0, 6)) == 'select' ) //il s'agit d'une requête de sélection
 		{
 			//On éxécute la requête
-			$result = $Sql->Query_while(str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
+			$result = $Sql->query_while(str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
 			$i = 1;
-			while( $row = $Sql->Sql_fetch_assoc($result) )
+			while( $row = $Sql->fetch_assoc($result) )
 			{
 				$Template->Assign_block_vars('line', array());
 				//Premier passage: on liste le nom des champs sélectionnés
@@ -327,16 +327,16 @@ elseif( !empty($table) && $action == 'query' )
 		}
 		elseif( substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table' ) //Requêtes d'autres types
 		{
-			$result = $Sql->Query_inject($query, __LINE__, __FILE__);
-			$affected_rows = @$Sql->Sql_affected_rows($result, "");			
+			$result = $Sql->query_inject($query, __LINE__, __FILE__);
+			$affected_rows = @$Sql->affected_rows($result, "");			
 		}
 	}	
 	elseif( !empty($table) )
 		$query = "SELECT * FROM " . $table . " WHERE 1";
 		
 	$Template->Assign_vars(array(
-		'QUERY' => $Sql->Indent_query($query),
-		'QUERY_HIGHLIGHT' => $Sql->Highlight_query($query),
+		'QUERY' => $Sql->indent_query($query),
+		'QUERY_HIGHLIGHT' => $Sql->highlight_query($query),
 		'L_REQUIRE' => $LANG['require'],
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
 		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],

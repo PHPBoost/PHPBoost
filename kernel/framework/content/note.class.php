@@ -53,7 +53,7 @@ class Note
 		if( $Member->Check_level(MEMBER_LEVEL) )
 		{
 			$check_note = ($note >= 0 && $note <= $this->notation_scale) ? true : false; //Validité de la note.			
-			$row_note = $Sql->Query_array($this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+			$row_note = $Sql->query_array($this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 			$user_id = $Member->Get_attribute('user_id');
 			$array_users_note = explode('/', $row_note['users_note']);
 			if( !in_array($user_id, $array_users_note) && $check_note ) //L'utilisateur n'a pas déjà voté, et la note est valide.
@@ -61,7 +61,7 @@ class Note
 				$note = (($row_note['note'] * $row_note['nbrnote']) + $note)/($row_note['nbrnote'] + 1);
 				$users_note = !empty($row_note['users_note']) ? $row_note['users_note'] . '/' . $user_id : $user_id; //On ajoute l'id de l'utilisateur.
 				
-				$Sql->Query_inject("UPDATE ".PREFIX.$this->sql_table." SET note = '" . $note . "', nbrnote = nbrnote + 1, users_note = '" . $users_note . "' WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX.$this->sql_table." SET note = '" . $note . "', nbrnote = nbrnote + 1, users_note = '" . $users_note . "' WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 				
 				return 'get_note = ' . $note . ';get_nbrnote = ' . ($row_note['nbrnote'] + 1) . ';';
 			}
@@ -97,7 +97,7 @@ class Note
 			else
 			{
 				###########################Affichage##############################
-				$row_note = $Sql->Query_array($this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+				$row_note = $Sql->query_array($this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 					
 				//Génération de l'échelle de notation pour ceux ayant le javascript désactivé.
 				$select = '<option value="-1" selected="selected">' . $LANG['note'] . '</option>';
@@ -228,7 +228,7 @@ class Note
 		{
 			if( $info_module['note'] == $this->script )
 			{
-				$idprov = $Sql->Query("SELECT id FROM ".PREFIX.$info_module['note']." WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+				$idprov = $Sql->query("SELECT id FROM ".PREFIX.$info_module['note']." WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 				if( $idprov == $this->idprov )
 					$check_script = true;
 			}

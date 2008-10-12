@@ -60,22 +60,22 @@ if( $read )
 		$nbr_waiting_pm = $nbr_pm - $limit_group; //Nombre de messages privés non visibles.
 	
 	$j = 0;
-	$result = $Sql->Query_while("SELECT pm.last_msg_id, pm.user_view_pm
+	$result = $Sql->query_while("SELECT pm.last_msg_id, pm.user_view_pm
 	FROM ".PREFIX."pm_topic pm
 	LEFT JOIN ".PREFIX."pm_msg msg ON msg.idconvers = pm.id AND msg.id = pm.last_msg_id
 	WHERE " . $Member->Get_attribute('user_id') . " IN (pm.user_id, pm.user_id_dest) AND pm.last_user_id <> '" . $Member->Get_attribute('user_id') . "' AND msg.view_status = 0
 	ORDER BY pm.last_timestamp DESC ", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		//On saute l'itération si la limite est dépassé.
 		$j++;
 		if( !$unlimited_pm && ($nbr_waiting_pm - $j) >= 0 )
 			continue;
-		$Sql->Query_inject("UPDATE ".PREFIX."pm_msg SET view_status = 1 WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__); 		
+		$Sql->query_inject("UPDATE ".PREFIX."pm_msg SET view_status = 1 WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__); 		
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
-	$Sql->Query_inject("UPDATE ".PREFIX."member SET user_pm = '" . $nbr_waiting_pm . "' WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__); 
+	$Sql->query_inject("UPDATE ".PREFIX."member SET user_pm = '" . $nbr_waiting_pm . "' WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__); 
 	
 	redirect(HOST . DIR . transid('/member/pm.php', '', '&'));
 }
@@ -95,7 +95,7 @@ if( $convers && empty($pm_edit) && empty($pm_del) ) //Envoi de conversation.
 	if( !empty($title) && !empty($contents) && !empty($login) )
 	{	
 		//On essaye de récupérer le user_id, si le membre n'a pas cliqué une fois la recherche AJAX terminée.
-		$user_id_dest = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__); 
+		$user_id_dest = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__); 
 		if( !empty($user_id_dest) && $user_id_dest != $Member->Get_attribute('user_id') ) 
 		{
 			//Envoi de la conversation, vérification de la boite si pleine => erreur
@@ -134,7 +134,7 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $Member->Get_attribute('
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$login = !empty($pm_get) ? $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $pm_get . "'", __LINE__, __FILE__) : '';
+	$login = !empty($pm_get) ? $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $pm_get . "'", __LINE__, __FILE__) : '';
 	
 	$Template->Assign_block_vars('post_convers', array(
 		'U_ACTION_CONVERS' => transid('.php'),
@@ -223,7 +223,7 @@ elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de
 elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisualisation du message.
 {
 	//On récupère les info de la conversation.
-	$convers_title = $Sql->Query("SELECT title FROM ".PREFIX."pm_topic WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
+	$convers_title = $Sql->query("SELECT title FROM ".PREFIX."pm_topic WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
 	
 	$Template->Set_filenames(array(
 		'pm'=> 'pm.tpl'
@@ -263,7 +263,7 @@ elseif( !empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 		//user_view_pm => nombre de messages non lu par l'un des 2 participants.
 		
 		//On récupère les info de la conversation.
-		$convers = $Sql->Query_array('pm_topic', 'user_id', 'user_id_dest', 'user_convers_status', 'nbr_msg', 'user_view_pm', 'last_user_id', "WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
+		$convers = $Sql->query_array('pm_topic', 'user_id', 'user_id_dest', 'user_convers_status', 'nbr_msg', 'user_view_pm', 'last_user_id', "WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
 		
 		//Récupération de l'id du destinataire.
 		$user_id_dest = ($convers['user_id_dest'] == $Member->Get_attribute('user_id')) ? $convers['user_id'] : $convers['user_id_dest'];
@@ -279,7 +279,7 @@ elseif( !empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 			
 			//Cas assez sournois, l'expediteur a reçu un message pendant qu'il lisait la conversation juste avant de répondre => on marque le message comme lu.
 			if( $convers['user_view_pm'] > 1 && $convers['last_user_id'] != $Member->Get_attribute('user_id') )
-				$Sql->Query_inject("UPDATE ".PREFIX."member SET user_pm = user_pm - '" . $convers['user_view_pm'] . "' WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."member SET user_pm = user_pm - '" . $convers['user_view_pm'] . "' WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 				
 			//Envoi du message privé.
 			$Privatemsg->Send_single_pm($user_id_dest, $pm_id_get, $contents, $Member->Get_attribute('user_id'), $status);
@@ -306,7 +306,7 @@ elseif( $pm_del_convers ) //Suppression de conversation.
 	//Conversation présente chez les deux membres: user_convers_status => 0.
 	//Conversation supprimée chez l'expediteur: user_convers_status => 1.
 	//Conversation supprimée chez le destinataire: user_convers_status => 2.
-	$result = $Sql->Query_while("SELECT id, user_id, user_id_dest, user_convers_status, last_msg_id
+	$result = $Sql->query_while("SELECT id, user_id, user_id_dest, user_convers_status, last_msg_id
 	FROM ".PREFIX."pm_topic
 	WHERE 
 	(
@@ -323,8 +323,8 @@ elseif( $pm_del_convers ) //Suppression de conversation.
 		)
 	)
 	ORDER BY last_timestamp DESC 
-	" . $Sql->Sql_limit($Pagination->First_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	" . $Sql->limit($Pagination->First_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$del_convers = isset($_POST[$row['id']]) ? trim($_POST[$row['id']]) : '';
 		if( $del_convers == 'on' )
@@ -343,7 +343,7 @@ elseif( $pm_del_convers ) //Suppression de conversation.
 					$del_convers = true;
 			}
 			
-			$view_status = $Sql->Query("SELECT view_status FROM ".PREFIX."pm_msg WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__);	
+			$view_status = $Sql->query("SELECT view_status FROM ".PREFIX."pm_msg WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__);	
 			$update_nbr_pm = ($view_status == '0') ? true : false;	
 			$Privatemsg->Del_pm($Member->Get_attribute('user_id'), $row['id'], $expd, $del_convers, $update_nbr_pm);
 		}
@@ -353,12 +353,12 @@ elseif( $pm_del_convers ) //Suppression de conversation.
 }
 elseif( !empty($pm_del) ) //Suppression du message privé, si le destinataire ne la pas encore lu.
 {
-	$pm = $Sql->Query_array('pm_msg', 'idconvers', 'contents', 'view_status', "WHERE id = '" . $pm_del . "' AND user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$pm = $Sql->query_array('pm_msg', 'idconvers', 'contents', 'view_status', "WHERE id = '" . $pm_del . "' AND user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
 	if( !empty($pm['idconvers']) ) //Permet de vérifier si le message appartient bien au membre.
 	{		
 		//On récupère les info de la conversation.
-		$convers = $Sql->Query_array('pm_topic', 'title', 'user_id', 'user_id_dest', 'last_msg_id', "WHERE id = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);	
+		$convers = $Sql->query_array('pm_topic', 'title', 'user_id', 'user_id_dest', 'last_msg_id', "WHERE id = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);	
 		if( $pm_del ==  $convers['last_msg_id'] ) //On édite uniquement le dernier message.
 		{
 			if( $convers['user_id'] == $Member->Get_attribute('user_id') ) //Expediteur.
@@ -379,7 +379,7 @@ elseif( !empty($pm_del) ) //Suppression du message privé, si le destinataire ne 
 			//Le destinataire n'a pas lu le message => on peut éditer.
 			if( $view === false )
 			{
-				$id_first = $Sql->Query("SELECT MIN(id) FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);
+				$id_first = $Sql->query("SELECT MIN(id) FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);
 				if( $pm_del > $id_first ) //Suppression du message.
 				{	
 					$pm_last_msg = $Privatemsg->Del_single_pm($pm_to, $pm_del, $pm['idconvers']);					
@@ -402,12 +402,12 @@ elseif( !empty($pm_del) ) //Suppression du message privé, si le destinataire ne 
 }
 elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la pas encore lu.
 {		
-	$pm = $Sql->Query_array('pm_msg', 'idconvers', 'contents', 'view_status', "WHERE id = '" . $pm_edit . "' AND user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$pm = $Sql->query_array('pm_msg', 'idconvers', 'contents', 'view_status', "WHERE id = '" . $pm_edit . "' AND user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
 	if( !empty($pm['idconvers']) ) //Permet de vérifier si le message appartient bien au membre.
 	{		
 		//On récupère les info de la conversation.
-		$convers = $Sql->Query_array('pm_topic', 'title', 'user_id', 'user_id_dest', "WHERE id = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);	
+		$convers = $Sql->query_array('pm_topic', 'title', 'user_id', 'user_id_dest', "WHERE id = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);	
 		
 		$view = false;
 		if( $pm['view_status'] == '1' ) //Le membre a déjà lu le message => échec.
@@ -416,7 +416,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 		//Le destinataire n'a pas lu le message => on peut éditer.
 		if( $view === false )
 		{
-			$id_first = $Sql->Query("SELECT MIN(id) as id FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);			
+			$id_first = $Sql->query("SELECT MIN(id) as id FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);			
 			if( !empty($_POST['convers']) XOR !empty($_POST['edit_pm']) )
 			{
 				$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -425,7 +425,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 				if( !empty($_POST['edit_pm']) && !empty($contents) )
 				{
 					if( $pm_edit > $id_first ) //Maj du message.
-						$Sql->Query_inject("UPDATE ".PREFIX."pm_msg SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
+						$Sql->query_inject("UPDATE ".PREFIX."pm_msg SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
 					else //Echec.
 						$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 				}
@@ -433,8 +433,8 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 				{
 					if( $pm_edit == $id_first )
 					{	
-						$Sql->Query_inject("UPDATE ".PREFIX."pm_topic SET title = '" . $title . "', last_timestamp = '" . time() . "' WHERE id = '" . $pm['idconvers'] . "' AND last_msg_id = '" . $pm_edit . "'", __LINE__, __FILE__);
-						$Sql->Query_inject("UPDATE ".PREFIX."pm_msg SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
+						$Sql->query_inject("UPDATE ".PREFIX."pm_topic SET title = '" . $title . "', last_timestamp = '" . time() . "' WHERE id = '" . $pm['idconvers'] . "' AND last_msg_id = '" . $pm_edit . "'", __LINE__, __FILE__);
+						$Sql->query_inject("UPDATE ".PREFIX."pm_msg SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
 					}
 					else //Echec.
 						$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -519,7 +519,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	$Pagination = new Pagination();
 
 	//On récupère les info de la conversation.
-	$convers = $Sql->Query_array('pm_topic', 'id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm', "WHERE id = '" . $pm_id_get . "' AND '" . $Member->Get_attribute('user_id') . "' IN (user_id, user_id_dest)", __LINE__, __FILE__);
+	$convers = $Sql->query_array('pm_topic', 'id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm', "WHERE id = '" . $pm_id_get . "' AND '" . $Member->Get_attribute('user_id') . "' IN (user_id, user_id_dest)", __LINE__, __FILE__);
 
 	//Vérification des autorisations.
 	if( empty($convers['id']) || ($convers['user_id'] != $Member->Get_attribute('user_id') && $convers['user_id_dest'] != $Member->Get_attribute('user_id')) )
@@ -527,9 +527,9 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	
 	if( $convers['user_view_pm'] > 0 && $convers['last_user_id'] != $Member->Get_attribute('user_id') ) //Membre n'ayant pas encore lu la conversation.
 	{
-		$Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."member SET user_pm = user_pm - '" . $convers['user_view_pm'] . "' WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__); 
-		$Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."pm_topic SET user_view_pm = 0 WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
-		$Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."pm_msg SET view_status = 1 WHERE idconvers = '" . $convers['id'] . "' AND user_id <> '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."member SET user_pm = user_pm - '" . $convers['user_view_pm'] . "' WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__); 
+		$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."pm_topic SET user_view_pm = 0 WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."pm_msg SET view_status = 1 WHERE idconvers = '" . $convers['id'] . "' AND user_id <> '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 	}	
 	
 	$pagination_msg = 25;	
@@ -564,14 +564,14 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 	$i = 0;	
 	$j = 0;	
-	$result = $Sql->Query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, msg.contents
+	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, msg.contents
 	FROM ".PREFIX."pm_msg msg
 	LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
 	LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id <> -1
 	WHERE msg.idconvers = '" . $pm_id_get . "'
 	ORDER BY msg.timestamp 
-	" . $Sql->Sql_limit($Pagination->First_msg($pagination_msg, 'p'), $pagination_msg), __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	" . $Sql->limit($Pagination->First_msg($pagination_msg, 'p'), $pagination_msg), __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$row['user_id'] = (int)$row['user_id'];
 		$is_admin = ($row['user_id'] === -1);
@@ -701,13 +701,13 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 			$track = true;
 		$j++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 
 	//Récupération du message quoté.
 	if( !empty($quote_get) )
 	{	
-		$quote_msg = $Sql->Query_array('pm_msg', 'user_id', 'contents', "WHERE id = '" . $quote_get . "'", __LINE__, __FILE__);
-		$pseudo = $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $quote_msg['user_id'] . "'", __LINE__, __FILE__);
+		$quote_msg = $Sql->query_array('pm_msg', 'user_id', 'contents', "WHERE id = '" . $quote_get . "'", __LINE__, __FILE__);
+		$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $quote_msg['user_id'] . "'", __LINE__, __FILE__);
 		
 		$contents = '[quote=' . $pseudo . ']' . unparse($quote_msg['contents']) . '[/quote]';
 	}
@@ -815,7 +815,7 @@ else //Liste des conversation, dans la boite du membre.
 	//Conversation supprimée chez le destinataire: user_convers_status => 2.
 	$i = 0;
 	$j = 0;
-	$result = $Sql->Query_while("SELECT pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, m.login AS login, m1.login AS login_dest, m2.login AS last_login
+	$result = $Sql->query_while("SELECT pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, m.login AS login, m1.login AS login_dest, m2.login AS last_login
 	FROM ".PREFIX."pm_topic pm
 	LEFT JOIN ".PREFIX."pm_msg msg ON msg.id = pm.last_msg_id
 	LEFT JOIN ".PREFIX."member m ON m.user_id = pm.user_id
@@ -836,8 +836,8 @@ else //Liste des conversation, dans la boite du membre.
 		)
 	)
 	ORDER BY pm.last_timestamp DESC 
-	" . $Sql->Sql_limit($Pagination->First_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	" . $Sql->limit($Pagination->First_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		//On saute l'itération si la limite est dépassé, si ce n'est pas un message privé du système.
 		if( $row['user_id'] != -1 )
@@ -901,7 +901,7 @@ else //Liste des conversation, dans la boite du membre.
 		));
 		$i++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Template->Pparse('pm');
 }

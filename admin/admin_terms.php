@@ -48,7 +48,7 @@ if( !empty($_POST['msg_register']) ) //Message à l'inscription.
 	
 	$config_member['msg_register'] = stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_UNCHANGE)));
 	
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
 	
 	###### Régénération du cache $CONFIG_MEMBER #######
 	$Cache->Generate_file('member');
@@ -66,7 +66,7 @@ else
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 	));
 	
-	$msg_register = $Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__); //Message à l'inscription.
+	$msg_register = $Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__); //Message à l'inscription.
 	
 	$Template->Assign_vars(array(
 		'CONTENTS' => unparse($CONFIG_MEMBER['msg_register']),

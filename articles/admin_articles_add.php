@@ -89,12 +89,12 @@ if( !empty($_POST['valid']) )
 			$CAT_ARTICLES[0]['id_right'] = 0;
 		}
 			
-		$Sql->Query_inject("INSERT INTO ".PREFIX."articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . str_replace('[page][/page]', '', $contents) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
-		$last_articles_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."articles");
+		$Sql->query_inject("INSERT INTO ".PREFIX."articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . str_replace('[page][/page]', '', $contents) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
+		$last_articles_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."articles");
 		
 		//Mise à jours du nombre d'articles des parents.
 		$clause_update = ($visible == 1) ? 'nbr_articles_visible = nbr_articles_visible + 1' : 'nbr_articles_unvisible = nbr_articles_unvisible + 1';
-		$Sql->Query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 		
         ###### Regénération du cache #######
 		$Cache->Generate_module_file('articles');
@@ -164,7 +164,7 @@ elseif( !empty($_POST['previs']) )
 		$end = '';
 	}	
 	
-	$pseudo = $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = " . $Member->Get_attribute('user_id'), __LINE__, __FILE__);
+	$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = " . $Member->Get_attribute('user_id'), __LINE__, __FILE__);
 	$Template->Assign_vars(array(
 		'C_ARTICLES_PREVIEW' => true,
 		'TITLE_PRW' => $title,
@@ -176,17 +176,17 @@ elseif( !empty($_POST['previs']) )
 	//Catégories.	
 	$i = 0;	
 	$categories = '<option value="0" %s>' . $LANG['root'] . '</option>';
-	$result = $Sql->Query_while("SELECT id, level, name 
+	$result = $Sql->query_while("SELECT id, level, name 
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
 		$categories .= '<option value="' . $row['id'] . '" ' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 		$i++;
 	}		
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Images disponibles
 	$img_direct_path = (strpos($icon, '/') !== false);
@@ -276,16 +276,16 @@ else
 	//Catégories.	
 	$i = 0;	
 	$categories = '<option value="0">' . $LANG['root'] . '</option>';
-	$result = $Sql->Query_while("SELECT id, level, name 
+	$result = $Sql->query_while("SELECT id, level, name 
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$categories .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 		$i++;
 	}		
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Images disponibles
 	$rep = './';
