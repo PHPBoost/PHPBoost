@@ -45,7 +45,7 @@ function forum_limit_time_msg()
 {
 	global $Member, $CONFIG_FORUM;
 	
-	$last_view_forum = $Member->Get_attribute('last_view_forum');
+	$last_view_forum = $Member->get_attribute('last_view_forum');
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
 	
@@ -58,21 +58,21 @@ function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 	global $Sql, $Member, $CONFIG_FORUM;
 	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-	$last_view_forum = ($Member->Get_attribute('last_view_forum') > 0) ? $Member->Get_attribute('last_view_forum') : 0;
+	$last_view_forum = ($Member->get_attribute('last_view_forum') > 0) ? $Member->get_attribute('last_view_forum') : 0;
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
-	if( $Member->Get_attribute('user_id') !== -1 && $last_timestamp >= $max_time_msg )
+	if( $Member->get_attribute('user_id') !== -1 && $last_timestamp >= $max_time_msg )
 	{
-		$check_view_id = $Sql->query("SELECT last_view_id FROM ".PREFIX."forum_view WHERE user_id = '" . $Member->Get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+		$check_view_id = $Sql->query("SELECT last_view_id FROM ".PREFIX."forum_view WHERE user_id = '" . $Member->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 		if( !empty($check_view_id) && $check_view_id != $last_msg_id ) 
 		{
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."forum_view SET last_view_id = '" . $last_msg_id . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."forum_view SET last_view_id = '" . $last_msg_id . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		}
 		elseif( empty($check_view_id) )
 		{			
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO ".PREFIX."forum_view (idtopic, last_view_id, user_id, timestamp) VALUES('" . $idtopic . "', '" . $last_msg_id . "', '" . $Member->Get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);			
+			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO ".PREFIX."forum_view (idtopic, last_view_id, user_id, timestamp) VALUES('" . $idtopic . "', '" . $last_msg_id . "', '" . $Member->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);			
 		}
 		else
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
@@ -86,7 +86,7 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 {
 	global $Sql, $Member;
 	
-	$Sql->query_inject("INSERT INTO ".PREFIX."forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . strprotect($type) . "', '" . $Member->Get_attribute('user_id') . "', '" . numeric($user_id_action) . "', '" . strprotect($url_action) . "', '" . time() . "')", __LINE__, __FILE__);
+	$Sql->query_inject("INSERT INTO ".PREFIX."forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . strprotect($type) . "', '" . $Member->get_attribute('user_id') . "', '" . numeric($user_id_action) . "', '" . strprotect($url_action) . "', '" . time() . "')", __LINE__, __FILE__);
 }
 
 //Gestion du rss du forum.

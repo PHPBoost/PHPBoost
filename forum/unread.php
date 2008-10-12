@@ -37,10 +37,10 @@ require_once('../kernel/header.php');
 //Redirection changement de catégorie.
 if( !empty($_POST['change_cat']) )
 	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
-if( !$Member->Check_level(MEMBER_LEVEL) ) //Réservé aux membres.
+if( !$Member->check_level(MEMBER_LEVEL) ) //Réservé aux membres.
 	redirect(HOST . DIR . '/member/error.php'); 
 	
-if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
+if( $Member->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
 {
 	$Template->Set_filenames(array(
 		'forum_forum'=> 'forum/forum_forum.tpl',
@@ -60,7 +60,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 	{
 		foreach($CAT_FORUM as $idcat => $key)
 		{
-			if( !$Member->Check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+			if( !$Member->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -73,9 +73,9 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 	$result = $Sql->query_while("SELECT c.id as cid, m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 	FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
-	LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id	AND v.user_id = '" . $Member->Get_attribute('user_id') . "'
+	LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id	AND v.user_id = '" . $Member->get_attribute('user_id') . "'
 	LEFT JOIN ".PREFIX."forum_poll p ON p.idtopic = t.id
-	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $Member->Get_attribute('user_id') . "'
+	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $Member->get_attribute('user_id') . "'
 	LEFT JOIN ".PREFIX."member m1 ON m1.user_id = t.user_id
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = t.last_user_id
 	WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "
@@ -140,7 +140,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 	
 	$nbr_topics = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
-	LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id	AND v.user_id = '" . $Member->Get_attribute('user_id') . "'
+	LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id	AND v.user_id = '" . $Member->get_attribute('user_id') . "'
 	WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats, __LINE__, __FILE__);
 
 	//Le membre a déjà lu tous les messages.

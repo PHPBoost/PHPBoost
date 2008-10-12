@@ -47,7 +47,7 @@ class Template
 			$this->files[$this->tpl] = $this->tpl;
 			if( $auto_load_vars )
 			{
-				$member_connected = $Member->Check_level(MEMBER_LEVEL);
+				$member_connected = $Member->check_level(MEMBER_LEVEL);
 				$this->assign_vars(array(
 					'SID' => SID,
 					'THEME' => $CONFIG['theme'],

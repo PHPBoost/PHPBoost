@@ -38,18 +38,18 @@ if( !empty($_GET['new_folder']) ) //Ajout d'un dossier dans la gestion des fichi
 	$Uploads = new Uploads; 
 	
 	$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : '0';
-	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $Member->Get_attribute('user_id');
+	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $Member->get_attribute('user_id');
 	$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
 
-	if( !empty($user_id) && $Member->Get_attribute('user_id') != $user_id )
+	if( !empty($user_id) && $Member->get_attribute('user_id') != $user_id )
 	{	
-		if( $Member->Check_level(ADMIN_LEVEL) )
+		if( $Member->check_level(ADMIN_LEVEL) )
 			echo $Uploads->Add_folder($id_parent, $user_id, $name);
 		else
-			echo $Uploads->Add_folder($id_parent, $Member->Get_attribute('user_id'), $name);		
+			echo $Uploads->Add_folder($id_parent, $Member->get_attribute('user_id'), $name);		
 	}
 	else
-		echo $Uploads->Add_folder($id_parent, $Member->Get_attribute('user_id'), $name);
+		echo $Uploads->Add_folder($id_parent, $Member->get_attribute('user_id'), $name);
 }
 elseif( !empty($_GET['rename_folder']) ) //Renomme un dossier dans la gestion des fichiers.
 {
@@ -59,20 +59,20 @@ elseif( !empty($_GET['rename_folder']) ) //Renomme un dossier dans la gestion de
 	
 	$id_folder = !empty($_POST['id_folder']) ? numeric($_POST['id_folder']) : '0';
 	$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
-	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $Member->Get_attribute('user_id');
+	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $Member->get_attribute('user_id');
 	$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
 	
 	if( !empty($id_folder) && !empty($name) )
 	{
-		if( $Member->Get_attribute('user_id') != $user_id )
+		if( $Member->get_attribute('user_id') != $user_id )
 		{	
-			if( $Member->Check_level(ADMIN_LEVEL) )
+			if( $Member->check_level(ADMIN_LEVEL) )
 				echo $Uploads->Rename_folder($id_folder, $name, $previous_name, $user_id, ADMIN_NO_CHECK);
 			else
-				echo $Uploads->Rename_folder($id_folder, $name, $previous_name, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);
+				echo $Uploads->Rename_folder($id_folder, $name, $previous_name, $Member->get_attribute('user_id'), ADMIN_NO_CHECK);
 		}
 		else
-			echo $Uploads->Rename_folder($id_folder, $name, $previous_name, $Member->Get_attribute('user_id'));
+			echo $Uploads->Rename_folder($id_folder, $name, $previous_name, $Member->get_attribute('user_id'));
 	}
 	else 
 		echo 0;
@@ -84,21 +84,21 @@ elseif( !empty($_GET['rename_file']) ) //Renomme un fichier d'un dossier dans la
 	$Uploads = new Uploads; 
 	
 	$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
-	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $Member->Get_attribute('user_id');
+	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $Member->get_attribute('user_id');
 	$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
 	$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
 	
 	if( !empty($id_file) && !empty($name) )
 	{		
-		if( $Member->Get_attribute('user_id') != $user_id )
+		if( $Member->get_attribute('user_id') != $user_id )
 		{	
-			if( $Member->Check_level(ADMIN_LEVEL) )
+			if( $Member->check_level(ADMIN_LEVEL) )
 				echo $Uploads->Rename_file($id_file, $name, $previous_name, $user_id, ADMIN_NO_CHECK);
 			else
-				echo $Uploads->Rename_file($id_file, $name, $previous_name, $Member->Get_attribute('user_id'), ADMIN_NO_CHECK);
+				echo $Uploads->Rename_file($id_file, $name, $previous_name, $Member->get_attribute('user_id'), ADMIN_NO_CHECK);
 		}
 		else
-			echo $Uploads->Rename_file($id_file, $name, $previous_name, $Member->Get_attribute('user_id'));		
+			echo $Uploads->Rename_file($id_file, $name, $previous_name, $Member->get_attribute('user_id'));		
 	}
 	else 
 		echo 0;

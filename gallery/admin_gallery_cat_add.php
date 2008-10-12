@@ -49,7 +49,7 @@ if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 	$status = isset($_POST['status']) ? numeric($_POST['status']) : 0;   
 		
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::Return_array_auth(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
+	$array_auth_all = Authorizations::auth_array(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
 	
 	if( !empty($name) )
 	{	
@@ -122,9 +122,9 @@ else
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
 		'CATEGORIES' => $galleries,
-		'AUTH_READ' => Authorizations::Generate_select_auth(READ_CAT_GALLERY, array(), array(0 => true, 1 => true, 2 => true)),
-		'AUTH_WRITE' => Authorizations::Generate_select_auth(WRITE_CAT_GALLERY, array(), array(1 => true, 2 => true)),
-		'AUTH_EDIT' => Authorizations::Generate_select_auth(EDIT_CAT_GALLERY, array(), array(2 => true)),
+		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, array(), array(0 => true, 1 => true, 2 => true)),
+		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_GALLERY, array(), array(1 => true, 2 => true)),
+		'AUTH_EDIT' => Authorizations::generate_select(EDIT_CAT_GALLERY, array(), array(2 => true)),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 

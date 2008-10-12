@@ -118,7 +118,7 @@ if( $checkdate === true && empty($id) && !$add )
 	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
 	$month_day = $array_month[$month - 1];
 	
-	if( $Member->Check_level($CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
+	if( $Member->check_level($CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
 	{
 		$add_event = '<a href="calendar' . transid('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" /></a><br />';
 	}
@@ -127,7 +127,7 @@ if( $checkdate === true && empty($id) && !$add )
 	
 	$Template->Assign_vars(array(
 		'C_CALENDAR_DISPLAY' => true,
-		'ADMIN_CALENDAR' => ($Member->Check_level(ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
+		'ADMIN_CALENDAR' => ($Member->check_level(ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
 		'ADD' => $add_event,
 		'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
 		'U_PREVIOUS' => ($month == 1) ? transid('.php?d=' . $day . '&amp;m=12&amp;y=' . ($year - 1), '-' . $day . '-12-' . ($year - 1) . '.php') :  transid('.php?d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year, '-1-' . ($month - 1) . '-' . $year . '.php'),
@@ -219,7 +219,7 @@ if( $checkdate === true && empty($id) && !$add )
 		GROUP BY cl.id", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
-			if( $Member->Check_level(ADMIN_LEVEL) )
+			if( $Member->check_level(ADMIN_LEVEL) )
 			{
 				$edit = '&nbsp;&nbsp;<a href="calendar' . transid('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
 				$del = '&nbsp;&nbsp;<a href="calendar' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm_del();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>';
@@ -281,7 +281,7 @@ if( $checkdate === true && empty($id) && !$add )
 }
 elseif( !empty($id) )
 {
-	if( !$Member->Check_level(ADMIN_LEVEL) ) //Admins seulement autorisés à editer/supprimer!
+	if( !$Member->check_level(ADMIN_LEVEL) ) //Admins seulement autorisés à editer/supprimer!
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	if( $del ) //Suppression simple.
@@ -386,7 +386,7 @@ elseif( !empty($id) )
 }
 elseif( $add ) //Ajout d'un évenement
 {
-	if( !$Member->Check_level($CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
+	if( !$Member->check_level($CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 	if( !empty($_POST['valid']) ) //Enregistrement
@@ -409,7 +409,7 @@ elseif( $add ) //Ajout d'un évenement
 		{
 			if( !empty($title) && !empty($contents) ) //succès
 			{
-				$Sql->query_inject("INSERT INTO ".PREFIX."calendar (timestamp,title,contents,user_id,nbr_com) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $Member->Get_attribute('user_id') . "', 0)", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."calendar (timestamp,title,contents,user_id,nbr_com) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $Member->get_attribute('user_id') . "', 0)", __LINE__, __FILE__);
 				
 				$day = gmdate_format('d', $timestamp);
 				$month = gmdate_format('m', $timestamp);

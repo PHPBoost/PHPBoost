@@ -104,11 +104,11 @@ class PagesInterface extends ModuleInterface
         $auth_cats = '';
         if( is_array($_PAGES_CATS) )
         {
-            if( isset($_PAGES_CATS['auth']) && !$Member->Check_auth($_PAGES_CATS['auth'], READ_PAGE) )
+            if( isset($_PAGES_CATS['auth']) && !$Member->check_auth($_PAGES_CATS['auth'], READ_PAGE) )
                 $auth_cats .= '0,';
             foreach($_PAGES_CATS as $id => $key)
             {
-                if( !$Member->Check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )
+                if( !$Member->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )
                     $auth_cats .= $id.',';
             }
         }
@@ -132,7 +132,7 @@ class PagesInterface extends ModuleInterface
             if ( !empty($row['auth']) )
             {
                 $auth = sunserialize($row['auth']);
-                if ( !$Member->Check_auth($auth, READ_PAGE) )
+                if ( !$Member->check_auth($auth, READ_PAGE) )
                 {
                     unset($row['auth']);
                     array_push($results, $row);

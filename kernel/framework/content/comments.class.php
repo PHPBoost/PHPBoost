@@ -172,15 +172,15 @@ class Comments
 				if( !empty($login) && !empty($contents) )
 				{
 					//Status des commentaires, verrouillé/déverrouillé?
-					if( $this->lock_com >= 1 && !$Member->Check_level(MODO_LEVEL) )
+					if( $this->lock_com >= 1 && !$Member->check_level(MODO_LEVEL) )
 						redirect($path_redirect);
 					
 					//Autorisation de poster des commentaires? 
-					if( $Member->Check_level($CONFIG_COM['com_auth']) )
+					if( $Member->check_level($CONFIG_COM['com_auth']) )
 					{
 						//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 						$check_time = ($Member->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."com WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
-						if( !empty($check_time) && !$Member->Check_max_value(AUTH_FLOOD) )
+						if( !empty($check_time) && !$Member->check_max_value(AUTH_FLOOD) )
 						{				
 							if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcule la fin du delai.	
 								redirect($path_redirect . '&errorh=flood#errorh');
@@ -218,7 +218,7 @@ class Comments
 				$row = $Sql->query_array('com', '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 				$row['user_id'] = (int)$row['user_id'];
 				
-				if( $this->idcom != 0 && ($Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1)) ) //Modération des commentaires.
+				if( $this->idcom != 0 && ($Member->check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1)) ) //Modération des commentaires.
 				{
 					if( $delcom > 0) //Suppression du commentaire.
 					{
@@ -300,9 +300,9 @@ class Comments
 				else
 					$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 			}
-			elseif( isset($_GET['lock']) && $Member->Check_level(MODO_LEVEL) ) //Verrouillage des commentaires.
+			elseif( isset($_GET['lock']) && $Member->check_level(MODO_LEVEL) ) //Verrouillage des commentaires.
 			{
-				if( $Member->Check_level(MODO_LEVEL) )
+				if( $Member->check_level(MODO_LEVEL) )
 				{
 					$lock = retrieve(GET, 'lock', 0);
 					$this->lock($lock);
@@ -331,7 +331,7 @@ class Comments
 				));
 				
 				//Affichage du lien de verrouillage/déverrouillage.
-				if( $Member->Check_level(MODO_LEVEL) )
+				if( $Member->check_level(MODO_LEVEL) )
 				{
 					$Template->Assign_vars(array(
 						'COM_LOCK' => true,
@@ -370,9 +370,9 @@ class Comments
 					$Errorh->Error_handler($errstr, E_USER_NOTICE);
 				
 				//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
-				if( !$this->lock_com || $Member->Check_level(MODO_LEVEL) )
+				if( !$this->lock_com || $Member->check_level(MODO_LEVEL) )
 				{
-					if( $Member->Check_level($CONFIG_COM['com_auth']) )
+					if( $Member->check_level($CONFIG_COM['com_auth']) )
 						$Template->Assign_vars(array(
 							'AUTH_POST_COM' => true
 						));
@@ -450,7 +450,7 @@ class Comments
 					$del = '';
 					
 					$is_guest = ($row['user_id'] === -1);
-					$is_modo = $Member->Check_level(MODO_LEVEL);
+					$is_modo = $Member->check_level(MODO_LEVEL);
 					$warning = '';
 					$readonly = '';
 					if( $is_modo && !$is_guest ) //Modération.

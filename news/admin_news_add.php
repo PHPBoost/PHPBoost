@@ -80,7 +80,7 @@ if( !empty($_POST['valid']) )
 			$timestamp = time();
 		
 		$Sql->query_inject("INSERT INTO ".PREFIX."news (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com) 
-		VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
+		VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
 		
         // Feeds Regeneration
         require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
@@ -131,7 +131,7 @@ elseif( !empty($_POST['previs']) )
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
 		'EXTEND_CONTENTS' => second_parse(stripslashes(strparse($extend_contents))) . '<br /><br />',
-		'PSEUDO' => $Member->Get_attribute('login'),
+		'PSEUDO' => $Member->get_attribute('login'),
 		'IMG' => (!empty($img) ? '<img src="' . stripslashes($img) . '" alt="' . stripslashes($alt) . '" title="' . stripslashes($alt) . '" class="img_right" style="margin:6px;border:1px solid #000000;" />' : ''),
 		'DATE' => gmdate_format('date_format_short')
 	));

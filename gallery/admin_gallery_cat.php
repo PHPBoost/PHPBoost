@@ -43,7 +43,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 1;  
 
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::Return_array_auth(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
+	$array_auth_all = Authorizations::auth_array(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
 
 	if( !empty($name) )
 	{
@@ -189,7 +189,7 @@ elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la ra
 	$Cache->Load_file('gallery');
 	
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::Return_array_auth(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
+	$array_auth_all = Authorizations::auth_array(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
 	
 	$CONFIG_GALLERY['auth_root'] = serialize($array_auth_all);
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_GALLERY)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
@@ -723,9 +723,9 @@ elseif( !empty($id) ) //Edition des catégories.
 		'UNCHECKED_APROB' => ($gallery_info['aprob'] == 0) ? 'checked="checked"' : '',
 		'CHECKED_STATUS' => ($gallery_info['status'] == 1) ? 'checked="checked"' : '',
 		'UNCHECKED_STATUS' => ($gallery_info['status'] == 0) ? 'checked="checked"' : '',
-		'AUTH_READ' => Authorizations::Generate_select_auth(READ_CAT_GALLERY, $array_auth),
-		'AUTH_WRITE' => Authorizations::Generate_select_auth(WRITE_CAT_GALLERY, $array_auth),
-		'AUTH_EDIT' => Authorizations::Generate_select_auth(EDIT_CAT_GALLERY, $array_auth),
+		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, $array_auth),
+		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_GALLERY, $array_auth),
+		'AUTH_EDIT' => Authorizations::generate_select(EDIT_CAT_GALLERY, $array_auth),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 
@@ -778,9 +778,9 @@ elseif( !empty($root) ) //Edition de la racine.
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
-		'AUTH_READ' => Authorizations::Generate_select_auth(READ_CAT_GALLERY, $array_auth),
-		'AUTH_WRITE' => Authorizations::Generate_select_auth(WRITE_CAT_GALLERY, $array_auth),
-		'AUTH_EDIT' => Authorizations::Generate_select_auth(EDIT_CAT_GALLERY, $array_auth),
+		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, $array_auth),
+		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_GALLERY, $array_auth),
+		'AUTH_EDIT' => Authorizations::generate_select(EDIT_CAT_GALLERY, $array_auth),
 		'L_ROOT' => $LANG['root'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 

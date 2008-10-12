@@ -138,7 +138,7 @@ ORDER BY s.session_time DESC", __LINE__, __FILE__);
 while( $row = $Sql->fetch_assoc($result) )
 {
 	//On vérifie que la session ne correspond pas à un robot.
-	$robot = $Session->check_robot($row['session_ip']);
+	$robot = $Session->_check_bot($row['session_ip']);
 
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{ 		

@@ -155,16 +155,16 @@ elseif( !empty($type) ) //Rédaction
 		switch($type)
 		{
 			case 'html':
-				$newsletter_sender->send_html($mail_object, $mail_contents, $Member->Get_attribute('user_mail'));
+				$newsletter_sender->send_html($mail_object, $mail_contents, $Member->get_attribute('user_mail'));
 				break;
 			case 'bbcode':
-				$newsletter_sender->send_bbcode($mail_object, $mail_contents, $Member->Get_attribute('user_mail'));
+				$newsletter_sender->send_bbcode($mail_object, $mail_contents, $Member->get_attribute('user_mail'));
 				break;
 			default:
-				$newsletter_sender->send_text($mail_object, $mail_contents, $Member->Get_attribute('user_mail'));
+				$newsletter_sender->send_text($mail_object, $mail_contents, $Member->get_attribute('user_mail'));
 			break;
 		}
-		$Errorh->Error_handler(sprintf($LANG['newsletter_test_sent'], $Member->Get_attribute('user_mail')), E_USER_NOTICE);
+		$Errorh->Error_handler(sprintf($LANG['newsletter_test_sent'], $Member->get_attribute('user_mail')), E_USER_NOTICE);
 	}
 }
 //On fait choisir un type

@@ -47,7 +47,7 @@ if( $id_auth > 0 ) //Autorisations de l'article
 	define('TITLE', $LANG['wiki_auth_management']);
 	$article_infos = $Sql->query_array('wiki_articles', 'id', 'title', 'encoded_title', 'auth', 'is_cat', 'id_cat', "WHERE id = '" . $id_auth . "'", __LINE__, __FILE__);
 	
-	if( !$Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
+	if( !$Member->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( $wiki_status > 0 )//On s'intéresse au statut de l'article
@@ -58,7 +58,7 @@ elseif( $wiki_status > 0 )//On s'intéresse au statut de l'article
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
-	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_STATUS))) )
+	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $Member->check_auth($article_auth , WIKI_STATUS))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( $move > 0 ) //Déplacement d'article
@@ -69,7 +69,7 @@ elseif( $move > 0 ) //Déplacement d'article
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
-	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_MOVE))) )
+	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $Member->check_auth($article_auth , WIKI_MOVE))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( $rename > 0 ) //Renommer l'article
@@ -80,7 +80,7 @@ elseif( $rename > 0 ) //Renommer l'article
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
-	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_RENAME))) )
+	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $Member->check_auth($article_auth , WIKI_RENAME))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( $redirect > 0 || $create_redirection > 0 )//Redirection
@@ -94,7 +94,7 @@ elseif( $redirect > 0 || $create_redirection > 0 )//Redirection
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
-	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_REDIRECT))) )
+	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $Member->check_auth($article_auth , WIKI_REDIRECT))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( isset($_GET['i']) && $idcom > 0 )
@@ -104,7 +104,7 @@ elseif( isset($_GET['i']) && $idcom > 0 )
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
-	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_COM))) )
+	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $Member->check_auth($article_auth , WIKI_COM))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
@@ -114,7 +114,7 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
-	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_DELETE))) )
+	if( !((!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $Member->check_auth($article_auth , WIKI_DELETE))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 else
@@ -148,15 +148,15 @@ elseif( $id_auth > 0 ) //gestion du niveau d'autorisation
 	
 	//On assigne les variables pour le POST en précisant l'idurl.	
 	$Template->Assign_vars(array(
-		'SELECT_RESTORE_ARCHIVE' => Authorizations::Generate_select_auth(WIKI_RESTORE_ARCHIVE, $array_auth),
-		'SELECT_DELETE_ARCHIVE' => Authorizations::Generate_select_auth(WIKI_DELETE_ARCHIVE, $array_auth),
-		'SELECT_EDIT' => Authorizations::Generate_select_auth(WIKI_EDIT, $array_auth),
-		'SELECT_DELETE' => Authorizations::Generate_select_auth(WIKI_DELETE, $array_auth),
-		'SELECT_RENAME' => Authorizations::Generate_select_auth(WIKI_RENAME, $array_auth),
-		'SELECT_REDIRECT' => Authorizations::Generate_select_auth(WIKI_REDIRECT, $array_auth),
-		'SELECT_MOVE' => Authorizations::Generate_select_auth(WIKI_MOVE, $array_auth),
-		'SELECT_STATUS' => Authorizations::Generate_select_auth(WIKI_STATUS, $array_auth),
-		'SELECT_COM' => Authorizations::Generate_select_auth(WIKI_COM, $array_auth),
+		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $array_auth),
+		'SELECT_DELETE_ARCHIVE' => Authorizations::generate_select(WIKI_DELETE_ARCHIVE, $array_auth),
+		'SELECT_EDIT' => Authorizations::generate_select(WIKI_EDIT, $array_auth),
+		'SELECT_DELETE' => Authorizations::generate_select(WIKI_DELETE, $array_auth),
+		'SELECT_RENAME' => Authorizations::generate_select(WIKI_RENAME, $array_auth),
+		'SELECT_REDIRECT' => Authorizations::generate_select(WIKI_REDIRECT, $array_auth),
+		'SELECT_MOVE' => Authorizations::generate_select(WIKI_MOVE, $array_auth),
+		'SELECT_STATUS' => Authorizations::generate_select(WIKI_STATUS, $array_auth),
+		'SELECT_COM' => Authorizations::generate_select(WIKI_COM, $array_auth),
 		'L_DEFAULT' => $LANG['wiki_restore_default_auth'],
 		'L_EXPLAIN_DEFAULT' => $LANG['wiki_explain_restore_default_auth']
 	));

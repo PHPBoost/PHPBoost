@@ -42,7 +42,7 @@ class Group
 	}
 
 	//Ajout du membre au groupe, retourne true si le membre est bien ajouté, false si le membre appartient déjà au groupe.
-	function Add_member($user_id, $idgroup)
+	function add_member($user_id, $idgroup)
 	{
 		global $Sql;
 
@@ -64,7 +64,7 @@ class Group
 	}
  
 	//Change les groupes du membre, calcul la différence entre les groupes précédent et nouveaux.
-	function Edit_member($user_id, $array_user_groups)
+	function edit_member($user_id, $array_user_groups)
 	{
 		global $Sql;
 		
@@ -77,7 +77,7 @@ class Group
 		foreach($array_diff_pos as $key => $idgroup)				
 		{	
 			if( !empty($idgroup) )	
-				$this->Add_member($user_id, $idgroup);
+				$this->add_member($user_id, $idgroup);
 		}	
 		
 		//Insertion du différentiel négatif des groupes précédent du membre et ceux choisis dans la table des groupes.
@@ -85,7 +85,7 @@ class Group
 		foreach($array_diff_neg as $key => $idgroup)				
 		{	
 			if( !empty($idgroup) )
-				$this->Del_member($user_id, $idgroup);
+				$this->remove_member($user_id, $idgroup);
 		}
 	}
 	
@@ -96,7 +96,7 @@ class Group
 	}
  
 	//Suppression d'un membre du groupe.
-	function Del_member($user_id, $idgroup)
+	function remove_member($user_id, $idgroup)
 	{
 		global $Sql;
 

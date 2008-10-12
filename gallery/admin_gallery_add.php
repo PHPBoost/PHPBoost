@@ -68,7 +68,7 @@ if( isset($_FILES['gallery']) && isset($_POST['idcat_post']) ) //Upload
 						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Gallery->error . '#errorh');
 					
 					$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
-					$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->filename['gallery'], $Member->Get_attribute('user_id'));
+					$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->filename['gallery'], $Member->get_attribute('user_id'));
 					if( !empty($Gallery->error) )
 						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Gallery->error . '#errorh');
 					
@@ -96,7 +96,7 @@ elseif( !empty($_POST['valid']) && !empty($nbr_pics_post) ) //Ajout massif d'ima
 			if( $del )
 				delete_file('pics/' . $uniq);
 			else
-				$Gallery->Add_pics($cat, $name, $uniq, $Member->Get_attribute('user_id'));
+				$Gallery->Add_pics($cat, $name, $uniq, $Member->get_attribute('user_id'));
 		}		
 	}
 	

@@ -35,7 +35,7 @@ $cat = retrieve(GET, 'cat', 0);
 if( !empty($idart) && isset($_GET['cat'])  )
 {
 	//Niveau d'autorisation de la catégorie
-	if( !isset($CAT_ARTICLES[$idartcat]) || !$Member->Check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
+	if( !isset($CAT_ARTICLES[$idartcat]) || !$Member->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	if( empty($articles['id']) )
 		$Errorh->Error_handler('e_unexist_articles', E_USER_REDIRECT); 
@@ -45,7 +45,7 @@ if( !empty($idart) && isset($_GET['cat'])  )
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
-	if( $Member->Check_level(ADMIN_LEVEL) )
+	if( $Member->check_level(ADMIN_LEVEL) )
 	{
 		$java = '<script type="text/javascript">
 		<!--
@@ -162,7 +162,7 @@ else
 	}
 
 	//Niveau d'autorisation de la catégorie
-	if( !$Member->Check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) ) 
+	if( !$Member->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) ) 
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
 	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."articles WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);	
@@ -175,7 +175,7 @@ else
 	$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 	$column_width_cats = floor(100/$nbr_column_cats);
 	
-	$is_admin = $Member->Check_level(ADMIN_LEVEL) ? true : false;	
+	$is_admin = $Member->check_level(ADMIN_LEVEL) ? true : false;	
 	$Template->Assign_vars(array(
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
 		'ADD_ARTICLES' => $is_admin ? (!empty($idartcat) ? '&raquo; ' : '') . '<a href="admin_articles_add.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
@@ -235,7 +235,7 @@ else
 	$unauth_cats_sql = array();
 	foreach($CAT_ARTICLES as $id => $key)
 	{
-		if( !$Member->Check_auth($CAT_ARTICLES[$id]['auth'], READ_CAT_ARTICLES) )
+		if( !$Member->check_auth($CAT_ARTICLES[$id]['auth'], READ_CAT_ARTICLES) )
 			$unauth_cats_sql[] = $id;
 	}
 	$nbr_unauth_cats = count($unauth_cats_sql);

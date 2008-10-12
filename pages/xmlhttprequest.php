@@ -31,7 +31,7 @@ if( $id_cat != 0 )
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if( ($special_auth && $Member->Check_auth($row['auth'], READ_PAGE)) || (!$special_auth && $Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+		if( ($special_auth && $Member->check_auth($row['auth'], READ_PAGE)) || (!$special_auth && $Member->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 		{
 			//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
 			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
@@ -80,7 +80,7 @@ elseif( !empty($open_cat) || $root == 1 )
 			//Autorisation particulière ?
 			$special_auth = !empty($value['auth']);
 			//Vérification de l'autorisation d'éditer la page
-			if( ($special_auth && $Member->Check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+			if( ($special_auth && $Member->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $Member->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 			{
 				$return .= '<tr><td class="row2"><img src="' . $Template->Module_data_path('pages') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 			}
@@ -95,7 +95,7 @@ elseif( !empty($open_cat) || $root == 1 )
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if( ($special_auth && $Member->Check_auth(sunserialize($row['auth']), READ_PAGE)) || (!$special_auth && $Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+		if( ($special_auth && $Member->check_auth(sunserialize($row['auth']), READ_PAGE)) || (!$special_auth && $Member->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 		{
 			$return .= '<tr><td class="row2"><img src="' . $Template->Module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 		}

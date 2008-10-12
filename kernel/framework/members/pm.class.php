@@ -31,16 +31,16 @@ define('SYSTEM_PM', true); //Message privé envoyé par le système.
 define('DEL_PM_CONVERS', true); //Suppression de la conversation complète.
 define('UPDATE_MBR_PM', true); //Met à jour le nombre de mp du membre.
 
-class Privatemsg
+class PrivateMsg
 {
 	## Public Methods ##
 	//Constructeur.
-	function Pm() 
+	function PrivateMsg() 
 	{
 	}
 	
 	//Récupération du nombre total de conversations dans la boite du membre.
-	function Get_total_convers_pm($userid)
+	function count_conversations($userid)
 	{
 		global $Sql;
 		
@@ -65,7 +65,7 @@ class Privatemsg
 	}
 	
 	//Envoi d'une conversation + le message privé associé.
-	function Send_pm($pm_to, $pm_objet, $pm_contents, $pm_from, $system_pm = false)
+	function start_conversation($pm_to, $pm_objet, $pm_contents, $pm_from, $system_pm = false)
 	{
 		global $CONFIG, $Sql;
 		
@@ -80,31 +80,35 @@ class Privatemsg
 			
 		//Insertion de la conversation.
 		$Sql->query_inject("INSERT INTO ".PREFIX."pm_topic (title, user_id, user_id_dest, user_convers_status, user_view_pm, nbr_msg, last_user_id, last_msg_id, last_timestamp) VALUES ('" . $pm_objet . "', '" . $pm_from . "', '" . $pm_to . "', '" . $user_convers_status . "', 1, 1, '" . $pm_from . "', 0, '" . time() . "')", __LINE__, __FILE__);
-		$this->pm_convers_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."pm_topic");			
-
-		//Insertion du message associé à la conversation.
-		$Sql->query_inject("INSERT INTO ".PREFIX."pm_msg (idconvers,user_id,contents,timestamp,view_status) VALUES('" . $this->pm_convers_id . "', '" . $pm_from . "', '" . strparse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
-		$this->pm_msg_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."pm_msg");
-		
-		//MAJ de la conversation.
-		$Sql->query_inject("UPDATE ".PREFIX."pm_topic SET last_msg_id = '" . $this->pm_msg_id . "' WHERE id = '" . $this->pm_convers_id . "'", __LINE__, __FILE__);
-		
-		//Mise à jour du compteur de mp du destinataire.
-		$Sql->query_inject("UPDATE ".PREFIX."member SET user_pm = user_pm + 1 WHERE user_id = '" . $pm_to . "'", __LINE__, __FILE__);
+		$this->pm_convers_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."pm_topic");
+        
+        $this->send($pm_to, $this->pm_convers_id, $pm_contents, $pm_from, $user_convers_status, false);
+// 		//Insertion du message associé à la conversation.
+// 		$Sql->query_inject("INSERT INTO ".PREFIX."pm_msg (idconvers,user_id,contents,timestamp,view_status) VALUES('" . $this->pm_convers_id . "', '" . $pm_from . "', '" . strparse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
+// 		$this->pm_msg_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."pm_msg");
+// 		
+// 		//MAJ de la conversation.
+// 		$Sql->query_inject("UPDATE ".PREFIX."pm_topic SET last_msg_id = '" . $this->pm_msg_id . "' WHERE id = '" . $this->pm_convers_id . "'", __LINE__, __FILE__);
+// 		
+// 		//Mise à jour du compteur de mp du destinataire.
+// 		$Sql->query_inject("UPDATE ".PREFIX."member SET user_pm = user_pm + 1 WHERE user_id = '" . $pm_to . "'", __LINE__, __FILE__);
 	}
 	
 	//Réponse à une conversation
-	function Send_single_pm($pm_to, $pm_idconvers, $pm_contents, $pm_from, $pm_status)
+	function send($pm_to, $pm_idconvers, $pm_contents, $pm_from, $pm_status, $check_mp_before_send = true)
 	{
 		global $Sql;
 		
 		//On vérifie qu'un message n'a pas été posté entre temps.
-		$info_convers =	$Sql->query_array("pm_topic", "last_user_id", "user_view_pm", "WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
-		if( $info_convers['last_user_id'] != $pm_from && $info_convers['user_view_pm'] > 0 ) //Nouveau message
-		{
-			$Sql->query_inject("UPDATE ".PREFIX."member SET user_pm = user_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_from . "'", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".PREFIX."pm_topic SET user_view_pm = 0 WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
-		}
+        if( $check_mp_before_send )
+        {
+            $info_convers =	$Sql->query_array("pm_topic", "last_user_id", "user_view_pm", "WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
+            if( $info_convers['last_user_id'] != $pm_from && $info_convers['user_view_pm'] > 0 ) //Nouveau message
+            {
+                $Sql->query_inject("UPDATE ".PREFIX."member SET user_pm = user_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_from . "'", __LINE__, __FILE__);
+                $Sql->query_inject("UPDATE ".PREFIX."pm_topic SET user_view_pm = 0 WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
+            }
+        }
 		
 		//Insertion du message.
 		$Sql->query_inject("INSERT INTO ".PREFIX."pm_msg (idconvers, user_id, contents, timestamp, view_status) VALUES('" . $pm_idconvers . "', '" . $pm_from . "', '" . strparse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
@@ -118,7 +122,7 @@ class Privatemsg
 	}
 	
 	//Suppression d'une conversation.
-	function Del_pm($pm_userid, $pm_idconvers, $pm_expd, $pm_del, $pm_update)
+	function delete_conversation(($pm_userid, $pm_idconvers, $pm_expd, $pm_del, $pm_update)
 	{
 		global $CONFIG, $Sql;	
 				
@@ -153,7 +157,7 @@ class Privatemsg
 	}
 	
 	//Suppression d'un message privé, tant que le destinataire ne l'a pas lu.
-	function Del_single_pm($pm_to, $pm_idmsg, $pm_idconvers)
+	function delete($pm_to, $pm_idmsg, $pm_idconvers)
 	{
 		global $Sql;
 		

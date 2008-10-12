@@ -41,7 +41,7 @@ $bottom = retrieve(GET, 'bot', '');
 if( !empty($_POST['valid']) )
 {
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::Return_array_auth(FLOOD_FORUM, EDIT_MARK_FORUM, TRACK_TOPIC_FORUM, ADMIN_NOAUTH_DEFAULT);
+	$array_auth_all = Authorizations::auth_array(FLOOD_FORUM, EDIT_MARK_FORUM, TRACK_TOPIC_FORUM, ADMIN_NOAUTH_DEFAULT);
 		
 	$CONFIG_FORUM['auth'] = serialize($array_auth_all);
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'", __LINE__, __FILE__);
@@ -60,9 +60,9 @@ else
 	$array_auth = isset($CONFIG_FORUM['auth']) ? $CONFIG_FORUM['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	
 	$Template->Assign_vars(array(
-		'FLOOD_AUTH' => Authorizations::Generate_select_auth(FLOOD_FORUM, $array_auth),
-		'EDIT_MARK_AUTH' => Authorizations::Generate_select_auth(EDIT_MARK_FORUM, $array_auth),
-		'TRACK_TOPIC_AUTH' => Authorizations::Generate_select_auth(TRACK_TOPIC_FORUM, $array_auth),
+		'FLOOD_AUTH' => Authorizations::generate_select(FLOOD_FORUM, $array_auth),
+		'EDIT_MARK_AUTH' => Authorizations::generate_select(EDIT_MARK_FORUM, $array_auth),
+		'TRACK_TOPIC_AUTH' => Authorizations::generate_select(TRACK_TOPIC_FORUM, $array_auth),
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
 		'L_ADD_CAT' => $LANG['cat_add'],

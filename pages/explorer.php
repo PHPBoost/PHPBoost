@@ -44,7 +44,7 @@ foreach($_PAGES_CATS as $key => $value )
 		//Autorisation particulière ?
 		$special_auth = !empty($value['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if( ($special_auth && $Member->Check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+		if( ($special_auth && $Member->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $Member->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 		{
 			$root .= '<tr><td class="row2"><img src="' . $Template->Module_data_path('pages') . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 		}
@@ -61,7 +61,7 @@ while( $row = $Sql->fetch_assoc($result) )
 	$special_auth = !empty($row['auth']);
 	$array_auth = sunserialize($row['auth']);
 	//Vérification de l'autorisation d'éditer la page
-	if( ($special_auth && $Member->Check_auth($array_auth, READ_PAGE)) || (!$special_auth && $Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+	if( ($special_auth && $Member->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $Member->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 	{
 		$root .= '<tr><td class="row2"><img src="' . $Template->Module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 	}

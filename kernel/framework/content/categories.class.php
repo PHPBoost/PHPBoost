@@ -400,7 +400,7 @@ class CategoriesManagement
 			$template = new Template('framework/content/categories_select_form.tpl');
 		
 		if( $num_auth != 0 )
-			$general_auth = $Member->Check_auth($array_auth, $num_auth);
+			$general_auth = $Member->check_auth($array_auth, $num_auth);
 		
 		$template->assign_vars(array(
 			'FORM_ID' =>  $form_id,
@@ -421,7 +421,7 @@ class CategoriesManagement
 		//Boolean variable which is true when we can stop the loop : optimization
 		$end_of_category = false;
 		
-		if( $add_this && ($category_id == 0 || (($num_auth > 0 && $Member->Check_auth($this->cache_var[$category_id], $num_auth) || $num_auth == 0))) )
+		if( $add_this && ($category_id == 0 || (($num_auth > 0 && $Member->check_auth($this->cache_var[$category_id], $num_auth) || $num_auth == 0))) )
 			$list[] = $category_id;
 		
 		$id_categories = array_keys($this->cache_var);
@@ -435,7 +435,7 @@ class CategoriesManagement
 			if( $id != 0 && $value['id_parent'] == $category_id )
 			{
 				$list[] = $id;
-				if( $recursive_exploration && (($num_auth > 0 && $Member->Check_auth($this->cache_var[$id]['auth'], $num_auth) || $num_auth == 0)) )
+				if( $recursive_exploration && (($num_auth > 0 && $Member->check_auth($this->cache_var[$id]['auth'], $num_auth) || $num_auth == 0)) )
 					$this->Build_children_id_list($id, $list, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth);
 				
 				if( !$end_of_category )
@@ -560,7 +560,7 @@ class CategoriesManagement
 				//Exploration which reading behaviour : if we can't se a folder, we can't see its children
 				if( $recursion_mode != IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH )
 				{
-					if( $num_auth == 0 || $general_auth || $Member->Check_auth($value['auth'], $num_auth) )
+					if( $num_auth == 0 || $general_auth || $Member->check_auth($value['auth'], $num_auth) )
 					{
 						$template->assign_block_vars('options', array(
 							'ID' => $id,
@@ -587,7 +587,7 @@ class CategoriesManagement
 						$this->_create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, $template);
 					}
 					//If we must check authorizations and it's good
-					elseif( (empty($value['auth']) && $general_auth) || (!empty($value['auth']) && $Member->Check_auth($value['auth'], $num_auth)) )
+					elseif( (empty($value['auth']) && $general_auth) || (!empty($value['auth']) && $Member->check_auth($value['auth'], $num_auth)) )
 					{
 						$template->assign_block_vars('options', array(
 							'ID' => $id,
@@ -599,7 +599,7 @@ class CategoriesManagement
 						$this->_create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, true, $template);
 					}
 					//If we must check authorizations and it's not good, we don't display it but we continue browsing
-					elseif( (empty($value['auth']) && !$general_auth) || (!empty($value['auth']) && !$Member->Check_auth($value['auth'], $num_auth)) )
+					elseif( (empty($value['auth']) && !$general_auth) || (!empty($value['auth']) && !$Member->check_auth($value['auth'], $num_auth)) )
 					{
 						$this->_create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, false, $template);
 					}

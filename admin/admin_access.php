@@ -35,7 +35,7 @@ $unlock = strhash(retrieve(POST, 'unlock', '', TSTRING_UNSECURE));
 
 if( retrieve(GET, 'disconnect', false) ) //Déconnexion.
 {
-    $Session->session_end();
+    $Session->end();
     redirect(get_start_page());
 }
 
@@ -55,17 +55,17 @@ if( retrieve(POST, 'connect', false) && !empty($login) && !empty($password) )
 			//Protection de l'administration par connexion brute force.
 			if( $info_connect['test_connect'] < '5' || $unlock === $CONFIG['unlock_admin'] ) //Si clée de déverouillage bonne aucune vérification.
 			{
-				$error_report = $Session->session_begin($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
+				$error_report = $Session->start($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
 			}
 			elseif( $delay_connect >= 600 && $info_connect['test_connect'] == '5' ) //5 nouveau essais, 10 minutes après.
 			{
 				$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-				$error_report = $Session->session_begin($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
+				$error_report = $Session->start($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
 			}
 			elseif( $delay_connect >= 300 && $info_connect['test_connect'] == '5' ) //2 essais 5 minutes après
 			{
 				$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__); //Redonne un essai.
-				$error_report = $Session->session_begin($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
+				$error_report = $Session->start($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
 			}
 			else //plus d'essais
 				redirect(HOST . DIR . '/admin/admin_index.php?flood=0');
@@ -89,7 +89,7 @@ if( retrieve(POST, 'connect', false) && !empty($login) && !empty($password) )
 		}
 		elseif( !empty($unlock) && $unlock !== $CONFIG['unlock_admin'] )
 		{
-			$Session->session_end(); //Suppression de la session.
+			$Session->end(); //Suppression de la session.
 			redirect(HOST . DIR . '/admin/admin_index.php?flood=0');
 		}
 		else //Succès redonne tous les essais.
@@ -101,7 +101,7 @@ if( retrieve(POST, 'connect', false) && !empty($login) && !empty($password) )
 	redirect(HOST . SCRIPT);
 }
 
-if( !$Member->Check_level(ADMIN_LEVEL) )
+if( !$Member->check_level(ADMIN_LEVEL) )
 {
 	$Template->Set_filenames(array(
 		'admin_connect'=> 'admin/admin_connect.tpl'

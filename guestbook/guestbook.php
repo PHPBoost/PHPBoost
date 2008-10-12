@@ -40,16 +40,16 @@ if( $guestbook && empty($id_get) ) //Enregistrement
 	$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
 
 	//Membre en lecture seule?
-	if( $Member->Get_attribute('user_readonly') > time() ) 
+	if( $Member->get_attribute('user_readonly') > time() ) 
 		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 	
 	if( !empty($guestbook_contents) && !empty($guestbook_pseudo) )
 	{	
 		//Accès pour poster.			
-		if( $Member->Check_level($CONFIG_GUESTBOOK['guestbook_auth']) )
+		if( $Member->check_level($CONFIG_GUESTBOOK['guestbook_auth']) )
 		{
 			//Mod anti-flood
-			$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."guestbook WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+			$check_time = ($Member->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."guestbook WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
 			if( !empty($check_time) )
 			{			
 				if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcul la fin du delai.	
@@ -62,7 +62,7 @@ if( $guestbook && empty($id_get) ) //Enregistrement
 			if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
 				redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
 			
-			$Sql->query_inject("INSERT INTO ".PREFIX."guestbook (contents,login,user_id,timestamp) VALUES('" . $guestbook_contents . "', '" . $guestbook_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."guestbook (contents,login,user_id,timestamp) VALUES('" . $guestbook_contents . "', '" . $guestbook_pseudo . "', '" . $Member->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
 			$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."guestbook"); //Dernier message inséré.
 			
 			redirect(HOST . SCRIPT . SID2 . '#m' . $last_msg_id);
@@ -133,7 +133,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 	$row = $Sql->query_array('guestbook', '*', 'WHERE id="' . $id_get . '"', __LINE__, __FILE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
-	if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
+	if( $Member->check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1) )
 	{
 		if( $del ) //Suppression.
 		{
@@ -213,10 +213,10 @@ else //Affichage.
 	));
 		
 	//Pseudo du membre connecté.
-	if( $Member->Get_attribute('user_id') !== -1 )
+	if( $Member->get_attribute('user_id') !== -1 )
 		$Template->Assign_vars(array(
 			'C_HIDDEN_GUESTBOOK' => true,
-			'PSEUDO' => $Member->Get_attribute('login')
+			'PSEUDO' => $Member->get_attribute('login')
 		));
 	else
 		$Template->Assign_vars(array(
@@ -290,7 +290,7 @@ else //Affichage.
 		$del = '';
 		
 		$is_guest = ($row['user_id'] === -1);
-		$is_modo = $Member->Check_level(MODO_LEVEL);
+		$is_modo = $Member->check_level(MODO_LEVEL);
 		$warning = '';
 		$readonly = '';
 		if( $is_modo && !$is_guest ) //Modération.
@@ -300,7 +300,7 @@ else //Affichage.
 		}
 		
 		//Edition/suppression.
-		if( $is_modo || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
+		if( $is_modo || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1) )
 		{
 			$edit = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . transid('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
 			$del = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . transid('.php?del=1&id=' . $row['id']) . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';

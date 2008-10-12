@@ -63,15 +63,15 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 			$Sql->query_inject("UPDATE ".PREFIX."member SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-			if( $info_mbr['user_id'] != $Member->Get_attribute('user_id') )
+			if( $info_mbr['user_id'] != $Member->get_attribute('user_id') )
 			{
 				if( !empty($readonly_contents) && !empty($readonly) )
 				{					
 					include_once('../kernel/framework/members/pm.class.php');
-					$Privatemsg = new Privatemsg();
+					$Privatemsg = new PrivateMsg();
 					
 					//Envoi du message.
-					$Privatemsg->Send_pm($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', SYSTEM_PM);
+					$Privatemsg->start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', SYSTEM_PM);
 				}
 			}
 		}
@@ -219,15 +219,15 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				$Sql->query_inject("UPDATE ".PREFIX."member SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if( $info_mbr['user_id'] != $Member->Get_attribute('user_id') )
+				if( $info_mbr['user_id'] != $Member->get_attribute('user_id') )
 				{					
 					if( !empty($warning_contents) )
 					{					
 						include_once('../kernel/framework/members/pm.class.php');
-						$Privatemsg = new Privatemsg();
+						$Privatemsg = new PrivateMsg();
 						
 						//Envoi du message.
-						$Privatemsg->Send_pm($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', SYSTEM_PM);
+						$Privatemsg->start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', SYSTEM_PM);
 					}
 				}
 			}

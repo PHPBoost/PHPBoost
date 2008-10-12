@@ -39,7 +39,7 @@ $page = retrieve(GET, 'p', 1);
 //Redirection changement de catégorie.
 if( !empty($_POST['change_cat']) )
 	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
-if( !$Member->Check_level(MEMBER_LEVEL) ) //Réservé aux membres.
+if( !$Member->check_level(MEMBER_LEVEL) ) //Réservé aux membres.
 	redirect(HOST . DIR . '/member/error.php'); 
 	
 if( !empty($_POST['valid']) )
@@ -50,7 +50,7 @@ if( !empty($_POST['valid']) )
 	$result = $Sql->query_while("SELECT t.id, tr.pm, tr.mail
 	FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id
-	WHERE tr.user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
+	WHERE tr.user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$pm = (isset($_POST['p' . $row['id']]) && $_POST['p' . $row['id']] == 'on') ? 1 : 0;
@@ -67,7 +67,7 @@ if( !empty($_POST['valid']) )
 	
 	redirect(HOST . DIR . '/forum/track.php' . SID2);
 }
-elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
+elseif( $Member->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
 {
 	$Template->Set_filenames(array(
 		'forum_track'=> 'forum/forum_track.tpl',
@@ -85,13 +85,13 @@ elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s
 	$nbr_topics_compt = 0;
 	$result = $Sql->query_while("SELECT m1.login AS login , m2.login AS last_login , t.id , t.title , t.subtitle , t.user_id , t.nbr_msg , t.nbr_views , t.last_user_id , t.last_msg_id , t.last_timestamp , t.type , t.status, t.display_msg, v.last_view_id, p.question, me.last_view_forum, tr.pm, tr.mail, me.last_view_forum
 	FROM ".PREFIX."forum_topics t
-	LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $Member->Get_attribute('user_id') . "' AND v.idtopic = t.id
+	LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $Member->get_attribute('user_id') . "' AND v.idtopic = t.id
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id
 	LEFT JOIN ".PREFIX."forum_poll p ON p.idtopic = t.id
 	LEFT JOIN ".PREFIX."member m1 ON m1.user_id = t.user_id
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = t.last_user_id
-	LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $Member->Get_attribute('user_id') . "'
-	WHERE tr.user_id = '" . $Member->Get_attribute('user_id') . "'
+	LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $Member->get_attribute('user_id') . "'
+	WHERE tr.user_id = '" . $Member->get_attribute('user_id') . "'
 	ORDER BY t.last_timestamp DESC
 	" . $Sql->limit($Pagination->First_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -136,7 +136,7 @@ elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s
 		$last_msg = '<a href="topic' . transid('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small_link" href="../member/member' . transid('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '">' . wordwrap_html($row['last_login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>');
 		
 		//Ancre ajoutée aux messages non lus.	
-		$new_ancre = ($new_msg === true && $Member->Get_attribute('user_id') !== -1) ? '<a href="topic' . transid('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a>' : '';
+		$new_ancre = ($new_msg === true && $Member->get_attribute('user_id') !== -1) ? '<a href="topic' . transid('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a>' : '';
 		
 		$Template->Assign_block_vars('topics', array(
 			'ID' => $row['id'],
@@ -165,7 +165,7 @@ elseif( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s
 	
 	$nbr_topics = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id
-	WHERE tr.user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
+	WHERE tr.user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
 	//Le membre a déjà lu tous les messages.
 	if( $nbr_topics == 0 )

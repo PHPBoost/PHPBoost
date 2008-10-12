@@ -37,7 +37,7 @@ $refresh = !empty($_GET['refresh']) ? true : false;
 if( $add )
 {
 	//Membre en lecture seule?
-	if( $Member->Get_attribute('user_readonly') > time() ) 
+	if( $Member->get_attribute('user_readonly') > time() ) 
 	{
 		echo -6;
 		exit;
@@ -48,11 +48,11 @@ if( $add )
 	if( !empty($shout_pseudo) && !empty($shout_contents) )
 	{
 		//Accès pour poster.		
-		if( $Member->Check_level($CONFIG_SHOUTBOX['shoutbox_auth']) )
+		if( $Member->check_level($CONFIG_SHOUTBOX['shoutbox_auth']) )
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-			$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
-			if( !empty($check_time) && !$Member->Check_max_value(AUTH_FLOOD) )
+			$check_time = ($Member->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+			if( !empty($check_time) && !$Member->check_max_value(AUTH_FLOOD) )
 			{
 				if( $check_time >= (time() - $CONFIG['delay_flood']) )
 				{
@@ -74,12 +74,12 @@ if( $add )
 				exit;
 			}
 			
-			$Sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . $Member->Get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $Member->get_attribute('user_id') . "', '" . $Member->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 			$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."shoutbox"); 
 			
 			$array_class = array('member', 'modo', 'admin');
-			if( $Member->Get_attribute('user_id') !== -1 )
-				$shout_pseudo = '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a> <a style="font-size:10px;" class="' . $array_class[$Member->Get_attribute('level')] . '" href="../member/member' . transid('.php?id=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php') . '">' . (!empty($shout_pseudo) ? wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . '</a>';
+			if( $Member->get_attribute('user_id') !== -1 )
+				$shout_pseudo = '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a> <a style="font-size:10px;" class="' . $array_class[$Member->get_attribute('level')] . '" href="../member/member' . transid('.php?id=' . $Member->get_attribute('user_id'), '-' . $Member->get_attribute('user_id') . '.php') . '">' . (!empty($shout_pseudo) ? wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . '</a>';
 			else
 				$shout_pseudo = '<span class="text_small" style="font-style: italic;">' . (!empty($shout_pseudo) ? wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . '</span>';
 				
@@ -103,7 +103,7 @@ elseif( $refresh )
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$row['user_id'] = (int)$row['user_id'];		
-		if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
+		if( $Member->check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1) )
 			$del = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a>';
 		else
 			$del = '';
@@ -123,7 +123,7 @@ elseif( $del )
 	if( !empty($shout_id) )
 	{
 		$user_id = (int)$Sql->query("SELECT user_id FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
-		if( $Member->Check_level(MODO_LEVEL) || ($user_id === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
+		if( $Member->check_level(MODO_LEVEL) || ($user_id === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1) )
 		{
 			$Sql->query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			echo 1;

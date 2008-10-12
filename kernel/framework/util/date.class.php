@@ -259,7 +259,7 @@ class Date
 				break;
 				
 			case TIMEZONE_USER:
-				$timezone = $Member->Get_attribute('user_timezone') - $server_hour;
+				$timezone = $Member->get_attribute('user_timezone') - $server_hour;
 				break;
 			
 			default:

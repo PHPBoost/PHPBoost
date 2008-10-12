@@ -46,7 +46,7 @@ $show_result = retrieve(GET, 'r', false); //Affichage des résulats.
 if( !empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives )
 {
 	//Niveau d'autorisation.
-	if( $Member->Check_level($CONFIG_POLL['poll_auth']) )
+	if( $Member->check_level($CONFIG_POLL['poll_auth']) )
 	{
 		//On note le passage du visiteur par un cookie.
 		if( isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ) //Recherche dans le cookie existant.
@@ -85,11 +85,11 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives )
 		else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.	
-			$user_id = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."poll_ip WHERE user_id = '" . $Member->Get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+			$user_id = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."poll_ip WHERE user_id = '" . $Member->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 			if( empty($user_id) )
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO ".PREFIX."poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . USER_IP . "', '" . $Member->Get_attribute('user_id') . "', '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . USER_IP . "', '" . $Member->get_attribute('user_id') . "', '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
 				$check_bdd = false;
 			}
 		}
@@ -146,7 +146,7 @@ elseif( !empty($poll['id']) && !$archives )
 		'poll'=> 'poll/poll.tpl'
 	));
 	list($java, $edit, $del) = array('','','');	
-	if( $Member->Check_level(ADMIN_LEVEL) )
+	if( $Member->check_level(ADMIN_LEVEL) )
 	{
 		$java = "<script type='text/javascript'>
 		<!--
@@ -172,7 +172,7 @@ elseif( !empty($poll['id']) && !$archives )
 	else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.	
-		$user_id = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."poll_ip WHERE user_id = '" . $Member->Get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+		$user_id = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."poll_ip WHERE user_id = '" . $Member->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 		if( !empty($user_id) )
 			$check_bdd = true;
 	}
@@ -296,7 +296,7 @@ elseif( !$archives ) //Menu principal.
 	$show_archives = !empty($show_archives) ? '<a href="poll' . transid('.php?archives=1', '.php?archives=1') . '">' . $LANG['archives'] . '</a>' : '';
 	
 	$edit = '';	
-	if( $Member->Check_level(ADMIN_LEVEL) )
+	if( $Member->check_level(ADMIN_LEVEL) )
 		$edit = '<a href="../poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
 	
 	$Template->Assign_vars(array(

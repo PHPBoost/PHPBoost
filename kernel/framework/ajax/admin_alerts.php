@@ -33,7 +33,7 @@ define('NO_SESSION_LOCATION', true);
 
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-if( !$Member->Check_level(ADMIN_LEVEL) )
+if( !$Member->check_level(ADMIN_LEVEL) )
 	die('');
 
 require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
