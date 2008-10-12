@@ -33,8 +33,8 @@ $id_get = retrieve(GET, 'id', 0, TUNSIGNED_INT);
 
 $title_mbr = !empty($id_get) ? (!empty($edit_get) ? $LANG['profil_edit'] : $LANG['member']) : $LANG['member_s'];
 if( $User->check_level(MEMBER_LEVEL) )
-	$Bread_crumb->Add_link($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
-$Bread_crumb->Add_link($title_mbr, '');
+	$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+$Bread_crumb->add($title_mbr, '');
 
 require_once('../kernel/header.php'); 
 
@@ -362,10 +362,10 @@ if( !empty($id_get) ) //Espace membre
 			$errstr = '';
 		}
 		if( !empty($errstr) )
-			$Errorh->Error_handler($errstr, E_USER_NOTICE);  
+			$Errorh->handler($errstr, E_USER_NOTICE);  
 
 		if( isset($LANG[$get_l_error]) )
-			$Errorh->Error_handler($LANG[$get_l_error], E_USER_WARNING);
+			$Errorh->handler($LANG[$get_l_error], E_USER_WARNING);
 	}
 	elseif( !empty($_POST['valid']) && ($User->get_attribute('user_id') === $id_get) && ($User->check_level(MEMBER_LEVEL)) ) //Update du profil
 	{
@@ -645,7 +645,7 @@ if( !empty($id_get) ) //Espace membre
 		$user_born = $Sql->query("SELECT " . $Sql->date_diff('user_born') . " FROM ".PREFIX."member WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		if( empty($row['user_id']) ) //Vérification de l'existance du membre. 
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+			$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 		//Dernière connexion, si vide => date d'enregistrement du membre.
 		$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']; 

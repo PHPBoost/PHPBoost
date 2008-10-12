@@ -103,7 +103,7 @@ class Comments
 		global $Errorh;
 		
 		if( empty($this->sql_table) ) //Erreur avec le module non prévu pour gérer les commentaires.
-			$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT);
+			$Errorh->handler('e_unexist_page', E_USER_REDIRECT);
 			
 		return (!empty($this->script) && !empty($this->idprov) && !empty($this->vars));
 	}
@@ -164,7 +164,7 @@ class Comments
 			{
 				//Membre en lecture seule?
 				if( $User->get_attribute('user_readonly') > time() ) 
-					$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+					$Errorh->handler('e_auth', E_USER_REDIRECT);
 				
 				$login = retrieve(POST, 'login', ''); //Pseudo posté.
 				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
@@ -213,7 +213,7 @@ class Comments
 			{
 				//Membre en lecture seule?
 				if( $User->get_attribute('user_readonly') > time() ) 
-					$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+					$Errorh->handler('e_auth', E_USER_REDIRECT);
 				
 				$row = $Sql->query_array('com', '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 				$row['user_id'] = (int)$row['user_id'];
@@ -298,7 +298,7 @@ class Comments
 						redirect($path_redirect . '&errorh=incomplete#errorh');
 				}
 				else
-					$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+					$Errorh->handler('e_auth', E_USER_REDIRECT);
 			}
 			elseif( isset($_GET['lock']) && $User->check_level(MODO_LEVEL) ) //Verrouillage des commentaires.
 			{
@@ -367,7 +367,7 @@ class Comments
 				}
 				
 				if( !empty($errstr) )
-					$Errorh->Error_handler($errstr, E_USER_NOTICE);
+					$Errorh->handler($errstr, E_USER_NOTICE);
 				
 				//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
 				if( !$this->lock_com || $User->check_level(MODO_LEVEL) )
@@ -377,7 +377,7 @@ class Comments
 							'AUTH_POST_COM' => true
 						));
 					else
-						$Errorh->Error_handler($LANG['e_unauthorized'], E_USER_NOTICE);
+						$Errorh->handler($LANG['e_unauthorized'], E_USER_NOTICE);
 					
 					//Pseudo du membre connecté.
 					if( $User->get_attribute('user_id') !== -1 )
@@ -392,7 +392,7 @@ class Comments
 						));
 				}	
 				else
-					$Errorh->Error_handler($LANG['com_locked'], E_USER_NOTICE);
+					$Errorh->handler($LANG['com_locked'], E_USER_NOTICE);
 				
 				$get_pos = strpos($_SERVER['QUERY_STRING'], '&pc');
 				

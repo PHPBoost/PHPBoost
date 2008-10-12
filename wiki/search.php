@@ -36,7 +36,7 @@ require_once('../wiki/wiki_bread_crumb.php');
 require_once('../kernel/header.php');
 
 if( !$User->check_level(MEMBER_LEVEL) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 $search_string = retrieve(GET, 'search', '');
 $where_search = retrieve(GET, 'where', '');
@@ -92,7 +92,7 @@ if( !empty($search_string) ) //recherche
 			'PAGES' => !empty($pages_links) ? $pages_links : '&nbsp;'
 		));
 	else
-		$Errorh->Error_handler($LANG['wiki_empty_search'], E_NOTICE);
+		$Errorh->handler($LANG['wiki_empty_search'], E_NOTICE);
 	
 	$i = 1; //On �mule le "limit" 10 r�sultats par page
 	while( $row = $Sql->fetch_assoc($result) )

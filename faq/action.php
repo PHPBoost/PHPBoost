@@ -71,7 +71,7 @@ if( $faq_del_id > 0 )
 		}
 	}
 	else
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 elseif( $down > 0 )
 {
@@ -90,7 +90,7 @@ elseif( $down > 0 )
 		}
 	}
 	else
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 elseif( $up > 0 )
 {
@@ -107,7 +107,7 @@ elseif( $up > 0 )
 		}
 	}
 	else
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 //Updating or creating a question
 elseif( !empty($entitled) && !empty($answer) )
@@ -124,7 +124,7 @@ elseif( !empty($entitled) && !empty($answer) )
 			
 		}
 		else
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+			$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
 	else
 	{
@@ -154,7 +154,7 @@ elseif( !empty($entitled) && !empty($answer) )
 			redirect(HOST . DIR . '/faq/' . transid('faq.php?id=' . $new_id_cat . '&amp;question=' . $new_question_id, 'faq-' . $new_id_cat . '+' . url_encode_rewrite($FAQ_CATS[$new_id_cat]['name']) . '.php?question=' . $new_question_id, '&') . '#q' . $new_question_id);
 		}
 		else
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+			$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
 }
 elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
@@ -192,7 +192,7 @@ elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
 		redirect(HOST . DIR . transid('/faq/management.php?faq=' . $id_cat, '', '&'));
 	}
 	else
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 //Moving a question
 elseif( $id_question > 0 && $move_question && $target >= 0 )
@@ -239,7 +239,7 @@ elseif( $id_question > 0 && $move_question && $target >= 0 )
 			redirect(HOST . DIR . transid('/faq/management.php?faq=' . $target, '', '&'));
 		}
 	}
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 else
 	redirect(HOST . DIR . transid('/faq/faq.php', '', '&'));

@@ -194,9 +194,9 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( !empty($get_error) && isset($LANG[$get_error]) )
-		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
+		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 		
 	//Modules installé
 	$i = 0;	

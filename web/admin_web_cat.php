@@ -190,7 +190,7 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$min_cat = $Sql->query("SELECT MIN(class) FROM ".PREFIX."web_cat", __LINE__, __FILE__);
 	$max_cat = $Sql->query("SELECT MAX(class) FROM ".PREFIX."web_cat", __LINE__, __FILE__);

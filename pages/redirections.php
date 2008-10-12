@@ -131,26 +131,26 @@ if( $id_page > 0 )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	if($id_redirection > 0 )
-		$Bread_crumb->Add_link($LANG['pages_redirection_management'], transid('redirections.php?id=' . $id_redirection));
+		$Bread_crumb->add($LANG['pages_redirection_management'], transid('redirections.php?id=' . $id_redirection));
 	elseif( $id_new > 0 )
-		$Bread_crumb->Add_link($LANG['pages_creation_redirection'], transid('redirections.php?new=' . $id_redirection));
+		$Bread_crumb->add($LANG['pages_creation_redirection'], transid('redirections.php?new=' . $id_redirection));
 	else
-		$Bread_crumb->Add_link($LANG['pages_rename'], transid('redirections.php?rename=' . $id_rename));
-	$Bread_crumb->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+		$Bread_crumb->add($LANG['pages_rename'], transid('redirections.php?rename=' . $id_rename));
+	$Bread_crumb->add($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
 		if( empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )	
-			$Bread_crumb->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+			$Bread_crumb->add($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
-	$Bread_crumb->Reverse_links();
+		$Bread_crumb->add($LANG['pages'], transid('pages.php'));
+	$Bread_crumb->reverse();
 }
 else
-	$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
-	$Bread_crumb->Add_link($LANG['pages_redirections'], transid('redirections.php'));
+	$Bread_crumb->add($LANG['pages'], transid('pages.php'));
+	$Bread_crumb->add($LANG['pages_redirections'], transid('redirections.php'));
 
 require_once('../kernel/header.php');
 
@@ -171,7 +171,7 @@ if( $id_rename > 0 )
 	//Erreur : la page existe déjà
 	if( $error == 'title_already_exists' )
 	{
-		$Errorh->Error_handler($LANG['pages_already_exists'], E_USER_WARNING);
+		$Errorh->handler($LANG['pages_already_exists'], E_USER_WARNING);
 	}
 }
 //Création d'une redirection
@@ -188,7 +188,7 @@ elseif( $id_new > 0 )
 	//Erreur : la page existe déjà
 	if( $error == 'title_already_exists' )
 	{
-		$Errorh->Error_handler($LANG['pages_already_exists'], E_USER_WARNING);
+		$Errorh->handler($LANG['pages_already_exists'], E_USER_WARNING);
 	}
 }
 //Liste des redirections vers cette page

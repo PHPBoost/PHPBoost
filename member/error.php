@@ -99,7 +99,7 @@ if( in_array($id_error, $array_error) )
 		}	
 			
 		if( !empty($errstr) )
-			$Errorh->Error_handler($errstr, $errno);		
+			$Errorh->handler($errstr, $errno);		
 			
 		$Template->assign_vars(array(
 			'C_ERRORH_CONNEXION' => true,

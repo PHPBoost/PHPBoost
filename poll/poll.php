@@ -37,7 +37,7 @@ if( !empty($poll_id) )
 	
 	//Pas de sondage trouvé => erreur.
 	if( empty($poll['id']) )
-		$Errorh->Error_handler('e_unexist_poll', E_USER_REDIRECT); 
+		$Errorh->handler('e_unexist_poll', E_USER_REDIRECT); 
 }	
 	
 $archives = retrieve(GET, 'archives', false); //On vérifie si on est sur les archives
@@ -193,7 +193,7 @@ elseif( !empty($poll['id']) && !$archives )
 		$errstr = '';
 	}
 	if( !empty($errstr) )
-		$Errorh->Error_handler($errstr, $type);
+		$Errorh->handler($errstr, $type);
 			
 	//Si le cookie existe, ou l'ip est connue on redirige vers les resulats, sinon on prend en compte le vote.
 	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
@@ -385,7 +385,7 @@ elseif( $archives ) //Archives.
 	$Template->pparse('poll');
 }
 else
-	$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT); 
+	$Errorh->handler('e_unexist_page', E_USER_REDIRECT); 
 	
 require_once('../kernel/footer.php');
 

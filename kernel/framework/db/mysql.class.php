@@ -412,7 +412,7 @@ class Sql
 		
 		//Enregistrement dans le log d'erreur.
         $too_many_connections = strpos($errstr, 'already has more than \'max_user_connections\' active connections') > 0;
-		$Errorh->Error_handler($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile, false, !$too_many_connections);
+		$Errorh->handler($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile, false, !$too_many_connections);
         redirect(PATH_TO_ROOT . '/member/toomanyconnections.php');
 	}	
 	

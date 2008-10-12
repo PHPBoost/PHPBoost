@@ -90,9 +90,9 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $get_error == 'exist_field' )
-		$Errorh->Error_handler($LANG['e_exist_field'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_exist_field'], E_USER_NOTICE);
 		
 	$Template->assign_vars(array(
 		'L_REQUIRE_NAME' => $LANG['require_title'],

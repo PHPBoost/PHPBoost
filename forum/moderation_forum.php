@@ -34,12 +34,12 @@ $id_get = retrieve(GET, 'id', 0);
 $new_status = retrieve(GET, 'new_status', '');
 $get_del = retrieve(GET, 'del', '');
 
-$Bread_crumb->Add_link($LANG['moderation_panel'], '../member/moderation_panel.php' . SID);
-$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'moderation_forum.php' . SID);
+$Bread_crumb->add($LANG['moderation_panel'], '../member/moderation_panel.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'moderation_forum.php' . SID);
 if( $action == 'alert' )
-	$Bread_crumb->Add_link($LANG['alert_management'], transid('moderation_forum.php?action=alert'));
+	$Bread_crumb->add($LANG['alert_management'], transid('moderation_forum.php?action=alert'));
 elseif( $action == 'users' )
-	$Bread_crumb->Add_link($LANG['warning_management'], transid('moderation_forum.php?action=warning'));
+	$Bread_crumb->add($LANG['warning_management'], transid('moderation_forum.php?action=warning'));
 	
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['moderation_panel']);
 require_once('../kernel/header.php');
@@ -59,7 +59,7 @@ if( is_array($CAT_FORUM) )
 }
 
 if( !$User->check_level(MODO_LEVEL) && $check_auth_by_group !== true ) //Si il n'est pas modérateur (total ou partiel)
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 $Template->set_filenames(array(
 	'forum_moderation_panel'=> 'forum/forum_moderation_panel.tpl',

@@ -111,7 +111,7 @@ if( $checkdate === true && empty($id) && !$add )
 		$errstr = '';
 	}
 	if( !empty($errstr) )
-		$Errorh->Error_handler($errstr, E_USER_NOTICE);
+		$Errorh->handler($errstr, E_USER_NOTICE);
 		
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 	$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'], 
@@ -282,7 +282,7 @@ if( $checkdate === true && empty($id) && !$add )
 elseif( !empty($id) )
 {
 	if( !$User->check_level(ADMIN_LEVEL) ) //Admins seulement autorisés à editer/supprimer!
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	if( $del ) //Suppression simple.
 	{
@@ -376,7 +376,7 @@ elseif( !empty($id) )
 				$errstr = '';
 			}
 			if( !empty($errstr) )
-				$Errorh->Error_handler($errstr, E_USER_NOTICE);
+				$Errorh->handler($errstr, E_USER_NOTICE);
 			
 			$Template->pparse('calendar');
 		}
@@ -387,7 +387,7 @@ elseif( !empty($id) )
 elseif( $add ) //Ajout d'un évenement
 {
 	if( !$User->check_level($CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 	if( !empty($_POST['valid']) ) //Enregistrement
 	{
@@ -477,7 +477,7 @@ elseif( $add ) //Ajout d'un évenement
 			$errstr = '';
 		}
 		if( !empty($errstr) )
-			$Errorh->Error_handler($errstr, E_USER_NOTICE);
+			$Errorh->handler($errstr, E_USER_NOTICE);
 
 		$Template->pparse('calendar');
 	}

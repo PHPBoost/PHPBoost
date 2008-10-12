@@ -135,7 +135,7 @@ elseif( $del_cat_post > 0 && $report_cat >= 0 )
 	$general_auth = empty($page_infos['auth']) ? true : false;
 	$array_auth = !empty($page_infos['auth']) ? sunserialize($page_infos['auth']) : array();
 	if( !((!$general_auth || $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) && ($general_auth || $User->check_auth($array_auth , EDIT_PAGE))) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 	$sub_cats = array();
 	//On fait un tableau contenant la liste des sous catégories de cette catégorie
@@ -199,27 +199,27 @@ if( $id_page > 0 )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	if($id_redirection > 0 )
-		$Bread_crumb->Add_link($LANG['pages_redirection_management'], transid('action.php?id=' . $id_redirection));
+		$Bread_crumb->add($LANG['pages_redirection_management'], transid('action.php?id=' . $id_redirection));
 	elseif( $id_new > 0 )
-		$Bread_crumb->Add_link($LANG['pages_creation_redirection'], transid('action.php?new=' . $id_redirection));
+		$Bread_crumb->add($LANG['pages_creation_redirection'], transid('action.php?new=' . $id_redirection));
 	elseif( $del_cat > 0 )
-		$Bread_crumb->Add_link($LANG['pages_delete_cat'], transid('action.php?del_cat=' . $id_redirection));
+		$Bread_crumb->add($LANG['pages_delete_cat'], transid('action.php?del_cat=' . $id_redirection));
 	else
-		$Bread_crumb->Add_link($LANG['pages_rename'], transid('action.php?rename=' . $id_rename));
-	$Bread_crumb->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+		$Bread_crumb->add($LANG['pages_rename'], transid('action.php?rename=' . $id_rename));
+	$Bread_crumb->add($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
 	if( empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )	
-		$Bread_crumb->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$Bread_crumb->add($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
-	$Bread_crumb->Reverse_links();
+		$Bread_crumb->add($LANG['pages'], transid('pages.php'));
+	$Bread_crumb->reverse();
 }
 else
-	$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'), $LANG['pages_redirections'], transid('action.php'));
+	$Bread_crumb->add($LANG['pages'], transid('pages.php'), $LANG['pages_redirections'], transid('action.php'));
 
 require_once('../kernel/header.php');
 
@@ -283,7 +283,7 @@ if( $del_cat > 0 )
 	else
 		$errstr = '';
 	if( !empty($errstr) )
-		$Errorh->Error_handler($errstr, E_USER_WARNING);
+		$Errorh->handler($errstr, E_USER_WARNING);
 }
 elseif( $id_rename > 0 )
 {
@@ -302,7 +302,7 @@ elseif( $id_rename > 0 )
 	//Erreur : la page existe déjà
 	if( $error == 'title_already_exists' )
 	{
-		$Errorh->Error_handler($LANG['pages_already_exists'], E_USER_WARNING);
+		$Errorh->handler($LANG['pages_already_exists'], E_USER_WARNING);
 	}
 }
 //Création d'une redirection
@@ -320,7 +320,7 @@ elseif( $id_new > 0 )
 	//Erreur : la page existe déjà
 	if( $error == 'title_already_exists' )
 	{
-		$Errorh->Error_handler($LANG['pages_already_exists'], E_USER_WARNING);
+		$Errorh->handler($LANG['pages_already_exists'], E_USER_WARNING);
 	}
 }
 //Liste des redirections vers cette page

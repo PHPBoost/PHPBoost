@@ -52,20 +52,20 @@ if( !empty($encoded_title) ) //Si on connait son titre
 	
 	//Définition du fil d'Ariane de la page
 	if( $page_infos['is_cat'] == 0 )
-		$Bread_crumb->Add_link($page_infos['title'], transid('pages.php?title=' . $encoded_title, $encoded_title));
+		$Bread_crumb->add($page_infos['title'], transid('pages.php?title=' . $encoded_title, $encoded_title));
 	
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
 		//Si on a les droits de lecture sur la catégorie, on l'affiche	
 		if( empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )
-			$Bread_crumb->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+			$Bread_crumb->add($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}	
 	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
+		$Bread_crumb->add($LANG['pages'], transid('pages.php'));
 	//On renverse ce fil pour le mettre dans le bon ordre d'arborescence
-	$Bread_crumb->Reverse_links();
+	$Bread_crumb->reverse();
 }
 elseif( $id_com > 0 )
 {
@@ -77,24 +77,24 @@ elseif( $id_com > 0 )
 	$page_infos = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
-	$Bread_crumb->Add_link($LANG['pages_com'], transid('pages.php?id=' . $id_com . '&amp;com=0'));
-	$Bread_crumb->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+	$Bread_crumb->add($LANG['pages_com'], transid('pages.php?id=' . $id_com . '&amp;com=0'));
+	$Bread_crumb->add($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
-		$Bread_crumb->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$Bread_crumb->add($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
-	$Bread_crumb->Reverse_links();
+		$Bread_crumb->add($LANG['pages'], transid('pages.php'));
+	$Bread_crumb->reverse();
 }
 else
 {
 	define('TITLE', $LANG['pages']);
 	$auth_index = $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE);
 	if( $auth_index )
-		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
+		$Bread_crumb->add($LANG['pages'], transid('pages.php'));
 	elseif( !$auth_index && empty($error) )
 		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth'));
 }
@@ -218,22 +218,22 @@ elseif( !empty($error) )
 	switch($error)
 	{
 		case 'e_page_not_found' :
-			$Errorh->Error_handler($LANG['pages_not_found'], E_USER_WARNING);
+			$Errorh->handler($LANG['pages_not_found'], E_USER_WARNING);
 			break;
 		case 'e_auth' :
-			$Errorh->Error_handler($LANG['pages_error_auth_read'], E_USER_WARNING);
+			$Errorh->handler($LANG['pages_error_auth_read'], E_USER_WARNING);
 			break;
 		case 'e_auth_com' :
-			$Errorh->Error_handler($LANG['pages_error_auth_com'], E_USER_WARNING);
+			$Errorh->handler($LANG['pages_error_auth_com'], E_USER_WARNING);
 			break;
 		case 'e_unactiv_com' :
-			$Errorh->Error_handler($LANG['pages_error_unactiv_com'], E_USER_WARNING);
+			$Errorh->handler($LANG['pages_error_unactiv_com'], E_USER_WARNING);
 			break;
 		case 'delete_success' :
-			$Errorh->Error_handler($LANG['pages_delete_success'], E_USER_NOTICE);
+			$Errorh->handler($LANG['pages_delete_success'], E_USER_NOTICE);
 			break;
 		case 'delete_failure' :
-			$Errorh->Error_handler($LANG['pages_delete_failure'], E_USER_NOTICE);
+			$Errorh->handler($LANG['pages_delete_failure'], E_USER_NOTICE);
 			break;
 		default :
 			redirect(HOST . DIR . transid('/pages/pages.php'));

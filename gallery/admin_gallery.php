@@ -94,7 +94,7 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if( $get_error == 'unexist_cat' )
-		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
+		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
 		
 	//On crée une pagination si le nombre de catégories est trop important.
 	include_once('../kernel/framework/util/pagination.class.php'); 

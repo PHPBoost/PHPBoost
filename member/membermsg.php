@@ -26,8 +26,8 @@
 ###################################################*/
 
 require_once('../kernel/begin.php'); 
-$Bread_crumb->Add_link($LANG['member_area'], 'member.php' . SID);
-$Bread_crumb->Add_link($LANG['member_msg'], 'membermsg.php' . SID);
+$Bread_crumb->add($LANG['member_area'], 'member.php' . SID);
+$Bread_crumb->add($LANG['member_msg'], 'membermsg.php' . SID);
 define('TITLE', $LANG['member_msg']);
 require_once('../kernel/header.php'); 
 

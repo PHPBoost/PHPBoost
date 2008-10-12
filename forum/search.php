@@ -30,8 +30,8 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
-$Bread_crumb->Add_link($LANG['title_search'], '');
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($LANG['title_search'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['title_search']);
 require_once('../kernel/header.php');
 
@@ -212,7 +212,7 @@ if( !empty($valid_search) && !empty($search) )
 		$Sql->query_close($result);
 		
 		if( $check_result !== true )
-			$Errorh->Error_handler($LANG['no_result'], E_USER_NOTICE);
+			$Errorh->handler($LANG['no_result'], E_USER_NOTICE);
 		else
 		{
 			$Template->assign_vars(array(
@@ -221,10 +221,10 @@ if( !empty($valid_search) && !empty($search) )
 		}
 	}
 	else //Gestion erreur.
-		$Errorh->Error_handler($LANG['invalid_req'], E_USER_NOTICE);
+		$Errorh->handler($LANG['invalid_req'], E_USER_NOTICE);
 }
 elseif( !empty($valid_search) )
-	$Errorh->Error_handler($LANG['invalid_req'], E_USER_WARNING);
+	$Errorh->handler($LANG['invalid_req'], E_USER_WARNING);
 	
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');

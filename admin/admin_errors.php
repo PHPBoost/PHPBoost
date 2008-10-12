@@ -78,7 +78,7 @@ if( is_file($file_path) && is_readable($file_path) ) //Fichier accessible en lec
 				case 5:
 				$errinfo['errline'] = $buffer;	
 				$i = 0;	
-				$errinfo['errclass'] = $Errorh->Get_errno_class($errinfo['errno']);
+				$errinfo['errclass'] = $Errorh->get_errno_class($errinfo['errno']);
 				$array_errinfo[] = array(
 				'errclass' => $errinfo['errclass'], 
 				'errstr' => $errinfo['errstr'], 

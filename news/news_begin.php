@@ -51,9 +51,9 @@ else
 }
 
 $news_title = !empty($idnews) ? $news['title'] : '';
-$Bread_crumb->Add_link($LANG['title_news'], transid('news.php'));
-$Bread_crumb->Add_link($news_title, (!empty($_GET['i']) ? transid('news.php?id=' . $idnews) : ''));
-$Bread_crumb->Add_link((isset($_GET['i']) ? $LANG['com'] : ''), '');
+$Bread_crumb->add($LANG['title_news'], transid('news.php'));
+$Bread_crumb->add($news_title, (!empty($_GET['i']) ? transid('news.php?id=' . $idnews) : ''));
+$Bread_crumb->add((isset($_GET['i']) ? $LANG['com'] : ''), '');
 
 //Chargement du cache
 $Cache->Load_file('news');

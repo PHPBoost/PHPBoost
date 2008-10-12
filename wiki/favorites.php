@@ -36,7 +36,7 @@ require_once('../wiki/wiki_bread_crumb.php');
 require_once('../kernel/header.php'); 
 
 if( !$User->check_level(MEMBER_LEVEL) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 $add_favorite = retrieve(GET, 'add', 0);
 $remove_favorite = retrieve(GET, 'del', 0);
@@ -88,7 +88,7 @@ else
 	else
 		$errstr = '';
 	if( !empty($errstr) )
-		$Errorh->Error_handler($errstr, E_USER_WARNING);
+		$Errorh->handler($errstr, E_USER_WARNING);
 	
 	//on liste les favoris
 	$result = $Sql->query_while("SELECT f.id, a.id, a.title, a.encoded_title

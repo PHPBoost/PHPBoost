@@ -95,9 +95,9 @@ elseif( $check_advanced && empty($_POST['advanced']) )
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( isset($_GET['mail']) )
-		$Errorh->Error_handler($LANG['unlock_admin_confirm'], E_USER_NOTICE);
+		$Errorh->handler($LANG['unlock_admin_confirm'], E_USER_NOTICE);
 	
 	//Gestion fuseau horaire par défaut.
 	$select_timezone = '';
@@ -212,7 +212,7 @@ else //Sinon on rempli le formulaire
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$select_page = '';
 	$start_page = '';

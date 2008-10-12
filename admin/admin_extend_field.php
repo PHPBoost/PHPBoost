@@ -150,9 +150,9 @@ elseif( !empty($id) )
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif( $get_error == 'exist_field' )
-		$Errorh->Error_handler($LANG['e_exist_field'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_exist_field'], E_USER_NOTICE);
 	
 	$array_field = array(
 		1 => $LANG['short_text'],

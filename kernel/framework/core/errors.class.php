@@ -57,7 +57,7 @@ class Errors
 	}	
 	
 	//Gestionnaire d'erreur.
-	function Error_handler_php($errno, $errstr, $errfile, $errline)
+	function handler_php($errno, $errstr, $errfile, $errline)
 	{
 		global $LANG, $CONFIG;
 		
@@ -106,7 +106,7 @@ class Errors
 		</div>';
 		
 		//Et on l'archive
-		$this->error_log($errfile, $errline, $errno, $errstr, true);
+		$this->_error_log($errfile, $errline, $errno, $errstr, true);
 		
 		//Dans le cas d'un E_USER_ERROR on arrête l'execution
 		if( $errno == E_USER_ERROR )
@@ -117,7 +117,7 @@ class Errors
 	}
 	
 	//Gestionnaire d'erreurs controlées par le développeur.
-	function Error_handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false, $stop = true)
+	function handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false, $stop = true)
 	{
 		global $LANG, $Template;
 		
@@ -128,7 +128,7 @@ class Errors
 			{
 				//Message d'erreur demandant une redirection.
 				case E_USER_REDIRECT:
-				$this->error_log($errfile, $errline, $errno, $errstr, $archive);
+				$this->_error_log($errfile, $errline, $errno, $errstr, $archive);
 				redirect($this->redirect . '/member/error' . transid('.php?e=' . $errstr, '', '&'));
 				break;				
 				//Message de succès, étrange pour une classe d'erreur non?
@@ -167,7 +167,7 @@ class Errors
 				case E_USER_ERROR:
 				case E_ERROR:
 				//Enregistrement de l'erreur fatale dans tout les cas.
-				$error_id = $this->error_log($errfile, $errline, $errno, $errstr, true);
+				$error_id = $this->_error_log($errfile, $errline, $errno, $errstr, true);
 				
                 if( $stop )
                 {
@@ -181,14 +181,14 @@ class Errors
 		
 			//Enregistrement de l'erreur si demandé.			
 			if( $archive )
-				return $this->error_log($errfile, $errline, $errno, $errstr, $archive);
+				return $this->_error_log($errfile, $errline, $errno, $errstr, $archive);
 			return true;
 		}
 		return false;
 	}
 	
 	//Récupération des informations de la dernière erreur.
-	function Get_last_error_log()
+	function get_last__error_log()
 	{
 		$errinfo = '';		
 		$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'r');
@@ -217,7 +217,7 @@ class Errors
 	}
 	
 	//Récupération du type de l'erreur.
-	function Get_errno_class($errno)
+	function get_errno_class($errno)
 	{
 		switch($errno)
 		{
@@ -250,12 +250,12 @@ class Errors
 	
 	## Private Methods ##
 	//Enregistre l'erreur dans le fichier de log.
-	function error_log($errfile, $errline, $errno, $errstr, $archive)
+	function _error_log($errfile, $errline, $errno, $errstr, $archive)
 	{		
 		if( $archive || $this->archive_all )
 		{				
 			//Nettoyage de la chaîne avant enregistrement.
-			$errstr = $this->clean_errstr($errstr);
+			$errstr = $this->_clean_error_string($errstr);
 			
 		    $error = gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n";
 		    $error .= $errno . "\n";
@@ -272,7 +272,7 @@ class Errors
 	}
 	
 	//Nettoie la chaine d'erreur pour compresser le fichier.
-	function clean_errstr($errstr)
+	function _clean_error_string($errstr)
 	{
 		$errstr = preg_replace("`\r|\n|\t`", "\n", $errstr);
 		$errstr = preg_replace("`(\n){1,}`", '<br />', $errstr);

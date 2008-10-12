@@ -48,7 +48,7 @@ if( $id_auth > 0 ) //Autorisations de l'article
 	$article_infos = $Sql->query_array('wiki_articles', 'id', 'title', 'encoded_title', 'auth', 'is_cat', 'id_cat', "WHERE id = '" . $id_auth . "'", __LINE__, __FILE__);
 	
 	if( !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( $wiki_status > 0 )//On s'intéresse au statut de l'article
 {
@@ -59,7 +59,7 @@ elseif( $wiki_status > 0 )//On s'intéresse au statut de l'article
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
 	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS))) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( $move > 0 ) //Déplacement d'article
 {
@@ -70,7 +70,7 @@ elseif( $move > 0 ) //Déplacement d'article
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
 	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE))) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( $rename > 0 ) //Renommer l'article
 {
@@ -81,7 +81,7 @@ elseif( $rename > 0 ) //Renommer l'article
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
 	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME))) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( $redirect > 0 || $create_redirection > 0 )//Redirection
 {
@@ -95,7 +95,7 @@ elseif( $redirect > 0 || $create_redirection > 0 )//Redirection
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
 	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( isset($_GET['i']) && $idcom > 0 )
 {
@@ -105,7 +105,7 @@ elseif( isset($_GET['i']) && $idcom > 0 )
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	
 	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $User->check_auth($article_auth , WIKI_COM))) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 {
@@ -115,7 +115,7 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE))) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 else
 	define('TITLE', '');
@@ -231,7 +231,7 @@ elseif( $move > 0 ) //On déplace l'article
 	else
 		$errstr = '';
 	if( !empty($errstr) )
-		$Errorh->Error_handler($errstr, E_USER_WARNING);
+		$Errorh->handler($errstr, E_USER_WARNING);
 }
 elseif( $rename > 0 )//On renomme un article
 {
@@ -250,7 +250,7 @@ elseif( $rename > 0 )//On renomme un article
 	else
 		$errstr = '';
 	if( !empty($errstr) )
-		$Errorh->Error_handler($errstr, E_USER_WARNING);
+		$Errorh->handler($errstr, E_USER_WARNING);
 }
 elseif( $redirect > 0 ) //Redirections de l'article
 {
@@ -302,7 +302,7 @@ elseif( $create_redirection > 0 ) //Création d'une redirection
 	else
 		$errstr = '';
 	if( !empty($errstr) )
-		$Errorh->Error_handler($errstr, E_USER_WARNING);
+		$Errorh->handler($errstr, E_USER_WARNING);
 }
 elseif( isset($_GET['com']) && $idcom > 0 ) //Affichage des commentaires
 {
@@ -359,7 +359,7 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 		else
 			$errstr = '';
 		if( !empty($errstr) )
-			$Errorh->Error_handler($errstr, E_USER_WARNING);
+			$Errorh->handler($errstr, E_USER_WARNING);
 	}
 }
 else

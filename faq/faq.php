@@ -35,7 +35,7 @@ $id_question = retrieve(GET, 'question', 0);
 //if the category doesn't exist or is not visible
 if( !array_key_exists($id_faq, $FAQ_CATS) || (array_key_exists($id_faq, $FAQ_CATS) && $id_faq > 0 && !$FAQ_CATS[$id_faq]['visible']) )
 {
-	$Errorh->Error_handler('e_unexist_cat', E_USER_REDIRECT);
+	$Errorh->handler('e_unexist_cat', E_USER_REDIRECT);
 	exit;
 }
 
@@ -52,7 +52,7 @@ include_once('faq_bread_crumb.php');
 //checking authorization
 if( !$auth_read )
 {
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	$Errorh->handler('e_auth', E_USER_REDIRECT);
 	exit;
 }
 

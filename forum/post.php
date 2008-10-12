@@ -33,21 +33,21 @@ $id_get = retrieve(GET, 'id', 0);
 
 //Existance de la catégorie.
 if( !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0 )
-	$Errorh->Error_handler('e_unexist_cat', E_USER_REDIRECT);
+	$Errorh->handler('e_unexist_cat', E_USER_REDIRECT);
 
 if( $User->get_attribute('user_readonly') > time() ) //Lecture seule.
-	$Errorh->Error_handler('e_readonly', E_USER_REDIRECT);
+	$Errorh->handler('e_readonly', E_USER_REDIRECT);
 
 //Récupération de la barre d'arborescence.
-$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 foreach($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if( $CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'] )
-		$Bread_crumb->Add_link($array_info_cat['name'], ($array_info_cat['level'] == 0) ? transid('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
+		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? transid('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
 }
 if( !empty($CAT_FORUM[$id_get]['name']) ) //Nom de la catégorie courante.
-	$Bread_crumb->Add_link($CAT_FORUM[$id_get]['name'], 'forum' . transid('.php?id=' . $id_get, '-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php'));
-$Bread_crumb->Add_link($LANG['title_post'], '');
+	$Bread_crumb->add($CAT_FORUM[$id_get]['name'], 'forum' . transid('.php?id=' . $id_get, '-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php'));
+$Bread_crumb->add($LANG['title_post'], '');
 define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php'); 
 
@@ -71,7 +71,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
 	$forum_cats = '';	
-	$Bread_crumb->Remove_last_link();
+	$Bread_crumb->remove_last();
 	foreach($Bread_crumb->array_links as $key => $array)
 	{
 		if( $i == 2 )
@@ -89,7 +89,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 
 		if( empty($topic['idcat']) ) //Topic inexistant.
-			$Errorh->Error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
+			$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
 		
 		$Template->set_filenames(array(
 			'edit_msg'=> 'forum/forum_edit_msg.tpl',
@@ -385,7 +385,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		//Verrouillé?
 		$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 		if( empty($topic['idcat']) )
-			$Errorh->Error_handler('e_topic_lock_forum', E_USER_REDIRECT);
+			$Errorh->handler('e_topic_lock_forum', E_USER_REDIRECT);
 		
 		$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 		//Catégorie verrouillée?
@@ -439,7 +439,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		$topic = $Sql->query_array('forum_topics', 'title', 'subtitle', 'type', 'user_id', 'display_msg', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 		
 		if( empty($id_get) || empty($id_first) ) //Topic/message inexistant.
-			$Errorh->Error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
+			$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
 		
 		$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 		
@@ -455,7 +455,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$check_auth = true;
 		
 			if( !$check_auth )
-				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			
 			if( $update && $post_topic )
 			{
@@ -621,7 +621,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if( $get_error_e == 'incomplete_t' )
-					$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+					$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 
 				if( $is_modo )
 				{
@@ -751,7 +751,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$check_auth = true;
 	
 			if( !$check_auth ) //Non autorisé!
-				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			
 			if( $update && retrieve(POST, 'edit_msg', false) )
 			{
@@ -783,7 +783,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if( $get_error_e == 'incomplete' )
-					$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
+					$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 					
 				$Template->assign_vars(array(
 					'P_UPDATE' => transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
@@ -816,7 +816,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		{
 			$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 			if( empty($topic['idcat']) ) //Topic inexistant.
-				$Errorh->Error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
+				$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
 			
 			$Template->set_filenames(array(
 				'error_post'=> 'forum/forum_edit_msg.tpl',
@@ -843,7 +843,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$errstr = '';
 			}
 			if( !empty($errstr) )
-				$Errorh->Error_handler($errstr, $type);
+				$Errorh->handler($errstr, $type);
 	
 			$Template->assign_vars(array(
 				'P_UPDATE' => '',
@@ -909,7 +909,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$errstr = '';
 			}	
 			if( !empty($errstr) )
-				$Errorh->Error_handler($errstr, $type);
+				$Errorh->handler($errstr, $type);
 				
 			//Liste des choix des sondages => 20 maxi
 			$nbr_poll_field = 0;
@@ -956,15 +956,15 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			));
 		}
 		else
-			$Errorh->Error_handler('unknow_error', E_USER_REDIRECT);
+			$Errorh->handler('unknow_error', E_USER_REDIRECT);
 		
 		$Template->pparse('error_post');
 	}
 	else
-		$Errorh->Error_handler('unknow_error', E_USER_REDIRECT); 
+		$Errorh->handler('unknow_error', E_USER_REDIRECT); 
 }
 else
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 include('../kernel/footer.php');
 

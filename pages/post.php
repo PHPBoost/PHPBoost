@@ -52,20 +52,20 @@ else
 if( $id_edit > 0 )
 {
 	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
-	$Bread_crumb->Add_link(TITLE, transid('post.php?id=' . $id_edit));
-	$Bread_crumb->Add_link($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+	$Bread_crumb->add(TITLE, transid('post.php?id=' . $id_edit));
+	$Bread_crumb->add($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
-		$Bread_crumb->Add_link($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$Bread_crumb->add($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
-	$Bread_crumb->Reverse_links();
+		$Bread_crumb->add($LANG['pages'], transid('pages.php'));
+	$Bread_crumb->reverse();
 }
 else
-	$Bread_crumb->Add_link($LANG['pages'], transid('pages.php'));
+	$Bread_crumb->add($LANG['pages'], transid('pages.php'));
 	
 require_once('../kernel/header.php');
 
@@ -202,10 +202,10 @@ if( $id_edit > 0 )
 	
 	//Erreur d'enregistrement ?
 	if( $error == 'cat_contains_cat' )
-		$Errorh->Error_handler($LANG['pages_cat_contains_cat'], E_USER_WARNING);
+		$Errorh->handler($LANG['pages_cat_contains_cat'], E_USER_WARNING);
 	elseif( $error == 'preview' )
 	{
-		$Errorh->Error_handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
+		$Errorh->handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
 		$Template->assign_block_vars('previewing', array(
 			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
 			'TITLE' => stripslashes($title)
@@ -237,10 +237,10 @@ else
 		
 	//La page existe déjà !
 	if( $error == 'page_already_exists' )
-		$Errorh->Error_handler($LANG['pages_already_exists'], E_USER_WARNING);
+		$Errorh->handler($LANG['pages_already_exists'], E_USER_WARNING);
 	elseif( $error == 'preview' )
 	{
-		$Errorh->Error_handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
+		$Errorh->handler($LANG['pages_notice_previewing'], E_USER_NOTICE);
 		$Template->assign_block_vars('previewing', array(
 			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
 			'TITLE' => stripslashes($title)

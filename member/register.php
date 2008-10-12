@@ -96,10 +96,10 @@ if( empty($key) )
 			$errstr = '';
 		}
 		if( !empty($errstr) )
-			$Errorh->Error_handler($errstr, E_USER_NOTICE);  
+			$Errorh->handler($errstr, E_USER_NOTICE);  
 
 		if( isset($LANG[$get_erroru]) )
-			$Errorh->Error_handler($LANG[$get_erroru], E_USER_WARNING);  
+			$Errorh->handler($LANG[$get_erroru], E_USER_WARNING);  
 			
 		//Mode d'activation du membre.
 		if( $CONFIG_MEMBER['activ_mbr'] == '1' )

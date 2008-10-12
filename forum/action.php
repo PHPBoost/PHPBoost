@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php'); 
 require_once('../forum/forum_begin.php');
-$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 require_once('../kernel/header_no_display.php');
 
 //Variable GET.
@@ -63,7 +63,7 @@ if( !empty($idm_get) && $del ) //Suppression d'un message/topic.
 		if( !empty($msg['idtopic']) && ($User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $User->get_attribute('user_id') == $topic['user_id']) ) //Autorisé à supprimer?
 			$Forumfct->Del_topic($msg['idtopic']); //Suppresion du topic.
 		else
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 		
 		redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
 	}
@@ -72,10 +72,10 @@ if( !empty($idm_get) && $del ) //Suppression d'un message/topic.
 		if( !empty($topic['idcat']) && ($User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $User->get_attribute('user_id') == $msg['user_id']) ) //Autorisé à supprimer?
 			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['idcat'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']);
 		else
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 		
 		if( $nbr_msg === false && $previous_msg_id === false ) //Echec de la suppression.
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 		
 		//On compte le nombre de messages du topic avant l'id supprimé.
 		$last_page = ceil( $nbr_msg/ $CONFIG_FORUM['pagination_msg'] );
@@ -85,7 +85,7 @@ if( !empty($idm_get) && $del ) //Suppression d'un message/topic.
 		redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $msg['idtopic'] . $last_page, '-' . $msg['idtopic'] . $last_page_rewrite . '.php', '&') . '#m' . $previous_msg_id);
 	}
 	else //Non autorisé, on redirige.
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( !empty($idt_get) )
 {		
@@ -93,7 +93,7 @@ elseif( !empty($idt_get) )
 	$topic = $Sql->query_array('forum_topics', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 
 	if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 	$rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : '';
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
@@ -111,7 +111,7 @@ elseif( !empty($idt_get) )
 			redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
 		}	
 		else
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	}	
 	elseif( $poll && $User->get_attribute('user_id') !== -1 ) //Enregistrement vote du sondage
 	{
@@ -172,10 +172,10 @@ elseif( !empty($idt_get) )
 			}
 		}
 		else
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	}
 	else
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( !empty($track) && $User->check_level(MEMBER_LEVEL) ) //Ajout du sujet aux sujets suivis.
 {

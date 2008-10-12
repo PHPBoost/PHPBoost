@@ -41,7 +41,7 @@ if( $guestbook && empty($id_get) ) //Enregistrement
 
 	//Membre en lecture seule?
 	if( $User->get_attribute('user_readonly') > time() ) 
-		$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
+		$Errorh->handler('e_readonly', E_USER_REDIRECT); 
 	
 	if( !empty($guestbook_contents) && !empty($guestbook_pseudo) )
 	{	
@@ -198,7 +198,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 				redirect(HOST . SCRIPT. SID2 . '#m' . $id_get);
 			}
 			else
-				$Errorh->Error_handler('e_incomplete', E_USER_REDIRECT);
+				$Errorh->handler('e_incomplete', E_USER_REDIRECT);
 		}
 		else
 			redirect(HOST . SCRIPT . SID2);
@@ -247,7 +247,7 @@ else //Affichage.
 		$errstr = '';
 	}
 	if( !empty($errstr) )
-		$Errorh->Error_handler($errstr, E_USER_NOTICE);
+		$Errorh->handler($errstr, E_USER_NOTICE);
 	
 	$nbr_guestbook = $Sql->count_table('guestbook', __LINE__, __FILE__);
 	//On crée une pagination si le nombre de msg est trop important.

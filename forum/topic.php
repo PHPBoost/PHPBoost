@@ -37,21 +37,21 @@ $quote_get = retrieve(GET, 'quote', 0);
 $topic = !empty($id_get) ? $Sql->query_array('forum_topics', 'id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__) : '';
 //Existance du topic.
 if( empty($topic['id']) )
-	$Errorh->Error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
+	$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
 //Existance de la catégorie.
 if( !isset($CAT_FORUM[$topic['idcat']]) || $CAT_FORUM[$topic['idcat']]['aprob'] == 0 || $CAT_FORUM[$topic['idcat']]['level'] == 0 )
-	$Errorh->Error_handler('e_unexist_cat', E_USER_REDIRECT);
+	$Errorh->handler('e_unexist_cat', E_USER_REDIRECT);
 
 //Récupération de la barre d'arborescence.
-$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 foreach($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if( $CAT_FORUM[$topic['idcat']]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$topic['idcat']]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$topic['idcat']]['level'] )
-		$Bread_crumb->Add_link($array_info_cat['name'], ($array_info_cat['level'] == 0) ? transid('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
+		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? transid('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
 }
 if( !empty($CAT_FORUM[$topic['idcat']]['name']) ) //Nom de la catégorie courante.
-	$Bread_crumb->Add_link($CAT_FORUM[$topic['idcat']]['name'], 'forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) . '.php'));
-$Bread_crumb->Add_link($topic['title'], '');
+	$Bread_crumb->add($CAT_FORUM[$topic['idcat']]['name'], 'forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) . '.php'));
+$Bread_crumb->add($topic['title'], '');
 
 define('TITLE', $LANG['title_topic'] . ' - ' . addslashes($topic['title']));
 require_once('../kernel/header.php'); 
@@ -65,7 +65,7 @@ if( !empty($_POST['change_cat']) )
 	
 //Autorisation en lecture.
 if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$topic['idcat']]['url']) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 $Template->set_filenames(array(
 	'forum_topic'=> 'forum/forum_topic.tpl',
@@ -124,7 +124,7 @@ $Pagination = new Pagination();
 //Affichage de l'arborescence des catégories.
 $i = 0;
 $forum_cats = '';	
-$Bread_crumb->Remove_last_link();
+$Bread_crumb->remove_last();
 foreach($Bread_crumb->array_links as $key => $array)
 {
 	if( $i == 2 )

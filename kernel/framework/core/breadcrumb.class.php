@@ -29,8 +29,10 @@
 class BreadCrumb
 {
 	##  Méthodes publiques  ##
+    function BreadCrumb() { }
+    
 	//Ajout d'un lien
-	function Add_link($text, $target = '')
+	function add($text, $target = '')
 	{
 		if( !empty($text) )
 		{
@@ -42,24 +44,24 @@ class BreadCrumb
 	}
 	
 	//Inversion de l'ordre des liens
-	function Reverse_links()
+	function reverse()
 	{
 		$this->array_links = array_reverse($this->array_links);
 	}
 	
 	//Inversion de l'ordre des liens
-	function Remove_last_link()
+	function remove_last()
 	{
 		array_pop($this->array_links);
 	}
 	
 	//Affichage
-	function Display_bread_crumb()
+	function display()
 	{
 		global $Template, $CONFIG, $LANG;
 		
 		if( empty($this->array_links) )
-			$this->Add_link(stripslashes(TITLE), HOST . SCRIPT . SID);
+			$this->add(stripslashes(TITLE), HOST . SCRIPT . SID);
 		
 		$Template->assign_vars(array(
 			'START_PAGE' => get_start_page(),
@@ -76,7 +78,7 @@ class BreadCrumb
 	}
 	
 	//Suppression des liens existants
-	function Clean_links()
+	function clean()
 	{
 		$this->array_links = array();
 	}

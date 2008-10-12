@@ -36,10 +36,10 @@ $topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE 
 
 $cat_name = !empty($CAT_FORUM[$topic['idcat']]['name']) ? $CAT_FORUM[$topic['idcat']]['name'] : '';
 $topic_name = !empty($topic['title']) ? $topic['title'] : '';
-$Bread_crumb->Add_link($CONFIG_FORUM['forum_name'], 'index.php' . SID);
-$Bread_crumb->Add_link($cat_name, 'forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . url_encode_rewrite($cat_name) . '.php'));
-$Bread_crumb->Add_link($topic['title'], 'topic' . transid('.php?id=' . $alert, '-' . $alert . '-' . url_encode_rewrite($topic_name) . '.php'));
-$Bread_crumb->Add_link($LANG['alert_topic'], '');
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($cat_name, 'forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . url_encode_rewrite($cat_name) . '.php'));
+$Bread_crumb->add($topic['title'], 'topic' . transid('.php?id=' . $alert, '-' . $alert . '-' . url_encode_rewrite($topic_name) . '.php'));
+$Bread_crumb->add($LANG['alert_topic'], '');
 
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['alert_topic']);
 require_once('../kernel/header.php');
@@ -48,7 +48,7 @@ if( empty($alert) && empty($alert_post) || empty($topic['idcat']) )
 	redirect(HOST . DIR . '/forum/index' . transid('.php'));  
 
 if( !$User->check_level(MEMBER_LEVEL) ) //Si c'est un invité
-    $Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+    $Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 $Template->set_filenames(array(
 	'forum_alert'=> 'forum/forum_alert.tpl',

@@ -98,7 +98,7 @@ if( !empty($contents) ) //On enregistre un article
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 			if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))) )
-				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			
 			$previous_id_contents = $Sql->query("SELECT id_contents FROM ".PREFIX."wiki_articles WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 			//On met à jour l'ancien contenu (comme archive)
@@ -123,9 +123,9 @@ if( !empty($contents) ) //On enregistre un article
 		{
 			//autorisations
 			if( $is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
-				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			elseif( !$is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
-				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			
 			//On vérifie que le titre n'existe pas
 			$article_exists = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title = '" . url_encode_rewrite($title) . "'", __LINE__, __FILE__);
@@ -179,7 +179,7 @@ if( $id_edit > 0 )//On édite
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	$article_contents = $Sql->query_array('wiki_contents', '*', "WHERE id_contents = '" . $article_infos['id_contents'] . "'", __LINE__, __FILE__);
 	$contents = $article_contents['content'];
@@ -204,12 +204,12 @@ else
 {
 	//autorisations
 	if( $is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	elseif( !$is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	if( !empty($encoded_title) )
-		$Errorh->Error_handler($LANG['wiki_article_does_not_exist'], E_USER_WARNING);	
+		$Errorh->handler($LANG['wiki_article_does_not_exist'], E_USER_WARNING);	
 	
 	if( $id_cat > 0 && array_key_exists($id_cat, $_WIKI_CATS) ) //Catégorie préselectionnée
 	{
@@ -305,7 +305,7 @@ include_once('../wiki/post_js_tools.php');
 
 //Eventuelles erreurs
 if( !empty($errstr) )
-	$Errorh->Error_handler($errstr, E_USER_WARNING);
+	$Errorh->handler($errstr, E_USER_WARNING);
 
 $Template->pparse('wiki_edit');
 

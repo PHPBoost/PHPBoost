@@ -211,7 +211,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 {
 	if( empty($news['id']) )
-		$Errorh->Error_handler('e_unexist_news', E_USER_REDIRECT);
+		$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
 
 	$tpl_news = new Template('news/news.tpl');
 	
@@ -261,7 +261,7 @@ elseif( !empty($idcat) )
 	
 	$cat = $Sql->query_array('news_cat', 'id', 'name', 'icon', "WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	if( empty($cat['id']) )
-		$Errorh->Error_handler('error_unexist_cat', E_USER_REDIRECT);
+		$Errorh->handler('error_unexist_cat', E_USER_REDIRECT);
 	
 	$tpl_news->assign_vars(array(
 		'C_NEWS_LINK' => true,

@@ -63,8 +63,8 @@ if( !empty($popup) ) //Popup.
 }
 else //Affichage de l'interface de gestion.
 {	
-	$Bread_crumb->Add_link($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
-	$Bread_crumb->Add_link($LANG['files_management'], transid('upload.php'));
+	$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add($LANG['files_management'], transid('upload.php'));
 	require_once('../kernel/header.php');
 	$field = '';
 	$header = '';
@@ -74,14 +74,14 @@ else //Affichage de l'interface de gestion.
 }
 
 if( !$User->check_level(MEMBER_LEVEL) ) //Visiteurs interdits!
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 //Chargement de la configuration.
 $Cache->Load_file('uploads');
 
 //Droit d'accès?.
 if( !$User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES) )
-	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 //Initialisation  de la class de gestion des fichiers.
 include_once('../member/uploads.class.php');
@@ -172,7 +172,7 @@ elseif( !empty($del_folder) ) //Supprime un dossier.
 		if( $check_user_id == $User->get_attribute('user_id') )	
 			$Uploads->Del_folder($del_folder);
 		else
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	}
 	
 	redirect(HOST . DIR . transid('/member/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
@@ -192,7 +192,7 @@ elseif( !empty($del_file) ) //Suppression d'un fichier
 	{
 		$error = $Uploads->Del_file($del_file, $User->get_attribute('user_id'));
 		if( !empty($error) )
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	}
 	
 	redirect(HOST . DIR . transid('/member/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
@@ -221,7 +221,7 @@ elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 			redirect(HOST . DIR . transid('/member/upload.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder&' . $popup_noamp, '', '&'));
 	}
 	else
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
 {
@@ -239,10 +239,10 @@ elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
 			redirect(HOST . DIR . transid('/member/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
 		}
 		else
-			$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	}
 	else
-		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 elseif( !empty($move_folder) || !empty($move_file) )
 {
@@ -269,7 +269,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 	));
 	
 	if( $get_error == 'folder_contains_folder' )
-		$Errorh->Error_handler($LANG['upload_folder_contains_folder'], E_USER_WARNING);
+		$Errorh->handler($LANG['upload_folder_contains_folder'], E_USER_WARNING);
 	
 	//liste des fichiers disponibles
 	include_once('upload_functions.php');
@@ -340,12 +340,12 @@ else
 	//Gestion des erreurs.
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled', 'e_max_data_reach');
 	if( in_array($get_error, $array_error) )
-		$Errorh->Error_handler($LANG[$get_error], E_USER_WARNING);
+		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);  
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);  
 
 	if( isset($LANG[$get_l_error]) )
-		$Errorh->Error_handler($LANG[$get_l_error], E_USER_WARNING);  
+		$Errorh->handler($LANG[$get_l_error], E_USER_WARNING);  
 
 	$Template->assign_vars(array(
 		'POPUP' => $popup,

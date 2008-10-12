@@ -159,7 +159,7 @@ class Note
 		else
         {
             global $Errorh;
-            $Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT);
+            $Errorh->handler('e_unexist_page', E_USER_REDIRECT);
         }
 	}
 	
@@ -211,7 +211,7 @@ class Note
 		global $Errorh;
 		
 		if( empty($this->sql_table) ) //Erreur avec le module non prévu pour gérer les commentaires.
-			$Errorh->Error_handler('e_unexist_page', E_USER_REDIRECT);
+			$Errorh->handler('e_unexist_page', E_USER_REDIRECT);
 		
 		return (!empty($this->script) && !empty($this->idprov) && !empty($this->vars));
 	}

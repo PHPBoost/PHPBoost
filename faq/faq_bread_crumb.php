@@ -35,7 +35,7 @@ $auth_write = $User->check_auth($FAQ_CONFIG['global_auth'], AUTH_WRITE);
 while( $id_cat_for_bread_crumb > 0 )
 {
 	//Inserting the link in the bread crumb
-	$Bread_crumb->Add_link($FAQ_CATS[$id_cat_for_bread_crumb]['name'], transid('faq.php?id=' . $id_cat_for_bread_crumb, 'faq-' . $id_cat_for_bread_crumb . '+' . url_encode_rewrite($FAQ_CATS[$id_cat_for_bread_crumb]['name']) . '.php'));
+	$Bread_crumb->add($FAQ_CATS[$id_cat_for_bread_crumb]['name'], transid('faq.php?id=' . $id_cat_for_bread_crumb, 'faq-' . $id_cat_for_bread_crumb . '+' . url_encode_rewrite($FAQ_CATS[$id_cat_for_bread_crumb]['name']) . '.php'));
 	
 	//If the category has special authorizations
 	if( !empty($FAQ_CATS[$id_cat_for_bread_crumb]['auth']) )
@@ -49,8 +49,8 @@ while( $id_cat_for_bread_crumb > 0 )
 	$id_cat_for_bread_crumb = (int)$FAQ_CATS[$id_cat_for_bread_crumb]['id_parent'];	
 }
 
-$Bread_crumb->Add_link($FAQ_CONFIG['faq_name'], transid('faq.php'));
+$Bread_crumb->add($FAQ_CONFIG['faq_name'], transid('faq.php'));
 
-$Bread_crumb->Reverse_links();
+$Bread_crumb->reverse();
 
 ?>

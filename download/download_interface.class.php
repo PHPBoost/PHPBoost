@@ -105,7 +105,7 @@ class DownloadInterface extends ModuleInterface
         global $Sql, $Cache;
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		
-		$Cache->load_file('download');
+		$Cache->load('download');
 		
         require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
         $cats = new DownloadCats();
@@ -133,7 +133,7 @@ class DownloadInterface extends ModuleInterface
      */
     {
         global $Sql, $Cache, $CONFIG, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD;
-        $Cache->load_file('download');
+        $Cache->load('download');
         
         require_once(PATH_TO_ROOT . '/kernel/begin.php');
         load_module_lang('download'); //Chargement de la langue du module.

@@ -40,12 +40,12 @@ class Cache
             global $Errorh;
 		
 			//Enregistrement dans le log d'erreur.
-			$Errorh->Error_handler('Cache -> Le dossier /cache doit être inscriptible, donc en CHMOD 777', E_USER_ERROR, __LINE__, __FILE__);
+			$Errorh->handler('Cache -> Le dossier /cache doit être inscriptible, donc en CHMOD 777', E_USER_ERROR, __LINE__, __FILE__);
         }
     }
         
     //Fonction de chargement d'un fichier cache
-    function load_file($file, $reload_cache = false)
+    function load($file, $reload_cache = false)
     {
 		global $Errorh, $Sql;
 		
@@ -59,7 +59,7 @@ class Cache
 				$this->generate_file($file);
 				//On inclue une nouvelle fois				
 				if( !@include(PATH_TO_ROOT . '/cache/' . $file . '.php') )
-					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
+					$Errorh->handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
 			}
 			else
 			{
@@ -67,7 +67,7 @@ class Cache
 				$this->generate_module_file($file);
 				//On inclue une nouvelle fois
 				if( !@include(PATH_TO_ROOT . '/cache/' . $file . '.php') )
-					$Errorh->Error_handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
+					$Errorh->handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
 			}
 		}
     }
@@ -89,7 +89,7 @@ class Cache
 		if( $module->has_functionnality('get_cache') ) //Le module implémente bien la fonction.
 			$this->_write_cache($module_name, $module->functionnality('get_cache'));
 		elseif( !$no_alert_on_error )
-			$Errorh->Error_handler('Cache -> Le module <strong>' . $module_name . '</strong> n\'a pas de fonction de cache!', E_USER_ERROR, __LINE__, __FILE__);
+			$Errorh->handler('Cache -> Le module <strong>' . $module_name . '</strong> n\'a pas de fonction de cache!', E_USER_ERROR, __LINE__, __FILE__);
     }
 	
 	//Génération de tous les fichiers
@@ -143,7 +143,7 @@ class Cache
 
 		//Il est l'heure de vérifier si la génération a fonctionnée.
 		if( !file_exists($file_path) && filesize($file_path) == '0' )
-			$Errorh->Error_handler('Cache -> La génération du fichier de cache <strong>' . $file . '</strong> a échoué!', E_USER_ERROR, __LINE__, __FILE__);
+			$Errorh->handler('Cache -> La génération du fichier de cache <strong>' . $file . '</strong> a échoué!', E_USER_ERROR, __LINE__, __FILE__);
 	}
 	
     ########## Fonctions de génération des fichiers un à un ##########

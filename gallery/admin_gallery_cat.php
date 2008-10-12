@@ -710,7 +710,7 @@ elseif( !empty($id) ) //Edition des catégories.
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
 
 	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
@@ -772,7 +772,7 @@ elseif( !empty($root) ) //Edition de la racine.
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if( $get_error == 'incomplete' )
-		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
 	$array_auth = !empty($CONFIG_GALLERY['auth_root']) ? $CONFIG_GALLERY['auth_root'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	$Template->assign_vars(array(
@@ -814,7 +814,7 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if( $get_error == 'unexist_cat' )
-		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 		
 	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],

@@ -145,7 +145,7 @@ if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
 	
 	//On inclut une nouvelle fois
 	if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
-		$Errorh->Error_handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
+		$Errorh->handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 }
 $Template->assign_vars(array(
 	'MODULES_MINI_HEADER_CONTENT' =>$MODULES_MINI['header'],
@@ -192,7 +192,7 @@ if( $right_column )  //Gestion des blocs de droite.
 }
 
 //Gestion du fil d'ariane, et des titres des pages dynamiques.
-$Bread_crumb->Display_bread_crumb();
+$Bread_crumb->display();
 
 $Template->assign_vars(array(
 	'MODULES_MINI_TOPCENTRAL_CONTENT' => $MODULES_MINI['topcentral']
