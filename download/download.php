@@ -152,7 +152,7 @@ else
 	}
 	
 	//Contenu de la catégorie	
-	$nbr_files = (int)$Sql->Query("SELECT COUNT(*) FROM ".PREFIX."download WHERE visible = 1 AND idcat = '" . $category_id . "'", __LINE__, __FILE__);
+	$nbr_files = (int)$Sql->query("SELECT COUNT(*) FROM ".PREFIX."download WHERE visible = 1 AND idcat = '" . $category_id . "'", __LINE__, __FILE__);
 	if( $nbr_files > 0 )
 	{
 		$get_sort = retrieve(GET, 'sort', '');	
@@ -237,12 +237,12 @@ else
 			'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
 			));
 
-		$result = $Sql->Query_while("SELECT id, title, timestamp, size, count, note, nbrnote, nbr_com, image, short_contents
+		$result = $Sql->query_while("SELECT id, title, timestamp, size, count, note, nbrnote, nbr_com, image, short_contents
 		FROM ".PREFIX."download
 		WHERE visible = 1 AND idcat = '" . $category_id . "'
 		ORDER BY " . $sort . " " . $mode . 
-		$Sql->Sql_limit($Pagination->First_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		$Sql->limit($Pagination->First_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$Template->Assign_block_vars('file', array(			
 				'NAME' => $row['title'],
@@ -261,7 +261,7 @@ else
 				'U_COM_LINK' => com_display_link($row['nbr_com'], '../download/download' . transid('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'download')
 			));
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 	}
 	else
 	{

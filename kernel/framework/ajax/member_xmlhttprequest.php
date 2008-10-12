@@ -39,8 +39,8 @@ if( !empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
 	if( !empty($login) )
 	{
 		$i = 0;
-		$result = $Sql->Query_while("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		$result = $Sql->query_while("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			if( !empty($_GET['member']) )
 				echo '<a href="member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a><br />';
@@ -62,7 +62,7 @@ if( !empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
 	else
 		echo $LANG['no_result'];
 	
-	$Sql->Sql_close(); //Fermeture de mysql*/
+	$Sql->close(); //Fermeture de mysql*/
 }
 elseif( !empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty($_GET['ban_user']) ) //Recherche d'un membre
 {
@@ -72,8 +72,8 @@ elseif( !empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty(
 	if( !empty($login) )
 	{
 		$i = 0;
-		$result = $Sql->Query_while("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		$result = $Sql->query_while("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$url_warn = ($admin) ? 'admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] : transid('moderation_panel.php?action=warning&amp;id=' . $row['user_id']);
 			$url_punish = ($admin) ? 'admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] : transid('moderation_panel.php?action=punish&amp;id=' . $row['user_id']);
@@ -94,7 +94,7 @@ elseif( !empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty(
 	else
 		echo $LANG['no_result'];
 	
-	$Sql->Sql_close(); //Fermeture de mysql*/
+	$Sql->close(); //Fermeture de mysql*/
 }
 
 ?>

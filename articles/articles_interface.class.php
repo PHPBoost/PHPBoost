@@ -49,7 +49,7 @@ class ArticlesInterface extends ModuleInterface
 		$config_articles = 'global $CONFIG_ARTICLES;' . "\n";
 
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_ARTICLES = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'articles'", __LINE__, __FILE__));
+		$CONFIG_ARTICLES = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'articles'", __LINE__, __FILE__));
 		$CONFIG_ARTICLES = is_array($CONFIG_ARTICLES) ? $CONFIG_ARTICLES : array();
 
 		if(isset($CONFIG_ARTICLES['auth_root']))
@@ -58,10 +58,10 @@ class ArticlesInterface extends ModuleInterface
 		$config_articles .= '$CONFIG_ARTICLES = ' . var_export($CONFIG_ARTICLES, true) . ';' . "\n";
 
 		$cat_articles = 'global $CAT_ARTICLES;' . "\n";
-		$result = $Sql->Query_while("SELECT id, id_left, id_right, level, name, aprob, auth
+		$result = $Sql->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
 		FROM ".PREFIX."articles_cats
 		ORDER BY id_left", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			if( empty($row['auth']) )
 			$row['auth'] = serialize(array());
@@ -73,7 +73,7 @@ class ArticlesInterface extends ModuleInterface
 			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
 			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(sunserialize($row['auth']), true) . ';' . "\n";
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 
 		return $config_articles . "\n" . $cat_articles;
 	}
@@ -84,15 +84,15 @@ class ArticlesInterface extends ModuleInterface
 		global $Sql;
 
 		//Publication des articles en attente pour la date donnée.
-		$result = $Sql->Query_while("SELECT id, start, end
+		$result = $Sql->query_while("SELECT id, start, end
 		FROM ".PREFIX."articles	
 		WHERE visible != 0", __LINE__, __FILE__);
-		while($row = $Sql->Sql_fetch_assoc($result) )
+		while($row = $Sql->fetch_assoc($result) )
 		{
 			if( $row['start'] <= time() && $row['start'] != 0 )
-			$Sql->Query_inject("UPDATE ".PREFIX."articles SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."articles SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if( $row['end'] <= time() && $row['end'] != 0 )
-			$Sql->Query_inject("UPDATE ".PREFIX."articles SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."articles SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
 
@@ -125,14 +125,14 @@ class ArticlesInterface extends ModuleInterface
 	             a.id AS `id_content`,
 	             a.title AS `title`,
 	             ( 2 * MATCH(a.title) AGAINST('" . $args['search'] . "') + MATCH(a.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS `relevance`, "
-	             . $Sql->Sql_concat("'" . PATH_TO_ROOT . "/articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS `link`
+	             . $Sql->Concat("'" . PATH_TO_ROOT . "/articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS `link`
             FROM " . PREFIX . "articles a
             LEFT JOIN ".PREFIX."articles_cats ac ON ac.id = a.idcat
             WHERE
             	a.visible = 1 AND ((ac.aprob = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
             	AND (MATCH(a.title) AGAINST('" . $args['search'] . "') OR MATCH(a.contents) AGAINST('" . $args['search'] . "'))
             ORDER BY a.timestamp DESC
-            " . $Sql->Sql_limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
+            " . $Sql->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
 
 		return $request;
 	}
@@ -157,15 +157,15 @@ class ArticlesInterface extends ModuleInterface
         $data->set_lang($LANG['xml_lang']);
         $data->set_auth_bit(READ_CAT_ARTICLES);
         
-        $result = $Sql->Query_while("SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon, ac.auth
+        $result = $Sql->query_while("SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon, ac.auth
         FROM ".PREFIX."articles a
         LEFT JOIN ".PREFIX."articles_cats ac ON ac.id = a.idcat
         WHERE a.visible = 1 AND (ac.aprob = 1 OR a.idcat = 0)
         ORDER BY a.timestamp DESC
-        " . $Sql->Sql_limit(0, 2 * $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
+        " . $Sql->limit(0, 2 * $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
         
         // Generation of the feed's items
-        while ($row = $Sql->Sql_fetch_assoc($result))
+        while ($row = $Sql->fetch_assoc($result))
         {
             $item = new FeedItem();
             // Rewriting
@@ -190,7 +190,7 @@ class ArticlesInterface extends ModuleInterface
             
             $data->add_item($item);
         }
-        $Sql->Close($result);
+        $Sql->query_close($result);
 		
 		return $data;
 	}

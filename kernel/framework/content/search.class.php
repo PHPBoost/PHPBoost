@@ -63,15 +63,15 @@ class Search
         
         $nbIdsToDelete = 0;
         $idsToDelete = '';
-        $request = $Sql->Query_while($reqOldIndex, __LINE__, __FILE__);
-        while($row = $Sql->Sql_fetch_assoc($request))
+        $request = $Sql->query_while($reqOldIndex, __LINE__, __FILE__);
+        while($row = $Sql->fetch_assoc($request))
         {
             if ( $nbIdsToDelete > 0 )
                 $idsToDelete .= ',';
             $idsToDelete .= "'".$row['id_search']."'";
             $nbIdsToDelete++;
         }
-        $Sql->Close($request);
+        $Sql->query_close($request);
         
         // Si il y a des résultats à supprimer, on les supprime
         if ( $nbIdsToDelete > 0 )
@@ -79,8 +79,8 @@ class Search
             $reqDeleteIdx = "DELETE FROM ".PREFIX."search_index WHERE `id_search` IN (".$idsToDelete.")";
             $reqDeleteRst = "DELETE FROM ".PREFIX."search_results WHERE `id_search` IN (".$idsToDelete.")";
             
-            $Sql->Query_inject($reqDeleteIdx, __LINE__, __FILE__);
-            $Sql->Query_inject($reqDeleteRst, __LINE__, __FILE__);
+            $Sql->query_inject($reqDeleteIdx, __LINE__, __FILE__);
+            $Sql->query_inject($reqDeleteRst, __LINE__, __FILE__);
         }
         
         // Si on demande une recherche directe par id, on ne calcule pas de résultats
@@ -92,20 +92,20 @@ class Search
             if( $this->modules_conditions != '' )
                 $reqCache .= " AND " . $this->modules_conditions;
             
-            $request = $Sql->Query_while($reqCache, __LINE__, __FILE__);
-            while($row = $Sql->Sql_fetch_assoc($request))
+            $request = $Sql->query_while($reqCache, __LINE__, __FILE__);
+            while($row = $Sql->fetch_assoc($request))
             {   // Récupération du cache
                 array_push($this->cache, $row['module']);
                 $this->id_search[$row['module']] = $row['id_search'];
             }
-            $Sql->Close($request);
+            $Sql->query_close($request);
             
             // Mise à jours des résultats du cache
             if( count($this->id_search) > 0 )
             {
                 $reqUpdate  = "UPDATE " . PREFIX . "search_index SET times_used=times_used+1, `last_search_use`='" . time() . "' WHERE ";
                 $reqUpdate .= "`id_search` IN (" . implode(',', $this->id_search) . ");";
-                $Sql->Query_inject($reqUpdate, __LINE__, __FILE__);
+                $Sql->query_inject($reqUpdate, __LINE__, __FILE__);
             }
             
             // Si tous les modules ne sont pas en cache
@@ -133,7 +133,7 @@ class Search
                 
                 // Exécution des derniéres requêtes d'insertions
                 if( $nbReqInsert > 0 )
-                    $Sql->Query_inject("INSERT INTO " . PREFIX . "search_index (`id_user`, `module`, `search`, `options`, `last_search_use`, `times_used`) VALUES " . substr($reqInsert, 0, strlen($reqInsert) - 1) . "", __LINE__, __FILE__);
+                    $Sql->query_inject("INSERT INTO " . PREFIX . "search_index (`id_user`, `module`, `search`, `options`, `last_search_use`, `times_used`) VALUES " . substr($reqInsert, 0, strlen($reqInsert) - 1) . "", __LINE__, __FILE__);
                 
                 // Récupération des résultats et de leurs id dans le cache.
                 
@@ -152,12 +152,12 @@ class Search
                 if( $this->modules_conditions != '' )
                     $reqCache .= " AND " . $this->modules_conditions;
                 
-                $request = $Sql->Query_while( $reqCache, __LINE__, __FILE__ );
-                while($row = $Sql->Sql_fetch_assoc($request))
+                $request = $Sql->query_while( $reqCache, __LINE__, __FILE__ );
+                while($row = $Sql->fetch_assoc($request))
                 {   // Ajout des résultats s'ils font partie de la liste des modules à traiter
                     $this->id_search[$row['module']] = $row['id_search'];
                 }
-                $Sql->Close($request);
+                $Sql->query_close($request);
             }
         }
     }
@@ -179,20 +179,20 @@ class Search
                         WHERE idx.id_search = ".$idSearch." AND rst.id_search = ".$idSearch."
                         AND `id_user` = '".$this->id_user."' ORDER BY `relevance` DESC ";
         if ( $nbLines > 0 )
-            $reqResults .= $Sql->Sql_limit($offset, $nbLines);
+            $reqResults .= $Sql->limit($offset, $nbLines);
         
         // Exécution de la requête
-        $request = $Sql->Query_while( $reqResults, __LINE__, __FILE__ );
-        while( $result = $Sql->Sql_fetch_assoc($request) )
+        $request = $Sql->query_while( $reqResults, __LINE__, __FILE__ );
+        while( $result = $Sql->fetch_assoc($request) )
         {   // Ajout des résultats
             array_push($results, $result);
         }
         // Récupération du nombre de résultats correspondant à la recherche
         $reqNbResults  = "SELECT COUNT(*) ".PREFIX."search_results WHERE `id_search` = ".$idSearch;
-        $nbResults = $Sql->Sql_num_rows( $request, $reqNbResults );
+        $nbResults = $Sql->num_rows( $request, $reqNbResults );
         
         //On libére la mémoire
-        $Sql->Close($request);
+        $Sql->query_close($request);
         
         return $nbResults;
     }
@@ -232,11 +232,11 @@ class Search
             $reqResults .= " AND rst.id_search  IN (".$modules_conditions.")";
         $reqResults .= " ORDER BY relevance DESC ";
         if ( $nbLines > 0 )
-            $reqResults .= $Sql->Sql_limit($offset, $nbLines);
+            $reqResults .= $Sql->limit($offset, $nbLines);
         
         // Exécution de la requête
-        $request = $Sql->Query_while($reqResults, __LINE__, __FILE__);
-        while( $result = $Sql->Sql_fetch_assoc($request) )
+        $request = $Sql->query_while($reqResults, __LINE__, __FILE__);
+        while( $result = $Sql->fetch_assoc($request) )
         {   // Ajout des résultats
             array_push($results, $result);
         }
@@ -244,12 +244,12 @@ class Search
         // Récupération du nombre de résultats correspondant à la recherche
         $reqNbResults  = "SELECT COUNT(*) FROM ".PREFIX."search_results WHERE id_search IN ( ".$modules_conditions." )";
         if ( $modules_conditions > 0 )
-            $nbResults = $Sql->Query($reqNbResults, __LINE__, __FILE__  );
+            $nbResults = $Sql->query($reqNbResults, __LINE__, __FILE__  );
         else
             $nbResults = 0;
         
         //On libére la mémoire
-        $Sql->Close($request);
+        $Sql->query_close($request);
         
         return $nbResults;
     }
@@ -303,8 +303,8 @@ class Search
 
             if ( !empty($reqSEARCH) )
             {
-                $request = $Sql->Query_while($reqSEARCH, __LINE__, __FILE__ );
-                while( $row = $Sql->Sql_fetch_assoc($request) )
+                $request = $Sql->query_while($reqSEARCH, __LINE__, __FILE__ );
+                while( $row = $Sql->fetch_assoc($request) )
                 {
                     if( $nbReqInsert > 0 )
                         $reqInsert .= ',';
@@ -316,7 +316,7 @@ class Search
             
             // Exécution des derniéres requêtes d'insertions
             if( $nbReqInsert > 0 )
-                $Sql->Query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
+                $Sql->query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
         }
     }
     
@@ -327,13 +327,13 @@ class Search
      */
     {
         global $Sql;
-        $id = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."search_index WHERE id_search = '".$idSearch."' AND `id_user` = '".$this->id_user."';", __LINE__, __FILE__);
+        $id = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."search_index WHERE id_search = '".$idSearch."' AND `id_user` = '".$this->id_user."';", __LINE__, __FILE__);
         if( $id == 1 )
         {
             // la recherche est déjà, en cache, on la met à jour.
             $reqUpdate  = "UPDATE ".PREFIX."search_index SET times_used=times_used+1, `last_search_use`='".time()."' WHERE ";
             $reqUpdate .= "`id_search` = '".$idSearch."' AND `id_user` = '".$this->id_user."';";
-            $Sql->Query_inject($reqUpdate, __LINE__, __FILE__);
+            $Sql->query_inject($reqUpdate, __LINE__, __FILE__);
             return true;
         }
         else return false;

@@ -62,7 +62,7 @@ if( !$is_guest )
 	}
 	
 	//Requête pour compter le nombre de messages non lus.
-	$nbr_msg_not_read = $Sql->Query("SELECT COUNT(*)
+	$nbr_msg_not_read = $Sql->query("SELECT COUNT(*)
 	FROM ".PREFIX."forum_topics t
 	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
 	LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id AND v.user_id = '" . $Member->Get_attribute('user_id') . "'

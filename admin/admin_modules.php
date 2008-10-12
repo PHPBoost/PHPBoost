@@ -34,14 +34,14 @@ $error = retrieve(GET, 'error', '');
 
 if( isset($_POST['valid']) )		
 {
-	$result = $Sql->Query_while("SELECT id, name, auth, activ 
+	$result = $Sql->query_while("SELECT id, name, auth, activ 
 	FROM ".PREFIX."modules", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$activ = retrieve(POST, 'activ' . $row['id'], 0);
 		$array_auth_all = Authorizations::Return_array_auth_simple(ACCESS_MODULE, $row['id']);
 		
-		$Sql->Query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	//Génération du cache des modules
 	$Cache->Generate_file('modules');
@@ -55,12 +55,12 @@ elseif( $uninstall ) //Désinstallation du module
 		$idmodule = retrieve(POST, 'idmodule', 0);
 		$drop_files = !empty($_POST['drop_files']) ? true : false; 		
 		//Suppression du modules dans la bdd => module désinstallé.
-		$module_name = $Sql->Query("SELECT name FROM ".PREFIX."modules WHERE id = '" . $idmodule . "'", __LINE__, __FILE__);
+		$module_name = $Sql->query("SELECT name FROM ".PREFIX."modules WHERE id = '" . $idmodule . "'", __LINE__, __FILE__);
 		
 		//Désinstallation du module
 		if( !empty($idmodule) && !empty($module_name) )
 		{
-			$Sql->Query_inject("DELETE FROM ".PREFIX."modules WHERE id = '" . $idmodule . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."modules WHERE id = '" . $idmodule . "'", __LINE__, __FILE__);
 			
 			//Récupération des infos de config.
 			$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
@@ -70,15 +70,15 @@ elseif( $uninstall ) //Désinstallation du module
 			
 			//Suppression des commentaires associés.
 			if( !empty($info_module['com']) )
-				$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . addslashes($info_module['com']) . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . addslashes($info_module['com']) . "'", __LINE__, __FILE__);
 			
 			//Suppression de la configuration.
 			$config = get_ini_config('../news/lang/', $CONFIG['lang']); //Récupération des infos de config.
 			if( !empty($config) )
-				$Sql->Query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 			
 			//Suppression du module mini.
-			$Sql->Query_inject("DELETE FROM ".PREFIX."modules_mini WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."modules_mini WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 			
 			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 			$dir_db_module = $CONFIG['lang'];
@@ -98,7 +98,7 @@ elseif( $uninstall ) //Désinstallation du module
 			}
 
 			if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql') ) //Parsage du fichier sql de désinstallation.
-				$Sql->Sql_parse('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
+				$Sql->parse('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
 			
 			if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php') ) //Parsage fichier php de désinstallation.
 				@include_once('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php');
@@ -203,16 +203,16 @@ else
 	$array_modules = array();
 	$array_info_module = array();
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	$result = $Sql->Query_while("SELECT id, name, auth, activ 
+	$result = $Sql->query_while("SELECT id, name, auth, activ 
 	FROM ".PREFIX."modules
 	ORDER BY name", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		//Récupération des infos de config.
 		$array_info_module[$row['name']] = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);		
 		$array_modules[$array_info_module[$row['name']]['name']] = array('id' => $row['id'], 'name' => $row['name'], 'auth' => $row['auth'], 'activ' => $row['activ']);
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	ksort($array_modules);
 	foreach($array_modules as $name => $array_config)

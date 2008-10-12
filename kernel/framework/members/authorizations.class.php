@@ -160,17 +160,17 @@ class Authorizations
 		//Listing des membres autorisés.
 		if( $advanced_auth )
 		{
-			$result = $Sql->Query_while("SELECT user_id, login 
+			$result = $Sql->query_while("SELECT user_id, login 
 			FROM ".PREFIX."member
 			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")", __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
+			while( $row = $Sql->fetch_assoc($result) )
 			{
 				 $Template->Assign_block_vars('members_list', array(
 					'USER_ID' => $row['user_id'],
 					'LOGIN' => $row['login']
 				));
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 		}
 
         return $Template->parse(TEMPLATE_STRING_MODE);

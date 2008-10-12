@@ -45,18 +45,18 @@ class WikiInterface extends ModuleInterface
 		//Catégories du wiki
 		$config = 'global $_WIKI_CATS;' . "\n";
 		$config .= '$_WIKI_CATS = array();' . "\n";
-		$result = $Sql->Query_while("SELECT c.id, c.id_parent, c.article_id, a.title
+		$result = $Sql->query_while("SELECT c.id, c.id_parent, c.article_id, a.title
 			FROM ".PREFIX."wiki_cats c
 			LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.article_id 
 			ORDER BY a.title", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$config .= '$_WIKI_CATS[\'' . $row['id'] . '\'] = array(\'id_parent\' => ' . ( !empty($row['id_parent']) ? $row['id_parent'] : '0') . ', \'name\' => ' . var_export($row['title'], true) . ');' . "\n";
 		}
 
 		//Configuration du wiki
 		$code = 'global $_WIKI_CONFIG;' . "\n" . '$_WIKI_CONFIG = array();' . "\n";
-		$CONFIG_WIKI = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'wiki'", __LINE__, __FILE__));
+		$CONFIG_WIKI = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'wiki'", __LINE__, __FILE__));
 		
 		$CONFIG_WIKI = is_array($CONFIG_WIKI) ? $CONFIG_WIKI : array();
 		$CONFIG_WIKI['auth'] = unserialize($CONFIG_WIKI['auth']);
@@ -188,15 +188,15 @@ class WikiInterface extends ModuleInterface
         $Cache->Load_file('wiki');
         
         // Last news
-        $result = $Sql->Query_while("SELECT a.title, a.encoded_title, c.content, c.timestamp 
+        $result = $Sql->query_while("SELECT a.title, a.encoded_title, c.content, c.timestamp 
             FROM ".PREFIX."wiki_articles a
             LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id_contents
             WHERE a.redirect = 0 " . $where . "
             ORDER BY c.timestamp DESC
-            " . $Sql->Sql_limit(0, 2 * 10), __LINE__, __FILE__);
+            " . $Sql->limit(0, 2 * 10), __LINE__, __FILE__);
         
         // Generation of the feed's items
-        while ($row = $Sql->Sql_fetch_assoc($result))
+        while ($row = $Sql->fetch_assoc($result))
         {
             $item = new FeedItem();
             // Rewriting
@@ -219,7 +219,7 @@ class WikiInterface extends ModuleInterface
             
             $data->add_item($item);
         }
-        $Sql->Close($result);
+        $Sql->query_close($result);
         
         return $data;
     }

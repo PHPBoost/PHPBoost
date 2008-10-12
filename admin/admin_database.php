@@ -98,9 +98,9 @@ if( !empty($_GET['query']) )
 		if( strtolower(substr($query, 0, 6)) == 'select' ) //il s'agit d'une requête de sélection
 		{
 			//On éxécute la requête
-			$result = $Sql->Query_while(str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
+			$result = $Sql->query_while(str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
 			$i = 1;
-			while( $row = $Sql->Sql_fetch_assoc($result) )
+			while( $row = $Sql->fetch_assoc($result) )
 			{
 				$Template->Assign_block_vars('line', array());
 				//Premier passage: on liste le nom des champs sélectionnés
@@ -126,14 +126,14 @@ if( !empty($_GET['query']) )
 		}
 		elseif( substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table' ) //Requêtes d'autres types
 		{
-			$result = $Sql->Query_inject($query, __LINE__, __FILE__);
-			$affected_rows = @$Sql->Sql_affected_rows($result, "");			
+			$result = $Sql->query_inject($query, __LINE__, __FILE__);
+			$affected_rows = @$Sql->affected_rows($result, "");			
 		}
 	}	
 	
 	$Template->Assign_vars(array(
-		'QUERY' => $Sql->Indent_query($query),
-		'QUERY_HIGHLIGHT' => $Sql->Highlight_query($query),
+		'QUERY' => $Sql->indent_query($query),
+		'QUERY_HIGHLIGHT' => $Sql->highlight_query($query),
 		'L_REQUIRE' => $LANG['require'],
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
 		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],
@@ -169,7 +169,7 @@ elseif( $action == 'restore' )
 		$file_path = '../cache/backup/' . $file;
 		if( preg_match('`[^/]+\.sql$`', $file) && is_file($file_path) )
 		{
-			$Sql->Sql_parse($file_path);
+			$Sql->parse($file_path);
 			$Backup->tables = array();
 			$Backup->List_table();
 			//on liste les tables
@@ -191,7 +191,7 @@ elseif( $action == 'restore' )
 			$file_path = '../cache/backup/' . $post_file['name'];
 			if( !is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path) )
 			{
-				$Sql->Sql_parse($file_path);
+				$Sql->parse($file_path);
 				$Backup->tables = array();
 				$Backup->List_table();
 				//on liste les tables

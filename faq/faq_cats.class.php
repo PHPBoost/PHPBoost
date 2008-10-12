@@ -76,9 +76,9 @@ class FaqCats extends CategoriesManagement
 				parent::Move_category_into_another_category($id_cat, $new_id_cat_content);			
 		}
 		
-		$max_q_order = $Sql->Query("SELECT MAX(q_order) FROM ".PREFIX."faq WHERE idcat = '" . $new_id_cat_content . "'", __LINE__, __FILE__);
+		$max_q_order = $Sql->query("SELECT MAX(q_order) FROM ".PREFIX."faq WHERE idcat = '" . $new_id_cat_content . "'", __LINE__, __FILE__);
 		$max_q_order = $max_q_order > 0 ? $max_q_order : 1;
-		$Sql->Query_inject("UPDATE ".PREFIX."faq SET idcat = '" . $new_id_cat_content . "', q_order = q_order + " . $max_q_order . " WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."faq SET idcat = '" . $new_id_cat_content . "', q_order = q_order + " . $max_q_order . " WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
 		
 		$this->Recount_subquestions();
 		
@@ -92,7 +92,7 @@ class FaqCats extends CategoriesManagement
 		if( array_key_exists($id_parent, $this->cache_var) )
 		{
 			$new_id_cat = parent::Add_category($id_parent, $name);
-			$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET description = '" . $description . "', image = '" . $image . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."faq_cats SET description = '" . $description . "', image = '" . $image . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
 			//We don't recount the number of questions because this category is empty
 			return 'e_success';
 		}
@@ -121,7 +121,7 @@ class FaqCats extends CategoriesManagement
 					$this->Recount_subquestions(NOT_CACHE_GENERATION);
 				}
 			}
-			$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."faq_cats SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
 			$Cache->Generate_module_file('faq');
 			
 			return 'e_success';
@@ -187,7 +187,7 @@ class FaqCats extends CategoriesManagement
 		if( $test = parent::Delete_category($id) )
 		{
 			//We remove its whole content
-			$Sql->Query_inject("DELETE FROM ".PREFIX."faq WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."faq WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
 			return true;
 		}
 		else
@@ -211,9 +211,9 @@ class FaqCats extends CategoriesManagement
 		if( $cat_id != 0 )
 		{
 			//We add to this number the number of questions of this category
-			$num_subquestions += (int) $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."faq WHERE idcat = '" . $cat_id . "'", __LINE__, __FILE__);
+			$num_subquestions += (int) $Sql->query("SELECT COUNT(*) FROM ".PREFIX."faq WHERE idcat = '" . $cat_id . "'", __LINE__, __FILE__);
 			
-			$Sql->Query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."faq_cats SET num_questions = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "'", __LINE__, __FILE__);
 			
 			return $num_subquestions;
 		}

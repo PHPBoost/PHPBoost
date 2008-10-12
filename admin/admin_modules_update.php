@@ -41,7 +41,7 @@ if( $update ) //Mise à jour du module
 	$activ_module = retrieve(POST, $module_name . 'activ', 0);
 	
 	//Vérification de l'existance du module
-	$ckeck_module = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
+	$ckeck_module = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
 	
 	//Mise à jour du module
 	if( !empty($ckeck_module) )
@@ -50,7 +50,7 @@ if( $update ) //Mise à jour du module
 		$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
 		
 		//Récupération de l'ancienne version du module
-		$previous_version = $Sql->Query("SELECT version FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
+		$previous_version = $Sql->query("SELECT version FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
 	
 		//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 		$dir_db_module = $CONFIG['lang'];
@@ -95,14 +95,14 @@ if( $update ) //Mise à jour du module
 			if( strpos($file, '.php') !== false ) //Parsage fichier php.
 				@include_once($dir_db . $module_update_name);
 			else //Requêtes sql de mise à jour.		
-				$Sql->Sql_parse($dir_db . $module_update_name, PREFIX);
+				$Sql->parse($dir_db . $module_update_name, PREFIX);
 		}
 		
 		//Régénération du cache du module si il l'utilise
 		$Cache->generate_module_file($module_name, NO_FATAL_ERROR_CACHE);
 
 		//Insertion du modules dans la bdd => module mis à jour.
-		$Sql->Query_inject("UPDATE ".PREFIX."modules SET version = '" . $info_module['version'] . "' WHERE name = '" . $module_name . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."modules SET version = '" . $info_module['version'] . "' WHERE name = '" . $module_name . "'", __LINE__, __FILE__);
 		
 		//Génération du cache des modules
 		$Cache->Generate_file('modules');
@@ -291,14 +291,14 @@ else
 		
 	//Modules mis à jour
 	$updated_modules = array();
-	$result = $Sql->Query_while("SELECT name, version
+	$result = $Sql->query_while("SELECT name, version
 	FROM ".PREFIX."modules
 	WHERE activ = 1", __LINE__, __FILE__);
 	
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 		$updated_modules[$row['name']] = $row['version'];
 	
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Vérification des mises à jour du noyau  et des modules sur le site officiel.
 	$get_info_update = @file_get_contents_emulate('http://www.phpboost.com/phpboost/updates.txt');

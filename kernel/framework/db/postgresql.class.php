@@ -37,15 +37,15 @@ class Sql
         static $connected = false;
         if( $connect == true && !$connected )
         {
-            $this->link = @$this->Sql_connect($sql_host, $sql_login, $sql_pass) or $this->sql_error('', 'Connexion base de donnée impossible!', __LINE__, __FILE__);
-//             @$this->sql_select_db($sql_base, $this->link) or $this->sql_error('', 'Selection de la base de donnée impossible!', __LINE__, __FILE__);
+            $this->link = @$this->connect($sql_host, $sql_login, $sql_pass) or $this->_error('', 'Connexion base de donnée impossible!', __LINE__, __FILE__);
+//             @$this->sql_select_db($sql_base, $this->link) or $this->_error('', 'Selection de la base de donnée impossible!', __LINE__, __FILE__);
             $connected = true;
         }
         return;
     }
     
     //Connexion
-    function Sql_connect($sql_host, $sql_login, $sql_pass)
+    function connect($sql_host, $sql_login, $sql_pass)
     {
         global $sql_base;
         return pg_connect('host='.$sql_host.' dbname='.$sql_base.' user='.$sql_login.' password='.$sql_pass);
@@ -58,9 +58,9 @@ class Sql
     }
 
     //Requête simple
-    function Query($query, $errline, $errfile) 
+    function query($query, $errline, $errfile) 
     {
-        $this->result = pg_query($query) or $this->sql_error($query, 'Requête simple invalide', $errline, $errfile);
+        $this->result = pg_query($query) or $this->_error($query, 'Requête simple invalide', $errline, $errfile);
         $this->result = pg_fetch_row($this->result);
         $this->close($this->result); //Déchargement mémoire.
         $this->req++;
@@ -69,7 +69,7 @@ class Sql
     }
 
     //Requête multiple.
-    function Query_array()
+    function query_array()
     {
         $table = func_get_arg(0);
         $nbr_arg = func_num_args();
@@ -94,7 +94,7 @@ class Sql
         
         $error_line = func_get_arg($nbr_arg - 2);
         $error_file = func_get_arg($nbr_arg - 1);
-        $this->result = pg_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req) or $this->sql_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Requête multiple invalide', $error_line, $error_file);
+        $this->result = pg_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req) or $this->_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Requête multiple invalide', $error_line, $error_file);
         $this->result = pg_fetch_assoc($this->result);
         $this->close($this->result); //Déchargement mémoire.
         $this->req++;       
@@ -103,27 +103,27 @@ class Sql
     }
 
     //Requete d'injection (insert, update, et requêtes complexes..)
-    function Query_inject($query, $errline, $errfile) 
+    function query_inject($query, $errline, $errfile) 
     {
-        $resource = pg_query($query) or $this->sql_error($query, 'Requête inject invalide', $errline, $errfile);
+        $resource = pg_query($query) or $this->_error($query, 'Requête inject invalide', $errline, $errfile);
         $this->req++;
         
         return $resource;
     }
 
     //Requête de boucle.
-    function Query_while($query, $errline, $errfile) 
+    function query_while($query, $errline, $errfile) 
     {
-        $this->result = pg_query($query) or $this->sql_error($query, 'Requête while invalide', $errline, $errfile);
+        $this->result = pg_query($query) or $this->_error($query, 'Requête while invalide', $errline, $errfile);
         $this->req++;
 
         return $this->result;
     }
     
     //Nombre d'entrées dans la table.
-    function Count_table($table, $errline, $errfile)
+    function count_table($table, $errline, $errfile)
     { 
-        $this->result = pg_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table) or $this->sql_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Requête count invalide', $errline, $errfile);
+        $this->result = pg_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Requête count invalide', $errline, $errfile);
         $this->result = pg_fetch_assoc($this->result);
         $this->close($this->result); //Déchargement mémoire.
         $this->req++;
@@ -132,7 +132,7 @@ class Sql
     }
 
     //Limite des résultats de la requete sql.
-    function Sql_limit($offset, $number = 'ALL')
+    function limit($offset, $number = 'ALL')
     {
         return ' LIMIT ' . $number . ' ' .  $offset;
     }
@@ -145,7 +145,7 @@ class Sql
     //  EXEMPLE :
     //      - champ SQL : $champSQL = "id" ou $champSQL = 'id'
     //      - chaine PHP  : $strPHP = "'ma chaine'" ou $strPHP='\'ma chaine\''
-    function Sql_concat()
+    function Concat()
     {
         $nbr_args = func_num_args();
         $concatString = func_get_arg(0);
@@ -156,58 +156,58 @@ class Sql
     }
     
     //Balayage du retour de la requête sous forme de tableau indexé par le nom des champs.
-    function Sql_fetch_assoc($result)
+    function fetch_assoc($result)
     {   
         return pg_fetch_assoc($result);
     }
     
     //Balayage du retour de la requête sous forme de tableau indexé numériquement.
-    function Sql_fetch_row($result)
+    function fetch_row($result)
     {   
         return pg_fetch_row($result);
     }
     
     //Lignes affectées lors de requêtes de mise à jour ou d'insertion.
-    function Sql_affected_rows($ressource, $query)
+    function affected_rows($ressource, $query)
     {
         return pg_affected_rows();
     }
     
     //Nombres de lignes retournées.
-    function Sql_num_rows($ressource, $query)
+    function num_rows($ressource, $query)
     {
         return pg_num_rows($ressource);
     }
     
     //Retourne l'id de la dernière insertion
-    function Sql_insert_id($query)
+    function insert_id($query)
     {
 //         return pg_last_oid();// A vérifier sur http://fr.php.net/manual/fr/function.pg-last-oid.php
-        return $this->Query($query, __LINE__, __FILE__);
+        return $this->query($query, __LINE__, __FILE__);
     }
     
     //Retourne le nombre d'année entre la date et aujourd'hui.
-    function Sql_date_diff($field)
+    function date_diff($field)
     {
         return '(YEAR(CURRENT_DATE) - YEAR(' . $field . ')) - (RIGHT(CURRENT_DATE, 5) < RIGHT(' . $field . ', 5))';
     }
     
     //Déchargement mémoire.
-    function Close($result)
+    function close($result)
     {
         if( is_resource($result) )
             return pg_free_result($result);
     }
 
     //Fermeture de la connexion postgresql ouverte.
-    function Sql_close()
+    function close()
     {
         if( $this->link ) // si la connexion est établie
             return pg_close($this->link); // on ferme la connexion ouverte.
     }
     
     //Liste les champs d'une table.
-    function Sql_list_fields($table)
+    function list_fields($table)
     {
         global $sql_base;
         
@@ -224,7 +224,7 @@ class Sql
     }
     
     //Liste les tables + infos.
-    function Sql_list_tables()
+    function list_tables()
     {
         global $sql_base;
         
@@ -247,7 +247,7 @@ class Sql
     }
         
     //Parsage d'un fichier SQL => exécution des requêtes.
-    function Sql_parse($file_path, $tableprefix = '')
+    function parse($file_path, $tableprefix = '')
     {
         $handle_sql = @fopen($file_path, 'r');
         if( $handle_sql )
@@ -282,13 +282,13 @@ class Sql
     }
     
     //Affichage du nombre de requête sql.
-    function Display_sql_request()
+    function display_request()
     {
         return $this->req;
     }
     
     //Coloration syntaxique du SQL
-    function Highlight_query($query)
+    function highlight_query($query)
     {
         $query = ' ' . strtolower($query) . ' ';
         
@@ -316,7 +316,7 @@ class Sql
     }
     
     //Indente une requête SQL.
-    function Indent_query($query)
+    function indent_query($query)
     {
         $query = ' ' . strtolower($query) . ' ';
         
@@ -338,7 +338,7 @@ class Sql
     
     ## Private Methods ##
     //Gestion des erreurs.
-    function sql_error($query, $errstr, $errline = '', $errfile = '') 
+    function _error($query, $errstr, $errline = '', $errfile = '') 
     {
         global $Errorh;
         

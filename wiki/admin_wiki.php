@@ -49,7 +49,7 @@ if( !empty($_POST['update']) )  //Mise à jour
 	$_WIKI_CONFIG['count_hits'] = $count_hits;
 	$_WIKI_CONFIG['auth'] = serialize($_WIKI_CONFIG['auth']);
 
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
 	//Régénération du cache
 	$Cache->Generate_module_file('wiki');	
 }

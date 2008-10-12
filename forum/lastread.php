@@ -57,7 +57,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = forum_limit_time_msg();
 	
-	$result = $Sql->Query_while("SELECT m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
+	$result = $Sql->query_while("SELECT m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 	FROM ".PREFIX."forum_view v
 	LEFT JOIN ".PREFIX."forum_topics t ON t.id = v.idtopic
 	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat 
@@ -67,8 +67,8 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = t.last_user_id
 	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . $Member->Get_attribute('user_id') . "'
 	ORDER BY t.last_timestamp DESC
-	" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
-	while ($row = $Sql->Sql_fetch_assoc($result))
+	" . $Sql->limit($Pagination->First_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$last_msg = $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' <a class="small_link" href="../member/member.php?id=' . $row['last_user_id'] . '">' . $row['last_login'] . '</a>';
 		
@@ -127,9 +127,9 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 			'L_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '',
 		));	
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
-	$nbr_topics = $Sql->Query("SELECT COUNT(*)
+	$nbr_topics = $Sql->query("SELECT COUNT(*)
 	FROM ".PREFIX."forum_view v
 	LEFT JOIN ".PREFIX."forum_topics t ON t.id = v.idtopic
 	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
@@ -165,12 +165,12 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 	
 	//Listes les utilisateurs en lignes.
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
+	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
 	FROM ".PREFIX."sessions s 
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/lastread.php'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
@@ -194,7 +194,7 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 
 	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
 	$Template->Assign_vars(array(

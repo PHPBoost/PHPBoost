@@ -49,12 +49,12 @@ if( !empty($mail_newsletter) )
 		//Inscription
 		if( $subscribe === 1)
 		{
-			$check_mail = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __LINE__, __FILE__);
+			$check_mail = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __LINE__, __FILE__);
 			//Si il n'est pas déjà inscrit
 			if( $check_mail == 0 )
 			{
 				//On enregistre le mail
-				$Sql->Query_inject("INSERT INTO ".PREFIX."newsletter (mail) VALUES ('" . $mail_newsletter . "')",  __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."newsletter (mail) VALUES ('" . $mail_newsletter . "')",  __LINE__, __FILE__);
 				$Errorh->Error_handler($LANG['newsletter_add_success'], E_USER_NOTICE);
 			}			
 			else
@@ -62,10 +62,10 @@ if( !empty($mail_newsletter) )
 		}
 		else
 		{
-			$check_mail = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __LINE__, __FILE__);
+			$check_mail = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __LINE__, __FILE__);
 			if( $check_mail >= 1 )
 			{
-				$Sql->Query_inject("DELETE FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __lINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __lINE__, __FILE__);
 				$Errorh->Error_handler($LANG['newsletter_del_success'], E_USER_NOTICE);
 			}
 			else
@@ -78,7 +78,7 @@ if( !empty($mail_newsletter) )
 //Désinscription demandée suite à la réception d'une newsletter
 elseif( $id > 0 )
 {
-	$check_mail = $Sql->Query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$check_mail = $Sql->query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	$Errorh->Error_handler($LANG['newsletter_del_success'], E_USER_NOTICE);
 }
 //Affichage des archives
@@ -90,12 +90,12 @@ else
 	$Pagination = new Pagination();
 	
 	$i = 0;	
-	$result = $Sql->Query_while("SELECT id, title, message, timestamp, type, nbr
+	$result = $Sql->query_while("SELECT id, title, message, timestamp, type, nbr
 	FROM ".PREFIX."newsletter_arch 
 	ORDER BY id DESC 
-	" . $Sql->Sql_limit($Pagination->First_msg(5, 'p'), 5), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->First_msg(5, 'p'), 5), __LINE__, __FILE__);
 	
-	while($row = $Sql->Sql_fetch_assoc($result))
+	while($row = $Sql->fetch_assoc($result))
 	{
 		$Template->Assign_block_vars('arch', array(
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
@@ -107,7 +107,7 @@ else
 		$i++;
 	}
 	
-	$total_msg = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."newsletter_arch", __LINE__, __FILE__);
+	$total_msg = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."newsletter_arch", __LINE__, __FILE__);
 	
 	if( $total_msg == 0 )
 		$Errorh->Error_handler($LANG['newsletter_no_archives'], E_USER_NOTICE);

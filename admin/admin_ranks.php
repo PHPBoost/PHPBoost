@@ -35,20 +35,20 @@ $get_id = retrieve(GET, 'id', 0);
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
 {
-	$result = $Sql->Query_while("SELECT id, special 
+	$result = $Sql->query_while("SELECT id, special 
 	FROM ".PREFIX."ranks", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$name = retrieve(POST, $row['id'] . 'name', '');
 		$msg = retrieve(POST, $row['id'] . 'msg', 0);
 		$icon = retrieve(POST, $row['id'] . 'icon', '');
 
 		if( !empty($name) && $row['special'] != 1 )
-			$Sql->Query_inject("UPDATE ".PREFIX."ranks SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."ranks SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		else
-			$Sql->Query_inject("UPDATE ".PREFIX."ranks SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."ranks SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 
 	###### Régénération du cache des rangs #######
 	$Cache->Generate_file('ranks');
@@ -58,7 +58,7 @@ if( !empty($_POST['valid']) )
 elseif( !empty($_GET['del']) && !empty($get_id) ) //Suppression du rang.
 {
 	//On supprime dans la bdd.
-	$Sql->Query_inject("DELETE FROM ".PREFIX."ranks WHERE id = '" . $get_id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM ".PREFIX."ranks WHERE id = '" . $get_id . "'", __LINE__, __FILE__);	
 
 	###### Régénération du cache des rangs #######
 	$Cache->Generate_file('ranks');
@@ -103,10 +103,10 @@ else //Sinon on rempli le formulaire
 		closedir($dh); //On ferme le dossier
 	}	
 	
-	$result = $Sql->Query_while("SELECT id, name, msg, icon, special
+	$result = $Sql->query_while("SELECT id, name, msg, icon, special
 	FROM ".PREFIX."ranks 
 	ORDER BY msg", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{				
 		if( $row['special'] == 0 )
 			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" title="" /></a>';
@@ -129,7 +129,7 @@ else //Sinon on rempli le formulaire
 			'DELETE' => $del
 		));
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Template->Pparse('admin_ranks');
 }

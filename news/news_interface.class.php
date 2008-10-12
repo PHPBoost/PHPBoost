@@ -47,7 +47,7 @@ class NewsInterface extends ModuleInterface
 		$news_config = 'global $CONFIG_NEWS;' . "\n";
 		
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_NEWS = unserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'news'", __LINE__, __FILE__));
+		$CONFIG_NEWS = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'news'", __LINE__, __FILE__));
 		
 		$news_config .= '$CONFIG_NEWS = ' . var_export($CONFIG_NEWS, true) . ';' . "\n";
 
@@ -60,15 +60,15 @@ class NewsInterface extends ModuleInterface
 		global $Sql;
 		
 		//Publication des news en attente pour la date donnée.
-		$result = $Sql->Query_while("SELECT id, start, end
+		$result = $Sql->query_while("SELECT id, start, end
 		FROM ".PREFIX."news	
 		WHERE visible != 0", __LINE__, __FILE__);
-		while($row = $Sql->Sql_fetch_assoc($result) )
+		while($row = $Sql->fetch_assoc($result) )
 		{ 
 			if( $row['start'] <= time() && $row['start'] != 0 )
-				$Sql->Query_inject("UPDATE ".PREFIX."news SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."news SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if( $row['end'] <= time() && $row['end'] != 0 )
-				$Sql->Query_inject("UPDATE ".PREFIX."news SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."news SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}		
 	
@@ -84,11 +84,11 @@ class NewsInterface extends ModuleInterface
             n.id AS `id_content`,
             n.title AS `title`,
             ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS `relevance`, "
-            . $Sql->Sql_concat("'" . PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS `link`
+            . $Sql->Concat("'" . PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS `link`
             FROM " . PREFIX . "news n
             WHERE ( MATCH(n.title) AGAINST('" . $args['search'] . "') OR MATCH(n.contents) AGAINST('" . $args['search'] . "') OR MATCH(n.extend_contents) AGAINST('" . $args['search'] . "') )
                 AND visible = 1 AND ('" . time() . "' > start AND ( end = 0 OR '" . time() . "' < end ) )
-            ORDER BY `relevance` " . $Sql->Sql_limit(0, NEWS_MAX_SEARCH_RESULTS);
+            ORDER BY `relevance` " . $Sql->limit(0, NEWS_MAX_SEARCH_RESULTS);
         
         return $request;
     }
@@ -115,14 +115,14 @@ class NewsInterface extends ModuleInterface
         $Cache->Load_file('news');
         
         // Last news
-        $result = $Sql->Query_while("SELECT id, title, contents, timestamp, img
+        $result = $Sql->query_while("SELECT id, title, contents, timestamp, img
             FROM ".PREFIX."news
             WHERE visible = 1
             ORDER BY timestamp DESC
-        " . $Sql->Sql_limit(0, 2 * $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
+        " . $Sql->limit(0, 2 * $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
         
         // Generation of the feed's items
-        while ($row = $Sql->Sql_fetch_assoc($result))
+        while ($row = $Sql->fetch_assoc($result))
         {
             $item = new FeedItem();
             // Rewriting
@@ -146,7 +146,7 @@ class NewsInterface extends ModuleInterface
             
             $data->add_item($item);
         }
-        $Sql->Close($result);
+        $Sql->query_close($result);
         
         return $data;
     }

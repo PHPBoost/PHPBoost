@@ -36,7 +36,7 @@ define('TITLE' , $LANG['wiki_history']);
 
 if( !empty($id_article) )
 {
-	$article_infos = $Sql->Query_array('wiki_articles', 'title', 'auth', 'encoded_title', 'id_cat', 'WHERE id = ' . $id_article, __LINE__, __FILE__);
+	$article_infos = $Sql->query_array('wiki_articles', 'title', 'auth', 'encoded_title', 'id_cat', 'WHERE id = ' . $id_article, __LINE__, __FILE__);
 }
 
 $bread_crumb_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
@@ -58,14 +58,14 @@ if( !empty($id_article) )
 	$delete_auth = (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
 	
 	//on va chercher le contenu de la page
-	$result = $Sql->Query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.login, c.id_article, c.activ
+	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.login, c.id_article, c.activ
 		FROM ".PREFIX."wiki_contents c
 		LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.id_article
 		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
 		WHERE c.id_article = '" . $id_article . "'
 		ORDER BY c.timestamp DESC", __LINE__, __FILE__);
 	
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		//Restauration
 		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . transid('action.php?restore=' . $row['id_contents']) . '" title="' . $LANG['wiki_restore_version'] . '"><img src="templates/images/restore.png" alt="' . $LANG['wiki_restore_version'] . '" /></a> &nbsp; ' : '';
@@ -83,7 +83,7 @@ if( !empty($id_article) )
 			'ACTIONS' => !empty($actions) ? $actions : $LANG['wiki_no_possible_action']
 		));
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Template->Assign_vars(array(
 		'L_VERSIONS' => $LANG['wiki_version_list'],
@@ -103,7 +103,7 @@ else //On affiche la liste des modifications
 	$order = $order == 'asc' ? 'asc' : 'desc';
 	
 	//On compte le nombre d'articles
-	$nbr_articles = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE redirect = '0'", __LINE__, __FILE__);
+	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE redirect = '0'", __LINE__, __FILE__);
 	
 	//On instancie la classe de pagination
 	include_once('../kernel/framework/util/pagination.class.php');
@@ -124,13 +124,13 @@ else //On affiche la liste des modifications
 		'PAGINATION' => ($nbr_articles > $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY  ?  $show_pagin : '') //Affichage de la pagination si il le faut
 	));	
 
-	$result = $Sql->Query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, m.login, c.id_article, c.activ,  a.id_contents
+	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, m.login, c.id_article, c.activ,  a.id_contents
 		FROM ".PREFIX."wiki_articles a
 		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
 		WHERE a.redirect = 0
 		ORDER BY " . ($field == 'title' ? 'a' : 'c') . "." . $field . " " . $order . "
-		" . $Sql->Sql_limit($Pagination->First_msg($_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 'p'),$_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY), __LINE__, __FILE__);
+		" . $Sql->limit($Pagination->First_msg($_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 'p'),$_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY), __LINE__, __FILE__);
 	while( $row = mysql_fetch_assoc($result) )
 	{
 		$Template->Assign_block_vars('index.list', array(

@@ -73,13 +73,13 @@ $end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date',
 //Deleting a file
 if( $delete_file > 0 )
 {
-	$file_infos = $Sql->Query_array('download', '*', "WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);	
+	$file_infos = $Sql->query_array('download', '*', "WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);	
 	if( empty($file_infos['title']) )
 		redirect(HOST. DIR . transid('/download/download.php'));
 	
 	if( $download_categories->Check_auth($file_infos['idcat']) )
 	{
-		$Sql->Query_inject("DELETE FROM ".PREFIX."download WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."download WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
 		//Deleting comments if the file has
 		if( $file_infos['nbr_com'] > 0 )
 		{
@@ -99,7 +99,7 @@ if( $delete_file > 0 )
 }
 elseif( $edit_file_id > 0 )
 {
-	$file_infos = $Sql->Query_array('download', '*', "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);	
+	$file_infos = $Sql->query_array('download', '*', "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);	
 	if( empty($file_infos['title']) )
 		redirect(HOST. DIR . transid('/download/download.php'));
 	define('TITLE', $DOWNLOAD_LANG['file_management']);
@@ -175,7 +175,7 @@ if( $edit_file_id > 0 )
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->Query_inject("UPDATE ".PREFIX."download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_url . "', size = '" . $file_size . "', count = '" . $file_hits . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', image = '" . $file_image . "', timestamp = '" . $file_creation_date->Get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->Get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_url . "', size = '" . $file_size . "', count = '" . $file_hits . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', image = '" . $file_image . "', timestamp = '" . $file_creation_date->Get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->Get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
 			
 			//Updating the number of subfiles in each category
 			if( $file_cat_id != $file_infos['idcat'] )
@@ -360,9 +360,9 @@ elseif( $add_file )
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->Query_inject("INSERT INTO ".PREFIX."download (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_url . "', '" . $file_size . "', '" . $file_hits . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', '" . $file_image . "', '" . $file_creation_date->Get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->Get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."download (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_url . "', '" . $file_size . "', '" . $file_hits . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', '" . $file_image . "', '" . $file_creation_date->Get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->Get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
 			
-			$new_id_file = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."download");
+			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."download");
 			
 			//Updating the number of subfiles in each category
 			if( $file_cat_id != $file_infos['idcat'] )

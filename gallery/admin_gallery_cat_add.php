@@ -57,14 +57,14 @@ if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 		{
 			//Galerie parente de la galerie cible.
 			$list_parent_cats = '';
-			$result = $Sql->Query_while("SELECT id
+			$result = $Sql->query_while("SELECT id
 			FROM ".PREFIX."gallery_cats 
 			WHERE id_left <= '" . $CAT_GALLERY[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$parent_category]['id_right'] . "'", __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
+			while( $row = $Sql->fetch_assoc($result) )
 			{
 				$list_parent_cats .= $row['id'] . ', ';
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 			$list_parent_cats = trim($list_parent_cats, ', ');
 				
 			if( empty($list_parent_cats) )
@@ -73,19 +73,19 @@ if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 				$clause_parent = "id IN (" . $list_parent_cats . ")";
 				
 			$id_left = $CAT_GALLERY[$parent_category]['id_right'];
-			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + 2 WHERE " . $clause_parent, __LINE__, __FILE__);
-			$Sql->Query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + 2 WHERE " . $clause_parent, __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'", __LINE__, __FILE__);
 			$level = $CAT_GALLERY[$parent_category]['level'] + 1;
 			
 		}
 		else //Insertion galerie niveau 0.
 		{
-			$id_left = $Sql->Query("SELECT MAX(id_right) FROM ".PREFIX."gallery_cats", __LINE__, __FILE__);
+			$id_left = $Sql->query("SELECT MAX(id_right) FROM ".PREFIX."gallery_cats", __LINE__, __FILE__);
 			$id_left++;
 			$level = 0;
 		}
 			
-		$Sql->Query_inject("INSERT INTO ".PREFIX."gallery_cats (id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $status . "', '" . $aprob . "', '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
+		$Sql->query_inject("INSERT INTO ".PREFIX."gallery_cats (id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $status . "', '" . $aprob . "', '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
 
 		###### Regénération du cache #######
 		$Cache->Generate_module_file('gallery');
@@ -103,15 +103,15 @@ else
 			
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$galleries = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
-	$result = $Sql->Query_while("SELECT id, name, level
+	$result = $Sql->query_while("SELECT id, name, level
 	FROM ".PREFIX."gallery_cats 
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{	
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$galleries .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';

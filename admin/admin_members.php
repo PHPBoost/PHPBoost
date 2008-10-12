@@ -41,7 +41,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 {
 	if( !empty($_POST['delete']) ) //Suppression du membre.
 	{
-		$Sql->Query_inject("DELETE FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->query_inject("DELETE FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);	
 	
 		//On régénère le cache
 		$Cache->Generate_file('stats');
@@ -54,8 +54,8 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 	if( check_mail($user_mail) )
 	{	
 		//Vérirication de l'unicité du membre et du mail
-		$check_user = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member WHERE login = '" . $login . "' AND user_id <> '" . $id_post . "'", __LINE__, __FILE__);
-		$check_mail = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_id <> '" . $id_post . "' AND user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
+		$check_user = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE login = '" . $login . "' AND user_id <> '" . $id_post . "'", __LINE__, __FILE__);
+		$check_mail = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_id <> '" . $id_post . "' AND user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 		if( $check_user >= 1 ) 
 			redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pseudo_auth') . '#errorh');
 		elseif( $check_mail >= 1 ) 
@@ -74,7 +74,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 				{
 					if( strlen($password) >= 6 )
                     {
-						$Sql->Query_inject("UPDATE ".PREFIX."member SET password = '" . $password_hash . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+						$Sql->query_inject("UPDATE ".PREFIX."member SET password = '" . $password_hash . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
                     }
 					else //Longueur minimale du password
 						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
@@ -119,7 +119,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			//Gestion de la suppression de l'avatar.
 			if( !empty($_POST['delete_avatar']) )
 			{
-				$user_avatar_path = $Sql->Query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				$user_avatar_path = $Sql->query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				
 				if( !empty($user_avatar_path) )
 				{
@@ -128,7 +128,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 					@unlink('../images/avatars/' . $user_avatar_path);
 				}
 				
-				$Sql->Query_inject("UPDATE ".PREFIX."member SET user_avatar = '' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."member SET user_avatar = '' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 			}
 
 			//Gestion upload d'avatar.					
@@ -154,7 +154,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 						else
 						{
 							//Suppression de l'ancien avatar (sur le serveur) si il existe!
-							$user_avatar_path = $Sql->Query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+							$user_avatar_path = $Sql->query("SELECT user_avatar FROM ".PREFIX."member WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 							if( !empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match) )
 							{
 								if( is_file($user_avatar_path) && isset($match[1]) )
@@ -180,14 +180,14 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			if( !empty($login) && !empty($user_mail) )
 			{	
 				//Suppression des images des stats concernant les membres, si l'info à été modifiée.
-				$info_mbr = $Sql->Query_array("member", "user_theme", "user_sex", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				$info_mbr = $Sql->query_array("member", "user_theme", "user_sex", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				if( $info_mbr['user_sex'] != $user_sex )
 					@unlink('../cache/sex.png');
 				if( $info_mbr['user_theme'] != $user_theme )
 					@unlink('../cache/theme.png');
 				
                 //Si le membre n'était pas approuvé et qu'on l'approuve et qu'il existe une alerte, on la règle automatiquement
-                $member_infos = $Sql->Query_array("member", "user_aprob", "level", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+                $member_infos = $Sql->query_array("member", "user_aprob", "level", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
                 
 				if( $member_infos['user_aprob'] != $user_aprob && $member_infos['user_aprob'] == 0 )
 				{
@@ -206,31 +206,31 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 					}
 				}
 				
-                $Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . $login . "', level = '" . $user_level . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+                $Sql->query_inject("UPDATE ".PREFIX."member SET login = '" . $login . "', level = '" . $user_level . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				
                 //Mise à jour de la session si l'utilisateur change de niveau pour lui donner immédiatement les droits
                 if( $member_infos['level'] != $user_level )
-					$Sql->Query_inject("UPDATE ".PREFIX."sessions SET level = '" . $user_level . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE ".PREFIX."sessions SET level = '" . $user_level . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				
 				if( $user_ban > 0 )	//Suppression de la session si le membre se fait bannir.
 				{	
-					$Sql->Query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+					$Sql->query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 					include_once('../kernel/framework/io/mail.class.php');
 					$Mail = new Mail();
 					$Mail->Send_mail($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST), $CONFIG['mail']);
 				}
 				
 				//Champs supplémentaires.
-				$extend_field_exist = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+				$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 				if( $extend_field_exist > 0 )
 				{
 					$req_update = '';
 					$req_field = '';
 					$req_insert = '';
-					$result = $Sql->Query_while("SELECT field_name, field, possible_values
+					$result = $Sql->query_while("SELECT field_name, field, possible_values
 					FROM ".PREFIX."member_extend_cat
 					WHERE display = 1", __LINE__, __FILE__);
-					while( $row = $Sql->Sql_fetch_assoc($result) )
+					while( $row = $Sql->fetch_assoc($result) )
 					{
 						$field = retrieve(POST, $row['field_name'], '', TSTRING_UNSECURE);
 						if( $row['field'] == 2 )
@@ -263,18 +263,18 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 							$req_insert .= '\'' . trim($field, '|') . '\', ';
 						}
 					}
-					$Sql->Close($result);	
+					$Sql->query_close($result);	
 										
-					$check_member = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+					$check_member = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 					if( $check_member )
 					{	
 						if( !empty($req_update) )
-							$Sql->Query_inject("UPDATE ".PREFIX."member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__); 
+							$Sql->query_inject("UPDATE ".PREFIX."member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__); 
 					}
 					else
 					{	
 						if( !empty($req_insert) )
-							$Sql->Query_inject("INSERT INTO ".PREFIX."member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $id_post . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
+							$Sql->query_inject("INSERT INTO ".PREFIX."member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $id_post . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
 				}	
 				
@@ -299,8 +299,8 @@ elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 	if( check_mail($mail) )
 	{	
 		//Vérirication de l'unicité du membre et du mail
-		$check_user = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
-		$check_mail = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE user_mail = '" . $mail . "'", __LINE__, __FILE__);
+		$check_user = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
+		$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE user_mail = '" . $mail . "'", __LINE__, __FILE__);
 		if( $check_user >= 1 ) 
 			redirect(HOST . DIR . '/admin/admin_members' . transid('.php?error=pseudo_auth&add=1') . '#errorh');
 		elseif( $check_mail >= 1 ) 
@@ -312,7 +312,7 @@ elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 				if( !empty($login) )
 				{	
 					//On insere le nouveau membre.
-					$Sql->Query_inject("INSERT INTO ".PREFIX."member (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,user_readonly,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
+					$Sql->query_inject("INSERT INTO ".PREFIX."member (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,user_readonly,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
 					VALUES('" . $login . "', '" . $password_hash . "', '" . $level . "', '0', '" . $CONFIG['lang'] . "', '', '" . $mail . "', '1', '" . time() . "', '', '0', '', '', '', '', '', '', '', '', '', '', '0', '0', '0', '0', '0', '', '', '0', '1')", __LINE__, __FILE__);
 					
 					//On régénère le cache
@@ -333,7 +333,7 @@ elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 elseif( !empty($id) && $delete ) //Suppression du membre.
 {
 	//On supprime dans la bdd.
-	$Sql->Query_inject("DELETE FROM ".PREFIX."member WHERE user_id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM ".PREFIX."member WHERE user_id = '" . $id . "'", __LINE__, __FILE__);	
 	
 	//On régénère le cache
 	$Cache->Generate_file('stats');
@@ -396,7 +396,7 @@ elseif( !empty($id) )
 		'admin_members_management2'=> 'admin/admin_members_management2.tpl'
 	));
 	
-	$mbr = $Sql->Query_array('member', '*', "WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
+	$mbr = $Sql->query_array('member', '*', "WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
 
 	$user_born = '';
 	$array_user_born = explode('-', $mbr['user_born']);
@@ -467,9 +467,9 @@ elseif( !empty($id) )
 	//Groupes.	
 	$i = 0;
 	$groups_options = '';
-	$result = $Sql->Query_while("SELECT id, name
+	$result = $Sql->query_while("SELECT id, name
 	FROM ".PREFIX."group", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{		
 		$selected = '';		
 		$search_group = array_search($row['id'], explode('|', $mbr['user_groups']));		
@@ -479,7 +479,7 @@ elseif( !empty($id) )
 		$groups_options .= '<option value="' . $row['id'] . '" id="g' . $i . '" ' . $selected . '>' . $row['name'] . '</option>';
 		$i++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 
 	//Temps de bannissement.
 	$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
@@ -546,9 +546,9 @@ elseif( !empty($id) )
 	$lang_options = '';
 	$array_identifier = '';
 	$lang_identifier = '../images/stats/other.png';
-	$result = $Sql->Query_while("SELECT lang 
+	$result = $Sql->query_while("SELECT lang 
 	FROM ".PREFIX."lang", __LINE__, __FILE__);
-	while( $row2 = $Sql->Sql_fetch_assoc($result) )
+	while( $row2 = $Sql->fetch_assoc($result) )
 	{	
 		$lang_info = load_ini_file('../lang/', $row2['lang']);
 		if( is_array($lang_info) )
@@ -564,13 +564,13 @@ elseif( !empty($id) )
 			$lang_options .= '<option value="' . $row2['lang'] . '" ' . $selected . '>' . $lang_name . '</option>';
 		}
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Gestion thème par défaut.
 	$theme_options = '';
-	$result = $Sql->Query_while("SELECT theme 
+	$result = $Sql->query_while("SELECT theme 
 	FROM ".PREFIX."themes", __LINE__, __FILE__);
-	while( $row2 = $Sql->Sql_fetch_assoc($result) )
+	while( $row2 = $Sql->fetch_assoc($result) )
 	{	
 		$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', $CONFIG['lang']);
 		if( is_array($theme_info) )
@@ -580,7 +580,7 @@ elseif( !empty($id) )
 			$theme_options .= '<option value="' . $row2['theme'] . '" ' . $selected . '>' . $theme_name . '</option>';
 		}
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Editeur texte par défaut.
 	$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
@@ -624,7 +624,7 @@ elseif( !empty($id) )
 		'SELECT_APROB' => ($mbr['user_aprob'] == 1) ? 'selected="selected"' : '',
 		'RANKS_OPTIONS' => $ranks_options,
 		'GROUPS_OPTIONS' => $groups_options,
-		'NBR_GROUP' => $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."group", __LINE__, __FILE__),
+		'NBR_GROUP' => $Sql->query("SELECT COUNT(*) FROM ".PREFIX."group", __LINE__, __FILE__),
 		'LANG_OPTIONS' => $lang_options,
 		'THEME_OPTIONS' => $theme_options,
 		'EDITOR_OPTIONS' => $editor_options,
@@ -722,7 +722,7 @@ elseif( !empty($id) )
 	));
 
 	//Champs supplémentaires.
-	$extend_field_exist = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+	$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 	if( $extend_field_exist > 0 )
 	{
 		$Template->Assign_vars(array(			
@@ -730,12 +730,12 @@ elseif( !empty($id) )
 			'L_MISCELLANEOUS' => $LANG['miscellaneous']
 		));
 
-		$result = $Sql->Query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values, ex.*
+		$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values, ex.*
 		FROM ".PREFIX."member_extend_cat exc
 		LEFT JOIN ".PREFIX."member_extend ex ON ex.user_id = '" . $id . "'
 		WHERE exc.display = 1
 		ORDER BY exc.class", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{	
 			// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 			$field = '';
@@ -801,7 +801,7 @@ elseif( !empty($id) )
 				'FIELD' => $field
 			));
 		}
-		$Sql->Close($result);	
+		$Sql->query_close($result);	
 	}
 	
 	$Template->Pparse('admin_members_management2');
@@ -817,13 +817,13 @@ else
 	{
 		$search = str_replace('*', '%', $search);
 		$req = "SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '".$search."%'";
-		$nbr_result = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login LIKE '%".$search."%'", __LINE__, __FILE__);
+		$nbr_result = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login LIKE '%".$search."%'", __LINE__, __FILE__);
 
 		if( !empty($nbr_result) )
 		{			
 			$i = 0;
-			$result = $Sql->Query_while($req, __LINE__, __FILE__);
-			while ($row = $Sql->Sql_fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
+			$result = $Sql->query_while($req, __LINE__, __FILE__);
+			while ($row = $Sql->fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
 			{ 
 				$coma = ($i != 0) ? ', ' : '';
 				$i++;
@@ -831,7 +831,7 @@ else
 					'RESULT' => $coma . '<a href="../admin/admin_members.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a>'
 				));
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 		}
 		else
 		{
@@ -841,7 +841,7 @@ else
 		}		
 	}
 
-	$nbr_membre = $Sql->Count_table("member", __LINE__, __FILE__);
+	$nbr_membre = $Sql->count_table("member", __LINE__, __FILE__);
 	//On crée une pagination si le nombre de membre est trop important.
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
@@ -904,11 +904,11 @@ else
 		'L_DELETE' => $LANG['delete']
 	));
 		
-	$result = $Sql->Query_while("SELECT login, user_id, user_mail, timestamp, user_web, level, user_aprob
+	$result = $Sql->query_while("SELECT login, user_id, user_mail, timestamp, user_web, level, user_aprob
 	FROM ".PREFIX."member 
 	ORDER BY " . $sort . " " . $mode . 
-	$Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	$Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		switch ($row['level']) 
 		{	
@@ -939,7 +939,7 @@ else
 			'APROB' => ($row['user_aprob'] == 0) ? $LANG['no'] : $LANG['yes']		
 		));
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Template->Pparse('admin_members_management'); 
 }

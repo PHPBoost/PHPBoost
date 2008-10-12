@@ -49,7 +49,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 			if( $Member->Check_level($CONFIG_SHOUTBOX['shoutbox_auth']) )
 			{
 				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-				$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->Query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+				$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
 				if( !empty($check_time) && !$Member->Check_max_value(AUTH_FLOOD) )
 				{
 					if( $check_time >= (time() - $CONFIG['delay_flood']) )
@@ -63,7 +63,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 				if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
 					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=l_flood', '', '&'));
 					
-				$Sql->Query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . $Member->Get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . $Member->Get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
 				redirect(HOST . transid(SCRIPT . '?' . QUERY_STRING, '', '&'));
 			}
@@ -109,11 +109,11 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	));
 	
 	$array_class = array('member', 'modo', 'admin');
-	$result = $Sql->Query_while("SELECT id, login, user_id, level, contents 
+	$result = $Sql->query_while("SELECT id, login, user_id, level, contents 
 	FROM ".PREFIX."shoutbox 
 	ORDER BY timestamp DESC 
-	" . $Sql->Sql_limit(0, 25), __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	" . $Sql->limit(0, 25), __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$row['user_id'] = (int)$row['user_id'];		
 		if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
@@ -134,7 +134,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 			'CONTENTS' => ucfirst($row['contents']) //Majuscule premier caractère.
 		));							
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 }
 
 ?>

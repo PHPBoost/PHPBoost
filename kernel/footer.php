@@ -27,7 +27,7 @@
 
 if( defined('PHPBOOST') !== true) exit;
 
-$Sql->Sql_close(); //Fermeture de mysql
+$Sql->close(); //Fermeture de mysql
 
 $Template->Set_filenames(array(
 	'footer'=> 'footer.tpl'
@@ -59,7 +59,7 @@ if( $CONFIG['bench'] )
 	$Template->Assign_vars(array(
 		'C_DISPLAY_BENCH' => true,
 		'BENCH' => $Bench->Display_bench('site'), //Fin du benchmark
-		'REQ' => $Sql->Display_sql_request(),
+		'REQ' => $Sql->display_request(),
 		'L_REQ' => $LANG['sql_req'],
 		'L_ACHIEVED' => $LANG['achieved'],
 		'L_UNIT_SECOND' => $LANG['unit_seconds_short']

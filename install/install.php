@@ -247,7 +247,7 @@ elseif( $step == 4 )
 				$Errorh = new Errors;
 				$Sql = new Sql();
 	            //Connexion
-				$Sql->Sql_connect($host, $login, $password, $database, ERRORS_MANAGEMENT_BY_RETURN);
+				$Sql->connect($host, $login, $password, $database, ERRORS_MANAGEMENT_BY_RETURN);
 							
 				//Création du fichier de configuration
 				require_once('../kernel/framework/io/file.class.php');
@@ -279,11 +279,11 @@ else
 				$db_config_file->close();
 	
 				//On crée la structure de la base de données et on y insère la configuration de base
-				$Sql->Sql_parse('db/mysql.sql', $tables_prefix);
+				$Sql->parse('db/mysql.sql', $tables_prefix);
 				//Insertion des données variables selon la langue
-				$Sql->Sql_parse('lang/' . $lang . '/mysql_install_' . $lang . '.sql', $tables_prefix);
+				$Sql->parse('lang/' . $lang . '/mysql_install_' . $lang . '.sql', $tables_prefix);
 				
-				$Sql->Close();
+				$Sql->query_close();
 				redirect(HOST . FILE . add_lang('?step=5', true));
 				break;
 			case DB_CONFIG_ERROR_CONNECTION_TO_DBMS:
@@ -420,20 +420,20 @@ elseif( $step == 5 )
 		load_db_connection();
 		
 		//On insère dans la base de données
-        $Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+        $Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
         
 		//On installe la langue
-		$Sql->Query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES ('" . strprotect($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES ('" . strprotect($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
 		
 		//On installe le thème
-		$Sql->Query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
 		
 		//On génère le cache
 		include('../kernel/framework/core/cache.class.php');
 		$Cache = new Cache;
 		$Cache->Generate_all_files();
 		
-		$Sql->Sql_close();
+		$Sql->close();
 		
 		redirect(HOST . FILE . add_lang('?step=6', true));
 	}
@@ -539,14 +539,14 @@ elseif( $step == 6 )
 			$Cache->Load_file('config');
 			
 			//On enregistre le membre (l'entrée était au préalable créée)
-			$Sql->Query_inject("UPDATE ".PREFIX."member SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."member SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
 			
 			//Génération de la clé d'activation, en cas de verrouillage de l'administration
 			$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
 			$CONFIG['unlock_admin'] = strhash($unlock_admin);
 			$CONFIG['mail'] = $user_mail;
 			
-			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 			
 			$Cache->Generate_file('config');
 			
@@ -556,7 +556,7 @@ elseif( $step == 6 )
 			$CONFIG_MEMBER['msg_mbr'] = $LANG['site_config_msg_mbr'];
 			$CONFIG_MEMBER['msg_register'] = $LANG['site_config_msg_register'];
 			
-			$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_MEMBER)) . "' WHERE name = 'member'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_MEMBER)) . "' WHERE name = 'member'", __LINE__, __FILE__);
 			
 			$Cache->generate_file('member');
 			
@@ -574,7 +574,7 @@ elseif( $step == 6 )
 				$Session = new Sessions;
 				
 				//Remise à zéro du compteur d'essais.
-				$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__);
 				//Lancement de la session (avec ou sans autoconnexion selon la demande de l'utilisateur)
 				$Session->session_begin(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); 
 			}

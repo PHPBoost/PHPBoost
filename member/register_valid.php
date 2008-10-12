@@ -116,8 +116,8 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 				
 				$admin_sign = $CONFIG['sign'];
 						
-				$check_user = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
-				$check_mail = $Sql->Query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
+				$check_user = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
+				$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 			
 				if( $check_user >= 1 ) 
 					redirect(HOST . DIR . '/member/register' . transid('.php?error=pseudo_auth') . '#errorh');
@@ -132,10 +132,10 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					@unlink('../cache/sex.png');
 					@unlink('../cache/theme.png');
 					
-					$Sql->Query_inject("INSERT INTO ".PREFIX."member (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,user_editor,user_timezone,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
+					$Sql->query_inject("INSERT INTO ".PREFIX."member (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,user_editor,user_timezone,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
 					VALUES ('" . $login . "', '" . $password_hash . "', 0, '0', '" . $user_lang . "', '" . $user_theme . "', '" . $user_mail . "', '" . $user_show_mail . "', '" . $user_editor . "', '" . $user_timezone . "', '" . time() . "', '" . $user_avatar . "', 0, '" . $user_local . "', '" . $user_msn . "', '" . $user_yahoo . "', '" . $user_web . "', '" . $user_occupation . "', '" . $user_hobbies . "', '" . $user_desc . "', '" . $user_sex . "', '" . $user_born . "', '" . $user_sign . "', 0, 0, '" . time() . "', 0, '" . $activ_mbr . "', '', 0, '" . $user_aprob . "')", __LINE__, __FILE__); //Compte membre
 					
-					$last_mbr_id = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."member"); //Id du membre qu'on vient d'enregistrer
+					$last_mbr_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."member"); //Id du membre qu'on vient d'enregistrer
 					
 					//Si son inscription nécessite une approbation, on en avertit l'administration au biais d'une alerte
 					if( !$user_aprob )
@@ -156,16 +156,16 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					}
 						
 					//Champs supplémentaires.
-					$extend_field_exist = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+					$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 					if( $extend_field_exist > 0 )
 					{
 						$req_update = '';
 						$req_field = '';
 						$req_insert = '';
-						$result = $Sql->Query_while("SELECT field_name, field, possible_values, regex
+						$result = $Sql->query_while("SELECT field_name, field, possible_values, regex
 						FROM ".PREFIX."member_extend_cat
 						WHERE display = 1", __LINE__, __FILE__);
-						while( $row = $Sql->Sql_fetch_assoc($result) )
+						while( $row = $Sql->fetch_assoc($result) )
 						{
 							$field = retrieve(POST, $row['field_name'], '', TSTRING_UNSECURE);
 							//Validation par expressions régulières.
@@ -223,13 +223,13 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 								}
 							}
 						}
-						$Sql->Close($result);
+						$Sql->query_close($result);
 						
-						$check_member = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__);
+						$check_member = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__);
 						if( $check_member && !empty($req_update) )
-								$Sql->Query_inject("UPDATE ".PREFIX."member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); 
+								$Sql->query_inject("UPDATE ".PREFIX."member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); 
 						else if( !empty($req_insert) )
-								$Sql->Query_inject("INSERT INTO ".PREFIX."member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $last_mbr_id . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
+								$Sql->query_inject("INSERT INTO ".PREFIX."member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $last_mbr_id . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
 					
 					//On régénère le cache
@@ -261,7 +261,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					//On connecte le membre directement si aucune activation demandée.
 					if( $CONFIG_MEMBER['activ_mbr'] == 0 )
 					{
-						$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+						$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
 						$Session->Session_begin($last_mbr_id, $password, 0, SCRIPT, QUERY_STRING, TITLE, 1); //On lance la session.
 					}
 					unset($password, $password_hash);

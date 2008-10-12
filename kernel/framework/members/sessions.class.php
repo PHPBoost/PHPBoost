@@ -55,10 +55,10 @@ class Sessions
 		}
 		elseif( retrieve(POST, 'connect', false) && !empty($login) && !empty($password) ) //Création de la session.
 		{
-			$user_id = $Sql->Query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
+			$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
 			if( !empty($user_id) ) //Membre existant.
 			{
-				$info_connect = $Sql->Query_array('member', 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', "WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
+				$info_connect = $Sql->query_array('member', 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', "WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
 				$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
 				$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
 				
@@ -66,12 +66,12 @@ class Sessions
 				{
 					if( $delay_connect >= 600 ) //5 nouveau essais, 10 minutes après.
 					{
-						$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+						$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
 						$error_report = $Session->session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
 					}
 					elseif( $delay_connect >= 300 ) //2 essais 5 minutes après
 					{
-						$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Redonne 2 essais.
+						$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Redonne 2 essais.
 						$error_report = $Session->session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
 					}
 					elseif( $info_connect['test_connect'] < 5 ) //Succès.
@@ -93,13 +93,13 @@ class Sessions
 						
 				if( !empty($error_report) ) //Erreur
 				{
-					$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
 					$info_connect['test_connect']++;
 					$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
 					redirect(HOST . DIR . '/member/error.php?e=e_member_flood&flood=' . $info_connect['test_connect'] . '#errorh');
 				}
 				elseif( $info_connect['test_connect'] > 0 ) //Succès redonne tous les essais.
-					$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+					$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
 			}
 			else
 				redirect(HOST . DIR . '/member/error.php?e=e_unexist_member#errorh');
@@ -130,17 +130,17 @@ class Sessions
 		$session_script_title = addslashes($session_script_title);
 		
 		########Insertion dans le compteur si l'ip est inconnue.########
-		$check_ip = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."compteur WHERE ip = '" . USER_IP . "'", __LINE__, __FILE__);
+		$check_ip = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."compteur WHERE ip = '" . USER_IP . "'", __LINE__, __FILE__);
 		$_include_once = empty($check_ip) && ($this->check_robot(USER_IP) === false);
 		if( $_include_once )
 		{
 			//Récupération forcée de la valeur du total de visites, car problème de CAST avec postgresql.
-			$Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."compteur SET ip = ip + 1, time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', total = total + 1 WHERE id = 1", __LINE__, __FILE__);
-			$Sql->Query_inject("INSERT ".LOW_PRIORITY." INTO ".PREFIX."compteur (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', 0)", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."compteur SET ip = ip + 1, time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', total = total + 1 WHERE id = 1", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO ".PREFIX."compteur (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', 0)", __LINE__, __FILE__);
 			
 			//Mise à jour du last_connect, pour un membre qui vient d'arriver sur le site.
 			if( $user_id !== '-1' )
-				$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		}
 		
 		//On lance les stats.
@@ -160,28 +160,28 @@ class Sessions
 		if( $user_id !== '-1' )
 		{
 			//Suppression de la session visiteur générée avant l'enregistrement!
-			$Sql->Query_inject("DELETE FROM ".PREFIX."sessions WHERE session_ip = '" . USER_IP . "' AND user_id = -1", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."sessions WHERE session_ip = '" . USER_IP . "' AND user_id = -1", __LINE__, __FILE__);
 			
 			//En cas de double connexion, on supprime le cookie et la session associée de la base de données!
 			if( isset($_COOKIE[$CONFIG['site_cookie'] . '_data']) ) 
 				setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/');
-			$Sql->Query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 			//Récupération password BDD
-			$password_m = $Sql->Query("SELECT password FROM ".PREFIX."member WHERE user_id = '" . $user_id . "' AND user_warning < 100 AND '" . time() . "' - user_ban >= 0", __LINE__, __FILE__);
+			$password_m = $Sql->query("SELECT password FROM ".PREFIX."member WHERE user_id = '" . $user_id . "' AND user_warning < 100 AND '" . time() . "' - user_ban >= 0", __LINE__, __FILE__);
 			if( !empty($password) && (($password === $password_m) || (md5($pwd) === $password_m)) ) //Succès! => md5 gestion des vieux mdp
 			{
                 if( md5($pwd) === $password_m ) // Si le mot de passe est encore stocké en md5, on l'update
-                    $Sql->Query_inject("UPDATE ".PREFIX."member SET password = '" . $password . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+                    $Sql->query_inject("UPDATE ".PREFIX."member SET password = '" . $password . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				
-				$Sql->Query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '')", __LINE__, __FILE__);
 				$cookie_on = true; //Génération du cookie!
 			}
 			else //Session visiteur, echec!
 			{
-				$Sql->Query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0')", __LINE__, __FILE__);
 				
-				$delay_ban = $Sql->Query("SELECT user_ban FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+				$delay_ban = $Sql->query("SELECT user_ban FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				if( (time() - $delay_ban) >= 0 )
 					$error = 'echec';
 				else
@@ -190,7 +190,7 @@ class Sessions
 		}
 		else //Session visiteur valide.
 		{
-			$Sql->Query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0')", __LINE__, __FILE__);
 		}
 		
 		########Génération du cookie de session########
@@ -227,12 +227,12 @@ class Sessions
 		if( $this->data['user_id'] > 0 && !empty($this->data['session_id']) )
 		{
 			//Récupère également les champs membres supplémentaires
-			$result = $Sql->Query_inject("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_avatar avatar, m.user_readonly, me.*
+			$result = $Sql->query_inject("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_avatar avatar, m.user_readonly, me.*
 			FROM ".PREFIX."member m
             JOIN ".PREFIX."sessions s ON s.user_id = '" . $this->data['user_id'] . "' AND s.session_id = '" . $this->data['session_id'] . "'
 			LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $this->data['user_id'] . "'
 			WHERE m.user_id = '" . $this->data['user_id'] . "'", __LINE__, __FILE__);
-			$userdata = $Sql->Sql_fetch_assoc($result);
+			$userdata = $Sql->fetch_assoc($result);
          
 			if( !empty($userdata) ) //Succès.
 			{    
@@ -282,8 +282,8 @@ class Sessions
 				$location = '';
 			
 			//On modifie le session_flag pour forcer mysql à modifier l'entrée, pour prendre en compte la mise à jour par mysql_affected_rows().
-			$resource = $Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . time() . "', " . $location . " session_flag = 1 - session_flag WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'", __LINE__, __FILE__);			
-			if( $Sql->Sql_affected_rows($resource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'") == 0 ) //Aucune session lancée.
+			$resource = $Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . time() . "', " . $location . " session_flag = 1 - session_flag WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'", __LINE__, __FILE__);			
+			if( $Sql->affected_rows($resource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'") == 0 ) //Aucune session lancée.
 			{
 				if( $this->get_session_autoconnect($session_script, $session_script_get, $session_script_title) === false ) //On essaie de lancer la session automatiquement.
 				{					
@@ -307,8 +307,8 @@ class Sessions
 				$location = '';
 				
 			//On modifie le session_flag pour forcer mysql à modifier l'entrée, pour prendre en compte la mise à jour par mysql_affected_rows().
-			$resource = $Sql->Query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . (time() + 1) . "', " . $location . " session_flag = 1 - session_flag WHERE user_id = -1 AND session_ip = '" . USER_IP . "'", __LINE__, __FILE__);			
-			if( $Sql->Sql_affected_rows($resource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE user_id = -1 AND session_ip = '" . USER_IP . "'") == 0 ) //Aucune session lancée.
+			$resource = $Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . (time() + 1) . "', " . $location . " session_flag = 1 - session_flag WHERE user_id = -1 AND session_ip = '" . USER_IP . "'", __LINE__, __FILE__);			
+			if( $Sql->affected_rows($resource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE user_id = -1 AND session_ip = '" . USER_IP . "'") == 0 ) //Aucune session lancée.
 			{
 				if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
 					setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
@@ -325,7 +325,7 @@ class Sessions
 		$this->get_session_id();
 			
 		//On supprime la session de la bdd.
-		$Sql->Query_inject("DELETE FROM ".PREFIX."sessions WHERE session_id = '" . $this->data['session_id'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."sessions WHERE session_id = '" . $this->data['session_id'] . "'", __LINE__, __FILE__);
 		
 		if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) ) //Session cookie?
 			setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //On supprime le cookie.		
@@ -391,7 +391,7 @@ class Sessions
 			$session_autoconnect = isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) ? sunserialize($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) : array();
 			$session_autoconnect['user_id'] = !empty($session_autoconnect['user_id']) ? numeric($session_autoconnect['user_id']) : ''; //Validité user id?.
 			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? strprotect($session_autoconnect['pwd']) : ''; //Validité password.
-			$level = $Sql->Query("SELECT level FROM ".PREFIX."member WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'", __LINE__, __FILE__);
+			$level = $Sql->query("SELECT level FROM ".PREFIX."member WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'", __LINE__, __FILE__);
 			
 			if( !empty($session_autoconnect['user_id']) && !empty($session_autoconnect['pwd']) && $level != '' )
 			{
@@ -400,9 +400,9 @@ class Sessions
 				//Gestion des erreurs pour éviter un brute force.
 				if( $error_report === 'echec' )
 				{
-					$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
 					
-					$test_connect = $Sql->Query("SELECT test_connect FROM ".PREFIX."member WHERE user_id = '" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
+					$test_connect = $Sql->query("SELECT test_connect FROM ".PREFIX."member WHERE user_id = '" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
 					
 					setcookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
 					
@@ -418,7 +418,7 @@ class Sessions
 				else //Succès on recharge la page.
 				{
 					//On met à jour la date de dernière connexion. 
-					$Sql->Query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "' WHERE user_id = '" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "' WHERE user_id = '" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
 					
 					if( QUERY_STRING != '' )
 						redirect(HOST . SCRIPT . '?' . QUERY_STRING);
@@ -437,7 +437,7 @@ class Sessions
 	{
 		global $CONFIG, $Sql;
 			
-		$Sql->Query_inject("DELETE 
+		$Sql->query_inject("DELETE 
 		FROM ".PREFIX."sessions 
 		WHERE session_time < '" . (time() - $CONFIG['site_session']) . "' 
 		OR (session_time < '" . (time() - $CONFIG['site_session_invit']) . "' AND user_id = -1)", __LINE__, __FILE__);

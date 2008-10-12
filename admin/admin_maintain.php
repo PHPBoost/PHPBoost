@@ -55,7 +55,7 @@ if( !empty($_POST['valid']) )
 	$CONFIG['maintain_display_admin'] = retrieve(POST, 'maintain_display_admin', 0);
 	$CONFIG['maintain'] = $maintain;
 	
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 	
 	###### Régénération du cache $CONFIG #######
 	$Cache->Generate_file('config');

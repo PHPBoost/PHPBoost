@@ -41,7 +41,7 @@ if( !empty($_POST['valid']) )
 
 	if( !empty($title) && !empty($url) && !empty($idcat) && isset($aprob) )
 	{	
-		$Sql->Query_inject("INSERT INTO ".PREFIX."web (idcat,title,contents,url,compt,aprob,timestamp,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "', '0', '0', '0', '0')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."web (idcat,title,contents,url,compt,aprob,timestamp,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "', '0', '0', '0', '0')", __LINE__, __FILE__);
 		
 		redirect(HOST . DIR . '/web/admin_web.php');
 	}
@@ -64,7 +64,7 @@ elseif( !empty($_POST['previs']) )
 	$aprob_enable = ($aprob == 1) ? 'checked="checked"' : '';
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
 
-	$cat = $Sql->Query("SELECT name FROM ".PREFIX."web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->query("SELECT name FROM ".PREFIX."web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	
 	$Template->Assign_block_vars('web', array(
 		'NAME' => $title,
@@ -117,10 +117,10 @@ elseif( !empty($_POST['previs']) )
 	
 	//Catégories.
 	$i = 0;
-	$result = $Sql->Query_while("SELECT id, name 
+	$result = $Sql->query_while("SELECT id, name 
 	FROM ".PREFIX."web_cat
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
 		$Template->Assign_block_vars('select', array(
@@ -128,7 +128,7 @@ elseif( !empty($_POST['previs']) )
 		));
 		$i++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
@@ -169,17 +169,17 @@ else
 	
 	//Catégories.	
 	$i = 0;
-	$result = $Sql->Query_while("SELECT id, name 
+	$result = $Sql->query_while("SELECT id, name 
 	FROM ".PREFIX."web_cat
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$Template->Assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '">' . $row['name'] . '</option>'
 		));
 		$i++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');

@@ -46,11 +46,11 @@ class PagesInterface extends ModuleInterface
 		//Catégories des pages
 		$config = 'global $_PAGES_CATS;' . "\n";
 		$config .= '$_PAGES_CATS = array();' . "\n";
-		$result = $Sql->Query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
+		$result = $Sql->query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
 		FROM ".PREFIX."pages_cats c
 		LEFT JOIN ".PREFIX."pages p ON p.id = c.id_page
 		ORDER BY p.title", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$config .= '$_PAGES_CATS[\'' . $row['id'] . '\'] = ' . var_export(array(
 				'id_parent' => !empty($row['id_parent']) ? $row['id_parent'] : '0',
@@ -61,7 +61,7 @@ class PagesInterface extends ModuleInterface
 
 		//Configuration du module de pages
 		$code = 'global $_PAGES_CONFIG;' . "\n";
-		$CONFIG_PAGES = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'pages'", __LINE__, __FILE__));
+		$CONFIG_PAGES = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'pages'", __LINE__, __FILE__));
 								
 		if( is_array($CONFIG_PAGES) )
 			$CONFIG_PAGES['auth'] = sunserialize($CONFIG_PAGES['auth']);
@@ -124,9 +124,9 @@ class PagesInterface extends ModuleInterface
             p.auth AS `auth`
             FROM ".PREFIX."pages p
             WHERE ( MATCH(title) AGAINST('".$args['search']."') OR MATCH(contents) AGAINST('".$args['search']."') )".$auth_cats
-            .$Sql->Sql_limit(0, PAGES_MAX_SEARCH_RESULTS);
+            .$Sql->limit(0, PAGES_MAX_SEARCH_RESULTS);
 
-        $result = $Sql->Query_while($request, __LINE__, __FILE__);
+        $result = $Sql->query_while($request, __LINE__, __FILE__);
         while( $row = $Sql->sql_fetch_assoc($result) )
         {
             if ( !empty($row['auth']) )
@@ -144,7 +144,7 @@ class PagesInterface extends ModuleInterface
                 array_push($results, $row);
             }
         }
-        $Sql->Close($result);
+        $Sql->query_close($result);
         
         return $results;
     }

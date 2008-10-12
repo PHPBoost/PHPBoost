@@ -38,7 +38,7 @@ class Sql
         static $connected = false;
         if( $connect == true && !$connected )
         {
-            $this->link = @$this->Sql_connect($sql_host) or $this->sql_error('', 'Connexion base de donnée impossible!', __LINE__, __FILE__);
+            $this->link = @$this->connect($sql_host) or $this->_error('', 'Connexion base de donnée impossible!', __LINE__, __FILE__);
 
             $connected = true;
         }
@@ -46,7 +46,7 @@ class Sql
     }
     
     //Connexion
-    function Sql_connect($filename='')
+    function connect($filename='')
     {
         $file = SQLITE_DB_FOLDER.$filename.'.sqlite';
         echo '<br />';
@@ -72,14 +72,14 @@ class Sql
     //Connexion
     function Sql_select_db($sql_base, $link)
     {
-//         $this->Sql_close();
-        return $this->Sql_connect($sql_base); // inexistant en sqlite faire une déconnection, puis une reconnection
+//         $this->close();
+        return $this->connect($sql_base); // inexistant en sqlite faire une déconnection, puis une reconnection
     }
 
     //Requête simple
-    function Query($query, $errline, $errfile) 
+    function query($query, $errline, $errfile) 
     {
-        $this->last_ressource = sqlite_query($query) or $this->sql_error($query, 'Requête simple invalide', $errline, $errfile);
+        $this->last_ressource = sqlite_query($query) or $this->_error($query, 'Requête simple invalide', $errline, $errfile);
         $this->result = sqlite_fetch_array($this->last_ressource);
         $this->close($this->last_ressource); //Déchargement mémoire.
         $this->req++;
@@ -88,7 +88,7 @@ class Sql
     }
 
     //Requête multiple.
-    function Query_array()
+    function query_array()
     {
         $table = func_get_arg(0);
         $nbr_arg = func_num_args();
@@ -113,7 +113,7 @@ class Sql
         
         $error_line = func_get_arg($nbr_arg - 2);
         $error_file = func_get_arg($nbr_arg - 1);
-        $this->last_ressource = sqlite_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req) or $this->sql_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Requête multiple invalide', $error_line, $error_file, SQLITE_ASSOC);
+        $this->last_ressource = sqlite_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req) or $this->_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Requête multiple invalide', $error_line, $error_file, SQLITE_ASSOC);
         $this->result = sqlite_fetch_array($this->last_ressource, SQLITE_ASSOC);
         $this->close($this->last_ressource); //Déchargement mémoire.
         $this->req++;
@@ -122,28 +122,28 @@ class Sql
     }
 
     //Requete d'injection (insert, update, et requêtes complexes..)
-    function Query_inject($query, $errline, $errfile) 
+    function query_inject($query, $errline, $errfile) 
     {
         echo 'coucou'.$query.'<hr />';
-        $this->last_ressource = sqlite_query($query) or $this->sql_error($query, 'Requête inject invalide', $errline, $errfile);
+        $this->last_ressource = sqlite_query($query) or $this->_error($query, 'Requête inject invalide', $errline, $errfile);
         $this->req++;
         
         return $this->last_ressource;
     }
 
     //Requête de boucle.
-    function Query_while($query, $errline, $errfile) 
+    function query_while($query, $errline, $errfile) 
     {
-        $this->result = sqlite_query($query) or $this->sql_error($query, 'Requête while invalide', $errline, $errfile);
+        $this->result = sqlite_query($query) or $this->_error($query, 'Requête while invalide', $errline, $errfile);
         $this->req++;
 
         return $this->result;
     }
     
     //Nombre d'entrées dans la table.
-    function Count_table($table, $errline, $errfile)
+    function count_table($table, $errline, $errfile)
     { 
-        $this->last_ressource = sqlite_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, SQLITE_ASSOC) or $this->sql_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Requête count invalide', $errline, $errfile);
+        $this->last_ressource = sqlite_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, SQLITE_ASSOC) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Requête count invalide', $errline, $errfile);
         $this->result = sqlite_fetch_array($this->last_ressource, SQLITE_ASSOC);
         $this->close($this->last_ressource); //Déchargement mémoire.
         $this->req++;
@@ -152,7 +152,7 @@ class Sql
     }
 
     //Limite des résultats de la requete sql.
-    function Sql_limit($offset, $number = 'ALL')
+    function limit($offset, $number = 'ALL')
     {
         return ' LIMIT ' . $number . ', ' .  $offset;
     }
@@ -165,7 +165,7 @@ class Sql
     //  EXEMPLE :
     //      - champ SQL : $champSQL = "id" ou $champSQL = 'id'
     //      - chaine PHP  : $strPHP = "'ma chaine'" ou $strPHP='\'ma chaine\''
-    function Sql_concat()
+    function Concat()
     {
         $nbr_args = func_num_args();
         $concatString = func_get_arg(0);
@@ -176,43 +176,43 @@ class Sql
     }
     
     //Balayage du retour de la requête sous forme de tableau indexé par le nom des champs.
-    function Sql_fetch_assoc($result)
+    function fetch_assoc($result)
     {
         return sqlite_fetch_array($result, SQLITE_ASSOC);
     }
     
     //Balayage du retour de la requête sous forme de tableau indexé numériquement.
-    function Sql_fetch_row($result)
+    function fetch_row($result)
     {
         return sqlite_fetch_array($result, SQLITE_NUM);
     }
     
     //Lignes affectées lors de requêtes de mise à jour ou d'insertion.
-    function Sql_affected_rows($ressource, $query)
+    function affected_rows($ressource, $query)
     {
         return sqlite_changes($this->last_ressource);
     }
     
     //Nombres de lignes retournées.
-    function Sql_num_rows($ressource, $query)
+    function num_rows($ressource, $query)
     {
         return sqlite_num_rows($ressource);
     }
     
     //Retourne l'id de la dernière insertion
-    function Sql_insert_id($query)
+    function insert_id($query)
     {
         return sqlite_last_insert_rowid($this->last_ressource);
     }
     
     //Retourne le nombre d'année entre la date et aujourd'hui.
-    function Sql_date_diff($field)
+    function date_diff($field)
     {
         return '(YEAR(CURRENT_DATE) - YEAR(' . $field . ')) - (RIGHT(CURRENT_DATE, 5) < RIGHT(' . $field . ', 5))';
     }
     
     //Déchargement mémoire.
-    function Close($result)
+    function close($result)
     {
 //         if( is_resource($result) )
 //             return sqlite_close($result);
@@ -220,14 +220,14 @@ class Sql
     }
 
     //Fermeture de la connexion postgresql ouverte.
-    function Sql_close()
+    function close()
     {
         if( $this->link ) // si la connexion est établie
             return sqlite_close($this->link); // on ferme la connexion ouverte.
     }
     
     //Liste les champs d'une table.
-    function Sql_list_fields($table)
+    function list_fields($table)
     {
         global $sql_base;
         
@@ -244,7 +244,7 @@ class Sql
     }
     
     //Liste les tables + infos.
-    function Sql_list_tables()
+    function list_tables()
     {
         global $sql_base;
         
@@ -267,7 +267,7 @@ class Sql
     }
         
     //Parsage d'un fichier SQL => exécution des requêtes.
-    function Sql_parse($file_path, $tableprefix = '')
+    function parse($file_path, $tableprefix = '')
     {
         $handle_sql = @fopen($file_path, 'r');
         if( $handle_sql )
@@ -302,13 +302,13 @@ class Sql
     }
     
     //Affichage du nombre de requête sql.
-    function Display_sql_request()
+    function display_request()
     {
         return $this->req;
     }
     
     //Coloration syntaxique du SQL
-    function Highlight_query($query)
+    function highlight_query($query)
     {
         $query = ' ' . strtolower($query) . ' ';
         
@@ -336,7 +336,7 @@ class Sql
     }
     
     //Indente une requête SQL.
-    function Indent_query($query)
+    function indent_query($query)
     {
         $query = ' ' . strtolower($query) . ' ';
         
@@ -358,7 +358,7 @@ class Sql
     
     ## Private Methods ##
     //Gestion des erreurs.
-    function sql_error($query, $errstr, $errline = '', $errfile = '') 
+    function _error($query, $errstr, $errline = '', $errfile = '') 
     {
         global $Errorh;
         

@@ -37,7 +37,7 @@ if( !empty($_POST['valid']))
 	$config_poll['poll_cookie'] = retrieve(POST, 'poll_cookie', 'poll', TSTRING_UNSECURE);	
 	$config_poll['poll_cookie_lenght'] = !empty($_POST['poll_cookie_lenght']) ? (numeric($_POST['poll_cookie_lenght']) * 3600 * 24) : 30*24*3600;	
 		
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_poll)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_poll)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des sondages #######
 	$Cache->Generate_module_file('poll');
@@ -55,16 +55,16 @@ else
 	$i = 0;
 	//Mini poll courant	
 	$mini_poll_list = '';
-	$result = $Sql->Query_while("SELECT id, question 
+	$result = $Sql->query_while("SELECT id, question 
 	FROM ".PREFIX."poll
 	WHERE archive = 0 AND visible = 1
 	ORDER BY timestamp", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$selected = in_array($row['id'], $CONFIG_POLL['poll_mini']) ? 'selected="selected"' : '';
 		$mini_poll_list .= '<option value="' . $row['id'] . '" ' . $selected . ' id="poll_mini' . $i++ . '">' . $row['question'] . '</option>';
 	}
-	$Sql->Close($result); 
+	$Sql->query_close($result); 
 	
 	$Template->Assign_vars(array(
 		'COOKIE_NAME' => !empty($CONFIG_POLL['poll_cookie']) ? $CONFIG_POLL['poll_cookie'] : 'poll',

@@ -119,13 +119,13 @@ if( $num_subcats > 0 )
 }
 
 //Displaying the questions that this cat contains
-$result = $Sql->Query_while("SELECT id, question, q_order, answer
+$result = $Sql->query_while("SELECT id, question, q_order, answer
 FROM ".PREFIX."faq
 WHERE idcat = '" . $id_faq . "'
 ORDER BY q_order",
 __LINE__, __FILE__);
 
-$num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
+$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
 
 if( $num_rows > 0 )
 {
@@ -144,7 +144,7 @@ if( $num_rows > 0 )
 	else
 		$Template->Assign_block_vars('questions_block', array());
 		
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		if( !$faq_display_block )
 		{

@@ -49,7 +49,7 @@ $to = retrieve(GET, 'to', -1);
 
 if( isset($_GET['fup']) ) //Changement de dossier
 {
-	$parent_folder = $Sql->Query_array("upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
+	$parent_folder = $Sql->query_array("upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
 	//die('test'.$parent_folder['id_parent'] );
 	if( !empty($folder_member) ) 
 		redirect(HOST . DIR . '/admin/admin_files.php?showm=1');
@@ -83,11 +83,11 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 			redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->error . '#errorh');
 		else //Insertion dans la bdd
 		{
-			$check_user_folder = $Sql->Query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $folder . "'", __LINE__, __FILE__);
+			$check_user_folder = $Sql->query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $folder . "'", __LINE__, __FILE__);
 			$user_id = ($check_user_folder <= 0) ? -1 : $Member->Get_attribute('user_id');
 			$user_id = max($user_id, $folder_member);
 			
-			$Sql->Query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $user_id . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $user_id . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
 		}
 	}
 	else
@@ -119,15 +119,15 @@ elseif( !empty($del_file) ) //Suppression d'un fichier
 elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 {
 	$move_list_parent = array();
-	$result = $Sql->Query_while("SELECT id, id_parent, name
+	$result = $Sql->query_while("SELECT id, id_parent, name
 	FROM ".PREFIX."upload_cat
 	WHERE user_id = '" . $Member->Get_attribute('user_id') . "'
 	ORDER BY id", __LINE__, __FILE__);
 	
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 		$move_list_parent[$row['id']] = $row['id_parent'];
 	
-	$Sql->Close($result);
+	$Sql->query_close($result);
 
 	$array_child_folder = array();
 	$Uploads->Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
@@ -163,8 +163,8 @@ else
 		LEFT JOIN ".PREFIX."member m ON m.user_id = uc.user_id
 		WHERE uc.id = '" . $folder . "'");
 
-	$result = $Sql->Query_while($sql_request, __LINE__, __FILE__);
-	$folder_info = $Sql->Sql_fetch_assoc($result);
+	$result = $Sql->query_while($sql_request, __LINE__, __FILE__);
+	$folder_info = $Sql->fetch_assoc($result);
 		
 	//Gestion des erreurs.
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled');
@@ -262,8 +262,8 @@ else
 		ORDER BY name";
 
 	//Affichage des dossiers
-	$result = $Sql->Query_while($sql_folder, __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	$result = $Sql->query_while($sql_folder, __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
@@ -283,13 +283,13 @@ else
 		));
 		$total_directories++;
 	}	
-	$Sql->Close($result);
+	$Sql->query_close($result);
 		
 	if( !$show_member ) //Dossier membres.
 	{
 		//Affichage des fichiers contenu dans le dossier
-		$result = $Sql->Query_while($sql_files, __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		$result = $Sql->query_while($sql_files, __LINE__, __FILE__);
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
@@ -337,11 +337,11 @@ else
 			$total_folder_size += $row['size'];
 			$total_files++;
 		}	
-		$Sql->Close($result);
+		$Sql->query_close($result);
 	}
 	
 
-	$total_size = $Sql->Query("SELECT SUM(size) FROM ".PREFIX."upload", __LINE__, __FILE__);
+	$total_size = $Sql->query("SELECT SUM(size) FROM ".PREFIX."upload", __LINE__, __FILE__);
 	$Template->Assign_vars(array(
 		'TOTAL_SIZE' => ($total_size > 1024) ? number_round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? number_round($total_folder_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($total_folder_size, 0) . ' ' . $LANG['unit_kilobytes'],

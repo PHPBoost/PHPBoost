@@ -105,14 +105,14 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 		
 		$z = 0;
 		list($admin, $del) = array('', ''); 			
-		$result = $Sql->Query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
+		$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
 		FROM ".PREFIX."news n
 		LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 		LEFT JOIN ".PREFIX."member m ON m.user_id = n.user_id		
 		WHERE '" . time() . "' >= n.start AND ('" . time() . "' <= n.end OR n.end = 0) AND n.visible = 1
 		ORDER BY n.timestamp DESC 
-		" . $Sql->Sql_limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
-		while($row = $Sql->Sql_fetch_assoc($result) )
+		" . $Sql->limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
+		while($row = $Sql->fetch_assoc($result) )
 		{
 			if( $is_admin )
 			{
@@ -146,7 +146,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 			));
 			$z++;
 		}
-		$Sql->Close($result);	
+		$Sql->query_close($result);	
 		
 		if( $z == 0 )
 		{
@@ -182,13 +182,13 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 			$new_row = '';
 		}
 		
-		$result = $Sql->Query_while("SELECT n.id, n.title, n.timestamp, nc.id AS idcat, nc.icon
+		$result = $Sql->query_while("SELECT n.id, n.title, n.timestamp, nc.id AS idcat, nc.icon
 		FROM ".PREFIX."news n
 		LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 		WHERE n.visible = 1
 		ORDER BY n.timestamp DESC 
-		" . $Sql->Sql_limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
-		while ($row = $Sql->Sql_fetch_assoc($result))
+		" . $Sql->limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
+		while ($row = $Sql->fetch_assoc($result))
 		{ 
 			//Séparation des news en colonnes si activé.
 			if( $column )
@@ -205,7 +205,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 				'U_NEWS' => 'news' . transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
 			));
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 	}
 }
 elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
@@ -223,8 +223,8 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $news['id'] . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" /></a>';
 	}
 
-	$next_news = $Sql->Query_array("news", "title", "id", "WHERE visible = 1 AND id > '" . $idnews . "' " . $Sql->sql_limit(0, 1), __LINE__, __FILE__);
-	$previous_news = $Sql->Query_array("news", "title", "id", "WHERE visible = 1 AND id < '" . $idnews . "' ORDER BY id DESC " . $Sql->sql_limit(0, 1), __LINE__, __FILE__);
+	$next_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id > '" . $idnews . "' " . $Sql->sql_limit(0, 1), __LINE__, __FILE__);
+	$previous_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id < '" . $idnews . "' ORDER BY id DESC " . $Sql->sql_limit(0, 1), __LINE__, __FILE__);
 
 	$tpl_news->Assign_vars(array(
 	    'L_SYNDICATION' => $LANG['syndication'],
@@ -259,7 +259,7 @@ elseif( !empty($idcat) )
 {
 	$tpl_news = new Template('news/news_cat.tpl');
 	
-	$cat = $Sql->Query_array('news_cat', 'id', 'name', 'icon', "WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->query_array('news_cat', 'id', 'name', 'icon', "WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	if( empty($cat['id']) )
 		$Errorh->Error_handler('error_unexist_cat', E_USER_REDIRECT);
 	
@@ -270,12 +270,12 @@ elseif( !empty($idcat) )
 		'L_CATEGORY' => $LANG['category']
 	));
 		
-	$result = $Sql->Query_while("SELECT n.id, n.title, n.nbr_com, nc.id AS idcat, nc.icon
+	$result = $Sql->query_while("SELECT n.id, n.title, n.nbr_com, nc.id AS idcat, nc.icon
 	FROM ".PREFIX."news n
 	LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 	WHERE n.visible = 1 AND n.idcat = '" . $idcat . "'
 	ORDER BY n.timestamp DESC", __LINE__, __FILE__);
-	while ($row = $Sql->Sql_fetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{ 
 		$tpl_news->Assign_block_vars('list', array(
 			'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),

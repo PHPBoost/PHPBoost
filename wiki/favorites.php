@@ -44,14 +44,14 @@ $remove_favorite = retrieve(GET, 'del', 0);
 if( $add_favorite > 0 )//Ajout d'un favori
 {
 	//on vérifie que l'article existe
-	$article_infos = $Sql->Query_array("wiki_articles", "encoded_title", "WHERE id = '" . $add_favorite . "'", __LINE__, __FILE__);
+	$article_infos = $Sql->query_array("wiki_articles", "encoded_title", "WHERE id = '" . $add_favorite . "'", __LINE__, __FILE__);
 	if( empty($article_infos['encoded_title']) ) //L'article n'existe pas
 		redirect(HOST . DIR . '/wiki/' . transid('wiki.php', '', '&'));
 	//On regarde que le sujet n'est pas en favoris
-	$is_favorite = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."wiki_favorites WHERE user_id = '" . $Member->Get_attribute('user_id') . "' AND id_article = '" . $add_favorite . "'", __LINE__, __FILE__);
+	$is_favorite = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_favorites WHERE user_id = '" . $Member->Get_attribute('user_id') . "' AND id_article = '" . $add_favorite . "'", __LINE__, __FILE__);
 	if( $is_favorite == 0 )
 	{
-		$Sql->Query_inject("INSERT INTO ".PREFIX."wiki_favorites (id_article, user_id) VALUES ('" . $add_favorite . "', '" . $Member->Get_attribute('user_id') . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."wiki_favorites (id_article, user_id) VALUES ('" . $add_favorite . "', '" . $Member->Get_attribute('user_id') . "')", __LINE__, __FILE__);
 		redirect(HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris
@@ -60,16 +60,16 @@ if( $add_favorite > 0 )//Ajout d'un favori
 elseif( $remove_favorite > 0 )
 {
 	//on vérifie que l'article existe
-	$article_infos = $Sql->Query_array("wiki_articles", "encoded_title", "WHERE id = '" . $remove_favorite . "'", __LINE__, __FILE__);
+	$article_infos = $Sql->query_array("wiki_articles", "encoded_title", "WHERE id = '" . $remove_favorite . "'", __LINE__, __FILE__);
 	if( empty($article_infos['encoded_title']) ) //L'article n'existe pas
 		redirect(HOST . DIR . '/wiki/' . transid('wiki.php', '', '&'));
 		
 	//On regarde que le sujet n'est pas en favoris
-	$is_favorite = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."wiki_favorites WHERE user_id = '" . $Member->Get_attribute('user_id') . "' AND id_article = '" . $remove_favorite . "'", __LINE__, __FILE__);
+	$is_favorite = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_favorites WHERE user_id = '" . $Member->Get_attribute('user_id') . "' AND id_article = '" . $remove_favorite . "'", __LINE__, __FILE__);
 	//L'article est effectivement en favoris
 	if( $is_favorite > 0 )
 	{
-		$Sql->Query_inject("DELETE FROM ".PREFIX."wiki_favorites WHERE id_article = '" . $remove_favorite . "' AND user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."wiki_favorites WHERE id_article = '" . $remove_favorite . "' AND user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 		redirect(HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris
@@ -91,13 +91,13 @@ else
 		$Errorh->Error_handler($errstr, E_USER_WARNING);
 	
 	//on liste les favoris
-	$result = $Sql->Query_while("SELECT f.id, a.id, a.title, a.encoded_title
+	$result = $Sql->query_while("SELECT f.id, a.id, a.title, a.encoded_title
 	FROM ".PREFIX."wiki_favorites f
 	LEFT JOIN ".PREFIX."wiki_articles a ON a.id = f.id_article
 	WHERE user_id = '" . $Member->Get_attribute('user_id') . "'"
 	, __LINE__, __FILE__);
 	
-	$num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
 	if( $num_rows == 0 )
 	{
@@ -106,7 +106,7 @@ else
 		));
 	}
 	
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$Template->Assign_block_vars('list', array(
 			'U_ARTICLE' => transid('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),

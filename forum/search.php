@@ -99,11 +99,11 @@ $selected = ($idcat == '-1') ? ' selected="selected"' : '';
 $Template->Assign_block_vars('cat', array(
 	'CAT' => '<option value="-1"' . $selected . '>' . $LANG['all'] . '</option>'
 ));	
-$result = $Sql->Query_while("SELECT id, name, level
+$result = $Sql->query_while("SELECT id, name, level
 FROM ".PREFIX."forum_cats 
 WHERE aprob = 1 " . $auth_cats_select . "
 ORDER BY id_left", __LINE__, __FILE__);
-while( $row = $Sql->Sql_fetch_assoc($result) )
+while( $row = $Sql->fetch_assoc($result) )
 {	
 	$margin = ($row['level'] > 0) ? str_repeat('----------', $row['level']) : '----';
 	$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
@@ -111,7 +111,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 		'CAT' => '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>'
 	));	
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 require_once('../forum/forum_functions.php');
 
@@ -134,7 +134,7 @@ if( !empty($valid_search) && !empty($search) )
 		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY msg.id
 		ORDER BY relevance DESC
-		" . $Sql->Sql_limit(0, 24);
+		" . $Sql->limit(0, 24);
 
 		$req_title = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, 0 AS relevance2
 		FROM ".PREFIX."forum_msg msg
@@ -146,7 +146,7 @@ if( !empty($valid_search) && !empty($search) )
 		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY t.id
 		ORDER BY relevance DESC
-		" . $Sql->Sql_limit(0, 24);
+		" . $Sql->limit(0, 24);
 		
 		$req_all = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, MATCH(msg.contents) AGAINST('" . $search . "') AS relevance2
 		FROM ".PREFIX."forum_msg msg
@@ -158,7 +158,7 @@ if( !empty($valid_search) && !empty($search) )
 		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY t.id
 		ORDER BY relevance DESC
-		" . $Sql->Sql_limit(0, 24);
+		" . $Sql->limit(0, 24);
 		
 		switch($where)
 		{
@@ -174,8 +174,8 @@ if( !empty($valid_search) && !empty($search) )
 
 		$max_relevance = 4.5;		
 		$check_result = false;
-		$result = $Sql->Query_while($req, __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) ) //On execute la requête dans une boucle pour afficher tout les résultats.
+		$result = $Sql->query_while($req, __LINE__, __FILE__);
+		while( $row = $Sql->fetch_assoc($result) ) //On execute la requête dans une boucle pour afficher tout les résultats.
 		{ 
 			$title = $row['title'];
 			if( !empty($row['title']) )
@@ -209,7 +209,7 @@ if( !empty($valid_search) && !empty($search) )
 			
 			$check_result = true;
 		}	
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		
 		if( $check_result !== true )
 			$Errorh->Error_handler($LANG['no_result'], E_USER_NOTICE);
@@ -228,12 +228,12 @@ elseif( !empty($valid_search) )
 	
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
+$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
 FROM ".PREFIX."sessions s 
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/search.php'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $Sql->Sql_fetch_assoc($result) )
+while( $row = $Sql->fetch_assoc($result) )
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
@@ -257,7 +257,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
 $Template->Assign_vars(array(

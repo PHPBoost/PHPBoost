@@ -51,11 +51,11 @@ foreach($_PAGES_CATS as $key => $value )
 	}
 }
 //Liste des fichiers de la racine
-$result = $Sql->Query_while("SELECT title, id, encoded_title, auth
+$result = $Sql->query_while("SELECT title, id, encoded_title, auth
 	FROM ".PREFIX."pages
 	WHERE id_cat = 0 AND is_cat = 0
 	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
-while( $row = $Sql->Sql_fetch_assoc($result) )
+while( $row = $Sql->fetch_assoc($result) )
 {
 	//Autorisation particulière ?
 	$special_auth = !empty($row['auth']);
@@ -66,7 +66,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 		$root .= '<tr><td class="row2"><img src="' . $Template->Module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 	}
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 $Template->Assign_vars(array(
 	'PAGES_PATH' => $Template->Module_data_path('pages'),
@@ -78,14 +78,14 @@ $Template->Assign_vars(array(
 ));
 
 $contents = '';
-$result = $Sql->Query_while("SELECT c.id, p.title, p.encoded_title
+$result = $Sql->query_while("SELECT c.id, p.title, p.encoded_title
 FROM ".PREFIX."pages_cats c
 LEFT JOIN ".PREFIX."pages p ON p.id = c.id_page
 WHERE c.id_parent = 0
 ORDER BY p.title ASC", __LINE__, __FILE__);
-while( $row = $Sql->Sql_fetch_assoc($result) )
+while( $row = $Sql->fetch_assoc($result) )
 {
-	$sub_cats_number = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 	if( $sub_cats_number > 0 )
 	{	
 		$Template->Assign_block_vars('list', array(
@@ -100,7 +100,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 		));
 	}
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 $Template->Assign_vars(array(
 	'SELECTED_CAT' => 0,
 	'CAT_0' => 'pages_selected_cat',

@@ -45,7 +45,7 @@ class PollInterface extends ModuleInterface
 		$code = 'global $CONFIG_POLL;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_POLL = sunserialize($Sql->Query("SELECT value FROM ".PREFIX."configs WHERE name = 'poll'", __LINE__, __FILE__));
+		$CONFIG_POLL = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'poll'", __LINE__, __FILE__));
 		$CONFIG_POLL = is_array($CONFIG_POLL) ? $CONFIG_POLL : array();
 		
 		$code .= '$CONFIG_POLL = ' . var_export($CONFIG_POLL, true) . ';' . "\n";
@@ -55,7 +55,7 @@ class PollInterface extends ModuleInterface
 		{
 			foreach($CONFIG_POLL['poll_mini'] as $key => $idpoll)
 			{
-				$poll = $Sql->Query_array('poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
+				$poll = $Sql->query_array('poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
 				if( !empty($poll['id']) ) //Sondage existant.
 				{	
 					$array_answer = explode('|', $poll['answers']);
@@ -84,18 +84,18 @@ class PollInterface extends ModuleInterface
 	{
 		global $Sql;
 		
-		$Sql->Query_inject("DELETE FROM ".PREFIX."poll_ip WHERE timestamp < '" . (time() - (3600 * 24)) . "' AND user_id = -1", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."poll_ip WHERE timestamp < '" . (time() - (3600 * 24)) . "' AND user_id = -1", __LINE__, __FILE__);
 
 		//Publication des news en attente pour la date donnée.
-		$result = $Sql->Query_while("SELECT id, start, end
+		$result = $Sql->query_while("SELECT id, start, end
 		FROM ".PREFIX."poll
 		WHERE visible != 0", __LINE__, __FILE__);
-		while($row = $Sql->Sql_fetch_assoc($result) )
+		while($row = $Sql->fetch_assoc($result) )
 		{ 
 			if( $row['start'] <= time() && $row['start'] != 0 )
-				$Sql->Query_inject("UPDATE ".PREFIX."poll SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."poll SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if( $row['end'] <= time() && $row['end'] != 0 )
-				$Sql->Query_inject("UPDATE ".PREFIX."poll SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."poll SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
 }

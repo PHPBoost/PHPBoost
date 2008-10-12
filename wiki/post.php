@@ -93,23 +93,23 @@ if( !empty($contents) ) //On enregistre un article
 	{
 		if( $id_edit > 0 )//On édite un article
 		{		
-			$article_infos = $Sql->Query_array("wiki_articles", "encoded_title", "auth", "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__); 
+			$article_infos = $Sql->query_array("wiki_articles", "encoded_title", "auth", "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__); 
 			//Autorisations
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
 			if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_EDIT))) )
 				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 			
-			$previous_id_contents = $Sql->Query("SELECT id_contents FROM ".PREFIX."wiki_articles WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+			$previous_id_contents = $Sql->query("SELECT id_contents FROM ".PREFIX."wiki_articles WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 			//On met à jour l'ancien contenu (comme archive)
-			$Sql->Query_inject("UPDATE ".PREFIX."wiki_contents SET activ = 0 WHERE id_contents = '" . $previous_id_contents . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."wiki_contents SET activ = 0 WHERE id_contents = '" . $previous_id_contents . "'", __LINE__, __FILE__);
 			//On insère le contenu
-			$Sql->Query_inject("INSERT INTO ".PREFIX."wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . $menu . "', '" . $contents . "', 1, " . $Member->Get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . $menu . "', '" . $contents . "', 1, " . $Member->Get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
 			//Dernier id enregistré
-			$id_contents = $Sql->Sql_insert_id("SELECT MAX(id_contents) FROM ".PREFIX."wiki_contents");
+			$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM ".PREFIX."wiki_contents");
             
 	 		//On donne le nouveau id de contenu
-			$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
         
             // Feeds Regeneration
             require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
@@ -128,7 +128,7 @@ if( !empty($contents) ) //On enregistre un article
 				$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 			
 			//On vérifie que le titre n'existe pas
-			$article_exists = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title = '" . url_encode_rewrite($title) . "'", __LINE__, __FILE__);
+			$article_exists = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title = '" . url_encode_rewrite($title) . "'", __LINE__, __FILE__);
 			
 			
 			//Si il existe: message d'erreur
@@ -136,30 +136,30 @@ if( !empty($contents) ) //On enregistre un article
 				$errstr = $LANG['wiki_title_already_exists'];
 			else //On enregistre
 			{
-				$Sql->Query_inject("INSERT INTO ".PREFIX."wiki_articles (title, encoded_title, id_cat, is_cat) VALUES ('" . $title . "', '" . url_encode_rewrite($title) . "', '" . $new_id_cat . "', '" . $is_cat . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."wiki_articles (title, encoded_title, id_cat, is_cat) VALUES ('" . $title . "', '" . url_encode_rewrite($title) . "', '" . $new_id_cat . "', '" . $is_cat . "')", __LINE__, __FILE__);
 				//On récupère le numéro de l'article créé
-				$id_article = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."wiki_articles");
+				$id_article = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."wiki_articles");
 				//On insère le contenu
-				$Sql->Query_inject("INSERT INTO ".PREFIX."wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . $menu . "', '" . $contents . "', 1, " . $Member->Get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . $menu . "', '" . $contents . "', 1, " . $Member->Get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
 				//On met à jour le numéro du contenu dans la table articles
-				$id_contents = $Sql->Sql_insert_id("SELECT MAX(id_contents) FROM ".PREFIX."wiki_contents");
+				$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM ".PREFIX."wiki_contents");
 				$cat_update = '';
 				if( $is_cat == 1 )//si c'est une catégorie, on la crée
 				{
-					$Sql->Query_inject("INSERT INTO ".PREFIX."wiki_cats (id_parent, article_id) VALUES (" . $new_id_cat . ", '" . $id_article . "')", __LINE__, __FILE__);
+					$Sql->query_inject("INSERT INTO ".PREFIX."wiki_cats (id_parent, article_id) VALUES (" . $new_id_cat . ", '" . $id_article . "')", __LINE__, __FILE__);
 					//on récupère l'id de la dernière catégorie créée
-					$id_created_cat = $Sql->Sql_insert_id("SELECT MAX(id) FROM ".PREFIX."wiki_articles");
+					$id_created_cat = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."wiki_articles");
 					$cat_update = ", id_cat = '" . $id_created_cat . "'";
 					//On régénère le cache
 					$Cache->Generate_module_file('wiki');
 				}
-				$Sql->Query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article, __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article, __LINE__, __FILE__);
 				
                 // Feeds Regeneration
                 require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
                 Feed::clear_cache('wiki');
                 
-				$redirect = $Sql->Query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);
+				$redirect = $Sql->query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);
 				redirect(transid('wiki.php?title=' . $redirect, $redirect, '' , '&'));
 			}
 		}
@@ -173,7 +173,7 @@ $Template->Assign_vars(array(
 ));
 if( $id_edit > 0 )//On édite
 {
-	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 	
 	//Autorisations
 	$general_auth = empty($article_infos['auth']) ? true : false;
@@ -181,7 +181,7 @@ if( $id_edit > 0 )//On édite
 	if( !((!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_EDIT))) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
-	$article_contents = $Sql->Query_array('wiki_contents', '*', "WHERE id_contents = '" . $article_infos['id_contents'] . "'", __LINE__, __FILE__);
+	$article_contents = $Sql->query_array('wiki_contents', '*', "WHERE id_contents = '" . $article_infos['id_contents'] . "'", __LINE__, __FILE__);
 	$contents = $article_contents['content'];
 	if( !empty($article_contents['menu']) ) //On reforme les paragraphes
 	{
@@ -239,14 +239,14 @@ else
 	{
 		$Template->Assign_block_vars('create', array());
 		$contents = '';
-		$result = $Sql->Query_while("SELECT c.id, a.title, a.encoded_title
+		$result = $Sql->query_while("SELECT c.id, a.title, a.encoded_title
 		FROM ".PREFIX."wiki_cats c
 		LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.article_id
 		WHERE c.id_parent = 0
 		ORDER BY title ASC", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$sub_cats_number = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if( $sub_cats_number > 0 )
 			{	
 				$Template->Assign_block_vars('create.list', array(
@@ -261,7 +261,7 @@ else
 				));
 			}
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		$Template->Assign_vars(array(
 			'SELECTED_CAT' => 0,
 			'CAT_0' => 'wiki_selected_cat',

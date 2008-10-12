@@ -88,8 +88,8 @@ else
 		$CAT_GALLERY[0]['level'] = -1;
 	}
 	
-	$nbr_pics = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
-	$total_cat = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
+	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
+	$total_cat = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
@@ -153,14 +153,14 @@ else
 		));		
 			
 		$i = 0;	
-		$result = $Sql->Query_while("SELECT gc.id, gc.name, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path 
+		$result = $Sql->query_while("SELECT gc.id, gc.name, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path 
 		FROM ".PREFIX."gallery_cats gc
 		LEFT JOIN ".PREFIX."gallery g ON g.idcat = gc.id
 		" . $clause_cat . "
 		GROUP BY gc.id
 		ORDER BY gc.id_left
-		" . $Sql->Sql_limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		" . $Sql->limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			//On genère le tableau pour $CONFIG_GALLERY['nbr_column'] colonnes
 			$multiple_x = $i / $nbr_column_cats;
@@ -183,7 +183,7 @@ else
 				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info_admin'], $row['nbr_pics'], $row['nbr_pics_unaprob'])
 			));
 		}
-		$Sql->Close($result);	
+		$Sql->query_close($result);	
 		
 		//Création des cellules du tableau si besoin est.
 		while( !is_int($i/$nbr_column_cats) )
@@ -213,24 +213,24 @@ else
 		));
 		
 		$array_cat_list = array(0 => '<option value="0" %s>' . $LANG['root'] . '</option>');
-		$result = $Sql->Query_while("SELECT id, level, name 
+		$result = $Sql->query_while("SELECT id, level, name 
 		FROM ".PREFIX."gallery_cats
 		ORDER BY id_left", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 			$array_cat_list[$row['id']] = '<option value="' . $row['id'] . '" %s>' . $margin . ' ' . $row['name'] . '</option>';			
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		
 		if( !empty($idpics) )
 		{
-			$result = $Sql->Query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
+			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
 			FROM ".PREFIX."gallery g
 			LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id		
 			WHERE g.idcat = '" . $idcat . "' AND g.id = '" . $idpics . "'
-			" . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
-			$info_pics = $Sql->Sql_fetch_assoc($result);			
+			" . $Sql->limit(0, 1), __LINE__, __FILE__);
+			$info_pics = $Sql->fetch_assoc($result);			
 			if( !empty($info_pics['id']) )
 			{
 				//Affichage miniatures.		
@@ -241,11 +241,11 @@ else
 				list($i, $reach_pics_pos, $pos_pics, $thumbnails_before, $thumbnails_after, $start_thumbnails, $end_thumbnails) = array(0, false, 0, 0, 0, $nbr_pics_display_before, $nbr_pics_display_after);
 				$array_pics = array();
 				$array_js = 'var array_pics = new Array();';
-				$result = $Sql->Query_while("SELECT g.id, g.idcat, g.path
+				$result = $Sql->query_while("SELECT g.id, g.idcat, g.path
 				FROM ".PREFIX."gallery g
 				LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id		
 				WHERE g.idcat = '" . $idcat . "'", __LINE__, __FILE__);
-				while( $row = $Sql->Sql_fetch_assoc($result) )
+				while( $row = $Sql->fetch_assoc($result) )
 				{
 					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 					if( !file_exists('pics/thumbnails/' . $row['path']) )
@@ -280,7 +280,7 @@ else
 					$array_js .= 'array_pics[' . $i . '][\'path\'] = \'' . $row['path'] . "';\n";
 					$i++;
 				}
-				$Sql->Close($result);
+				$Sql->query_close($result);
 								
 				if( $thumbnails_before < $nbr_pics_display_before )	
 					$end_thumbnails += $nbr_pics_display_before - $thumbnails_before;				
@@ -350,13 +350,13 @@ else
 		else
 		{
 			$j = 0;
-			$result = $Sql->Query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.login, m.user_id
+			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.login, m.user_id
 			FROM ".PREFIX."gallery g
 			LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id
 			WHERE g.idcat = '" . $idcat . "' 
 			ORDER BY g.timestamp 
-			" . $Sql->Sql_limit($Pagination->First_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
-			while( $row = $Sql->Sql_fetch_assoc($result) )
+			" . $Sql->limit($Pagination->First_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
+			while( $row = $Sql->fetch_assoc($result) )
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 				if( !file_exists('pics/thumbnails/' . $row['path']) )
@@ -403,7 +403,7 @@ else
 					'U_POSTOR' => $LANG['by'] . ' <a class="com" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
 				));	
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 			
 			//Création des cellules du tableau si besoin est.
 			while( !is_int($j/$nbr_column_pics) )

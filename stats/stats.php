@@ -55,8 +55,8 @@ $Template->Assign_vars(array(
 
 if( $members )
 {
-	$last_user = $Sql->Query_array('member', 'user_id', 'login', "ORDER BY user_id DESC " . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
-	$nbr_member = $Sql->Count_table('member', __LINE__, __FILE__);
+	$last_user = $Sql->query_array('member', 'user_id', 'login', "ORDER BY user_id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
+	$nbr_member = $Sql->count_table('member', __LINE__, __FILE__);
 	
 	$Template->Assign_vars(array(
 		'C_STATS_MEMBERS' => true,
@@ -76,18 +76,18 @@ if( $members )
 	));
 	
 	$stats_array = array();
-	$result = $Sql->Query_while("SELECT at.theme, COUNT(m.user_theme) AS compt
+	$result = $Sql->query_while("SELECT at.theme, COUNT(m.user_theme) AS compt
 	FROM ".PREFIX."themes at
 	LEFT JOIN ".PREFIX."member m ON m.user_theme = at.theme
 	GROUP BY at.theme
 	ORDER BY compt DESC", __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result))
+	while($row = $Sql->fetch_assoc($result))
 	{
 		$info_theme = load_ini_file('../templates/' . $row['theme'] . '/config/', $CONFIG['lang']);
 		$name = isset($info_theme['name']) ? $info_theme['name'] : $row['theme'];
 		$stats_array[$name] = $row['compt'];
 	}	
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	include_once('../kernel/framework/util/images_stats.class.php');
 	$Stats = new Stats();
 		
@@ -104,11 +104,11 @@ if( $members )
 	}
 
 	$stats_array = array();
-	$result = $Sql->Query_while("SELECT count(user_sex) as compt, user_sex
+	$result = $Sql->query_while("SELECT count(user_sex) as compt, user_sex
 	FROM ".PREFIX."member
 	GROUP BY user_sex
 	ORDER BY compt", __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result))
+	while($row = $Sql->fetch_assoc($result))
 	{
 		switch($row['user_sex'])
 		{
@@ -124,7 +124,7 @@ if( $members )
 		}
 		$stats_array[$name] = $row['compt'];
 	}	
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Stats->color_index = 0;	
 	$Stats->Load_statsdata($stats_array, 'ellipse');
@@ -140,11 +140,11 @@ if( $members )
 	}
 	
 	$i = 1;		
-	$result = $Sql->Query_while("SELECT user_id, login, user_msg 
+	$result = $Sql->query_while("SELECT user_id, login, user_msg 
 	FROM ".PREFIX."member 
 	ORDER BY user_msg DESC 
-	" . $Sql->Sql_limit(0, 10), __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result))
+	" . $Sql->limit(0, 10), __LINE__, __FILE__);
+	while($row = $Sql->fetch_assoc($result))
 	{
 		$Template->Assign_block_vars('top_poster', array(
 			'ID' => $i,
@@ -155,12 +155,12 @@ if( $members )
 		
 		$i++;
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 }
 elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 {
 	//On affiche les visiteurs totaux et du jour
-	$compteur = $Sql->Query_array('compteur', 'ip AS nbr_ip', 'total', "WHERE id = 1", __LINE__, __FILE__);
+	$compteur = $Sql->query_array('compteur', 'ip AS nbr_ip', 'total', "WHERE id = 1", __LINE__, __FILE__);
 	$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 	$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 	
@@ -195,7 +195,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 		$previous_year = $visit_year - 1;
 
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-		$info = $Sql->Query_array('stats', 'MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $visit_year . "' GROUP BY stats_year", __LINE__, __FILE__);
+		$info = $Sql->query_array('stats', 'MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $visit_year . "' GROUP BY stats_year", __LINE__, __FILE__);
 
 		$Template->Assign_vars(array(
 			'C_STATS_VISIT' => true,
@@ -212,7 +212,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 		));
 
 		//Année maximale
-		$info_year = $Sql->Query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+		$info_year = $Sql->query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
 		$years = '';
 		for($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 		{
@@ -231,11 +231,11 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			));
 			
 			//On fait la liste des visites journalières
-			$result = $Sql->Query_while("SELECT stats_month, SUM(nbr) AS total 
+			$result = $Sql->query_while("SELECT stats_month, SUM(nbr) AS total 
 			FROM ".PREFIX."stats 
 			WHERE stats_year = '" . $visit_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
-			while($row = $Sql->Sql_fetch_assoc($result))
+			while($row = $Sql->fetch_assoc($result))
 			{	
 				//On affiche les stats numériquement dans un tableau en dessous
 				$Template->Assign_block_vars('value', array(
@@ -243,16 +243,16 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 					'NBR' => $row['total']
 				));
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 		}
 		else
 		{
-			$result = $Sql->Query_while("SELECT SUM(nbr) AS total 
+			$result = $Sql->query_while("SELECT SUM(nbr) AS total 
 			FROM ".PREFIX."stats 
 			WHERE stats_year = '" . $visit_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
 			$max_month = 1;
-			while($row = $Sql->Sql_fetch_assoc($result) )
+			while($row = $Sql->fetch_assoc($result) )
 			{
 				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 			}			
@@ -264,11 +264,11 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			$i = 1; 
 			$last_month = 1;
 			$months_not_empty = array();
-			$result = $Sql->Query_while("SELECT stats_month, SUM(nbr) AS total 
+			$result = $Sql->query_while("SELECT stats_month, SUM(nbr) AS total 
 			FROM ".PREFIX."stats 
 			WHERE stats_year = '" . $visit_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
-			while($row = $Sql->Sql_fetch_assoc($result))
+			while($row = $Sql->fetch_assoc($result))
 			{	
 				$diff = 0;
 				if( $row['stats_month'] != $i )
@@ -306,7 +306,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 				$last_month = $row['stats_month'];
 				$i++;
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 
 			//Génération des td manquants.
 			$date_day = isset($date_day) ? $date_day : 1;
@@ -340,7 +340,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 		$previous_year = ($month > 1) ? $year : $year - 1;		
 		
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-		$info = $Sql->Query_array('stats', 'MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr', "WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' GROUP BY stats_month", __LINE__, __FILE__);
+		$info = $Sql->query_array('stats', 'MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr', "WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' GROUP BY stats_month", __LINE__, __FILE__);
 			
 		$Template->Assign_vars(array(
 			'C_STATS_VISIT' => true,
@@ -366,7 +366,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 		}
 		
 		//Année maximale
-		$info_year = $Sql->Query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+		$info_year = $Sql->query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
 		$years = '';
 		for($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 		{
@@ -387,10 +387,10 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			));
 			
 			//On fait la liste des visites journalières
-			$result = $Sql->Query_while("SELECT nbr, stats_day AS day 
+			$result = $Sql->query_while("SELECT nbr, stats_day AS day 
 			FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 			ORDER BY stats_day", __LINE__, __FILE__);
-			while($row = $Sql->Sql_fetch_assoc($result))
+			while($row = $Sql->fetch_assoc($result))
 			{	
 				$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
 				
@@ -400,7 +400,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 					'NBR' => $row['nbr']
 				));
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 		}
 		else
 		{
@@ -417,10 +417,10 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 				
 				//On fait la liste des visites journalières
 				$j = 0;
-				$result = $Sql->Query_while("SELECT nbr, stats_day AS day 
+				$result = $Sql->query_while("SELECT nbr, stats_day AS day 
 				FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 				ORDER BY stats_day", __LINE__, __FILE__);
-				while($row = $Sql->Sql_fetch_assoc($result))
+				while($row = $Sql->fetch_assoc($result))
 				{	
 					//Complétion des jours précédent le premier enregistrement du mois.
 					if( $j == 0 )
@@ -468,7 +468,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 
 					$i++;
 				}
-				$Sql->Close($result);
+				$Sql->query_close($result);
 				
 				//Génération des td manquants.
 				$date_day = isset($date_day) ? $date_day : 1;
@@ -516,10 +516,10 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 	}	
 	
 	//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-	$info = $Sql->Query_array('stats', 'MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages', "WHERE stats_year = '" . $year . "'" . $clause . " AND pages_detail <> '' GROUP BY stats_month", __LINE__, __FILE__);
+	$info = $Sql->query_array('stats', 'MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages', "WHERE stats_year = '" . $year . "'" . $clause . " AND pages_detail <> '' GROUP BY stats_month", __LINE__, __FILE__);
 
 	//On affiche les visiteurs totaux et du jour
-	$compteur_total = $Sql->Query("SELECT SUM(pages) FROM ".PREFIX."stats", __LINE__, __FILE__);
+	$compteur_total = $Sql->query("SELECT SUM(pages) FROM ".PREFIX."stats", __LINE__, __FILE__);
 	$compteur_day = array_sum(pages_displayed(NO_UPDATE_PAGES)) + 1;
 	$compteur_total = $compteur_total + $compteur_day;
 	$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
@@ -546,7 +546,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 		$previous_year = $pages_year - 1;
 		
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-		$info = $Sql->Query_array('stats', 'MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $pages_year . "' AND pages_detail <> '' GROUP BY stats_year", __LINE__, __FILE__);
+		$info = $Sql->query_array('stats', 'MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $pages_year . "' AND pages_detail <> '' GROUP BY stats_year", __LINE__, __FILE__);
 	
 		$Template->Assign_vars(array(
 			'C_STATS_VISIT' => true,
@@ -563,7 +563,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 		));
 
 		//Année maximale
-		$info_year = $Sql->Query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+		$info_year = $Sql->query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
 		$years = '';
 		for($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 		{
@@ -582,11 +582,11 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			));
 			
 			//On fait la liste des visites journalières
-			$result = $Sql->Query_while("SELECT stats_month, SUM(pages) AS total 
+			$result = $Sql->query_while("SELECT stats_month, SUM(pages) AS total 
 			FROM ".PREFIX."stats 
 			WHERE stats_year = '" . $pages_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
-			while($row = $Sql->Sql_fetch_assoc($result))
+			while($row = $Sql->fetch_assoc($result))
 			{	
 				//On affiche les stats numériquement dans un tableau en dessous
 				$Template->Assign_block_vars('value', array(
@@ -594,16 +594,16 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 					'NBR' => $row['total']
 				));
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 		}
 		else
 		{
-			$result = $Sql->Query_while("SELECT SUM(nbr) AS total 
+			$result = $Sql->query_while("SELECT SUM(nbr) AS total 
 			FROM ".PREFIX."stats 
 			WHERE stats_year = '" . $visit_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
 			$max_month = 1;
-			while($row = $Sql->Sql_fetch_assoc($result) )
+			while($row = $Sql->fetch_assoc($result) )
 			{
 				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 			}
@@ -615,11 +615,11 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			$i = 1; 
 			$last_month = 1;
 			$months_not_empty = array();			
-			$result = $Sql->Query_while("SELECT stats_month, SUM(pages) AS total 
+			$result = $Sql->query_while("SELECT stats_month, SUM(pages) AS total 
 			FROM ".PREFIX."stats 
 			WHERE stats_year = '" . $pages_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
-			while($row = $Sql->Sql_fetch_assoc($result))
+			while($row = $Sql->fetch_assoc($result))
 			{	
 				$diff = 0;
 				if( $row['stats_month'] != $i )
@@ -657,7 +657,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				$last_month = $row['stats_month'];
 				$i++;
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 
 			//Génération des td manquants.
 			$date_day = isset($date_day) ? $date_day : 1;
@@ -723,7 +723,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 		}
 		
 		//Année maximale
-		$info_year = $Sql->Query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+		$info_year = $Sql->query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
 		$years = '';
 		for($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 		{
@@ -742,10 +742,10 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 		));
 		
 		//On fait la liste des visites journalières
-		$result = $Sql->Query_while("SELECT pages, stats_day, stats_month, stats_year
+		$result = $Sql->query_while("SELECT pages, stats_day, stats_month, stats_year
 		FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 		ORDER BY stats_day", __LINE__, __FILE__);
-		while($row = $Sql->Sql_fetch_assoc($result))
+		while($row = $Sql->fetch_assoc($result))
 		{	
 			$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
 			
@@ -755,7 +755,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				'NBR' => $row['pages']
 			));
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 	}
 	else
 	{
@@ -793,7 +793,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 		}
 		
 		//Année maximale
-		$info_year = $Sql->Query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+		$info_year = $Sql->query_array('stats', 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
 		$years = '';
 		for($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 		{
@@ -814,10 +814,10 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			));
 			
 			//On fait la liste des visites journalières
-			$result = $Sql->Query_while("SELECT pages, stats_day, stats_month, stats_year
+			$result = $Sql->query_while("SELECT pages, stats_day, stats_month, stats_year
 			FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 			ORDER BY stats_day", __LINE__, __FILE__);
-			while($row = $Sql->Sql_fetch_assoc($result))
+			while($row = $Sql->fetch_assoc($result))
 			{	
 				$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
 				
@@ -827,7 +827,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 					'NBR' => $row['pages']
 				));
 			}
-			$Sql->Close($result);
+			$Sql->query_close($result);
 		}
 		else
 		{
@@ -844,10 +844,10 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				
 				//On fait la liste des visites journalières
 				$j = 0;
-				$result = $Sql->Query_while("SELECT pages, stats_day AS day, stats_month, stats_year 
+				$result = $Sql->query_while("SELECT pages, stats_day AS day, stats_month, stats_year 
 				FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 				ORDER BY stats_day", __LINE__, __FILE__);
-				while($row = $Sql->Sql_fetch_assoc($result))
+				while($row = $Sql->fetch_assoc($result))
 				{	
 					//Complétion des jours précédent le premier enregistrement du mois.
 					if( $j == 0 )
@@ -895,7 +895,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 
 					$i++;
 				}
-				$Sql->Close($result);
+				$Sql->query_close($result);
 				
 				//Génération des td manquants.
 				$date_day = isset($date_day) ? $date_day : 1;
@@ -922,14 +922,14 @@ elseif( $referer )
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
-	$nbr_referer = $Sql->Query("SELECT COUNT(DISTINCT(url)) FROM ".PREFIX."stats_referer WHERE type = 0", __LINE__, __FILE__);
-	$result = $Sql->Query_while("SELECT id, COUNT(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
+	$nbr_referer = $Sql->query("SELECT COUNT(DISTINCT(url)) FROM ".PREFIX."stats_referer WHERE type = 0", __LINE__, __FILE__);
+	$result = $Sql->query_while("SELECT id, COUNT(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 	FROM ".PREFIX."stats_referer
 	WHERE type = 0
 	GROUP BY url
 	ORDER BY total_visit DESC
-	" . $Sql->Sql_limit($Pagination->First_msg(15, 'p'), 15), __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result))
+	" . $Sql->limit($Pagination->First_msg(15, 'p'), 15), __LINE__, __FILE__);
+	while($row = $Sql->fetch_assoc($result))
 	{	
 		$average = ($row['total_visit'] / $row['nbr_day']);
 		if( $row['yesterday_visit'] > $average )
@@ -962,7 +962,7 @@ elseif( $referer )
 			'TREND' => '<img src="../templates/' . $CONFIG['theme'] . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
 		));
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Template->Assign_vars(array(
 		'C_STATS_REFERER' => true,
@@ -979,14 +979,14 @@ elseif( $keyword )
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
-	$nbr_keyword = $Sql->Query("SELECT COUNT(DISTINCT(relative_url)) FROM ".PREFIX."stats_referer WHERE type = 1", __LINE__, __FILE__);
-	$result = $Sql->Query_while("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
+	$nbr_keyword = $Sql->query("SELECT COUNT(DISTINCT(relative_url)) FROM ".PREFIX."stats_referer WHERE type = 1", __LINE__, __FILE__);
+	$result = $Sql->query_while("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 	FROM ".PREFIX."stats_referer
 	WHERE type = 1
 	GROUP BY relative_url
 	ORDER BY total_visit DESC
-	" . $Sql->Sql_limit($Pagination->First_msg(15, 'p'), 15), __LINE__, __FILE__);
-	while($row = $Sql->Sql_fetch_assoc($result))
+	" . $Sql->limit($Pagination->First_msg(15, 'p'), 15), __LINE__, __FILE__);
+	while($row = $Sql->fetch_assoc($result))
 	{	
 		$average = ($row['total_visit'] / $row['nbr_day']);
 		if( $row['yesterday_visit'] > $average )
@@ -1019,7 +1019,7 @@ elseif( $keyword )
 			'TREND' => '<img src="../templates/' . $CONFIG['theme'] . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
 		));
 	}	
-	$Sql->Close($result);
+	$Sql->query_close($result);
 		
 	$Template->Assign_vars(array(
 		'C_STATS_KEYWORD' => true,

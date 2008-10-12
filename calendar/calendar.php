@@ -54,11 +54,11 @@ if( $checkdate === true && empty($id) && !$add )
 	//Redirection vers l'évenement suivant/précédent.
 	if( $get_event == 'up' )
 	{
-		$event_up = $Sql->Query("SELECT timestamp 
+		$event_up = $Sql->query("SELECT timestamp 
 		FROM ".PREFIX."calendar 
 		WHERE timestamp > '" . mktime(23, 59, 59, $month, $day, $year, 0) . "' 
 		ORDER BY timestamp 
-		" . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
+		" . $Sql->limit(0, 1), __LINE__, __FILE__);
 		
 		if( !empty($event_up) )
 		{
@@ -74,11 +74,11 @@ if( $checkdate === true && empty($id) && !$add )
 	}
 	elseif( $get_event == 'down' )
 	{
-		$event_down = $Sql->Query("SELECT timestamp 
+		$event_down = $Sql->query("SELECT timestamp 
 		FROM ".PREFIX."calendar 
 		WHERE timestamp < '" . mktime(0, 0, 0, $month, $day, $year, 0) . "' 
 		ORDER BY timestamp DESC 
-		" . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
+		" . $Sql->limit(0, 1), __LINE__, __FILE__);
 			
 		if( !empty($event_down) )
 		{
@@ -157,17 +157,17 @@ if( $checkdate === true && empty($id) && !$add )
 	}			
 	
 	//Récupération des actions du mois en cours.	
-	$result = $Sql->Query_while("SELECT timestamp
+	$result = $Sql->query_while("SELECT timestamp
 	FROM ".PREFIX."calendar 
 	WHERE timestamp BETWEEN '" . mktime(0, 0, 0, $month, 1, $year, 0) . "' AND '" . mktime(23, 59, 59, $month, $month_day, $year, 0) . "'
 	ORDER BY timestamp
-	" . $Sql->Sql_limit(0, ($array_month[$month - 1] - 1)), __LINE__, __FILE__);	
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	" . $Sql->limit(0, ($array_month[$month - 1] - 1)), __LINE__, __FILE__);	
+	while( $row = $Sql->fetch_assoc($result) )
 	{ 
 		$day_action = gmdate_format('j', $row['timestamp']);
 		$array_action[$day_action] = true;
 	}
-	$Sql->Close($result);	
+	$Sql->query_close($result);	
 	
 	//Génération des jours du calendrier.
 	$array_l_days =  array($LANG['monday'], $LANG['tuesday'], $LANG['wenesday'], $LANG['thursday'], $LANG['friday'], $LANG['saturday'], 
@@ -212,12 +212,12 @@ if( $checkdate === true && empty($id) && !$add )
 	if( !empty($day) )
 	{
 		$java = '';
-		$result = $Sql->Query_while("SELECT cl.id, cl.timestamp, cl.title, cl.contents, cl.user_id, cl.nbr_com, m.login
+		$result = $Sql->query_while("SELECT cl.id, cl.timestamp, cl.title, cl.contents, cl.user_id, cl.nbr_com, m.login
 		FROM ".PREFIX."calendar cl
 		LEFT JOIN ".PREFIX."member m ON m.user_id=cl.user_id
 		WHERE cl.timestamp BETWEEN '" . mktime(0, 0, 0, $month, $day, $year, 0) . "' AND '" . mktime(23, 59, 59, $month, $day, $year, 0) . "'
 		GROUP BY cl.id", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			if( $Member->Check_level(ADMIN_LEVEL) )
 			{
@@ -251,7 +251,7 @@ if( $checkdate === true && empty($id) && !$add )
 			
 			$check_action = true;
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 			
 		if( !isset($check_action) )
 		{		
@@ -286,10 +286,10 @@ elseif( !empty($id) )
 	
 	if( $del ) //Suppression simple.
 	{
-		$Sql->Query_inject("DELETE FROM ".PREFIX."calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//Suppression des commentaires associés.
-		$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'calendar'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'calendar'", __LINE__, __FILE__);
 		
 		redirect(HOST . SCRIPT . SID2);
 	}
@@ -315,7 +315,7 @@ elseif( !empty($id) )
 			{
 				if( !empty($title) && !empty($contents) ) //succès
 				{
-					$Sql->Query_inject("UPDATE ".PREFIX."calendar SET title = '" . $title . "', contents = '" . $contents . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE ".PREFIX."calendar SET title = '" . $title . "', contents = '" . $contents . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					
 					$day = gmdate_format('d', $timestamp);
 					$month = gmdate_format('m', $timestamp);
@@ -336,7 +336,7 @@ elseif( !empty($id) )
 			));
 			
 			//Récupération des infos
-			$row = $Sql->Query_array('calendar', 'timestamp', 'title', 'contents', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$row = $Sql->query_array('calendar', 'timestamp', 'title', 'contents', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
 			$Template->Assign_vars(array(				
 				'C_CALENDAR_FORM' => true,
@@ -409,7 +409,7 @@ elseif( $add ) //Ajout d'un évenement
 		{
 			if( !empty($title) && !empty($contents) ) //succès
 			{
-				$Sql->Query_inject("INSERT INTO ".PREFIX."calendar (timestamp,title,contents,user_id,nbr_com) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $Member->Get_attribute('user_id') . "', 0)", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."calendar (timestamp,title,contents,user_id,nbr_com) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $Member->Get_attribute('user_id') . "', 0)", __LINE__, __FILE__);
 				
 				$day = gmdate_format('d', $timestamp);
 				$month = gmdate_format('m', $timestamp);

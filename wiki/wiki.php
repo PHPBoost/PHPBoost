@@ -43,15 +43,15 @@ $parse_redirection = false;
 //Requêtes préliminaires utiles par la suite
 if( !empty($encoded_title) ) //Si on connait son titre
 {
-	$result = $Sql->Query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, a.nbr_com, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
+	$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, a.nbr_com, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
 	FROM ".PREFIX."wiki_articles a
 	LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id_contents
 	LEFT JOIN ".PREFIX."wiki_favorites f ON f.id_article = a.id
 	WHERE a.encoded_title = '" . $encoded_title . "'
 	GROUP BY a.id", __LINE__, __FILE__);	
-	$num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
-	$article_infos = $Sql->Sql_fetch_assoc($result);
-	$Sql->Close($result);
+	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+	$article_infos = $Sql->fetch_assoc($result);
+	$Sql->query_close($result);
 	$id_article = $article_infos['id'];
 
 	if( !empty($article_infos['redirect']) )//Si on est redirigé
@@ -59,14 +59,14 @@ if( !empty($encoded_title) ) //Si on connait son titre
 		$ex_title = $article_infos['title'];
 		$id_redirection = $article_infos['id'];
 		
-		$result = $Sql->Query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.nbr_com, a.defined_status, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
+		$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.nbr_com, a.defined_status, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
 		FROM ".PREFIX."wiki_articles a
 		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN ".PREFIX."wiki_favorites f ON f.id_article = a.id
 		WHERE a.id = '" . $article_infos['redirect'] . "'
 		GROUP BY a.id", __LINE__, __FILE__);	
-		$article_infos = $Sql->Sql_fetch_assoc($result);
-		$Sql->Close($result);
+		$article_infos = $Sql->fetch_assoc($result);
+		$Sql->query_close($result);
 		$id_article = $article_infos['id'];
 		$parse_redirection = true;
 	}
@@ -74,13 +74,13 @@ if( !empty($encoded_title) ) //Si on connait son titre
 //Sinon on cherche dans les archives
 elseif( !empty($id_contents) )
 {
-	$result = $Sql->Query_while("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, a.nbr_com, f.id AS id_favorite, c.menu, c.content
+	$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, a.nbr_com, f.id AS id_favorite, c.menu, c.content
 	FROM ".PREFIX."wiki_contents c
 	LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.id_article
 	LEFT JOIN ".PREFIX."wiki_favorites f ON f.id_article = a.id
 	WHERE c.id_contents = '" . $id_contents . "'", __LINE__, __FILE__);
-	$article_infos = $Sql->Sql_fetch_assoc($result);
-	$Sql->Close($result);
+	$article_infos = $Sql->fetch_assoc($result);
+	$Sql->query_close($result);
 	$id_article = $article_infos['id'];
 	$num_rows = 1;
 }
@@ -106,7 +106,7 @@ $Template->Assign_vars(array(
 if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 { 
 	if( $_WIKI_CONFIG['count_hits'] != 0 )//Si on prend en compte le nombre de vus
-		$Sql->Query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."wiki_articles SET hits = hits + 1 WHERE id = '" . $article_infos['id'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."wiki_articles SET hits = hits + 1 WHERE id = '" . $article_infos['id'] . "'", __LINE__, __FILE__);
 
 	//Si c'est une archive
 	if( $id_contents > 0 )
@@ -166,20 +166,20 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 	if( $article_infos['is_cat'] == 1 && $id_contents == 0 ) //Catégorie non archivée
 	{
 		//On liste les articles de la catégorie et ses sous catégories
-		$result = $Sql->Query_while("SELECT a.title, a.encoded_title, a.id
+		$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id
 		FROM ".PREFIX."wiki_articles a
 		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id_contents
 		WHERE a.id_cat = '" . $article_infos['id_cat'] . "' AND a.id != '" . $id_article . "' AND a.redirect = 0
 		ORDER BY a.title",
 		__LINE__, __FILE__);
 
-		$num_articles = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE a.id_cat = '" . $article_infos['id_cat'] . "' AND a.id <> '" . $id_article . "' AND a.redirect = 0", __LINE__, __FILE__);
+		$num_articles = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE a.id_cat = '" . $article_infos['id_cat'] . "' AND a.id <> '" . $id_article . "' AND a.redirect = 0", __LINE__, __FILE__);
 		
 		$Template->Assign_block_vars('cat', array(
 			'RSS' => $num_articles > 0 ? '<a href="syndication.php?cat=' . $article_infos['id_cat'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/rss.png" alt="RSS" /></a>' : ''
 		));
 
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$Template->Assign_block_vars('cat.list_art', array(
 				'TITLE' => $row['title'],
@@ -224,13 +224,13 @@ else
 {
 	if( $_WIKI_CONFIG['last_articles'] > 1 )
 	{
-		$result = $Sql->Query_while("SELECT a.title, a.encoded_title, a.id
+		$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id
 		FROM ".PREFIX."wiki_articles a
 		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id_contents
 		WHERE a.redirect = 0
 		ORDER BY c.timestamp DESC
 		LIMIT 0, " . $_WIKI_CONFIG['last_articles'], __LINE__, __FILE__);		
-		$articles_number = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+		$articles_number = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 		
 		$Template->Assign_block_vars('last_articles', array(
 			'L_ARTICLES' => $LANG['wiki_last_articles_list'],
@@ -238,7 +238,7 @@ else
 		));
 		
 		$i = 0;
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$Template->Assign_block_vars('last_articles.list', array(
 				'ARTICLE' => $row['title'],

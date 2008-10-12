@@ -45,7 +45,7 @@ $del_article = retrieve(GET, 'del', 0);
 if( $id_auth > 0 ) //Autorisations de l'article
 {
 	define('TITLE', $LANG['wiki_auth_management']);
-	$article_infos = $Sql->Query_array('wiki_articles', 'id', 'title', 'encoded_title', 'auth', 'is_cat', 'id_cat', "WHERE id = '" . $id_auth . "'", __LINE__, __FILE__);
+	$article_infos = $Sql->query_array('wiki_articles', 'id', 'title', 'encoded_title', 'auth', 'is_cat', 'id_cat', "WHERE id = '" . $id_auth . "'", __LINE__, __FILE__);
 	
 	if( !$Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
@@ -53,7 +53,7 @@ if( $id_auth > 0 ) //Autorisations de l'article
 elseif( $wiki_status > 0 )//On s'intéresse au statut de l'article
 {
 	define('TITLE', $LANG['wiki_status_management']);
-	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = " . $wiki_status, __LINE__, __FILE__);
+	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = " . $wiki_status, __LINE__, __FILE__);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
@@ -64,7 +64,7 @@ elseif( $wiki_status > 0 )//On s'intéresse au statut de l'article
 elseif( $move > 0 ) //Déplacement d'article
 {
 	define('TITLE', $LANG['wiki_moving_article']);
-	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = " . $move, __LINE__, __FILE__);
+	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = " . $move, __LINE__, __FILE__);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
@@ -75,7 +75,7 @@ elseif( $move > 0 ) //Déplacement d'article
 elseif( $rename > 0 ) //Renommer l'article
 {
 	define('TITLE', $LANG['wiki_renaming_article']);
-	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = " . $rename, __LINE__, __FILE__);
+	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = " . $rename, __LINE__, __FILE__);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
@@ -86,9 +86,9 @@ elseif( $rename > 0 ) //Renommer l'article
 elseif( $redirect > 0 || $create_redirection > 0 )//Redirection
 {
 	if( $redirect > 0 )
-		$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = '" . $redirect . "'", __LINE__, __FILE__);	
+		$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = '" . $redirect . "'", __LINE__, __FILE__);	
 	else
-		$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = '" . $create_redirection . "'", __LINE__, __FILE__);	
+		$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = '" . $create_redirection . "'", __LINE__, __FILE__);	
 	define('TITLE', $LANG['wiki_redirections_management']);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
@@ -99,7 +99,7 @@ elseif( $redirect > 0 || $create_redirection > 0 )//Redirection
 }
 elseif( isset($_GET['i']) && $idcom > 0 )
 {
-	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = '" . $idcom . "'", __LINE__, __FILE__);	
+	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = '" . $idcom . "'", __LINE__, __FILE__);	
 	define('TITLE', $LANG['wiki_article_com']);
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
@@ -109,7 +109,7 @@ elseif( isset($_GET['i']) && $idcom > 0 )
 }
 elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 {
-	$article_infos = $Sql->Query_array('wiki_articles', '*', "WHERE id = '" . $del_article . "'", __LINE__, __FILE__);	
+	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = '" . $del_article . "'", __LINE__, __FILE__);	
 	define('TITLE', $LANG['wiki_remove_cat']);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
@@ -131,7 +131,7 @@ $Template->Assign_vars(array(
 
 if( $random )//Recherche d'une page aléatoire
 {
-	$page = $Sql->Query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE redirect = 0 ORDER BY rand() " . $Sql->Sql_limit(0, 1), __LINE__, __FILE__);
+	$page = $Sql->query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE redirect = 0 ORDER BY rand() " . $Sql->limit(0, 1), __LINE__, __FILE__);
 	if( !empty($page) ) //On redirige
 		redirect(HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $page, $page));
 	else
@@ -258,12 +258,12 @@ elseif( $redirect > 0 ) //Redirections de l'article
 		'L_TITLE' => sprintf($LANG['wiki_redirections_to_this_article'], $article_infos['title'])
 	));
 	//Liste des redirections
-	$result = $Sql->Query_while("SELECT title, id
+	$result = $Sql->query_while("SELECT title, id
 		FROM ".PREFIX."wiki_articles
 		WHERE redirect = '" . $redirect . "'
 		ORDER BY title", __LINE__, __FILE__);
-	$num_rows = $Sql->Sql_num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE redirect = '" . $redirect . "'", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE redirect = '" . $redirect . "'", __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$Template->Assign_block_vars('redirect.list', array(
 			'U_REDIRECTION_DELETE' => transid('action.php?del_redirection=' . $row['id']),

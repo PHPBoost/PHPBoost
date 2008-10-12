@@ -29,7 +29,7 @@
 
 ########################admin_body_footer.tpl#######################
 
-$Sql->Sql_close(); //Fermeture de mysql.
+$Sql->close(); //Fermeture de mysql.
 
 $Template->Set_filenames(array(
 	'admin_footer'=> 'admin/admin_footer.tpl'
@@ -59,7 +59,7 @@ if( $CONFIG['bench'] )
 	$Template->Assign_vars(array(
 		'C_DISPLAY_BENCH' => true,
 		'BENCH' => $Bench->Display_bench('site'), //Fin du benchmark
-		'REQ' => $Sql->Display_sql_request(),
+		'REQ' => $Sql->display_request(),
 		'L_UNIT_SECOND' => HOST,
 		'L_REQ' => $LANG['sql_req'],
 		'L_ACHIEVED' => $LANG['achieved'],

@@ -43,15 +43,15 @@ $Template->Set_filenames(array(
 $total_day = number_round((time() - $CONFIG['start'])/(3600*24), 0);
 $timestamp_today = @mktime(0, 0, 1, gmdate_format('m'), gmdate_format('d'), gmdate_format('y'));
 
-$sum = $Sql->Query_array("forum_cats", "SUM(nbr_topic) as total_topics", "SUM(nbr_msg) as total_msg", "WHERE level <> 0 AND level < 2 AND aprob = 1", __LINE__, __FILE__);
+$sum = $Sql->query_array("forum_cats", "SUM(nbr_topic) as total_topics", "SUM(nbr_msg) as total_msg", "WHERE level <> 0 AND level < 2 AND aprob = 1", __LINE__, __FILE__);
 
 $total_day = max(1, $total_day);
 $nbr_topics_day = number_round($sum['total_topics']/$total_day, 1);
 $nbr_msg_day = number_round($sum['total_msg']/$total_day, 1);
-$nbr_topics_today = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."forum_topics t
+$nbr_topics_today = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_topics t
 JOIN ".PREFIX."forum_msg m ON m.id = t.first_msg_id
 WHERE m.timestamp > '" . $timestamp_today . "'", __LINE__, __FILE__);
-$nbr_msg_today = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."forum_msg WHERE timestamp > '" . $timestamp_today . "'", __LINE__, __FILE__);
+$nbr_msg_today = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_msg WHERE timestamp > '" . $timestamp_today . "'", __LINE__, __FILE__);
 
 $Template->Assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
@@ -89,61 +89,61 @@ if( is_array($CAT_FORUM) )
 }
 
 //Dernières réponses	
-$result = $Sql->Query_while("SELECT t.id, t.title, c.id as cid, c.auth
+$result = $Sql->query_while("SELECT t.id, t.title, c.id as cid, c.auth
 FROM ".PREFIX."forum_topics t
 LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
 WHERE c.level != 0 AND c.aprob = 1 " . $auth_cats . "
 ORDER BY t.last_timestamp DESC
-" . $Sql->Sql_limit(0, 10), __LINE__, __FILE__);
-while($row = $Sql->Sql_fetch_assoc($result))
+" . $Sql->limit(0, 10), __LINE__, __FILE__);
+while($row = $Sql->fetch_assoc($result))
 {
 	$Template->Assign_block_vars('last_msg', array(
 		'U_TOPIC_ID' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 //Les plus vus	
-$result = $Sql->Query_while("SELECT t.id, t.title, c.id as cid, c.auth
+$result = $Sql->query_while("SELECT t.id, t.title, c.id as cid, c.auth
 FROM ".PREFIX."forum_topics t
 LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
 WHERE c.level != 0 AND c.aprob = 1 " . $auth_cats . "
 ORDER BY t.nbr_views DESC
-" . $Sql->Sql_limit(0, 10), __LINE__, __FILE__);
-while($row = $Sql->Sql_fetch_assoc($result))
+" . $Sql->limit(0, 10), __LINE__, __FILE__);
+while($row = $Sql->fetch_assoc($result))
 {
 	$Template->Assign_block_vars('popular', array(
 		'U_TOPIC_ID' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 //Les plus répondus	
-$result = $Sql->Query_while("SELECT t.id, t.title, c.id as cid, c.auth
+$result = $Sql->query_while("SELECT t.id, t.title, c.id as cid, c.auth
 FROM ".PREFIX."forum_topics t
 LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
 WHERE c.level != 0 AND c.aprob = 1 " . $auth_cats . "
 ORDER BY t.nbr_msg DESC
-" . $Sql->Sql_limit(0, 10), __LINE__, __FILE__);
-while($row = $Sql->Sql_fetch_assoc($result))
+" . $Sql->limit(0, 10), __LINE__, __FILE__);
+while($row = $Sql->fetch_assoc($result))
 {
 	$Template->Assign_block_vars('answers', array(
 		'U_TOPIC_ID' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
 }	
-$Sql->Close($result);
+$Sql->query_close($result);
 	
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-$result = $Sql->Query_while("SELECT s.user_id, s.level, m.login 
+$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
 FROM ".PREFIX."sessions s 
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $Sql->Sql_fetch_assoc($result) )
+while( $row = $Sql->fetch_assoc($result) )
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
@@ -167,7 +167,7 @@ while( $row = $Sql->Sql_fetch_assoc($result) )
 	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 }
-$Sql->Close($result);
+$Sql->query_close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
 $Template->Assign_vars(array(

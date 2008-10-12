@@ -45,13 +45,13 @@ if( $install )
 	$secure = retrieve(POST, $theme . 'secure', -1);
 	$activ = retrieve(POST, $theme . 'activ', 0);
 		
-	$check_theme = $Sql->Query("SELECT theme FROM ".PREFIX."themes WHERE theme = '" . strprotect($theme) . "'", __LINE__, __FILE__);	
+	$check_theme = $Sql->query("SELECT theme FROM ".PREFIX."themes WHERE theme = '" . strprotect($theme) . "'", __LINE__, __FILE__);	
 	if( empty($check_theme) && !empty($theme) )
 	{
 		//On récupère la configuration du thème.
 		$info_theme = load_ini_file('../templates/' . $theme . '/config/', $CONFIG['lang']);
 		
-		$Sql->Query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure, left_column, right_column) VALUES('" . strprotect($theme) . "', '" . $activ . "', '" .  $secure . "', '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure, left_column, right_column) VALUES('" . strprotect($theme) . "', '" . $activ . "', '" .  $secure . "', '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
 		
 		//Régénération du cache.
 		$Cache->Generate_file('themes');
@@ -73,7 +73,7 @@ elseif( !empty($_FILES['upload_theme']['name']) ) //Upload et décompression de l
 	$error = '';
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
-		$check_theme = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."themes WHERE theme = '" . strprotect($_FILES['upload_theme']['name']) . "'", __LINE__, __FILE__);
+		$check_theme = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."themes WHERE theme = '" . strprotect($_FILES['upload_theme']['name']) . "'", __LINE__, __FILE__);
 		if( empty($check_theme) && !is_dir('../templates/' . $_FILES['upload_theme']['name']) )
 		{
 			include_once('../kernel/framework/io/upload.class.php');
@@ -167,16 +167,16 @@ else
 		}	
 		@closedir($dh); //On ferme le dossier
 	
-		$result = $Sql->Query_while("SELECT theme 
+		$result = $Sql->query_while("SELECT theme 
 		FROM ".PREFIX."themes", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
 			$key = array_search($row['theme'], $array_dir);
 			if( $key !== false)
 				unset($array_dir[$key]); //On supprime ces clées du tableau.
 		}
-		$Sql->Close($result);
+		$Sql->query_close($result);
 		
 		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 		foreach($array_dir as $theme_array => $value_array) //On effectue la recherche dans le tableau.

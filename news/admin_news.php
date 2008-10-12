@@ -89,7 +89,7 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		else //Ajout des heures et minutes
 			$timestamp = ' , timestamp = \'' . time() . '\'';
 			
-		$Sql->Query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . $contents . "', extend_contents = '" . $extend_contents . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
+		$Sql->query_inject("UPDATE ".PREFIX."news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . $contents . "', extend_contents = '" . $extend_contents . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
 		WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
         
         
@@ -99,8 +99,8 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
-		$CONFIG_NEWS['nbr_news'] = $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
-		$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
+		$CONFIG_NEWS['nbr_news'] = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 				
 		###### Régénération du cache des news #######
 		$Cache->Generate_module_file('news');
@@ -113,10 +113,10 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
 elseif( $del && !empty($id) ) //Suppression de la news.
 {
 	//On supprime dans la bdd.
-	$Sql->Query_inject("DELETE FROM ".PREFIX."news WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM ".PREFIX."news WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
 	//On supprimes les éventuels commentaires associés.
-	$Sql->Query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'news'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'news'", __LINE__, __FILE__);
 
     // Feeds Regeneration
     require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
@@ -124,8 +124,8 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 	
 	//Mise à jour du nombre de news dans le cache de la configuration.
 	$Cache->Load_file('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
-	$CONFIG_NEWS['nbr_news'] = $Sql->Query("SELECT COUNT(*) AS nbr_news FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
-	$Sql->Query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
+	$CONFIG_NEWS['nbr_news'] = $Sql->query("SELECT COUNT(*) AS nbr_news FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 		
 	redirect(HOST . SCRIPT);
 }
@@ -135,7 +135,7 @@ elseif( !empty($id) ) //Vue de la news
 		'admin_news_management'=> 'news/admin_news_management.tpl'
 	));
 
-	$row = $Sql->Query_array('news', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->query_array('news', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 	$Template->Assign_block_vars('news', array(
 		'TITLE' => $row['title'],
@@ -208,9 +208,9 @@ elseif( !empty($id) ) //Vue de la news
 	//Catégories.	
 	$i = 0;
 	$idcat = $row['idcat'];
-	$result = $Sql->Query_while("SELECT id, name 
+	$result = $Sql->query_while("SELECT id, name 
 	FROM ".PREFIX."news_cat", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
 		$Template->Assign_block_vars('news.select', array(
@@ -218,7 +218,7 @@ elseif( !empty($id) ) //Vue de la news
 		));
 		$i++;
 	}	
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
@@ -296,9 +296,9 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 	
 	//Catégories.	
 	$i = 0;
-	$result = $Sql->Query_while("SELECT id, name 
+	$result = $Sql->query_while("SELECT id, name 
 	FROM ".PREFIX."news_cat", __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
 		$Template->Assign_block_vars('news.select', array(
@@ -306,7 +306,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 		));
 		$i++;
 	}	
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
@@ -316,7 +316,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
 		'EXTEND_CONTENTS' => second_parse(stripslashes(strparse($extend_contents))) . '<br /><br />',
-		'PSEUDO' => $Sql->Query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__),
+		'PSEUDO' => $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__),
 		'USER_ID' => $user_id,
 		'IMG_PREVIEW' => !empty($img) ? '<img src="' . $img . '" alt="" />': $LANG['no_img'],
 		'IMG' => !empty($img) ? '<img src="' . stripslashes($img) . '" alt="" class="img_right" />' : '',
@@ -368,7 +368,7 @@ else
 		'admin_news_management'=> 'news/admin_news_management.tpl'
 	));
 	
-	$nbr_news = $Sql->Count_table('news', __LINE__, __FILE__);
+	$nbr_news = $Sql->count_table('news', __LINE__, __FILE__);
 	//On crée une pagination si le nombre de news est trop important.
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
@@ -394,13 +394,13 @@ else
 	$Template->Assign_block_vars('list', array(
 	));
 	
-	$result = $Sql->Query_while("SELECT nc.name, n.id, n.title, n.timestamp, n.visible, n.start, n.end, m.login 
+	$result = $Sql->query_while("SELECT nc.name, n.id, n.title, n.timestamp, n.visible, n.start, n.end, m.login 
 	FROM ".PREFIX."news n
 	LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
 	LEFT JOIN ".PREFIX."member m ON m.user_id = n.user_id
 	ORDER BY n.timestamp DESC 
-	" . $Sql->Sql_limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
-	while( $row = $Sql->Sql_fetch_assoc($result) )
+	" . $Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	while( $row = $Sql->fetch_assoc($result) )
 	{
 		if( $row['visible'] && $row['start'] > time() )
 			$aprob = $LANG['waiting'];
@@ -431,7 +431,7 @@ else
 			'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : '')
 		));
 	}
-	$Sql->Close($result);
+	$Sql->query_close($result);
 	
 	$Template->Pparse('admin_news_management');
 }

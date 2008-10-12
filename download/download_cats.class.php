@@ -77,7 +77,7 @@ class DownloadCats extends CategoriesManagement
 				parent::Move_category_into_another_category($id_cat, $new_id_cat_content);			
 		}
 		
-		$Sql->Query_inject("UPDATE ".PREFIX."download SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."download SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
 		
 		$this->Recount_sub_files();
 		
@@ -91,7 +91,7 @@ class DownloadCats extends CategoriesManagement
 		if( $id_parent == 0 || array_key_exists($id_parent, $this->cache_var) )
 		{
 			$new_id_cat = parent::Add_category($id_parent, $name);
-			$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET contents = '" . $description . "', icon = '" . $image . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."download_cat SET contents = '" . $description . "', icon = '" . $image . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
 			//We don't recount the number of questions because this category is empty
 			return 'e_success';
 		}
@@ -120,7 +120,7 @@ class DownloadCats extends CategoriesManagement
 					$this->Recount_sub_files(NOT_CACHE_GENERATION);
 				}
 			}
-			$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET name = '" . $name . "', icon = '" . $icon . "', contents = '" . $description . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."download_cat SET name = '" . $name . "', icon = '" . $icon . "', contents = '" . $description . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
 			$Cache->Generate_module_file('download');
 			
 			return 'e_success';
@@ -186,7 +186,7 @@ class DownloadCats extends CategoriesManagement
 		if( $test = parent::Delete_category($id) )
 		{
 			//We remove its whole content
-			$Sql->Query_inject("DELETE FROM ".PREFIX."download WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."download WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
 			return true;
 		}
 		else
@@ -210,9 +210,9 @@ class DownloadCats extends CategoriesManagement
 		if( $cat_id != 0 )
 		{
 			//We add to this number the number of questions of this category
-			$num_subquestions += (int) $Sql->Query("SELECT COUNT(*) FROM ".PREFIX."download WHERE idcat = '" . $cat_id . "'", __LINE__, __FILE__);
+			$num_subquestions += (int) $Sql->query("SELECT COUNT(*) FROM ".PREFIX."download WHERE idcat = '" . $cat_id . "'", __LINE__, __FILE__);
 			
-			$Sql->Query_inject("UPDATE ".PREFIX."download_cat SET num_files = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "' AND visible = 1", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."download_cat SET num_files = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "' AND visible = 1", __LINE__, __FILE__);
 			
 			return $num_subquestions;
 		}

@@ -52,7 +52,7 @@ function check_database_config($host, $login, $password, $database_name, $tables
 	$status = CONNECTION_FAILED;
 	
 	//Tentative de connexion à la base de données
-	switch($Sql->Sql_connect($host, $login, $password, $database_name, ERRORS_MANAGEMENT_BY_RETURN))
+	switch($Sql->connect($host, $login, $password, $database_name, ERRORS_MANAGEMENT_BY_RETURN))
 	{
 		//La connexion a échoué, l'hôte ou les identifiants sont erronés
 		case CONNECTION_FAILED:
@@ -64,7 +64,7 @@ function check_database_config($host, $login, $password, $database_name, $tables
 			
 			//On regarde si elle a pu être traitée
 			$table_list = $Sql->list_databases();
-			$Sql->Sql_close();
+			$Sql->close();
 			
 			if( in_array($database_name, $table_list))
 				return DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED;
@@ -74,10 +74,10 @@ function check_database_config($host, $login, $password, $database_name, $tables
 		case CONNECTED_TO_DATABASE:
 			//Est-ce qu'une installation de PHPBoost n'existe déjà pas à sur cette base avec le même préfixe ?
 			define('PREFIX', $tables_prefix);
-			$tables_list = $Sql->Sql_list_tables();
+			$tables_list = $Sql->list_tables();
 			
 			//Fermeture de la connexion à la base de données
-			$Sql->Sql_close();
+			$Sql->close();
 
 			//On fait le test sur quelques tables du noyau
 			if( !empty($tables_list[$tables_prefix . 'member']) || !empty($tables_list[$tables_prefix . 'configs']) )

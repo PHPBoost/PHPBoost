@@ -335,7 +335,7 @@ function redirect($url)
     global $Sql;
     
     if( !empty($Sql) && is_object($Sql) ) //Coupure de la connexion mysql.
-        $Sql->Sql_close();
+        $Sql->close();
         
     header('Location:' . $url);
     exit;
