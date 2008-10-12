@@ -345,7 +345,7 @@ elseif( $pm_del_convers ) //Suppression de conversation.
 			
 			$view_status = $Sql->query("SELECT view_status FROM ".PREFIX."pm_msg WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__);	
 			$update_nbr_pm = ($view_status == '0') ? true : false;	
-			$Privatemsg->delete_conversation(($User->get_attribute('user_id'), $row['id'], $expd, $del_convers, $update_nbr_pm);
+			$Privatemsg->delete_conversation($User->get_attribute('user_id'), $row['id'], $expd, $del_convers, $update_nbr_pm);
 		}
 	}
 	
@@ -387,7 +387,7 @@ elseif( !empty($pm_del) ) //Suppression du message privé, si le destinataire ne 
 				}	
 				elseif( $pm_del == $id_first ) //Suppression de la conversation.
 				{	
-					$Privatemsg->delete_conversation(($pm_to, $pm['idconvers'], $expd, DEL_PM_CONVERS, UPDATE_MBR_PM);
+					$Privatemsg->delete_conversation($pm_to, $pm['idconvers'], $expd, DEL_PM_CONVERS, UPDATE_MBR_PM);
 					redirect(HOST . DIR . '/member/pm.php' . SID2);
 				}					
 			}
