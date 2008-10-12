@@ -136,7 +136,11 @@
 						<h1>{L_INTRO_TITLE}</h1>
 						{L_INTRO_EXPLAIN}
 						
-						<div style="margin-bottom:150px;">&nbsp;</div>
+						<div style="margin-bottom:60px;">&nbsp;</div>
+						
+						<h1>{DISTRIBUTION}</h1>
+						{L_DISTRIBUTION_EXPLAIN}
+						{DISTRIBUTION_DESCRIPTION}
 						
 						<fieldset class="submit_case">
 							<a href="{L_NEXT_STEP}" title="{L_START_INSTALL}" ><img src="templates/images/right.png" alt="{L_START_INSTALL}" /></a>

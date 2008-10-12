@@ -43,7 +43,6 @@ require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions 
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
 require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
 
-
 define('ERROR_REPORTING', E_ALL | E_NOTICE);
 @error_reporting(ERROR_REPORTING);
 set_magic_quotes_runtime(0);
@@ -52,10 +51,6 @@ define('HOST', 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 define('FILE', $server_path);
 define('DIR', str_replace('/install/install.php', '', $server_path));
-
-//Valeurs par défaut
-define('DEFAULT_THEME', 'main');
-define('START_PAGE', '/member/member.php');
 
 $step = retrieve(GET, 'step', 1, TUNSIGNED_INT);
 $step = $step > STEPS_NUMBER ? 1 : $step;
@@ -69,6 +64,42 @@ if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
 	$lang = DEFAULT_LANGUAGE;
 }
 
+
+//Chargement de la configuration de la distribution
+if( is_file('distribution/distribution_' . $lang . '.php') )
+{
+	include('distribution/distribution_' . $lang . '.php');
+}
+else
+{
+	require_once(PATH_TO_ROOT . '/kernel/framework/io/folder.class.php');
+	$distribution_folder = new Folder('distribution');
+	$distribution_files = $distribution_folder->get_files('`distribution_[a-z_-]+\.php`i');
+	if( count($distribution_files) > 0)
+		include('distribution/distribution_' . $distribution_files[0]->get_name() . '.php');
+	else
+	{
+		//Distribution par défaut
+		//Nom de la distribution
+		define('DISTRIBUTION_NAME', 'Default distribution');
+		
+		//Description de la distribution
+		define('DISTRIBUTION_DESCRIPTION', 'This distribution is the default distribution. You will manage to install PHPBoost with the default configuration but it will install only the kernel without any module.');
+		
+		//Thème de la distribution
+		define('DISTRIBUTION_THEME', 'main');
+		
+		//Page de démarrage de la distribution (commencer à la racine du site avec /)
+		define('DISTRIBUTION_START_PAGE', '/member/member.php');
+		
+		//Espace membre activé ? (Est-ce que les membres peuvent s'inscrire et participer au site ?)
+		define('DISTRIBUTION_ENABLE_MEMBER', false);
+		
+		//Liste des modules
+		$DISTRIBUTION_MODULES = array();
+	}
+}
+
 //On vérifie que le dossier cache/tpl existe et est inscriptible, sans quoi on ne peut pas mettre en cache les fichiers et donc afficher l'installateur
 if( !is_dir('../cache') || !is_dir('../cache/tpl') || !is_writable('../') )
 	die($LANG['cache_tpl_must_exist_and_be_writable']);
@@ -78,7 +109,6 @@ if( retrieve(GET, 'restart', false) )
 
 //Template d'installation
 $template = new Template('install/install.tpl', DO_NOT_AUTO_LOAD_FREQUENT_VARS);
-
 
 //Fonction pour gérer la langue
 function add_lang($url, $header_location = false)
@@ -113,6 +143,9 @@ if( $step == 1 )
 		'C_INTRO' => true,
 		'L_INTRO_TITLE' => $LANG['intro_title'],
 		'L_INTRO_EXPLAIN' => $LANG['intro_explain'],
+		'DISTRIBUTION' => sprintf($LANG['intro_distribution'], DISTRIBUTION_NAME),
+		'L_DISTRIBUTION_EXPLAIN' => $LANG['intro_distribution_intro'],
+		'DISTRIBUTION_DESCRIPTION' => DISTRIBUTION_DESCRIPTION,
 		'L_NEXT_STEP' => add_lang('install.php?step=2'),
 		'L_START_INSTALL' => $LANG['start_install']
 	));
@@ -385,10 +418,10 @@ elseif( $step == 5 )
 		$CONFIG['start'] = time();
 		$CONFIG['version'] = UPDATE_VERSION;
 		$CONFIG['lang'] = $lang;
-		$CONFIG['theme'] = DEFAULT_THEME;
+		$CONFIG['theme'] = DISTRIBUTION_THEME;
 		$CONFIG['editor'] = 'bbcode';
 		$CONFIG['timezone'] = $site_timezone;
-		$CONFIG['start_page'] = START_PAGE;
+		$CONFIG['start_page'] = DISTRIBUTION_START_PAGE;
 		$CONFIG['maintain'] = 0;
 		$CONFIG['maintain_delay'] = 1;
 		$CONFIG['maintain_display_admin'] = 1;
@@ -465,7 +498,7 @@ elseif( $step == 5 )
 	}
 		
 	$template->assign_vars(array(
-		'IMG_THEME' => DEFAULT_THEME,
+		'IMG_THEME' => DISTRIBUTION_THEME,
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=4'),
 		'U_CURRENT_STEP' => add_lang('install.php?step=5'),
 		'L_SITE_CONFIG' => $LANG['site_config_title'],
@@ -553,6 +586,7 @@ elseif( $step == 6 )
 			//Configuration des membres
 			$Cache->load_file('member');
 			
+			$CONFIG_MEMBER['activ_mbr'] = (int)DISTRIBUTION_ENABLE_MEMBER;
 			$CONFIG_MEMBER['msg_mbr'] = $LANG['site_config_msg_mbr'];
 			$CONFIG_MEMBER['msg_register'] = $LANG['site_config_msg_register'];
 			

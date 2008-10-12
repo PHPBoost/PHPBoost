@@ -61,6 +61,9 @@ $LANG['intro_title'] = 'Bienvenue dans l\'assistant d\'installation de PHPBoost'
 $LANG['intro_explain'] = '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
 <p>Pour installer PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
 <p>Cordialement l\'équipe PHPBoost</p>';
+$LANG['intro_distribution'] = 'Distribution %s';
+$LANG['intro_distribution_intro'] = '<p>Il existe différentes distributions de PHPBoost permettant à l\'utilisateur de configurer automatiquement selon son objectif. Une distribution contient des modules ainsi que quelques paramétrages du noyau.</p>
+<p>PHPBoost va s\'installer selon la configuration de cette distribution, vous pourrez évidemment par la suite modifier sa configuration et ajouter ou supprimer des modules.</p>';
 $LANG['start_install'] = 'Commencer l\'installation';
 
 //licence
