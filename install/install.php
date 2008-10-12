@@ -317,6 +317,14 @@ else
 				$Sql->parse('lang/' . $lang . '/mysql_install_' . $lang . '.sql', $tables_prefix);
 				
 				$Sql->query_close();
+				
+				//Installation des modules de la distribution
+				require_once(PATH_TO_ROOT . '/kernel/framework/modules/packages_manager.php');
+				foreach($DISTRIBUTION_MODULES as $module_name)
+				{
+					 PackagesManager::install_module($module_name);
+				}
+				
 				redirect(HOST . FILE . add_lang('?step=5', true));
 				break;
 			case DB_CONFIG_ERROR_CONNECTION_TO_DBMS:
