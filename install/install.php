@@ -316,14 +316,8 @@ else
 				//Insertion des données variables selon la langue
 				$Sql->parse('lang/' . $lang . '/mysql_install_' . $lang . '.sql', $tables_prefix);
 				
-				$Sql->query_close();
-				
-				//Installation des modules de la distribution
-				require_once(PATH_TO_ROOT . '/kernel/framework/modules/packages_manager.php');
-				foreach($DISTRIBUTION_MODULES as $module_name)
-				{
-					 PackagesManager::install_module($module_name);
-				}
+				//Fermeture de la connexion BDD	
+				$Sql->close();
 				
 				redirect(HOST . FILE . add_lang('?step=5', true));
 				break;
@@ -472,6 +466,14 @@ elseif( $step == 5 )
 		//On génère le cache
 		include('../kernel/framework/core/cache.class.php');
 		$Cache = new Cache;
+		
+		//Installation des modules de la distribution
+		foreach($DISTRIBUTION_MODULES as $module_name)
+		{
+			$Cache->load_file('modules');
+			PackagesManager::install_module($module_name, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+		}
+		
 		$Cache->Generate_all_files();
 		
 		$Sql->close();
@@ -611,7 +613,6 @@ elseif( $step == 6 )
 			//On connecte directement l'administrateur si il l'a demandé
 			if( $create_session )
 			{
-				include('../kernel/constant.php');
 				include('../kernel/framework/members/sessions.class.php');
 				$Session = new Sessions;
 				
